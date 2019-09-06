@@ -2318,6 +2318,7 @@ if(FALSE) {
     use_cxx11 <- FALSE
     use_cxx14 <- FALSE
     use_cxx17 <- FALSE
+    use_fc_link <- FALSE
     pkg_libs <- character()
     clean <- FALSE
     preclean <- FALSE
@@ -2434,6 +2435,8 @@ if(FALSE) {
                 stop("C++98 standard requested but unsupported",
                      call. = FALSE, domain = NA)
         }
+        if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
+            use_fc_link <- TRUE
     } else if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars", warn = FALSE)
@@ -2459,6 +2462,8 @@ if(FALSE) {
                 stop("C++98 standard requested but unsupported",
                      call. = FALSE, domain = NA)
         }
+        if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
+            use_fc_link <- TRUE
     }
     if (!is.na(Sys.getenv("USE_CXX98", NA_character_)))
         stop("C++98 standard requested but unsupported",
@@ -2541,7 +2546,9 @@ if(FALSE) {
         else
             c("SHLIB_LDFLAGS='$(SHLIB_CXXLDFLAGS)'",
               "SHLIB_LD='$(SHLIB_CXXLD)'", makeargs)
-    }
+    } else if (use_fc_link && (with_f77 || with_f9x))
+        makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
+                      "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
     if (with_f77 || with_f9x)
         shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")

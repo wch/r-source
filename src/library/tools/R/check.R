@@ -3004,6 +3004,7 @@ add_dummies <- function(dir, Log)
 
                 c1 <- grepl("^[[:space:]]*PKG_LIBS", lines, useBytes = TRUE)
                 anyInLIBS <- any(grepl("SHLIB_OPENMP_", lines[c1], useBytes = TRUE))
+                use_fc <- any(grepl("^USE_FC_TO_LINK", lines, useBytes = TRUE))
 
                 ## Now see what sort of files we have
                 have_c <- length(dir('src', pattern = "[.]c$", recursive = TRUE)) > 0L
@@ -3057,13 +3058,14 @@ add_dummies <- function(dir, Log)
                         c_or_cxx <- if(have_cxx) "CXXFLAGS" else "CFLAGS"
                         this2 <- if (f %in% c("F", "FC")) c_or_cxx else this
                         pat2 <- paste0("SHLIB_OPENMP_", this2)
-                        if(!any(grepl(pat2, lines[c1], useBytes = TRUE))) {
+                        if(!any(grepl(pat2, lines[c1], useBytes = TRUE))
+                           && !use_fc) {
                             if (!any) noteLog(Log)
                             any <- TRUE
                             msg <- if(anyInLIBS) {
                                 if (f == "F")
                                     sprintf("SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS but not SHLIB_OPENMP_%s in PKG_LIBS\n", c_or_cxx)
-                                 else if (f == "FC")
+                                else if (f == "FC")
                                      sprintf("SHLIB_OPENMP_%sFLAGS is included in PKG_FCFLAGS but not SHLIB_OPENMP_%s in PKG_LIBS\n", f_or_fc, c_or_cxx)
                                else
                                     sprintf("SHLIB_OPENMP_%s is included in PKG_%s but not in PKG_LIBS\n",
@@ -3099,7 +3101,7 @@ add_dummies <- function(dir, Log)
                     pat2 <- paste0("SHLIB_OPENMP_", this)
                     res <- any(grepl(pat2 , lines[c1], useBytes = TRUE))
                     cnt <- cnt + res
-                    if (res && f %in% c( "F", "FC"))  {
+                    if (res && f %in% c( "F", "FC") && !use_fc)  {
                         if (!any) noteLog(Log)
                         any <- TRUE
                         printLog(Log,"  ", m, ": ",
@@ -3122,6 +3124,8 @@ add_dummies <- function(dir, Log)
                     ## Fortran exceptions
                     if (((!have_cxx && f == "C") || (have_cxx && f == "CXX"))
                         && any(c("FFLAGS", "FCFLAGS") %in% used)) next
+                    ## A package still used PKG_FCFLAGS
+                    if (use_fc && f == "F" && used == "FCFLAGS") next
                     if (res) {
                         if (!any) noteLog(Log)
                         any <- TRUE

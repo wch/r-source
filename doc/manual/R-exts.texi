@@ -2197,12 +2197,18 @@ all: $(SHLIB)
 $(SHLIB): $(OBJECTS)
         $(SHLIB_LINK) -o $@ $(OBJECTS) $(ALL_LIBS)
 @end example
+@noindent
+Since @R{} >= 3.6.2 a further alternative is to use
+@example
+USE_FC_TO_LINK =
+PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_FFLAGS)
+@end example
+in @file{src/Makevars} or @file{src/Makevsars.win}.
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
-are of different families: using C and Fortran is most widely supported
-(but only fortuitously currently works on macOS).
-@c It probably will not work with gfortran 9 on macOS.
+are of different families.
 
 For portability, any C/C++ code using the @code{omp_*} functions should
 include the @file{omp.h} header: some compilers (but not all) include it

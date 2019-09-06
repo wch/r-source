@@ -54,7 +54,7 @@
       translated (to the native encoding or in some cases on Windows to
       UTF-8), rather than translate to a different file path using
       escapes.  Some (such as \code{dir.exists()}, \code{file.exists()},
-      \code{file.access()}, \code{file.info()}, \code{list.files},
+      \code{file.access()}, \code{file.info()}, \code{list.files()},
       \code{normalizePath()} and \code{path.expand()}) treat this like
       any other non-existent file, often with a warning.
 
@@ -74,7 +74,7 @@
       detailing how file paths with marked encodings are handled.
 
       \item There is a new function \code{infoRDS()} providing information
-      about serialization format of a serialized object.
+      about the serialization format of a serialized object.
 
       \item S3 method lookup now by default skips the elements of the
       search path between the global and base environments.
@@ -205,6 +205,16 @@
       \code{USE_FC_LEN_T} and include \file{Rconfig.h} (possibly
       \emph{via} \file{R.h}) before including \file{R_ext/BLAS.h} or
       \file{R_ext/Lapack.h}.
+
+      \item A package with Fortran source code and perhaps C (but not
+      C++) sources can request for its shared object/DLL to be linked by
+      the Fortran compiler by including a line \code{USE_FC_TO_LINK=} in
+      \file{src/Makevars[.win]}.
+
+      The known reason for doing so is a package which uses Fortran
+      (only) OpenMP on a platform where the Fortran OpenMP runtime is
+      incompatible with the C one (e.g.\sspace{}\command{gfortran} 9.x
+      with \command{clang}).
     }
   }
 
