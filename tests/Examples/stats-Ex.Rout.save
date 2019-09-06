@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-08-29 r77089) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-09-06 r77158) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3942,7 +3942,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x439ed80>
+<environment: 0x5964290>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4979,7 +4979,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x50f7900>
+<bytecode: 0x66c05e8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7603,7 +7603,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x4ec9490>
+<environment: 0x648b9d0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12297,14 +12297,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4341d40>
-<environment: 0x434c670>
+<bytecode: 0x58f9550>
+<environment: 0x5901f00>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4341bf0>
-<environment: 0x434c670>
+<bytecode: 0x58f9400>
+<environment: 0x5901f00>
 
 > 
 > 
@@ -16523,8 +16523,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x3922a58>
-<environment: 0x70f5790>
+<bytecode: 0x4edf498>
+<environment: 0x6ae2f68>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18849,7 +18849,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.453 0.198 6.685 0 0 
+Time elapsed:  6.38 0.196 6.614 0 0 
 > grDevices::dev.off()
 null device 
           1 
