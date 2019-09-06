@@ -45,6 +45,16 @@
       \code{USE_FC_LEN_T} and include \file{Rconfig.h} (possibly
       \emph{via} \file{R.h}) before including \file{R_ext/BLAS.h} or
       \file{R_ext/Lapack.h}.
+
+      \item A package with Fortran source code and perhaps C (but not
+      C++) sources can request for its shared object/DLL to be linked by
+      the Fortran compiler by including a line \code{USE_FC_TO_LINK=} in
+      \file{src/Makevars[.win]}.
+
+      The known reason for doing so is a package which uses Fortran
+      (only) OpenMP on a platform where the Fortran OpenMP runtime is
+      incompatible with the C one (e.g.\sspace{}\command{gfortran} 9.x
+      with \command{clang}).
     }
   }
 
