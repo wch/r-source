@@ -99,7 +99,7 @@
 
       \item Support for specifying C++98 in package installation has
       been removed.
-      
+
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}, nor
       \samp{CXX98} and similar.
@@ -161,6 +161,10 @@
       than arbitrary \code{n = 100}.
 
       \item \code{format(as.symbol("foo"))} now works (returning \code{"foo"}).
+
+      \item \code{postscript(.., title = *)} now signals an error when the
+      title string contains a character which produces corrupt PostScript,
+      thanks to Daisuko Ogawa's \PR{17607}.
     }
   }
 }
@@ -230,7 +234,7 @@
     \itemize{
       \item Support for specifying C++98 in package installation is
       deprecated.
- 
+
       \item Support in \command{R CMD config} for \samp{F77},
       \samp{FCPIFCPLAGS}, \samp{CPP}, \samp{CXXCPP} and \samp{CXX98} and
       similar is deprecated.  (\samp{CPP} is found from the system
