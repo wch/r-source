@@ -79,7 +79,7 @@
       \item S3 method lookup now by default skips the elements of the
       search path between the global and base environments.
 
-      \item Add an arguemnt \code{add_datalist(*, small.size = 0)} to
+      \item Add an argument \code{add_datalist(*, small.size = 0)} to
       allow the creation of a \file{data/datalist} file even when the
       total size of the data sets is small.
     }
