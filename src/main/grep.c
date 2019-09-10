@@ -1837,10 +1837,12 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean use_UTF8 = FALSE, use_WC = FALSE;
     const wchar_t *wrep = NULL;
 #ifdef HAVE_PCRE2
+    uint32_t ovecsize = 10;
     pcre2_code *re = NULL;
     pcre2_match_context *mcontext = NULL;
     pcre2_match_data *mdata = NULL;
 #else
+    int ovecsize = 30;
     pcre *re_pcre = NULL;
     pcre_extra *re_pe  = NULL;
     const unsigned char *tables = NULL;
@@ -1960,6 +1962,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if (perl_opt) {
 #ifdef HAVE_PCRE2
 	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &re, &mcontext);
+	mdata = pcre2_match_data_create(ovecsize, NULL);
 #else
 	R_pcre_prepare(spat, text, use_UTF8, igcase_opt, FALSE, &tables,
 	             &re_pcre, &re_pe);
@@ -2046,13 +2049,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_PCRE2
 	   uint32_t eflag;
 	   PCRE2_SIZE *ovector = NULL;
-	   uint32_t ovecsize = 10;
-	   /* not zeroing ovector as this is not possible with PCRE2, but
-	      it should not be necessary */
-	   mdata = pcre2_match_data_create(ovecsize, NULL);
 #else
 	   int eflag;
-	   int ovecsize = 30;
 	   int ovector[ovecsize];
 	   /* zero for unknown patterns; this is done to make sure that back
               references to unset groups return an empty string, but it is
