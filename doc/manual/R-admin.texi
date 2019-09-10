@@ -237,7 +237,7 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @samp{sparc-@/sun-@/solaris} as well as
 perhaps (it is tested less frequently on these platforms)
 @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
-@samp{i386-@/*-@/netbsd}, @samp{x86_64/*-@/openbsd} and
+@samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
 
 @cindex Linux
@@ -274,8 +274,7 @@ is either unset (and @file{/tmp} exists and can be written in and
 scripts can be executed from) or points to the absolute path to a valid
 temporary directory (one from which execution of scripts is allowed)
 which does not contain spaces.@footnote{Most aspects will work with
-paths containing spaces, but external software used by @R{}, e.g.@:
-@command{texi2dvi} version @code{4.8}, may not.}
+paths containing spaces, but external software used by @R{} may not.}
 
 @findex R_HOME
 Choose a directory to install the @R{} tree (@R{} is not just a binary, but
@@ -296,7 +295,8 @@ make
 @noindent
 (See @ref{Using make} if your make is not called @samp{make}.)  Users of
 Debian-based 64-bit systems@footnote{which use @file{lib} rather than
-@file{lib64} for their primary 64-bit library directories.} may need
+@file{lib64} for their primary 64-bit library directories: attempts are
+made to detect such systems.} may need
 
 @example
 ./configure LIBnn=lib
@@ -992,8 +992,9 @@ R_OPENMP_CFLAGS
 @end example
 
 Use for packages has similar restrictions (involving @code{SHLIB_LD} and
-similar: note that as Fortran code is linked by the C (or C++) compiler,
-both need to support OpenMP) and can be overridden by specifying some of
+similar: note that as Fortran code is by default linked by the C (or
+C++) compiler, both need to support OpenMP) and can be overridden by
+specifying some of
 @example
 SHLIB_OPENMP_CFLAGS
 SHLIB_OPENMP_CXXFLAGS
@@ -1011,11 +1012,6 @@ the Fortran runtime always used OpenMP.} of OpenMP).  The
 OpenMP program, which is not the same as compiling a shared object and
 loading it into the C program of @R{}'s executable.  Note that
 overridden values are not tested.
-
-Note the mixing compiler families may not work even if both support
-OpenMP: for example where @command{gfortran} 9.x is used for Fortran, it
-can generate calls to @code{libgomp} which are not in the OpenMP runtime
-used by @command{clang} or @command{clang++} (at least up to version 8).
 
 @node C++ Support, Link-Time Optimization, OpenMP Support, Other Options
 @subsection C++ Support
@@ -1067,17 +1063,7 @@ compiler @code{CC}.} that there is no suitable flag for C++11 support,
 in which case a different compiler could be selected for @code{CXX11}
 and its corresponding flags.  Likewise, a different compiler can be
 specified for C++14 support with @code{CXX14} and for C++17 support with
-@code{CXX17}.  Some compilers@footnote{Currently only GCC and
-@command{clang++} versions 6 and later.} by default assume a later
-standard than C++98 whereas the latter has been assumed by some packages.  So
-users of GCC 6 might like to specify
-@example
-CXX='g++ -std=gnu++98'
-CXX11=g++
-CXX11STD='-std=c++11'
-CXX14=g++
-CXX14STD='-std=c++14'
-@end example
+@code{CXX17}.
 
 The @option{-std} flag is supported by the GCC, @command{clang++}, Intel
 and Solaris compilers (the latter from version 12.4).  Currently
@@ -1109,9 +1095,9 @@ extensions': what those are is hard to track down.
 
 For the use of C++11 and later in @R{} packages see the `Writing R
 Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
-that of the compiler used: currently it is C++11 if supported by the
-compiler: this can be overridden by setting @samp{CXXSTD} when @R{} is
-configured, for example to @samp{-std=gnu++14}.
+that of the compiler used: currently it is C++11: this can be overridden
+by setting @samp{CXXSTD} when @R{} is configured, for example to
+@samp{-std=gnu++14}.
 
 @node Link-Time Optimization,  , C++ Support, Other Options
 @subsection Link-Time Optimization
@@ -1123,9 +1109,10 @@ Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler and linker have to support it, and support it by
 the same mechanism (so mixing compiler families may not work and a
 non-system linker such as @command{gold}@footnote{Nowadays part of GNU
-@code{binutils} and used by LLVM to support LTO.} may be needed).  It
-has been tested recently on Linux with @command{gcc}/@command{gfortran}
-8.x and 9.x: that needed setting
+@code{binutils} and used by LLVM to support LTO.  It is sometimes
+installed as @command{ld.gold}.} may be needed).  It has been tested
+recently on Linux with @command{gcc}/@command{gfortran} 8.x and 9.x:
+that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
@@ -1135,14 +1122,14 @@ RANLIB=gcc-ranlib
 wrappers have not been installed one may need something like
 @example
 AR="ar --plugin=/path/to/liblto_plugin.so"
-RANLIB="ranlib --plugin=/path/to/liblto_plugin.so
+RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 @end example
 @noindent
 amd it may be needed to set @code{NM} similarly.
 
 Unfortunately @option{--enable-lto} may be accepted but silently do
-nothing if some of the toolchain does not support LTO: that happens on
-macOS (at the time of writing).
+nothing if some of the toolchain does not support LTO: that has happened on
+macOS.
 
 When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
@@ -1924,7 +1911,7 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 
 You can run command-line @R{} and @command{Rscript} from a
-Terminal@footnote{The installer as puts links to @command{R} and
+Terminal@footnote{The installer puts links to @command{R} and
 @command{Rscript} in @file{/usr/local/bin}. If these are missing, you
 can run directly the copies in
 @file{/Library/Frameworks/R.framework/Resources/}.} so these can be
@@ -1932,7 +1919,7 @@ typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R},
-e.g.@: @file{~/Library/R/3.6/library}), and that warnings, messages and
+e.g.@: @file{~/Library/R/3.7/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
@@ -2031,24 +2018,24 @@ of the Apple package of the same name: this means that installing a package for
 the @R{} framework which it finds installed.  This can be avoided by
 using @command{pkgutil --forget} (see the previous section).  However,
 note that different versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{3.5},
+@file{/Library/Frameworks/R.framework/Versions} as @file{3.7},
 @file{3.6} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
-/Library/Frameworks/R.framework/Versions/3.6/Resources/bin/R
+/Library/Frameworks/R.framework/Versions/3.7/Resources/bin/R
 @end example
 
 @noindent
 However, @Rapp{} will always run the `current' version, that is the last
 installed version.  A small utility, @command{Rswitch.app} (available at
-@url{https://mac.R-project.org/#other}), can be used to change the
-`current' version.  This is of limited use as @Rapp{} is compiled
-against a particular version of @R{} and will likely crash if switched
-to an earlier version.  This may allow you to install a development
-version of @R{} (de-selecting @Rapp{}) and then switch back to the
-release version.
+@url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
+Catalina), can be used to change the `current' version.  This is of
+limited use as @Rapp{} is compiled against a particular version of @R{}
+and will likely crash if switched to an earlier version.  This may allow
+you to install a development version of @R{} (de-selecting @Rapp{}) and
+then switch back to the release version.
 
 
 @node Running R, Add-on packages, Installing R under macOS, Top
@@ -2412,7 +2399,7 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages which include compiled code are tied to a
-particular series (e.g.@: @R{} 3.6.x or 3.5.x) of @R{}.
+particular series (e.g.@: @R{} 3.7.x or 3.6.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -3154,7 +3141,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"3.6.0"}.
+string containing the current @R{} version, for example @code{"3.7.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
