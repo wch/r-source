@@ -6,6 +6,27 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{USER-VISIBLE CHANGES}{
+      \itemize{
+       \item \R now builds by default against PCRE2 library for Perl-like
+       regular expressions if available at build time on non-Windows
+       platforms (otherwise PCRE1 is used as in older versions of \R)
+       
+       PCRE2 is stricter in some cases and reports errors for some
+       regular expressions that were accepted by PCRE1.  A hyphen now
+       has to be escaped in a character class to be interpreted as a
+       literal (unless first or last in the class definition).
+       \samp{\\R}, \samp{\\B} and \samp{\\X} are no longer allowed in
+       character classes (PCRE1 treated these as literals).
+
+       Option \code{PCRE_study} is no longer used, and reported as
+       \code{FALSE}.
+
+       The version of PCRE used can be obtained via
+       \code{extSoftVersion()}, PCRE1 has versions < 10, PCRE2 versions
+       >= 10.
+    }
+  }
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -85,24 +106,6 @@
     }
   }
 
-  \subsection{USER-VISIBLE CHANGES}{
-      \itemize{
-
-       \item \R now builds by default against PCRE2 library for Perl-like
-       regular expressions if available at build time on non-Windows
-       platforms (otherwise PCRE1 is used as in older versions of R).
-       PCRE1 is no longer developed, it only receives bug fixes and has
-       outdated Unicode tables. PCRE2 is stricter in some cases and reports
-       errors for some regular expressions that were accepted by PCRE1.
-       Hyphen now has to be escaped in a character class to be interpreted
-       as a literal, unless first or last in the class definition.
-       \samp{\\R}, \samp{\\B} and \samp{\\X} are no longer allowed in character
-       classes (in PCRE1 treated as literals). The version of PCRE used can be
-       obtained via \code{extSoftVersion()}, PCRE1 has versions <10,
-       PCRE2 versions >=10.
-    }
-  }
-
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Make macro \samp{F77_VISIBILITY} has been removed
@@ -148,6 +151,10 @@
 
       \item A C++ compiler default is set only if the C++11 standard is
       supported: it no longer falls back to C++98.
+
+      \item PCRE2 is used if available: this is strongly recommended as
+      PCRE1 is no longer developed (it only receives bug fixes and has
+      outdated Unicode tables). 
     }
   }
 
