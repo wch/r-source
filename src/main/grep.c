@@ -662,7 +662,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    pcre2_code *re = NULL;
 	    pcre2_match_context *mcontext = NULL;
 	    PCRE2_SIZE *ovector = NULL;
-	    int ovecsize = 10;
+	    uint32_t ovecsize = 10;
 	    R_pcre2_prepare(split, x, use_UTF8, FALSE, &re, &mcontext);
 	    pcre2_match_data *mdata = pcre2_match_data_create(ovecsize, NULL);
 #else
@@ -1049,7 +1049,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_PCRE2
     pcre2_code *re = NULL;
     pcre2_match_context *mcontext = NULL;
-    int ovecsize = 1;
+    uint32_t ovecsize = 1;
     pcre2_match_data *mdata = NULL;
 #else
     pcre *re_pcre = NULL /* -Wall */;
@@ -2046,7 +2046,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_PCRE2
 	   uint32_t eflag;
 	   PCRE2_SIZE *ovector = NULL;
-	   PCRE2_SIZE ovecsize = 10;
+	   uint32_t ovecsize = 10;
 	   /* not zeroing ovector as this is not possible with PCRE2, but
 	      it should not be necessary */
 	   mdata = pcre2_match_data_create(ovecsize, NULL);
@@ -2090,9 +2090,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       for (j = offset; j < ovector[0]; j++) *u++ = s[j];
 	       if (last_end == -1 /* for PCRE2 */ || ovector[1] > last_end) {
 		   u = R_pcre_string_adj(u, s, srep, ovector, use_UTF8, ncap);
-		   last_end = ovector[1];
+		   last_end = (int) ovector[1];
 	       }
-	       offset = ovector[1];
+	       offset = (int) ovector[1];
 	       if (s[offset] == '\0' || !global) break;
 	       if (ovector[1] == ovector[0]) {
 		   /* advance by a char */
