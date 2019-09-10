@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -204,14 +204,16 @@
   matching using the same syntax and semantics as Perl 5.x,
   with just a few differences.
 
-  For complete details please consult the man pages for PCRE (and not
-  PCRE2), especially \command{man pcrepattern} and \command{man
-  pcreapi}, on your system or from the sources at
-  \url{http://www.pcre.org}.  (The version in use can be found by
-  calling \code{\link{extSoftVersion}}.  It need not be the version
-  described in the system's man page.  As PCRE has been feature-frozen
-  for some time (essentially 2012), the man pages at
-  \url{http://www.pcre.org/original/doc/html/} should be a good match.)
+  For complete details please consult the man pages for PCRE, especially
+  \command{man pcrepattern} and \command{man pcreapi}, on your system or
+  from the sources at \url{http://www.pcre.org}.  (The version in use can be
+  found by calling \code{\link{extSoftVersion}}.  It need not be the version
+  described in the system's man page.  PCRE1 (reported as version < 10.00 by
+  \code{\link{extSoftVersion}}) has been feature-frozen for some time
+  (essentially 2012), the man pages at
+  \url{http://www.pcre.org/original/doc/html/} should be a good match.
+  PCRE2 (PCRE version >= 10.00) has man pages at
+  \url{http://www.pcre.org/current/doc/html/}).
 
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
@@ -287,7 +289,15 @@
   byte, including a newline, but its use is warned against.  In UTF-8
   mode, \samp{\\R} matches any Unicode newline character (not just CR),
   and \samp{\\X} matches any number of Unicode characters that form an
-  extended Unicode sequence.
+  extended Unicode sequence. \samp{\\X}, \samp{\\R} and \samp{\\B} cannot be
+  used inside a character class (with PCRE1, they are treated as characters
+  \samp{X}, \samp{R} and \samp{B}; with PCRE2 they cause an error).
+
+  A hyphen (minus) inside a character class is treated as a range, unless it
+  is first or last character in the class definition.  It can be quoted to
+  represent the hypen literal (\samp{\\-}).  PCRE1 allows an unquoted hyphen
+  at some other locations inside a character class where it cannot represent
+  a valid range, but PCRE2 reports an error in such cases.
 
   In UTF-8 mode, some Unicode properties may be supported via
   \samp{\p{xx}} and \samp{\P{xx}} which match characters with and
@@ -296,7 +306,8 @@
   \sQuote{upper case letter} and \samp{Sc} is \sQuote{currency symbol}.
   (This support depends on the PCRE library being compiled with
   \sQuote{Unicode property support} which can be checked \emph{via}
-  \code{\link{pcre_config}}.)
+  \code{\link{pcre_config}}. PCRE2 when compiled with Unicode support always
+  supports also Unicode properies.)
 
   The sequence \samp{(?#} marks the start of a comment which continues
   up to the next closing parenthesis.  Nested parentheses are not

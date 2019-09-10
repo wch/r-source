@@ -1,6 +1,6 @@
 % File src/library/base/man/pcre_config.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015-2017 R Core Team
+% Copyright 2015-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pcre_config}
@@ -19,7 +19,8 @@ pcre_config()
   A named logical vector, currently with elements
   \item{UTF-8}{Support for UTF-8 inputs.  Required.}
   \item{Unicode properties}{Support for \samp{\p{xx}} and \samp{\P{xx}}
-    in regular expressions.  Desirable and used by some CRAN packages.}
+    in regular expressions.  Desirable and used by some CRAN packages.
+    As of PCRE2, always present with support for UTF-8.}
   \item{JIT}{Support for just-in-time compilation.  Desirable for speed
     (but only available as a compile-time option on certain
     architectures).}

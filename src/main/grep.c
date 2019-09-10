@@ -69,12 +69,18 @@ strsplit grep [g]sub [g]regexpr
 /* As from TRE 0.8.0, tre.h replaces regex.h */
 #include <tre/tre.h>
 
-/* Some systems might have pcre headers in a subdirectory -- not seen recently.
-*/
-#ifdef HAVE_PCRE_PCRE_H
-# include <pcre/pcre.h>
+#ifdef HAVE_PCRE2
+  /* PCRE2_CODE_UNIT_WIDTH is defined to 8 via config.h */
+# include<pcre2.h>
 #else
-# include <pcre.h>
+  /*
+  Some systems might have pcre headers in a subdirectory -- not seen recently.
+  */
+# ifdef HAVE_PCRE_PCRE_H
+#  include <pcre/pcre.h>
+# else
+#  include <pcre.h>
+# endif
 #endif
 
 /*
@@ -88,25 +94,44 @@ strsplit grep [g]sub [g]regexpr
    that is not an issue -- and most sessions will not use PCRE with
    more than 10 strings.
  */
-static pcre_jit_stack *jit_stack = NULL; // allocated at first use.
 
+#ifdef HAVE_PCRE2
+static pcre2_jit_stack *jit_stack = NULL; // allocated at first use.
+#else
+static pcre_jit_stack *jit_stack = NULL; // allocated at first use.
+#endif
+
+static int jit_stack_size()
+{
+    int stmax = JIT_STACK_MAX;
+    char *p = getenv("R_PCRE_JIT_STACK_MAXSIZE");
+    if (p) {
+	char *endp;
+	double xdouble = R_strtod(p, &endp);
+	if (xdouble >= 0 && xdouble <= 1000)
+	    stmax = (int)(xdouble*1024*1024);
+	else warning ("R_PCRE_JIT_STACK_MAXSIZE invalid and ignored");
+    }
+    return stmax;
+}
+
+#ifdef HAVE_PCRE2
+static void setup_jit(pcre2_match_context *mcontext)
+{
+    if (!jit_stack)
+	jit_stack = pcre2_jit_stack_create(32*1024, jit_stack_size(), NULL);
+    if (jit_stack)
+	pcre2_jit_stack_assign(mcontext, NULL, jit_stack);
+}
+#else
 static void setup_jit(pcre_extra *re_pe)
 {
-    if (!jit_stack) {
-	int stmax = JIT_STACK_MAX;
-	char *p = getenv("R_PCRE_JIT_STACK_MAXSIZE");
-	if (p) {
-	    char *endp;
-	    double xdouble = R_strtod(p, &endp);
-	    if (xdouble >= 0 && xdouble <= 1000)
-		stmax = (int)(xdouble*1024*1024);
-	    else warning ("R_PCRE_JIT_STACK_MAXSIZE invalid and ignored");
-	}
-	jit_stack = pcre_jit_stack_alloc(32*1024, stmax);
-    }
+    if (!jit_stack)
+	jit_stack = pcre_jit_stack_alloc(32*1024, jit_stack_size());
     if (jit_stack)
 	pcre_assign_jit_stack(re_pe, NULL, jit_stack);
 }
+#endif
 
 #ifndef MAX
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -153,18 +178,28 @@ static SEXP mkCharW(const wchar_t *wc)
     return ans;
 }
 
-
-static void pcre_exec_error(int rc, R_xlen_t i)
+#ifdef HAVE_PCRE2
+static void R_pcre_exec_error(int rc, R_xlen_t i)
+{
+    if (rc >= 0 || rc == PCRE2_ERROR_NOMATCH)
+	return;
+    // too much effort to handle long-vector indices, including on Windows
+    char buf[256];
+    pcre2_get_error_message(rc, (PCRE2_UCHAR *)buf, sizeof(buf));
+    warning(_("PCRE error\n\t'%s'\n\tfor element %d"), buf, (int) i + 1);
+}
+#else
+static void R_pcre_exec_error(int rc, R_xlen_t i)
 {
     if (rc > -2) return;
     // too much effort to handle long-vector indices, including on Windows
     switch (rc) {
-#ifdef PCRE_ERROR_JIT_STACKLIMIT
+#  ifdef PCRE_ERROR_JIT_STACKLIMIT
     case PCRE_ERROR_JIT_STACKLIMIT:
 	warning("JIT stack limit reached in PCRE for element %d",
 		(int) i + 1);
 	break;
-#endif
+#  endif
     case PCRE_ERROR_MATCHLIMIT:
 	warning("back-tracking limit reached in PCRE for element %d",
 		(int) i + 1);
@@ -178,13 +213,37 @@ static void pcre_exec_error(int rc, R_xlen_t i)
 	warning("unexpected internal error in PCRE for element %d",
 		(int) i + 1);
 	break;
-#ifdef PCRE_ERROR_RECURSELOOP
+#  ifdef PCRE_ERROR_RECURSELOOP
    case PCRE_ERROR_RECURSELOOP:
 	warning("PCRE detected a recursive loop in the pattern for element %d",
 		(int) i + 1);
 	break;
-#endif
+#  endif
     }
+}
+#endif
+
+/* returns value allocated on R_alloc stack */
+static const char *to_native(const char *str, Rboolean use_UTF8)
+{
+    return use_UTF8 ? reEnc(str, CE_UTF8, CE_NATIVE, 1) : str;
+}
+
+static Rboolean use_recursion_limit(SEXP subject)
+{
+    Rboolean use_limit = FALSE;
+    if (R_PCRE_limit_recursion == NA_LOGICAL) {
+	// use recursion limit only on long strings
+	R_xlen_t i;
+	R_xlen_t len = XLENGTH(subject);
+	for (i = 0 ; i < len ; i++)
+	    if (strlen(CHAR(STRING_ELT(subject, i))) >= 1000) {
+		use_limit = TRUE;
+		break;
+	    }
+    } else if (R_PCRE_limit_recursion)
+	use_limit = TRUE;
+    return use_limit;
 }
 
 static long R_pcre_max_recursions()
@@ -207,7 +266,12 @@ static long R_pcre_max_recursions()
     const long fallback_limit = 10000;
     /* Was PCRE compiled to use stack or heap for recursion? 1=stack */
     int use_recursion;
+#ifdef HAVE_PCRE2
+    pcre2_config(PCRE2_CONFIG_STACKRECURSE, &use_recursion);
+    /* from PCRE2 10.30, use_recursion is always false */
+#else
     pcre_config(PCRE_CONFIG_STACKRECURSE, &use_recursion);
+#endif
     if (!use_recursion) return -1L;
     if (R_CStackLimit == -1) return fallback_limit;
     current_frame = (uintptr_t) &ans;
@@ -224,6 +288,47 @@ static long R_pcre_max_recursions()
     return (long) ((ans <= LONG_MAX) ? ans : -1L);
 }
 
+#ifdef HAVE_PCRE2
+static void
+R_pcre2_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
+                Rboolean caseless, pcre2_code **re,
+                pcre2_match_context **mcontext)
+{
+    int errcode;
+    PCRE2_SIZE erroffset;
+    uint32_t options = 0;
+
+    if (use_UTF8)
+	options |= PCRE2_UTF | PCRE2_NO_UTF_CHECK;
+    if (caseless)
+	options |= PCRE2_CASELESS;
+
+    *re = pcre2_compile((PCRE2_SPTR) pattern, PCRE2_ZERO_TERMINATED, options,
+                         &errcode, &erroffset, NULL);
+    if (!*re) {
+	/* not managing R_alloc stack because this ends in error */
+	char buf[256];
+	pcre2_get_error_message(errcode, (PCRE2_UCHAR *)buf, sizeof(buf));
+	warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"), buf,
+	        to_native(pattern + erroffset, use_UTF8));
+	error(_("invalid regular expression '%s'"),
+	      to_native(pattern, use_UTF8));
+    }
+    *mcontext = pcre2_match_context_create(NULL);
+    if (R_PCRE_use_JIT) {
+	int rc = pcre2_jit_compile(*re, 0);
+	if (rc) {
+	    fprintf(stderr, "rc is %d\n", rc);
+	    char buf[256];
+	    pcre2_get_error_message(rc, (PCRE2_UCHAR *)buf, sizeof(buf));
+	    warning(_("PCRE JIT compilation error\n\t'%s'"), buf);
+	}
+	setup_jit(*mcontext);
+    } else if (use_recursion_limit(subject))
+	/* only makes sense for PCRE2 < 10.30 */
+	pcre2_set_depth_limit(*mcontext, (uint32_t) R_pcre_max_recursions());
+}
+#else /* ! HAVE_PCRE2 */
 static void
 set_pcre_recursion_limit(pcre_extra **re_pe_ptr, const long limit)
 {
@@ -244,17 +349,23 @@ set_pcre_recursion_limit(pcre_extra **re_pe_ptr, const long limit)
     }
 }
 
-static void prepare_pcre(const char *pattern, int options, SEXP subject,
-                         Rboolean always_study, const unsigned char **tables,
-                         pcre **re, pcre_extra **re_extra)
+static void
+R_pcre_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
+               Rboolean caseless, Rboolean always_study,
+               const unsigned char **tables, pcre **re, pcre_extra **re_extra)
 {
     int erroffset;
     const char *errorptr;
+    int options = 0;
     Rboolean use_limit = FALSE;
     R_xlen_t len = XLENGTH(subject);
     Rboolean pcre_st = always_study ||
                        (R_PCRE_study == -2 ? FALSE : len >= R_PCRE_study);
 
+    if (use_UTF8)
+	options |= PCRE_UTF8;
+    if (caseless)
+	options |= PCRE_CASELESS;
     if (!*tables)
 	// PCRE docs say this is not needed, but it is on Windows
 	*tables = pcre_maketables();
@@ -262,9 +373,10 @@ static void prepare_pcre(const char *pattern, int options, SEXP subject,
     if (!*re) {
 	if (errorptr)
 	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
-	            errorptr, pattern + erroffset);
+	            errorptr, to_native(pattern + erroffset, use_UTF8));
 	/* in R 3.6 and earlier strsplit reported "invalid split pattern" */
-	error(_("invalid regular expression '%s'"), pattern);
+	error(_("invalid regular expression '%s'"),
+	      to_native(pattern, use_UTF8));
     }
     if (pcre_st) {
 	*re_extra = pcre_study(*re,
@@ -275,19 +387,13 @@ static void prepare_pcre(const char *pattern, int options, SEXP subject,
 	else if (R_PCRE_use_JIT)
 	    setup_jit(*re_extra);
     }
-    if (R_PCRE_limit_recursion == NA_LOGICAL) {
-	// use recursion limit only on long strings
-	R_xlen_t i;
-	for (i = 0 ; i < len ; i++)
-	    if (strlen(CHAR(STRING_ELT(subject, i))) >= 1000) {
-		use_limit = TRUE;
-		break;
-	    }
-    } else if (R_PCRE_limit_recursion)
-	use_limit = TRUE;
-    if (use_limit)
+    /* FIXME: do not set recursion limit when JIT compilation succeeded? */
+    if (use_recursion_limit(subject))
 	set_pcre_recursion_limit(re_extra, R_pcre_max_recursions());
 }
+#endif
+
+// FIXME: Protect PCRE/PCRE2 data via contexts
 
 /* strsplit is going to split the strings in the first argument into
  * tokens depending on the second argument. The characters of the second
@@ -304,7 +410,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     int fixed_opt, perl_opt, useBytes;
     char *pt = NULL; wchar_t *wpt = NULL;
     const char *buf, *split = "", *bufp;
+#ifndef HAVE_PCRE2
     const unsigned char *tables = NULL;
+#endif
     Rboolean use_UTF8 = FALSE, haveBytes = FALSE;
     const void *vmax, *vmax2;
     int nwarn = 0;
@@ -539,12 +647,6 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		vmaxset(vmax2);
 	    }
 	} else if (perl_opt) {
-	    pcre *re_pcre;
-	    pcre_extra *re_pe = NULL;
-	    int ovector[30];
-	    int options = 0;
-
-	    if (use_UTF8) options = PCRE_UTF8;
 	    if (useBytes)
 		split = CHAR(STRING_ELT(tok, itok));
 	    else if (use_UTF8) {
@@ -556,7 +658,22 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (mbcslocale && !mbcsValid(split))
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
-	    prepare_pcre(split, options, x, TRUE, &tables, &re_pcre, &re_pe);
+#ifdef HAVE_PCRE2
+	    pcre2_code *re = NULL;
+	    pcre2_match_context *mcontext = NULL;
+	    PCRE2_SIZE *ovector = NULL;
+	    int ovecsize = 10;
+	    R_pcre2_prepare(split, x, use_UTF8, FALSE, &re, &mcontext);
+	    pcre2_match_data *mdata = pcre2_match_data_create(ovecsize, NULL);
+#else
+	    pcre *re_pcre = NULL;
+	    pcre_extra *re_pe = NULL;
+	    int ovecsize = 30;
+	    int ovector[ovecsize];
+
+	    R_pcre_prepare(split, x, use_UTF8, FALSE, TRUE, &tables, &re_pcre,
+	                 &re_pe);
+#endif
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
@@ -589,16 +706,23 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		bufp = buf;
 		if (*bufp) {
 		    int rc;
+#ifdef HAVE_PCRE2
+		    while((rc = pcre2_match(re, (PCRE2_SPTR) bufp,
+		                            PCRE2_ZERO_TERMINATED,
+					    0, 0, mdata, mcontext)) >= 0) {
+			ovector = pcre2_get_ovector_pointer(mdata);
+#else
 		    while((rc = pcre_exec(re_pcre, re_pe, bufp,
 					  (int) strlen(bufp),
-					  0, 0, ovector, 30)) >= 0) {
+					  0, 0, ovector, ovecsize)) >= 0) {
+#endif
 			/* Empty matches get the next char, so move by one. */
 			bufp += MAX(ovector[1], 1);
 			ntok++;
 			if (*bufp == '\0')
 			    break;
 		    }
-		    pcre_exec_error(rc, i);
+		    R_pcre_exec_error(rc, i);
 		}
 		SET_VECTOR_ELT(ans, i,
 			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
@@ -606,10 +730,16 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		bufp = buf;
 		pt = Realloc(pt, strlen(buf)+1, char);
 		for (j = 0; j < ntok; j++) {
+#ifdef HAVE_PCRE2
+		    int rc = pcre2_match(re, (PCRE2_SPTR) bufp,
+				       PCRE2_ZERO_TERMINATED,
+		                       0, 0, mdata, mcontext);
+#else
 		    int rc = pcre_exec(re_pcre, re_pe, bufp,
 				       (int) strlen(bufp), 0, 0,
-				       ovector, 30);
-		    pcre_exec_error(rc, i);
+				       ovector, ovecsize);
+#endif
+		    R_pcre_exec_error(rc, i);
 		    if (ovector[1] > 0) {
 			/* Match was non-empty. */
 			if (ovector[0] > 0)
@@ -635,8 +765,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		vmaxset(vmax2);
 	    }
+#ifdef HAVE_PCRE2
+	    pcre2_match_data_free(mdata);
+	    pcre2_code_free(re);
+	    pcre2_match_context_free(mcontext);
+#else
 	    if(re_pe) pcre_free_study(re_pe);
 	    pcre_free(re_pcre);
+#endif
 	} else if (!useBytes && use_UTF8) { /* ERE in wchar_t */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
@@ -799,7 +935,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	namesgets(ans, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
     Free(pt); Free(wpt);
+#ifndef HAVE_PCRE2
     if (tables) pcre_free((void *)tables);
+#endif
     return ans;
 }
 
@@ -905,12 +1043,21 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ind, ans;
     regex_t reg;
     R_xlen_t i, j, n;
-    int nmatches = 0, ov[3], rc;
+    int nmatches = 0, rc;
     int igcase_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
     const char *spat = NULL;
+#ifdef HAVE_PCRE2
+    pcre2_code *re = NULL;
+    pcre2_match_context *mcontext = NULL;
+    int ovecsize = 1;
+    pcre2_match_data *mdata = NULL;
+#else
     pcre *re_pcre = NULL /* -Wall */;
     pcre_extra *re_pe = NULL;
     const unsigned char *tables = NULL /* -Wall */;
+    int ovecsize = 3;
+    int ov[ovecsize];
+#endif
     Rboolean use_UTF8 = FALSE, use_WC = FALSE;
     const void *vmax;
     int nwarn = 0;
@@ -1016,10 +1163,13 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (fixed_opt) ;
     else if (perl_opt) {
-	int cflags = 0;
-	if (igcase_opt) cflags |= PCRE_CASELESS;
-	if (!useBytes && use_UTF8) cflags |= PCRE_UTF8;
-	prepare_pcre(spat, cflags, text, FALSE, &tables, &re_pcre, &re_pe);
+#ifdef HAVE_PCRE2
+	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &re, &mcontext);
+	mdata = pcre2_match_data_create(ovecsize, NULL);
+#else
+	R_pcre_prepare(spat, text, use_UTF8, igcase_opt, FALSE, &tables,
+                     &re_pcre, &re_pe);
+#endif
     } else {
 	int cflags = REG_NOSUB | REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
@@ -1059,12 +1209,17 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (fixed_opt)
 		LOGICAL(ind)[i] = fgrep_one(spat, s, useBytes, use_UTF8, NULL) >= 0;
 	    else if (perl_opt) {
+#ifdef HAVE_PCRE2
+		int rc = pcre2_match(re, (PCRE2_SPTR) s, PCRE2_ZERO_TERMINATED,
+		                     0, 0, mdata, mcontext);
+#else
 		int rc =
 		    pcre_exec(re_pcre, re_pe, s, (int) strlen(s), 0, 0, ov, 0);
+#endif
 		if(rc >= 0) INTEGER(ind)[i] = 1;
 		else {
 		    INTEGER(ind)[i] = 0;
-		    pcre_exec_error(rc, i);
+		    R_pcre_exec_error(rc, i);
 		}
 	    } else {
 		if (!use_WC)
@@ -1085,9 +1240,15 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (fixed_opt);
     else if (perl_opt) {
+#ifdef HAVE_PCRE2
+	pcre2_match_data_free(mdata);
+	pcre2_code_free(re);
+	pcre2_match_context_free(mcontext);
+#else
 	if (re_pe) pcre_free_study(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
+#endif
     } else
 	tre_regfree(&reg);
 
@@ -1542,11 +1703,18 @@ static int count_subs(const char *repl)
 }
 
 /* FIXME: use UCP for upper/lower conversion */
+#ifdef HAVE_PCRE2
 static
-char *pcre_string_adj(char *target, const char *orig, const char *repl,
-		      int *ovec, Rboolean use_UTF8)
+char *R_pcre_string_adj(char *target, const char *orig, const char *repl,
+		      PCRE2_SIZE *ovec, Rboolean use_UTF8, int ncap)
+#else
+static
+char *R_pcre_string_adj(char *target, const char *orig, const char *repl,
+		      int *ovec, Rboolean use_UTF8, int ncap)
+#endif
 {
-    int i, k, nb;
+    uint64_t i, nb;
+    int k;
     const char *p = repl;
     char *t = target, c;
     Rboolean upper = FALSE, lower = FALSE;
@@ -1555,11 +1723,23 @@ char *pcre_string_adj(char *target, const char *orig, const char *repl,
 	if (*p == '\\') {
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
+		if (k >= ncap) {
+		    /* back-reference to a group that has not been captured,
+		       treat it as an empty string; the special case is needed
+		       for PCRE2, but not for PCRE where the length of the
+		       matched group will appear to be zero because ovector
+		       is zeroed */
+		    p += 2;
+		    continue;
+		}
 		/* Here we need to work in chars */
 		nb = ovec[2*k+1] - ovec[2*k];
+		/* unused patterns will have nb == 0, both offsets -1 with PCRE
+		   and PCRE2_UNSET with PCRE2 */
 		if (nb > 0 && use_UTF8 && (upper || lower)) {
 		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
-		    int j, nc;
+		    uint64_t j;
+		    int nc;
 		    char *xi, *p;
 		    wchar_t *wc;
 		    R_CheckStack2((nb+1)*sizeof(char));
@@ -1656,9 +1836,15 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     size_t patlen = 0, replen = 0;
     Rboolean use_UTF8 = FALSE, use_WC = FALSE;
     const wchar_t *wrep = NULL;
+#ifdef HAVE_PCRE2
+    pcre2_code *re = NULL;
+    pcre2_match_context *mcontext = NULL;
+    pcre2_match_data *mdata = NULL;
+#else
     pcre *re_pcre = NULL;
     pcre_extra *re_pe  = NULL;
     const unsigned char *tables = NULL;
+#endif
     const void *vmax = vmaxget();
 
     checkArity(op, args);
@@ -1772,10 +1958,12 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!patlen) error(_("zero-length pattern"));
 	replen = strlen(srep);
     } else if (perl_opt) {
-	int cflags = 0;
-	if (use_UTF8) cflags |= PCRE_UTF8;
-	if (igcase_opt) cflags |= PCRE_CASELESS;
-	prepare_pcre(spat, cflags, text, FALSE, &tables, &re_pcre, &re_pe);
+#ifdef HAVE_PCRE2
+	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &re, &mcontext);
+#else
+	R_pcre_prepare(spat, text, use_UTF8, igcase_opt, FALSE, &tables,
+	             &re_pcre, &re_pe);
+#endif
 	replen = strlen(srep);
     } else {
 	int cflags = REG_EXTENDED;
@@ -1854,8 +2042,23 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		Free(cbuf);
 	    }
 	} else if (perl_opt) {
-	   int ncap, maxrep, ovector[30], eflag;
-	   memset(ovector, 0, 30*sizeof(int)); /* zero for unknown patterns */
+	   int ncap, maxrep;
+#ifdef HAVE_PCRE2
+	   uint32_t eflag;
+	   PCRE2_SIZE *ovector = NULL;
+	   PCRE2_SIZE ovecsize = 10;
+	   /* not zeroing ovector as this is not possible with PCRE2, but
+	      it should not be necessary */
+	   mdata = pcre2_match_data_create(ovecsize, NULL);
+#else
+	   int eflag;
+	   int ovecsize = 30;
+	   int ovector[ovecsize];
+	   /* zero for unknown patterns; this is done to make sure that back
+              references to unset groups return an empty string, but it is
+	      not needed anymore as ncap is being checked due to PCRE2 */
+	   memset(ovector, 0, ovecsize*sizeof(int));
+#endif
 	   ns = (int) strlen(s);
 	   /* worst possible scenario is to put a copy of the
 	      replacement after every character, unless there are
@@ -1870,14 +2073,23 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	   u = cbuf = Calloc(nns, char);
 	   offset = 0; nmatch = 0; eflag = 0; last_end = -1;
 	   /* ncap is one more than the number of capturing patterns */
+#ifdef HAVE_PCRE2
+	   /* PCRE2 has also pcre2_substitute */
+	   while ((ncap = pcre2_match(re, (PCRE2_SPTR) s, (PCRE2_SIZE) ns,
+	                              (PCRE2_SIZE) offset, eflag, mdata,
+	                              mcontext)) >= 0 ) {
+
+	       ovector = pcre2_get_ovector_pointer(mdata);
+#else
 	   while ((ncap = pcre_exec(re_pcre, re_pe, s, ns, offset, eflag,
 				   ovector, 30)) >= 0) {
+#endif
 	       /* printf("%s, %d, %d %d\n", s, offset,
 		  ovector[0], ovector[1]); */
 	       nmatch++;
 	       for (j = offset; j < ovector[0]; j++) *u++ = s[j];
-	       if (ovector[1] > last_end) {
-		   u = pcre_string_adj(u, s, srep, ovector, use_UTF8);
+	       if (last_end == -1 /* for PCRE2 */ || ovector[1] > last_end) {
+		   u = R_pcre_string_adj(u, s, srep, ovector, use_UTF8, ncap);
 		   last_end = ovector[1];
 	       }
 	       offset = ovector[1];
@@ -1905,9 +2117,13 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		   u = tmp + (u - cbuf);
 		   cbuf = tmp;
 	       }
+#ifdef HAVE_PCRE2
+	       eflag = PCRE2_NOTBOL;  /* probably not needed */
+#else
 	       eflag = PCRE_NOTBOL;  /* probably not needed */
+#endif
 	   }
-	   pcre_exec_error(ncap, i);
+	   R_pcre_exec_error(ncap, i);
 	   if (nmatch == 0)
 	       SET_STRING_ELT(ans, i, STRING_ELT(text, i));
 	   else if (STRING_ELT(rep, 0) == NA_STRING)
@@ -2066,9 +2282,15 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (fixed_opt) ;
     else if (perl_opt) {
+#ifdef HAVE_PCRE2
+	pcre2_match_data_free(mdata);
+	pcre2_code_free(re);
+	pcre2_match_context_free(mcontext);
+#else
 	if (re_pe) pcre_free_study(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
+#endif
     } else tre_regfree(&reg);
     SHALLOW_DUPLICATE_ATTRIB(ans, text);
     /* This copied the class, if any */
@@ -2273,25 +2495,34 @@ gregexpr_fixed(const char *pattern, const char *string,
 
    Toby Dylan Hocking 2011-03-10
 */
+#ifdef HAVE_PCRE2
+static Rboolean
+ovector_extract_start_length(Rboolean use_UTF8,PCRE2_SIZE *ovector,
+			     int *mptr,int *lenptr,const char *string)
+#else
 static Rboolean
 ovector_extract_start_length(Rboolean use_UTF8,int *ovector,
 			     int *mptr,int *lenptr,const char *string)
+#endif
 {
     Rboolean foundAll = FALSE;
-    int st = ovector[0];
+    /* FIXME: what if the match is unused? */
+    int st = (int) ovector[0];
     *mptr = st + 1; /* index from one */
-    *lenptr = ovector[1] - st;
+    *lenptr = (int) ovector[1] - st;
     if (use_UTF8) {
 	/* Unfortunately these are in bytes */
 	if (st > 0) {
 	    *mptr = 1 + getNc(string, st);
 	    if (*mptr <= 0) { /* an invalid string */
+		/* FIXME: seems unreachable */
 		*mptr = NA_INTEGER;
 		foundAll = TRUE; /* if we get here, we are done */
 	    }
 	}
 	*lenptr = getNc(string + st, *lenptr);
 	if (*lenptr < 0) {/* an invalid string */
+	   /* FIXME: seems unreachable */
 	    *lenptr = NA_INTEGER;
 	    foundAll = TRUE;
 	}
@@ -2307,10 +2538,17 @@ ovector_extract_start_length(Rboolean use_UTF8,int *ovector,
    the 2.
 
    Toby Dylan Hocking 2011-03-10 */
+#ifdef HAVE_PCRE2
+static Rboolean
+extract_match_and_groups(Rboolean use_UTF8, PCRE2_SIZE *ovector, int capture_count,
+			 int *mptr, int *lenptr, int *cptr, int *clenptr,
+			 const char *string, int capture_stride)
+#else
 static Rboolean
 extract_match_and_groups(Rboolean use_UTF8, int *ovector, int capture_count,
 			 int *mptr, int *lenptr, int *cptr, int *clenptr,
 			 const char *string, int capture_stride)
+#endif
 {
     Rboolean foundAll =
 	ovector_extract_start_length(use_UTF8, ovector, mptr, lenptr, string);
@@ -2323,13 +2561,21 @@ extract_match_and_groups(Rboolean use_UTF8, int *ovector, int capture_count,
     return foundAll;
 }
 
+#ifdef HAVE_PCRE2
 static SEXP
-gregexpr_perl(const char *pattern, const char *string,
-	      pcre *re_pcre, pcre_extra *re_pe,
-	      Rboolean useBytes, Rboolean use_UTF8,
-	      int *ovector, int ovector_size,
-	      int capture_count, SEXP capture_names, R_xlen_t n,
-	      SEXP itype)
+R_pcre2_gregexpr(const char *pattern, const char *string,
+	         pcre2_code *re, Rboolean useBytes, Rboolean use_UTF8,
+	         pcre2_match_data *mdata, pcre2_match_context *mcontext,
+                 int capture_count, SEXP capture_names, R_xlen_t n, SEXP itype)
+#else
+static SEXP
+R_pcre_gregexpr(const char *pattern, const char *string,
+	        pcre *re_pcre, pcre_extra *re_pe,
+	        Rboolean useBytes, Rboolean use_UTF8,
+	        int *ovector, int ovector_size,
+	        int capture_count, SEXP capture_names, R_xlen_t n,
+	        SEXP itype)
+#endif
 {
     Rboolean foundAll = FALSE, foundAny = FALSE;
     int matchIndex = -1, start = 0;
@@ -2348,9 +2594,15 @@ gregexpr_perl(const char *pattern, const char *string,
     PROTECT_WITH_INDEX(matchlenbuf = allocVector(INTSXP, bufsize), &mlb);
 
     while (!foundAll) {
+#ifdef HAVE_PCRE2
+	int rc = pcre2_match(re, (PCRE2_SPTR) string, slen, start, 0, mdata,
+		             mcontext);
+	PCRE2_SIZE* ovector = pcre2_get_ovector_pointer(mdata);
+#else
 	int rc = pcre_exec(re_pcre, re_pe, string, slen, start, 0, ovector,
 		       ovector_size);
-	pcre_exec_error(rc, n);
+#endif
+	R_pcre_exec_error(rc, n);
 	if (rc >= 0) {
 	    if ((matchIndex + 1) == bufsize) {
 		/* Reallocate match buffers */
@@ -2391,9 +2643,9 @@ gregexpr_perl(const char *pattern, const char *string,
 					 string, bufsize);
 	    /* we need to advance 'start' in bytes */
 	    if (ovector[1] - ovector[0] == 0)
-		start = ovector[0] + 1;
+		start = (int) ovector[0] + 1;
 	    else
-		start = ovector[1];
+		start = (int) ovector[1];
 	    if (start >= slen) foundAll = 1;
 	} else {
 	    foundAll = TRUE;
@@ -2478,14 +2730,22 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     int rc, igcase_opt, perl_opt, fixed_opt, useBytes;
     const char *spat = NULL; /* -Wall */
     const char *s = NULL;
+#ifdef HAVE_PCRE2
+    pcre2_code *re = NULL;
+    pcre2_match_context *mcontext = NULL;
+    pcre2_match_data *mdata = NULL;
+    PCRE2_SIZE *ovector = NULL;
+    uint32_t name_count, name_entry_size, capture_count;
+#else
     pcre *re_pcre = NULL /* -Wall */;
     pcre_extra *re_pe = NULL;
     const unsigned char *tables = NULL /* -Wall */;
+    int *ovector = NULL, name_count, name_entry_size, capture_count;
+#endif
     Rboolean use_UTF8 = FALSE, use_WC = FALSE;
-    const void *vmax;
-    int capture_count, *ovector = NULL, ovector_size = 0, /* -Wall */
-	name_count, name_entry_size, info_code;
     char *name_table;
+    const void *vmax;
+    int info_code, ovector_size = 0; /* -Wall */
     SEXP capture_names = R_NilValue;
     int nwarn = 0;
 
@@ -2543,7 +2803,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    useBytes = TRUE;
 	}
     }
-    if (!useBytes && !use_UTF8) {
+    if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales,
 	   and as from 2.11.0 in TRE too. */
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
@@ -2576,10 +2836,25 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (fixed_opt) ;
     else if (perl_opt) {
-	int cflags = 0;
-	if (igcase_opt) cflags |= PCRE_CASELESS;
-	if (!useBytes && use_UTF8) cflags |= PCRE_UTF8;
-	prepare_pcre(spat, cflags, text, FALSE, &tables, &re_pcre, &re_pe);
+#ifdef HAVE_PCRE2
+	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &re, &mcontext);
+
+	/* also extract info for named groups */
+	pcre2_pattern_info(re, PCRE2_INFO_NAMECOUNT, &name_count);
+	pcre2_pattern_info(re, PCRE2_INFO_NAMEENTRYSIZE, &name_entry_size);
+	pcre2_pattern_info(re, PCRE2_INFO_NAMETABLE, (PCRE2_SPTR**) &name_table);
+	info_code =
+	    pcre2_pattern_info(re, PCRE2_INFO_CAPTURECOUNT, &capture_count);
+	if(info_code < 0)
+	    /* this should not happen, but  */
+	    error(_("'pcre2_patterninfo' returned '%d' "), info_code);
+	ovector_size = (int) capture_count + 1;
+	/* PCRE2 also has pcre2_match_data_create_from_pattern() */
+	mdata = pcre2_match_data_create(ovector_size, NULL);
+	/* ovector_size not used below */
+#else
+	R_pcre_prepare(spat, text, use_UTF8, igcase_opt, FALSE, &tables,
+	               &re_pcre, &re_pe);
 
 	/* also extract info for named groups */
 	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMECOUNT, &name_count);
@@ -2592,8 +2867,9 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("'pcre_fullinfo' returned '%d' "), info_code);
 	ovector_size = (capture_count + 1) * 3;
 	ovector = (int *) malloc(ovector_size*sizeof(int));
+#endif
 	SEXP thisname;
-	PROTECT(capture_names = allocVector(STRSXP, capture_count));
+	PROTECT(capture_names = allocVector(STRSXP, (int) capture_count));
 	for(i = 0; i < name_count; i++) {
 	    char *entry = name_table + name_entry_size * i;
 	    PROTECT(thisname = mkChar(entry + 2));
@@ -2629,10 +2905,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SEXP dmn;
 	    PROTECT(dmn = allocVector(VECSXP, 2));
 	    SET_VECTOR_ELT(dmn, 1, capture_names);
-	    PROTECT(capture_start = allocMatrix(INTSXP, nn, capture_count));
+	    PROTECT(capture_start = allocMatrix(INTSXP, nn, (int) capture_count));
 	    setAttrib(capture_start, R_DimNamesSymbol, dmn);
 	    setAttrib(ans, install("capture.start"), capture_start);
-	    PROTECT(capturelen = allocMatrix(INTSXP, nn, capture_count));
+	    PROTECT(capturelen = allocMatrix(INTSXP, nn, (int) capture_count));
 	    setAttrib(capturelen, R_DimNamesSymbol, dmn);
 	    setAttrib(ans, install("capture.length"), capturelen);
 	    setAttrib(ans, install("capture.names"), capture_names);
@@ -2640,7 +2916,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    is = INTEGER(capture_start);
 	    il = INTEGER(capturelen);
 	    // initiialization needed for NA inputs: PR#16484
-	    for (i = 0 ; i < n * capture_count ; i++)
+	    for (i = 0 ; i < n * (int) capture_count ; i++)
 		is[i] = il[i] = NA_INTEGER;
 	} else is = il = NULL; /* not actually used */
 	vmax = vmaxget();
@@ -2683,12 +2959,18 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			    (int) strlen(spat):-1;
 		} else if (perl_opt) {
 		    int rc;
+#ifdef HAVE_PCRE2
+		    rc = pcre2_match(re, (PCRE2_SPTR) s, PCRE2_ZERO_TERMINATED,
+		                     0, 0, mdata, mcontext);
+		    ovector = pcre2_get_ovector_pointer(mdata);
+#else
 		    rc = pcre_exec(re_pcre, re_pe, s, (int) strlen(s), 0, 0,
 				   ovector, ovector_size);
-		    pcre_exec_error(rc, i);
+#endif
+		    R_pcre_exec_error(rc, i);
 		    if (rc >= 0) {
 			extract_match_and_groups(use_UTF8, ovector,
-						 capture_count,
+						 (int) capture_count,
 						 // don't use this for large i
 						 INTEGER(ans) + i,
 						 INTEGER(matchlen) + i,
@@ -2696,7 +2978,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 						 s, (int) n);
 		    } else {
 			INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
-			for(int cn = 0; cn < capture_count; cn++) {
+			for(int cn = 0; cn < (int) capture_count; cn++) {
 			    R_xlen_t ind = i + cn*n;
 			    is[ind] = il[ind] = -1;
 			}
@@ -2746,10 +3028,18 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			    elt = gregexpr_fixed(spat, s, useBytes, use_UTF8,
 				                 itype);
 			else
-			    elt = gregexpr_perl(spat, s, re_pcre, re_pe,
-						useBytes, use_UTF8, ovector,
-						ovector_size, capture_count,
-						capture_names, i, itype);
+#ifdef HAVE_PCRE2
+			    elt = R_pcre2_gregexpr(spat, s, re,	useBytes,
+			                           use_UTF8, mdata, mcontext,
+			                           (int) capture_count,
+						   capture_names, i, itype);
+#else
+			    elt = R_pcre_gregexpr(spat, s, re_pcre, re_pe,
+						  useBytes, use_UTF8, ovector,
+						  ovector_size,
+			                          (int) capture_count,
+						  capture_names, i, itype);
+#endif
 		    }
 		} else
 		    elt = gregexpr_Regexc(&reg, STRING_ELT(text, i),
@@ -2762,11 +3052,17 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (fixed_opt) ;
     else if (perl_opt) {
+#ifdef HAVE_PCRE2
+	pcre2_match_data_free(mdata);
+	pcre2_code_free(re);
+	pcre2_match_context_free(mcontext);
+#else
 	if (re_pe) pcre_free_study(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
-	UNPROTECT(1);
 	free(ovector);
+#endif
+	UNPROTECT(1);
     } else
 	tre_regfree(&reg);
 
@@ -2962,6 +3258,31 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
    PCRE_CONFIG_UNICODE_PROPERTIES had been added by 8.10,
    the earliest version we allow.
  */
+#ifdef HAVE_PCRE2
+SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    uint32_t res;
+
+    checkArity(op, args);
+    SEXP ans = PROTECT(allocVector(LGLSXP, 4));
+    int *lans = LOGICAL(ans);
+    SEXP nm = allocVector(STRSXP, 4);
+    setAttrib(ans, R_NamesSymbol, nm);
+    SET_STRING_ELT(nm, 0, mkChar("UTF-8"));
+    pcre2_config(PCRE2_CONFIG_UNICODE, &res);
+    lans[0] = res;
+    SET_STRING_ELT(nm, 1, mkChar("Unicode properties"));
+    lans[1] = res;
+    SET_STRING_ELT(nm, 2, mkChar("JIT"));
+    pcre2_config(PCRE2_CONFIG_JIT, &res);
+    lans[2] = res;
+    pcre2_config(PCRE2_CONFIG_STACKRECURSE, &res);
+    lans[3] = res;
+    SET_STRING_ELT(nm, 3, mkChar("stack"));
+    UNPROTECT(1);
+    return ans;
+}
+#else
 SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int res;
@@ -2988,3 +3309,4 @@ SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+#endif

@@ -865,7 +865,11 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 
 /* for PCRE as from R 3.4.0 */
 extern0 Rboolean R_PCRE_use_JIT INI_as(TRUE);
+#ifdef HAVE_PCRE2
+extern0 int R_PCRE_study INI_as(-2);
+#else
 extern0 int R_PCRE_study INI_as(10);
+#endif
 extern0 int R_PCRE_limit_recursion;
 
 

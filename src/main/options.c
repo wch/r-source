@@ -757,6 +757,10 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_VECTOR_ELT(value, i,
 				       SetOption(tag, ScalarInteger(R_PCRE_study)));
 		}
+#ifdef HAVE_PCRE2
+		if (R_PCRE_study != -2)
+		    warning(_("'PCRE_study' has no effect with PCRE2"));
+#endif
 	    }
 	    else if (streql(CHAR(namei), "PCRE_use_JIT")) {
 		int use_JIT = asLogical(argi);

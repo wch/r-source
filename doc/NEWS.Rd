@@ -85,6 +85,24 @@
     }
   }
 
+  \subsection{USER-VISIBLE CHANGES}{
+      \itemize{
+
+       \item \R now builds by default against PCRE2 library for Perl-like
+       regular expressions if available at build time on non-Windows
+       platforms (otherwise PCRE1 is used as in older versions of R).
+       PCRE1 is no longer developed, it only receives bug fixes and has
+       outdated Unicode tables. PCRE2 is stricter in some cases and reports
+       errors for some regular expressions that were accepted by PCRE1.
+       Hyphen now has to be escaped in a character class to be interpreted
+       as a literal, unless first or last in the class definition.
+       \samp{\\R}, \samp{\\B} and \samp{\\X} are no longer allowed in character
+       classes (in PCRE1 treated as literals). The version of PCRE used can be
+       obtained via \code{extSoftVersion()}, PCRE1 has versions <10,
+       PCRE2 versions >=10.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Make macro \samp{F77_VISIBILITY} has been removed
