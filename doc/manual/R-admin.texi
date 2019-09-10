@@ -237,7 +237,7 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @samp{sparc-@/sun-@/solaris} as well as
 perhaps (it is tested less frequently on these platforms)
 @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
-@samp{i386-@/*-@/netbsd}, @samp{x86_64/*-@/openbsd} and
+@samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
 
 @cindex Linux
@@ -274,8 +274,7 @@ is either unset (and @file{/tmp} exists and can be written in and
 scripts can be executed from) or points to the absolute path to a valid
 temporary directory (one from which execution of scripts is allowed)
 which does not contain spaces.@footnote{Most aspects will work with
-paths containing spaces, but external software used by @R{}, e.g.@:
-@command{texi2dvi} version @code{4.8}, may not.}
+paths containing spaces, but external software used by @R{} may not.}
 
 @findex R_HOME
 Choose a directory to install the @R{} tree (@R{} is not just a binary, but
@@ -992,8 +991,9 @@ R_OPENMP_CFLAGS
 @end example
 
 Use for packages has similar restrictions (involving @code{SHLIB_LD} and
-similar: note that as Fortran code is linked by the C (or C++) compiler,
-both need to support OpenMP) and can be overridden by specifying some of
+similar: note that as Fortran code is by default linked by the C (or
+C++) compiler, both need to support OpenMP) and can be overridden by
+specifying some of
 @example
 SHLIB_OPENMP_CFLAGS
 SHLIB_OPENMP_CXXFLAGS
@@ -1011,11 +1011,6 @@ the Fortran runtime always used OpenMP.} of OpenMP).  The
 OpenMP program, which is not the same as compiling a shared object and
 loading it into the C program of @R{}'s executable.  Note that
 overridden values are not tested.
-
-Note the mixing compiler families may not work even if both support
-OpenMP: for example where @command{gfortran} 9.x is used for Fortran, it
-can generate calls to @code{libgomp} which are not in the OpenMP runtime
-used by @command{clang} or @command{clang++} (at least up to version 8).
 
 @node C++ Support, Link-Time Optimization, OpenMP Support, Other Options
 @subsection C++ Support
@@ -1067,17 +1062,7 @@ compiler @code{CC}.} that there is no suitable flag for C++11 support,
 in which case a different compiler could be selected for @code{CXX11}
 and its corresponding flags.  Likewise, a different compiler can be
 specified for C++14 support with @code{CXX14} and for C++17 support with
-@code{CXX17}.  Some compilers@footnote{Currently only GCC and
-@command{clang++} versions 6 and later.} by default assume a later
-standard than C++98 whereas the latter has been assumed by some packages.  So
-users of GCC 6 might like to specify
-@example
-CXX='g++ -std=gnu++98'
-CXX11=g++
-CXX11STD='-std=c++11'
-CXX14=g++
-CXX14STD='-std=c++14'
-@end example
+@code{CXX17}.
 
 The @option{-std} flag is supported by the GCC, @command{clang++}, Intel
 and Solaris compilers (the latter from version 12.4).  Currently
@@ -1123,9 +1108,10 @@ Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler and linker have to support it, and support it by
 the same mechanism (so mixing compiler families may not work and a
 non-system linker such as @command{gold}@footnote{Nowadays part of GNU
-@code{binutils} and used by LLVM to support LTO.} may be needed).  It
-has been tested recently on Linux with @command{gcc}/@command{gfortran}
-8.x and 9.x: that needed setting
+@code{binutils} and used by LLVM to support LTO.  It is sometimes
+installed as @command{ld.gold}.} may be needed).  It has been tested
+recently on Linux with @command{gcc}/@command{gfortran} 8.x and 9.x:
+that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
@@ -1135,14 +1121,14 @@ RANLIB=gcc-ranlib
 wrappers have not been installed one may need something like
 @example
 AR="ar --plugin=/path/to/liblto_plugin.so"
-RANLIB="ranlib --plugin=/path/to/liblto_plugin.so
+RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 @end example
 @noindent
 amd it may be needed to set @code{NM} similarly.
 
 Unfortunately @option{--enable-lto} may be accepted but silently do
-nothing if some of the toolchain does not support LTO: that happens on
-macOS (at the time of writing).
+nothing if some of the toolchain does not support LTO: that has happened on
+macOS.
 
 When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
@@ -1910,7 +1896,7 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 
 You can run command-line @R{} and @command{Rscript} from a
-Terminal@footnote{The installer as puts links to @command{R} and
+Terminal@footnote{The installer puts links to @command{R} and
 @command{Rscript} in @file{/usr/local/bin}. If these are missing, you
 can run directly the copies in
 @file{/Library/Frameworks/R.framework/Resources/}.} so these can be
@@ -2029,12 +2015,12 @@ A version of @R{} can be run directly from the command-line as e.g.@:
 @noindent
 However, @Rapp{} will always run the `current' version, that is the last
 installed version.  A small utility, @command{Rswitch.app} (available at
-@url{https://mac.R-project.org/#other}), can be used to change the
-`current' version.  This is of limited use as @Rapp{} is compiled
-against a particular version of @R{} and will likely crash if switched
-to an earlier version.  This may allow you to install a development
-version of @R{} (de-selecting @Rapp{}) and then switch back to the
-release version.
+@url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
+Catalina), can be used to change the `current' version.  This is of
+limited use as @Rapp{} is compiled against a particular version of @R{}
+and will likely crash if switched to an earlier version.  This may allow
+you to install a development version of @R{} (de-selecting @Rapp{}) and
+then switch back to the release version.
 
 
 @node Running R, Add-on packages, Installing R under macOS, Top
@@ -2437,11 +2423,14 @@ both C and C++ with extensive checking by having in @file{~/.R/Makevars}
 @example
 CC = /usr/local/clang7/bin/clang
 CXX = /usr/local/clang7/bin/clang++
-CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
-CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
+CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
+CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
+CXX11FLAGS = $CXXFLAGS
+CXX14FLAGS = $CXXFLAGS
+CXX17FLAGS = $CXXFLAGS
 @end example
 @noindent
 and @command{gfortran} by
