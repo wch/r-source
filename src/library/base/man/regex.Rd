@@ -295,7 +295,7 @@
 
   A hyphen (minus) inside a character class is treated as a range, unless it
   is first or last character in the class definition.  It can be quoted to
-  represent the hypen literal (\samp{\\-}).  PCRE1 allows an unquoted hyphen
+  represent the hyphen literal (\samp{\\-}).  PCRE1 allows an unquoted hyphen
   at some other locations inside a character class where it cannot represent
   a valid range, but PCRE2 reports an error in such cases.
 
@@ -307,7 +307,7 @@
   (This support depends on the PCRE library being compiled with
   \sQuote{Unicode property support} which can be checked \emph{via}
   \code{\link{pcre_config}}. PCRE2 when compiled with Unicode support always
-  supports also Unicode properies.)
+  supports also Unicode properties.)
 
   The sequence \samp{(?#} marks the start of a comment which continues
   up to the next closing parenthesis.  Nested parentheses are not
