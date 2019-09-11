@@ -442,7 +442,7 @@
 /* Define if your <locale.h> file defines LC_MESSAGES. */
 #undef HAVE_LC_MESSAGES
 
-/* Define if your system has libcurl >= 7.22.0 with support for https. */
+/* Define if your system has libcurl >= 7.28.0 with support for https. */
 #undef HAVE_LIBCURL
 
 /* Define if __libc_stack_end is visible. */

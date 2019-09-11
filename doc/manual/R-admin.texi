@@ -3434,6 +3434,7 @@ later are required.
 @c PCRE[1] 8.32 is from Nov 2012.
 @c Debian Wheezy had 8.30, Ubuntu 14.04LTS had 8.31 but both are EOL.
 @c PCRE2: Ubuntu 16.04LTS and RHEL/Centos 6 have 10.21, OpenCSW has 10.20.
+@c PCRE2 10.30 is from Aug 2017.  Ubuntu 18.04LTS has 10.31
 Either PCRE1 (version 8.32 or later, formerly known as just PCRE) or
 PCRE2 is required: PCRE2 is preferred.  Only the 8-bit library and
 headers are needed if these are packaged separately. JIT support
@@ -3444,7 +3445,9 @@ use with @R{} a suitable @command{configure} command might be
 @end example
 @noindent  
 The @option{--enable-jit} flag is supported for most common CPUs.  (See
-also the comments for Solaris.)  For PCRE2 >= 10.30
+also the comments for Solaris.)  For PCRE2 >= 10.30 (which is desirable
+as matching has been re-written not to use recursion and the Unicode
+tables were updated to version 10)
 @example
 ./configure --enable-jit
 @end example
@@ -3458,14 +3461,14 @@ by calling @code{pcre_config()}.
 @c libcurl 7.26.0 was released in May 2012, still in Debian 7 Wheezy LTS,
 @c   end-of-life May 2018. 
 @c libcurl 7.28.0 was released in Oct 2012
-Library @code{libcurl} (version 7.22.0 or later@footnote{but not a major
+@c Ubuntu 16.04LTS has 7.47.0
+Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
 version greater than 7 should there ever be one: the major version has
-been 7 since 2000.}) is required, with at least 7.28.0 being desirable.
-Information on @code{libcurl} is found from the @command{curl-config}
-script: if that is missing or needs to be overridden@footnote{for
-example to specify static linking with a build which has both shared and
-static libraries.} there are macros to do so described in file
-@file{config.site}.
+been 7 since 2000.}) is required.  Information on @code{libcurl} is
+found from the @command{curl-config} script: if that is missing or needs
+to be overridden@footnote{for example to specify static linking with a
+build which has both shared and static libraries.} there are macros to
+do so described in file @file{config.site}.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as

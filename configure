@@ -42610,13 +42610,13 @@ done
 
 
 if test "x${have_libcurl}" = "xyes"; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.22.0" >&5
-$as_echo_n "checking if libcurl is version 7 and >= 7.22.0... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.28.0" >&5
+$as_echo_n "checking if libcurl is version 7 and >= 7.28.0... " >&6; }
 if ${r_cv_have_curl722+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   if test "$cross_compiling" = yes; then :
-  r_cv_have_curl722=no
+  r_cv_have_curl728=no
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -42628,7 +42628,7 @@ int main()
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
   exit(1);
-#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 22
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
   exit(0);
 #else
   exit(1);
@@ -42640,9 +42640,9 @@ int main()
 
 _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_have_curl722=yes
+  r_cv_have_curl728=yes
 else
-  r_cv_have_curl722=no
+  r_cv_have_curl728=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
@@ -42652,7 +42652,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl722" >&5
 $as_echo "$r_cv_have_curl722" >&6; }
 fi
-if test "x${r_cv_have_curl722}" = xno; then
+if test "x${r_cv_have_curl728}" = xno; then
   have_libcurl=no
 fi
 
@@ -42706,7 +42706,7 @@ $as_echo "#define HAVE_LIBCURL 1" >>confdefs.h
 
 
 else
-  as_fn_error $? "libcurl >= 7.22.0 library and headers are required with support for https" "$LINENO" 5
+  as_fn_error $? "libcurl >= 7.28.0 library and headers are required with support for https" "$LINENO" 5
 fi
 
 

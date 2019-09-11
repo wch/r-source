@@ -159,9 +159,12 @@
       PCRE1 is no longer developed (it only receives bug fixes and has
       outdated Unicode tables).  \command{configure} will warn if PCRE2
       is not found and fall back to PCRE1.  \command{configure} options
-      \option{--without-pcre1} and \option{--without-pcre1} can be used
+      \option{--without-pcre1} and \option{--without-pcre2} can be used
       to exclude one or the other (but at least one of PCRE2 and PCRE1
       is required).
+
+      \item The minimum required version of \code{libcurl} is now 7.28.0
+      (Oct 2012).
     }
   }
 
