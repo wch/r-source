@@ -1911,9 +1911,17 @@ AC_SUBST(MACOS_SIERRA)
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD. 
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
-## timespec_get is C11.
 AC_CHECK_LIB(rt, clock_gettime)
-R_CHECK_FUNCS([clock_gettime timespec_get], [#include <time.h>])
+R_CHECK_FUNCS([clock_gettime], [#include <time.h>])
+## timespec_get is C11.
+## macOS added timespec_get in 10.15 but used 10.15's SDK for 10.14 (Darwin 18)
+case "${host_os}" in
+   darwin1[[012345678]].*)
+   ;;
+   *)
+     R_CHECK_FUNCS([timespec_get], [#include <time.h>])
+   ;;
+esac
 ## We need setenv or putenv.  It seems that everyone does have
 ## putenv, as earlier versions of R would have failed without it.
 ## It is not always declared, so we do not require a declaration.
