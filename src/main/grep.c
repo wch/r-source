@@ -317,12 +317,15 @@ R_pcre2_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
     *mcontext = pcre2_match_context_create(NULL);
     if (R_PCRE_use_JIT) {
 	int rc = pcre2_jit_compile(*re, 0);
-	if (rc) {
+	if (rc && rc != PCRE2_ERROR_JIT_BADOPTION) {
+	    /* PCRE2_ERROR_JIT_BADOPTION is returned when JIT support is not
+	       compiled in PCRE2 library */
 	    char buf[256];
 	    pcre2_get_error_message(rc, (PCRE2_UCHAR *)buf, sizeof(buf));
 	    warning(_("PCRE JIT compilation error\n\t'%s'"), buf);
 	}
-	setup_jit(*mcontext);
+	if (!rc)
+	    setup_jit(*mcontext);
     } else if (use_recursion_limit(subject))
 	/* only makes sense for PCRE2 < 10.30 */
 	pcre2_set_depth_limit(*mcontext, (uint32_t) R_pcre_max_recursions());
