@@ -3433,8 +3433,9 @@ later are required.
 
 @c PCRE[1] 8.32 is from Nov 2012.
 @c Debian Wheezy had 8.30, Ubuntu 14.04LTS had 8.31 but both are EOL.
-@c PCRE2: Ubuntu 16.04LTS and RHEL/Centos 6 have 10.21, OpenCSW has 10.20.
-@c PCRE2 10.30 is from Aug 2017.  Ubuntu 18.04LTS has 10.31
+@c PCRE2: Ubuntu 16.04LTS (EOL Apr 2021) and RHEL/Centos 6 have 10.21,
+@c OpenCSW has 10.20.
+@c PCRE2 10.30 is from Aug 2017.  Ubuntu 18.04LTS has 10.31.
 Either PCRE1 (version 8.32 or later, formerly known as just PCRE) or
 PCRE2 is required: PCRE2 is preferred.  Only the 8-bit library and
 headers are needed if these are packaged separately. JIT support
@@ -3570,7 +3571,7 @@ suitable code can be compiled.  These tests will fail if
 @file{config.site}, on the @command{configure} command line or in the
 environment.}, and are likely to fail if @code{cairo} was built
 statically (unusual).  Most systems with @code{Gtk+} 2.8 or later
-installed will have suitable libraries
+installed will have suitable libraries.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
@@ -5287,11 +5288,11 @@ CC="/usr/local/clang8/bin/clang -isysroot /Library/Developer/CommandLineTools/SD
 CXX="/usr/local/clang8/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 @end example
 @noindent
-(The location of the SDK, which could conceivably change, can be found
-by running @command{xcrun -show-sdk-path}.)
+(The location of the SDK can be found by running @command{xcrun
+-show-sdk-path}.)
 
-This alternative approach is said to be going to be needed for future
-versions of macOS and versions 11.x of the Command Line Tools/Xcode.
+This alternative approach is needed for versions 11.x of the Command
+Line Tools/Xcode.
 
 @node Other libraries, Tcl/Tk headers and libraries, Recommended C/C++ compilers, macOS
 @subsection Other libraries
