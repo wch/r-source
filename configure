@@ -42170,13 +42170,13 @@ fi
 if test "x${have_pcre}" = xyes; then
 r_save_LIBS="${LIBS}"
 LIBS="-lpcre ${LIBS}"
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 8.20, < 10.0 and has UTF-8 support" >&5
-$as_echo_n "checking if PCRE version >= 8.20, < 10.0 and has UTF-8 support... " >&6; }
-if ${r_cv_have_pcre820+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE1 version >= 8.32 and has UTF-8 support" >&5
+$as_echo_n "checking if PCRE1 version >= 8.32 and has UTF-8 support... " >&6; }
+if ${r_cv_have_pcre832+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   if test "$cross_compiling" = yes; then :
-  r_cv_have_pcre820=no
+  r_cv_have_pcre832=no
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -42192,7 +42192,7 @@ int main() {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
-#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 20
+#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 32
 {
     int ans;
     int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
@@ -42208,75 +42208,30 @@ int main() {
 
 _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_have_pcre820=yes
+  r_cv_have_pcre832=yes
 else
-  r_cv_have_pcre820=no
+  r_cv_have_pcre832=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre820" >&5
-$as_echo "$r_cv_have_pcre820" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre832" >&5
+$as_echo "$r_cv_have_pcre832" >&6; }
 fi
-if test "x${r_cv_have_pcre820}" != xyes; then
+if test "x${r_cv_have_pcre832}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
-else
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 8.32" >&5
-$as_echo_n "checking if PCRE version >= 8.32... " >&6; }
-if ${r_cv_have_pcre_832+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "$cross_compiling" = yes; then :
-  r_cv_have_pcre_832=no
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef HAVE_PCRE_PCRE_H
-#include <pcre/pcre.h>
-#else
-#ifdef HAVE_PCRE_H
-#include <pcre.h>
-#endif
-#endif
-int main() {
-#if PCRE_MAJOR == 8 && PCRE_MINOR >= 32
-  exit(0);
-#else
-  exit(1);
-#endif
-}
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_have_pcre_832=yes
-else
-  r_cv_have_pcre_832=no
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre_832" >&5
-$as_echo "$r_cv_have_pcre_832" >&6; }
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether PCRE support suffices" >&5
 $as_echo_n "checking whether PCRE support suffices... " >&6; }
-if test "x${r_cv_have_pcre820}" != xyes; then
-  as_fn_error $? "pcre >= 8.20 library and headers are required" "$LINENO" 5
+if test "x${r_cv_have_pcre832}" != xyes; then
+  as_fn_error $? "pcre >= 8.32 library and headers are required" "$LINENO" 5
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-fi
-if test "x${r_cv_have_pcre_832}" != xyes; then
-  warn_pcre_version="pcre < 8.32 is deprecated"
-  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_pcre_version}" >&5
-$as_echo "$as_me: WARNING: ${warn_pcre_version}" >&2;}
 fi
 
 

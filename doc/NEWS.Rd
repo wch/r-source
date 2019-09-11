@@ -10,7 +10,7 @@
       \itemize{
        \item \R now builds by default against PCRE2 library for Perl-like
        regular expressions if available at build time on non-Windows
-       platforms (otherwise PCRE1 is used as in older versions of \R)
+       platforms (otherwise PCRE1 is used as in older versions of \R).
        
        PCRE2 is stricter in some cases and reports errors for some
        regular expressions that were accepted by PCRE1.  A hyphen now
@@ -124,6 +124,9 @@
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}, nor
       \samp{CXX98} and similar.
+
+      \item PCRE >= 8.32 (Nov 2012) is required: the deprecated
+      provision for 8.20--8.31 has been removed.
     }
   }
 
@@ -151,10 +154,10 @@
 
       \item A C++ compiler default is set only if the C++11 standard is
       supported: it no longer falls back to C++98.
-
+      
       \item PCRE2 is used if available: this is strongly recommended as
       PCRE1 is no longer developed (it only receives bug fixes and has
-      outdated Unicode tables). 
+      outdated Unicode tables).
     }
   }
 
