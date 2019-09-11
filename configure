@@ -36259,7 +36259,6 @@ esac
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD.
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
-## timespec_get is C11.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for clock_gettime in -lrt" >&5
 $as_echo_n "checking for clock_gettime in -lrt... " >&6; }
 if ${ac_cv_lib_rt_clock_gettime+:} false; then :
@@ -36313,7 +36312,7 @@ _ACEOF
 
 fi
 
-for ac_func in clock_gettime timespec_get
+for ac_func in clock_gettime
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
@@ -36363,6 +36362,64 @@ _ACEOF
 fi
 done
 
+## timespec_get is C11.
+## macOS added timespec_get in 10.15 but used 10.15's SDK for 10.14 (Darwin 18)
+case "${host_os}" in
+   darwin1[012345678].*)
+   ;;
+   *)
+     for ac_func in timespec_get
+do
+as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
+$as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
+if eval \${$as_ac_Symbol+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <time.h>
+
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  eval "$as_ac_Symbol=yes"
+else
+  eval "$as_ac_Symbol=no"
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+fi
+eval ac_res=\$$as_ac_Symbol
+	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
+if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+   ;;
+esac
 ## We need setenv or putenv.  It seems that everyone does have
 ## putenv, as earlier versions of R would have failed without it.
 ## It is not always declared, so we do not require a declaration.
