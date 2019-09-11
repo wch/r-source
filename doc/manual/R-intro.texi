@@ -6854,7 +6854,7 @@ suitably coded.
 Change @code{Expt} and @code{Run} into factors.
 
 @item attach(mm)
-Make the data frame visible at position 3 (the default).
+Make the data frame visible at position 2 (the default).
 
 @item plot(Expt, Speed, main="Speed of Light Data", xlab="Experiment No.")
 Compare the five experiments with simple boxplots.
