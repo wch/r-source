@@ -379,6 +379,18 @@ AC_ARG_WITH([readline],
 [R_ARG_USE(readline)],
 [use_readline=yes])
 
+## PCRE2.
+AC_ARG_WITH([pcre2],
+[AS_HELP_STRING([--with-pcre2],[use PCRE2 library (if available) @<:@yes@:>@])],
+[R_ARG_USE(pcre2)],
+[use_pcre2=yes])
+
+## PCRE1.
+AC_ARG_WITH([pcre1],
+[AS_HELP_STRING([--with-pcre1],[use PCRE1 library (if available and PCRE2 is not) @<:@yes@:>@])],
+[R_ARG_USE(pcre1)],
+[use_pcre1=yes])
+
 ## Aqua.
 AC_ARG_WITH([aqua],
 [AS_HELP_STRING([--with-aqua],[macOS only: use Aqua (if available) @<:@yes@:>@])],
@@ -2307,11 +2319,8 @@ R_BZLIB
 ## LZMA headers and libraries from xz-utils
 R_LZMA
 
-## PCRE headers and libraries.
+## PCRE[12] headers and libraries.
 R_PCRE
-
-## PCRE2 header and 8-bit library.
-R_PCRE2
 
 ## tre headers and libraries.
 R_TRE
@@ -2767,8 +2776,13 @@ for item in X11 aqua tcltk; do
   fi
 done
 r_external_libs=
+if test "${r_cv_have_pcre2utf}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [pcre2], [, ])
+elif test "${r_cv_have_pcre832}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [pcre1], [, ])
+fi
 if test "${use_readline}" = yes; then
-  r_external_libs=readline
+  R_SH_VAR_ADD(r_external_libs, [readline], [, ])
 fi
 if test "${acx_blas_ok}" = "yes"; then
   ## Try to figure out which BLAS was used.
@@ -2920,8 +2934,8 @@ fi
 if test -n "${warn_tcltk_version}"; then
   AC_MSG_WARN([${warn_tcltk_version}])
 fi
-if test -n "${warn_pcre_version}"; then
-  AC_MSG_WARN([${warn_pcre_version}])
+if test -n "${warn_pcre2}"; then
+  AC_MSG_WARN([${warn_pcre2}])
 fi
 if test -n "${warn_info}"; then
   AC_MSG_WARN([${warn_info}])

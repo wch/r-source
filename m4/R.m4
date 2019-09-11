@@ -3054,7 +3054,9 @@ caddr_t hello() {
 ## RedHat put the headers in /usr/include/pcre.
 ## JIT was possible in >= 8.20 , and important bug fixes in 8.32
 AC_DEFUN([R_PCRE],
-[AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
+[AC_REQUIRE([R_PCRE2])
+if test "x${r_cv_have_pcre2utf}" != xyes && test "x${use_pcre1}" = xyes; then
+AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
 if test "${have_pcre}" = yes; then
   AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
   if test "${ac_cv_header_pcre_h}" = no \
@@ -3074,6 +3076,7 @@ AC_CACHE_CHECK([if PCRE1 version >= 8.32 and has UTF-8 support], [r_cv_have_pcre
 #include <pcre.h>
 #endif
 #endif
+#include <stdlib.h>
 int main() {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
@@ -3097,10 +3100,15 @@ if test "x${r_cv_have_pcre832}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
 fi
+else
+  have_pcre=no
+  r_cv_have_pcre832=no
+fi
 
 AC_MSG_CHECKING([whether PCRE support suffices])
-if test "x${r_cv_have_pcre832}" != xyes; then
-  AC_MSG_ERROR([pcre >= 8.32 library and headers are required])
+if test "x${r_cv_have_pcre2utf}" != xyes && \
+   test "x${r_cv_have_pcre832}" != xyes; then
+  AC_MSG_ERROR([Either pcre >= 8.32 or pcre2 library and headers are required])
 else
   AC_MSG_RESULT([yes])
 fi
@@ -3111,6 +3119,7 @@ fi
 ## Try finding pcre2 (8-bit) library and header.
 AC_DEFUN([R_PCRE2],
 [have_pcre2=no
+if test "x${use_pcre2}" = xyes; then
 if "${PKG_CONFIG}" --exists libpcre2-8; then
   PCRE2_CPPFLAGS=`"${PKG_CONFIG}" --cflags libpcre2-8`
   PCRE2_LIBS=`"${PKG_CONFIG}" --libs libpcre2-8`
@@ -3133,12 +3142,30 @@ if test "x${have_pcre2}" = "xyes"; then
   if test "x${have_pcre2}" = "xyes"; then
     AC_CHECK_LIB(pcre2-8, pcre2_compile_8, [have_pcre2=yes], [have_pcre2=no])
   fi
-  if test "x${have_pcre2}" = "xyes"; then
+  dnl now check it was built with UTF-8 support
+  AC_CACHE_CHECK([if PCRE2 has Unicode support], [r_cv_have_pcre2utf],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
+#include <stdlib.h>
+int main() {
+    int ans;
+    int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
+    if (res || ans != 1) exit(1); else exit(0);
+}
+]])], [r_cv_have_pcre2utf=yes], [r_cv_have_pcre2utf=no], [r_cv_have_pcre2utf=no])])
+  if test "x${r_cv_have_pcre2utf}" = "xyes"; then
     AC_DEFINE(HAVE_PCRE2, 1, [Define if your system has pcre2.])
   else
+    warn_pcre2="PCRE2 is preferred but unavailable"
+    AC_MSG_WARN([${warn_pcre2}])
     CPPFLAGS="${r_save_CPPFLAGS}"
     LIBS="${r_save_LIBS}"
   fi
+fi
+else
+  have_pcre2=no
+  r_cv_have_pcre2utf=no
 fi
 ])# R_PCRE2
 

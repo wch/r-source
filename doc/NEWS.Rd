@@ -125,8 +125,8 @@
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}, nor
       \samp{CXX98} and similar.
 
-      \item PCRE >= 8.32 (Nov 2012) is required: the deprecated
-      provision for 8.20--8.31 has been removed.
+      \item Either PCRE >= 8.32 (Nov 2012) or PCRE2 is required: the
+      deprecated provision for 8.20--8.31 has been removed.
     }
   }
 
@@ -157,7 +157,11 @@
       
       \item PCRE2 is used if available: this is strongly recommended as
       PCRE1 is no longer developed (it only receives bug fixes and has
-      outdated Unicode tables).
+      outdated Unicode tables).  \command{configure} will warn if PCRE2
+      is not found and fall back to PCRE1.  \command{configure} options
+      \option{--without-pcre1} and \option{--without-pcre1} can be used
+      to exclude one or the other (but at least one of PCRE2 and PCRE1
+      is required).
     }
   }
 

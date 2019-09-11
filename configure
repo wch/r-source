@@ -1034,6 +1034,8 @@ enable_java
 with_blas
 with_lapack
 with_readline
+with_pcre2
+with_pcre1
 with_aqua
 with_tcltk
 with_tcl_config
@@ -1807,6 +1809,9 @@ Optional Packages:
   --with-lapack           use system LAPACK library (if available), or specify
                           it [no]
   --with-readline         use readline library [yes]
+  --with-pcre2            use PCRE2 library (if available) [yes]
+  --with-pcre1            use PCRE1 library (if available and PCRE2 is not)
+                          [yes]
   --with-aqua             macOS only: use Aqua (if available) [yes]
   --with-tcltk            use Tcl/Tk (if available), or specify its library
                           dir [yes]
@@ -4013,6 +4018,36 @@ fi
 
 else
   use_readline=yes
+fi
+
+
+## PCRE2.
+
+# Check whether --with-pcre2 was given.
+if test "${with_pcre2+set}" = set; then :
+  withval=$with_pcre2; if test "${withval}" = no; then
+  use_pcre2=no
+else
+  use_pcre2=yes
+fi
+
+else
+  use_pcre2=yes
+fi
+
+
+## PCRE1.
+
+# Check whether --with-pcre1 was given.
+if test "${with_pcre1+set}" = set; then :
+  withval=$with_pcre1; if test "${withval}" = no; then
+  use_pcre1=no
+else
+  use_pcre1=yes
+fi
+
+else
+  use_pcre1=yes
 fi
 
 
@@ -25329,7 +25364,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25332: \"$ac_link\") >&5
+(eval echo $as_me:25367: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25404,7 +25439,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25407: \"$ac_link\") >&5
+(eval echo $as_me:25442: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -42097,146 +42132,9 @@ else
 fi
 
 
-## PCRE headers and libraries.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pcre_fullinfo in -lpcre" >&5
-$as_echo_n "checking for pcre_fullinfo in -lpcre... " >&6; }
-if ${ac_cv_lib_pcre_pcre_fullinfo+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpcre  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char pcre_fullinfo ();
-#ifdef FC_DUMMY_MAIN
-#ifndef FC_DUMMY_MAIN_EQ_F77
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int FC_DUMMY_MAIN() { return 1; }
-#endif
-#endif
-int
-main ()
-{
-return pcre_fullinfo ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pcre_pcre_fullinfo=yes
-else
-  ac_cv_lib_pcre_pcre_fullinfo=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pcre_pcre_fullinfo" >&5
-$as_echo "$ac_cv_lib_pcre_pcre_fullinfo" >&6; }
-if test "x$ac_cv_lib_pcre_pcre_fullinfo" = xyes; then :
-  have_pcre=yes
-else
-  have_pcre=no
-fi
-
-if test "${have_pcre}" = yes; then
-  for ac_header in pcre.h pcre/pcre.h
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-  if test "${ac_cv_header_pcre_h}" = no \
-    && test "${ac_cv_header_pcre_pcre_h}" = no; then
-    have_pcre=no
-  fi
-fi
-if test "x${have_pcre}" = xyes; then
-r_save_LIBS="${LIBS}"
-LIBS="-lpcre ${LIBS}"
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE1 version >= 8.32 and has UTF-8 support" >&5
-$as_echo_n "checking if PCRE1 version >= 8.32 and has UTF-8 support... " >&6; }
-if ${r_cv_have_pcre832+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "$cross_compiling" = yes; then :
-  r_cv_have_pcre832=no
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef HAVE_PCRE_PCRE_H
-#include <pcre/pcre.h>
-#else
-#ifdef HAVE_PCRE_H
-#include <pcre.h>
-#endif
-#endif
-int main() {
-#ifdef PCRE_MAJOR
-#if PCRE_MAJOR > 8
-  exit(1);
-#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 32
-{
-    int ans;
-    int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
-    if (res || ans != 1) exit(1); else exit(0);
-}
-#else
-  exit(1);
-#endif
-#else
-  exit(1);
-#endif
-}
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_have_pcre832=yes
-else
-  r_cv_have_pcre832=no
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre832" >&5
-$as_echo "$r_cv_have_pcre832" >&6; }
-fi
-if test "x${r_cv_have_pcre832}" != xyes; then
-  have_pcre=no
-  LIBS="${r_save_LIBS}"
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether PCRE support suffices" >&5
-$as_echo_n "checking whether PCRE support suffices... " >&6; }
-if test "x${r_cv_have_pcre832}" != xyes; then
-  as_fn_error $? "pcre >= 8.32 library and headers are required" "$LINENO" 5
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-fi
-
-
-## PCRE2 header and 8-bit library.
+## PCRE[12] headers and libraries.
 have_pcre2=no
+if test "x${use_pcre2}" = xyes; then
 if "${PKG_CONFIG}" --exists libpcre2-8; then
   PCRE2_CPPFLAGS=`"${PKG_CONFIG}" --cflags libpcre2-8`
   PCRE2_LIBS=`"${PKG_CONFIG}" --libs libpcre2-8`
@@ -42356,14 +42254,198 @@ else
 fi
 
   fi
-  if test "x${have_pcre2}" = "xyes"; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE2 has Unicode support" >&5
+$as_echo_n "checking if PCRE2 has Unicode support... " >&6; }
+if ${r_cv_have_pcre2utf+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "$cross_compiling" = yes; then :
+  r_cv_have_pcre2utf=no
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
+#include <stdlib.h>
+int main() {
+    int ans;
+    int res = pcre2_config(PCRE2_CONFIG_UNICODE, &ans);
+    if (res || ans != 1) exit(1); else exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  r_cv_have_pcre2utf=yes
+else
+  r_cv_have_pcre2utf=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre2utf" >&5
+$as_echo "$r_cv_have_pcre2utf" >&6; }
+  if test "x${r_cv_have_pcre2utf}" = "xyes"; then
 
 $as_echo "#define HAVE_PCRE2 1" >>confdefs.h
 
   else
+    warn_pcre2="PCRE2 is preferred but unavailable"
+    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_pcre2}" >&5
+$as_echo "$as_me: WARNING: ${warn_pcre2}" >&2;}
     CPPFLAGS="${r_save_CPPFLAGS}"
     LIBS="${r_save_LIBS}"
   fi
+fi
+else
+  have_pcre2=no
+  r_cv_have_pcre2utf=no
+fi
+
+
+if test "x${r_cv_have_pcre2utf}" != xyes && test "x${use_pcre1}" = xyes; then
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pcre_fullinfo in -lpcre" >&5
+$as_echo_n "checking for pcre_fullinfo in -lpcre... " >&6; }
+if ${ac_cv_lib_pcre_pcre_fullinfo+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpcre  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char pcre_fullinfo ();
+#ifdef FC_DUMMY_MAIN
+#ifndef FC_DUMMY_MAIN_EQ_F77
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int FC_DUMMY_MAIN() { return 1; }
+#endif
+#endif
+int
+main ()
+{
+return pcre_fullinfo ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_pcre_pcre_fullinfo=yes
+else
+  ac_cv_lib_pcre_pcre_fullinfo=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pcre_pcre_fullinfo" >&5
+$as_echo "$ac_cv_lib_pcre_pcre_fullinfo" >&6; }
+if test "x$ac_cv_lib_pcre_pcre_fullinfo" = xyes; then :
+  have_pcre=yes
+else
+  have_pcre=no
+fi
+
+if test "${have_pcre}" = yes; then
+  for ac_header in pcre.h pcre/pcre.h
+do :
+  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
+if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
+  if test "${ac_cv_header_pcre_h}" = no \
+    && test "${ac_cv_header_pcre_pcre_h}" = no; then
+    have_pcre=no
+  fi
+fi
+if test "x${have_pcre}" = xyes; then
+r_save_LIBS="${LIBS}"
+LIBS="-lpcre ${LIBS}"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE1 version >= 8.32 and has UTF-8 support" >&5
+$as_echo_n "checking if PCRE1 version >= 8.32 and has UTF-8 support... " >&6; }
+if ${r_cv_have_pcre832+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "$cross_compiling" = yes; then :
+  r_cv_have_pcre832=no
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef HAVE_PCRE_PCRE_H
+#include <pcre/pcre.h>
+#else
+#ifdef HAVE_PCRE_H
+#include <pcre.h>
+#endif
+#endif
+#include <stdlib.h>
+int main() {
+#ifdef PCRE_MAJOR
+#if PCRE_MAJOR > 8
+  exit(1);
+#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 32
+{
+    int ans;
+    int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
+    if (res || ans != 1) exit(1); else exit(0);
+}
+#else
+  exit(1);
+#endif
+#else
+  exit(1);
+#endif
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  r_cv_have_pcre832=yes
+else
+  r_cv_have_pcre832=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre832" >&5
+$as_echo "$r_cv_have_pcre832" >&6; }
+fi
+if test "x${r_cv_have_pcre832}" != xyes; then
+  have_pcre=no
+  LIBS="${r_save_LIBS}"
+fi
+else
+  have_pcre=no
+  r_cv_have_pcre832=no
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether PCRE support suffices" >&5
+$as_echo_n "checking whether PCRE support suffices... " >&6; }
+if test "x${r_cv_have_pcre2utf}" != xyes && \
+   test "x${r_cv_have_pcre832}" != xyes; then
+  as_fn_error $? "Either pcre >= 8.32 or pcre2 library and headers are required" "$LINENO" 5
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
 fi
 
 
@@ -51821,8 +51903,31 @@ fi
   fi
 done
 r_external_libs=
+if test "${r_cv_have_pcre2utf}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="pcre2"
+else
+  r_external_libs="${r_external_libs}${separator}pcre2"
+fi
+elif test "${r_cv_have_pcre832}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="pcre1"
+else
+  r_external_libs="${r_external_libs}${separator}pcre1"
+fi
+fi
 if test "${use_readline}" = yes; then
-  r_external_libs=readline
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="readline"
+else
+  r_external_libs="${r_external_libs}${separator}readline"
+fi
 fi
 if test "${acx_blas_ok}" = "yes"; then
   ## Try to figure out which BLAS was used.
@@ -52174,9 +52279,9 @@ if test -n "${warn_tcltk_version}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_tcltk_version}" >&5
 $as_echo "$as_me: WARNING: ${warn_tcltk_version}" >&2;}
 fi
-if test -n "${warn_pcre_version}"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_pcre_version}" >&5
-$as_echo "$as_me: WARNING: ${warn_pcre_version}" >&2;}
+if test -n "${warn_pcre2}"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_pcre2}" >&5
+$as_echo "$as_me: WARNING: ${warn_pcre2}" >&2;}
 fi
 if test -n "${warn_info}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_info}" >&5
