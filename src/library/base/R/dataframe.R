@@ -131,8 +131,9 @@ is.na.data.frame <- function (x)
     y
 }
 
-## not needed, as  anyNA() works recursively on list()s :
-## anyNA.data.frame <- function(x) any(vapply(x, anyNA, NA, USE.NAMES=FALSE))
+## Provide for efficiency reasons (PR#17600):
+anyNA.data.frame <- function(x, recursive = FALSE)
+    any(vapply(x, anyNA, NA, USE.NAMES = FALSE))
 
 is.data.frame <- function(x) inherits(x, "data.frame")
 

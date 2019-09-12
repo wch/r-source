@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-09-06 r77158) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-09-11 r77173) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3249,14 +3249,14 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 > meth2gen("data.frame")
  [1] $<-           Math          Ops           Summary       [            
  [6] [<-           [[            [[<-          aggregate     anyDuplicated
-[11] as.data.frame as.list       as.matrix     by            cbind        
-[16] dim           dimnames      dimnames<-    droplevels    duplicated   
-[21] edit          format        formula       head          is.na        
-[26] merge         na.exclude    na.omit       plot          print        
-[31] prompt        rbind         row.names     row.names<-   rowsum       
-[36] split         split<-       stack         str           subset       
-[41] summary       t             tail          transform     type.convert 
-[46] unique        unstack       within       
+[11] anyNA         as.data.frame as.list       as.matrix     by           
+[16] cbind         dim           dimnames      dimnames<-    droplevels   
+[21] duplicated    edit          format        formula       head         
+[26] is.na         merge         na.exclude    na.omit       plot         
+[31] print         prompt        rbind         row.names     row.names<-  
+[36] rowsum        split         split<-       stack         str          
+[41] subset        summary       t             tail          transform    
+[46] type.convert  unique        unstack       within       
 > meth2gen("dendrogram")
  [1] [[            as.dendrogram as.hclust     cophenetic    cut          
  [6] labels        merge         nobs          plot          print        
@@ -6347,7 +6347,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2e5e5a0>
+<bytecode: 0x564c470de6e0>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6358,7 +6358,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2e5e5a0>
+<bytecode: 0x564c470de6e0>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6370,7 +6370,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2e5e5a0>
+<bytecode: 0x564c470de6e0>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
