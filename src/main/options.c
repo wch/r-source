@@ -772,6 +772,8 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_PCRE_limit_recursion = asLogical(argi);
 		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, ScalarLogical(R_PCRE_limit_recursion)));
+		/* could warn for PCRE2 >= 10.30, but the value is ignored also when
+		   JIT is used  */
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));

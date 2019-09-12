@@ -326,9 +326,16 @@ R_pcre2_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
 	}
 	if (!rc)
 	    setup_jit(*mcontext);
-    } else if (use_recursion_limit(subject))
-	/* only makes sense for PCRE2 < 10.30 */
-	pcre2_set_depth_limit(*mcontext, (uint32_t) R_pcre_max_recursions());
+    }
+#if PCRE2_MAJOR < 10 || (PCRE2_MAJOR == 10 && PCRE2_MINOR < 30)
+    else if (use_recursion_limit(subject)) 
+	pcre2_set_recursion_limit(*mcontext, (uint32_t) R_pcre_max_recursions());
+
+    /* we could use set_depth_limit() in newer versions, but the memory limit
+       imposed then depends on the regular expression, and the values have
+       different meaning from those for recursion limit in versions before
+       10.30 */
+#endif
 }
 #else /* ! HAVE_PCRE2 */
 static void
