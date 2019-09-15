@@ -1068,7 +1068,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     if(force_identical_methods == -1) {
 	force = getenv("_R_BIND_S3_DISPATCH_FORCE_IDENTICAL_METHODS_");
 	force_identical_methods =
-	    ((force != NULL) && StringFalse(force)) ? 0 : 1;
+	    ((force != NULL) && StringTrue(force)) ? 1 : 0;
     }
 
     PROTECT(args = promiseArgs(args, env));
