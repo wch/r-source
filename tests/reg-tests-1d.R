@@ -2797,6 +2797,7 @@ spois     <- summary( poisfit)
 sqpois    <- summary(qpoisfit)
 sqpois.d1 <- summary(qpoisfit, dispersion=1)
 SE1 <- sqrt(diag(V <- vcov(poisfit)))
+(noLdbl <- (.Machine$sizeof.longdouble <= 8)) ## TRUE when --disable-long-double
 stopifnot(exprs = { ## Same variances and same as V
     all.equal(vcov(spois), V)
     all.equal(vcov(qpoisfit, dispersion=1), V) ## << was wrong
@@ -3031,6 +3032,47 @@ if(!(onWindows && arch == "x86")) {
                          "simpleWarning", verbose=TRUE)
     stopifnot(p == 1)
 }
+
+
+## x %% +- Inf -- PR#17611  //  also  %/%  for "large" args
+for(x in list(0:3, c(0, 0.5+0:2))) {
+    xp <- x[x != 0] # x "positive"
+    for(L in c(2^(2:9), 1000^(1:7), Inf))
+        stopifnot(exprs = {
+            ## ----------------- %% -------------
+            ## same signs :
+               x  %%  L ==  x
+             (-x) %% -L == -x
+            ## opposite signs, x > 0 :
+            (-xp) %%  L == L-xp
+              xp  %% -L == xp-L
+            ## ----------------- %/% ------------
+              x  %/%  L == pmin(0, sign(x))
+            (-x) %/% -L == x  %/%  L
+            (-x) %/%  L == pmin(0, sign(-x))
+              x  %/% -L == (-x) %/% L
+              ## L . x :
+              L %/%  xp == (-L) %/% -xp
+              L %/% -xp == (-L) %/%  xp
+        })
+    stopifnot(exprs = {
+        Inf %/%   x == sign( x+(x==0))*Inf
+        Inf %/% -xp == -Inf
+    })
+}
+## these all returned  NaN  when L == Inf  in R <= 3.6.1
+##
+## Further - very basics and some large (working "since ever"):
+stopifnot(exprs = {
+    -6:17 %%  3L == 0:2
+    -5:15 %% -3L == -2:0
+    is.finite(x <- 2^(1:1022))
+    x %% (x.2 <- x/2) == 0
+    x %/% 2 == x.2
+    x[1:52] %% 3 == 2:1
+   -x[1:52] %% 3 == 1:2
+}) # larger x suffer from cancellation (well, warning too early now):
+tools::assertWarning(x[60:68] %% 3)
 
 
 

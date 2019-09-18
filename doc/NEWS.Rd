@@ -7,11 +7,11 @@
 
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{USER-VISIBLE CHANGES}{
-      \itemize{
+    \itemize{
        \item \R now builds by default against PCRE2 library for Perl-like
        regular expressions if available at build time on non-Windows
        platforms (otherwise PCRE1 is used as in older versions of \R).
-       
+
        PCRE2 is stricter in some cases and reports errors for some
        regular expressions that were accepted by PCRE1.  A hyphen now
        has to be escaped in a character class to be interpreted as a
@@ -154,7 +154,7 @@
 
       \item A C++ compiler default is set only if the C++11 standard is
       supported: it no longer falls back to C++98.
-      
+
       \item PCRE2 is used if available: this is strongly recommended as
       PCRE1 is no longer developed (it only receives bug fixes and has
       outdated Unicode tables).  \command{configure} will warn if PCRE2
@@ -200,6 +200,14 @@
       \item \code{postscript(.., title = *)} now signals an error when the
       title string contains a character which produces corrupt PostScript,
       thanks to Daisuko Ogawa's \PR{17607}.
+
+      \item \code{x \%\% L} for finite \code{x} no longer returns
+      \code{NaN} when \code{L} is infinite, nor suffers from cancellation
+      for large finite \code{L}, thanks to Long Qu's \PR{17611}.
+
+      Analogously, \code{x \%/\% L} and \code{L \%/\% x} suffer less from
+      cancellation and return values corresponding to limits for large
+      \code{L}.
     }
   }
 }
