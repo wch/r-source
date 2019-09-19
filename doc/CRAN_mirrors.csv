@@ -23,7 +23,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Beijing) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
 "China (Hong Kong) [https]",China,"Hong Kong",https://mirror-hk.koddos.net/CRAN/,"KoDDoS in Hong Kong","mirror # koddos.net",1,cn,"secure_mirror_from_master"
-"China (Guangzhou) [https]",China,Guangzhou,https://mirrors.eliteu.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",0,cn,"secure_mirror_from_master"
+"China (Guangzhou) [https]",China,Guangzhou,https://mirrors.eliteu.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",1,cn,"secure_mirror_from_master"
 "China (Lanzhou) [https]",China,Lanzhou,https://mirror.lzu.edu.cn/CRAN/,"Lanzhou University Open Source Society","oss.lzu.edu.cn # gmail.com",1,cn,"secure_mirror_from_master"
 "China (Shanghai) [https]",China,Shanghai,https://mirrors.tongji.edu.cn/CRAN/,"Tongji University","mirrors # opentj.org",1,cn,"secure_mirror_from_master"
 "Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,"secure_mirror_from_master"
