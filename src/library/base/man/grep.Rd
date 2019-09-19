@@ -50,7 +50,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
     \code{\link{as.character}} to a character string if possible.  If a
     character vector of length 2 or more is supplied, the first element
     is used with a warning.  Missing values are allowed except for
-    \code{regexpr} and \code{gregexpr}.}
+    \code{regexpr}, \code{gregexpr} and \code{regexec}.}
   \item{x, text}{a character vector where matches are sought, or an
     object which can be coerced by \code{as.character} to a character
     vector.  \link{Long vectors} are supported.}
@@ -103,6 +103,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   For \code{regexpr}, \code{gregexpr} and \code{regexec} it is an error
   for \code{pattern} to be \code{NA}, otherwise \code{NA} is permitted
   and gives an \code{NA} match.
+
+  Both \code{grep} and \code{grepl} take missing values in \code{x} as
+  not matching a non-missing \code{pattern}.
 
   The main effect of \code{useBytes} is to avoid errors/warnings about
   invalid inputs and spurious matches in multibyte locales, but for

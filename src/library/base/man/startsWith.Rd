@@ -6,11 +6,6 @@
   Determines if entries of \code{x} start or end with string (entries of)
   \code{prefix} or \code{suffix} respectively, where strings are
   recycled to common lengths.
-
-  \code{startsWith()} is equivalent to but much faster than
-  \preformatted{substring(x, 1, nchar(prefix)) == prefix}
-  or also \preformatted{grepl("^<prefix>", x)} where \code{prefix} is
-  not to contain special regular expression characters.
 }
 \usage{
 startsWith(x, prefix)
@@ -22,6 +17,14 @@ startsWith(x, prefix)
   \item{prefix, suffix}{\code{\link{character}} vector (often of length one).}
 }
 \details{
+  \code{startsWith()} is equivalent to but much faster than
+\preformatted{  substring(x, 1, nchar(prefix)) == prefix  }
+  or also
+\preformatted{  grepl("^<prefix>", x)  }
+  where \code{prefix} is not to contain special regular expression
+  characters (and for \code{grepl}, \code{x} does not contain missing
+  values, see below).
+ 
   The code has an optimized branch for the most common usage in which
   \code{prefix} or \code{suffix} is of length one, and is further
   optimized in a UTF-8 or 8-byte locale if that is an ASCII string.
@@ -52,6 +55,12 @@ x2 <- cbind(
         endsWith(x1, "an"))
 rownames(x2) <- x1; colnames(x2) <- c("b", "b1", "bla", "n", "an")
 x2
+
+## Non-equivalence in case of missing values in 'x', see Details:
+x <- c("all", "but", NA_character_)
+cbind(startsWith(x, "a"),
+      substring(x, 1L, 1L) == "a",
+      grepl("^a", x))
 }
 \keyword{character}
 \keyword{utilities}
