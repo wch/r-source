@@ -1616,7 +1616,6 @@ Math.data.frame <- function (x, ...)
 
 Ops.data.frame <- function(e1, e2 = NULL)
 {
-    isList <- function(x) !is.null(x) && is.list(x)
     unary <- nargs() == 1L
     lclass <- nzchar(.Method[1L])
     rclass <- !unary && (nzchar(.Method[2L]))
@@ -1641,7 +1640,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	if(.row_names_info(e1) > 0L) rn <- attr(e1, "row.names")
 	cn <- names(e1)
 	rscalar <- length(e2) <= 1L # e2 might be null
-	if(isList(e2)) {
+	if(is.list(e2)) {
 	    if(rscalar) e2 <- e2[[1L]]
 	    else if(length(e2) != ncol(e1))
 		stop(gettextf("list of length %d not meaningful", length(e2)),
@@ -1658,7 +1657,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	if(.row_names_info(e2) > 0L) rn <- attr(e2, "row.names")
 	cn <- names(e2)
 	lscalar <- length(e1) <= 1L
-	if(isList(e1)) {
+	if(is.list(e1)) {
 	    if(lscalar) e1 <- e1[[1L]]
 	    else if(length(e1) != ncol(e2))
 		stop(gettextf("list of length %d not meaningful", length(e1)),
@@ -1684,8 +1683,10 @@ Ops.data.frame <- function(e1, e2 = NULL)
     }
     else { ## 'Logic' ("&","|")  and  'Compare' ("==",">","<","!=","<=",">=") :
 	value <- unlist(value, recursive = FALSE, use.names = FALSE)
-	matrix(if(is.null(value)) logical() else value,
-	       nrow = nr, dimnames = list(rn,cn))
+	if(!length(value))
+	    matrix(logical(), nrow = nr, ncol = length(cn), dimnames = list(rn,cn))
+	else # nrow + possibly recycled value determine dim:
+	    matrix(value, nrow = nr, dimnames = list(rn,cn))
     }
 }
 

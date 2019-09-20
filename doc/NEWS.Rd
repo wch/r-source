@@ -208,6 +208,9 @@
       Analogously, \code{x \%/\% L} and \code{L \%/\% x} suffer less from
       cancellation and return values corresponding to limits for large
       \code{L}.
+
+      \item Certain \code{Ops} (notably comparison such as \code{==}) now
+      also work for 0-length data frames, after reports by Hilmer Berger.
     }
   }
 }
