@@ -8,7 +8,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{USER-VISIBLE CHANGES}{
     \itemize{
-       \item \R now builds by default against PCRE2 library for Perl-like
+       \item \R now builds by default against a PCRE2 library for Perl-like
        regular expressions if available at build time on non-Windows
        platforms (otherwise PCRE1 is used as in older versions of \R).
 
@@ -100,7 +100,7 @@
       \item S3 method lookup now by default skips the elements of the
       search path between the global and base environments.
 
-      \item Add an argument \code{add_datalist(*, small.size = 0)} to
+      \item Added an argument \code{add_datalist(*, small.size = 0)} to
       allow the creation of a \file{data/datalist} file even when the
       total size of the data sets is small.
     }
@@ -118,8 +118,8 @@
       to the value of \samp{FC}, which is set for package compilation.
       But portable code should not rely on this.)
 
-      \item Support for specifying C++98 in package installation has
-      been removed.
+      \item The deprecated support for specifying C++98 in package
+      installation has been removed.
 
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}, nor
