@@ -3063,7 +3063,10 @@ for(x in list(0:3, c(0, 0.5+0:2))) {
 ## these all returned  NaN  when L == Inf  in R <= 3.6.1
 ##
 ## Further - very basics and some large (working "since ever"):
+L <- 1e111 * c(-1,1)
 stopifnot(exprs = {
+    L %%  L == 0  # failed for a few days in R-devel
+    L %% -L == 0
     -6:17 %%  3L == 0:2
     -5:15 %% -3L == -2:0
     is.finite(x <- 2^(1:1022))

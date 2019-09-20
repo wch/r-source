@@ -188,16 +188,17 @@ static double myfmod(double x1, double x2)
     if (x2 == 0.0) return R_NaN;
     if(fabs(x2) > q_1_eps && R_FINITE(x1) && fabs(x1) <= fabs(x2)) {
 	return
+	    (fabs(x1) == fabs(x2)) ? 0 :
 	    ((x1 < 0 && x2 > 0) ||
-	     (x1 > 0 && x2 < 0))
-	    ? x1+x2  // differing signs
-	    : x1   ; // "same" signs (incl. 0)
+	     (x2 < 0 && x1 > 0))
+	     ? x1+x2  // differing signs
+	     : x1   ; // "same" signs (incl. 0)
     }
     double q = x1 / x2;
     if(R_FINITE(q) && (fabs(q) > q_1_eps))
 	warning(_("probable complete loss of accuracy in modulus"));
     LDOUBLE tmp = (LDOUBLE)x1 - floor(q) * (LDOUBLE)x2;
-    return (double) tmp - floorl(tmp/x2) * x2;
+    return (double) (tmp - floorl(tmp/x2) * x2);
 }
 
 static double myfloor(double x1, double x2)
@@ -211,7 +212,7 @@ static double myfloor(double x1, double x2)
 	       (x1 > 0 && x2 < 0) // differing signs
 	       ? -1 : 0);
     LDOUBLE tmp = (LDOUBLE)x1 - floor(q) * (LDOUBLE)x2;
-    return (double) floor(q) + floorl(tmp/x2);
+    return (double) (floor(q) + floorl(tmp/x2));
 }
 
 double R_pow(double x, double y) /* = x ^ y */
