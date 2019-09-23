@@ -301,29 +301,41 @@ static long R_pcre_max_recursions()
 #ifdef HAVE_PCRE2
 static void
 R_pcre2_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
-                Rboolean caseless, pcre2_code **re,
-                pcre2_match_context **mcontext)
+                Rboolean caseless, const unsigned char **tables,
+                pcre2_code **re, pcre2_match_context **mcontext)
 {
     int errcode;
     PCRE2_SIZE erroffset;
     uint32_t options = 0;
+    pcre2_compile_context *ccontext = NULL;
 
     if (use_UTF8)
 	options |= PCRE2_UTF | PCRE2_NO_UTF_CHECK;
+    else {
+	ccontext = pcre2_compile_context_create(NULL);
+	/* PCRE2 internal tables by default are only for ASCII characters.
+	   They are needed for lower/upper case distinction and character
+	   classes in non-UTF mode. */
+	if (!*tables)
+	    *tables = pcre2_maketables(NULL);
+	pcre2_set_character_tables(ccontext, *tables);
+    }
     if (caseless)
 	options |= PCRE2_CASELESS;
 
     *re = pcre2_compile((PCRE2_SPTR) pattern, PCRE2_ZERO_TERMINATED, options,
-                         &errcode, &erroffset, NULL);
+                         &errcode, &erroffset, ccontext);
     if (!*re) {
 	/* not managing R_alloc stack because this ends in error */
 	char buf[256];
 	pcre2_get_error_message(errcode, (PCRE2_UCHAR *)buf, sizeof(buf));
+	pcre2_compile_context_free(ccontext);
 	warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"), buf,
 	        to_native(pattern + erroffset, use_UTF8));
 	error(_("invalid regular expression '%s'"),
 	      to_native(pattern, use_UTF8));
     }
+    pcre2_compile_context_free(ccontext);
     *mcontext = pcre2_match_context_create(NULL);
     if (R_PCRE_use_JIT) {
 	int rc = pcre2_jit_compile(*re, 0);
@@ -411,7 +423,11 @@ R_pcre_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
 }
 #endif
 
-// FIXME: Protect PCRE/PCRE2 data via contexts
+// FIXME: Protect PCRE/PCRE2 data via contexts.
+// FIXME: Do not rebuild locale tables repeatedly.
+// FIXME: There is no documented way to free locale tables with PCRE2.
+//        Using free() would not work on Windows if PCRE2 is dynamically
+//        linked but uses a different C runtime from R.
 
 /* strsplit is going to split the strings in the first argument into
  * tokens depending on the second argument. The characters of the second
@@ -428,9 +444,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     int fixed_opt, perl_opt, useBytes;
     char *pt = NULL; wchar_t *wpt = NULL;
     const char *buf, *split = "", *bufp;
-#ifndef HAVE_PCRE2
     const unsigned char *tables = NULL;
-#endif
     Rboolean use_UTF8 = FALSE, haveBytes = FALSE;
     const void *vmax, *vmax2;
     int nwarn = 0;
@@ -681,7 +695,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    pcre2_match_context *mcontext = NULL;
 	    PCRE2_SIZE *ovector = NULL;
 	    uint32_t ovecsize = 10;
-	    R_pcre2_prepare(split, x, use_UTF8, FALSE, &re, &mcontext);
+	    R_pcre2_prepare(split, x, use_UTF8, FALSE, &tables, &re, &mcontext);
 	    pcre2_match_data *mdata = pcre2_match_data_create(ovecsize, NULL);
 #else
 	    pcre *re_pcre = NULL;
@@ -953,7 +967,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	namesgets(ans, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
     Free(pt); Free(wpt);
-#ifndef HAVE_PCRE2
+#ifdef HAVE_PCRE2
+    if (tables) free((void *)tables);
+#else
     if (tables) pcre_free((void *)tables);
 #endif
     return ans;
@@ -1064,6 +1080,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     int nmatches = 0, rc;
     int igcase_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
     const char *spat = NULL;
+    const unsigned char *tables = NULL /* -Wall */;
 #ifdef HAVE_PCRE2
     pcre2_code *re = NULL;
     pcre2_match_context *mcontext = NULL;
@@ -1072,7 +1089,6 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
     pcre *re_pcre = NULL /* -Wall */;
     pcre_extra *re_pe = NULL;
-    const unsigned char *tables = NULL /* -Wall */;
     int ovecsize = 3;
     int ov[ovecsize];
 #endif
@@ -1182,7 +1198,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt) ;
     else if (perl_opt) {
 #ifdef HAVE_PCRE2
-	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &re, &mcontext);
+	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &tables, &re,
+	                &mcontext);
 	mdata = pcre2_match_data_create(ovecsize, NULL);
 #else
 	R_pcre_prepare(spat, text, use_UTF8, igcase_opt, FALSE, &tables,
@@ -1262,6 +1279,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	pcre2_match_data_free(mdata);
 	pcre2_code_free(re);
 	pcre2_match_context_free(mcontext);
+	if (tables)
+	    free((void *)tables);
 #else
 	if (re_pe) pcre_free_study(re_pe);
 	pcre_free(re_pcre);
@@ -1854,6 +1873,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     size_t patlen = 0, replen = 0;
     Rboolean use_UTF8 = FALSE, use_WC = FALSE;
     const wchar_t *wrep = NULL;
+    const unsigned char *tables = NULL;
 #ifdef HAVE_PCRE2
     uint32_t ovecsize = 10;
     pcre2_code *re = NULL;
@@ -1863,7 +1883,6 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     int ovecsize = 30;
     pcre *re_pcre = NULL;
     pcre_extra *re_pe  = NULL;
-    const unsigned char *tables = NULL;
 #endif
     const void *vmax = vmaxget();
 
@@ -1979,7 +1998,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	replen = strlen(srep);
     } else if (perl_opt) {
 #ifdef HAVE_PCRE2
-	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &re, &mcontext);
+	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &tables, &re,
+	                &mcontext);
 	mdata = pcre2_match_data_create(ovecsize, NULL);
 #else
 	R_pcre_prepare(spat, text, use_UTF8, igcase_opt, FALSE, &tables,
@@ -2302,6 +2322,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	pcre2_match_data_free(mdata);
 	pcre2_code_free(re);
 	pcre2_match_context_free(mcontext);
+	if (tables)
+	    free((void *)tables);
 #else
 	if (re_pe) pcre_free_study(re_pe);
 	pcre_free(re_pcre);
@@ -2746,6 +2768,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     int rc, igcase_opt, perl_opt, fixed_opt, useBytes;
     const char *spat = NULL; /* -Wall */
     const char *s = NULL;
+    const unsigned char *tables = NULL /* -Wall */;
 #ifdef HAVE_PCRE2
     pcre2_code *re = NULL;
     pcre2_match_context *mcontext = NULL;
@@ -2755,7 +2778,6 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
     pcre *re_pcre = NULL /* -Wall */;
     pcre_extra *re_pe = NULL;
-    const unsigned char *tables = NULL /* -Wall */;
     int *ovector = NULL, name_count, name_entry_size, capture_count;
 #endif
     Rboolean use_UTF8 = FALSE, use_WC = FALSE;
@@ -2853,7 +2875,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt) ;
     else if (perl_opt) {
 #ifdef HAVE_PCRE2
-	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &re, &mcontext);
+	R_pcre2_prepare(spat, text, use_UTF8, igcase_opt, &tables, &re,
+	                &mcontext);
 
 	/* also extract info for named groups */
 	pcre2_pattern_info(re, PCRE2_INFO_NAMECOUNT, &name_count);
@@ -3072,6 +3095,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	pcre2_match_data_free(mdata);
 	pcre2_code_free(re);
 	pcre2_match_context_free(mcontext);
+	if (tables)
+	    free((void *)tables);
 #else
 	if (re_pe) pcre_free_study(re_pe);
 	pcre_free(re_pcre);
