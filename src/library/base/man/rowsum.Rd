@@ -47,7 +47,7 @@ rowsum(x, group, reorder = TRUE, \dots)
   The original function was written by Terry Therneau, but this is a
   new implementation using hashing that is much faster for large matrices.
 
-  To sum over all the rows of a matrix (ie, a single \code{group}) use
+  To sum over all the rows of a matrix (i.e., a single \code{group}) use
   \code{\link{colSums}}, which should be even faster.
 
   For integer arguments, over/underflow in forming the sum results in
@@ -68,4 +68,3 @@ t(sapply(split(as.data.frame(x), group), colSums))
 aggregate(x, list(group), sum)[-1]
 }
 \keyword{manip}
-

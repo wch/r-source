@@ -104,7 +104,7 @@ rbind(\dots, deparse.level = 1)
   It then takes the classes of the columns from the
   first data frame, and matches columns by name (rather than by
   position).  Factors have their levels expanded as necessary (in the
-  order of the levels of the levelsets of the factors encountered) and
+  order of the levels of the level sets of the factors encountered) and
   the result is an ordered factor if and only if all the components were
   ordered factors.  (The last point differs from S-PLUS.)  Old-style
   categories (integer vectors with levels) are promoted to factors.

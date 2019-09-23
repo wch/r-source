@@ -66,7 +66,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 
   Note that the 1- and Inf-norm condition numbers are much faster to
   calculate, and \code{rcond()} computes these \emph{\bold{r}eciprocal}
-  condition numbers, also for complex matrices, using standard Lapack
+  condition numbers, also for complex matrices, using standard LAPACK
   routines.
 
   \code{kappa} and \code{rcond} are different interfaces to

@@ -5,7 +5,7 @@
 \alias{sigma.mlm}
 \description{
   Extract the estimated standard deviation of the errors, the
-  \dQuote{residual standard deviation} (misnomed also
+  \dQuote{residual standard deviation} (misnamed also
   \dQuote{residual standard error}, e.g., in
   \code{\link{summary.lm}()}'s output, from a fitted model).
 

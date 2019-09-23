@@ -39,7 +39,7 @@ xaxisGrob(at = NULL, label = TRUE, main = TRUE,
     a list of graphical parameter settings.}
   \item{draw}{A logical value indicating whether graphics output
     should be produced.}
-  \item{vp}{A Grid viewport obect (or \code{NULL}).}
+  \item{vp}{A Grid viewport object (or \code{NULL}).}
 }
 \details{
   Both functions create an xaxis grob (a graphical object describing an

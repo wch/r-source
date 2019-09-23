@@ -39,7 +39,7 @@ norm(x, type = c("O", "I", "F", "M", "2"))
     \code{type[1]} is used.}
 }
 \details{
-  The \pkg{base} method of \code{norm()} calls the Lapack function
+  The \pkg{base} method of \code{norm()} calls the LAPACK function
   \code{dlange}.
 
   Note that the 1-, Inf- and \code{"M"} norm is faster to calculate than

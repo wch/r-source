@@ -1,6 +1,6 @@
 % File src/library/base/man/gc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gc}
@@ -29,14 +29,14 @@ gcinfo(verbose)
   A call of \code{gc} causes a garbage collection to take place.
   This will also take place automatically without user intervention, and the
   primary purpose of calling \code{gc} is for the report on memory
-  usage. For an accurate report \code{full = TRUE} should be used.  
+  usage.  For an accurate report \code{full = TRUE} should be used.
 
   It can be useful to call \code{gc} after a large object
   has been removed, as this may prompt \R to return memory to the
   operating system.
 
   \R allocates space for vectors in multiples of 8 bytes: hence the
-  report of \code{"Vcells"}, a relict of an earlier allocator (that used
+  report of \code{"Vcells"}, a relic of an earlier allocator (that used
   a vector heap).
 
   When \code{gcinfo(TRUE)} is in force, messages are sent to the message
