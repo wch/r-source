@@ -5126,8 +5126,9 @@ Sierra and High Sierra@*
 Mojave and later@*
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.
 @end itemize
-These all install into @file{/usr/local/gfortran}.  This does not need
-to be on the path as a full path can be used for @code{FC}: see below.
+These all install into @file{/usr/local/gfortran}.  Its @file{bin}
+directory does not need to be on the path as a full path can be used for
+@code{FC}: see below.
 
 @item
 Binary components @code{pcre} and @code{xz} (for @code{libzma}) from
@@ -5194,8 +5195,8 @@ Compilers supporting OpenMP: see the next subsection.
 @end itemize
 
 To build @R{} itself from the sources with the compilers in the Command
-Line Tools (or Xcode) and one of these installers, use a file
-@file{config.site} containing
+Line Tools (or Xcode) and one of the @command{gfortran} installers, use
+a file @file{config.site} containing
 @example
 CC=clang
 OBJC=$CC
@@ -5331,7 +5332,7 @@ provides a graphical means to manage @TeX{} packages.  This is
 documented to require Sierra or later: for earlier versions see the
 instructions on the MacTeX front page.
 
-Checking packages thoroughly require @command{ghostscript} (part of the
+Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
 @uref{https://www.tug.org/mactex/morepackages.html}) and @command{qpdf}
 (an early version of which is in the @file{bin} directory of a binary
