@@ -37,7 +37,7 @@ writeClipboard(str, format = 1)
   CF_BITMAP      \tab   2  \tab \cr
   CF_METAFILEPICT \tab  3  \tab Metafile picture\cr
   CF_SYLK        \tab   4  \tab Symbolic link\cr
-  CF_DIF         \tab   5  \tab Data Interchange Fornat\cr
+  CF_DIF         \tab   5  \tab Data Interchange Format\cr
   CF_TIFF        \tab   6  \tab Tagged-Image File Format\cr
   CF_OEMTEXT     \tab   7  \tab Text in the OEM codepage\cr
   CF_DIB         \tab   8  \tab Device-Independent Bitmap\cr

@@ -52,7 +52,7 @@ make.names(names, unique = FALSE, allow_ = TRUE)
 
   \code{allow_ = FALSE} is also useful when creating names for export to
   applications which do not allow underline in names (for example,
-  S-PLUS and some DBMSs).
+  S-PLUS and some DBMSes).
 }
 \seealso{
   \code{\link{make.unique}},

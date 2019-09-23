@@ -79,7 +79,7 @@ iconvlist()
   results, and for \samp{win_iconv} currently a \sQuote{best fit}
   strategy is used except for \code{to = "ASCII"}).
 
-  Most commercial Unixes contain an implemetation of \code{iconv} but
+  Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
   the \dQuote{R Installation and Administration Manual} recommends
   installing GNU \samp{libiconv} on Solaris and AIX, for example.
@@ -92,7 +92,7 @@ iconvlist()
   Note that you cannot rely on invalid inputs being detected, especially
   for \code{to = "ASCII"} where some implementations allow 8-bit
   characters and pass them through unchanged or with transliteration.
-  
+
   Some of the implementations have interesting extra encodings: for
   example GNU \samp{libiconv} allows \code{to = "C99"} to use
   \samp{\\uxxxx} escapes for non-ASCII characters.
@@ -118,7 +118,7 @@ iconvlist()
   \code{x} in other \code{from} encodings: they may be discarded,
   returned as character \code{U+FEFF} or regarded as invalid.
 }
-  
+
 \value{
   If \code{toRaw = FALSE} (the default), the value is a character vector
   of the same length and the same attributes as \code{x} (after
@@ -140,7 +140,7 @@ iconvlist()
   The only reasonably portable name for the ISO 8859-15 encoding,
   commonly known as \sQuote{Latin 9}, is \code{"latin-9"}: some
   platforms support \code{"latin9"} but GNU \samp{libiconv} does not.
-  
+
   Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
   not portable.  \code{"utf8"} is converted to \code{"UTF-8"} for
   \code{from} and \code{to} by \code{iconv}, but not

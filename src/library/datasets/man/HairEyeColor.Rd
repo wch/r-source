@@ -23,7 +23,7 @@
   }
 }
 \details{
-  The Hair \eqn{\times}{x} Eye table comes rom a survey of students at
+  The Hair \eqn{\times}{x} Eye table comes from a survey of students at
   the University of Delaware reported by Snee (1974).  The split by
   \code{Sex} was added by Friendly (1992a) for didactic purposes.
 
