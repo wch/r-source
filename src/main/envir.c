@@ -1246,7 +1246,7 @@ static SEXP findVarLoc(SEXP symbol, SEXP rho)
 	error(_("use of NULL environment is defunct"));
 
     if (!isEnvironment(rho))
-	error(_("argument to '%s' is not an environment"), "findVar");
+	error(_("argument to '%s' is not an environment"), "findVarLoc");
 
 #ifdef USE_GLOBAL_CACHE
     /* This first loop handles local frames, if there are any.  It
