@@ -305,12 +305,12 @@ binomInitialize <- function(family) substitute({ # other "arg"s:  (y, weights, n
 	    stop("y values must be 0 <= y <= 1")
 	mustart <- (weights * y + 0.5)/(weights + 1)
 	m <- weights * y
-	if(any(abs(m - round(m)) > 1e-3))
+	if(FAMILY == "binomial" && any(abs(m - round(m)) > 1e-3))
 	    warning(gettextf("non-integer #successes in a %s glm!", FAMILY),
 		    domain = NA)
     }
     else if (NCOL(y) == 2) {
-	if(any(abs(y - round(y)) > 1e-3))
+	if(FAMILY == "binomial" && any(abs(y - round(y)) > 1e-3))
 	    warning(gettextf("non-integer counts in a %s glm!", FAMILY),
 		    domain = NA)
 	n <- (y1 <- y[, 1L]) + y[, 2L]
