@@ -165,8 +165,10 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
 }
 \note{
   The number of unique \code{x} values, \eqn{\code{nx} = n_x}{nx}, are
-  determined by the \code{tol} argument, equivalently to \preformatted{%
-    nx <- length(x)  -  sum(duplicated( round((x - mean(x)) / tol) ))}
+  determined by the \code{tol} argument, equivalently to
+  \preformatted{
+    nx <- length(x) - sum(duplicated( round((x - mean(x)) / tol) ))
+  }
 
   The default \code{all.knots = FALSE} and \code{nknots = .nknots.smspl},
   entails using only \eqn{O({n_x}^{0.2})}{O(nx ^ 0.2)}

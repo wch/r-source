@@ -99,13 +99,16 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   \emph{will} find those in parts of the \R code \sQuote{commented out}
   by inclusion in \code{if(FALSE) \{ \dots \}}.
   On the other hand, it will fail to find the entry points in
-  constructs like \preformatted{
+  constructs like
+  \preformatted{
     .Call(if(int) "rle_i" else "rle_d", i, force)
   }
-  and does not know the value of variables in calls like \preformatted{
+  and does not know the value of variables in calls like
+  \preformatted{
     .Call (cfunction, ...)
     .Call(..., PACKAGE="sparseLTSEigen")
-  } (but if \code{character_only} is false, will extract the first as
+  }
+  (but if \code{character_only} is false, will extract the first as
   \code{"cfunction"}).  Calls which have not been fully resolved will be
   noted \emph{via} comments in the output file.
 
@@ -115,28 +118,32 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
 
 \section{Extracting C/C++ prototypes}{
   There are several tools available to extract function declarations
-  from C or C++ code.  For example,
+  from C or C++ code.
 
   For C code one can use \command{cproto}
   (\url{http://invisible-island.net/cproto/cproto.html}; Windows
   executables are available), for
-  example\preformatted{
+  example
+  \preformatted{
     cproto -I/path/to/R/include -e *.c
   }
   
   \command{ctags} (commonly distributed with the OS)
-  covers C and C++., listing all function usages by something
-  like\preformatted{
+  covers C and C++., using something like
+  \preformatted{
     ctags -x *.c
-  }.  (The \sQuote{Exuberant} version allows a lot more control.)
+  }
+  to list all function usages.
+  (The \sQuote{Exuberant} version allows a lot more control.)
 }
 
 \section{Extracting Fortran prototypes}{
   \command{gfortran} 9.2 and later can extract C prototypes for Fortran
-  subroutines with a special flag:\preformatted{
+  subroutines with a special flag:
+  \preformatted{
     gfortran -c -fc-prototypes-external file.f
-}
-   although ironically not for functions declared \code{bind(C)}.
+  }
+  although ironically not for functions declared \code{bind(C)}.
 }
 
 \seealso{

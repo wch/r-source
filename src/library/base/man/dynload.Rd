@@ -223,15 +223,15 @@ is.loaded(symbol, PACKAGE = "", type = "")
   only one directory can be inserted in this way.)
 
   Users have been confused by messages like
-\preformatted{
- error: unable to load shared object
- '.../library/rJava/libs/x64/rJava.dll':
- LoadLibrary failure:  The specified module could not be found.
-}
-   The final line is a Windows (not \R) diagnostic: the \sQuote{module}
-   that could not be found is not \file{rJava.dll} but something else
-   Windows is looking for (here most likely Java DLLs): if you are lucky
-   there will be a dialog box with more details.
+  \preformatted{
+    error: unable to load shared object
+    '.../library/rJava/libs/x64/rJava.dll':
+    LoadLibrary failure:  The specified module could not be found.
+  }
+  The final line is a Windows (not \R) diagnostic: the \sQuote{module}
+  that could not be found is not \file{rJava.dll} but something else
+  Windows is looking for (here most likely Java DLLs): if you are lucky
+  there will be a dialog box with more details.
 }
 #endif
 \section{Warning}{

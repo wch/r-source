@@ -117,11 +117,13 @@ barplot(height, \dots)
     names.  Only used if \code{legend.text} is supplied.}
   \item{formula}{a formula where the \code{y} variables are numeric data
     to plot against the categorical \code{x} variables.  The formula
-    can have one of three forms: \preformatted{
+    can have one of three forms:
+    \preformatted{
       y ~ x
       y ~ x1 + x2
-      cbind(y1, y2) ~ x},
-    see the examples.}
+      cbind(y1, y2) ~ x
+    }
+    (see the examples).}
   \item{data}{a data frame (or list) from which the variables in formula
     should be taken.}
   \item{subset}{an optional vector specifying a subset of observations

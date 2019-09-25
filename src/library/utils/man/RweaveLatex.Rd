@@ -240,7 +240,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   If option \code{grdevice} is supplied for a code chunk with both
   \code{fig} and \code{eval} true, the following call is made
   \preformatted{  get(options$grdevice, envir = .GlobalEnv)(name=, width=,
-                                              height=, options)
+                                            height=, options)
 }
   which should open a graphics device.  The chunk's code is then
   evaluated and \code{\link{dev.off}} is called.  Normally a function of

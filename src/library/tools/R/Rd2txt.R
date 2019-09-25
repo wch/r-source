@@ -633,8 +633,10 @@ Rd2txt <-
                "\\sQuote" =,
                "\\dQuote"= writeQ(block, tag) ,
                "\\preformatted"= {
-                   putf("\n")
+                   blankLine()
+                   wrap(FALSE)
                    writeCodeBlock(block, tag)
+                   blankLine()
                },
                "\\verb"= put(block),
                "\\linkS4class" =,

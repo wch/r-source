@@ -56,12 +56,13 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
 
   \code{left.open = TRUE} is occasionally useful, e.g., for survival data.
   For (anti-)symmetry reasons, it is equivalent to using
-  \dQuote{mirrored} data, i.e., the following is always true: \preformatted{
+  \dQuote{mirrored} data, i.e., the following is always true:
+  \preformatted{
     identical(
           findInterval( x,  v,      left.open= TRUE, ...) ,
       N - findInterval(-x, -v[N:1], left.open=FALSE, ...) )
-    }
-    where \code{N <- length(vec)} as above.
+  }
+  where \code{N <- length(vec)} as above.
 }
 \value{
   vector of length \code{length(x)} with values in \code{0:N} (and

@@ -62,17 +62,19 @@ get0(x, envir = pos.to.env(-1L), mode = "any", inherits = TRUE,
 }
 \note{
   With \code{get0()}, instead of the easy to read but somewhat
-  inefficient \preformatted{
-  if (exists(myVarName, envir = myEnvir)) {
-    r <- get(myVarName, envir = myEnvir)
-    ## ... deal with r ...
+  inefficient
+  \preformatted{
+    if (exists(myVarName, envir = myEnvir)) {
+      r <- get(myVarName, envir = myEnvir)
+      ## ... deal with r ...
+    }
   }
-}
-  you now can use the more efficient (and slightly harder to read) \preformatted{
-  if (!is.null(r <- get0(myVarName, envir = myEnvir))) {
-    ## ... deal with r ...
+  you now can use the more efficient (and slightly harder to read)
+  \preformatted{
+    if (!is.null(r <- get0(myVarName, envir = myEnvir))) {
+      ## ... deal with r ...
+    }
   }
-}
 }
 \value{
   \code{exists():} Logical, true if and only if an object of the correct

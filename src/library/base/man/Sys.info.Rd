@@ -53,12 +53,12 @@ Sys.info()
   on a Unix-alike they normally refer to the kernel.  There, usually
   \code{release} contains a numeric version and \code{version} gives
   additional information.  Examples for \code{release}:
-\preformatted{
-  "4.17.11-200.fc28.x86_64" # Linux (Fedora)
-  "3.16.0-5-amd64"          # Linux (Debian)
-  "17.7.0"                  # macOS 10.13.6
-  "5.11"                    # Solaris
-}
+  \preformatted{
+    "4.17.11-200.fc28.x86_64" # Linux (Fedora)
+    "3.16.0-5-amd64"          # Linux (Debian)
+    "17.7.0"                  # macOS 10.13.6
+    "5.11"                    # Solaris
+  }
   
   There is no guarantee that the node or login or user names will be
   what you might reasonably expect.  (In particular on some Linux
