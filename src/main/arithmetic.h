@@ -75,7 +75,7 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
         if (TYPEOF(s2) == type && NO_REFERENCES(s2)) {
 	    if (ATTRIB(s2) != R_NilValue)
 		/* need to remove 'names' attribute if present to
-		   match what copyMostAttrib does. copyMostAttributes
+		   match what copyMostAttrib does. copyMostAttrib()
 		   also skips 'dim' and 'dimnames' but those, here
 		   since those, if present, will be replaced by
 		   attribute cleanup code in R_Binary) */

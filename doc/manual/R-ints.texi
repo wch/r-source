@@ -739,8 +739,8 @@ functions (those which operate element-by-element on a vector and whose
 output is similar to the input) should preserve attributes (except
 perhaps class, and if they do preserve class they need to preserve the
 @code{OBJECT} and S4 bits).  Binary operations normally call
-@findex copyMostAttributes
-@code{copyMostAttributes} to copy most attributes from the longer
+@findex copyMostAttrib
+@code{copyMostAttrib} to copy most attributes from the longer
 argument (and if they are of the same length from both, preferring the
 values on the first).  Here `most' means all except the @code{names},
 @code{dim} and @code{dimnames} which are set appropriately by the code
