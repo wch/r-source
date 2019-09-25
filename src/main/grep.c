@@ -350,7 +350,7 @@ R_pcre2_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
 	    setup_jit(*mcontext);
     }
 # ifdef R_PCRE_LIMIT_RECURSION
-    else if (use_recursion_limit(subject)) 
+    else if (use_recursion_limit(subject))
 	pcre2_set_recursion_limit(*mcontext, (uint32_t) R_pcre_max_recursions());
 
     /* we could use set_depth_limit() in newer versions, but the memory limit
@@ -1135,6 +1135,9 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (!isNull(nmold))
 		setAttrib(ans, R_NamesSymbol, duplicate(nmold));
 	    UNPROTECT(2); /* ans, nmold */
+	} else if (PRIMVAL(op)) { // grepl case
+	    ans = allocVector(LGLSXP, n);
+	    for (i = 0; i < n; i++)  LOGICAL(ans)[i] = NA_LOGICAL;
 	} else {
 	    ans = allocVector(INTSXP, n);
 	    for (i = 0; i < n; i++)  INTEGER(ans)[i] = NA_INTEGER;
@@ -1251,9 +1254,9 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		int rc =
 		    pcre_exec(re_pcre, re_pe, s, (int) strlen(s), 0, 0, ov, 0);
 #endif
-		if(rc >= 0) INTEGER(ind)[i] = 1;
+		if(rc >= 0) LOGICAL(ind)[i] = 1;
 		else {
-		    INTEGER(ind)[i] = 0;
+		    LOGICAL(ind)[i] = 0;
 		    R_pcre_exec_error(rc, i);
 		}
 	    } else {

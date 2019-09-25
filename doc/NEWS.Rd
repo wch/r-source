@@ -330,6 +330,8 @@
       \item \code{pchisq(<LRG>, <LRG>, ncp=100)} no longer takes
       practically forever in some cases.  Hence ditto for corresponding
       \code{qchisq()} calls.
+
+      \item \code{grepl(NA, *)} now returns \code{logical} as documented.
     }
   }
 }

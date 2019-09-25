@@ -3092,6 +3092,13 @@ for(DF in list(d0., d0, d30., d30))
 	    length(r) == 0
 	    dim(r) <= dim(DF) # sometimes r is <0 x 0> when DF is not
 	})
+## many of these '==' calls failed in R <= 3.6.x
+
+
+## grepl(<NA>, ...)
+N <- grepl(NA_character_, "something")
+stopifnot(is.na(N), is.logical(N))
+## gave integer instead of logical in R <= 3.6.1
 
 
 
