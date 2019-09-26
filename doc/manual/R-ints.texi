@@ -405,17 +405,20 @@ The vector types are @code{RAWSXP}, @code{CHARSXP}, @code{LGLSXP},
 @code{VECSXP}, @code{EXPRSXP} and @code{WEAKREFSXP}.  Remember that such
 types are a @code{VECTOR_SEXPREC}, which again consists of the header
 and the same three pointers, but followed by two integers giving the
-length and `true length'@footnote{This is almost unused.  The only
-current use is for hash tables of environments (@code{VECSXP}s), where
-@code{length} is the size of the table and @code{truelength} is the
-number of primary slots in use, and for the reference hash tables in
-serialization (@code{VECSXP}s), where @code{truelength} is the number of
-slots in use.} of the vector, and then followed by the data (aligned as
-required: on most 32-bit systems with a 24-byte @code{VECTOR_SEXPREC}
-node the data can follow immediately after the node).  The data are a
-block of memory of the appropriate length to store `true length'
-elements (rounded up to a multiple of 8 bytes, with the 8-byte blocks
-being the `Vcells' referred in the documentation for @code{gc()}).
+length and `true length'@footnote{The only current use is for hash tables of
+environments (@code{VECSXP}s), where @code{length} is the size of the table
+and @code{truelength} is the number of primary slots in use, for the
+reference hash tables in serialization (@code{VECSXP}s), and for `growable'
+vectors (atomic vectors, @code{VECSXP}s and @code{EXPRSXP}s) which are
+created by slightly over-committing when enlarging a vector during
+subassignment, so that some number of the following enlargements during
+subassignment can be performed in place), where @code{truelength} is the
+number of slots in use.  } of the vector, and then followed by the data
+(aligned as required: on most 32-bit systems with a 24-byte
+@code{VECTOR_SEXPREC} node the data can follow immediately after the node). 
+The data are a block of memory of the appropriate length to store `true
+length' elements (rounded up to a multiple of 8 bytes, with the 8-byte
+blocks being the `Vcells' referred in the documentation for @code{gc()}).
 
 The `data' for the various types are given in the table below.  A lot of
 this is interpretation, i.e.@: the types are not checked.
