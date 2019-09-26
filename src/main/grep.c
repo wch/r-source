@@ -1620,7 +1620,8 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	if (!nmatches) eflags |= REG_NOTBOL;
 	if (res_ptr >= res_alloc) {
-	    if (res_alloc < (2^24)) res_alloc <<= 1;
+	    /* double the buffer size, but limit to 32Mb */
+	    if (res_alloc < 33554432) res_alloc <<= 1;
 	    SETCDR(res_tail, list1(allocVector(INTSXP, res_alloc)));
 	    res_tail = CDR(res_tail);
 	    res_val = INTEGER(CAR(res_tail));
