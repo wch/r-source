@@ -969,6 +969,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     Free(pt); Free(wpt);
 #ifdef HAVE_PCRE2
     if (tables) free((void *)tables);
+    /* new PCRE2 will have pcre2_maketables_free() */
 #else
     if (tables) pcre_free((void *)tables);
 #endif
@@ -1283,6 +1284,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	pcre2_code_free(re);
 	pcre2_match_context_free(mcontext);
 	if (tables)
+	    /* new PCRE2 will have pcre2_maketables_free() */
 	    free((void *)tables);
 #else
 	if (re_pe) pcre_free_study(re_pe);
@@ -2330,6 +2332,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	pcre2_code_free(re);
 	pcre2_match_context_free(mcontext);
 	if (tables)
+	    /* new PCRE2 will have pcre2_maketables_free() */
 	    free((void *)tables);
 #else
 	if (re_pe) pcre_free_study(re_pe);
@@ -3103,6 +3106,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	pcre2_code_free(re);
 	pcre2_match_context_free(mcontext);
 	if (tables)
+	    /* new PCRE2 will have pcre2_maketables_free() */
 	    free((void *)tables);
 #else
 	if (re_pe) pcre_free_study(re_pe);
