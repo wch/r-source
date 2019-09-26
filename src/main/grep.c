@@ -423,7 +423,7 @@ R_pcre_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
 }
 #endif
 
-// FIXME: Protect PCRE/PCRE2 data via contexts.
+// FIXME: Protect PCRE/PCRE2 data via contexts (as well as other data).
 // FIXME: Do not rebuild locale tables repeatedly.
 // FIXME: There is no documented way to free locale tables with PCRE2.
 //        Using free() would not work on Windows if PCRE2 is dynamically
@@ -1742,7 +1742,10 @@ static int count_subs(const char *repl)
     return i;
 }
 
-/* FIXME: use UCP for upper/lower conversion */
+/* FIXME: use UCP for upper/lower conversion
+          could use pcre2_substitute which will take care of that and also
+          supports \u, \l
+*/
 #ifdef HAVE_PCRE2
 static
 char *R_pcre_string_adj(char *target, const char *orig, const char *repl,
