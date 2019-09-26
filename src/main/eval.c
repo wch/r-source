@@ -2118,13 +2118,17 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
     return (eval(Stmt, rho));
 }
 
+#define IS_USER_DATABASE(rho)					\
+    (OBJECT((rho)) && inherits((rho), "UserDefinedDatabase"))
+
 static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
 {
-    if (rho == R_BaseEnv || rho == R_BaseNamespace)
+    if (rho == R_BaseEnv || rho == R_BaseNamespace || IS_USER_DATABASE(rho))
 	return R_NilValue;
     else {
 	R_varloc_t loc = R_findVarLocInFrame(rho, symbol);
-	return (! R_VARLOC_IS_NULL(loc)) ? loc.cell : R_NilValue;
+	return (! R_VARLOC_IS_NULL(loc) && ! IS_ACTIVE_BINDING(loc.cell)) ?
+	    loc.cell : R_NilValue;
     }
 }
 
@@ -4927,14 +4931,7 @@ static R_INLINE void DECLNK_stack(R_bcstack_t *base, R_bcstack_t *top)
 static R_INLINE SEXP FIND_VAR_NO_CACHE(SEXP symbol, SEXP rho, SEXP cell,
 				       R_bcstack_t *stack_base)
 {
-    R_varloc_t loc;
-    /* only need to search the current frame again if
-       binding was special or frame is a base frame */
-    if (cell != R_NilValue ||
-	rho == R_BaseEnv || rho == R_BaseNamespace)
-	loc =  R_findVarLoc(symbol, rho);
-    else
-	loc =  R_findVarLoc(symbol, ENCLOS(rho));
+    R_varloc_t loc =  R_findVarLoc(symbol, rho);
     if (loc.cell && IS_ACTIVE_BINDING(loc.cell)) {
 	INCLNK_stack(stack_base, R_BCNodeStackTop);
 	SEXP value = R_GetVarLocValue(loc);
