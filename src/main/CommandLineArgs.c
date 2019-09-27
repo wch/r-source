@@ -149,7 +149,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		Rp->R_Verbose = TRUE;
 	    }
 	    else if (!strcmp(*av, "--no-echo") ||
-		     !strcmp(*av, "--no-echo") || // "deprecated" from R 4.0.0 (spring 2020)
+		     !strcmp(*av, "--slave") || // "deprecated" from R 4.0.0 (spring 2020)
 		     !strcmp(*av, "-s")) {
 		Rp->R_Quiet = TRUE;
 		Rp->R_NoEcho = TRUE;
