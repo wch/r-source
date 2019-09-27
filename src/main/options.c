@@ -105,7 +105,7 @@ static SEXP FindTaggedItem(SEXP lst, SEXP tag)
 {
     for ( ; lst != R_NilValue ; lst = CDR(lst)) {
 	if (TAG(lst) == tag) {
-	    if (CAR(lst) == R_NilValue) 
+	    if (CAR(lst) == R_NilValue)
 		error("option %s has NULL value", CHAR(PRINTNAME(tag)));
 	    return lst;
 	}
@@ -516,8 +516,8 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    } else if (streql(CHAR(namei), "width")) {
 		int k = asInteger(argi);
 		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
-		    error(_("invalid 'width' parameter, allowed %d...%d"),
-			  R_MIN_WIDTH_OPT, R_MAX_WIDTH_OPT);
+		    error(_("invalid '%s' parameter, allowed %d...%d"),
+			  CHAR(namei), R_MIN_WIDTH_OPT, R_MAX_WIDTH_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "deparse.cutoff")) {
@@ -527,14 +527,14 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "digits")) {
 		int k = asInteger(argi);
 		if (k < R_MIN_DIGITS_OPT || k > R_MAX_DIGITS_OPT)
-		    error(_("invalid 'digits' parameter, allowed %d...%d"),
-			  R_MIN_DIGITS_OPT, R_MAX_DIGITS_OPT);
+		    error(_("invalid '%s' parameter, allowed %d...%d"),
+			  CHAR(namei), R_MIN_DIGITS_OPT, R_MAX_DIGITS_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "expressions")) {
 		int k = asInteger(argi);
 		if (k < R_MIN_EXPRESSIONS_OPT || k > R_MAX_EXPRESSIONS_OPT)
-		    error(_("'expressions' parameter invalid, allowed %d...%d"),
+		    error(_("invalid '%s' parameter, allowed %d...%d"), CHAR(namei),
 			  R_MIN_EXPRESSIONS_OPT, R_MAX_EXPRESSIONS_OPT);
 		R_Expressions = R_Expressions_keep = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
@@ -583,7 +583,26 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "warn")) {
 		if (!isNumeric(argi) || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
+		int k;
+		// k = asInteger(argi) wld give both error + warning
+		if(TYPEOF(argi) == REALSXP) {
+		    int w;
+		    k = IntegerFromReal(REAL_ELT(argi, 0), &w);
+		} else {
+		    k = asInteger(argi);
+		}
+		if (k == NA_INTEGER)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+#ifdef _NOT_YET_
+		char *p = getenv("R_WARN_BOUNDS_OPT");
+		if ((p && (strcmp(p, "yes") == 0)) && (k < -1 || k > 2)) {
+		    int k_n = (k < 0) ? -1 : 2;
+		    REprintf(_("value for '%s' outside of -1:2 is set to %d\n"),
+			     CHAR(namei), k_n);
+		    k = k_n;
+		}
+#endif
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "warning.length")) {
 		int k = asInteger(argi);

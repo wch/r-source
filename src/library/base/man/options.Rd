@@ -419,8 +419,8 @@ getOption(x, default = NULL)
       signalled.  An object called \code{last.warning} is
       created and can be printed through the function
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
-      printed as they occur.  If \code{warn} is two or larger all
-      warnings are turned into errors.}
+      printed as they occur.  If \code{warn} is two (or larger, coercible
+      to integer), all warnings are turned into errors.}
 
     \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
       partial matching is used in argument matching.}
