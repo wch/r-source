@@ -3101,6 +3101,11 @@ stopifnot(is.na(N), is.logical(N))
 ## gave integer instead of logical in R <= 3.6.1
 
 
+## options(warn=1e11) leading to infinite loop -> "C Stack ..." error
+tools::assertError(options(warn = 1+.Machine$integer.max))
+## "worked" and gave problems later in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

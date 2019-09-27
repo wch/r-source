@@ -332,6 +332,9 @@
       \code{qchisq()} calls.
 
       \item \code{grepl(NA, *)} now returns \code{logical} as documented.
+
+      \item \code{options(warn=1e11)} is an error now, instead of later
+      leading to C stack overflow because of infinite recursion.
     }
   }
 }
