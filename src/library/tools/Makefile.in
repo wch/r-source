@@ -18,7 +18,7 @@ pkg = tools
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
 ## avoid bootstrapping issue with internal tzcode.
-R_EXE = R_ENABLE_JIT=0 TZ=UTC $(top_builddir)/bin/R --vanilla --slave
+R_EXE = R_ENABLE_JIT=0 TZ=UTC $(top_builddir)/bin/R --vanilla --no-echo
 
 ## For people who do make -C ../src/library/tools
 update:

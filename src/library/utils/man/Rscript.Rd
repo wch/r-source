@@ -29,7 +29,7 @@
   Other invocations invoke the \R front-end with selected options.  This
   front-end is convenient for writing \samp{#!} scripts since it is an
   executable and takes \code{file} directly as an argument.  Options
-  \option{--slave --no-restore} are always supplied: these imply
+  \option{--no-echo --no-restore} are always supplied: these imply
   \option{--no-save}. Arguments that contain spaces cannot be specified
   directly on the \samp{#!} line, because spaces and tabs are interpreted as
   delimiters and there is no way to protect them from this interpretation on

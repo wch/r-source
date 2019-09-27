@@ -24,7 +24,7 @@ commandArgs(TRUE)
 q(status=7)
 
 This invokes R with a command line like
-R --slave --no-restore --vanilla --file=foo [script_args]
+R --no-echo --no-restore --vanilla --file=foo [script_args]
 
 */
 
@@ -99,7 +99,7 @@ void usage(void)
     fprintf(stderr, "  --default-packages=list\n");
     fprintf(stderr, "                      Where 'list' is a comma-separated set\n");
     fprintf(stderr, "                        of package names, or 'NULL'\n");
-    fprintf(stderr, "or options to R, in addition to --slave --no-restore, such as\n");
+    fprintf(stderr, "or options to R, in addition to --no-echo --no-restore, such as\n");
     fprintf(stderr, "  --save              Do save workspace at the end of the session\n");
     fprintf(stderr, "  --no-environ        Don't read the site and user environment files\n");
     fprintf(stderr, "  --no-site-file      Don't read the site-wide Rprofile\n");
@@ -219,7 +219,7 @@ int main(int argc_, char *argv_[])
     snprintf(cmd, PATH_MAX+1, "%s/bin/R", p);
 #endif
     av[ac++] = cmd;
-    av[ac++] = "--slave";
+    av[ac++] = "--no-echo";
     av[ac++] = "--no-restore";
 
     if(argc == 2) {

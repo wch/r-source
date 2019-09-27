@@ -75,7 +75,7 @@ Options:
   --min-vsize=N         Set vector heap minimum to N bytes; '4M' = 4 MegaB
   -q, --quiet           Don't print startup message
   --silent              Same as --quiet
-  --slave               Make R run as quietly as possible
+  -s, --no-echo         Make R run as quietly as possible
   --interactive         Force an interactive session
   --verbose             Print more information about progress
   -d, --debugger=NAME   Run R through debugger NAME

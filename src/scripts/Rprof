@@ -7,4 +7,4 @@ while test -n "${1}"; do
 done
 
 ## NB: Apple's ICU needs LC_COLLATE set when R is started.
-echo 'tools:::.Rprof()' | R_DEFAULT_PACKAGES=utils LC_COLLATE=C "${R_HOME}/bin/R" --vanilla --slave --args ${args}
+echo 'tools:::.Rprof()' | R_DEFAULT_PACKAGES=utils LC_COLLATE=C "${R_HOME}/bin/R" --vanilla --no-echo --args ${args}

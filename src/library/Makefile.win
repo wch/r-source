@@ -14,7 +14,7 @@ MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 
-R_EXE = $(top_builddir)/$(BINDIR)/Rterm --vanilla --slave
+R_EXE = $(top_builddir)/$(BINDIR)/Rterm --vanilla --no-echo
 
 .SUFFIXES: .Rdts
 

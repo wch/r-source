@@ -6008,14 +6008,14 @@ add_dummies <- function(dir, Log)
         setwd(startdir)
     }
 
-    ## all the analysis code is run with --slave
+    ## all the analysis code is run with --no-echo
     ## examples and tests are not.
     R_opts <- "--vanilla"
-    R_opts2 <- "--vanilla --slave"
+    R_opts2 <- "--vanilla --no-echo"
     ## do run Renviron.site for some multiarch runs
     ## We set R_ENVIRON_USER to skip .Renviron files.
     R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
-    R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
+    R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --no-echo"
     env0 <- if(WINDOWS) "R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''"
 
     msg_DESCRIPTION <-

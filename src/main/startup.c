@@ -150,7 +150,7 @@ void R_SaveGlobalEnv(void)
 void R_DefParams(Rstart Rp)
 {
     Rp->R_Quiet = FALSE;
-    Rp->R_Slave = FALSE;
+    Rp->R_NoEcho = FALSE;
     Rp->R_Interactive = TRUE;
     Rp->R_Verbose = FALSE;
     Rp->RestoreAction = SA_RESTORE;
@@ -268,7 +268,7 @@ static void SetSize(R_size_t vsize, R_size_t nsize)
 void R_SetParams(Rstart Rp)
 {
     R_Quiet = Rp->R_Quiet;
-    R_Slave = Rp->R_Slave;
+    R_NoEcho = Rp->R_NoEcho;
     R_Interactive = Rp->R_Interactive;
     R_Verbose = Rp->R_Verbose;
     RestoreAction = Rp->RestoreAction;

@@ -289,7 +289,7 @@ void attribute_hidden InitOptions(void)
     v = CDR(v);
 
     SET_TAG(v, install("echo"));
-    SETCAR(v, ScalarLogical(!R_Slave));
+    SETCAR(v, ScalarLogical(!R_NoEcho));
     v = CDR(v);
 
     SET_TAG(v, install("verbose"));
@@ -649,7 +649,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* Should be quicker than checking options(echo)
 		   every time R prompts for input:
 		   */
-		R_Slave = !k;
+		R_NoEcho = !k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "OutDec")) {

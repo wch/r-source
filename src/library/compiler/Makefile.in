@@ -16,7 +16,7 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 pkg = compiler
 
 ## avoid bootstrapping issue with internal tzcode.
-R_EXE = R_ENABLE_JIT=0 TZ=UTC $(top_builddir)/bin/R --vanilla --slave
+R_EXE = R_ENABLE_JIT=0 TZ=UTC $(top_builddir)/bin/R --vanilla --no-echo
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 DEFPKGS = NULL

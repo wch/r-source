@@ -139,7 +139,7 @@ rtags(path.expand('${SRCDIR}'), pattern = '[.]*\\\\\.[RrSs]$',
       verbose = ${VERBOSE}, 
       ofile = '${ofile}', 
       append = ${APPEND}, 
-      recursive = TRUE)" | "${RPROG}" --slave
+      recursive = TRUE)" | "${RPROG}" --no-echo
 
 fi
 

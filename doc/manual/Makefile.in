@@ -180,7 +180,7 @@ version.tex: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "$${v}") > $@
 
-R_EXE = $(top_builddir)/bin/R --slave --vanilla
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 
 $(texinputs_BASE): FORCE
 	@(pkg=`basename $@ -pkg.tex`; \

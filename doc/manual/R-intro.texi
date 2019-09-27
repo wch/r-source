@@ -7165,7 +7165,7 @@ maximum allowed on that version of Windows.
 @itemx -q
 Do not print out the initial copyright and welcome messages.
 
-@item --slave
+@item --no-echo
 Make @R{} run as quietly as possible.  This option is intended to
 support programs which use @R{} to compute results for them.  It implies
 @option{--quiet} and @option{--no-save}.
@@ -7494,7 +7494,7 @@ Pinard) is to use a @emph{here document} like
 @example
 #!/bin/sh
 [environment variables can be set here]
-R --slave [other options] <<EOF
+R --no-echo [other options] <<EOF
 
    R program goes here...
 

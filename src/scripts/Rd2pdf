@@ -9,4 +9,4 @@ done
 
 echo 'tools:::..Rd2pdf()' \
 | R_DEFAULT_PACKAGES= LC_COLLATE=C "${R_HOME}/bin/R" \
---vanilla --slave --args ${args}
+--vanilla --no-echo --args ${args}

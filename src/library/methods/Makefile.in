@@ -16,7 +16,7 @@ pkg = methods
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 ## Note that R_COMPILER_SUPPRESS_ALL is now on by default
 EXTRAS = @BYTE_COMPILE_PACKAGES_TRUE@ _R_COMPILE_PKGS_=1 R_COMPILER_SUPPRESS_ALL=1
 

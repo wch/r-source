@@ -22,7 +22,7 @@ DISTFILES = Makefile.in  Makefile.win $(INSTFILES)
 ## is done in C order in massageExamples(), but we want to test the
 ## orderings users use.
 R_EXE = LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE='nothing' \
-  $(top_builddir)/bin/R --slave --vanilla
+  $(top_builddir)/bin/R --vanilla --no-echo
 
 all: Makefile test-Examples-Base
 

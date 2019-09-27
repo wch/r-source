@@ -155,7 +155,7 @@ getOption(x, default = NULL)
 
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,
       when it controls whether input is echoed.  Command-line option
-      \option{--slave} sets this to \code{FALSE}, but otherwise
+      \option{--no-echo} sets this to \code{FALSE}, but otherwise
       it starts the session as \code{TRUE}.}
 
     \item{\code{encoding}:}{The name of an encoding, default

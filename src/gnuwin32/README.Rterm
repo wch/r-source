@@ -5,7 +5,7 @@ Rterm.exe can be used in three distinct modes:
 
 1) Interactively in an MSDOS / Commands window.
 2) In batch mode by redirecting its input from a file or pipe.
-3) As a slave process for ESS mode in NTEmacs with flag --ess.
+3) As a no-echo process for ESS mode in NTEmacs with flag --ess.
 
 Its purpose is to provide something similar to the main Unix interface
 for R, including a batch capability.  The command-line arguments are

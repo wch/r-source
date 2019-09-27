@@ -15,7 +15,7 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 
 pkg = tcltk
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/zzz.R`
 DEFPKGS = NULL

@@ -44,11 +44,11 @@ test-Internet2:
 
 test-BasePackages:
 	@$(MKINSTALLDIRS) Packages
-	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='base')" | $(R) --slave
+	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='base')" | $(R) --no-echo
 
 test-Recommended:
 	@$(MKINSTALLDIRS) Packages
-	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='recommended')" | $(R) --slave
+	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='recommended')" | $(R) --no-echo
 
 
 mostlyclean: clean

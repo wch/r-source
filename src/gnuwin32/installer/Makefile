@@ -117,12 +117,12 @@ md5sums:
 	@echo "adding MD5 checksums"
 	@(cd $(RPREFIX); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
-	  ../../../../$(BINDIR)/Rterm.exe --vanilla --slave)
+	  ../../../../$(BINDIR)/Rterm.exe --vanilla --no-echo)
 
 PDF_FILES = $(wildcard $(RPREFIX)/library/*/doc/*.pdf)
 
 fixups:
-	echo "make.packages.html(.Library,temp=FALSE,verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library,temp=FALSE,verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --no-echo LC_COLLATE=C
 	$(CP) -pRf $(R_HOME)/Tcl $(RPREFIX)
 	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
 ifneq ($(strip $(QPDF)),)
@@ -205,11 +205,11 @@ distclean: clean
 	rm -f R*-win*.exe R*-win*.msi
 
 myR:
-	echo "make.packages.html(.Library, verbose=FALSE)" | "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library, verbose=FALSE)" | "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --no-echo LC_COLLATE=C
 	@echo "adding MD5 checksums"
 	@(cd "$(IMAGEDIR)"; echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
-	  "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --slave)
+	  "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --no-echo)
 	../../../bin$(R_ARCH)/Rscript JRins.R \
 	  $(RPREFIX) "$(IMAGEDIR)" $(MDISDI) \
 	  $(HelpStyle) $(Producer) "$(ISDIR)"

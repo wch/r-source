@@ -17,7 +17,7 @@ ECHO = echo
 ## Note that this does not set LC_COLLATE.  The collation of examples
 ## is done in C order in massageExamples(), but we want to test the
 ## orderings users use.
-R_EXE = $(R_HOME)/$(BINDIR)/Rterm --slave --vanilla \
+R_EXE = $(R_HOME)/$(BINDIR)/Rterm --vanilla --no-echo \
   LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE=nothing
 
 all: test-Examples-Base

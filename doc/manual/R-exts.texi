@@ -1318,7 +1318,7 @@ are written to a @file{.Rout} file.  If there is a
 corresponding@footnote{The best way to generate such a file is to copy
 the @file{.Rout} from a successful run of @command{R CMD check}.  If you
 want to generate it separately, do run @R{} with options
-@option{--vanilla --slave} and with environment variable
+@option{--vanilla --no-echo} and with environment variable
 @env{LANGUAGE=en} set to get messages in English.  Be careful not to use
 output with the option @option{--timings} (and note that
 @option{--as-cran} sets it).} @file{.Rout.save} file, these two are
@@ -1403,7 +1403,9 @@ not attaching them by using @code{requireNamespace(@var{pkg}, quietly =
 TRUE)} and using @code{@var{pkg}::} to refer to objects in the
 namespace).
 
-If your data files are large and you are not using @samp{LazyData} you
+If you are not using @samp{LazyData} and either your data files are large
+or e.g., you use @file{data/foo.R} scripts to produce your data, loading
+your namespace, you 
 can speed up installation by providing a file @file{datalist} in the
 @file{data} subdirectory.  This should have one line per topic that
 @code{data()} will find, in the format @samp{foo} if @code{data(foo)}
@@ -10655,7 +10657,7 @@ display here)
 @example
 PKGB_PATH=`echo 'library(packB);
   cat(system.file("lib",  package="packB", mustWork=TRUE))' \
- | "$@{R_HOME@}/bin/R" --vanilla --slave`
+ | "$@{R_HOME@}/bin/R" --vanilla --no-echo`
 PKG_LIBS="$(PKGB_PATH)$(R_ARCH)/libpackB.a"
 @end example
 
@@ -10666,7 +10668,7 @@ a shared object, @file{.so}, on that platform) we could use
 @example
 PKGB_PATH=`echo 'library(packB);
   cat(system.file("lib", package="packB", mustWork=TRUE))' \
- | "$@{R_HOME@}/bin/R" --vanilla --slave`
+ | "$@{R_HOME@}/bin/R" --vanilla --no-echo`
 PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
 
@@ -10688,7 +10690,7 @@ e.g.@:
 @example
 PKGB_PATH=`echo 'library(packB);
   cat(system.file("lib", package="packB", mustWork=TRUE)))' \
- | "$@{R_HOME@}/bin/R" --vanilla --slave`
+ | "$@{R_HOME@}/bin/R" --vanilla --no-echo`
 PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -Wl,-rpath,"$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
 
@@ -10739,7 +10741,7 @@ where it is by something like
 @example
 PKGB_PATH=`echo 'library(packB);
   cat(system.file("libs", package="packB", mustWork=TRUE))' \
- | rterm --vanilla --slave`
+ | rterm --vanilla --no-echo`
 PKG_LIBS= -L"$(PKGB_PATH)$(R_ARCH)" -lexB
 @end example
 

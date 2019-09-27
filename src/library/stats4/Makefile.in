@@ -15,7 +15,7 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 
 pkg = stats4
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 DEFPKGS = "methods,graphics,stats"
 
 all: Makefile DESCRIPTION

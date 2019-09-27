@@ -173,7 +173,7 @@ version.tex: $(top_srcdir)/VERSION $(SVN_REV)
 %-pkg.tex: FORCE
 	@$(ECHO) "collecting LaTeX docs for package \`$*' ..."
 	@$(ECHO) "tools:::.pkg2tex(\"$(top_srcdir)/library/$*\")" \
-	    | LC_ALL=C $(R_EXE) --slave --vanilla
+	    | LC_ALL=C $(R_EXE) --vanilla --no-echo
 FORCE:
 
 version.texi: Makefile.win $(top_srcdir)/VERSION $(SVN_REV)

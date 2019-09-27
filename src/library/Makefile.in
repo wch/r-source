@@ -15,7 +15,7 @@ DISTFILES = Makefile.in Makefile.win
 
 SUBDIRS = profile $(R_PKGS_BASE) translations Recommended
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 
 .SUFFIXES: .inn .Rdts .Rdh
 

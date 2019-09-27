@@ -22,7 +22,7 @@ SUBDIRS = html manual
 
 HELP2MAN = perl $(top_srcdir)/tools/help2man.pl
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 
 all: Makefile R docs
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

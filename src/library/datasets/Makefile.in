@@ -15,7 +15,7 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 
 pkg = datasets
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"

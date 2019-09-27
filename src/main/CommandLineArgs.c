@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2013   The R Core Team
+ *  Copyright (C) 1997-2019   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -148,10 +148,11 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    else if (!strcmp(*av, "--verbose")) {
 		Rp->R_Verbose = TRUE;
 	    }
-	    else if (!strcmp(*av, "--slave") ||
+	    else if (!strcmp(*av, "--no-echo") ||
+		     !strcmp(*av, "--no-echo") || // "deprecated" from R 4.0.0 (spring 2020)
 		     !strcmp(*av, "-s")) {
 		Rp->R_Quiet = TRUE;
-		Rp->R_Slave = TRUE;
+		Rp->R_NoEcho = TRUE;
 		Rp->SaveAction = SA_NOSAVE;
 	    }
 	    else if (!strcmp(*av, "--no-site-file")) {

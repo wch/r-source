@@ -67,7 +67,7 @@ typedef enum {
 typedef struct
 {
     Rboolean R_Quiet;
-    Rboolean R_Slave;
+    Rboolean R_NoEcho;
     Rboolean R_Interactive;
     Rboolean R_Verbose;
     Rboolean LoadSiteFile;

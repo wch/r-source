@@ -330,7 +330,7 @@ pdfdocs manuals:
 	@$(MK) -C ../../doc/manual -f Makefile.win clean
 	@$(MK) -C ../../doc/manual -f Makefile.win
 
-R_EXE = ../../$(BINDIR)/Rterm.exe --vanilla --slave
+R_EXE = ../../$(BINDIR)/Rterm.exe --vanilla --no-echo
 
 ## must come after recommended
 vignettes:

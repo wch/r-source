@@ -2,7 +2,7 @@
 
 R_EXE="${R_HOME}/bin/R"
 
-R_SWEAVE_OPTIONS=${R_SWEAVE_OPTIONS:='--no-restore --slave'}
+R_SWEAVE_OPTIONS=${R_SWEAVE_OPTIONS:='--no-restore --no-echo'}
 
 args=
 while test -n "${1}"; do

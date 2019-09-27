@@ -124,7 +124,7 @@ typedef long long int _lli_t;
 # include <Startup.h>
 #endif
 
-#define NCONNECTIONS 128 /* snow needs one per slave node */
+#define NCONNECTIONS 128 /* snow needs one per no-echo node */
 #define NSINKS 21
 
 static Rconnection Connections[NCONNECTIONS];

@@ -950,7 +950,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
     if(!R_Interactive) {
 	size_t ll;
 	int err = 0;
-	if (!R_Slave) {
+	if (!R_NoEcho) {
 	    fputs(prompt, stdout);
 	    fflush(stdout); /* make sure prompt is output */
 	}
@@ -993,7 +993,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    && (ll == 0 || buf[ll - 1] != '\n') && ll < (size_t)len) {
 	    buf[ll++] = '\n'; buf[ll] = '\0';
 	}
-	if (!R_Slave) {
+	if (!R_NoEcho) {
 	    fputs((char *)buf, stdout);
 	    fflush(stdout);
 	}

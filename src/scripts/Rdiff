@@ -7,4 +7,4 @@ while test -n "${1}"; do
   shift
 done
 
-R_DEFAULT_PACKAGES=NULL "${R_HOME}/bin/R" -e 'tools:::.Rdiff()' --vanilla --slave --args ${args}
+R_DEFAULT_PACKAGES=NULL "${R_HOME}/bin/R" -e 'tools:::.Rdiff()' --vanilla --no-echo --args ${args}

@@ -126,7 +126,7 @@ static char BrowsePrompt[20];
 
 static const char *R_PromptString(int browselevel, int type)
 {
-    if (R_Slave) {
+    if (R_NoEcho) {
 	BrowsePrompt[0] = '\0';
 	return BrowsePrompt;
     }
@@ -1090,8 +1090,8 @@ extern SA_TYPE SaveAction; /* from src/main/startup.c */
 
 static void end_Rmainloop(void)
 {
-    /* refrain from printing trailing '\n' in slave mode */
-    if (!R_Slave)
+    /* refrain from printing trailing '\n' in no-echo mode */
+    if (!R_NoEcho)
 	Rprintf("\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */

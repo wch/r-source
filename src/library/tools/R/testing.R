@@ -346,7 +346,7 @@ testInstalledPackage <-
                    cmd <-
                        sprintf("invisible(tools::Rdiff('%s','%s',TRUE,TRUE))",
                                outfile, savefile)
-                   out <- R_runR(cmd, "--vanilla --slave")
+                   out <- R_runR(cmd, "--vanilla --no-echo")
                    if(length(out)) {
                        if(strict)
                            message(" ERROR")
@@ -369,7 +369,7 @@ testInstalledPackage <-
                     cmd <-
                         sprintf("invisible(tools::Rdiff('%s','%s',TRUE,TRUE))",
                                 outfile, prevfile)
-                    out <- R_runR(cmd, "--vanilla --slave")
+                    out <- R_runR(cmd, "--vanilla --no-echo")
                     if(length(out)) {
                         message(" NOTE")
                         writeLines(paste0("  ", out))
@@ -540,7 +540,7 @@ testInstalledPackage <-
         if (!is.null(Log))
             cat("  Creating ", sQuote(Rfile), "\n", sep = "", file = Log)
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                     "CMD BATCH --no-timing --vanilla --slave", f)
+                     "CMD BATCH --no-timing --vanilla --no-echo", f)
         if (system(cmd)) {
             warning("creation of ", sQuote(Rfile), " failed", domain = NA)
             if (!is.null(Log))
@@ -623,7 +623,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
                 stop("file ", sQuote(f), " not found", domain = NA)
             message("creating ", sQuote(f), domain = NA)
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                         "--vanilla --slave -f", fin)
+                         "--vanilla --no-echo -f", fin)
             if (system(cmd))
                 stop("creation of ", sQuote(f), " failed", domain = NA)
             ## This needs an extra trailing space to match the .Rin.R rule

@@ -78,7 +78,7 @@ if(FALSE) {
         ## because it cannot find the tests startup file)
         env <- paste(env, "R_TESTS=")
         opts <- paste(if(deps_only) "--vanilla" else "--no-save",
-                      "--slave")
+                      "--no-echo")
         R_runR(cmd = cmd, Ropts = opts, env = env, ...)
     }
 

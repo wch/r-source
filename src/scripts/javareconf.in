@@ -267,7 +267,7 @@ if test "${JAVA_LIBS}" = "~autodetect~"; then
            jmdinc=''
            jmdirs=''
 	   ## we are not in configure, so we need to find the OS from R
-	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --slave 2>/dev/null`
+	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --no-echo 2>/dev/null`
            ## put the most probable locations for each system in the first place
            case "${host_os}" in
              darwin*)  jmdirs=darwin;;

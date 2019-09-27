@@ -2,7 +2,7 @@
 
 R_EXE="${R_HOME}/bin/R"
 
-R_STANGLE_OPTIONS=${R_STANGLE_OPTIONS:='--vanilla --slave'}
+R_STANGLE_OPTIONS=${R_STANGLE_OPTIONS:='--vanilla --no-echo'}
 
 args=
 while test -n "${1}"; do

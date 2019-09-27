@@ -54,7 +54,7 @@ if test -z "${timing}"; then
   export R_BATCH
 fi
 ## this used to set options(echo=TRUE), but that is the default
-## except for --slave, and why inhibit the latter?
+## except for --no-echo, and why inhibit the latter?
 
 ## need to put -f first in case user does --args
 ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} >${out} 2>&1

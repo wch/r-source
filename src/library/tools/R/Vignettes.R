@@ -582,7 +582,7 @@ buildVignettes <-
             tlim <- get_timeout(Sys.getenv("_R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_",
                                            Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
             tf <- tempfile()
-            status <- R_runR(Rcmd, "--vanilla --slave", elibs,
+            status <- R_runR(Rcmd, "--vanilla --no-echo", elibs,
                              stdout = tf, stderr = tf, timeout = tlim)
             unlink(tf2)
             ##print(status)

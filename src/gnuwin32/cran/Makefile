@@ -9,7 +9,7 @@ RVER = $(shell cut -d' ' -f1 ../../../VERSION | sed -n 1p)
 DATE = $(shell date +%F)
 SIZEMB = $(shell du -m ../installer/$(RPREFIX)-win.exe | cut -f1)
 
-R_EXE = $(R_HOME)/$(BINDIR)/rterm.exe --vanilla --slave
+R_EXE = $(R_HOME)/$(BINDIR)/rterm.exe --vanilla --no-echo
 
 all:
 	$(CP) ../../../doc/html/CHANGES.html CHANGES.$(RPREFIX).html

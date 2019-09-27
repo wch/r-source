@@ -9,7 +9,7 @@ R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats
 top_srcdir = ..
 ECHO = echo
 
-R_EXE = ../bin/R --vanilla --slave
+R_EXE = ../bin/R --vanilla --no-echo
 update-RGui:
 	@echo "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
