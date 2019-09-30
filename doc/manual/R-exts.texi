@@ -2600,7 +2600,7 @@ define a module of the same name in multiple source files.
 
 @R{} can be built without a C++ compiler although one is available (but
 not necessarily installed) on all known @R{} platforms.  As from @R{}
-3.7.0 a C++ compiler will be selected only if it conforms to the 2011
+4.0.0 a C++ compiler will be selected only if it conforms to the 2011
 standard (`C++11').  A minor update@footnote{The changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
 (`C++14') was published in December 2014.  The latest standard (`C++17')
@@ -5024,7 +5024,7 @@ extensions (such as POSIX functions) are supported.
 
 @strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
 where available@footnote{which it is on all known platforms, and is
-required as from @R{} 3.7.0}.  However, in earlier versions the default
+required as from @R{} 4.0.0}.  However, in earlier versions the default
 standard was that of the compiler used, often C++98 or C++14.  Packages
 which are for use only with @R{} 3.6.0 or later can assume C++11 or
 specify a later standard.  However, those which may be used in earlier
@@ -13131,7 +13131,7 @@ Functions @code{Rvprintf} and @code{REvprintf} are analogues using the
 @code{vprintf} interface.  Because that is a C99@footnote{also part of
 C++11.} interface, they are only defined by @file{R_ext/Print.h} in C++
 code if the macro @code{R_USE_C99_IN_CXX} is defined when it is
-included or, as from @R{} 3.7.0, a C++11 compiler is used.
+included or, as from @R{} 4.0.0, a C++11 compiler is used.
 
 Another circumstance when it may be important to use these functions is
 when using parallel computation on a cluster of computational nodes, as

@@ -41,7 +41,7 @@ next
   \item{seq}{An expression evaluating to a vector (including a list and
     an \link{expression}) or to a \link{pairlist} or \code{NULL}.  A
     factor value will be coerced to a character vector.  As from \R
-    3.7.0 this can be a long vector.}
+    4.0.0 this can be a long vector.}
   \item{expr, cons.expr, alt.expr}{
     An \emph{expression} in a formal sense.  This is either a
     simple expression or a so-called \emph{compound expression}, usually

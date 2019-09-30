@@ -95,7 +95,7 @@
 }
 
 \section{Historical comment}{
-  Before \R 3.7.0, file paths marked as being in Latin-1 or UTF-8 were
+  Before \R 4.0.0, file paths marked as being in Latin-1 or UTF-8 were
   silently translated to the native encoding using escapes such as
   \samp{<e7>} or \samp{<U+00e7>}.  This created valid file names but
   maybe not those intended.

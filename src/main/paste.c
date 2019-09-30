@@ -278,7 +278,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /*
-  Encoding support added for R 3.7.0.  One would normally expect file
+  Encoding support added for R 4.0.0.  One would normally expect file
   paths (and their components) to be in the session encoding, but on
   Windows there is some support for Unicode paths encoded (inside R) in UTF-8.
 

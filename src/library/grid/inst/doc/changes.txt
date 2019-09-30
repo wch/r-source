@@ -1,5 +1,5 @@
 
-Changes from grid_3.6.* to grid_3.7.0:
+Changes from grid_3.6.* to grid_4.0.0:
 -------------------------------------
 
 1.  upViewport() or popViewport() now correctly reverts to previous

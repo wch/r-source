@@ -3141,7 +3141,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"3.7.0"}.
+string containing the current @R{} version, for example @code{"4.0.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -5438,7 +5438,7 @@ long-term support, e.g.@: 8 or 11 (but not 9, 10 or 12 which have/had a
 6-month lifetime).
 
 Binary distributions of @R{} are built against a specific version
-(e.g.@: 9) of Java so @command{sudo R CMD javareconf} will likely be
+(e.g.@: 11.0.1) of Java so @command{sudo R CMD javareconf} will likely be
 needed before using Java-using packages.
 
 To see what compatible versions of Java are currently installed, run

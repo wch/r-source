@@ -1058,7 +1058,7 @@ SEXP installTrChar(SEXP x)
 }
 
 /* Translates as from R 3.6.0.
-   As from R 3.7.0 unused in newly installed code as installChar is
+   As from R 4.0.0 unused in newly installed code as installChar is
    remapped to Rf_installTrChar. 
  */
 SEXP Rf_installChar(SEXP x)
