@@ -8,6 +8,9 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{USER-VISIBLE CHANGES}{
     \itemize{
+       \item The internal version number of R-devel has been set to 4.0.0,
+       reflecting the intention that the next non-patch release should be 4.0.0.
+
        \item \R now builds by default against a PCRE2 library for Perl-like
        regular expressions if available at build time on non-Windows
        platforms (otherwise PCRE1 is used as in older versions of \R).
