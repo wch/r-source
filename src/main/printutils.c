@@ -93,19 +93,19 @@ R_size_t R_Decode2Long(char *p, int *ierr)
 	REprintf("R_Decode2Long(): v=%ld\n", v);
     // NOTE: currently, positive *ierr are not differentiated in the callers:
     if(p[0] == 'G') {
-	if((Giga * (double)v) > R_SIZE_T_MAX) { *ierr = 4; return(v); }
+	if((Giga * (double)v) > (double) R_SIZE_T_MAX) { *ierr = 4; return(v); }
 	return (R_size_t) Giga * v;
     }
     else if(p[0] == 'M') {
-	if((Mega * (double)v) > R_SIZE_T_MAX) { *ierr = 1; return(v); }
+	if((Mega * (double)v) > (double) R_SIZE_T_MAX) { *ierr = 1; return(v); }
 	return (R_size_t) Mega * v;
     }
     else if(p[0] == 'K') {
-	if((1024 * (double)v) > R_SIZE_T_MAX) { *ierr = 2; return(v); }
+	if((1024 * (double)v) > (double) R_SIZE_T_MAX) { *ierr = 2; return(v); }
 	return (1024*v);
     }
     else if(p[0] == 'k') {
-	if((1000 * (double)v) > R_SIZE_T_MAX) { *ierr = 3; return(v); }
+	if((1000 * (double)v) > (double) R_SIZE_T_MAX) { *ierr = 3; return(v); }
 	return (1000*v);
     }
     else {
@@ -614,7 +614,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 
        +2 allows for quotes, +6 for UTF_8 escapes.
      */
-    if(5.*cnt + 8 > SIZE_MAX)
+    if(5.*cnt + 8 > (double) SIZE_MAX)
 	error(_("too large string (nchar=%d) => 5*nchar + 8 > SIZE_MAX"));
     size_t q_len = 5*(size_t)cnt + 8;
     if(q_len < w) q_len = (size_t) w;
