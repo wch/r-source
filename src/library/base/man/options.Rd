@@ -421,7 +421,7 @@ getOption(x, default = NULL)
       on progress?  Set to \code{TRUE} by the command-line option
       \option{--verbose}.}
 
-    \item{\code{warn}:}{sets the handling of warning messages.  If
+    \item{\code{warn}:}{integer value to set the handling of warning messages.  If
       \code{warn} is negative all warnings are ignored.  If \code{warn}
       is zero (the default) warnings are stored until the top--level
       function returns.  If 10 or fewer warnings were signalled they
