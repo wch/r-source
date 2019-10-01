@@ -1075,11 +1075,15 @@ add_dummies <- function(dir, Log)
             if(length(Rver) && Rver[[1L]]$op == ">=") {
                 ver <- unclass(Rver[[1L]]$version)[[1L]]
                 thisver <- unclass(getRversion())[[1L]]
-                ## needs updating if we ever go to 4.0
-                tv <- if(thisver[1L] == 3L) thisver[2L] - 2L else 4L
-                if (length(ver) == 3L && ver[3L] != 0 &&
-                    ((ver[1L] > 3L) ||
-                     (ver[1L] == 3L) && (ver[2L] >= tv) )) {
+                ## needs updating if we ever go to 5.0
+                notOK <- length(ver) == 3L && ver[3L] != 0
+                if (notOK && (
+                    ## report only for last two versions,
+                    ## currently 3.5, 3.6 and 4.0
+                    ((ver[1L] == 4L) && (ver[2L] >= max(0L, thisver[2L] - 2L)))
+                    ||
+                    ((ver[1L] == 3L) && (ver[2L] >= thisver[2L] + 5L))
+                    )) {
                     ## This is not quite right: may have NOTE-d above
                     if(Check_R_deps == "warn") warningLog(Log)
                     else if(!any) noteLog(Log)
