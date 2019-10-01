@@ -346,6 +346,10 @@
 
       \item \code{options(warn=1e11)} is an error now, instead of later
       leading to C stack overflow because of infinite recursion.
+
+      \item \code{R_tryCatch} no longer transfers control for all
+      conditions. Reported and patch provided by Linoel Henry in
+      \PR{17617}.
     }
   }
 }
