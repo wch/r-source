@@ -4869,14 +4869,21 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wcatch-value=\\]",
                              ": warning: .* \\[-Wlto-type-mismatch\\]",
                              ": warning: .* \\[-Wunused-value\\]",
-                             ## warning in g++, fatal in clang.
+                             ## warning in g++, fatal in clang++.
                              ": warning: .* \\[-Wnarrowing\\]",
-                             ## -pedantic warning at -O2, fatal at -O3
+                             ## -pedantic warning in g++, fatal in clang and ODS
                              ": warning: initializer element is not a constant expression",
                              ": warning: range expressions in switch statements are non-standard",
+                             ## clang version is
+                             ": warning: use of GNU case range extension",
                              ": warning: ordered comparison of pointer with integer zero",
+                             ## clang version is
+                             ": warning: ordered comparison between pointer and zero",
                              ": warning: initialization of a flexible array member",
+                             ## clang version is
+                             ": warning: flexible array initialization is a GNU extension",
                              ": warning: C[+][+] designated initializers",
+                             ": warning: designated initializers are a C99 feature",
                              ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
