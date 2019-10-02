@@ -4383,10 +4383,11 @@ variable and in the case of standard assignment assign it in the local
 frame if it is not assigned there already. They also prepare the stack
 for the assignment process.  The stack invariant maintained by the
 assignment process is that the current right hand side value is on the
-top, followed by the evaluated left hand side values and the original
-right hand side value. Thus the start instruction leaves the right
-hand side value, the value of the left hand side variable, and again
-the right hand side value on the top of the stack.
+top, followed by the evaluated left hand side values, the binding
+cell, and the original right hand side value. Thus the start
+instruction leaves the right hand side value on the top, then the
+value of the left hand side variable, the binding cell, and again the
+right hand side value on the stack.
 
 The end instruction finds the final right hand side value followed by
 the original right hand side value on the top of the stack.  The final

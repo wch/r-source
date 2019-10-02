@@ -359,6 +359,45 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
 #define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
 
+/* To make complex assignments a bit safer, in particular with
+   reference counting, a bit is set on the LHS binding cell or symbol
+   at the beginning of the complex assignment process and unset at the
+   end.
+
+   - When the assignment bit is set and a new value is assigned to the
+     binding then the reference count on the old value is not
+     decremented. This prevents moving a single binding from the LHS
+     variable of the assignment to another variable during the
+     assignment process.
+
+  - If a complex assignment tries to update a binding that already has
+    its bit set then, the value of the binding is shallow-duplicated
+    before proceeding. This ensures that the structure involved in the
+    original complex assignment will not be mutated by further R level
+    assignments during the original assignment process.
+
+  For now, no attempt is made to unset the bit if the end of an
+  assignment is not reached because of a jump. This may result in some
+  unnecessary duplications. This could be prevented by maintaining a
+  stack of pending assignments to resent the bits on jump, but that
+  seems like overkill.
+
+  It might also be useful to use this bit to communicate to functions
+  when they are used in a getter/setter context.
+
+  The bit used is bit 11 in the 'gp' field. An alternative would be to
+  take a bit from the 'extra' field.
+
+  LT
+*/
+
+#define ASSIGNMENT_PENDING_MASK (1 << 11)
+#define ASSIGNMENT_PENDING(x) ((x)->sxpinfo.gp & ASSIGNMENT_PENDING_MASK)
+#define SET_ASSIGNMENT_PENDING(x, v) do {			\
+	if (v) (((x)->sxpinfo.gp) |= ASSIGNMENT_PENDING_MASK);	\
+	else (((x)->sxpinfo.gp) &= ~ASSIGNMENT_PENDING_MASK);	\
+    } while (0)
+
 #ifdef SWITCH_TO_REFCNT
 # undef NAMED
 # undef SET_NAMED
@@ -624,6 +663,9 @@ void (INCREMENT_REFCNT)(SEXP x);
 void (DISABLE_REFCNT)(SEXP x);
 void (ENABLE_REFCNT)(SEXP x);
 void (MARK_NOT_MUTABLE)(SEXP x);
+
+int (ASSIGNMENT_PENDING)(SEXP x);
+void (SET_ASSIGNMENT_PENDING)(SEXP x, int v);
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x);

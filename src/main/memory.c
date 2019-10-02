@@ -1204,18 +1204,35 @@ static void old_to_new(SEXP x, SEXP y)
 }
 
 #ifdef COMPUTE_REFCNT_VALUES
-#define FIX_REFCNT(x, old, new) do {					\
-	if (TRACKREFS(x)) {						\
+#define FIX_REFCNT_EX(x, old, new, chkpnd) do {				\
+	SEXP __x__ = (x);						\
+	if (TRACKREFS(__x__)) {						\
 	    SEXP __old__ = (old);					\
 	    SEXP __new__ = (new);					\
 	    if (__old__ != __new__) {					\
-		if (__old__) DECREMENT_REFCNT(__old__);			\
+		if (__old__) {						\
+		    if ((chkpnd) && ASSIGNMENT_PENDING(__x__))		\
+			SET_ASSIGNMENT_PENDING(__x__, FALSE);		\
+		    else						\
+			DECREMENT_REFCNT(__old__);			\
+		}							\
 		if (__new__) INCREMENT_REFCNT(__new__);			\
 	    }								\
 	}								\
     } while (0)
+#define FIX_REFCNT(x, old, new) FIX_REFCNT_EX(x, old, new, FALSE)
+#define FIX_BINDING_REFCNT(x, old, new)		\
+    FIX_REFCNT_EX(x, old, new, TRUE)
 #else
 #define FIX_REFCNT(x, old, new) do {} while (0)
+#define FIX_BINDING_REFCNT(x, old, new) do {\
+	SEXP __x__ = (x);						\
+	SEXP __old__ = (old);						\
+	SEXP __new__ = (new);						\
+	if (ASSIGNMENT_PENDING(__x__) && __old__ &&			\
+	    __old__ != __new__)						\
+	    SET_ASSIGNMENT_PENDING(__x__, FALSE);			\
+    } while (0)
 #endif
 
 #define CHECK_OLD_TO_NEW(x,y) do { \
@@ -3653,6 +3670,11 @@ void (INCREMENT_REFCNT)(SEXP x) { INCREMENT_REFCNT(CHK(x)); }
 void (DISABLE_REFCNT)(SEXP x)  { DISABLE_REFCNT(CHK(x)); }
 void (ENABLE_REFCNT)(SEXP x) { ENABLE_REFCNT(CHK(x)); }
 void (MARK_NOT_MUTABLE)(SEXP x) { MARK_NOT_MUTABLE(CHK(x)); }
+int (ASSIGNMENT_PENDING)(SEXP x) { return ASSIGNMENT_PENDING(CHK(x)); }
+void (SET_ASSIGNMENT_PENDING)(SEXP x, int v)
+{
+    SET_ASSIGNMENT_PENDING(CHK(x), v);
+}
 
 void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
@@ -3987,7 +4009,9 @@ SEXP (SETCAR)(SEXP x, SEXP y)
 {
     if (CHKCONS(x) == NULL || x == R_NilValue)
 	error(_("bad value"));
-    FIX_REFCNT(x, CAR(x), y);
+    if (y == CAR(x))
+	return y;
+    FIX_BINDING_REFCNT(x, CAR(x), y);
     CHECK_OLD_TO_NEW(x, y);
     CAR(x) = y;
     return y;
@@ -4094,7 +4118,16 @@ SEXP (INTERNAL)(SEXP x) { return CHK(INTERNAL(CHK(x))); }
 int (DDVAL)(SEXP x) { return DDVAL(CHK(x)); }
 
 void (SET_PRINTNAME)(SEXP x, SEXP v) { FIX_REFCNT(x, PRINTNAME(x), v); CHECK_OLD_TO_NEW(x, v); PRINTNAME(x) = v; }
-void (SET_SYMVALUE)(SEXP x, SEXP v) { FIX_REFCNT(x, SYMVALUE(x), v); CHECK_OLD_TO_NEW(x, v); SYMVALUE(x) = v; }
+
+void (SET_SYMVALUE)(SEXP x, SEXP v)
+{
+    if (SYMVALUE(x) == v)
+	return;
+    FIX_BINDING_REFCNT(x, SYMVALUE(x), v);
+    CHECK_OLD_TO_NEW(x, v);
+    SYMVALUE(x) = v;
+}
+
 void (SET_INTERNAL)(SEXP x, SEXP v) { FIX_REFCNT(x, INTERNAL(x), v); CHECK_OLD_TO_NEW(x, v); INTERNAL(x) = v; }
 void (SET_DDVAL)(SEXP x, int v) { SET_DDVAL(CHK(x), v); }
 
