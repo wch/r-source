@@ -4871,6 +4871,12 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wunused-value\\]",
                              ## warning in g++, fatal in clang.
                              ": warning: .* \\[-Wnarrowing\\]",
+                             ## -pedantic warning at -O2, fatal at -O3
+                             ": warning: initializer element is not a constant expression",
+                             ": warning: range expressions in switch statements are non-standard",
+                             ": warning: ordered comparison of pointer with integer zero",
+                             ": warning: initialization of a flexible array member",
+                             ": warning: C++ designated initializers",
                              ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
