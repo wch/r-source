@@ -38,8 +38,10 @@ t.test(x, \dots)
     (or Satterthwaite) approximation to the degrees of freedom is used.}
   \item{conf.level}{confidence level of the interval.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
-    is a numeric variable giving the data values and \code{rhs} a factor
-    with two levels giving the corresponding groups.}
+    is a numeric variable giving the data values and \code{rhs} either 
+    \code{1} for a one-sample or paired test or a factor
+    with two levels giving the corresponding groups. If \code{lhs} is of 
+    class \code{"Pair"} and \code{rhs} is \code{1}, a paired test is done}
   \item{data}{an optional matrix or data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
@@ -101,7 +103,17 @@ t.test(1:10, y = c(7:20, 200)) # P = .1245    -- NOT significant anymore
 plot(extra ~ group, data = sleep)
 ## Traditional interface
 with(sleep, t.test(extra[group == 1], extra[group == 2]))
+
 ## Formula interface
 t.test(extra ~ group, data = sleep)
+
+## Formula interface to one-sample test
+t.test(extra ~ 1, data = sleep)
+
+## Formula interface to paired test
+## The sleep data are actually paired, so could have been in wide format:
+sleep2 <- reshape(sleep, direction = "wide", 
+                  idvar = "ID", timevar = "group")
+t.test(Pair(extra.1, extra.2) ~ 1, data = sleep2)
 }
 \keyword{htest}

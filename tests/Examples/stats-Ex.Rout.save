@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2019-09-30 r77236) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-10-01 r77242) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin18.7.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3942,7 +3942,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x5673d00>
+<environment: 0x7ff8b11d1aa8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4979,7 +4979,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x63cc5a8>
+<bytecode: 0x7ff8b458f1c8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7603,7 +7603,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x619d8e8>
+<environment: 0x7ff8b2c31598>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12297,14 +12297,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x563b820>
-<environment: 0x5654b00>
+<bytecode: 0x7ff8b1f92400>
+<environment: 0x7ff8b1fa0fd0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x563b6d0>
-<environment: 0x5654b00>
+<bytecode: 0x7ff8b1f922b0>
+<environment: 0x7ff8b1fa0fd0>
 
 > 
 > 
@@ -16523,8 +16523,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x4be0c08>
-<environment: 0x7194c20>
+<bytecode: 0x7ff8b4ce3f80>
+<environment: 0x7ff8b88053f0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17234,6 +17234,7 @@ sample estimates:
 mean of x mean of y 
      0.75      2.33 
 
+> 
 > ## Formula interface
 > t.test(extra ~ group, data = sleep)
 
@@ -17247,6 +17248,39 @@ alternative hypothesis: true difference in means is not equal to 0
 sample estimates:
 mean in group 1 mean in group 2 
            0.75            2.33 
+
+> 
+> ## Formula interface to one-sample test
+> t.test(extra ~ 1, data = sleep)
+
+	One Sample t-test
+
+data:  extra
+t = 3.413, df = 19, p-value = 0.002918
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.5955845 2.4844155
+sample estimates:
+mean of x 
+     1.54 
+
+> 
+> ## Formula interface to paired test
+> ## The sleep data are actually paired, so could have been in wide format:
+> sleep2 <- reshape(sleep, direction = "wide", 
++                   idvar = "ID", timevar = "group")
+> t.test(Pair(extra.1, extra.2) ~ 1, data = sleep2)
+
+	Paired t-test
+
+data:  Pair(extra.1, extra.2)
+t = -4.0621, df = 9, p-value = 0.002833
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -2.4598858 -0.7001142
+sample estimates:
+mean of the differences 
+                  -1.58 
 
 > 
 > 
@@ -18849,7 +18883,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.394 0.223 6.649 0 0 
+Time elapsed:  4.046 0.421 4.504 0 0 
 > grDevices::dev.off()
 null device 
           1 

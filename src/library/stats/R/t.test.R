@@ -124,29 +124,46 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 }
 
 t.test.formula <-
-function(formula, data, subset, na.action, ...)
+function (formula, data, subset, na.action, ...) 
 {
-    if(missing(formula)
-       || (length(formula) != 3L)
-       || (length(attr(terms(formula[-2L]), "term.labels")) != 1L))
+    if (missing(formula) || (length(formula) != 3L))
         stop("'formula' missing or incorrect")
+    oneSampleOrPaired <- FALSE
+    if (length(attr(terms(formula[-2L]), "term.labels")) != 1L) 
+        if (formula[[3]] == 1L)
+            oneSampleOrPaired <- TRUE
+        else
+            stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
-    if(is.matrix(eval(m$data, parent.frame())))
+    if (is.matrix(eval(m$data, parent.frame()))) 
         m$data <- as.data.frame(data)
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     m$... <- NULL
     mf <- eval(m, parent.frame())
-    DNAME <- paste(names(mf), collapse = " by ")
+    DNAME <- paste(names(mf), collapse = " by ") # works in all cases
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
-    g <- factor(mf[[-response]])
-    if(nlevels(g) != 2L)
-        stop("grouping factor must have exactly 2 levels")
-    DATA <- setNames(split(mf[[response]], g), c("x", "y"))
-    y <- do.call("t.test", c(DATA, list(...)))
+    if (! oneSampleOrPaired) {
+        g <- factor(mf[[-response]])
+        if (nlevels(g) != 2L) 
+            stop("grouping factor must have exactly 2 levels")
+        DATA <- setNames(split(mf[[response]], g), c("x", "y"))
+        y <- do.call("t.test", c(DATA, list(...)))
+        if (length(y$estimate) == 2L) 
+            names(y$estimate) <- paste("mean in group", levels(g))
+    }
+    else { # 1-sample and paired tests
+        respVar <- mf[[response]]
+        if (inherits(respVar, "Pair")){
+            DATA <- list(x = respVar[,1], y = respVar[,2], paired=TRUE)
+            y <- do.call("t.test", c(DATA, list(...)))
+        }
+        else {
+            DATA <- list(x = respVar)
+            y <- do.call("t.test", c(DATA, list(...)))
+        }
+    }
     y$data.name <- DNAME
-    if(length(y$estimate) == 2L)
-        names(y$estimate) <- paste("mean in group", levels(g))
     y
 }

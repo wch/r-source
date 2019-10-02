@@ -33,6 +33,9 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
+      \item The formula interface to \code{t.test} has been extended to
+      handle one-sample and paired tests.
+
       \item \code{assertError()} and \code{assertWarning()} (in package
       \pkg{tools}) can now check for \emph{specific} error or warning
       classes \emph{via} the new optional second argument \code{classes}
