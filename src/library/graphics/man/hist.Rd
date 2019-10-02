@@ -62,8 +62,9 @@ hist(x, \dots)
     The default of \code{NULL} yields unfilled bars.}
   \item{border}{the color of the border around the bars.  The default
     is to use the standard foreground color.}
-  \item{main, xlab, ylab}{these arguments to \code{title} have useful
-    defaults here.}
+  \item{main, xlab, ylab}{main title and axis labels: these arguments to
+    \code{\link{title}()} get \dQuote{smart} defaults here, e.g., the default
+    \code{ylab} is \code{"Frequency"} iff \code{probability} is true.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.
     Note that \code{xlim} is \emph{not} used to define the histogram (breaks),
     but only for plotting (when \code{plot = TRUE}).}
