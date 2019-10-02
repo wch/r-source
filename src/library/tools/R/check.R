@@ -4876,7 +4876,7 @@ add_dummies <- function(dir, Log)
                              ": warning: range expressions in switch statements are non-standard",
                              ": warning: ordered comparison of pointer with integer zero",
                              ": warning: initialization of a flexible array member",
-                             ": warning: C++ designated initializers",
+                             ": warning: C[+][+] designated initializers",
                              ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
