@@ -5600,6 +5600,16 @@ function(package, dir, lib.loc = NULL)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% c("setClass", "setMethod")) {
                 uses_methods <<- TRUE
+            } else if((Call %in% c("<-", "<<-")) &&
+                      is.call(e[[2L]]) &&
+                      is.call(e21 <- e[[2L]][[1L]]) &&
+                      (deparse(e21[[1L]])[1L] %in% c("::", ":::"))) {
+                ## For complex assignments like
+                ##    pkg::fun(......) <- rhs
+                ## need to look for replacement function 'fun<-' in pkg
+                ## (PR#17613).
+                e[[2L]][[1L]][[3L]] <-
+                    as.name(paste0(deparse(e21[[3L]])[1L], "<-"))
             }
             for(i in seq_along(e)) Recall(e[[i]])
         }
