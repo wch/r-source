@@ -109,7 +109,8 @@
  *  This function returns 1 if the named file is "hidden".  In Unix,
  *  this is the case if the file name begins with a '.'.  On the Mac
  *  a file is hidden if the file name ends in '\r'.
- *  More complex tests may be needed on other platforms.
+ *  More complex tests may be needed on other platforms. Currently,
+ *  only the Unix-style visibility is implemented and used on all platforms.
  *
  *    int R_ShowFiles(int nfile, const char **file, const char **headers,
  *                    const char *wtitle, Rboolean del, const char *pager)

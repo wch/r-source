@@ -29,7 +29,8 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
   \item{pattern}{an optional \link{regular expression}.  Only file names
     which match the regular expression will be returned.}
   \item{all.files}{a logical value.  If \code{FALSE}, only the
-    names of visible files are returned.  If \code{TRUE},
+    names of visible files are returned (following Unix-style visibility,
+    that is files whose name does not start with a dot).  If \code{TRUE},
     all file names will be returned.}
   \item{full.names}{a logical value.  If \code{TRUE}, the directory
     path is prepended to the file names to give a relative file path.
