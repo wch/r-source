@@ -4871,7 +4871,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wunused-value\\]",
                              ## warning in g++, fatal in clang++.
                              ": warning: .* \\[-Wnarrowing\\]",
-                             ## -pedantic warning in g++, fatal in clang and ODS
+                             ## -pedantic warning in gcc, fatal in clang and ODS
                              ": warning: initializer element is not a constant expression",
                              ": warning: range expressions in switch statements are non-standard",
                              ## clang version is
