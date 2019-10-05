@@ -24,9 +24,9 @@ glm(formula, family = gaussian, data, weights, subset,
     control = list(\dots), model = TRUE, method = "glm.fit",
     x = FALSE, y = TRUE, singular.ok = TRUE, contrasts = NULL, \dots)
 
-glm.fit(x, y, weights = rep(1, nobs),
+glm.fit(x, y, weights = rep.int(1, nobs),
         start = NULL, etastart = NULL, mustart = NULL,
-        offset = rep(0, nobs), family = gaussian(),
+        offset = rep.int(0, nobs), family = gaussian(),
         control = list(), intercept = TRUE, singular.ok = TRUE)
 
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
@@ -334,7 +334,7 @@ glm.fit(x, y, weights = rep(1, nobs),
 counts <- c(18,17,15,20,10,20,25,13,12)
 outcome <- gl(3,1,9)
 treatment <- gl(3,3)
-print(d.AD <- data.frame(treatment, outcome, counts))
+data.frame(treatment, outcome, counts) # showing data
 glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
 anova(glm.D93)
 \donttest{summary(glm.D93)}

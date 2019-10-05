@@ -52,13 +52,16 @@ rchisq(n, df, ncp = 0)
   The chi-squared distribution with \code{df}\eqn{= n \ge 0}
   degrees of freedom has density
   \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{f_n(x) = 1 / (2^(n/2) \Gamma(n/2))  x^(n/2-1) e^(-x/2)}
-  for \eqn{x > 0}.  The mean and variance are \eqn{n} and \eqn{2n}.
+  for \eqn{x > 0}, where \eqn{f_0(x) := \lim_{n \to 0} f_n(x) =
+  \delta_0(x)}, a point mass at zero, is not a density function proper, but
+  a \dQuote{\eqn{\delta} distribution}.\cr
+  The mean and variance are \eqn{n} and \eqn{2n}.
 
   The non-central chi-squared distribution with \code{df}\eqn{= n}
   degrees of freedom and non-centrality parameter \code{ncp}
   \eqn{= \lambda} has density
   \deqn{
-    f(x) = e^{-\lambda / 2}
+    f(x) = f_{n,\lambda}(x) = e^{-\lambda / 2}
       \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{f(x) = exp(-\lambda/2) SUM_{r=0}^\infty ((\lambda/2)^r / r!) dchisq(x, df + 2r)
   }
   for \eqn{x \ge 0}.  For integer \eqn{n}, this is the distribution of
@@ -127,6 +130,10 @@ rchisq(n, df, ncp = 0)
   is the same as a Gamma distribution with \code{shape} \eqn{\alpha =
     n/2}{a = n/2} and \code{scale} \eqn{\sigma = 2}{s = 2}.  Hence, see
   \code{\link{dgamma}} for the Gamma distribution.
+
+  The central chi-squared distribution with 2 d.f. is identical to the
+  exponential distribution with rate 1/2: \eqn{\chi^2_2 = Exp(1/2)}, see
+  \code{\link{dexp}}.
 }
 \examples{
 require(graphics)
