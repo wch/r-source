@@ -3157,10 +3157,8 @@ for formulae and because the intention is to return objects in the
 environment of a function for later use.
 
 Complete checking of a package which contains a file @file{README.md}
-needs @command{pandoc} installed: see
-@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.  This
-should be reasonably current: at the time of writing @acronym{CRAN} used
-version 1.12.4.2 to process these files.
+needs a reasonably current version of  @command{pandoc} installed: see
+@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
