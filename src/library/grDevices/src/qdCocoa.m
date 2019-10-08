@@ -518,7 +518,7 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
    This EL is enabled upon the first use of Quartz or alternatively using
    the QuartzCocoa_SetupEventLoop function */
 
-static BOOL el_active = YES;   /* the no-echo thread work until this is NO */
+static BOOL el_active = YES;   /* the worker thread work until this is NO */
 static BOOL el_fired  = NO;    /* flag set when an event was fired */
 static int  el_ofd, el_ifd;    /* communication file descriptors */
 static unsigned long el_sleep; /* latency in ms */
