@@ -24,7 +24,7 @@ bquote <- function(expr, where=parent.frame())
 {
     unquote <- function(e)
         if (is.pairlist(e)) as.pairlist(lapply(e, unquote))
-        else if (length(e) <= 1L) e
+        else if (! is.call(e)) e
         else if (e[[1L]] == as.name(".")) eval(e[[2L]], where)
         else as.call(lapply(e, unquote))
 
