@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist}
@@ -64,7 +64,7 @@ hist(x, \dots)
     is to use the standard foreground color.}
   \item{main, xlab, ylab}{main title and axis labels: these arguments to
     \code{\link{title}()} get \dQuote{smart} defaults here, e.g., the default
-    \code{ylab} is \code{"Frequency"} iff \code{probability} is true.}
+    \code{ylab} is \code{"Frequency"} iff \code{freq} is true.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.
     Note that \code{xlim} is \emph{not} used to define the histogram (breaks),
     but only for plotting (when \code{plot = TRUE}).}
