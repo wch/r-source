@@ -109,6 +109,10 @@
       \item Added an argument \code{add_datalist(*, small.size = 0)} to
       allow the creation of a \file{data/datalist} file even when the
       total size of the data sets is small.
+
+      \item The backquote function \code{bquote()} has a new argument
+      \code{splice} to enable splicing a computed list of values into an
+      expression, like \code{,@} in LISP's backquote.
     }
   }
 
