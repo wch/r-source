@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -258,9 +258,9 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{data}{the \code{data argument}.}
   \item{offset}{the offset vector used.}
   \item{control}{the value of the \code{control} argument used.}
-  \item{method}{the name of the fitter function used (when provided as a 
-    character string to \code(glm)) or the function definition of the fitter 
-    (when provided as a function to \code(glm)).}
+  \item{method}{the name of the fitter function used (when provided as a
+    \code{\link{character}} string to \code{glm()}) or the fitter
+    \code{\link{function}} (when provided as that).}
   \item{contrasts}{(where relevant) the contrasts used.}
   \item{xlevels}{(where relevant) a record of the levels of the factors
     used in fitting.}
