@@ -258,8 +258,9 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   \item{data}{the \code{data argument}.}
   \item{offset}{the offset vector used.}
   \item{control}{the value of the \code{control} argument used.}
-  \item{method}{the name of the fitter function used, currently always
-    \code{"glm.fit"}.}
+  \item{method}{the name of the fitter function used (when provided as a 
+    character string to \code(glm)) or the function definition of the fitter 
+    (when provided as a function to \code(glm)).}
   \item{contrasts}{(where relevant) the contrasts used.}
   \item{xlevels}{(where relevant) a record of the levels of the factors
     used in fitting.}
