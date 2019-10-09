@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2019-10-01 r77242) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-10-08 r77266) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin18.7.0/x86_64 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2113,16 +2113,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ## following example(glm)
 > ## Don't show: 
 > example(glm, echo = FALSE)
-  treatment outcome counts
-1         1       1     18
-2         1       2     17
-3         1       3     15
-4         2       1     20
-5         2       2     10
-6         2       3     20
-7         3       1     25
-8         3       2     13
-9         3       3     12
 > ## End(Don't show)
 > drop1(glm.D93, test = "Chisq")
 Single term deletions
@@ -2579,16 +2569,6 @@ Frequency = 1
 > ## Don't show: 
 > require(utils)
 > example("glm", echo = FALSE)
-  treatment outcome counts
-1         1       1     18
-2         1       2     17
-3         1       3     15
-4         2       1     20
-5         2       2     10
-6         2       3     20
-7         3       1     25
-8         3       2     13
-9         3       3     12
 > ## End(Don't show)
 > anova(glm.D93)
 Analysis of Deviance Table
@@ -3942,7 +3922,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x7ff8b11d1aa8>
+<environment: 0x601bbb0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4979,7 +4959,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x7ff8b458f1c8>
+<bytecode: 0x6cd26d8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7603,7 +7583,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x7ff8b2c31598>
+<environment: 0x6b57b50>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7995,7 +7975,7 @@ Crew  Child        0      0
 > counts <- c(18,17,15,20,10,20,25,13,12)
 > outcome <- gl(3,1,9)
 > treatment <- gl(3,3)
-> print(d.AD <- data.frame(treatment, outcome, counts))
+> data.frame(treatment, outcome, counts) # showing data
   treatment outcome counts
 1         1       1     18
 2         1       2     17
@@ -12297,14 +12277,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7ff8b1f92400>
-<environment: 0x7ff8b1fa0fd0>
+<bytecode: 0x5ff4e80>
+<environment: 0x5ff9a60>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x7ff8b1f922b0>
-<environment: 0x7ff8b1fa0fd0>
+<bytecode: 0x5ff4d30>
+<environment: 0x5ff9a60>
 
 > 
 > 
@@ -16438,16 +16418,6 @@ Max.     2.00  1.03072752
 > ##-- Continued from '?glm':
 > ## Don't show: 
 > utils::example("glm", echo = FALSE)
-  treatment outcome counts
-1         1       1     18
-2         1       2     17
-3         1       3     15
-4         2       1     20
-5         2       2     10
-6         2       3     20
-7         3       1     25
-8         3       2     13
-9         3       3     12
 > ## End(Don't show)
 > print(ag <- anova(glm.D93))
 Analysis of Deviance Table
@@ -16523,8 +16493,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x7ff8b4ce3f80>
-<environment: 0x7ff8b88053f0>
+<bytecode: 0x55e1020>
+<environment: 0x608d188>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18883,7 +18853,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.046 0.421 4.504 0 0 
+Time elapsed:  6.468 0.2 6.701 0 0 
 > grDevices::dev.off()
 null device 
           1 
