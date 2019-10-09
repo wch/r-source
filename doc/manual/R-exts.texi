@@ -4794,6 +4794,12 @@ imported or suggested package but needed for examples, tests or
 vignettes in the package itself.  Such usages should always be declared
 and conditional.
 
+Interpreters for scripting languages such as Perl, Python and Ruby need
+to be declared as system requirements and used conditionally: for
+example macOS 10.16 is announced not to have them.  Python 2 is widely
+deprecated and will be removed from some major distributions by Jan
+2020.
+
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
 and @code{macroman} are.  See the help for @code{file} for more details.
