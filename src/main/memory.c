@@ -2198,6 +2198,7 @@ void attribute_hidden InitMemory()
 	R_Suicide("couldn't allocate node stack");
     R_BCNodeStackTop = R_BCNodeStackBase;
     R_BCNodeStackEnd = R_BCNodeStackBase + R_BCNODESTACKSIZE;
+    R_BCProtTop = R_BCNodeStackTop;
 
     R_weak_refs = R_NilValue;
 

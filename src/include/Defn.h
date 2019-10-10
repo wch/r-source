@@ -522,6 +522,7 @@ typedef struct {
 # define PARTIALSXP_MASK (~255)
 # define IS_PARTIAL_SXP_TAG(x) ((x) & PARTIALSXP_MASK)
 # define RAWMEM_TAG 254
+# define CACHESZ_TAG 253
 
 #ifdef R_USE_SIGNALS
 /* Stack entry for pending promises */
@@ -555,6 +556,7 @@ typedef struct RCNTXT {
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
     R_bcstack_t *nodestack;
+    R_bcstack_t *bcprottop;
     SEXP srcref;	        /* The source line in effect */
     int browserfinish;          /* should browser finish this context without
                                    stopping */
@@ -811,6 +813,7 @@ void resetTimeLimits(void);
 #define R_BCNODESTACKSIZE 200000
 LibExtern R_bcstack_t *R_BCNodeStackTop, *R_BCNodeStackEnd;
 extern0 R_bcstack_t *R_BCNodeStackBase;
+extern0 R_bcstack_t *R_BCProtTop;
 extern0 int R_jit_enabled INI_as(0); /* has to be 0 during R startup */
 extern0 int R_compile_pkgs INI_as(0);
 extern0 int R_check_constants INI_as(0);
@@ -823,6 +826,8 @@ extern SEXP R_findBCInterpreterSrcref(RCNTXT*);
 #endif
 extern SEXP R_getCurrentSrcref();
 extern SEXP R_getBCInterpreterExpression();
+
+void R_BCProtReset(R_bcstack_t *);
 
 LibExtern int R_num_math_threads INI_as(1);
 LibExtern int R_max_num_math_threads INI_as(1);

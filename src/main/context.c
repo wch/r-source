@@ -191,6 +191,7 @@ static void R_restore_globals(RCNTXT *cptr)
     R_Expressions = R_Expressions_keep;
     R_BCNodeStackTop = cptr->nodestack;
     R_Srcref = cptr->srcref;
+    R_BCProtReset(cptr->bcprottop);
 }
 
 static RCNTXT *first_jump_target(RCNTXT *cptr, int mask)
@@ -267,6 +268,7 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->restartstack = R_RestartStack;
     cptr->prstack = R_PendingPromises;
     cptr->nodestack = R_BCNodeStackTop;
+    cptr->bcprottop = R_BCProtTop;
     cptr->srcref = R_Srcref;
     cptr->browserfinish = R_GlobalContext->browserfinish;
     cptr->nextcontext = R_GlobalContext;

@@ -3242,7 +3242,13 @@ The [[INCLNK]] and [[DECLNK]] instructions are used to protect
 evaluated arguents on the stack from modifications during evaluation
 of subsequent arguments. These instructions can be omitted if the
 subsequent argument evaluations cannot modify values on the stack.
+With changes to stack protection this is mechanism is no longer
+needed, so the check just returns [[FALSE]].
 <<[[checkNeedsInc]] function>>=
+checkNeedsInc <- function(e, cntxt)
+    return(FALSE)
+@ %def checkNeedsInc
+<<old [[checkNeedsInc]] function>>=
 checkNeedsInc <- function(e, cntxt) {
     type <- typeof(e)
     if (type %in% c("language", "bytecode", "promise"))
@@ -4342,8 +4348,10 @@ Complex assignment expressions are compiled by [[cmpComplexAssign]].
 <<[[cmpComplexAssign]] function>>=
 cmpComplexAssign <- function(symbol, lhs, value, superAssign, cb, cntxt) {
     <<select complex assignment instructions>>
+    <<protect the stack during a non-top-level complex assignment>>
     <<compile the right hand side value expression>>
     <<compile the left hand side call>>
+    <<unprotect the stack after a not-top-level complex assignment>>
     <<for tail calls return the value invisibly>>
     TRUE;
 }
@@ -4470,6 +4478,15 @@ its call; all others will use [[*vtmp*]].  Each replacement function
 call compiled by [[cmpSetterCall]] will remove the top two elements
 from the stack and then push the new right hand side value on the
 stack.  [[cmpSetterCall]] is described in Section \ref{subsec:setter}.
+
+For non-top-level complex assignments values on the stack need to be
+protected from mutation during the assignment.
+<<protect the stack during a non-top-level complex assignment>>=
+if (! cntxt$toplevel) cb$putcode(INCLNKSTK.OP)
+@
+<<unprotect the stack after a not-top-level complex assignment>>=
+if (! cntxt$toplevel) cb$putcode(DECLNKSTK.OP)
+@
 
 
 \subsection{Compiling setter calls}
@@ -6121,6 +6138,8 @@ BASEGUARD.OP <- 123
 INCLNK.OP <- 124
 DECLNK.OP <- 125
 DECLNK_N.OP <- 126
+INCLNKSTK.OP <- 127
+DECLNKSTK.OP <- 128
 @ 
 
 \subsection{Instruction argument counts and names}
@@ -6252,7 +6271,9 @@ SEQLEN.OP = 1,
 BASEGUARD.OP = 2,
 INCLNK.OP = 0,
 DECLNK.OP = 0,
-DECLNK_N.OP = 1
+DECLNK_N.OP = 1,
+INCLNKSTK.OP = 0,
+DECLNKSTK.OP = 0
 )
 @ 
 
