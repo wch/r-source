@@ -121,8 +121,11 @@
       leading to C stack overflow because of infinite recursion.
 
       \item \code{R_tryCatch} no longer transfers control for all
-      conditions. Reported and patch provided by Linoel Henry in
+      conditions. Reported and patch provided by Lionel Henry in
       \PR{17617}.
+
+      \item \code{format(object.size(.), digits=NULL)} now works, fixing
+      \PR{17628} reported by Jonathan Carroll.
     }
   }
 }

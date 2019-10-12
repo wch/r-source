@@ -2,6 +2,7 @@
 
 pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
+tryCid <- function(expr) tryCatch(expr, error = identity)
 
 ## body() / formals() notably the replacement versions
 x <- NULL; tools::assertWarning(   body(x) <-    body(mean))	# to be error
@@ -2820,6 +2821,74 @@ stopifnot(exprs = {
     inherits(Tfail <- allT14$fail, "error")
     grepl("^runmed\\(.*: .*NA.*x\\[1\\]", Tfail$message)
 })
+
+
+
+
+
+
+
+## misleading error message when coercing language object to atomic, etc:
+e <- tryCid(as.double(quote(foo(1))))
+stopifnot(inherits(e, "error"), grepl("'language'", e$message, fixed=TRUE))
+## had 'pairlist' in R <= 3.6.1
+
+
+## print(ls.str(<environment with error object with "missing" in message text>))
+msg <- "arguments in the signature are missing"
+e1 <- new.env(hash=FALSE)
+e1$Err <- structure(list(message = msg, call = quote(foo(bar))),
+                    class = c("simpleError", "error", "condition"))
+writeLines(prE <- capture.output(ls.str(e1)))
+## was "Err: <missing>" in R <= 3.6.1
+stopifnot(exprs = { length(prE) >= 3
+    grepl("List of 2", prE[[1]], fixed=TRUE)
+    grepl(msg,         prE[[2]], fixed=TRUE)
+    grepl("call.* foo\\(bar\\)", prE[[3]])
+})
+
+
+.M <- .Machine
+str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
+b64 <- .M$sizeof.pointer == 8
+arch <- Sys.info()[["machine"]]
+onWindows <- .Platform$OS.type == "windows"
+if(!(onWindows && arch == "x86")) {
+## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
+stopifnot(exprs = {
+    all.equal(dgamma(2^-1027, shape = .99 , log=TRUE), 7.1127667376, tol=1e-10)
+    all.equal(dgamma(2^-1031, shape = 1e-2, log=TRUE), 702.8889158,  tol=1e-10)
+    all.equal(dgamma(2^-1048, shape = 1e-7, log=TRUE), 710.30007699, tol=1e-10)
+    all.equal(dgamma(2^-1048, shape = 1e-7, scale = 1e-315, log=TRUE),
+              709.96858768, tol=1e-10)
+})
+## all gave Inf in R <= 3.6.1
+} else cat("PR#17577 bug fix not checked, as it may not work on this platform\n")
+
+
+
+
+
+
+
+
+
+## grepl(<NA>, ...)
+N <- grepl(NA_character_, "something")
+stopifnot(is.na(N), is.logical(N))
+## gave integer instead of logical in R <= 3.6.1
+
+
+## options(warn=1e11) leading to infinite loop -> "C Stack ..." error
+tools::assertError(options(warn = 1+.Machine$integer.max))
+## "worked" and gave problems later in R <= 3.6.1
+
+
+## PR#17628
+df <- data.frame(x = 1, y = 2); class(df$y) <- "object_size"
+df ## --> print.data.frame(*, digits=NULL)' -- error in R <= 3.6.1
+format(object.size(pi), digits=NULL)
+## error in R <= 3.6.1
 
 
 
