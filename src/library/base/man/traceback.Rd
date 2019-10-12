@@ -29,8 +29,10 @@
   \item{x}{\code{NULL} (default, meaning \code{.Traceback}), or an
     integer count of calls to skip in the current stack, or a list or
     pairlist of calls.  See the details.}
-  \item{max.lines}{the maximum number of lines to be printed
-    \emph{per call}.  The default is unlimited.}
+  \item{max.lines}{a number, the maximum number of lines to be printed
+    \emph{per call}.  The default is unlimited.  Applies only when \code{x}
+    is \code{NULL}, a \code{\link{list}} or a \code{\link{pairlist}} of
+    calls, see the details.}
 }
 \details{
   The default display is of the stack of the last uncaught error as
@@ -53,19 +55,29 @@
   \code{.traceback()}
   and the error function that called it.
 
-  Otherwise, \code{x} is assumed to be a list or pairlist of calls and will
-  be displayed in the same way.
+  Otherwise, \code{x} is assumed to be a list or pairlist of calls or
+  deparsed calls and will be displayed in the same way.
+
+  \code{.traceback()} and by extension \code{traceback()} may trigger
+  deparsing of \code{\link{call}}s.  This is an expensive operation
+  for large calls so it may be advisable to set \code{max.lines}
+  to a reasonable value when such calls are on the call stack.
 }
 \value{
-  \code{traceback()} prints the call stack deepest call first, and
-  returns it invisibly.  The calls may print on more than
-  one line, and the first line for each call is labelled by the frame
-  number.  The number of lines printed per call can be limited via
-  \code{max.lines}.
+  \code{.traceback()} returns the deparsed call stack deepest call
+  first as a list or pairlist.  The number of lines deparsed from
+  the call can be limited via \code{max.lines}.  Calls for which
+  \code{max.lines} results in truncated output will gain a
+  \code{\dQuote{truncated}} attribute.
+
+  \code{traceback()} formats, prints, and returns the call stack
+  produced by \code{.traceback()} invisibly.
 }
 \section{Warning}{
   It is undocumented where \code{.Traceback} is stored nor that it is
-  visible, and this is subject to change.
+  visible, and this is subject to change.  As of \R 4.0.0
+  \code{.Traceback} contains the \code{\link{call}}s as language
+  objects, whereas previously these calls were deparsed.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

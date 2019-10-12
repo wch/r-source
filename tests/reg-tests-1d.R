@@ -3121,6 +3121,43 @@ stopifnot(is.character(mc), inherits(mc, "MethodsFunction"),
 ## warns once only, in R >= 3.6.2
 
 
+## PR#17580 -- using max.lines, "truncated"
+op <- options(error = expression(NULL)) # {careful! : errors do *NOT* stop}
+is.t.back <- function(x) is.pairlist(x) && all(vapply(x, is.character, NA))
+f <- function(...) stop(deparse(substitute(...)))
+g <- function(...) f(...)
+do.call(g, mtcars)
+tb. <- .traceback()
+traceback(tb1 <- .traceback(max.lines=1))# prints with '...' as it's truncated
+stopifnot(exprs = {
+    is.t.back(tb.)
+    is.t.back(tb1)
+    length(tb.) == length(tb1)
+    vapply(tb1, length, 0L) == 1
+    length(tb.[[3]]) > 20
+})
+f <- function() options(warn = 1+.Machine$integer.max)
+do.call(g, mtcars)
+tb0 <- .traceback()
+traceback(tb3  <- .traceback(max.lines = 3))
+traceback(tb00 <- .traceback(max.lines = 0))
+options(op)# revert to normal
+stopifnot(exprs = {
+    is.t.back(tb0)
+    is.t.back(tb3)
+    is.t.back(tb00)
+    vapply(tb0, function(.) is.null(attributes(.)), NA)
+    length(tb0) == length(tb3)
+    vapply(tb3 , length, 0L) <= 3
+    vapply(tb00, length, 0L) == 0L
+    identical(lapply(tb3, attributes),
+              list(list(truncated = TRUE), NULL))
+    identical(lapply(tb00, attributes),
+              rep(list(list(truncated = TRUE)), 2))
+})
+## partly not possible in R < 4.0.0; always deparsed in full
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

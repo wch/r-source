@@ -61,7 +61,7 @@
       rather than the \emph{\code{deparse()}d} calls, deferring the
       deparsing to the user-level functions \code{.traceback()} and
       \code{traceback()}, fulfilling the wish of \PR{17580}, reported
-      (incl.\sspace{}patch proposal) by Brodie Gaslam.
+      incl.\sspace{}two patch proposals by Brodie Gaslam.
 
       \item \code{data.matrix()} now converts character columns to
       factors and from this to integers.
