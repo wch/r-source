@@ -3106,6 +3106,13 @@ tools::assertError(options(warn = 1+.Machine$integer.max))
 ## "worked" and gave problems later in R <= 3.6.1
 
 
+## PR#17628
+df <- data.frame(x = 1, y = 2); class(df$y) <- "object_size"
+df ## --> print.data.frame(*, digits=NULL)' -- error in R <= 3.6.1
+format(object.size(pi), digits=NULL)
+## error in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
