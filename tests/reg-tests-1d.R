@@ -3017,7 +3017,7 @@ stopifnot(exprs = {
     nchar(ch) == 309
     identical(ch, co)
     ch == format(xMAX, scientific=FALSE)
-})## format(*, scientific=FALSE) was "not obeyed" in R <= 3.6.1
+})## format(*, scientific=FALSE) was "not obeyed" in R < 4.0.0
 
 
 ## format(<symbol>) aka format(<name>) :
@@ -3111,6 +3111,14 @@ df <- data.frame(x = 1, y = 2); class(df$y) <- "object_size"
 df ## --> print.data.frame(*, digits=NULL)' -- error in R <= 3.6.1
 format(object.size(pi), digits=NULL)
 ## error in R <= 3.6.1
+
+
+## methods(class = <{length > 1}>)  giving many non-helpful warnings
+tools::assertWarning(mc <- methods(class = class(ordered(4:1))), verbose=TRUE)
+                                        # class = ".S3methods",
+stopifnot(is.character(mc), inherits(mc, "MethodsFunction"),
+          is.data.frame(attr(mc,"info")))
+## warns once only, in R >= 3.6.2
 
 
 

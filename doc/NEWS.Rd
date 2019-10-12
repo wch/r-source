@@ -229,6 +229,9 @@
 
       \item Certain \code{Ops} (notably comparison such as \code{==}) now
       also work for 0-length data frames, after reports by Hilmar Berger.
+
+      \item \code{methods(class = class(glm(..)))} now warns more usefully
+      and only once.
     }
   }
 }
