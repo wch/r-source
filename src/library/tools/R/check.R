@@ -2881,7 +2881,9 @@ add_dummies <- function(dir, Log)
             }
             SysReq <- desc["SystemRequirements"]
             if (length(bad_files)) {
-                if(!is.na(SysReq) && grepl("GNU [Mm]ake", SysReq)) {
+                if(!is.na(SysReq) &&
+                   grepl("GNU [Mm]ake",
+                         gsub("[[:space:]]+", " ", SysReq))) {
                     if(!config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_NOTE_GNU_MAKE_", "FALSE"))) {
                         noteLog(Log, "GNU make is a SystemRequirements.")
                     } else resultLog(Log, "OK")
