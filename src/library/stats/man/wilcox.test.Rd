@@ -43,8 +43,10 @@ wilcox.test(x, \dots)
     should be computed.}
   \item{conf.level}{confidence level of the interval.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
-    is a numeric variable giving the data values and \code{rhs} a factor
-    with two levels giving the corresponding groups.}
+    is a numeric variable giving the data values and \code{rhs} either 
+    \code{1} for a one-sample or paired test or a factor
+    with two levels giving the corresponding groups. If \code{lhs} is of 
+    class \code{"Pair"} and \code{rhs} is \code{1}, a paired test is done}
   \item{data}{an optional matrix or data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
@@ -186,6 +188,12 @@ wilcox.test(y - x, alternative = "less",
             exact = FALSE, correct = FALSE) # H&W large sample
                                             # approximation
 
+## Formula interface to one-sample and paired tests
+
+depression <- data.frame(first = x, second = y, change = y - x)
+wilcox.test(change ~ 1, data = depression)
+wilcox.test(Pair(first, second) ~ 1, data = depression)
+
 ## Two-sample test.
 ## Hollander & Wolfe (1973), 69f.
 ## Permeability constants of the human chorioamnion (a placental
@@ -205,5 +213,8 @@ wilcox.test(rnorm(10), rnorm(10, 2), conf.int = TRUE)
 boxplot(Ozone ~ Month, data = airquality)
 wilcox.test(Ozone ~ Month, data = airquality,
             subset = Month \%in\% c(5, 8))
+
 }
+
+
 \keyword{htest}

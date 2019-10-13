@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2019-10-08 r77266) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-10-13 r77280) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin18.7.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3922,7 +3922,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x601bbb0>
+<environment: 0x7fc18f46dc98>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4959,7 +4959,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x6cd26d8>
+<bytecode: 0x7fc18e6bf310>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7583,7 +7583,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x6b57b50>
+<environment: 0x7fc18e438d98>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12277,14 +12277,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5ff4e80>
-<environment: 0x5ff9a60>
+<bytecode: 0x7fc18c7bcb20>
+<environment: 0x7fc18c7c5878>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5ff4d30>
-<environment: 0x5ff9a60>
+<bytecode: 0x7fc18c7bc9d0>
+<environment: 0x7fc18c7c5878>
 
 > 
 > 
@@ -16493,8 +16493,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x55e1020>
-<environment: 0x608d188>
+<bytecode: 0x7fc18dbe10e8>
+<environment: 0x7fc1910fe9a8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18281,6 +18281,26 @@ alternative hypothesis: true location is less than 0
 
 >                                             # approximation
 > 
+> ## Formula interface to one-sample and paired tests
+> 
+> depression <- data.frame(first = x, second = y, change = y - x)
+> wilcox.test(change ~ 1, data = depression)
+
+	Wilcoxon signed rank test
+
+data:  change
+V = 5, p-value = 0.03906
+alternative hypothesis: true location is not equal to 0
+
+> wilcox.test(Pair(first, second) ~ 1, data = depression)
+
+	Wilcoxon signed rank test
+
+data:  Pair(first, second)
+V = 40, p-value = 0.03906
+alternative hypothesis: true location shift is not equal to 0
+
+> 
 > ## Two-sample test.
 > ## Hollander & Wolfe (1973), 69f.
 > ## Permeability constants of the human chorioamnion (a placental
@@ -18335,6 +18355,7 @@ data:  Ozone by Month
 W = 127.5, p-value = 0.0001208
 alternative hypothesis: true location shift is not equal to 0
 
+> 
 > 
 > 
 > 
@@ -18853,7 +18874,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.468 0.2 6.701 0 0 
+Time elapsed:  3.944 0.412 4.38 0 0 
 > grDevices::dev.off()
 null device 
           1 
