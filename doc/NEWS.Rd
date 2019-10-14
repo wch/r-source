@@ -363,6 +363,10 @@
 
       \item \code{format(object.size(.), digits=NULL)} now works, fixing
       \PR{17628} reported by Jonathan Carroll.
+
+      \item \code{get_all_vars(f, d)} now also works for cases, e.g. where
+      \code{d} contains a matrix.  Reported by Simon Wood in 2009 and patch
+      provided by Ben Bolker in \PR{13624}.
     }
   }
 }

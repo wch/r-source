@@ -483,8 +483,7 @@ model.frame.default <-
         return(eval(fcall, env)) # 2-arg form as env is an environment
     }
     if(missing(formula)) {
-	if(!missing(data) && inherits(data, "data.frame") &&
-	   length(attr(data, "terms")))
+	if(!missing(data) && inherits(data, "data.frame") && length(attr(data, "terms")))
 	    return(data)
 	formula <- as.formula(data)
     }
@@ -493,8 +492,8 @@ model.frame.default <-
 	    return(formula)
 	data <- formula
 	formula <- as.formula(data)
-    }
-    formula <- as.formula(formula)
+    } else
+        formula <- as.formula(formula)
     if(missing(na.action)) {
 	if(!is.null(naa <- attr(data, "na.action")) & mode(naa)!="numeric")
 	    na.action <- naa
@@ -782,9 +781,12 @@ get_all_vars <- function(formula, data = NULL, ...)
     extras <- substitute(list(...))
     extranames <- names(extras[-1L])
     extras <- eval(extras, data, env)
-    x <- setNames(as.data.frame(c(variables, extras), optional=TRUE),
-		  c(varnames, extranames))
-    if (!is.null(rownames))
-	attr(x, "row.names") <- rownames # might be short form
+    x <- c(variables, extras)
+    ## PR#13624: as.data.frame() not useful here {is there a better solution?}
+    class(x) <- "data.frame"
+    names(x) <- c(varnames, extranames)
+    attr(x, "row.names") <-
+        if(is.null(rownames)) .set_row_names(max(vapply(x, NROW, integer(1))))
+        else rownames # might be short form
     x
 }

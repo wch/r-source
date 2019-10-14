@@ -3164,6 +3164,28 @@ stopifnot(is.character(t1 <- tb2n1[[1]]), length(t1) == 1L, attr(t1, "truncated"
 ## partly not possible in R < 4.0.0; always deparsed in full
 
 
+## PR#13624 : get_all_vars(*, <matrix>):
+ok_get_all_vars <- function(form,d) { ## get_all_vars() :<=> model_frame() apart from "terms"
+    mf <- if(missing(d)) model.frame(form) else model.frame(form,d)
+    attr(mf, "terms") <- NULL
+    identical(mf,
+              if(missing(d)) get_all_vars(form) else get_all_vars(form,d))
+}
+M <- matrix(1:15, 5,3)
+n <- 26:30
+stopifnot(exprs = {
+    ok_get_all_vars(~ M)
+    ok_get_all_vars(~M+n)
+    ok_get_all_vars(~ X ,               list(X=  M))
+    ok_get_all_vars(~z+X,               list(X=  M,  z=n))
+    ok_get_all_vars(~z+X,               list(X=I(M), z=n))
+    ok_get_all_vars(~z+X,    data.frame(     X=I(M), z=n))
+    ok_get_all_vars(~z+X,    data.frame(list(X=I(M), z=n)))
+    ok_get_all_vars(~z+X, as.data.frame(list(X=I(M), z=n)))
+})
+## the last  4  cases worked already in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
