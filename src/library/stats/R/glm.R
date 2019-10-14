@@ -1,7 +1,7 @@
 #  File src/library/stats/R/glm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ glm <- function(formula, family = gaussian, data, weights,
                 x = FALSE, y = TRUE,
 		singular.ok = TRUE, contrasts = NULL, ...)
 {
-    call <- match.call()
+    cal <- match.call()
     ## family
     if(is.character(family))
         family <- get(family, mode = "function", envir = parent.frame())
@@ -81,7 +81,8 @@ glm <- function(formula, family = gaussian, data, weights,
     offset <- as.vector(model.offset(mf))
     if(!is.null(offset)) {
         if(length(offset) != NROW(Y))
-            stop(gettextf("number of offsets is %d should equal %d (number of observations)", length(offset), NROW(Y)), domain = NA)
+	    stop(gettextf("number of offsets is %d should equal %d (number of observations)",
+			  length(offset), NROW(Y)), domain = NA)
     }
     ## these allow starting values to be expressed in terms of other vars.
     mustart <- model.extract(mf, "mustart")
@@ -119,13 +120,13 @@ glm <- function(formula, family = gaussian, data, weights,
     fit$na.action <- attr(mf, "na.action")
     if(x) fit$x <- X
     if(!y) fit$y <- NULL
-    fit <- c(fit, list(call = call, formula = formula,
-		       terms = mt, data = data,
-		       offset = offset, control = control, method = method,
-		       contrasts = attr(X, "contrasts"),
-                       xlevels = .getXlevels(mt, mf)))
-    class(fit) <- c(fit$class, c("glm", "lm"))
-    fit
+    structure(c(fit,
+		list(call = cal, formula = formula,
+		     terms = mt, data = data,
+		     offset = offset, control = control, method = method,
+		     contrasts = attr(X, "contrasts"),
+		     xlevels = .getXlevels(mt, mf))),
+	      class = c(fit$class, c("glm", "lm")))
 }
 
 
@@ -144,8 +145,8 @@ glm.control <- function(epsilon = 1e-8, maxit = 25, trace = FALSE)
 ## Updated by KH as suggested by BDR on 1998/06/16
 
 glm.fit <-
-    function (x, y, weights = rep(1, nobs), start = NULL,
-	      etastart = NULL, mustart = NULL, offset = rep(0, nobs),
+    function (x, y, weights = rep.int(1, nobs), start = NULL,
+	      etastart = NULL, mustart = NULL, offset = rep.int(0, nobs),
 	      family = gaussian(), control = list(), intercept = TRUE,
 	      singular.ok = TRUE)
 {
