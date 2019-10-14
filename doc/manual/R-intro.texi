@@ -976,7 +976,7 @@ of characters delimited by the double quote character, e.g.,
 Character strings are entered using either matching double (@code{"}) or
 single (@code{'}) quotes, but are printed using double quotes (or
 sometimes without quotes).  They use C-style escape sequences, using
-@code{\} as the escape character, so @code{\\} is entered and printed as
+@code{\} as the escape character, so @code{\} is entered and printed as
 @code{\\}, and inside double quotes @code{"} is entered as @code{\"}.
 Other useful escape sequences are @code{\n}, newline, @code{\t}, tab and
 @code{\b}, backspace---see @command{?Quotes} for a full list.
