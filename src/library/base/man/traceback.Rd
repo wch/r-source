@@ -68,7 +68,7 @@
   first as a list or pairlist.  The number of lines deparsed from
   the call can be limited via \code{max.lines}.  Calls for which
   \code{max.lines} results in truncated output will gain a
-  \code{\dQuote{truncated}} attribute.
+  \code{"truncated"} attribute.
 
   \code{traceback()} formats, prints, and returns the call stack
   produced by \code{.traceback()} invisibly.

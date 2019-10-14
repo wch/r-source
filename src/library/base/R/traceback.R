@@ -24,7 +24,9 @@
     .is.positive.intlike <- function(x)
         is.numeric(x) && length(x) == 1L && !is.na(x) && as.integer(x) >= 0L
 
-    if((is.null(x) && !is.null(x <- get0(".Traceback", envir = baseenv()))) ||
+    if(int.x <- .is.positive.intlike(x))
+	x <- .Internal(traceback(x))
+    if(int.x || (is.null(x) && !is.null(x <- get0(".Traceback", envir = baseenv()))) ||
        is.pairlist(x) || is.list(x))
     {
         valid.max.lines <- .is.positive.intlike(max.lines)
@@ -40,8 +42,6 @@
             attr(x[[i]], 'srcref') <- srcref
         }
     }
-    else if(is.numeric(x))
-    	x <- .Internal(traceback(x))
     x
 }
 

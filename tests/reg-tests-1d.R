@@ -3155,6 +3155,12 @@ stopifnot(exprs = {
     identical(lapply(tb00, attributes),
               rep(list(list(truncated = TRUE)), 2))
 })
+f <- function(...) .traceback(2, max.lines=1)
+g(
+  'hello hello hello hello hello hello hello hello hello hello hello',
+  'world world world world world world world world world world world'
+) -> tb2n1
+stopifnot(is.character(t1 <- tb2n1[[1]]), length(t1) == 1L, attr(t1, "truncated"))
 ## partly not possible in R < 4.0.0; always deparsed in full
 
 
