@@ -49,7 +49,10 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   on macOS absolute paths such as \file{/tmp} and \file{/var} are
   symbolic links. On Linux, a path produced by bash process substitution is
   a symbolic link (such as \file{/proc/fd/63}) to a pipe and there is no
-  canonical form of such path.
+  canonical form of such path. Windows may convert case of the path name
+  (in Windows 10, name of a file without a long name seems to be returned in
+  the case used for creation of the file, but the case in \code{path} is
+  preserved for a file with a long name).
 }
 
 \value{
