@@ -83,6 +83,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item{\code{barplot()} could get spacings wrong if there was exactly two
+      bars \PR{15522}. Patch by Michael Chirico.}
+
       \item \code{runmed(x, *)} when \code{x} contains missing values
       now works consistently for both \code{algorithm="Stuetzle"} and
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as

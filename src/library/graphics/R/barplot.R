@@ -41,9 +41,10 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	names.arg <-
 	    if(is.matrix(height)) colnames(height) else names(height)
 
-    if (is.vector(height)
-	|| (is.array(height) && (length(dim(height)) == 1))) {
+    vectorInput <- (is.vector(height)
+	|| (is.array(height) && (length(dim(height)) == 1)))
 	## Treat vectors and 1-d arrays the same.
+    if (vectorInput) {
 	height <- cbind(height)
 	beside <- TRUE
 	## The above may look strange, but in particular makes color
@@ -75,7 +76,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     NC <- ncol(height)
 
     if (beside) {
-	if (length(space) == 2)
+	if (length(space) == 2 && !vectorInput)
 	    space <- rep.int(c(space[2L], rep.int(space[1L], NR - 1)), NC)
 	width <- rep_len(width, NR)
     } else {
