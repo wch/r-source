@@ -802,6 +802,7 @@ void R_check_thread(const char *s);
 /* These also work for ... objects */
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
+void SET_BNDCELL(SEXP cell, SEXP val);
 SEXP (TAG)(SEXP e);
 SEXP (CAR)(SEXP e);
 SEXP (CDR)(SEXP e);

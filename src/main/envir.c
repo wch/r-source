@@ -109,7 +109,12 @@
 /*#define UNLOCK_FRAME(e) SET_ENVFLAGS(e, ENVFLAGS(e) & (~ FRAME_LOCK_MASK))*/
 
 /* use the same bits (15 and 14) in symbols and bindings */
-#define BINDING_VALUE(b) ((IS_ACTIVE_BINDING(b) ? getActiveValue(CAR(b)) : CAR(b)))
+static SEXP getActiveValue(SEXP);
+static R_INLINE SEXP BINDING_VALUE(SEXP b)
+{
+    if (IS_ACTIVE_BINDING(b)) return getActiveValue(CAR(b));
+    else return CAR(b);
+}
 
 #define SYMBOL_BINDING_VALUE(s) ((IS_ACTIVE_BINDING(s) ? getActiveValue(SYMVALUE(s)) : SYMVALUE(s)))
 #define SYMBOL_HAS_BINDING(s) (IS_ACTIVE_BINDING(s) || (SYMVALUE(s) != R_UnboundValue))
@@ -125,7 +130,7 @@
     setActiveValue(CAR(__b__), __val__); \
     UNPROTECT(1); \
    } else \
-    SETCAR(__b__, __val__); \
+    SET_BNDCELL(__b__, __val__); \
 } while (0)
 
 #define SET_SYMBOL_BINDING_VALUE(sym, val) do { \
@@ -789,10 +794,10 @@ static SEXP RemoveFromList(SEXP thing, SEXP list, int *found)
     }
     else if (TAG(list) == thing) {
 	*found = 1;
-	SETCAR(list, R_UnboundValue); /* in case binding is cached */
-	LOCK_BINDING(list);           /* in case binding is cached */
+	SET_BNDCELL(list, R_UnboundValue); /* in case binding is cached */
+	LOCK_BINDING(list);                /* in case binding is cached */
 	SEXP rest = CDR(list);
-	SETCDR(list, R_NilValue);     /* to fix refcnt on 'rest' */
+	SETCDR(list, R_NilValue);          /* to fix refcnt on 'rest' */
 	return rest;
     }
     else {
@@ -2651,7 +2656,7 @@ static void FrameValues(SEXP frame, int all, SEXP values, int *indx)
     if (all) {
 	while (frame != R_NilValue) {
 #         define DO_FrameValues						\
-	    SEXP value = CAR(frame);					\
+	    SEXP value = BINDING_VALUE(frame);				\
 	    if (TYPEOF(value) == PROMSXP) {				\
 		PROTECT(value);						\
 		value = eval(value, R_GlobalEnv);			\
