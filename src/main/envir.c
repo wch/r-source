@@ -2651,16 +2651,31 @@ static void FrameNames(SEXP frame, int all, SEXP names, int *indx)
     }
 }
 
+/* returning the active binding function instead of the
+   value is not right, but packages are depending on it so
+   keep for now. */
+static R_INLINE SEXP BINDING_VALUE_TMP(SEXP cell)
+{
+    if (IS_ACTIVE_BINDING(cell)) {
+	static int inited = FALSE;
+	static int bugfix = FALSE;
+	if (! inited) {
+	    inited = TRUE;
+	    const char *p = getenv("_R_ENV2LIST_BUGFIX_");
+	    if (p != NULL && StringTrue(p))
+		bugfix = TRUE;
+	}
+	return bugfix ? BINDING_VALUE(cell) : CAR(cell);
+    }
+    else return BINDING_VALUE(cell);
+}
+
 static void FrameValues(SEXP frame, int all, SEXP values, int *indx)
 {
     if (all) {
 	while (frame != R_NilValue) {
-	    /* returning the active binding function instead of the
-	       value is not right, but packages are depending on it so
-	       keep for now. */
 #         define DO_FrameValues						\
-	    SEXP value = IS_ACTIVE_BINDING(frame) ? CAR(frame) :	\
-		BINDING_VALUE(frame);					\
+	    SEXP value = BINDING_VALUE_TMP(frame);			\
 	    if (TYPEOF(value) == PROMSXP) {				\
 		PROTECT(value);						\
 		value = eval(value, R_GlobalEnv);			\
