@@ -1,7 +1,7 @@
 #  File src/library/methods/R/SClasses.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -816,8 +816,8 @@ sealClass <- function(Class, where = topenv(parent.frame())) {
     invisible(classDef)
 }
 
-## see $RHOME/src/main/duplicate.c for the corresponding datatypes
-## not copied by duplicate1
+## see src/main/duplicate.c for the corresponding datatypes not copied
+## by duplicate1
 .AbnormalTypes <- c("environment", "name", "externalptr",  "NULL")
 
 
