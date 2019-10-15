@@ -2655,8 +2655,12 @@ static void FrameValues(SEXP frame, int all, SEXP values, int *indx)
 {
     if (all) {
 	while (frame != R_NilValue) {
+	    /* returning the active binding function instead of the
+	       value is not right, but packages are depending on it so
+	       keep for now. */
 #         define DO_FrameValues						\
-	    SEXP value = BINDING_VALUE(frame);				\
+	    SEXP value = IS_ACTIVE_BINDING(frame) ? CAR(frame) :	\
+		BINDING_VALUE(frame);					\
 	    if (TYPEOF(value) == PROMSXP) {				\
 		PROTECT(value);						\
 		value = eval(value, R_GlobalEnv);			\
