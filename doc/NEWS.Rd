@@ -33,9 +33,6 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item The formula interface to \code{t.test} and \code{wilcox.test}
-      has been extended to handle one-sample and paired tests.
-
       \item \code{assertError()} and \code{assertWarning()} (in package
       \pkg{tools}) can now check for \emph{specific} error or warning
       classes \emph{via} the new optional second argument \code{classes}
@@ -113,6 +110,9 @@
       \item The backquote function \code{bquote()} has a new argument
       \code{splice} to enable splicing a computed list of values into an
       expression, like \code{,@} in LISP's backquote.
+
+      \item The formula interface to \code{t.test} and \code{wilcox.test}
+      has been extended to handle one-sample and paired tests.
     }
   }
 
