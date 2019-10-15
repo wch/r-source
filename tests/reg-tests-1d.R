@@ -3112,6 +3112,12 @@ df ## --> print.data.frame(*, digits=NULL)' -- error in R <= 3.6.1
 format(object.size(pi), digits=NULL)
 ## error in R <= 3.6.1
 
+## PR#15522
+pos <- barplot(1:2, space=c(9, 1), 
+    ylim=c(0, 21), xlim=c(0, 11), horiz=TRUE,
+    plot=FALSE)
+stopifnot(all.equal(pos, cbind(c(9.5, 11.5))))
+## bar spacing was wrong in R <= 3.6.1
 
 ## methods(class = <{length > 1}>)  giving many non-helpful warnings
 tools::assertWarning(mc <- methods(class = class(ordered(4:1))), verbose=TRUE)
