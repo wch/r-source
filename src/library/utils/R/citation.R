@@ -117,8 +117,8 @@ function(given = NULL, family = NULL, middle = NULL,
         if(length(comment)) {
             ## Be nice and recognize ORCID identifiers given as URLs
             ## but perhaps without an ORCID name.
-            ind <- grepl(paste0("^https?://orcid.org/",
-                                "([[:digit:]]{4}[-]){3}[[:digit:]]{3}[[:alnum:]]$"),
+            ind <- grepl(sprintf("^https?://orcid.org/%s$",
+                                 tools:::.ORCID_iD_regexp),
                          comment)
             if(any(ind)) {
                 if(is.null(names(comment)))
@@ -513,13 +513,15 @@ function(object, ...)
 .canonicalize_ORCID_identifier <-
 function(x)
 {
-    paste0("https://orcid.org/", sub(".*/", "", x))
+    paste0("https://orcid.org/",
+           sub(tools:::.ORCID_iD_variants_regexp, "\\3", x))
 }
 
 .expand_ORCID_identifier <-
 function(x)
 {
-    if(any(ind <- (names(x) == "ORCID")))
+    if(any(ind <- ((names(x) == "ORCID") &
+                   grepl(tools:::.ORCID_iD_variants_regexp, x))))
         x[ind] <- paste0("<",
                          .canonicalize_ORCID_identifier(x[ind]),
                          ">")

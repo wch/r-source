@@ -508,6 +508,16 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ## releases a year, so we do need to set this manually.
 ## Wierdly, 3.0 is the second version (after 2.14) for the 3.1.x series.
 
+### ** .ORCID_iD_regexp
+
+.ORCID_iD_regexp <-
+    "([[:digit:]]{4}[-]){3}[[:digit:]]{3}[[:alnum:]]"
+
+### ** .ORCID_iD_variants_regexp
+
+.ORCID_iD_variants_regexp <-
+    sprintf("^<?((https?://|)orcid.org/)?(%s)>?$", .ORCID_iD_regexp)
+
 ### ** .vc_dir_names
 
 ## Version control directory names: CVS, .svn (Subversion), .arch-ids
