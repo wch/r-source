@@ -1552,15 +1552,19 @@ shells are not fully POSIX-compliant and omissions and idiosyncrasies
 need to be worked around---which Autoconf will do for you.  Arithmetic
 expansion is a known issue: see
 @uref{https://www.gnu.org/@/software/@/autoconf/@/manual/autoconf.html#Portable-Shell}
-for this and others.}) shell script @file{configure} in your package
-which (if present) is executed by @code{R CMD INSTALL} before any other
-action is performed.  This can be a script created by the Autoconf
-mechanism, but may also be a script written by yourself.  Use this to
-detect if any nonstandard libraries are present such that corresponding
-code in the package can be disabled at install time rather than giving
-error messages when the package is compiled or used.  To summarize, the
-full power of Autoconf is available for your extension package
-(including variable substitution, searching for libraries, etc.).
+for this and others.  Some checks can be done by the
+@code{checkbashisms} Perl script at
+@uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}, also
+found in some Linux distributions.})  shell script @file{configure} in
+your package which (if present) is executed by @code{R CMD INSTALL}
+before any other action is performed.  This can be a script created by
+the Autoconf mechanism, but may also be a script written by yourself.
+Use this to detect if any nonstandard libraries are present such that
+corresponding code in the package can be disabled at install time rather
+than giving error messages when the package is compiled or used.  To
+summarize, the full power of Autoconf is available for your extension
+package (including variable substitution, searching for libraries,
+etc.).
 
 Under a Unix-alike only, an executable (Bourne shell) script
 @file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
@@ -4428,6 +4432,11 @@ export FOO=value
 @end example
 @noindent
 which is bash-specific (first set the variable then export it by name).
+
+On macOS Catalina and later, which shell @file{/bin/sh} invokes is user-
+and platform-dependent: it might be @command{bash} version 3.2,
+@command{dash} or @command{zsh} (for new accounts it is @command{zsh},
+for accounts ported from earlier version it is usually @command{bash}).
 
 @item
 Make use of the abilities of your compilers to check the
