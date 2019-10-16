@@ -531,7 +531,7 @@ m4/openmp.m4
 tools/config.quess
 tools/config.sub
 
-   Copyright 1992-2013 Free Software Foundation.  
+   Copyright 1992-2019 Free Software Foundation.  
    The Exception to GPL-3 applies.
 
 tools/install-sh
