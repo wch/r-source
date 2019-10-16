@@ -14,7 +14,7 @@ Pair(x, y)
 	Vector. 1st element of pair.
   }
   \item{y}{
-	Vector. 2nd element of pair. Should be same lenght as \code{x}
+	Vector. 2nd element of pair. Should be same length as \code{x}
   }  
 }
 
