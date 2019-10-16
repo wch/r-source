@@ -315,9 +315,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item{\code{barplot()} could get spacings wrong if there was exactly two
-      bars \PR{15522}. Patch by Michael Chirico.}
-
       \item \code{runmed(x, *)} when \code{x} contains missing values
       now works consistently for both \code{algorithm="Stuetzle"} and
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
@@ -371,6 +368,12 @@
       \item \code{get_all_vars(f, d)} now also works for cases, e.g. where
       \code{d} contains a matrix.  Reported by Simon Wood in 2009 and patch
       provided by Ben Bolker in \PR{13624}.
+
+      \item \code{barplot()} could get spacings wrong if there were exactly two
+      bars \PR{15522}.  Patch by Michael Chirico.
+
+      \item \code{power.t.test()} works in more cases when returning values
+      of n smaller than 2.
     }
   }
 }

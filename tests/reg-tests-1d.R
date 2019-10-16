@@ -3113,7 +3113,7 @@ format(object.size(pi), digits=NULL)
 ## error in R <= 3.6.1
 
 ## PR#15522
-pos <- barplot(1:2, space=c(9, 1), 
+pos <- barplot(1:2, space=c(9, 1),
     ylim=c(0, 21), xlim=c(0, 11), horiz=TRUE,
     plot=FALSE)
 stopifnot(all.equal(pos, cbind(c(9.5, 11.5))))
@@ -3190,6 +3190,31 @@ stopifnot(exprs = {
     ok_get_all_vars(~z+X, as.data.frame(list(X=I(M), z=n)))
 })
 ## the last  4  cases worked already in R <= 3.6.1
+
+
+## two-arg Rd macros (PR#17627)
+parse_Rd_txt <- function(ch) tools::parse_Rd(textConnection(ch), fragment = TRUE)
+rd1 <- parse_Rd_txt(t1 <- "\\if{html}{\\out{<hr>}}")
+rd2 <- parse_Rd_txt(t2 <- "\\href{https://www.r-project.org}{some text}")
+(tx1 <- paste(as.character(rd1), collapse = ""))
+(tx2 <- paste(as.character(rd2), collapse = ""))
+stopifnot(exprs = {
+    identical(paste0(t1,"\n"), tx1)
+    identical(paste0(t2,"\n"), tx2)
+})
+## had duplicated braces in R < 4.0.0
+
+
+## power.t.test() failure for very small (unreasonable) n;  R-devel m.list Oct.4, 2019
+(ptt0 <- power.t.test(delta=10,  sd=1,       power=0.9 , sig.level=0.05, tol = 1e-8))
+(ptt1 <- power.t.test(delta=0.6, sd=0.00001, power=0.9 , sig.level=0.05))
+(ptt2 <- power.t.test(delta=2,   sd = 1e-8,  power=0.99, sig.level=0.01))
+stopifnot(exprs = {
+    all.equal(0.9, power.t.test(delta=10, sd=1, n = ptt0 $ n)$power)
+    all.equal(ptt1$n, 1.00428,   tol = 1e-5)
+    all.equal(ptt2$n, 1.1215733, tol = 1e-5)
+})
+## when uniroot() was trying n < 1, the code failed previously (in 2nd and 3rd case)
 
 
 

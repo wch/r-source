@@ -1,7 +1,7 @@
 #  File src/library/stats/R/power.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -39,13 +39,13 @@ power.t.test <-
     p.body <-
         if (strict && tside == 2) # count rejections in opposite tail
             quote({
-                nu <- (n - 1) * tsample
+                nu <- pmax(1e-7, n - 1) * tsample
                 qu <- qt(sig.level/tside, nu, lower.tail = FALSE)
                 pt( qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower.tail = FALSE) +
                 pt(-qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower.tail = TRUE)
             })
         else ## normal case:
-            quote({nu <- (n - 1) * tsample
+            quote({nu <- pmax(1e-7, n - 1) * tsample
                    pt(qt(sig.level/tside, nu, lower.tail = FALSE),
                       nu, ncp = sqrt(n/tsample) * delta/sd, lower.tail = FALSE)})
 
