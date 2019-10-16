@@ -111,8 +111,9 @@
       \code{splice} to enable splicing a computed list of values into an
       expression, like \code{,@} in LISP's backquote.
 
-      \item The formula interface to \code{t.test} and \code{wilcox.test}
-      has been extended to handle one-sample and paired tests.
+      \item The formula interface to \code{t.test()} and
+      \code{wilcox.test()} has been extended to handle one-sample and
+      paired tests.
     }
   }
 

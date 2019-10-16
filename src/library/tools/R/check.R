@@ -4921,6 +4921,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Winvalid-source-encoding\\]",
                              ": warning: .* \\[-Wunused-command-line-argument\\]",
                              ": warning: .* \\[-Wxor-used-as-pow\\]", # clang 10
+                             ": warning: .* \\[-Winconsistent-missing-override\\]",
                              ## For non-portable flags (seen in sub-Makefiles)
                              "warning: .* \\[-Wunknown-warning-option\\]"
                              )
