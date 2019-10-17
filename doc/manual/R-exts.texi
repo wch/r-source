@@ -1688,7 +1688,7 @@ to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and
 be used with @R{} versions before 3.6.0 should use the legacy forms
 @samp{F77 FFLAGS FPICFLAGS} and @samp{FC FCFLAGS FCPICFLAGS}, but
 @samp{F77} and @samp{FCPICFLAGS} are no longer defined, so such packages
-should depend on @samp{R (< 3.7)}.)
+should depend on @samp{R (< 4.0)}.)
 
 To check for an external BLAS library using the @code{AX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do

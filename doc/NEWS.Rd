@@ -184,6 +184,10 @@
       \item \command{R --help} now mentions the option \command{--no-echo}
       (renamed from \command{--slave}) and its previously undocumented
       short form \command{-s}.
+
+      \item \command{R CMD check} now optionally checks
+      \command{configure} and \command{cleanup} scripts for
+      non-Bourne-shell code (\sQuote{bashisms}).
     }
   }
 
