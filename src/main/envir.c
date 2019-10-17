@@ -2310,6 +2310,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(t = findVarLocInFrame(rho, sym, NULL));
     rval = allocVector(LGLSXP,1);
+    LOGICAL(rval)[0] = 0;
     UNPROTECT(1);
     if (t != R_NilValue) {
 	if (DDVAL(s)) {
