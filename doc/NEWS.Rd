@@ -224,14 +224,6 @@
       title string contains a character which produces corrupt PostScript,
       thanks to Daisuko Ogawa's \PR{17607}.
 
-      \item \code{x \%\% L} for finite \code{x} no longer returns
-      \code{NaN} when \code{L} is infinite, nor suffers from cancellation
-      for large finite \code{L}, thanks to Long Qu's \PR{17611}.
-
-      Analogously, \code{x \%/\% L} and \code{L \%/\% x} suffer less from
-      cancellation and return values corresponding to limits for large
-      \code{L}.
-
       \item Certain \code{Ops} (notably comparison such as \code{==}) now
       also work for 0-length data frames, after reports by Hilmar Berger.
 
@@ -359,6 +351,14 @@
       \item \code{pchisq(<LRG>, <LRG>, ncp=100)} no longer takes
       practically forever in some cases.  Hence ditto for corresponding
       \code{qchisq()} calls.
+
+      \item \code{x \%\% L} for finite \code{x} no longer returns
+      \code{NaN} when \code{L} is infinite, nor suffers from cancellation
+      for large finite \code{L}, thanks to Long Qu's \PR{17611}.
+
+      Analogously, \code{x \%/\% L} and \code{L \%/\% x} suffer less from
+      cancellation and return values corresponding to limits for large
+      \code{L}.
 
       \item \code{grepl(NA, *)} now returns \code{logical} as documented.
 
