@@ -8422,7 +8422,7 @@ function(dir, limit = c(usage = 95, examples = 105), installed = FALSE)
         Rd_db(basename(dir), lib.loc = dirname(dir))
     else
         Rd_db(dir = dir)
-    out <- find_wide_Rd_lines_in_Rd_db(db, limit)
+    out <- find_wide_Rd_lines_in_Rd_db(db, limit, installed)
     class(out) <- "check_Rd_line_widths"
     attr(out, "limit") <- limit
     out
@@ -8471,20 +8471,21 @@ function(x, ...)
 }
 
 find_wide_Rd_lines_in_Rd_db <-
-function(x, limit = NULL)
+function(x, limit = NULL, installed = FALSE)
 {
-    y <- lapply(x, find_wide_Rd_lines_in_Rd_object, limit)
+    y <- lapply(x, find_wide_Rd_lines_in_Rd_object, limit, installed)
     Filter(length, y)
 }
 
 find_wide_Rd_lines_in_Rd_object <-
-function(x, limit = NULL)
+function(x, limit = NULL, installed = FALSE)
 {
     if(is.null(limit))
         limit <- list(usage = c(79, 95), examples = c(87, 105))
     sections <- names(limit)
     if(is.null(sections))
         stop("no Rd sections specified")
+    if (installed) x <- prepare_Rd(x, stages = "render")
     y <- Map(function(s, l) {
         out <- NULL
         zz <- textConnection("out", "w", local = TRUE)
