@@ -441,7 +441,7 @@ prepare_Rd <-
 	    if (stage %in% stages)
 		Rd <- processRdSexprs(Rd, stage, options, macros=attr(Rd, "macros"))
 	if (pratt < 2L && stage2)
-	    Rd <- prepare2_Rd(Rd, Rdfile)
+	    Rd <- prepare2_Rd(Rd, Rdfile, stages)
 	meta <- attr(Rd, "meta")
 	if (pratt < 3L && stage3)
 	    Rd <- prepare3_Rd(Rd, Rdfile, msglevel = msglevel)
@@ -454,7 +454,7 @@ prepare_Rd <-
 }
 
 ## auxiliary, currently called only from prepare_Rd(*, stage2 = TRUE)
-prepare2_Rd <- function(Rd, Rdfile)
+prepare2_Rd <- function(Rd, Rdfile, stages)
 {
     sections <- RdTags(Rd)
 
@@ -520,6 +520,11 @@ prepare2_Rd <- function(Rd, Rdfile)
                 "USERMACRO", "\\newcommand", "\\renewcommand")
     drop <- drop | (sections %in% extras)
     bad <- sections %notin% c(names(sectionOrder), extras)
+    ## \Sexpr[stage=render] is OK, if we are not at the render stage yet
+    if ("render" %notin% stages) {
+      render <- vapply(Rd, function(r) getDynamicFlags(r)[["render"]], TRUE)
+      bad <- bad & (sections != "\\Sexpr" | !render)
+    }
     if (any(bad)) {
         for(s in which(bad))
             warnRd(Rd[[s]], Rdfile, "Section ",
