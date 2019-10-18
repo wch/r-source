@@ -1,6 +1,6 @@
 % File src/library/graphics/man/dotchart.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dotchart}
@@ -11,6 +11,7 @@
 }
 \usage{
 dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
+         ann = par("ann"), xaxt = par("xaxt"), frame.plot = TRUE, log = "",
          cex = par("cex"), pt.cex = cex,
          pch = 21, gpch = 21, bg = par("bg"),
          color = par("fg"), gcolor = par("fg"), lcolor = "gray",
@@ -34,6 +35,14 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
   \item{gdata}{data values for the groups.
     This is typically a summary such as the median or mean
     of each group.}
+  \item{ann}{a \code{\link{logical}} value indicating whether the default annotation
+    (title and x and y axis labels) should appear on the plot.}
+  \item{xaxt}{a string indicating the x-axis style; use \code{"n"} to
+    suppress and see also \code{\link{par}("xaxt")}.}
+  \item{frame.plot}{a logical indicating whether a box should be drawn
+    around the plot.}
+  \item{log}{a character string indicating if one or the other axis should
+    be logarithmic, see \code{\link{plot.default}}.}
   \item{cex}{the character size to be used.  Setting \code{cex}
     to a value smaller than one can be a useful way of avoiding label
     overlap.  Unlike many other graphics functions, this sets the actual
@@ -76,7 +85,7 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
 \examples{
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
 op <- par(xaxs = "i")  # 0 -- 100\%
-dotchart(t(VADeaths), xlim = c(0,100),
+dotchart(t(VADeaths), xlim = c(0,100), bg = "skyblue",
          main = "Death Rates in Virginia - 1940")
 par(op)
 }

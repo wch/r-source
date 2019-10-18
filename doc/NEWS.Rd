@@ -247,6 +247,9 @@
     \itemize{
       \item \code{runmed(x, *)} gets new option \code{na.action}
       determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
+
+      \item \code{dotchart()} gets new options \code{ann}, \code{xaxt},
+      \code{frame.plot} and \code{log}.
     }
   }
 
@@ -378,6 +381,9 @@
 
       \item \code{power.t.test()} works in more cases when returning values
       of n smaller than 2.
+
+      \item \code{dotchart(*, pch=., groups=.)} now works better.  Reported
+      by Robert and confirmed by Nic Rochette in \PR{16953}.
     }
   }
 }
