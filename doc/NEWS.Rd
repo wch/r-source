@@ -70,7 +70,7 @@
     \itemize{
       \item Support for specifying C++98 in package installation is
       deprecated.
- 
+
       \item Support in \command{R CMD config} for \samp{F77},
       \samp{FCPIFCPLAGS}, \samp{CPP}, \samp{CXXCPP} and \samp{CXX98} and
       similar is deprecated.  (\samp{CPP} is found from the system
@@ -83,9 +83,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item{\code{barplot()} could get spacings wrong if there was exactly two
-      bars \PR{15522}. Patch by Michael Chirico.}
-
       \item \code{runmed(x, *)} when \code{x} contains missing values
       now works consistently for both \code{algorithm="Stuetzle"} and
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
@@ -118,6 +115,14 @@
       practically forever in some cases.  Hence ditto for corresponding
       \code{qchisq()} calls.
 
+      \item \code{x \%\% L} for finite \code{x} no longer returns
+      \code{NaN} when \code{L} is infinite, nor suffers from cancellation
+      for large finite \code{L}, thanks to Long Qu's \PR{17611}.
+
+      Analogously, \code{x \%/\% L} and \code{L \%/\% x} suffer less from
+      cancellation and return values corresponding to limits for large
+      \code{L}.
+
       \item \code{grepl(NA, *)} now returns \code{logical} as documented.
 
       \item \code{options(warn=1e11)} is an error now, instead of later
@@ -129,6 +134,9 @@
 
       \item \code{format(object.size(.), digits=NULL)} now works, fixing
       \PR{17628} reported by Jonathan Carroll.
+
+      \item \code{barplot()} could get spacings wrong if there were exactly two
+      bars \PR{15522}.  Patch by Michael Chirico.
     }
   }
 }
