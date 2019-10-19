@@ -1028,7 +1028,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, t, obj, method, rho, ans;
     int mode, deparse_level;
-    Rboolean compatible = TRUE, anyS4 = FALSE;
+    Rboolean anyS4 = FALSE;
     struct BindData data;
     char buf[512];
 
@@ -1056,30 +1056,26 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
      * 2) We inspect each class in turn to see if there is an
      *	  applicable method.
      *
+     * 3) If we find a method, we use it.  Otherwise, if there was an S4
+     *    object among the arguments, we try S4 dispatch; otherwise, we
+     *    use the default code.
+     *
+     * In versions of R up to 3.6.x, we used the following rule instead:
+     *
      * 3) If we find an applicable method we make sure that it is
      *	  identical to any method determined for prior arguments.
      *	  If it is identical, we proceed, otherwise we immediately
      *	  drop through to the default code.
      */
 
-    static int force_identical_methods = -1;
-    char *force;
-
-    if(force_identical_methods == -1) {
-	force = getenv("_R_BIND_S3_DISPATCH_FORCE_IDENTICAL_METHODS_");
-	force_identical_methods =
-	    ((force != NULL) && StringTrue(force)) ? 1 : 0;
-    }
-
     PROTECT(args = promiseArgs(args, env));
 
     const char *generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
-    const char *klass = "";
     method = R_NilValue;
-    for (a = CDR(args); a != R_NilValue; a = CDR(a)) {
+    for (a = CDR(args); a != R_NilValue && method == R_NilValue; a = CDR(a)) {
 	PROTECT(obj = eval(CAR(a), env));
 	if (tryS4 && !anyS4 && isS4(obj)) anyS4 = TRUE;
-	if (compatible && isObject(obj)) {
+	if (isObject(obj)) {
 	    SEXP classlist = PROTECT(R_data_class2(obj));
 	    for (int i = 0; i < length(classlist); i++) {
 		const char *s = translateChar(STRING_ELT(classlist, i));
@@ -1089,24 +1085,8 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		SEXP classmethod = R_LookupMethod(install(buf), env, env,
 						  R_BaseNamespace);
 		if (classmethod != R_UnboundValue) {
-		    if (klass[0] == '\0') {
-			/* There is no previous class */
-			/* We use this method. */
-			klass = s;
-			method = classmethod;
-		    }
-		    else {
-			/* Check compatibility with the */
-			/* previous class.  If the two are not */
-			/* compatible we drop through to the */
-			/* default method. */
-			if (strcmp(klass, s)) {
-			    if(force_identical_methods)
-				method = R_NilValue;
-			    compatible = FALSE;
-			}
-		    }
-		    break; /* go to next parameter */
+		    method = classmethod;
+		    break;
 		}
 	    }
 	    UNPROTECT(1);
@@ -1114,7 +1094,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
 
-    tryS4 = anyS4 && (!compatible || method == R_NilValue);
+    tryS4 = anyS4 && (method == R_NilValue);
     if (tryS4) {
 	// keep 'deparse.level' as first arg and *name* it:
 	SET_TAG(args, install("deparse.level"));
