@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-10-08 r77266) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-10-18 r77313) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -862,7 +862,7 @@ temperature no yes
 > 
 > dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
 > op <- par(xaxs = "i")  # 0 -- 100%
-> dotchart(t(VADeaths), xlim = c(0,100),
+> dotchart(t(VADeaths), xlim = c(0,100), bg = "skyblue",
 +          main = "Death Rates in Virginia - 1940")
 > par(op)
 > 
