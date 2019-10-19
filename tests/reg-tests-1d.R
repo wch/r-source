@@ -3179,6 +3179,8 @@ ok_get_all_vars <- function(form,d) { ## get_all_vars() :<=> model_frame() apart
 }
 M <- matrix(1:15, 5,3)
 n <- 26:30
+T <- TRUE
+m <- 2:7
 stopifnot(exprs = {
     ok_get_all_vars(~ M)
     ok_get_all_vars(~M+n)
@@ -3188,8 +3190,13 @@ stopifnot(exprs = {
     ok_get_all_vars(~z+X,    data.frame(     X=I(M), z=n))
     ok_get_all_vars(~z+X,    data.frame(list(X=I(M), z=n)))
     ok_get_all_vars(~z+X, as.data.frame(list(X=I(M), z=n)))
+    lengths(d <- get_all_vars(~ n + T, one = 1)) == 5L
+    identical(d[,"T"], rep.int(TRUE, 5))
+    ## recycling works when commensurate:
+    lengths(d6 <- get_all_vars(~ m + T, one=1, "2 s"=1:2, "3's"=3:1, `f 3` = gl(3,2))) == 6
+    identical(colnames(d6), c("m", "T", "one", "2 s", "3's", "f 3"))
 })
-## the last  4  cases worked already in R <= 3.6.1
+## all but the first 4 cases worked already in R <= 3.6.1
 
 
 ## two-arg Rd macros (PR#17627)

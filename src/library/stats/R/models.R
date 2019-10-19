@@ -782,9 +782,13 @@ get_all_vars <- function(formula, data = NULL, ...)
     extranames <- names(extras[-1L])
     extras <- eval(extras, data, env)
     x <- c(variables, extras)
-    ## PR#13624: as.data.frame() not useful here {is there a better solution?}
-    class(x) <- "data.frame"
+    ## protect the unprotected matrices:
+    if(anyM <- any(isM <- vapply(x, function(o) is.matrix(o) && !inherits(o,"AsIs"), NA)))
+        x[isM] <- lapply(x[isM], I)
+    x <- as.data.frame(x, optional=TRUE)
     names(x) <- c(varnames, extranames)
+    if(anyM)
+        x[isM] <- lapply(x[isM], function(o) `class<-`(o, class(o)[class(o) != "AsIs"]))
     attr(x, "row.names") <-
         if(is.null(rownames)) .set_row_names(max(vapply(x, NROW, integer(1))))
         else rownames # might be short form
