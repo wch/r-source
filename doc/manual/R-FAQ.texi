@@ -1503,9 +1503,10 @@ Annotation in Plots'', @url{http://www.amstat.org/publications/jcgs/, ,
 
 For a very long time, there was no such thing.
 
-@url{http://www.xlsolutions-corp.com/, XLSolutions Corporation} is
-currently beta testing a commercially supported version of R named R+
-(read R plus).
+@c This seems gone as of 2019-10.
+@c @url{http://www.xlsolutions-corp.com/, XLSolutions Corporation} is
+@c currently beta testing a commercially supported version of R named R+
+@c (read R plus).
 
 @url{http://www.revolution-computing.com/, Revolution Analytics} has
 released REvolution R, now available as Microsoft R (see
