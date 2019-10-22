@@ -31,12 +31,14 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include "Defn.h"
 #include <Internal.h>
 #include "Fileio.h"
 #include <direct.h>
 #include "graphapp/ga.h"
+#include "rlocale.h"
 /* Mingw-w64 defines this to be 0x0502 */
 #ifndef _WIN32_WINNT
 # define _WIN32_WINNT 0x0502 /* for GetLongPathName, KEY_WOW64_64KEY */
@@ -434,6 +436,156 @@ const char *formatError(DWORD res)
     return buf;
 }
 
+#if _WIN32_WINNT < 0x0600
+/* available from Windows Vista */
+typedef DWORD (WINAPI *LPFN_GFPNBH) (HANDLE, LPSTR, DWORD, DWORD);
+typedef DWORD (WINAPI *LPFN_GFPNBHW) (HANDLE, LPWSTR, DWORD, DWORD);
+/*
+DWORD GetFinalPathNameByHandle(
+    HANDLE hFile,
+    LPSTR lpszFilePath,
+    DWORD cchFilePath,
+    DWORD dwFlags);
+
+DWORD GetFinalPathNameByHandleW(
+    HANDLE hFile,
+    LPWSTR lpszFilePath,
+    DWORD  cchFilePath,
+    DWORD  dwFlags
+);
+*/
+#endif
+
+/*
+   Returns TRUE on success. On failure, "res" may be modified but not useful.
+*/
+static Rboolean getFinalPathName(const char *orig, char *res)
+{
+    HANDLE h;
+    int ret;
+    static LPFN_GFPNBH gfpnbh = NULL;
+    static Rboolean initialized = FALSE;
+
+    if (!initialized) {
+	initialized = TRUE;
+	gfpnbh = (LPFN_GFPNBH) GetProcAddress(
+	    GetModuleHandle(TEXT("kernel32")),
+	    "GetFinalPathNameByHandleA");
+    }
+    if (gfpnbh == NULL)
+	return FALSE;
+
+    h = CreateFile(orig, 0,
+                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+		   NULL, OPEN_EXISTING,
+                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
+    if (h == INVALID_HANDLE_VALUE) 
+	return FALSE;
+
+    ret = gfpnbh(h, res, MAX_PATH, VOLUME_NAME_DOS);
+    CloseHandle(h);
+
+    if (!ret || ret > MAX_PATH)
+	return FALSE;
+    
+    /* get rid of the \\?\ prefix */
+    int len = strlen(res);
+    int strip = 0;
+    if (len < 4 || strncmp("\\\\?\\", res, 4))
+	/* res should start with \\?\ */
+	return FALSE;
+    
+    if (len > 8 && !strncmp("UNC\\", res+4, 4))
+	/* UNC path \\?\UNC */
+	strip = 7;	
+    else if (len >= 6 && isalpha(res[4]) && res[5] == ':' && res[6] == '\\')
+	/* \\?\D: */
+	strip = 4;
+    else
+	return FALSE;
+    memmove(res, res+strip, len-strip+1);
+
+    /* sanity check if the file exists using the normalized path, a normalized
+       path to an existing file should still be working */
+    h = CreateFile(orig, 0,
+                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+		   NULL, OPEN_EXISTING,
+                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
+    if (h == INVALID_HANDLE_VALUE)
+	return FALSE;
+    CloseHandle(h);
+
+    return TRUE;	
+}
+
+/*
+   Returns TRUE on success. On failure, "res" may be modified but not useful.
+*/
+static Rboolean getFinalPathNameW(const wchar_t *orig, wchar_t *res)
+{
+    HANDLE h;
+    int ret;
+    static LPFN_GFPNBHW gfpnbhw = NULL;
+    static Rboolean initialized = FALSE;
+
+    if (!initialized) {
+	initialized = TRUE;
+	gfpnbhw = (LPFN_GFPNBHW) GetProcAddress(
+	    GetModuleHandle(TEXT("kernel32")),
+	    "GetFinalPathNameByHandleW");
+    }
+    if (gfpnbhw == NULL)
+	return FALSE;
+
+    h = CreateFileW(orig, 0,
+                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+		   NULL, OPEN_EXISTING,
+                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
+    if (h == INVALID_HANDLE_VALUE) 
+	return FALSE;
+
+    ret = gfpnbhw(h, res, 32767, VOLUME_NAME_DOS);
+    CloseHandle(h);
+
+    if (!ret || ret > 32768)
+	return FALSE;
+    
+    /* get rid of the \\?\ prefix */
+    size_t len = wcslen(res);
+    int strip = 0;
+    if (len < 4 || wcsncmp(L"\\\\?\\", res, 4))
+	/* res should start with \\?\ */
+	return FALSE;
+    
+    if (len > 8 && !wcsncmp(L"UNC\\", res+4, 4))
+	/* UNC path \\?\UNC */
+	strip = 7;	
+    else if (len >= 6 && Ri18n_iswctype(res[4], Ri18n_wctype("alpha"))
+	     && res[5] == L':' && res[6] == L'\\')
+	/* \\?\D: */
+	strip = 4;
+    else
+	return FALSE;
+    wmemmove(res, res+strip, len-strip+1);
+
+    /* sanity check if the file exists using the normalized path, a normalized
+       path to an existing file should still be working */
+    h = CreateFileW(orig, 0,
+                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+		   NULL, OPEN_EXISTING,
+                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
+    if (h == INVALID_HANDLE_VALUE)
+	return FALSE;
+    CloseHandle(h);
+
+    return TRUE;	
+}
+
+
 
 void R_UTF8fixslash(char *s); /* from main/util.c */
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -460,8 +612,8 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-    	int warn = 0;
     	SEXP result;
+	Rboolean ok = FALSE;
 	el = STRING_ELT(paths, i);
 	result = el;
 	if (el == NA_STRING) {
@@ -471,71 +623,80 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if(mustWork == NA_LOGICAL)
 		warningcall(call, "path[%d]=NA", i+1);
 	} else if(getCharCE(el) == CE_UTF8) {
-	    if ((res = GetFullPathNameW(filenameToWchar(el, FALSE), 32768, 
-					wtmp, &wtmp2)) && res <= 32768) {
-		if ((res = GetLongPathNameW(wtmp, wlongpath, 32768))
-		    && res <= 32768) {
-	    	    wcstoutf8(longpath, wlongpath, sizeof(longpath));
-		    if(fslash) R_UTF8fixslash(longpath);
-	    	    result = mkCharCE(longpath, CE_UTF8);
-		} else if(mustWork == 1) {
-		    errorcall(call, "path[%d]=\"%s\": %s", i+1, 
-			      translateChar(el), 
-			      formatError(GetLastError()));	
-	    	} else {
-	    	    wcstoutf8(tmp, wtmp, sizeof(tmp));
-		    if(fslash) R_UTF8fixslash(tmp);
-	    	    result = mkCharCE(tmp, CE_UTF8);
-	    	    warn = 1;
-	    	}
-	    } else if(mustWork == 1) {
-		errorcall(call, "path[%d]=\"%s\": %s", i+1, 
-			  translateChar(el), 
-			  formatError(GetLastError()));	
+	    wchar_t *norm = NULL;
+	    const wchar_t* wel = filenameToWchar(el, FALSE);
+
+	    if (getFinalPathNameW(wel, wtmp)) {
+		norm = wtmp;
+		ok = TRUE;
 	    } else {
-		if (fslash) {
-		    strcpy(tmp, translateCharUTF8(el));
-		    R_UTF8fixslash(tmp);
-	    	    result = mkCharCE(tmp, CE_UTF8);
+		/* silently fall back to GetFullPathNameW/GetLongPathNameW */
+		res = GetFullPathNameW(wel, 32768, wtmp, &wtmp2);
+		if (res && res <= 32768) {
+		    norm = wtmp;
+		    res = GetLongPathNameW(wtmp, wlongpath, 32768);
+		    if (res && res <= 32768) {
+			norm = wlongpath;
+			ok = TRUE;
+		    }
 		}
-	    	warn = 1;
 	    }
-	    if (warn && (mustWork == NA_LOGICAL))
-	    	warningcall(call, "path[%d]=\"%ls\": %s", i+1, 
-			    filenameToWchar(el,FALSE), 
-			    formatError(GetLastError()));
+	    if (!ok) {
+		if (mustWork == 1) {
+		    errorcall(call, "path[%d]=\"%ls\": %s", i+1, 
+			      wel, formatError(GetLastError()));
+		} else if (mustWork == NA_LOGICAL) {
+		    warningcall(call, "path[%d]=\"%ls\": %s", i+1, 
+				wel, formatError(GetLastError()));
+		}
+	    }
+
+	    char *normutf8 = tmp;
+	    if (norm)
+		wcstoutf8(tmp, norm, sizeof(tmp));
+	    else if (fslash)
+		strcpy(tmp, translateCharUTF8(el));
+	    else
+		normutf8 = (char *)translateCharUTF8(el);
+
+	    if (fslash) R_UTF8fixslash(normutf8);
+	    result = mkCharCE(normutf8, CE_UTF8);
 	} else {
-	    if ((res = GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2)) 
-		&& res <= MAX_PATH) {
-	    	if ((res = GetLongPathName(tmp, longpath, MAX_PATH))
-		    && res <= MAX_PATH) {
-		    if(fslash) R_fixslash(longpath);
-	    	    result = mkChar(longpath);
-		} else if(mustWork == 1) {
-		    errorcall(call, "path[%d]=\"%s\": %s", i+1, 
-			      translateChar(el), 
-			      formatError(GetLastError()));	
-	    	} else {
-		    if(fslash) R_fixslash(tmp);
-	    	    result = mkChar(tmp);
-	    	    warn = 1;
-	    	}
-	    } else if(mustWork == 1) {
-		errorcall(call, "path[%d]=\"%s\": %s", i+1, 
-			  translateChar(el), 
-			  formatError(GetLastError()));	
+	    char *norm = NULL;
+	    const char *tel = translateChar(el);
+	    if (getFinalPathName(tel, tmp)) {
+		norm = tmp;
+		ok = TRUE;
 	    } else {
-		if (fslash) {
-		    strcpy(tmp, translateChar(el));
-		    R_fixslash(tmp);
-		    result = mkChar(tmp);
+		/* silently fall back to GetFullPathName/GetLongPathName */
+		res = GetFullPathName(tel, MAX_PATH, tmp, &tmp2);
+		if (res && res <= MAX_PATH) {
+		    norm = tmp;
+		    res = GetLongPathName(tmp, longpath, MAX_PATH);
+		    if (res && res <= MAX_PATH) {
+			norm = longpath;
+			ok = TRUE;
+		    }
 		}
-	    	warn = 1;
 	    }
-	    if (warn && (mustWork == NA_LOGICAL))
-		warningcall(call, "path[%d]=\"%s\": %s", i+1, 
-			    translateChar(el), 
-			    formatError(GetLastError()));	
+	    if (!ok) {
+		if (mustWork == 1) {
+		    errorcall(call, "path[%d]=\"%s\": %s", i+1, 
+			      tel, formatError(GetLastError()));
+		} else if (mustWork == NA_LOGICAL) {
+		    warningcall(call, "path[%d]=\"%s\": %s", i+1, 
+				tel, formatError(GetLastError()));
+		}
+		if (!norm) {
+		    if (fslash) {
+			strcpy(tmp, tel);
+			norm = tmp;
+		    } else
+			norm = (char *)tel;
+		}
+	    }
+	    if (fslash) R_fixslash(norm);
+	    result = mkChar(norm);
 	}
 	SET_STRING_ELT(ans, i, result);
     }

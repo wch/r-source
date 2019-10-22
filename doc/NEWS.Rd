@@ -114,6 +114,10 @@
       \item The formula interface to \code{t.test()} and
       \code{wilcox.test()} has been extended to handle one-sample and
       paired tests.
+
+      \item \code{normalizePath()} on Windows now resolves symbolic links
+      and normalizes case of long names of path elements in case-insensitive
+      folders (\PR{17165}).
     }
   }
 

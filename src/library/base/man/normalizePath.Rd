@@ -34,10 +34,15 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   path need not be unique, for example \emph{via} hard links or
   multiple mounts.
 
-  On Windows it converts relative paths to absolute paths, converts
-  short names for path elements to long names and ensures the separator
-  is that specified by \code{winslash}.  It will match paths
-  case-insensitively and return the canonical case.
+  On Windows it converts relative paths to absolute paths, resolves symbolic
+  links, converts short names for path elements to long names and ensures the
+  separator is that specified by \code{winslash}.  It will match each path
+  element case-insensitively or case-sensitively as during the usual name
+  lookup and return the canonical case. It relies on Windows API function
+  \code{GetFinalPathNameByHandle} and in case of an error (such as
+  insufficient permissions) it currently falls back to the \R 3.6 (and
+  older) implementation, which relies on \code{GetFullPathName} and
+  \code{GetLongPathName} with limitations described in the Notes section.
   UTF-8-encoded paths not valid in the current locale can be used.
 
   \code{mustWork = FALSE} is useful for expressing paths for use in
@@ -49,10 +54,10 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   on macOS absolute paths such as \file{/tmp} and \file{/var} are
   symbolic links. On Linux, a path produced by bash process substitution is
   a symbolic link (such as \file{/proc/fd/63}) to a pipe and there is no
-  canonical form of such path. Windows may convert case of the path name
-  (in Windows 10, name of a file without a long name seems to be returned in
-  the case used for creation of the file, but the case in \code{path} is
-  preserved for a file with a long name).
+  canonical form of such path. In \R 3.6 and older on Windows, symlinks will
+  not be resolved and the long names for path elements will be returned with
+  the case in which they are in \code{path}, which may not be canonical in
+  case-insensitive folders.
 }
 
 \value{
