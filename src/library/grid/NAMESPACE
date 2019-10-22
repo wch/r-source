@@ -38,6 +38,7 @@ export(
        "grobX", "grobY", "grobWidth", "grobHeight",
        "grobAscent", "grobDescent",
        "absolute.size",
+       "unitType",
 
        "valid.just", "resolveHJust", "resolveVJust",
        "resolveRasterSize",
@@ -363,6 +364,10 @@ S3method("forceGrob", "gTree")
 S3method("absolute.units", "unit")
 S3method("absolute.units", "unit.list")
 S3method("absolute.units", "unit.arithmetic")
+
+S3method("unitType", "unit")
+S3method("unitType", "unit.list")
+S3method("unitType", "unit.arithmetic")
 
 # S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")

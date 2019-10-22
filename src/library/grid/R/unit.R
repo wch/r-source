@@ -221,6 +221,26 @@ valid.units <- function(units) {
   .Call(C_validUnits, units)
 }
 
+unitType <- function(x) {
+    UseMethod("unitType")
+}
+unitType.unit <- function(x) {
+    rep(attr(x, "unit"), length.out=length(x))
+}
+unitType.unit.arithmetic <- function(x) {
+    rep(switch(x$fname,
+               "+"=,
+               "-"=,
+               "*"=,
+               sum="sum",
+               min="min",
+               max="max"),
+        length.out=length(x))
+}
+unitType.unit.list <- function(x) {
+    sapply(x, unitType)
+}
+    
 as.character.unit <- function(x, ...) {
   class(x) <- NULL
   paste0(x, attr(x, "unit"))
@@ -861,3 +881,4 @@ absolute.units.unit.arithmetic <- function(unit) {
          "max"=unit.arithmetic("max", absolute.units(unit$arg1)),
          "sum"=unit.arithmetic("sum", absolute.units(unit$arg1)))
 }
+
