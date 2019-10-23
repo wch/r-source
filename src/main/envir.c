@@ -112,6 +112,10 @@
 static SEXP getActiveValue(SEXP);
 static R_INLINE SEXP BINDING_VALUE(SEXP b)
 {
+    if (BNDCELL_TAG(b)) {
+	R_expand_binding_value(b);
+	return CAR0(b);
+    }
     if (IS_ACTIVE_BINDING(b)) return getActiveValue(CAR(b));
     else return CAR(b);
 }
@@ -2251,9 +2255,12 @@ R_isMissing(SEXP symbol, SEXP rho)
 	    else
 		vl = nthcdr(CAR(vl), ddv-1);
 	}
-	if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
+	if (MISSING(vl) == 1 ||
+	    (BNDCELL_TAG(vl) == 0 && CAR(vl) == R_MissingArg))
 	    return 1;
 	if (IS_ACTIVE_BINDING(vl))
+	    return 0;
+	if (BNDCELL_TAG(vl))
 	    return 0;
 	SETCAR(vl, findRootPromise(CAR(vl)));
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
@@ -2321,6 +2328,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		t = nthcdr(CAR(t), ddv-1);
 	}
+	if (BNDCELL_TAG(t)) return rval;
 	if (MISSING(t) || CAR(t) == R_MissingArg) {
 	    LOGICAL(rval)[0] = 1;
 	    return rval;

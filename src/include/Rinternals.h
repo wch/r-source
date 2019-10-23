@@ -226,7 +226,7 @@ struct sxpinfo_struct {
     unsigned int gcgen :  1;  /* old generation number */
     unsigned int gccls :  3;  /* node class */
     unsigned int named : NAMED_BITS;
-    unsigned int extra : 32 - NAMED_BITS;
+    unsigned int extra : 32 - NAMED_BITS; /* used for immediate bindings */
 }; /*		    Tot: 64 */
 
 struct vecsxp_struct {
@@ -498,7 +498,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 /* These also work for ... objects */
 #define LISTVAL(x)	((x)->u.listsxp)
 #define TAG(e)		((e)->u.listsxp.tagval)
-#define CAR(e)		((e)->u.listsxp.carval)
+#define CAR0(e)		((e)->u.listsxp.carval)
 #define CDR(e)		((e)->u.listsxp.cdrval)
 #define CAAR(e)		CAR(CAR(e))
 #define CDAR(e)		CDR(CAR(e))
@@ -516,6 +516,59 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
   int __other_flags__ = __x__->sxpinfo.gp & ~MISSING_MASK; \
   __x__->sxpinfo.gp = __other_flags__ | __v__; \
 } while (0)
+#define BNDCELL_TAG(e)	((e)->sxpinfo.extra)
+#define SET_BNDCELL_TAG(e, v) ((e)->sxpinfo.extra = (v))
+
+#if ( SIZEOF_SIZE_T < SIZEOF_DOUBLE )
+# define BOXED_BINDING_CELLS 1
+#else
+# define BOXED_BINDING_CELLS 0
+#endif
+#if BOXED_BINDING_CELLS
+/* Use allocated scalars to hold immediate binding values. A little
+   less efficient but does not change memory layout or use. These
+   allocated scalars must not escape their bindings. */
+#define BNDCELL_DVAL(v) SCALAR_DVAL(CAR0(v))
+#define BNDCELL_IVAL(v) SCALAR_IVAL(CAR0(v))
+#define BNDCELL_LVAL(v) SCALAR_LVAL(CAR0(v))
+
+#define SET_BNDCELL_DVAL(cell, dval) SET_SCALAR_DVAL(CAR0(cell), dval)
+#define SET_BNDCELL_IVAL(cell, ival) SET_SCALAR_IVAL(CAR0(cell), ival)
+#define SET_BNDCELL_LVAL(cell, lval) SET_SCALAR_LVAL(CAR0(cell), lval)
+
+#define INIT_BNDCELL(cell, type) do {		\
+	SEXP val = allocVector(type, 1);	\
+	SETCAR(cell, val);			\
+	INCREMENT_NAMED(val);			\
+	SET_BNDCELL_TAG(cell, type);		\
+	SET_MISSING(cell, 0);			\
+    } while (0)
+#else
+/* Use a union in the CAR field to represent an SEXP or an immediate
+   value.  More efficient, but changes the menory layout on 32 bit
+   platforms since the size of the union is larger than the size of a
+   pointer. The layout should not change on 64 bit platforms. */
+typedef union {
+    SEXP sxpval;
+    double dval;
+    int ival;
+} R_bndval_t;
+
+#define BNDCELL_DVAL(v) ((R_bndval_t *) &CAR0(v))->dval
+#define BNDCELL_IVAL(v) ((R_bndval_t *) &CAR0(v))->ival
+#define BNDCELL_LVAL(v) ((R_bndval_t *) &CAR0(v))->ival
+
+#define SET_BNDCELL_DVAL(cell, dval) (BNDCELL_DVAL(cell) = (dval))
+#define SET_BNDCELL_IVAL(cell, ival) (BNDCELL_IVAL(cell) = (ival))
+#define SET_BNDCELL_LVAL(cell, lval) (BNDCELL_LVAL(cell) = (lval))
+
+#define INIT_BNDCELL(cell, type) do {		\
+	if (BNDCELL_TAG(cell) == 0)		\
+	    DECREMENT_REFCNT(CAR0(cell));	\
+	SET_BNDCELL_TAG(cell, type);		\
+	SET_MISSING(cell, 0);			\
+    } while (0)
+#endif
 
 /* Closure Access Macros */
 #define FORMALS(x)	((x)->u.closxp.formals)
@@ -802,9 +855,19 @@ void R_check_thread(const char *s);
 /* These also work for ... objects */
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
+int (BNDCELL_TAG)(SEXP e);
+void (SET_BNDCELL_TAG)(SEXP e, int v);
+double (BNDCELL_DVAL)(SEXP cell);
+int (BNDCELL_IVAL)(SEXP cell);
+int (BNDCELL_LVAL)(SEXP cell);
+void (SET_BNDCELL_DVAL)(SEXP cell, double v);
+void (SET_BNDCELL_IVAL)(SEXP cell, int v);
+void (SET_BNDCELL_LVAL)(SEXP cell, int v);
+void (INIT_BNDCELL)(SEXP cell, int type);
 void SET_BNDCELL(SEXP cell, SEXP val);
+
 SEXP (TAG)(SEXP e);
-SEXP (CAR)(SEXP e);
+SEXP (CAR0)(SEXP e);
 SEXP (CDR)(SEXP e);
 SEXP (CAAR)(SEXP e);
 SEXP (CDAR)(SEXP e);
@@ -881,7 +944,7 @@ void (SET_HASHVALUE)(SEXP x, int v);
 
 
 /* External pointer access macros */
-#define EXTPTR_PTR(x)	CAR(x)
+#define EXTPTR_PTR(x)	CAR0(x)
 #define EXTPTR_PROT(x)	CDR(x)
 #define EXTPTR_TAG(x)	TAG(x)
 
@@ -1664,6 +1727,7 @@ void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
 SEXP R_FixupRHS(SEXP x, SEXP y);
+SEXP (CAR)(SEXP e);
 void *(DATAPTR)(SEXP x);
 const void *(DATAPTR_RO)(SEXP x);
 const void *(DATAPTR_OR_NULL)(SEXP x);

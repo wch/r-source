@@ -78,6 +78,19 @@
 # define CATCH_ZERO_LENGTH_ACCESS
 #endif
 
+
+#if defined(USE_RINTERNALS) || defined(COMPILING_R)
+/* inline version of CAR to support immediate bindings */
+INLINE_FUN SEXP CAR(SEXP e)
+{
+    if (BNDCELL_TAG(e))
+	error("bad binding access");
+    return CAR0(e);
+}
+#else
+SEXP CAR(SEXP e);
+#endif
+
 #ifdef STRICT_TYPECHECK
 INLINE_FUN void CHKVEC(SEXP x) {
     switch (TYPEOF(x)) {
