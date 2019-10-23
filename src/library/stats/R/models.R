@@ -771,8 +771,7 @@ get_all_vars <- function(formula, data = NULL, ...)
     env <- environment(formula)
     rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
     varnames <- all.vars(formula)
-    inp <- str2lang(paste0("list(", paste(varnames, collapse = ","), ")"))
-    variables <- eval(inp, data, env)
+    variables <- lapply(lapply(varnames, as.name), eval, data, env)
     if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
         ## see if we can get rownames from the response
         lhs <- variables[[resp]]

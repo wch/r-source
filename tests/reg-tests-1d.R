@@ -3190,7 +3190,7 @@ stopifnot(exprs = {
     ok_get_all_vars(~z+X,    data.frame(     X=I(M), z=n))
     ok_get_all_vars(~z+X,    data.frame(list(X=I(M), z=n)))
     ok_get_all_vars(~z+X, as.data.frame(list(X=I(M), z=n)))
-    lengths(d <- get_all_vars(~ n + T, one = 1)) == 5L
+    lengths(d <- get_all_vars(~ n + T, "2n" = 2*n)) == 5L
     identical(d[,"T"], rep.int(TRUE, 5))
     ## recycling works when commensurate:
     lengths(d6 <- get_all_vars(~ m + T, one=1, "2 s"=1:2, "3's"=3:1, `f 3` = gl(3,2))) == 6
