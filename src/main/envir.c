@@ -1985,6 +1985,28 @@ SEXP attribute_hidden do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+void R_removeVarFromFrame(SEXP name, SEXP env)
+{
+    int hashcode = -1;
+
+    if (TYPEOF(env) == NILSXP)
+	error(_("use of NULL environment is defunct"));
+
+    if (!isEnvironment(env))
+	error(_("argument to '%s' is not an environment"), "R_removeVarFromFrame");
+
+    if (TYPEOF(name) != SYMSXP)
+	error(_("not a symbol"));
+
+    if (IS_HASHED(env)) {
+	if( !HASHASH(PRINTNAME(name)))
+	    hashcode = R_Newhashpjw(CHAR(PRINTNAME(name)));
+	else
+	    hashcode = HASHVALUE(PRINTNAME(name));
+    }
+    RemoveVariable(name, hashcode, env);
+}
+
 
 /*----------------------------------------------------------------------
 
