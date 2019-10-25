@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-12  The R Core Team.
+ *  Copyright (C) 2001--2019  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -190,20 +190,20 @@
 	for (R_xlen_t idx = strt; idx < __ibr_n__; idx += nb) {		\
 	    nb = __ibr_n__  - idx > GET_REGION_BUFSIZE ?		\
 		GET_REGION_BUFSIZE :  __ibr_n__ - idx;			\
-	    etype *px = GET_REGION_PTR(sx, idx, nb, __ibr_buf__, vtype); \
+	    etype *px = (etype *) GET_REGION_PTR(sx, idx, nb,		\
+	                                         __ibr_buf__, vtype);	\
 	    expr							\
 	 }							        \
     } while (0)
 
 #define ITERATE_BY_REGION_PARTIAL(sx, px, idx, nb, etype, vtype,	\
 				  strt, nfull, expr) do {		\
-	const etype *px = DATAPTR_OR_NULL(sx);				\
+	const etype *px = (etype *) DATAPTR_OR_NULL(sx);		\
 	if (px != NULL) {						\
-	    R_xlen_t __ibr_n__ = strt + nfull;				\
-	    R_xlen_t nb = __ibr_n__;					\
-	    for (R_xlen_t idx = strt; idx < __ibr_n__; idx += nb) {	\
-		expr							\
-	     }								\
+	    R_xlen_t idx = strt;					\
+	    R_xlen_t nb = nfull;					\
+	    px += strt;							\
+	    expr							\
 	}								\
 	else ITERATE_BY_REGION_PARTIAL0(sx, px, idx, nb, etype, vtype,	\
 					strt, nfull, expr);		\
