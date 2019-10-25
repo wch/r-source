@@ -2477,9 +2477,12 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 	strncmp((char*)buf, "RDX3\n", 5) == 0) {
 	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
 	if (PRIMVAL(op) == 0) {
+	    int old_InitReadItemDepth = R_InitReadItemDepth,
+		old_ReadItemDepth = R_ReadItemDepth;
 	    R_InitReadItemDepth = R_ReadItemDepth = -asInteger(CADDR(args));
 	    res = RestoreToEnv(R_Unserialize(&in), aenv);
-	    R_ReadItemDepth = 0;
+	    R_InitReadItemDepth = old_InitReadItemDepth;
+	    R_ReadItemDepth = old_ReadItemDepth;
 	} else 
 	    res = R_SerializeInfo(&in);
 	if(!wasopen) {
