@@ -233,6 +233,8 @@
 
       \item \code{methods(class = class(glm(..)))} now warns more usefully
       and only once.
+
+      \item \code{write.dcf()} no longer mangles field names (\PR{17589}).
     }
   }
 }
