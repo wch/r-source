@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-10-08 r77266) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-10-26 r77334) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1498,5 +1498,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.56 0.016 1.582 0 0 
+Time elapsed:  1.571 0.015 1.592 0 0 
 > 
