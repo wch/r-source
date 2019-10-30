@@ -540,6 +540,8 @@ int dummy_fgetc(Rconnection con)
 	    errno = 0;
 	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
 	    con->inavail = (short) inb;
+	    con->next = con->oconvbuff;
+	    con->navail = (short)(50 - onb);
 	    if(res == (size_t)-1) { /* an error condition */
 		if(errno == EINVAL || errno == E2BIG) {
 		    /* incomplete input char or no space in output buffer */
@@ -548,11 +550,10 @@ int dummy_fgetc(Rconnection con)
 		    warning(_("invalid input found on input connection '%s'"),
 			    con->description);
 		    con->inavail = 0;
+		    if (con->navail == 0) return R_EOF;
 		    con->EOF_signalled = TRUE;
 		}
 	    }
-	    con->next = con->oconvbuff;
-	    con->navail = (short)(50 - onb);
 	}
 	con->navail--;
 	/* the cast prevents sign extension of 0xFF to -1 (R_EOF) */
