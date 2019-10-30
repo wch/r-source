@@ -298,7 +298,8 @@
       \item A package with Fortran source code and perhaps C (but not
       C++) sources can request for its shared object/DLL to be linked by
       the Fortran compiler by including a line \code{USE_FC_TO_LINK=} in
-      \file{src/Makevars[.win]}.
+      \file{src/Makevars[.win]} and using \code{$(SHLIB_OPENMP_FFLAGS)}
+      as part of \code{PKG_LIBS}.
 
       The known reason for doing so is a package which uses Fortran
       (only) OpenMP on a platform where the Fortran OpenMP runtime is
