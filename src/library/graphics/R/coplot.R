@@ -36,7 +36,7 @@ co.intervals <- function (x, number = 6, overlap = 0.5)
 }
 
 panel.smooth <- function(x, y, col = par("col"), bg = NA, pch = par("pch"),
-			 cex = 1, col.smooth = "red", span = 2/3, iter = 3, ...)
+			 cex = 1, col.smooth = 2, span = 2/3, iter = 3, ...)
 {
     points(x, y, pch=pch, col=col, bg=bg, cex=cex)
     ok <- is.finite(x) & is.finite(y)

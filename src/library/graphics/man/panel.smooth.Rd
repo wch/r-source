@@ -12,7 +12,7 @@
 }
 \usage{
 panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"),
-             cex = 1, col.smooth = "red", span = 2/3, iter = 3,
+             cex = 1, col.smooth = 2, span = 2/3, iter = 3,
              \dots)
 }
 \arguments{
@@ -34,7 +34,7 @@ panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"),
 }
 \examples{
 pairs(swiss, panel = panel.smooth, pch = ".")  # emphasize the smooths
-pairs(swiss, panel = panel.smooth, lwd = 2, cex = 1.5, col = "blue")  # hmm...
+pairs(swiss, panel = panel.smooth, lwd = 2, cex = 1.5, col = 4)  # hmm...
 }
 \keyword{hplot}
 \keyword{dplot}

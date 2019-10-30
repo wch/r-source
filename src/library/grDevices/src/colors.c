@@ -595,13 +595,13 @@ SEXP col2rgb(SEXP colors, SEXP alpha)
 static int PaletteSize = 8;
 static rcolor Palette[MAX_PALETTE_SIZE] = {
     0xff000000,
-    0xff0000ff,
-    0xff00cd00,
-    0xffff0000,
-    0xffffff00,
-    0xffff00ff,
-    0xff00ffff,
-    0xffbebebe
+    0xff6b53df,
+    0xff4fd061,
+    0xfffda513,
+    0xffdfdb33,
+    0xfff53ad0,
+    0xff1fc2ee,
+    0xff656565
 };
 
 static rcolor Palette0[MAX_PALETTE_SIZE];
@@ -640,21 +640,16 @@ static int StrMatch(const char *s, const char *t)
  */
 
 /* Default Color Palette */
-/* Paul Murrell 05/06/02 (2002, probably)
- * Changed "white" to "grey" in the default palette
- * in response to user suggestion
- */
 attribute_hidden
-const char *DefaultPalette[] = {
-    "black",
-    "red",
-    "green3",
-    "blue",
-    "cyan",
-    "magenta",
-    "yellow",
-    "grey",
-    NULL
+const rcolor DefaultPalette[8] = {
+    0xff000000,
+    0xff6b53df,
+    0xff4fd061,
+    0xfffda513,
+    0xffdfdb33,
+    0xfff53ad0,
+    0xff1fc2ee,
+    0xff656565
 };
 
 /* The Table of Known Color Names */
@@ -1502,8 +1497,8 @@ SEXP palette(SEXP val)
     if ((n = length(val)) == 1) {
 	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) {
 	    int i;
-	    for (i = 0; (i < MAX_PALETTE_SIZE) && DefaultPalette[i]; i++)
-		Palette[i] = name2col(DefaultPalette[i]);
+	    for (i = 0; i < 8; i++)
+		Palette[i] = DefaultPalette[i];
 	    PaletteSize = i;
 	} else error(_("unknown palette (need >= 2 colors)"));
     }

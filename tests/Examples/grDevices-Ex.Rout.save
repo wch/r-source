@@ -177,13 +177,13 @@ $allowed
 > cbind(palette(), adjustcolor(1:8, 0.75))
      [,1]      [,2]       
 [1,] "black"   "#000000BF"
-[2,] "red"     "#FF0000BF"
-[3,] "green3"  "#00CD00BF"
-[4,] "blue"    "#0000FFBF"
-[5,] "cyan"    "#00FFFFBF"
-[6,] "magenta" "#FF00FFBF"
-[7,] "yellow"  "#FFFF00BF"
-[8,] "gray"    "#BEBEBEBF"
+[2,] "#DF536B" "#DF536BBF"
+[3,] "#61D04F" "#61D04FBF"
+[4,] "#13A5FD" "#13A5FDBF"
+[5,] "#33DBDF" "#33DBDFBF"
+[6,] "#D03AF5" "#D03AF5BF"
+[7,] "#EEC21F" "#EEC21FBF"
+[8,] "#656565" "#656565BF"
 > 
 > ##  alpha = 1/2 * previous alpha --> opaque colors
 > x <- palette(adjustcolor(palette(), 0.5))
@@ -197,13 +197,13 @@ $allowed
 > cbind(x, x.)
      x         x.         
 [1,] "black"   "#80808099"
-[2,] "red"     "#FF808099"
-[3,] "green3"  "#80FF8099"
-[4,] "blue"    "#8080FF99"
-[5,] "cyan"    "#80FFFF99"
-[6,] "magenta" "#FF80FF99"
-[7,] "yellow"  "#FFFF8099"
-[8,] "gray"    "#FFFFFF99"
+[2,] "#DF536B" "#FFBACA99"
+[3,] "#61D04F" "#C3FFB799"
+[4,] "#13A5FD" "#8DF3FF99"
+[5,] "#33DBDF" "#A3FFFF99"
+[6,] "#D03AF5" "#FFA8FF99"
+[7,] "#EEC21F" "#FFFF9599"
+[8,] "#656565" "#C6C6C699"
 > op <- par(bg = adjustcolor("goldenrod", offset = -rep(.4, 4)), xpd = NA)
 > plot(0:9, 0:9, type = "n", axes = FALSE, xlab = "", ylab = "",
 +      main = "adjustcolor() -> translucent")
@@ -219,8 +219,8 @@ $allowed
 [3,] 0.3333333 0.3333333 0.3333333    0
 [4,] 0.0000000 0.0000000 0.0000000    1
 > adjustcolor(x, transform = M)
-[1] "#000000FF" "#555555FF" "#444444FF" "#555555FF" "#AAAAAAFF" "#AAAAAAFF"
-[7] "#AAAAAAFF" "#BEBEBEFF"
+[1] "#000000FF" "#8A8A8AFF" "#808080FF" "#929292FF" "#A4A4A4FF" "#AAAAAAFF"
+[7] "#9A9A9AFF" "#656565FF"
 > 
 > ## revert to previous palette: active
 > palette(opal)
@@ -661,9 +661,9 @@ blue  225      71
 > 
 > col2rgb(1:8)  # the ones from the palette() (if the default)
       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
-red      0  255    0    0    0  255  255  190
-green    0    0  205    0  255    0  255  190
-blue     0    0    0  255  255  255    0  190
+red      0  223   97   19   51  208  238  101
+green    0   83  208  165  219   58  194  101
+blue     0  107   79  253  223  245   31  101
 > 
 > col2rgb(paste0("gold", 1:4))
       [,1] [,2] [,3] [,4]
@@ -684,9 +684,9 @@ green   0 205
 blue    0 239
 > col2rgb(c(palette = 1:3))
       palette1 palette2 palette3
-red          0      255        0
-green        0        0      205
-blue         0        0        0
+red          0      223       97
+green        0       83      208
+blue         0      107       79
 > 
 > ##-- NON-INTRODUCTORY examples --
 > 
@@ -1810,23 +1810,23 @@ detaching ‘package:grid’
 > cols <- t(col2rgb(palette())); rownames(cols) <- palette(); cols
         red green blue
 black     0     0    0
-red     255     0    0
-green3    0   205    0
-blue      0     0  255
-cyan      0   255  255
-magenta 255     0  255
-yellow  255   255    0
-gray    190   190  190
+#DF536B 223    83  107
+#61D04F  97   208   79
+#13A5FD  19   165  253
+#33DBDF  51   219  223
+#D03AF5 208    58  245
+#EEC21F 238   194   31
+#656565 101   101  101
 > zapsmall(lab <- convertColor(cols, from = "sRGB", to = "Lab", scale.in = 255))
-               L         a          b
-black    0.00000   0.00000    0.00000
-red     53.48418  80.01027   67.38407
-green3  71.91841 -73.33548   70.41134
-blue    32.24075  78.82042 -107.93632
-cyan    91.01106 -48.46075  -14.29081
-magenta 60.50231  97.95195  -60.51490
-yellow  97.14950 -21.36677   94.42044
-gray    76.97594   0.00000    0.00000
+               L         a         b
+black    0.00000   0.00000   0.00000
+#DF536B 55.16051  56.30900  16.18063
+#61D04F 74.89688 -55.97739  53.00681
+#13A5FD 64.99262  -3.97388 -53.33556
+#33DBDF 79.91838 -39.39571 -14.04455
+#D03AF5 55.21747  80.08516 -63.84886
+#EEC21F 80.15007   2.12223  77.35114
+#656565 42.78380   0.00000   0.00000
 > stopifnot(all.equal(cols, # converting back.. getting the original:
 +    round(convertColor(lab, from = "Lab", to = "sRGB", scale.out = 255)),
 +                     check.attributes = FALSE))
@@ -2339,46 +2339,46 @@ display gamma = 2.2
 > (cols <- t(col2rgb(palette())))
      red green blue
 [1,]   0     0    0
-[2,] 255     0    0
-[3,]   0   205    0
-[4,]   0     0  255
-[5,]   0   255  255
-[6,] 255     0  255
-[7,] 255   255    0
-[8,] 190   190  190
+[2,] 223    83  107
+[3,]  97   208   79
+[4,]  19   165  253
+[5,]  51   219  223
+[6,] 208    58  245
+[7,] 238   194   31
+[8,] 101   101  101
 > zapsmall(luv <- convertColor(cols, from = "sRGB", to = "Luv", scale.in = 255))
             L         u          v
 [1,]  0.00000   0.00000    0.00000
-[2,] 53.48418 175.36468   37.80017
-[3,] 71.91841 -68.70661   87.86408
-[4,] 32.24075  -9.66060 -130.19297
-[5,] 91.01106 -71.17303  -15.34147
-[6,] 60.50231  84.56678 -108.14654
-[7,] 97.14950   7.89815  106.44098
-[8,] 76.97594   0.00000    0.00000
+[2,] 55.16051  99.94871    8.95299
+[3,] 74.89688 -51.95694   73.49647
+[4,] 64.99262 -40.72973  -85.66824
+[5,] 79.91838 -58.54370  -16.04295
+[6,] 55.21747  51.07792 -108.40014
+[7,] 80.15007  38.24066   81.46952
+[8,] 42.78380   0.00000    0.00000
 > (hex <- convertColor(luv, from = "Luv",  to = hexcolor, scale.out = NULL))
      [,1]     
 [1,] "#000000"
-[2,] "#FF0000"
-[3,] "#00CD00"
-[4,] "#0000FF"
-[5,] "#00FFFF"
-[6,] "#FF00FF"
-[7,] "#FFFF00"
-[8,] "#BEBEBE"
+[2,] "#DF536B"
+[3,] "#61D04F"
+[4,] "#13A5FD"
+[5,] "#33DBDF"
+[6,] "#D03AF5"
+[7,] "#EEC21F"
+[8,] "#656565"
 > 
 > ## must make hex a matrix before using it
 > (cc <- round(convertColor(as.matrix(hex), from = hexcolor, to = "sRGB",
 +                           scale.in = NULL, scale.out = 255)))
      [,1] [,2] [,3]
 [1,]    0    0    0
-[2,]  255    0    0
-[3,]    0  205    0
-[4,]    0    0  255
-[5,]    0  255  255
-[6,]  255    0  255
-[7,]  255  255    0
-[8,]  190  190  190
+[2,]  223   83  107
+[3,]   97  208   79
+[4,]   19  165  253
+[5,]   51  219  223
+[6,]  208   58  245
+[7,]  238  194   31
+[8,]  101  101  101
 > stopifnot(cc == cols)
 > 
 > ## Internally vectorized version of hexcolor, notice the use
@@ -2400,13 +2400,13 @@ display gamma = 2.2
 +                            scale.in = NULL, scale.out = 255)))
      [,1] [,2] [,3]
 [1,]    0    0    0
-[2,]  255    0    0
-[3,]    0  205    0
-[4,]    0    0  255
-[5,]    0  255  255
-[6,]  255    0  255
-[7,]  255  255    0
-[8,]  190  190  190
+[2,]  223   83  107
+[3,]   97  208   79
+[4,]   19  165  253
+[5,]   51  219  223
+[6,]  208   58  245
+[7,]  238  194   31
+[8,]  101  101  101
 > stopifnot(ccv == cols)
 > 
 > 
@@ -2484,7 +2484,7 @@ Sturges   Scott      FD
 > 
 > ### Name: palette
 > ### Title: Set or View the Graphics Palette
-> ### Aliases: palette
+> ### Aliases: palette palette.pals palette.colors
 > ### Keywords: color sysdata
 > 
 > ### ** Examples
@@ -2492,8 +2492,8 @@ Sturges   Scott      FD
 > require(graphics)
 > 
 > palette()               # obtain the current palette
-[1] "black"   "red"     "green3"  "blue"    "cyan"    "magenta" "yellow" 
-[8] "gray"   
+[1] "black"   "#DF536B" "#61D04F" "#13A5FD" "#33DBDF" "#D03AF5" "#EEC21F"
+[8] "#656565"
 > palette(rainbow(6))     # six color rainbow
 > 
 > (palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
@@ -2512,6 +2512,32 @@ Sturges   Scott      FD
 +        main = "Alpha-Transparency Palette\n alpha = 0.3")
 > xy[,1] <- -xy[,1]
 > points(xy, col = 8, pch = 16, cex = 1.5)
+> palette("default")
+> 
+> ## List available built-in palettes
+> palette.pals()
+ [1] "R3"              "R4"              "ggplot2"         "Okabe-Ito"      
+ [5] "Accent"          "Dark 2"          "Paired"          "Pastel 1"       
+ [9] "Pastel 2"        "Set 1"           "Set 2"           "Set 3"          
+[13] "Tableau 10"      "Classic Tableau" "Polychrome 36"   "Alphabet"       
+> 
+> ## Demonstrate the colors 1:8 in different palettes using a custom matplot()
+> sinplot <- function() {
++     x <- outer(
++ 	seq(-pi, pi, length.out = 50),
++ 	seq(0, pi, length.out = 8),
++ 	function(x, y) sin(x - y)
++     )
++     matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "")
++ }
+> sinplot()
+> palette("R3")
+> sinplot()
+> palette("Okabe-Ito")
+> sinplot()
+> palette("Tableau")
+> sinplot()
+> 
 > palette("default")
 > 
 > 
@@ -3834,6 +3860,40 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 + X11Fonts(utopia = utopia)
 + })
+> X11Fonts()
+$serif
+[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$sans
+[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Times
+[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Helvetica
+[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrTimes
+[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrHelvetica
+[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Arial
+[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Mincho
+[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> X11Fonts("mono")
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
+> X11Fonts(utopia = utopia)
 > ## IGNORE_RDIFF_END
 > 
 > 

@@ -4,13 +4,21 @@
 % Distributed under GPL 2 or later
 
 \name{palette}
+\alias{palette}
+\alias{palette.pals}
+\alias{palette.colors}
 \title{Set or View the Graphics Palette}
 \usage{
 palette(value)
+palette.pals()
+palette.colors(n = NULL, palette = "Okabe-Ito", alpha = 1)
 }
-\alias{palette}
 \arguments{
-  \item{value}{an optional character vector.}
+  \item{value}{an optional character vector specifying a new palette
+    (see Details).}
+  \item{n}{the number of colors to select from a palette.}
+  \item{palette}{a valid palette name (one of \code{palette.pals()}).}
+  \item{alpha}{an alpha-transparency level.}
 }
 \description{
   View or manipulate the color palette which is used when a \code{col=}
@@ -22,15 +30,17 @@ palette(value)
   it is almost always better to specify colours by name.
 
   If \code{value} has length 1, it is taken to be the name of a built-in
-  color palette (only \code{"default"} is built-in currently).  If
-  \code{value} has length greater than 1 it is assumed to contain a
-  description of the colors which are to make up the new palette (either
-  by name or by RGB levels).  The maximum size for a palette is 1024
+  color palette.  The available palette names are returned by
+  \code{palette.pals()}.  It is also possible to specify \code{"default"}.
+
+  If \code{value} has length greater than 1 it is assumed to contain a
+  description of the colors which are to make up the new palette.
+  The maximum size for a palette is 1024
   entries.
 
   If \code{value} is omitted, no change is made to the current palette.
 
-  There is only one palette setting for all devices in a \R session.  If
+  There is only one palette setting for all devices in an \R session.  If
   the palette is changed, the new palette applies to all subsequent
   plotting.
 
@@ -41,7 +51,8 @@ palette(value)
 }
 
 \value{
-  A character vector giving the palette which \emph{was} in effect.
+  A character vector giving the colors from the
+  palette which \emph{was} in effect.
   This is \code{\link{invisible}} unless the argument is omitted.
 }
 \seealso{
@@ -74,6 +85,28 @@ plot (xy, lwd = 2,
        main = "Alpha-Transparency Palette\n alpha = 0.3")
 xy[,1] <- -xy[,1]
 points(xy, col = 8, pch = 16, cex = 1.5)
+palette("default")
+
+## List available built-in palettes
+palette.pals()
+
+## Demonstrate the colors 1:8 in different palettes using a custom matplot()
+sinplot <- function() {
+    x <- outer(
+	seq(-pi, pi, length.out = 50),
+	seq(0, pi, length.out = 8),
+	function(x, y) sin(x - y)
+    )
+    matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "")
+}
+sinplot()
+palette("R3")
+sinplot()
+palette("Okabe-Ito")
+sinplot()
+palette("Tableau")
+sinplot()
+
 palette("default")
 }
 \keyword{color}

@@ -118,6 +118,14 @@
       \item \code{normalizePath()} on Windows now resolves symbolic links
       and normalizes case of long names of path elements in case-insensitive
       folders (\PR{17165}).
+
+      \item The \code{palette()} function has a new default set of
+      colours (which are less saturated and have better accessibility
+      properties).  There are also some new built-in palettes, which
+      are listed by the new \code{palette.pals()} function.  These
+      include the old default palette under the name \code{"R3"}. Finally,
+      the new \code{palette.colors()} function allows a subset of
+      colours to be selected from any of the built-in palettes.
     }
   }
 
