@@ -91,7 +91,7 @@ void Rprintf(const char *, ...);
 #define	BG_RANGE	L'-'
 #define	BG_RBRACKET	L']'
 #define	BG_SEP		L'/'
-#ifdef DOSISH /* true */
+#ifdef DOSISH /* true, cannot be set to false anymore */
 #define BG_SEP2		L'\\'
 #endif
 #define	BG_STAR		L'*'
@@ -102,14 +102,6 @@ void Rprintf(const char *, ...);
 #define	BG_SLASH	L'/'
 #define	BG_COMMA	L','
 
-/* 
-   The DOS version set the upper bit of bytes for meta characters.
-   Here we set the top bit of a wchar_t, which is safer (but not safe). 
- */
-#define	M_QUOTE		0x8000
-#define	M_ASCII		0x3fff
-#define	M_PROTECT	0x4000
-#define	M_MASK		0xffff /* pointless in current setup */
 
 #include <stdlib.h>
 #include <dirent.h>
@@ -122,17 +114,6 @@ void Rprintf(const char *, ...);
 typedef size_t STRLEN;
 typedef struct _stat Stat_t;
 typedef struct _wdirent Direntry_t;
-
-
-#define	CHAR(c)		((wchar_t)((c) & M_ASCII))
-#define	META(c)		((wchar_t)((c) | M_QUOTE))
-#define	M_ALL		META(L'*')
-#define	M_END		META(L']')
-#define	M_NOT		META(L'!')
-#define	M_ONE		META(L'?')
-#define	M_RNG		META(L'-')
-#define	M_SET		META(L'[')
-#define	ismeta(c)	(((c) & M_QUOTE) != 0)
 
 
 static int	 compare(const void *, const void *);
@@ -157,6 +138,82 @@ static int	 match(wchar_t *, wchar_t *, wchar_t *, int);
 #ifdef GLOB_DEBUG
 static void	 qprintf(const char *, wchar_t *);
 #endif /* GLOB_DEBUG */
+
+/* 
+   Protected and meta characters are from Unicode Private Use Area.
+   The DOS version set the upper bit of bytes for meta characters.
+   An earlier wchar_t version set the top bits of wchar_t.
+*/
+
+#define	M_MASK		0xffff /* pointless in current setup */
+
+#define P_LBRACKET  (wchar_t)	0xfdd0
+#define P_RBRACKET  (wchar_t)	0xfdd1
+#define P_RANGE	    (wchar_t)	0xfdd2
+#define P_LBRACE    (wchar_t)	0xfdd3
+#define P_RBRACE    (wchar_t)	0xfdd4
+#define P_TILDE	    (wchar_t)	0xfdd5
+#define P_QUOTE	    (wchar_t)	0xfdd6
+#define	M_ALL	    (wchar_t)	0xfdd7
+#define	M_END	    (wchar_t)	0xfdd8
+#define	M_NOT	    (wchar_t)	0xfdd9
+#define	M_ONE	    (wchar_t)	0xfdda
+#define	M_RNG	    (wchar_t)	0xfddb
+#define	M_SET	    (wchar_t)	0xfddc
+
+static wchar_t WC_PROTECT(wchar_t c)
+{
+    /* []-{}~\ */
+
+    switch(c) {
+	case BG_LBRACKET: return P_LBRACKET;
+	case BG_RBRACKET: return P_RBRACKET;
+	case BG_RANGE: return P_RANGE;
+	case BG_LBRACE: return P_LBRACE;
+	case BG_RBRACE: return P_RBRACE;
+	case BG_TILDE: return P_TILDE;
+	case BG_QUOTE: return P_QUOTE;
+	default:
+	    /* not reachable */
+	    return c;
+    }
+}
+
+static int ismeta(wchar_t c)
+{
+    switch(c) {
+	case M_ALL:
+	case M_END:
+	case M_NOT:
+	case M_ONE:
+	case M_RNG:
+	case M_SET:
+	    return 1;
+	default:
+	    return 0;
+    }
+}
+
+static wchar_t CHAR(wchar_t c)
+{
+    switch(c) {
+	case P_LBRACKET: return BG_LBRACKET;
+	case P_RBRACKET: return BG_RBRACKET;
+	case P_RANGE: return BG_RANGE;
+	case P_LBRACE: return BG_LBRACE;
+	case P_RBRACE: return BG_RBRACE;
+	case P_TILDE: return BG_TILDE;
+	case P_QUOTE: return BG_QUOTE;
+	case M_ALL: return BG_STAR;
+	case M_END: return BG_RBRACKET;
+	case M_NOT: return BG_NOT;
+	case M_ONE: return BG_QUESTION;
+	case M_RNG: return BG_RANGE;
+	case M_SET: return BG_LBRACKET;
+	default:
+	    return c;
+    }
+}
 
 int
 dos_wglob(const wchar_t *pattern, int flags,
@@ -233,13 +290,15 @@ dos_wglob(const wchar_t *pattern, int flags,
 		if ((c = *patnext++) != L'[' && c != L']' &&
 		    c != L'-' && c != L'{' && c != L'}' &&
 		    c != L'~' && c != L'\\') {
+		    /* WC_PROTECT has to support all characters above */
 #else
+# error DOSISH must be true
 		if ((c = *patnext++) == BG_EOS) {
 #endif
 		    c = BG_QUOTE;
 		    --patnext;
 		}
-		*bufnext++ = c | M_PROTECT;
+		*bufnext++ = WC_PROTECT(c);
 	    } else
 		*bufnext++ = c;
 	} else

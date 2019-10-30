@@ -243,6 +243,10 @@
       and only once.
 
       \item \code{write.dcf()} no longer mangles field names (\PR{17589}).
+
+      \item \code{Sys.glob()} on Windows now supports all characters from
+      the BMP, no longer corrupting (less commonly used) characters
+      (\PR{17638}).
     }
   }
 }
