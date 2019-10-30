@@ -496,7 +496,12 @@ int dummy_fgetc(Rconnection con)
     Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
 
     if(con->inconv) {
-	if(con->navail <= 0) {
+	while(con->navail <= 0) {
+	    /* Probably in all cases there will be at most one iteration
+	       of the loop. It could iterate multiple times only if the input
+	       encoding could have \r or \n as a part of a multi-byte coded
+	       character.
+	    */
 	    unsigned int i, inew = 0;
 	    char *p, *ob;
 	    const char *ib;
@@ -521,6 +526,13 @@ int dummy_fgetc(Rconnection con)
 		*p++ = (char) c;
 		con->inavail++;
 		inew++;
+		if(!con->buff && (c == '\n' || c == '\r'))
+		    /* Possibly a line separator: better stop filling in the
+		       encoding conversion buffer if not buffering the input
+		       anyway, as not to confuse interactive applications
+		       (PR17634).
+		    */
+		    break;
 	    }
 	    if(inew == 0) return R_EOF;
 	    if(checkBOM && con->inavail >= 2 &&
