@@ -257,6 +257,8 @@
       assignment context.
 
       \item Better error message for \code{contour(*, levels=Inf)}.
+
+      \item \code{contourLines()}' value is no longer \code{invisible()}.
     }
   }
 }

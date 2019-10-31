@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/contourLines.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{contourLines}
@@ -37,8 +37,7 @@ contourLines(x = seq(0, 1, length.out = nrow(z)),
   The source code is in \file{\var{\link{R_HOME}}/src/main/plot3d.c}.
 }
 \value{
-  A list of contours.
-  Each contour is a list with elements:
+  A \code{\link{list}} of contours, each itself a \code{list} with elements:
   \item{level }{The contour level.}
   \item{x }{The x-coordinates of the contour.}
   \item{y }{The y-coordinates of the contour.}
@@ -47,11 +46,23 @@ contourLines(x = seq(0, 1, length.out = nrow(z)),
   \code{\link{options}("max.contour.segments")} for the maximal
   complexity of a single contour line.
 
-  \code{\link{contour}}.
+  \code{\link{contour}}: Its \sQuote{Examples} demonstrate how
+  \code{contourLines()} can be drawn and are the same (as those from
+  \code{contour()}).
 }
 \examples{
 x <- 10*1:nrow(volcano)
 y <- 10*1:ncol(volcano)
-contourLines(x, y, volcano)
+cl <- contourLines(x, y, volcano)
+## summarize the sizes of each the contour lines :
+cbind(lev = vapply(cl, `[[`, .5, "level"),
+       n  = vapply(cl, function(l) length(l$x), 1))
+
+z <- outer(-9:25, -9:25)
+pretty(range(z), 10) # -300 -200 ... 600 700
+utils::str(c2 <- contourLines(z))
+   # no segments for {-300, 700};
+   #  2 segments for {-200, -100, 0}
+   #  1 segment  for  100:600
 }
 \keyword{dplot}

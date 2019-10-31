@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-10-26 r77334) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-10-31 r77342) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1752,7 +1752,88 @@ detaching ‘package:grid’
 > 
 > x <- 10*1:nrow(volcano)
 > y <- 10*1:ncol(volcano)
-> contourLines(x, y, volcano)
+> cl <- contourLines(x, y, volcano)
+> ## summarize the sizes of each the contour lines :
+> cbind(lev = vapply(cl, `[[`, .5, "level"),
++        n  = vapply(cl, function(l) length(l$x), 1))
+      lev   n
+ [1,] 100  47
+ [2,] 100  16
+ [3,] 100  11
+ [4,] 110  45
+ [5,] 110  48
+ [6,] 110 126
+ [7,] 110  14
+ [8,] 120 270
+ [9,] 130 259
+[10,] 140 245
+[11,] 150 207
+[12,] 150  13
+[13,] 160 165
+[14,] 160  31
+[15,] 170 169
+[16,] 170   5
+[17,] 170  21
+[18,] 180 105
+[19,] 180  15
+[20,] 190  49
+> 
+> z <- outer(-9:25, -9:25)
+> pretty(range(z), 10) # -300 -200 ... 600 700
+ [1] -300 -200 -100    0  100  200  300  400  500  600  700
+> utils::str(c2 <- contourLines(z))
+List of 12
+ $ :List of 3
+  ..$ level: num -200
+  ..$ x    : num [1:4] 0 0.00895 0.01961 0.02844
+  ..$ y    : num [1:4] 0.918 0.941 0.971 1
+ $ :List of 3
+  ..$ level: num -200
+  ..$ x    : num [1:4] 0.918 0.941 0.971 1
+  ..$ y    : num [1:4] 0 0.00895 0.01961 0.02844
+ $ :List of 3
+  ..$ level: num -100
+  ..$ x    : num [1:19] 0 0.0196 0.0294 0.0385 0.0546 ...
+  ..$ y    : num [1:19] 0.592 0.618 0.632 0.647 0.676 ...
+ $ :List of 3
+  ..$ level: num -100
+  ..$ x    : num [1:19] 0.592 0.618 0.632 0.647 0.676 ...
+  ..$ y    : num [1:19] 0 0.0196 0.0294 0.0385 0.0546 ...
+ $ :List of 3
+  ..$ level: num 0
+  ..$ x    : num [1:34] 0 0.0294 0.0588 0.0882 0.1176 ...
+  ..$ y    : num [1:34] 0.267 0.268 0.268 0.268 0.269 ...
+ $ :List of 3
+  ..$ level: num 0
+  ..$ x    : num [1:34] 0.267 0.268 0.268 0.268 0.269 ...
+  ..$ y    : num [1:34] 0 0.0294 0.0588 0.0882 0.1176 ...
+ $ :List of 3
+  ..$ level: num 100
+  ..$ x    : num [1:44] 1 0.995 0.971 0.941 0.912 ...
+  ..$ y    : num [1:44] 0.381 0.382 0.387 0.393 0.398 ...
+ $ :List of 3
+  ..$ level: num 200
+  ..$ x    : num [1:36] 1 0.997 0.971 0.941 0.918 ...
+  ..$ y    : num [1:36] 0.499 0.5 0.51 0.52 0.529 ...
+ $ :List of 3
+  ..$ level: num 300
+  ..$ x    : num [1:28] 1 0.998 0.971 0.943 0.941 ...
+  ..$ y    : num [1:28] 0.617 0.618 0.632 0.647 0.648 ...
+ $ :List of 3
+  ..$ level: num 400
+  ..$ x    : num [1:20] 1 0.999 0.971 0.957 0.941 ...
+  ..$ y    : num [1:20] 0.734 0.735 0.755 0.765 0.776 ...
+ $ :List of 3
+  ..$ level: num 500
+  ..$ x    : num [1:12] 1 0.999 0.971 0.965 0.941 ...
+  ..$ y    : num [1:12] 0.852 0.853 0.877 0.882 0.904 ...
+ $ :List of 3
+  ..$ level: num 600
+  ..$ x    : num [1:4] 1 0.999 0.971 0.97
+  ..$ y    : num [1:4] 0.97 0.971 0.999 1
+>    # no segments for {-300, 700};
+>    #  2 segments for {-200, -100, 0}
+>    #  1 segment  for  100:600
 > 
 > 
 > 
