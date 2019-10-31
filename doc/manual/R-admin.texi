@@ -5230,10 +5230,10 @@ those tools.  Some packages have further requirements such as
 @acronym{CRAN} binary distributions of @R{} 3.6.x use the build of
 @command{clang} 7.0.0 contained in
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-7.0.0.pkg}.
-Other recent distributions of @command{clang} are available from
-@uref{http://releases.llvm.org/} (which the above re-packages).  In
-particular, these include support for OpenMP which Apple builds
-of @command{clang} do not.
+Other recent distributions (including 9.0.0 and 8.0.0) of
+@command{clang} are available from @uref{http://releases.llvm.org/}
+(which the above re-packages).  In particular, these include support for
+OpenMP which Apple builds of @command{clang} do not.
 
 Suppose one of these distributions is installed under
 @file{/usr/local/clang7}. Use a file @file{config.site} containing
