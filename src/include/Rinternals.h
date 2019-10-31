@@ -571,7 +571,7 @@ typedef union {
 
 #define INIT_BNDCELL(cell, type) do {		\
 	if (BNDCELL_TAG(cell) == 0)		\
-	    DECREMENT_REFCNT(CAR0(cell));	\
+	    SETCAR(cell, R_NilValue);		\
 	SET_BNDCELL_TAG(cell, type);		\
 	SET_MISSING(cell, 0);			\
     } while (0)
