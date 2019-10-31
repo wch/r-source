@@ -1,6 +1,6 @@
 % File src/library/graphics/man/contour.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{contour}
@@ -59,9 +59,9 @@ contour(x, \dots)
   \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot.}
   \item{axes, frame.plot}{logical indicating whether axes or a box
     should be drawn, see \code{\link{plot.default}}.}
-  \item{col}{color for the lines drawn.}
-  \item{lty}{line type for the lines drawn.}
-  \item{lwd}{line width for the lines drawn.}
+  \item{col}{colour(s) for the lines drawn.}
+  \item{lty}{line type(s) for the lines drawn.}
+  \item{lwd}{line width(s) for the lines drawn.}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
   \item{\dots}{additional arguments to \code{\link{plot.window}},
     \code{\link{title}}, \code{\link{Axis}} and \code{\link{box}},
@@ -87,6 +87,9 @@ contour(x, \dots)
   number and the y axis to column number, with column 1 at the bottom,
   i.e.\sspace{}a 90 degree counter-clockwise rotation of the conventional textual
   layout.
+
+  Vector (of length \eqn{> 1}) \code{col}, \code{lty}, and \code{lwd} are
+  applied along \code{levels} and recycled, see the Examples.
 
   Alternatively, use \code{\link[lattice:levelplot]{contourplot}} from the
   \CRANpkg{lattice} package where the \code{\link{formula}} notation allows
@@ -126,6 +129,17 @@ contour(x, x, z, ylim = c(1, 6), method = "simple", labcex = 1,
         xlab = quote(x[1]), ylab = quote(x[2]))
 contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2, method = "simple",
         main = "20 levels; \"simple\" labelling method")
+par(op)
+
+## Passing multiple colours / lty / lwd :
+op <- par(mfrow = c(1, 2))
+z <- outer(-9:25, -9:25)
+## Using default levels <- pretty(range(z, finite = TRUE), 10),
+##  the first and last of which typically are *not* drawn:
+(levs <- pretty(z, n=10)) # -300 -200 ... 600 700
+contour(z, col = 1:4)
+## Set levels explicitly; show that 'lwd' and 'lty' are recycled as well:
+contour(z, levels=levs[-c(1,length(levs))], col = 1:5, lwd = 1:3 *1.5, lty = 1:3)
 par(op)
 
 ## Persian Rug Art:
