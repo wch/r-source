@@ -126,6 +126,10 @@
       include the old default palette under the name \code{"R3"}. Finally,
       the new \code{palette.colors()} function allows a subset of
       colours to be selected from any of the built-in palettes.
+
+      \item \code{md5sum()} on Windows supports UTF-8 file names with
+      characters that cannot be translated to the native encoding
+      (\PR{17633}).
     }
   }
 
