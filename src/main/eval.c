@@ -2088,6 +2088,7 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
     SETCAR(ptmp, rhs);
     SET_TAG(ptmp, R_valueSym);
     SET_TYPEOF(tmp, LANGSXP);
+    MARK_ASSIGNMENT_CALL(tmp);
     return tmp;
 }
 
@@ -5362,6 +5363,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
   int label = GETOP(); \
   SEXP lhs = GETSTACK(-2); \
   SEXP rhs = GETSTACK(-1); \
+  MARK_ASSIGNMENT_CALL(call); \
   if (MAYBE_SHARED(lhs)) { \
     lhs = shallow_duplicate(lhs); \
     SETSTACK(-2, lhs); \
@@ -5389,6 +5391,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
   SEXP rhs = GETSTACK_BELOW_CALL_FRAME(-2); \
   SEXP call = GETSTACK_BELOW_CALL_FRAME(-1); \
   SEXP args = BUILTIN_CALL_FRAME_ARGS(); \
+  MARK_ASSIGNMENT_CALL(call); \
   PUSHCALLARG(rhs); \
   SEXP value = fun(call, symbol, args, rho); \
   POP_CALL_FRAME_PLUS(3, value); \
@@ -5419,6 +5422,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
     SEXP lhs = GETSTACK(-2); \
     if (isObject(lhs)) { \
 	SEXP call = VECTOR_ELT(constants, callidx); \
+	MARK_ASSIGNMENT_CALL(call); \
 	SEXP rhs = GETSTACK(-1); \
 	if (MAYBE_SHARED(lhs)) { \
 	    lhs = shallow_duplicate(lhs); \
@@ -5840,6 +5844,7 @@ static R_INLINE void VECSUBASSIGN_PTR(SEXP vec, R_bcstack_t *srhs,
     args = CONS_NR(vec, args);
     PROTECT(args);
     SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    MARK_ASSIGNMENT_CALL(call);
     if (subassign2)
 	vec = do_subassign2_dflt(call, R_Subassign2Sym, args, rho);
     else
@@ -5927,6 +5932,7 @@ static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
     args = CONS_NR(mat, args);
     PROTECT(args);
     SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    MARK_ASSIGNMENT_CALL(call);
     if (subassign2)
 	mat = do_subassign2_dflt(call, R_Subassign2Sym, args, rho);
     else
@@ -5973,6 +5979,7 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
     SET_TAG(args, R_valueSym);
     PROTECT(args = CONS_NR(x, addStackArgsList(rank, si, args)));
     SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
+    MARK_ASSIGNMENT_CALL(call);
     if (subassign2)
 	x = do_subassign2_dflt(call, R_Subassign2Sym, args, rho);
     else
@@ -7213,6 +7220,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	SEXP x = GETSTACK(-2);
 	SEXP rhs = GETSTACK(-1);
+	MARK_ASSIGNMENT_CALL(call);
 	if (MAYBE_SHARED(x)) {
 	    x = shallow_duplicate(x);
 	    SETSTACK(-2, x);
@@ -7369,6 +7377,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP vexpr = VECTOR_ELT(constants, GETOP());
 	SEXP args, prom, last;
+	MARK_ASSIGNMENT_CALL(call);
 	if (MAYBE_SHARED(lhs)) {
 	  lhs = shallow_duplicate(lhs);
 	  SETSTACK_BELOW_CALL_FRAME(-2, lhs);

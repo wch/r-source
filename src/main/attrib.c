@@ -567,7 +567,9 @@ SEXP attribute_hidden do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     // have 2 args: check1arg(args, call, "x");
 
-    if (MAYBE_SHARED(CAR(args))) SETCAR(args, shallow_duplicate(CAR(args)));
+    if (MAYBE_SHARED(CAR(args)) ||
+	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
+	SETCAR(args, shallow_duplicate(CAR(args)));
     if (length(CADR(args)) == 0) SETCADR(args, R_NilValue);
     if(IS_S4_OBJECT(CAR(args)))
       UNSET_S4_OBJECT(CAR(args));
@@ -881,7 +883,8 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	getAttrib(CAR(args), R_NamesSymbol) == R_NilValue)
 	return CAR(args);
     PROTECT(args = ans);
-    if (MAYBE_SHARED(CAR(args)))
+    if (MAYBE_SHARED(CAR(args)) ||
+	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
 	SETCAR(args, R_shallow_duplicate_attr(CAR(args)));
     if (TYPEOF(CAR(args)) == S4SXP) {
 	const char *klass = CHAR(STRING_ELT(R_data_class(CAR(args), FALSE), 0));
@@ -1016,7 +1019,8 @@ SEXP attribute_hidden do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchOrEval(call, op, "dimnames<-", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
-    if (MAYBE_SHARED(CAR(args)))
+    if (MAYBE_SHARED(CAR(args)) ||
+	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
 	SETCAR(args, R_shallow_duplicate_attr(CAR(args)));
     setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
     UNPROTECT(1);
@@ -1162,7 +1166,9 @@ SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (s == R_NilValue) return x;
     }
     PROTECT(args = ans);
-    if (MAYBE_SHARED(x)) SETCAR(args, x = shallow_duplicate(x));
+    if (MAYBE_SHARED(x) ||
+	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(x)))
+	SETCAR(args, x = shallow_duplicate(x));
     setAttrib(x, R_DimSymbol, CADR(args));
     setAttrib(x, R_NamesSymbol, R_NilValue);
     UNPROTECT(1);
@@ -1279,7 +1285,9 @@ SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("factor level [%d] is duplicated"),
 		  any_duplicated(CADR(args), FALSE));
     args = ans;
-    if (MAYBE_SHARED(CAR(args))) SETCAR(args, duplicate(CAR(args)));
+    if (MAYBE_SHARED(CAR(args)) ||
+	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
+	SETCAR(args, duplicate(CAR(args)));
     setAttrib(CAR(args), R_LevelsSymbol, CADR(args));
     UNPROTECT(1);
     return CAR(args);
@@ -1329,7 +1337,8 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	   As from R 2.7.0 we don't optimize NAMED == 1 _if_ we are
 	   setting any attributes as an error later on would leave
 	   'obj' changed */
-	if (MAYBE_SHARED(object) || (MAYBE_REFERENCED(object) && nattrs))
+	if (MAYBE_SHARED(object) || (MAYBE_REFERENCED(object) && nattrs) ||
+	    ((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(object)))
 	    object = R_shallow_duplicate_attr(object);
 	PROTECT(object);
     }
@@ -1561,7 +1570,8 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	PROTECT(value = CADDR(ans));
 	obj = CAR(ans);
-	if (MAYBE_SHARED(obj))
+	if (MAYBE_SHARED(obj) ||
+	    ((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(obj)))
 	    PROTECT(obj = shallow_duplicate(obj));
 	else
 	    PROTECT(obj);
@@ -1576,7 +1586,8 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	static SEXP do_attrgets_formals = NULL;
 
 	obj = CAR(args);
-	if (MAYBE_SHARED(obj))
+	if (MAYBE_SHARED(obj) ||
+	    ((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(obj)))
 	    PROTECT(obj = shallow_duplicate(obj));
 	else
 	    PROTECT(obj);

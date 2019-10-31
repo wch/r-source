@@ -247,6 +247,10 @@
       \item \code{Sys.glob()} on Windows now supports all characters from
       the BMP, no longer corrupting (less commonly used) characters
       (\PR{17638}).
+
+      \item Primitive replacement functions no longer mutate a
+      referenced first argument when used outsinde of a complex
+      assignment context.
     }
   }
 }
