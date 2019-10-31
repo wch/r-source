@@ -601,7 +601,7 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 		    newcol = R_RGB(r, g, b);
 		    GPolygon(nv, xx, yy, USER, newcol, border, dd);
 		}
-	    } else 
+	    } else
 		GPolygon(nv, xx, yy, USER, newcol, border, dd);
 	}
     }
@@ -663,7 +663,7 @@ static int LimitCheck(double *lim, double *c, double *s)
    their outside toward the eye are drawn.  This lets us carry
    out hidden line removal by drawing any faces which will be
    obscured before the surface, and those which will not be
-   obscured after the surface. 
+   obscured after the surface.
 
    Unfortunately as PR#202 showed, this is simplistic as the surface
    can go outside the box.
@@ -702,14 +702,14 @@ static short int Edge[6][4] = {
 };
 
 
-static void PerspBox(int front, double *x, double *y, double *z, 
+static void PerspBox(int front, double *x, double *y, double *z,
 		     char *EdgeDone, pGEDevDesc dd)
 {
     Vector3d u0, v0, u1, v1, u2, v2, u3, v3;
     double d[3], e[3];
     int f, i, p0, p1, p2, p3, nearby;
     int ltysave = gpptr(dd)->lty;
-    
+
     gpptr(dd)->lty = front ? LTY_DOTTED : LTY_SOLID;
 
     for (f = 0; f < 6; f++) {
@@ -1464,10 +1464,15 @@ static SEXP contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 #endif
 
     vmax = vmaxget();
-    /* This R-allocs ctr_SegDB */
+    /* This R-allocs ctr_SegDB :
+     * contourLines() in ../../grDevices/src/stubs.c
+     *    --> do_contourLines() --> GEcontourLines() in ../../../main/plot3d.c */
     ctr_SegDB = contourLines(REAL(x), nx, REAL(y), ny, REAL(z), zc, atom);
 
     /* The segment database is now assembled. */
+
+/// NB: The following code is very much the same as in addContourLines() in ...main/plot3d.c
+
     /* Begin following contours. */
     /* 1. Grab a segment */
     /* 2. Follow its tail */
@@ -1518,7 +1523,7 @@ static SEXP contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		s = s->next;
 	    }
 	    if(ns == max_contour_segments)
-		warning(_("contour(): circular/long seglist -- set %s > %d?"), 
+		warning(_("contour(): circular/long seglist -- set %s > %d?"),
 		        "options(\"max.contour.segments\")", max_contour_segments);
 
 	    /* contour midpoint : use for labelling sometime (not yet!)
@@ -1828,6 +1833,8 @@ static SEXP contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    vmaxset(vmax);
 	} /* while */
       } /* for(i .. )  for(j ..) */
+    /* FIXME?  Instead of returning labelList which is not really used,
+     * -----   return  lengths() info on ctr_SegDB[] ?  */
     vmaxset(vmax); /* now we are done with ctr_SegDB */
     UNPROTECT(2);  /* label1, labelList */
     return labelList;
@@ -1856,7 +1863,7 @@ SEXP C_contour(SEXP args)
     Rboolean drawLabels;
     double labcex;
     pGEDevDesc dd = GEcurrentDevice();
-    SEXP result = R_NilValue;
+    SEXP result = R_NilValue; // FIXME? return info about contourlines drawn
     SEXP labelList;
 
     GCheckState(dd);
@@ -1925,7 +1932,7 @@ SEXP C_contour(SEXP args)
 	error(_("dimension mismatch"));
 
     if (nc < 1)
-	error(_("no contour values"));
+	error(_("no 'levels'"));
 
     for (i = 0; i < nx; i++) {
 	if (!R_FINITE(REAL(x)[i]))
@@ -1943,7 +1950,8 @@ SEXP C_contour(SEXP args)
 
     for (i = 0; i < nc; i++)
 	if (!R_FINITE(REAL(c)[i]))
-	    error(_("invalid NA contour values"));
+	    error(_("non-finite level values: levels[%d] = %g"),
+		  i+1, REAL(c)[i]);
 
     zmin = DBL_MAX;
     zmax = DBL_MIN;

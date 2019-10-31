@@ -255,6 +255,8 @@
       \item Primitive replacement functions no longer mutate a
       referenced first argument when used outsinde of a complex
       assignment context.
+
+      \item Better error message for \code{contour(*, levels=Inf)}.
     }
   }
 }

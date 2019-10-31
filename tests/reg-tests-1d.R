@@ -3224,6 +3224,12 @@ stopifnot(exprs = {
 ## when uniroot() was trying n < 1, the code failed previously (in 2nd and 3rd case)
 
 
+## improved error message from contour():
+tt <- tryCatch(contour(volcano, levels = c(20*c(4:6, -Inf, 8:10))), error=identity)
+stopifnot(inherits(tt, "error"), grepl("non-finite level.*\\[4\\] = -inf", tt$message))
+## had "invalid NA contour values"
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
