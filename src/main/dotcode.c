@@ -531,12 +531,8 @@ static void check_retval(SEXP call, SEXP val)
 	    check = TRUE;
     }
 
-    if (check) {
-	if (val == NULL)
-	    errorcall(call, "NULL return value");
-	else if (val < (SEXP) 16)
-	    errorcall(call, "WEIRD RETURN VALUE");
-    }
+    if (check && val < (SEXP) 16)
+	errorcall(call, "WEIRD RETURN VALUE: %p", val);
 }
     
 SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1236,6 +1232,7 @@ SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
     default:
 	errorcall(call, _("too many arguments, sorry"));
     }
+    check_retval(call, retval);
     return retval;
 }
 
@@ -1309,7 +1306,6 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(nargs + 1);
     }
     vmaxset(vmax);
-    check_retval(call, retval);
     return retval;
 }
 
