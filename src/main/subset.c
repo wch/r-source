@@ -993,12 +993,16 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (len > 1) {
 #ifdef SWITCH_TO_REFCNT
 	    if (IS_GETTER_CALL(call)) {
-		/* this is (most likely) a getter call in a complex
+		/* This is (most likely) a getter call in a complex
 		   assighment so we duplicate as needed. The original
 		   x should have been duplicated if it might be
-		   shared */
-		if (MAYBE_SHARED(x))
-		    error("getter call used outside of a complex assignment.");
+		   shared, but might get additional references before
+		   it arrives here. */
+		if (MAYBE_SHARED(x)) {
+		    x = shallow_duplicate(x);
+		    UNPROTECT(1); /* old x */
+		    PROTECT(x);
+		}
 		x = vectorIndex(x, thesub, 0, len-1, pok, call, TRUE);
 	    }
 	    else
