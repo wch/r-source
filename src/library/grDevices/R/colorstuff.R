@@ -175,7 +175,7 @@ grey.colors <- gray.colors
 palette <- function (value)
 {
     ## if value missing return current palette (visibly)
-    if (missing(value)) return(.Call(grDevices:::C_palette, character()))
+    if (missing(value)) return(.Call(C_palette, character()))
     
     ## in case value is just a single string, select the corresponding set
     ## colors with "default" handled at C level
@@ -188,9 +188,9 @@ palette <- function (value)
     ## set new palette value, return old one invisibly
     ## if a .Device is open, record the .Call.graphics
     if (.Device == "null device") {
-      invisible(.Call(grDevices:::C_palette, value))
+      invisible(.Call(C_palette, value))
     } else {
-      invisible(.Call.graphics(grDevices:::C_palette, value))    
+      invisible(.Call.graphics(C_palette, value))    
     }
 
 }
