@@ -71,16 +71,19 @@ find_vignette_product <-
 
     if (by == "weave") {
         if (length(output) == 0L)
-            stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
+            stop(gettextf("Failed to locate %s output file %s or %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s",
                           sQuote(by),
+                          sQuote(paste0(name, ".pdf")), sQuote(paste0(name, ".html")),
+                          sQuote(name),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-                          sQuote(name), sQuote(dir),
-                          paste(sQuote(output0), collapse=", ")),
+                          sQuote(normalizePath(dir)),
+                          paste(sprintf("%s (%g bytes)", sQuote(output0), file.size(output0)), collapse=", ")),
                  domain = NA)
         if (length(output) > 2L || (final && length(output) > 1L))
             stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s", sQuote(by),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-                          sQuote(name), paste(sQuote(output), collapse=", ")),
+                          sQuote(name),
+                          paste(sprintf("%s (%g bytes)", sQuote(output), file.size(output)), collapse=", ")),
                  domain  = NA)
 	# If weave produced a TeX and then a PDF without cleaning out
 	# the TeX, consider the newer one (PDF wins a tie) as the weave product
@@ -95,17 +98,20 @@ find_vignette_product <-
             stopifnot(length(output) <= 1L)
     } else if (by == "texi2pdf") {
         if (length(output) == 0L)
-            stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
+            stop(gettextf("Failed to locate %s output file %s for vignette with name %s and engine %s. The following files exist in working directory %s: %s",
                           sQuote(by),
+                          sQuote(paste0(name, ".pdf")),
+                          sQuote(name),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-                          sQuote(name), sQuote(dir),
-                          paste(sQuote(output0), collapse=", ")),
+                          sQuote(normalizePath(dir)),
+                          paste(sprintf("%s (%g bytes)", sQuote(output0), file.size(output0)), collapse=", ")),
                  domain = NA)
         if (length(output) > 1L)
             stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s",
                           sQuote(by),
                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-                          sQuote(name), paste(sQuote(output), collapse=", ")),
+                          sQuote(name),
+                          paste(sprintf("%s (%g bytes)", sQuote(output), file.size(output)), collapse=", ")),
                  domain = NA)
     }
 
