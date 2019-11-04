@@ -130,6 +130,11 @@
       \item \code{md5sum()} on Windows supports UTF-8 file names with
       characters that cannot be translated to the native encoding
       (\PR{17633}).
+
+      \item (Windows) \command{Rterm} gains new option \option{--workspace}
+      to specify the workspace to be restored.  This allows equals to be
+      part of the name when opening via Windows file associations (reported
+      by Christian Asseburg).
     }
   }
 

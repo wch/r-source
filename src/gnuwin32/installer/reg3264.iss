@@ -58,6 +58,6 @@ Root: HKCU; Subkey: "Software\@Producer@\R64\@RVER@"; ValueType: string; ValueNa
 Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdmin
 Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdmin
 Root: HKCR; Subkey: "RWorkspace\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386\RGui.exe,0"; Tasks: associate; Check: IsAdmin and isComponentSelected('i386')
-Root: HKCR; Subkey: "RWorkspace\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin and isComponentSelected('i386')
+Root: HKCR; Subkey: "RWorkspace\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386\RGui.exe"" --workspace=""%1"""; Tasks: associate; Check: IsAdmin and isComponentSelected('i386')
 Root: HKCR; Subkey: "RWorkspace\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\x64\RGui.exe,0"; Tasks: associate; Check: IsAdmin and isComponentSelected('x64') and Is64BitInstallMode
-Root: HKCR; Subkey: "RWorkspace\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\x64\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin and isComponentSelected('x64') and Is64BitInstallMode
+Root: HKCR; Subkey: "RWorkspace\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\x64\RGui.exe"" --workspace=""%1"""; Tasks: associate; Check: IsAdmin and isComponentSelected('x64') and Is64BitInstallMode
