@@ -1361,10 +1361,13 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 	    }
 	}
     else
-	for(t = s; ; res++, t += m) {
+	for(t = s; ; t += m) {
 	    m  = (ssize_t) utf8toucs(&local, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
 	    if (m == 0) break;
+	    res ++;
+	    if (IS_HIGH_SURROGATE(local))
+		res++;
 	}
     return (size_t) res;
 }
