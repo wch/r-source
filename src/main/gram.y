@@ -1193,11 +1193,13 @@ static SEXP xxexprlist(SEXP a1, YYLTYPE *lloc, SEXP a2)
 	    PrependToSrcRefs(s);
 	    attachSrcrefs(a2);
 	    UNPROTECT(2); /* prevSrcrefs, s */
+#ifndef SWITCH_TO_REFCNT
 	    /* SrcRefs got NAMED by being an attribute, preventively
 	       getAttrib(), but it has not in fact been referenced. Set NAMED
 	       to 0 to avoid overhead in further setAttrib calls due to cycle
 	       detection. */
 	    SET_NAMED(prevSrcrefs, 0);
+#endif
 	    PS_SET_SRCREFS(prevSrcrefs);
 	}
 	PRESERVE_SV(ans = a2);

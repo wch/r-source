@@ -409,25 +409,36 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # undef NAMED
 # undef SET_NAMED
 # define NAMED(x) REFCNT(x)
-# define SET_NAMED(x, v) do {} while (0)
-#endif
-
-#define ENSURE_NAMEDMAX(v) do {			\
+/* temporary cack to evaluate x for Simon's usage in fastmath and iotools */
+# define SET_NAMED(x, v) do {						\
+	if ((x) == NULL) error("NULL SEXP pointer");			\
+    } while (0)
+# define ENSURE_NAMEDMAX(v) do { } while (0)
+# define ENSURE_NAMED(v) do { } while (0)
+#else
+# define ENSURE_NAMEDMAX(v) do {		\
 	SEXP __enm_v__ = (v);			\
 	if (NAMED(__enm_v__) < NAMEDMAX)	\
 	    SET_NAMED( __enm_v__, NAMEDMAX);	\
     } while (0)
-#define ENSURE_NAMED(v) do { if (NAMED(v) == 0) SET_NAMED(v, 1); } while (0)
-#define SETTER_CLEAR_NAMED(x) do {				\
+# define ENSURE_NAMED(v) do { if (NAMED(v) == 0) SET_NAMED(v, 1); } while (0)
+#endif
+
+#ifdef SWITCH_TO_REFCNT
+# define SETTER_CLEAR_NAMED(x) do { } while (0)
+# define RAISE_NAMED(x, n) do { } while (0)
+#else
+# define SETTER_CLEAR_NAMED(x) do {			\
 	SEXP __x__ = (x);				\
 	if (NAMED(__x__) == 1) SET_NAMED(__x__, 0);	\
     } while (0)
-#define RAISE_NAMED(x, n) do {			\
+# define RAISE_NAMED(x, n) do {			\
 	SEXP __x__ = (x);			\
 	int __n__ = (n);			\
 	if (NAMED(__x__) < __n__)		\
 	    SET_NAMED(__x__, __n__);		\
     } while (0)
+#endif
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
@@ -628,17 +639,22 @@ Rboolean (Rf_isObject)(SEXP s);
     (((x)->sxpinfo.scalar && ATTRIB(x) == R_NilValue) ? TYPEOF(x) : 0)
 
 #define NAMEDMAX 7
-#define INCREMENT_NAMED(x) do {				\
+#ifdef SWITCH_TO_REFCNT
+# define INCREMENT_NAMED(x) do { } while (0)
+# define DECREMENT_NAMED(x) do { } while (0)
+#else
+# define INCREMENT_NAMED(x) do {			\
 	SEXP __x__ = (x);				\
 	if (NAMED(__x__) != NAMEDMAX)			\
 	    SET_NAMED(__x__, NAMED(__x__) + 1);		\
     } while (0)
-#define DECREMENT_NAMED(x) do {				    \
+# define DECREMENT_NAMED(x) do {			    \
 	SEXP __x__ = (x);				    \
 	int __n__ = NAMED(__x__);			    \
 	if (__n__ > 0 && __n__ < NAMEDMAX)		    \
 	    SET_NAMED(__x__, __n__ - 1);		    \
     } while (0)
+#endif
 
 #define INCREMENT_LINKS(x) do {			\
 	SEXP il__x__ = (x);			\
