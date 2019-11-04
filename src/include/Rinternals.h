@@ -409,10 +409,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # undef NAMED
 # undef SET_NAMED
 # define NAMED(x) REFCNT(x)
-/* temporary cack to evaluate x for Simon's usage in fastmath and iotools */
-# define SET_NAMED(x, v) do {						\
-	if ((x) == NULL) error("NULL SEXP pointer");			\
-    } while (0)
+/* no definition for SET_NAMED; any calls will use the one in memory.c */    
 # define ENSURE_NAMEDMAX(v) do { } while (0)
 # define ENSURE_NAMED(v) do { } while (0)
 #else

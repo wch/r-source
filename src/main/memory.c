@@ -3715,7 +3715,12 @@ void (SET_ATTRIB)(SEXP x, SEXP v) {
 }
 void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(CHK(x), v); }
 void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(CHK(x), v); }
-void (SET_NAMED)(SEXP x, int v) { SET_NAMED(CHK(x), v); }
+void (SET_NAMED)(SEXP x, int v)
+{
+#ifndef SWITCH_TO_REFCNT
+    SET_NAMED(CHK(x), v);
+#endif
+}
 void (SET_RTRACE)(SEXP x, int v) { SET_RTRACE(CHK(x), v); }
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(CHK(x), v); }
 void DUPLICATE_ATTRIB(SEXP to, SEXP from) {
