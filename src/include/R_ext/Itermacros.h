@@ -201,6 +201,7 @@
 	const etype *px = (etype *) DATAPTR_OR_NULL(sx);		\
 	if (px != NULL) {						\
 	    R_xlen_t idx = strt;					\
+	    (void) idx; /* variable may be unused in expr */		\
 	    R_xlen_t nb = nfull;					\
 	    px += strt;							\
 	    expr							\
