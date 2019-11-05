@@ -114,7 +114,7 @@ static int gc_count = 0;
 /* Report error encountered during garbage collection where for detecting
    problems it is better to abort, but for debugging (or some production runs,
    where external validation of results is possible) it may be preferred to
-   continue. Configurable via _R_GC_FAIL_ON_ERROR.
+   continue. Configurable via _R_GC_FAIL_ON_ERROR_.
 */
 static Rboolean gc_fail_on_error = FALSE;
 static void gc_error(const char *msg)
@@ -2133,7 +2133,7 @@ void attribute_hidden InitMemory()
     init_gctorture();
     init_gc_grow_settings();
 
-    arg = getenv("_R_GC_FAIL_ON_ERROR");
+    arg = getenv("_R_GC_FAIL_ON_ERROR_");
     if (arg != NULL && StringTrue(arg))
 	gc_fail_on_error = TRUE;
     else if (arg != NULL && StringFalse(arg))
