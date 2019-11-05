@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-10-31 r77342) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-11-05 r77374) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2575,16 +2575,20 @@ Sturges   Scott      FD
 > palette()               # obtain the current palette
 [1] "black"   "#DF536B" "#61D04F" "#13A5FD" "#33DBDF" "#D03AF5" "#EEC21F"
 [8] "#656565"
-> palette(rainbow(6))     # six color rainbow
+> palette("R3")           # old default palette
+> palette("ggplot2")      # ggplot2-style palette
+> 
+> palette(hcl.colors(8, "viridis"))
 > 
 > (palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
-[1] "red"     "yellow"  "green"   "cyan"    "blue"    "magenta"
+[1] "#4B0055" "#3C3777" "#006290" "#008A98" "#00AC8E" "#25C771" "#A6DA42"
+[8] "#FDE333"
 > matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
 +         main = "Gray Scales Palette",
 +         sub = "palette(gray(seq(0, .9, len=25)))")
 > palette("default")      # reset back to the default
 > 
-> ## on a device where alpha-transparency is supported,
+> ## on a device where alpha transparency is supported,
 > ##  use 'alpha = 0.3' transparency with the default palette :
 > mycols <- adjustcolor(palette(), alpha.f = 0.3)
 > opal <- palette(mycols)
