@@ -7415,7 +7415,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  break;
 	case CLOSXP:
 	  /* push evaluated promise for RHS onto arguments with 'value' tag */
-	  prom = mkRHSPROMISE(vexpr, rhs);
+	  /* This need to use a standard EVPROMISE so the reference
+	     from the environment to the RHS value is counted. */
+	  prom = R_mkEVPROMISE(vexpr, rhs);
 	  PUSHCALLARG(prom);
 	  SETCALLARG_TAG_SYMBOL(R_valueSym);
 	  /* replace first argument with evaluated promise for LHS */
