@@ -2965,8 +2965,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    val = eval(CAR(h), rho);
-		    if (CDR(el) != R_NilValue)
-			INCREMENT_LINKS(val);
+		    INCREMENT_LINKS(val);
 		    ev = CONS_NR(val, R_NilValue);
 		    if (head == R_NilValue) {
 			UNPROTECT(1); /* h */
@@ -3005,8 +3004,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 #endif
 	} else {
 	    val = eval(CAR(el), rho);
-	    if (CDR(el) != R_NilValue)
-		INCREMENT_LINKS(val);
+	    INCREMENT_LINKS(val);
 	    ev = CONS_NR(val, R_NilValue);
 	    if (head == R_NilValue)
 		PROTECT(head = ev);
@@ -3019,8 +3017,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
     }
 
     for(el = head; el != R_NilValue; el = CDR(el))
-	if (CDR(el) != R_NilValue)
-	    DECREMENT_LINKS(CAR(el));
+	DECREMENT_LINKS(CAR(el));
 
     if (head != R_NilValue)
 	UNPROTECT(1);
@@ -3058,8 +3055,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 			val = R_MissingArg;
 		    else
 			val = eval(CAR(h), rho);
-		    if (CDR(el) != R_NilValue)
-			INCREMENT_LINKS(val);
+		    INCREMENT_LINKS(val);
 		    ev = CONS_NR(val, R_NilValue);
 		    if (head == R_NilValue) {
 			UNPROTECT(1); /* h */
@@ -3082,8 +3078,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 		val = R_MissingArg;
 	    else
 		val = eval(CAR(el), rho);
-	    if (CDR(el) != R_NilValue)
-		INCREMENT_LINKS(val);
+	    INCREMENT_LINKS(val);
 	    ev = CONS_NR(val, R_NilValue);
 	    if (head==R_NilValue)
 		PROTECT(head = ev);
@@ -3096,8 +3091,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
     }
 
     for(el = head; el != R_NilValue; el = CDR(el))
-	if (CDR(el) != R_NilValue)
-	    DECREMENT_LINKS(CAR(el));
+	DECREMENT_LINKS(CAR(el));
 
     if (head!=R_NilValue)
 	UNPROTECT(1);
