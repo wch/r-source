@@ -56,14 +56,16 @@ select.list <-
                              collapse = "")
             cat("", op, sep = "\n")
         } else cat("", op, "", sep = "\n")
-        cat(gettext("Enter one or more numbers separated by spaces, or an empty line to cancel\n"))
+        cat(gettext("Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel\n"))
 	repeat {
             res <- tryCatch(scan("", what = 0, quiet = TRUE, nlines = 1),
                             error = identity)
 	    if(!inherits(res, "error")) break
 	    cat(gettext("Invalid input, please try again\n"))
 	}
-        if(!length(res) || (length(res) == 1L && !res[1L])) return(character())
+        if (any(res == 0)) return(character())
+        if (!is.null(preselect)) res <- c(which(def), res)
+        res <- unique(res)
         res <- sort(res[1 <= res & res <= nc])
         return(choices[res])
     }
