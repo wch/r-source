@@ -64,7 +64,7 @@ the corresponding palettes are typically not a good choice for statistical
 graphics and data visualization.
 
 In contrast, HCL (hue-chroma-luminance) colors are much more suitable for
-capturing human color perception (see also \code{\link{hcl}} and better color
+capturing human color perception (see also \code{\link{hcl}}) and better color
 palettes can be derived based on HCL coordinates.
 Conceptually, three types of palettes are often distinguished:
 \itemize{
@@ -137,7 +137,7 @@ suitable palette from \code{hcl.colors} instead of
   Accessed March 26, 2019.
 
   Zeileis, A., Fisher, J. C., Hornik, K., Ihaka, R., McWhite, C. D., Murrell, P., Stauffer, R. and Wilke, C. O. (2019).
-  \dQuote{ccolorspace: A toolbox for manipulating and assessing colors and palettes.}
+  \dQuote{colorspace: A toolbox for manipulating and assessing colors and palettes.}
   arXiv:1903.06490, arXiv.org E-Print Archive.
   \url{http://arxiv.org/abs/1903.06490}.
 
