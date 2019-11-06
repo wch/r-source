@@ -299,10 +299,14 @@ void endcontext(RCNTXT * cptr)
 	PROTECT(saveretval);
 	PROTECT(s);
 	R_FixupExitingHandlerResult(saveretval);
+	if (cptr->returnValue) // why is this needed???
+	    INCREMENT_LINKS(cptr->returnValue);
 	for (; s != R_NilValue; s = CDR(s)) {
 	    cptr->conexit = CDR(s);
 	    eval(CAR(s), cptr->cloenv);
 	}
+	if (cptr->returnValue) // why is this needed???
+	    DECREMENT_LINKS(cptr->returnValue);
 	R_ReturnedValue = saveretval;
 	UNPROTECT(2);
 	R_ExitContext = savecontext;
