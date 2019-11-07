@@ -111,7 +111,7 @@ x \%/\% y
 
   \code{\%\%} and \code{x \%/\% y} can be used for non-integer \code{y},
   e.g.\sspace{}\code{1 \%/\% 0.2}, but the results are subject to representation
-  error and so may be platform-dependent.  Because the IEC 60059
+  error and so may be platform-dependent.  Because the IEC 60559
   representation of \code{0.2} is a binary fraction slightly larger than
   \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but
   most platforms give \code{5}.
@@ -144,7 +144,7 @@ x \%/\% y
   (those outside the range given by \code{\link{.Machine}}) may differ
   between platforms and even between calculations on a single platform.
 
-  Another potential issue is signed zeroes: on IEC 60659 platforms there
+  Another potential issue is signed zeroes: on IEC 60559 platforms there
   are two zeroes with internal representations differing by sign.  Where
   possible \R treats them as the same, but for example direct output
   from C code often does not do so and may output \samp{-0.0} (and on
@@ -183,6 +183,10 @@ x \%/\% y
   \url{http://www.validlab.com/goldberg/paper.ps}.
   Extended PDF version at
   \url{http://www.validlab.com/goldberg/paper.pdf}.
+
+  For the IEC 60559 (aka IEEE 754) standard:
+  \url{https://www.iso.org/standard/57469.html} and
+  \url{https://en.wikipedia.org/wiki/IEEE_754}.
 }
 \seealso{
   \code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special
