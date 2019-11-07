@@ -1598,7 +1598,8 @@ stopifnot(identical(w8, 141:142),# exactly 1941:1942 had CEST on Jan.1
 ## tsp<- did not remove mts class
 z <- ts(cbind(1:5,1:5))
 tsp(z) <- NULL
-stopifnot(identical(class(z), "matrix"))
+stopifnot(identical(c(FALSE,  TRUE),
+                    c("mts","matrix") %in% class(z)))
 ## kept "mts" in 3.2.4, PR#16769
 
 
