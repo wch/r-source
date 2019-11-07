@@ -2,10 +2,10 @@
 %Å‚Å„ÅœÅ”\r
 1 0 obj
 <<
-/CreationDate (D:20180827190428)
-/ModDate (D:20180827190428)
+/CreationDate (D:20191018174124)
+/ModDate (D:20191018174124)
 /Title (R Graphics Output)
-/Producer (R 3.6.0)
+/Producer (R 4.0.0)
 /Creator (R)
 >>
 endobj
@@ -9155,13 +9155,92 @@ endobj
 138 0 obj
 525
 endobj
+139 0 obj
+<< /Type /Page /Parent 3 0 R /Contents 140 0 R /Resources 4 0 R >>
+endobj
+140 0 obj
+<<
+/Length 141 0 R
+>>
+stream
+1 J 1 j q
+Q q 227.98 119.08 414.72 371.52 re W n
+Q q 168.94 45.64 504.00 504.00 re W n
+BT
+/sRGB cs
+0.000 0.804 0.000 scn
+/F2 1 Tf 12.00 0.00 0.00 12.00 199.18 145.73 Tm (aaa) Tj
+ET
+BT
+/F2 1 Tf 12.00 0.00 0.00 12.00 199.18 176.69 Tm [(b) 10 (b) 10 (b)] TJ
+ET
+BT
+1.000 0.000 0.000 scn
+/F2 1 Tf 12.00 0.00 0.00 12.00 199.18 269.57 Tm (aa) Tj
+ET
+BT
+/F2 1 Tf 12.00 0.00 0.00 12.00 199.18 300.53 Tm [(b) 10 (b)] TJ
+ET
+BT
+0.000 0.000 0.000 scn
+/F2 1 Tf 12.00 0.00 0.00 12.00 199.18 393.41 Tm (a) Tj
+ET
+BT
+/F2 1 Tf 12.00 0.00 0.00 12.00 199.18 424.37 Tm (b) Tj
+ET
+Q q 226.40 119.08 416.30 371.52 re W n
+/sRGB CS
+0.745 0.745 0.745 SCN
+0.75 w
+[ 0.00 3.00] 0 d
+1 J
+1 j
+10.00 M
+226.40 150.04 m 642.70 150.04 l S
+226.40 181.00 m 642.70 181.00 l S
+226.40 273.88 m 642.70 273.88 l S
+226.40 304.84 m 642.70 304.84 l S
+226.40 397.72 m 642.70 397.72 l S
+226.40 428.68 m 642.70 428.68 l S
+0.000 0.804 0.000 SCN
+0.75 w
+[] 0 d
+392.19 150.04 m 399.82 150.04 l S
+396.01 146.22 m 396.01 153.86 l S
+623.47 181.00 m 631.10 181.00 l S
+627.29 177.18 m 627.29 184.82 l S
+1.000 0.000 0.000 SCN
+318.91 278.08 m
+322.55 271.78 l
+315.28 271.78 l
+318.91 278.08 l
+S
+550.19 309.04 m
+553.83 302.74 l
+546.56 302.74 l
+550.19 309.04 l
+S
+0.000 0.000 0.000 SCN
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 238.86 395.12 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 470.14 426.08 Tm (l) Tj 0 Tr
+ET
+Q q 168.94 45.64 504.00 504.00 re W n
+Q
+endstream
+endobj
+141 0 obj
+1384
+endobj
 3 0 obj
-<< /Type /Pages /Kids [ 7 0 R 10 0 R 13 0 R 16 0 R 19 0 R 22 0 R 25 0 R 28 0 R 31 0 R 34 0 R 37 0 R 40 0 R 43 0 R 46 0 R 49 0 R 52 0 R 55 0 R 58 0 R 61 0 R 64 0 R 67 0 R 70 0 R 73 0 R 76 0 R 79 0 R 82 0 R 85 0 R 88 0 R 91 0 R 94 0 R 97 0 R 100 0 R 103 0 R 106 0 R 109 0 R 112 0 R 115 0 R 118 0 R 121 0 R 124 0 R 127 0 R 130 0 R 133 0 R 136 0 R ] /Count 44 /MediaBox [0 0 841 595] >>
+<< /Type /Pages /Kids [ 7 0 R 10 0 R 13 0 R 16 0 R 19 0 R 22 0 R 25 0 R 28 0 R 31 0 R 34 0 R 37 0 R 40 0 R 43 0 R 46 0 R 49 0 R 52 0 R 55 0 R 58 0 R 61 0 R 64 0 R 67 0 R 70 0 R 73 0 R 76 0 R 79 0 R 82 0 R 85 0 R 88 0 R 91 0 R 94 0 R 97 0 R 100 0 R 103 0 R 106 0 R 109 0 R 112 0 R 115 0 R 118 0 R 121 0 R 124 0 R 127 0 R 130 0 R 133 0 R 136 0 R 139 0 R ] /Count 45 /MediaBox [0 0 841 595] >>
 endobj
 4 0 obj
 <<
 /ProcSet [/PDF /Text]
-/Font << /F1 140 0 R /F2 141 0 R /F3 142 0 R /F6 143 0 R >>
+/Font << /F1 143 0 R /F2 144 0 R /F3 145 0 R /F6 146 0 R >>
 /ExtGState << >>
 /ColorSpace << /sRGB 5 0 R >>
 >>
@@ -9371,7 +9450,7 @@ f9 c7 fa 57 fa e7 fb 77 fc 07 fc 98 fd 29 fd ba
 fe 4b fe dc ff 6d ff ff >
 endstream
 endobj
-139 0 obj
+142 0 obj
 <<
 /Type /Encoding /BaseEncoding /WinAnsiEncoding
 /Differences [ 45/minus 96/quoteleft
@@ -9379,30 +9458,30 @@ endobj
 /dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek /caron /space]
 >>
 endobj
-140 0 obj
+143 0 obj
 << /Type /Font /Subtype /Type1 /Name /F1 /BaseFont /ZapfDingbats >>
 endobj
-141 0 obj
+144 0 obj
 << /Type /Font /Subtype /Type1 /Name /F2 /BaseFont /Helvetica
-/Encoding 139 0 R >>
+/Encoding 142 0 R >>
 endobj
-142 0 obj
+145 0 obj
 << /Type /Font /Subtype /Type1 /Name /F3 /BaseFont /Helvetica-Bold
-/Encoding 139 0 R >>
+/Encoding 142 0 R >>
 endobj
-143 0 obj
+146 0 obj
 << /Type /Font /Subtype /Type1 /Name /F6 /BaseFont /Symbol
 >>
 endobj
 xref
-0 144
+0 147
 0000000000 65535 f 
 0000000021 00000 n 
 0000000163 00000 n 
-0000177855 00000 n 
-0000178253 00000 n 
-0000178403 00000 n 
-0000178436 00000 n 
+0000179401 00000 n 
+0000179807 00000 n 
+0000179957 00000 n 
+0000179990 00000 n 
 0000000212 00000 n 
 0000000292 00000 n 
 0000001974 00000 n 
@@ -9535,13 +9614,16 @@ xref
 0000177169 00000 n 
 0000177253 00000 n 
 0000177834 00000 n 
-0000187972 00000 n 
-0000188231 00000 n 
-0000188316 00000 n 
-0000188416 00000 n 
-0000188521 00000 n 
+0000177855 00000 n 
+0000177939 00000 n 
+0000179379 00000 n 
+0000189526 00000 n 
+0000189785 00000 n 
+0000189870 00000 n 
+0000189970 00000 n 
+0000190075 00000 n 
 trailer
-<< /Size 144 /Info 1 0 R /Root 2 0 R >>
+<< /Size 147 /Info 1 0 R /Root 2 0 R >>
 startxref
-188600
+190154
 %%EOF

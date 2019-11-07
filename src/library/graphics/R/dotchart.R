@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/dotchart.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 dotchart <-
 function(x, labels = NULL, groups = NULL, gdata = NULL,
+         ann = par("ann"), xaxt = par("xaxt"), frame.plot = TRUE, log = "",
          cex = par("cex"), pt.cex = cex,
 	 pch = 21, gpch = 21, bg = par("bg"), color = par("fg"),
 	 gcolor = par("fg"), lcolor = "gray",
@@ -37,7 +38,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL,
 	if (is.null(labels))
 	    labels <- rownames(x)
 	if (is.null(labels))
-	    labels <- as.character(1L:nrow(x))
+	    labels <- as.character(seq_len(nrow(x)))
 	labels <- rep_len(labels, n)
 	if (is.null(groups))
 	    groups <- col(x, as.factor = TRUE)
@@ -72,7 +73,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL,
     }
 
     if (is.null(groups)) {
-	o <- 1L:n
+	o <- seq_len(n)
 	y <- o
 	ylim <- c(0, n + 1)
     }
@@ -80,14 +81,15 @@ function(x, labels = NULL, groups = NULL, gdata = NULL,
 	o <- sort.list(as.numeric(groups), decreasing = TRUE)
 	x <- x[o]
 	groups <- groups[o]
-	color <- rep_len(color, length(groups))[o]
+	color  <- rep_len(color,  length(groups))[o]
 	lcolor <- rep_len(lcolor, length(groups))[o]
+	pch    <- rep_len(pch,    length(groups))[o]
 	offset <- cumsum(c(0, diff(as.numeric(groups)) != 0))
-	y <- 1L:n + 2 * offset
+	y <- seq_len(n) + 2 * offset
 	ylim <- range(0, y + 2)
     }
 
-    plot.window(xlim = xlim, ylim = ylim, log = "")
+    plot.window(xlim = xlim, ylim = ylim, log = log)
 #    xmin <- par("usr")[1L]
     lheight <- par("csi")
     if (!is.null(labels)) {
@@ -111,8 +113,10 @@ function(x, labels = NULL, groups = NULL, gdata = NULL,
                    cex = pt.cex/cex, ...)
 	}
     }
-    axis(1)
-    box()
-    title(main=main, xlab=xlab, ylab=ylab, ...)
+    axis(1, xaxt=xaxt) # FIXME? add '...' or use localAxis() as plot.default()
+    if(frame.plot)
+	box()
+    if(ann)
+	title(main=main, xlab=xlab, ylab=ylab, ...)
     invisible()
 }

@@ -232,3 +232,10 @@ if(interactive()) # not regularly, where pdf is stored
 plotNchk(y74) # gives 3 warnings; 1. from pretty(): "very small range"
 plotNchk(y74[1:8]) # 3 warnings *and* no error anymore
 plotNchk(y74[1:2]) #    (ditto)
+
+
+## dotchart(*, pch=., groups=*) -- PR#16953
+x <- setNames(0:5, c('a','aa', 'aaa', 'b', 'bb', 'bbb'))
+y <- nchar(names(x)) # (minimal plot:)
+dotchart(x, color=y, pch=y, groups=y, xaxt="n", frame.plot=FALSE)
+## now pch and colors match groups

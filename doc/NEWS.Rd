@@ -11,6 +11,9 @@
     \itemize{
       \item \code{runmed(x, *)} gets new option \code{na.action}
       determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
+
+      \item \code{dotchart()} gets new options \code{ann}, \code{xaxt},
+      \code{frame.plot} and \code{log}.
     }
   }
 
@@ -138,6 +141,9 @@
 
       \item \code{barplot()} could get spacings wrong if there were exactly two
       bars \PR{15522}.  Patch by Michael Chirico.
+
+      \item \code{dotchart(*, pch=., groups=.)} now works better.  Reported
+      by Robert and confirmed by Nic Rochette in \PR{16953}.
     }
   }
 }
