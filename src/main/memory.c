@@ -114,15 +114,18 @@ static int gc_count = 0;
 /* Report error encountered during garbage collection where for detecting
    problems it is better to abort, but for debugging (or some production runs,
    where external validation of results is possible) it may be preferred to
-   continue. Configurable via _R_GC_FAIL_ON_ERROR_.
+   continue. Configurable via _R_GC_FAIL_ON_ERROR_. Typically these problems
+   are due to memory corruption.
 */
 static Rboolean gc_fail_on_error = FALSE;
 static void gc_error(const char *msg)
 {
     if (gc_fail_on_error)
 	R_Suicide(msg);
-    else
+    else if (R_in_gc)
 	REprintf(msg);
+    else
+	error(msg);
 }
 
 /* These are used in profiling to separate out time in GC */
@@ -3176,41 +3179,46 @@ static void R_gc_internal(R_size_t size_needed)
 #endif
 
     if (first_bad_sexp_type != 0) {
+	char msg[256];
 #ifdef PROTECTCHECK
 	if (first_bad_sexp_type == FREESXP)
-	    error("GC encountered a node (%p) with type FREESXP (was %s)"
+	    snprintf(msg, 256,
+	          "GC encountered a node (%p) with type FREESXP (was %s)"
 		  " at memory.c:%d",
 		  first_bad_sexp_type_sexp,
 		  sexptype2char(first_bad_sexp_type_old_type),
 		  first_bad_sexp_type_line);
 	else
-	    error("GC encountered a node (%p) with an unknown SEXP type: %d"
+	    snprintf(msg, 256,
+	          "GC encountered a node (%p) with an unknown SEXP type: %d"
 		  " at memory.c:%d",
 		  first_bad_sexp_type_sexp,
 		  first_bad_sexp_type,
 		  first_bad_sexp_type_line);
 #else
-	error("GC encountered a node (%p) with an unknown SEXP type: %d"
+	snprintf(msg, 256,
+	      "GC encountered a node (%p) with an unknown SEXP type: %d"
 	      " at memory.c:%d",
 	      first_bad_sexp_type_sexp,
 	      first_bad_sexp_type,
 	      first_bad_sexp_type_line);
+	gc_error(msg);
 #endif
     }
 
     /* sanity check on logical scalar values */
     if (R_TrueValue != NULL && LOGICAL(R_TrueValue)[0] != TRUE) {
 	LOGICAL(R_TrueValue)[0] = TRUE;
-	error("internal TRUE value has been modified");
+	gc_error("internal TRUE value has been modified");
     }
     if (R_FalseValue != NULL && LOGICAL(R_FalseValue)[0] != FALSE) {
 	LOGICAL(R_FalseValue)[0] = FALSE;
-	error("internal FALSE value has been modified");
+	gc_error("internal FALSE value has been modified");
     }
     if (R_LogicalNAValue != NULL &&
 	LOGICAL(R_LogicalNAValue)[0] != NA_LOGICAL) {
 	LOGICAL(R_LogicalNAValue)[0] = NA_LOGICAL;
-	error("internal logical NA value has been modified");
+	gc_error("internal logical NA value has been modified");
     }
 }
 
