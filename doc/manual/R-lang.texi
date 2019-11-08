@@ -2544,13 +2544,7 @@ h(3)
 
 @cindex evaluation
 A rather interesting question is what happens when @code{h} is
-evaluated.  To describe this we need a bit more notation.  Within a
-@cindex function
-function body variables can be bound, local or unbound.  The bound
-variables are those that match the formal arguments to the function.
-The local variables are those that were created or defined within the
-function body.  The unbound variables are those that are neither local
-nor bound.  When a function body is evaluated there is no problem
+evaluated. When a function body is evaluated there is no problem
 determining values for local variables or for bound variables.  Scoping
 rules determine how the language will find values for the unbound
 variables.
