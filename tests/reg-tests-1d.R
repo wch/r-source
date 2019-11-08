@@ -2283,7 +2283,12 @@ op <- options(warn = 1)# warning:
 str(mo, max.level = 2)
 options(op)# revert
 ## in R <= 3.5.x, str() gave error instead of the warning
-}
+m0 <- matrix(,0,0)
+stopifnot(exprs = {
+    canCoerce(m0, "array")
+  ! canCoerce(m0, "lgRMatrix") # was wrongly FALSE in a private version of R-devel
+})
+}## if(<Matrix>)
 
 
 ## seq.default() w/ integer overflow in border cases: -- PR#17497, Suharto Anggono
@@ -3228,6 +3233,11 @@ stopifnot(exprs = {
 tt <- tryCatch(contour(volcano, levels = c(20*c(4:6, -Inf, 8:10))), error=identity)
 stopifnot(inherits(tt, "error"), grepl("non-finite level.*\\[4\\] = -inf", tt$message))
 ## had "invalid NA contour values"
+
+
+## A matrix is an array, too:
+stopifnot( vapply(1:9, function(N) inherits(array(pi, dim = 1:N), "array"), NA) )
+## was false for N=2 in R < 4.0.0
 
 
 
