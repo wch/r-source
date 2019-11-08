@@ -2970,6 +2970,18 @@ stopifnot(exprs = {
 ## all but the first 4 cases worked already in R <= 3.6.1
 
 
+## power.t.test() failure for very small (unreasonable) n;  R-devel m.list Oct.4, 2019
+(ptt0 <- power.t.test(delta=10,  sd=1,       power=0.9 , sig.level=0.05, tol = 1e-8))
+(ptt1 <- power.t.test(delta=0.6, sd=0.00001, power=0.9 , sig.level=0.05))
+(ptt2 <- power.t.test(delta=2,   sd = 1e-8,  power=0.99, sig.level=0.01))
+stopifnot(exprs = {
+    all.equal(0.9, power.t.test(delta=10, sd=1, n = ptt0 $ n)$power)
+    all.equal(ptt1$n, 1.00428,   tol = 1e-5)
+    all.equal(ptt2$n, 1.1215733, tol = 1e-5)
+})
+## when uniroot() was trying n < 1, the code failed previously (in 2nd and 3rd case)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

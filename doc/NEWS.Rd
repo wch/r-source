@@ -146,6 +146,9 @@
       \item \code{barplot()} could get spacings wrong if there were exactly two
       bars \PR{15522}.  Patch by Michael Chirico.
 
+      \item \code{power.t.test()} works in more cases when returning values
+      of n smaller than 2.
+
       \item \code{dotchart(*, pch=., groups=.)} now works better.  Reported
       by Robert and confirmed by Nic Rochette in \PR{16953}.
     }
