@@ -2930,7 +2930,44 @@ df ## --> print.data.frame(*, digits=NULL)' -- error in R <= 3.6.1
 format(object.size(pi), digits=NULL)
 ## error in R <= 3.6.1
 
+## PR#15522
+pos <- barplot(1:2, space=c(9, 1),
+    ylim=c(0, 21), xlim=c(0, 11), horiz=TRUE,
+    plot=FALSE)
+stopifnot(all.equal(pos, cbind(c(9.5, 11.5))))
+## bar spacing was wrong in R <= 3.6.1
 
+
+
+
+
+## PR#13624 : get_all_vars(*, <matrix>):
+ok_get_all_vars <- function(form,d) { ## get_all_vars() :<=> model_frame() apart from "terms"
+    mf <- if(missing(d)) model.frame(form) else model.frame(form,d)
+    attr(mf, "terms") <- NULL
+    identical(mf,
+              if(missing(d)) get_all_vars(form) else get_all_vars(form,d))
+}
+M <- matrix(1:15, 5,3)
+n <- 26:30
+T <- TRUE
+m <- 2:7
+stopifnot(exprs = {
+    ok_get_all_vars(~ M)
+    ok_get_all_vars(~M+n)
+    ok_get_all_vars(~ X ,               list(X=  M))
+    ok_get_all_vars(~z+X,               list(X=  M,  z=n))
+    ok_get_all_vars(~z+X,               list(X=I(M), z=n))
+    ok_get_all_vars(~z+X,    data.frame(     X=I(M), z=n))
+    ok_get_all_vars(~z+X,    data.frame(list(X=I(M), z=n)))
+    ok_get_all_vars(~z+X, as.data.frame(list(X=I(M), z=n)))
+    lengths(d <- get_all_vars(~ n + T, "2n" = 2*n)) == 5L
+    identical(d[,"T"], rep.int(TRUE, 5))
+    ## recycling works when commensurate:
+    lengths(d6 <- get_all_vars(~ m + T, one=1, "2 s"=1:2, "3's"=3:1, `f 3` = gl(3,2))) == 6
+    identical(colnames(d6), c("m", "T", "one", "2 s", "3's", "f 3"))
+})
+## all but the first 4 cases worked already in R <= 3.6.1
 
 
 

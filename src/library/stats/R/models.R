@@ -446,8 +446,7 @@ model.frame.default <-
         return(eval(fcall, env)) # 2-arg form as env is an environment
     }
     if(missing(formula)) {
-	if(!missing(data) && inherits(data, "data.frame") &&
-	   length(attr(data, "terms")))
+	if(!missing(data) && inherits(data, "data.frame") && length(attr(data, "terms")))
 	    return(data)
 	formula <- as.formula(data)
     }
@@ -456,8 +455,8 @@ model.frame.default <-
 	    return(formula)
 	data <- formula
 	formula <- as.formula(data)
-    }
-    formula <- as.formula(formula)
+    } else
+        formula <- as.formula(formula)
     if(missing(na.action)) {
 	if(!is.null(naa <- attr(data, "na.action")) & mode(naa)!="numeric")
 	    na.action <- naa
@@ -735,9 +734,7 @@ get_all_vars <- function(formula, data = NULL, ...)
     env <- environment(formula)
     rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
     varnames <- all.vars(formula)
-    inp <- parse(text = paste0("list(", paste(varnames, collapse = ","), ")"),
-                 keep.source = FALSE) # ->  expression( list(v1, v2, ..) )
-    variables <- eval(inp, data, env)
+    variables <- lapply(lapply(varnames, as.name), eval, data, env)
     if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
         ## see if we can get rownames from the response
         lhs <- variables[[resp]]
@@ -746,9 +743,16 @@ get_all_vars <- function(formula, data = NULL, ...)
     extras <- substitute(list(...))
     extranames <- names(extras[-1L])
     extras <- eval(extras, data, env)
-    x <- setNames(as.data.frame(c(variables, extras), optional=TRUE),
-		  c(varnames, extranames))
-    if (!is.null(rownames))
-	attr(x, "row.names") <- rownames # might be short form
+    x <- c(variables, extras)
+    ## protect the unprotected matrices:
+    if(anyM <- any(isM <- vapply(x, function(o) is.matrix(o) && !inherits(o,"AsIs"), NA)))
+        x[isM] <- lapply(x[isM], I)
+    x <- as.data.frame(x, optional=TRUE)
+    names(x) <- c(varnames, extranames)
+    if(anyM)
+        x[isM] <- lapply(x[isM], function(o) `class<-`(o, class(o)[class(o) != "AsIs"]))
+    attr(x, "row.names") <-
+        if(is.null(rownames)) .set_row_names(max(vapply(x, NROW, integer(1))))
+        else rownames # might be short form
     x
 }
