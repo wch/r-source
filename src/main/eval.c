@@ -1991,6 +1991,12 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 		SET_PRCODE(val, CAR(deflt));
 	    }
 	}
+#ifdef SWITCH_TO_REFCNT
+	/* re-promise to get referenve counts for references from rho
+	   and newrho right. */
+	if (TYPEOF(val) == PROMSXP)
+	    SETCAR(FRAME(newrho), mkPROMISE(val, rho));
+#endif
     }
 
     /* copy the bindings of the special dispatch variables in the top
