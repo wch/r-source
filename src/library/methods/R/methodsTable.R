@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,15 +38,14 @@
     }
     if(canStore) {
         list2env(new, table)
-        table
     }
     else { # rats! have to get the generic function
-        f <- gsub(".__T__(.*):([^:]+)", "\\1", metaname)
-        package <- gsub(".__T__(.*):([^:]+(.*))", "\\2", metaname)
+        f       <- gsub("^\\.__T__(.*):([^:]+)",     "\\1", metaname)
+        package <- gsub("^\\.__T__(.*):([^:]+(.*))", "\\2", metaname)
         generic <- getGeneric(f, TRUE, envir, package)
         .mergeMethodsTable(generic, table, newtable, TRUE)
-        table
     }
+    table
 }
 
 ## action on attach, detach to merge methods tables

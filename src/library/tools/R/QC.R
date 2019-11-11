@@ -6648,7 +6648,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
                  ".find.package", ".path.package")
 
     ## X11 may not work on even a Unix-alike: it needs X support
-    ## (optional) at install time and and an X server at run time.
+    ## (optional) at install time and an X server at run time.
     bad_dev <- c("quartz", "x11", "X11")
     if(!WINDOWS)
         bad_dev <- c(bad_dev,  "windows", "win.graph", "win.metafile", "win.print")

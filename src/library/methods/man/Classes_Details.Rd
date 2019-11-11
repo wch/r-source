@@ -1,4 +1,4 @@
-% File src/library/methods/man/Classes.Rd
+% File src/library/methods/man/Classes_Details.Rd
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later

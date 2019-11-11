@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-2016	    The R Core Team
- *  Copyright (C) 2005		    The R Foundation
+ *  Copyright (C) 2000-2019  The R Core Team
+ *  Copyright (C) 2005       The R Foundation
+ *  Copyright (C) 1995-1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-/* Note: gcc -peantic may warn in several places about C99 features 
+/* Note: gcc -pedantic may warn in several places about C99 features
    as extensions.
    This was a very-long-standing GCC bug, http://gcc.gnu.org/PR7263
    The system <complex.h> header can work around it: some do.
@@ -355,24 +355,25 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     return y;
 }
 
-/* used in format.c and printutils.c */
+/* Implementing  signif(<complex>)  *and* used in format.c and printutils.c */
 #define MAX_DIGITS 22
 void attribute_hidden z_prec_r(Rcomplex *r, const Rcomplex *x, double digits)
 {
-    double m = 0.0, m1, m2;
-    int dig, mag;
+    // Implement    r <- signif(x, digits)
 
     r->r = x->r; r->i = x->i;
-    m1 = fabs(x->r); m2 = fabs(x->i);
+    double m = 0.0,
+	m1 = fabs(x->r),
+	m2 = fabs(x->i);
     if(R_FINITE(m1)) m = m1;
     if(R_FINITE(m2) && m2 > m) m = m2;
     if (m == 0.0) return;
     if (!R_FINITE(digits)) {
 	if(digits > 0) return; else {r->r = r->i = 0.0; return ;}
     }
-    dig = (int)floor(digits+0.5);
+    int dig = (int)floor(digits+0.5);
     if (dig > MAX_DIGITS) return; else if (dig < 1) dig = 1;
-    mag = (int)floor(log10(m));
+    int mag = (int)floor(log10(m));
     dig = dig - mag - 1;
     if (dig > 306) {
 	double pow10 = 1.0e4;
@@ -616,14 +617,20 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
     switch (PRIMVAL(op)) {
     case 10003: naflag = cmath1(clog, px, py, n); break;
+	// 1: floor
+	// 2: ceil[ing]
     case 3: naflag = cmath1(csqrt, px, py, n); break;
+	// 4: sign
     case 10: naflag = cmath1(cexp, px, py, n); break;
+	// 11: expm1
+	// 12: log1p
     case 20: naflag = cmath1(ccos, px, py, n); break;
     case 21: naflag = cmath1(csin, px, py, n); break;
     case 22: naflag = cmath1(z_tan, px, py, n); break;
     case 23: naflag = cmath1(z_acos, px, py, n); break;
     case 24: naflag = cmath1(z_asin, px, py, n); break;
     case 25: naflag = cmath1(z_atan, px, py, n); break;
+
     case 30: naflag = cmath1(ccosh, px, py, n); break;
     case 31: naflag = cmath1(csinh, px, py, n); break;
     case 32: naflag = cmath1(ctanh, px, py, n); break;

@@ -25,7 +25,9 @@
  *
  *  DESCRIPTION
  *
- *    This function returns the value of the log beta function.
+ *    This function returns the value of the log beta function
+ *
+ *	log B(a,b) = log G(a) + log G(b) - log G(a+b)
  *
  *  NOTES
  *

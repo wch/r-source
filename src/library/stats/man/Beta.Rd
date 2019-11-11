@@ -113,7 +113,7 @@ rbeta(n, shape1, shape2, ncp = 0)
 
   \item The non-central \code{pbeta} uses a C translation of
 
-  Lenth, R. V. (1987) Algorithm AS226: Computing noncentral beta
+  Lenth, R. V. (1987) Algorithm AS 226: Computing noncentral beta
   probabilities. \emph{Appl. Statist}, \bold{36}, 241--244,
   incorporating\cr
   Frick, H. (1990)'s AS R84, \emph{Appl. Statist}, \bold{39}, 311--2,

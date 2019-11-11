@@ -3840,7 +3840,7 @@ SEXP mkCharCE(const char *name, cetype_t enc)
    return mkCharLenCE(name, (int) len, enc);
 }
 
-/* no longer used in R but docuented in 2.7.x */
+/* no longer used in R but documented in 2.7.x */
 SEXP mkCharLen(const char *name, int len)
 {
     return mkCharLenCE(name, len, CE_NATIVE);
@@ -3939,11 +3939,11 @@ static void R_StringHash_resize(unsigned int newsize)
 #endif
 }
 
-/* mkCharCE - make a character (CHARSXP) variable and set its
+
+/* mkCharLenCE - make a character (CHARSXP) variable and set its
    encoding bit.  If a CHARSXP with the same string already exists in
    the global CHARSXP cache, R_StringHash, it is returned.  Otherwise,
    a new CHARSXP is created, added to the cache and then returned. */
-
 
 SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 {

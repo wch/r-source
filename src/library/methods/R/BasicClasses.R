@@ -1,7 +1,7 @@
 #  File src/library/methods/R/BasicClasses.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -220,8 +220,7 @@
         }
         cl <- as.character(class(object))
         S3Class <- object@.S3Class
-        if(length(S3Class)) S3Class <- S3Class[[1L]]
-        else S3Class <- "oldClass"      # or error?
+        S3Class <- if(length(S3Class)) S3Class[[1L]] else "oldClass" # or error?
         cat("Object of class \"", cl, "\"\n", sep = "")
         print(S3Part(object, strictS3 = TRUE))
         otherSlots <- slotNames(cl)

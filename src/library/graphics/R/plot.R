@@ -154,7 +154,7 @@ function(formula, data = parent.frame(), ..., subset,
     ## see PR#10525
     nmdots <- names(dots)
     if ("main" %in% nmdots) dots[["main"]] <- enquote(dots[["main"]])
-    if ("sub" %in% nmdots) dots[["sub"]] <- enquote(dots[["sub"]])
+    if ("sub"  %in% nmdots) dots[["sub" ]] <- enquote(dots[["sub"]])
     if ("xlab" %in% nmdots) dots[["xlab"]] <- enquote(dots[["xlab"]])
 
     m$ylab <- m$... <- m$ask <- NULL
@@ -206,8 +206,8 @@ function(formula, data = parent.frame(), ..., subset,
                 if(horizontal && is.factor(mf[[i]])) {yl <- xl; xl <- ylab}
                 do.call(funname,
                         c(list(mf[[i]], y, ylab = yl, xlab = xl), dots))
-               }
-	} else {
+	    }
+	} else { # no non-response variable names: only (y, ylab)
 	    if(length(varnames) == 1L && length(formula) == 3L &&
 	       identical(formula[[2L]], formula[[3L]]))
 		warning(gettextf("the formula '%s' is treated as '%s'",
@@ -342,6 +342,7 @@ text.formula <- function(formula, data = parent.frame(), ..., subset)
 	stop("must have a response variable")
 }
 
+## in base "graphics", this is called exactly from   {plot, points, lines}.default():
 plot.xy <- function(xy, type, pch = par("pch"), lty = par("lty"),
                     col = par("col"), bg = NA, cex = 1, lwd = par("lwd"),
                     ...)
