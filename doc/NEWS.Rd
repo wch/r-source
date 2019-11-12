@@ -264,6 +264,10 @@
       \item Better error message for \code{contour(*, levels=Inf)}.
 
       \item \code{contourLines()}' value is no longer \code{invisible()}.
+
+      \item (Windows) \command{Rterm} now correctly displays multi-byte
+      coded characters representable in the current native encoding (at least
+      on Windows 10 they were sometimes omitted, \PR{17632}).
     }
   }
 }
