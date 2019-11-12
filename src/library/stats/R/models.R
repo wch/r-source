@@ -750,7 +750,7 @@ get_all_vars <- function(formula, data = NULL, ...)
     x <- as.data.frame(x, optional=TRUE)
     names(x) <- c(varnames, extranames)
     if(anyM)
-        x[isM] <- lapply(x[isM], function(o) `class<-`(o, class(o)[class(o) != "AsIs"]))
+        x[isM] <- lapply(x[isM], function(o) `class<-`(o, class(o)[!inherits(o,"AsIs")]))
     attr(x, "row.names") <-
         if(is.null(rownames)) .set_row_names(max(vapply(x, NROW, integer(1))))
         else rownames # might be short form
