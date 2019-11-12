@@ -70,6 +70,12 @@
     }
   }
 
+  \subsection{Windows}{
+    The default standard for C++ in package installation is C++11 (as it
+    has been on other platforms if available since \R{} 3.6.0: the
+    default toolchain on Windows was defaulting to C++98).
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Support for specifying C++98 in package installation is
