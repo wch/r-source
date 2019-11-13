@@ -2626,14 +2626,15 @@ The webpage
 some information on which compilers are known to support recent C++
 features.  @command{g++} claims full C++11 support from version 4.8.1.
 
-As from version 3.6.0, @R{} selects a default C++ compiler with options
-that conform as far as possible@footnote{allowing `GNU extensions', but
-if possible excluding C++14 features.} to C++11. Packages which do not
-specify @samp{R (>= 3.6)} in their @file{DESCRIPTION} files need to
-explicitly require C++11, hence the rest of this section.
+As from version 3.6.2@footnote{version 3.6.0 except on Windows.}, @R{}
+selects a default C++ compiler with options that conform as far as
+possible@footnote{allowing `GNU extensions', but if possible excluding
+C++14 features.} to C++11. Packages which do not specify @samp{R (>=
+4.0)} in their @file{DESCRIPTION} files need to explicitly require
+C++11, hence the rest of this section.
 
 In order to specify C++11 code in a package to be used with @R{}
-versions from 3.1.0 but before 3.6.0, the package's @file{Makevars} file
+versions from 3.1.0 but before 3.6.2, the package's @file{Makevars} file
 (or @file{Makevars.win} on Windows) should include the line
 
 @example
