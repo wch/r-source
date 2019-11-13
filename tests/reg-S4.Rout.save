@@ -1299,3 +1299,10 @@ value <- new("A")
 > ## for a few days in R-devel (Nov.2017)
 > 
 > 
+> ## canCoerce(obj, .)  when length(class(obj)) > 1 :
+> setOldClass("foo")
+> setAs("foo", "A", function(from) new("A", foo=from))
+> o3 <- structure(1:7, class = c("foo", "bar"))
+> stopifnot( canCoerce(o3, "A") )
+> ## failed in R <= 3.6.1
+> 

@@ -1,7 +1,7 @@
 #  File src/library/methods/R/as.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -419,7 +419,7 @@ setAs <-
 
 canCoerce <- function(object, Class) {
     is(object, Class) ||
-    !is.null(selectMethod("coerce", c(class(object), Class),
+    !is.null(selectMethod("coerce", c(.class1(object), Class),
 			  optional = TRUE,
 			  useInherited = c(from=TRUE, to=FALSE)))
 }

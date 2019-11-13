@@ -696,7 +696,7 @@ reconcilePropertiesAndPrototype <-
               if(!is.null(thisDataPart)) {
                     dataPartClass <- thisDataPart
                     if(!is.null(clDef@prototype)) {
-                        protoClass <- class(clDef@prototype)
+                        protoClass <- class(clDef@prototype)[1L] # [1]: for (matrix, array)
                         newObject <-
                             if (protoClass %in% .AbnormalTypes) {
                                 indirect <- .indirectAbnormalClasses[protoClass]

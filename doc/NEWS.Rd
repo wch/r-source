@@ -159,6 +159,9 @@
 
       \item \code{dotchart(*, pch=., groups=.)} now works better.  Reported
       by Robert and confirmed by Nic Rochette in \PR{16953}.
+
+      \item \code{canCoerce(obj, cl)} no longer assumes
+      \code{length(class(obj)) == 1}.
     }
   }
 }
