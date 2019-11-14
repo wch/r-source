@@ -424,6 +424,9 @@
       \code{d} contains a matrix.  Reported by Simon Wood in 2009 and patch
       provided by Ben Bolker in \PR{13624}.
 
+      Additionally, it now also works when some variables are data frames,
+      fixing \PR{14905}, reported by Patrick Breheny.
+
       \item \code{barplot()} could get spacings wrong if there were exactly two
       bars \PR{15522}.  Patch by Michael Chirico.
 

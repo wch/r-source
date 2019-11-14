@@ -3230,6 +3230,19 @@ stopifnot(inherits(tt, "error"), grepl("non-finite level.*\\[4\\] = -inf", tt$me
 ## had "invalid NA contour values"
 
 
+## get_all_vars() when some variables are data frames - PR#14905
+x <- (1:10)/10
+Y <- data.frame(A = 2^x, B = pi*x)
+gav <- get_all_vars(Y[,1] ~ x)
+stopifnot(exprs = {
+    is.data.frame(gav)
+    ncol(gav) == 3
+    identical(gav, cbind(Y, x))
+    identical(get_all_vars(x ~ Y), cbind(x, Y))
+})
+## the last were wrong in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
