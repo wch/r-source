@@ -2741,7 +2741,10 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     INCLNK_stack_commit();
 
     PROTECT(saverhs = rhs = eval(CADR(args), rho));
-    INCREMENT_REFCNT(saverhs);
+#ifdef SWITCH_TO_REFCNT
+    int refrhs = MAYBE_REFERENCED(saverhs);
+    if (refrhs) INCREMENT_REFCNT(saverhs);
+#endif
 
     /*  FIXME: We need to ensure that this works for hashed
 	environments.  This code only works for unhashed ones.  the
@@ -2886,7 +2889,9 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     INCREMENT_NAMED(saverhs);
 #endif
-    DECREMENT_REFCNT(saverhs);
+#ifdef SWITCH_TO_REFCNT
+    if (refrhs) DECREMENT_REFCNT(saverhs);
+#endif
 
     DECREMENT_BCSTACK_LINKS();
 
@@ -4070,6 +4075,9 @@ static SEXP seq_int(int n1, int n2)
 #endif
 /* tag for boxed stack entries to be ignored by stack protection */
 #define NLNKSXP 9996
+
+#define GETSTACK_FLAGS(n) (R_BCNodeStackTop[n].flags)
+#define SETSTACK_FLAGS(n, v) (R_BCNodeStackTop[n].flags = (v))
 
 static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 {
@@ -7118,6 +7126,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(STARTASSIGN, 1):
       {
 	INCLNK_stack_commit();
+	if (IS_STACKVAL_BOXED(-1)) {
+	    SEXP saverhs = GETSTACK(-1);
+	    FIXUP_RHS_NAMED(saverhs);
+	    int refrhs = MAYBE_REFERENCED(saverhs);
+	    SETSTACK_FLAGS(-1, refrhs);
+	    if (refrhs) INCREMENT_REFCNT(saverhs);
+	}
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
 	SEXP cell = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
@@ -7142,10 +7157,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	BCNDUP3RD();
 	/* top four stack entries are now
 	   RHS value, LHS cell, LHS value, RHS value */
-	if (IS_STACKVAL_BOXED(-1)) {
-	    FIXUP_RHS_NAMED(GETSTACK(-1));
-	    INCREMENT_REFCNT(GETSTACK(-1));
-	}
 	NEXT();
       }
     OP(ENDASSIGN, 1):
@@ -7175,8 +7186,10 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	ENSURE_NAMEDMAX(GETSTACK(-1));
 #else
 	if (IS_STACKVAL_BOXED(-1)) {
-	    INCREMENT_NAMED(GETSTACK(-1));
-	    DECREMENT_REFCNT(GETSTACK(-1));
+	    SEXP saverhs = GETSTACK(-1);
+	    INCREMENT_NAMED(saverhs);
+	    int refrhs = GETSTACK_FLAGS(-1);
+	    if (refrhs) DECREMENT_REFCNT(saverhs);
 	}
 #endif
 	NEXT();

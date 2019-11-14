@@ -513,6 +513,7 @@ Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b);
 */
 typedef struct {
     int tag;
+    int flags;
     union {
 	int ival;
 	double dval;
