@@ -9,8 +9,37 @@ source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
 if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
-    example(Matrix)
-    ## a subset from  example(sparseMatrix) :
+    ## a subset/version of example(Matrix) : --------------------------------
+
+    (Z32 <- Matrix(0, 3, 2))              # 3 by 2 matrix of zeros -> sparse
+    (z32 <- Matrix(0, 3, 2, sparse=FALSE))# -> 'dense'
+
+    ## 4 cases - 3 different results :
+    ## TODO (Z22  <- Matrix(0, 2, 2))              # diagonal from Matrix 1.3.* on
+    (Z22. <- Matrix(0, 2, 2, sparse=FALSE))# (ditto)
+    (Z22s <- Matrix(0, 2, 2,               doDiag=FALSE))# -> sparse symm. "dsCMatrix"
+    (Z22d <- Matrix(0, 2, 2, sparse=FALSE, doDiag=FALSE))# -> dense  symm. "dsyMatrix"
+
+    ## logical ones:
+    (L4  <- Matrix(diag(4) >  0)) # -> "ldiMatrix" with diag = "U"
+    (L4. <- Matrix(diag(4) >  0, sparse=TRUE)) #  (ditto)
+    (L4d <- Matrix(diag(4) >= 0)) # -> "lsyMatrix" (of all 'TRUE')
+    ## triangular
+    l3 <- upper.tri(matrix(,3,3))
+    (M <- Matrix(l3))               # "ltCMatrix"
+    (Nl3 <- Matrix(! l3))           # "ltrMatrix"
+    (l3s <- as(l3, "CsparseMatrix"))# "lgCMatrix"
+
+    (I3 <- Matrix(diag(3)))# identity, i.e., unit "diagonalMatrix"
+
+    (ad <- cbind(a=c(2,1), b=1:2))# symmetric *apart* from dimnames
+    (As <- Matrix(ad, dimnames = list(NULL,NULL)))# -> symmetric
+    forceSymmetric(ad) # also symmetric, w/ symm. dimnames
+    stopifnot(is(As, "symmetricMatrix"),
+              is(Matrix(0, 3,3), "sparseMatrix"),
+              is(Matrix(FALSE, 1,1), "sparseMatrix"))
+
+    ## a subset from  example(sparseMatrix) : -------------------------------
     i <- c(1,3:8); j <- c(2,9,6:10); x <- 7 * (1:7)
     A <- sparseMatrix(i, j, x = x)
     sA <- sparseMatrix(i, j, x = x, symmetric = TRUE)
