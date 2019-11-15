@@ -1432,7 +1432,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	R_CheckStack(); /* in case attributes might lead to a cycle */
 
     if(nargs == 3) {
-	exact = asLogical(CADDR(args));
+	exact = asLogical(CADDR(argList));
 	if(exact == NA_LOGICAL) exact = 0;
     }
 
@@ -1543,7 +1543,7 @@ static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env)
 */
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP obj, name;
+    SEXP obj;
     checkArity(op, args);
 
     if(PRIMVAL(op)) { /* @<- */
@@ -1599,14 +1599,15 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	argList = matchArgs(do_attrgets_formals, args, call);
 	PROTECT(argList);
 
-	name = CADR(argList);
+	SEXP name = CADR(argList);
+	SEXP val = CADDR(argList);
 	if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
 	    error(_("'name' must be non-null character string"));
 	/* TODO?  if (isFactor(obj) && !strcmp(asChar(name), "levels"))
-	 * ---         if(any_duplicated(CADDR(args)))
+	 * ---         if(any_duplicated(val))
 	 *                  error(.....)
 	 */
-	setAttrib(obj, name, CADDR(args));
+	setAttrib(obj, name, val);
 	UNPROTECT(2);
 	SETTER_CLEAR_NAMED(obj);
 	return obj;

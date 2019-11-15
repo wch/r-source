@@ -3243,6 +3243,13 @@ stopifnot(exprs = {
 ## the last were wrong in R <= 3.6.1
 
 
+## get all arguments from matched argument list; failed in R <= 4.0.0
+y <- list()
+stopifnot(identical(attr(`attr<-`(y, value = 1, "A"), "A"), 1))
+y <- structure(list(), AA = 1)
+stopifnot(is.null(attr(y, exact = TRUE, "A")))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
