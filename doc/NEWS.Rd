@@ -268,6 +268,10 @@
       \item (Windows) \command{Rterm} now correctly displays multi-byte
       coded characters representable in the current native encoding (at least
       on Windows 10 they were sometimes omitted, \PR{17632}).
+
+      \item The Fortran code for calculating the \code{coefficients} component in
+      \code{lm.influence} was very inefficient. It has (for now) been replaced with
+      much faster R code. \PR{17624}
     }
   }
 }

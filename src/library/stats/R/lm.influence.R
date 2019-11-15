@@ -63,7 +63,32 @@ lm.influence <- function (model, do.coef = TRUE)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
         tol <- 10 * .Machine$double.eps
-        res <- .Call(C_influence, mqr, do.coef, e, tol)
+###     The Fortran code for do.coef is terribly inefficient, so we do it in R instead
+###     Implement in Fortran eventually        
+###        res <- .Call(C_influence, mqr, do.coef, e, tol)
+        res <- .Call(C_influence, mqr, FALSE, e, tol)
+        if (do.coef){
+            ok <- seq_len(mqr$rank) # need this for rank-deficient cases
+            Q <- qr.Q(mqr)[ , ok, drop=FALSE]
+            R <- qr.R(mqr)[ok, ok, drop=FALSE]
+            hat <- res$hat
+            invRQtt <- t(backsolve(R,t(Q)))
+            k <- NCOL(Q)
+            q <- NCOL(e)
+            ## NB: The following relies on recycling: diag(v) %*% A == A * v
+            ## so we need a for loop for the mlm case
+            if (is.mlm){
+                cf <- array(0, c(n,k,q))
+                for ( j in seq_len(q) )
+                    cf[,,j] <- invRQtt * ifelse(hat == 1, 0, e[,j]/(1-hat))
+            } else 
+                cf <- invRQtt * ifelse(hat == 1, 0, e/(1-hat))
+ 
+                 
+            res$coefficients <- cf
+        }
+        
+        
         drop1d <- function(a) { # more cautious variant of drop(.)
             d <- dim(a)
             if(length(d) == 3L && d[[3L]] == 1L)
@@ -106,7 +131,7 @@ lm.influence <- function (model, do.coef = TRUE)
 					       names(cf)[!is.na(cf)])
 	}
     }
-    res
+    res[c("hat", "coefficients", "sigma", "wt.res")] # ensure order, for backward compatibility and regression tests
 }
 
 ## The following is adapted from John Fox's  "car" :

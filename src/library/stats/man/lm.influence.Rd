@@ -68,8 +68,9 @@ lm.influence(model, do.coef = TRUE)
   Rather than returning the coefficients which result
   from dropping each case, we return the changes in the coefficients.
   This is more directly useful in many diagnostic measures.\cr
-  Since these need \eqn{O(n^2 p)} computing time, they can be omitted by
-  \code{do.coef = FALSE}.
+  Since these need \eqn{O(n p^2)} computing time, they can be omitted by
+  \code{do.coef = FALSE}. (Prior to R 4.0.0, this was much worse, using
+  an \eqn{O(n^2 p)} algorithm.)
 
   Note that cases with \code{weights == 0} are \emph{dropped} (contrary
   to the situation in S).

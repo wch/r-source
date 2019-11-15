@@ -104,6 +104,14 @@ c
 c
 c     changes in the estimated coefficients  coef(i,j,c)  i=1..n, j=1..k, c=1..q
 c
+c     NB: This code is terribly inefficient. For now, the R code in lm.influence simply
+c     bypasses it by calling with docoef = 0 and handling it in R code instead.
+c     Specifically, we need to calculate R^{-1}Q'D with D = diag(resid/(1-hat))
+c     The code below does this by computing  Q'Y with Y being each column of D in turn,
+c     but it is much more efficient to compute  R^{-1}Q' once and scale the columns by the
+c     elements of D (-pd, nov.2019)
+c
+      
       if(docoef .ne. 0) then
          ! use sigma(*,1) as auxiliary
          do  i = 1,n
