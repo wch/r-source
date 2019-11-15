@@ -69,7 +69,7 @@ Type 'q()' to quit R.
 + 
 +     ## logical ones:
 +     (L4  <- Matrix(diag(4) >  0)) # -> "ldiMatrix" with diag = "U"
-+     (L4. <- Matrix(diag(4) >  0, sparse=TRUE)) #  (ditto)
++     ## TODO (L4. <- Matrix(diag(4) >  0, sparse=TRUE)) #  ditto, from Matrix 1.3.* on
 +     (L4d <- Matrix(diag(4) >= 0)) # -> "lsyMatrix" (of all 'TRUE')
 +     ## triangular
 +     l3 <- upper.tri(matrix(,3,3))
@@ -147,13 +147,6 @@ Trying some Matrix objects, too
 [1,]    0    0
 [2,]    0    0
 > (L4 <- Matrix(diag(4) > 0))
-4 x 4 diagonal matrix of class "ldiMatrix"
-     [,1] [,2] [,3] [,4]
-[1,] TRUE    .    .    .
-[2,]    . TRUE    .    .
-[3,]    .    . TRUE    .
-[4,]    .    .    . TRUE
-> (L4. <- Matrix(diag(4) > 0, sparse = TRUE))
 4 x 4 diagonal matrix of class "ldiMatrix"
      [,1] [,2] [,3] [,4]
 [1,] TRUE    .    .    .
@@ -278,10 +271,6 @@ I3: new("ddiMatrix", diag = "U", Dim = c(3L, 3L), Dimnames = list(
  --> checking list(*): Ok
 --=--=--=--=--
 L4: new("ldiMatrix", diag = "U", Dim = c(4L, 4L), Dimnames = list(
-    NULL, NULL), x = logical(0))
- --> checking list(*): Ok
---=--=--=--=--
-L4.: new("ldiMatrix", diag = "U", Dim = c(4L, 4L), Dimnames = list(
     NULL, NULL), x = logical(0))
  --> checking list(*): Ok
 --=--=--=--=--

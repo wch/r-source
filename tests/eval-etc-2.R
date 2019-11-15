@@ -22,7 +22,7 @@ if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
 
     ## logical ones:
     (L4  <- Matrix(diag(4) >  0)) # -> "ldiMatrix" with diag = "U"
-    (L4. <- Matrix(diag(4) >  0, sparse=TRUE)) #  (ditto)
+    ## TODO (L4. <- Matrix(diag(4) >  0, sparse=TRUE)) #  ditto, from Matrix 1.3.* on
     (L4d <- Matrix(diag(4) >= 0)) # -> "lsyMatrix" (of all 'TRUE')
     ## triangular
     l3 <- upper.tri(matrix(,3,3))
