@@ -196,7 +196,7 @@ hcl.swatch <- function(type = NULL, n = 5, nrow = 11,
     nswatch <- min(ncol, nrow)
 
     par(mar = rep(0.1, 4),
-        mfrow = c(1, min(5, ncol \%/\% nrow + 1)),
+        mfrow = c(1, min(5, ceiling(ncol/nrow))),
         pin = c(1, 0.5 * nswatch),
         cex = 0.7)
 
