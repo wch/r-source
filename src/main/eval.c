@@ -5824,8 +5824,10 @@ static R_INLINE Rboolean setElementFromScalar(SEXP vec, R_xlen_t i,
 	}								\
 	else if (subassign2 && TYPEOF(vec) == VECSXP &&			\
 		 i < XLENGTH(vec)) {					\
-	    SEXP rhs = R_FixupRHS(vec, GETSTACK_PTR(srhs));		\
+	    SEXP rhs = GETSTACK_PTR(srhs);				\
 	    if (rhs != R_NilValue) {					\
+		if (MAYBE_REFERENCED(rhs) && VECTOR_ELT(vec, i) != rhs)	\
+		    rhs = R_FixupRHS(vec, rhs);				\
 		SET_VECTOR_ELT(vec, i, rhs);				\
 		SETTER_CLEAR_NAMED(vec);				\
 		SETSTACK_PTR(sv, vec);					\

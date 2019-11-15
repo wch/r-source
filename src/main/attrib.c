@@ -248,7 +248,6 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
     if (vec == R_NilValue)
 	error(_("attempt to set an attribute on NULL"));
 
-    if (MAYBE_REFERENCED(val)) val = R_FixupRHS(vec, val);
     UNPROTECT(2);
 
     if (name == R_NamesSymbol)
@@ -352,6 +351,8 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
     /* this does no allocation */
     for (SEXP s = ATTRIB(vec); s != R_NilValue; s = CDR(s)) {
 	if (TAG(s) == name) {
+	    if (MAYBE_REFERENCED(val) && val != CAR(s))
+		val = R_FixupRHS(vec, val);
 	    SETCAR(s, val);
 	    return val;
 	}
@@ -362,6 +363,7 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
        but a lot of existing code depends assume that
        setAttrib/installAttrib protects its arguments */
     PROTECT(vec); PROTECT(name); PROTECT(val);
+    if (MAYBE_REFERENCED(val)) ENSURE_NAMEDMAX(val);
     SEXP s = CONS(val, R_NilValue);
     SET_TAG(s, name);
     if (ATTRIB(vec) == R_NilValue) SET_ATTRIB(vec, s); else SETCDR(t, s);
@@ -1814,9 +1816,6 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 #else
 	/* simplified version of setAttrib(obj, name, value);
 	   here we do *not* treat "names", "dimnames", "dim", .. specially : */
-	PROTECT(name);
-	if (MAYBE_REFERENCED(value)) value = R_FixupRHS(obj, value);
-	UNPROTECT(1);
 	installAttrib(obj, name, value);
 #endif
     }
