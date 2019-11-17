@@ -6921,7 +6921,9 @@ function(dir, localOnly = FALSE)
     }
 
     language <- meta["Language"]
-    if((is.na(language) || language == "en") &&
+    if((is.na(language) ||
+        language == "en" ||
+        startsWith(language, "en-")) &&
        config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
                                         "FALSE"))) {
         a <- .aspell_package_description_for_CRAN(dir)
