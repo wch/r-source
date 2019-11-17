@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2019-11-05 r77374) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-11-17 r77426) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin19.0.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2677,7 +2677,7 @@ Sturges   Scott      FD
 +     nswatch <- min(ncol, nrow)
 + 
 +     par(mar = rep(0.1, 4),
-+         mfrow = c(1, min(5, ncol %/% nrow + 1)),
++         mfrow = c(1, min(5, ceiling(ncol/nrow))),
 +         pin = c(1, 0.5 * nswatch),
 +         cex = 0.7)
 + 
@@ -4238,7 +4238,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.559 0.287 10.901 0 0 
+Time elapsed:  8.463 0.709 9.316 0.002 0.003 
 > grDevices::dev.off()
 null device 
           1 
