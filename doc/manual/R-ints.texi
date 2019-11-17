@@ -304,7 +304,8 @@ a <- `dim<-`(a, c(7, 2))
 
 @noindent
 but for no longer, and so some primitive functions can be optimized to
-avoid a copy in this case.
+avoid a copy in this case.  [This mechanism is scheduled to be replaced
+in @R{} 4.0.0.]
 
 The @code{gp} bits are by definition `general purpose'.  We label these
 from 0 to 15.  Bits 0--5 and bits 14--15 have been used as described below

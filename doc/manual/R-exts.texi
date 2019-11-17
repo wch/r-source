@@ -11597,8 +11597,8 @@ The maximal value is @code{NAMEDMAX}.
 @end table
 
 @noindent
-Note the past tenses: @R{} does not do full reference counting and there
-may currently be fewer bindings.
+Note the past tenses: @R{} does not do currently do full reference
+counting and there may currently be fewer bindings.
 
 It is safe to modify the value of any @code{SEXP} for which
 @code{NAMED(foo)} is zero, and if @code{NAMED(foo)} is two or more, the
@@ -11633,7 +11633,7 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is likely to be replaced in future versions of @R{}. To
+This mechanism is scheduled to be replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
