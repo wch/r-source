@@ -3177,11 +3177,11 @@ ok_get_all_vars <- function(form,d) { ## get_all_vars() :<=> model_frame() apart
     identical(mf,
               if(missing(d)) get_all_vars(form) else get_all_vars(form,d))
 }
-M <- matrix(1:15, 5,3)
+M <- .Date(matrix(1:15, 5,3)) # has class to be kept
 n <- 26:30
 T <- TRUE
 m <- 2:7
-stopifnot(exprs = {
+stopifnot(exprs = { is.matrix(M) ; dim(M) == c(5,3)
     ok_get_all_vars(~ M)
     ok_get_all_vars(~M+n)
     ok_get_all_vars(~ X ,               list(X=  M))
