@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-09-30 r77236) -- "Action of the Toes"
+R version 3.6.1 Patched (2019-11-15 r77430) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -738,4 +738,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.452   0.065   1.504 
+  1.419   0.065   1.468 

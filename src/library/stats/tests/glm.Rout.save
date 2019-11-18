@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-09-30 r77236) -- "Action of the Toes"
+R version 3.6.1 Patched (2019-11-15 r77430) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -199,4 +199,4 @@ Number of Fisher Scoring iterations: 3
 > 
 > proc.time()
    user  system elapsed 
-  0.265   0.045   0.283 
+  0.250   0.050   0.276 

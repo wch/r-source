@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-09-30 r77236) -- "Action of the Toes"
+R version 3.6.1 Patched (2019-11-15 r77430) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -600,5 +600,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.398 0.11 1.533 0.002 0.005 
+Time elapsed:  1.353 0.117 1.501 0.004 0.004 
 > 

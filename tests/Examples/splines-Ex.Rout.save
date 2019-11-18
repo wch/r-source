@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-09-30 r77236) -- "Action of the Toes"
+R version 3.6.1 Patched (2019-11-15 r77430) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -588,7 +588,7 @@ attr(,"class")
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.194 0.012 0.208 0 0 
+Time elapsed:  0.197 0.007 0.205 0 0 
 > grDevices::dev.off()
 null device 
           1 
