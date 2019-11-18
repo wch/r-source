@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-10-26 r77334) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-11-17 r77430) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -199,4 +199,4 @@ Number of Fisher Scoring iterations: 3
 > 
 > proc.time()
    user  system elapsed 
-  0.309   0.047   0.341 
+  0.266   0.042   0.286 
