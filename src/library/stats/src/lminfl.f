@@ -79,7 +79,7 @@ c   'q' for multivariate (mlm) models added Sep, 2018;  Martin Maechler.
 c   coef(.,.) can be dummy(1) when docoef is 0(false)
 
       integer c, i, j, info
-      double precision sum, denom, dummy
+      double precision sum, denom, dummy(1)
 c
 c     hat matrix diagonal h_ii = hat(i)    [sigma(i,1) as auxiliary] :
 c
