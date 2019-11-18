@@ -28,6 +28,17 @@
        The version of PCRE used can be obtained via
        \code{extSoftVersion()}, PCRE1 has versions < 10, PCRE2 versions
        >= 10.
+
+       \item For now only active when environment variable
+       \env{_R_CLASS_MATRIX_ARRAY_} is set to non-empty, but planned to be the
+       new unconditional behavior when R 4.0.0 is released:
+
+       Newly, \code{matrix} objects also inherit from class \code{"array"},
+       namely, e.g., \code{class(diag(1))} is \code{c("matrix", "array")}
+       which invalidates code (wrongly) assuming that
+       \code{length(class(obj)) == 1}, a wrong assumption that is less
+       frequently fulfilled now
+       (currently only after setting \env{_R_CLASS_MATRIX_ARRAY_} to non-empty).
     }
   }
 

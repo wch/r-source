@@ -1,6 +1,6 @@
 % File src/library/base/man/matrix.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matrix}
@@ -102,6 +102,9 @@ will avoid duplicating \code{x}.
   matrix.
 
   A matrix is the special case of a two-dimensional \code{\link{array}}.
+  Currently, only if the environment variable  \code{"_R_CLASS_MATRIX_ARRAY_"} is set to a
+  non-empty string, i.e., \code{if(nzchar(Sys.getenv("_R_CLASS_MATRIX_ARRAY_")))} but then
+  From \R 4.0.0 on, \code{\link{inherits}(m, "array")} is true for a \code{matrix} \code{m}.
 }
 \examples{
 is.matrix(as.matrix(1:10))

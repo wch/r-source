@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -636,8 +636,22 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 	SEXP dim = getAttrib(obj, R_DimSymbol);
 	int nd = length(dim);
 	if(nd > 0) {
-	    if(nd == 2)
-		klass = mkChar("matrix");
+	    if(nd == 2) {
+	      char *p = getenv("_R_CLASS_MATRIX_ARRAY_");
+	      if(p) {  // "the future" (eventually, unconditionally)
+		if(singleString)
+		    klass = mkChar("matrix");
+		else { // R >= 4.0.0 :  class(<matrix>) |->  c("matrix", "array")
+		    PROTECT(klass = allocVector(STRSXP, 2));
+		    SET_STRING_ELT(klass, 0, mkChar("matrix"));
+		    SET_STRING_ELT(klass, 1, mkChar("array"));
+		    UNPROTECT(1);
+		    return klass;
+		}
+	      } else { // back-compatible R <= 3.x.y behavior
+		  klass = mkChar("matrix");
+	      }
+	    }
 	    else
 		klass = mkChar("array");
 	}
@@ -1398,7 +1412,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	attributes(x)[[which]]
    }
 
-The R functions was being called very often and replacing it by
+The R function was being called very often and replacing it by
 something more efficient made a noticeable difference on several
 benchmarks.  There is still some inefficiency since using getAttrib
 means the attributes list will be searched twice, but this seems
