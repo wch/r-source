@@ -175,11 +175,22 @@ function(meta)
     for(v in meta[fields]) {
         if(is.na(v)) next
         pattern <-
-            "<(URL: *)?((https?|ftp)://[^[:space:],]*)[[:space:]]>"
+            "<(URL: *)?((https?|ftp)://[^[:space:],]*)[[:space:]]*>"
         m <- gregexpr(pattern, v)
         urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
         regmatches(v, m) <- ""
         pattern <- "(^|[^>\"])((https?|ftp)://[^[:space:],]*)"
+        m <- gregexpr(pattern, v)
+        urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
+    }
+    if(!is.na(v <- meta["Description"])) {
+        pattern <-
+            "<(URL: *)?((https?|ftp)://[^[:space:]]+)[[:space:]]*>"
+        m <- gregexpr(pattern, v)
+        urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
+        regmatches(v, m) <- ""
+        pattern <-
+            "([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])"
         m <- gregexpr(pattern, v)
         urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
     }
