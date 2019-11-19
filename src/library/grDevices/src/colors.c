@@ -597,8 +597,8 @@ static rcolor Palette[MAX_PALETTE_SIZE] = {
     0xff000000,
     0xff6b53df,
     0xff4fd061,
-    0xfffda513,
-    0xffdfdb33,
+    0xffe69722,
+    0xffe5e228,
     0xfff53ad0,
     0xff1fc2ee,
     0xff656565
@@ -645,8 +645,8 @@ const rcolor DefaultPalette[8] = {
     0xff000000,
     0xff6b53df,
     0xff4fd061,
-    0xfffda513,
-    0xffdfdb33,
+    0xffe69722,
+    0xffe5e228,
     0xfff53ad0,
     0xff1fc2ee,
     0xff656565
