@@ -4357,7 +4357,7 @@ expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
 in the AT&T Bourne shell used on Solaris 10/11, even though they are in
-the 2008 POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.}
+the POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.}
 Bourne shells: the @R{} toolset on Windows and some Unix-alike OSes use
 @command{ash} (@uref{https://en.wikipedia.org/@/wiki/@/Almquist_shell}),
 a rather minimal shell with few builtins.  Beware of assuming that all
@@ -4379,11 +4379,16 @@ export FOO=value
 @noindent
 which is bash-specific (first set the variable then export it by name).
 
-@code{test -e} (or @code{[ -e ]} in shell scripts is not portable:
-@code{-f} is normally what is intended.
+Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not
+portable: @code{-f} is normally what is intended.  Flags @option{-a} and
+@option{-o} are nowadays declared obsolescent by POSIX and should not be
+used.
 
-On macOS Catalina and later, which shell @file{/bin/sh} invokes is user-
-and platform-dependent: it might be @command{bash} version 3.2,
+The @option{-o} flag for @command{set} in shell scripts is optional in
+POSIX and not supported on all the platforms @R{} is used on.
+
+On macOS Catalina which shell @file{/bin/sh} invokes is user- and
+platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
 for accounts ported from earlier version it is usually @command{bash}).
 
