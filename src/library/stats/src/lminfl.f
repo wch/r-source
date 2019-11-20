@@ -42,7 +42,9 @@ c               the number of columns of the (multivariate) y[]
 c
 c       docoef  integer (logical) indicating if  coef(*,*) should be computed
 c               Computation of coef(.) is O(n^2 * k) which may be too much.
-c
+
+c       Nov 2018: docoef != 0 is not used and code commented out.
+      
 c       qraux   double precision(k)
 c               auxiliary information about the qr decomposition.
 c
@@ -78,7 +80,7 @@ c   'q' for multivariate (mlm) models added Sep, 2018;  Martin Maechler.
      +     hat(n), coef(n,k,q), sigma(n,q), tol
 c   coef(.,.) can be dummy(1) when docoef is 0(false)
 
-      integer c, i, j, info
+      integer i, j, info
       double precision sum, denom, dummy(1)
 c
 c     hat matrix diagonal h_ii = hat(i)    [sigma(i,1) as auxiliary] :
@@ -111,26 +113,30 @@ c     The code below does this by computing  Q'Y with Y being each column of D i
 c     but it is much more efficient to compute  R^{-1}Q' once and scale the columns by the
 c     elements of D (-pd, nov.2019)
 c
-      
+
+c     The code in this branch has caused compilation problems (gfortran 10),
+c      so comment out.     
       if(docoef .ne. 0) then
-         ! use sigma(*,1) as auxiliary
-         do  i = 1,n
-            do c = 1,q
-               do j = 1,n
-                  sigma(j,1) = 0.0d0
-               end do
-c     if hat() is effectively 1, change is zero
-               if(hat(i) .lt. 1.0d0) then
-                  sigma(i,1) = resid(i,c)/(1.0d0 - hat(i))
-                  call dqrsl(x, ldx, n, k, qraux, sigma, dummy, sigma,
-     .                       dummy, dummy, dummy, 1000, info)
-                  call dtrsl(x, ldx, k, sigma, 1, info)
-               endif
-               do j = 1,k
-                  coef(i,j,c) = sigma(j,1)
-               end do
-            end do ! c = 1..q
-         end do ! i = 1,n
+         call rexit("docoef !=0 is not supported in lminfl")
+c$$$         integer c
+c$$$         ! use sigma(*,1) as auxiliary
+c$$$         do  i = 1,n
+c$$$            do c = 1,q
+c$$$               do j = 1,n
+c$$$                  sigma(j,1) = 0.0d0
+c$$$               end do
+c$$$c     if hat() is effectively 1, change is zero
+c$$$               if(hat(i) .lt. 1.0d0) then
+c$$$                  sigma(i,1) = resid(i,c)/(1.0d0 - hat(i))
+c$$$                  call dqrsl(x, ldx, n, k, qraux, sigma, dummy, sigma,
+c$$$     .                       dummy, dummy, dummy, 1000, info)
+c$$$                  call dtrsl(x, ldx, k, sigma, 1, info)
+c$$$               endif
+c$$$               do j = 1,k
+c$$$                  coef(i,j,c) = sigma(j,1)
+c$$$               end do
+c$$$            end do ! c = 1..q
+c$$$         end do ! i = 1,n
       endif
 c
 c     estimated residual standard deviation  sigma(j,c)
