@@ -4434,6 +4434,9 @@ export FOO=value
 @noindent
 which is bash-specific (first set the variable then export it by name).
 
+@code{test -e} (or @code{[ -e ]} in shell scripts is not portable:
+@code{-f} is normally what is intended.
+
 On macOS Catalina and later, which shell @file{/bin/sh} invokes is user-
 and platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
