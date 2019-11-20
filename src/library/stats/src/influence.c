@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012--2018 The R Core Team
+ *  Copyright (C) 2012--2019 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,40 +22,28 @@
 #include "statsR.h"
 #include "stats.h"
 
-SEXP influence(SEXP mqr, SEXP do_coef, SEXP e, SEXP stol)
+SEXP influence(SEXP mqr, SEXP e, SEXP stol)
 {
     SEXP qr = getListElement(mqr, "qr"), qraux = getListElement(mqr, "qraux");
     int n = nrows(qr), k = asInteger(getListElement(mqr, "rank")),
 	q = ncols(e);
-    int docoef = asLogical(do_coef);
     double tol = asReal(stol);
 
     SEXP hat = PROTECT(allocVector(REALSXP, n));
     double *rh = REAL(hat);
-    SEXP coefficients = PROTECT(docoef
-				? alloc3DArray(REALSXP, n, k, q) // or (q,n,k) ??
-				: allocVector (REALSXP, 0)); // <- numeric(0)
     SEXP sigma = PROTECT(allocMatrix(REALSXP, n, q));
-    F77_CALL(lminfl)(REAL(qr), &n, &n, &k, &q, &docoef, REAL(qraux),
-		     REAL(e), rh, REAL(coefficients), REAL(sigma), &tol);
+    F77_CALL(lminfl)(REAL(qr), &n, &n, &k, &q, REAL(qraux),
+		     REAL(e), rh, REAL(sigma), &tol);
 
     for (int i = 0; i < n; i++) if (rh[i] > 1. - tol) rh[i] = 1.;
-    SEXP ans = PROTECT(allocVector(VECSXP, docoef ? 3 : 2));
-    SEXP nm =          allocVector(STRSXP, docoef ? 3 : 2);
+    SEXP ans = PROTECT(allocVector(VECSXP, 2));
+    SEXP nm =  allocVector(STRSXP, 2);
     setAttrib(ans, R_NamesSymbol, nm);
     int m = 0;
     SET_VECTOR_ELT(ans, m, hat);
     SET_STRING_ELT(nm, m++, mkChar("hat"));
-    if (docoef) {
-	SET_VECTOR_ELT(ans, m, coefficients);
-	SET_STRING_ELT(nm, m++, mkChar("coefficients"));
-    }
     SET_VECTOR_ELT(ans, m, sigma);
     SET_STRING_ELT(nm, m++, mkChar("sigma"));
-    /* unneeded :
-    SET_VECTOR_ELT(ans, m, e);
-    SET_STRING_ELT(nm, m, mkChar("wt.res"));
-    */
-    UNPROTECT(4);
+    UNPROTECT(3);
     return ans;
 }

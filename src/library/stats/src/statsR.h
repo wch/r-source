@@ -167,7 +167,7 @@ SEXP call_dqags(SEXP);
 SEXP Rsm(SEXP x, SEXP stype, SEXP send);
 SEXP tukeyline(SEXP x, SEXP y, SEXP iter, SEXP call);
 SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev);
-SEXP influence(SEXP mqr, SEXP do_coef, SEXP e, SEXP stol);
+SEXP influence(SEXP mqr, SEXP e, SEXP stol);
 
 SEXP pSmirnov2x(SEXP statistic, SEXP snx, SEXP sny);
 SEXP pKolmogorov2x(SEXP statistic, SEXP sn);

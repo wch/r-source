@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.influence.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,10 +63,7 @@ lm.influence <- function (model, do.coef = TRUE)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
         tol <- 10 * .Machine$double.eps
-###     The Fortran code for do.coef is terribly inefficient, so we do it in R instead
-###     Implement in Fortran eventually        
-###        res <- .Call(C_influence, mqr, do.coef, e, tol)
-        res <- .Call(C_influence, mqr, FALSE, e, tol)
+        res <- .Call(C_influence, mqr, e, tol)
         if (do.coef){
             ok <- seq_len(mqr$rank) # need this for rank-deficient cases
             Q <- qr.Q(mqr)[ , ok, drop=FALSE]
@@ -81,14 +78,14 @@ lm.influence <- function (model, do.coef = TRUE)
                 cf <- array(0, c(n,k,q))
                 for ( j in seq_len(q) )
                     cf[,,j] <- invRQtt * ifelse(hat == 1, 0, e[,j]/(1-hat))
-            } else 
+            } else
                 cf <- invRQtt * ifelse(hat == 1, 0, e/(1-hat))
- 
-                 
+
+
             res$coefficients <- cf
         }
-        
-        
+
+
         drop1d <- function(a) { # more cautious variant of drop(.)
             d <- dim(a)
             if(length(d) == 3L && d[[3L]] == 1L)
