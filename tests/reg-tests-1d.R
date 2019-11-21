@@ -3251,10 +3251,18 @@ stopifnot(is.null(attr(y, exact = TRUE, "A")))
 
 
 if(nzchar(Sys.getenv("_R_CLASS_MATRIX_ARRAY_"))) {
-## A matrix is an array, too:
+## 1) A matrix is an array, too:
 stopifnot( vapply(1:9, function(N) inherits(array(pi, dim = 1:N), "array"), NA) )
 ## was false for N=2 in R < 4.0.0
-} else cat("not tested\n")
+##
+## 2) Matrix must dispatch for array methods, too :
+foo <- function(x) UseMethod("foo")
+foo.array <- function(x) "made in foo.array()"
+stopifnot(
+    vapply(1:9, function(N) foo(array(pi, dim = 1:N)), "chr") == foo.array())
+## foo(array(*)) gave error for N=2 in R < 4.0.0
+} else
+    cat("not tested\n")
 
 
 

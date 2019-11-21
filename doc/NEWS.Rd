@@ -37,8 +37,11 @@
        namely, e.g., \code{class(diag(1))} is \code{c("matrix", "array")}
        which invalidates code (wrongly) assuming that
        \code{length(class(obj)) == 1}, a wrong assumption that is less
-       frequently fulfilled now
-       (currently only after setting \env{_R_CLASS_MATRIX_ARRAY_} to non-empty).
+       frequently fulfilled now.
+       (Currently only after setting \env{_R_CLASS_MATRIX_ARRAY_} to non-empty.)
+
+       S3 methods for \code{"array"}, i.e., \code{<someFun>.array()}, are
+       now also dispatched for \code{matrix} objects.
     }
   }
 
