@@ -1067,11 +1067,15 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error("invalid subscript for pairlist");
 #endif
 	ans = CAR(nthcdr(x, (int) offset));
+#ifndef SWITCH_TO_REFCNT
 	RAISE_NAMED(ans, named_x);
+#endif
     } else if(isVectorList(x)) {
 	/* did unconditional duplication before 2.4.0 */
 	ans = VECTOR_ELT(x, offset);
+#ifndef SWITCH_TO_REFCNT
 	RAISE_NAMED(ans, named_x);
+#endif
     } else {
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
