@@ -2427,7 +2427,7 @@ SEXP cons(SEXP car, SEXP cdr)
     return s;
 }
 
-SEXP CONS_NR(SEXP car, SEXP cdr)
+SEXP attribute_hidden CONS_NR(SEXP car, SEXP cdr)
 {
     SEXP s;
     if (FORCE_GC || NO_FREE_NODES()) {
@@ -2564,7 +2564,7 @@ SEXP R_mkEVPROMISE(SEXP expr, SEXP val)
     return prom;
 }
 
-SEXP R_mkEVPROMISE_NR(SEXP expr, SEXP val)
+SEXP attribute_hidden R_mkEVPROMISE_NR(SEXP expr, SEXP val)
 {
     SEXP prom = mkPROMISE(expr, R_NilValue);
     DISABLE_REFCNT(prom);
