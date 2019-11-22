@@ -2354,7 +2354,7 @@ SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (do_anyNA_formals == NULL)
 	    do_anyNA_formals = allocFormalsList2(install("x"),
 						 R_RecursiveSymbol);
-	PROTECT(args = matchArgs(do_anyNA_formals, args, call));
+	PROTECT(args = matchArgs_NR(do_anyNA_formals, args, call));
 	if(CADR(args) ==  R_MissingArg) SETCADR(args, ScalarLogical(FALSE));
 	ans = ScalarLogical(anyNA(call, op, args, rho));
 	UNPROTECT(1);
@@ -2752,7 +2752,7 @@ SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 						  install("env"));
 
     /* argument matching */
-    PROTECT(argList = matchArgs(do_substitute_formals, args, call));
+    PROTECT(argList = matchArgs_NR(do_substitute_formals, args, call));
 
     /* set up the environment for substitution */
     if (CADR(argList) == R_MissingArg)

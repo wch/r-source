@@ -230,7 +230,7 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 	do_retracemem_formals = allocFormalsList2(install("x"),
 						  R_PreviousSymbol);
 
-    PROTECT(argList =  matchArgs(do_retracemem_formals, args, call));
+    PROTECT(argList =  matchArgs_NR(do_retracemem_formals, args, call));
     if(CAR(argList) == R_MissingArg) SETCAR(argList, R_NilValue);
     if(CADR(argList) == R_MissingArg) SETCAR(CDR(argList), R_NilValue);
 

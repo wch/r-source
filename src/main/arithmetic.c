@@ -1654,7 +1654,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (do_Math2_formals == NULL)
 		    do_Math2_formals = allocFormalsList2(install("x"),
 							 install("digits"));
-		PROTECT(args = matchArgs(do_Math2_formals, args, call));
+		PROTECT(args = matchArgs_NR(do_Math2_formals, args, call));
 		nprotect++;
 	    }
 	    if (length(CADR(args)) == 0)
@@ -1768,7 +1768,7 @@ SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* match argument names if supplied */
 	/* will signal an error unless there are one or two arguments */
 	/* after the match, length(args) will be 2 */
-	PROTECT(args = matchArgs(do_log_formals, args, call));
+	PROTECT(args = matchArgs_NR(do_log_formals, args, call));
 
 	if(CAR(args) == R_MissingArg)
 	    error(_("argument \"%s\" is missing, with no default"), "x");

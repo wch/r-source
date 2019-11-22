@@ -367,7 +367,8 @@
  Rf_mat2indsub
  Rf_matchArg
  Rf_matchArgExact
- Rf_matchArgs
+ Rf_matchArgs_NR
+ Rf_matchArgs_RC
  Rf_matchPar
  Rf_mbtoucs
  Rf_mkCLOSXP

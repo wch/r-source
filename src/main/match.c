@@ -183,8 +183,10 @@ SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
 /* We need to leave 'supplied' unchanged in case we call UseMethod */
 /* MULTIPLE_MATCHES was added by RI in Jan 2005 but never activated:
    code in R-2-8-branch */
+/* Renamed to matchArgs_NR to reflect that it returns a
+   non-reference-tracking list */
 
-SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
+SEXP attribute_hidden matchArgs_NR(SEXP formals, SEXP supplied, SEXP call)
 {
     Rboolean seendots;
     int i, arg_i = 0;
@@ -200,8 +202,8 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     }
     /* We use fargused instead of ARGUSED/SET_ARGUSED on elements of
        formals to avoid modification of the formals SEXPs.  A gc can
-       cause matchArgs to be called from finalizer code, resulting in
-       another matchArgs call with the same formals.  In R-2.10.x, this
+       cause matchArgs_NR to be called from finalizer code, resulting in
+       another matchArgs_NR call with the same formals.  In R-2.10.x, this
        corrupted the ARGUSED data of the formals and resulted in an
        incorrect "formal argument 'foo' matched by multiple actual
        arguments" error.
@@ -401,7 +403,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 /* Use matchArgs_RC if the result might escape into R. */
 SEXP attribute_hidden matchArgs_RC(SEXP formals, SEXP supplied, SEXP call)
 {
-    SEXP args = matchArgs(formals, supplied, call);
+    SEXP args = matchArgs_NR(formals, supplied, call);
     /* it would be better not to build this arglist with CONS_NR in
        the first place */
     for (SEXP a = args; a  != R_NilValue; a = CDR(a)) {
@@ -419,8 +421,8 @@ SEXP attribute_hidden matchArgs_RC(SEXP formals, SEXP supplied, SEXP call)
    for the respective actuals in the given environment 'cloenv'.  This is
    used by NextMethod to allow patching of arguments to the current closure
    before dispatching to the next method.  The implementation is based on
-   matchArgs, but there is no error/warning checking, assuming that it has
-   already been done by a call to matchArgs when the current closure was
+   matchArgs_NR, but there is no error/warning checking, assuming that it has
+   already been done by a call to matchArgs_NR when the current closure was
    invoked.
 */
 
@@ -479,7 +481,7 @@ patchArgsByActuals(SEXP formals, SEXP supplied, SEXP cloenv)
 		if (TAG(b) != R_NilValue && pmatch(TAG(f), TAG(b), 1)) {
 		    patchArgument(b, TAG(f), &farg[farg_i], cloenv);
 		    SET_ARGUSED(b, 2);
-		    break; /* Previous invocation of matchArgs */
+		    break; /* Previous invocation of matchArgs_NR */
 		           /* ensured unique matches */
 		}
 	    }
@@ -506,7 +508,7 @@ patchArgsByActuals(SEXP formals, SEXP supplied, SEXP cloenv)
 
 			patchArgument(b, TAG(f), &farg[farg_i], cloenv);
 			SET_ARGUSED(b, 1);
-			break; /* Previous invocation of matchArgs */
+			break; /* Previous invocation of matchArgs_NR */
 			       /* ensured unique matches */
 		    }
 		}
@@ -532,7 +534,7 @@ patchArgsByActuals(SEXP formals, SEXP supplied, SEXP cloenv)
 	    break;
 	} else if (farg[farg_i] == FS_MATCHED_PRESENT) {
 	    /* Note that this check corresponds to CAR(b) == R_MissingArg */
-	    /* in matchArgs */
+	    /* in matchArgs_NR */
 
 	    /* Already matched by tag */
 	    /* skip to next formal */
@@ -565,7 +567,7 @@ patchArgsByActuals(SEXP formals, SEXP supplied, SEXP cloenv)
 	}
     }
 
-    /* Previous invocation of matchArgs ensured all args are used */
+    /* Previous invocation of matchArgs_NR ensured all args are used */
     UNPROTECT(1);
     return(prsupplied);
 }

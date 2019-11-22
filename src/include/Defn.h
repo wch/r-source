@@ -975,7 +975,7 @@ extern0 int R_PCRE_limit_recursion;
 # define mat2indsub		Rf_mat2indsub
 # define matchArg		Rf_matchArg
 # define matchArgExact		Rf_matchArgExact
-# define matchArgs		Rf_matchArgs
+# define matchArgs_NR		Rf_matchArgs_NR
 # define matchArgs_RC		Rf_matchArgs_RC
 # define matchPar		Rf_matchPar
 # define Mbrtowc		Rf_mbrtowc
@@ -1213,7 +1213,7 @@ SEXP markKnown(const char *, SEXP);
 SEXP mat2indsub(SEXP, SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
-SEXP matchArgs(SEXP, SEXP, SEXP);
+SEXP matchArgs_NR(SEXP, SEXP, SEXP);
 SEXP matchArgs_RC(SEXP, SEXP, SEXP);
 SEXP matchPar(const char *, SEXP*);
 void memtrace_report(void *, void *);

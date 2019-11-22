@@ -1451,7 +1451,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	do_attr_formals = allocFormalsList3(install("x"), install("which"),
 					    R_ExactSymbol);
 
-    argList = matchArgs(do_attr_formals, args, call);
+    argList = matchArgs_NR(do_attr_formals, args, call);
 
     if (nargs < 2 || nargs > 3)
 	errorcall(call, "either 2 or 3 arguments are required");
@@ -1633,7 +1633,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (do_attrgets_formals == NULL)
 	    do_attrgets_formals = allocFormalsList3(install("x"), install("which"),
 						    install("value"));
-	argList = matchArgs(do_attrgets_formals, args, call);
+	argList = matchArgs_NR(do_attrgets_formals, args, call);
 	PROTECT(argList);
 
 	SEXP name = CADR(argList);

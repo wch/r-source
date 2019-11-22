@@ -337,7 +337,7 @@ actual and formal function arguments, and take the values 0, 1 and 2.
 The macros @code{MISSING} and @code{SET_MISSING} are used for pairlists
 of arguments.  Four bits are reserved, but only two are used (and
 exactly what for is not explained).  It seems that bit 0 is used by
-@code{matchArgs} to mark missingness on the returned argument list, and
+@code{matchArgs_NR} to mark missingness on the returned argument list, and
 bit 1 is used to mark the use of a default value for an argument copied
 to the evaluation frame of a closure.
 

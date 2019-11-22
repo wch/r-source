@@ -514,7 +514,7 @@ SEXP attribute_hidden NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env
 	do_usemethod_formals = allocFormalsList2(install("generic"),
 						 install("object"));
 
-    PROTECT(argList = matchArgs(do_usemethod_formals, args, call));
+    PROTECT(argList = matchArgs_NR(do_usemethod_formals, args, call));
     if (CAR(argList) == R_MissingArg)
 	errorcall(call, _("there must be a 'generic' argument"));
     else
