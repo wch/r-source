@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-11-19 r77437) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-11-21 r77446) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2518,10 +2518,14 @@ display gamma = 2.2
 +    plot(x, x^j, main = substitute(x^ exp, list(exp = j)), type = "l",
 +    col = "blue")
 > 
-> sapply(1:10, n2mfrow)
-     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-[1,]    1    2    3    2    3    3    3    3    3     4
-[2,]    1    1    1    2    2    2    3    3    3     3
+> sapply(1:14, n2mfrow)
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+[1,]    1    2    3    2    3    3    3    3    3     4     4     4     4     4
+[2,]    1    1    1    2    2    2    3    3    3     3     3     3     4     4
+> sapply(1:14, n2mfrow, asp=16/9)
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+[1,]    1    2    2    2    2    2    2    3    3     3     3     3     3     3
+[2,]    1    1    2    2    3    3    4    3    3     4     4     4     5     5
 > 
 > 
 > 

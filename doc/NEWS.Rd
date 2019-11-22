@@ -149,8 +149,12 @@
       to specify the workspace to be restored.  This allows equals to be
       part of the name when opening via Windows file associations (reported
       by Christian Asseburg).
+
+      \item \code{n2mfrow()} gains an option \code{asp = 1} to specify the
+      aspect ratio, fulfilling the wish and extending the proposal of
+      Michael Chirico in \PR{17648}.
     }
-  }
+  }% end{ NEW FEATURES }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{

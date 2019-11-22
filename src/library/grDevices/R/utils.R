@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,13 +16,29 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-n2mfrow <- function(nr.plots)
+n2mfrow <- function(nr.plots, asp = 1)
 {
-  if      (nr.plots <=  3)  c(nr.plots,1) # 1, 2, 3
-  else if (nr.plots <=  6)  c((nr.plots+1)%/%2,2)#-- n.. = 4,5,6
-  else if (nr.plots <= 12)  c((nr.plots+2)%/%3,3)
-  else c(nrow <- ceiling(sqrt(nr.plots)),
-         ceiling( nr.plots / nrow))
+  nr.plots <- as.integer(nr.plots)
+  if(asp == 1 && nr.plots <= 12L) { # if only for back compatibility
+      if   (nr.plots <=  3L)
+          c(nr.plots, 1L)        # nr.p = 1, 2, 3
+      else if (nr.plots <=  6L)
+           c((nr.plots+1L) %/% 2L, 2L)# = 4, 5, 6
+      else c((nr.plots+2L) %/% 3L, 3L)# = 7, 8,.., 12
+  }
+  else {
+      rc <- c(nrow <- ceiling(sqrt(nr.plots / asp)),
+              ceiling(nr.plots / nrow))
+      ## improve (if easy):
+      do <- TRUE
+      while(do && prod(rc) > nr.plots) {
+          if(do <- prod(n <- rc - 0:1) >= nr.plots)
+              rc <- n
+          else if(do <- prod(n <- rc - 1:0) >= nr.plots)
+              rc <- n
+      }
+      rc
+  }
 }
 
 extendrange <- function(x, r = range(x, na.rm = TRUE), f = 0.05)
