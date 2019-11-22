@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/colorstuff.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -172,6 +172,12 @@ gray.colors <- function(n, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL,
 
 grey.colors <- gray.colors
 
+##' match palette name (not exported)
+palette.match <- function(pal) {
+    fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
+    charmatch(fx(pal), fx(names(.palette_colors_hex)))
+}
+
 palette <- function (value)
 {
     ## if value missing return current palette (visibly)
@@ -180,8 +186,7 @@ palette <- function (value)
     ## in case value is just a single string, select the corresponding set
     ## colors with "default" handled at C level
     if (length(value) == 1L && value != "default") {
-        fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
-        n <- charmatch(fx(value), fx(names(.palette_colors_hex)))
+        n <- palette.match(value)
 	if (!is.na(n)) value <- .palette_colors_hex[[n]]
     }
 
@@ -192,45 +197,48 @@ palette <- function (value)
     } else {
       invisible(.Call.graphics(C_palette, value))    
     }
-
 }
 
 ## palette.colors() is a function for accessing the colors behind palette()
 ## directly. palette.pals() shows the available names (a la hcl.pals()).
 palette.pals <- function() names(.palette_colors_hex)
 
-palette.colors <- function(n = NULL, palette = "Okabe-Ito", alpha = 1)
+palette.colors <- function(n = NULL, palette = "Okabe-Ito",
+                           alpha = 1, recycle = FALSE)
 {
     ## number of colors
     if (!is.null(n)) {
         n <- as.integer(n[1L])
         if (n < 1L) return(character())
     }
-    
-    ## match palette name
-    fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
-    p <- charmatch(fx(palette), fx(names(.palette_colors_hex)))
+
+    p <- palette.match(palette)
     if (is.na(p)) stop("'palette' does not match any given palette")
     if (p < 1L) stop("'palette' is ambiguous")
  
     ## select n colors from palette
-    cols <- .palette_colors_hex[[p]]
-    if (is.null(n)) n <- length(cols)
-    if (n > length(cols)) {
-        n <- length(cols)
-        warning(sprintf("'n' set to %s, the maximum available for %s palette",
-                        n, palette))
+    nc <- length(cols <- .palette_colors_hex[[p]])
+    if (is.null(n))
+        n <- nc
+    else if(n > nc) {
+        if(recycle) {
+            cols <- cols[rep_len(seq_len(nc), n)]
+        } else {
+            warning(sprintf("'n' set to %s, the maximum available for %s palette",
+                            n, palette))
+            n <- nc
+        }
     }
-    cols <- cols[seq_len(n)]
+    else if(n < nc)
+        cols <- cols[seq_len(n)]
 
-    ## add alpha if specified
-    if (!missing(alpha) || is.null(alpha)) {
+    ## add alpha if specified as number:
+    if (!(missing(alpha) || is.null(alpha))) {
         alpha <- format(as.hexmode(round(alpha * 255 + 0.0001)),
                         width = 2L, upper.case = TRUE)
 	cols <- paste0(cols, alpha)
     }
-    
-    return(cols)
+    cols
 }
 
 ## underlying hex codes for palette color sets

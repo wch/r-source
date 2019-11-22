@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-11-21 r77446) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-11-22 r77447) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2500,7 +2500,7 @@ display gamma = 2.2
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: n2mfrow
-> ### Title: Compute Default mfrow From Number of Plots
+> ### Title: Compute Default 'mfrow' From Number of Plots
 > ### Aliases: n2mfrow
 > ### Keywords: dplot utilities
 > 
@@ -2579,8 +2579,13 @@ Sturges   Scott      FD
 > palette()               # obtain the current palette
 [1] "black"   "#DF536B" "#61D04F" "#2297E6" "#28E2E5" "#D03AF5" "#EEC21F"
 [8] "#656565"
-> palette("R3")           # old default palette
+> palette("R3");palette() # old default palette
+[1] "black"   "red"     "green3"  "blue"    "cyan"    "magenta" "yellow" 
+[8] "gray"   
 > palette("ggplot2")      # ggplot2-style palette
+> palette()
+[1] "black"   "#F8766D" "#00BA38" "#619CFF" "#00BFC4" "#F564E3" "#B79F00"
+[8] "gray62" 
 > 
 > palette(hcl.colors(8, "viridis"))
 > 
@@ -2611,23 +2616,49 @@ Sturges   Scott      FD
 [13] "Tableau 10"      "Classic Tableau" "Polychrome 36"   "Alphabet"       
 > 
 > ## Demonstrate the colors 1:8 in different palettes using a custom matplot()
-> sinplot <- function() {
+> sinplot <- function(main=NULL) {
 +     x <- outer(
 + 	seq(-pi, pi, length.out = 50),
 + 	seq(0, pi, length.out = 8),
 + 	function(x, y) sin(x - y)
 +     )
-+     matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "")
++     matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "", main=main)
 + }
-> sinplot()
-> palette("R3")
-> sinplot()
-> palette("Okabe-Ito")
-> sinplot()
-> palette("Tableau")
-> sinplot()
+> sinplot("default palette")
 > 
-> palette("default")
+> palette("R3");        sinplot("R3")
+> palette("Okabe-Ito"); sinplot("Okabe-Ito")
+> palette("Tableau")  ; sinplot("Tableau")
+> palette("default") # reset
+> 
+> ## color swatches for palette.colors()
+> palette.swatch <- function(palette = palette.pals(), n = 8, nrow = 8,
++                            border = "black", cex = 1, ...)
++ {
++      cols <- sapply(palette, palette.colors, n = n, recycle = TRUE)
++      ncol <- ncol(cols)
++      nswatch <- min(ncol, nrow)
++      op <- par(mar = rep(0.1, 4),
++                mfrow = c(1, min(5, ceiling(ncol/nrow))),
++      	       cex = cex, ...)
++      on.exit(par(op))
++      while (length(palette)) {
++  	subset <- seq_len(min(nrow, ncol(cols)))
++  	plot.new()
++  	plot.window(c(0, n), c(0.25, nrow + 0.25))
++  	y <- rev(subset)
++  	text(0, y + 0.1, palette[subset], adj = c(0, 0))
++  	y <- rep(y, each = n)
++  	rect(rep(0:(n-1), n), y, rep(1:n, n), y - 0.5,
++  	     col = cols[, subset], border = border)
++  	palette <- palette[-subset]
++  	cols    <- cols [, -subset]
++      }
++ }
+> 
+> palette.swatch()
+> 
+> palette.swatch(n = 26) # show full "Alphabet"; recycle most others
 > 
 > 
 > 
@@ -4242,7 +4273,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.88 0.276 11.176 0 0 
+Time elapsed:  6.49 0.237 6.812 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/palette.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{palette}
@@ -11,17 +11,21 @@
 \usage{
 palette(value)
 palette.pals()
-palette.colors(n = NULL, palette = "Okabe-Ito", alpha = 1)
+palette.colors(n = NULL, palette = "Okabe-Ito", alpha = 1, recycle = FALSE)
 }
 \arguments{
   \item{value}{an optional character vector specifying a new palette
     (see Details).}
-  \item{n}{the number of colors to select from a palette.}
+  \item{n}{the number of colors to select from a palette.  The default
+    \code{\link{NULL}} selects all colors of the given palette.}
   \item{palette}{a valid palette name (one of \code{palette.pals()}).
     The name is matched to the list of available palettes, ignoring
     upper vs. lower case, spaces, dashes, etc. in the matching.}
   \item{alpha}{an alpha-transparency level in the range [0,1]
     (0 means transparent and 1 means opaque).}
+  \item{recycle}{logical indicating what happens in case \code{n >
+      length(palette(.))}.  By default (\code{recycle = FALSE}), the
+    result is as for \code{n = NULL}, but with a warning.}
 }
 \description{
   View or manipulate the color palette which is used when \code{col=}
@@ -30,7 +34,7 @@ palette.colors(n = NULL, palette = "Okabe-Ito", alpha = 1)
 \details{
   The \code{palette()} function gets or sets the current palette,
   the \code{palette.pals()} function  lists the available predefined
-  palettes, and the \code{palette.colors()} function 
+  palettes, and the \code{palette.colors()} function
   selects colors from the predefined palettes.
 
   The color palette and referring to colors by number (see
@@ -70,7 +74,7 @@ palette.colors(n = NULL, palette = "Okabe-Ito", alpha = 1)
 }
 \seealso{
   \code{\link{colors}} for the vector of built-in named colors;
-  \code{\link{hsv}}, \code{\link{gray}}, 
+  \code{\link{hsv}}, \code{\link{gray}},
   \code{\link{hcl.colors}}, \dots to construct colors.
 
   \code{\link{adjustcolor}}, e.g., for tweaking existing palettes;
@@ -81,8 +85,9 @@ palette.colors(n = NULL, palette = "Okabe-Ito", alpha = 1)
 require(graphics)
 
 palette()               # obtain the current palette
-palette("R3")           # old default palette
+palette("R3");palette() # old default palette
 palette("ggplot2")      # ggplot2-style palette
+palette()
 
 palette(hcl.colors(8, "viridis"))
 
@@ -107,23 +112,49 @@ palette("default")
 palette.pals()
 
 ## Demonstrate the colors 1:8 in different palettes using a custom matplot()
-sinplot <- function() {
+sinplot <- function(main=NULL) {
     x <- outer(
 	seq(-pi, pi, length.out = 50),
 	seq(0, pi, length.out = 8),
 	function(x, y) sin(x - y)
     )
-    matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "")
+    matplot(x, type = "l", lwd = 4, lty = 1, col = 1:8, ylab = "", main=main)
 }
-sinplot()
-palette("R3")
-sinplot()
-palette("Okabe-Ito")
-sinplot()
-palette("Tableau")
-sinplot()
+sinplot("default palette")
 
-palette("default")
+palette("R3");        sinplot("R3")
+palette("Okabe-Ito"); sinplot("Okabe-Ito")
+palette("Tableau")  ; sinplot("Tableau")
+palette("default") # reset
+
+## color swatches for palette.colors()
+palette.swatch <- function(palette = palette.pals(), n = 8, nrow = 8,
+                           border = "black", cex = 1, ...)
+{
+     cols <- sapply(palette, palette.colors, n = n, recycle = TRUE)
+     ncol <- ncol(cols)
+     nswatch <- min(ncol, nrow)
+     op <- par(mar = rep(0.1, 4),
+               mfrow = c(1, min(5, ceiling(ncol/nrow))),
+     	       cex = cex, ...)
+     on.exit(par(op))
+     while (length(palette)) {
+ 	subset <- seq_len(min(nrow, ncol(cols)))
+ 	plot.new()
+ 	plot.window(c(0, n), c(0.25, nrow + 0.25))
+ 	y <- rev(subset)
+ 	text(0, y + 0.1, palette[subset], adj = c(0, 0))
+ 	y <- rep(y, each = n)
+ 	rect(rep(0:(n-1), n), y, rep(1:n, n), y - 0.5,
+ 	     col = cols[, subset], border = border)
+ 	palette <- palette[-subset]
+ 	cols    <- cols [, -subset]
+     }
+}
+
+palette.swatch()
+
+palette.swatch(n = 26) # show full "Alphabet"; recycle most others
 }
 \keyword{color}
 \keyword{sysdata}
