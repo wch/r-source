@@ -564,6 +564,22 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 		      nargs, symbol.symbol.external->numArgs, buf);
     }
 
+#ifdef SWITCH_TO_REFCNT
+    /* args is escaping into user C code and might get captured, so
+       make sure it is reference counting. */
+    for (SEXP a = args; a != R_NilValue; a = CDR(a))
+	if (! TRACKREFS(a)) {
+	    ENABLE_REFCNT(a);
+	    INCREMENT_REFCNT(CAR(a));
+	    INCREMENT_REFCNT(CDR(a));
+#ifdef TESTING_WRITE_BARRIER
+	    /* this should not see non-tracking arguments */
+	    if (! TRACKREFS(CAR(a)))
+		error("argument not tracking references");
+#endif
+	}
+#endif
+
     if (PRIMVAL(op) == 1) {
 	R_ExternalRoutine2 fun = (R_ExternalRoutine2) ofun;
 	retval = fun(call, op, args, env);
