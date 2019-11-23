@@ -80,11 +80,6 @@
  *  2000/08/01  Also promises, expressions, environments when using [[ PD
  */
 
-/* a temporary hack until the SET_REFCNT below is removed */
-#ifdef SWITCH_TO_REFCNT
-# define USE_RINTERNALS
-#endif
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
