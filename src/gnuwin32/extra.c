@@ -631,7 +631,22 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (getFinalPathNameW(wel, wtmp)) {
 		norm = wtmp;
 		ok = TRUE;
-	    } else {
+		/* if normalized to UNC path but full path is D:..., fall back
+		   to GetLongPathName */
+		if (norm[0] == L'\\' && norm[1] == L'\\') {
+		    res = GetFullPathNameW(wel, 32768, wlongpath, &wtmp2);
+		    if (res && res <= 32768 &&
+		        Ri18n_iswctype(wlongpath[0], Ri18n_wctype("alpha")) &&
+		        wlongpath[1] == L':') {
+
+			ok = FALSE;
+			norm = NULL;
+			/* NOTE: GetFullPathName is called twice */
+		    }
+		}
+	    }
+
+	    if (!ok) {
 		/* silently fall back to GetFullPathNameW/GetLongPathNameW */
 		res = GetFullPathNameW(wel, 32768, wtmp, &wtmp2);
 		if (res && res <= 32768) {
@@ -669,7 +684,20 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (getFinalPathName(tel, tmp)) {
 		norm = tmp;
 		ok = TRUE;
-	    } else {
+		/* if normalized to UNC path but full path is D:..., fall back
+		   to GetLongPathName */
+		if (norm[0] == '\\' && norm[1] == '\\') {
+		    res = GetFullPathName(tel, MAX_PATH, longpath, &tmp2);
+		    if (res && res <= MAX_PATH &&
+		        isalpha(longpath[0]) && longpath[1] == ':') {
+
+			ok = FALSE;
+			norm = NULL;
+			/* NOTE: GetFullPathName is called twice */
+		    }
+		}
+	    }
+	    if (!ok) {
 		/* silently fall back to GetFullPathName/GetLongPathName */
 		res = GetFullPathName(tel, MAX_PATH, tmp, &tmp2);
 		if (res && res <= MAX_PATH) {

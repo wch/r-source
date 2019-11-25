@@ -43,6 +43,10 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   insufficient permissions) it currently falls back to the \R 3.6 (and
   older) implementation, which relies on \code{GetFullPathName} and
   \code{GetLongPathName} with limitations described in the Notes section.
+  An attempt is made not to introduce UNC paths in presence of mapped drives
+  or symbolic links: if \code{GetFinalPathNameByHandle} returns a UNC path,
+  but \code{GetLongPathName} returns a path starting with a drive letter, R
+  falls back to the \R 3.6 (and older) implementation.
   UTF-8-encoded paths not valid in the current locale can be used.
 
   \code{mustWork = FALSE} is useful for expressing paths for use in
