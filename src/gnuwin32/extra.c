@@ -496,10 +496,11 @@ static Rboolean getFinalPathName(const char *orig, char *res)
 	/* res should start with \\?\ */
 	return FALSE;
     
-    if (len > 8 && !strncmp("UNC\\", res+4, 4))
+    if (len > 8 && !strncmp("UNC\\", res+4, 4)) {
 	/* UNC path \\?\UNC */
-	strip = 7;	
-    else if (len >= 6 && isalpha(res[4]) && res[5] == ':' && res[6] == '\\')
+	res[6] = '\\'; /* replace the "C" in "UNC" to get "\\" prefix */
+	strip = 6;
+    } else if (len >= 6 && isalpha(res[4]) && res[5] == ':' && res[6] == '\\')
 	/* \\?\D: */
 	strip = 4;
     else
