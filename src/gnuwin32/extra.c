@@ -561,10 +561,11 @@ static Rboolean getFinalPathNameW(const wchar_t *orig, wchar_t *res)
 	/* res should start with \\?\ */
 	return FALSE;
     
-    if (len > 8 && !wcsncmp(L"UNC\\", res+4, 4))
+    if (len > 8 && !wcsncmp(L"UNC\\", res+4, 4)) {
 	/* UNC path \\?\UNC */
-	strip = 7;	
-    else if (len >= 6 && Ri18n_iswctype(res[4], Ri18n_wctype("alpha"))
+	res[6] = L'\\';
+	strip = 6;
+    } else if (len >= 6 && Ri18n_iswctype(res[4], Ri18n_wctype("alpha"))
 	     && res[5] == L':' && res[6] == L'\\')
 	/* \\?\D: */
 	strip = 4;
