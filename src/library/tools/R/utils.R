@@ -606,16 +606,7 @@ function() {
 ### ** config_val_to_logical
 
 config_val_to_logical <-
-function(val) {
-    v <- tolower(val)
-    if (v %in% c("1", "yes", "true")) TRUE
-    else if (v %in% c("0", "no", "false")) FALSE
-    else {
-        warning(gettextf("cannot coerce %s to logical", sQuote(val)),
-                domain = NA)
-        NA
-    }
-}
+function(val) utils:::str2logical(val)
 
 ### ** .canonicalize_doi
 
@@ -2115,7 +2106,7 @@ function(dir, envir, meta = character())
                       call. = FALSE))
 }
 
-### * .split_dependencies
+### ** .split_dependencies
 
 .split_dependencies <-
 function(x)
@@ -2131,7 +2122,7 @@ function(x)
     lapply(x, .split_op_version)
 }
 
-### * .split_op_version
+### ** .split_op_version
 
 .split_op_version <-
 function(x)
@@ -2275,6 +2266,14 @@ function(args, ...)
         system2(file.path(R.home("bin"), "Rcmd.exe"), args, ...)
     else
         system2(file.path(R.home("bin"), "R"), c("CMD", args), ...)
+}
+
+### ** Sys.setenv1
+
+##' Sys.setenv() *one* variable unless it's set (to non-empty) already - export/move to base?
+Sys.setenv1 <- function(var, value) {
+    if(!nzchar(Sys.getenv(var)))
+        .Internal(Sys.setenv(var, as.character(value)))
 }
 
 ### ** pskill
