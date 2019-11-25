@@ -5999,8 +5999,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_" = "TRUE")
         Sys.setenv("_R_CHECK_PRAGMAS_" = "TRUE")
         Sys.setenv("_R_CHECK_COMPILATION_FLAGS_" = "TRUE")
-        if(!nzchar(Sys.getenv("_R_CHECK_R_DEPENDS_")))
-            Sys.setenv("_R_CHECK_R_DEPENDS_" = "warn")
+        Sys.setenv1("_R_CHECK_R_DEPENDS_", "warn")
         ## until this is tested on Windows
         Sys.setenv("_R_CHECK_R_ON_PATH_" = if(WINDOWS) "FALSE" else "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_" = "TRUE")
@@ -6008,11 +6007,13 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_SHLIB_OPENMP_FLAGS_" = "TRUE")
         Sys.setenv("_R_CHECK_FUTURE_FILE_TIMESTAMPS_" = "TRUE")
         Sys.setenv("_R_CHECK_RD_CONTENTS_KEYWORDS_" = "TRUE")
-        Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" =
-                       "package:_R_CHECK_PACKAGE_NAME_,verbose")
+        chkPkg.v <- "package:_R_CHECK_PACKAGE_NAME_,verbose" # not ",abort" here
+        Sys.setenv1("_R_CHECK_LENGTH_1_CONDITION_", chkPkg.v)
+        Sys.setenv1("_R_CHECK_LENGTH_1_LOGIC2_"   , chkPkg.v)
         Sys.setenv("_R_CHECK_CODOC_VARIABLES_IN_USAGES_" = "TRUE")
         Sys.setenv("_R_CHECK_DATALIST_" = "TRUE")
         if(!WINDOWS) Sys.setenv("_R_CHECK_BASHISMS_" = "TRUE")
+        Sys.setenv("_R_CLASS_MATRIX_ARRAY_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

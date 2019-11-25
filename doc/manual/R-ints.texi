@@ -4261,14 +4261,15 @@ the namespace of package @samp{pkg}, @samp{package:_R_CHECK_PACKAGE_NAME_}
 restricts the check to if/while statements executing in the package that is
 currently being checked by @code{R CMD check}, @samp{warn} causes R to
 report a warning instead of signalling an error.
-Default: unset (warning is reported)
+Default: unset (warning is reported, but
+@samp{package:_R_CHECK_PACKAGE_NAME_,[abort,]verbose} for the CRAN submission checks).
 
 @item _R_CHECK_LENGTH_1_LOGIC2_
-Optionally check if either argument of the binary operators @code{&&} and
-@code{||} has length greater than one.  The format is the same as for
-_R_CHECK_LENGTH_1_CONDITION_.
+Optionally check if an argument of the binary operators @code{&&} and
+@code{||} has length greater than one, checked only if it is used.  The
+format is the same as for @samp{_R_CHECK_LENGTH_1_CONDITION_}.
 Default: unset (nothing is reported, but
-@samp{package:_R_CHECK_PACKAGE_NAME_,verbose} for the CRAN
+@samp{package:_R_CHECK_PACKAGE_NAME_,[abort,]verbose} for the CRAN
 submission checks).
 
 @item _R_CHECK_BUILD_VIGNETTES_SEPARATELY_
@@ -4363,12 +4364,14 @@ _R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_=TRUE
 _R_CHECK_SHLIB_OPENMP_FLAGS_=TRUE
 _R_CHECK_CONNECTIONS_LEFT_OPEN_=TRUE
 _R_CHECK_FUTURE_FILE_TIMESTAMPS_=TRUE
+_R_CHECK_LENGTH_1_CONDITION_=package:_R_CHECK_PACKAGE_NAME_,abort,verbose
 _R_CHECK_LENGTH_1_LOGIC2_=package:_R_CHECK_PACKAGE_NAME_,abort,verbose
 _R_CHECK_AUTOCONF_=true
 _R_CHECK_DATALIST_=true
 _R_CHECK_THINGS_IN_CHECK_DIR_=true
 _R_CHECK_THINGS_IN_TEMP_DIR_=true
 _R_CHECK_BASHISMS_=true
+_R_CLASS_MATRIX_ARRARY_=true
 @end example
 
 @noindent
@@ -4795,4 +4798,5 @@ gigabytes), many cores and a multi-threaded @acronym{BLAS}.
 
 @c Local Variables: ***
 @c mode: TeXinfo ***
+@c TeX-master: t
 @c End: ***
