@@ -153,6 +153,11 @@
       \item \code{n2mfrow()} gains an option \code{asp = 1} to specify the
       aspect ratio, fulfilling the wish and extending the proposal of
       Michael Chirico in \PR{17648}.
+
+      \item \code{head(x, n)} and \code{tail()} default and other S3 methods
+      notably for \emph{vector} \code{n}, e.g. to get a \dQuote{corner} of
+      a matrix, also extended for \code{array}'s of higher dimension,
+      thanks to the patch proposal by Gabe Becker in \PR{16764}.
     }
   }% end{ NEW FEATURES }
 
