@@ -3265,6 +3265,20 @@ stopifnot(
     cat("not tested\n")
 
 
+## PR#17659: Some *.colors() producers have appended (alpha=1) info even by default
+fnms <- c(apropos("[.]colors$"), "rainbow") # 8 x "<foo>.colors" + rainbow
+for(fn in fnms) {
+    Fn <- get(fn, mode="function")
+    cat(sprintf("%14s(n), n = 1,2,3 : ", fn))
+    for(n in 1:3)
+        stopifnot(length(cc <- Fn(n)) == n,
+                  nchar(cc) == 1L+6L, # just RGB, no alpha
+                  identical(cc, Fn(n, alpha=NULL)))
+    cat("[Ok]\n")
+}
+## in R <= 3.6.x, four of these functions gave extra alpha=1 info (appended "FF")
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

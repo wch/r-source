@@ -81,9 +81,9 @@ rainbow <- function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n,
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
 	cols <- hsv(h = seq.int(start, (start > end)*1 + end,
-                                length.out = n) %% 1, s, v, alpha)
-        if (rev) cols <- rev(cols)
-        cols
+				length.out = n) %% 1,
+		    s, v, if(!missing(alpha)) alpha)
+        if(rev) rev(cols) else cols
     } else character()
 }
 
@@ -93,6 +93,7 @@ topo.colors <- function (n, alpha = 1, rev = FALSE)
 	j <- n %/% 3
 	k <- n %/% 3
 	i <- n - j - k
+        if(missing(alpha)) alpha <- NULL
 	cols <- c(if(i > 0) hsv(h = seq.int(from = 43/60, to = 31/60,
                                             length.out = i), alpha = alpha),
                   if(j > 0) hsv(h = seq.int(from = 23/60, to = 11/60,
@@ -101,8 +102,7 @@ topo.colors <- function (n, alpha = 1, rev = FALSE)
                                             length.out = k), alpha = alpha,
                                 s = seq.int(from = 1, to = 0.3,
                                             length.out = k), v = 1))
-        if (rev) cols <- rev(cols)
-        cols        
+        if(rev) rev(cols) else cols
     } else character()
 }
 
@@ -113,6 +113,7 @@ terrain.colors <- function (n, alpha = 1, rev = FALSE)
 	h <- c(4/12, 2/12, 0/12)
 	s <- c(1, 1, 0)
 	v <- c(0.65, 0.9, 0.95)
+        if(missing(alpha)) alpha <- NULL
 	cols <- c(hsv(h = seq.int(h[1L], h[2L], length.out = k),
                       s = seq.int(s[1L], s[2L], length.out = k),
                       v = seq.int(v[1L], v[2L], length.out = k), alpha = alpha),
@@ -120,8 +121,7 @@ terrain.colors <- function (n, alpha = 1, rev = FALSE)
                       s = seq.int(s[2L], s[3L], length.out = n - k + 1)[-1L],
                       v = seq.int(v[2L], v[3L], length.out = n - k + 1)[-1L],
                       alpha = alpha))
-        if (rev) cols <- rev(cols)
-        cols
+        if(rev) rev(cols) else cols
     } else character()
 }
 
@@ -130,14 +130,14 @@ heat.colors <- function (n, alpha = 1, rev = FALSE)
     if ((n <- as.integer(n[1L])) > 0) {
 	j <- n %/% 4
 	i <- n - j
+        if(missing(alpha)) alpha <- NULL
 	cols <- c(rainbow(i, start = 0, end = 1/6, alpha = alpha),
                   if (j > 0)
                       hsv(h = 1/6,
                           s = seq.int(from = 1-1/(2*j), to = 1/(2*j),
                                       length.out = j),
                           v = 1, alpha = alpha))
-        if (rev) cols <- rev(cols)
-        cols
+        if(rev) rev(cols) else cols
     } else character()
 }
 
@@ -148,6 +148,7 @@ cm.colors <- function (n, alpha = 1, rev = FALSE)
 	k <- n %/% 2L
 	l1 <- k + 1L - even.n
 	l2 <- n - k + even.n
+        if(missing(alpha)) alpha <- NULL
 	cols <- c(if(l1 > 0L)
                       hsv(h =  6/12,
                           s = seq.int(.5, if(even.n) .5/k else 0,
@@ -156,8 +157,7 @@ cm.colors <- function (n, alpha = 1, rev = FALSE)
                   if(l2 > 1)
                       hsv(h = 10/12, s = seq.int(0, 0.5, length.out = l2)[-1L],
                           v = 1, alpha = alpha))
-        if (rev) cols <- rev(cols)
-        cols
+        if(rev) rev(cols) else cols
     } else character()
 }
 
@@ -166,8 +166,7 @@ gray.colors <- function(n, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL,
     cols <- gray(seq.int(from = start^gamma,
                          to = end^gamma, length.out = n)^(1/gamma),
                  alpha)
-    if (rev) cols <- rev(cols)
-    cols
+    if(rev) rev(cols) else cols
 }
 
 grey.colors <- gray.colors

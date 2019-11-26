@@ -35,7 +35,10 @@ cm.colors(n, alpha = 1, rev = FALSE)
     upper vs. lower case, spaces, dashes, etc. in the matching.}
   \item{alpha}{an alpha-transparency level in the range [0,1]
     (0 means transparent and 1 means opaque), see argument
-    \code{alpha} in \code{\link{hsv}} and \code{\link{hcl}}, respectively.}
+    \code{alpha} in \code{\link{hsv}} and \code{\link{hcl}}, respectively.\cr
+    Since \R 4.0.0, a \code{\link{missing}}, i.e., not explicitly specified
+    \code{alpha} is equivalent to \code{alpha = NULL}, which does \emph{not}
+    add opacity codes (\code{"FF"}) to the individual color hex codes.}
   \item{rev}{logical indicating whether the ordering of the colors should
     be reversed.}
   \item{fixup}{logical indicating whether the resulting color should be

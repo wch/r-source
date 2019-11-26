@@ -290,6 +290,10 @@
       \item The Fortran code for calculating the \code{coefficients} component in
       \code{lm.influence} was very inefficient. It has (for now) been replaced with
       much faster R code. \PR{17624}
+
+      \item \code{cm.colors(n)} etc no longer append \code{alpha=1} codes
+      \code{"FF"} to all colors.  Hence all eight \code{*.colors()}
+      functions and \code{rainbow()} behave consistently, \PR{17659}.
     }
   }
 }
