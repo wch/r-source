@@ -157,7 +157,7 @@
       \item \code{head(x, n)} and \code{tail()} default and other S3 methods
       notably for \emph{vector} \code{n}, e.g. to get a \dQuote{corner} of
       a matrix, also extended for \code{array}'s of higher dimension,
-      thanks to the patch proposal by Gabe Becker in \PR{16764}.
+      thanks to the patch proposal by Gabe Becker in \PR{17652}.
     }
   }% end{ NEW FEATURES }
 
