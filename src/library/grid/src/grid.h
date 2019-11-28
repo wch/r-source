@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2016 The R Core Team
+ *                2003-2019 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -604,7 +604,7 @@ void setGridStateElement(pGEDevDesc dd, int elementIndex, SEXP value);
 
 SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data);
 
-int gridRegisterIndex;
+extern int gridRegisterIndex;
 
 
 /* From grid.c */
