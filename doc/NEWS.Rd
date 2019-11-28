@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.6.1 patched}{
+\section{\Rlogo CHANGES IN R }{
 
   \subsection{NEW FEATURES}{
     \itemize{
