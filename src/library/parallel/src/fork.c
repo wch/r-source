@@ -47,25 +47,37 @@
 #include <Rinterface.h> /* for R_Interactive */
 #include <R_ext/eventloop.h> /* for R_SelectEx */
 
-/* NOTE: the logging is not safe to use in signal handler because printf is
-   not async-signal-safe */
-#ifndef FILE_LOG
-/* use printf instead of Rprintf for debugging to avoid forked console interactions */
-#define Dprintf printf
-#else
-/* logging into a file */
-#include <stdarg.h>
-void Dprintf(char *format, ...) {
-    va_list (args);
-    va_start (args, format);
-    FILE *f = fopen("mc_debug.txt", "a");
-    if (f) {
+#ifdef MC_DEBUG
+  /* NOTE: the logging is not safe to use in signal handler because printf is
+     not async-signal-safe */
+# ifndef FILE_LOG
+    /* use printf instead of Rprintf for debugging to avoid forked console interactions */
+    /* #   define Dprintf printf */
+    void Dprintf(char *format, ...) {
+      static double t0 = 0;
+      if (t0 == 0)
+        t0 = currentTime();
+      va_list (args);
+      va_start (args, format);
+      printf("%.8f %d: ", currentTime() - t0, getpid());
+      vprintf(format, args);
+      va_end (args);
+    }
+# else
+    /* logging into a file */
+#   include <stdarg.h>
+    void Dprintf(char *format, ...) {
+      va_list (args);
+      va_start (args, format);
+      FILE *f = fopen("mc_debug.txt", "a");
+      if (f) {
 	fprintf(f, "%d> ", getpid());
 	vfprintf(f, format, args);
 	fclose(f);
+      }
+      va_end (args);
     }
-    va_end (args);
-}
+# endif
 #endif
 
 /* A child is created in mc_fork as detached (sEstranged=TRUE, has sifd
@@ -549,7 +561,8 @@ SEXP mc_fork(SEXP sEstranged)
 	    signal(SIGUSR1, child_sig_handler);
 	}
 #ifdef MC_DEBUG
-	Dprintf("child process %d started\n", getpid());
+	Dprintf("child process %d started, master_fd=%d\n", getpid(),
+	        master_fd);
 #endif
     } else { /* master process */
 	child_info_t *ci;
@@ -637,8 +650,13 @@ static ssize_t readrep(int fildes, void *buf, size_t nbyte)
 	if (r == -1) {
 	    if (errno == EINTR)
 		continue;
-	    else
+	    else {
+#ifdef MC_DEBUG
+	        Dprintf("process %d: error %s reading from fd %d\n",
+		        getpid(), strerror(errno), fildes);
+#endif
 		return -1;
+	    }
 	}
 	if (r == 0) /* EOF */
 	    return rbyte;
@@ -660,13 +678,22 @@ static ssize_t writerep(int fildes, const void *buf, size_t nbyte)
 	if (w == -1) {
 	    if (errno == EINTR)
 		continue;
-	    else
+	    else {
+#ifdef MC_DEBUG
+	        Dprintf("process %d: error %s writing to fd %d\n",
+		        getpid(), strerror(errno), fildes);
+#endif
 		return -1;
+	    }
 	}
 	if (w == 0) {
 	    /* possibly sending EOF on some systems via nbyte == 0,
 	       or an old indication that non-blocking read of not
 	       even a single more byte is possible */
+#ifdef MC_DEBUG
+	    Dprintf("process %d: write() returned 0 writing to fd %d\n",
+	           getpid(), fildes);
+#endif
 	    return wbyte;
 	}
 	wbyte += w;
@@ -878,7 +905,7 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
     if (sr < 1) return ScalarLogical(TRUE); /* TRUE on timeout */
     ci = children;
 #ifdef MC_DEBUG
-    Dprintf(" - read select %d children: ", sr);
+    Dprintf(" - read select %d children: \n", sr);
 #endif
     res = allocVector(INTSXP, sr);
     res_i = INTEGER(res);
@@ -886,14 +913,11 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	if (!ci->detached && ci->ppid == ppid && FD_ISSET(ci->pfd, &fs)) {
 	    (res_i++)[0] = ci->pid;
 #ifdef MC_DEBUG
-	    Dprintf("%d ", ci->pid);
+	    Dprintf("    %d \n", ci->pid);
 #endif
 	}
 	ci = ci->next;
     }
-#ifdef MC_DEBUG
-    Dprintf("\n");
-#endif
     return res;
 }
 
