@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-11-26 r77462) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-11-27 r77463) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3251,12 +3251,12 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
  [6] [<-           [[            [[<-          aggregate     anyDuplicated
 [11] anyNA         as.data.frame as.list       as.matrix     by           
 [16] cbind         dim           dimnames      dimnames<-    droplevels   
-[21] duplicated    edit          format        formula       is.na        
-[26] merge         na.exclude    na.omit       plot          print        
-[31] prompt        rbind         row.names     row.names<-   rowsum       
-[36] split         split<-       stack         str           subset       
-[41] summary       t             transform     type.convert  unique       
-[46] unstack       within       
+[21] duplicated    edit          format        formula       head         
+[26] is.na         merge         na.exclude    na.omit       plot         
+[31] print         prompt        rbind         row.names     row.names<-  
+[36] rowsum        split         split<-       stack         str          
+[41] subset        summary       t             tail          transform    
+[46] type.convert  unique        unstack       within       
 > meth2gen("dendrogram")
  [1] [[            as.dendrogram as.hclust     cophenetic    cut          
  [6] labels        merge         nobs          plot          print        

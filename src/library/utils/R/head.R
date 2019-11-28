@@ -28,17 +28,30 @@
 
 head <- function(x, ...) UseMethod("head")
 
-## used on vectors, arrays, data frames, .. :
 head.default <- function(x, n = 6L, ...)
+{
+    if(length(n) == 1L) {
+        n <- if (n < 0L) max(length(x) + n, 0L) else min(n, length(x))
+        x[seq_len(n)]
+    } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
+        head.array(x, n, ...)
+    else
+        stop("No method found for object of class ", class(x))
+}
+
+## used on vectors, arrays, data frames, .. :
+head.array <- function(x, n = 6L, ...)
 {
     ## lapply over "dimensions" even for x without dim attribute.
     ds <- dim(x) %||% length(x)
+    ## non-specified dimensions (ie dims > length(n) or n[i] is NA)
+    ## *must* become missing .. but we cannot store and use it, just use it below
+    ## theMiss <- alist(. =)$.
     indvecs <- lapply(seq_along(ds), function(i) {
-        ## All non-specified dimensions (ie dims > length(n) or n[i] is NA)
-        ## are taken to be the maximum (display all indices in that dimension)
-        di <- ds[i]
         ## NB: relies on n[i] returning NA if i > length(n)!
-        ni <- if(!is.na(n[i])) n[i] else di
+        if(is.na(ni <- n[i])) return(alist(. =)$.)
+        ## else :
+        di <- ds[i]
         ## negative indices work as a they always have, no restriction
         ## against mixing negative and positive ns across different dims
         ni <- if(ni < 0L) max(di + ni, 0L) else min(ni, di)
@@ -48,9 +61,10 @@ head.default <- function(x, n = 6L, ...)
                    if(!is.null(dim(x))) list(drop = FALSE)))
 }
 
+head.data.frame <-
 ## head.matrix and tail.matrix are now exported (to be used for other classes)
-head.matrix <- head.default
-## head.array is not needed (nor would head.matrix be) as it would be identical
+head.matrix <- head.array
+
 
 head.ftable <- function(x, n = 6L, ...) {
     r <- format(x)
@@ -75,29 +89,37 @@ tail <- function(x, ...) UseMethod("tail")
     ## returns a list of vectors of indices in each dimension,
     ## regardless of length of the  n  argument :
     lapply(seq_along(ds), function(i) {
+        ## non-specified dimensions (ie dims > length(n) or n[i] is NA)
+        ## *must* become missing (NB: relies on n[i] returning NA if i > length(n))
+        if(is.na(ni <- n[i])) return(alist(. =)$.)
+        ## else :
         dxi <- ds[i]
-        ## select all indices (full dim) if not specified
-        ni <- if(!is.na(n[i])) n[i] else dxi
         seq.int(to = dxi, ## handle negative n's; result is *integer* iff ds[] is
                 length.out = if(ni < 0L) max(dxi + ni, 0L) else min(ni, dxi))
     })
 }
 
-# also for data.frame
 tail.default <- function (x, n = 6L, ...)
 {
-    do.call(`[`, c(list(x), .tailindices(x, n),
-                   if(!is.null(dim(x))) list(drop = FALSE)))
+    if(length(n) == 1L) {
+        xlen <- length(x)
+        n <- if (n < 0L) max(xlen + n, 0L) else min(n, xlen)
+        x[seq.int(to = xlen, length.out = n)]
+    } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
+        do.call(`[`, c(list(x), .tailindices(x, n),
+                       if(!is.null(dim(x))) list(drop = FALSE)))
+    else
+        stop("No method found for object of class ", class(x))
 }
 
 
+tail.data.frame <-
 ## tail.matrix is exported (to be reused)
 tail.array <- tail.matrix <-
     tail.table <- function(x, n = 6L, addrownums = TRUE, ...)
 {
     sel <- .tailindices(x, n)
     ans <- do.call(`[`, c(list(x), sel, drop = FALSE))
-
     if (length(dim(x)) > 1L && addrownums && is.null(rownames(x)))
         ## first element of sel is the rows selected
 	rownames(ans) <- format(sprintf("[%d,]", sel[[1]]), justify="right")

@@ -3279,6 +3279,57 @@ for(fn in fnms) {
 ## in R <= 3.6.x, four of these functions gave extra alpha=1 info (appended "FF")
 
 
+## Generalized head(x, n) and tail() methods - for length(n) > 1 and arbitrary array x
+## PR#17652
+## -------- pkg glmmTMB uses head(.) on calls quite a bit
+cForm <- quote(some ~ really + quite + longish + but:still:not:very:long *
+                   (formula | reality / extreme:cases:you:never:think:of))
+fL <- eval(cForm)
+length(fRHS <- fL[[3]])
+cLong <- quote(fun_with_many_args(1,2,3, 4,5,6, 7,8,9))
+stopifnot(exprs = {
+    ## these all work as previously
+    head(cForm,1) == `~`()
+    head(cForm,2) == ~some
+    head(cForm) == cForm
+    is.call(cl <- quote((Days|Subject)))
+    is.call(fL)
+    inherits(fL, "formula")
+    head(fL) == fL
+    ## == tail ===
+    identical(tail(cForm,1), cForm[3])
+    tail(cForm,2) == cForm[2:3]
+    tail(cForm) == cForm
+    tail(fL) == fL
+    ##
+    ## -------------failed from here -----------------------
+    identical(head(cl), cl) ## for a few days, gave Error in do.call(..):  object 'Days' not found
+    identical( head(fRHS), fRHS)
+    identical(head(cLong), cLong[1:6])
+    identical(head(cLong, 2), cLong[1:2])
+    identical(head(cLong, 1), quote(fun_with_many_args()))
+    ## == tail ===
+    identical(tail(cl), cl) ## for a few days, gave Error ...:  object 'Days' not found
+    identical( tail(fRHS), fRHS)
+    identical(tail(cLong), cLong[tail(seq_along(cLong))])
+    identical(tail(cLong, 2), cLong[9:10])
+    identical(tail(cLong, 1), cLong[10])
+})
+##
+## Ensure that the code does not access dimensions it does not need (pkg TraMineR):
+`[.noCol` <- function(x, i, j, drop = FALSE) {
+    if(!missing(j)) stop(" [!] Column subscripts not allowed", call. = FALSE)
+    NextMethod("[")
+}
+noC <- structure(datasets::trees, class = c("noCol", "data.frame"))
+tools::assertError( noC[1,2], verbose=TRUE) # fails indeed
+stopifnot(exprs = {
+    identical(head(noC), noC[1:6,])
+    identical(head(noC, 1), noC[1, ])
+    identical(tail(noC, 1), noC[31,])
+})
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
