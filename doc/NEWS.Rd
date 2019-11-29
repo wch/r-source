@@ -162,6 +162,9 @@
 
       \item \code{canCoerce(obj, cl)} no longer assumes
       \code{length(class(obj)) == 1}.
+
+      \item \code{plot.formula(*, subset=*)} now also works in a boundary
+      case reported by Robert Schlicht (TU Dresden).
     }
   }
 }

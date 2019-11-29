@@ -169,7 +169,7 @@ function(formula, data = parent.frame(), ..., subset,
 	l <- nrow(mf)
 	dosub <- function(x) if (length(x) == l) x[s] else x
 	dots <- lapply(dots, dosub)
-	mf <- mf[s, ]
+	mf <- mf[s, , drop=FALSE]
     }
     ## check for horizontal arg
     horizontal <- FALSE
