@@ -3330,6 +3330,12 @@ stopifnot(exprs = {
 })
 
 
+## Forgotten 'drop=FALSE' in plot.formula()
+df <- data.frame(x=1:3, grp=c("A","A","B"))
+plot( ~grp, data=df, subset = x > 1)
+## failed in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
