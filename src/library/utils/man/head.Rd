@@ -85,8 +85,9 @@ tail(x, \dots)
   methods for data frames.
 }
 \value{
-  An object (usually) like \code{x} but generally smaller.  For
-  \code{\link{ftable}} objects \code{x}, a transformed \code{format(x)}.
+  An object (usually) like \code{x} but generally smaller.  Hence, for
+  \code{\link{array}}s, the result corresponds to \code{x[.., drop=FALSE]}.
+  For \code{\link{ftable}} objects \code{x}, a transformed \code{format(x)}.
 }
 \author{
   Patrick Burns, improved and corrected by R-Core. Negative argument
@@ -131,5 +132,15 @@ stopifnot(exprs = { # attribute is kept
 tail(library) # last lines of function
 
 head(stats::ftable(Titanic))
+
+## 1d-array (with named dim) :
+a1 <- array(1:7, 7); names(dim(a1)) <- "O2"
+stopifnot(exprs = {
+  identical( tail(a1, 10), a1)
+  identical( head(a1, 10), a1)
+  identical( head(a1, 1), a1 [1 , drop=FALSE] ) # was a1[1] in R <= 3.6.x
+  identical( tail(a1, 2), a1[6:7])
+  identical( tail(a1, 1), a1 [7 , drop=FALSE] ) # was a1[7] in R <= 3.6.x
+})
 }
-\keyword{ manip }
+\keyword{manip}

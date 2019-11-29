@@ -3328,6 +3328,21 @@ stopifnot(exprs = {
     identical(head(noC, 1), noC[1, ])
     identical(tail(noC, 1), noC[31,])
 })
+##
+## For all arrays 'a',  head(a, 1)  should correspond to  a[1, {,}* , drop = FALSE]
+str(Alis <- lapply(1:4, function(n) {d <- 1+(1:n); array(seq_len(prod(d)), d) }))
+h2 <- lapply(Alis, head, 2)
+h1 <- lapply(Alis, head, 1)
+t1 <- lapply(Alis, tail, 1)
+dh1 <- lapply(h1, dim)
+stopifnot(exprs = {
+    identical(h2, Alis)
+    vapply(h1, is.array, NA)
+    vapply(t1, is.array, NA)
+    identical(dh1, lapply(1:4, function(n) seq_len(n+1L)[-2L]))
+    identical(dh1, lapply(t1, dim))
+})
+## This was *not the case for  1d arrays in R <= 3.6.x
 
 
 ## Forgotten 'drop=FALSE' in plot.formula()

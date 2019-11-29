@@ -36,14 +36,19 @@ head.default <- function(x, n = 6L, ...)
     } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
         head.array(x, n, ...)
     else
-        stop("No method found for object of class ", class(x))
+        stop(gettextf("no method found for %s(., n=%s) and class %s",
+                      "head", deparse(n), sQuote(class(x))),
+             domain = NA)
 }
 
-## used on vectors, arrays, data frames, .. :
+## head.matrix and tail.matrix are now exported (to be used for other classes)
+head.matrix <-
+## used on arrays (incl. matrices), data frames, .. :
 head.array <- function(x, n = 6L, ...)
 {
     ## lapply over "dimensions" even for x without dim attribute.
-    ds <- dim(x) %||% length(x)
+    has.d <- !is.null(d <- dim(x))
+    ds <- if(has.d) d else length(x)
     ## non-specified dimensions (ie dims > length(n) or n[i] is NA)
     ## *must* become missing .. but we cannot store and use it, just use it below
     ## theMiss <- alist(. =)$.
@@ -57,13 +62,8 @@ head.array <- function(x, n = 6L, ...)
         ni <- if(ni < 0L) max(di + ni, 0L) else min(ni, di)
         seq_len(ni)
     })
-    do.call(`[`, c(list(x), indvecs,
-                   if(!is.null(dim(x))) list(drop = FALSE)))
+    do.call(`[`, c(list(x), indvecs, if(has.d) list(drop = FALSE)))
 }
-
-head.data.frame <-
-## head.matrix and tail.matrix are now exported (to be used for other classes)
-head.matrix <- head.array
 
 
 head.ftable <- function(x, n = 6L, ...) {
@@ -107,16 +107,17 @@ tail.default <- function (x, n = 6L, ...)
         x[seq.int(to = xlen, length.out = n)]
     } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
         do.call(`[`, c(list(x), .tailindices(x, n),
-                       if(!is.null(dim(x))) list(drop = FALSE)))
+                       if(!is.null(dx)) list(drop = FALSE)))
     else
-        stop("No method found for object of class ", class(x))
+        stop(gettextf("no method found for %s(., n=%s) and class %s",
+                      "tail", deparse(n), sQuote(class(x))),
+             domain = NA)
 }
 
 
-tail.data.frame <-
 ## tail.matrix is exported (to be reused)
-tail.array <- tail.matrix <-
-    tail.table <- function(x, n = 6L, addrownums = TRUE, ...)
+tail.matrix <-
+tail.array <- function(x, n = 6L, addrownums = TRUE, ...)
 {
     sel <- .tailindices(x, n)
     ans <- do.call(`[`, c(list(x), sel, drop = FALSE))
