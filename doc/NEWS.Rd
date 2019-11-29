@@ -321,6 +321,10 @@
       run-time to \command{configure}: this is safer with LTO builds and
       allows the detection to be overridden -- see file
       \file{config.site}.
+
+      \item Source-code changes enable installation on platforms using
+      \command{gcc -fno-common} (the expected default for
+      \command{gcc 10.x}.
     }
   }
 
