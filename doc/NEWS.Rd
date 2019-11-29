@@ -9,10 +9,10 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{runmed(x, *)} gets new option \code{na.action}
+      \item \code{runmed(x, *)} gains a new option \code{na.action}
       determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
 
-      \item \code{dotchart()} gets new options \code{ann}, \code{xaxt},
+      \item \code{dotchart()} gains new options \code{ann}, \code{xaxt},
       \code{frame.plot} and \code{log}.
     }
   }
@@ -26,7 +26,7 @@
 
       \item Source-code changes enable installation on platforms using
       \command{gcc -fno-common} (the expected default for
-      \command{gcc 10.x}.
+      \command{gcc 10.x}).
     }
   }
 
@@ -76,9 +76,9 @@
 
   \subsection{Windows}{
     \itemize{
-      \item The default standard for C++ in package installation is C++11 (as it
-      has been on other platforms if available since \R{} 3.6.0: the
-      default toolchain on Windows was defaulting to C++98).
+      \item The default standard for C++ in package installation is
+      C++11 (as it has been on other platforms where available since \R{}
+      3.6.0: the default toolchain on Windows was defaulting to C++98).
     }
   }
 
@@ -167,7 +167,7 @@
       \item \code{canCoerce(obj, cl)} no longer assumes
       \code{length(class(obj)) == 1}.
 
-      \item \code{plot.formula(*, subset=*)} now also works in a boundary
+      \item \code{plot.formula(*, subset = *)} now also works in a boundary
       case reported by Robert Schlicht (TU Dresden).
     }
   }
