@@ -33,12 +33,11 @@
        \env{_R_CLASS_MATRIX_ARRAY_} is set to non-empty, but planned to be the
        new unconditional behavior when R 4.0.0 is released:
 
-       Newly, \code{matrix} objects also inherit from class \code{"array"},
-       namely, e.g., \code{class(diag(1))} is \code{c("matrix", "array")}
-       which invalidates code (wrongly) assuming that
-       \code{length(class(obj)) == 1}, a wrong assumption that is less
-       frequently fulfilled now.
-       (Currently only after setting \env{_R_CLASS_MATRIX_ARRAY_} to non-empty.)
+       \code{matrix} objects now also inherit from class \code{"array"},
+       namely, e.g., \code{class(diag(1))} is \code{c("matrix",
+       "array")} which invalidates code assuming that
+       \code{length(class(obj)) == 1}, an incorrect assumption that is
+       less frequently fulfilled now.
 
        S3 methods for \code{"array"}, i.e., \code{<someFun>.array()}, are
        now also dispatched for \code{matrix} objects.
@@ -284,7 +283,7 @@
       referenced first argument when used outside of a complex
       assignment context.
 
-      \item Better error message for \code{contour(*, levels=Inf)}.
+      \item Better error message for \code{contour(*, levels = Inf)}.
 
       \item \code{contourLines()}' value is no longer \code{invisible()}.
 
@@ -292,13 +291,14 @@
       coded characters representable in the current native encoding (at least
       on Windows 10 they were sometimes omitted, \PR{17632}).
 
-      \item The Fortran code for calculating the \code{coefficients} component in
-      \code{lm.influence} was very inefficient. It has (for now) been replaced with
-      much faster R code. \PR{17624}
+      \item The Fortran code for calculating the \code{coefficients}
+      component in \code{lm.influence} was very inefficient. It has (for
+      now) been replaced with much faster R code (\PR{17624}).
 
-      \item \code{cm.colors(n)} etc no longer append \code{alpha=1} codes
-      \code{"FF"} to all colors.  Hence all eight \code{*.colors()}
-      functions and \code{rainbow()} behave consistently, \PR{17659}.
+      \item \code{cm.colors(n)} etc no longer append the code for
+      \code{alpha = 1}, \code{"FF"}, to all colors.  Hence all eight
+      \code{*.colors()} functions and \code{rainbow()} behave
+      consistently (\PR{17659}).
     }
   }
 }
@@ -307,10 +307,10 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{runmed(x, *)} gets new option \code{na.action}
+      \item \code{runmed(x, *)} gains a new option \code{na.action}
       determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
 
-      \item \code{dotchart()} gets new options \code{ann}, \code{xaxt},
+      \item \code{dotchart()} gains new options \code{ann}, \code{xaxt},
       \code{frame.plot} and \code{log}.
     }
   }
@@ -324,7 +324,7 @@
 
       \item Source-code changes enable installation on platforms using
       \command{gcc -fno-common} (the expected default for
-      \command{gcc 10.x}.
+      \command{gcc 10.x}).
     }
   }
 
@@ -374,9 +374,9 @@
 
   \subsection{Windows}{
     \itemize{
-      \item The default standard for C++ in package installation is C++11 (as it
-      has been on other platforms if available since \R{} 3.6.0: the
-      default toolchain on Windows was defaulting to C++98).
+      \item The default standard for C++ in package installation is
+      C++11 (as it has been on other platforms where available since \R{}
+      3.6.0: the default toolchain on Windows was defaulting to C++98).
     }
   }
 
@@ -474,7 +474,7 @@
       \item \code{canCoerce(obj, cl)} no longer assumes
       \code{length(class(obj)) == 1}.
 
-      \item \code{plot.formula(*, subset=*)} now also works in a boundary
+      \item \code{plot.formula(*, subset = *)} now also works in a boundary
       case reported by Robert Schlicht (TU Dresden).
     }
   }
