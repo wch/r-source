@@ -33,6 +33,8 @@
 #define _(String) (String)
 #endif
 
+Tcl_Interp *RTcl_interp;
+
 static void RTcl_dec_refcount(SEXP R_tclobj)
 {
     Tcl_DecrRefCount((Tcl_Obj *) R_ExternalPtrAddr(R_tclobj));

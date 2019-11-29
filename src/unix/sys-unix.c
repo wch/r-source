@@ -866,7 +866,10 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* The pointer here is used in the Mac GUI */
 #include <R_ext/eventloop.h> /* for R_PolledEvents */
 #include <R_ext/Rdynload.h>
-DL_FUNC ptr_R_ProcessEvents;
+
+#define R_INTERFACE_PTRS 1
+#include <Rinterface.h> /* for ptr_R_ProcessEvents */
+
 void R_ProcessEvents(void)
 {
 #ifdef HAVE_AQUA

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2017  The R Core Team
+ *  Copyright (C) 2000--2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ void Tcl_unix_setup(void);
 
 /* Globals exported from  ./tcltk.c : */
 
-Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
+extern Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
 void tcltk_init(int *);
 
 SEXP dotTcl(SEXP args);

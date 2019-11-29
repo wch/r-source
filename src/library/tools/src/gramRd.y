@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,10 +38,16 @@
 #define _(String) (String)
 #endif
 
-/* bison creates a non-static symbol yylloc in both gramLatex.o and gramRd.o,
-   so remap */
+/* bison creates a non-static symbol yylloc (and other) in both gramLatex.o
+   and gramRd.o, so remap */   
 
 #define yylloc yyllocR
+#undef yynerrs /* from Defn.h */
+#define yynerrs yynerrsR
+#undef yychar /* from Defn.h */
+#define yychar yycharR
+#undef yylval /* from Defn.h */
+#define yylval yylvalR
 
 #define DEBUGVALS 0		/* 1 causes detailed internal state output to R console */	
 #define DEBUGMODE 0		/* 1 causes Bison output of parse state, to stdout or stderr */
