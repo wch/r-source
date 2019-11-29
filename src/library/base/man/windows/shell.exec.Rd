@@ -1,6 +1,6 @@
 % File src/library/base/man/windows/shell.exec.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shell.exec}
@@ -17,11 +17,13 @@ shell.exec(file)
   Windows file associations.
 }
 \details{
-  The path in \code{file} is interpreted relative to the current working
-  directory.
+  The path in \code{file} should be a full path.
 
-  \R versions 2.13.0 and earlier interpreted \code{file} relative to
-  the \R home directory, so a complete path was usually needed.
+  If the path in \code{file} is not a full path, it is interpreted relative
+  to the current working directory, but in \R versions 2.13.0 and earlier it
+  was interpreted relative to the \R home directory. To be interpreted as
+  relative, the path also needs to use backslashes as separators (at least
+  in Windows 10).
 
   Encoded \samp{file://} URLs should be in the Windows standard form,
   e.g.\sspace{}\code{"file:///c:/path/to/file.txt"}.
