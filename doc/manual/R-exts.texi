@@ -5040,6 +5040,10 @@ so it is strongly recommended to check in a UTF-8 locale.
 @node Portable C and C++ code, Binary distribution, Encoding issues, Writing portable packages
 @subsection Portable C and C++ code
 
+@menu
+* Common symbols::
+@end menu
+
 Writing portable C and C++ code is mainly a matter of observing the
 standards (C99, C++11 or where declared C++14/17) and testing that
 extensions (such as POSIX functions) are supported.
@@ -5398,6 +5402,30 @@ forget macOS).
 Some additional information for C++ is available at
 @uref{http://journal.r-project.org/@/archive/@/2011-2/@/RJournal_2011-2_Plummer.pdf}
 by Martyn Plummer.
+
+@node Common symbols,  , Portable C and C++ code, Portable C and C++ code
+@subsubsection Common symbols
+
+Most OSes (including all those commonly used for @R{}) have the concept
+of `tentative definitions' where global C variables are defined without
+an initiallizer.  Traditionally the linker resolves all tentative
+definitions of the same variable in different object files to the same
+object, or to a non-tentative definition.  However,
+@command{gcc}@tie{}10 has changed its default so that tentative
+definitions cannot be merged and the linked will give an error if the
+same variable is defined in more than one object file.  To avoid this,
+all but one of the C source files should declare the variable
+@code{extern} --- which means that any such variables included in header
+files need to be declared @code{extern}.
+
+The `modern' behaviour can be seen@footnote{In principle this could
+depend on the OS, but has been checked on Linux and macOS.} by using
+compiler flag @option{-fno-common} as part of @samp{CFLAGS} in earlier
+versions of @command{gcc} and also in @command{clang}.  It is
+recommended that packages are if possible checked with that flag to
+ensure portability.
+
+This is not pertinent to C++ which does not permit tentative definitions.
 
 @node Binary distribution,  , Portable C and C++ code, Writing portable packages
 @subsection Binary distribution
