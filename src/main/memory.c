@@ -4092,6 +4092,26 @@ attribute_hidden void R_expand_binding_value(SEXP b)
 #endif
 }
 
+void attribute_hidden R_args_enable_refcnt(SEXP args)
+{
+#ifdef SWITCH_TO_REFCNT
+    /* args is escaping into user C code and might get captured, so
+       make sure it is reference counting. Should be able to get rid
+       of this function if we reduce use of CONS_NR. */
+    for (SEXP a = args; a != R_NilValue; a = CDR(a))
+	if (! TRACKREFS(a)) {
+	    ENABLE_REFCNT(a);
+	    INCREMENT_REFCNT(CAR(a));
+	    INCREMENT_REFCNT(CDR(a));
+#ifdef TESTING_WRITE_BARRIER
+	    /* this should not see non-tracking arguments */
+	    if (! TRACKREFS(CAR(a)))
+		error("argument not tracking references");
+#endif
+	}
+#endif
+}
+
 /* List Accessors */
 SEXP (TAG)(SEXP e) { return CHK(TAG(CHKCONS(e))); }
 SEXP (CAR0)(SEXP e) { return CHK(CAR0(CHKCONS(e))); }
