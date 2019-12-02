@@ -738,7 +738,9 @@ get_all_vars <- function(formula, data = NULL, ...)
     if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
         ## see if we can get rownames from the response
         lhs <- variables[[resp]]
-        rownames <- if(is.matrix(lhs)) rownames(lhs) else names(lhs)
+	rownames <- if(!is.null(d <- dim(lhs)) && length(d) == 2L) {
+			if(is.data.frame(lhs)) .row_names_info(lhs, 0L) else rownames(lhs)
+		    } else names(lhs)
     }
     extras <- substitute(list(...))
     extranames <- names(extras[-1L])
@@ -747,8 +749,12 @@ get_all_vars <- function(formula, data = NULL, ...)
     ## protect the unprotected matrices:
     if(anyM <- any(isM <- vapply(x, function(o) is.matrix(o) && !inherits(o,"AsIs"), NA)))
         x[isM] <- lapply(x[isM], I)
+    nms.x <- c(varnames, extranames)
+    if(any(vapply(x, is.data.frame, NA)))
+        nms.x <- unlist(lapply(seq_along(x), function(i)
+            if(is.list(x[[i]])) names(x[[i]]) else nms.x[[i]]))
     x <- as.data.frame(x, optional=TRUE)
-    names(x) <- c(varnames, extranames)
+    names(x) <- nms.x
     if(anyM)
         x[isM] <- lapply(x[isM], function(o) `class<-`(o, class(o)[!inherits(o,"AsIs")]))
     attr(x, "row.names") <-
