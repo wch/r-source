@@ -599,9 +599,9 @@ static rcolor Palette[MAX_PALETTE_SIZE] = {
     0xff4fd061,
     0xffe69722,
     0xffe5e228,
-    0xfff53ad0,
-    0xff1fc2ee,
-    0xff656565
+    0xffbc0bcd,
+    0xff10c7f5,
+    0xff9e9e9e
 };
 
 static rcolor Palette0[MAX_PALETTE_SIZE];
@@ -647,9 +647,9 @@ const rcolor DefaultPalette[8] = {
     0xff4fd061,
     0xffe69722,
     0xffe5e228,
-    0xfff53ad0,
-    0xff1fc2ee,
-    0xff656565
+    0xffbc0bcd,
+    0xff10c7f5,
+    0xff9e9e9e
 };
 
 /* The Table of Known Color Names */
