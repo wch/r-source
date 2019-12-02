@@ -1694,7 +1694,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     a = CAR(args);
     if (!isArray(a))
-	error(_("invalid first argument, must be an array"));
+	error(_("invalid first argument, must be %s"), "an array");
 
     PROTECT(dimsa = getAttrib(a, R_DimSymbol));
     n = LENGTH(dimsa);
