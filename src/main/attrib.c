@@ -889,7 +889,7 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
     }
 }
 
-// class(x)  &  .cache_class(classname, extendsForS3(.)) {called from methods} :
+// class(x)  &  .cache_class(classname, extendsForS3(.)) {called from methods}  & .class2() :
 SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   checkArity(op, args);
@@ -901,8 +901,11 @@ SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
       const char *class = translateChar(STRING_ELT(klass, 0));
       return cache_class(class, CADR(args));
   }
-  // class():
   check1arg(args, call, "x");
+  if(PRIMVAL(op) == 2)
+      // .class2()
+      return R_data_class2(CAR(args));
+  // class():
   return R_data_class(CAR(args), FALSE);
 }
 

@@ -1,11 +1,12 @@
 % File src/library/base/man/class.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{class}
 \title{Object Classes}
 \alias{class}
+\alias{.class2}
 \alias{class<-}
 \alias{oldClass}
 \alias{oldClass<-}
@@ -24,6 +25,7 @@ inherits(x, what, which = FALSE)
 
 oldClass(x)
 oldClass(x) <- value
+.class2(x)
 }
 \arguments{
   \item{x}{a \R object}
@@ -53,8 +55,21 @@ oldClass(x) <- value
   \code{if}, \code{while}, \code{for}, \code{=}, \code{<-}, \code{(},
   \code{\{}, \code{call}.
 
-  Note that \code{\link{NULL}} objects cannot have attributes (hence not
-  classes) and attempting to assign a class is an error.
+  Note that for objects \code{x} of an implicit (or an S4) class, when a
+  (S3) generic function \code{foo(x)} is called, method dispatch may use
+  more classes than are returned by \code{class(x)}, e.g., for a numeric
+  matrix, the \code{foo.numeric()} method may apply.  The exact full
+  \code{\link{character}} vector of the classes which
+  \code{\link{UseMethod}()} uses, is available as \code{.class2(x)} since
+  \R version 4.0.0.  (This also applies to S4 objects when S3 dispatch is
+  considered, see below.)
+
+  Beware that using \code{.class2()} for other reasons than didactical,
+  diagnostical or for debugging may rather be a misuse than smart.
+
+  \code{\link{NULL}} objects (of implicit class \code{"NULL"}) cannot have
+  attributes (hence no \code{class} attribute) and attempting to assign a
+  class is an error.
 
   When a generic function \code{fun} is applied to an object with class
   attribute \code{c("first", "second")}, the system searches for a
@@ -149,6 +164,9 @@ class( quote(sin(pi*x)) )    # "call"
 class( quote(x <- 1) )       # "<-"
 class( quote((1 < 2)) )      # "("
 class( quote( if(8<3) pi ) ) # "if"
+
+.class2(pi)               # "double" "numeric"
+.class2(matrix(1:6, 2,3)) # "matrix" "array" "integer" "numeric"
 }
 \keyword{methods}
 \keyword{classes}

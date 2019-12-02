@@ -157,6 +157,9 @@
       notably for \emph{vector} \code{n}, e.g. to get a \dQuote{corner} of
       a matrix, also extended for \code{array}'s of higher dimension,
       thanks to the patch proposal by Gabe Becker in \PR{17652}.
+
+      \item New function \code{.class2()} provides the full character
+      vector of class names used for S3 or S4 method dispatch.
     }
   }% end{ NEW FEATURES }
 
