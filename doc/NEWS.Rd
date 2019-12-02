@@ -257,6 +257,12 @@
       an \R object of class \code{expression} (or other \sQuote{language})
       to work more consistently, thanks to suggestions by Suharto Anggono.
 
+      \item \code{conformMethod()} now works correctly in cases containing
+      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
+      creates methods with \code{"missing"} entries in the signature.
+      Consequently, \code{rematchDefinition()} is amended to use
+      appropriate \code{.local()} calls with named arguments where needed.
+
       \item \code{format.default(*, scientific = FALSE)} now corresponds to
       a practically most extreme \code{options(scipen = n)} setting rather
       than arbitrary \code{n = 100}.
@@ -401,12 +407,6 @@
       now works consistently for both \code{algorithm="Stuetzle"} and
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
       reported by Hilmar Berger.
-
-      \item \code{conformMethod()} now works correctly in cases containing
-      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
-      creates methods with \code{"missing"} entries in the signature.
-      Consequently, \code{rematchDefinition()} is amended to use
-      appropriate \code{.local()} calls with named arguments where needed.
 
       \item \code{apply(diag(3), 2:3, mean)} now gives a helpful error message.
 
