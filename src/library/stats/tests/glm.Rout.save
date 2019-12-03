@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-11-15 r77430) -- "Action of the Toes"
+R version 3.6.2 beta (2019-12-03 r77509) -- "Dark and Stormy Night"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -199,4 +199,4 @@ Number of Fisher Scoring iterations: 3
 > 
 > proc.time()
    user  system elapsed 
-  0.250   0.050   0.276 
+  0.248   0.059   0.285 

@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-11-15 r77430) -- "Action of the Toes"
+R version 3.6.2 beta (2019-12-03 r77509) -- "Dark and Stormy Night"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -321,6 +321,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.444 0.048 1.498 0 0 
+Time elapsed:  1.527 0.035 1.567 0 0 
 > 
 > 
