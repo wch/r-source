@@ -70,6 +70,9 @@ extern "C" {
  *             - added pkgName to graphics system state info (as attribute)
  * Version 12: For R 3.4.0
  *             Added canGenIdle, doIdle() and doesIdle() to devices.
+ * Version 13: For R 4.0.0
+ *             Added graphical definitions
+ *             - linear gradients
  */
 
 #define R_GE_version 12
@@ -202,7 +205,7 @@ typedef struct {
     /*
      * Definitions
      */
-    SEXP gradientFill;  
+    SEXP patternFill;  
 } R_GE_gcontext;
 
 typedef R_GE_gcontext* pGEcontext;
@@ -527,20 +530,25 @@ SEXP CreateAtVector(double*, double*, int, Rboolean);
 #define GAxisPars 		Rf_GAxisPars
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
 
-/* Gradients - from ../../library/grDevices/src/gradients.c */
-double R_GE_gradientX1(SEXP gradient);
-double R_GE_gradientY1(SEXP gradient);
-double R_GE_gradientX2(SEXP gradient);
-double R_GE_gradientY2(SEXP gradient);
-int R_GE_gradientNumStops(SEXP gradient);
-double R_GE_gradientStop(SEXP gradient, int i);
-rcolor R_GE_gradientColour(SEXP gradient, int i);
-/* Must match order in ../library/grDevices/R/gradients.R */
-#define R_GE_gradientExtendPad 1
-#define R_GE_gradientExtendRepeat 2
-#define R_GE_gradientExtendReflect 3
-#define R_GE_gradientExtendNone 4
-int R_GE_gradientExtend(SEXP gradient);
+/* Patterns - from ../../library/grDevices/src/patterns.c */
+Rboolean R_GE_isPattern(SEXP x);
+#define R_GE_linearGradientPattern 1
+#define R_GE_radialGradientPattern 2
+int R_GE_patternType(SEXP pattern);
+
+double R_GE_linearGradientX1(SEXP pattern);
+double R_GE_linearGradientY1(SEXP pattern);
+double R_GE_linearGradientX2(SEXP pattern);
+double R_GE_linearGradientY2(SEXP pattern);
+int R_GE_linearGradientNumStops(SEXP pattern);
+double R_GE_linearGradientStop(SEXP pattern, int i);
+rcolor R_GE_linearGradientColour(SEXP pattern, int i);
+/* Must match order in ../library/grDevices/R/patterns.R */
+#define R_GE_linearGradientExtendPad 1
+#define R_GE_linearGradientExtendRepeat 2
+#define R_GE_linearGradientExtendReflect 3
+#define R_GE_linearGradientExtendNone 4
+int R_GE_linearGradientExtend(SEXP pattern);
 
 #ifdef __cplusplus
 }

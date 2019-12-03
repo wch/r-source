@@ -447,5 +447,8 @@ S3method("grid.revert", "grob")
 S3method("grid.revert", "character")
 S3method("grid.revert", "gPath")
 
-S3method("resolveGradient", "default")
-S3method("resolveGradient", "GridLinearGradient")
+S3method("resolveFill", "default")
+S3method("resolveFill", "GridPattern")
+S3method("resolveFill", "Pattern")
+
+S3method("resolvePattern", "GridLinearGradient")

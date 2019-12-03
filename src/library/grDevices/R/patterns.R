@@ -16,9 +16,27 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## Create R objects defining gradients
+## Create R objects defining patterns
+
+#######################################################
+## MUST match C #defines in
+## ../../../main/patterns.c and
+## ../../../include/R_ext/GraphicsEngine.h
+#######################################################
+
+patternTypes <- c("LinearGradient", "RadialGradient")
 
 extendOptions <- c("pad", "repeat", "reflect", "none")
+
+pattern <- function(type, ...) {
+    type <- match(type, patternTypes)
+    if (is.na(type))
+        stop("Invalid pattern type")
+    
+    pattern <- c(list(type=as.integer(type)), list(...))
+    class(pattern) <- c(type, "Pattern")
+    pattern
+}
 
 linearGradient <- function(colours = c("black", "white"),
                            stops = seq(0, 1, length.out = length(colours)),
@@ -35,12 +53,12 @@ linearGradient <- function(colours = c("black", "white"),
     
     ## Make sure we really have colours in some form
     ## AND convert to "#RRGGBB" format
-    colours <- rgb(t(col2rgb(colours)), maxColorValue=255)
+    RGBA <- col2rgb(colours, alpha=TRUE)
+    colours <- rgb(t(RGBA[1:3,]), alpha=RGBA[4,], maxColorValue=255)
     
-    grad <- list(x1 = as.numeric(x1), y1 = as.numeric(y1),
-                 x2 = as.numeric(x2), y2 = as.numeric(y2),
-                 stops = as.numeric(stops), colours = colours,
-                 extend = as.integer(extend))
-    class(grad) <- c("LinearGradient", "Gradient")
-    grad
+    pattern("LinearGradient",
+            x1 = as.numeric(x1), y1 = as.numeric(y1),
+            x2 = as.numeric(x2), y2 = as.numeric(y2),
+            stops = as.numeric(stops), colours = colours,
+            extend = as.integer(extend))
 }

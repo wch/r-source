@@ -28,52 +28,77 @@
 
 /*
  * C API for graphics devices to interrogate gradient SEXPs
+ *
+ * MUST match R structures in ../library/grDevices/R/patterns.R
  */
 
-#define gradient_x1 0
-#define gradient_y1 1
-#define gradient_x2 2
-#define gradient_y2 3
-#define gradient_stops 4
-#define gradient_colours 5
-#define gradient_extend 6
-
-double R_GE_gradientX1(SEXP gradient)
-{
-    return REAL(VECTOR_ELT(gradient, gradient_x1))[0];
+Rboolean R_GE_isPattern(SEXP x) {
+    return Rf_inherits(x, "Pattern");
 }
 
-double R_GE_gradientY1(SEXP gradient)
+/* Pattern type is always component 0 */
+int R_GE_patternType(SEXP pattern) 
 {
-    return REAL(VECTOR_ELT(gradient, gradient_y1))[0];
+    return INTEGER(VECTOR_ELT(pattern, 0))[0];
 }
 
-double R_GE_gradientX2(SEXP gradient)
+/* Linear gradients */
+#define linear_gradient_x1 1
+#define linear_gradient_y1 2
+#define linear_gradient_x2 3
+#define linear_gradient_y2 4
+#define linear_gradient_stops 5
+#define linear_gradient_colours 6
+#define linear_gradient_extend 7
+
+#define checkLinearGradient() \
+    if (!(R_GE_patternType(pattern) == R_GE_linearGradientPattern)) \
+        error(_("pattern is not a linear gradient"))
+
+double R_GE_linearGradientX1(SEXP pattern)
 {
-    return REAL(VECTOR_ELT(gradient, gradient_x2))[0];
+    checkLinearGradient();
+    return REAL(VECTOR_ELT(pattern, linear_gradient_x1))[0];
 }
 
-double R_GE_gradientY2(SEXP gradient)
+double R_GE_linearGradientY1(SEXP pattern)
 {
-    return REAL(VECTOR_ELT(gradient, gradient_y2))[0];
+    checkLinearGradient();
+    return REAL(VECTOR_ELT(pattern, linear_gradient_y1))[0];
 }
 
-int R_GE_gradientNumStops(SEXP gradient) 
+double R_GE_linearGradientX2(SEXP pattern)
 {
-    return LENGTH(VECTOR_ELT(gradient, gradient_stops));
+    checkLinearGradient();
+    return REAL(VECTOR_ELT(pattern, linear_gradient_x2))[0];
 }
 
-double R_GE_gradientStop(SEXP gradient, int i) 
+double R_GE_linearGradientY2(SEXP pattern)
 {
-    return REAL(VECTOR_ELT(gradient, gradient_stops))[i];
+    checkLinearGradient();
+    return REAL(VECTOR_ELT(pattern, linear_gradient_y2))[0];
 }
 
-rcolor R_GE_gradientColour(SEXP gradient, int i) 
+int R_GE_linearGradientNumStops(SEXP pattern) 
 {
-    return RGBpar(VECTOR_ELT(gradient, gradient_colours), i);
+    checkLinearGradient();
+    return LENGTH(VECTOR_ELT(pattern, linear_gradient_stops));
 }
 
-int R_GE_gradientExtend(SEXP gradient) 
+double R_GE_linearGradientStop(SEXP pattern, int i) 
 {
-    return INTEGER(VECTOR_ELT(gradient, gradient_extend))[0];
+    checkLinearGradient();
+    return REAL(VECTOR_ELT(pattern, linear_gradient_stops))[i];
+}
+
+rcolor R_GE_linearGradientColour(SEXP pattern, int i) 
+{
+    checkLinearGradient();
+    return RGBpar(VECTOR_ELT(pattern, linear_gradient_colours), i);
+}
+
+int R_GE_linearGradientExtend(SEXP pattern) 
+{
+    checkLinearGradient();
+    return INTEGER(VECTOR_ELT(pattern, linear_gradient_extend))[0];
 }

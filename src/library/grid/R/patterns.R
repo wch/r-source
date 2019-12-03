@@ -1,11 +1,11 @@
 
-## Create R objects defining gradients
-## This OVERRIDES grDevices::linearGradient()
+## Create R objects defining patterns
+## These OVERRIDE functions like grDevices::linearGradient()
 ## When a 'grid' GridLinearGradient needs resolving, we
 ## create a 'grDevices' LinearGradient
 
-is.gradient <- function(x) {
-    inherits(x, "GridGradient")
+is.pattern <- function(x) {
+    inherits(x, "GridPattern")
 }
 
 linearGradient <- function(colours = c("black", "white"),
@@ -32,25 +32,63 @@ linearGradient <- function(colours = c("black", "white"),
                  x2 = x2, y2 = y2,
                  stops = as.numeric(stops), colours = colours,
                  extend = match.arg(extend))
-    class(grad) <- c("GridLinearGradient", "GridGradient")
+    class(grad) <- c("GridLinearGradient", "GridPattern")
     grad
 }
 
 ## Called when drawing a grob
-resolveGradient <- function(gradient, grob) {
-    UseMethod("resolveGradient")
+resolveFill <- function(fill, grob) {
+    UseMethod("resolveFill")
 }
 
-## No gradient, nothing to do
-resolveGradient.default <- function(gradient, grob) {
-    if (is.null(gradient)) {
-        return(NULL)
+## Simple fills include an R colour (integer or string) or NA
+## These just pass through
+resolveFill.default <- function(fill, grob) {
+    fill
+}
+
+## A pattern fill that has already been resolved
+## (a grDevices::Pattern)
+resolveFill.Pattern <- function(fill, grob) {
+    ## The pattern has already been resolved so we just leave it alone
+    fill
+}
+
+## A pattern fill that needs resolving
+## (a grid::GridPattern)
+resolveFill.GridPattern <- function(fill, grob) {
+    ## All predrawing has been done
+    if (is.null(grob)) {
+        ## We are pushing a viewport, so resolve relative to viewport
+        resolvePattern(fill)
     } else {
-        stop("Invalid gradient")
+        pts <- grobPoints(grob, closed=TRUE)
+        if (!isEmptyCoords(pts)) {
+            x <- unlist(lapply(pts, function(p) p$x))
+            y <- unlist(lapply(pts, function(p) p$y))
+            left <- min(x)
+            bottom <- min(y)
+            width <- diff(range(x))
+            height <- diff(range(y))
+            pushViewport(viewport(left, bottom, width, height,
+                                  default.units="in",
+                                  just=c("left", "bottom")))
+            gradient <- resolvePattern(fill)
+            popViewport()
+            gradient
+        } else {
+            warning("Gradient fill applied to object with no inside")
+            ## Set fill to transparent
+            "transparent"
+        }
     }
 }
 
-resolveLinearGradient <- function(gradient) {
+resolvePattern <- function(pattern) {
+    UseMethod("resolvePattern")
+}
+
+resolvePattern.GridLinearGradient <- function(gradient) {
     p1 <- deviceLoc(gradient$x1, gradient$y1, valueOnly=TRUE, device=TRUE)
     p2 <- deviceLoc(gradient$x2, gradient$y2, valueOnly=TRUE, device=TRUE)
     grDevices::linearGradient(gradient$colours,
@@ -59,40 +97,3 @@ resolveLinearGradient <- function(gradient) {
                               extend=gradient$extend)
 }
 
-## Logical gradient, resolve current gradient fill
-## (i.e., the most recent gradientFill set by a parent viewport)
-resolveGradient.logical <- function(gradient, grob) {
-    if (gradient) {
-        gradient <- get.gpar("gradientFill")$gradientFill
-        if (is.gradient(gradient)) {
-            resolveLinearGradient(gradient)
-        } else {
-            NULL
-        }
-    } else {
-        NULL
-    }
-}
-
-## Actual gradient, resolve relative to the grob being drawn
-## (using temporary viewport)
-resolveGradient.GridLinearGradient <- function(gradient, grob) {
-    ## All predrawing has been done
-    pts <- grobPoints(grob, closed=TRUE)
-    if (!isEmptyCoords(pts)) {
-        x <- unlist(lapply(pts, function(p) p$x))
-        y <- unlist(lapply(pts, function(p) p$y))
-        left <- min(x)
-        bottom <- min(y)
-        width <- diff(range(x))
-        height <- diff(range(y))
-        pushViewport(viewport(left, bottom, width, height, default.units="in",
-                              just=c("left", "bottom")))
-        gradient <- resolveLinearGradient(gradient)
-        popViewport()
-        gradient
-    } else {
-        warning("Gradient fill applied to object with no inside")
-        NULL
-    }
-}

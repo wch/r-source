@@ -125,11 +125,10 @@
 #define GP_LINEJOIN 12
 #define GP_LINEMITRE 13
 #define GP_LEX 14
-#define GP_GRADIENTFILL 15
 /* 
  * Keep fontface at the end because it is never used in C code
  */
-#define GP_FONTFACE 16
+#define GP_FONTFACE 15
 
 /*
  * Structure of an arrow description

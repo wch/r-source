@@ -91,10 +91,14 @@ validGP <- function(gpars) {
           check.length("col")
   }
   if (!is.na(match("fill", names(gpars)))) {
-      if (is.null(gpars$fill))
+      if (is.null(gpars$fill)) {
           gpars$fill <- NULL
-      else
-          check.length("fill")
+      } else {
+          ## fill can be a simple colour (NA, integer, string)
+          ## OR a "GridPattern"
+          if (!is.pattern(gpars$fill))
+              check.length("fill")
+      }
   }
   # lty converted in C code
   # BUT still want to check for NULL and check length > 0
@@ -174,12 +178,6 @@ validGP <- function(gpars) {
 			      stop("invalid fontface ", ch)), 0L)
 	}
   }
-    ## GradientFill can be gradient or logical or missing or NULL
-    if (!(is.null(gpars$gradientFill) ||
-          is.na(gpars$gradientFill) ||
-          is.gradient(gpars$gradientFill) ||
-          is.logical(gpars$gradientFill)))
-        stop("Invalid 'gradientFill'")
   gpars
 }
 
@@ -228,24 +226,8 @@ set.gpar <- function(gp, grob=NULL) {
     templex <- temp$lex * gp$lex
   else
     templex <- temp$lex
-  ## gradientFill
-  if (is.null(grob)) {
-      ## If we are pushing a viewport, need to make sure we set
-      ## a gradient or NULL or NA
-      if (is.logical(gp$gradientFill)) {
-          if (gp$gradientFill) {
-              ## TRUE means inherit
-              gp$gradientFill <- temp$gradientFill
-          } else {
-              ## FALSE means turn OFF gradient fills
-              gp$gradientFill <- NULL
-              temp["gradientFill"] <- list(NULL)
-          }
-      } 
-  } else {
-      ## If we are drawing a grob, need to resolve the gradient
-      gp$gradientFill <- resolveGradient(gp$gradientFill, grob)
-  }
+  ## resolve fill - could be a simple colour OR a "GridPattern"
+  gp$fill <- resolveFill(gp$fill, grob)
   # All other gpars
   temp[names(gp)] <- gp
   temp$cex <- tempcex
