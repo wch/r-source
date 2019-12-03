@@ -1634,6 +1634,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(args = evalListKeepMissing(args, env));
+    R_args_enable_refcnt(args);
     PROTECT(call2 = lang2(CAR(call), R_NilValue));
     SETCDR(call2, args);
 

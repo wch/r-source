@@ -4153,6 +4153,11 @@ SEXP (SETCDR)(SEXP x, SEXP y)
     if (CHKCONS(x) == NULL || x == R_NilValue)
 	error(_("bad value"));
     FIX_REFCNT(x, CDR(x), y);
+#ifdef TESTING_WRITE_BARRIER
+    /* this should not add a non-tracking CDR to a tracking cell */
+    if (TRACKREFS(x) && y && ! TRACKREFS(y))
+	error("inserting non-tracking CDR in tracking cell");
+#endif
     CHECK_OLD_TO_NEW(x, y);
     CDR(x) = y;
     return y;
