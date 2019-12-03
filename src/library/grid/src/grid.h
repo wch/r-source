@@ -125,10 +125,11 @@
 #define GP_LINEJOIN 12
 #define GP_LINEMITRE 13
 #define GP_LEX 14
+#define GP_GRADIENTFILL 15
 /* 
  * Keep fontface at the end because it is never used in C code
  */
-#define GP_FONTFACE 15
+#define GP_FONTFACE 16
 
 /*
  * Structure of an arrow description
@@ -305,8 +306,8 @@ SEXP L_pretty(SEXP scale);
 SEXP L_locator();
 SEXP L_convert(SEXP x, SEXP whatfrom,
 	       SEXP whatto, SEXP unitto);
-SEXP L_devLoc(SEXP x, SEXP y);
-SEXP L_devDim(SEXP x, SEXP y);
+SEXP L_devLoc(SEXP x, SEXP y, SEXP device);
+SEXP L_devDim(SEXP x, SEXP y, SEXP device);
 SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol);
 
 SEXP L_stringMetric(SEXP label);

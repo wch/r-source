@@ -251,6 +251,15 @@ double gpLex2(SEXP gp, int i, int* gpIsScalar) {
     return REAL(lex)[i % LENGTH(lex)];
 }
 
+static SEXP gpGradientFill(SEXP gp) {
+    return VECTOR_ELT(gp, GP_GRADIENTFILL);
+}
+
+static SEXP gpGradientFill2(SEXP gp, int* gpIsScalar) {
+    gpIsScalar[GP_GRADIENTFILL] = 1;
+    return gpGradientFill(gp);
+}
+
 /*
  * Never access fontface because fontface values are stored in font
  * Historical reasons ...
@@ -307,6 +316,7 @@ void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd)
     gc->lineheight = gpLineHeight(gp, i);
     gc->fontface = gpFont(gp, i);
     strcpy(gc->fontfamily, gpFontFamily(gp, i));
+    gc->gradientFill = gpGradientFill(gp);
 }
 
 SEXP L_setGPar(SEXP gpars) 
@@ -358,8 +368,8 @@ void initGPar(pGEDevDesc dd)
     SEXP gpfill, gpcol, gpgamma, gplty, gplwd, gpcex, gpfs, gplh, gpfont;
     SEXP gpfontfamily, gpalpha, gplineend, gplinejoin, gplinemitre, gplex;
     SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
-    PROTECT(gpar = allocVector(VECSXP, 15));
-    PROTECT(gparnames = allocVector(STRSXP, 15));
+    PROTECT(gpar = allocVector(VECSXP, 16));
+    PROTECT(gparnames = allocVector(STRSXP, 16));
     SET_STRING_ELT(gparnames, GP_FILL, mkChar("fill"));
     SET_STRING_ELT(gparnames, GP_COL, mkChar("col"));
     SET_STRING_ELT(gparnames, GP_GAMMA, mkChar("gamma"));
@@ -375,6 +385,7 @@ void initGPar(pGEDevDesc dd)
     SET_STRING_ELT(gparnames, GP_LINEJOIN, mkChar("linejoin"));
     SET_STRING_ELT(gparnames, GP_LINEMITRE, mkChar("linemitre"));
     SET_STRING_ELT(gparnames, GP_LEX, mkChar("lex"));
+    SET_STRING_ELT(gparnames, GP_GRADIENTFILL, mkChar("gradientFill"));
     setAttrib(gpar, R_NamesSymbol, gparnames);
     PROTECT(gpfill = allocVector(STRSXP, 1));
     SET_STRING_ELT(gpfill, 0, mkChar(col2name(dev->startfill)));
@@ -425,6 +436,7 @@ void initGPar(pGEDevDesc dd)
     REAL(gplex)[0] = 1;
     SET_VECTOR_ELT(gpar, GP_LEX, gplex);
     PROTECT(class = allocVector(STRSXP, 1));
+    SET_VECTOR_ELT(gpar, GP_GRADIENTFILL, R_NilValue);
     SET_STRING_ELT(class, 0, mkChar("gpar"));
     classgets(gpar, class);
     SET_VECTOR_ELT(gsd, GSS_GPAR, gpar);
@@ -465,6 +477,7 @@ void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar,
     gcCache->fontface = gc->fontface = gpFont2(gp, i, gpIsScalar);
     strcpy(gc->fontfamily, gpFontFamily2(gp, i, gpIsScalar));
     strcpy(gcCache->fontfamily, gc->fontfamily);
+    gcCache->gradientFill = gc->gradientFill = gpGradientFill2(gp, gpIsScalar);
 }
 void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd, 
                     int* gpIsScalar, const pGEcontext gcCache)
@@ -505,4 +518,5 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
     } else {
         strcpy(gc->fontfamily, gpFontFamily(gp, i));
     }
+    gc->gradientFill = gpGradientFill(gp);
 }

@@ -1282,7 +1282,7 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
 /*
  * Convert locations or dimensions to device inches
  */
-SEXP L_devLoc(SEXP x, SEXP y) {
+SEXP L_devLoc(SEXP x, SEXP y, SEXP device) {
     double xx, yy;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
@@ -1316,6 +1316,10 @@ SEXP L_devLoc(SEXP x, SEXP y) {
                       dd,
                       transform,
                       &xx, &yy);
+        if (LOGICAL(device)[0]) {
+            xx = toDeviceX(xx, GE_INCHES, dd);
+            yy = toDeviceY(yy, GE_INCHES, dd);
+        }
         REAL(devx)[i] = xx;
         REAL(devy)[i] = yy;
     }
@@ -1325,7 +1329,7 @@ SEXP L_devLoc(SEXP x, SEXP y) {
     return result;
 }
 
-SEXP L_devDim(SEXP x, SEXP y) {
+SEXP L_devDim(SEXP x, SEXP y, SEXP device) {
     double xx, yy;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
@@ -1358,6 +1362,10 @@ SEXP L_devDim(SEXP x, SEXP y) {
                       vpWidthCM, vpHeightCM,
                       dd, rotationAngle,
                       &xx, &yy);
+        if (LOGICAL(device)[0]) {
+            xx = toDeviceWidth(xx, GE_INCHES, dd);
+            yy = toDeviceHeight(yy, GE_INCHES, dd);
+        }
         REAL(devx)[i] = xx;
         REAL(devy)[i] = yy;
     }

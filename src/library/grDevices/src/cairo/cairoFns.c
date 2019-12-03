@@ -87,17 +87,22 @@
 
 */
 
+static void CairoCol(unsigned int col, double* R, double* G, double* B)
+{
+    *R = R_RED(col)/255.0;
+    *G = R_GREEN(col)/255.0;
+    *B = R_BLUE(col)/255.0;
+    *R = pow(*R, RedGamma);
+    *G = pow(*G, GreenGamma);
+    *B = pow(*B, BlueGamma);
+}
+
 static void CairoColor(unsigned int col, pX11Desc xd)
 {
     unsigned int alpha = R_ALPHA(col);
     double red, blue, green;
 
-    red = R_RED(col)/255.0;
-    green = R_GREEN(col)/255.0;
-    blue = R_BLUE(col)/255.0;
-    red = pow(red, RedGamma);
-    green = pow(green, GreenGamma);
-    blue = pow(blue, BlueGamma);
+    CairoCol(col, &red, &green, &blue);
 
     /* This optimization should not be necessary, but alpha = 1 seems
        to cause image fallback in some backends */
@@ -105,6 +110,35 @@ static void CairoColor(unsigned int col, pX11Desc xd)
 	cairo_set_source_rgb(xd->cc, red, green, blue);
     else
 	cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0);
+}
+
+static void CairoGradientFill(SEXP gradient, pX11Desc xd)
+{
+    unsigned int col;
+    unsigned int alpha;
+    double red, blue, green;
+    cairo_pattern_t *cairo_gradient;  
+    int i, nStops = R_GE_gradientNumStops(gradient);
+    double stop;
+    cairo_gradient = cairo_pattern_create_linear(R_GE_gradientX1(gradient),
+                                                 R_GE_gradientY1(gradient),
+                                                 R_GE_gradientX2(gradient),
+                                                 R_GE_gradientY2(gradient));
+    for (i = 0; i < nStops; i++) {
+        col = R_GE_gradientColour(gradient, i);
+        stop = R_GE_gradientStop(gradient, i);
+        CairoCol(col, &red, &green, &blue);
+        alpha = R_ALPHA(col);
+        if (alpha == 255)
+            cairo_pattern_add_color_stop_rgb(cairo_gradient, stop, 
+                                             red, green, blue);
+        else
+            cairo_pattern_add_color_stop_rgba(cairo_gradient, stop, 
+                                              red, green, blue, alpha/255.0);
+    }
+    cairo_set_source(xd->cc, cairo_gradient);
+    cairo_fill_preserve(xd->cc);
+    cairo_pattern_destroy(cairo_gradient);
 }
 
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
@@ -165,7 +199,10 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
     cairo_new_path(xd->cc);
     cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
 
-    if (R_ALPHA(gc->fill) > 0) {
+    /* gradientFill overrides fill */
+    if (gc->gradientFill != R_NilValue) { 
+        CairoGradientFill(gc->gradientFill, xd);
+    } else if (R_ALPHA(gc->fill) > 0) {
 	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
 	CairoColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);

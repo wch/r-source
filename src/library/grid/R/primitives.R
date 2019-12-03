@@ -1115,9 +1115,9 @@ validDetails.rect <- function(x) {
 }
 
 drawDetails.rect <- function(x, recording=TRUE) {
-  grid.Call.graphics(C_rect, x$x, x$y, x$width, x$height,
-                     resolveHJust(x$just, x$hjust),
-                     resolveVJust(x$just, x$vjust))
+    grid.Call.graphics(C_rect, x$x, x$y, x$width, x$height,
+                       resolveHJust(x$just, x$hjust),
+                       resolveVJust(x$just, x$vjust))
 }
 
 xDetails.rect <- function(x, theta) {

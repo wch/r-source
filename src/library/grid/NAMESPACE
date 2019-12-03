@@ -43,6 +43,8 @@ export(
        "valid.just", "resolveHJust", "resolveVJust",
        "resolveRasterSize",
 
+       "linearGradient",
+    
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
        "pop.viewport", "push.viewport",
        "popViewport", "pushViewport",
@@ -444,3 +446,6 @@ S3method("grid.revert", "default")
 S3method("grid.revert", "grob")
 S3method("grid.revert", "character")
 S3method("grid.revert", "gPath")
+
+S3method("resolveGradient", "default")
+S3method("resolveGradient", "GridLinearGradient")

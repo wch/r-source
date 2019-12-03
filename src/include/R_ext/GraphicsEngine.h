@@ -199,6 +199,10 @@ typedef struct {
     double lineheight;   /* Line height (multiply by font size) */
     int fontface;        /* Font face (plain, italic, bold, ...) */
     char fontfamily[201]; /* Font family */
+    /*
+     * Definitions
+     */
+    SEXP gradientFill;  
 } R_GE_gcontext;
 
 typedef R_GE_gcontext* pGEcontext;
@@ -522,6 +526,15 @@ SEXP CreateAtVector(double*, double*, int, Rboolean);
 /* From ../../main/graphics.c, used by ../../library/grDevices/src/axis_scales.c : */
 #define GAxisPars 		Rf_GAxisPars
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
+
+/* Gradients - from ../../library/grDevices/src/gradients.c */
+double R_GE_gradientX1(SEXP gradient);
+double R_GE_gradientY1(SEXP gradient);
+double R_GE_gradientX2(SEXP gradient);
+double R_GE_gradientY2(SEXP gradient);
+int R_GE_gradientNumStops(SEXP gradient);
+double R_GE_gradientStop(SEXP gradient, int i);
+rcolor R_GE_gradientColour(SEXP gradient, int i);
 
 #ifdef __cplusplus
 }

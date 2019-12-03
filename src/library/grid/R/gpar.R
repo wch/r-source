@@ -174,6 +174,12 @@ validGP <- function(gpars) {
 			      stop("invalid fontface ", ch)), 0L)
 	}
   }
+    ## GradientFill can be gradient or logical or missing or NULL
+    if (!(is.null(gpars$gradientFill) ||
+          is.na(gpars$gradientFill) ||
+          is.gradient(gpars$gradientFill) ||
+          is.logical(gpars$gradientFill)))
+        stop("Invalid 'gradientFill'")
   gpars
 }
 
@@ -193,12 +199,12 @@ validGP <- function(gpars) {
 .grid.gpar.names <- c("fill", "col", "gamma", "lty", "lwd", "cex",
                       "fontsize", "lineheight", "font", "fontfamily",
                       "alpha", "lineend", "linejoin", "linemitre",
-                      "lex",
+                      "lex", "gradientFill",
                       # Keep fontface at the end because it is never
                       # used in C code (it gets mapped to font)
                       "fontface")
 
-set.gpar <- function(gp, engineDL=TRUE) {
+set.gpar <- function(gp, grob=NULL) {
   if (!is.gpar(gp))
     stop("argument must be a 'gpar' object")
   temp <- grid.Call(C_getGPar)
@@ -222,12 +228,30 @@ set.gpar <- function(gp, engineDL=TRUE) {
     templex <- temp$lex * gp$lex
   else
     templex <- temp$lex
+  ## gradientFill
+  if (is.null(grob)) {
+      ## If we are pushing a viewport, need to make sure we set
+      ## a gradient or NULL or NA
+      if (is.logical(gp$gradientFill)) {
+          if (gp$gradientFill) {
+              ## TRUE means inherit
+              gp$gradientFill <- temp$gradientFill
+          } else {
+              ## FALSE means turn OFF gradient fills
+              gp$gradientFill <- NULL
+              temp["gradientFill"] <- list(NULL)
+          }
+      } 
+  } else {
+      ## If we are drawing a grob, need to resolve the gradient
+      gp$gradientFill <- resolveGradient(gp$gradientFill, grob)
+  }
   # All other gpars
   temp[names(gp)] <- gp
   temp$cex <- tempcex
   temp$alpha <- tempalpha
   temp$lex <- templex
-  if (engineDL) {
+  if (is.null(grob)) {
       ## Do this as a .Call.graphics to get it onto the base display list
       grid.Call.graphics(C_setGPar, temp)
   } else {
