@@ -120,6 +120,7 @@ static void CairoGradientFill(SEXP gradient, pX11Desc xd)
     cairo_pattern_t *cairo_gradient;  
     int i, nStops = R_GE_gradientNumStops(gradient);
     double stop;
+    cairo_extend_t extend;
     cairo_gradient = cairo_pattern_create_linear(R_GE_gradientX1(gradient),
                                                  R_GE_gradientY1(gradient),
                                                  R_GE_gradientX2(gradient),
@@ -136,6 +137,13 @@ static void CairoGradientFill(SEXP gradient, pX11Desc xd)
             cairo_pattern_add_color_stop_rgba(cairo_gradient, stop, 
                                               red, green, blue, alpha/255.0);
     }
+    switch(R_GE_gradientExtend(gradient)) {
+    case R_GE_gradientExtendNone: extend = CAIRO_EXTEND_NONE; break;
+    case R_GE_gradientExtendPad: extend = CAIRO_EXTEND_PAD; break;
+    case R_GE_gradientExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
+    case R_GE_gradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
+    }
+    cairo_pattern_set_extend(cairo_gradient, extend);
     cairo_set_source(xd->cc, cairo_gradient);
     cairo_fill_preserve(xd->cc);
     cairo_pattern_destroy(cairo_gradient);

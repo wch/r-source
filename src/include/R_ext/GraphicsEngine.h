@@ -535,6 +535,12 @@ double R_GE_gradientY2(SEXP gradient);
 int R_GE_gradientNumStops(SEXP gradient);
 double R_GE_gradientStop(SEXP gradient, int i);
 rcolor R_GE_gradientColour(SEXP gradient, int i);
+/* Must match order in ../library/grDevices/R/gradients.R */
+#define R_GE_gradientExtendPad 1
+#define R_GE_gradientExtendRepeat 2
+#define R_GE_gradientExtendReflect 3
+#define R_GE_gradientExtendNone 4
+int R_GE_gradientExtend(SEXP gradient);
 
 #ifdef __cplusplus
 }

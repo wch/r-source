@@ -36,6 +36,7 @@
 #define gradient_y2 3
 #define gradient_stops 4
 #define gradient_colours 5
+#define gradient_extend 6
 
 double R_GE_gradientX1(SEXP gradient)
 {
@@ -70,4 +71,9 @@ double R_GE_gradientStop(SEXP gradient, int i)
 rcolor R_GE_gradientColour(SEXP gradient, int i) 
 {
     return RGBpar(VECTOR_ELT(gradient, gradient_colours), i);
+}
+
+int R_GE_gradientExtend(SEXP gradient) 
+{
+    return INTEGER(VECTOR_ELT(gradient, gradient_extend))[0];
 }

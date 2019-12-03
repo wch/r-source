@@ -12,7 +12,8 @@ linearGradient <- function(colours = c("black", "white"),
                            stops = seq(0, 1, length.out = length(colours)),
                            x1 = unit(0, "npc"), x2 = unit(1, "npc"),
                            y1 = unit(0, "npc"), y2 = unit(1, "npc"),
-                           default.units = "npc") {
+                           default.units = "npc",
+                           extend = c("pad", "repeat", "reflect", "none")) {
 
     nstops <- max(length(colours), length(stops))
     colours <- rep(colours, length.out = nstops)
@@ -29,7 +30,8 @@ linearGradient <- function(colours = c("black", "white"),
 
     grad <- list(x1 = x1, y1 = y1,
                  x2 = x2, y2 = y2,
-                 stops = as.numeric(stops), colours = colours)
+                 stops = as.numeric(stops), colours = colours,
+                 extend = match.arg(extend))
     class(grad) <- c("GridLinearGradient", "GridGradient")
     grad
 }
@@ -53,7 +55,8 @@ resolveLinearGradient <- function(gradient) {
     p2 <- deviceLoc(gradient$x2, gradient$y2, valueOnly=TRUE, device=TRUE)
     grDevices::linearGradient(gradient$colours,
                               gradient$stops,
-                              p1$x, p1$y, p2$x, p2$y)
+                              p1$x, p1$y, p2$x, p2$y,
+                              extend=gradient$extend)
 }
 
 ## Logical gradient, resolve current gradient fill
