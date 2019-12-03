@@ -5453,7 +5453,7 @@ function(dir)
         ((length(e) > 1L) &&
          (is.null(env) ||
           (is.name(env) && as.character(env) == ".GlobalEnv") ||
-          (is.call(env) && as.character(env) == "globalenv")))
+          (is.call(env) && as.character(env[[1L]]) == "globalenv")))
     }
 
     calls <- Filter(length,
