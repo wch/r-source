@@ -5408,7 +5408,7 @@ by Martyn Plummer.
 
 Most OSes (including all those commonly used for @R{}) have the concept
 of `tentative definitions' where global C variables are defined without
-an initiallizer.  Traditionally the linker resolves all tentative
+an initializer.  Traditionally the linker resolves all tentative
 definitions of the same variable in different object files to the same
 object, or to a non-tentative definition.  However,
 @command{gcc}@tie{}10 has changed its default so that tentative
