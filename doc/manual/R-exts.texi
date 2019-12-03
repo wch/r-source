@@ -11594,6 +11594,8 @@ Function @code{R_compute_identical} corresponds to @R{}'s @code{identical} funct
 @findex duplicate
 @cindex Copying objects
 
+[The @code{NAMED} mechanism has been replaced by reference counting.]
+
 When assignments are done in @R{} such as
 
 @example

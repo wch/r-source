@@ -41,6 +41,14 @@
 
        S3 methods for \code{"array"}, i.e., \code{<someFun>.array()}, are
        now also dispatched for \code{matrix} objects.
+
+       \item \R now uses reference counting instead of the \code{NAMED}
+       mechanism for determining when objects can be safely mutated in
+       base C code. This reduces the need for copying is some cases and
+       should allow further optimizations in the future. It should also
+       help make the internal code easier to maintain. This change is
+       expected to have minimal impact on packages not using unsupported
+       coding practices in their C code.
     }
   }
 
