@@ -62,3 +62,31 @@ linearGradient <- function(colours = c("black", "white"),
             stops = as.numeric(stops), colours = colours,
             extend = as.integer(extend))
 }
+
+radialGradient <- function(colours = c("black", "white"),
+                           stops = seq(0, 1, length.out = length(colours)),
+                           cx1 = 0, cy1 = 0, r1 = 0,
+                           cx2 = 1, cy2 = 1, r2 = .5,
+                           extend = "pad") {
+    ## Vectorising colours & stops
+    nstops <- max(length(colours), length(stops))
+    colours <- rep(colours, length.out = nstops)
+    stops <- rep(stops, length.out = nstops)
+
+    extend <- match(extend, extendOptions)
+    if (is.na(extend))
+        stop("Invalid 'extend' value")
+    
+    ## Make sure we really have colours in some form
+    ## AND convert to "#RRGGBB" format
+    RGBA <- col2rgb(colours, alpha=TRUE)
+    colours <- rgb(t(RGBA[1:3,]), alpha=RGBA[4,], maxColorValue=255)
+    
+    pattern("RadialGradient",
+            cx1 = as.numeric(cx1), cy1 = as.numeric(cy1),
+            r1 = as.numeric(r1),
+            cx2 = as.numeric(cx2), cy2 = as.numeric(cy2),
+            r2 = as.numeric(r2),
+            stops = as.numeric(stops), colours = colours,
+            extend = as.integer(extend))
+}

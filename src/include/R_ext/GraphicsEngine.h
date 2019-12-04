@@ -73,6 +73,7 @@ extern "C" {
  * Version 13: For R 4.0.0
  *             Added graphical definitions
  *             - linear gradients
+ *             - radial gradients
  */
 
 #define R_GE_version 12
@@ -544,11 +545,22 @@ int R_GE_linearGradientNumStops(SEXP pattern);
 double R_GE_linearGradientStop(SEXP pattern, int i);
 rcolor R_GE_linearGradientColour(SEXP pattern, int i);
 /* Must match order in ../library/grDevices/R/patterns.R */
-#define R_GE_linearGradientExtendPad 1
-#define R_GE_linearGradientExtendRepeat 2
-#define R_GE_linearGradientExtendReflect 3
-#define R_GE_linearGradientExtendNone 4
+#define R_GE_gradientExtendPad 1
+#define R_GE_gradientExtendRepeat 2
+#define R_GE_gradientExtendReflect 3
+#define R_GE_gradientExtendNone 4
 int R_GE_linearGradientExtend(SEXP pattern);
+
+double R_GE_radialGradientCX1(SEXP pattern);
+double R_GE_radialGradientCY1(SEXP pattern);
+double R_GE_radialGradientR1(SEXP pattern);
+double R_GE_radialGradientCX2(SEXP pattern);
+double R_GE_radialGradientCY2(SEXP pattern);
+double R_GE_radialGradientR2(SEXP pattern);
+int R_GE_radialGradientNumStops(SEXP pattern);
+double R_GE_radialGradientStop(SEXP pattern, int i);
+rcolor R_GE_radialGradientColour(SEXP pattern, int i);
+int R_GE_radialGradientExtend(SEXP pattern);
 
 #ifdef __cplusplus
 }

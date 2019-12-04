@@ -102,3 +102,78 @@ int R_GE_linearGradientExtend(SEXP pattern)
     checkLinearGradient();
     return INTEGER(VECTOR_ELT(pattern, linear_gradient_extend))[0];
 }
+
+/* Radial gradients */
+#define radial_gradient_cx1 1
+#define radial_gradient_cy1 2
+#define radial_gradient_r1 3
+#define radial_gradient_cx2 4
+#define radial_gradient_cy2 5
+#define radial_gradient_r2 6
+#define radial_gradient_stops 7
+#define radial_gradient_colours 8
+#define radial_gradient_extend 9
+
+#define checkRadialGradient() \
+    if (!(R_GE_patternType(pattern) == R_GE_radialGradientPattern)) \
+        error(_("pattern is not a radial gradient"))
+
+double R_GE_radialGradientCX1(SEXP pattern)
+{
+    checkRadialGradient();
+    return REAL(VECTOR_ELT(pattern, radial_gradient_cx1))[0];
+}
+
+double R_GE_radialGradientCY1(SEXP pattern)
+{
+    checkRadialGradient();
+    return REAL(VECTOR_ELT(pattern, radial_gradient_cy1))[0];
+}
+
+double R_GE_radialGradientR1(SEXP pattern)
+{
+    checkRadialGradient();
+    return REAL(VECTOR_ELT(pattern, radial_gradient_r1))[0];
+}
+
+double R_GE_radialGradientCX2(SEXP pattern)
+{
+    checkRadialGradient();
+    return REAL(VECTOR_ELT(pattern, radial_gradient_cx2))[0];
+}
+
+double R_GE_radialGradientCY2(SEXP pattern)
+{
+    checkRadialGradient();
+    return REAL(VECTOR_ELT(pattern, radial_gradient_cy2))[0];
+}
+
+double R_GE_radialGradientR2(SEXP pattern)
+{
+    checkRadialGradient();
+    return REAL(VECTOR_ELT(pattern, radial_gradient_r2))[0];
+}
+
+int R_GE_radialGradientNumStops(SEXP pattern) 
+{
+    checkRadialGradient();
+    return LENGTH(VECTOR_ELT(pattern, radial_gradient_stops));
+}
+
+double R_GE_radialGradientStop(SEXP pattern, int i) 
+{
+    checkRadialGradient();
+    return REAL(VECTOR_ELT(pattern, radial_gradient_stops))[i];
+}
+
+rcolor R_GE_radialGradientColour(SEXP pattern, int i) 
+{
+    checkRadialGradient();
+    return RGBpar(VECTOR_ELT(pattern, radial_gradient_colours), i);
+}
+
+int R_GE_radialGradientExtend(SEXP pattern) 
+{
+    checkRadialGradient();
+    return INTEGER(VECTOR_ELT(pattern, radial_gradient_extend))[0];
+}

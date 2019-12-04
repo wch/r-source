@@ -43,7 +43,7 @@ export(
        "valid.just", "resolveHJust", "resolveVJust",
        "resolveRasterSize",
 
-       "linearGradient",
+       "linearGradient", "radialGradient",
     
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
        "pop.viewport", "push.viewport",

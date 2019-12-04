@@ -117,10 +117,10 @@ static void CairoLinearGradientFill(SEXP gradient, pX11Desc xd)
     unsigned int col;
     unsigned int alpha;
     double red, blue, green;
-    cairo_pattern_t *cairo_gradient;  
     int i, nStops = R_GE_linearGradientNumStops(gradient);
     double stop;
     cairo_extend_t extend;
+    cairo_pattern_t *cairo_gradient;  
     cairo_gradient = 
         cairo_pattern_create_linear(R_GE_linearGradientX1(gradient),
                                     R_GE_linearGradientY1(gradient),
@@ -139,12 +139,52 @@ static void CairoLinearGradientFill(SEXP gradient, pX11Desc xd)
                                               red, green, blue, alpha/255.0);
     }
     switch(R_GE_linearGradientExtend(gradient)) {
-    case R_GE_linearGradientExtendNone: extend = CAIRO_EXTEND_NONE; break;
-    case R_GE_linearGradientExtendPad: extend = CAIRO_EXTEND_PAD; break;
-    case R_GE_linearGradientExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
-    case R_GE_linearGradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
+    case R_GE_gradientExtendNone: extend = CAIRO_EXTEND_NONE; break;
+    case R_GE_gradientExtendPad: extend = CAIRO_EXTEND_PAD; break;
+    case R_GE_gradientExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
+    case R_GE_gradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
     }
-    cairo_pattern_set_extend(cairo_gradient, extend);
+    cairo_pattern_set_extend(cairo_gradient, extend);    
+    cairo_set_source(xd->cc, cairo_gradient);
+    cairo_fill_preserve(xd->cc);
+    cairo_pattern_destroy(cairo_gradient);
+}
+
+static void CairoRadialGradientFill(SEXP gradient, pX11Desc xd)
+{
+    unsigned int col;
+    unsigned int alpha;
+    double red, blue, green;
+    int i, nStops = R_GE_radialGradientNumStops(gradient);
+    double stop;
+    cairo_extend_t extend;
+    cairo_pattern_t *cairo_gradient;  
+    cairo_gradient = 
+        cairo_pattern_create_radial(R_GE_radialGradientCX1(gradient),
+                                    R_GE_radialGradientCY1(gradient),
+                                    R_GE_radialGradientR1(gradient),
+                                    R_GE_radialGradientCX2(gradient),
+                                    R_GE_radialGradientCY2(gradient),
+                                    R_GE_radialGradientR2(gradient));
+    for (i = 0; i < nStops; i++) {
+        col = R_GE_radialGradientColour(gradient, i);
+        stop = R_GE_radialGradientStop(gradient, i);
+        CairoCol(col, &red, &green, &blue);
+        alpha = R_ALPHA(col);
+        if (alpha == 255)
+            cairo_pattern_add_color_stop_rgb(cairo_gradient, stop, 
+                                             red, green, blue);
+        else
+            cairo_pattern_add_color_stop_rgba(cairo_gradient, stop, 
+                                              red, green, blue, alpha/255.0);
+    }
+    switch(R_GE_radialGradientExtend(gradient)) {
+    case R_GE_gradientExtendNone: extend = CAIRO_EXTEND_NONE; break;
+    case R_GE_gradientExtendPad: extend = CAIRO_EXTEND_PAD; break;
+    case R_GE_gradientExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
+    case R_GE_gradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
+    }
+    cairo_pattern_set_extend(cairo_gradient, extend);    
     cairo_set_source(xd->cc, cairo_gradient);
     cairo_fill_preserve(xd->cc);
     cairo_pattern_destroy(cairo_gradient);
@@ -213,6 +253,9 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
         switch(R_GE_patternType(gc->patternFill)) {
         case R_GE_linearGradientPattern: 
             CairoLinearGradientFill(gc->patternFill, xd);
+            break;
+        case R_GE_radialGradientPattern:
+            CairoRadialGradientFill(gc->patternFill, xd);            
             break;
         }
     } else if (R_ALPHA(gc->fill) > 0) {

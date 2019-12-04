@@ -10,8 +10,8 @@ is.pattern <- function(x) {
 
 linearGradient <- function(colours = c("black", "white"),
                            stops = seq(0, 1, length.out = length(colours)),
-                           x1 = unit(0, "npc"), x2 = unit(1, "npc"),
-                           y1 = unit(0, "npc"), y2 = unit(1, "npc"),
+                           x1 = unit(0, "npc"), y1 = unit(0, "npc"),  
+                           x2 = unit(1, "npc"), y2 = unit(1, "npc"),
                            default.units = "npc",
                            extend = c("pad", "repeat", "reflect", "none")) {
 
@@ -35,6 +35,41 @@ linearGradient <- function(colours = c("black", "white"),
     class(grad) <- c("GridLinearGradient", "GridPattern")
     grad
 }
+
+radialGradient <- function(colours = c("black", "white"),
+                           stops = seq(0, 1, length.out = length(colours)),
+                           cx1 = unit(.5, "npc"), cy1 = unit(.5, "npc"),
+                           r1 = unit(0, "npc"),
+                           cx2 = unit(.5, "npc"), cy2 = unit(.5, "npc"),
+                           r2 = unit(.5, "npc"),
+                           default.units = "npc",
+                           extend = c("pad", "repeat", "reflect", "none")) {
+
+    nstops <- max(length(colours), length(stops))
+    colours <- rep(colours, length.out = nstops)
+    stops <- rep(stops, length.out = nstops)
+
+    if (!is.unit(cx1))
+        cx1 <- unit(cx1, default.units)
+    if (!is.unit(cy1))
+        cy1 <- unit(cy1, default.units)
+    if (!is.unit(r1))
+        r1 <- unit(r1, default.units)
+    if (!is.unit(cx2))
+        cx2 <- unit(cx2, default.units)
+    if (!is.unit(cy2))
+        cy2 <- unit(cy2, default.units)
+    if (!is.unit(r2))
+        r2 <- unit(r2, default.units)
+
+    grad <- list(cx1 = cx1, cy1 = cy1, r1=r1,
+                 cx2 = cx2, cy2 = cy2, r2=r2,
+                 stops = as.numeric(stops), colours = colours,
+                 extend = match.arg(extend))
+    class(grad) <- c("GridRadialGradient", "GridPattern")
+    grad
+}
+
 
 ## Called when drawing a grob
 resolveFill <- function(fill, grob) {
@@ -94,6 +129,23 @@ resolvePattern.GridLinearGradient <- function(gradient) {
     grDevices::linearGradient(gradient$colours,
                               gradient$stops,
                               p1$x, p1$y, p2$x, p2$y,
+                              extend=gradient$extend)
+}
+
+resolvePattern.GridRadialGradient <- function(gradient) {
+    c1 <- deviceLoc(gradient$cx1, gradient$cy1, valueOnly=TRUE, device=TRUE)
+    r1 <- min(sqrt(sum(unlist(deviceDim(unit(0, "in"), gradient$r1,
+                                        valueOnly=TRUE, device=TRUE))^2)),
+              sqrt(sum(unlist(deviceDim(gradient$r1, unit(0, "in"), 
+                                        valueOnly=TRUE, device=TRUE))^2)))
+    c2 <- deviceLoc(gradient$cx2, gradient$cy2, valueOnly=TRUE, device=TRUE)
+    r2 <- min(sqrt(sum(unlist(deviceDim(unit(0, "in"), gradient$r2,
+                                        valueOnly=TRUE, device=TRUE))^2)),
+              sqrt(sum(unlist(deviceDim(gradient$r2, unit(0, "in"), 
+                                        valueOnly=TRUE, device=TRUE))^2)))
+    grDevices::radialGradient(gradient$colours,
+                              gradient$stops,
+                              c1$x, c1$y, r1, c2$x, c2$y, r2,
                               extend=gradient$extend)
 }
 
