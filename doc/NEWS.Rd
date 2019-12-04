@@ -151,6 +151,8 @@
 
       \item New function \code{.class2()} provides the full character
       vector of class names used for S3 or S4 method dispatch.
+
+      \item Printing \code{methods(..)} now uses new \code{format()} method.
     }
   }% end{ NEW FEATURES }
 
