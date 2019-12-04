@@ -48,7 +48,7 @@
        should allow further optimizations in the future. It should also
        help make the internal code easier to maintain. This change is
        expected to have minimal impact on packages not using unsupported
-       coding practices in their C code.
+       coding practices in their C/C++ code.
     }
   }
 
@@ -103,10 +103,6 @@
       \code{normalizePath()} and \code{path.expand()}) treat this like
       any other non-existent file, often with a warning.
 
-      \item (Windows) \command{Rterm} now works also when invoked from
-      MSYS2 terminals.  Line editing is possible when \command{winpty}
-      is installed.
-
       \item New function \code{list2DF()} for creating data frames from
       lists of variables.
 
@@ -136,10 +132,6 @@
       \code{wilcox.test()} has been extended to handle one-sample and
       paired tests.
 
-      \item \code{normalizePath()} on Windows now resolves symbolic links
-      and normalizes case of long names of path elements in case-insensitive
-      folders (\PR{17165}).
-
       \item The \code{palette()} function has a new default set of
       colours (which are less saturated and have better accessibility
       properties).  There are also some new built-in palettes, which
@@ -147,15 +139,6 @@
       include the old default palette under the name \code{"R3"}. Finally,
       the new \code{palette.colors()} function allows a subset of
       colours to be selected from any of the built-in palettes.
-
-      \item \code{md5sum()} on Windows supports UTF-8 file names with
-      characters that cannot be translated to the native encoding
-      (\PR{17633}).
-
-      \item (Windows) \command{Rterm} gains new option \option{--workspace}
-      to specify the workspace to be restored.  This allows equals to be
-      part of the name when opening via Windows file associations (reported
-      by Christian Asseburg).
 
       \item \code{n2mfrow()} gains an option \code{asp = 1} to specify the
       aspect ratio, fulfilling the wish and extending the proposal of
@@ -170,6 +153,26 @@
       vector of class names used for S3 or S4 method dispatch.
     }
   }% end{ NEW FEATURES }
+
+  \subsection{Windows}{
+    \itemize{
+      \item \command{Rterm} now works also when invoked from MSYS2
+      terminals.  Line editing is possible when command \command{winpty} is
+      installed.
+
+      \item \code{normalizePath()} now resolves symbolic links and
+      normalizes case of long names of path elements in case-insensitive
+      folders (\PR{17165}).
+
+       \item \code{md5sum()} supports UTF-8 file names with characters
+      that cannot be translated to the native encoding (\PR{17633}).
+
+      \item \command{Rterm} gains a new option \option{--workspace} to
+      specify the workspace to be restored.  This allows equals to be
+      part of the name when opening via Windows file associations
+      (reported by Christian Asseburg).
+   }
+  }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
