@@ -85,10 +85,7 @@ function(object, filename = NULL, name = NULL,
                        if(!is.missing.arg(argls[[i]]))
                        paste0(" = ",
                               ## need to backtick symbols
-                              paste(deparse(argls[[i]],
-                                            backtick = TRUE,
-                                            width.cutoff = 500L),
-                                    collapse="\n")))
+                              deparse1(argls[[i]], "\n", backtick = TRUE)))
         if(i != n) Call <- paste0(Call, ", ")
     }
 

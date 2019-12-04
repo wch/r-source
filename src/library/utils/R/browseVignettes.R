@@ -37,8 +37,7 @@ browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
 print.browseVignettes <- function(x, ...)
 {
     if (length(x) == 0L) {
-        message(gettextf("No vignettes found by %s",
-                         paste(deparse(attr(x, "call")), collapse=" ")),
+        message(gettextf("No vignettes found by %s", deparse1(attr(x, "call"))),
                 domain = NA)
         return(invisible(x))
     }
@@ -83,7 +82,7 @@ print.browseVignettes <- function(x, ...)
 </head>
 <body>\n", css_file))
     cat(sprintf("<h2>Vignettes found by <code><q>%s</q></code></h2>",
-                paste(deparse(attr(x, "call")), collapse=" ")))
+                deparse1(attr(x, "call"))))
     cat("<div class=\"vignettes\">")
     for (pkg in names(x))
     {
