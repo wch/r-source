@@ -27,19 +27,21 @@
 \usage{
 head(x, \dots)
 \method{head}{default}(x, n = 6L, \dots)
-% head.matrix(x, n = 6L, \dots) # <-- gives NOTE
+% head.matrix(x, n = 6L, \dots) # <-- gives NOTE, even though exported
 \method{head}{matrix}(x, n = 6L, \dots) # is exported as head.matrix()
-\method{tail}{data.frame}(x, n = 6L, \dots)
-\method{head}{function}(x, n = 6L, \dots)
+## NB: The methods for 'data.frame' and 'array'  are identical to the 'matrix' one
+
 \method{head}{ftable}(x, n = 6L, \dots)
+\method{head}{function}(x, n = 6L, \dots)
+
 
 tail(x, \dots)
-\method{tail}{default}(x, n = 6L, \dots)
+\method{tail}{default}(x, n = 6L, addrownums = FALSE, \dots)
 \method{tail}{matrix}(x, n = 6L, addrownums = TRUE, \dots) # exported as tail.matrix()
-\method{tail}{data.frame}(x, n = 6L, \dots)
-\method{tail}{array}(x, n = 6L, addrownums = TRUE, \dots)
+## NB: The methods for 'data.frame', 'array', and 'table'
+##     are identical to the  'matrix'  one
+
 \method{tail}{ftable}(x, n = 6L, addrownums = FALSE, \dots)
-\method{tail}{table}(x, n = 6L, addrownums = TRUE, \dots)
 \method{tail}{function}(x, n = 6L, \dots)
 }
 \arguments{

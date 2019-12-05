@@ -3343,6 +3343,21 @@ stopifnot(exprs = {
     identical(dh1, lapply(t1, dim))
 })
 ## This was *not the case for  1d arrays in R <= 3.6.x
+##
+## matrix of "language" -- with expression()
+is.arr.expr <- function(x) is.array(x) && is.expression(x)
+e <- matrix(expression(foo(2), bar(x), r(foobar), foo(rbar)), 2)
+str(h1 <- head(e, 1))
+str(t1 <- tail(e, 1))
+stopifnot(exprs = {
+    is.arr.expr(e)  && identical(dim(e),  c(2L, 2L))
+    is.arr.expr(h1) && identical(dim(h1), c(1L, 2L))
+    is.arr.expr(t1) && identical(dim(t1), c(1L, 2L))
+    is.arr.expr(ee <- e[rep(1:2, 3), rep(1:2, 2)]) && identical(dim(ee), c(6L, 4L))
+    is.arr.expr(hee <- head(ee, n=c(2,-1))) && identical(dim(hee), 2:3)
+    is.arr.expr(tee <- tail(ee, n=c(-3,1))) && identical(dim(tee), c(3L, 1L))
+})
+## (for length(n) == 1,  has worked the same "always")
 
 
 ## Forgotten 'drop=FALSE' in plot.formula()

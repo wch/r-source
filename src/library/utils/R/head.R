@@ -46,24 +46,16 @@ head.matrix <-
 ## used on arrays (incl. matrices), data frames, .. :
 head.array <- function(x, n = 6L, ...)
 {
-    ## lapply over "dimensions" even for x without dim attribute.
-    has.d <- !is.null(d <- dim(x))
-    ds <- if(has.d) d else length(x)
-    ## non-specified dimensions (ie dims > length(n) or n[i] is NA)
-    ## *must* become missing .. but we cannot store and use it, just use it below
-    ## theMiss <- alist(. =)$.
-    indvecs <- lapply(seq_along(ds), function(i) {
-        ## NB: relies on n[i] returning NA if i > length(n)!
-        if(is.na(ni <- n[i])) return(alist(. =)$.)
-        ## else :
-        di <- ds[i]
-        ## negative indices work as a they always have, no restriction
-        ## against mixing negative and positive ns across different dims
-        ni <- if(ni < 0L) max(di + ni, 0L) else min(ni, di)
-        seq_len(ni)
-    })
-    do.call(`[`, c(list(x), indvecs, if(has.d) list(drop = FALSE)))
+    d <- dim(x)
+    args <- rep(alist(x, , drop = FALSE), c(1L, length(d), 1L))
+    ## non-specified dimensions (ie dims > length(n) or n[i] is NA) will stay missing / empty:
+    ii <- which(!is.na(n[seq_along(d)]))
+    args[1L + ii] <- lapply(ii, function(i)
+        seq_len(if((ni <- n[i]) < 0L) max(d[i] + ni, 0L) else min(ni, d[i]) ))
+    do.call("[", args)
 }
+## ../NAMESPACE defines  data.frame  method via head.array, too :
+## S3method(head, data.frame, head.array)
 
 
 head.ftable <- function(x, n = 6L, ...) {
@@ -82,50 +74,43 @@ head.function <- function(x, n = 6L, ...)
 
 tail <- function(x, ...) UseMethod("tail")
 
-## tail.array()  has  'addrownums = TRUE' ;  tail.default doesn't
-.tailindices <- function(x, n)
-{
-    ds <- dim(x) %||% length(x)
-    ## returns a list of vectors of indices in each dimension,
-    ## regardless of length of the  n  argument :
-    lapply(seq_along(ds), function(i) {
-        ## non-specified dimensions (ie dims > length(n) or n[i] is NA)
-        ## *must* become missing (NB: relies on n[i] returning NA if i > length(n))
-        if(is.na(ni <- n[i])) return(alist(. =)$.)
-        ## else :
-        dxi <- ds[i]
-        seq.int(to = dxi, ## handle negative n's; result is *integer* iff ds[] is
-                length.out = if(ni < 0L) max(dxi + ni, 0L) else min(ni, dxi))
-    })
-}
-
-tail.default <- function (x, n = 6L, ...)
+tail.default <- function (x, n = 6L, addrownums = FALSE, ...)
 {
     if(length(n) == 1L) {
         xlen <- length(x)
         n <- if (n < 0L) max(xlen + n, 0L) else min(n, xlen)
         x[seq.int(to = xlen, length.out = n)]
     } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
-        do.call(`[`, c(list(x), .tailindices(x, n),
-                       if(!is.null(dx)) list(drop = FALSE)))
+        tail.array(x, n=n, addrownums=addrownums, ...)
     else
         stop(gettextf("no method found for %s(., n=%s) and class %s",
                       "tail", deparse(n), sQuote(class(x))),
              domain = NA)
 }
 
-
 ## tail.matrix is exported (to be reused)
 tail.matrix <-
 tail.array <- function(x, n = 6L, addrownums = TRUE, ...)
 {
-    sel <- .tailindices(x, n)
-    ans <- do.call(`[`, c(list(x), sel, drop = FALSE))
-    if (length(dim(x)) > 1L && addrownums && is.null(rownames(x)))
+    d <- dim(x)
+    ## non-specified dimensions (ie dims > length(n) or n[i] is NA) will stay missing / empty:
+    ii <- which(!is.na(n[seq_along(d)]))
+    sel <- lapply(ii, function(i) {
+        di <- d[i]
+        ni <- n[i]
+        seq.int(to = di, ## handle negative n's; result is *integer* iff ds[] is
+                length.out = if(ni < 0L) max(di + ni, 0L) else min(ni, di))
+        })
+    args <- rep(alist(x, , drop = FALSE), c(1L, length(d), 1L))
+    args[1L + ii] <- sel
+    ans <- do.call("[", args)
+    if (addrownums && length(d) > 1L && is.null(rownames(x)))
         ## first element of sel is the rows selected
 	rownames(ans) <- format(sprintf("[%d,]", sel[[1]]), justify="right")
     ans
 }
+## ../NAMESPACE defines  data.frame and table  method via tail.array, too :
+## S3method(tail, data.frame, tail.array) ... and ditto for 'table'
 
 tail.ftable <- function(x, n = 6L, addrownums = FALSE, ...) {
     r <- format(x)
