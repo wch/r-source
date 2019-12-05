@@ -877,8 +877,13 @@
 
       \item The \code{plot()} method for \code{lm} and \code{glm} fits,
       \code{plot.lm()}, gains a new option \code{iter.smooth} with a
-      default of \code{0} for binomial fits, no longer down-weighting
-      when smoothing the residuals.
+      default of \code{0} for glm fits, no longer down-weighting "outliers"
+      when smoothing the residuals. Especially for binary observations
+      with high or low fitted probabilities, this effectively deleted
+      all observations of 1 or 0, respectively. Also, the type of
+      residuals used in the \code{glm} case has been switched to
+      \code{"pearson"} since deviance residuals do not in general have
+      approximately zero mean.
 
       \item \code{zip()} passes its list of files \emph{via} standard
       input to the external command when too long for the command line
