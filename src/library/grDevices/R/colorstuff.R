@@ -31,7 +31,8 @@ col2rgb <- function(col, alpha = FALSE)
     .Call(C_col2rgb, col, alpha)
 }
 
-gray <- function(level, alpha = NULL) .Call(C_gray, level, alpha)
+gray <- function(level, alpha)
+    .Call(C_gray, level, if (missing(alpha)) NULL else alpha)
 grey <- gray
 
 rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
@@ -49,10 +50,10 @@ rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
           maxColorValue, names)
 }
 
-hsv <- function(h = 1, s = 1, v = 1, alpha = 1)
+hsv <- function(h = 1, s = 1, v = 1, alpha)
     .Call(C_hsv, h, s, v, if(missing(alpha)) NULL else alpha)
 
-hcl <- function (h = 0, c = 35, l = 85, alpha = 1, fixup = TRUE)
+hcl <- function (h = 0, c = 35, l = 85, alpha, fixup = TRUE)
     .Call(C_hcl, h, c, l, if(missing(alpha)) NULL else alpha, fixup)
 
 
@@ -75,25 +76,24 @@ rgb2hsv <- function(r, g = NULL, b = NULL, maxColorValue = 255)
 ## A quick little ''rainbow'' function -- improved by MM
 ## doc in	../man/palettes.Rd
 rainbow <- function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n,
-                     alpha = 1, rev = FALSE)
+                     alpha, rev = FALSE)
 {
     if ((n <- as.integer(n[1L])) > 0) {
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
 	cols <- hsv(h = seq.int(start, (start > end)*1 + end,
 				length.out = n) %% 1,
-		    s, v, if(!missing(alpha)) alpha)
+		    s, v, alpha)
         if(rev) rev(cols) else cols
     } else character()
 }
 
-topo.colors <- function (n, alpha = 1, rev = FALSE)
+topo.colors <- function (n, alpha, rev = FALSE)
 {
     if ((n <- as.integer(n[1L])) > 0) {
 	j <- n %/% 3
 	k <- n %/% 3
 	i <- n - j - k
-        if(missing(alpha)) alpha <- NULL
 	cols <- c(if(i > 0) hsv(h = seq.int(from = 43/60, to = 31/60,
                                             length.out = i), alpha = alpha),
                   if(j > 0) hsv(h = seq.int(from = 23/60, to = 11/60,
@@ -106,14 +106,13 @@ topo.colors <- function (n, alpha = 1, rev = FALSE)
     } else character()
 }
 
-terrain.colors <- function (n, alpha = 1, rev = FALSE)
+terrain.colors <- function (n, alpha, rev = FALSE)
 {
     if ((n <- as.integer(n[1L])) > 0) {
 	k <- n%/%2
 	h <- c(4/12, 2/12, 0/12)
 	s <- c(1, 1, 0)
 	v <- c(0.65, 0.9, 0.95)
-        if(missing(alpha)) alpha <- NULL
 	cols <- c(hsv(h = seq.int(h[1L], h[2L], length.out = k),
                       s = seq.int(s[1L], s[2L], length.out = k),
                       v = seq.int(v[1L], v[2L], length.out = k), alpha = alpha),
@@ -125,12 +124,11 @@ terrain.colors <- function (n, alpha = 1, rev = FALSE)
     } else character()
 }
 
-heat.colors <- function (n, alpha = 1, rev = FALSE)
+heat.colors <- function (n, alpha, rev = FALSE)
 {
     if ((n <- as.integer(n[1L])) > 0) {
 	j <- n %/% 4
 	i <- n - j
-        if(missing(alpha)) alpha <- NULL
 	cols <- c(rainbow(i, start = 0, end = 1/6, alpha = alpha),
                   if (j > 0)
                       hsv(h = 1/6,
@@ -141,14 +139,13 @@ heat.colors <- function (n, alpha = 1, rev = FALSE)
     } else character()
 }
 
-cm.colors <- function (n, alpha = 1, rev = FALSE)
+cm.colors <- function (n, alpha, rev = FALSE)
 {
     if ((n <- as.integer(n[1L])) > 0L) {
 	even.n <- n %% 2L == 0L
 	k <- n %/% 2L
 	l1 <- k + 1L - even.n
 	l2 <- n - k + even.n
-        if(missing(alpha)) alpha <- NULL
 	cols <- c(if(l1 > 0L)
                       hsv(h =  6/12,
                           s = seq.int(.5, if(even.n) .5/k else 0,
@@ -161,7 +158,7 @@ cm.colors <- function (n, alpha = 1, rev = FALSE)
     } else character()
 }
 
-gray.colors <- function(n, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL,
+gray.colors <- function(n, start = 0.3, end = 0.9, gamma = 2.2, alpha,
                         rev = FALSE) {
     cols <- gray(seq.int(from = start^gamma,
                          to = end^gamma, length.out = n)^(1/gamma),
@@ -203,7 +200,7 @@ palette <- function (value)
 palette.pals <- function() names(.palette_colors_hex)
 
 palette.colors <- function(n = NULL, palette = "Okabe-Ito",
-                           alpha = 1, recycle = FALSE)
+                           alpha, recycle = FALSE)
 {
     ## number of colors
     if (!is.null(n)) {

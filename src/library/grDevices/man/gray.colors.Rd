@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/gray.colors.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gray.colors}
@@ -11,8 +11,8 @@
   Create a vector of \code{n} gamma-corrected gray colors.
 }
 \usage{
-gray.colors(n, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL, rev = FALSE)
-grey.colors(n, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL, rev = FALSE)
+gray.colors(n, start = 0.3, end = 0.9, gamma = 2.2, alpha, rev = FALSE)
+grey.colors(n, start = 0.3, end = 0.9, gamma = 2.2, alpha, rev = FALSE)
 }
 \arguments{
   \item{n}{the number of gray colors (\eqn{\ge 1}) to be in the
@@ -22,7 +22,7 @@ grey.colors(n, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL, rev = FALSE)
     indicates \code{"white"}).}
   \item{end}{ending gray level in the palette.}
   \item{gamma}{the gamma correction.}
-  \item{alpha}{the opacity, is specified.}
+  \item{alpha}{the opacity, if specified.}
   \item{rev}{logical indicating whether the ordering of the colors should
     be reversed.}
 }

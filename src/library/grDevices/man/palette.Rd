@@ -11,7 +11,7 @@
 \usage{
 palette(value)
 palette.pals()
-palette.colors(n = NULL, palette = "Okabe-Ito", alpha = 1, recycle = FALSE)
+palette.colors(n = NULL, palette = "Okabe-Ito", alpha, recycle = FALSE)
 }
 \arguments{
   \item{value}{an optional character vector specifying a new palette

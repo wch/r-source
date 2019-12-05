@@ -21,11 +21,11 @@ hcl.colors(n, palette = "viridis", alpha = NULL, rev = FALSE, fixup = TRUE)
 hcl.pals(type = NULL)
 
 rainbow(n, s = 1, v = 1, start = 0, end = max(1, n - 1)/n,
-        alpha = 1, rev = FALSE)
-heat.colors(n, alpha = 1, rev = FALSE)
-terrain.colors(n, alpha = 1, rev = FALSE)
-topo.colors(n, alpha = 1, rev = FALSE)
-cm.colors(n, alpha = 1, rev = FALSE)
+        alpha, rev = FALSE)
+heat.colors(n, alpha, rev = FALSE)
+terrain.colors(n, alpha, rev = FALSE)
+topo.colors(n, alpha, rev = FALSE)
+cm.colors(n, alpha, rev = FALSE)
 }
 \arguments{
   \item{n}{the number of colors (\eqn{\ge 1}) to be in the

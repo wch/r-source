@@ -324,7 +324,7 @@
       \item \code{cm.colors(n)} etc no longer append the code for
       \code{alpha = 1}, \code{"FF"}, to all colors.  Hence all eight
       \code{*.colors()} functions and \code{rainbow()} behave
-      consistently (\PR{17659}).
+      consistently and have the same non-explicit default (\PR{17659}).
     }
   }
 }
