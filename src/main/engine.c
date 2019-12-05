@@ -1057,7 +1057,7 @@ static void clipPolygon(int n, double *x, double *y,
     /* if bg not specified then draw as polyline rather than polygon
      * to avoid drawing line along border of clipping region
      * If bg was NA then it has been converted to fully transparent */
-    if (R_TRANSPARENT(gc->fill)) {
+    if (R_TRANSPARENT(gc->fill) && gc->patternFill == R_NilValue) {
 	int i;
 	xc = (double*) R_alloc(n + 1, sizeof(double));
 	yc = (double*) R_alloc(n + 1, sizeof(double));
