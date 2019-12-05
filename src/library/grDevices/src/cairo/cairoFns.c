@@ -336,7 +336,17 @@ static void Cairo_Polygon(int n, double *x, double *y,
     for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
     cairo_close_path(xd->cc);
 
-    if (R_ALPHA(gc->fill) > 0) {
+    /* patternFill overrides fill */
+    if (gc->patternFill != R_NilValue) { 
+        switch(R_GE_patternType(gc->patternFill)) {
+        case R_GE_linearGradientPattern: 
+            CairoLinearGradientFill(gc->patternFill, xd);
+            break;
+        case R_GE_radialGradientPattern:
+            CairoRadialGradientFill(gc->patternFill, xd);            
+            break;
+        }
+    } else if (R_ALPHA(gc->fill) > 0) {
 	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
 	CairoColor(gc->fill, xd);
 	cairo_fill_preserve(xd->cc);
