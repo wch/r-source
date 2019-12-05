@@ -1,6 +1,6 @@
 % File src/library/base/man/order.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{order}
@@ -11,7 +11,7 @@
 \description{
   \code{order} returns a permutation which rearranges its first
   argument into ascending or descending order, breaking ties by further
-  arguments. \code{sort.list} is the same, using only one argument.\cr
+  arguments.  \code{sort.list} does the same, using only one argument.\cr
   See the examples for how to use these functions to sort data frames,
   etc.
 }
@@ -25,7 +25,10 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 \arguments{
   \item{\dots}{a sequence of numeric, complex, character or logical
     vectors, all of the same length, or a classed \R object.}
-  \item{x}{an atomic vector.}
+  \item{x}{an atomic vector for \code{method}s \code{"shell"} and
+    \code{"quick"}.  When \code{x} is a non-atomic \R object, the default
+    \code{"auto"} and \code{"radix"} methods may work if \code{order(x,..)}
+    does.}
   \item{partial}{vector of indices for partial sorting.
     (Non-\code{NULL} values are not implemented.)}
   \item{decreasing}{logical.  Should the sort order be increasing or

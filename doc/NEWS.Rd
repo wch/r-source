@@ -150,9 +150,13 @@
       thanks to the patch proposal by Gabe Becker in \PR{17652}.
 
       \item New function \code{.class2()} provides the full character
-      vector of class names used for S3 or S4 method dispatch.
+      vector of class names used for S3 method dispatch.
 
       \item Printing \code{methods(..)} now uses new \code{format()} method.
+
+      \item \code{sort.list(x)} now works for non-atomic objects \code{x}
+      and \code{method="auto"} (default) or \code{"radix"} in cases
+      \code{order(x)} works.
     }
   }% end{ NEW FEATURES }
 
