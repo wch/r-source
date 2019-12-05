@@ -271,5 +271,21 @@ if(availableGB > 44) withAutoprint({ ## seen 40 G ('RES')
 })
 
 
+## readBin() and writeBin() for long rawConnection s, PR#17665
+## -------       --------            -------------
+if(availableGB > 14) withAutoprint({ ## seen 11.6 G
+    vec <- rep(0, 3e8) # object.size(vec) > 2^31
+    raw_con <- rawConnection(serialize(vec, NULL)) # ~ 5 sec.
+    ## Stepping through this connection gives an error after the 2^31st element:
+    repeat {
+        x <- readBin(raw_con, "raw", n = 1e+06)
+        if(length(x) == 0)
+            break
+        cat(".")
+    }; cat("\n")
+    ## Error in readBin(raw_con, "raw", n = 1e+06) : too large a block specified
+})
+
+
 gc() # NB the "max used"
 proc.time() # total  [ ~ 40 minutes in full case, 2019-04-12]
