@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/gray.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gray}
@@ -11,8 +11,8 @@
   Create a vector of colors from a vector of gray levels.
 }
 \usage{
-gray(level, alpha = NULL)
-grey(level, alpha = NULL)
+gray(level, alpha)
+grey(level, alpha)
 }
 \arguments{
   \item{level}{a vector of desired gray levels between \code{0} and

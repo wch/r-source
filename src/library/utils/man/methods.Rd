@@ -1,12 +1,13 @@
 % File src/library/utils/man/methods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methods}
 \title{List Methods for S3 Generic Functions or Classes}
 \alias{.S3methods}
 \alias{methods}
+\alias{format.MethodsFunction}
 \alias{print.MethodsFunction}
 \description{
   List all available methods for a S3 and S4 generic function, or all
@@ -16,6 +17,7 @@
 methods(generic.function, class)
 .S3methods(generic.function, class, envir=parent.frame())
 
+\S3method{format}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 \S3method{print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 }
 \arguments{
@@ -26,7 +28,7 @@ methods(generic.function, class)
   \item{envir}{the environment in which to look for the definition of
     the generic function, when the generic function is passed as a
     character string.}
-  \item{x}{typically the result of \code{methods(..)}, an \R object of % S3
+  \item{x}{typically the result of \code{methods(..)}, an \R object of S3
     class \code{"MethodsFunction"}, see \sQuote{Value} below.}
   \item{byclass}{an optional \code{\link{logical}} allowing to override
     the \code{"byclass"} attribute determining how the result is
@@ -107,6 +109,8 @@ methods(generic.function, class)
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \examples{
+methods(class = "MethodsFunction") # format and print
+
 require(stats)
 
 methods(summary)
@@ -119,11 +123,14 @@ methods("$<-")            # replacement function
 methods("+")              # binary operator
 methods("Math")           # group generic
 require(graphics)
-methods("axis")           # looks like a generic, but is not
+methods(axis)             # looks like a generic, but is not
+
+mf <- methods(format)     # quite a few; ... the last few :
+tail(cbind(meth = format(mf)))
 
 if(require(Matrix)) {
 print(methods(class = "Matrix"))  # S4 class
-m <- methods("dim")       # S3 and S4 methods
+m <- methods(dim)         # S3 and S4 methods
 print(m)
 print(attr(m, "info"))    # more extensive information
 

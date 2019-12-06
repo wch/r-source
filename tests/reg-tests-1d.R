@@ -3279,6 +3279,93 @@ for(fn in fnms) {
 ## in R <= 3.6.x, four of these functions gave extra alpha=1 info (appended "FF")
 
 
+## Generalized head(x, n) and tail() methods - for length(n) > 1 and arbitrary array x
+## PR#17652
+## -------- pkg glmmTMB uses head(.) on calls quite a bit
+cForm <- quote(some ~ really + quite + longish + but:still:not:very:long *
+                   (formula | reality / extreme:cases:you:never:think:of))
+fL <- eval(cForm)
+length(fRHS <- fL[[3]])
+cLong <- quote(fun_with_many_args(1,2,3, 4,5,6, 7,8,9))
+stopifnot(exprs = {
+    ## these all work as previously
+    head(cForm,1) == `~`()
+    head(cForm,2) == ~some
+    head(cForm) == cForm
+    is.call(cl <- quote((Days|Subject)))
+    is.call(fL)
+    inherits(fL, "formula")
+    head(fL) == fL
+    ## == tail ===
+    identical(tail(cForm,1), cForm[3])
+    tail(cForm,2) == cForm[2:3]
+    tail(cForm) == cForm
+    tail(fL) == fL
+    ##
+    ## -------------failed from here -----------------------
+    identical(head(cl), cl) ## for a few days, gave Error in do.call(..):  object 'Days' not found
+    identical( head(fRHS), fRHS)
+    identical(head(cLong), cLong[1:6])
+    identical(head(cLong, 2), cLong[1:2])
+    identical(head(cLong, 1), quote(fun_with_many_args()))
+    ## == tail ===
+    identical(tail(cl), cl) ## for a few days, gave Error ...:  object 'Days' not found
+    identical( tail(fRHS), fRHS)
+    identical(tail(cLong), cLong[tail(seq_along(cLong))])
+    identical(tail(cLong, 2), cLong[9:10])
+    identical(tail(cLong, 1), cLong[10])
+})
+##
+## Ensure that the code does not access dimensions it does not need (pkg TraMineR):
+`[.noCol` <- function(x, i, j, drop = FALSE) {
+    if(!missing(j)) stop(" [!] Column subscripts not allowed", call. = FALSE)
+    NextMethod("[")
+}
+noC <- structure(datasets::trees, class = c("noCol", "data.frame"))
+tools::assertError( noC[1,2], verbose=TRUE) # fails indeed
+stopifnot(exprs = {
+    identical(head(noC), noC[1:6,])
+    identical(head(noC, 1), noC[1, ])
+    identical(tail(noC, 1), noC[31,])
+})
+##
+## For all arrays 'a',  head(a, 1)  should correspond to  a[1, {,}* , drop = FALSE]
+str(Alis <- lapply(1:4, function(n) {d <- 1+(1:n); array(seq_len(prod(d)), d) }))
+h2 <- lapply(Alis, head, 2)
+h1 <- lapply(Alis, head, 1)
+t1 <- lapply(Alis, tail, 1)
+dh1 <- lapply(h1, dim)
+stopifnot(exprs = {
+    identical(h2, Alis)
+    vapply(h1, is.array, NA)
+    vapply(t1, is.array, NA)
+    identical(dh1, lapply(1:4, function(n) seq_len(n+1L)[-2L]))
+    identical(dh1, lapply(t1, dim))
+})
+## This was *not the case for  1d arrays in R <= 3.6.x
+##
+## matrix of "language" -- with expression()
+is.arr.expr <- function(x) is.array(x) && is.expression(x)
+e <- matrix(expression(foo(2), bar(x), r(foobar), foo(rbar)), 2)
+str(h1 <- head(e, 1))
+str(t1 <- tail(e, 1))
+stopifnot(exprs = {
+    is.arr.expr(e)  && identical(dim(e),  c(2L, 2L))
+    is.arr.expr(h1) && identical(dim(h1), c(1L, 2L))
+    is.arr.expr(t1) && identical(dim(t1), c(1L, 2L))
+    is.arr.expr(ee <- e[rep(1:2, 3), rep(1:2, 2)]) && identical(dim(ee), c(6L, 4L))
+    is.arr.expr(hee <- head(ee, n=c(2,-1))) && identical(dim(hee), 2:3)
+    is.arr.expr(tee <- tail(ee, n=c(-3,1))) && identical(dim(tee), c(3L, 1L))
+})
+## (for length(n) == 1,  has worked the same "always")
+
+
+## Forgotten 'drop=FALSE' in plot.formula()
+df <- data.frame(x=1:3, grp=c("A","A","B"))
+plot( ~grp, data=df, subset = x > 1)
+## failed in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

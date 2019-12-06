@@ -29,7 +29,8 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
 	  qqline = TRUE, cook.levels = c(0.5, 1.0),
 	  add.smooth = getOption("add.smooth"),
-          iter.smooth = if(isGlm && binomialLike) 0 else 3,
+          iter.smooth = if(isGlm # && binomialLike
+                           ) 0 else 3,
 	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25)
 {
     dropInf <- function(x, h) {
@@ -50,7 +51,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
         binomialLike <- family(x)$family == "binomial" # || "multinomial" (maybe)
     show <- rep(FALSE, 6)
     show[which] <- TRUE
-    r <- residuals(x)
+    r <- if(isGlm) residuals(x, type="pearson") else residuals(x)
     yh <- predict(x) # != fitted() for glm
     w <- weights(x)
     if(!is.null(w)) { # drop obs with zero wt: PR#6640
@@ -74,10 +75,10 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	}
     }
     if (any(show[2L:3L])) {
-	ylab23 <- if(isGlm) "Std. deviance resid." else "Standardized residuals"
+	ylab23 <- if(isGlm) "Std. Pearson resid." else "Standardized residuals"
 	r.w <- if (is.null(w)) r else sqrt(w) * r
         ## NB: rs is already NaN if r=0, hii=1
-	rs <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
+	rs <- dropInf( if (isGlm) rstandard(x, type="pearson") else r.w/(s * sqrt(1 - hii)), hii )
     }
 
     if (any(show[5L:6L])) { # using 'leverages'

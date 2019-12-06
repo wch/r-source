@@ -1,6 +1,7 @@
 .hcl_colors_parameters <- as.data.frame(rbind(structure(numeric(0L), .Dim = c(0L, 16L), .Dimnames = list(NULL,
                       c("type", "h1", "h2", "h3", "c1", "c2", "c3", "l1", "l2", "l3", "p1", "p2", "p3", "p4", "cmax1", "cmax2"))),
-    "Pastel 1"      = c(1,  0, NA, NA, 35, NA, NA, 85, NA, NA,   NA,   NA,   NA,   NA,      NA,      NA),
+    ##  1 : qualitative
+    "Pastel 1"      = c(     1,    0,   NA,   NA,   35,   NA,   NA,   85,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),
     "Dark 2"        = c(     1,    0,   NA,   NA,   50,   NA,   NA,   60,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),
     "Dark 3"        = c(     1,    0,   NA,   NA,   80,   NA,   NA,   60,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),
     "Set 2"         = c(     1,    0,   NA,   NA,   60,   NA,   NA,   70,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),
@@ -9,6 +10,7 @@
     "Cold"          = c(     1,  270,  150,   NA,   50,   NA,   NA,   70,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),
     "Harmonic"      = c(     1,   60,  240,   NA,   50,   NA,   NA,   70,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),
     "Dynamic"       = c(     1,   30,   NA,   NA,   50,   NA,   NA,   70,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),
+    ##  2 : sequential
     "Grays"         = c(     2,    0,   NA,   NA,    0,   NA,   NA,   10,   98,   NA,  1.3,   NA,   NA,   NA,      NA,      NA),
     "Light Grays"   = c(     2,    0,   NA,   NA,    0,   NA,   NA,   30,   90,   NA,  1.5,   NA,   NA,   NA,      NA,      NA),
     "Blues 2"       = c(     2,  260,   NA,   NA,   80,   NA,   NA,   30,   90,   NA,  1.5,   NA,   NA,   NA,      NA,      NA),
@@ -75,6 +77,7 @@
     "Blues"         = c(     2,  260,  220,   NA,   45,    5,   NA,   25,   98,   NA,  1.2,  1.3,   NA,   NA,      70,      NA),
     "Lajolla"       = c(     2,   90,  -20,   NA,   40,    5,   NA,   99,    5,   NA,  0.7,  0.8,   NA,   NA,     100,      NA),
     "Turku"         = c(     2,   10,  120,   NA,   20,    0,   NA,   95,    1,   NA,  1.7,  0.8,   NA,   NA,      55,      NA),
+    ##  3 : diverging
     "Blue-Red"      = c(     3,  260,    0,   NA,   80,   NA,   NA,   30,   90,   NA,  1.5,   NA,   NA,   NA,      NA,      NA),
     "Blue-Red 2"    = c(     3,  260,    0,   NA,  100,   NA,   NA,   50,   90,   NA,    1,   NA,   NA,   NA,      NA,      NA),
     "Blue-Red 3"    = c(     3,  255,   12,   NA,   50,   NA,   NA,   20,   97,   NA,    1,  1.3,   NA,   NA,      80,      NA),
@@ -93,6 +96,7 @@
     "Berlin"        = c(     3,  240,   15,   NA,   60,   NA,   NA,   75,    5,   NA,  1.2,  1.5,   NA,   NA,      80,      NA),
     "Lisbon"        = c(     3,  240,   85,   NA,   30,   NA,   NA,   98,    8,   NA,    1,   NA,   NA,   NA,      45,      NA),
     "Tofino"        = c(     3,  260,  120,   NA,   45,   NA,   NA,   90,    5,   NA,  0.8,    1,   NA,   NA,      55,      NA),
+    ##  4 : divergingx
     "ArmyRose"      = c(     4,    0,   NA,   93,   73,   18,   47,   58,   98,   52,  1.5,  0.8,  0.8,    1,      NA,      55),
     "Earth"         = c(     4,   43,   82,  221,   61,   30,   45,   50,   92,   52,    1,    1,  0.8,    1,      NA,      10),
     "Fall"          = c(     4,  133,   77,   21,   20,   35,  100,   35,   95,   50,    1,   NA,  1.5,   NA,      NA,      NA),
@@ -127,15 +131,15 @@ hcl.colors <- function(n, palette = "viridis",
     ## empty palette
     n <- as.integer(n[1L])
     if(n < 1L) return(character())
-    
+
     ## match palette (ignoring case, space, -, _)
     fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
     p <- charmatch(fx(palette), fx(rownames(.hcl_colors_parameters)))
     if(is.na(p)) stop("'palette' does not match any given palette")
     if(p < 1L) stop("'palette' is ambiguous")
     p <- .hcl_colors_parameters[p, ]
-    p$type <- as.integer(p$type)
-    p <- as.matrix(p)[1L, , drop = TRUE]
+    p.type <- as.character(p$type[1L]) # one of the factor levels
+    p <- unlist(p[1L, -1L, drop = TRUE])
 
     ## trajectories
     lintrj <- function(i, p1, p2) p2 - (p2 - p1) * i
@@ -144,7 +148,7 @@ hcl.colors <- function(n, palette = "viridis",
         pm - (pm - p1) * abs((i - j)/(1 - j)))
     seqhcl <- function(i, h1, h2, c1, c2, l1, l2, p1, p2, cmax) {
         j <- 1/(1 + abs(cmax - c1) / abs(cmax - c2))
-        if (!is.na(j) && (j <= 0 | j >= 1)) j <- NA
+        if (!is.na(j) && (j <= 0 || 1 <= j)) j <- NA
         hcl(h = lintrj(i, h1, h2),
             c = if(is.na(j)) lintrj(i^p1, c1, c2) else tritrj(i^p1, j, c1, c2, cmax),
 	    l = lintrj(i^p2, l1, l2),
@@ -153,41 +157,43 @@ hcl.colors <- function(n, palette = "viridis",
     }
 
     ## adapt defaults and set up HCL colors
-    if(p["type"] == 1L) {
-        ## qualitative defaults
-	if(is.na(p["h2"])) p["h2"] <- p["h1"] + 360 * (n - 1)/n
+    switch(p.type,
+           "qualitative" = {
+	if(is.na(p[["h2"]])) p[["h2"]] <- p[["h1"]] + 360 * (n - 1L)/n
         ## h/c/l trajectories
         i <- seq.int(1, 0, length.out = n)
-	col <- hcl(h = lintrj(i, p["h1"], p["h2"]), c = p["c1"], l = p["l1"], alpha = alpha, fixup = fixup)
-    } else if(p["type"] == 2L) {
-        ## sequential defaults
-	if(is.na(p["h2"])) p["h2"] <- p["h1"]
-	if(is.na(p["c2"])) p["c2"] <- 0
-	if(is.na(p["p2"])) p["p2"] <- p["p1"]
+	col <- hcl(h = lintrj(i, p[["h1"]], p[["h2"]]),
+                   c = p[["c1"]], l = p[["l1"]],
+		   alpha = alpha, fixup = fixup)
+    }, "sequential" = {
+	if(is.na(p[["h2"]])) p[["h2"]] <- p[["h1"]]
+	if(is.na(p[["c2"]])) p[["c2"]] <- 0
+	if(is.na(p[["p2"]])) p[["p2"]] <- p[["p1"]]
         ## h/c/l trajectories
         i <- seq.int(1, 0, length.out = n)
-	col <- seqhcl(i, p["h1"], p["h2"], p["c1"], p["c2"], p["l1"], p["l2"], p["p1"], p["p2"], p["cmax1"])
-    } else if(p["type"] == 3L) {
-        ## diverging defaults
-	if(is.na(p["p2"])) p["p2"] <- p["p1"]
-        ## h/c/l trajectories
-        n2 <- ceiling(n/2)    
-	i <- seq.int(1, by = -2/(n - 1), length.out = n2)
-	col <- c(seqhcl(i, p["h1"], p["h1"], p["c1"], 0, p["l1"], p["l2"], p["p1"], p["p2"], p["cmax1"]),
-	     rev(seqhcl(i, p["h2"], p["h2"], p["c1"], 0, p["l1"], p["l2"], p["p1"], p["p2"], p["cmax1"])))
-        if(floor(n/2) < n2) col <- col[-n2]
-    } else if(p["type"] == 4L) {
-        ## divergingx defaults
-	if(is.na(p["p2"])) p["p2"] <- p["p1"]
-	if(is.na(p["p4"])) p["p4"] <- p["p2"]
+	col <- seqhcl(i, p[["h1"]], p[["h2"]], p[["c1"]], p[["c2"]],
+			 p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]])
+    }, "diverging" = {
+	if(is.na(p[["p2"]])) p[["p2"]] <- p[["p1"]]
         ## h/c/l trajectories
         n2 <- ceiling(n/2)
 	i <- seq.int(1, by = -2/(n - 1), length.out = n2)
-	col <- c(seqhcl(i, p["h1"], if(is.na(p["h2"])) p["h1"] else p["h2"], p["c1"], p["c2"], p["l1"], p["l2"], p["p1"], p["p2"], p["cmax1"]),
-	     rev(seqhcl(i, p["h3"], if(is.na(p["h2"])) p["h3"] else p["h2"], p["c3"], p["c2"], p["l3"], p["l2"], p["p3"], p["p4"], p["cmax2"])))
-        if(floor(n/2) < n2) col <- col[-n2]
-    }
+	col <- c(seqhcl(i, p[["h1"]], p[["h1"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]]),
+	     rev(seqhcl(i, p[["h2"]], p[["h2"]], p[["c1"]], 0, p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]])))
+        if(n%/%2 < n2) col <- col[-n2]
+    }, "divergingx" = {
+	if(is.na(p[["p2"]])) p[["p2"]] <- p[["p1"]]
+	if(is.na(p[["p4"]])) p[["p4"]] <- p[["p2"]]
+        ## h/c/l trajectories
+        n2 <- ceiling(n/2)
+	i <- seq.int(1, by = -2/(n - 1), length.out = n2)
+	col <- c(seqhcl(i, p[["h1"]], if(is.na(p[["h2"]])) p[["h1"]] else p[["h2"]], p[["c1"]], p[["c2"]],
+			   p[["l1"]], p[["l2"]], p[["p1"]], p[["p2"]], p[["cmax1"]]),
+		 rev(seqhcl(i, p[["h3"]], if(is.na(p[["h2"]])) p[["h3"]] else p[["h2"]], p[["c3"]], p[["c2"]],
+			       p[["l3"]], p[["l2"]], p[["p3"]], p[["p4"]], p[["cmax2"]])))
+        if(n%/%2 < n2) col <- col[-n2]
+    },
+    stop("wrong 'type'; should never happen, please report!"))
 
-    if(rev) col <- rev(col)
-    return(col)
+    if(rev) rev(col) else col
 }

@@ -1635,15 +1635,16 @@ static R_INLINE void cleanupEnvVector(SEXP v)
     /* This is mainly for handling results of list(...) stored as a
        local variable. It would be cheaper to just use
        DECREMENT_REFCNT. It might also make sense to max out at len =
-       10 or so. But this may still be too expensive. */
+       10 or so, and to avoid ALTREP objects. */
 
     /* FIXME: Disabled for now since a BUILTIN that saves its (NR)
        list can cause problems. .External.graphics does this for
        recording. Probably the best option is to not have the args go
-       down as NR. */
+       down as NR. Most of these are fixed now, but this stilll seems
+       to wake things up, so hold off for now. */
     return;
 
-    R_xlen_t len = LENGTH(v);
+    R_xlen_t len = XLENGTH(v);
     for (R_xlen_t i = 0; i < len; i++)
 	SET_VECTOR_ELT(v, i, R_NilValue);
 }

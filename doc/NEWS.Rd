@@ -33,15 +33,22 @@
        \env{_R_CLASS_MATRIX_ARRAY_} is set to non-empty, but planned to be the
        new unconditional behavior when R 4.0.0 is released:
 
-       Newly, \code{matrix} objects also inherit from class \code{"array"},
-       namely, e.g., \code{class(diag(1))} is \code{c("matrix", "array")}
-       which invalidates code (wrongly) assuming that
-       \code{length(class(obj)) == 1}, a wrong assumption that is less
-       frequently fulfilled now.
-       (Currently only after setting \env{_R_CLASS_MATRIX_ARRAY_} to non-empty.)
+       \code{matrix} objects now also inherit from class \code{"array"},
+       namely, e.g., \code{class(diag(1))} is \code{c("matrix",
+       "array")} which invalidates code assuming that
+       \code{length(class(obj)) == 1}, an incorrect assumption that is
+       less frequently fulfilled now.
 
        S3 methods for \code{"array"}, i.e., \code{<someFun>.array()}, are
        now also dispatched for \code{matrix} objects.
+
+       \item \R now uses reference counting instead of the \code{NAMED}
+       mechanism for determining when objects can be safely mutated in
+       base C code. This reduces the need for copying is some cases and
+       should allow further optimizations in the future. It should also
+       help make the internal code easier to maintain. This change is
+       expected to have minimal impact on packages not using unsupported
+       coding practices in their C/C++ code.
     }
   }
 
@@ -96,10 +103,6 @@
       \code{normalizePath()} and \code{path.expand()}) treat this like
       any other non-existent file, often with a warning.
 
-      \item (Windows) \command{Rterm} now works also when invoked from
-      MSYS2 terminals.  Line editing is possible when \command{winpty}
-      is installed.
-
       \item New function \code{list2DF()} for creating data frames from
       lists of variables.
 
@@ -129,10 +132,6 @@
       \code{wilcox.test()} has been extended to handle one-sample and
       paired tests.
 
-      \item \code{normalizePath()} on Windows now resolves symbolic links
-      and normalizes case of long names of path elements in case-insensitive
-      folders (\PR{17165}).
-
       \item The \code{palette()} function has a new default set of
       colours (which are less saturated and have better accessibility
       properties).  There are also some new built-in palettes, which
@@ -141,15 +140,6 @@
       the new \code{palette.colors()} function allows a subset of
       colours to be selected from any of the built-in palettes.
 
-      \item \code{md5sum()} on Windows supports UTF-8 file names with
-      characters that cannot be translated to the native encoding
-      (\PR{17633}).
-
-      \item (Windows) \command{Rterm} gains new option \option{--workspace}
-      to specify the workspace to be restored.  This allows equals to be
-      part of the name when opening via Windows file associations (reported
-      by Christian Asseburg).
-
       \item \code{n2mfrow()} gains an option \code{asp = 1} to specify the
       aspect ratio, fulfilling the wish and extending the proposal of
       Michael Chirico in \PR{17648}.
@@ -157,9 +147,38 @@
       \item \code{head(x, n)} and \code{tail()} default and other S3 methods
       notably for \emph{vector} \code{n}, e.g. to get a \dQuote{corner} of
       a matrix, also extended for \code{array}'s of higher dimension,
-      thanks to the patch proposal by Gabe Becker in \PR{16764}.
+      thanks to the patch proposal by Gabe Becker in \PR{17652}.
+
+      \item New function \code{.class2()} provides the full character
+      vector of class names used for S3 method dispatch.
+
+      \item Printing \code{methods(..)} now uses new \code{format()} method.
+
+      \item \code{sort.list(x)} now works for non-atomic objects \code{x}
+      and \code{method="auto"} (default) or \code{"radix"} in cases
+      \code{order(x)} works.
     }
   }% end{ NEW FEATURES }
+
+  \subsection{Windows}{
+    \itemize{
+      \item \command{Rterm} now works also when invoked from MSYS2
+      terminals.  Line editing is possible when command \command{winpty} is
+      installed.
+
+      \item \code{normalizePath()} now resolves symbolic links and
+      normalizes case of long names of path elements in case-insensitive
+      folders (\PR{17165}).
+
+       \item \code{md5sum()} supports UTF-8 file names with characters
+      that cannot be translated to the native encoding (\PR{17633}).
+
+      \item \command{Rterm} gains a new option \option{--workspace} to
+      specify the workspace to be restored.  This allows equals to be
+      part of the name when opening via Windows file associations
+      (reported by Christian Asseburg).
+   }
+  }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
@@ -258,6 +277,12 @@
       an \R object of class \code{expression} (or other \sQuote{language})
       to work more consistently, thanks to suggestions by Suharto Anggono.
 
+      \item \code{conformMethod()} now works correctly in cases containing
+      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
+      creates methods with \code{"missing"} entries in the signature.
+      Consequently, \code{rematchDefinition()} is amended to use
+      appropriate \code{.local()} calls with named arguments where needed.
+
       \item \code{format.default(*, scientific = FALSE)} now corresponds to
       a practically most extreme \code{options(scipen = n)} setting rather
       than arbitrary \code{n = 100}.
@@ -284,7 +309,7 @@
       referenced first argument when used outside of a complex
       assignment context.
 
-      \item Better error message for \code{contour(*, levels=Inf)}.
+      \item Better error message for \code{contour(*, levels = Inf)}.
 
       \item \code{contourLines()}' value is no longer \code{invisible()}.
 
@@ -292,25 +317,26 @@
       coded characters representable in the current native encoding (at least
       on Windows 10 they were sometimes omitted, \PR{17632}).
 
-      \item The Fortran code for calculating the \code{coefficients} component in
-      \code{lm.influence} was very inefficient. It has (for now) been replaced with
-      much faster R code. \PR{17624}
+      \item The Fortran code for calculating the \code{coefficients}
+      component in \code{lm.influence} was very inefficient. It has (for
+      now) been replaced with much faster R code (\PR{17624}).
 
-      \item \code{cm.colors(n)} etc no longer append \code{alpha=1} codes
-      \code{"FF"} to all colors.  Hence all eight \code{*.colors()}
-      functions and \code{rainbow()} behave consistently, \PR{17659}.
+      \item \code{cm.colors(n)} etc no longer append the code for
+      \code{alpha = 1}, \code{"FF"}, to all colors.  Hence all eight
+      \code{*.colors()} functions and \code{rainbow()} behave
+      consistently and have the same non-explicit default (\PR{17659}).
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.6.1 patched}{
+\section{\Rlogo CHANGES IN R 3.6.2}{
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{runmed(x, *)} gets new option \code{na.action}
+      \item \code{runmed(x, *)} gains a new option \code{na.action}
       determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
 
-      \item \code{dotchart()} gets new options \code{ann}, \code{xaxt},
+      \item \code{dotchart()} gains new options \code{ann}, \code{xaxt},
       \code{frame.plot} and \code{log}.
     }
   }
@@ -321,6 +347,10 @@
       run-time to \command{configure}: this is safer with LTO builds and
       allows the detection to be overridden -- see file
       \file{config.site}.
+
+      \item Source-code changes enable installation on platforms using
+      \command{gcc -fno-common} (the expected default for
+      \command{gcc 10.x}).
     }
   }
 
@@ -370,9 +400,9 @@
 
   \subsection{Windows}{
     \itemize{
-      \item The default standard for C++ in package installation is C++11 (as it
-      has been on other platforms if available since \R{} 3.6.0: the
-      default toolchain on Windows was defaulting to C++98).
+      \item The default standard for C++ in package installation is
+      C++11 (as it has been on other platforms where available since \R{}
+      3.6.0: the default toolchain on Windows was defaulting to C++98).
     }
   }
 
@@ -397,12 +427,6 @@
       now works consistently for both \code{algorithm="Stuetzle"} and
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
       reported by Hilmar Berger.
-
-      \item \code{conformMethod()} now works correctly in cases containing
-      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
-      creates methods with \code{"missing"} entries in the signature.
-      Consequently, \code{rematchDefinition()} is amended to use
-      appropriate \code{.local()} calls with named arguments where needed.
 
       \item \code{apply(diag(3), 2:3, mean)} now gives a helpful error message.
 
@@ -469,6 +493,13 @@
 
       \item \code{canCoerce(obj, cl)} no longer assumes
       \code{length(class(obj)) == 1}.
+
+      \item \code{plot.formula(*, subset = *)} now also works in a boundary
+      case reported by Robert Schlicht (TU Dresden).
+
+      \item \code{readBin()} and \code{writeBin()} of a
+      \code{rawConnection()} now also work in large cases, thanks to a
+      report and proposal by Taeke Harkema in \PR{17665}.
     }
   }
 }
@@ -846,8 +877,13 @@
 
       \item The \code{plot()} method for \code{lm} and \code{glm} fits,
       \code{plot.lm()}, gains a new option \code{iter.smooth} with a
-      default of \code{0} for binomial fits, no longer down-weighting
-      when smoothing the residuals.
+      default of \code{0} for glm fits, no longer down-weighting "outliers"
+      when smoothing the residuals. Especially for binary observations
+      with high or low fitted probabilities, this effectively deleted
+      all observations of 1 or 0, respectively. Also, the type of
+      residuals used in the \code{glm} case has been switched to
+      \code{"pearson"} since deviance residuals do not in general have
+      approximately zero mean.
 
       \item \code{zip()} passes its list of files \emph{via} standard
       input to the external command when too long for the command line

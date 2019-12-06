@@ -184,9 +184,11 @@ typedef enum {
 typedef struct SEXPREC *SEXP;
 
 
-/* Define SWITH_TO_REFCNT to use reference counting instead of the
-   'NAMED' mechanism. */
-//#define SWITCH_TO_REFCNT
+/* Define SWITCH_TO_NAMED to use the 'NAMED' mechanism instead of
+   reference counting. */
+#if ! defined(SWITCH_TO_NAMED) && ! defined(SWITCH_TO_REFCNT)
+# define SWITCH_TO_REFCNT
+#endif
 
 #if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)
 # define COMPUTE_REFCNT_VALUES

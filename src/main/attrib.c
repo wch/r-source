@@ -209,7 +209,7 @@ SEXP do_shortRowNames(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* This is allowed to change 'out' */
+// .Internal(copyDFattr(in, out)) --  is allowed to change 'out' (!!)
 attribute_hidden
 SEXP do_copyDFattr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -285,7 +285,7 @@ void copyMostAttrib(SEXP inp, SEXP ans)
     for (s = ATTRIB(inp); s != R_NilValue; s = CDR(s)) {
 	if ((TAG(s) != R_NamesSymbol) &&
 	    (TAG(s) != R_DimSymbol) &&
-	    (TAG(s) != R_DimNamesSymbol)) {
+	    (TAG(s) != R_DimNamesSymbol)) { // << for matrix, array ..
 	    installAttrib(ans, TAG(s), CAR(s));
 	}
     }
@@ -395,7 +395,7 @@ static void checkNames(SEXP x, SEXP s)
 {
     if (isVector(x) || isList(x) || isLanguage(x)) {
 	if (!isVector(s) && !isList(s))
-	    error(_("invalid type (%s) for 'names': must be vector"),
+	    error(_("invalid type (%s) for 'names': must be vector or NULL"),
 		  type2char(TYPEOF(s)));
 	if (xlength(x) != xlength(s))
 	    error(_("'names' attribute [%d] must be the same length as the vector [%d]"), length(s), length(x));
@@ -889,7 +889,7 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
     }
 }
 
-// class(x)  &  .cache_class(classname, extendsForS3(.)) {called from methods} :
+// class(x)  &  .cache_class(classname, extendsForS3(.)) {called from methods}  & .class2() :
 SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   checkArity(op, args);
@@ -901,8 +901,11 @@ SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
       const char *class = translateChar(STRING_ELT(klass, 0));
       return cache_class(class, CADR(args));
   }
-  // class():
   check1arg(args, call, "x");
+  if(PRIMVAL(op) == 2)
+      // .class2()
+      return R_data_class2(CAR(args));
+  // class():
   return R_data_class(CAR(args), FALSE);
 }
 
@@ -1039,8 +1042,7 @@ SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = CAR(args);
     if (isEnvironment(ans) || isS4Environment(ans))
 	ans = R_lsInternal3(ans, TRUE, FALSE);
-    else if (isVector(ans) || isList(ans) || isLanguage(ans) ||
-	     IS_S4_OBJECT(ans))
+    else if (isVector(ans) || isList(ans) || isLanguage(ans) || IS_S4_OBJECT(ans))
 	ans = getAttrib(ans, R_NamesSymbol);
     else ans = R_NilValue;
     UNPROTECT(1);
@@ -1219,11 +1221,10 @@ SEXP dimgets(SEXP vec, SEXP val)
     R_xlen_t len, total;
     PROTECT(vec);
     PROTECT(val);
-    if ((!isVector(vec) && !isList(vec)))
-	error(_("invalid first argument"));
-
-    if (!isVector(val) && !isList(val))
-	error(_("invalid second argument"));
+    if (!isVector(vec) && !isList(vec))
+	error(_("invalid first argument, must be %s"), "vector (list or atomic)");
+    if (val != R_NilValue && !isVectorAtomic(val))
+	error(_("invalid second argument, must be %s"), "vector or NULL");
     val = coerceVector(val, INTSXP);
     UNPROTECT(1);
     PROTECT(val);
@@ -1338,20 +1339,17 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 /* brought to the front of the list.  This ensures that when both */
 /* "dim" and "dimnames" are set that the "dim" is attached first. */
 
-    SEXP object, attrs, names = R_NilValue /* -Wall */;
-    int i, nattrs;
-
     /* Extract the arguments from the argument list */
 
     checkArity(op, args);
 
-    object = CAR(args);
-    attrs = CADR(args);
+    SEXP object = CAR(args),
+	attrs = CADR(args), names;
 
     /* Do checks before duplication */
     if (!isNewList(attrs))
 	error(_("attributes must be a list or NULL"));
-    nattrs = length(attrs);
+    int nattrs = length(attrs), i;
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)
@@ -1362,7 +1360,8 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		error(_("all attributes must have names [%d does not]"), i+1);
 	    }
 	}
-    }
+    } else
+	names = R_NilValue; // -Wall
 
     if (object == R_NilValue) {
 	if (attrs == R_NilValue)

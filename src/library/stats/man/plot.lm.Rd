@@ -21,7 +21,7 @@
      id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
      qqline = TRUE, cook.levels = c(0.5, 1.0),
      add.smooth = getOption("add.smooth"),
-     iter.smooth = if(isGlm && binomialLike) 0 else 3,
+     iter.smooth = if(isGlm) 0 else 3,
      label.pos = c(4,2),
      cex.caption = 1, cex.oma.main = 1.25)
 }
@@ -61,8 +61,10 @@
     most plots; see also \code{panel} above.}
   \item{iter.smooth}{the number of robustness iterations, the argument
     \code{iter} in \code{\link{panel.smooth}()}; the default uses no such
-    iterations for \code{\link{glm}(*, family=binomial)} fits which is
-    particularly desirable for the (predominant) case of binary observations.}
+    iterations for \code{\link{glm}} fits which is
+    particularly desirable for the (predominant) case of binary
+    observations, but also for other models where the response
+    distribution can be highly skewed.}
   \item{label.pos}{positioning of labels, for the left half and right
     half of the graph respectively, for plots 1-3.}
   \item{cex.caption}{controls the size of \code{caption}.}
@@ -110,6 +112,11 @@
   standardized residuals (\code{\link{rstandard}(.)}) that are equal in
   magnitude are lines through the origin.  The contour lines are
   labelled with the magnitudes.
+
+  Notice that some plots may not make much sense for the \code{glm}
+  case; e.g., the normal Q-Q plot only makes sense if the distribution
+  is approximately normal.
+    
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980).

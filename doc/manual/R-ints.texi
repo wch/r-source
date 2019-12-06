@@ -275,6 +275,7 @@ possibly higher if @code{NAMEDMAX} is set to a higher value.
 @example
 b <- a
 @end example
+[The @code{NAMED} mechanism has been replaced by reference counting.]
 
 @noindent
 appears to make a copy of @code{a} and refer to it as @code{b}.
@@ -899,6 +900,7 @@ are encountered.
 (Evaluating a promise sets @code{NAMED = NAMEDMAX} on its value, so if the
 argument was a symbol its binding is regarded as having multiple
 references during the evaluation of the closure call.)
+[The @code{NAMED} mechanism has been replaced by reference counting.]
 
 If the closure is an S3 generic (that is, contains a call to
 @code{UseMethod}) the evaluation process is the same until the
@@ -2152,6 +2154,7 @@ primitive (as the closure wrapper of a @code{.Internal} will set
 @code{NAMED = NAMEDMAX} when the promise to the argument is evaluated) and
 hence replacement functions should where possible be primitive to avoid
 copying (at least in their default methods).
+[The @code{NAMED} mechanism has been replaced by reference counting.]
 
 @item
 The following functions are primitive for efficiency reasons:

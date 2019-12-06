@@ -6,11 +6,13 @@
 \name{head}
 \title{Return the First or Last Parts of an Object}
 \alias{head}
+\alias{head.data.frame}
 \alias{head.default}
 \alias{head.function}
 \alias{head.ftable}
 \alias{head.matrix}
 \alias{tail}
+\alias{tail.data.frame}
 \alias{tail.default}
 \alias{tail.function}
 \alias{tail.ftable}
@@ -25,17 +27,21 @@
 \usage{
 head(x, \dots)
 \method{head}{default}(x, n = 6L, \dots)
-% head.matrix(x, n = 6L, \dots) # <-- gives NOTE
+% head.matrix(x, n = 6L, \dots) # <-- gives NOTE, even though exported
 \method{head}{matrix}(x, n = 6L, \dots) # is exported as head.matrix()
-\method{head}{function}(x, n = 6L, \dots)
+## NB: The methods for 'data.frame' and 'array'  are identical to the 'matrix' one
+
 \method{head}{ftable}(x, n = 6L, \dots)
+\method{head}{function}(x, n = 6L, \dots)
+
 
 tail(x, \dots)
-\method{tail}{default}(x, n = 6L, \dots)
+\method{tail}{default}(x, n = 6L, addrownums = FALSE, \dots)
 \method{tail}{matrix}(x, n = 6L, addrownums = TRUE, \dots) # exported as tail.matrix()
-\method{tail}{array}(x, n = 6L, addrownums = TRUE, \dots)
+## NB: The methods for 'data.frame', 'array', and 'table'
+##     are identical to the  'matrix'  one
+
 \method{tail}{ftable}(x, n = 6L, addrownums = FALSE, \dots)
-\method{tail}{table}(x, n = 6L, addrownums = TRUE, \dots)
 \method{tail}{function}(x, n = 6L, \dots)
 }
 \arguments{
@@ -61,7 +67,6 @@ tail(x, \dots)
   in any remaining dimensions. \code{head.matrix()} and
   \code{tail.matrix()} are exported.
 
-
   The default and array(/matrix) methods for \code{head()} and
   \code{tail()} are quite general. They will work as is for any class
   which has a \code{dim()} method, a \code{length()} method (only
@@ -76,10 +81,15 @@ tail(x, \dots)
   names of the form \code{"[n,]"} to the result, so that it looks
   similar to the last lines of \code{x} when printed.  Setting
   \code{addrownums = FALSE} suppresses this behaviour.
+
+  As \code{\link{data.frame}} subsetting (\sQuote{indexing}) keeps
+  \code{\link{attributes}}, so do the \code{head()} and \code{tail()}
+  methods for data frames.
 }
 \value{
-  An object (usually) like \code{x} but generally smaller.  For
-  \code{\link{ftable}} objects \code{x}, a transformed \code{format(x)}.
+  An object (usually) like \code{x} but generally smaller.  Hence, for
+  \code{\link{array}}s, the result corresponds to \code{x[.., drop=FALSE]}.
+  For \code{\link{ftable}} objects \code{x}, a transformed \code{format(x)}.
 }
 \author{
   Patrick Burns, improved and corrected by R-Core. Negative argument
@@ -109,8 +119,30 @@ tail(iris3)
 tail(iris3, c(6L, 2L))
 tail(iris3, c(6L, -1L, 2L))
 
+## data frame w/ a (non-standard) attribute:
+treeS <- structure(trees, foo = "bar")
+(n <- nrow(treeS))
+stopifnot(exprs = { # attribute is kept
+    identical(htS <- head(treeS), treeS[1:6, ])
+    identical(attr(htS, "foo") , "bar")
+    identical(tlS <- tail(treeS), treeS[(n-5):n, ])
+    ## BUT if I use "useAttrib(.)", this is *not* ok, when n is of length 2:
+    ## --- because [i,j]-indexing of data frames *also* drops "other" attributes ..
+    identical(tail(treeS, 3:2), treeS[(n-2):n, 2:3] )
+})
+
 tail(library) # last lines of function
 
 head(stats::ftable(Titanic))
+
+## 1d-array (with named dim) :
+a1 <- array(1:7, 7); names(dim(a1)) <- "O2"
+stopifnot(exprs = {
+  identical( tail(a1, 10), a1)
+  identical( head(a1, 10), a1)
+  identical( head(a1, 1), a1 [1 , drop=FALSE] ) # was a1[1] in R <= 3.6.x
+  identical( tail(a1, 2), a1[6:7])
+  identical( tail(a1, 1), a1 [7 , drop=FALSE] ) # was a1[7] in R <= 3.6.x
+})
 }
-\keyword{ manip }
+\keyword{manip}

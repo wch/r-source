@@ -221,22 +221,22 @@ function(generic.function, class)
     envir <- parent.frame()
     if(!missing(generic.function) && !is.character(generic.function)) {
         what <- substitute(generic.function)
-        if(is.function(generic.function) &&
-           is.call(what) &&
-           (deparse(what[[1L]])[1L] %in% c("::", ":::"))) {
-            generic.function <- as.character(what[[3L]])
-            envir <- asNamespace(as.character(what[[2L]]))
-        } else
-            generic.function <- deparse(what)
+        generic.function <-
+            if(is.function(generic.function) &&
+               is.call(what) &&
+               (deparse(what[[1L]], nlines=1L) %in% c("::", ":::"))) {
+                what <- as.character(what[2:3])
+                envir <- asNamespace(what[[1L]])
+                what[[2L]]
+            } else
+                deparse(what)
     }
 
     if (!missing(class) && !is.character(class))
         class <- deparse1(substitute(class))
 
     s3 <- .S3methods(generic.function, class, envir)
-    s4 <- if (.isMethodsDispatchOn()) {
-        methods::.S4methods(generic.function, class)
-    } else NULL
+    s4 <- if(.isMethodsDispatchOn()) methods::.S4methods(generic.function, class)
 
     .MethodsFunction(s3, s4, missing(generic.function))
 }
@@ -254,16 +254,18 @@ function(s3, s4, byclass)
               class="MethodsFunction")
 }
 
-print.MethodsFunction <- function(x, byclass = attr(x, "byclass"), ...)
+format.MethodsFunction <- function(x, byclass = attr(x, "byclass"), ...)
 {
     info <- attr(x, "info")
-    values <-
 	if (byclass)
 	    unique(info$generic)
 	else
 	    paste0(rownames(info), visible = ifelse(info$visible, "", "*"))
+}
 
-    if (length(values)) {
+print.MethodsFunction <- function(x, byclass = attr(x, "byclass"), ...)
+{
+    if (length(values <- format(x, byclass=byclass, ...))) {
         print(noquote(values))
         cat("see '?methods' for accessing help and source code\n")
     } else
@@ -350,7 +352,7 @@ isS3method <- function(method, f, class, envir = parent.frame())
 	    if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
 		## assumes the default method is the S3 generic function
 		genfun <- methods::selectMethod(genfun, "ANY")
-            .defenv_for_S3_registry(genfun)            
+            .defenv_for_S3_registry(genfun)
 	}
     S3Table <- get(".__S3MethodsTable__.", envir = defenv)
     ## return
@@ -611,7 +613,7 @@ function(x)
 .defenv_for_S3_registry <-
 function(genfun)
 {
-    if (typeof(genfun) == "closure") {    
+    if (typeof(genfun) == "closure") {
         lookup <- Sys.getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_",
                              "TRUE")
         lookup <- tools:::config_val_to_logical(lookup)

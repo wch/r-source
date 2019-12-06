@@ -564,21 +564,9 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 		      nargs, symbol.symbol.external->numArgs, buf);
     }
 
-#ifdef SWITCH_TO_REFCNT
     /* args is escaping into user C code and might get captured, so
        make sure it is reference counting. */
-    for (SEXP a = args; a != R_NilValue; a = CDR(a))
-	if (! TRACKREFS(a)) {
-	    ENABLE_REFCNT(a);
-	    INCREMENT_REFCNT(CAR(a));
-	    INCREMENT_REFCNT(CDR(a));
-#ifdef TESTING_WRITE_BARRIER
-	    /* this should not see non-tracking arguments */
-	    if (! TRACKREFS(CAR(a)))
-		error("argument not tracking references");
-#endif
-	}
-#endif
+    R_args_enable_refcnt(args);
 
     if (PRIMVAL(op) == 1) {
 	R_ExternalRoutine2 fun = (R_ExternalRoutine2) ofun;
@@ -1360,6 +1348,9 @@ SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (GErecording(call, dd)) { // which is record && call != R_NilValue
 	if (!GEcheckState(dd))
 	    errorcall(call, _("invalid graphics state"));
+	/* args is escaping, so make sure it is reference counting. */
+	/* should alread be handled in do_External, but be safe ... */
+	R_args_enable_refcnt(args);
 	GErecordGraphicOperation(op, args, dd);
     }
     UNPROTECT(1);
@@ -1377,6 +1368,8 @@ SEXP attribute_hidden do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
 	    errorcall(call, _("invalid graphics state"));
+	/* args is escaping, so make sure it is reference counting. */
+	R_args_enable_refcnt(args);
 	GErecordGraphicOperation(op, args, dd);
     }
     UNPROTECT(1);

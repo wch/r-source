@@ -28,29 +28,35 @@
 
 head <- function(x, ...) UseMethod("head")
 
-## used on vectors, arrays, data frames, .. :
 head.default <- function(x, n = 6L, ...)
 {
-    ## lapply over "dimensions" even for x without dim attribute.
-    ds <- dim(x) %||% length(x)
-    indvecs <- lapply(seq_along(ds), function(i) {
-        ## All non-specified dimensions (ie dims > length(n) or n[i] is NA)
-        ## are taken to be the maximum (display all indices in that dimension)
-        di <- ds[i]
-        ## NB: relies on n[i] returning NA if i > length(n)!
-        ni <- if(!is.na(n[i])) n[i] else di
-        ## negative indices work as a they always have, no restriction
-        ## against mixing negative and positive ns across different dims
-        ni <- if(ni < 0L) max(di + ni, 0L) else min(ni, di)
-        seq_len(ni)
-    })
-    do.call(`[`, c(list(x), indvecs,
-                   if(!is.null(dim(x))) list(drop = FALSE)))
+    if(length(n) == 1L) {
+        n <- if (n < 0L) max(length(x) + n, 0L) else min(n, length(x))
+        x[seq_len(n)]
+    } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
+        head.array(x, n, ...)
+    else
+        stop(gettextf("no method found for %s(., n=%s) and class %s",
+                      "head", deparse(n), sQuote(class(x))),
+             domain = NA)
 }
 
 ## head.matrix and tail.matrix are now exported (to be used for other classes)
-head.matrix <- head.default
-## head.array is not needed (nor would head.matrix be) as it would be identical
+head.matrix <-
+## used on arrays (incl. matrices), data frames, .. :
+head.array <- function(x, n = 6L, ...)
+{
+    d <- dim(x)
+    args <- rep(alist(x, , drop = FALSE), c(1L, length(d), 1L))
+    ## non-specified dimensions (ie dims > length(n) or n[i] is NA) will stay missing / empty:
+    ii <- which(!is.na(n[seq_along(d)]))
+    args[1L + ii] <- lapply(ii, function(i)
+        seq_len(if((ni <- n[i]) < 0L) max(d[i] + ni, 0L) else min(ni, d[i]) ))
+    do.call("[", args)
+}
+## ../NAMESPACE defines  data.frame  method via head.array, too :
+## S3method(head, data.frame, head.array)
+
 
 head.ftable <- function(x, n = 6L, ...) {
     r <- format(x)
@@ -68,41 +74,43 @@ head.function <- function(x, n = 6L, ...)
 
 tail <- function(x, ...) UseMethod("tail")
 
-## tail.array()  has  'addrownums = TRUE' ;  tail.default doesn't
-.tailindices <- function(x, n)
+tail.default <- function (x, n = 6L, addrownums = FALSE, ...)
 {
-    ds <- dim(x) %||% length(x)
-    ## returns a list of vectors of indices in each dimension,
-    ## regardless of length of the  n  argument :
-    lapply(seq_along(ds), function(i) {
-        dxi <- ds[i]
-        ## select all indices (full dim) if not specified
-        ni <- if(!is.na(n[i])) n[i] else dxi
-        seq.int(to = dxi, ## handle negative n's; result is *integer* iff ds[] is
-                length.out = if(ni < 0L) max(dxi + ni, 0L) else min(ni, dxi))
-    })
+    if(length(n) == 1L) {
+        xlen <- length(x)
+        n <- if (n < 0L) max(xlen + n, 0L) else min(n, xlen)
+        x[seq.int(to = xlen, length.out = n)]
+    } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
+        tail.array(x, n=n, addrownums=addrownums, ...)
+    else
+        stop(gettextf("no method found for %s(., n=%s) and class %s",
+                      "tail", deparse(n), sQuote(class(x))),
+             domain = NA)
 }
-
-# also for data.frame
-tail.default <- function (x, n = 6L, ...)
-{
-    do.call(`[`, c(list(x), .tailindices(x, n),
-                   if(!is.null(dim(x))) list(drop = FALSE)))
-}
-
 
 ## tail.matrix is exported (to be reused)
-tail.array <- tail.matrix <-
-    tail.table <- function(x, n = 6L, addrownums = TRUE, ...)
+tail.matrix <-
+tail.array <- function(x, n = 6L, addrownums = TRUE, ...)
 {
-    sel <- .tailindices(x, n)
-    ans <- do.call(`[`, c(list(x), sel, drop = FALSE))
-
-    if (length(dim(x)) > 1L && addrownums && is.null(rownames(x)))
+    d <- dim(x)
+    ## non-specified dimensions (ie dims > length(n) or n[i] is NA) will stay missing / empty:
+    ii <- which(!is.na(n[seq_along(d)]))
+    sel <- lapply(ii, function(i) {
+        di <- d[i]
+        ni <- n[i]
+        seq.int(to = di, ## handle negative n's; result is *integer* iff ds[] is
+                length.out = if(ni < 0L) max(di + ni, 0L) else min(ni, di))
+        })
+    args <- rep(alist(x, , drop = FALSE), c(1L, length(d), 1L))
+    args[1L + ii] <- sel
+    ans <- do.call("[", args)
+    if (addrownums && length(d) > 1L && is.null(rownames(x)))
         ## first element of sel is the rows selected
 	rownames(ans) <- format(sprintf("[%d,]", sel[[1]]), justify="right")
     ans
 }
+## ../NAMESPACE defines  data.frame and table  method via tail.array, too :
+## S3method(tail, data.frame, tail.array) ... and ditto for 'table'
 
 tail.ftable <- function(x, n = 6L, addrownums = FALSE, ...) {
     r <- format(x)

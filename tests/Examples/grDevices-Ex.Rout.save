@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-11-26 r77462) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-12-03 r77513) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -181,9 +181,9 @@ $allowed
 [3,] "#61D04F" "#61D04FBF"
 [4,] "#2297E6" "#2297E6BF"
 [5,] "#28E2E5" "#28E2E5BF"
-[6,] "#D03AF5" "#D03AF5BF"
-[7,] "#EEC21F" "#EEC21FBF"
-[8,] "#656565" "#656565BF"
+[6,] "#CD0BBC" "#CD0BBCBF"
+[7,] "#F5C710" "#F5C710BF"
+[8,] "gray62"  "#9E9E9EBF"
 > 
 > ##  alpha = 1/2 * previous alpha --> opaque colors
 > x <- palette(adjustcolor(palette(), 0.5))
@@ -201,9 +201,9 @@ $allowed
 [3,] "#61D04F" "#C3FFB799"
 [4,] "#2297E6" "#97E9FF99"
 [5,] "#28E2E5" "#9BFFFF99"
-[6,] "#D03AF5" "#FFA8FF99"
-[7,] "#EEC21F" "#FFFF9599"
-[8,] "#656565" "#C6C6C699"
+[6,] "#CD0BBC" "#FF87FF99"
+[7,] "#F5C710" "#FFFF8B99"
+[8,] "gray62"  "#EEEEEE99"
 > op <- par(bg = adjustcolor("goldenrod", offset = -rep(.4, 4)), xpd = NA)
 > plot(0:9, 0:9, type = "n", axes = FALSE, xlab = "", ylab = "",
 +      main = "adjustcolor() -> translucent")
@@ -219,8 +219,8 @@ $allowed
 [3,] 0.3333333 0.3333333 0.3333333    0
 [4,] 0.0000000 0.0000000 0.0000000    1
 > adjustcolor(x, transform = M)
-[1] "#000000FF" "#8A8A8AFF" "#808080FF" "#8A8A8AFF" "#A5A5A5FF" "#AAAAAAFF"
-[7] "#9A9A9AFF" "#656565FF"
+[1] "#000000FF" "#8A8A8AFF" "#808080FF" "#8A8A8AFF" "#A5A5A5FF" "#878787FF"
+[7] "#999999FF" "#9E9E9EFF"
 > 
 > ## revert to previous palette: active
 > palette(opal)
@@ -661,9 +661,9 @@ blue  225      71
 > 
 > col2rgb(1:8)  # the ones from the palette() (if the default)
       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
-red      0  223   97   34   40  208  238  101
-green    0   83  208  151  226   58  194  101
-blue     0  107   79  230  229  245   31  101
+red      0  223   97   34   40  205  245  158
+green    0   83  208  151  226   11  199  158
+blue     0  107   79  230  229  188   16  158
 > 
 > col2rgb(paste0("gold", 1:4))
       [,1] [,2] [,3] [,4]
@@ -1895,9 +1895,9 @@ black     0     0    0
 #61D04F  97   208   79
 #2297E6  34   151  230
 #28E2E5  40   226  229
-#D03AF5 208    58  245
-#EEC21F 238   194   31
-#656565 101   101  101
+#CD0BBC 205    11  188
+#F5C710 245   199   16
+gray62  158   158  158
 > zapsmall(lab <- convertColor(cols, from = "sRGB", to = "Lab", scale.in = 255))
                L         a         b
 black    0.00000   0.00000   0.00000
@@ -1905,9 +1905,9 @@ black    0.00000   0.00000   0.00000
 #61D04F 74.89688 -55.97739  53.00681
 #2297E6 59.98342  -3.54255 -48.62932
 #28E2E5 82.01645 -41.73498 -14.10432
-#D03AF5 55.21747  80.08516 -63.84886
-#EEC21F 80.15007   2.12223  77.35114
-#656565 42.78380   0.00000   0.00000
+#CD0BBC 48.23048  79.84315 -42.53326
+#F5C710 82.05072   2.31748  81.63638
+gray62  65.11425   0.00000   0.00000
 > stopifnot(all.equal(cols, # converting back.. getting the original:
 +    round(convertColor(lab, from = "Lab", to = "sRGB", scale.out = 255)),
 +                     check.attributes = FALSE))
@@ -2424,19 +2424,19 @@ display gamma = 2.2
 [3,]  97   208   79
 [4,]  34   151  230
 [5,]  40   226  229
-[6,] 208    58  245
-[7,] 238   194   31
-[8,] 101   101  101
+[6,] 205    11  188
+[7,] 245   199   16
+[8,] 158   158  158
 > zapsmall(luv <- convertColor(cols, from = "sRGB", to = "Luv", scale.in = 255))
-            L         u          v
-[1,]  0.00000   0.00000    0.00000
-[2,] 55.16051  99.94871    8.95299
-[3,] 74.89688 -51.95694   73.49647
-[4,] 59.98342 -36.43653  -76.74275
-[5,] 82.01645 -61.64283  -15.85619
-[6,] 55.21747  51.07792 -108.40014
-[7,] 80.15007  38.24066   81.46952
-[8,] 42.78380   0.00000    0.00000
+            L         u         v
+[1,]  0.00000   0.00000   0.00000
+[2,] 55.16051  99.94871   8.95299
+[3,] 74.89688 -51.95694  73.49647
+[4,] 59.98342 -36.43653 -76.74275
+[5,] 82.01645 -61.64283 -15.85619
+[6,] 48.23048  74.70628 -73.95136
+[7,] 82.05072  40.07525  84.92489
+[8,] 65.11425   0.00000   0.00000
 > (hex <- convertColor(luv, from = "Luv",  to = hexcolor, scale.out = NULL))
      [,1]     
 [1,] "#000000"
@@ -2444,9 +2444,9 @@ display gamma = 2.2
 [3,] "#61D04F"
 [4,] "#2297E6"
 [5,] "#28E2E5"
-[6,] "#D03AF5"
-[7,] "#EEC21F"
-[8,] "#656565"
+[6,] "#CD0BBC"
+[7,] "#F5C710"
+[8,] "#9E9E9E"
 > 
 > ## must make hex a matrix before using it
 > (cc <- round(convertColor(as.matrix(hex), from = hexcolor, to = "sRGB",
@@ -2457,9 +2457,9 @@ display gamma = 2.2
 [3,]   97  208   79
 [4,]   34  151  230
 [5,]   40  226  229
-[6,]  208   58  245
-[7,]  238  194   31
-[8,]  101  101  101
+[6,]  205   11  188
+[7,]  245  199   16
+[8,]  158  158  158
 > stopifnot(cc == cols)
 > 
 > ## Internally vectorized version of hexcolor, notice the use
@@ -2485,9 +2485,9 @@ display gamma = 2.2
 [3,]   97  208   79
 [4,]   34  151  230
 [5,]   40  226  229
-[6,]  208   58  245
-[7,]  238  194   31
-[8,]  101  101  101
+[6,]  205   11  188
+[7,]  245  199   16
+[8,]  158  158  158
 > stopifnot(ccv == cols)
 > 
 > 
@@ -2577,8 +2577,8 @@ Sturges   Scott      FD
 > require(graphics)
 > 
 > palette()               # obtain the current palette
-[1] "black"   "#DF536B" "#61D04F" "#2297E6" "#28E2E5" "#D03AF5" "#EEC21F"
-[8] "#656565"
+[1] "black"   "#DF536B" "#61D04F" "#2297E6" "#28E2E5" "#CD0BBC" "#F5C710"
+[8] "gray62" 
 > palette("R3");palette() # old default palette
 [1] "black"   "red"     "green3"  "blue"    "cyan"    "magenta" "yellow" 
 [8] "gray"   
@@ -4240,7 +4240,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.73 0.274 11.046 0 0 
+Time elapsed:  10.896 0.247 11.197 0 0 
 > grDevices::dev.off()
 null device 
           1 

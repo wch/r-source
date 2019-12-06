@@ -19,7 +19,7 @@ sum(\dots, na.rm = FALSE)
     removed?}
 }
 \value{
-  The sum.  If all of the \eqn{M} \code{\dots} arguments are of type
+  The sum.  If all of the \code{\dots} arguments are of type
   integer or logical, then the sum is \code{\link{integer}} when
   possible and is \code{double} otherwise.  Integer overflow should no
   longer happen since \R version 3.5.0.
