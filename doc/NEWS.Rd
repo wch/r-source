@@ -172,6 +172,10 @@
 
       \item \code{plot.formula(*, subset = *)} now also works in a boundary
       case reported by Robert Schlicht (TU Dresden).
+
+      \item \code{readBin()} and \code{writeBin()} of a
+      \code{rawConnection()} now also work in large cases, thanks to a
+      report and proposal by Taeke Harkema in \PR{17665}.
     }
   }
 }
