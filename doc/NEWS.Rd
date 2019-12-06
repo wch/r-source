@@ -952,6 +952,10 @@
       package repository index, instead of rebuilding the index from
       scratch. Thanks to Gabe Becker in \PR{17544} for the patch, based
       on part of his \pkg{switchr} package.
+
+      \item In \code{plot.lm}, Cook's distance was computed from unweighted
+      residuals, leading to inconsistencies. Replaced with usual weighted
+      version. (\PR{16056}) 
     }
   }
 

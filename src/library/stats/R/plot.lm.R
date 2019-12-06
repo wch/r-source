@@ -68,17 +68,19 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	     else sqrt(deviance(x)/df.residual(x))
 	hii <- (infl <- influence(x, do.coef = FALSE))$hat
 	if (any(show[4L:6L])) {
-	    cook <-
-		if (isGlm)
-		    cooks.distance (x, infl = infl)
-		else cooks.distance(x, infl = infl, sd = s, res = r, hat = hii)
+            cook <- cooks.distance(x, infl)
+	    ## cook <-
+	    ##     if (isGlm)
+	    ##         cooks.distance (x, infl = infl)
+	    ##     else cooks.distance(x, infl = infl, sd = s, res = r, hat = hii)
 	}
     }
-    if (any(show[2L:3L])) {
-	ylab23 <- if(isGlm) "Std. Pearson resid." else "Standardized residuals"
+    if (any(show[c(2L,3L,5L)])) {
+        ## (Defensive programming used when fusing code for 2:3 and 5)
+	ylab5 <- ylab23 <- if(isGlm) "Std. Pearson resid." else "Standardized residuals"
 	r.w <- if (is.null(w)) r else sqrt(w) * r
         ## NB: rs is already NaN if r=0, hii=1
-	rs <- dropInf( if (isGlm) rstandard(x, type="pearson") else r.w/(s * sqrt(1 - hii)), hii )
+	rsp <- rs <- dropInf( if (isGlm) rstandard(x, type="pearson") else r.w/(s * sqrt(1 - hii)), hii )
     }
 
     if (any(show[5L:6L])) { # using 'leverages'
@@ -194,10 +196,11 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
         dev.flush()
     }
     if (show[5L]) {
-        ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
-        r.w <- residuals(x, "pearson")
-        if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
- 	rsp <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
+        ### Now handled earlier, consistently with 2:3, except variable naming
+        ## ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
+        ## r.w <- residuals(x, "pearson")
+        ## if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
+ 	## rsp <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
 	ylim <- range(rsp, na.rm = TRUE)
 	if (id.n > 0) {
 	    ylim <- extendrange(r = ylim, f = 0.08)
