@@ -3287,6 +3287,8 @@ cForm <- quote(some ~ really + quite + longish + but:still:not:very:long *
 fL <- eval(cForm)
 length(fRHS <- fL[[3]])
 cLong <- quote(fun_with_many_args(1,2,3, 4,5,6, 7,8,9))
+a1 <- structure(array(1:7,  7  ), class = "foo")
+a3 <- structure(array(1:24, 2:4), class = "foo")
 stopifnot(exprs = {
     ## these all work as previously
     head(cForm,1) == `~`()
@@ -3314,6 +3316,10 @@ stopifnot(exprs = {
     identical(tail(cLong), cLong[tail(seq_along(cLong))])
     identical(tail(cLong, 2), cLong[9:10])
     identical(tail(cLong, 1), cLong[10])
+    ## funny arrays
+    identical(head(a1,1), a1[1,    drop=FALSE])
+    identical(head(a3,1), a3[1, ,, drop=FALSE])
+    identical(tail(a3,1), a3[2, ,, drop=FALSE])
 })
 ##
 ## Ensure that the code does not access dimensions it does not need (pkg TraMineR):
@@ -3335,12 +3341,23 @@ h2 <- lapply(Alis, head, 2)
 h1 <- lapply(Alis, head, 1)
 t1 <- lapply(Alis, tail, 1)
 dh1 <- lapply(h1, dim)
+h1N <- lapply(Alis, head, c(1, NA))
+t1N <- lapply(Alis, tail, c(1, NA))
+Foolis <- lapply(Alis, `class<-`, "foo")
+h1F  <- lapply(Foolis, head, 1)
+h1FN <- lapply(Foolis, head, c(1, NA))
+t1F  <- lapply(Foolis, tail, 1)
+t1FN <- lapply(Foolis, tail, c(1, NA))
 stopifnot(exprs = {
     identical(h2, Alis)
     vapply(h1, is.array, NA)
     vapply(t1, is.array, NA)
     identical(dh1, lapply(1:4, function(n) seq_len(n+1L)[-2L]))
     identical(dh1, lapply(t1, dim))
+    identical(h1, h1N)
+    identical(t1, t1N)
+    identical(h1F, h1FN)
+    identical(t1F, t1FN)
 })
 ## This was *not the case for  1d arrays in R <= 3.6.x
 ##
