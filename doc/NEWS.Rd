@@ -159,6 +159,9 @@
       \item \code{sort.list(x)} now works for non-atomic objects \code{x}
       and \code{method="auto"} (default) or \code{"radix"} in cases
       \code{order(x)} works.
+
+      \item Where long vectors are available (i.e., almost everywhere),
+      \code{writeBin()} now allows long vectors, i.e., of length >= 2^31.
     }
   }% end{ NEW FEATURES }
 
