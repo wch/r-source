@@ -638,9 +638,22 @@ function(dir, logs = NULL, ...)
     results <- lapply(logs, function(log, ...) {
         lines <- read_check_log(log, ...)
         ## See analyze_lines() inside analyze_check_log():
-        re <- "^\\* (loading checks for arch|checking (examples|tests) \\.\\.\\.$)"
-        pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
-        if(length(pos <- pos[pos < length(lines)]))
+        pos <- which(startsWith(lines, "* loading checks for arch"))
+        pos <- pos[pos < length(lines)]
+        pos <- pos[startsWith(lines[pos + 1L], "** checking")]
+        if(length(pos))
+            lines <- lines[-pos]
+        pos <- which(startsWith(lines, "* checking examples"))
+        pos <- pos[pos < length(lines)]
+        pos <- pos[startsWith(lines[pos + 1L],
+                              "** running examples for arch")]
+        if(length(pos))
+            lines <- lines[-pos]
+        pos <- which(startsWith(lines, "* checking tests"))
+        pos <- pos[pos < length(lines)]
+        pos <- pos[startsWith(lines[pos + 1L],
+                              "** running tests for arch")]
+        if(length(pos))
             lines <- lines[-pos]
         re <- "^\\*\\*? ((checking|creating|running examples for arch|running tests for arch) .*) \\.\\.\\.( (\\[[^ ]*\\]))?( (NOTE|WARNING|ERROR)|)$"
         m <- regexpr(re, lines, perl = TRUE, useBytes = TRUE)
