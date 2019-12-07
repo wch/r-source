@@ -102,9 +102,11 @@ will avoid duplicating \code{x}.
   matrix.
 
   A matrix is the special case of a two-dimensional \code{\link{array}}.
-  Currently, only if the environment variable  \code{"_R_CLASS_MATRIX_ARRAY_"} is set to a
-  non-empty string, i.e., \code{if(nzchar(Sys.getenv("_R_CLASS_MATRIX_ARRAY_")))} but then
-  From \R 4.0.0 on, \code{\link{inherits}(m, "array")} is true for a \code{matrix} \code{m}.
+  Currently, only if the environment variable
+  \env{_R_CLASS_MATRIX_ARRAY_} is set to something true (i.e., one of
+  \samp{TRUE}, \samp{True}, \samp{true}, or \samp{T}), but then from \R
+  4.0.0 on, \code{\link{inherits}(m, "array")} is true for a
+  \code{matrix} \code{m}. 
 }
 \examples{
 is.matrix(as.matrix(1:10))

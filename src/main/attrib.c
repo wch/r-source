@@ -638,7 +638,7 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 	if(nd > 0) {
 	    if(nd == 2) {
 	      char *p = getenv("_R_CLASS_MATRIX_ARRAY_");
-	      if(p) {  // "the future" (eventually, unconditionally)
+	      if(p != NULL && StringTrue(p)) {  // "the future" (eventually, unconditionally)
 		if(singleString)
 		    klass = mkChar("matrix");
 		else { // R >= 4.0.0 :  class(<matrix>) |->  c("matrix", "array")
@@ -779,7 +779,8 @@ attribute_hidden
 void InitS3DefaultTypes()
 {
     char *p = getenv("_R_CLASS_MATRIX_ARRAY_");
-    use_matrix_array = ((p) ? TRUE : FALSE); // store globally
+    use_matrix_array = 
+	((p != NULL && StringTrue(p)) ? TRUE : FALSE); // store globally
 
     for(int type = 0; type < MAX_NUM_SEXPTYPE; type++) {
 	SEXP part3 = R_NilValue;
@@ -848,7 +849,8 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 	/* For now, allow the user to change environment variable *during* R session,
 	   hence must check (slow ??!!) : */
 	char *p = getenv("_R_CLASS_MATRIX_ARRAY_");
-	Rboolean new_use_m_a = ((p) ? TRUE : FALSE);
+	Rboolean new_use_m_a = 
+	    ((p != NULL && StringTrue(p)) ? TRUE : FALSE);
 	if(new_use_m_a != use_matrix_array) { // re-initialize Type2DefaultClass table
 	    use_matrix_array = new_use_m_a; // global
 	    InitS3DefaultTypes();

@@ -3250,7 +3250,8 @@ y <- structure(list(), AA = 1)
 stopifnot(is.null(attr(y, exact = TRUE, "A")))
 
 
-if(nzchar(Sys.getenv("_R_CLASS_MATRIX_ARRAY_"))) {
+if(Sys.getenv("_R_CLASS_MATRIX_ARRAY_") %in%
+   c("true", "True", "TRUE", "T")) {
 ## 1) A matrix is an array, too:
 stopifnot( vapply(1:9, function(N) inherits(array(pi, dim = 1:N), "array"), NA) )
 ## was false for N=2 in R < 4.0.0

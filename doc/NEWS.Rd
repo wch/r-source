@@ -30,8 +30,10 @@
        >= 10.
 
        \item For now only active when environment variable
-       \env{_R_CLASS_MATRIX_ARRAY_} is set to non-empty, but planned to be the
-       new unconditional behavior when R 4.0.0 is released:
+       \env{_R_CLASS_MATRIX_ARRAY_} is set to something true (i.e., one
+       of \samp{TRUE}, \samp{True}, \samp{true}, or \samp{T}), but
+       planned to be the new unconditional behavior when R 4.0.0 is
+       released:
 
        \code{matrix} objects now also inherit from class \code{"array"},
        namely, e.g., \code{class(diag(1))} is \code{c("matrix",
