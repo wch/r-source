@@ -2477,7 +2477,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 		wchar_t from[PATH_MAX];
 		wcsncpy(from, p, PATH_MAX);
 		from[PATH_MAX - 1] = L'\0';
-		size_t ll = wcslend(from);
+		size_t ll = wcslen(from);
 		if (ll) {  // people do pass ""
 		    /* If there is a trailing sep, this is a mistake */
 		    p = from + (ll - 1);
