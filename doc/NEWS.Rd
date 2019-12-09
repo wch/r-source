@@ -508,7 +508,7 @@
 
       \item \code{dnorm} had a problematic corner case with \code{sd == -Inf} and
       negative \code{sd} was not flagged as error in all cases. Thanks to Stephen
-      D. Weigand for reporting and Jiefei Wang for analyzing this.
+      D. Weigand for reporting and Wang Jiefei for analyzing this.
     }
   }
 }
