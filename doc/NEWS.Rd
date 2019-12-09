@@ -505,6 +505,10 @@
       \item \code{readBin()} and \code{writeBin()} of a
       \code{rawConnection()} now also work in large cases, thanks to a
       report and proposal by Taeke Harkema in \PR{17665}.
+
+      \item \code{dnorm} had a problematic corner case with \code{sd == -Inf} and
+      negative \code{sd} was not flagged as error in all cases. Thanks to Stephen
+      D. Weigand for reporting and Jiefei Wang for analyzing this.
     }
   }
 }
