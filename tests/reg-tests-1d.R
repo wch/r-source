@@ -3384,6 +3384,13 @@ plot( ~grp, data=df, subset = x > 1)
 ## failed in R <= 3.6.1
 
 
+## dnorm() etc border cases, notably sigma = -Inf
+tools::assertWarning(v0Neg  <- dnorm(0:1, sd = -Inf))
+tools::assertWarning(dlInf0 <- dlnorm(Inf,Inf, sd = 0))
+stopifnot(is.nan(v0Neg), is.nan(dlInf0))
+## in R <= 3.6.2, v0Neg was 0 w/o any warning; dlnorm(...) was +Inf
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
