@@ -508,6 +508,7 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->close = BM_Close;
 
     dd->setPattern = Cairo_SetPattern;
+    dd->releasePattern = Cairo_ReleasePattern;
 
     dd->left = 0;
     dd->right = width;

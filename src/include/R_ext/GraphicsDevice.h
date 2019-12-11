@@ -681,6 +681,12 @@ struct _DevDesc {
     int (*setPattern)();
 #endif
 
+#if R_USE_PROTOTYPES
+    void (*releasePattern)(int index, pDevDesc dd);
+#else
+    void (*releasePattern)();
+#endif
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

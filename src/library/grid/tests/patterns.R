@@ -125,5 +125,59 @@ x
 ######################################
 ## Tests of "efficiency"
 ## (are patterns being resolved only as necessary)
+
+## 
+trace(grid:::resolveFill.GridPattern, print=FALSE,
+      function(...) cat("Viewport pattern resolved\n"))
+trace(grid:::resolveFill.GridGrobPattern, print=FALSE,
+      function(...) cat("Grob pattern resolved\n"))
+
+## ONCE for rect grob
 grid.newpage()
+grid.rect(gp=gpar(fill=linearGradient()))
+
+## ONCE for multiple rects from single grob
+grid.newpage()
+grid.rect(x=1:5/6, y=1:5/6, width=1/8, height=1/8,
+          gp=gpar(fill=linearGradient()))
+
+## ONCE for viewport with rect
+grid.newpage()
+pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient())))
+grid.rect()
+
+## ONCE for viewport with rect, revisiting multiple times
+grid.newpage()
+pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient()),
+                      name="vp"))
+grid.rect(gp=gpar(lwd=8))
+pushViewport(viewport(width=.5, height=.5))
+grid.rect()
+upViewport()
+grid.rect(gp=gpar(col="red", lwd=4))
+upViewport()
+downViewport("vp")
+grid.rect(gp=gpar(col="blue", lwd=2))
+
+######################################
+## Test for running out of patterns
+
+## Should NOT run out of patterns
+grid.newpage()
+for (i in 1:21) {
+    grid.rect(gp=gpar(fill=linearGradient()))
+}
+
+## Should run out of patterns
+grid.newpage()
+for (i in 1:21) {
+    pushViewport(viewport(gp=gpar(fill=linearGradient())))
+}
+
+## grid.newpage() should fix it
+grid.newpage()
+for (i in 1:21) {
+    grid.rect(gp=gpar(fill=linearGradient()))
+}
+
 

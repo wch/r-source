@@ -94,3 +94,4 @@ radialGradient <- function(colours = c("black", "white"),
 setPattern <- function(pattern) {
     .External(C_setPattern, pattern)
 }
+

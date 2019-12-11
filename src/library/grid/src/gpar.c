@@ -288,13 +288,16 @@ static SEXP resolveFill(SEXP pattern)
     return result;
 }
 
-void resolveGPar(SEXP gp) 
+SEXP resolveGPar(SEXP gp) 
 {
+    SEXP result = R_NilValue;
     if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
         SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp)));
         setListElement(gp, "fill", resolvedFill);
+        result = resolvedFill;
         UNPROTECT(1);
     }
+    return result;
 }
 
 /* 

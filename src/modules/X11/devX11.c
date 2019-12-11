@@ -2870,6 +2870,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->haveLocator = (xd->type > WINDOW) ? 1 : 2;
 
         dd->setPattern = Cairo_SetPattern;
+        dd->releasePattern = Cairo_ReleasePattern;
     } else
 #endif
     {

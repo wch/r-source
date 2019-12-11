@@ -128,6 +128,7 @@ static void CairoCleanPatterns(pX11Desc xd)
     for (i = 0; i < xd->numPatterns; i++) {
         if (xd->patterns[i] != NULL) {
             cairo_pattern_destroy(xd->patterns[i]);
+            xd->patterns[i] = NULL;
         }
     }    
 }
@@ -251,6 +252,16 @@ static int CairoSetPattern(SEXP pattern, pX11Desc xd)
     return index;
 }
 
+static void CairoReleasePattern(int index, pX11Desc xd)
+{
+    if (xd->patterns[index]) {
+        cairo_pattern_destroy(xd->patterns[index]);
+        xd->patterns[index] = NULL;
+    } else {
+        warning(_("Attempt to release non-existent pattern"));
+    }
+}
+
 static void CairoResetPattern(SEXP pattern, int index, pX11Desc xd)
 {
     cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
@@ -258,6 +269,8 @@ static void CairoResetPattern(SEXP pattern, int index, pX11Desc xd)
     /* Kill old pattern */
     if (xd->patterns[index]) {
         cairo_pattern_destroy(xd->patterns[index]);
+    } else {
+        warning(_("Attempt to reset non-existent pattern"));
     }
    
     xd->patterns[index] = cairo_pattern;
@@ -269,6 +282,8 @@ static void CairoReusePattern(SEXP pattern, int index, pX11Desc xd)
     if (xd->patterns[index] == NULL) {
         cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
         xd->patterns[index] = cairo_pattern;
+    } else {
+        warning(_("Attempt to reuse non-existent pattern"));
     }
 }
 
@@ -1070,5 +1085,16 @@ static int Cairo_SetPattern(SEXP pattern, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     return CairoSetPattern(pattern, xd);
+}
+
+static void Cairo_ReleasePattern(int index, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    /* Negative index means release all patterns */
+    if (index < 0) {
+        CairoCleanPatterns(xd);
+    } else {
+        CairoReleasePattern(index, xd);
+    }
 }
 
