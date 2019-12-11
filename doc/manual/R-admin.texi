@@ -1919,7 +1919,7 @@ typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R},
-e.g.@: @file{~/Library/R/3.7/library}), and that warnings, messages and
+e.g.@: @file{~/Library/R/4.0/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
@@ -2018,13 +2018,13 @@ of the Apple package of the same name: this means that installing a package for
 the @R{} framework which it finds installed.  This can be avoided by
 using @command{pkgutil --forget} (see the previous section).  However,
 note that different versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{3.7},
+@file{/Library/Frameworks/R.framework/Versions} as @file{4.0},
 @file{3.6} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
-/Library/Frameworks/R.framework/Versions/3.7/Resources/bin/R
+/Library/Frameworks/R.framework/Versions/4.0/Resources/bin/R
 @end example
 
 @noindent
@@ -2399,7 +2399,7 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages which include compiled code are tied to a
-particular series (e.g.@: @R{} 3.7.x or 3.6.x) of @R{}.
+particular series (e.g.@: @R{} 4.0.x or 3.6.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
