@@ -123,6 +123,27 @@ x
 }
 
 ######################################
+## Test of 'grid' display list
+
+grid.newpage()
+grid.rect(name="r")
+grid.edit("r", gp=gpar(fill=linearGradient()))
+
+grid.newpage()
+grid.rect(gp=gpar(fill=linearGradient()))
+x <- grid.grab()
+dev.new()
+grid.draw(x)
+
+grid.newpage()
+pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient())))
+grid.rect()
+x <- grid.grab()
+dev.new()
+grid.draw(x)
+
+
+######################################
 ## Tests of "efficiency"
 ## (are patterns being resolved only as necessary)
 
@@ -171,7 +192,7 @@ for (i in 1:21) {
 ## Should run out of patterns
 grid.newpage()
 for (i in 1:21) {
-    pushViewport(viewport(gp=gpar(fill=linearGradient())))
+    try(pushViewport(viewport(gp=gpar(fill=linearGradient()))))
 }
 
 ## grid.newpage() should fix it
