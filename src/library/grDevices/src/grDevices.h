@@ -112,3 +112,6 @@ void initPalette(void);
 
 SEXP cairoVersion(void);
 SEXP bmVersion(void);
+
+SEXP setPattern(SEXP args);
+

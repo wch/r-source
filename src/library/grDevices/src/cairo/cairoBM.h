@@ -110,6 +110,8 @@ typedef struct {
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
+    int numPatterns;
+    cairo_pattern_t **patterns;
 
     double fontscale;
 } X11Desc;

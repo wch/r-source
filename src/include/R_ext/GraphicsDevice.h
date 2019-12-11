@@ -675,6 +675,11 @@ struct _DevDesc {
     int haveRaster; /* 1 = no, 2 = yes, 3 = except for missing values */
     int haveCapture, haveLocator;  /* 1 = no, 2 = yes */
 
+#if R_USE_PROTOTYPES
+    int (*setPattern)(SEXP pattern, pDevDesc dd);
+#else
+    int (*setPattern)();
+#endif
 
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded

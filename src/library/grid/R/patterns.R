@@ -70,52 +70,59 @@ radialGradient <- function(colours = c("black", "white"),
     grad
 }
 
+resolvedPattern <- function(pattern, index) {
+    index <- as.integer(index)
+    pattern$index <- index
+    class(pattern) <- c("GridResolvedPattern", class(pattern))
+    pattern
+}
 
 ## Called when drawing a grob
-resolveFill <- function(fill, grob) {
+resolveFill <- function(fill) {
     UseMethod("resolveFill")
 }
 
 ## Simple fills include an R colour (integer or string) or NA
 ## These just pass through
-resolveFill.default <- function(fill, grob) {
+resolveFill.default <- function(fill) {
     fill
 }
 
 ## A pattern fill that has already been resolved
-## (a grDevices::Pattern)
-resolveFill.Pattern <- function(fill, grob) {
-    ## The pattern has already been resolved so we just leave it alone
+resolveFill.GridResolvedPattern <- function(fill) {
     fill
 }
 
 ## A pattern fill that needs resolving
 ## (a grid::GridPattern)
-resolveFill.GridPattern <- function(fill, grob) {
+## This will handle viewports
+resolveFill.GridPattern <- function(fill) {
+    resolvePattern(fill)
+}
+
+## This will handle grobs
+resolveFill.GridGrobPattern <- function(fill) {
     ## All predrawing has been done
-    if (is.null(grob)) {
-        ## We are pushing a viewport, so resolve relative to viewport
-        resolvePattern(fill)
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    if (!isEmptyCoords(pts)) {
+        x <- unlist(lapply(pts, function(p) p$x))
+        y <- unlist(lapply(pts, function(p) p$y))
+        left <- min(x)
+        bottom <- min(y)
+        width <- diff(range(x))
+        height <- diff(range(y))
+        ## Temporary viewport for calculations, so do NOT record on grid DL
+        pushViewport(viewport(left, bottom, width, height,
+                              default.units="in",
+                              just=c("left", "bottom")),
+                     recording=FALSE)
+        pattern <- resolvePattern(fill)
+        popViewport(recording=FALSE)
+        pattern
     } else {
-        pts <- grobPoints(grob, closed=TRUE)
-        if (!isEmptyCoords(pts)) {
-            x <- unlist(lapply(pts, function(p) p$x))
-            y <- unlist(lapply(pts, function(p) p$y))
-            left <- min(x)
-            bottom <- min(y)
-            width <- diff(range(x))
-            height <- diff(range(y))
-            pushViewport(viewport(left, bottom, width, height,
-                                  default.units="in",
-                                  just=c("left", "bottom")))
-            gradient <- resolvePattern(fill)
-            popViewport()
-            gradient
-        } else {
-            warning("Gradient fill applied to object with no inside")
-            ## Set fill to transparent
-            "transparent"
-        }
+        warning("Gradient fill applied to object with no inside")
+        ## Set fill to transparent
+        "transparent"
     }
 }
 
@@ -123,29 +130,32 @@ resolvePattern <- function(pattern) {
     UseMethod("resolvePattern")
 }
 
-resolvePattern.GridLinearGradient <- function(gradient) {
-    p1 <- deviceLoc(gradient$x1, gradient$y1, valueOnly=TRUE, device=TRUE)
-    p2 <- deviceLoc(gradient$x2, gradient$y2, valueOnly=TRUE, device=TRUE)
-    grDevices::linearGradient(gradient$colours,
-                              gradient$stops,
-                              p1$x, p1$y, p2$x, p2$y,
-                              extend=gradient$extend)
+resolvePattern.GridLinearGradient <- function(pattern) {
+    p1 <- deviceLoc(pattern$x1, pattern$y1, valueOnly=TRUE, device=TRUE)
+    p2 <- deviceLoc(pattern$x2, pattern$y2, valueOnly=TRUE, device=TRUE)
+    index <- setPattern(grDevices::linearGradient(pattern$colours,
+                                                  pattern$stops,
+                                                  p1$x, p1$y, p2$x, p2$y,
+                                                  extend=pattern$extend))
+    resolvedPattern(pattern, index)
 }
 
-resolvePattern.GridRadialGradient <- function(gradient) {
-    c1 <- deviceLoc(gradient$cx1, gradient$cy1, valueOnly=TRUE, device=TRUE)
-    r1 <- min(sqrt(sum(unlist(deviceDim(unit(0, "in"), gradient$r1,
+resolvePattern.GridRadialGradient <- function(pattern) {
+    c1 <- deviceLoc(pattern$cx1, pattern$cy1, valueOnly=TRUE, device=TRUE)
+    r1 <- min(sqrt(sum(unlist(deviceDim(unit(0, "in"), pattern$r1,
                                         valueOnly=TRUE, device=TRUE))^2)),
-              sqrt(sum(unlist(deviceDim(gradient$r1, unit(0, "in"), 
+              sqrt(sum(unlist(deviceDim(pattern$r1, unit(0, "in"), 
                                         valueOnly=TRUE, device=TRUE))^2)))
-    c2 <- deviceLoc(gradient$cx2, gradient$cy2, valueOnly=TRUE, device=TRUE)
-    r2 <- min(sqrt(sum(unlist(deviceDim(unit(0, "in"), gradient$r2,
+    c2 <- deviceLoc(pattern$cx2, pattern$cy2, valueOnly=TRUE, device=TRUE)
+    r2 <- min(sqrt(sum(unlist(deviceDim(unit(0, "in"), pattern$r2,
                                         valueOnly=TRUE, device=TRUE))^2)),
-              sqrt(sum(unlist(deviceDim(gradient$r2, unit(0, "in"), 
+              sqrt(sum(unlist(deviceDim(pattern$r2, unit(0, "in"), 
                                         valueOnly=TRUE, device=TRUE))^2)))
-    grDevices::radialGradient(gradient$colours,
-                              gradient$stops,
-                              c1$x, c1$y, r1, c2$x, c2$y, r2,
-                              extend=gradient$extend)
+    index <- setPattern(grDevices::radialGradient(pattern$colours,
+                                                  pattern$stops,
+                                                  c1$x, c1$y, r1,
+                                                  c2$x, c2$y, r2,
+                                                  extend=pattern$extend))
+    resolvedPattern(pattern, index)
 }
 

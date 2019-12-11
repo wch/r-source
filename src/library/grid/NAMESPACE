@@ -449,6 +449,8 @@ S3method("grid.revert", "gPath")
 
 S3method("resolveFill", "default")
 S3method("resolveFill", "GridPattern")
-S3method("resolveFill", "Pattern")
+S3method("resolveFill", "GridGrobPattern")
+S3method("resolveFill", "GridResolvedPattern")
 
 S3method("resolvePattern", "GridLinearGradient")
+S3method("resolvePattern", "GridRadialGradient")

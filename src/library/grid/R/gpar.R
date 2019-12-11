@@ -227,7 +227,14 @@ set.gpar <- function(gp, grob=NULL) {
   else
     templex <- temp$lex
   ## resolve fill - could be a simple colour OR a "GridPattern"
-  gp$fill <- resolveFill(gp$fill, grob)
+  if (is.pattern(gp$fill)) {
+      if (is.null(grob)) {
+          class(gp$fill) <- c("GridViewportPattern", class(gp$fill))
+      } else {
+          class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
+          attr(gp$fill, "grob") <- grob
+      }
+  }
   # All other gpars
   temp[names(gp)] <- gp
   temp$cex <- tempcex

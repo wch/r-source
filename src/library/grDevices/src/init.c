@@ -110,6 +110,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(getGraphicsEvent, 1),
     EXTDEF(getGraphicsEventEnv, 1),
     EXTDEF(setGraphicsEventEnv, 2),
+    EXTDEF(setPattern, 1),
     EXTDEF(devAskNewPage, 1),
 
 #ifdef _WIN32

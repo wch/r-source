@@ -1686,6 +1686,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		cairo_new_path(xd->cc);
 		cairo_paint(xd->cc);
 	    }
+
+            CairoInitPatterns(xd);
 #endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
@@ -2073,6 +2075,7 @@ static void X11_Close(pDevDesc dd)
 
 #ifdef HAVE_WORKING_CAIRO
 	if(xd->useCairo) {
+            CairoDestroyPatterns(xd);
 	    if(xd->cs) cairo_surface_destroy(xd->cs);
 	    if(xd->cc) cairo_destroy(xd->cc);
 	    if(xd->xcs) cairo_surface_destroy(xd->xcs);
@@ -2773,6 +2776,7 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 	case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
 	case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
 	}
+        
     }
 #else
     /* Currently this gets caught at R level */
@@ -2864,6 +2868,8 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->haveRaster = 2;
 	dd->haveCapture = (xd->type > WINDOW) ? 1 : 2;
 	dd->haveLocator = (xd->type > WINDOW) ? 1 : 2;
+
+        dd->setPattern = Cairo_SetPattern;
     } else
 #endif
     {

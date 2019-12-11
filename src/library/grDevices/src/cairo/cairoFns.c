@@ -112,7 +112,49 @@ static void CairoColor(unsigned int col, pX11Desc xd)
 	cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0);
 }
 
-static void CairoLinearGradientFill(SEXP gradient, pX11Desc xd)
+static void CairoInitPatterns(pX11Desc xd)
+{
+    int i;
+    xd->numPatterns = 20;
+    xd->patterns = malloc(sizeof(cairo_pattern_t*) * xd->numPatterns);
+    for (i = 0; i < xd->numPatterns; i++) {
+        xd->patterns[i] = NULL;
+    }
+}
+
+static void CairoCleanPatterns(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numPatterns; i++) {
+        if (xd->patterns[i] != NULL) {
+            cairo_pattern_destroy(xd->patterns[i]);
+        }
+    }    
+}
+
+static void CairoDestroyPatterns(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numPatterns; i++) {
+        if (xd->patterns[i] != NULL) {
+            cairo_pattern_destroy(xd->patterns[i]);
+        }
+    }    
+    free(xd->patterns);
+}
+
+static int CairoNewPatternIndex(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numPatterns; i++) {
+        if (xd->patterns[i] == NULL) {
+            return i;
+        }
+    }    
+    error(_("Cairo patterns exhausted (try opening device with more patterns)"));
+}
+
+static cairo_pattern_t* CairoLinearGradient(SEXP gradient, pX11Desc xd)
 {
     unsigned int col;
     unsigned int alpha;
@@ -145,12 +187,10 @@ static void CairoLinearGradientFill(SEXP gradient, pX11Desc xd)
     case R_GE_gradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
     }
     cairo_pattern_set_extend(cairo_gradient, extend);    
-    cairo_set_source(xd->cc, cairo_gradient);
-    cairo_fill_preserve(xd->cc);
-    cairo_pattern_destroy(cairo_gradient);
+    return cairo_gradient;
 }
 
-static void CairoRadialGradientFill(SEXP gradient, pX11Desc xd)
+static cairo_pattern_t* CairoRadialGradient(SEXP gradient, pX11Desc xd)
 {
     unsigned int col;
     unsigned int alpha;
@@ -185,9 +225,57 @@ static void CairoRadialGradientFill(SEXP gradient, pX11Desc xd)
     case R_GE_gradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
     }
     cairo_pattern_set_extend(cairo_gradient, extend);    
-    cairo_set_source(xd->cc, cairo_gradient);
+    return cairo_gradient;
+}
+
+static cairo_pattern_t *CairoCreatePattern(SEXP pattern, pX11Desc xd)
+{
+    cairo_pattern_t *cairo_pattern;
+    switch(R_GE_patternType(pattern)) {
+    case R_GE_linearGradientPattern: 
+        cairo_pattern = CairoLinearGradient(pattern, xd);
+        break;
+    case R_GE_radialGradientPattern:
+        cairo_pattern = CairoRadialGradient(pattern, xd);            
+        break;
+    }
+    return cairo_pattern;
+}
+
+static int CairoSetPattern(SEXP pattern, pX11Desc xd)
+{
+    int index = CairoNewPatternIndex(xd);
+    cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
+
+    xd->patterns[index] = cairo_pattern;
+    return index;
+}
+
+static void CairoResetPattern(SEXP pattern, int index, pX11Desc xd)
+{
+    cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
+
+    /* Kill old pattern */
+    if (xd->patterns[index]) {
+        cairo_pattern_destroy(xd->patterns[index]);
+    }
+   
+    xd->patterns[index] = cairo_pattern;
+}
+
+static void CairoReusePattern(SEXP pattern, int index, pX11Desc xd)
+{
+    /* If pattern does not exist, recreate */
+    if (xd->patterns[index] == NULL) {
+        cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
+        xd->patterns[index] = cairo_pattern;
+    }
+}
+
+static void CairoPatternFill(int index, pX11Desc xd)
+{
+    cairo_set_source(xd->cc, xd->patterns[index]);
     cairo_fill_preserve(xd->cc);
-    cairo_pattern_destroy(cairo_gradient);
 }
 
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
@@ -249,15 +337,8 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
     cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
 
     /* patternFill overrides fill */
-    if (gc->patternFill != R_NilValue) { 
-        switch(R_GE_patternType(gc->patternFill)) {
-        case R_GE_linearGradientPattern: 
-            CairoLinearGradientFill(gc->patternFill, xd);
-            break;
-        case R_GE_radialGradientPattern:
-            CairoRadialGradientFill(gc->patternFill, xd);            
-            break;
-        }
+    if (gc->patternFill >= 0) { 
+        CairoPatternFill(gc->patternFill, xd);
     } else if (R_ALPHA(gc->fill) > 0) {
 	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
 	CairoColor(gc->fill, xd);
@@ -337,15 +418,8 @@ static void Cairo_Polygon(int n, double *x, double *y,
     cairo_close_path(xd->cc);
 
     /* patternFill overrides fill */
-    if (gc->patternFill != R_NilValue) { 
-        switch(R_GE_patternType(gc->patternFill)) {
-        case R_GE_linearGradientPattern: 
-            CairoLinearGradientFill(gc->patternFill, xd);
-            break;
-        case R_GE_radialGradientPattern:
-            CairoRadialGradientFill(gc->patternFill, xd);            
-            break;
-        }
+    if (gc->patternFill >= 0) { 
+        CairoPatternFill(gc->patternFill, xd);
     } else if (R_ALPHA(gc->fill) > 0) {
 	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
 	CairoColor(gc->fill, xd);
@@ -989,4 +1063,12 @@ static void Cairo_Text(double x, double y,
 	cairo_restore(xd->cc);
     }
 }
+
 #endif
+
+static int Cairo_SetPattern(SEXP pattern, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    return CairoSetPattern(pattern, xd);
+}
+

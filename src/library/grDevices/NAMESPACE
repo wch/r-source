@@ -17,7 +17,8 @@ export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks,
        pdf, pdf.options, pdfFonts, pictex, postscript,
        postscriptFonts, ps.options, radialGradient, rainbow, recordGraphics,
        recordPlot, replayPlot, rgb, rgb2hsv, savePlot, setEPS,
-       setGraphicsEventEnv, setGraphicsEventHandlers, setPS,
+       setGraphicsEventEnv, setGraphicsEventHandlers,
+       setPattern, setPS, 
        terrain.colors, topo.colors, trans3d, Type1Font, .axisPars,
        xfig, xyTable, xy.coords, xyz.coords)
 

@@ -145,6 +145,8 @@ typedef struct {
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
     double last, last_activity, update_interval;
+    int numPatterns;
+    cairo_pattern_t **patterns;    
 #endif
 
     double fontscale;

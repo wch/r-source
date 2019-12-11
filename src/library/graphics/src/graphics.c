@@ -2503,7 +2503,7 @@ void gcontextFromGP(pGEcontext gc, pGEDevDesc dd)
     /*
      * Just "zero" this for now
      */
-    gc->patternFill = R_NilValue;
+    gc->patternFill = 0;
 }
 
 /* Draw a line. */

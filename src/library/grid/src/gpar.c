@@ -278,6 +278,25 @@ static unsigned int combineAlpha(double alpha, int col)
     return R_RGBA(R_RED(col), R_GREEN(col), R_BLUE(col), newAlpha);
 }
 
+static SEXP resolveFill(SEXP pattern) 
+{
+    SEXP resolveFn, R_fcall, result;
+    PROTECT(resolveFn = findFun(install("resolveFill"), R_gridEvalEnv));
+    PROTECT(R_fcall = lang2(resolveFn, pattern));
+    result = eval(R_fcall, R_gridEvalEnv);
+    UNPROTECT(2);
+    return result;
+}
+
+void resolveGPar(SEXP gp) 
+{
+    if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
+        SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp)));
+        setListElement(gp, "fill", resolvedFill);
+        UNPROTECT(1);
+    }
+}
+
 /* 
  * Generate an R_GE_gcontext from a gpar
  */
@@ -290,12 +309,18 @@ void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd)
     /*
      * Fill could be colour OR pattern
      */
-    if (R_GE_isPattern(gpFillSXP(gp))) {
-        gc->fill = R_TRANWHITE;
-        gc->patternFill = gpFillSXP(gp);
+    if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
+        if (Rf_inherits(gpFillSXP(gp), "GridResolvedPattern")) {
+            int fillIndex = INTEGER(getListElement(gpFillSXP(gp), "index"))[0];
+            gc->fill = R_TRANWHITE;
+            gc->patternFill = fillIndex;
+        } else {
+            gc->fill = R_TRANWHITE;
+            gc->patternFill = -1;
+        }
     } else {
         gc->fill = combineAlpha(gpAlpha(gp, i), gpFill(gp, i));
-        gc->patternFill = R_NilValue;
+        gc->patternFill = -1;
     }
     gc->gamma = gpGamma(gp, i);
     /*
@@ -451,14 +476,20 @@ void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar,
      */
     gcCache->col = gc->col = 
         combineAlpha(gpAlpha2(gp, i, gpIsScalar), gpCol2(gp, i, gpIsScalar));
-    if (R_GE_isPattern(gpFillSXP(gp))) {
-        gcCache->fill = gc->fill = R_TRANWHITE;
-        gcCache->patternFill = gc->patternFill = gpFillSXP(gp);
+    if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
+        if (Rf_inherits(gpFillSXP(gp), "GridResolvedPattern")) {
+            int fillIndex = INTEGER(getListElement(gpFillSXP(gp), "index"))[0];
+            gcCache->fill = gc->fill = R_TRANWHITE;
+            gcCache->patternFill = gc->patternFill = fillIndex;
+        } else {
+            gcCache->fill = gc->fill = R_TRANWHITE;
+            gcCache->patternFill = gc->patternFill = -1;
+        }
         gpIsScalar[GP_FILL] = 1;
     } else {
         gcCache->fill = gc->fill = 
             combineAlpha(gpAlpha(gp, i), gpFill2(gp, i, gpIsScalar));
-        gcCache->patternFill = gc->patternFill = R_NilValue;
+        gcCache->patternFill = gc->patternFill = -1;
     }
     gcCache->gamma = gc->gamma = gpGamma2(gp, i, gpIsScalar);
     /*
@@ -495,7 +526,7 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
     } else {
         gc->col = gcCache->col;
     }
-    if (R_GE_isPattern(gpFillSXP(gp))) {
+    if (Rf_inherits(gpFillSXP(gp), "GridPattern")) {
         gc->fill = gcCache->fill;
         gc->patternFill = gcCache->patternFill;
     } else {

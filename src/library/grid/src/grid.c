@@ -339,6 +339,22 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
      * list works 
      */
     setGridStateElement(dd, GSS_VP, pushedvp);
+    /*
+     * Resolve definitions for this viewport 
+     */
+    {
+        SEXP vpgp = PROTECT(VECTOR_ELT(pushedvp, VP_GP));
+        SEXP fill = getListElement(vpgp, "fill");
+        if (fill != R_NilValue) {
+            resolveGPar(vpgp);
+            /* Record the resolved fill for subsequent up/down/pop */
+            SET_VECTOR_ELT(VECTOR_ELT(pushedvp, PVP_GPAR),
+                           GP_FILL,
+                           getListElement(vpgp, "fill"));
+            /* Ensure that the "current" gpar has the resolved fill too */
+            setGridStateElement(dd, GSS_GPAR, VECTOR_ELT(pushedvp, PVP_GPAR));
+        }
+    }
     UNPROTECT(3);
     return R_NilValue;
 }
@@ -2056,6 +2072,9 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    if (!LOGICAL(o)[0] && draw) {
+        resolveGPar(currentgp);
+    }
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     /* 
      * Number of xsplines
@@ -2376,8 +2395,9 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     Rboolean first, last;
+    int gpIsScalar[15] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
     LViewportContext vpc;
-    R_GE_gcontext gc;
+    R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP devloc = R_NilValue; /* -Wall */
@@ -2393,6 +2413,8 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
     maxn = getArrowN(x1, x2, xnm1, xn,
 		     y1, y2, ynm1, yn);
     ne = LENGTH(ends);
+    resolveGPar(currentgp);
+    initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     /* Convert the x and y values to INCHES locations */
     /* FIXME:  Need to check for NaN's and NA's
      */
@@ -2411,7 +2433,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	    last = FALSE;
 	    break;
 	}
-	gcontextFromgpar(currentgp, i, &gc, dd);
+	updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
 	/*
 	 * If we're adding arrows to a line.to
 	 * x1 will be NULL
@@ -2492,6 +2514,7 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    resolveGPar(currentgp);
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     GEMode(1, dd);
     /* 
@@ -2573,6 +2596,7 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    resolveGPar(currentgp);
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     nx = unitLength(x); 
     ny = unitLength(y);
@@ -2721,6 +2745,9 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    if (draw) {
+        resolveGPar(currentgp);
+    }
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     maxn = unitLength(x); 
     ny = unitLength(y); 
@@ -2948,6 +2975,7 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    resolveGPar(currentgp);
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     GEMode(1, dd);
     /*
@@ -3447,6 +3475,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    resolveGPar(currentgp);
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     nx = unitLength(x); 
     npch = LENGTH(pch);
