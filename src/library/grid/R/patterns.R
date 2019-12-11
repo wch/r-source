@@ -159,3 +159,35 @@ resolvePattern.GridRadialGradient <- function(pattern) {
     resolvedPattern(pattern, index)
 }
 
+## Used when "grab"ing the display list to "demote"
+## a resolved pattern
+unresolveFill <- function(fill) {
+    UseMethod("unresolveFill")
+}
+
+## Simple fills include an R colour (integer or string) or NA
+## These just pass through
+unresolveFill.default <- function(fill) {
+    fill
+}
+
+unresolveFill.GridPattern <- function(fill) {
+    unresolvePattern(fill)
+}
+
+unresolvePattern <- function(pattern) {
+    UseMethod("unresolvePattern")
+}
+    
+## Unresolved patterns just pass through
+unresolvePattern.GridPattern <- function(pattern) {
+    pattern
+}
+
+unresolvePattern.GridResolvedPattern <- function(pattern) {
+    pattern$index <- NULL
+    class(pattern) <-
+        class(pattern)[!(class(pattern) %in% "GridResolvedPattern")]
+    pattern
+}
+

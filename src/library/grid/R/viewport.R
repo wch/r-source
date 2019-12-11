@@ -123,14 +123,19 @@ pushedvp <- function(vp) {
 }
 
 vpFromPushedvp <- function(pvp) {
-  vp <- pvp[c("x", "y", "width", "height",
-              "justification", "gp", "clip",
-              "xscale", "yscale", "angle",
-              "layout", "layout.pos.row", "layout.pos.col",
-              "valid.just", "valid.pos.row", "valid.pos.col",
-              "name")]
-  class(vp) <- "viewport"
-  vp
+    ## Only keep non-pushedvp content
+    vp <- pvp[c("x", "y", "width", "height",
+                "justification", "gp", "clip",
+                "xscale", "yscale", "angle",
+                "layout", "layout.pos.row", "layout.pos.col",
+                "valid.just", "valid.pos.row", "valid.pos.col",
+                "name")]
+    ## Unresolve any resolved fills
+    if (!is.null(vp$gp$fill)) {
+        vp$gp$fill <- unresolveFill(vp$gp$fill)
+    }
+    class(vp) <- "viewport"
+    vp
 }
 
 as.character.viewport <- function(x, ...) {

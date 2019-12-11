@@ -454,3 +454,11 @@ S3method("resolveFill", "GridResolvedPattern")
 
 S3method("resolvePattern", "GridLinearGradient")
 S3method("resolvePattern", "GridRadialGradient")
+
+S3method("unresolveFill", "default")
+S3method("unresolveFill", "GridPattern")
+
+S3method("unresolvePattern", "GridPattern")
+S3method("unresolvePattern", "GridResolvedPattern")
+
+
