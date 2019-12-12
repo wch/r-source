@@ -114,6 +114,11 @@ grobPoints <- function(x, closed, ...) {
     UseMethod("grobPoints")
 }
 
+## Currently covers gLists and gTrees
+grobPoints.default <- function(x, closed, ...) {
+    emptyCoords
+}
+
 grobPoints.move.to <- function(x, closed, ...) {
     emptyCoords
 }
