@@ -137,8 +137,7 @@ grid.rect(gp=gpar(fill=linearGradient()))
 x <- recordPlot()
 grid.text("default gradient
 for recordPlot()")
-grid.newpage()
-x
+replayPlot(x)
 grid.text("default gradient
 from replayPlot()")
 ## (Resize that as well if you like)
@@ -149,8 +148,7 @@ grid.rect()
 x <- recordPlot()
 grid.text("gradient on viewport
 for recordPlot()")
-grid.newpage()
-x
+replayPlot(x)
 grid.text("gradient on viewport
 from replayPlot()")
 
@@ -163,7 +161,7 @@ grid.text("default gradient
 for recordPlot()")
 grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient(c("white", "red"))))
-x
+replayPlot(x)
 grid.text("default gradient
 from replayPlot()
 AFTER white-red gradient
@@ -173,13 +171,13 @@ AFTER white-red gradient
 grid.newpage()
 pushViewport(viewport(gp=gpar(fill=linearGradient())))
 grid.rect()
+x <- recordPlot()
 grid.text("gradient on viewport
 for recordPlot()")
-x <- recordPlot()
 grid.newpage()
 pushViewport(viewport(gp=gpar(fill=linearGradient(c("white", "red")))))
 grid.rect()
-x
+replayPlot(x)
 grid.text("gradient on viewport
 from replayPlot()
 AFTER white-red gradient
@@ -224,17 +222,19 @@ from grid.grab")
 
 ## 
 trace(grid:::resolveFill.GridPattern, print=FALSE,
-      function(...) cat("Viewport pattern resolved\n"))
+      function(...) cat("*** RESOLVE:  Viewport pattern resolved\n"))
 trace(grid:::resolveFill.GridGrobPattern, print=FALSE,
-      function(...) cat("Grob pattern resolved\n"))
+      function(...) cat("*** RESOLVE:  Grob pattern resolved\n"))
 
 ## ONCE for rect grob
+cat("*** RESOLVE:  ONE resolve for rect grob with gradient\n")
 grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient()))
 grid.text("default gradient
 for tracing")
 
 ## ONCE for multiple rects from single grob
+cat("*** RESOLVE:  ONE resolve for multiple rects from rect grob with gradient\n")
 grid.newpage()
 grid.rect(x=1:5/6, y=1:5/6, width=1/8, height=1/8,
           gp=gpar(fill=linearGradient()))
@@ -242,6 +242,7 @@ grid.text("gradient on five rects
 for tracing")
 
 ## ONCE for viewport with rect
+cat("*** RESOLVE:  ONE resolve for rect grob in viewport with gradient\n")
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient())))
 grid.rect()
@@ -250,6 +251,7 @@ viewport half height/width
 for tracing")
 
 ## ONCE for viewport with rect, revisiting multiple times
+cat("*** RESOLVE:  ONE resolve for rect grob in viewport with gradient, plus nested viewport, plus viewport revisited\n")
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient()),
                       name="vp"))
@@ -269,6 +271,9 @@ rect (medium red border)
 navigate to original viewport
 rect (thin blue border)")
 
+untrace(grid:::resolveFill.GridPattern)
+untrace(grid:::resolveFill.GridGrobPattern)
+
 ######################################
 ## Test for running out of patterns
 
@@ -283,9 +288,12 @@ new pattern every time"))
 ## Should run out of patterns
 grid.newpage()
 for (i in 1:21) {
-    try(pushViewport(viewport(gp=gpar(fill=linearGradient()))))
-    grid.text(paste0("viewport ", i, " with gradient
+    result <- try(pushViewport(viewport(gp=gpar(fill=linearGradient()))))
+    if (!inherits(result, "try-error")) {
+        grid.rect()
+        grid.text(paste0("viewport ", i, " with gradient
 runs out after 20"))
+    }
 }
 
 ## grid.newpage() should fix it
