@@ -24,13 +24,13 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Beijing) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
 "China (Hong Kong) [https]",China,"Hong Kong",https://mirror-hk.koddos.net/CRAN/,"KoDDoS in Hong Kong","mirror # koddos.net",1,cn,"secure_mirror_from_master"
-"China (Guangzhou) [https]",China,Guangzhou,https://mirrors.eliteu.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",0,cn,"secure_mirror_from_master"
+"China (Guangzhou) [https]",China,Guangzhou,https://mirrors.e-ducation.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",1,cn,"secure_mirror_from_master"
 "China (Lanzhou) [https]",China,Lanzhou,https://mirror.lzu.edu.cn/CRAN/,"Lanzhou University Open Source Society","oss.lzu.edu.cn # gmail.com",1,cn,"secure_mirror_from_master"
 "China (Shanghai) [https]",China,Shanghai,https://mirrors.tongji.edu.cn/CRAN/,"Tongji University","mirrors # opentj.org",1,cn,"secure_mirror_from_master"
 "Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,"secure_mirror_from_master"
 "Czech Republic [https]","Czech Republic","Prague",https://mirrors.nic.cz/R/,"CZ.NIC, Prague","mirrors # nic.cz",1,cz,"secure_mirror_from_master,maintainer_address_bounces"
 "Denmark [https]",Denmark,Aalborg,https://mirrors.dotsrc.org/cran/,"Aalborg University","staff # dotsrc.org",1,dk,"secure_mirror_from_master"
-"East Asia [https]",0-Cloud-East-Asia,0-Cloud-East-Asia,"https://cran.asia/","Personnel Psychology Laboratory, Industrial Psychology Department, Kwangwoon University (sites: Tokyo, Seoul/Wonjoo, Singapore)","admin # cran.asia",0,asia,"secure_mirror_from_master"
+"East Asia [https]",0-Cloud-East-Asia,0-Cloud-East-Asia,"https://cran.asia/","Personnel Psychology Laboratory, Industrial Psychology Department, Kwangwoon University (sites: Tokyo, Seoul/Wonjoo, Singapore)","admin # cran.asia",1,asia,"secure_mirror_from_master"
 "Ecuador (Cuenca) [https]",Ecuador,Cuenca,https://mirror.cedia.org.ec/CRAN/,CEDIA,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "Ecuador (Quito) [https]",Ecuador,Quito,https://mirror.epn.edu.ec/CRAN/,Escuela Politécnica Nacional,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "El Salvador","El Salvador","San Salvador",http://cran.salud.gob.sv/,"Ministry of Health (Ministerio de Salud)","mirror # salud.gob.sv",1,sv
@@ -81,7 +81,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
 "Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr,"secure_mirror_from_master"
 "Turkey (Mersin) [https]",Turkey,Mersin,https://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","atasiran # metu.edu.tr, ncc-cc # metu.edu.tr",1,tr,"secure_mirror_from_master"
-"UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
+"UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Oliver Johnson <O.Johnson # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (CA) [https]",USA,Berkeley,https://cran.cnr.berkeley.edu/,"University of California, Berkeley, CA","casterln # nature.berkeley.edu",1,us,"secure_mirror_from_master"
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
@@ -89,7 +89,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (KS) [https]",USA,Lawrence,https://rweb.crmda.ku.edu/cran/,"University of Kansas, Lawrence, KS","Paul Johnson <pauljohn # ku.edu>",1,us,"secure_mirror_from_master"
 "USA (MI 1) [https]",USA,Houghton,https://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us,"secure_mirror_from_master"
 "USA (MI 2) [https]",USA,"Ann Arbor",https://repo.miserver.it.umich.edu/cran/,"MBNI, University of Michigan, Ann Arbor, MI","linux-mirrors # umich.edu",1,us,"secure_mirror_from_master"
-"USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","admartin # wustl.edu",1,us,"maintainer_address_bounces"
+"USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","Jonathan Rapkin <rapkin # wustl.edu>",1,us,
 "USA (NC)",USA,Durham,http://archive.linux.duke.edu/cran/,"Duke University, Durham, NC","csi-linux-admins # duke.edu",1,us
 "USA (OH) [https]",USA,Cleveland,https://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us
 "USA (OR) [https]",USA,Corvallis,https://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us,"secure_mirror_from_master"

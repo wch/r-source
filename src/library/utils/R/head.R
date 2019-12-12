@@ -30,12 +30,12 @@ head <- function(x, ...) UseMethod("head")
 
 head.default <- function(x, n = 6L, ...)
 {
-    if(length(n) == 1L) {
+    if(!is.null(dx <- dim(x)))
+        head.array(x, n, ...)
+    else if(length(n) == 1L) {
         n <- if (n < 0L) max(length(x) + n, 0L) else min(n, length(x))
         x[seq_len(n)]
-    } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
-        head.array(x, n, ...)
-    else
+    } else
         stop(gettextf("no method found for %s(., n=%s) and class %s",
                       "head", deparse(n), sQuote(class(x))),
              domain = NA)
@@ -76,13 +76,13 @@ tail <- function(x, ...) UseMethod("tail")
 
 tail.default <- function (x, n = 6L, addrownums = FALSE, ...)
 {
-    if(length(n) == 1L) {
+    if(!is.null(dx <- dim(x)))
+        tail.array(x, n=n, addrownums=addrownums, ...)
+    else if(length(n) == 1L) {
         xlen <- length(x)
         n <- if (n < 0L) max(xlen + n, 0L) else min(n, xlen)
         x[seq.int(to = xlen, length.out = n)]
-    } else if(!is.null(dx <- dim(x)) && length(n) <= length(dx))
-        tail.array(x, n=n, addrownums=addrownums, ...)
-    else
+    } else
         stop(gettextf("no method found for %s(., n=%s) and class %s",
                       "tail", deparse(n), sQuote(class(x))),
              domain = NA)

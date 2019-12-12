@@ -32,6 +32,12 @@ availableGB <-
 cat("Available (processor aka CPU) memory: ", round(availableGB, 1),
     "GB (Giga Bytes)\n")
 
+if(.Machine$sizeof.pointer < 8) {
+    cat(".Machine :\n"); str(.Machine)
+    cat("not a 64-bit system -- forget about these tests!\n")
+    q("no")
+}
+
 ### Testing  readLines()  *large* file with embedded nul aka `\0'
 ##
 ## takes close to one minute and ~ 10 GB RAM
@@ -285,6 +291,27 @@ if(availableGB > 14) withAutoprint({ ## seen 11.6 G
     }; cat("\n")
     ## Error in readBin(raw_con, "raw", n = 1e+06) : too large a block specified
 })
+
+## writeBin() for long vectors
+if(availableGB > 20) withAutoprint({ ## seen 20.9 G
+    x <- raw(2^31)
+    writeBin(x, con = nullfile())
+
+    con <- rawConnection(raw(0L), "w")
+    writeBin(x, con = con)
+    stopifnot(identical(x, rawConnectionValue(con)))
+
+    system.time(x <- pi*seq_len(2.1*2^30)) # 25 sec
+    zzfil <- tempfile("test-large-bin")
+    zz <- file(zzfil, "wb") ## file size will be 2.5 GB !!!
+    system.time(z <- writeBin(x, zz)) # 32 sec
+    stopifnot(is.null(z))
+    close(zz); zz <- file(zzfil, "rb")
+    system.time(r <- readBin(zz, double(), n = length(x) + 999)) # 32 sec
+    system.time(stopifnot(identical(x, r))) # 24 sec
+    close(zz); rm(r, zz)
+})
+
 
 
 gc() # NB the "max used"

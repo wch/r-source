@@ -1988,7 +1988,12 @@ within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
 @node Should I run R from within Emacs?, Debugging R from within Emacs, Is there Emacs support for R?, R and Emacs
 @section Should I run R from within Emacs?
 
-Yes, @emph{definitely}.  Inferior R mode provides a readline/history
+Yes, instead of just running it in a console, @emph{definitely}.  As an
+alternative to other IDE's such as Rstudio, @emph{possibly}, notably if you
+are interested to use Emacs for other computer interaction.
+You'd be using @acronym{ESS}, Emacs Speaks Statistics, see previous FAQ.
+
+Inferior R mode provides a readline/history
 mechanism, object name completion, and syntax-based highlighting of the
 interaction buffer using Font Lock mode, as well as a very convenient
 interface to the R help system.

@@ -453,7 +453,7 @@ This can be helpful, if the elements of \code{X} (parallel jobs) have a
 high variance of completion time or if the hardware architecture
 is heterogeneous. It also enables the development of scheduling
 strategies for optimizing the overall runtime of independent parallel jobs.
-If \code{affinity.list} is set, the \code{mc.core} parameter is
+If \code{affinity.list} is set, the \code{mc.cores} parameter is
 replaced with the number of CPU ids used in the affinity masks.
 To use this parameter prescheduling has to be deactivated
 (\code{mc.preschedule = FALSE}).
