@@ -330,6 +330,10 @@
       \code{alpha = 1}, \code{"FF"}, to all colors.  Hence all eight
       \code{*.colors()} functions and \code{rainbow()} behave
       consistently and have the same non-explicit default (\PR{17659}).
+
+      \item Time-series \code{ts(*, start, end, frequency)} with fractional
+      \code{frequency} are supported more consistently; thanks to a report
+      from Johann Kleinbub and analysis and patch by Duncan Murdoch in \PR{17669}.
     }
   }
 }
@@ -976,7 +980,7 @@
 
       \item In \code{plot.lm}, Cook's distance was computed from unweighted
       residuals, leading to inconsistencies. Replaced with usual weighted
-      version. (\PR{16056}) 
+      version. (\PR{16056})
     }
   }
 

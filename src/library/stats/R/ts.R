@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,6 +64,11 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
 	start <- end - (ndata - 1)/frequency
 
     if(start > end) stop("'start' cannot be after 'end'")
+
+    cycles <- (end - start)*frequency
+    if(abs(round(cycles) - cycles) > ts.eps)
+    	stop("'end' must be a whole number of cycles after 'start'")
+
     nobs <- floor((end - start) * frequency + 1.01)
 
     if(nobs != ndata)
@@ -118,24 +123,27 @@ as.ts.default <- function(x, ...)
     else ts(x)
 }
 
-.cbind.ts <- function(sers, nmsers, dframe = FALSE, union = TRUE)
+.cbind.ts <- function(sers, nmsers, dframe = FALSE, union = TRUE,
+                      ts.eps = getOption("ts.eps"))
 {
     nulls <- vapply(sers, is.null, NA)
     sers <- sers[!nulls]
     nser <- length(sers)
     if(nser == 0L) return(NULL)
     if(nser == 1L)
-        if(dframe) return(as.data.frame(sers[[1L]])) else return(sers[[1L]])
+        return(if(dframe) as.data.frame(sers[[1L]]) else sers[[1L]])
     tsser <- vapply(sers, function(x) length(tsp(x)) > 0L, NA)
     if(!any(tsser))
         stop("no time series supplied")
     sers <- lapply(sers, as.ts)
-    nsers <- vapply(sers, NCOL, 1)
     tsps <- sapply(sers[tsser], tsp)
     freq <- mean(tsps[3,])
-    if(max(abs(tsps[3,] - freq)) > getOption("ts.eps")) {
+    if(max(abs(tsps[3,] - freq)) > ts.eps)
         stop("not all series have the same frequency")
-    }
+
+    phases <- apply(tsps, 2L, function(tsp) (tsp[1L]*tsp[3L]) %% 1)
+    if(max(abs(phases - mean(phases))) > ts.eps)
+    	stop("not all series have the same phase")
     if(union) {
         st <- min(tsps[1,])
         en <- max(tsps[2,])
@@ -158,6 +166,7 @@ as.ts.default <- function(x, ...)
         }
         tsps <- sapply(sers, tsp)
     }
+    nsers <- vapply(sers, NCOL, 1)
     if(dframe) {
 	x <- setNames(vector("list", nser), nmsers)
     } else {
@@ -690,9 +699,12 @@ window.default <- function(x, start = NULL, end = NULL,
         ## first adjust start and end to the time base
         ## try to ensure that they are exactly n/xfreq
         stoff <- ceiling((start - xtsp[1L]) * xfreq - ts.eps)
-        ystart <- (round(xtsp[1L]*xfreq) + stoff)/xfreq
+        ystart <- stoff/xfreq + xtsp[1L]
         enoff <- floor((end - xtsp[2L]) * xfreq + ts.eps)
-        yend <- (round(xtsp[2L]*xfreq) + enoff)/xfreq
+        yend <- enoff/xfreq + xtsp[2L]
+        # Rounding can cause problems #PR13272
+        if (ystart > yend && (ystart - yend)*xfreq < ts.eps)
+            yend <- ystart
         nold <- round(xfreq*(xtsp[2L] - xtsp[1L])) + 1
         ## both start and end could be outside time base
         ## and indeed the new ad old ranges might not intersect.

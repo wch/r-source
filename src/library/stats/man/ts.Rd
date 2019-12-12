@@ -1,6 +1,6 @@
 % File src/library/stats/man/ts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ts}
@@ -31,7 +31,8 @@ is.ts(x)
     values. A data frame will be coerced to a numeric matrix via
     \code{data.matrix}.  (See also \sQuote{Details}.)}
   \item{start}{the time of the first observation.  Either a single
-    number or a vector of two integers, which specify a natural time
+    number or a vector of two numbers (the second of which is an integer),
+    which specify a natural time
     unit and a (1-based) number of samples into the time unit.  See
     the examples for the use of the second form.}
   \item{end}{the time of the last observation, specified in the same way
@@ -71,14 +72,17 @@ is.ts(x)
   matrix (a one-column matrix if a vector) and hence returns a result
   that does not inherit from class \code{"ts"}.
 
-  The value of argument \code{frequency} is used when the series is
-  sampled an integral number of times in each unit time interval.  For
+  Argument \code{frequency} indicates the sampling frequency of the
+  time series, with the default value \code{1} indicating one sample in
+  each unit time interval.  For
   example, one could use a value of \code{7} for \code{frequency} when
   the data are sampled daily, and the natural time period is a week, or
   \code{12} when the data are sampled monthly and the natural time
   period is a year.  Values of \code{4} and \code{12} are assumed in
   (e.g.) \code{print} methods to imply a quarterly and monthly series
-  respectively.
+  respectively.  As from \R 4.0.0, \code{frequency} need not be a whole
+  number.  For example, \code{frequency = 0.2} would imply sampling
+  once every five time units.
 
   \code{as.ts} is generic.  Its default method will use the
   \code{\link{tsp}} attribute of the object if it has one to set the
@@ -102,7 +106,7 @@ is.ts(x)
   \code{\link{window}};
   \code{\link{print.ts}}, the print method for time series objects;
   \code{\link{plot.ts}}, the plot method for time series objects.
-  
+
   For other definitions of \sQuote{time series} (e.g.,
   time-ordered observations) see the CRAN task view at
   \url{https://CRAN.R-project.org/view=TimeSeries}.

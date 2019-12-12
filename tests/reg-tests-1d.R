@@ -3391,6 +3391,18 @@ stopifnot(is.nan(v0Neg), is.nan(dlInf0))
 ## in R <= 3.6.2, v0Neg was 0 w/o any warning; dlnorm(...) was +Inf
 
 
+## Unusual frequency and start not supported by ts() and window()
+x <- ts(x, start = 2.5, end = 107.5, frequency = 0.2)
+(wx <- window(x, start = 20, end = 30, extend = TRUE))
+stopifnot(exprs = {
+    all.equal(attributes(x),         list(tsp = c(2.5, 107.5, 0.2), class = "ts"))
+    all.equal(wx, structure(c(0.5, 0.6), .Tsp = c(22.5, 27.5, 0.2), class = "ts"))
+})
+tools::assertError(cbind(ts(1:2, start = 0.5, end = 1.5),
+			 ts(1:2, start = 0  , end = 1)), verbose=TRUE)
+## Wrong results in R < 4.0.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
