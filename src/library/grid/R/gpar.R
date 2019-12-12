@@ -231,8 +231,12 @@ set.gpar <- function(gp, grob=NULL) {
       if (is.null(grob)) {
           class(gp$fill) <- c("GridViewportPattern", class(gp$fill))
       } else {
-          class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
-          attr(gp$fill, "grob") <- grob
+          if (inherits(grob, "gTree")) {
+              ## Just pass the fill through to child grobs
+          } else {
+              class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
+              attr(gp$fill, "grob") <- grob
+          }
       }
   }
   # All other gpars
