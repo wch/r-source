@@ -2149,7 +2149,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
 	char nbuf[nelen + 1];
 	InString(stream, nbuf, nelen);
 	nbuf[nelen] = '\0';
-	nelen = nelen < (R_CODESET_MAX + 1) ? nelen : (R_CODESET_MAX + 1);
+	nelen = nelen < (R_CODESET_MAX + 1) ? nelen : R_CODESET_MAX;
 	strncpy(stream->native_encoding, nbuf, nelen);
 	stream->native_encoding[nelen] = '\0';
 	break;
