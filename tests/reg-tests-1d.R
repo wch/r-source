@@ -3414,6 +3414,35 @@ stopifnot(length(acl$series) == 1,
 ## funny data names in R < 4.0.0
 
 
+## wilcox.test(x,{y,} ..): when 'x' and/or 'y' contain +/- Inf
+dfn <- c(shifted = function(L) 1/8 + c(9:4, L), # <- without, and
+            ties = function(L)       c(9:4, L)) # <- with ties
+oWarn <- getOption("warn")
+for(nm in names(dfn)) {
+    y7 <- dfn[[nm]]
+    options(warn = if(nm == "ties") 1 else 2) ## "ties" : ==> 2 x 3 (different) warnings
+    w2  <- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L)))
+    w1  <- lapply(c(1000, Inf), function(L) wilcox.test( y7(L) ))
+    w2p <- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L), paired= TRUE))
+    w2n <- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L), exact = FALSE))
+    w2pn<- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L), exact = FALSE, paired=TRUE))
+    stopifnot(exprs = {
+        identical(w2  [[1]], w2  [[2]]) # was FALSE in R <= 3.6.x
+        identical(w1  [[1]], w1  [[2]]) # was FALSE ..
+        identical(w2p [[1]], w2p [[2]])
+        identical(w2n [[1]], w2n [[2]]) # was FALSE ..
+        identical(w2pn[[1]], w2pn[[2]])
+    })
+}; options(warn = oWarn)
+## non-paired cases treated 'Inf' non-robustly in R <= 3.6.x
+wII <- wilcox.test(c(-Inf, 1:5, Inf), c(-Inf, 4*(0:4), Inf), paired=TRUE) # error in R <= 3.6.x
+ w1 <- wilcox.test(c(      1:5, Inf), c(      4*(0:4), Inf), paired=TRUE) # ditto
+(w0 <- wilcox.test(        1:5,               4*(0:4),       paired=TRUE))
+sel <- names(w0) != "data.name"
+stopifnot(identical(w0[sel], w1[sel]), identical(w0[sel], wII[sel]))
+## Inf-Inf  etc broken in paired case in R <= 3.6.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

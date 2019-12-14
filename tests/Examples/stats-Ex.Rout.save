@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-12-11 r77551) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-12-11 r77558) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -18256,7 +18256,7 @@ $rotmat
 > y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
 > wilcox.test(x, y, paired = TRUE, alternative = "greater")
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  x and y
 V = 40, p-value = 0.01953
@@ -18264,7 +18264,7 @@ alternative hypothesis: true location shift is greater than 0
 
 > wilcox.test(y - x, alternative = "less")    # The same.
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  y - x
 V = 5, p-value = 0.01953
@@ -18286,7 +18286,7 @@ alternative hypothesis: true location is less than 0
 > depression <- data.frame(first = x, second = y, change = y - x)
 > wilcox.test(change ~ 1, data = depression)
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  change
 V = 5, p-value = 0.03906
@@ -18294,7 +18294,7 @@ alternative hypothesis: true location is not equal to 0
 
 > wilcox.test(Pair(first, second) ~ 1, data = depression)
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  Pair(first, second)
 V = 40, p-value = 0.03906
@@ -18311,7 +18311,7 @@ alternative hypothesis: true location shift is not equal to 0
 > y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
 > wilcox.test(x, y, alternative = "g")        # greater
 
-	Wilcoxon rank sum test
+	Wilcoxon rank sum exact test
 
 data:  x and y
 W = 35, p-value = 0.1272
@@ -18330,7 +18330,7 @@ alternative hypothesis: true location shift is greater than 0
 > 
 > wilcox.test(rnorm(10), rnorm(10, 2), conf.int = TRUE)
 
-	Wilcoxon rank sum test
+	Wilcoxon rank sum exact test
 
 data:  rnorm(10) and rnorm(10, 2)
 W = 7, p-value = 0.0004871
@@ -18356,6 +18356,35 @@ W = 127.5, p-value = 0.0001208
 alternative hypothesis: true location shift is not equal to 0
 
 > 
+> ## accuracy in ties determination via 'digits.rank':
+> wilcox.test( 4:2,      3:1,     paired=TRUE) # Warning:  cannot compute exact p-value with ties
+Warning in wilcox.test.default(4:2, 3:1, paired = TRUE) :
+  cannot compute exact p-value with ties
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  4:2 and 3:1
+V = 6, p-value = 0.1489
+alternative hypothesis: true location shift is not equal to 0
+
+> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) # no ties => *no* warning
+
+	Wilcoxon signed rank exact test
+
+data:  (4:2)/10 and (3:1)/10
+V = 6, p-value = 0.25
+alternative hypothesis: true location shift is not equal to 0
+
+> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE, digits.rank = 9) # same ties as (4:2, 3:1)
+Warning in wilcox.test.default((4:2)/10, (3:1)/10, paired = TRUE, digits.rank = 9) :
+  cannot compute exact p-value with ties
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  (4:2)/10 and (3:1)/10
+V = 6, p-value = 0.1489
+alternative hypothesis: true location shift is not equal to 0
+
 > 
 > 
 > 
@@ -18874,7 +18903,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.832 0.222 7.091 0 0 
+Time elapsed:  3.667 0.164 4.044 0 0 
 > grDevices::dev.off()
 null device 
           1 

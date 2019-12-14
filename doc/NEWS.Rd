@@ -166,6 +166,13 @@
       \item New function \code{deparse1()} produces one string, wrapping
       \code{deparse()}, to be used typically in
       \code{deparse1(substitute(*))}, e.g., to fix \PR{17671}.
+
+      \item \code{wilcox.test()} enhancements: In the (non-paired)
+      two-sample case, \code{Inf} values are treated as very large for
+      robustness consistency.  If exact computations are used, the result
+      now has \code{"exact"} in its \code{method}.  New arguments
+      \code{tol.root} and \code{digits.rank}.  The latter may be used for
+      stability to treat very close numbers as ties.
     }
   }% end{ NEW FEATURES }
 
