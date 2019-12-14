@@ -1,7 +1,7 @@
 #  File src/library/stats/R/fisher.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
          conf.int = TRUE, conf.level = 0.95,
          simulate.p.value = FALSE, B = 2000)
 {
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     METHOD <- "Fisher's Exact Test for Count Data"
     if(is.data.frame(x))
         x <- as.matrix(x)
@@ -48,7 +48,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             stop("if 'x' is not a matrix, 'y' must be given")
         if(length(x) != length(y))
             stop("'x' and 'y' must have the same length")
-        DNAME <- paste(DNAME, "and", deparse(substitute(y)))
+        DNAME <- paste(DNAME, "and", deparse1(substitute(y)))
         OK <- complete.cases(x, y)
         ## use as.factor rather than factor here to be consistent with
         ## pre-tabulated data

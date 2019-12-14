@@ -3403,6 +3403,17 @@ tools::assertError(cbind(ts(1:2, start = 0.5, end = 1.5),
 ## Wrong results in R < 4.0.0
 
 
+## Using deparse1() fixing potential naming problems in many places, PR#17671
+(acl <- do.call(acf, list(lynx, plot=FALSE)))
+set.seed(7); t44 <- table(sample(LETTERS[1:4], size = 50, replace=TRUE),
+                          sample(letters[1:4], size = 50, replace=TRUE))
+ft44 <- do.call(fisher.test, list(t44))
+stopifnot(length(acl$series) == 1,
+          length(do.call(pacf, list(lynx, plot=FALSE))$series) == 1,
+          identical(t44, eval(str2lang(ft44$data.name))))
+## funny data names in R < 4.0.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

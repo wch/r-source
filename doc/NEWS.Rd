@@ -162,6 +162,10 @@
 
       \item Where long vectors are available (i.e., almost everywhere),
       \code{writeBin()} now allows long vectors, i.e., of length >= 2^31.
+
+      \item New function \code{deparse1()} produces one string, wrapping
+      \code{deparse()}, to be used typically in
+      \code{deparse1(substitute(*))}, e.g., to fix \PR{17671}.
     }
   }% end{ NEW FEATURES }
 
