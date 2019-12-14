@@ -1584,10 +1584,10 @@
 *> \verbatim
 *>          JOB is CHARACTER*1
 *>          Specifies the type of backward transformation required:
-*>          = 'N', do nothing, return immediately;
-*>          = 'P', do backward transformation for permutation only;
-*>          = 'S', do backward transformation for scaling only;
-*>          = 'B', do backward transformations for both permutation and
+*>          = 'N': do nothing, return immediately;
+*>          = 'P': do backward transformation for permutation only;
+*>          = 'S': do backward transformation for scaling only;
+*>          = 'B': do backward transformations for both permutation and
 *>                 scaling.
 *>          JOB must be the same as the argument JOB supplied to ZGEBAL.
 *> \endverbatim
@@ -4052,7 +4052,7 @@
 *>          < 0:  if INFO = -i, the i-th argument had an illegal value.
 *>          > 0:  if INFO = i, the QR algorithm failed to compute all the
 *>                eigenvalues, and no eigenvectors have been computed;
-*>                elements and i+1:N of W contain eigenvalues which have
+*>                elements i+1:N of W contain eigenvalues which have
 *>                converged.
 *> \endverbatim
 *
@@ -5011,8 +5011,16 @@
 *>
 *> \verbatim
 *>
-*> ZGELQ2 computes an LQ factorization of a complex m by n matrix A:
-*> A = L * Q.
+*> ZGELQ2 computes an LQ factorization of a complex m-by-n matrix A:
+*>
+*>    A = ( L 0 ) *  Q
+*>
+*> where:
+*>
+*>    Q is a n-by-n orthogonal matrix;
+*>    L is an lower-triangular m-by-m matrix;
+*>    0 is a m-by-(n-m) zero matrix, if m < n.
+*>
 *> \endverbatim
 *
 *  Arguments:
@@ -5074,7 +5082,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2019
 *
 *> \ingroup complex16GEcomputational
 *
@@ -5099,10 +5107,10 @@
 *  =====================================================================
       SUBROUTINE ZGELQ2( M, N, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.9.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2019
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -5206,7 +5214,15 @@
 *> \verbatim
 *>
 *> ZGELQF computes an LQ factorization of a complex M-by-N matrix A:
-*> A = L * Q.
+*>
+*>    A = ( L 0 ) *  Q
+*>
+*> where:
+*>
+*>    Q is a N-by-N orthogonal matrix;
+*>    L is an lower-triangular M-by-M matrix;
+*>    0 is a M-by-(N-M) zero matrix, if M < N.
+*>
 *> \endverbatim
 *
 *  Arguments:
@@ -5282,7 +5298,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2019
 *
 *> \ingroup complex16GEcomputational
 *
@@ -5307,10 +5323,10 @@
 *  =====================================================================
       SUBROUTINE ZGELQF( M, N, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.9.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2019
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -7016,8 +7032,17 @@
 *>
 *> \verbatim
 *>
-*> ZGEQR2 computes a QR factorization of a complex m by n matrix A:
-*> A = Q * R.
+*> ZGEQR2 computes a QR factorization of a complex m-by-n matrix A:
+*>
+*>    A = Q * ( R ),
+*>            ( 0 )
+*>
+*> where:
+*>
+*>    Q is a m-by-m orthogonal matrix;
+*>    R is an upper-triangular n-by-n matrix;
+*>    0 is a (m-n)-by-n zero matrix, if m > n.
+*>
 *> \endverbatim
 *
 *  Arguments:
@@ -7079,7 +7104,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2019
 *
 *> \ingroup complex16GEcomputational
 *
@@ -7104,10 +7129,10 @@
 *  =====================================================================
       SUBROUTINE ZGEQR2( M, N, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.9.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2019
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -7209,7 +7234,16 @@
 *> \verbatim
 *>
 *> ZGEQRF computes a QR factorization of a complex M-by-N matrix A:
-*> A = Q * R.
+*>
+*>    A = Q * ( R ),
+*>            ( 0 )
+*>
+*> where:
+*>
+*>    Q is a M-by-M orthogonal matrix;
+*>    R is an upper-triangular N-by-N matrix;
+*>    0 is a (M-N)-by-N zero matrix, if M > N.
+*>
 *> \endverbatim
 *
 *  Arguments:
@@ -7286,7 +7320,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2019
 *
 *> \ingroup complex16GEcomputational
 *
@@ -7311,10 +7345,10 @@
 *  =====================================================================
       SUBROUTINE ZGEQRF( M, N, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.9.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2019
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -7984,7 +8018,7 @@
 *> \verbatim
 *>          SCALE is DOUBLE PRECISION
 *>           On exit, SCALE contains the scale factor. SCALE is chosen
-*>           0 <= SCALE <= 1 to prevent owerflow in the solution.
+*>           0 <= SCALE <= 1 to prevent overflow in the solution.
 *> \endverbatim
 *
 *  Authors:
@@ -20988,7 +21022,7 @@
 *> \param[in] N
 *> \verbatim
 *>          N is INTEGER
-*>           The order of the matrix H.  N .GE. 0.
+*>           The order of the matrix H.  N >= 0.
 *> \endverbatim
 *>
 *> \param[in] ILO
@@ -21005,7 +21039,7 @@
 *>           set by a previous call to ZGEBAL, and then passed to ZGEHRD
 *>           when the matrix output by ZGEBAL is reduced to Hessenberg
 *>           form. Otherwise ILO and IHI should be set to 1 and N
-*>           respectively.  If N.GT.0, then 1.LE.ILO.LE.IHI.LE.N.
+*>           respectively.  If N > 0, then 1 <= ILO <= IHI <= N.
 *>           If N = 0, then ILO = 1 and IHI = 0.
 *> \endverbatim
 *>
@@ -21017,17 +21051,17 @@
 *>           triangular matrix T from the Schur decomposition (the
 *>           Schur form). If INFO = 0 and JOB = 'E', the contents of
 *>           H are unspecified on exit.  (The output value of H when
-*>           INFO.GT.0 is given under the description of INFO below.)
+*>           INFO > 0 is given under the description of INFO below.)
 *>
 *>           Unlike earlier versions of ZHSEQR, this subroutine may
-*>           explicitly H(i,j) = 0 for i.GT.j and j = 1, 2, ... ILO-1
+*>           explicitly H(i,j) = 0 for i > j and j = 1, 2, ... ILO-1
 *>           or j = IHI+1, IHI+2, ... N.
 *> \endverbatim
 *>
 *> \param[in] LDH
 *> \verbatim
 *>          LDH is INTEGER
-*>           The leading dimension of the array H. LDH .GE. max(1,N).
+*>           The leading dimension of the array H. LDH >= max(1,N).
 *> \endverbatim
 *>
 *> \param[out] W
@@ -21050,7 +21084,7 @@
 *>           if INFO = 0, Z contains Q*Z.
 *>           Normally Q is the unitary matrix generated by ZUNGHR
 *>           after the call to ZGEHRD which formed the Hessenberg matrix
-*>           H. (The output value of Z when INFO.GT.0 is given under
+*>           H. (The output value of Z when INFO > 0 is given under
 *>           the description of INFO below.)
 *> \endverbatim
 *>
@@ -21058,7 +21092,7 @@
 *> \verbatim
 *>          LDZ is INTEGER
 *>           The leading dimension of the array Z.  if COMPZ = 'I' or
-*>           COMPZ = 'V', then LDZ.GE.MAX(1,N).  Otherwize, LDZ.GE.1.
+*>           COMPZ = 'V', then LDZ >= MAX(1,N).  Otherwise, LDZ >= 1.
 *> \endverbatim
 *>
 *> \param[out] WORK
@@ -21071,7 +21105,7 @@
 *> \param[in] LWORK
 *> \verbatim
 *>          LWORK is INTEGER
-*>           The dimension of the array WORK.  LWORK .GE. max(1,N)
+*>           The dimension of the array WORK.  LWORK >= max(1,N)
 *>           is sufficient and delivers very good and sometimes
 *>           optimal performance.  However, LWORK as large as 11*N
 *>           may be required for optimal performance.  A workspace
@@ -21089,21 +21123,21 @@
 *> \param[out] INFO
 *> \verbatim
 *>          INFO is INTEGER
-*>             =  0:  successful exit
-*>           .LT. 0:  if INFO = -i, the i-th argument had an illegal
+*>             = 0:  successful exit
+*>             < 0:  if INFO = -i, the i-th argument had an illegal
 *>                    value
-*>           .GT. 0:  if INFO = i, ZHSEQR failed to compute all of
-*>                the eigenvalues.  Elements 1:ilo-1 and i+1:n of WR
-*>                and WI contain those eigenvalues which have been
+*>             > 0:  if INFO = i, ZHSEQR failed to compute all of
+*>                the eigenvalues.  Elements 1:ilo-1 and i+1:n of W
+*>                contain those eigenvalues which have been
 *>                successfully computed.  (Failures are rare.)
 *>
-*>                If INFO .GT. 0 and JOB = 'E', then on exit, the
+*>                If INFO > 0 and JOB = 'E', then on exit, the
 *>                remaining unconverged eigenvalues are the eigen-
 *>                values of the upper Hessenberg matrix rows and
 *>                columns ILO through INFO of the final, output
 *>                value of H.
 *>
-*>                If INFO .GT. 0 and JOB   = 'S', then on exit
+*>                If INFO > 0 and JOB   = 'S', then on exit
 *>
 *>           (*)  (initial value of H)*U  = U*(final value of H)
 *>
@@ -21111,19 +21145,19 @@
 *>                value of  H is upper Hessenberg and triangular in
 *>                rows and columns INFO+1 through IHI.
 *>
-*>                If INFO .GT. 0 and COMPZ = 'V', then on exit
+*>                If INFO > 0 and COMPZ = 'V', then on exit
 *>
 *>                  (final value of Z)  =  (initial value of Z)*U
 *>
 *>                where U is the unitary matrix in (*) (regard-
 *>                less of the value of JOB.)
 *>
-*>                If INFO .GT. 0 and COMPZ = 'I', then on exit
+*>                If INFO > 0 and COMPZ = 'I', then on exit
 *>                      (final value of Z)  = U
 *>                where U is the unitary matrix in (*) (regard-
 *>                less of the value of JOB.)
 *>
-*>                If INFO .GT. 0 and COMPZ = 'N', then Z is not
+*>                If INFO > 0 and COMPZ = 'N', then Z is not
 *>                accessed.
 *> \endverbatim
 *
@@ -21163,8 +21197,8 @@
 *>                      This depends on ILO, IHI and NS.  NS is the
 *>                      number of simultaneous shifts returned
 *>                      by ILAENV(ISPEC=15).  (See ISPEC=15 below.)
-*>                      The default for (IHI-ILO+1).LE.500 is NS.
-*>                      The default for (IHI-ILO+1).GT.500 is 3*NS/2.
+*>                      The default for (IHI-ILO+1) <= 500 is NS.
+*>                      The default for (IHI-ILO+1) >  500 is 3*NS/2.
 *>
 *>            ISPEC=14: Nibble crossover point. (See IPARMQ for
 *>                      details.)  Default: 14% of deflation window
@@ -21242,8 +21276,8 @@
       PARAMETER          ( NTINY = 11 )
 *
 *     ==== NL allocates some local workspace to help small matrices
-*     .    through a rare ZLAHQR failure.  NL .GT. NTINY = 11 is
-*     .    required and NL .LE. NMIN = ILAENV(ISPEC=12,...) is recom-
+*     .    through a rare ZLAHQR failure.  NL > NTINY = 11 is
+*     .    required and NL <= NMIN = ILAENV(ISPEC=12,...) is recom-
 *     .    mended.  (The default value of NMIN is 75.)  Using NL = 49
 *     .    allows up to six simultaneous shifts and a 16-by-16
 *     .    deflation window.  ====
@@ -24233,26 +24267,26 @@
 *> \param[out] INFO
 *> \verbatim
 *>          INFO is INTEGER
-*>           =   0: successful exit
-*>          .GT. 0: if INFO = i, ZLAHQR failed to compute all the
+*>           = 0:   successful exit
+*>           > 0:   if INFO = i, ZLAHQR failed to compute all the
 *>                  eigenvalues ILO to IHI in a total of 30 iterations
 *>                  per eigenvalue; elements i+1:ihi of W contain
 *>                  those eigenvalues which have been successfully
 *>                  computed.
 *>
-*>                  If INFO .GT. 0 and WANTT is .FALSE., then on exit,
+*>                  If INFO > 0 and WANTT is .FALSE., then on exit,
 *>                  the remaining unconverged eigenvalues are the
 *>                  eigenvalues of the upper Hessenberg matrix
-*>                  rows and columns ILO thorugh INFO of the final,
+*>                  rows and columns ILO through INFO of the final,
 *>                  output value of H.
 *>
-*>                  If INFO .GT. 0 and WANTT is .TRUE., then on exit
+*>                  If INFO > 0 and WANTT is .TRUE., then on exit
 *>          (*)       (initial value of H)*U  = U*(final value of H)
-*>                  where U is an orthognal matrix.    The final
+*>                  where U is an orthogonal matrix.    The final
 *>                  value of H is upper Hessenberg and triangular in
 *>                  rows and columns INFO+1 through IHI.
 *>
-*>                  If INFO .GT. 0 and WANTZ is .TRUE., then on exit
+*>                  If INFO > 0 and WANTZ is .TRUE., then on exit
 *>                      (final value of Z)  = (initial value of Z)*U
 *>                  where U is the orthogonal matrix in (*)
 *>                  (regardless of the value of WANTT.)
@@ -27290,6 +27324,7 @@
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     December 2016
 *
+      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          NORM
       INTEGER            LDA, M, N
@@ -27307,14 +27342,17 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, J
-      DOUBLE PRECISION   SCALE, SUM, VALUE, TEMP
+      DOUBLE PRECISION   SUM, VALUE, TEMP
+*     ..
+*     .. Local Arrays ..
+      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ
+      EXTERNAL           ZLASSQ, DCOMBSSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MIN, SQRT
@@ -27366,13 +27404,19 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
+*        SSQ(1) is scale
+*        SSQ(2) is sum-of-squares
+*        For better accuracy, sum each column separately.
 *
-         SCALE = ZERO
-         SUM = ONE
+         SSQ( 1 ) = ZERO
+         SSQ( 2 ) = ONE
          DO 90 J = 1, N
-            CALL ZLASSQ( M, A( 1, J ), 1, SCALE, SUM )
+            COLSSQ( 1 ) = ZERO
+            COLSSQ( 2 ) = ONE
+            CALL ZLASSQ( M, A( 1, J ), 1, COLSSQ( 1 ), COLSSQ( 2 ) )
+            CALL DCOMBSSQ( SSQ, COLSSQ )
    90    CONTINUE
-         VALUE = SCALE*SQRT( SUM )
+         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
       END IF
 *
       ZLANGE = VALUE
@@ -27512,6 +27556,7 @@
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     December 2016
 *
+      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          NORM, UPLO
       INTEGER            LDA, N
@@ -27529,14 +27574,17 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, J
-      DOUBLE PRECISION   ABSA, SCALE, SUM, VALUE
+      DOUBLE PRECISION   ABSA, SUM, VALUE
+*     ..
+*     .. Local Arrays ..
+      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ
+      EXTERNAL           ZLASSQ, DCOMBSSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, SQRT
@@ -27606,31 +27654,48 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
+*        SSQ(1) is scale
+*        SSQ(2) is sum-of-squares
+*        For better accuracy, sum each column separately.
 *
-         SCALE = ZERO
-         SUM = ONE
+         SSQ( 1 ) = ZERO
+         SSQ( 2 ) = ONE
+*
+*        Sum off-diagonals
+*
          IF( LSAME( UPLO, 'U' ) ) THEN
             DO 110 J = 2, N
-               CALL ZLASSQ( J-1, A( 1, J ), 1, SCALE, SUM )
+               COLSSQ( 1 ) = ZERO
+               COLSSQ( 2 ) = ONE
+               CALL ZLASSQ( J-1, A( 1, J ), 1,
+     $                      COLSSQ( 1 ), COLSSQ( 2 ) )
+               CALL DCOMBSSQ( SSQ, COLSSQ )
   110       CONTINUE
          ELSE
             DO 120 J = 1, N - 1
-               CALL ZLASSQ( N-J, A( J+1, J ), 1, SCALE, SUM )
+               COLSSQ( 1 ) = ZERO
+               COLSSQ( 2 ) = ONE
+               CALL ZLASSQ( N-J, A( J+1, J ), 1,
+     $                      COLSSQ( 1 ), COLSSQ( 2 ) )
+               CALL DCOMBSSQ( SSQ, COLSSQ )
   120       CONTINUE
          END IF
-         SUM = 2*SUM
+         SSQ( 2 ) = 2*SSQ( 2 )
+*
+*        Sum diagonal
+*
          DO 130 I = 1, N
             IF( DBLE( A( I, I ) ).NE.ZERO ) THEN
                ABSA = ABS( DBLE( A( I, I ) ) )
-               IF( SCALE.LT.ABSA ) THEN
-                  SUM = ONE + SUM*( SCALE / ABSA )**2
-                  SCALE = ABSA
+               IF( SSQ( 1 ).LT.ABSA ) THEN
+                  SSQ( 2 ) = ONE + SSQ( 2 )*( SSQ( 1 ) / ABSA )**2
+                  SSQ( 1 ) = ABSA
                ELSE
-                  SUM = SUM + ( ABSA / SCALE )**2
+                  SSQ( 2 ) = SSQ( 2 ) + ( ABSA / SSQ( 1 ) )**2
                END IF
             END IF
   130    CONTINUE
-         VALUE = SCALE*SQRT( SUM )
+         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
       END IF
 *
       ZLANHE = VALUE
@@ -27755,6 +27820,7 @@
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     December 2016
 *
+      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          NORM
       INTEGER            LDA, N
@@ -27772,14 +27838,17 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, J
-      DOUBLE PRECISION   SCALE, SUM, VALUE
+      DOUBLE PRECISION   SUM, VALUE
+*     ..
+*     .. Local Arrays ..
+      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ
+      EXTERNAL           ZLASSQ, DCOMBSSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MIN, SQRT
@@ -27831,13 +27900,20 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
+*        SSQ(1) is scale
+*        SSQ(2) is sum-of-squares
+*        For better accuracy, sum each column separately.
 *
-         SCALE = ZERO
-         SUM = ONE
+         SSQ( 1 ) = ZERO
+         SSQ( 2 ) = ONE
          DO 90 J = 1, N
-            CALL ZLASSQ( MIN( N, J+1 ), A( 1, J ), 1, SCALE, SUM )
+            COLSSQ( 1 ) = ZERO
+            COLSSQ( 2 ) = ONE
+            CALL ZLASSQ( MIN( N, J+1 ), A( 1, J ), 1,
+     $                   COLSSQ( 1 ), COLSSQ( 2 ) )
+            CALL DCOMBSSQ( SSQ, COLSSQ )
    90    CONTINUE
-         VALUE = SCALE*SQRT( SUM )
+         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
       END IF
 *
       ZLANHS = VALUE
@@ -27995,6 +28071,7 @@
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     December 2016
 *
+      IMPLICIT NONE
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
       INTEGER            LDA, M, N
@@ -28013,14 +28090,17 @@
 *     .. Local Scalars ..
       LOGICAL            UDIAG
       INTEGER            I, J
-      DOUBLE PRECISION   SCALE, SUM, VALUE
+      DOUBLE PRECISION   SUM, VALUE
+*     ..
+*     .. Local Arrays ..
+      DOUBLE PRECISION   SSQ( 2 ), COLSSQ( 2 )
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME, DISNAN
       EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASSQ
+      EXTERNAL           ZLASSQ, DCOMBSSQ
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MIN, SQRT
@@ -28161,38 +28241,56 @@
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
 *        Find normF(A).
+*        SSQ(1) is scale
+*        SSQ(2) is sum-of-squares
+*        For better accuracy, sum each column separately.
 *
          IF( LSAME( UPLO, 'U' ) ) THEN
             IF( LSAME( DIAG, 'U' ) ) THEN
-               SCALE = ONE
-               SUM = MIN( M, N )
+               SSQ( 1 ) = ONE
+               SSQ( 2 ) = MIN( M, N )
                DO 290 J = 2, N
-                  CALL ZLASSQ( MIN( M, J-1 ), A( 1, J ), 1, SCALE, SUM )
+                  COLSSQ( 1 ) = ZERO
+                  COLSSQ( 2 ) = ONE
+                  CALL ZLASSQ( MIN( M, J-1 ), A( 1, J ), 1,
+     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
+                  CALL DCOMBSSQ( SSQ, COLSSQ )
   290          CONTINUE
             ELSE
-               SCALE = ZERO
-               SUM = ONE
+               SSQ( 1 ) = ZERO
+               SSQ( 2 ) = ONE
                DO 300 J = 1, N
-                  CALL ZLASSQ( MIN( M, J ), A( 1, J ), 1, SCALE, SUM )
+                  COLSSQ( 1 ) = ZERO
+                  COLSSQ( 2 ) = ONE
+                  CALL ZLASSQ( MIN( M, J ), A( 1, J ), 1,
+     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
+                  CALL DCOMBSSQ( SSQ, COLSSQ )
   300          CONTINUE
             END IF
          ELSE
             IF( LSAME( DIAG, 'U' ) ) THEN
-               SCALE = ONE
-               SUM = MIN( M, N )
+               SSQ( 1 ) = ONE
+               SSQ( 2 ) = MIN( M, N )
                DO 310 J = 1, N
-                  CALL ZLASSQ( M-J, A( MIN( M, J+1 ), J ), 1, SCALE,
-     $                         SUM )
+                  COLSSQ( 1 ) = ZERO
+                  COLSSQ( 2 ) = ONE
+                  CALL ZLASSQ( M-J, A( MIN( M, J+1 ), J ), 1,
+     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
+                  CALL DCOMBSSQ( SSQ, COLSSQ )
   310          CONTINUE
             ELSE
-               SCALE = ZERO
-               SUM = ONE
+               SSQ( 1 ) = ZERO
+               SSQ( 2 ) = ONE
                DO 320 J = 1, N
-                  CALL ZLASSQ( M-J+1, A( J, J ), 1, SCALE, SUM )
+                  COLSSQ( 1 ) = ZERO
+                  COLSSQ( 2 ) = ONE
+                  CALL ZLASSQ( M-J+1, A( J, J ), 1,
+     $                         COLSSQ( 1 ), COLSSQ( 2 ) )
+                  CALL DCOMBSSQ( SSQ, COLSSQ )
   320          CONTINUE
             END IF
          END IF
-         VALUE = SCALE*SQRT( SUM )
+         VALUE = SSQ( 1 )*SQRT( SSQ( 2 ) )
       END IF
 *
       ZLANTR = VALUE
@@ -28834,7 +28932,7 @@
 *> \param[in,out] AUXV
 *> \verbatim
 *>          AUXV is COMPLEX*16 array, dimension (NB)
-*>          Auxiliar vector.
+*>          Auxiliary vector.
 *> \endverbatim
 *>
 *> \param[in,out] F
@@ -29143,7 +29241,7 @@
 *> \param[in] N
 *> \verbatim
 *>          N is INTEGER
-*>           The order of the matrix H.  N .GE. 0.
+*>           The order of the matrix H.  N >= 0.
 *> \endverbatim
 *>
 *> \param[in] ILO
@@ -29156,12 +29254,12 @@
 *>          IHI is INTEGER
 *>
 *>           It is assumed that H is already upper triangular in rows
-*>           and columns 1:ILO-1 and IHI+1:N and, if ILO.GT.1,
+*>           and columns 1:ILO-1 and IHI+1:N and, if ILO > 1,
 *>           H(ILO,ILO-1) is zero. ILO and IHI are normally set by a
 *>           previous call to ZGEBAL, and then passed to ZGEHRD when the
 *>           matrix output by ZGEBAL is reduced to Hessenberg form.
 *>           Otherwise, ILO and IHI should be set to 1 and N,
-*>           respectively.  If N.GT.0, then 1.LE.ILO.LE.IHI.LE.N.
+*>           respectively.  If N > 0, then 1 <= ILO <= IHI <= N.
 *>           If N = 0, then ILO = 1 and IHI = 0.
 *> \endverbatim
 *>
@@ -29173,17 +29271,17 @@
 *>           contains the upper triangular matrix T from the Schur
 *>           decomposition (the Schur form). If INFO = 0 and WANT is
 *>           .FALSE., then the contents of H are unspecified on exit.
-*>           (The output value of H when INFO.GT.0 is given under the
+*>           (The output value of H when INFO > 0 is given under the
 *>           description of INFO below.)
 *>
-*>           This subroutine may explicitly set H(i,j) = 0 for i.GT.j and
+*>           This subroutine may explicitly set H(i,j) = 0 for i > j and
 *>           j = 1, 2, ... ILO-1 or j = IHI+1, IHI+2, ... N.
 *> \endverbatim
 *>
 *> \param[in] LDH
 *> \verbatim
 *>          LDH is INTEGER
-*>           The leading dimension of the array H. LDH .GE. max(1,N).
+*>           The leading dimension of the array H. LDH >= max(1,N).
 *> \endverbatim
 *>
 *> \param[out] W
@@ -29205,7 +29303,7 @@
 *>          IHIZ is INTEGER
 *>           Specify the rows of Z to which transformations must be
 *>           applied if WANTZ is .TRUE..
-*>           1 .LE. ILOZ .LE. ILO; IHI .LE. IHIZ .LE. N.
+*>           1 <= ILOZ <= ILO; IHI <= IHIZ <= N.
 *> \endverbatim
 *>
 *> \param[in,out] Z
@@ -29215,7 +29313,7 @@
 *>           If WANTZ is .TRUE., then Z(ILO:IHI,ILOZ:IHIZ) is
 *>           replaced by Z(ILO:IHI,ILOZ:IHIZ)*U where U is the
 *>           orthogonal Schur factor of H(ILO:IHI,ILO:IHI).
-*>           (The output value of Z when INFO.GT.0 is given under
+*>           (The output value of Z when INFO > 0 is given under
 *>           the description of INFO below.)
 *> \endverbatim
 *>
@@ -29223,7 +29321,7 @@
 *> \verbatim
 *>          LDZ is INTEGER
 *>           The leading dimension of the array Z.  if WANTZ is .TRUE.
-*>           then LDZ.GE.MAX(1,IHIZ).  Otherwize, LDZ.GE.1.
+*>           then LDZ >= MAX(1,IHIZ).  Otherwise, LDZ >= 1.
 *> \endverbatim
 *>
 *> \param[out] WORK
@@ -29236,7 +29334,7 @@
 *> \param[in] LWORK
 *> \verbatim
 *>          LWORK is INTEGER
-*>           The dimension of the array WORK.  LWORK .GE. max(1,N)
+*>           The dimension of the array WORK.  LWORK >= max(1,N)
 *>           is sufficient, but LWORK typically as large as 6*N may
 *>           be required for optimal performance.  A workspace query
 *>           to determine the optimal workspace size is recommended.
@@ -29252,19 +29350,19 @@
 *> \param[out] INFO
 *> \verbatim
 *>          INFO is INTEGER
-*>             =  0:  successful exit
-*>           .GT. 0:  if INFO = i, ZLAQR0 failed to compute all of
+*>             = 0:  successful exit
+*>             > 0:  if INFO = i, ZLAQR0 failed to compute all of
 *>                the eigenvalues.  Elements 1:ilo-1 and i+1:n of WR
 *>                and WI contain those eigenvalues which have been
 *>                successfully computed.  (Failures are rare.)
 *>
-*>                If INFO .GT. 0 and WANT is .FALSE., then on exit,
+*>                If INFO > 0 and WANT is .FALSE., then on exit,
 *>                the remaining unconverged eigenvalues are the eigen-
 *>                values of the upper Hessenberg matrix rows and
 *>                columns ILO through INFO of the final, output
 *>                value of H.
 *>
-*>                If INFO .GT. 0 and WANTT is .TRUE., then on exit
+*>                If INFO > 0 and WANTT is .TRUE., then on exit
 *>
 *>           (*)  (initial value of H)*U  = U*(final value of H)
 *>
@@ -29272,7 +29370,7 @@
 *>                value of  H is upper Hessenberg and triangular in
 *>                rows and columns INFO+1 through IHI.
 *>
-*>                If INFO .GT. 0 and WANTZ is .TRUE., then on exit
+*>                If INFO > 0 and WANTZ is .TRUE., then on exit
 *>
 *>                  (final value of Z(ILO:IHI,ILOZ:IHIZ)
 *>                   =  (initial value of Z(ILO:IHI,ILOZ:IHIZ)*U
@@ -29280,7 +29378,7 @@
 *>                where U is the unitary matrix in (*) (regard-
 *>                less of the value of WANTT.)
 *>
-*>                If INFO .GT. 0 and WANTZ is .FALSE., then Z is not
+*>                If INFO > 0 and WANTZ is .FALSE., then Z is not
 *>                accessed.
 *> \endverbatim
 *
@@ -29718,7 +29816,7 @@
                   END IF
                END IF
 *
-*              ==== Use up to NS of the the smallest magnatiude
+*              ==== Use up to NS of the the smallest magnitude
 *              .    shifts.  If there aren't NS shifts available,
 *              .    then use them all, possibly dropping one to
 *              .    make the number of shifts even. ====
@@ -29844,7 +29942,7 @@
 *> \verbatim
 *>          LDH is INTEGER
 *>              The leading dimension of H as declared in
-*>              the calling procedure.  LDH.GE.N
+*>              the calling procedure.  LDH >= N
 *> \endverbatim
 *>
 *> \param[in] S1
@@ -29922,6 +30020,13 @@
       CABS1( CDUM ) = ABS( DBLE( CDUM ) ) + ABS( DIMAG( CDUM ) )
 *     ..
 *     .. Executable Statements ..
+*
+*     Quick return if possible
+*
+      IF( N.NE.2 .AND. N.NE.3 ) THEN
+         RETURN
+      END IF
+*
       IF( N.EQ.2 ) THEN
          S = CABS1( H( 1, 1 )-S2 ) + CABS1( H( 2, 1 ) )
          IF( S.EQ.RZERO ) THEN
@@ -30055,7 +30160,7 @@
 *> \param[in] NW
 *> \verbatim
 *>          NW is INTEGER
-*>          Deflation window size.  1 .LE. NW .LE. (KBOT-KTOP+1).
+*>          Deflation window size.  1 <= NW <= (KBOT-KTOP+1).
 *> \endverbatim
 *>
 *> \param[in,out] H
@@ -30073,7 +30178,7 @@
 *> \verbatim
 *>          LDH is INTEGER
 *>          Leading dimension of H just as declared in the calling
-*>          subroutine.  N .LE. LDH
+*>          subroutine.  N <= LDH
 *> \endverbatim
 *>
 *> \param[in] ILOZ
@@ -30085,7 +30190,7 @@
 *> \verbatim
 *>          IHIZ is INTEGER
 *>          Specify the rows of Z to which transformations must be
-*>          applied if WANTZ is .TRUE.. 1 .LE. ILOZ .LE. IHIZ .LE. N.
+*>          applied if WANTZ is .TRUE.. 1 <= ILOZ <= IHIZ <= N.
 *> \endverbatim
 *>
 *> \param[in,out] Z
@@ -30101,7 +30206,7 @@
 *> \verbatim
 *>          LDZ is INTEGER
 *>          The leading dimension of Z just as declared in the
-*>          calling subroutine.  1 .LE. LDZ.
+*>          calling subroutine.  1 <= LDZ.
 *> \endverbatim
 *>
 *> \param[out] NS
@@ -30138,13 +30243,13 @@
 *> \verbatim
 *>          LDV is INTEGER
 *>          The leading dimension of V just as declared in the
-*>          calling subroutine.  NW .LE. LDV
+*>          calling subroutine.  NW <= LDV
 *> \endverbatim
 *>
 *> \param[in] NH
 *> \verbatim
 *>          NH is INTEGER
-*>          The number of columns of T.  NH.GE.NW.
+*>          The number of columns of T.  NH >= NW.
 *> \endverbatim
 *>
 *> \param[out] T
@@ -30156,14 +30261,14 @@
 *> \verbatim
 *>          LDT is INTEGER
 *>          The leading dimension of T just as declared in the
-*>          calling subroutine.  NW .LE. LDT
+*>          calling subroutine.  NW <= LDT
 *> \endverbatim
 *>
 *> \param[in] NV
 *> \verbatim
 *>          NV is INTEGER
 *>          The number of rows of work array WV available for
-*>          workspace.  NV.GE.NW.
+*>          workspace.  NV >= NW.
 *> \endverbatim
 *>
 *> \param[out] WV
@@ -30175,7 +30280,7 @@
 *> \verbatim
 *>          LDWV is INTEGER
 *>          The leading dimension of W just as declared in the
-*>          calling subroutine.  NW .LE. LDV
+*>          calling subroutine.  NW <= LDV
 *> \endverbatim
 *>
 *> \param[out] WORK
@@ -30619,7 +30724,7 @@
 *> \param[in] NW
 *> \verbatim
 *>          NW is INTEGER
-*>          Deflation window size.  1 .LE. NW .LE. (KBOT-KTOP+1).
+*>          Deflation window size.  1 <= NW <= (KBOT-KTOP+1).
 *> \endverbatim
 *>
 *> \param[in,out] H
@@ -30637,7 +30742,7 @@
 *> \verbatim
 *>          LDH is INTEGER
 *>          Leading dimension of H just as declared in the calling
-*>          subroutine.  N .LE. LDH
+*>          subroutine.  N <= LDH
 *> \endverbatim
 *>
 *> \param[in] ILOZ
@@ -30649,7 +30754,7 @@
 *> \verbatim
 *>          IHIZ is INTEGER
 *>          Specify the rows of Z to which transformations must be
-*>          applied if WANTZ is .TRUE.. 1 .LE. ILOZ .LE. IHIZ .LE. N.
+*>          applied if WANTZ is .TRUE.. 1 <= ILOZ <= IHIZ <= N.
 *> \endverbatim
 *>
 *> \param[in,out] Z
@@ -30665,7 +30770,7 @@
 *> \verbatim
 *>          LDZ is INTEGER
 *>          The leading dimension of Z just as declared in the
-*>          calling subroutine.  1 .LE. LDZ.
+*>          calling subroutine.  1 <= LDZ.
 *> \endverbatim
 *>
 *> \param[out] NS
@@ -30702,13 +30807,13 @@
 *> \verbatim
 *>          LDV is INTEGER
 *>          The leading dimension of V just as declared in the
-*>          calling subroutine.  NW .LE. LDV
+*>          calling subroutine.  NW <= LDV
 *> \endverbatim
 *>
 *> \param[in] NH
 *> \verbatim
 *>          NH is INTEGER
-*>          The number of columns of T.  NH.GE.NW.
+*>          The number of columns of T.  NH >= NW.
 *> \endverbatim
 *>
 *> \param[out] T
@@ -30720,14 +30825,14 @@
 *> \verbatim
 *>          LDT is INTEGER
 *>          The leading dimension of T just as declared in the
-*>          calling subroutine.  NW .LE. LDT
+*>          calling subroutine.  NW <= LDT
 *> \endverbatim
 *>
 *> \param[in] NV
 *> \verbatim
 *>          NV is INTEGER
 *>          The number of rows of work array WV available for
-*>          workspace.  NV.GE.NW.
+*>          workspace.  NV >= NW.
 *> \endverbatim
 *>
 *> \param[out] WV
@@ -30739,7 +30844,7 @@
 *> \verbatim
 *>          LDWV is INTEGER
 *>          The leading dimension of W just as declared in the
-*>          calling subroutine.  NW .LE. LDV
+*>          calling subroutine.  NW <= LDV
 *> \endverbatim
 *>
 *> \param[out] WORK
@@ -31170,7 +31275,7 @@
 *> \param[in] N
 *> \verbatim
 *>          N is INTEGER
-*>           The order of the matrix H.  N .GE. 0.
+*>           The order of the matrix H.  N >= 0.
 *> \endverbatim
 *>
 *> \param[in] ILO
@@ -31182,12 +31287,12 @@
 *> \verbatim
 *>          IHI is INTEGER
 *>           It is assumed that H is already upper triangular in rows
-*>           and columns 1:ILO-1 and IHI+1:N and, if ILO.GT.1,
+*>           and columns 1:ILO-1 and IHI+1:N and, if ILO > 1,
 *>           H(ILO,ILO-1) is zero. ILO and IHI are normally set by a
 *>           previous call to ZGEBAL, and then passed to ZGEHRD when the
 *>           matrix output by ZGEBAL is reduced to Hessenberg form.
 *>           Otherwise, ILO and IHI should be set to 1 and N,
-*>           respectively.  If N.GT.0, then 1.LE.ILO.LE.IHI.LE.N.
+*>           respectively.  If N > 0, then 1 <= ILO <= IHI <= N.
 *>           If N = 0, then ILO = 1 and IHI = 0.
 *> \endverbatim
 *>
@@ -31199,17 +31304,17 @@
 *>           contains the upper triangular matrix T from the Schur
 *>           decomposition (the Schur form). If INFO = 0 and WANT is
 *>           .FALSE., then the contents of H are unspecified on exit.
-*>           (The output value of H when INFO.GT.0 is given under the
+*>           (The output value of H when INFO > 0 is given under the
 *>           description of INFO below.)
 *>
-*>           This subroutine may explicitly set H(i,j) = 0 for i.GT.j and
+*>           This subroutine may explicitly set H(i,j) = 0 for i > j and
 *>           j = 1, 2, ... ILO-1 or j = IHI+1, IHI+2, ... N.
 *> \endverbatim
 *>
 *> \param[in] LDH
 *> \verbatim
 *>          LDH is INTEGER
-*>           The leading dimension of the array H. LDH .GE. max(1,N).
+*>           The leading dimension of the array H. LDH >= max(1,N).
 *> \endverbatim
 *>
 *> \param[out] W
@@ -31231,7 +31336,7 @@
 *>          IHIZ is INTEGER
 *>           Specify the rows of Z to which transformations must be
 *>           applied if WANTZ is .TRUE..
-*>           1 .LE. ILOZ .LE. ILO; IHI .LE. IHIZ .LE. N.
+*>           1 <= ILOZ <= ILO; IHI <= IHIZ <= N.
 *> \endverbatim
 *>
 *> \param[in,out] Z
@@ -31241,7 +31346,7 @@
 *>           If WANTZ is .TRUE., then Z(ILO:IHI,ILOZ:IHIZ) is
 *>           replaced by Z(ILO:IHI,ILOZ:IHIZ)*U where U is the
 *>           orthogonal Schur factor of H(ILO:IHI,ILO:IHI).
-*>           (The output value of Z when INFO.GT.0 is given under
+*>           (The output value of Z when INFO > 0 is given under
 *>           the description of INFO below.)
 *> \endverbatim
 *>
@@ -31249,7 +31354,7 @@
 *> \verbatim
 *>          LDZ is INTEGER
 *>           The leading dimension of the array Z.  if WANTZ is .TRUE.
-*>           then LDZ.GE.MAX(1,IHIZ).  Otherwize, LDZ.GE.1.
+*>           then LDZ >= MAX(1,IHIZ).  Otherwise, LDZ >= 1.
 *> \endverbatim
 *>
 *> \param[out] WORK
@@ -31262,7 +31367,7 @@
 *> \param[in] LWORK
 *> \verbatim
 *>          LWORK is INTEGER
-*>           The dimension of the array WORK.  LWORK .GE. max(1,N)
+*>           The dimension of the array WORK.  LWORK >= max(1,N)
 *>           is sufficient, but LWORK typically as large as 6*N may
 *>           be required for optimal performance.  A workspace query
 *>           to determine the optimal workspace size is recommended.
@@ -31279,18 +31384,18 @@
 *> \verbatim
 *>          INFO is INTEGER
 *>             =  0:  successful exit
-*>           .GT. 0:  if INFO = i, ZLAQR4 failed to compute all of
+*>             > 0:  if INFO = i, ZLAQR4 failed to compute all of
 *>                the eigenvalues.  Elements 1:ilo-1 and i+1:n of WR
 *>                and WI contain those eigenvalues which have been
 *>                successfully computed.  (Failures are rare.)
 *>
-*>                If INFO .GT. 0 and WANT is .FALSE., then on exit,
+*>                If INFO > 0 and WANT is .FALSE., then on exit,
 *>                the remaining unconverged eigenvalues are the eigen-
 *>                values of the upper Hessenberg matrix rows and
 *>                columns ILO through INFO of the final, output
 *>                value of H.
 *>
-*>                If INFO .GT. 0 and WANTT is .TRUE., then on exit
+*>                If INFO > 0 and WANTT is .TRUE., then on exit
 *>
 *>           (*)  (initial value of H)*U  = U*(final value of H)
 *>
@@ -31298,7 +31403,7 @@
 *>                value of  H is upper Hessenberg and triangular in
 *>                rows and columns INFO+1 through IHI.
 *>
-*>                If INFO .GT. 0 and WANTZ is .TRUE., then on exit
+*>                If INFO > 0 and WANTZ is .TRUE., then on exit
 *>
 *>                  (final value of Z(ILO:IHI,ILOZ:IHIZ)
 *>                   =  (initial value of Z(ILO:IHI,ILOZ:IHIZ)*U
@@ -31306,7 +31411,7 @@
 *>                where U is the unitary matrix in (*) (regard-
 *>                less of the value of WANTT.)
 *>
-*>                If INFO .GT. 0 and WANTZ is .FALSE., then Z is not
+*>                If INFO > 0 and WANTZ is .FALSE., then Z is not
 *>                accessed.
 *> \endverbatim
 *
@@ -31738,7 +31843,7 @@
                   END IF
                END IF
 *
-*              ==== Use up to NS of the the smallest magnatiude
+*              ==== Use up to NS of the the smallest magnitude
 *              .    shifts.  If there aren't NS shifts available,
 *              .    then use them all, possibly dropping one to
 *              .    make the number of shifts even. ====
@@ -31925,7 +32030,7 @@
 *> \verbatim
 *>          LDH is INTEGER
 *>             LDH is the leading dimension of H just as declared in the
-*>             calling procedure.  LDH.GE.MAX(1,N).
+*>             calling procedure.  LDH >= MAX(1,N).
 *> \endverbatim
 *>
 *> \param[in] ILOZ
@@ -31937,7 +32042,7 @@
 *> \verbatim
 *>          IHIZ is INTEGER
 *>             Specify the rows of Z to which transformations must be
-*>             applied if WANTZ is .TRUE.. 1 .LE. ILOZ .LE. IHIZ .LE. N
+*>             applied if WANTZ is .TRUE.. 1 <= ILOZ <= IHIZ <= N
 *> \endverbatim
 *>
 *> \param[in,out] Z
@@ -31953,7 +32058,7 @@
 *> \verbatim
 *>          LDZ is INTEGER
 *>             LDA is the leading dimension of Z just as declared in
-*>             the calling procedure. LDZ.GE.N.
+*>             the calling procedure. LDZ >= N.
 *> \endverbatim
 *>
 *> \param[out] V
@@ -31965,7 +32070,7 @@
 *> \verbatim
 *>          LDV is INTEGER
 *>             LDV is the leading dimension of V as declared in the
-*>             calling procedure.  LDV.GE.3.
+*>             calling procedure.  LDV >= 3.
 *> \endverbatim
 *>
 *> \param[out] U
@@ -31977,33 +32082,14 @@
 *> \verbatim
 *>          LDU is INTEGER
 *>             LDU is the leading dimension of U just as declared in the
-*>             in the calling subroutine.  LDU.GE.3*NSHFTS-3.
-*> \endverbatim
-*>
-*> \param[in] NH
-*> \verbatim
-*>          NH is INTEGER
-*>             NH is the number of columns in array WH available for
-*>             workspace. NH.GE.1.
-*> \endverbatim
-*>
-*> \param[out] WH
-*> \verbatim
-*>          WH is COMPLEX*16 array, dimension (LDWH,NH)
-*> \endverbatim
-*>
-*> \param[in] LDWH
-*> \verbatim
-*>          LDWH is INTEGER
-*>             Leading dimension of WH just as declared in the
-*>             calling procedure.  LDWH.GE.3*NSHFTS-3.
+*>             in the calling subroutine.  LDU >= 3*NSHFTS-3.
 *> \endverbatim
 *>
 *> \param[in] NV
 *> \verbatim
 *>          NV is INTEGER
 *>             NV is the number of rows in WV agailable for workspace.
-*>             NV.GE.1.
+*>             NV >= 1.
 *> \endverbatim
 *>
 *> \param[out] WV
@@ -32015,9 +32101,28 @@
 *> \verbatim
 *>          LDWV is INTEGER
 *>             LDWV is the leading dimension of WV as declared in the
-*>             in the calling subroutine.  LDWV.GE.NV.
+*>             in the calling subroutine.  LDWV >= NV.
 *> \endverbatim
 *
+*> \param[in] NH
+*> \verbatim
+*>          NH is INTEGER
+*>             NH is the number of columns in array WH available for
+*>             workspace. NH >= 1.
+*> \endverbatim
+*>
+*> \param[out] WH
+*> \verbatim
+*>          WH is COMPLEX*16 array, dimension (LDWH,NH)
+*> \endverbatim
+*>
+*> \param[in] LDWH
+*> \verbatim
+*>          LDWH is INTEGER
+*>             Leading dimension of WH just as declared in the
+*>             calling procedure.  LDWH >= 3*NSHFTS-3.
+*> \endverbatim
+*>
 *  Authors:
 *  ========
 *
@@ -33217,6 +33322,8 @@
 *>          K is INTEGER
 *>          The order of the matrix T (= the number of elementary
 *>          reflectors whose product defines the block reflector).
+*>          If SIDE = 'L', M >= K >= 0;
+*>          if SIDE = 'R', N >= K >= 0.
 *> \endverbatim
 *>
 *> \param[in] V
@@ -34480,7 +34587,7 @@
 *> \param[in] LDC
 *> \verbatim
 *>          LDC is INTEGER
-*>          The leading dimension of the array C. LDA >= max(1,M).
+*>          The leading dimension of the array C. LDC >= max(1,M).
 *> \endverbatim
 *>
 *> \param[out] WORK
@@ -36368,7 +36475,7 @@
 *> where x( i ) = abs( X( 1 + ( i - 1 )*INCX ) ). The value of sumsq is
 *> assumed to be at least unity and the value of ssq will then satisfy
 *>
-*>    1.0 .le. ssq .le. ( sumsq + 2*n ).
+*>    1.0 <= ssq <= ( sumsq + 2*n ).
 *>
 *> scale is assumed to be non-negative and scl returns the value
 *>
@@ -36392,7 +36499,7 @@
 *>
 *> \param[in] X
 *> \verbatim
-*>          X is COMPLEX*16 array, dimension (N)
+*>          X is COMPLEX*16 array, dimension (1+(N-1)*INCX)
 *>          The vector x as described above.
 *>             x( i )  = X( 1 + ( i - 1 )*INCX ), 1 <= i <= n.
 *> \endverbatim
@@ -37779,7 +37886,7 @@
 *
 *        Solve for U- part, lockahead for RHS(N) = +-1. This is not done
 *        In BSOLVE and will hopefully give us a better estimate because
-*        any ill-conditioning of the original matrix is transfered to U
+*        any ill-conditioning of the original matrix is transferred to U
 *        and not to L. U(N, N) is an approximation to sigma_min(LU).
 *
          CALL ZCOPY( N-1, RHS, 1, WORK, 1 )
@@ -40104,7 +40211,7 @@
 *>
 *> \verbatim
 *>
-*> ZPOTRF2 computes the Cholesky factorization of a real symmetric
+*> ZPOTRF2 computes the Cholesky factorization of a Hermitian
 *> positive definite matrix A using the recursive algorithm.
 *>
 *> The factorization has the form
@@ -40143,7 +40250,7 @@
 *> \param[in,out] A
 *> \verbatim
 *>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the symmetric matrix A.  If UPLO = 'U', the leading
+*>          On entry, the Hermitian matrix A.  If UPLO = 'U', the leading
 *>          N-by-N upper triangular part of A contains the upper
 *>          triangular part of the matrix A, and the strictly lower
 *>          triangular part of A is not referenced.  If UPLO = 'L', the
@@ -42969,7 +43076,7 @@
 *>
 *> where U (or L) is a product of permutation and unit upper (lower)
 *> triangular matrices, and D is symmetric and block diagonal with
-*> with 1-by-1 and 2-by-2 diagonal blocks.
+*> 1-by-1 and 2-by-2 diagonal blocks.
 *>
 *> This is the blocked version of the algorithm, calling Level 3 BLAS.
 *> \endverbatim
@@ -45929,7 +46036,7 @@
 *>             R  * B**H + L  * E**H  = scale * -F
 *>
 *> This case is used to compute an estimate of Dif[(A, D), (B, E)] =
-*> = sigma_min(Z) using reverse communicaton with ZLACON.
+*> = sigma_min(Z) using reverse communication with ZLACON.
 *>
 *> ZTGSY2 also (IJOB >= 1) contributes to the computation in ZTGSYL
 *> of an upper bound on the separation between to matrix pairs. Then
@@ -45943,7 +46050,7 @@
 *> \param[in] TRANS
 *> \verbatim
 *>          TRANS is CHARACTER*1
-*>          = 'N', solve the generalized Sylvester equation (1).
+*>          = 'N': solve the generalized Sylvester equation (1).
 *>          = 'T': solve the 'transposed' system (3).
 *> \endverbatim
 *>

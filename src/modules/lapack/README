@@ -1,5 +1,5 @@
 The Fortran routines here were extracted from LAPACK 3.1.0, then
-3.1.1, 3.4.1, 3.4.2, 3.5.0, 3.6.0, 3.6.1, 3.7.0, 3.7.1, 3.8.0
+3.1.1, 3.4.1, 3.4.2, 3.5.0, 3.6.0, 3.6.1, 3.7.0, 3.7.1, 3.8.0, 3.9.0
 (Sources from http://www.netlib.org/lapack and mirrors).
 
 dlapack.f contains support routines for `real' LAPACK calls.  
@@ -15,7 +15,7 @@ Preparation
 -----------
 
 dlapack.f and cmplx.f were created at the top level in the LAPACK
-3.8.0 sources by copying {dble,cmplx}.txt there and running in R
+3.9.0 sources by copying {dble,cmplx}.txt there and running in R
 
 dir.create('dble')
 foo <- scan('dble.txt', "")
@@ -31,7 +31,8 @@ system("cat cmplx/* > cmplx.f")
 
 If you update the LAPACK version, you need to copy over the LICENSE
 file and update it in doc/COPYRIGHTS.  And if you patch the sources,
-*DO* mention it here and add the patch to R.patch.
+*DO* mention it here and add the patch to a file R.patch (not
+currently used).
 
 New LAPACK versions (even point releases) often add new auxiliary
 routines, and these can be hard to track down.  We found it helpful to

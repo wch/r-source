@@ -5,6 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.6.2 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The included LAPACK has been updated to version 3.9.0 (for
+      the included routines, just bug fixes).
+    }
+  }
+
+}
+
 \section{\Rlogo CHANGES IN R 3.6.2}{
 
   \subsection{NEW FEATURES}{

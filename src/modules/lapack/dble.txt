@@ -81,3 +81,4 @@ dtrevc3.f
 DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
 DEPRECATED/dtzrqf.f
+dcombssq.f

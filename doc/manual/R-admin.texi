@@ -5224,6 +5224,23 @@ and appropriate compilers, e.g.@: Fortran and the C/C++ compilers from
 those tools.  Some packages have further requirements such as
 @command{pkg-config}.
 
+@menu
+* Note for Catalina users::
+@end menu
+
+@node Note for Catalina users,  , Prerequisites, Prerequisites
+@subsubsection Note for Catalina users
+
+The default security settings for Catalina can make it difficult to
+install Apple packages built after 2019-06-01 which have not been
+`notarized'@footnote{See
+@uref{https://developer.apple.com//@/documentation/@/xcode/@/notarizing_macos_software_before_distribution}.}
+by Apple.  And not just packages, as this has been seen for executables
+contained in tarballs (for example, for @command{pandoc}).
+
+There are workarounds, including in some cases not installing the latest
+version.
+
 @node Recommended C/C++ compilers, Other libraries, Prerequisites, macOS
 @subsection Recommended C/C++ compilers
 
