@@ -9,13 +9,17 @@ grid.rect(gp=gpar(fill="grey"))
 ## NORMAL clipping(!)
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, clip=TRUE))
-grid.circle(r=.6)
+grid.circle(r=.6, gp=gpar(fill="grey"))
 
 ## A slightly more complex clipping path
 grid.newpage()
 pushViewport(viewport(clip=circleGrob(1:2/3, r=unit(.5, "in"))))
 grid.rect(gp=gpar(fill="grey"))
 
+## Rotated clip rect!
+grid.newpage()
+pushViewport(viewport(width=.5, height=.6, angle=45, clip=rectGrob()))
+grid.circle(r=.6, gp=gpar(fill="grey"))
 
 ######################
 ## NOT YET WORKING

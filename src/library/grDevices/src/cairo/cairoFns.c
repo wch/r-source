@@ -475,23 +475,28 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    cairo_new_path(xd->cc);
-    cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
-
-    /* patternFill overrides fill */
-    if (gc->patternFill >= 0) { 
-        CairoPatternFill(gc->patternFill, xd);
-    } else if (R_ALPHA(gc->fill) > 0) {
-	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
-	CairoColor(gc->fill, xd);
-	cairo_fill_preserve(xd->cc);
-	cairo_set_antialias(xd->cc, xd->antialias);
+    if (!xd->appending) {
+        cairo_new_path(xd->cc);
     }
 
-    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
-	CairoColor(gc->col, xd);
-	CairoLineType(gc, xd);
-	cairo_stroke(xd->cc);
+    cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
+
+    if (!xd->appending) {
+        /* patternFill overrides fill */
+        if (gc->patternFill >= 0) { 
+            CairoPatternFill(gc->patternFill, xd);
+        } else if (R_ALPHA(gc->fill) > 0) {
+            cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
+            CairoColor(gc->fill, xd);
+            cairo_fill_preserve(xd->cc);
+            cairo_set_antialias(xd->cc, xd->antialias);
+        }
+
+        if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
+            CairoColor(gc->col, xd);
+            CairoLineType(gc, xd);
+            cairo_stroke(xd->cc);
+        }
     }
 }
 
@@ -508,7 +513,10 @@ static void Cairo_Circle(double x, double y, double r,
     cairo_arc(xd->cc, x, y, (r > 0.5 ? r : 0.5), 0.0, 2 * M_PI);
 
     if (!xd->appending) {
-        if (R_ALPHA(gc->fill) > 0) {
+        /* patternFill overrides fill */
+        if (gc->patternFill >= 0) { 
+            CairoPatternFill(gc->patternFill, xd);
+        } else if (R_ALPHA(gc->fill) > 0) {
             cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
             CairoColor(gc->fill, xd);
             cairo_fill_preserve(xd->cc);
@@ -544,12 +552,18 @@ static void Cairo_Polyline(int n, double *x, double *y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (R_ALPHA(gc->col) > 0) {
-	CairoColor(gc->col, xd);
-	CairoLineType(gc, xd);
-	cairo_new_path(xd->cc);
+        if (!xd->appending) {
+            CairoColor(gc->col, xd);
+            CairoLineType(gc, xd);
+            cairo_new_path(xd->cc);
+        }
+
 	cairo_move_to(xd->cc, x[0], y[0]);
 	for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
-	cairo_stroke(xd->cc);
+        
+        if (!xd->appending) {
+            cairo_stroke(xd->cc);
+        }
     }
 }
 
@@ -559,24 +573,29 @@ static void Cairo_Polygon(int n, double *x, double *y,
     int i;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    cairo_new_path(xd->cc);
+    if (!xd->appending) {
+        cairo_new_path(xd->cc);
+    }
+
     cairo_move_to(xd->cc, x[0], y[0]);
     for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
     cairo_close_path(xd->cc);
 
-    /* patternFill overrides fill */
-    if (gc->patternFill >= 0) { 
-        CairoPatternFill(gc->patternFill, xd);
-    } else if (R_ALPHA(gc->fill) > 0) {
-	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
-	CairoColor(gc->fill, xd);
-	cairo_fill_preserve(xd->cc);
-	cairo_set_antialias(xd->cc, xd->antialias);
-    }
-    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
-	CairoColor(gc->col, xd);
-	CairoLineType(gc, xd);
-	cairo_stroke(xd->cc);
+    if (!xd->appending) {
+        /* patternFill overrides fill */
+        if (gc->patternFill >= 0) { 
+            CairoPatternFill(gc->patternFill, xd);
+        } else if (R_ALPHA(gc->fill) > 0) {
+            cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
+            CairoColor(gc->fill, xd);
+            cairo_fill_preserve(xd->cc);
+            cairo_set_antialias(xd->cc, xd->antialias);
+        }
+        if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
+            CairoColor(gc->col, xd);
+            CairoLineType(gc, xd);
+            cairo_stroke(xd->cc);
+        }
     }
 }
 
