@@ -305,6 +305,7 @@ tryCatch(contour(matrix(rnorm(100), 10, 10), levels = 0, labels = numeric()),
 
 
 ## unique.warnings() needs better duplicated():
+invisible(warnings())
 .tmp <- lapply(list(0, 1, 0:1, 1:2, c(1,1), -1:1), function(x) wilcox.test(x))
 stopifnot(length(print(uw <- unique(warnings()))) == 2)
 ## unique() gave only one warning in  R <= 3.3.1
@@ -3398,6 +3399,7 @@ stopifnot(exprs = {
     all.equal(attributes(x),         list(tsp = c(2.5, 107.5, 0.2), class = "ts"))
     all.equal(wx, structure(c(0.5, 0.6), .Tsp = c(22.5, 27.5, 0.2), class = "ts"))
 })
+if(FALSE) # phase check currently skipped (e.g., as it breaks diff(.), see below):
 tools::assertError(cbind(ts(1:2, start = 0.5, end = 1.5),
 			 ts(1:2, start = 0  , end = 1)), verbose=TRUE)
 ## Wrong results in R < 4.0.0
