@@ -3401,6 +3401,25 @@ stopifnot(exprs = {
 tools::assertError(cbind(ts(1:2, start = 0.5, end = 1.5),
 			 ts(1:2, start = 0  , end = 1)), verbose=TRUE)
 ## Wrong results in R < 4.0.0
+## New checks were overzealous
+## -- 1 --
+frYr <- 365.25
+tt <- (0:3652)/frYr
+timeO <- structure(tt, .Tsp = c(1981, 1990.998631, frYr), class = "ts")
+ttt <- time(timeO) # Error "'end' must be a whole number of cycles after 'start'"
+## -- 2 --
+set.seed(7); tt <- ts(rnorm(60), frequency=12)
+dt2 <- diff(tt, differences = 2) # Error in .cbind.ts(..): not all series have the same phase
+stopifnot(exprs = {
+    all.equal(timeO, ttt - 1981, tol = 1e-8)
+    inherits(ttt, "ts")
+    inherits(dt2, "ts")
+    length(dt2) == length(tt) - 2L
+    all.equal(6*tsp(dt2), c(7, 35.5, 72))
+    all.equal(dt2[1:2], c(3.986498, -0.22047961))
+})
+## failed for a while in R-devel 2019-12-*
+
 
 
 ## Using deparse1() fixing potential naming problems in many places, PR#17671

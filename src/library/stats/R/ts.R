@@ -66,10 +66,9 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
     if(start > end) stop("'start' cannot be after 'end'")
 
     cycles <- (end - start)*frequency
-    if(abs(round(cycles) - cycles) > ts.eps)
+    if(FALSE) ## abs(round(cycles) - cycles) > ts.eps : data(OZrain, package="VLMC") has 10-digit accurate 'end' but would fail here
     	stop("'end' must be a whole number of cycles after 'start'")
-
-    nobs <- floor((end - start) * frequency + 1.01)
+    nobs <- floor(cycles + 1.01)
 
     if(nobs != ndata)
 	data <-
@@ -142,6 +141,7 @@ as.ts.default <- function(x, ...)
         stop("not all series have the same frequency")
 
     phases <- apply(tsps, 2L, function(tsp) (tsp[1L]*tsp[3L]) %% 1)
+    if(FALSE)
     if(max(abs(phases - mean(phases))) > ts.eps)
     	stop("not all series have the same phase")
     if(union) {
@@ -230,14 +230,13 @@ Ops.ts <- function(e1, e2)
     } else {
         nc1 <- NCOL(e1)
         nc2 <- NCOL(e2)
-        ## use ts.intersect to align e1 and e2
+        ## align e1 and e2
         e12 <- .cbind.ts(list(e1, e2),
                          c(deparse(substitute(e1))[1L],
                            deparse(substitute(e2))[1L]),
                          union = FALSE)
-        e1 <- if(is.matrix(e1)) e12[, 1L:nc1, drop = FALSE] else e12[, 1]
-        e2 <- if(is.matrix(e2)) e12[, nc1 + (1L:nc2), drop = FALSE]
-        else e12[, nc1 + 1]
+        e1 <- if(is.matrix(e1)) e12[,        1L:nc1 , drop = FALSE] else e12[, 1]
+        e2 <- if(is.matrix(e2)) e12[, nc1 + (1L:nc2), drop = FALSE] else e12[, nc1 + 1]
         NextMethod(.Generic)
     }
 }
@@ -304,9 +303,8 @@ na.omit.ts <- function(object, ...)
 
 is.mts <- function (x) inherits(x, "mts")
 
-start.default <- function(x, ...)
+start.default <- function(x, ts.eps = getOption("ts.eps"), ...)
 {
-    ts.eps <- getOption("ts.eps")
     tsp <- attr(hasTsp(x), "tsp")
     is <- tsp[1L]*tsp[3L]
     if(abs(tsp[3L] - round(tsp[3L])) < ts.eps &&
@@ -318,9 +316,8 @@ start.default <- function(x, ...)
     else tsp[1L]
 }
 
-end.default <- function(x, ...)
+end.default <- function(x, ts.eps = getOption("ts.eps"), ...)
 {
-    ts.eps <- getOption("ts.eps")
     tsp <- attr(hasTsp(x), "tsp")
     is <- tsp[2L]*tsp[3L]
     if(abs(tsp[3L] - round(tsp[3L])) < ts.eps &&
@@ -635,20 +632,22 @@ lines.ts <- function(x, ...)
 
 window.default <- function(x, start = NULL, end = NULL,
                            frequency = NULL, deltat = NULL,
-                           extend = FALSE, ...)
+                           extend = FALSE, ts.eps = getOption("ts.eps"), ...)
 {
     x <- hasTsp(x)
     xtsp <- tsp(x)
     xfreq <- xtsp[3L]
     xtime <- time(x)
-    ts.eps <- getOption("ts.eps")
 
     if(!is.null(frequency) && !is.null(deltat) &&
        abs(frequency*deltat - 1) > ts.eps)
-        stop("'frequency' and 'deltat' are both supplied and are inconsistent")
-    if (is.null(frequency) && is.null(deltat)) yfreq <- xfreq
-    else if (is.null(deltat)) yfreq <- frequency
-    else if (is.null(frequency)) yfreq <- 1/deltat
+        stop("'frequency' and 'deltat' are both not NULL and are inconsistent")
+    yfreq <- if(is.null(frequency) && is.null(deltat))
+                 xfreq
+             else if(is.null(deltat))
+                 frequency
+             else if(is.null(frequency))
+                 1/deltat
     thin <- round(xfreq/yfreq)
     if (yfreq > 0 && abs(xfreq/yfreq -thin) < ts.eps) {
         yfreq <- xfreq/thin
