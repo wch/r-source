@@ -38,6 +38,10 @@ SEXP viewportHeight(SEXP vp) {
     return VECTOR_ELT(vp, VP_HEIGHT);
 }
 
+SEXP viewportClipSXP(SEXP vp) {
+    return VECTOR_ELT(vp, VP_CLIP);
+}
+
 Rboolean viewportClip(SEXP vp) {
     return LOGICAL(VECTOR_ELT(vp, VP_CLIP))[0];
 }

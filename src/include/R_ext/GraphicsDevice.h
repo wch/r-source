@@ -687,6 +687,12 @@ struct _DevDesc {
     void (*releasePattern)();
 #endif
 
+#if R_USE_PROTOTYPES
+    int (*setClipPath)(SEXP path, pDevDesc dd);
+#else
+    int (*setClipPath)();
+#endif
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

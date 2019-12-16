@@ -112,6 +112,9 @@ typedef struct {
     cairo_antialias_t antialias;
     int numPatterns;
     cairo_pattern_t **patterns;
+    int numClipPaths;
+    cairo_path_t **clippaths;
+    int appending;
 
     double fontscale;
 } X11Desc;

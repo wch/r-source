@@ -112,6 +112,11 @@ static void CairoColor(unsigned int col, pX11Desc xd)
 	cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0);
 }
 
+/*
+ ***************************
+ * Patterns
+ ***************************
+ */
 static void CairoInitPatterns(pX11Desc xd)
 {
     int i;
@@ -293,6 +298,128 @@ static void CairoPatternFill(int index, pX11Desc xd)
     cairo_fill_preserve(xd->cc);
 }
 
+/*
+ ***************************
+ * Clipping paths
+ ***************************
+ */
+static void CairoInitClipPaths(pX11Desc xd)
+{
+    int i;
+    xd->numClipPaths = 20;
+    xd->clippaths = malloc(sizeof(cairo_path_t*) * xd->numClipPaths);
+    for (i = 0; i < xd->numClipPaths; i++) {
+        xd->clippaths[i] = NULL;
+    }
+}
+
+static void CairoCleanClipPaths(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numClipPaths; i++) {
+        if (xd->clippaths[i] != NULL) {
+            cairo_path_destroy(xd->clippaths[i]);
+            xd->clippaths[i] = NULL;
+        }
+    }    
+}
+
+static void CairoDestroyClipPaths(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numClipPaths; i++) {
+        if (xd->clippaths[i] != NULL) {
+            cairo_path_destroy(xd->clippaths[i]);
+        }
+    }    
+    free(xd->clippaths);
+}
+
+static int CairoNewClipPathIndex(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numClipPaths; i++) {
+        if (xd->clippaths[i] == NULL) {
+            return i;
+        }
+    }    
+    warning(_("Cairo clipping paths exhausted"));
+    return -1;
+}
+
+static cairo_path_t* CairoCreateClipPath(SEXP clipPath, pX11Desc xd)
+{
+    cairo_t *cc = xd->cc;
+    SEXP R_fcall;
+    cairo_path_t *cairo_clippath;
+    /* Save the current path */
+    cairo_path_t *cairo_saved_path = cairo_copy_path(cc);
+    /* Increment the "appending" count */
+    xd->appending++;
+    /* Clear the current path */
+    cairo_new_path(cc);
+    /* Play the clipPath function to build the clipping path */
+    R_fcall = PROTECT(lang1(clipPath));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+    /* Set the clipping region from the path */
+    cairo_clip_preserve(cc);
+    /* Save the clipping path (for reuse) */
+    cairo_clippath = cairo_copy_path(cc);
+    /* Clear the path again */
+    cairo_new_path(cc);
+    /* Decrement the "appending" count */
+    xd->appending--;
+    /* Restore the saved path */
+    cairo_append_path(cc, cairo_saved_path);
+    /* Return the clipping path */
+    return cairo_clippath;
+}
+
+static int CairoSetClipPath(SEXP path, pX11Desc xd)
+{
+    int index = CairoNewClipPathIndex(xd);
+    cairo_path_t *cairo_clippath = CairoCreateClipPath(path, xd);
+
+    xd->clippaths[index] = cairo_clippath;
+    return index;
+}
+
+static void CairoReleaseClipPath(int index, pX11Desc xd)
+{
+    if (xd->clippaths[index]) {
+        cairo_path_destroy(xd->clippaths[index]);
+        xd->clippaths[index] = NULL;
+    } else {
+        warning(_("Attempt to release non-existent clipping path"));
+    }
+}
+
+static void CairoResetClipPath(SEXP path, int index, pX11Desc xd)
+{
+    cairo_path_t *cairo_clippath = CairoCreateClipPath(path, xd);
+
+    /* Kill old pattern */
+    if (xd->clippaths[index]) {
+        cairo_path_destroy(xd->clippaths[index]);
+    } else {
+        warning(_("Attempt to reset non-existent clipping path"));
+    }
+   
+    xd->clippaths[index] = cairo_clippath;
+}
+
+static void CairoReuseClipPath(SEXP path, int index, pX11Desc xd)
+{
+    /* If pattern does not exist, recreate */
+    if (xd->clippaths[index] == NULL) {
+        cairo_path_t *cairo_clippath = CairoCreateClipPath(path, xd);
+        xd->clippaths[index] = cairo_clippath;
+    } else {
+        warning(_("Attempt to reuse non-existent clipping path"));
+    }
+}
+
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
@@ -373,20 +500,25 @@ static void Cairo_Circle(double x, double y, double r,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    cairo_new_path(xd->cc);
+    if (!xd->appending) {
+        cairo_new_path(xd->cc);
+    }
+
     /* radius 0.5 seems to be visible */
     cairo_arc(xd->cc, x, y, (r > 0.5 ? r : 0.5), 0.0, 2 * M_PI);
 
-    if (R_ALPHA(gc->fill) > 0) {
-	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
-	CairoColor(gc->fill, xd);
-	cairo_fill_preserve(xd->cc);
-	cairo_set_antialias(xd->cc, xd->antialias);
-   }
-    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
-	CairoColor(gc->col, xd);
-	CairoLineType(gc, xd);
-	cairo_stroke(xd->cc);
+    if (!xd->appending) {
+        if (R_ALPHA(gc->fill) > 0) {
+            cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
+            CairoColor(gc->fill, xd);
+            cairo_fill_preserve(xd->cc);
+            cairo_set_antialias(xd->cc, xd->antialias);
+        }
+        if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
+            CairoColor(gc->col, xd);
+            CairoLineType(gc, xd);
+            cairo_stroke(xd->cc);
+        }
     }
 }
 
@@ -1096,5 +1228,11 @@ static void Cairo_ReleasePattern(int index, pDevDesc dd)
     } else {
         CairoReleasePattern(index, xd);
     }
+}
+
+static int Cairo_SetClipPath(SEXP clipPath, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    return CairoSetClipPath(clipPath, xd);
 }
 

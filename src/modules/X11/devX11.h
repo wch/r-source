@@ -147,6 +147,9 @@ typedef struct {
     double last, last_activity, update_interval;
     int numPatterns;
     cairo_pattern_t **patterns;    
+    int numClipPaths;
+    cairo_path_t **clippaths;
+    int appending;
 #endif
 
     double fontscale;

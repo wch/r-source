@@ -40,12 +40,17 @@ valid.viewport <- function(x, y, width, height, just,
     stop("'x', 'y', 'width', and 'height' must all be units of length 1")
   if (!is.gpar(gp))
     stop("invalid 'gp' value")
-  if (!is.logical(clip))
-    clip <- switch(as.character(clip),
-                   on=TRUE,
-                   off=NA,
-                   inherit=FALSE,
-                   stop("invalid 'clip' value"))
+  if (!is.logical(clip)) {
+      if (is.grob(clip)) {
+          clip <- createClipPath(clip)
+      } else {
+          clip <- switch(as.character(clip),
+                         on=TRUE,
+                         off=NA,
+                         inherit=FALSE,
+                         stop("invalid 'clip' value"))
+      }
+  }
   # Ensure both 'xscale' and 'yscale' are numeric (brute force defense)
   xscale <- as.numeric(xscale)
   yscale <- as.numeric(yscale)
@@ -117,7 +122,8 @@ pushedvp <- function(vp) {
                     # be pushed "properly" the first time, calculating
                     # transformations, etc ...
                     devwidthcm = 0,
-                    devheightcm = 0))
+                    devheightcm = 0,
+                    clippath = NULL))
   class(pvp) <- c("pushedvp", class(vp))
   pvp
 }

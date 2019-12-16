@@ -96,6 +96,7 @@
 #define PVP_CHILDREN 27
 #define PVP_DEVWIDTHCM 28
 #define PVP_DEVHEIGHTCM 29
+#define PVP_CLIPPATH 30
 
 /*
  * Structure of a layout
@@ -508,6 +509,11 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
 
 void initGPar(pGEDevDesc dd);
 
+/* From clippath.c */
+Rboolean isClipPath(SEXP clip);
+
+SEXP setClipPath(SEXP path, pGEDevDesc dd);
+
 /* From viewport.c */
 SEXP viewportX(SEXP vp);
 
@@ -527,6 +533,7 @@ double viewportFontSize(SEXP vp);
 
 double viewportLineHeight(SEXP vp);
 
+SEXP viewportClipSXP(SEXP vp);
 Rboolean viewportClip(SEXP vp);
 
 SEXP viewportClipRect(SEXP vp);

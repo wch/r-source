@@ -186,34 +186,105 @@ SEXP doSetViewport(SEXP vp,
 			  !topLevelVP &&
 			  !deviceChanged(devWidthCM, devHeightCM, 
 					 viewportParent(vp)), dd);
-    /* 
-     * We must "turn off" clipping
-     * We set the clip region to be the entire device
-     * (actually, as for the top-level viewport, we set it
-     *  to be slightly larger than the device to avoid 
-     *  "edge effects")
+    /*
+     * If just doing old-style rectangular clipping ...
      */
-    if (viewportClip(vp) == NA_LOGICAL) {
-	xx1 = toDeviceX(-0.5*devWidthCM/2.54, GE_INCHES, dd);
-	yy1 = toDeviceY(-0.5*devHeightCM/2.54, GE_INCHES, dd);
-	xx2 = toDeviceX(1.5*devWidthCM/2.54, GE_INCHES, dd);
-	yy2 = toDeviceY(1.5*devHeightCM/2.54, GE_INCHES, dd);
-	GESetClip(xx1, yy1, xx2, yy2, dd);
-    }
-    /* If we are supposed to clip to this viewport ...
-     * NOTE that we will only clip if there is no rotation
-     */
-    else if (viewportClip(vp)) {
-	double rotationAngle = REAL(viewportRotation(vp))[0];
-	if (rotationAngle != 0 &&
-            rotationAngle != 90 &&
-            rotationAngle != 270 &&
-            rotationAngle != 360) {
-	    warning(_("cannot clip to rotated viewport"));
-            /* Still need to set clip region for this viewport.
-               So "inherit" parent clip region.
-               In other words, 'clip=TRUE' + 'rot=15' = 'clip=FALSE'
-            */
+    if (!isClipPath(viewportClipSXP(vp))) {
+        /* 
+         * We must "turn off" clipping
+         * We set the clip region to be the entire device
+         * (actually, as for the top-level viewport, we set it
+         *  to be slightly larger than the device to avoid 
+         *  "edge effects")
+         */
+        if (viewportClip(vp) == NA_LOGICAL) {
+            xx1 = toDeviceX(-0.5*devWidthCM/2.54, GE_INCHES, dd);
+            yy1 = toDeviceY(-0.5*devHeightCM/2.54, GE_INCHES, dd);
+            xx2 = toDeviceX(1.5*devWidthCM/2.54, GE_INCHES, dd);
+            yy2 = toDeviceY(1.5*devHeightCM/2.54, GE_INCHES, dd);
+            GESetClip(xx1, yy1, xx2, yy2, dd);
+        }
+        /* If we are supposed to clip to this viewport ...
+         * NOTE that we will only clip if there is no rotation
+         */
+        else if (viewportClip(vp)) {
+            double rotationAngle = REAL(viewportRotation(vp))[0];
+            if (rotationAngle != 0 &&
+                rotationAngle != 90 &&
+                rotationAngle != 270 &&
+                rotationAngle != 360) {
+                warning(_("cannot clip to rotated viewport"));
+                /* Still need to set clip region for this viewport.
+                   So "inherit" parent clip region.
+                   In other words, 'clip=TRUE' + 'rot=15' = 'clip=FALSE'
+                */
+                SEXP parentClip;
+                PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
+                xx1 = REAL(parentClip)[0];
+                yy1 = REAL(parentClip)[1];
+                xx2 = REAL(parentClip)[2];
+                yy2 = REAL(parentClip)[3];
+                UNPROTECT(1);
+            } else {
+                /* Calculate a clipping region and set it
+                 */
+                SEXP x1, y1, x2, y2;
+                LViewportContext vpc;
+                double vpWidthCM = REAL(viewportWidthCM(vp))[0];
+                double vpHeightCM = REAL(viewportHeightCM(vp))[0];
+                R_GE_gcontext gc;
+                LTransform transform;
+                for (i=0; i<3; i++)
+                    for (j=0; j<3; j++)
+                        transform[i][j] = 
+                            REAL(viewportTransform(vp))[i + 3*j];
+                if (!topLevelVP) {
+                    PROTECT(x1 = unit(0, L_NPC));
+                    PROTECT(y1 = unit(0, L_NPC));
+                    PROTECT(x2 = unit(1, L_NPC));
+                    PROTECT(y2 = unit(1, L_NPC));
+                } else {
+                    /* Special case for top-level viewport.
+                     * Set clipping region outside device boundaries.
+                     * This means that we have set the clipping region to
+                     * something, but avoids problems if the nominal device
+                     * limits are actually within its physical limits
+                     * (e.g., PostScript)
+                     */
+                    PROTECT(x1 = unit(-.5, L_NPC));
+                    PROTECT(y1 = unit(-.5, L_NPC));
+                    PROTECT(x2 = unit(1.5, L_NPC));
+                    PROTECT(y2 = unit(1.5, L_NPC));
+                }
+                getViewportContext(vp, &vpc);
+                gcontextFromViewport(vp, &gc, dd);
+                transformLocn(x1, y1, 0, vpc, &gc, 
+                              vpWidthCM, vpHeightCM,
+                              dd,
+                              transform,
+                              &xx1, &yy1);
+                transformLocn(x2, y2, 0, vpc, &gc,
+                              vpWidthCM, vpHeightCM,
+                              dd,
+                              transform,
+                              &xx2, &yy2);
+                UNPROTECT(4);  /* unprotect x1, y1, x2, y2 */
+                /* The graphics engine only takes device coordinates
+                 */
+                xx1 = toDeviceX(xx1, GE_INCHES, dd);
+                yy1 = toDeviceY(yy1, GE_INCHES, dd);
+                xx2 = toDeviceX(xx2, GE_INCHES, dd);
+                yy2 = toDeviceY(yy2, GE_INCHES, dd);
+                GESetClip(xx1, yy1, xx2, yy2, dd);
+            }
+        } else {
+            /* If we haven't set the clipping region for this viewport
+             * we need to save the clipping region from its parent
+             * so that when we pop this viewport we can restore that.
+             */
+            /* NOTE that we are relying on grid.R setting clip=TRUE
+             * for the top-level viewport, else *BOOM*!
+             */
             SEXP parentClip;
             PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
             xx1 = REAL(parentClip)[0];
@@ -221,87 +292,21 @@ SEXP doSetViewport(SEXP vp,
             xx2 = REAL(parentClip)[2];
             yy2 = REAL(parentClip)[3];
             UNPROTECT(1);
-        } else {
-	    /* Calculate a clipping region and set it
-	     */
-	    SEXP x1, y1, x2, y2;
-	    LViewportContext vpc;
-	    double vpWidthCM = REAL(viewportWidthCM(vp))[0];
-	    double vpHeightCM = REAL(viewportHeightCM(vp))[0];
-	    R_GE_gcontext gc;
-	    LTransform transform;
-	    for (i=0; i<3; i++)
-		for (j=0; j<3; j++)
-		    transform[i][j] = 
-			REAL(viewportTransform(vp))[i + 3*j];
-	    if (!topLevelVP) {
-		PROTECT(x1 = unit(0, L_NPC));
-		PROTECT(y1 = unit(0, L_NPC));
-		PROTECT(x2 = unit(1, L_NPC));
-		PROTECT(y2 = unit(1, L_NPC));
-	    } else {
-		/* Special case for top-level viewport.
-		 * Set clipping region outside device boundaries.
-		 * This means that we have set the clipping region to
-		 * something, but avoids problems if the nominal device
-		 * limits are actually within its physical limits
-		 * (e.g., PostScript)
-		 */
-	        PROTECT(x1 = unit(-.5, L_NPC));
-		PROTECT(y1 = unit(-.5, L_NPC));
-		PROTECT(x2 = unit(1.5, L_NPC));
-		PROTECT(y2 = unit(1.5, L_NPC));
-	    }
-	    getViewportContext(vp, &vpc);
-	    gcontextFromViewport(vp, &gc, dd);
-	    transformLocn(x1, y1, 0, vpc, &gc, 
-			  vpWidthCM, vpHeightCM,
-			  dd,
-			  transform,
-			  &xx1, &yy1);
-	    transformLocn(x2, y2, 0, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd,
-			  transform,
-			  &xx2, &yy2);
-	    UNPROTECT(4);  /* unprotect x1, y1, x2, y2 */
-	    /* The graphics engine only takes device coordinates
-	     */
-	    xx1 = toDeviceX(xx1, GE_INCHES, dd);
-	    yy1 = toDeviceY(yy1, GE_INCHES, dd);
-	    xx2 = toDeviceX(xx2, GE_INCHES, dd);
-	    yy2 = toDeviceY(yy2, GE_INCHES, dd);
-	    GESetClip(xx1, yy1, xx2, yy2, dd);
-	}
-    } else {
-	/* If we haven't set the clipping region for this viewport
-	 * we need to save the clipping region from its parent
-	 * so that when we pop this viewport we can restore that.
-	 */
-	/* NOTE that we are relying on grid.R setting clip=TRUE
-	 * for the top-level viewport, else *BOOM*!
-	 */
-	SEXP parentClip;
-	PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
-	xx1 = REAL(parentClip)[0];
-	yy1 = REAL(parentClip)[1];
-	xx2 = REAL(parentClip)[2];
-	yy2 = REAL(parentClip)[3];
-	UNPROTECT(1);
-        /* If we are revisiting a viewport that inherits a clip
-         * region from a parent viewport, we may need to reset 
-         * the clip region (at worst, we generate a redundant clip)
-         */
-        if (!pushing) {
-	    GESetClip(xx1, yy1, xx2, yy2, dd);
+            /* If we are revisiting a viewport that inherits a clip
+             * region from a parent viewport, we may need to reset 
+             * the clip region (at worst, we generate a redundant clip)
+             */
+            if (!pushing) {
+                GESetClip(xx1, yy1, xx2, yy2, dd);
+            }
         }
+        PROTECT(currentClip = allocVector(REALSXP, 4));
+        REAL(currentClip)[0] = xx1;
+        REAL(currentClip)[1] = yy1;
+        REAL(currentClip)[2] = xx2;
+        REAL(currentClip)[3] = yy2;
+        SET_VECTOR_ELT(vp, PVP_CLIPRECT, currentClip);
     }
-    PROTECT(currentClip = allocVector(REALSXP, 4));
-    REAL(currentClip)[0] = xx1;
-    REAL(currentClip)[1] = yy1;
-    REAL(currentClip)[2] = xx2;
-    REAL(currentClip)[3] = yy2;
-    SET_VECTOR_ELT(vp, PVP_CLIPRECT, currentClip);
     /*
      * Save the current device size
      */
@@ -354,6 +359,20 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
             /* Ensure that the "current" gpar has the resolved fill too */
             setGridStateElement(dd, GSS_GPAR, VECTOR_ELT(pushedvp, PVP_GPAR));
         }
+        UNPROTECT(1);
+    }
+    /*
+     * Set clipping path (if it is a clipping path)
+     */
+    {
+        SEXP clip = PROTECT(viewportClipSXP(pushedvp));
+        if (isClipPath(clip)) {
+            SEXP resolvedclip = PROTECT(setClipPath(clip, dd));
+            /* Record the resolved clipping path for subsequent up/down/pop */
+            SET_VECTOR_ELT(pushedvp, PVP_CLIPPATH, resolvedclip);
+            UNPROTECT(1);
+        }
+        UNPROTECT(1);
     }
     UNPROTECT(3);
     return R_NilValue;
