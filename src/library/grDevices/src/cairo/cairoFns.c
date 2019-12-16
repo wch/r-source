@@ -536,12 +536,18 @@ static void Cairo_Line(double x1, double y1, double x2, double y2,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (R_ALPHA(gc->col) > 0) {
-	CairoColor(gc->col, xd);
-	CairoLineType(gc, xd);
-	cairo_new_path(xd->cc);
+        if (!xd->appending) {
+            CairoColor(gc->col, xd);
+            CairoLineType(gc, xd);
+            cairo_new_path(xd->cc);
+        }
+
 	cairo_move_to(xd->cc, x1, y1);
 	cairo_line_to(xd->cc, x2, y2);
-	cairo_stroke(xd->cc);
+
+        if (!xd->appending) {
+            cairo_stroke(xd->cc);
+        }
     }
 }
 
@@ -607,7 +613,10 @@ static void Cairo_Path(double *x, double *y,
     int i, j, n;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    cairo_new_path(xd->cc);
+    if (!xd->appending) {
+        cairo_new_path(xd->cc);
+    }
+
     n = 0;
     for (i=0; i < npoly; i++) {
         cairo_move_to(xd->cc, x[n], y[n]);
@@ -619,20 +628,30 @@ static void Cairo_Path(double *x, double *y,
         cairo_close_path(xd->cc);
     }
 
-    if (R_ALPHA(gc->fill) > 0) {
-	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
-        if (winding) 
-            cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_WINDING);
-        else 
-            cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_EVEN_ODD);
-	CairoColor(gc->fill, xd);
-	cairo_fill_preserve(xd->cc);
-	cairo_set_antialias(xd->cc, xd->antialias);
-    }
-    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
-	CairoColor(gc->col, xd);
-	CairoLineType(gc, xd);
-	cairo_stroke(xd->cc);
+    if (!xd->appending) {
+        if (gc->patternFill >= 0) { 
+            cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
+            if (winding) 
+                cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_WINDING);
+            else 
+                cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_EVEN_ODD);
+            CairoPatternFill(gc->patternFill, xd);
+            cairo_set_antialias(xd->cc, xd->antialias);
+        } else if (R_ALPHA(gc->fill) > 0) {
+            cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
+            if (winding) 
+                cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_WINDING);
+            else 
+                cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_EVEN_ODD);
+            CairoColor(gc->fill, xd);
+            cairo_fill_preserve(xd->cc);
+            cairo_set_antialias(xd->cc, xd->antialias);
+        }
+        if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
+            CairoColor(gc->col, xd);
+            CairoLineType(gc, xd);
+            cairo_stroke(xd->cc);
+        }
     }
 }
 
@@ -679,6 +698,12 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
     cairo_surface_t *image;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
+    /* 
+     * A raster image adds nothing to a clipping path (?)
+     */
+    if (xd->appending) 
+        return;
+    
     cairo_save(xd->cc);
 
     /* If we are going to use the graphics engine for interpolation
@@ -921,8 +946,15 @@ PangoCairo_Text(double x, double y,
 		const char *str, double rot, double hadj,
 		const pGEcontext gc, pDevDesc dd)
 {
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    
+    /*
+     * Pango text does not add to clipping path (yet ?)
+     */
+    if (xd->appending) 
+        return;
+
     if (R_ALPHA(gc->col) > 0) {
-	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	gint ascent, lbearing, width;
 	PangoLayout *layout;
 	PangoFontDescription *desc = 
@@ -1211,6 +1243,12 @@ static void Cairo_Text(double x, double y,
 		       const char *str, double rot, double hadj,
 		       pGEcontext gc, pDevDesc dd)
 {
+    /*
+     * Cairo "toy" text does not add to the clipping path (yet?)
+     */
+    if (xd->appending) 
+        return;
+
     if (!utf8Valid(str)) error("invalid string in Cairo_Text");
     if (R_ALPHA(gc->col) > 0) {
 	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
