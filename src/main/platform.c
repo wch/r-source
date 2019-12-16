@@ -3050,7 +3050,7 @@ SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(hd == INVALID_HANDLE_VALUE) {
 	warning("cannot open reparse point '%ls', reason '%s'",
 		to, formatError(GetLastError()));
-	return ScalarLogical(1);
+	return ScalarLogical(0);
     }
     TMN_REPARSE_DATA_BUFFER rdb;
     const size_t nbytes = wcslen(from) * 2;
