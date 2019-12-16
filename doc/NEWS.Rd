@@ -186,7 +186,7 @@
       normalizes case of long names of path elements in case-insensitive
       folders (\PR{17165}).
 
-       \item \code{md5sum()} supports UTF-8 file names with characters
+      \item \code{md5sum()} supports UTF-8 file names with characters
       that cannot be translated to the native encoding (\PR{17633}).
 
       \item \command{Rterm} gains a new option \option{--workspace} to
@@ -363,6 +363,10 @@
       \item Time-series \code{ts(*, start, end, frequency)} with fractional
       \code{frequency} are supported more consistently; thanks to a report
       from Johann Kleinbub and analysis and patch by Duncan Murdoch in \PR{17669}.
+
+      \item \code{mcmapply} in case of errors now preserves attributes of
+      returned \code{"try-error"} objects and avoids simplification,
+      overriding \code{SIMPLIFY} to \code{FALSE}. (\PR{17653})
     }
   }
 }
