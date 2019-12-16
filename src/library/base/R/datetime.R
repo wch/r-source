@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -264,7 +264,7 @@ as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
     if(optional)
         as.POSIXlt.character(rep.int(NA_character_, length(x)), tz=tz)
     else stop(gettextf("do not know how to convert '%s' to class %s",
-                       deparse(substitute(x)),
+                       deparse1(substitute(x)),
                        dQuote("POSIXlt")),
               domain = NA)
 }
@@ -281,7 +281,7 @@ as.POSIXct.Date <- function(x, ...) .POSIXct(unclass(x)*86400)
 ##         x <- (x - 3653) * 86400 # origin 1960-01-01
 ##         return(.POSIXct(x))
 ##     } else stop(gettextf("'%s' is not a \"date\" object",
-##                          deparse(substitute(x)) ))
+##                          deparse1(substitute(x)) ))
 ## }
 
 ## ## Moved to package chron
@@ -294,7 +294,7 @@ as.POSIXct.Date <- function(x, ...) .POSIXct(unclass(x)*86400)
 ##             x  <- x + as.numeric(ISOdate(z[3L], z[1L], z[2L], 0))
 ##         return(.POSIXct(x))
 ##     } else stop(gettextf("'%s' is not a \"dates\" object",
-##                          deparse(substitute(x)) ))
+##                          deparse1(substitute(x)) ))
 ## }
 
 as.POSIXct.POSIXlt <- function(x, tz = "", ...)
@@ -323,7 +323,7 @@ as.POSIXct.default <- function(x, tz = "", ...)
     if(is.logical(x) && all(is.na(x)))
         return(.POSIXct(as.numeric(x)))
     stop(gettextf("do not know how to convert '%s' to class %s",
-                  deparse(substitute(x)),
+                  deparse1(substitute(x)),
                   dQuote("POSIXct")),
          domain = NA)
 }
@@ -631,12 +631,12 @@ difftime <-
 ## "difftime" constructor
 ## Martin Maechler, Date: 16 Sep 2002
 ## Numeric input version Peter Dalgaard, December 2006
-as.difftime <- function(tim, format = "%X", units = "auto")
+as.difftime <- function(tim, format = "%X", units = "auto", tz = "UTC")
 {
     if (inherits(tim, "difftime")) return(tim)
     if (is.character(tim)) {
         difftime(strptime(tim, format = format),
-                 strptime("0:0:0", format = "%X"), units = units)
+                 strptime("0:0:0", format = "%X"), units = units, tz = tz)
     } else {
         if (!is.numeric(tim)) stop("'tim' is not character or numeric")
 	if (units == "auto") stop("need explicit units for numeric conversion")
@@ -1225,7 +1225,7 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     value <- as.data.frame.POSIXct(as.POSIXct(x), row.names, optional, ...)
     if (!optional)
-        names(value) <- deparse(substitute(x))[[1L]]
+        names(value) <- deparse1(substitute(x))
     value
 }
 

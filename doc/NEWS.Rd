@@ -367,6 +367,11 @@
       \item \code{mcmapply} in case of errors now preserves attributes of
       returned \code{"try-error"} objects and avoids simplification,
       overriding \code{SIMPLIFY} to \code{FALSE}. (\PR{17653})
+
+      \item \code{as.difftime()} gets new optional \code{tz = "UTC"}
+      argument which should fix behaviour during daylight savings
+      changeover days, fixing \PR{16764}, thanks to proposals and analysis
+      by Johannes Ranke and Kirill Müller.
     }
   }
 }
