@@ -342,6 +342,24 @@
       \code{*.colors()} functions and \code{rainbow()} behave
       consistently and have the same non-explicit default (\PR{17659}).
 
+      \item \code{dnorm} had a problematic corner case with \code{sd == -Inf} and
+      negative \code{sd} was not flagged as error in all cases. Thanks to Stephen
+      D. Weigand for reporting and Wang Jiefei for analyzing this; similar
+      change in \code{dlnorm()}.
+
+      \item The optional \code{iter.smooth} argument of \code{plot.lm()},
+      i.e., the \code{plot()} method for \code{lm} and \code{glm} fits, now
+      defaults to \code{0} for all glm.  Especially for binary observations
+      with high or low fitted probabilities, this effectively deleted all
+      observations of 1 or 0, respectively.  Also, the type of residuals
+      used in the \code{glm} case has been switched to \code{"pearson"}
+      since deviance residuals do not in general have approximately zero
+      mean.
+
+      \item In \code{plot.lm}, Cook's distance was computed from unweighted
+      residuals, leading to inconsistencies.  Replaced with usual weighted
+      version. (\PR{16056})
+
       \item Time-series \code{ts(*, start, end, frequency)} with fractional
       \code{frequency} are supported more consistently; thanks to a report
       from Johann Kleinbub and analysis and patch by Duncan Murdoch in \PR{17669}.
@@ -531,11 +549,6 @@
       \item \code{readBin()} and \code{writeBin()} of a
       \code{rawConnection()} now also work in large cases, thanks to a
       report and proposal by Taeke Harkema in \PR{17665}.
-
-      \item \code{dnorm} had a problematic corner case with \code{sd == -Inf} and
-      negative \code{sd} was not flagged as error in all cases. Thanks to Stephen
-      D. Weigand for reporting and Wang Jiefei for analyzing this; similar
-      change in \code{dlnorm()}.
     }
   }
 }
@@ -913,13 +926,8 @@
 
       \item The \code{plot()} method for \code{lm} and \code{glm} fits,
       \code{plot.lm()}, gains a new option \code{iter.smooth} with a
-      default of \code{0} for glm fits, no longer down-weighting "outliers"
-      when smoothing the residuals. Especially for binary observations
-      with high or low fitted probabilities, this effectively deleted
-      all observations of 1 or 0, respectively. Also, the type of
-      residuals used in the \code{glm} case has been switched to
-      \code{"pearson"} since deviance residuals do not in general have
-      approximately zero mean.
+      default of \code{0} for binomial fits, no longer down-weighting
+      when smoothing the residuals.
 
       \item \code{zip()} passes its list of files \emph{via} standard
       input to the external command when too long for the command line
@@ -988,10 +996,6 @@
       package repository index, instead of rebuilding the index from
       scratch. Thanks to Gabe Becker in \PR{17544} for the patch, based
       on part of his \pkg{switchr} package.
-
-      \item In \code{plot.lm}, Cook's distance was computed from unweighted
-      residuals, leading to inconsistencies. Replaced with usual weighted
-      version. (\PR{16056})
     }
   }
 
