@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2017   The R Core Team.
+ *  Copyright (C) 1998-2019   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,43 +73,38 @@ Rboolean psmatch(const char *f, const char *t, Rboolean exact)
 
 /* Matching formals and arguments */
 
-/* Are these are always native charset? */
+static R_INLINE SEXP charFromSexp(SEXP s)
+{
+    switch (TYPEOF(s)) {
+    case SYMSXP:
+	return PRINTNAME(s);
+    case CHARSXP:
+	return s;
+    case STRSXP:
+	if (LENGTH(s) == 1)
+	    return STRING_ELT(s, 0);
+	/* fall back to error */
+    default:
+	error(_("invalid partial string match"));
+    }
+}
+
 Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 {
-    const char *f, *t;
-    const void *vmax = vmaxget();
-    switch (TYPEOF(formal)) {
-    case SYMSXP:
-	f = CHAR(PRINTNAME(formal));
-	break;
-    case CHARSXP:
-	f = CHAR(formal);
-	break;
-    case STRSXP:
-	f = translateChar(STRING_ELT(formal, 0));
-	break;
-    default:
-	goto fail;
+    SEXP f = charFromSexp(formal);
+    SEXP t = charFromSexp(tag);
+    cetype_t fenc = getCharCE(f);
+    cetype_t tenc = getCharCE(t);
+
+    if (fenc == tenc)
+	return psmatch(CHAR(f), CHAR(t), exact);
+    else {
+	const void *vmax = vmaxget();
+	Rboolean res = psmatch(translateCharUTF8(f), translateCharUTF8(t),
+	                       exact);
+	vmaxset(vmax);
+	return res;
     }
-    switch(TYPEOF(tag)) {
-    case SYMSXP:
-	t = CHAR(PRINTNAME(tag));
-	break;
-    case CHARSXP:
-	t = CHAR(tag);
-	break;
-    case STRSXP:
-	t = translateChar(STRING_ELT(tag, 0));
-	break;
-    default:
-	goto fail;
-    }
-    Rboolean res = psmatch(f, t, exact);
-    vmaxset(vmax);
-    return res;
- fail:
-    error(_("invalid partial string match"));
-    return FALSE;/* for -Wall */
 }
 
 
