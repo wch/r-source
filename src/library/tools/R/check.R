@@ -142,11 +142,20 @@ setRlibs <-
 {
     WINDOWS <- .Platform$OS.type == "windows"
     useJunctions <- WINDOWS && !nzchar(Sys.getenv("R_WIN_NO_JUNCTIONS"))
+    
+    # flink assumes it is only being used for package directories
+    # containing DESCRIPTION!
     flink <- function(from, to) {
-        res <- if(WINDOWS) {
-            if(useJunctions) Sys.junction(from, to)
-            else file.copy(from, to, recursive = TRUE)
-        } else file.symlink(from, to)
+        if(WINDOWS) {
+            if(useJunctions) { 
+                Sys.junction(from, to)
+                if(file.exists(file.path(to, basename(from), "DESCRIPTION")))
+                    return()
+                unlink(file.path(to, basename(from)), recursive = TRUE)
+            }
+            res <- file.copy(from, to, recursive = TRUE)
+        } else 
+            res <- file.symlink(from, to)
         if (!res) stop(gettextf("cannot link from %s", from), domain = NA)
     }
 
