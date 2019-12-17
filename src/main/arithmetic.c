@@ -176,8 +176,14 @@ void attribute_hidden InitArithmetic()
 #endif
 }
 
+
 #if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
+# ifdef __PPC64__
+ // PowerPC 64 (when gcc has -mlong-double-128) fails constant folding with LDOUBLE
+#  define q_1_eps (1 / LDBL_EPSILON)
+# else
 static LDOUBLE q_1_eps = 1 / LDBL_EPSILON;
+# endif
 #else
 static double  q_1_eps = 1 / DBL_EPSILON;
 #endif
