@@ -1849,8 +1849,8 @@ and later (El Capitan, Sierra, High Sierra, Mojave, Catalina, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
-unsigned: to install those Control/right/two-finger click, select
-@samp{Open with} and @samp{Installer}.)
+unsigned/not notarized: to install those Control/right/two-finger click,
+select @samp{Open With} and @samp{Installer}.)
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -3596,9 +3596,9 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
-(versions 4.0.[5-10] have been tested) respectively.
+(versions 4.0.[5-10] and 4.1.0 have been tested) respectively.
 @command{pkg-config} is used if available and so needs the appropriate
-@file{.pc} file (which requires @code{libtiff} version 4.0.x and is not
+@file{.pc} file (which requires @code{libtiff} version 4.x and is not
 available on all platforms for @code{jpeg} before version 9c).  They
 also need support for either @code{X11} or @code{cairo} (see above).
 Should support for these devices @strong{not} be required or broken
@@ -5266,10 +5266,15 @@ install Apple packages built after 2019-06-01 which have not been
 `notarized'@footnote{See
 @uref{https://developer.apple.com//@/documentation/@/xcode/@/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
-contained in tarballs (for example, for @command{pandoc}).
+contained in tarballs/zipfiles (for example, for @command{pandoc}).
 
 There are workarounds, including in some cases not installing the latest
-version.
+version.  Usually one can use @samp{Open With}
+(Control/right/two-finger-click in Finder), then select @samp{Installer}
+and @samp{Open} if you get a further warning message.
+
+This applies also to some @R{} distributions, including @R{} 3.6.2 and
+`nightly builds' from @uref{https://mac.r-project.org/}.
 
 @node Recommended C/C++ compilers, Other libraries, Prerequisites, macOS
 @subsection Recommended C/C++ compilers
