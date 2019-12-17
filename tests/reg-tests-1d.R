@@ -3399,11 +3399,10 @@ stopifnot(exprs = {
     all.equal(attributes(x),         list(tsp = c(2.5, 107.5, 0.2), class = "ts"))
     all.equal(wx, structure(c(0.5, 0.6), .Tsp = c(22.5, 27.5, 0.2), class = "ts"))
 })
-if(FALSE) # phase check currently skipped (e.g., as it breaks diff(.), see below):
 tools::assertError(cbind(ts(1:2, start = 0.5, end = 1.5),
 			 ts(1:2, start = 0  , end = 1)), verbose=TRUE)
 ## Wrong results in R < 4.0.0
-## New checks were overzealous
+## New checks needed tweaks :
 ## -- 1 --
 frYr <- 365.25
 tt <- (0:3652)/frYr

@@ -66,7 +66,7 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
     if(start > end) stop("'start' cannot be after 'end'")
 
     cycles <- (end - start)*frequency
-    if(FALSE) ## abs(round(cycles) - cycles) > ts.eps : data(OZrain, package="VLMC") has 10-digit accurate 'end' but would fail here
+    if(abs(round(cycles) - cycles) > ts.eps*max(cycles, 1))
     	stop("'end' must be a whole number of cycles after 'start'")
     nobs <- floor(cycles + 1.01)
 
@@ -141,7 +141,7 @@ as.ts.default <- function(x, ...)
         stop("not all series have the same frequency")
 
     phases <- apply(tsps, 2L, function(tsp) (tsp[1L]*tsp[3L]) %% 1)
-    if(FALSE)
+    if(any(i1 <- abs(phases - 1) <= ts.eps)) phases[i1] <- phases[i1] - 1
     if(max(abs(phases - mean(phases))) > ts.eps)
     	stop("not all series have the same phase")
     if(union) {
@@ -618,8 +618,8 @@ plot.ts <-
 	if (frame.plot) box(...)
     }## {plotts}
 
-    xlabel <- if (!missing(x)) deparse(substitute(x))# else NULL
-    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xlabel <- if (!missing(x)) deparse1(substitute(x))# else NULL
+    ylabel <- if (!missing(y)) deparse1(substitute(y))
     plotts(x = x, y = y, plot.type = plot.type,
 	   xy.labels = xy.labels, xy.lines = xy.lines,
 	   panel = panel, nc = nc, xlabel = xlabel, ylabel = ylabel,
@@ -793,7 +793,7 @@ ts.plot <- function(..., gpars = list())
     }
     sers <- do.call("ts.union", dots)
     if(is.null(gpars$ylab))
-        gpars$ylab <- if(NCOL(sers) > 1) "" else deparse(substitute(...))
+        gpars$ylab <- if(NCOL(sers) > 1) "" else deparse1(substitute(...))
     do.call("plot.ts", c(list(sers, plot.type = "single"), gpars))
 }
 
