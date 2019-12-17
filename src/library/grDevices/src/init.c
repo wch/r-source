@@ -111,6 +111,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(getGraphicsEventEnv, 1),
     EXTDEF(setGraphicsEventEnv, 2),
     EXTDEF(setPattern, 1),
+    EXTDEF(setClipPath, 2),
     EXTDEF(devAskNewPage, 1),
 
 #ifdef _WIN32

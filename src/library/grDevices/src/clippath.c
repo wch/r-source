@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2019 The R Core Team
+ *  Copyright (C) 1997-2014  The R Core Team
+ *  Copyright (C) 2003	     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,19 +18,26 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#include "grid.h"
+/* This should be regarded as part of the graphics engine */
 
-Rboolean isClipPath(SEXP clip) {
-    return Rf_inherits(clip, "GridClipPath");
-}
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
-SEXP resolveClipPath(SEXP path, pGEDevDesc dd) 
+#include <Defn.h>
+#include <R_ext/GraphicsEngine.h>
+
+#include "grDevices.h"
+
+SEXP setClipPath(SEXP args) 
 {
-    SEXP resolveFn, R_fcall, result;
-    PROTECT(resolveFn = findFun(install("resolveClipPath"), R_gridEvalEnv));
-    PROTECT(R_fcall = lang2(resolveFn, path));
-    result = eval(R_fcall, R_gridEvalEnv);
-    UNPROTECT(2);
-    return result;    
+    pGEDevDesc dd = GEcurrentDevice();
+    SEXP path = CADR(args);
+    int index = INTEGER(CADDR(args))[0];
+    index = dd->dev->setClipPath(path, index, dd->dev);
+    SEXP result;
+    result = PROTECT(allocVector(INTSXP, 1));
+    INTEGER(result)[0] = index;
+    UNPROTECT(1);
+    return result;
 }
-

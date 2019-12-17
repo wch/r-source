@@ -114,4 +114,4 @@ SEXP cairoVersion(void);
 SEXP bmVersion(void);
 
 SEXP setPattern(SEXP args);
-
+SEXP setClipPath(SEXP args);

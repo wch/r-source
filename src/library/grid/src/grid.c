@@ -187,27 +187,43 @@ SEXP doSetViewport(SEXP vp,
 			  !deviceChanged(devWidthCM, devHeightCM, 
 					 viewportParent(vp)), dd);
     /*
-     * If just doing old-style rectangular clipping ...
+     * Establish the clipping region for this viewport
      */
-    if (!isClipPath(viewportClipSXP(vp))) {
-        /* 
-         * We must "turn off" clipping
-         * We set the clip region to be the entire device
-         * (actually, as for the top-level viewport, we set it
-         *  to be slightly larger than the device to avoid 
-         *  "edge effects")
+    if (isClipPath(viewportClipSXP(vp))) {
+        /*
+         * Set clipping path AFTER doSetViewport() so that this
+         * viewport is the current viewport for resolving clip path
          */
+        SEXP currentClip, parentClip;
+        /*
+         * Record clip rect from parent, just so there are numbers there
+         */
+        PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
+        PROTECT(currentClip = allocVector(REALSXP, 4));
+        REAL(currentClip)[0] = REAL(parentClip)[0];
+        REAL(currentClip)[1] = REAL(parentClip)[1];
+        REAL(currentClip)[2] = REAL(parentClip)[2];
+        REAL(currentClip)[3] = REAL(parentClip)[3];
+        SET_VECTOR_ELT(vp, PVP_CLIPRECT, currentClip);
+        UNPROTECT(2);
+    } else {
         if (viewportClip(vp) == NA_LOGICAL) {
+            /* 
+             * We must "turn off" clipping
+             * We set the clip region to be the entire device
+             * (actually, as for the top-level viewport, we set it
+             *  to be slightly larger than the device to avoid 
+             *  "edge effects")
+             */
             xx1 = toDeviceX(-0.5*devWidthCM/2.54, GE_INCHES, dd);
             yy1 = toDeviceY(-0.5*devHeightCM/2.54, GE_INCHES, dd);
             xx2 = toDeviceX(1.5*devWidthCM/2.54, GE_INCHES, dd);
             yy2 = toDeviceY(1.5*devHeightCM/2.54, GE_INCHES, dd);
             GESetClip(xx1, yy1, xx2, yy2, dd);
-        }
-        /* If we are supposed to clip to this viewport ...
-         * NOTE that we will only clip if there is no rotation
-         */
-        else if (viewportClip(vp)) {
+        } else if (viewportClip(vp)) {
+            /* If we are supposed to clip to this viewport ...
+             * NOTE that we will only clip if there is no rotation
+             */
             double rotationAngle = REAL(viewportRotation(vp))[0];
             if (rotationAngle != 0 &&
                 rotationAngle != 90 &&
@@ -286,20 +302,39 @@ SEXP doSetViewport(SEXP vp,
              * for the top-level viewport, else *BOOM*!
              */
             SEXP parentClip;
+            SEXP parentClipPath;
             PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
             xx1 = REAL(parentClip)[0];
             yy1 = REAL(parentClip)[1];
             xx2 = REAL(parentClip)[2];
             yy2 = REAL(parentClip)[3];
-            UNPROTECT(1);
+            /*
+             * The parent may have a clipping path instead of a clipping rect
+             */
+            PROTECT(parentClipPath = VECTOR_ELT(viewportParent(vp), 
+                                                PVP_CLIPPATH));            
+            if (isClipPath(parentClipPath)) {
+                SET_VECTOR_ELT(vp, PVP_CLIPPATH, parentClipPath);
+            }
             /* If we are revisiting a viewport that inherits a clip
              * region from a parent viewport, we may need to reset 
              * the clip region (at worst, we generate a redundant clip)
              */
             if (!pushing) {
-                GESetClip(xx1, yy1, xx2, yy2, dd);
+                if (isClipPath(parentClipPath)) {
+                    /*
+                     * Set clipping path AFTER doSetViewport() so that this
+                     * viewport is the current viewport for resolving clip path
+                     */
+                } else {
+                    GESetClip(xx1, yy1, xx2, yy2, dd);
+                }
             }
+            UNPROTECT(2);
         }
+        /*
+         * Record clip rect for revisiting this viewport
+         */
         PROTECT(currentClip = allocVector(REALSXP, 4));
         REAL(currentClip)[0] = xx1;
         REAL(currentClip)[1] = yy1;
@@ -345,7 +380,7 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
      */
     setGridStateElement(dd, GSS_VP, pushedvp);
     /*
-     * Resolve definitions for this viewport 
+     * Resolve patterns for this viewport 
      */
     {
         SEXP vpgp = PROTECT(VECTOR_ELT(pushedvp, VP_GP));
@@ -361,14 +396,15 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
         }
         UNPROTECT(1);
     }
-    /*
-     * Set clipping path (if it is a clipping path)
+    /* 
+     * Resolve clipping paths for this viewport
      */
     {
-        SEXP clip = PROTECT(viewportClipSXP(pushedvp));
+        SEXP clip, resolvedclip;
+        PROTECT(clip = viewportClipSXP(pushedvp));
         if (isClipPath(clip)) {
-            SEXP resolvedclip = PROTECT(setClipPath(clip, dd));
             /* Record the resolved clipping path for subsequent up/down/pop */
+            PROTECT(resolvedclip = resolveClipPath(clip, dd));
             SET_VECTOR_ELT(pushedvp, PVP_CLIPPATH, resolvedclip);
             UNPROTECT(1);
         }
@@ -543,6 +579,22 @@ SEXP L_downviewport(SEXP name, SEXP strict)
 	 * list works 
 	 */
 	setGridStateElement(dd, GSS_VP, vp);
+        /* 
+         * Restore clipping paths for this viewport.
+         * This may resolve the clipping path again if device does
+         * not maintain clipping path cache.
+         */
+        {
+            SEXP clip, resolvedclip;
+            PROTECT(clip = VECTOR_ELT(vp, PVP_CLIPPATH));
+            if (isClipPath(clip)) {
+                /* Record the resolved clipping path for subsequent up/down/pop */
+                PROTECT(resolvedclip = resolveClipPath(clip, dd));
+                SET_VECTOR_ELT(vp, PVP_CLIPPATH, resolvedclip);
+                UNPROTECT(1);
+            }
+            UNPROTECT(1);
+        }
         UNPROTECT(1);    
     } else {
         /* Important to have an error here, rather than back in
@@ -687,6 +739,22 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
 	 * list works 
 	 */
 	setGridStateElement(dd, GSS_VP, vp);
+        /* 
+         * Restore clipping paths for this viewport.
+         * This may resolve the clipping path again if device does
+         * not maintain clipping path cache.
+         */
+        {
+            SEXP clip, resolvedclip;
+            PROTECT(clip = VECTOR_ELT(vp, PVP_CLIPPATH));
+            if (isClipPath(clip)) {
+                /* Record the resolved clipping path for subsequent up/down/pop */
+                PROTECT(resolvedclip = resolveClipPath(clip, dd));
+                SET_VECTOR_ELT(vp, PVP_CLIPPATH, resolvedclip);
+                UNPROTECT(1);
+            }
+            UNPROTECT(1);
+        }
         UNPROTECT(1);    
     } else {
         /* Important to have an error here, rather than back in
@@ -710,7 +778,7 @@ SEXP L_unsetviewport(SEXP n)
     int i;
     double xx1, yy1, xx2, yy2;
     double devWidthCM, devHeightCM;
-    SEXP parentClip;
+    SEXP parentClip, parentClipPath;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -776,19 +844,30 @@ SEXP L_unsetviewport(SEXP n)
      * Enforce the current viewport settings
      */
     setGridStateElement(dd, GSS_GPAR, viewportgpar(newvp));
-    /* Set the clipping region to the parent's cur.clip
-     */
-    parentClip = viewportClipRect(newvp);
-    xx1 = REAL(parentClip)[0];
-    yy1 = REAL(parentClip)[1];
-    xx2 = REAL(parentClip)[2];
-    yy2 = REAL(parentClip)[3];
-    GESetClip(xx1, yy1, xx2, yy2, dd);
     /* Set the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
      */
     setGridStateElement(dd, GSS_VP, newvp);
+    /* Set the clipping region to the parent's cur.clip
+     */
+    {
+        PROTECT(parentClip = viewportClipRect(newvp));
+        PROTECT(parentClipPath = VECTOR_ELT(newvp, PVP_CLIPPATH));            
+        /*
+         * The parent may have a clipping path instead of a clipping rect
+         */
+        if (isClipPath(parentClipPath)) {
+            resolveClipPath(parentClipPath, dd);
+        } else {
+            xx1 = REAL(parentClip)[0];
+            yy1 = REAL(parentClip)[1];
+            xx2 = REAL(parentClip)[2];
+            yy2 = REAL(parentClip)[3];
+            GESetClip(xx1, yy1, xx2, yy2, dd);
+        }
+        UNPROTECT(2);
+    }
     /* 
      * Remove the parent from the child
      * This is not strictly necessary, but it is conceptually
@@ -813,7 +892,7 @@ SEXP L_upviewport(SEXP n)
     int i;
     double xx1, yy1, xx2, yy2;
     double devWidthCM, devHeightCM;
-    SEXP parentClip;
+    SEXP parentClip, parentClipPath;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -842,29 +921,30 @@ SEXP L_upviewport(SEXP n)
      *  is a childrenvp of a gTree, where the gTree has gpar settings)
      */
     setGridStateElement(dd, GSS_GPAR, VECTOR_ELT(gvp, PVP_PARENTGPAR));
-    /* Set the clipping region to the parent's cur.clip
-     */
-    parentClip = viewportClipRect(newvp);
-    xx1 = REAL(parentClip)[0];
-    yy1 = REAL(parentClip)[1];
-    xx2 = REAL(parentClip)[2];
-    yy2 = REAL(parentClip)[3];
-    GESetClip(xx1, yy1, xx2, yy2, dd);
-#if 0
-	    /* This is a VERY short term fix to avoid mucking
-	     * with the core graphics during feature freeze
-	     * It should be removed post R 1.4 release
-	     */
-	    dd->dev->clipLeft = fmin2(xx1, xx2);
-	    dd->dev->clipRight = fmax2(xx1, xx2);
-	    dd->dev->clipTop = fmax2(yy1, yy2);
-	    dd->dev->clipBottom = fmin2(yy1, yy2); 
-#endif
     /* Set the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
      */
     setGridStateElement(dd, GSS_VP, newvp);
+    /* Set the clipping region to the parent's cur.clip
+     */
+    {
+        PROTECT(parentClip = viewportClipRect(newvp));
+        PROTECT(parentClipPath = VECTOR_ELT(newvp, PVP_CLIPPATH));            
+        /*
+         * The parent may have a clipping path instead of a clipping rect
+         */
+        if (isClipPath(parentClipPath)) {
+            resolveClipPath(parentClipPath, dd);
+        } else {
+            xx1 = REAL(parentClip)[0];
+            yy1 = REAL(parentClip)[1];
+            xx2 = REAL(parentClip)[2];
+            yy2 = REAL(parentClip)[3];
+            GESetClip(xx1, yy1, xx2, yy2, dd);
+        }
+        UNPROTECT(2);
+    }
     return R_NilValue;
 }
 

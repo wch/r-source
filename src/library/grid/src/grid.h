@@ -512,7 +512,7 @@ void initGPar(pGEDevDesc dd);
 /* From clippath.c */
 Rboolean isClipPath(SEXP clip);
 
-SEXP setClipPath(SEXP path, pGEDevDesc dd);
+SEXP resolveClipPath(SEXP path, pGEDevDesc dd);
 
 /* From viewport.c */
 SEXP viewportX(SEXP vp);
