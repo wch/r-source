@@ -5457,7 +5457,7 @@ upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0}, @code{9}, @code{10} or @code{11} you need
+not start with @code{1.8.0}, @code{11} or higher you need
 to update your Java.} this should prompt you to install it.  You can
 also install directly a recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
@@ -5853,7 +5853,7 @@ The 32-bit version never worked well enough to pass @R{}'s @command{make
 check}, and residual support from earlier experiments was removed in
 @R{} 3.3.0.
 
-The 64-bit version was never unsupported.
+The 64-bit version was never supported.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms
