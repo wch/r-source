@@ -5427,14 +5427,14 @@ upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0}, @code{9}, @code{10} or @code{11} you need
+not start with @code{1.8.0}, @code{11} or higher you need
 to update your Java.} this should prompt you to install it.  You can
 also install directly a recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 Builds of OpenJDK may also be available, e.g.@: from
 @uref{http://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 (but not 9, 10 or 12 which have/had a
-6-month lifetime).
+long-term support, e.g.@: 8 or 11 (but not 9, 10, 12 or 13 which
+have/had a 6-month lifetime).
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 9) of Java so @command{sudo R CMD javareconf} will likely be
@@ -5822,7 +5822,7 @@ The 32-bit version never worked well enough to pass @R{}'s @command{make
 check}, and residual support from earlier experiments was removed in
 @R{} 3.3.0.
 
-The 64-bit version was never unsupported.
+The 64-bit version was never supported.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms
