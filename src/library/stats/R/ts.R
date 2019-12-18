@@ -140,9 +140,9 @@ as.ts.default <- function(x, ...)
     if(max(abs(tsps[3,] - freq)) > ts.eps)
         stop("not all series have the same frequency")
 
-    phases <- apply(tsps, 2L, function(tsp) (tsp[1L]*tsp[3L]) %% 1)
-    if(any(i1 <- abs(phases - 1) <= ts.eps)) phases[i1] <- phases[i1] - 1
-    if(max(abs(phases - mean(phases))) > ts.eps)
+    ## cos(2pi ph) + 1i*sin(2pi ph); ph := phases
+    eph <- exp(2i*(pi * apply(tsps, 2L, function(tsp) (tsp[1L]*tsp[3L]) %% 1)))
+    if(max(Mod(eph - mean(eph))) > ts.eps)
     	stop("not all series have the same phase")
     if(union) {
         st <- min(tsps[1,])
