@@ -1,7 +1,7 @@
 #  File src/library/stats/R/binom.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ binom.test <-
 function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95)
 {
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     xr <- round(x)
 
     if(any(is.na(x) | (x < 0)) || max(abs(x-xr)) > 1e-7)
@@ -37,7 +37,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
         if((length(n) > 1L) || is.na(n) || (n < 1) || abs(n-nr) > 1e-7
            || (x > nr))
             stop("'n' must be a positive integer >= 'x'")
-        DNAME <- paste(DNAME, "and", deparse(substitute(n)))
+        DNAME <- paste(DNAME, "and", deparse1(substitute(n)))
         n <- nr
     }
     else

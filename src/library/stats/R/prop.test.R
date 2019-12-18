@@ -20,7 +20,7 @@ prop.test <-
 function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95, correct = TRUE)
 {
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
 
     if (is.table(x) && length(dim(x)) == 1L) {
         if (dim(x) != 2L)
@@ -37,7 +37,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 	x <- x[, 1L]
     }
     else {
-	DNAME <- paste(DNAME, "out of", deparse(substitute(n)))
+	DNAME <- paste(DNAME, "out of", deparse1(substitute(n)))
 	if ((l <- length(x)) != length(n))
 	    stop("'x' and 'n' must have the same length")
     }
@@ -59,7 +59,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     if (!is.null(p)) {
 	DNAME <- paste0(DNAME, ", null ",
 		       if(k == 1) "probability " else "probabilities ",
-		       deparse(substitute(p)))
+		       deparse1(substitute(p)))
 	if (length(p) != l)
 	    stop("'p' must have the same length as 'x' and 'n'")
 	p <- p[OK]

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/matplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,8 +41,8 @@ matplot <- function(x, y, type = "p",
 	else string
     }
     ## These from plot.default :
-    xlabel <- if (!missing(x)) deparse(substitute(x))# else NULL
-    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xlabel <- if (!missing(x)) deparse1(substitute(x))# else NULL
+    ylabel <- if (!missing(y)) deparse1(substitute(y))
     ##
     if(missing(x)) {
 	if(missing(y)) stop("must specify at least one of 'x' and 'y'")

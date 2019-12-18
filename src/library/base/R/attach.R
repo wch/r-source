@@ -35,7 +35,7 @@
     sprintf(txt, pkg, paste(objs, collapse="\n"))
 }
 
-attach <- function(what, pos = 2L, name = deparse(substitute(what), backtick=FALSE),
+attach <- function(what, pos = 2L, name = deparse1(substitute(what), backtick=FALSE),
                    warn.conflicts = TRUE)
 {
     ## NB: ./library.R 's library() has similar checkConflicts(), keep in sync !
@@ -112,7 +112,7 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
 	pos <-
 	    if(is.numeric(name)) name
 	    else {
-                if (!is.character(name)) name <- deparse(name)
+                if (!is.character(name)) name <- deparse1(name)
                 match(name, search())
             }
 	if(is.na(pos)) stop("invalid 'name' argument")

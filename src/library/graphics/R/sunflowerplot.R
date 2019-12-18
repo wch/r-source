@@ -27,8 +27,8 @@ sunflowerplot.default <-
 {
     ## Argument "checking" as plot.default:
 
-    xlabel <- if (!missing(x)) deparse(substitute(x))
-    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xlabel <- if (!missing(x)) deparse1(substitute(x))
+    ylabel <- if (!missing(y)) deparse1(substitute(y))
     is.xyn <- (is.list(x) && all(c("x","y","number") %in% names(x)))
                                         # as, e.g., from grDevices::xyTable(.)
     xy <-

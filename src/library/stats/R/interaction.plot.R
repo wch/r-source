@@ -19,15 +19,15 @@
 interaction.plot <-
     function(x.factor, trace.factor, response, fun=mean,
 	     type = c("l", "p", "b", "o", "c"), legend = TRUE,
-             trace.label=deparse(substitute(trace.factor)), fixed=FALSE,
-             xlab = deparse(substitute(x.factor)), ylab = ylabel,
+             trace.label=deparse1(substitute(trace.factor)), fixed=FALSE,
+             xlab = deparse1(substitute(x.factor)), ylab = ylabel,
              ylim = range(cells, na.rm=TRUE),
              lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
              xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
              xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
 {
-    ylabel <- paste(deparse(substitute(fun)), "of ",
-                    deparse(substitute(response)))
+    ylabel <- paste(deparse1(substitute(fun)), "of ",
+                    deparse1(substitute(response)))
     type <- match.arg(type)
     cells <- tapply(response, list(x.factor, trace.factor), fun)
     nr <- nrow(cells); nc <- ncol(cells)

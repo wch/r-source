@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ks.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ ks.test <-
              exact = NULL)
 {
     alternative <- match.arg(alternative)
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     x <- x[!is.na(x)]
     n <- length(x)
     if(n < 1L)
@@ -29,7 +29,7 @@ ks.test <-
     PVAL <- NULL
 
     if(is.numeric(y)) { ## two-sample case
-        DNAME <- paste(DNAME, "and", deparse(substitute(y)))
+        DNAME <- paste(DNAME, "and", deparse1(substitute(y)))
         y <- y[!is.na(y)]
         n.x <- as.double(n)             # to avoid integer overflow
         n.y <- length(y)

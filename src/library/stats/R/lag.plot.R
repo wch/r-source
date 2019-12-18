@@ -35,7 +35,7 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1L:lags,
         if(missing(Mgp)) axis(side, ..., xpd = NA)
         else axis(side, ..., xpd = NA, mgp = Mgp)
 
-    xnam <- deparse(substitute(x))
+    xnam <- deparse1(substitute(x))
     is.mat <- !is.null(ncol(x))
     nser <- ncol(x <- as.ts(as.matrix(x)))
     n <- nrow(x)

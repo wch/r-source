@@ -25,7 +25,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 {
     alternative <- match.arg(alternative)
     method <- match.arg(method)
-    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
 
     if(length(x) != length(y))
 	stop("'x' and 'y' must have the same length")

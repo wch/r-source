@@ -238,9 +238,7 @@ as.data.frame.list <-
 }
 
 as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
-				 nm = paste(deparse(substitute(x),
-						    width.cutoff = 500L),
-					    collapse = " "))
+				 nm = deparse1(substitute(x)))
 {
     force(nm)
     nrows <- length(x)
@@ -297,7 +295,7 @@ default.stringsAsFactors <- function()
 as.data.frame.character <-
     function(x, ..., stringsAsFactors = default.stringsAsFactors())
 {
-    nm <- paste(deparse(substitute(x), width.cutoff=500L), collapse = " ")# as in  as.DF.vector()
+    nm <- deparse1(substitute(x))
     if(stringsAsFactors) x <- factor(x)
     if(!"nm" %in% names(list(...)))
         as.data.frame.vector(x, ..., nm = nm)
@@ -350,6 +348,7 @@ as.data.frame.model.matrix <-
     row.names <- dn[[1L]]
     value <- list(x)
     if(!optional) names(value) <- deparse(substitute(x))[[1L]]
+                                        # FIXME? better:  , nlines=1L  or deparse1(.)
     class(value) <- "data.frame"
     if(!is.null(row.names)) {
 	row.names <- as.character(row.names)
@@ -371,6 +370,7 @@ as.data.frame.array <- function(x, row.names = NULL, optional = FALSE, ...)
 	## c(): better than drop() or as.vector() !
 	value <- as.data.frame.vector( c(x), row.names, optional, ...)
         if(!optional) names(value) <- deparse(substitute(x))[[1L]]
+                                        # FIXME? better:  , nlines=1L  or deparse1(.)
         value
     } else if (length(d) == 2L) {
         ## for explicit "array" class; otherwise *.matrix() is dispatched
@@ -400,7 +400,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 	as.data.frame.model.matrix(x, row.names, optional)
     else { # as.data.frame.vector without removing names
         nrows <- length(x)
-        nm <- paste(deparse(substitute(x), width.cutoff=500L), collapse=" ")
+        nm <- deparse1(substitute(x))
         if(is.null(row.names)) {
             autoRN <- FALSE
             if (nrows == 0L)

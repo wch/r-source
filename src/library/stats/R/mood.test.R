@@ -22,7 +22,7 @@ mood.test.default <-
 function(x, y, alternative = c("two.sided", "less", "greater"), ...)
 {
     alternative <- match.arg(alternative)
-    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
 
     x <- x[is.finite(x)]
     y <- y[is.finite(y)]

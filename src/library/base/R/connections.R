@@ -141,7 +141,7 @@ textConnection <- function(object, open = "r", local = FALSE,
     env <- if (local) parent.frame() else .GlobalEnv
     type <- match(match.arg(encoding), c("", "bytes", "UTF-8"))
     nm <- deparse(substitute(object))
-    if(length(nm) != 1)
+    if(length(nm) != 1) # or use deparse1() above ?
         stop("argument 'object' must deparse to a single character string")
     .Internal(textConnection(nm, object, open, env, type))
 }

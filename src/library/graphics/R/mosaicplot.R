@@ -36,7 +36,7 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 ##   orientation (e.g. use of sort and dir options).
 
 mosaicplot.default <-
-function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
+function(x, main = deparse1(substitute(x)), sub = NULL, xlab = NULL,
          ylab = NULL, sort = NULL, off = NULL, dir = NULL,
          color = NULL, shade = FALSE, margin = NULL,
          cex.axis = 0.66, las = par("las"), border = NULL,
@@ -386,7 +386,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
 
 mosaicplot.formula <-
 function(formula, data = NULL, ...,
-         main = deparse(substitute(data)), subset, na.action = stats::na.omit)
+         main = deparse1(substitute(data)), subset, na.action = stats::na.omit)
 {
     main # force evaluation here
     m <- match.call(expand.dots = FALSE)

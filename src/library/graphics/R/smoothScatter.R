@@ -31,8 +31,8 @@ smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
     ret.selection <- ret.selection && nrpoints > 0
 
     ## similar as in plot.default
-    xlabel <- if (!missing(x)) deparse(substitute(x))
-    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xlabel <- if (!missing(x)) deparse1(substitute(x))
+    ylabel <- if (!missing(y)) deparse1(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel)
     xlab <- if (is.null(xlab)) xy$xlab else xlab
     ylab <- if (is.null(ylab)) xy$ylab else ylab

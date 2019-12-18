@@ -63,7 +63,7 @@ print.summary.princomp <-
     invisible(x)
 }
 
-plot.princomp <- function(x, main = deparse(substitute(x)), ...)
+plot.princomp <- function(x, main = deparse1(substitute(x)), ...)
   screeplot.default(x, main = main, ...)
 
 screeplot <- function(x, ...) UseMethod("screeplot")
@@ -71,7 +71,7 @@ screeplot <- function(x, ...) UseMethod("screeplot")
 screeplot.default <-
 function(x, npcs = min(10, length(x$sdev)),
          type = c("barplot", "lines"),
-         main = deparse(substitute(x)), ...)
+         main = deparse1(substitute(x)), ...)
 {
     main
     type <- match.arg(type)

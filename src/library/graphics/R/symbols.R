@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/symbols.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -55,8 +55,9 @@ function (x, y = NULL, circles, squares, rectangles, stars,
     }
     if (count != 1)
 	stop("exactly one symbol type must be specified")
-    xy <- xy.coords(x, y, xlab = deparse(substitute(x)),
-                    ylab = deparse(substitute(y)))
+    xy <- xy.coords(x, y,
+                    xlab = deparse1(substitute(x)),
+                    ylab = deparse1(substitute(y)))
     x <- xy$x; y <- xy$y
     if (!add) {
 	if(is.null(xlab)) xlab <- xy$xlab

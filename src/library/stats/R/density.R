@@ -1,7 +1,7 @@
 #  File src/library/stats/R/density.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ density.default <-
 
     if (!is.numeric(x))
         stop("argument 'x' must be numeric")
-    name <- deparse(substitute(x))
+    name <- deparse1(substitute(x))
     x <- as.vector(x)
     x.na <- is.na(x)
     if (any(x.na)) {

@@ -35,7 +35,7 @@ page <- function(x, method = c("dput", "print"), ...)
         else
             stop(gettextf("no object named '%s' to show", x), domain = NA)
     } else {
-        subx <- deparse(substitute(x))
+        subx <- deparse1(substitute(x))
     }
     file <- tempfile("Rpage.")
     if(match.arg(method) == "dput")

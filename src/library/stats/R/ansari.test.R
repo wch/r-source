@@ -30,7 +30,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
              && (conf.level < 1)))
             stop("'conf.level' must be a single number between 0 and 1")
     }
-    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
 
     x <- x[complete.cases(x)]
     y <- y[complete.cases(y)]

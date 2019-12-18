@@ -19,8 +19,8 @@
 prop.trend.test <- function (x, n, score = seq_along(x))
 {
     method <- "Chi-squared Test for Trend in Proportions"
-    dname <- paste(deparse(substitute(x)), "out of", deparse(substitute(n)))
-    dname <- paste(dname, ",\n using scores:", paste(score, collapse = " "))
+    dname <- paste(deparse1(substitute(x)), "out of", deparse1(substitute(n)),
+                   ",\n using scores:", paste(score, collapse = " "))
 
     ## Tabular input has caused grief, get rid of dim() attributes:
     x <- as.vector(x)

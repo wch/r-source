@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/persp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,11 +28,11 @@ function (x = seq(0, 1, length.out = nrow(z)),
           box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple", ...)
 {
     if (is.null(xlab))
-        xlab <- if (!missing(x)) deparse(substitute(x)) else "X"
+        xlab <- if (!missing(x)) deparse1(substitute(x)) else "X"
     if (is.null(ylab))
-        ylab <- if (!missing(y)) deparse(substitute(y)) else "Y"
+        ylab <- if (!missing(y)) deparse1(substitute(y)) else "Y"
     if (is.null(zlab))
-        zlab <- if (!missing(z)) deparse(substitute(z)) else "Z"
+        zlab <- if (!missing(z)) deparse1(substitute(z)) else "Z"
     ## labcex is disregarded since we do NOT yet put  ANY labels...
     if (missing(z)) {
         if (!missing(x)) {

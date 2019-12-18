@@ -32,8 +32,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         conf.level < 0 || conf.level > 1))
         stop("'conf.level' must be a single number between 0 and 1")
     if( !is.null(y) ) {
-	dname <- paste(deparse(substitute(x)),"and",
-		       deparse(substitute(y)))
+	dname <- paste(deparse1(substitute(x)),"and",
+		       deparse1(substitute(y)))
 	if(paired)
 	    xok <- yok <- complete.cases(x,y)
 	else {
@@ -43,7 +43,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	y <- y[yok]
     }
     else {
-	dname <- deparse(substitute(x))
+	dname <- deparse1(substitute(x))
 	if (paired) stop("'y' is missing for paired test")
 	xok <- !is.na(x)
 	yok <- NULL

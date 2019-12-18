@@ -109,7 +109,7 @@ detach(2) # 'pos' used for 'name'
 ## and of detaching a database named by a character vector
 attach_and_detach <- function(db, pos = 2)
 {
-   name <- deparse(substitute(db))
+   name <- deparse1(substitute(db))
    attach(db, pos = pos, name = name)
    print(search()[pos])
    detach(name, character.only = TRUE)

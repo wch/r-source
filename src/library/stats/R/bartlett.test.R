@@ -1,7 +1,7 @@
 #  File src/library/stats/R/bartlett.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ function(x, g, ...)
     if (is.list(x)) {
         if (length(x) < 2L)
             stop("'x' must be a list with at least 2 elements")
-        DNAME <- deparse(substitute(x))
+        DNAME <- deparse1(substitute(x))
         if (all(sapply(x, function(obj) inherits(obj, "lm"))))
             LM <- TRUE
         else
@@ -35,8 +35,8 @@ function(x, g, ...)
     else {
         if (length(x) != length(g))
             stop("'x' and 'g' must have the same length")
-        DNAME <- paste(deparse(substitute(x)), "and",
-                       deparse(substitute(g)))
+        DNAME <- paste(deparse1(substitute(x)), "and",
+                       deparse1(substitute(g)))
         OK <- complete.cases(x, g)
         x <- x[OK]
         g <- factor(g[OK])

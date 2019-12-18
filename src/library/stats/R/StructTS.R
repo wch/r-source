@@ -77,7 +77,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         0.5 * sum(z)
     }
 
-    series <- deparse(substitute(x))
+    series <- deparse1(substitute(x))
     if(NCOL(x) > 1L)
         stop("only implemented for univariate time series")
     x <- as.ts(x)

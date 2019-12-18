@@ -54,7 +54,7 @@ arima0 <- function(x, order = c(0, 0, 0),
         c(Re(x[-1L]), rep(0, q-q0))
     }
 
-    series <- deparse(substitute(x))
+    series <- deparse1(substitute(x))
     if(NCOL(x) > 1)
         stop("only implemented for univariate time series")
     method <- match.arg(method)

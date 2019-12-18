@@ -26,10 +26,10 @@ monthplot(x, \dots)
 \method{monthplot}{StructTS}(x, labels = NULL, ylab = choice, choice = "sea", \dots)
 
 \method{monthplot}{ts}(x, labels = NULL, times = time(x), phase = cycle(x),
-             ylab = deparse(substitute(x)), \dots)
+             ylab = deparse1(substitute(x)), \dots)
 
 \method{monthplot}{default}(x, labels = 1L:12L,
-          ylab = deparse(substitute(x)),
+          ylab = deparse1(substitute(x)),
           times = seq_along(x),
           phase = (times - 1L)\%\%length(labels) + 1L, base = mean,
           axes = TRUE, type = c("l", "h"), box = TRUE,

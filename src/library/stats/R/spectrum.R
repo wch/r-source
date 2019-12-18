@@ -1,7 +1,7 @@
 #  File src/library/stats/R/spectrum.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2018 The R Core Team
+#  Copyright (C) 1999-2019 The R Core Team
 #  Copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -54,7 +54,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
 {
     ## can be called with a ts or a result of an AR fit.
     if(!is.list(x)) {
-        series <- deparse(substitute(x))
+        series <- deparse1(substitute(x))
         x <- na.action(as.ts(x))
         xfreq <- frequency(x)
         nser <- NCOL(x)
@@ -98,7 +98,7 @@ spec.pgram <-
               plot = TRUE, na.action = na.fail, ...)
 {
     ## Estimate spectral density from (smoothed) periodogram.
-    series <- deparse(substitute(x))
+    series <- deparse1(substitute(x))
     x <- na.action(as.ts(x))
     xfreq <- frequency(x)
     x <- as.matrix(x)

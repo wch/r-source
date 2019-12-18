@@ -105,9 +105,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             lines <- readLines(file, warn = FALSE)
             srcfile <-
                 if (isTRUE(keep.source))
-                    srcfilecopy(deparse(substitute(file)), lines)
+                    srcfilecopy(deparse1(substitute(file), ""), lines)
                 else
-                    deparse(substitute(file))
+                    deparse1(substitute(file), "")
         }
 
         exprs <- if (!from_file) {

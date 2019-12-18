@@ -88,7 +88,7 @@ prcomp.formula <- function (formula, data = NULL, subset, na.action, ...)
     res
 }
 
-plot.prcomp <- function(x, main = deparse(substitute(x)), ...)
+plot.prcomp <- function(x, main = deparse1(substitute(x)), ...)
     screeplot.default(x, main = main, ...)
 
 print.prcomp <- function(x, print.x = FALSE, ...) {
