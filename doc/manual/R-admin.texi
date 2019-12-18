@@ -5385,11 +5385,13 @@ The @TeX{} implementation used by the developers is MacTeX
 need to add some packages, e.g.@: for the 2019 version we needed to
 add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
 inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
-@pkg{inconsolata} and @pkg{texinfo} which brought this to about 310MB.
-@samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
-provides a graphical means to manage @TeX{} packages.  This is
-documented to require Sierra or later: for earlier versions see the
-instructions on the MacTeX front page.
+@pkg{inconsolata} and @pkg{texinfo} which brought this to about
+310MB. (After updates in Dec 2019 it was also necessary to add
+@pkg{letltxmacro} to make @file{NEWS.pdf}.)  @samp{TeX Live Utility}
+(available @emph{via} the MacTeX front page) provides a graphical means
+to manage @TeX{} packages.  This is documented to require Sierra or
+later: for earlier versions see the instructions on the MacTeX front
+page.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
