@@ -1069,7 +1069,7 @@ compactPDF <-
                              "-dCompatibilityLevel=1.5",
                              "-dAutoRotatePages=/None",
                              "-dPrinted=false",
-                             sprintf("-sOutputFile=%s", tf),
+                             sprintf("-sOutputFile=%s", shQuote(tf)),
                              gs_extras, shQuote(p)), FALSE, FALSE)
             if(!res && use_qpdf) {
                 unlink(tf2) # precaution

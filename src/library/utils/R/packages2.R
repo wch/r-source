@@ -836,7 +836,7 @@ install.packages <-
                           "-l", shQuote(update[i, 2L]),
                           getConfigureArgs(fil),
                           getConfigureVars(fil),
-                          fil)
+                          shQuote(fil))
                 status <- system2(cmd0, args, env = env,
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)

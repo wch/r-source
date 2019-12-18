@@ -117,12 +117,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     out <- if (.Platform$OS.type == "windows") {
         ## workaround Windows problem with input = cmd
         if (!is.null(cmd)) {
-            ## In principle this should escape \
+           ## In principle this should escape \
            Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
         } else Rin <- stdin
         suppressWarnings(system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
                                  else file.path(R.home("bin"), "Rterm.exe"),
-                                 c(Ropts, paste("-f", Rin)), stdout, stderr,
+                                 c(Ropts, paste("-f", shQuote(Rin))), stdout, stderr,
                                  env = env, timeout = timeout))
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
