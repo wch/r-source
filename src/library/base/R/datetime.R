@@ -176,7 +176,8 @@ Sys.timezone <- function(location = TRUE)
         if(nzchar(Sys.which("cmp"))) {
             known <- dir(tzdir, recursive = TRUE)
             for(tz in known) {
-                status <- system2("cmp", c("-s", lt0, file.path(tzdir, tz)))
+                status <- system2("cmp", c("-s", shQuote(lt0),
+                                  shQuote(file.path(tzdir, tz))))
                 if (status == 0L) {
                     cacheIt(tz)
                     warning(sprintf("It is strongly recommended to set envionment variable TZ to %s (or equivalent)",
