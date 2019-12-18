@@ -244,6 +244,8 @@ closeAllConnections <- function()
 readBin <- function(con, what, n = 1L, size = NA_integer_, signed = TRUE,
                     endian = .Platform$endian)
 {
+    if (!endian %in% c("big", "little", "swap"))
+        stop("invalid 'endian' argument")
     if(is.character(con)) {
         con <- file(con, "rb")
         on.exit(close(con))
@@ -261,6 +263,8 @@ writeBin <-
     function(object, con, size = NA_integer_, endian = .Platform$endian,
              useBytes = FALSE)
 {
+    if (!endian %in% c("big", "little", "swap"))
+        stop("invalid 'endian' argument")
     swap <- endian != .Platform$endian
     if(!is.vector(object) || mode(object) == "list")
         stop("can only write vector objects")

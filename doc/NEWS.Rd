@@ -173,6 +173,11 @@
       now has \code{"exact"} in its \code{method}.  New arguments
       \code{tol.root} and \code{digits.rank}.  The latter may be used for
       stability to treat very close numbers as ties.
+
+      \item \code{readBin()} and \code{writeBin()} now report an error for
+      invalid \code{endian} value.  The affected code needs to be fixed with
+      care as the old undocumented behavior was to swap endian-ness in such
+      cases.
     }
   }% end{ NEW FEATURES }
 
