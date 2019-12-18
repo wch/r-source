@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2016  The R Core Team
+ *  Copyright (C) 1998-2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,8 +53,8 @@ double	Rf_gamma_cody(double);
 #include <R_ext/Print.h>
 
 /* moved from dpq.h */
-#ifdef HAVE_NEARYINT
-# define R_forceint(x)   nearbyint()
+#ifdef HAVE_NEARBYINT
+# define R_forceint(x)   nearbyint(x)
 #else
 # define R_forceint(x)   round(x)
 #endif
@@ -141,6 +141,10 @@ int R_finite(double);
 /*	does not have "full" precision */
 #define ME_UNDERFLOW	16
 /*	and underflow occured (important for IEEE)*/
+
+/* FIXME: 'ERR' and 'ERROR' below are misnomers, both in R and stand-alone Rmathlib:
+   -----  they only *warn* after all; they are private headers, so can change anytime
+*/
 
 #define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN, ""); return ML_NAN; }
 
