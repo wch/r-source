@@ -1,6 +1,6 @@
 % File src/library/utils/man/zip.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{zip}
@@ -34,7 +34,10 @@ zip(zipfile, files, flags = "-r9X", extras = "",
   \command{zip} command for other possibilities.
 
   Argument \code{extras} can be used to specify \code{-x} or \code{-i}
-  followed by a list of filepaths to exclude or include.
+  followed by a list of filepaths to exclude or include. Since
+  \code{extras} will be treated as if passed to \code{\link{system}}, if
+  the filepaths contain spaces they must be quoted e.g. by
+  \code{\link{shQuote}}.
 }
 \value{
   The status value returned by the external command, invisibly.
