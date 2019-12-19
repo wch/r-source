@@ -64,10 +64,6 @@ findGeneric <- function(fname, envir, warnS4only = TRUE)
     isUME(body(f))
 }
 
-## deparse(.) returning *one* string  {not exported (yet)}:
-deparse1 <- function(x, collapse=" ", ...)
-    paste(deparse(x, 500L, ...), collapse=collapse)
-
 getKnownS3generics <-
 function()
     c(names(.knownS3Generics), tools:::.get_internal_S3_generics())

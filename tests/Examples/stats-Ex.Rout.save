@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-12-11 r77551) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-12-16 r77583) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3922,7 +3922,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x49532f0>
+<environment: 0x581a4a0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4959,7 +4959,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x57518e0>
+<bytecode: 0x66134e8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7583,7 +7583,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x51561a0>
+<environment: 0x6003fc8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11717,7 +11717,7 @@ Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
 Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
   cannot compute exact p-value with ties
 
-	Pairwise comparisons using Wilcoxon rank sum test 
+	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
 
 data:  Ozone and Month 
 
@@ -11750,7 +11750,7 @@ Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
 Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
   cannot compute exact p-value with ties
 
-	Pairwise comparisons using Wilcoxon rank sum test 
+	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
 
 data:  Ozone and Month 
 
@@ -12277,14 +12277,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x46a65e0>
-<environment: 0x46af028>
+<bytecode: 0x561e160>
+<environment: 0x5626b70>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x46a6490>
-<environment: 0x46af028>
+<bytecode: 0x561e010>
+<environment: 0x5626b70>
 
 > 
 > 
@@ -16493,8 +16493,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x2ddc998>
-<environment: 0x3b8d9a8>
+<bytecode: 0x3ca0740>
+<environment: 0x3bc5e68>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18256,7 +18256,7 @@ $rotmat
 > y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
 > wilcox.test(x, y, paired = TRUE, alternative = "greater")
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  x and y
 V = 40, p-value = 0.01953
@@ -18264,7 +18264,7 @@ alternative hypothesis: true location shift is greater than 0
 
 > wilcox.test(y - x, alternative = "less")    # The same.
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  y - x
 V = 5, p-value = 0.01953
@@ -18286,7 +18286,7 @@ alternative hypothesis: true location is less than 0
 > depression <- data.frame(first = x, second = y, change = y - x)
 > wilcox.test(change ~ 1, data = depression)
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  change
 V = 5, p-value = 0.03906
@@ -18294,7 +18294,7 @@ alternative hypothesis: true location is not equal to 0
 
 > wilcox.test(Pair(first, second) ~ 1, data = depression)
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank exact test
 
 data:  Pair(first, second)
 V = 40, p-value = 0.03906
@@ -18311,7 +18311,7 @@ alternative hypothesis: true location shift is not equal to 0
 > y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
 > wilcox.test(x, y, alternative = "g")        # greater
 
-	Wilcoxon rank sum test
+	Wilcoxon rank sum exact test
 
 data:  x and y
 W = 35, p-value = 0.1272
@@ -18330,7 +18330,7 @@ alternative hypothesis: true location shift is greater than 0
 > 
 > wilcox.test(rnorm(10), rnorm(10, 2), conf.int = TRUE)
 
-	Wilcoxon rank sum test
+	Wilcoxon rank sum exact test
 
 data:  rnorm(10) and rnorm(10, 2)
 W = 7, p-value = 0.0004871
@@ -18356,6 +18356,35 @@ W = 127.5, p-value = 0.0001208
 alternative hypothesis: true location shift is not equal to 0
 
 > 
+> ## accuracy in ties determination via 'digits.rank':
+> wilcox.test( 4:2,      3:1,     paired=TRUE) # Warning:  cannot compute exact p-value with ties
+Warning in wilcox.test.default(4:2, 3:1, paired = TRUE) :
+  cannot compute exact p-value with ties
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  4:2 and 3:1
+V = 6, p-value = 0.1489
+alternative hypothesis: true location shift is not equal to 0
+
+> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) # no ties => *no* warning
+
+	Wilcoxon signed rank exact test
+
+data:  (4:2)/10 and (3:1)/10
+V = 6, p-value = 0.25
+alternative hypothesis: true location shift is not equal to 0
+
+> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE, digits.rank = 9) # same ties as (4:2, 3:1)
+Warning in wilcox.test.default((4:2)/10, (3:1)/10, paired = TRUE, digits.rank = 9) :
+  cannot compute exact p-value with ties
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  (4:2)/10 and (3:1)/10
+V = 6, p-value = 0.1489
+alternative hypothesis: true location shift is not equal to 0
+
 > 
 > 
 > 
@@ -18366,7 +18395,7 @@ alternative hypothesis: true location shift is not equal to 0
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: window
-> ### Title: Time Windows
+> ### Title: Time (Series) Windows
 > ### Aliases: window window.default window.ts window<- window<-.ts
 > ### Keywords: ts
 > 
@@ -18874,7 +18903,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.832 0.222 7.091 0 0 
+Time elapsed:  13.554 0.389 14.042 0 0 
 > grDevices::dev.off()
 null device 
           1 

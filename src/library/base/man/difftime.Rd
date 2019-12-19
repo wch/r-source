@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -37,7 +37,7 @@ difftime(time1, time2, tz,
          units = c("auto", "secs", "mins", "hours",
                    "days", "weeks"))
 
-as.difftime(tim, format = "\%X", units = "auto")
+as.difftime(tim, format = "\%X", units = "auto", tz = "UTC")
 
 \method{format}{difftime}(x, ...)
 \method{units}{difftime}(x)

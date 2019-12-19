@@ -24,15 +24,15 @@ mcnemar.test <- function(x, y = NULL, correct = TRUE)
             stop("'x' must be square with at least two rows and columns")
         if (any(x < 0) || anyNA(x))
             stop("all entries of 'x' must be nonnegative and finite")
-        DNAME <- deparse(substitute(x))
+        DNAME <- deparse1(substitute(x))
     }
     else {
         if (is.null(y))
             stop("if 'x' is not a matrix, 'y' must be given")
         if (length(x) != length(y))
             stop("'x' and 'y' must have the same length")
-        DNAME <- paste(deparse(substitute(x)), "and",
-                       deparse(substitute(y)))
+        DNAME <- paste(deparse1(substitute(x)), "and",
+                       deparse1(substitute(y)))
         OK <- complete.cases(x, y)
         x <- as.factor(x[OK])
         y <- as.factor(y[OK])

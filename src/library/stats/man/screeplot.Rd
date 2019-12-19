@@ -10,7 +10,7 @@
 \usage{
 \method{screeplot}{default}(x, npcs = min(10, length(x$sdev)),
           type = c("barplot", "lines"),
-          main = deparse(substitute(x)), \dots)
+          main = deparse1(substitute(x)), \dots)
 }
 \arguments{
   \item{x}{an object containing a \code{sdev} component, such as that

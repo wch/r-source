@@ -61,7 +61,7 @@ function(topic, package = NULL, lib.loc = NULL,
         reserved <-
             c("TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer_",
               "NA_real_", "NA_complex_", "NA_character_")
-        stopic <- deparse(substitute(topic))
+        stopic <- deparse1(substitute(topic))
         if(!is.name(substitute(topic)) && ! stopic %in% reserved)
             stop("'topic' should be a name, length-one character vector or reserved word")
         topic <- stopic

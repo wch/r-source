@@ -93,8 +93,8 @@ c(mode(e.s.e), typeof(e.s.e)) #  "expression", "expression"
 substitute(x <- x + 1, list(x = 1)) # nonsense
 
 myplot <- function(x, y)
-    plot(x, y, xlab = deparse(substitute(x)),
-         ylab = deparse(substitute(y)))
+    plot(x, y, xlab = deparse1(substitute(x)),
+               ylab = deparse1(substitute(y)))
 
 ## Simple examples about lazy evaluation, etc:
 

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/pairwise.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ function(x, g, p.adjust.method = p.adjust.methods, pool.sd = !paired,
 {
     if (paired & pool.sd)
         stop("pooling of SD is incompatible with paired tests")
-    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
+    DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(g)))
     g <- factor(g)
     p.adjust.method <- match.arg(p.adjust.method)
     alternative <- match.arg(alternative)
@@ -67,14 +67,19 @@ pairwise.wilcox.test <-
 function(x, g, p.adjust.method = p.adjust.methods, paired=FALSE, ...)
 {
     p.adjust.method <- match.arg(p.adjust.method)
-    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
+    DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(g)))
     g <- factor(g)
-    METHOD <- if (paired) "Wilcoxon signed rank test"
-        else "Wilcoxon rank sum test"
+    METHOD <- NULL # exact or not? (depends on '...', sample size 'n', etc)
     compare.levels <- function(i, j) {
         xi <- x[as.integer(g) == i]
         xj <- x[as.integer(g) == j]
-        wilcox.test(xi, xj, paired=paired, ...)$p.value
+        if(is.null(METHOD)) { # first time
+            wt <- wilcox.test(xi, xj, paired=paired, ...)
+            METHOD <<- wt$method
+            wt$p.value
+        }
+        else
+            wilcox.test(xi, xj, paired=paired, ...)$p.value
     }
     PVAL <- pairwise.table(compare.levels, levels(g), p.adjust.method)
     ans <- list(method = METHOD, data.name = DNAME,
@@ -88,7 +93,7 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
 {
     p.adjust.method <- match.arg(p.adjust.method)
     METHOD <- "Pairwise comparison of proportions"
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     if (is.matrix(x)) {
         if (ncol(x) != 2)
             stop("'x' must have 2 columns")
@@ -96,7 +101,7 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
         x <- x[, 1]
     }
     else {
-        DNAME <- paste(DNAME, "out of", deparse(substitute(n)))
+        DNAME <- paste(DNAME, "out of", deparse1(substitute(n)))
         if (length(x) != length(n))
             stop("'x' and 'n' must have the same length")
     }
@@ -122,13 +127,13 @@ function(compare.levels, level.names, p.adjust.method)
 {
     ix <- setNames(seq_along(level.names), level.names)
     pp <- outer(ix[-1L], ix[-length(ix)],function(ivec, jvec)
-          sapply(seq_along(ivec), function(k) {
+          vapply(seq_along(ivec), function(k) {
               i <- ivec[k]
               j <- jvec[k]
-              if (i > j) compare.levels(i, j) else NA
-          }))
-    pp[lower.tri(pp, TRUE)] <- p.adjust(pp[lower.tri(pp, TRUE)],
-                                        p.adjust.method)
+              if (i > j) compare.levels(i, j) else NA_real_
+          }, 0.05))
+    il.tri <- lower.tri(pp, TRUE)
+    pp[il.tri] <- p.adjust(pp[il.tri], p.adjust.method)
     pp
 }
 

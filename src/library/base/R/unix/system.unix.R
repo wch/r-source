@@ -1,7 +1,7 @@
 #  File src/library/base/R/unix/system.unix.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ system2 <- function(command, args = character(),
         writeLines(input, f)
         ## here 'command' is a single command, unlike system()
         command <- paste(command, "<", shQuote(f))
-    } else if (nzchar(stdin)) command <- paste(command, "<", stdin)
+    } else if (nzchar(stdin)) command <- paste(command, "<", shQuote(stdin))
     if(!wait && !intern) command <- paste(command, "&")
     .Internal(system(command, intern, timeout))
 }

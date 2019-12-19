@@ -1,7 +1,7 @@
 #  File src/library/stats/R/mantelhaen.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ function(x, y = NULL, z = NULL,
          alternative = c("two.sided", "less", "greater"),
          correct = TRUE, exact = FALSE, conf.level = 0.95)
 {
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     if(is.array(x)) {
         if(length(dim(x)) == 3L) {
             if(anyNA(x)) stop("NAs are not allowed")
@@ -35,8 +35,8 @@ function(x, y = NULL, z = NULL,
         if(is.null(z)) stop("if 'x' is not an array, 'z' must be given")
         if(any(diff(c(length(x), length(y), length(z))) != 0L ))
             stop("'x', 'y', and 'z' must have the same length")
-        DNAME <- paste(DNAME, "and", deparse(substitute(y)), "and",
-                       deparse(substitute(z)))
+        DNAME <- paste(DNAME, "and", deparse1(substitute(y)), "and",
+                       deparse1(substitute(z)))
         OK <- complete.cases(x, y, z)
         x <- factor(x[OK])
         y <- factor(y[OK])

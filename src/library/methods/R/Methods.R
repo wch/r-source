@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -714,7 +714,7 @@ getMethod <-
 	if(optional)
 	    return(NULL)
 	## else
-	if(!is.character(f)) f <- deparse(substitute(f))
+	if(!is.character(f)) f <- deparse1(substitute(f))
 	stop(gettextf("no generic function found for '%s'", f), domain = NA)
     }
     if(missing(mlist))
@@ -727,7 +727,7 @@ getMethod <-
 	signature <- matchSignature(signature, fdef)
 	value <- .findMethodInTable(signature, mlist, fdef)
 	if(is.null(value) && !optional) {
-	    if(!is.character(f)) f <- deparse(substitute(f))
+	    if(!is.character(f)) f <- deparse1(substitute(f))
 	    stop(gettextf("no method found for function '%s' and signature %s",
 			  f, paste(signature, collapse = ", ")))
 	}
@@ -1502,9 +1502,9 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 	return(sprintf("classes: %s, %s",
                        .dQ(class(f1)), .dQ(class(f2))))
     if(!isS4(f1)) return(gettextf("argument %s is not S4",
-                                  deparse(substitute(f1))))
+                                  deparse1(substitute(f1))))
     if(!isS4(f2)) return(gettextf("argument %s is not S4",
-                                  deparse(substitute(f2))))
+                                  deparse1(substitute(f2))))
     f1d <- f1@.Data
     f2d <- f2@.Data
     ## xtra... <- FALSE
@@ -1586,7 +1586,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
              domain = NA)
     else {
         fdef <- f
-        f <- deparse(substitute(f))
+        f <- deparse1(substitute(f))
     }
     if(!is(fdef, "genericFunction")) {
         warning(gettextf("non-generic function '%s' given to findMethods()", f),

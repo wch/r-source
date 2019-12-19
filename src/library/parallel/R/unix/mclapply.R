@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/mclapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -230,7 +230,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         if (length(has.errors) == cores)
             warning("all scheduled cores encountered errors in user code")
         else
-            warning(sprintf(ngettext(has.errors,
+            warning(sprintf(ngettext(length(has.errors),
                                      "scheduled core %s encountered error in user code, all values of the job will be affected",
                                      "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"),
                             paste(has.errors, collapse = ", ")),

@@ -13,9 +13,9 @@
 \usage{
 interaction.plot(x.factor, trace.factor, response, fun = mean,
                  type = c("l", "p", "b", "o", "c"), legend = TRUE,
-                 trace.label = deparse(substitute(trace.factor)),
+                 trace.label = deparse1(substitute(trace.factor)),
                  fixed = FALSE,
-                 xlab = deparse(substitute(x.factor)),
+                 xlab = deparse1(substitute(x.factor)),
                  ylab = ylabel,
                  ylim = range(cells, na.rm = TRUE),
                  lty = nc:1, col = 1, pch = c(1:9, 0, letters),

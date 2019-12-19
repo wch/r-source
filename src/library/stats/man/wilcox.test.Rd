@@ -1,6 +1,6 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
@@ -19,7 +19,8 @@ wilcox.test(x, \dots)
 \method{wilcox.test}{default}(x, y = NULL,
             alternative = c("two.sided", "less", "greater"),
             mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
-            conf.int = FALSE, conf.level = 0.95, \dots)
+            conf.int = FALSE, conf.level = 0.95,
+            tol.root = 1e-4, digits.rank = Inf, \dots)
 
 \method{wilcox.test}{formula}(formula, data, subset, na.action, \dots)
 }
@@ -42,10 +43,15 @@ wilcox.test(x, \dots)
   \item{conf.int}{a logical indicating whether a confidence interval
     should be computed.}
   \item{conf.level}{confidence level of the interval.}
+  \item{tol.root}{(when \code{conf.int} is true:) a positive numeric
+    tolerance, used in \code{\link{uniroot}(*, tol=tol.root)} calls.}
+  \item{digits.rank}{a number; if finite, \code{\link{rank}(\link{signif}(r, digits.rank))}
+    will be used to compute ranks for the test statistic instead of (the
+    default) \code{rank(r)}.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
-    is a numeric variable giving the data values and \code{rhs} either 
+    is a numeric variable giving the data values and \code{rhs} either
     \code{1} for a one-sample or paired test or a factor
-    with two levels giving the corresponding groups. If \code{lhs} is of 
+    with two levels giving the corresponding groups. If \code{lhs} is of
     class \code{"Pair"} and \code{rhs} is \code{1}, a paired test is done}
   \item{data}{an optional matrix or data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
@@ -79,6 +85,10 @@ wilcox.test(x, \dots)
   By default (if \code{exact} is not specified), an exact p-value
   is computed if the samples contain less than 50 finite values and
   there are no ties.  Otherwise, a normal approximation is used.
+
+  For stability reasons, it may be advisable to use rounded data or to set
+  \code{digits.rank = 7}, say, such that determination of ties does not
+  depend on very small numeric differences (see the example).
 
   Optionally (if argument \code{conf.int} is true), a nonparametric
   confidence interval and an estimator for the pseudomedian (one-sample
@@ -214,7 +224,9 @@ boxplot(Ozone ~ Month, data = airquality)
 wilcox.test(Ozone ~ Month, data = airquality,
             subset = Month \%in\% c(5, 8))
 
+## accuracy in ties determination via 'digits.rank':
+wilcox.test( 4:2,      3:1,     paired=TRUE) # Warning:  cannot compute exact p-value with ties
+wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) # no ties => *no* warning
+wilcox.test((4:2)/10, (3:1)/10, paired=TRUE, digits.rank = 9) # same ties as (4:2, 3:1)
 }
-
-
 \keyword{htest}

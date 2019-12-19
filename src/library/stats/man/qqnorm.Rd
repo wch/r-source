@@ -14,8 +14,9 @@ qqnorm(y, \dots)
 qqline(y, datax = FALSE, distribution = qnorm,
        probs = c(0.25, 0.75), qtype = 7, \dots)
 
-qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
-       ylab = deparse(substitute(y)), \dots)
+qqplot(x, y, plot.it = TRUE,
+       xlab = deparse1(substitute(x)),
+       ylab = deparse1(substitute(y)), \dots)
 }
 \alias{qqnorm}
 \alias{qqnorm.default}

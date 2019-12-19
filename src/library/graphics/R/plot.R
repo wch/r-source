@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/plot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,8 +60,8 @@ plot.default <-
     localBox    <- function(..., col, bg, pch, cex, lty, lwd) box(...)
     localWindow <- function(..., col, bg, pch, cex, lty, lwd) plot.window(...)
     localTitle  <- function(..., col, bg, pch, cex, lty, lwd) title(...)
-    xlabel <- if (!missing(x)) deparse(substitute(x))
-    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xlabel <- if (!missing(x)) deparse1(substitute(x))
+    ylabel <- if (!missing(y)) deparse1(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
     xlab <- if (is.null(xlab)) xy$xlab else xlab
     ylab <- if (is.null(ylab)) xy$ylab else ylab
@@ -115,7 +115,7 @@ plot.table <-
     function(x, type = "h", ylim = c(0, max(x)), lwd = 2,
              xlab = NULL, ylab = NULL, frame.plot = is.num, ...)
 {
-    xnam <- deparse(substitute(x))
+    xnam <- deparse1(substitute(x))
     rnk <- length(dim(x))
     if(rnk == 0L) stop("invalid table 'x'")
     if(rnk == 1L) {

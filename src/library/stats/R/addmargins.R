@@ -43,7 +43,7 @@ addmargins <-
     ## expand a single function specification to a list of the same
     ## length as the margins vector.
     if (length(FUN) == 1 && !is.list(FUN)) {
-	fname <- if (!miss.FUN) deparse(substitute(FUN)) else "Sum"
+	fname <- if (!miss.FUN) deparse1(substitute(FUN)) else "Sum"
 	FUN <- setNames(list(FUN), fname)
     }
 

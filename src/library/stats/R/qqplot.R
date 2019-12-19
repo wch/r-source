@@ -16,8 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-qqplot <- function(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
-		   ylab = deparse(substitute(y)), ...)
+qqplot <- function(x, y, plot.it = TRUE,
+                   xlab = deparse1(substitute(x)),
+		   ylab = deparse1(substitute(y)), ...)
 {
     sx <- sort(x)
     sy <- sort(y)

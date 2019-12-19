@@ -978,7 +978,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
             paste0("-sFONTPATH=",
                    shQuote(paste(fontpaths, collapse = .Platform$path.sep)))
     args <- c(paste0("-dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format),
-              paste0(" -sOutputFile=", tmpfile),
+              paste0(" -sOutputFile=", shQuote(tmpfile)),
               fontpaths, options, shQuote(file))
     ret <- system2(gsexe, args)
     if(ret != 0)

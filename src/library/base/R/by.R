@@ -1,7 +1,7 @@
 #  File src/library/base/R/by.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,14 +27,13 @@ by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
         by(dd, INDICES, FUN, ..., simplify = simplify)
     else {
         if(!is.list(INDICES)) {        # record the names for print.by
-            IND <- vector("list", 1L)
-            IND[[1L]] <- INDICES
-            names(IND) <- deparse(substitute(INDICES))[1L]
+            IND <- list(INDICES)
+            names(IND) <- deparse(substitute(INDICES))[1L] # FIXME? better: , nlines=1L  or deparse1()
         } else IND <- INDICES
         FUNx <- function(x) FUN(dd[x,], ...)
         nd <- nrow(dd)
 	structure(eval(substitute(tapply(seq_len(nd), IND, FUNx,
-				      simplify = simplify)), dd),
+                                         simplify = simplify)), dd),
 		  call = match.call(),
 		  class = "by")
     }
@@ -43,8 +42,7 @@ by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
 by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE)
 {
     if(!is.list(INDICES)) { # record the names for print.by
-        IND <- vector("list", 1L)
-        IND[[1L]] <- INDICES
+        IND <- list(INDICES)
         names(IND) <- deparse(substitute(INDICES))[1L]
     } else IND <- INDICES
     FUNx <- function(x) FUN(data[x,, drop=FALSE], ...) # (PR#10506)

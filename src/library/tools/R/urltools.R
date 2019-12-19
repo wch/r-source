@@ -84,7 +84,7 @@ function(f)
     setwd(d)
     g <- tempfile(tmpdir = d, fileext = ".xml")
     system2("pdftohtml",
-            c("-s -q -i -c -xml", basename(f), basename(g)))
+            c("-s -q -i -c -xml", shQuote(basename(f)), shQuote(basename(g))))
     ## Oh dear: seems that pdftohtml can fail without a non-zero exit
     ## status.
     if(file.exists(g))

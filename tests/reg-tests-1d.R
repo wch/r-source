@@ -305,6 +305,7 @@ tryCatch(contour(matrix(rnorm(100), 10, 10), levels = 0, labels = numeric()),
 
 
 ## unique.warnings() needs better duplicated():
+invisible(warnings())
 .tmp <- lapply(list(0, 1, 0:1, 1:2, c(1,1), -1:1), function(x) wilcox.test(x))
 stopifnot(length(print(uw <- unique(warnings()))) == 2)
 ## unique() gave only one warning in  R <= 3.3.1
@@ -3401,6 +3402,65 @@ stopifnot(exprs = {
 tools::assertError(cbind(ts(1:2, start = 0.5, end = 1.5),
 			 ts(1:2, start = 0  , end = 1)), verbose=TRUE)
 ## Wrong results in R < 4.0.0
+## New checks needed tweaks :
+## -- 1 --
+frYr <- 365.25
+tt <- (0:3652)/frYr
+timeO <- structure(tt, .Tsp = c(1981, 1990.998631, frYr), class = "ts")
+ttt <- time(timeO) # Error "'end' must be a whole number of cycles after 'start'"
+## -- 2 --
+set.seed(7); tt <- ts(rnorm(60), frequency=12)
+dt2 <- diff(tt, differences = 2) # Error in .cbind.ts(..): not all series have the same phase
+stopifnot(exprs = {
+    all.equal(timeO, ttt - 1981, tol = 1e-8)
+    inherits(ttt, "ts")
+    inherits(dt2, "ts")
+    length(dt2) == length(tt) - 2L
+    all.equal(6*tsp(dt2), c(7, 35.5, 72))
+    all.equal(dt2[1:2], c(3.986498, -0.22047961))
+})
+## failed for a while in R-devel 2019-12-*
+
+
+
+## Using deparse1() fixing potential naming problems in many places, PR#17671
+(acl <- do.call(acf, list(lynx, plot=FALSE)))
+set.seed(7); t44 <- table(sample(LETTERS[1:4], size = 50, replace=TRUE),
+                          sample(letters[1:4], size = 50, replace=TRUE))
+ft44 <- do.call(fisher.test, list(t44))
+stopifnot(length(acl$series) == 1,
+          length(do.call(pacf, list(lynx, plot=FALSE))$series) == 1,
+          identical(t44, eval(str2lang(ft44$data.name))))
+## funny data names in R < 4.0.0
+
+
+## wilcox.test(x,{y,} ..): when 'x' and/or 'y' contain +/- Inf
+dfn <- c(shifted = function(L) 1/8 + c(9:4, L), # <- without, and
+            ties = function(L)       c(9:4, L)) # <- with ties
+oWarn <- getOption("warn")
+for(nm in names(dfn)) {
+    y7 <- dfn[[nm]]
+    options(warn = if(nm == "ties") 1 else 2) ## "ties" : ==> 2 x 3 (different) warnings
+    w2  <- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L)))
+    w1  <- lapply(c(1000, Inf), function(L) wilcox.test( y7(L) ))
+    w2p <- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L), paired= TRUE))
+    w2n <- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L), exact = FALSE))
+    w2pn<- lapply(c(1000, Inf), function(L) wilcox.test(1:7, y7(L), exact = FALSE, paired=TRUE))
+    stopifnot(exprs = {
+        identical(w2  [[1]], w2  [[2]]) # was FALSE in R <= 3.6.x
+        identical(w1  [[1]], w1  [[2]]) # was FALSE ..
+        identical(w2p [[1]], w2p [[2]])
+        identical(w2n [[1]], w2n [[2]]) # was FALSE ..
+        identical(w2pn[[1]], w2pn[[2]])
+    })
+}; options(warn = oWarn)
+## non-paired cases treated 'Inf' non-robustly in R <= 3.6.x
+wII <- wilcox.test(c(-Inf, 1:5, Inf), c(-Inf, 4*(0:4), Inf), paired=TRUE) # error in R <= 3.6.x
+ w1 <- wilcox.test(c(      1:5, Inf), c(      4*(0:4), Inf), paired=TRUE) # ditto
+(w0 <- wilcox.test(        1:5,               4*(0:4),       paired=TRUE))
+sel <- names(w0) != "data.name"
+stopifnot(identical(w0[sel], w1[sel]), identical(w0[sel], wII[sel]))
+## Inf-Inf  etc broken in paired case in R <= 3.6.x
 
 
 

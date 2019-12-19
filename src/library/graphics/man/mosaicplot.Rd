@@ -1,6 +1,6 @@
 % File src/library/graphics/man/mosaicplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mosaicplot}
@@ -13,7 +13,7 @@
 \usage{
 mosaicplot(x, \dots)
 
-\method{mosaicplot}{default}(x, main = deparse(substitute(x)),
+\method{mosaicplot}{default}(x, main = deparse1(substitute(x)),
            sub = NULL, xlab = NULL, ylab = NULL,
            sort = NULL, off = NULL, dir = NULL,
            color = NULL, shade = FALSE, margin = NULL,
@@ -21,7 +21,7 @@ mosaicplot(x, \dots)
            type = c("pearson", "deviance", "FT"), \dots)
 
 \method{mosaicplot}{formula}(formula, data = NULL, \dots,
-           main = deparse(substitute(data)), subset,
+           main = deparse1(substitute(data)), subset,
            na.action = stats::na.omit)
 }
 \arguments{

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/wilcox.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ wilcox.test <- function(x, ...) UseMethod("wilcox.test")
 wilcox.test.default <-
 function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
          mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
-         conf.int = FALSE, conf.level = 0.95, ...)
+         conf.int = FALSE, conf.level = 0.95, tol.root = 1e-4, digits.rank = Inf, ...)
 {
     alternative <- match.arg(alternative)
     if(!missing(mu) && ((length(mu) > 1L) || !is.finite(mu)))
@@ -37,8 +37,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     if(!is.numeric(x)) stop("'x' must be numeric")
     if(!is.null(y)) {
         if(!is.numeric(y)) stop("'y' must be numeric")
-        DNAME <- paste(deparse(substitute(x)), "and",
-                       deparse(substitute(y)))
+        DNAME <- paste(deparse1(substitute(x)), "and",
+                       deparse1(substitute(y)))
         if(paired) {
             if(length(x) != length(y))
                 stop("'x' and 'y' must have the same length")
@@ -47,18 +47,17 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             y <- NULL
         }
         else {
-            x <- x[is.finite(x)]
-            y <- y[is.finite(y)]
+            y <- y[!is.na(y)]
         }
     } else {
-        DNAME <- deparse(substitute(x))
+        DNAME <- deparse1(substitute(x))
         if(paired)
             stop("'y' is missing for paired test")
-        x <- x[is.finite(x)]
     }
+    x <- x[!is.na(x)]
 
     if(length(x) < 1L)
-        stop("not enough (finite) 'x' observations")
+        stop("not enough (non-missing) 'x' observations")
     CORRECTION <- 0
     if(is.null(y)) {
         METHOD <- "Wilcoxon signed rank test"
@@ -69,11 +68,12 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         n <- as.double(length(x))
         if(is.null(exact))
             exact <- (n < 50)
-        r <- rank(abs(x))
+        r <- rank(abs(if(is.finite(digits.rank)) signif(x, digits.rank) else x))
         STATISTIC <- setNames(sum(r[x > 0]), "V")
         TIES <- length(r) != length(unique(r))
 
         if(exact && !TIES && !ZEROES) {
+	    METHOD <- sub("test", "exact test", METHOD, fixed=TRUE)
             PVAL <-
                 switch(alternative,
                        "two.sided" = {
@@ -159,7 +159,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 			xd <- x - d
 			xd <- xd[xd != 0]
 			nx <- length(xd)
-			dr <- rank(abs(xd))
+                        dr <- rank(abs(if(is.finite(digits.rank)) signif(xd, digits.rank) else xd))
 			zd <- sum(dr[xd > 0]) - nx * (nx + 1)/4
 			NTIES.CI <- table(dr)
 			SIGMA.CI <- sqrt(nx * (nx + 1) * (2 * nx + 1) / 24
@@ -199,7 +199,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                     root <- function(zq) {
                         uniroot(wdiff, lower = mumin, upper = mumax,
                                 f.lower = Wmumin - zq, f.upper = Wmumax - zq,
-                                tol = 1e-4, zq = zq)$root
+                                tol = tol.root, zq = zq)$root
                     }
 
 		    cint <- switch(alternative, "two.sided" = {
@@ -253,7 +253,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 		    correct <- FALSE # for W(): no continuity correction for estimate
 		    ESTIMATE <- c("(pseudo)median" =
 				  uniroot(W, lower = mumin, upper = mumax,
-					  tol = 1e-4)$root)
+					  tol = tol.root)$root)
                 } # regular (Wmumin, Wmumax)
             } # end{conf.int}
             if(exact && TIES) {
@@ -272,7 +272,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         if(length(y) < 1L)
             stop("not enough 'y' observations")
         METHOD <- "Wilcoxon rank sum test"
-        r <- rank(c(x - mu, y))
+        r <- c(x - mu, y)
+        r <- rank(if(is.finite(digits.rank)) signif(r, digits.rank) else r)
         n.x <- as.double(length(x))
         n.y <- as.double(length(y))
         if(is.null(exact))
@@ -280,6 +281,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         STATISTIC <- c("W" = sum(r[seq_along(x)]) - n.x * (n.x + 1) / 2)
         TIES <- (length(r) != length(unique(r)))
         if(exact && !TIES) {
+	    METHOD <- sub("test", "exact test", METHOD, fixed=TRUE)
             PVAL <-
                 switch(alternative,
                        "two.sided" = {
@@ -360,7 +362,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 mumin <- min(x) - max(y)
                 mumax <- max(x) - min(y)
                 W <- function(d) { ## also fn (x, y, n.x, n.y, correct, alternative)
-                    dr <- rank(c(x - d, y))
+                    dr <- c(x - d, y)
+                    dr <- rank(if(is.finite(digits.rank)) signif(dr, digits.rank) else dr)
                     NTIES.CI <- table(dr)
                     dz <- sum(dr[seq_along(x)]) - n.x * (n.x + 1) / 2 - n.x * n.y / 2
 		    CORRECTION.CI <-
@@ -392,7 +395,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                     if(f.upper >= 0) return(mumax)
                     uniroot(wdiff, lower=mumin, upper=mumax,
                             f.lower = f.lower, f.upper = f.upper,
-                            tol = 1e-4, zq = zq)$root
+                            tol = tol.root, zq = zq)$root
                 }
                 cint <- switch(alternative,
                                "two.sided" = {
@@ -412,8 +415,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 		correct <- FALSE # for W(): no continuity correction for estimate
 		ESTIMATE <- c("difference in location" =
 			      uniroot(W, lower=mumin, upper=mumax,
-				      tol = 1e-4)$root)
-            }
+				      tol = tol.root)$root)
+            } ## {conf.int}
 
             if(exact && TIES) {
                 warning("cannot compute exact p-value with ties")
@@ -445,7 +448,7 @@ function(formula, data, subset, na.action, ...)
     if(missing(formula) || (length(formula) != 3L))
         stop("'formula' missing or incorrect")
     oneSampleOrPaired <- FALSE
-    if (length(attr(terms(formula[-2L]), "term.labels")) != 1L) 
+    if (length(attr(terms(formula[-2L]), "term.labels")) != 1L)
         if (formula[[3]] == 1L)
             oneSampleOrPaired <- TRUE
         else

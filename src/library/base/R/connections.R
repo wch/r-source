@@ -141,7 +141,7 @@ textConnection <- function(object, open = "r", local = FALSE,
     env <- if (local) parent.frame() else .GlobalEnv
     type <- match(match.arg(encoding), c("", "bytes", "UTF-8"))
     nm <- deparse(substitute(object))
-    if(length(nm) != 1)
+    if(length(nm) != 1) # or use deparse1() above ?
         stop("argument 'object' must deparse to a single character string")
     .Internal(textConnection(nm, object, open, env, type))
 }
@@ -244,6 +244,8 @@ closeAllConnections <- function()
 readBin <- function(con, what, n = 1L, size = NA_integer_, signed = TRUE,
                     endian = .Platform$endian)
 {
+    if (!endian %in% c("big", "little", "swap"))
+        stop("invalid 'endian' argument")
     if(is.character(con)) {
         con <- file(con, "rb")
         on.exit(close(con))
@@ -261,6 +263,8 @@ writeBin <-
     function(object, con, size = NA_integer_, endian = .Platform$endian,
              useBytes = FALSE)
 {
+    if (!endian %in% c("big", "little", "swap"))
+        stop("invalid 'endian' argument")
     swap <- endian != .Platform$endian
     if(!is.vector(object) || mode(object) == "list")
         stop("can only write vector objects")

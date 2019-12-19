@@ -18,7 +18,7 @@
 
 ## This is called during package installation via makeLatex()
 ## so we can't use the symbol C_parseLatex here
-parseLatex <- function(text, filename = deparse(substitute(text)),
+parseLatex <- function(text, filename = deparse1(substitute(text)),
                      verbose = FALSE, verbatim = c("verbatim", "verbatim*",
                      "Sinput", "Soutput") )
 {

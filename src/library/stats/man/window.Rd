@@ -4,18 +4,18 @@
 % Distributed under GPL 2 or later
 
 \name{window}
+\title{Time (Series) Windows}
 \alias{window}
 \alias{window.default}
 \alias{window.ts}
 \alias{window<-}
 \alias{window<-.ts}
-\title{Time Windows}
 
 \usage{
 window(x, \dots)
 \method{window}{ts}(x, \dots)
 \method{window}{default}(x, start = NULL, end = NULL,
-      frequency = NULL, deltat = NULL, extend = FALSE, \dots)
+      frequency = NULL, deltat = NULL, extend = FALSE, ts.eps = getOption("ts.eps"), \dots)
 
 window(x, \dots) <- value
 \method{window}{ts}(x, start, end, frequency, deltat, \dots) <- value
@@ -29,6 +29,9 @@ window(x, \dots) <- value
   \item{extend}{logical.  If true, the \code{start} and \code{end} values
     are allowed to extend the series.  If false, attempts to extend the
     series give a warning and are ignored.}
+  \item{ts.eps}{time series comparison tolerance.  Frequencies are
+    considered equal if their absolute difference is less than
+    \code{ts.eps}.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{value}{replacement values.}
 }

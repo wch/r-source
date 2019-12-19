@@ -29,7 +29,7 @@ acf <-
         m$type <- NULL
         return(eval(m, parent.frame()))
     }
-    series <- deparse(substitute(x))
+    series <- deparse1(substitute(x))
     x <- na.action(as.ts(x))
     x.freq <- frequency(x)
     x <- as.matrix(x)
@@ -64,7 +64,7 @@ pacf <- function(x, lag.max, plot, na.action, ...) UseMethod("pacf")
 pacf.default <- function(x, lag.max = NULL, plot = TRUE,
                          na.action = na.fail, ...)
 {
-    series <- deparse(substitute(x))
+    series <- deparse1(substitute(x))
     x <- drop(na.action(as.ts(x)))  # use univariate code for a single series
     if(!is.numeric(x)) stop("'x' must be numeric")
     x.freq <- frequency(x)

@@ -467,8 +467,8 @@ scatter.smooth <-
 	     ylim = range(y, pred$y, na.rm = TRUE),
              evaluation = 50, ..., lpars = list())
 {
-    xlabel <- if (!missing(x)) deparse(substitute(x))
-    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xlabel <- if (!missing(x)) deparse1(substitute(x))
+    ylabel <- if (!missing(y)) deparse1(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel)
     x <- xy$x
     y <- xy$y

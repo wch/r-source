@@ -20,7 +20,7 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"), fitdf=0)
 {
     if (NCOL(x) > 1)
         stop ("x is not a vector or univariate time series")
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     type <- match.arg(type)
     cor <- acf (x, lag.max = lag, plot = FALSE, na.action = na.pass)
     n <- sum(!is.na(x))
@@ -51,7 +51,7 @@ PP.test <- function (x, lshort = TRUE)
 {
     if (NCOL(x) > 1)
         stop ("x is not a vector or univariate time series")
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     z <- embed (x, 2)
     yt <- z[,1]
     yt1 <- z[,2]

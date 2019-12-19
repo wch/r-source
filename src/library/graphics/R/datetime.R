@@ -83,7 +83,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
+hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                         plot = TRUE, freq = FALSE,
                         start.on.monday = TRUE, format, right = TRUE)
 {
@@ -249,7 +249,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
 }
 
 
-hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
+hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                       plot = TRUE, freq = FALSE,
                       start.on.monday = TRUE, format, right = TRUE)
 {

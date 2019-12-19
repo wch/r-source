@@ -32,7 +32,7 @@ function(x, y, ratio = 1,
           (conf.level > 0) && (conf.level < 1)))
         stop("'conf.level' must be a single number between 0 and 1")
 
-    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
 
     if (inherits(x, "lm") && inherits(y, "lm")) {
         DF.x <- x$df.residual

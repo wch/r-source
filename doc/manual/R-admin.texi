@@ -1849,8 +1849,8 @@ and later (El Capitan, Sierra, High Sierra, Mojave, Catalina, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
-unsigned: to install those Control/right/two-finger click, select
-@samp{Open with} and @samp{Installer}.)
+unsigned/not notarized: to install those Control/right/two-finger click,
+select @samp{Open With} and @samp{Installer}.)
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -3596,9 +3596,9 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
-(versions 4.0.[5-10] have been tested) respectively.
+(versions 4.0.[5-10] and 4.1.0 have been tested) respectively.
 @command{pkg-config} is used if available and so needs the appropriate
-@file{.pc} file (which requires @code{libtiff} version 4.0.x and is not
+@file{.pc} file (which requires @code{libtiff} version 4.x and is not
 available on all platforms for @code{jpeg} before version 9c).  They
 also need support for either @code{X11} or @code{cairo} (see above).
 Should support for these devices @strong{not} be required or broken
@@ -5266,10 +5266,15 @@ install Apple packages built after 2019-06-01 which have not been
 `notarized'@footnote{See
 @uref{https://developer.apple.com//@/documentation/@/xcode/@/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
-contained in tarballs (for example, for @command{pandoc}).
+contained in tarballs/zipfiles (for example, for @command{pandoc}).
 
 There are workarounds, including in some cases not installing the latest
-version.
+version.  Usually one can use @samp{Open With}
+(Control/right/two-finger-click in Finder), then select @samp{Installer}
+and @samp{Open} if you get a further warning message.
+
+This applies also to some @R{} distributions, including @R{} 3.6.2 and
+`nightly builds' from @uref{https://mac.r-project.org/}.
 
 @node Recommended C/C++ compilers, Other libraries, Prerequisites, macOS
 @subsection Recommended C/C++ compilers
@@ -5380,11 +5385,13 @@ The @TeX{} implementation used by the developers is MacTeX
 need to add some packages, e.g.@: for the 2019 version we needed to
 add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
 inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
-@pkg{inconsolata} and @pkg{texinfo} which brought this to about 310MB.
-@samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
-provides a graphical means to manage @TeX{} packages.  This is
-documented to require Sierra or later: for earlier versions see the
-instructions on the MacTeX front page.
+@pkg{inconsolata} and @pkg{texinfo} which brought this to about
+310MB. (After updates in Dec 2019 it was also necessary to add
+@pkg{letltxmacro} to make @file{NEWS.pdf}.)  @samp{TeX Live Utility}
+(available @emph{via} the MacTeX front page) provides a graphical means
+to manage @TeX{} packages.  This is documented to require Sierra or
+later: for earlier versions see the instructions on the MacTeX front
+page.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
@@ -5452,7 +5459,7 @@ upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0}, @code{9}, @code{10} or @code{11} you need
+not start with @code{1.8.0}, @code{11} or higher you need
 to update your Java.} this should prompt you to install it.  You can
 also install directly a recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
@@ -5848,7 +5855,7 @@ The 32-bit version never worked well enough to pass @R{}'s @command{make
 check}, and residual support from earlier experiments was removed in
 @R{} 3.3.0.
 
-The 64-bit version was never unsupported.
+The 64-bit version was never supported.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms

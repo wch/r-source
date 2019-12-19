@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/spineplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -82,8 +82,8 @@ function(x, y = NULL,
 	if(!is.null(ylevels))
           y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
         x.categorical <- is.factor(x)
-        if(is.null(xlab)) xlab <- deparse(substitute(x))
-        if(is.null(ylab)) ylab <- deparse(substitute(y))
+        if(is.null(xlab)) xlab <- deparse1(substitute(x))
+        if(is.null(ylab)) ylab <- deparse1(substitute(y))
         if(x.categorical) {
             tab <- table(x, y)
             xnam <- levels(x)

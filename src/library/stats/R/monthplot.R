@@ -28,7 +28,7 @@ monthplot.stl <-
 
 monthplot.ts <-
     function (x, labels = NULL, times = time(x), phase = cycle(x),
-              ylab = deparse(substitute(x)), ...)
+              ylab = deparse1(substitute(x)), ...)
 {
     if (is.null(labels) & !missing(phase))
         return(monthplot.default(x, times = times, phase = phase,
@@ -49,7 +49,7 @@ monthplot.ts <-
 
 monthplot.default <-
     function (x, labels = 1L:12L,
-              ylab = deparse(substitute(x)),
+              ylab = deparse1(substitute(x)),
               times = seq_along(x),
               phase = (times - 1L)%%length(labels) + 1L, base = mean,
               axes = TRUE, type = c("l", "h"), box = TRUE, add = FALSE,

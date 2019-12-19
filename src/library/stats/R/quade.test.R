@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quade.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ quade.test <- function(y, ...) UseMethod("quade.test")
 quade.test.default <-
 function(y, groups, blocks, ...)
 {
-    DNAME <- deparse(substitute(y))
+    DNAME <- deparse1(substitute(y))
     if(is.matrix(y)) {
         d <- dim(y)
         groups <- factor(.col(d))
@@ -33,8 +33,8 @@ function(y, groups, blocks, ...)
         if(any(diff(c(length(y), length(groups), length(blocks))) != 0L))
             stop("'y', 'groups' and 'blocks' must have the same length")
         DNAME <- paste0(DNAME, ", ",
-                        deparse(substitute(groups)), " and ",
-                        deparse(substitute(blocks)))
+                        deparse1(substitute(groups)), " and ",
+                        deparse1(substitute(blocks)))
         if(any(table(groups, blocks) != 1))
             stop("not an unreplicated complete block design")
         ord <- order(groups)

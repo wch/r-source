@@ -29,7 +29,7 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   \item{intercept}{should a separate intercept term be fitted?}
 
   \item{series}{names for the series.  Defaults to
-    \code{deparse(substitute(x))}.}
+    \code{deparse1(substitute(x))}.}
 
   \item{\dots}{further arguments to be passed to or from methods.}
 }

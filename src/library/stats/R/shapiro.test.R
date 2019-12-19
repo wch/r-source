@@ -18,7 +18,7 @@
 
 shapiro.test <- function(x)
 {
-    DNAME <- deparse(substitute(x))
+    DNAME <- deparse1(substitute(x))
     stopifnot(is.numeric(x))
     x <- sort(x[complete.cases(x)])
     n <- length(x)

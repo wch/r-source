@@ -1,7 +1,7 @@
 #  File src/library/stats/R/contr.poly.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -174,7 +174,7 @@ polym <- function (..., degree = 1, coefs = NULL, raw = FALSE)
     } else { ## use 'coefs' for prediction
 	newdata <- as.data.frame(dots) # new data
 	if (nd != ncol(newdata))
-	    stop("wrong number of columns in new data: ", deparse(substitute(...)))
+	    stop("wrong number of columns in new data: ", deparse1(substitute(...)))
 	res <- 1
 	for (i in seq_len(nd))
             res <- res*cbind(1, poly(newdata[[i]], degree=degree,

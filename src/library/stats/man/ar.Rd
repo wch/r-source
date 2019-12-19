@@ -1,6 +1,6 @@
 % File src/library/stats/man/ar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ar}
@@ -68,7 +68,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   \item{demean}{should a mean be estimated during fitting?}
 
   \item{series}{names for the series.  Defaults to
-    \code{deparse(substitute(x))}.}
+    \code{deparse1(substitute(x))}.}
 
   \item{var.method}{the method to estimate the innovations variance
     (see \sQuote{Details}).}

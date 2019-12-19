@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/mcmapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,8 @@ mcmapply <-
         save <- mcaffinity()
         mcaffinity(affinity.list[[1]])
       }
-      answer <- .mapply(FUN, dots, MoreArgs) 
+      answer <- .mapply(FUN, dots, MoreArgs)
+        # .mapply will not catch errors thrown by FUN
       if(!is.null(affinity.list)) mcaffinity(save)
       answer
     } else {    
@@ -51,6 +52,13 @@ mcmapply <-
                            mc.set.seed = mc.set.seed, mc.silent = mc.silent,
                            mc.cores = mc.cores, mc.cleanup = mc.cleanup, 
                            affinity.list = affinity.list)
+        answer <- lapply(answer, function(x) {
+            if (inherits(x, "try-error")) {
+                SIMPLIFY <<- FALSE # protect attributes from simplify2array()
+                list(x) # protect attributes from c()
+            } else
+                x
+        })
         do.call(c, answer)
     }
     if (USE.NAMES && length(dots)) {

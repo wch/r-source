@@ -65,8 +65,8 @@ function(x, y,
          yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...)
 {
     ## graphical parameters
-    if(is.null(xlab)) xlab <- deparse(substitute(x))
-    if(is.null(ylab)) ylab <- deparse(substitute(y))
+    if(is.null(xlab)) xlab <- deparse1(substitute(x))
+    if(is.null(ylab)) ylab <- deparse1(substitute(y))
     if(is.null(col)) col <- gray.colors(length(levels(y)))
     col <- rep_len(col, length.out = length(levels(y)))
     if(is.null(yaxlabels)) yaxlabels <- levels(y)
