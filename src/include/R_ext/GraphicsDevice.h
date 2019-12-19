@@ -688,9 +688,15 @@ struct _DevDesc {
 #endif
 
 #if R_USE_PROTOTYPES
-    int (*setClipPath)(SEXP path, int index, pDevDesc dd);
+    SEXP (*setClipPath)(SEXP path, SEXP ref, pDevDesc dd);
 #else
-    int (*setClipPath)();
+    SEXP (*setClipPath)();
+#endif
+
+#if R_USE_PROTOTYPES
+    void (*releaseClipPath)(SEXP ref, pDevDesc dd);
+#else
+    void (*releaseClipPath)();
 #endif
 
     /* Area for future expansion.

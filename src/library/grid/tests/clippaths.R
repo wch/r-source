@@ -141,6 +141,51 @@ squared circle
 upViewport
 grey circle")
 
+## A clipping path that itself makes use of a clipping path !?
+grid.newpage()
+clipPath <- rectGrob(vp=viewport(width=.5, height=.5, clip=circleGrob()))
+pushViewport(viewport(clip=clipPath))
+grid.rect(gp=gpar(fill="grey"))
+grid.text("clip path includes clip path
+(clip path is circle)
+push clipping path
+rect
+small grey circle")
+
+## A clipping path that itself makes use of a rectangular clipping !?
+grid.newpage()
+clipPath <- circleGrob(r=.6,
+                       gp=gpar(fill="grey"),
+                       vp=viewport(width=.5, height=.5, clip=TRUE))
+pushViewport(viewport(clip=clipPath))
+grid.rect(gp=gpar(fill="grey"))
+grid.text("clip path includes clip rect
+(clip path is squared circle)
+push clipping path
+rect
+squared circle")
+
+## Clipping path makes the clipping region BIGGER
+grid.newpage()
+pushViewport(viewport(width=.5, height=.5, clip=TRUE))
+pushViewport(viewport(clip=circleGrob(r=.6)))
+grid.rect(width=1.2, height=1.2, gp=gpar(fill="grey"))
+grid.text("push clip rect (small)
+push clip path (bigger)
+rect (big)
+grey circle")
+
+## Clipping path makes the clipping region BIGGER
+## (even when clipping path contains viewport)
+grid.newpage()
+pushViewport(viewport(width=.5, height=.5, clip=TRUE))
+pushViewport(viewport(clip=circleGrob(r=.6, vp=viewport())))
+grid.rect(width=1.2, height=1.2, gp=gpar(fill="grey"))
+grid.text("push clip rect (small)
+push clip path with viewport (bigger)
+rect (big)
+grey circle")
+
 
 ######################################
 ## Replaying the graphics display list
@@ -196,10 +241,15 @@ grid.draw")
 
 ######################
 ## Check resource exhaustion
+options(warn=2)
+grid.newpage()
 for (i in 1:21) {
-    grid.newpage()
-    try(pushViewport(viewport(clip=circleGrob())))
-    grid.rect(gp=gpar(fill="grey"))
+    result <- try(pushViewport(viewport(clip=circleGrob())))
+    if (!inherits(result, "try-error")) {
+        grid.rect(gp=gpar(fill="grey"))
+        grid.text(paste0("viewport ", i, " with clip path
+runs out after 20"))
+    }
 }
 
 
@@ -218,31 +268,10 @@ for (i in 1:21) {
 ## A clipping path on a gTree
 ## (defined relative to viewport that gTree is in)
 
+## Clipping path on viewport in vp of grob
+
+## Clipping path on viewport in vp of gTree
+
 ## A clipping path that makes use of makeContent() method
-
-## A clipping path that itself makes use of a clipping path !?
-grid.newpage()
-clipPath <- rectGrob(width=.1, height=.1,
-                     vp=viewport(width=.5, height=.5, clip=circleGrob()))
-pushViewport(viewport(clip=clipPath))
-grid.rect(gp=gpar(fill="grey"))
-grid.text("clip path includes clip path
-(clip path is circle)
-push clipping path
-rect
-small grey circle")
-
-## A clipping path that itself makes use of a rectangular clipping !?
-grid.newpage()
-clipPath <- circleGrob(r=.6,
-                       gp=gpar(fill="grey"),
-                       vp=viewport(width=.5, height=.5, clip=TRUE))
-pushViewport(viewport(clip=clipPath))
-grid.rect(gp=gpar(fill="grey"))
-grid.text("clip path includes clip rect
-(clip path is squared circle)
-push clipping path
-rect
-squared circle")
 
 

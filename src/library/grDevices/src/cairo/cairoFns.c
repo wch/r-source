@@ -306,10 +306,19 @@ static void CairoPatternFill(int index, pX11Desc xd)
 static void CairoInitClipPaths(pX11Desc xd)
 {
     int i;
+    /* Create empty path */
+    cairo_t *cc = xd->cc;
+    cairo_new_path(cc);
+    xd->emptypath = cairo_copy_path(cc);
+    /* Zero clip paths */
     xd->numClipPaths = 20;
     xd->clippaths = malloc(sizeof(cairo_path_t*) * xd->numClipPaths);
     for (i = 0; i < xd->numClipPaths; i++) {
         xd->clippaths[i] = NULL;
+    }
+    xd->clippathStack = malloc(sizeof(int) * xd->numClipPaths);
+    for (i = 0; i < xd->numClipPaths; i++) {
+        xd->clippathStack[i] = -1;
     }
 }
 
@@ -334,6 +343,9 @@ static void CairoDestroyClipPaths(pX11Desc xd)
         }
     }    
     free(xd->clippaths);
+    free(xd->clippathStack);
+    /* Free empty path */
+    cairo_path_destroy(xd->emptypath);
 }
 
 static int CairoNewClipPathIndex(pX11Desc xd)
@@ -348,23 +360,28 @@ static int CairoNewClipPathIndex(pX11Desc xd)
     return -1;
 }
 
-static cairo_path_t* CairoCreateClipPath(SEXP clipPath, pX11Desc xd)
+static cairo_path_t* CairoCreateClipPath(SEXP clipPath, int index, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
     SEXP R_fcall;
     cairo_path_t *cairo_clippath;
     /* Save the current path */
     cairo_path_t *cairo_saved_path = cairo_copy_path(cc);
+    /* Record clip path index on clippathStack */
+    xd->clippathStack[xd->appending] = index;
     /* Increment the "appending" count */
     xd->appending++;
     /* Clear the current path */
     cairo_new_path(cc);
+    /* Clear the clip region (unless we are already within a clipping path) */
+    if (xd->appending == 1) {
+        cairo_reset_clip(cc);
+    }
     /* Play the clipPath function to build the clipping path */
     R_fcall = PROTECT(lang1(clipPath));
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
     /* Set the clipping region from the path */
-    cairo_reset_clip(cc);
     cairo_clip_preserve(cc);
     /* Save the clipping path (for reuse) */
     cairo_clippath = cairo_copy_path(cc);
@@ -374,11 +391,14 @@ static cairo_path_t* CairoCreateClipPath(SEXP clipPath, pX11Desc xd)
     xd->appending--;
     /* Restore the saved path */
     cairo_append_path(cc, cairo_saved_path);
+    /* Destroy the saved path */
+    cairo_path_destroy(cairo_saved_path);
     /* Return the clipping path */
     return cairo_clippath;
 }
 
-static void CairoReuseClipPath(cairo_path_t *cairo_clippath, pX11Desc xd)
+static void CairoReuseClipPath(cairo_path_t *cairo_clippath, Rboolean reset,
+                               pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
     /* Save the current path */
@@ -388,38 +408,79 @@ static void CairoReuseClipPath(cairo_path_t *cairo_clippath, pX11Desc xd)
     /* Append the clipping path */
     cairo_append_path(cc, cairo_clippath);
     /* Set the clipping region from the path (which clears the path) */
-    cairo_reset_clip(cc);
+    if (reset) {
+        cairo_reset_clip(cc);
+    }
     cairo_clip(cc);
     /* Restore the saved path */
     cairo_append_path(cc, cairo_saved_path);
+    /* Destroy the saved path */
+    cairo_path_destroy(cairo_saved_path);
 }
 
-static int CairoSetClipPath(SEXP path, int index, pX11Desc xd)
+static SEXP CairoSetClipPath(SEXP path, SEXP ref, pX11Desc xd)
 {
     cairo_path_t *cairo_clippath;
+    SEXP newref = R_NilValue;
+    int index;
 
-    if (index < 0) {
-        /* Must generate new index */
+    if (isNull(ref)) {
+        /* Must generate new ref */
+        if (!xd->appending) {
+            /* Init clippathStack */
+            int i;
+            for (i = 0; i < xd->numClipPaths; i++) {
+                xd->clippathStack[i] = -1;
+            }
+        }
         index = CairoNewClipPathIndex(xd);
         if (index < 0) {
             /* Unless we have run out of space */
         } else {
-            cairo_clippath = CairoCreateClipPath(path, xd);
+            /* 
+             * Reserve this index (in case another clipping path is
+             * created during the creation of this clipping path)
+             */
+            xd->clippaths[index] = xd->emptypath;
+            /* Create this clipping path */
+            cairo_clippath = CairoCreateClipPath(path, index, xd);
             xd->clippaths[index] = cairo_clippath;
+        }
+        if (!xd->appending) {
+            /* Build new ref from clippathStack */
+            int i, stackSize = 0;
+            while (stackSize < xd->numClipPaths && 
+                   xd->clippathStack[stackSize] >= 0) {
+                stackSize++;
+            }
+            if (stackSize > 0) {
+                newref = PROTECT(allocVector(INTSXP, stackSize));
+                for (i = 0; i < stackSize; i++) {
+                    INTEGER(newref)[i] = xd->clippathStack[i];
+                }
+                UNPROTECT(1);
+            }
         }
     } else {
         /* Reuse indexed clip path */
+        int index = INTEGER(ref)[0];
         if (xd->clippaths[index]) {
-            CairoReuseClipPath(xd->clippaths[index], xd);
+            int i, numIndexes = LENGTH(ref);
+            /* Apply clip paths (in reverse order) */
+            for (i = 0; i < numIndexes; i++) {
+                CairoReuseClipPath(xd->clippaths[INTEGER(ref)[numIndexes-i-1]], 
+                                   i == 0, xd);
+            }
         } else {
             /* BUT if index clip path does not exist, create a new one */
-            cairo_clippath = CairoCreateClipPath(path, xd);
+            xd->clippaths[index] = xd->emptypath;
+            cairo_clippath = CairoCreateClipPath(path, index, xd);
             xd->clippaths[index] = cairo_clippath;
             warning(_("Attempt to reuse non-existent clipping path"));
         }
     }
 
-    return index;
+    return newref;
 }
 
 static void CairoReleaseClipPath(int index, pX11Desc xd)
@@ -475,10 +536,45 @@ static void Cairo_Clip(double x0, double x1, double y0, double y1,
     if (x1 < x0) { double h = x1; x1 = x0; x0 = h; };
     if (y1 < y0) { double h = y1; y1 = y0; y0 = h; };
 
-    cairo_reset_clip(xd->cc);
-    cairo_new_path(xd->cc);
-    cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
-    cairo_clip(xd->cc);
+    /* May be called during the creation of a clipping path */
+    if (xd->appending) {
+        /* Generate clip path and record it */
+        int index = CairoNewClipPathIndex(xd);
+        if (index < 0) {
+            /* Unless we have run out of space */
+        } else {
+            cairo_t *cc = xd->cc;
+            cairo_path_t *cairo_clippath;
+            /* Save the current path */
+            cairo_path_t *cairo_saved_path = cairo_copy_path(cc);
+            /* Record clip path index on clippathStack */
+            xd->clippathStack[xd->appending] = index;
+            /* Increment the "appending" count */
+            xd->appending++;
+            /* Clear the current path */
+            cairo_new_path(cc);
+            /* Create new path from clip rect */
+            cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
+            /* Set the clipping region from the path */
+            cairo_clip_preserve(cc);
+            /* Save the clipping path (for reuse) */
+            cairo_clippath = cairo_copy_path(cc);
+            xd->clippaths[index] = cairo_clippath;
+            /* Clear the path again */
+            cairo_new_path(cc);
+            /* Decrement the "appending" count */
+            xd->appending--;
+            /* Restore the saved path */
+            cairo_append_path(cc, cairo_saved_path);
+            /* Destroy the saved path */
+            cairo_path_destroy(cairo_saved_path);
+        }
+    } else {
+        cairo_reset_clip(xd->cc);
+        cairo_new_path(xd->cc);
+        cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
+        cairo_clip(xd->cc);
+    }
 }
 
 
@@ -1299,9 +1395,25 @@ static void Cairo_ReleasePattern(int index, pDevDesc dd)
     }
 }
 
-static int Cairo_SetClipPath(SEXP clipPath, int index, pDevDesc dd) 
+static SEXP Cairo_SetClipPath(SEXP path, SEXP ref, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    return CairoSetClipPath(clipPath, index, xd);
+    return CairoSetClipPath(path, ref, xd);
+}
+
+static void Cairo_ReleaseClipPath(SEXP ref, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    /* Negative index means release all patterns */
+    if (LENGTH(ref)) {
+        if (INTEGER(ref)[0] < 0) {
+            CairoCleanClipPaths(xd);
+        } else {
+            int i;
+            for (i = 0; i < LENGTH(ref); i++) {
+                CairoReleaseClipPath(INTEGER(ref)[i], xd);
+            }
+        }
+    }
 }
 

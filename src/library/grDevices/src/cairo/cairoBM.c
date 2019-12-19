@@ -513,6 +513,7 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->setPattern = Cairo_SetPattern;
     dd->releasePattern = Cairo_ReleasePattern;
     dd->setClipPath = Cairo_SetClipPath;
+    dd->releaseClipPath = Cairo_ReleaseClipPath;
 
     dd->left = 0;
     dd->right = width;

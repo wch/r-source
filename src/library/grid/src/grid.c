@@ -190,20 +190,34 @@ SEXP doSetViewport(SEXP vp,
      * Establish the clipping region for this viewport
      */
     if (isClipPath(viewportClipSXP(vp))) {
-        /*
-         * Set clipping path AFTER doSetViewport() so that this
-         * viewport is the current viewport for resolving clip path
-         */
         SEXP currentClip, parentClip;
         /*
-         * Record clip rect from parent, just so there are numbers there
+         * Set clipping path AFTER doSetViewport() so that this
+         * viewport is the current viewport for resolving clip path.
+         * Set "placeholder" here to handle nested clipping paths.
+         */
+        if (pushing) {
+            SEXP resolvingClip = PROTECT(allocVector(VECSXP, 1));
+            SEXP class = PROTECT(allocVector(STRSXP, 1));
+            SET_VECTOR_ELT(resolvingClip, 0, R_NilValue);
+            SET_STRING_ELT(class, 0, mkChar("GridResolvingClipPath"));
+            classgets(resolvingClip, class);
+            SET_VECTOR_ELT(vp, PVP_CLIPPATH, resolvingClip);
+            UNPROTECT(2);
+        }
+        /*
+         * Set clip rect to be device (actually larger), i.e., no clipping 
+         * because if viewports are nested within the clipping path
+         * this clip rect will become part of the clipping path
+         * when we upViewport() from those nested viewports
+         * during the resolution of the clipping path
          */
         PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
         PROTECT(currentClip = allocVector(REALSXP, 4));
-        REAL(currentClip)[0] = REAL(parentClip)[0];
-        REAL(currentClip)[1] = REAL(parentClip)[1];
-        REAL(currentClip)[2] = REAL(parentClip)[2];
-        REAL(currentClip)[3] = REAL(parentClip)[3];
+        REAL(currentClip)[0] = toDeviceX(-0.5*devWidthCM/2.54, GE_INCHES, dd);
+        REAL(currentClip)[1] = toDeviceY(-0.5*devHeightCM/2.54, GE_INCHES, dd);
+        REAL(currentClip)[2] = toDeviceX(1.5*devWidthCM/2.54, GE_INCHES, dd);
+        REAL(currentClip)[3] = toDeviceY(1.5*devHeightCM/2.54, GE_INCHES, dd);
         SET_VECTOR_ELT(vp, PVP_CLIPRECT, currentClip);
         UNPROTECT(2);
     } else {
@@ -1134,6 +1148,13 @@ SEXP L_newpage()
     
     /* Clear all device patterns */
     dd->dev->releasePattern(-1, dd->dev);
+    /* Clear all clip paths */
+    {
+        SEXP ref = PROTECT(allocVector(INTSXP, 1));
+        INTEGER(ref)[0] = -1;
+        dd->dev->releaseClipPath(ref, dd->dev);
+        UNPROTECT(1);
+    }
 
     return R_NilValue;
 }

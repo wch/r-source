@@ -2875,6 +2875,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
         dd->setPattern = Cairo_SetPattern;
         dd->releasePattern = Cairo_ReleasePattern;
         dd->setClipPath = Cairo_SetClipPath;
+        dd->releaseClipPath = Cairo_ReleaseClipPath;
 
     } else
 #endif

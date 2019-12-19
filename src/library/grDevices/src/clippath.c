@@ -33,11 +33,7 @@ SEXP setClipPath(SEXP args)
 {
     pGEDevDesc dd = GEcurrentDevice();
     SEXP path = CADR(args);
-    int index = INTEGER(CADDR(args))[0];
-    index = dd->dev->setClipPath(path, index, dd->dev);
-    SEXP result;
-    result = PROTECT(allocVector(INTSXP, 1));
-    INTEGER(result)[0] = index;
-    UNPROTECT(1);
-    return result;
+    SEXP ref = CADDR(args);
+    ref = dd->dev->setClipPath(path, ref, dd->dev);
+    return ref;
 }
