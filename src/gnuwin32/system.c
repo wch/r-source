@@ -967,10 +967,10 @@ int cmdlineoptions(int ac, char **av)
 	       it resolved to documents folder in systemprofile. This has do be done
 	       before process_user_Renviron(), because user .Renviron may be read from
 	       the current directory, which is expected to be userdocs. */
-	    TCHAR mydocs[MAX_PATH + 1];
-	    if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE,
-					  NULL, 0, mydocs))) 
-		SetCurrentDirectory(mydocs);
+	    wchar_t mydocs[MAX_PATH + 1];
+	    if (SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE,
+		                           NULL, 0, mydocs))) 
+		SetCurrentDirectoryW(mydocs);
 	}
 
     Rp->CallBack = R_DoNothing;
