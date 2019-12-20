@@ -5488,7 +5488,20 @@ definitions cannot be merged and the linker will give an error if the
 same variable is defined in more than one object file.  To avoid this,
 all but one of the C source files should declare the variable
 @code{extern} --- which means that any such variables included in header
-files need to be declared @code{extern}.
+files need to be declared @code{extern}.  A commonly used idiom
+(including by @R{} itself) is to define all global variables as
+@code{extern} in a header, say @file{globals.h} (and nowhere else), and
+then in one (and one only) source file use
+@example
+#define extern
+# include "globals.h"
+#undef extern
+@end example
+
+A cleaner approach is not to have global variables at all, but to place
+in a single file common variables (declared @code{static}) followed by
+all the functions which make use of them: this may result in more
+efficient code.
 
 The `modern' behaviour can be seen@footnote{In principle this could
 depend on the OS, but has been checked on Linux and macOS.} by using
