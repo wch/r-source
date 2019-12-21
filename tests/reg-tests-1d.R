@@ -3463,6 +3463,32 @@ stopifnot(identical(w0[sel], w1[sel]), identical(w0[sel], wII[sel]))
 ## Inf-Inf  etc broken in paired case in R <= 3.6.x
 
 
+## round(x, n) "to even" fails in some cases -- PR#17668
+dd <- 0:12
+x55 <- 55 + as.numeric(vapply(dd+1, function(k) paste0(".", strrep("5",k)), ""))
+rnd.x <- vapply(dd+1L, function(k) round(x55[k], dd[k]), 1.1)
+noquote(formatC(cbind(x55, dd, rnd.x), w=1, digits=15))
+stopifnot(exprs = {
+      print (   rnd.x - x55) > 0
+      all.equal(rnd.x - x55, 5 * 10^-(dd+1), tol = 1e-11) # see diff. of 6.8e-13
+})
+## more than half of the above were rounded *down* in R <= 3.6.x
+## This must work, too, the range of 'e' depending on 'd'
+EE <- c(-307, -300, -250, -200,-100,-50, -20, -10, -2:2,
+        10, 20, 50, 100, 200, 250, 290:307)
+for(d in 0:16) { cat("digits 'd' = ", d, ": ")
+    for(e in EE[EE+d <= 308]) {
+        f <- 10^e
+        cat(".")
+        stopifnot(all.equal(tolerance = if(d < 14) 1e-15
+                                        else if(d == 14) 1e-14 else 1e-13,
+                            round(pi/f, e + d) * f,
+                            round(pi, d)))
+    };cat("\n")
+}
+## (2nd part: continued working)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

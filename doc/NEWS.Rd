@@ -377,6 +377,10 @@
       argument which should fix behaviour during daylight savings
       changeover days, fixing \PR{16764}, thanks to proposals and analysis
       by Johannes Ranke and Kirill Müller.
+
+      \item \code{round()} correctly rounds \dQuote{to even} in more cases,
+      thanks to increased internal accuracy via code simplification
+      proposed by Adam Wheeler in his report (\PR{17668}).
     }
   }
 }
