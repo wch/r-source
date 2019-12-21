@@ -1056,6 +1056,14 @@ As noted above, packages in @samp{Enhances} @emph{must} be used
 conditionally and hence objects within them should always be accessed
 @emph{via} @code{::}.
 
+On most systems, @command{R CMD check} can be run with only those
+packages declared in @samp{Depends} and @samp{Imports} by setting
+environment variable @env{_R_CHECK_DEPENDS_ONLY_=true}, whereas setting
+@env{_R_CHECK_SUGGESTS_ONLY_=true} also allows suggested packages, but
+not those in @samp{Enhances} nor those not mentioned in the
+@file{DESCRIPTION} file.  It is recommended that a package is checked
+with each of these set, as well as with neither.
+
 @node The INDEX file, Package subdirectories, Package Dependencies, Package structure
 @subsection The @file{INDEX} file
 @cindex INDEX file
@@ -4813,8 +4821,9 @@ redirecting to @samp{https://} URLs.} that vary by build but are not
 documented.
 
 Usage of external commands should always be conditional on a test for
-existence (perhaps using @code{Sys.which}), as well as declared in the
-@samp{SystemRequirements} field.
+presence (perhaps using @code{Sys.which}), as well as declared in the
+@samp{SystemRequirements} field.  A package should pass its checks
+without warnings nor errors without the external command being present.
 
 An external command can be a (possibly optional) requirement for an
 imported or suggested package but needed for examples, tests or
