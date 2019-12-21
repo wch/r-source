@@ -1338,6 +1338,15 @@ file for running the examples when the latter are checked.  Reference
 output should be produced without having the @option{--timings} option
 set (and note that @option{--as-cran} sets it).
 
+If reference output is included for examples, tests or vignettes do make
+sure that it is fully reproducible, as it will be compared verbatim to
+that produced in a check run, unless the @samp{IGNORE_RDIFF} markup is
+used.  Things which trip maintainers up include displayed version
+numbers from loading other packages, printing numerical results to an
+unreproducibly high precision and printing timings.  Another trap is
+small values which are in fact rounding error from zero: consider using
+@code{zapsmall}.
+
 Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
 Perl, or Tcl.  NB: only files (and not directories) under @file{exec} are
@@ -6344,7 +6353,8 @@ Output from code between comments
 @end example
 @noindent
 is ignored when comparing check output to reference output (a
-@file{-Ex.Rout.save} file).
+@file{-Ex.Rout.save} file).  This markup can also be used for scripts
+under @file{tests}.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
