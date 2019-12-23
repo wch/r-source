@@ -3411,6 +3411,7 @@ ttt <- time(timeO) # Error "'end' must be a whole number of cycles after 'start'
 ## -- 2 --
 set.seed(7); tt <- ts(rnorm(60), frequency=12)
 dt2 <- diff(tt, differences = 2) # Error in .cbind.ts(..): not all series have the same phase
+tsD <- ts(1:49, start=as.Date("2019-12-12"), frequency=12)
 stopifnot(exprs = {
     all.equal(timeO, ttt - 1981, tol = 1e-8)
     inherits(ttt, "ts")
@@ -3418,6 +3419,7 @@ stopifnot(exprs = {
     length(dt2) == length(tt) - 2L
     all.equal(6*tsp(dt2), c(7, 35.5, 72))
     all.equal(dt2[1:2], c(3.986498, -0.22047961))
+    all.equal(tsD, structure(1:49, .Tsp = c(18242, 18246, 12), class = "ts"))
 })
 ## failed for a while in R-devel 2019-12-*
 
