@@ -3475,6 +3475,12 @@ stopifnot(exprs = {
       all.equal(rnd.x - x55, 5 * 10^-(dd+1), tol = 1e-11) # see diff. of 6.8e-13
 })
 ## more than half of the above were rounded *down* in R <= 3.6.x
+## Some "wrong tests" cases from CRAN packages (relying on wrong R <= 3.6.x behavior)
+stopifnot(exprs = {
+    all.equal(round(10.7775, digits=3), 10.778, tolerance = 1e-12) # even tol=0, was 10.777
+    all.equal(round(12345 / 1000,   2), 12.34 , tolerance = 1e-12) # even tol=0, was 12.35
+    all.equal(round(9.18665, 4),        9.1866, tolerance = 1e-12) # even tol=0, was  9.1867
+})
 ## This must work, too, the range of 'e' depending on 'd'
 EE <- c(-307, -300, -250, -200,-100,-50, -20, -10, -2:2,
         10, 20, 50, 100, 200, 250, 290:307)
@@ -3489,6 +3495,35 @@ for(d in 0:16) { cat("digits 'd' = ", d, ": ")
     };cat("\n")
 }
 ## (2nd part: continued working)
+i <- c(-2^(33:10), -10:10, 2^(10:33))
+for(digi in c(0:10, 500L, 1000L, 100000L, .Machine$integer.max))
+    stopifnot(identical(i, round(i, digi)),
+              identical(i+round(1/4, digi), round(i+1/4, digi)))
+x <- 7e-304; rx <- round(x, digits=307:322); xx <- rep(x, length(rx))
+print(cbind(rx), digits=16) # not really what ideally round() should do; but "ok"
+          all.equal(rx, xx, tol = 0)# show "average relative difference"
+stopifnot(all.equal(rx, xx, tol = 1e-4)) # tol may change in future
+## the round(i, *) failed, for ~ 2 days, in R-devel
+e <- 5.555555555555555555555e-308
+(e10 <- e * 1e298) # 5.555556e-10 -- much less extreme, for comparison
+d <- 20:1 ;   s.e <- signif(e, d) ; names(s.e) <- paste0("d", d)
+
+## currently, for round,  digits := pmin(308, digits) -- not going further than 310
+d <- 310:305; r.e   <- round (e,   d) ; names(r.e)   <- paste0("d", d)
+d <- d - 298; r.e10 <- round (e10, d) ; names(r.e10) <- paste0("d", d)
+op <- options(digits=18)
+cbind(signif = c(e, s.e)) ##-- this always rounds up (= to even)
+cbind( round = c(e, r.e), round.10 = c(e10, r.e10))
+stopifnot(exprs = {
+    ## the regularity of signif()'s result is amazing:
+    is.integer(d <- 14:1)
+    all.equal(log10(abs(1 - tail(diff(unname(s.e)), -5) * 1e308*10^d / 4)),
+              d - 16, tol = 0.08) # tol: seen 0.0294
+    all.equal(r.e * 1e298, r.e10,
+              check.attributes = FALSE, countEQ=TRUE, tol=1e-14)
+})
+## was not true for digits = 309, 310 in R <= 3.6.x
+options(op)
 
 
 

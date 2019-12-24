@@ -32,38 +32,43 @@
 #include "nmath.h"
 
 double fround(double x, double digits) {
-#define MAX_DIGITS DBL_MAX_10_EXP
-    /* = 308 (IEEE); was till R 0.99: (DBL_DIG - 1) */
-    /* Note that large digits make sense for very small numbers */
+#define MAX_DIGITS (DBL_MAX_10_EXP + DBL_DIG)
+    /* was DBL_MAX_10_EXP (= 308, IEEE) till R 3.6.x; before,
+       was (DBL_DIG - 1)  till R 0.99  */
+    const static int max10e = (int) DBL_MAX_10_EXP; // == 308 ("IEEE")
 
+    /* Note that large digits make sense for very small numbers */
     if (ISNAN(x) || ISNAN(digits))
 	return x + digits;
     if(!R_FINITE(x)) return x;
 
-    if(digits == ML_POSINF) return x;
+    if (digits > MAX_DIGITS || x == 0.)
+	return x;
     else if(digits == ML_NEGINF) return 0.0;
 
-    if (digits > MAX_DIGITS) digits = MAX_DIGITS;
-
     int dig = (int)floor(digits + 0.5);
-    LDOUBLE sgn = +1.;
+    double sgn = +1.;
     if(x < 0.) {
 	sgn = -1.;
 	x = -x;
-    }
+    } // now  x > 0
     if (dig == 0) {
-	return (double)(sgn * nearbyint(x));
+	return sgn * nearbyint(x);
     } else if (dig > 0) {
-	LDOUBLE pow10 = R_pow_di(10., dig)
-#ifdef R_3_AND_OLDER
-	    , intx = floor(x);
-	return (double)(sgn * (intx + nearbyint((double)((x-intx) * pow10)) / pow10));
-#else
-	;
-	return (double)(sgn * (nearbyint((double)(x * pow10)) / pow10));
-#endif
+	double l10x = log10(x);
+	if(l10x + dig > DBL_DIG) { // rounding to so many digits that no rounding is needed
+	    return sgn * x;
+	} else if (dig <= DBL_MAX_10_EXP) { // both pow10 := 10^d and (x * pow10) do *not* overflow
+	    LDOUBLE pow10 = R_pow_di(10., dig);
+	    return sgn *  (double)(nearbyint((double)(x * pow10)) / pow10);
+	} else { // DBL_MAX_10_EXP < dig <= DBL_DIG - log10(x) : case of |x| << 1; ~ 10^-305
+	    int e10 = dig - max10e; // > 0
+	    LDOUBLE p10 = R_pow_di(10., e10),
+		  pow10 = R_pow_di(10., max10e);
+	    return  sgn * (double) (nearbyint((double)((x*pow10)*p10))/pow10/p10);
+	}
     } else {
 	LDOUBLE pow10 = R_pow_di(10., -dig);
-        return (double)(sgn * nearbyint((double)(x/pow10)) * pow10);
+        return sgn *  (double) (nearbyint((double)(x/pow10)) * pow10);
     }
 }
