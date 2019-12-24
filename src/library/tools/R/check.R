@@ -142,19 +142,19 @@ setRlibs <-
 {
     WINDOWS <- .Platform$OS.type == "windows"
     useJunctions <- WINDOWS && !nzchar(Sys.getenv("R_WIN_NO_JUNCTIONS"))
-    
+
     # flink assumes it is only being used for package directories
     # containing DESCRIPTION!
     flink <- function(from, to) {
         if(WINDOWS) {
-            if(useJunctions) { 
+            if(useJunctions) {
                 Sys.junction(from, to)
                 if(file.exists(file.path(to, basename(from), "DESCRIPTION")))
                     return()
                 unlink(file.path(to, basename(from)), recursive = TRUE)
             }
             res <- file.copy(from, to, recursive = TRUE)
-        } else 
+        } else
             res <- file.symlink(from, to)
         if (!res) stop(gettextf("cannot link from %s", from), domain = NA)
     }
@@ -5009,7 +5009,11 @@ add_dummies <- function(dir, Log)
                 ex_re <- "^Warning: Fortran 2018 deleted feature:"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
-                ## and deprecated declarations in Eigen and boost
+                ## and gfortran 10 warnings
+                ex_re <- "^(Warning: Rank mismatch between actual argument|Warning: Array.*is larger than limit set)"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## And deprecated declarations in Eigen and boost
                 ex_re <- "(include/Eigen|include/boost|boost/smart_ptr).* warning: .* \\[-Wdeprecated-declarations\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
