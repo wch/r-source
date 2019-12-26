@@ -4389,7 +4389,9 @@ behaviours are allowed
 (@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
 and both occur as defaults on @R{} platforms: portable applications
 should not use @option{-n} (as the first argument) nor escape
-sequences. Another common issue is the construction
+sequences.  The recommended replacment for @command{echo -n} is the
+command @command{printf}.
+Another common issue is the construction
 @example
 export FOO=value
 @end example
@@ -4400,6 +4402,13 @@ Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not
 portable: @code{-f} is normally what is intended.  Flags @option{-a} and
 @option{-o} are nowadays declared obsolescent by POSIX and should not be
 used.
+
+Use of `brace expansion', e.g.,
+@example
+rm -f src/*.@{o,so,d@}
+@end example
+@noindent
+is not portable.
 
 The @option{-o} flag for @command{set} in shell scripts is optional in
 POSIX and not supported on all the platforms @R{} is used on.
