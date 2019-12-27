@@ -1077,18 +1077,16 @@ static int InstallVar(SEXP var)
 
 static void CheckRHS(SEXP v)
 {
-    int i, j;
-    SEXP s, t;
     while ((isList(v) || isLanguage(v)) && v != R_NilValue) {
 	CheckRHS(CAR(v));
 	v = CDR(v);
     }
     if (isSymbol(v)) {
-	for (i = 0; i < length(framenames); i++) {
-	    s = installTrChar(STRING_ELT(framenames, i));
+	for (int i = 0; i < length(framenames); i++) {
+	    SEXP s = installTrChar(STRING_ELT(framenames, i));
 	    if (v == s) {
-		t = allocVector(STRSXP, length(framenames) - 1);
-		for (j = 0; j < length(t); j++) {
+		SEXP t = allocVector(STRSXP, length(framenames) - 1);
+		for (int j = 0; j < length(t); j++) {
 		    if (j < i)
 			SET_STRING_ELT(t, j, STRING_ELT(framenames, j));
 		    else
@@ -1199,11 +1197,11 @@ static void ExtractVars(SEXP formula, int checkonly)
 /* AllocTerm allocates an integer array for
    bit string representation of a model term */
 
-static SEXP AllocTerm(int nw)
+static SEXP AllocTerm(void) // global (nwords)
 {
-    SEXP term = allocVector(INTSXP, nw);
+    SEXP term = allocVector(INTSXP, nwords);
     int *term_ = INTEGER(term);
-    for (int i = 0; i < nw; i++)
+    for (int i = 0; i < nwords; i++)
 	term_[i] = 0;
     return term;
 }
@@ -1215,10 +1213,10 @@ static SEXP AllocTerm(int nw)
 static void SetBit(SEXP term, int whichBit, int value)
 {
     int
-	word = (int)((whichBit - 1) / WORDSIZE),
+	word = (whichBit - 1) / WORDSIZE,
 	offset = (- whichBit) % WORDSIZE;
 #ifdef DEBUG_terms
-    printf("SetBit(*, which=%2d, %d):  word= %d, offset= %d\n",
+    printf("SetBit(*, which=%2d, %d):  word= %d, offset= %2d\n",
 	   whichBit, value, word, offset);
 #endif
     if (value)
@@ -1229,7 +1227,7 @@ static void SetBit(SEXP term, int whichBit, int value)
 
 /* 1a.  Check if nwords is large enough for 'whichBit'
  * 1b.  If not, increment nwords
- * 2.  term = AllocTerm(nwords);
+ * 2.  term = AllocTerm();
  * 3.  SetBit(term, whichBit, 1);
  */
 static SEXP AllocTermSetBit1(int whichBit) {
@@ -1239,7 +1237,7 @@ static SEXP AllocTermSetBit1(int whichBit) {
 	printf("AllocT.SetBit(): incrementing nwords to %d\n", nwords);
 #     endif
     }
-    SEXP term = AllocTerm(nwords);
+    SEXP term = AllocTerm();
     SetBit(term, whichBit, 1);
     return term;
 }
@@ -1251,10 +1249,12 @@ static SEXP AllocTermSetBit1(int whichBit) {
 static int GetBit(SEXP term, int whichBit)
 {
     unsigned int
-	word = ((whichBit - 1)/ WORDSIZE),
+	word = (whichBit - 1) / WORDSIZE,
 	offset = (- whichBit) % WORDSIZE;
 #ifdef DEBUG_terms
-    printf("GetBit(*, which=%2d):  word= %d, offset= %d\n", whichBit, word, offset);
+    printf("GetBit(*, which=%3d):  word= %d, offset= %2d --> bit= %d\n",
+	   whichBit, word, offset,
+	   ((((unsigned *) INTEGER(term))[word]) >> offset) & 1	);
 #endif
     return ((((unsigned *) INTEGER(term))[word]) >> offset) & 1;
 }
@@ -1266,7 +1266,7 @@ static int GetBit(SEXP term, int whichBit)
 
 static SEXP OrBits(SEXP term1, SEXP term2)
 {
-    SEXP term = AllocTerm(nwords);
+    SEXP term = AllocTerm();
     for (int i = 0; i < nwords; i++)
 	INTEGER(term)[i] = INTEGER(term1)[i] | INTEGER(term2)[i];
     return term;
@@ -1469,7 +1469,7 @@ static SEXP InTerms(SEXP left, SEXP right)
 {
     PROTECT(left = EncodeVars(left));
     PROTECT(right = EncodeVars(right));
-    SEXP t, term = PROTECT(AllocTerm(nwords));
+    SEXP t, term = PROTECT(AllocTerm());
     int *term_ = INTEGER(term);
     /* Bitwise or of all terms on right */
     for (t = right; t != R_NilValue; t = CDR(t)) {
@@ -1490,9 +1490,9 @@ static SEXP InTerms(SEXP left, SEXP right)
 
 static SEXP NestTerms(SEXP left, SEXP right)
 {
-    PROTECT(left = EncodeVars(left));
+    PROTECT(left  = EncodeVars(left));
     PROTECT(right = EncodeVars(right));
-    SEXP t, term = PROTECT(AllocTerm(nwords));
+    SEXP t, term = PROTECT(AllocTerm());
     int *term_ = INTEGER(term);
     /* Bitwise or of all terms on left */
     for (t = left; t != R_NilValue; t = CDR(t)) {
@@ -1548,12 +1548,10 @@ static SEXP EncodeVars(SEXP formula)
 	    /* prior to 1.7.0 this made term.labels in reverse order. */
 	    SEXP r = R_NilValue, v = R_NilValue; /* -Wall */
 	    if (!LENGTH(framenames)) return r;
-	    const char *c;
 	    const void *vmax = vmaxget();
-
 	    for (int i = 0; i < LENGTH(framenames); i++) {
 		/* change in 1.6.0 do not use duplicated names */
-		c = translateChar(STRING_ELT(framenames, i));
+		const char *c = translateChar(STRING_ELT(framenames, i));
 		for(int j = 0; j < i; j++)
 		    if(!strcmp(c, translateChar(STRING_ELT(framenames, j))))
 			error(_("duplicated name '%s' in data frame using '.'"),
@@ -1608,10 +1606,7 @@ static SEXP EncodeVars(SEXP formula)
 	if (CAR(formula) == parenSymbol) {
 	    return EncodeVars(CADR(formula));
 	}
-	int formulaIndex = InstallVar(formula);
-	term = PROTECT(AllocTerm(nwords));
-	SetBit(term, formulaIndex, 1);
-	UNPROTECT(1);
+	term = AllocTermSetBit1(InstallVar(formula)); // may increment  nwords
 	return CONS(term, R_NilValue);
     }
     error(_("invalid model formula in EncodeVars"));
@@ -1627,7 +1622,8 @@ static SEXP EncodeVars(SEXP formula)
 
 static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
 {
-    int *term_ = INTEGER(term), *th_t = INTEGER(CAR(thisterm));
+    int *term_ = INTEGER(term),
+	*th_t  = INTEGER(CAR(thisterm));
     for (int i = 0; i < nwords; i++)
 	term_[i] = th_t[i];
 
@@ -1650,10 +1646,10 @@ static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
     for (SEXP t = termlist; t != thisterm; t = CDR(t)) {
 	allzero = 1;
 	int *ct = INTEGER(CAR(t));
-	for (int i = 0; i < nwords; i++) {
-	    if ((~ct[i]) & term_[i])
-		allzero = 0;
-	}
+	for (int i = 0; i < nwords; i++)
+	    if (term_[i] & ~ct[i]) {
+		allzero = 0; break;
+	    }
 	if (allzero)
 	    return 1;
     }
@@ -1684,8 +1680,7 @@ SEXP termsform(SEXP args)
     parenSymbol = install("(");
     inSymbol = install("%in%");
 
-    /* Do we have a model formula? */
-    /* Check for unary or binary ~ */
+    /* Do we have a model formula? <==> Check for unary or binary ~ */
 
     if (!isLanguage(CAR(args)) ||
 	CAR(CAR(args)) != tildeSymbol ||
@@ -1829,7 +1824,7 @@ SEXP termsform(SEXP args)
     }
     int nterm = length(formula); /* # of model terms */
 #ifdef DEBUG_terms
-    printf("after step 2: nterm = %d\n", nterm);
+    printf("after step 2: #{offsets} = k = %ld;  nterm = %d\n", k, nterm);
 #endif
 
     /* Step 3: Reorder the model terms by BitCount, otherwise
@@ -1846,9 +1841,17 @@ SEXP termsform(SEXP args)
 	for (call = formula, n = 0; call != R_NilValue; call = CDR(call), n++) {
 	    SET_VECTOR_ELT(pattern, n, CAR(call));
 	    counts[n] = BitCount(CAR(call), nvar);
+#ifdef DEBUG_terms
+	    printf("  BitCount[n=%ld]=%2d", n+1, counts[n]);
+#endif
 	}
 	for (n = 0; n < nterm; n++)
 	    if(counts[n] > bitmax) bitmax = counts[n];
+#ifdef DEBUG_terms
+	printf("step 3 (part I): counts[1..nterm]: "); printVector(sCounts, 1, 0);
+	printf("  bitmax = max(counts[]) = %d\n", bitmax);
+#endif
+
 	if(keepOrder) {
 	    for (n = 0; n < nterm; n++)
 		iord[n] = counts[n];
@@ -1867,6 +1870,7 @@ SEXP termsform(SEXP args)
     }
 #ifdef DEBUG_terms
     printf("after step 3: ord[1:nterm]: "); printVector(ord, 1, 0);
+    printf("--=--\n .. step 4 .. \"factors\" pattern matrix:\n");
 #endif
 
     /* Step 4: Compute the factor pattern for the model. */
@@ -1881,14 +1885,17 @@ SEXP termsform(SEXP args)
 	int *pattn = INTEGER(pattern);
 	for (R_xlen_t i = 0; i < ((R_xlen_t) nterm) * nvar; i++)
 	    pattn[i] = 0;
-	SEXP term = PROTECT(AllocTerm(nwords));
-	R_xlen_t n = 0;
+	SEXP term = PROTECT(AllocTerm());
+	R_xlen_t n_n = -1; // n = 0;  ==>  n_n = -1 + n*nvar = -1
 	for (call = formula; call != R_NilValue; call = CDR(call)) {
+#ifdef DEBUG_terms
+	    printf("  st.4: (bitpattern in int) term: "); printVector(CAR(call), 0, 0);
+#endif
 	    for (int i = 1; i <= nvar; i++) {
 		if (GetBit(CAR(call), i))
-		    pattn[i-1+n*nvar] = TermCode(formula, call, i, term);
+		    pattn[i+n_n] = TermCode(formula, call, i, term);
 	    }
-	    n++;
+	    n_n += nvar; // n++ ==>  n_n = -1 + n*nvar
 	}
 	UNPROTECT(1);
     }
@@ -1900,8 +1907,8 @@ SEXP termsform(SEXP args)
 #ifdef DEBUG_terms
     printf(".. after step 4: \"factors\" matrix (nvar x nterm) = (%d x %d)\n",
 	   nvar, nterm);
+    printf("--=--\n .. step 5 .. computing term labels \"term.labels\":\n");
 #endif
-
 
     /* Step 5: Compute term labels */
 
@@ -1909,6 +1916,12 @@ SEXP termsform(SEXP args)
     R_xlen_t n = 0;
     for (call = formula; call != R_NilValue; call = CDR(call)) {
 	R_xlen_t l = 0;
+#ifdef DEBUG_terms
+	printf("  st.5: (bitpattern in int) term: "); printVector(CAR(call), 0, 0);
+# define DEBUG_terms_2
+	// such that next GetBit() is not traced :
+# undef DEBUG_terms
+#endif
 	for (int i = 1; i <= nvar; i++) {
 	    if (GetBit(CAR(call), i)) {
 		if (l > 0)
@@ -1916,6 +1929,9 @@ SEXP termsform(SEXP args)
 		l += (int) strlen(CHAR(STRING_ELT(varnames, i - 1)));
 	    }
 	}
+#ifdef DEBUG_terms_2
+# define DEBUG_terms
+#endif
 	char cbuf[l+1];
 	cbuf[0] = '\0';
 	l = 0;
@@ -1929,16 +1945,22 @@ SEXP termsform(SEXP args)
 	}
 	SET_STRING_ELT(termlabs, n, mkChar(cbuf));
 	n++;
+#ifdef DEBUG_terms
+	printf("  -> term.labels[%ld]: '%s'\n", n, cbuf);
+#endif
     }
+
 #ifdef DEBUG_terms
     printf(".. step 5: termlabs: "); printVector(termlabs, 1, /* quote */ 1);
 #endif
+    UNPROTECT(1); // termlabs
 
     if (nterm > 0) { // dimnames("factors") <- ...
 	PROTECT(v = allocVector(VECSXP, 2));
 	SET_VECTOR_ELT(v, 0, varnames);
 	SET_VECTOR_ELT(v, 1, termlabs);
 	setAttrib(pattern, R_DimNamesSymbol, v);
+	UNPROTECT(1);
     }
     SETCAR(a, termlabs);
     SET_TAG(a, install("term.labels"));
@@ -1982,7 +2004,6 @@ SEXP termsform(SEXP args)
 	vmaxset(vmax);
     }
 
-    UNPROTECT(2);	/* keep termlabs until here */
 
     /* Step 6: Fix up the formula by substituting for dot, which should be
        the framenames joined by + */
