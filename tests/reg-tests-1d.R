@@ -3518,12 +3518,37 @@ stopifnot(exprs = {
     ## the regularity of signif()'s result is amazing:
     is.integer(d <- 14:1)
     all.equal(log10(abs(1 - tail(diff(unname(s.e)), -5) * 1e308*10^d / 4)),
-              d - 16, tol = 0.08) # tol: seen 0.0294
+              d - 16, tol = 0.08) # tol: seen 0.0294 / 0.02988 (Win 32b)
     all.equal(r.e * 1e298, r.e10,
               check.attributes = FALSE, countEQ=TRUE, tol=1e-14)
 })
 ## was not true for digits = 309, 310 in R <= 3.6.x
 options(op)
+
+
+## update.formula() triggering terms.formula() bug -- PR#16326
+mkF <- function(nw) as.formula(paste("y ~ x + x1",
+                                     paste0("- w", seq_len(nw), collapse="")),
+                               env = .GlobalEnv)
+fterms <- function(n, simplify=TRUE) formula(terms.formula(mkF(n), simplify=simplify))
+## Fixed the main bug, which lead to corrupted memory, the following is still wrong:
+for(n in 1:20) print(fterms(66))
+## used to have a '-1'  (and much more, see below) in R <= 3.6.2
+## NB: had memory / random behavior -- and sometimes ended in
+##     malloc(): corrupted top size
+##     Process R... aborted (core dumped)
+set.seed(17)
+N <- 50 # FIXME once it works, take larger value ..
+Ns <- sort(1 + rpois(N, 3)+ 16*rpois(N, 3))
+for(n in Ns)
+    if(!identical(y ~ x + x1, F <- fterms(n)))
+        cat("n=",n, "; fterms(n) |--> ", format(F),"\n", sep="")
+    ## stopifnot(identical(y ~ x + x1, fterms(1+32*rpois(1, 1))))
+## Ended in this error [which really comes from C code trying to set dimnames !] :
+##   Error in terms.formula(mkF(n), simplify = simplify) :
+##     'dimnames' applied to non-array
+##
+##--TODO: less severe now (no seg.fault / corrupt memory crashes), but still really bad ! ---
 
 
 
