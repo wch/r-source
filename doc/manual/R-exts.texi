@@ -4416,7 +4416,7 @@ POSIX and not supported on all the platforms @R{} is used on.
 On macOS Catalina which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
-for accounts ported from earlier version it is usually @command{bash}).
+for accounts ported from an earlier version it is usually @command{bash}).
 
 @item
 Make use of the abilities of your compilers to check the
@@ -4445,7 +4445,7 @@ features from later standards.  (Although @R{} only requires Fortran 90,
 @command{gfortran} does not have a way to specify that standard.)
 
 @R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
-@code{COMPLEX*16}.  (Fortran code can use something like
+@code{COMPLEX*16}.  (One can also use something like
 @code{COMPLEX(KIND=KIND(0.0D0))}@footnote{See
 @uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
 
@@ -4515,7 +4515,7 @@ you should use a configure test for a C99/C++11 type such as
 @code{int_fast64_t} (and failing that, @code{long long}@footnote{but
 note that @code{long long} is not a standard C++98 type, and C++
 compilers for earlier versions of @R{} set up for strict C++98
-conformance will reject it.  C++11 (the default since @R{} 3.6.0)
+conformance will reject it.  C++11 (the default since @R{} 3.6.2)
 includes @code{long long}.}) and typedef your own type, or use another
 suitable type (such as @code{size_t}).
 @c https://en.cppreference.com/w/cpp/language/types claims long long is
@@ -4791,7 +4791,7 @@ deprecated and will be removed from some major distributions by Jan
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
-and @code{macroman} are.  See the help for @code{file} for more details.
+and @code{macroman} is.  See the help for @code{file} for more details.
 
 
 @item
@@ -4948,7 +4948,7 @@ and suitable options might be
 ; see @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
-of Ghostscript  produced much better reductions than earlier ones.
+of Ghostscript  produced much bigger reductions than earlier ones.
 
 We come across occasionally large PDF files containing excessively
 complicated figures using PDF vector graphics: such figures are often
@@ -5077,12 +5077,12 @@ extensions (such as POSIX functions) are supported.
 
 @strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
 where available@footnote{which it is on all known platforms, and is
-required as from @R{} 4.0.0}.  However, in earlier versions the default
-standard was that of the compiler used, often C++98 or C++14.  Packages
-which are for use only with @R{} 3.6.0 or later can assume C++11 or
-specify a later standard.  However, those which may be used in earlier
-versions need to specify C++11 explicitly (@pxref{Using C++11 code}) or
-be tested under all of C++11, C++98 and C++14.
+required as from @R{} 4.0.0} (3.6.2 on Windows).  However, in earlier
+versions the default standard was that of the compiler used, often C++98
+or C++14.  Packages which are for use only with @R{} 3.6.2 or later can
+assume C++11 or specify a later standard.  However, those which may be
+used in earlier versions need to specify C++11 explicitly (@pxref{Using
+C++11 code}) or be tested under all of C++11, C++98 and C++14.
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
