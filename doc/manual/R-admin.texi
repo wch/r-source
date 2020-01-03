@@ -465,7 +465,8 @@ have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
 of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
 @file{texinfo.tex}, often made part of the @TeX{} package in
 re-distributions).  The path to @command{texi2any} can be set by macro
-@samp{TEXI2ANY} in @file{config.site}.
+@samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} require
+@command{perl}.
 
 The PDF versions can be viewed using any recent PDF viewer: they have
 hyperlinks that can be followed.  The info files are suitable for
@@ -5227,6 +5228,11 @@ or appending that variable to the @command{configure} command.
 @item
 A TeX installation. @xref{Other libraries}.
 
+@item
+@command{texi2any} from a @samp{texinfo} distribution, which requires
+@command{perl} (currently part of macOS but it has been announced that
+it will not be from macOS 10.16).  (An old version of @command{texi2any}
+has been included in the binary distribution of @R{}.)
 @item
 Compilers supporting OpenMP: see the next subsection.
 @end itemize
