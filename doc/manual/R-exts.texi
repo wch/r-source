@@ -4759,12 +4759,15 @@ locales).
 
 @item
 Make sure that any version requirement for Java code is both declared in
-the @samp{SystemRequirements} field and tested at runtime (not least as
-the Java installation when the package is installed might not be the
-same as when the package is run and will not be for binary packages).
-Java 8 is available for fewer platforms than Java 7, and Java 11 for
-fewer still (at the time of writing, only @cputype{x86_64} Linux, macOS,
-64-bit Windows and 64-bit Solaris 11 from Oracle).
+the @samp{SystemRequirements} field@footnote{If a Java interpreter is
+required directly (not @emph{via} @CRANpkg{rJava}) this must be declared
+and its presence tested like any other external command.} and tested at
+runtime (not least as the Java installation when the package is
+installed might not be the same as when the package is run and will not
+be for binary packages).  Java 8 is available for fewer platforms than
+Java 7, and Java 11 for fewer still (at the time of writing, only
+@cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
+Oracle).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
@@ -4774,7 +4777,7 @@ names, which are (confusingly)
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.3} is also in use.
 
-A suitable test Java at least version 8 for packages using
+A suitable test for Java at least version 8 for packages using
 @CRANpkg{rJava} would be something like
 @example
 .jinit()
@@ -4841,9 +4844,9 @@ and conditional.
 
 Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
-example macOS 10.16 is announced not to have them.  Python 2 is widely
-deprecated and will be removed from some major distributions by Jan
-2020.
+example macOS 10.16 has been announced not to have them.  Python 2 has
+passed end-of-life and been removed from some major distributions.  This
+applies also to a Java interpreter (which macOS does not have by default).
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
