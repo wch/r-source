@@ -42,10 +42,6 @@ is <- function(object, class2)
                                      package
                                  else getPackageName(topenv(parent.frame())))
     }
-    else {
-        class2Def <- class2
-        class2 <- class2Def@className
-    }
     ## S3 inheritance is applied if the object is not S4 and class2 is either
     ## a basic class or an S3 class (registered or not)
     S3Case <- S3Case || (is.object(object) && !isS4(object))
