@@ -360,6 +360,7 @@ SEXP do_search(SEXP, SEXP, SEXP, SEXP);
 SEXP do_seq(SEXP, SEXP, SEXP, SEXP);
 SEXP do_seq_along(SEXP, SEXP, SEXP, SEXP);
 SEXP do_seq_len(SEXP, SEXP, SEXP, SEXP);
+SEXP do_sequence(SEXP, SEXP, SEXP, SEXP);
 SEXP do_serialize(SEXP, SEXP, SEXP, SEXP);
 SEXP do_serializeToConn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_serializeInfoFromConn(SEXP, SEXP, SEXP, SEXP);

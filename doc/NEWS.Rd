@@ -178,6 +178,10 @@
       invalid \code{endian} value.  The affected code needs to be fixed with
       care as the old undocumented behavior was to swap endian-ness in such
       cases.
+
+      \item \code{sequence()} is now a primitive and gains arguments to
+      generate more complex sequences. Based on code from the S4Vectors
+      Bioconductor package and the advice of Hervé Pagès.
     }
   }% end{ NEW FEATURES }
 
