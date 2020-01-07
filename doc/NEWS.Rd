@@ -381,6 +381,13 @@
       \item \code{round()} correctly rounds \dQuote{to even} in more cases,
       thanks to increased internal accuracy via code simplification
       proposed by Adam Wheeler in his report (\PR{17668}).
+
+      \item Inheritance information on S4 classes is maintained more
+      consistently, particularly in the case of class unions (in part
+      due to \PR{17596} and a report from Ezra Tucker).
+
+      \item \code{is()} behaves more robustly when \code{class2} is a
+      \code{classRepresentation} object.
     }
   }
 }

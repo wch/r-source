@@ -503,7 +503,8 @@ isVirtualClass <-
 
 assignClassDef <-
   ## assign the definition of the class to the specially named object
-  function(Class, def, where = .GlobalEnv, force = FALSE) {
+    function(Class, def, where = .GlobalEnv, force = FALSE,
+             doSubclasses = is(def, "ClassUnionRepresentation")) {
       if(!is(def,"classRepresentation"))
           stop(gettextf("trying to assign an object of class %s as the definition of class %s: must supply a \"classRepresentation\" object",
                         dQuote(class(def)),
@@ -532,7 +533,7 @@ assignClassDef <-
       else
           assign(mname, def, where)
       if(cacheOnAssign(where)) # will be FALSE for sourceEnvironment's
-          .cacheClass(clName, def, is(def, "ClassUnionRepresentation"), where)
+          .cacheClass(clName, def, doSubclasses, where)
   }
 
 
@@ -1091,7 +1092,9 @@ completeSubclasses <-
             cliDef <- getClassDef(cli, package=packageSlot(obji))
             ## don't override existing relations
             ## TODO:  have a metric that picks the "closest" relationship
-            if(!extends(classDef2, cliDef))
+            subcl <- cliDef@subclasses[[class2]]
+            if (is.null(subcl) ||
+                    !identical(packageSlot(subcl), packageSlot(classDef2)))
                 setIs(class2, cli, extensionObject = obji,
                       doComplete = FALSE, where = where)
         }
@@ -1609,6 +1612,7 @@ setDataPart <- function(object, value, check = TRUE) {
         ## the combined extension is conditional if either to or by is conditional
         if(is(byExt, "conditionalExtension") && !is(toExt, "conditionalExtension"))
           class(toExt) <- class(byExt)
+        toExt@package <- byExt@package
         toExt
 }
 
@@ -1949,13 +1953,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 	}
 	## now  prev  is a named list of class definitions (>= 1),
 	## where the names are names of packages (rather: namespaces)
-	i <- match(newpkg, names(prev))
-	if(is.na(i))
-	    prev[[newpkg]] <- def
-	else if(identical(def, prev[[i]]))
-	    return()
-	else # replace previous
-	    prev[[i]] <- def
+        prev[[newpkg]] <- def
 	def <- prev
 	if(length(def) > 1L)
 	    .duplicateClassesExist(TRUE)
@@ -2117,9 +2115,13 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     NULL
 }
 
-## alternative to .recacheSubclasses, only needed for non-unions
+## Alternative to .recacheSubclasses(), only needed for non-unions,
+## where we should modify the definition in the package namespace, not
+## only in the cache.
+
 ## Inferior in that nonlocal subclasses will not be updated, hence the
-## warning when the subclass is not in where
+## warning when the subclass is not in where.
+
 .checkSubclasses <- function(class, def, class2, def2, where, where2) {
     where <- as.environment(where)
     where2 <- as.environment(where2)
@@ -2154,8 +2156,6 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                            .dQ(what), .dQ(def2@className), .dQ(class)),
                   call. = FALSE, domain = NA)
         else if(is.na(match(class2, names(subDef@contains)))) {
-            ## The only "real action": seems only necessary to be called
-            ## during 'methods' "initializing class and method definitions":
             if(isTRUE(as.logical(Sys.getenv("_R_METHODS_SHOW_CHECKSUBCLASSES", "false"))))
             message(sprintf(paste( # currently only seen from setClassUnion() -> setIs() ->
                 "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);\n",
