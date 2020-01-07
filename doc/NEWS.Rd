@@ -202,6 +202,9 @@
       specify the workspace to be restored.  This allows equals to be
       part of the name when opening via Windows file associations
       (reported by Christian Asseburg).
+
+      \item \command{Rterm} now accepts ALT+xxx sequences also with NumLock
+      on. Tilde can be pasted with Italian keyboard (\PR{17679}).
    }
   }
 

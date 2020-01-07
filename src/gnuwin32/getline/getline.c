@@ -17,7 +17,7 @@
  *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
  */
 
- /* Copyright (C) 2018-2019 The R Core Team */
+ /* Copyright (C) 2018-2020 The R Core Team */
 
 #include       "getline.h"
 
@@ -180,17 +180,22 @@ gl_getc(void)
 	  }
 	}
 	else if (AltIsDown) { /* Interpret Alt+xxx entries */
+	    /* Alt+xxx entries may be given directly by user or may
+	       result from pasting a character that does not map to
+	       a key on the current keyboard (in that case the numbers
+	       are with numlock on at least on Windows 10), which has
+	       been observed with tilde on Italian keyboard (PR17679). */
 	  switch (vk) {
-	  case VK_INSERT: n = 0; break;
-	  case VK_END: n = 1; break;
-	  case VK_DOWN: n = 2; break;
-	  case VK_NEXT: n = 3;break;
-	  case VK_LEFT: n = 4; break;
-	  case VK_CLEAR:  n = 5; break;
-	  case VK_RIGHT: n = 6; break;
-	  case VK_HOME: n = 7; break;
-	  case VK_UP: n = 8; break;
-	  case VK_PRIOR: n = 9; break;	 
+	  case VK_NUMPAD0: case VK_INSERT: n = 0; break;
+	  case VK_NUMPAD1: case VK_END: n = 1; break;
+	  case VK_NUMPAD2: case VK_DOWN: n = 2; break;
+	  case VK_NUMPAD3: case VK_NEXT: n = 3;break;
+	  case VK_NUMPAD4: case VK_LEFT: n = 4; break;
+	  case VK_NUMPAD5: case VK_CLEAR:  n = 5; break;
+	  case VK_NUMPAD6: case VK_RIGHT: n = 6; break;
+	  case VK_NUMPAD7: case VK_HOME: n = 7; break;
+	  case VK_NUMPAD8: case VK_UP: n = 8; break;
+	  case VK_NUMPAD9: case VK_PRIOR: n = 9; break;	 
 	  default: n = -1;
 	  }
 	  if (n >= 0) bbb = 10 * bbb + n;
