@@ -1200,6 +1200,7 @@ namespaceExport <- function(ns, vars) {
         undef <- undef[! vapply(undef, exists, NA, envir = ns)]
         if (length(undef)) {
             undef <- do.call("paste", as.list(c(undef, sep = ", ")))
+            undef <- gsub("^\\.__C__", "class ", undef)
             stop(gettextf("undefined exports: %s", undef), domain = NA)
         }
         if(.isMethodsDispatchOn()) .mergeExportMethods(new, ns)

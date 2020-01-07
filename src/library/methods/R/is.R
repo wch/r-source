@@ -29,17 +29,18 @@ is <- function(object, class2)
     if(missing(class2))
         return(extends(class1))
     class1Def <- getClassDef(class1)
+    class2Def <- NULL
+    if(!is.character(class2)) {
+        class2Def <- class2
+        class2 <- class2Def@className
+    }
     if(is.null(class1Def)) # an unregistered S3 class
         return(inherits(object, class2))
-    if(is.character(class2)) {
+    if(is.null(class2Def)) {
         class2Def <- getClassDef(class2, .classDefEnv(class1Def),
                                  if (!is.null(package <- packageSlot(class2)))
                                      package
                                  else getPackageName(topenv(parent.frame())))
-    }
-    else {
-        class2Def <- class2
-        class2 <- class2Def@ className
     }
     ## S3 inheritance is applied if the object is not S4 and class2 is either
     ## a basic class or an S3 class (registered or not)
@@ -207,13 +208,31 @@ setIs <-
     where1 <- .findOrCopyClass(class1, classDef, where, "superClass")
     ## insert the direct contains information in a valid spot
     .newDirectSuperclass(classDef@contains, class2, names(classDef2@contains)) <- obj
+    ## Since class unions are implemented as a superclass of each of
+    ## its members, if a member comes from a different package, the
+    ## inheritance information will not be present upon namespace
+    ## load. Therefore, on loading a namespace, we have to restore the
+    ## inheritance hierarchy in the cache (the runtime definition);
+    ## see cacheMetaData(). This means that the class definition has
+    ## diverged between the namespace and the cache. In cases of
+    ## divergence, we need to avoid calling .checkSubclasses(),
+    ## because it will overwrite the cache with the saved version. Any
+    ## use of setIs() across packages will cause divergence. However,
+    ## the divergence is only reconciled in the case of class
+    ## unions. cacheMetaData() could be improved to recache whenever a
+    ## class already _knows_ that it is extended by a class from a
+    ## different package (like a class union does).
+    onlyRecacheSubclasses <-
+        (is(classDef, "ClassUnionRepresentation") ||
+             is(classDef2, "ClassUnionRepresentation")) &&
+        !identical(packageSlot(classDef), packageSlot(classDef2))
     if(doComplete) {
       classDef@contains <- completeExtends(classDef, class2, obj, where = where)
-      ## is needed at least during byte compilation of 'methods' itself :
-      if(!is(classDef, "ClassUnionRepresentation")) #unions are handled in assignClassDef
+      if(!onlyRecacheSubclasses) #unions are handled in assignClassDef
         .checkSubclasses(class1, classDef, class2, classDef2, where1, where2)
     }
-    assignClassDef(class1, classDef, where1, TRUE)
+    assignClassDef(class1, classDef, where1, TRUE,
+                   doSubclasses=onlyRecacheSubclasses)
     invisible(classDef)
  }
 

@@ -178,6 +178,11 @@
       invalid \code{endian} value.  The affected code needs to be fixed with
       care as the old undocumented behavior was to swap endian-ness in such
       cases.
+
+      \item \code{sequence()} is now an S3 generic, with an internally
+      implemented default method, and gains arguments to
+      generate more complex sequences. Based on code from the S4Vectors
+      Bioconductor package and the advice of Hervé Pagès.
     }
   }% end{ NEW FEATURES }
 
@@ -198,6 +203,9 @@
       specify the workspace to be restored.  This allows equals to be
       part of the name when opening via Windows file associations
       (reported by Christian Asseburg).
+
+      \item \command{Rterm} now accepts ALT+xxx sequences also with NumLock
+      on. Tilde can be pasted with Italian keyboard (\PR{17679}).
    }
   }
 
@@ -377,6 +385,21 @@
       argument which should fix behaviour during daylight savings
       changeover days, fixing \PR{16764}, thanks to proposals and analysis
       by Johannes Ranke and Kirill Müller.
+
+      \item \code{round()} correctly rounds \dQuote{to even} in more cases,
+      thanks to increased internal accuracy via code simplification
+      proposed by Adam Wheeler in his report (\PR{17668}).
+
+      \item Inheritance information on S4 classes is maintained more
+      consistently, particularly in the case of class unions (in part
+      due to \PR{17596} and a report from Ezra Tucker).
+
+      \item \code{is()} behaves more robustly when \code{class2} is a
+      \code{classRepresentation} object.
+
+      \item The warning message when attempting to export an nonexistant
+      class is now more readable; thanks to Thierry Onkelinx for
+      recognizing the problem.
     }
   }
 }
@@ -389,7 +412,16 @@
       the included routines, just bug fixes).
     }
   }
-
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{update(form, new)} in the case of a long \code{new}
+      formula sometimes wrongly eliminated the intercept from \code{form},
+      or (more rarely) added a garbage term (or seg.faulted !); reported by Mathias Ambühl in
+      \PR{16326}.
+      %% There is *still* a bug left but at least no seg.faulting memory corruption
+      %% Will be ported to .. "patched" once that is fixed ..
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.6.2}{

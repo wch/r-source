@@ -28,7 +28,7 @@ is.name <- is.symbol
     baseGenerics <- c("Math", "Ops", "Summary", "Complex",
         "as.character", "as.data.frame", "as.environment", "as.matrix", "as.vector",
         "cbind", "labels", "print", "rbind", "rep", "seq", "seq.int",
-        "solve", "summary", "t")
+        "sequence", "solve", "summary", "t")
 
     utilsGenerics <- c("edit", "str")
 
@@ -573,6 +573,7 @@ matrix(c("!", "hexmode",
          "seq", "Date",
          "seq", "POSIXt",
          "seq", "default",
+         "sequence", "default",
          "solve", "default",
          "solve", "qr",
          "sort", "POSIXlt",

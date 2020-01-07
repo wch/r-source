@@ -3411,6 +3411,7 @@ ttt <- time(timeO) # Error "'end' must be a whole number of cycles after 'start'
 ## -- 2 --
 set.seed(7); tt <- ts(rnorm(60), frequency=12)
 dt2 <- diff(tt, differences = 2) # Error in .cbind.ts(..): not all series have the same phase
+tsD <- ts(1:49, start=as.Date("2019-12-12"), frequency=12)
 stopifnot(exprs = {
     all.equal(timeO, ttt - 1981, tol = 1e-8)
     inherits(ttt, "ts")
@@ -3418,6 +3419,7 @@ stopifnot(exprs = {
     length(dt2) == length(tt) - 2L
     all.equal(6*tsp(dt2), c(7, 35.5, 72))
     all.equal(dt2[1:2], c(3.986498, -0.22047961))
+    all.equal(tsD, structure(1:49, .Tsp = c(18242, 18246, 12), class = "ts"))
 })
 ## failed for a while in R-devel 2019-12-*
 
@@ -3461,6 +3463,92 @@ wII <- wilcox.test(c(-Inf, 1:5, Inf), c(-Inf, 4*(0:4), Inf), paired=TRUE) # erro
 sel <- names(w0) != "data.name"
 stopifnot(identical(w0[sel], w1[sel]), identical(w0[sel], wII[sel]))
 ## Inf-Inf  etc broken in paired case in R <= 3.6.x
+
+
+## round(x, n) "to even" fails in some cases -- PR#17668
+dd <- 0:12
+x55 <- 55 + as.numeric(vapply(dd+1, function(k) paste0(".", strrep("5",k)), ""))
+rnd.x <- vapply(dd+1L, function(k) round(x55[k], dd[k]), 1.1)
+noquote(formatC(cbind(x55, dd, rnd.x), w=1, digits=15))
+stopifnot(exprs = {
+      print (   rnd.x - x55) > 0
+      all.equal(rnd.x - x55, 5 * 10^-(dd+1), tol = 1e-11) # see diff. of 6.8e-13
+})
+## more than half of the above were rounded *down* in R <= 3.6.x
+## Some "wrong tests" cases from CRAN packages (relying on wrong R <= 3.6.x behavior)
+stopifnot(exprs = {
+    all.equal(round(10.7775, digits=3), 10.778, tolerance = 1e-12) # even tol=0, was 10.777
+    all.equal(round(12345 / 1000,   2), 12.34 , tolerance = 1e-12) # even tol=0, was 12.35
+    all.equal(round(9.18665, 4),        9.1866, tolerance = 1e-12) # even tol=0, was  9.1867
+})
+## This must work, too, the range of 'e' depending on 'd'
+EE <- c(-307, -300, -250, -200,-100,-50, -20, -10, -2:2,
+        10, 20, 50, 100, 200, 250, 290:307)
+for(d in 0:16) { cat("digits 'd' = ", d, ": ")
+    for(e in EE[EE+d <= 308]) {
+        f <- 10^e
+        cat(".")
+        stopifnot(all.equal(tolerance = if(d < 14) 1e-15
+                                        else if(d == 14) 1e-14 else 1e-13,
+                            round(pi/f, e + d) * f,
+                            round(pi, d)))
+    };cat("\n")
+}
+## (2nd part: continued working)
+i <- c(-2^(33:10), -10:10, 2^(10:33))
+for(digi in c(0:10, 500L, 1000L, 100000L, .Machine$integer.max))
+    stopifnot(identical(i, round(i, digi)),
+              identical(i+round(1/4, digi), round(i+1/4, digi)))
+x <- 7e-304; rx <- round(x, digits=307:322); xx <- rep(x, length(rx))
+print(cbind(rx), digits=16) # not really what ideally round() should do; but "ok"
+          all.equal(rx, xx, tol = 0)# show "average relative difference"
+stopifnot(all.equal(rx, xx, tol = 1e-4)) # tol may change in future
+## the round(i, *) failed, for ~ 2 days, in R-devel
+e <- 5.555555555555555555555e-308
+(e10 <- e * 1e298) # 5.555556e-10 -- much less extreme, for comparison
+d <- 20:1 ;   s.e <- signif(e, d) ; names(s.e) <- paste0("d", d)
+
+## currently, for round,  digits := pmin(308, digits) -- not going further than 310
+d <- 310:305; r.e   <- round (e,   d) ; names(r.e)   <- paste0("d", d)
+d <- d - 298; r.e10 <- round (e10, d) ; names(r.e10) <- paste0("d", d)
+op <- options(digits=18)
+cbind(signif = c(e, s.e)) ##-- this always rounds up (= to even)
+cbind( round = c(e, r.e), round.10 = c(e10, r.e10))
+stopifnot(exprs = {
+    ## the regularity of signif()'s result is amazing:
+    is.integer(d <- 14:1)
+    all.equal(log10(abs(1 - tail(diff(unname(s.e)), -5) * 1e308*10^d / 4)),
+              d - 16, tol = 0.08) # tol: seen 0.0294 / 0.02988 (Win 32b)
+    all.equal(r.e * 1e298, r.e10,
+              check.attributes = FALSE, countEQ=TRUE, tol=1e-14)
+})
+## was not true for digits = 309, 310 in R <= 3.6.x
+options(op)
+
+
+## update.formula() triggering terms.formula() bug -- PR#16326
+mkF <- function(nw) as.formula(paste("y ~ x + x1",
+                                     paste0("- w", seq_len(nw), collapse="")),
+                               env = .GlobalEnv)
+fterms <- function(n, simplify=TRUE) formula(terms.formula(mkF(n), simplify=simplify))
+## Fixed the main bug, which lead to corrupted memory, the following is still wrong:
+for(n in 1:20) print(fterms(66))
+## used to have a '-1'  (and much more, see below) in R <= 3.6.2
+## NB: had memory / random behavior -- and sometimes ended in
+##     malloc(): corrupted top size
+##     Process R... aborted (core dumped)
+set.seed(17)
+N <- 50 # FIXME once it works, take larger value ..
+Ns <- sort(1 + rpois(N, 3)+ 16*rpois(N, 3))
+for(n in Ns)
+    if(!identical(y ~ x + x1, F <- fterms(n)))
+        cat("n=",n, "; fterms(n) |--> ", format(F),"\n", sep="")
+    ## stopifnot(identical(y ~ x + x1, fterms(1+32*rpois(1, 1))))
+## Ended in this error [which really comes from C code trying to set dimnames !] :
+##   Error in terms.formula(mkF(n), simplify = simplify) :
+##     'dimnames' applied to non-array
+##
+##--TODO: less severe now (no seg.fault / corrupt memory crashes), but still really bad ! ---
 
 
 

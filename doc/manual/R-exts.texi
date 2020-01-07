@@ -1056,6 +1056,14 @@ As noted above, packages in @samp{Enhances} @emph{must} be used
 conditionally and hence objects within them should always be accessed
 @emph{via} @code{::}.
 
+On most systems, @command{R CMD check} can be run with only those
+packages declared in @samp{Depends} and @samp{Imports} by setting
+environment variable @env{_R_CHECK_DEPENDS_ONLY_=true}, whereas setting
+@env{_R_CHECK_SUGGESTS_ONLY_=true} also allows suggested packages, but
+not those in @samp{Enhances} nor those not mentioned in the
+@file{DESCRIPTION} file.  It is recommended that a package is checked
+with each of these set, as well as with neither.
+
 @node The INDEX file, Package subdirectories, Package Dependencies, Package structure
 @subsection The @file{INDEX} file
 @cindex INDEX file
@@ -1337,6 +1345,15 @@ a file @code{@var{pkg}-Ex.Rout.save}, this is compared to the output
 file for running the examples when the latter are checked.  Reference
 output should be produced without having the @option{--timings} option
 set (and note that @option{--as-cran} sets it).
+
+If reference output is included for examples, tests or vignettes do make
+sure that it is fully reproducible, as it will be compared verbatim to
+that produced in a check run, unless the @samp{IGNORE_RDIFF} markup is
+used.  Things which trip maintainers up include displayed version
+numbers from loading other packages, printing numerical results to an
+unreproducibly high precision and printing timings.  Another trap is
+small values which are in fact rounding error from zero: consider using
+@code{zapsmall}.
 
 Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
@@ -4372,7 +4389,9 @@ behaviours are allowed
 (@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
 and both occur as defaults on @R{} platforms: portable applications
 should not use @option{-n} (as the first argument) nor escape
-sequences. Another common issue is the construction
+sequences.  The recommended replacment for @command{echo -n} is the
+command @command{printf}.
+Another common issue is the construction
 @example
 export FOO=value
 @end example
@@ -4384,13 +4403,20 @@ portable: @code{-f} is normally what is intended.  Flags @option{-a} and
 @option{-o} are nowadays declared obsolescent by POSIX and should not be
 used.
 
+Use of `brace expansion', e.g.,
+@example
+rm -f src/*.@{o,so,d@}
+@end example
+@noindent
+is not portable.
+
 The @option{-o} flag for @command{set} in shell scripts is optional in
 POSIX and not supported on all the platforms @R{} is used on.
 
 On macOS Catalina which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
-for accounts ported from earlier version it is usually @command{bash}).
+for accounts ported from an earlier version it is usually @command{bash}).
 
 @item
 Make use of the abilities of your compilers to check the
@@ -4419,7 +4445,7 @@ features from later standards.  (Although @R{} only requires Fortran 90,
 @command{gfortran} does not have a way to specify that standard.)
 
 @R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
-@code{COMPLEX*16}.  (Fortran code can use something like
+@code{COMPLEX*16}.  (One can also use something like
 @code{COMPLEX(KIND=KIND(0.0D0))}@footnote{See
 @uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
 
@@ -4489,7 +4515,7 @@ you should use a configure test for a C99/C++11 type such as
 @code{int_fast64_t} (and failing that, @code{long long}@footnote{but
 note that @code{long long} is not a standard C++98 type, and C++
 compilers for earlier versions of @R{} set up for strict C++98
-conformance will reject it.  C++11 (the default since @R{} 3.6.0)
+conformance will reject it.  C++11 (the default since @R{} 3.6.2)
 includes @code{long long}.}) and typedef your own type, or use another
 suitable type (such as @code{size_t}).
 @c https://en.cppreference.com/w/cpp/language/types claims long long is
@@ -4677,12 +4703,15 @@ locales).
 
 @item
 Make sure that any version requirement for Java code is both declared in
-the @samp{SystemRequirements} field and tested at runtime (not least as
-the Java installation when the package is installed might not be the
-same as when the package is run and will not be for binary packages).
-Java 8 is available for fewer platforms than Java 7, and Java 11 for
-fewer still (at the time of writing, only @cputype{x86_64} Linux, macOS,
-64-bit Windows and 64-bit Solaris 11 from Oracle).
+the @samp{SystemRequirements} field@footnote{If a Java interpreter is
+required directly (not @emph{via} @CRANpkg{rJava}) this must be declared
+and its presence tested like any other external command.} and tested at
+runtime (not least as the Java installation when the package is
+installed might not be the same as when the package is run and will not
+be for binary packages).  Java 8 is available for fewer platforms than
+Java 7, and Java 11 for fewer still (at the time of writing, only
+@cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
+Oracle).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
@@ -4692,7 +4721,7 @@ names, which are (confusingly)
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.3} is also in use.
 
-A suitable test Java at least version 8 for packages using
+A suitable test for Java at least version 8 for packages using
 @CRANpkg{rJava} would be something like
 @example
 .jinit()
@@ -4748,8 +4777,9 @@ redirecting to @samp{https://} URLs.} that vary by build but are not
 documented.
 
 Usage of external commands should always be conditional on a test for
-existence (perhaps using @code{Sys.which}), as well as declared in the
-@samp{SystemRequirements} field.
+presence (perhaps using @code{Sys.which}), as well as declared in the
+@samp{SystemRequirements} field.  A package should pass its checks
+without warnings nor errors without the external command being present.
 
 An external command can be a (possibly optional) requirement for an
 imported or suggested package but needed for examples, tests or
@@ -4758,13 +4788,13 @@ and conditional.
 
 Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
-example macOS 10.16 is announced not to have them.  Python 2 is widely
-deprecated and will be removed from some major distributions by Jan
-2020.
+example macOS 10.16 has been announced not to have them.  Python 2 has
+passed end-of-life and been removed from some major distributions.  This
+applies also to a Java interpreter (which macOS does not have by default).
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
-and @code{macroman} are.  See the help for @code{file} for more details.
+and @code{macroman} is.  See the help for @code{file} for more details.
 
 
 @item
@@ -4921,7 +4951,7 @@ and suitable options might be
 ; see @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
-of Ghostscript  produced much better reductions than earlier ones.
+of Ghostscript  produced much bigger reductions than earlier ones.
 
 We come across occasionally large PDF files containing excessively
 complicated figures using PDF vector graphics: such figures are often
@@ -5050,12 +5080,12 @@ extensions (such as POSIX functions) are supported.
 
 @strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
 where available@footnote{which it is on all known platforms, and is
-required as from @R{} 4.0.0}.  However, in earlier versions the default
-standard was that of the compiler used, often C++98 or C++14.  Packages
-which are for use only with @R{} 3.6.0 or later can assume C++11 or
-specify a later standard.  However, those which may be used in earlier
-versions need to specify C++11 explicitly (@pxref{Using C++11 code}) or
-be tested under all of C++11, C++98 and C++14.
+required as from @R{} 4.0.0} (3.6.2 on Windows).  However, in earlier
+versions the default standard was that of the compiler used, often C++98
+or C++14.  Packages which are for use only with @R{} 3.6.2 or later can
+assume C++11 or specify a later standard.  However, those which may be
+used in earlier versions need to specify C++11 explicitly (@pxref{Using
+C++11 code}) or be tested under all of C++11, C++98 and C++14.
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -5416,7 +5446,20 @@ definitions cannot be merged and the linker will give an error if the
 same variable is defined in more than one object file.  To avoid this,
 all but one of the C source files should declare the variable
 @code{extern} --- which means that any such variables included in header
-files need to be declared @code{extern}.
+files need to be declared @code{extern}.  A commonly used idiom
+(including by @R{} itself) is to define all global variables as
+@code{extern} in a header, say @file{globals.h} (and nowhere else), and
+then in one (and one only) source file use
+@example
+#define extern
+# include "globals.h"
+#undef extern
+@end example
+
+A cleaner approach is not to have global variables at all, but to place
+in a single file common variables (declared @code{static}) followed by
+all the functions which make use of them: this may result in more
+efficient code.
 
 The `modern' behaviour can be seen@footnote{In principle this could
 depend on the OS, but has been checked on Linux and macOS.} by using
@@ -6331,7 +6374,8 @@ Output from code between comments
 @end example
 @noindent
 is ignored when comparing check output to reference output (a
-@file{-Ex.Rout.save} file).
+@file{-Ex.Rout.save} file).  This markup can also be used for scripts
+under @file{tests}.
 
 @findex \keyword
 @item \keyword@{@var{key}@}

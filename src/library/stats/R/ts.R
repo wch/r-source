@@ -46,7 +46,7 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
     if(missing(frequency)) frequency <- 1/deltat
     else if(missing(deltat)) deltat <- 1/frequency
 
-    if(frequency > 1 && abs(frequency - round(frequency)) < ts.eps)
+    if(frequency > 1 && 0 < (d <- abs(frequency - round(frequency))) && d < ts.eps)
 	frequency <- round(frequency)
 
     if(length(start) > 1L) {
@@ -65,8 +65,8 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
 
     if(start > end) stop("'start' cannot be after 'end'")
 
-    cycles <- (end - start)*frequency
-    if(abs(round(cycles) - cycles) > ts.eps*max(cycles, 1))
+    cycles <- as.numeric((end - start)*frequency) # as.n*(): get rid of date/time
+    if(abs(round(cycles) - cycles) > ts.eps * max(cycles, 1))
     	stop("'end' must be a whole number of cycles after 'start'")
     nobs <- floor(cycles + 1.01)
 
