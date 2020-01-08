@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 2002--2009  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -2875,7 +2875,8 @@ SEXP C_abline(SEXP args)
 		    for(; lstop > 0 && yy[lstop] <= 0 ; lstop--);
 		}
 
-		GPolyline(lstop-lstart+1, xx+lstart, yy+lstart, USER, dd);
+		if (lstop-lstart+1>0)
+		    GPolyline(lstop-lstart+1, xx+lstart, yy+lstart, USER, dd);
 #undef NS
 	    } else { /* non-log plots, possibly with log scales */
 
