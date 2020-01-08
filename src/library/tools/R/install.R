@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -67,7 +67,7 @@ if(FALSE) {
     tmpdir <- ""
     clean_on_error <- TRUE
 
-    R_runR_deps_only <- function(cmd, deps_only_env, ...) {
+    R_runR_deps_only <- function(cmd, deps_only_env, multiarch = FALSE, ...) {
         deps_only <-
             config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_",
                                              "FALSE"))
@@ -78,8 +78,14 @@ if(FALSE) {
         ## because it cannot find the tests startup file)
         env <- paste(env, "R_TESTS=")
         opts <- "--no-save --no-restore --no-echo"
-        if (deps_only)
-          opts <- paste(opts, "--no-init-file --no-site-file")
+        if (deps_only) {
+            opts <- paste(opts, "--no-init-file --no-site-file")
+            if (!multiarch)
+              ## do not use --no-environ with multiarch, because Renviron
+              ## may include architecture-specific settings that may differ
+              ## from settings of the host process architecture
+              opts <- paste(opts, "--no-environ")
+        }
         R_runR(cmd = cmd, Ropts = opts, env = env, ...)
     }
 
@@ -1644,7 +1650,7 @@ if(FALSE) {
                     starsmsg("***", "arch - ", arch)
                     out <- R_runR_deps_only(cmd,
                         deps_only_env = setRlibs(lib0, self = TRUE, quote = TRUE),
-                        arch = arch, timeout = tlim)
+                        arch = arch, timeout = tlim, multiarch = TRUE)
                     if(length(attr(out, "status")))
                         msgs <- c(msgs, arch)
                     if(length(out))
