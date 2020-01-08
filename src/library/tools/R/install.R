@@ -77,8 +77,9 @@ if(FALSE) {
         ## packages during their tests (otherwise system profile fails
         ## because it cannot find the tests startup file)
         env <- paste(env, "R_TESTS=")
-        opts <- paste(if(deps_only) "--vanilla" else "--no-save",
-                      "--no-echo")
+        opts <- "--no-save --no-restore --no-echo"
+        if (deps_only)
+          opts <- paste(opts, "--no-init-file --no-site-file")
         R_runR(cmd = cmd, Ropts = opts, env = env, ...)
     }
 
