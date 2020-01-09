@@ -5448,7 +5448,7 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 removed in C++17.
 
 There are quite a lot of other C++98 features deprecated in C++11 and
-removed in C++17, and @command{clang} 9 has started to warn about
+removed in C++17, and @command{clang} 9 and later warn about
 them. Examples include @code{bind1st}/@code{bind2nd} (use
 @code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
@@ -5473,6 +5473,12 @@ Inclusion by such headers of C-style headers such as @file{math.h} (see above).
 @noindent
 The most portable way to interface to other software with a C API is to
 use C code (which can normally be mixed with C++ code in a package).
+
+@item
+@code{reinterpret_cast} in C++ is not safe for pointers: for example the types
+may have different alignment requirements.  Use @code{memcpy} to copy
+the contents to a fresh variable of the destination type.
+@c seen in 2019 for casts to both int32 and double from a byte stream
 
 @item
 Avoid platform-specific code if at all possible, but if you need to test
