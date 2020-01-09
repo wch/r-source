@@ -150,6 +150,9 @@
       notably for \emph{vector} \code{n}, e.g. to get a \dQuote{corner} of
       a matrix, also extended for \code{array}'s of higher dimension,
       thanks to the patch proposal by Gabe Becker in \PR{17652}.
+      Consequently, optional argument \code{addrownums} is deprecated and
+      replaced by the (more general) \code{keepnums}.  Invalid (2nd arg.)
+      \code{n} now leads to typically more easily readable error messages.
 
       \item New function \code{.class2()} provides the full character
       vector of class names used for S3 method dispatch.
@@ -181,7 +184,7 @@
 
       \item \code{sequence()} is now an S3 generic, with an internally
       implemented default method, and gains arguments to
-      generate more complex sequences. Based on code from the S4Vectors
+      generate more complex sequences. Based on code from the \pkg{S4Vectors}
       Bioconductor package and the advice of Hervé Pagès.
     }
   }% end{ NEW FEATURES }

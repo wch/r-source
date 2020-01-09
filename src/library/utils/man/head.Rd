@@ -1,6 +1,6 @@
 % File src/library/utils/man/head.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{head}
@@ -36,12 +36,12 @@ head(x, \dots)
 
 
 tail(x, \dots)
-\method{tail}{default}(x, n = 6L, addrownums = FALSE, \dots)
-\method{tail}{matrix}(x, n = 6L, addrownums = TRUE, \dots) # exported as tail.matrix()
+\method{tail}{default}(x, n = 6L, keepnums = FALSE, addrownums, \dots)
+\method{tail}{matrix}(x, n = 6L, keepnums = TRUE, addrownums, \dots) # exported as tail.matrix()
 ## NB: The methods for 'data.frame', 'array', and 'table'
 ##     are identical to the  'matrix'  one
 
-\method{tail}{ftable}(x, n = 6L, addrownums = FALSE, \dots)
+\method{tail}{ftable}(x, n = 6L, keepnums = FALSE, addrownums, \dots)
 \method{tail}{function}(x, n = 6L, \dots)
 }
 \arguments{
@@ -53,9 +53,13 @@ tail(x, \dots)
     \code{n[i]} indices in that dimension, while a negative value
     excludes the last/first \code{abs(n[i])}, including all remaining
     indices. \code{NA} or non-specified values (when \code{length(n) <
-      length(dim(x))}) select all indices in that dimension.}
-  \item{addrownums}{if there are no row names, create them from the row
-    numbers.}
+      length(dim(x))}) select all indices in that dimension. Must
+    contain at least one non-missing value.}
+  \item{keepnums}{in each dimension, if no names in that dimension are
+    present, create them using the indices included in that dimension.}
+  \item{addrownums}{deprecated - \code{keepnums} should be used
+    instead. Taken as the value of \code{keepnums} if it is explicitly
+    set when \code{keepnums} is not.}
   \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
@@ -91,6 +95,17 @@ tail(x, \dots)
   \code{\link{array}}s, the result corresponds to \code{x[.., drop=FALSE]}.
   For \code{\link{ftable}} objects \code{x}, a transformed \code{format(x)}.
 }
+\note{
+  For the output of \code{tail} when \code{keepnums} is \code{TRUE},
+  dimensions higher than 2 which were subset (ie corresponded to a
+  non-missing element of \code{n}), and did not already have
+  non-\code{NULL} dimnames are given dimnames of the \emph{original
+    numeric indices included in that dimension}. This means that, e.g.,
+  for 3-dimesional array \code{arr},  \code{tail(arr, c(2,2,-1))[ , ,
+    2]} and \code{tail(arr, c(2,2,-1))[ , , "2"]} may both be valid but
+  have completely different meanings.
+}
+
 \author{
   Patrick Burns, improved and corrected by R-Core. Negative argument
   added by Vincent Goulet.  Multi-dimension support added by Gabriel Becker.
@@ -118,6 +133,11 @@ tail(freeny.y)
 tail(iris3)
 tail(iris3, c(6L, 2L))
 tail(iris3, c(6L, -1L, 2L))
+
+## iris with dimnames stripped
+a3d <- iris3 ; dimnames(a3d) <- NULL
+tail(a3d, c(6, -1, 2)) # keepnums = TRUE is default here!
+tail(a3d, c(6, -1, 2), keepnums = FALSE)
 
 ## data frame w/ a (non-standard) attribute:
 treeS <- structure(trees, foo = "bar")

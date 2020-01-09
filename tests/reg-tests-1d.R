@@ -3,6 +3,7 @@
 pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
 tryCid <- function(expr) tryCatch(expr, error = identity)
+identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
 
 ## body() / formals() notably the replacement versions
 x <- NULL; tools::assertWarning(   body(x) <-    body(mean))	# to be error
@@ -1396,8 +1397,7 @@ d3.0 <- d3; d3.0 $HH <- m0
 d3.d0<- d3; d3.d0$HH <- d0
 stopifnot(exprs = {
     identical(unname(as.matrix(d0)), m0)
-    identical(capture.output(dd),
-              capture.output(d.))
+    identCO  (dd, d.)
     identical(as.matrix(d3.0 ), array(1:2, dim = 2:1, dimnames = list(NULL, "A")) -> m21)
     identical(as.matrix(d3.d0), m21)
     identical(as.matrix(dd), (cbind(n = 1:3) -> m.))
@@ -3338,30 +3338,103 @@ stopifnot(exprs = {
 })
 ##
 ## For all arrays 'a',  head(a, 1)  should correspond to  a[1, {,}* , drop = FALSE]
+## length(n) > length(dim(x)) (or 1L if dim(x) is NULL) is an error
 str(Alis <- lapply(1:4, function(n) {d <- 1+(1:n); array(seq_len(prod(d)), d) }))
 h2 <- lapply(Alis, head, 2)
+t2 <- lapply(Alis, head, 2)
+tools::assertError( head(Alis[[1]], c(1, NA)), verbose=TRUE)
+tools::assertError( tail(1:5, c(1, NA)), verbose=TRUE)
 h1 <- lapply(Alis, head, 1)
 t1 <- lapply(Alis, tail, 1)
 dh1 <- lapply(h1, dim)
-h1N <- lapply(Alis, head, c(1, NA))
-t1N <- lapply(Alis, tail, c(1, NA))
+## n =1L and n=c(1, NA) equivalent (only ones with 2+ dimensions)
+Alis2p <- Alis[-1]
+h1N <- lapply(Alis2p, head, c(1, NA))
+t1N <- lapply(Alis2p, tail, c(1, NA))
 Foolis <- lapply(Alis, `class<-`, "foo")
+tools::assertError( head(Foolis[[1]], c(1, NA)), verbose=TRUE)
 h1F  <- lapply(Foolis, head, 1)
-h1FN <- lapply(Foolis, head, c(1, NA))
+h2F  <- lapply(Foolis, head, 2)
 t1F  <- lapply(Foolis, tail, 1)
-t1FN <- lapply(Foolis, tail, c(1, NA))
+t2F  <- lapply(Foolis, tail, 2)
+Foolis2p <- Foolis[-1]
+h1FN <- lapply(Foolis2p, head, c(1, NA))
+t1FN <- lapply(Foolis2p, tail, c(1, NA))
 stopifnot(exprs = {
     identical(h2, Alis)
+    identical(t2, Alis)
     vapply(h1, is.array, NA)
     vapply(t1, is.array, NA)
     identical(dh1, lapply(1:4, function(n) seq_len(n+1L)[-2L]))
     identical(dh1, lapply(t1, dim))
-    identical(h1, h1N)
-    identical(t1, t1N)
-    identical(h1F, h1FN)
-    identical(t1F, t1FN)
+    identical(h1,  c(list(Alis  [[1]][1, drop=FALSE]), h1N))
+    identical(t1,  c(list(Alis  [[1]][2, drop=FALSE]), t1N))
+    identical(h1F, c(list(Foolis[[1]][1, drop=FALSE]), h1FN))
+    identical(t1F, c(list(Foolis[[1]][2, drop=FALSE]), t1FN))
 })
 ## This was *not the case for  1d arrays in R <= 3.6.x
+##
+tools::assertWarning(t3 <- tail(iris3[,1,], addrownums = FALSE), verbose=TRUE)
+stopifnot( identical(t3,   tail(iris3[,1,],  keepnums  = FALSE)) )
+##
+## 4-dim array
+## 4th dimension failed transiently when I using switch() in keepnums logic
+adims <- c(11, 3, 3, 3)
+arr <- array(seq_len(prod(adims)) * 100, adims)
+headI4 <- function(M, n) {
+    d <- dim(M)
+    M[head(seq_len(d[1]), n[1]),
+      head(seq_len(d[2]), n[2]),
+      head(seq_len(d[3]), n[3]),
+      head(seq_len(d[4]), n[4]),
+      drop = FALSE]
+}
+tailI4 <- function(M, n) {
+    d <- dim(M)
+    M[tail(seq_len(d[1]), n[1]),
+      tail(seq_len(d[2]), n[2]),
+      tail(seq_len(d[3]), n[3]),
+      tail(seq_len(d[4]), n[4]),
+      drop = FALSE]
+}
+
+n.set2 <- lapply(-2:2, rep, times = 4)
+stopifnot(
+    vapply(n.set2, function(n) identCO (head(arr, n), headI4(arr, n)), NA),
+    vapply(n.set2, function(n) identCO (tail (arr, n, keepnums=FALSE),
+                                        tailI4(arr, n)), NA),
+    vapply(n.set2, function(n) all.equal(tail(arr, n), tailI4(arr, n),
+                                         check.attributes=FALSE), NA))
+
+## full output
+aco <- capture.output(print(arr))
+## extract all dimnames from full output
+getnames <- function(txt, ndim = 4) {
+    el <- which(!nzchar(txt))
+    ## first handled elsewhere, last is just trailing line
+    el <- el[-c(1L, length(el))]
+    hdln  <- c(1L, el[seq(2, length(el), by = 2)] - 1L)
+    hdraw <- lapply(txt[hdln], function(tx) strsplit(tx, ", ")[[1L]])
+
+    ## 1 is higher indices, 2 is blank
+    cnms <- strsplit(trimws(txt[3], which = "left"), split = "[[:space:]]+")[[1]]
+    cnms <- cnms[nzchar(cnms)]
+    matln <- 4:(el[1] - 1L)
+    rnms <- gsub("^([^]]+]).*", "\\1", txt[matln])
+    hdnms <- lapply(3:ndim, ## blank ones are left in so this is ok
+                    function(i) unique(sapply(hdraw, `[`, i )))
+    c(list(rnms, cnms),
+      hdnms)
+}
+fpnms <- getnames(aco, length(adims))
+## ensure all dimnames correct for keepnums = TRUE
+stopifnot(
+    vapply(n.set2, function(n) identical(dimnames(tail(arr, n)),
+                                         mapply(function(x, ni) if(ni != 0) tail(x, ni),
+                                                x = fpnms, ni = n, SIMPLIFY = FALSE)),
+           NA)
+)
+##
 ##
 ## matrix of "language" -- with expression()
 is.arr.expr <- function(x) is.array(x) && is.expression(x)
@@ -3468,6 +3541,7 @@ stopifnot(identical(w0[sel], w1[sel]), identical(w0[sel], wII[sel]))
 ## round(x, n) "to even" fails in some cases -- PR#17668
 dd <- 0:12
 x55 <- 55 + as.numeric(vapply(dd+1, function(k) paste0(".", strrep("5",k)), ""))
+
 rnd.x <- vapply(dd+1L, function(k) round(x55[k], dd[k]), 1.1)
 noquote(formatC(cbind(x55, dd, rnd.x), w=1, digits=15))
 stopifnot(exprs = {
@@ -3501,7 +3575,7 @@ for(digi in c(0:10, 500L, 1000L, 100000L, .Machine$integer.max))
               identical(i+round(1/4, digi), round(i+1/4, digi)))
 x <- 7e-304; rx <- round(x, digits=307:322); xx <- rep(x, length(rx))
 print(cbind(rx), digits=16) # not really what ideally round() should do; but "ok"
-          all.equal(rx, xx, tol = 0)# show "average relative difference"
+          all.equal(rx, xx, tol = 0)# show "average relative difference" ("5.6856 e -16")
 stopifnot(all.equal(rx, xx, tol = 1e-4)) # tol may change in future
 ## the round(i, *) failed, for ~ 2 days, in R-devel
 e <- 5.555555555555555555555e-308
