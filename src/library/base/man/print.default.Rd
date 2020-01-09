@@ -1,6 +1,6 @@
 % File src/library/base/man/print.default.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print.default}
@@ -13,7 +13,7 @@
 \usage{
 \method{print}{default}(x, digits = NULL, quote = TRUE,
       na.print = NULL, print.gap = NULL, right = FALSE,
-      max = NULL, useSource = TRUE, \dots)
+      max = NULL, width = NULL, useSource = TRUE, \dots)
 }
 \arguments{
   \item{x}{the object to be printed.}
@@ -38,6 +38,9 @@
     maximum number of entries to be printed.  The default, \code{NULL},
     uses \code{\link{getOption}("max.print")}; see that help page for more
     details.}
+  \item{width}{controls the maximum number of columns on a line used in
+    printing vectors, matrices, etc.  The default, \code{NULL}, uses
+    \code{\link{getOption}("digits")}; see that help page for more details.}
   \item{useSource}{logical, indicating whether to use source
     references or copies rather than deparsing \link{language objects}.
     The default is to use the original source if it is available.}

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2019  The R Core Team.
+ *  Copyright (C) 1999--2020  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -411,7 +411,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # undef NAMED
 # undef SET_NAMED
 # define NAMED(x) REFCNT(x)
-/* no definition for SET_NAMED; any calls will use the one in memory.c */    
+/* no definition for SET_NAMED; any calls will use the one in memory.c */
 # define ENSURE_NAMEDMAX(v) do { } while (0)
 # define ENSURE_NAMED(v) do { } while (0)
 #else
@@ -1086,6 +1086,9 @@ Rcomplex Rf_asComplex(SEXP x);
 typedef struct R_allocator R_allocator_t;
 #endif
 
+typedef enum { iSILENT, iWARN, iERROR } warn_type;
+
+
 /* Other Internally Used Functions, excluding those which are inline-able*/
 
 char * Rf_acopy_string(const char *);
@@ -1142,6 +1145,8 @@ SEXP Rf_GetColNames(SEXP);
 void Rf_GetMatrixDimnames(SEXP, SEXP*, SEXP*, const char**, const char**);
 SEXP Rf_GetOption(SEXP, SEXP); /* pre-2.13.0 compatibility */
 SEXP Rf_GetOption1(SEXP);
+int Rf_FixupDigits(SEXP, warn_type);
+int Rf_FixupWidth (SEXP, warn_type);
 int Rf_GetOptionDigits(void);
 int Rf_GetOptionWidth(void);
 SEXP Rf_GetRowNames(SEXP);
@@ -1546,6 +1551,8 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define findVar			Rf_findVar
 #define findVarInFrame		Rf_findVarInFrame
 #define findVarInFrame3		Rf_findVarInFrame3
+#define FixupDigits		Rf_FixupDigits
+#define FixupWidth		Rf_FixupWidth
 #define GetArrayDimnames	Rf_GetArrayDimnames
 #define getAttrib		Rf_getAttrib
 #define getCharCE		Rf_getCharCE

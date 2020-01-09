@@ -970,7 +970,9 @@ dat[3, 1] <- dat[4, 2] <- NA
 lm.influence(lm(y ~ x1 + x2, data=dat, weights=wt, na.action=na.omit))
 lm.influence(lm(y ~ x1 + x2, data=dat, weights=wt, na.action=na.exclude))
 lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.omit))
+print(width = 99,
 lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.exclude))
+) ; stopifnot(getOption("width") == 80)
 lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.omit))
 lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.exclude))
 lm.influence(lm(y ~ 0, data=dat, na.action=na.exclude))
@@ -1880,10 +1882,11 @@ d.AD <- data.frame(treatment = gl(3,3), outcome = gl(3,1,9),
                    counts = c(18,17,15,20,10,20,25,13,12))
 fit <- glm(counts ~ outcome + treatment, family = poisson,
            data = d.AD, weights = c(0, rep(1,8)))
-residuals(fit, type="working") # first was NA < 2.4.0
+print(residuals(fit, type="working"),
+      width = 37) # first was NA < 2.4.0 //  using new 'width'
 ## working residuals were NA for zero-weight cases.
 fit2 <- glm(counts ~ outcome + treatment, family = poisson,
-           data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
+            data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
 for(z in c("response", "working", "deviance", "pearson"))
     stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
                         scale = 1, tolerance = 1e-10))

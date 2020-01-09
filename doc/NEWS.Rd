@@ -186,6 +186,11 @@
       implemented default method, and gains arguments to
       generate more complex sequences. Based on code from the \pkg{S4Vectors}
       Bioconductor package and the advice of Hervé Pagès.
+
+      \item \code{print()}'s default method and many other methods (by
+      calling the default eventually and passing \code{...}) now obey a new
+      optional \code{width} argument, the user not needing to set and unset
+      the option.
     }
   }% end{ NEW FEATURES }
 

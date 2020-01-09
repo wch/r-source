@@ -137,26 +137,40 @@ SEXP GetOption1(SEXP tag)
     return CAR(opt);
 }
 
-int GetOptionWidth(void)
+int FixupWidth(SEXP width, warn_type warn)
 {
-    int w;
-    w = asInteger(GetOption1(install("width")));
-    if (w < R_MIN_WIDTH_OPT || w > R_MAX_WIDTH_OPT) {
-	warning(_("invalid printing width, used 80"));
-	return 80;
+    int w = asInteger(width);
+    if (w == NA_INTEGER || w < R_MIN_WIDTH_OPT || w > R_MAX_WIDTH_OPT) {
+	switch(warn) {
+	case iWARN: warning(_("invalid printing width %d, used 80"), w);
+	case iSILENT:
+	    return 80; // for SILENT and WARN
+	case iERROR: error(_("invalid printing width"));
+	}
     }
     return w;
 }
-
-int GetOptionDigits(void)
+int GetOptionWidth(void)
 {
-    int d;
-    d = asInteger(GetOption1(install("digits")));
-    if (d < R_MIN_DIGITS_OPT || d > R_MAX_DIGITS_OPT) {
-	warning(_("invalid printing digits, used 7"));
-	return 7;
+    return FixupWidth(GetOption1(install("width")), iWARN);
+}
+
+int FixupDigits(SEXP digits, warn_type warn)
+{
+    int d = asInteger(digits);
+    if (d == NA_INTEGER || d < R_MIN_DIGITS_OPT || d > R_MAX_DIGITS_OPT) {
+	switch(warn) {
+	case iWARN: warning(_("invalid printing digits %d, used 7"), d);
+	case iSILENT:
+	    return 7; // for SILENT and WARN
+	case iERROR: error(_("invalid printing digits %d"), d);
+	}
     }
     return d;
+}
+int GetOptionDigits(void)
+{
+    return FixupDigits(GetOption1(install("digits")), iWARN);
 }
 
 attribute_hidden

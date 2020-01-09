@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2019	The R Core Team.
+ *  Copyright (C) 2000-2020	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -234,20 +234,19 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP orig = PROTECT(CONS(R_NilValue, args));
     SEXP prev = orig;
 
+    // The following relies on the *order* of args, as set inside (R level) print.default() :
     if(!isNull(CAR(args))) {
-	data.digits = asInteger(CAR(args));
-	if (data.digits == NA_INTEGER ||
-	    data.digits < R_MIN_DIGITS_OPT ||
-	    data.digits > R_MAX_DIGITS_OPT)
-	    error(_("invalid '%s' argument"), "digits");
+	data.digits = FixupDigits(CAR(args), iERROR);
     }
     advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
+    // quote :
     data.quote = asLogical(CAR(args));
     if(data.quote == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "quote");
     advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
+    // na.print :
     SEXP naprint = CAR(args);
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
@@ -258,6 +257,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
+    // print.gap :
     SEXP gap = CAR(args);
     if(!isNull(gap)) {
 	data.gap = asInteger(gap);
@@ -266,11 +266,13 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
+    // right :
     data.right = (Rprt_adj) asLogical(CAR(args)); /* Should this be asInteger()? */
     if(data.right == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "right");
     advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
+    // max :
     SEXP max = CAR(args);
     if(!isNull(max)) {
 	data.max = asInteger(max);
@@ -280,6 +282,13 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
+    // width :
+    SEXP width = CAR(args);
+    if(!isNull(width))
+	data.width = FixupWidth(width, iERROR);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
+
+    // useSource :
     data.useSource = asLogical(CAR(args));
     if(data.useSource == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "useSource");
@@ -1136,7 +1145,7 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 /* Fortran-callable error routine for lapack */
 
 #ifdef FC_LEN_T
-void NORET F77_NAME(xerbla)(const char *srname, int *info, 
+void NORET F77_NAME(xerbla)(const char *srname, int *info,
 			    const FC_LEN_T srname_len)
 #else
 void NORET F77_NAME(xerbla)(const char *srname, int *info)
