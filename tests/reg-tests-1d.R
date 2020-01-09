@@ -3538,7 +3538,7 @@ stopifnot(identical(w0[sel], w1[sel]), identical(w0[sel], wII[sel]))
 ## Inf-Inf  etc broken in paired case in R <= 3.6.x
 
 
-## round(x, n) "to even" fails in some cases -- PR#17668
+## round(x, n) "to even" failed in some cases -- PR#17668
 dd <- 0:12
 x55 <- 55 + as.numeric(vapply(dd+1, function(k) paste0(".", strrep("5",k)), ""))
 
@@ -3597,6 +3597,25 @@ stopifnot(exprs = {
               check.attributes = FALSE, countEQ=TRUE, tol=1e-14)
 })
 ## was not true for digits = 309, 310 in R <= 3.6.x
+##
+## round(*, digits < 0)
+M <- .Machine$double.xmax
+rM <- round(M, -(1:400))
+stopifnot(exprs = {
+    rM[(1:400) > 308] == 0
+    identical(which(rM == Inf),
+              c(298L, 299L, 304:308) -> II)
+    is.finite(rM[-II])
+})
+## had many Inf and NaN; now looks optimal: 'Inf' are "correct" rounding up
+##
+(mm <- 2^-(1022+52)) # denormalized smallest number
+mm == 1.49*mm # yes, that's "denormal"
+dr <- diff(rmm <- round(mm, 301:500))
+(inz <- which(dr != 0))
+stopifnot(length(inz) == 1, dr[inz] == mm, dr[-inz] == 0,
+          rmm[-(1:23)] == mm)
+## in R <= 3.6.x, all(rmm == 0)
 options(op)
 
 

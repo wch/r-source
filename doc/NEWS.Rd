@@ -395,8 +395,12 @@
       by Johannes Ranke and Kirill Müller.
 
       \item \code{round()} correctly rounds \dQuote{to even} in more cases,
-      thanks to increased internal accuracy via code simplification
-      proposed by Adam Wheeler in his report (\PR{17668}).
+      thanks to a more careful algorithm prompted by the report from Adam
+      Wheeler in \PR{17668}.
+      (The current algorithm will be tweaked further before release.)
+      \cr
+      \code{round(x, dig)} for \emph{negative} digits is much more rational
+      now, notably for large \eqn{|dig|}.
 
       \item Inheritance information on S4 classes is maintained more
       consistently, particularly in the case of class unions (in part
