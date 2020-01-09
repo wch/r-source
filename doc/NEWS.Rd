@@ -409,7 +409,7 @@
       \item \code{is()} behaves more robustly when \code{class2} is a
       \code{classRepresentation} object.
 
-      \item The warning message when attempting to export an nonexistant
+      \item The warning message when attempting to export an nonexistent
       class is now more readable; thanks to Thierry Onkelinx for
       recognizing the problem.
     }

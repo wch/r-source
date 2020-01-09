@@ -97,11 +97,11 @@ tail(x, \dots)
 }
 \note{
   For the output of \code{tail} when \code{keepnums} is \code{TRUE},
-  dimensions higher than 2 which were subset (ie corresponded to a
+  dimensions higher than 2 which were subset (i.e., corresponded to a
   non-missing element of \code{n}), and did not already have
   non-\code{NULL} dimnames are given dimnames of the \emph{original
     numeric indices included in that dimension}. This means that, e.g.,
-  for 3-dimesional array \code{arr},  \code{tail(arr, c(2,2,-1))[ , ,
+  for 3-dimensional array \code{arr},  \code{tail(arr, c(2,2,-1))[ , ,
     2]} and \code{tail(arr, c(2,2,-1))[ , , "2"]} may both be valid but
   have completely different meanings.
 }
