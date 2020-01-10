@@ -3604,7 +3604,7 @@ rM <- round(M, -(1:400))
 stopifnot(exprs = {
     rM[(1:400) > 308] == 0
     identical(which(rM == Inf),
-              c(298L, 299L, 304:308) -> II)
+              c(if(!b64) 294L, 298L, 299L, 304:308) -> II)
     is.finite(rM[-II])
 })
 ## had many Inf and NaN; now looks optimal: 'Inf' are "correct" rounding up
