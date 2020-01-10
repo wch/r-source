@@ -412,6 +412,9 @@
       \item The warning message when attempting to export an nonexistent
       class is now more readable; thanks to Thierry Onkelinx for
       recognizing the problem.
+
+      \item \code{scan()} issues with UTF-8 data when running in DBCS locale
+      have been resolved (\PR{16520},\PR{16584}).
     }
   }
 }

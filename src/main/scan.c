@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2018   The R Core Team.
+ *  Copyright (C) 1998-2020   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -330,7 +330,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 */
     char *bufp;
     int c, quote, filled, nbuf = MAXELTSIZE, m, mm = 0;
-    Rboolean dbcslocale = (MB_CUR_MAX == 2);
+    Rboolean dbcslocale = (MB_CUR_MAX == 2) && !d->isUTF8 && !d->isLatin1;
 
     m = 0;
     filled = 1;
