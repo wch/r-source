@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2018
-@set FAQ_DATE @value{FAQ_YEAR}-10-18
+@set FAQ_YEAR 2020
+@set FAQ_DATE @value{FAQ_YEAR}-01-10
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -812,10 +812,10 @@ Please always use the @acronym{URL} of the master site when referring to
 
 R is released under the
 @url{https://www.gnu.org/licenses/old-licenses/gpl-2.0.html,,
-@acronym{GNU} General Public License (@acronym{GPL}), version 2}.  If
-you have any questions regarding the legality of using R in any
-particular situation you should bring it up with your legal counsel.  We
-are in no position to offer legal advice.
+@acronym{GNU} General Public License (@acronym{GPL}), version 2 or
+version 3}.  If you have any questions regarding the legality of using R
+in any particular situation you should bring it up with your legal
+counsel.  We are in no position to offer legal advice.
 
 It is the opinion of the R Core Team that one can use R for commercial
 purposes (e.g., in business or in consulting).  The @acronym{GPL}, like
