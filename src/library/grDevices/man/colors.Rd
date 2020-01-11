@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/colors.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2019 R Core Team
 % Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -27,6 +27,9 @@ colours(distinct = FALSE)
   An even wider variety of colors can be created with primitives
   \code{rgb}, \code{hsv} and \code{hcl}, or the derived \code{rainbow},
   \code{heat.colors}, etc.
+
+  \code{"transparent"} is not a color and so not listed, but it is
+  accepted as a color specification.
 }
 \value{
   A character vector containing all the built-in color names.
