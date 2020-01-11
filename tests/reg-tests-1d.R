@@ -3580,7 +3580,7 @@ stopifnot(all.equal(rx, xx, tol = 1e-4)) # tol may change in future
 ## the round(i, *) failed, for ~ 2 days, in R-devel
 e <- 5.555555555555555555555e-308
 (e10 <- e * 1e298) # 5.555556e-10 -- much less extreme, for comparison
-d <- 20:1 ;   s.e <- signif(e, d) ; names(s.e) <- paste0("d", d)
+ds <- 20:1 ;   s.e <- signif(e, ds) ; names(s.e) <- paste0("d", ds)
 
 ## currently, for round,  digits := pmin(308, digits) -- not going further than 310
 d <- 310:305; r.e   <- round (e,   d) ; names(r.e)   <- paste0("d", d)
@@ -3588,10 +3588,11 @@ d <- d - 298; r.e10 <- round (e10, d) ; names(r.e10) <- paste0("d", d)
 op <- options(digits=18)
 cbind(signif = c(e, s.e)) ##-- this always rounds up (= to even)
 cbind( round = c(e, r.e), round.10 = c(e10, r.e10))
+iSub <- 6 : (18 + capabilities("long.double"))
 stopifnot(exprs = {
     ## the regularity of signif()'s result is amazing:
-    is.integer(d <- 14:1)
-    all.equal(log10(abs(1 - tail(diff(unname(s.e)), -5) * 1e308*10^d / 4)),
+    is.integer(d <- ds[iSub] - 1L)
+    all.equal(log10(abs(1 -  diff(unname(s.e))[iSub] * 1e308*10^d / 4)),
               d - 16, tol = 0.08) # tol: seen 0.0294 / 0.02988 (Win 32b)
     all.equal(r.e * 1e298, r.e10,
               check.attributes = FALSE, countEQ=TRUE, tol=1e-14)
