@@ -4333,6 +4333,9 @@ in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}
 and from @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}.)
 Default: false (but true for CRAN submission checks except on Windows).
 
+@item _R_CHECK_ORPHANED_
+Check if dependencies are orphaned packages.
+Default: false (but true for CRAN submission checks)
 @end vtable
 
 CRAN's submission checks use something like
@@ -4375,6 +4378,7 @@ _R_CHECK_THINGS_IN_CHECK_DIR_=true
 _R_CHECK_THINGS_IN_TEMP_DIR_=true
 _R_CHECK_BASHISMS_=true
 _R_CLASS_MATRIX_ARRARY_=true
+_R_CHECK_ORPHANED_=true
 @end example
 
 @noindent
