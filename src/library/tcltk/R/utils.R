@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -196,20 +196,7 @@ tk_choose.files <-
         fff <- paste0("{", ff, "}")
         args <- c(args, filetypes = paste(fff, collapse = " "))
     }
-    res <- tclvalue(do.call(tcl, args))
-    if(nzchar(res))
-        if(multi) {
-            ## Filenames with spaces will be surrounded by { }
-            ans <- character()
-            pat <- "([^{])*\\{([^}]*)\\}(.*)"
-            while(grepl(pat, res)) {
-                ans <- c(ans, sub(pat, "\\2", res))
-                res <- sub(pat, "\\1\\3", res)
-            }
-            ans <- c(ans, strsplit(res, " ", fixed = TRUE)[[1]])
-            ans[nzchar(ans)]
-        } else res
-    else character()
+    as.character(do.call(tcl, args))
 }
 
 
