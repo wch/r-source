@@ -3,7 +3,7 @@
  *  file dialogs.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2017  The R Core Team
+ *  Copyright (C) 2005--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP env)
     title = translateChar(STRING_ELT(tmp, 0));
     tmp = CAR(args); args = CDR(args);
     if(!isString(tmp) || length(tmp) < 1 || STRING_ELT(tmp, 0) == NA_STRING)
-	errorcall(call, "invalid '%s' argument", "Label");
+	errorcall(call, "invalid '%s' argument", "label");
     label = translateChar(STRING_ELT(tmp, 0));
     haveLabel = strlen(label) > 0;
     d = asReal(CAR(args)); args = CDR(args);
