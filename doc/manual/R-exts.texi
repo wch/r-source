@@ -8702,11 +8702,12 @@ memory all belongs to @R{}, @code{valgrind} would not (and did not)
 detect the problem in an uninstrumented build of @R{}.  In this example
 the stack trace was enough to isolate and fix the bug, which was in
 @code{tsc_transpose}, and in this example running under
-@code{gctorture()} did not provide any additional information.  When the
-stack trace is not sufficiently informative the option
-@option{--db-attach=yes} to @code{valgrind} may be helpful.  This starts
-a post-mortem debugger (by default @code{gdb}) so that variables in the
-C code can be inspected (@pxref{Inspecting R objects}).
+@code{gctorture()} did not provide any additional information.
+@c Was removed: see https://sourceforge.net/p/valgrind/mailman/message/34306867/
+@c When the stack trace is not sufficiently informative the option
+@c @option{--db-attach=yes} to @code{valgrind} may be helpful.  This starts
+@c a post-mortem debugger (by default @code{gdb}) so that variables in the
+@c C code can be inspected (@pxref{Inspecting R objects}).
 
 @command{valgrind} is good at spotting the use of uninitialized values:
 use option @option{--track-origins=yes} to show where these originated
