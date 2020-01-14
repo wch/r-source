@@ -5450,8 +5450,7 @@ add_dummies <- function(dir, Log)
                          "many_depends",
                          "skipped",
                          "hdOnly",
-                         "orphaned2",
-                         "orphaned", ## change later
+                         "orphaned2", "orphaned",
                          if(!check_incoming) "bad_engine")
             if(!all(names(res) %in% allowed)) {
                 errorLog(Log)
@@ -5463,16 +5462,16 @@ add_dummies <- function(dir, Log)
                            "by setting the environment variable",
                            "_R_CHECK_FORCE_SUGGESTS_",
                            "to a false value.\n\n")
-                if(length(res$orphaned2))
-                    wrapLog("Suggested packages should be used conditionally:",
-                            "this is particularly important for",
-                            "orphaned ones\n\n")
                 wrapLog(msg_DESCRIPTION)
                 summaryLog(Log)
                 do_exit(1L)
             } else {
-                noteLog(Log)
+                if(length(res[["orphaned"]])) warningLog(Log) else noteLog(Log)
                 printLog0(Log, paste(out, collapse = "\n"))
+                ## if(length(res$orphaned2))
+                ##     wrapLog("\nSuggested packages need to be used conditionally:",
+                ##             "this is particularly important for",
+                ##             "orphaned ones.\n")
             }
         } else resultLog(Log, "OK")
     }
@@ -6033,7 +6032,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_DATALIST_" = "TRUE")
         if(!WINDOWS) Sys.setenv("_R_CHECK_BASHISMS_" = "TRUE")
         Sys.setenv("_R_CLASS_MATRIX_ARRAY_" = "TRUE")
-        ## Sys.setenv("_R_CHECK_ORPHANED_" = "TRUE")
+        Sys.setenv("_R_CHECK_ORPHANED_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
