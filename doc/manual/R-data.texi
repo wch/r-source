@@ -81,27 +81,64 @@ Many volunteers have contributed to the packages used here.  The
 principal authors of the packages mentioned are
 
 @quotation
-@multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
-@item @CRANpkg{DBI} @tab David A. James
-@item @CRANpkg{dataframes2xls} @tab Guido van Steen
-@item @CRANpkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
-@item @CRANpkg{gdata} @tab Gregory R. Warnes
-@item @CRANpkg{ncdf4} @tab David Pierce
-@item @CRANpkg{rJava} @tab Simon Urbanek
-@item @CRANpkg{RJDBC} @tab Simon Urbanek
-@item @CRANpkg{RMySQL} @tab David James and Saikat DebRoy
-@item @CRANpkg{RNetCDF} @tab Pavel Michna
-@item @CRANpkg{RODBC} @tab Michael Lapsley and Brian Ripley
-@item @CRANpkg{ROracle} @tab David A, James
-@item @CRANpkg{RPostgreSQL} @tab Sameer Kumar Prayaga and Tomoaki Nishiyama
-@item @pkg{RSPerl} @tab Duncan Temple Lang
-@item @pkg{RSPython} @tab Duncan Temple Lang
-@item @CRANpkg{RSQLite} @tab David A, James
-@item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
-@item @CRANpkg{WriteXLS} @tab Marc Schwartz
-@item @CRANpkg{XLConnect} @tab Mirai Solutions GmbH
-@item @CRANpkg{XML} @tab Duncan Temple Lang
-@end multitable
+@table @asis
+@item @CRANpkg{DBI}:
+David A. James
+
+@item @CRANpkg{dataframes2xls}:
+Guido van Steen
+
+@item @CRANpkg{foreign}:
+Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
+
+@item @CRANpkg{gdata}:
+Gregory R. Warnes
+
+@item @CRANpkg{ncdf4}:
+David Pierce
+
+@item @CRANpkg{rJava}:
+Simon Urbanek
+
+@item @CRANpkg{RJDBC}:
+Simon Urbanek
+
+@item @CRANpkg{RMySQL}:
+David James and Saikat DebRoy
+
+@item @CRANpkg{RNetCDF}:
+Pavel Michna
+
+@item @CRANpkg{RODBC}:
+Michael Lapsley and Brian Ripley
+
+@item @CRANpkg{ROracle}:
+David A. James
+
+@item @CRANpkg{RPostgreSQL}:
+Sameer Kumar Prayaga and Tomoaki Nishiyama
+
+@item @pkg{RSPerl}:
+Duncan Temple Lang
+
+@item @pkg{RSPython}:
+Duncan Temple Lang
+
+@item @CRANpkg{RSQLite}:
+David A. James
+
+@item @pkg{SJava}:
+John Chambers and Duncan Temple Lang
+
+@item @CRANpkg{WriteXLS}:
+Marc Schwartz
+
+@item @CRANpkg{XLConnect}:
+Mirai Solutions GmbH
+
+@item @CRANpkg{XML}:
+Duncan Temple Lang
+@end table
 @end quotation
 
 Brian Ripley is the author of the support for connections.
