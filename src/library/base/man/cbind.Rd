@@ -152,20 +152,23 @@ rbind(\dots, deparse.level = 1)
   \enumerate{
     \item For each argument we get the list of possible class
     memberships from the class attribute.
-
+    
     \item We inspect each class in turn to see if there is an
     applicable method.
 
-    \item If we find an applicable method we make sure that it is
-     identical to any method determined for prior arguments.
-     If it is identical, we proceed, otherwise we immediately
-     drop through to the default code.
-   }
-   If you want to combine other objects with data frames, it may be
-   necessary to coerce them to data frames first.  (Note that this
-   algorithm can result in calling the data frame method if all the
-   arguments are either data frames or vectors, and this will result in
-   the coercion of character vectors to factors.)
+    \item If we find a method, we use it.  Otherwise, if there was an S4
+    object among the arguments, we try S4 dispatch; otherwise, we use
+    the default code.
+  }
+
+  (Before \R 4.0.0, an applicable method found was used only if
+  identical to any method determined for prior arguments.)
+
+  If you want to combine other objects with data frames, it may be
+  necessary to coerce them to data frames first.  (Note that this
+  algorithm can result in calling the data frame method if all the
+  arguments are either data frames or vectors, and this will result in
+  the coercion of character vectors to factors.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
