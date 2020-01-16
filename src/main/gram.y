@@ -440,7 +440,6 @@ expr	: 	NUM_CONST			{ $$ = $1;	setId( $$, @$); }
 	|	expr '/' expr			{ $$ = xxbinary($2,$1,$3);	setId( $$, @$); }
 	|	expr '^' expr 			{ $$ = xxbinary($2,$1,$3);	setId( $$, @$); }
 	|	expr SPECIAL expr		{ $$ = xxbinary($2,$1,$3);	setId( $$, @$); }
-	|	expr '%' expr			{ $$ = xxbinary($2,$1,$3);	setId( $$, @$); }
 	|	expr '~' expr			{ $$ = xxbinary($2,$1,$3);	setId( $$, @$); }
 	|	expr '?' expr			{ $$ = xxbinary($2,$1,$3);	setId( $$, @$); }
 	|	expr LT expr			{ $$ = xxbinary($2,$1,$3);	setId( $$, @$); }
