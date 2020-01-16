@@ -3106,25 +3106,32 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 
     ## (added in 4.0.0) Check for orphaned packages.
     if (config_val_to_logical(Sys.getenv("_R_CHECK_ORPHANED_", "FALSE"))) {
-        exceptions <- c('XML', 'RJSONIO', 'lpSolve', 'SuppDists')
+        exceptions <- c('XML', 'lpSolve', 'SuppDists')
         ## empty fields are list().
         strict <- setdiff(unique(c(as.character(depends),
                                    as.character(imports),
                                    as.character(links))),
                           c(exceptions, bad_depends$required_but_not_installed))
-        ## This assumes the dependencies are installed: strict
-        ## dependencies need to be for a full check.
+        ## First use dependencies which are installed: strict dependencies
+        ## need to be for a full check.
         ## Suggests might not even exist, so we suppress warnings.
-        ## 'Maintainer' is not listed in PACKAGES, so we cannot easily
-        ## find out orphan status from the repository.
         mt <- utils::maintainer
         strict2 <- sapply(strict, function(x) suppressWarnings(mt(x)))
-        strict <- strict[!is.na(strict2) & strict2 == "ORPHANED"]
-        if(length(strict)) bad_depends$orphaned <- strict
+        miss1 <- is.na(strict2)
         weak <- setdiff(as.character(suggests),
                         c(exceptions, bad_depends$suggested_but_not_installed))
         weak2 <- sapply(weak, function(x) suppressWarnings(mt(x)))
-        weak <- weak[!is.na(weak2) & weak2 == "ORPHANED"]
+        miss2 <- is.na(weak2)
+        if (any(miss1) || any(miss2)) {
+            ## This may not be local and needs a complete CRAN mirror
+            db <- CRAN_package_db()[, c("Package", "Maintainer")]
+            orphaned <- db[db$Maintainer == "ORPHANED" , 1L]
+            s2 <- strict[ (strict %in% orphaned)[miss1] ]
+            w2 <- weak[ (weak %in% orphaned)[miss2] ]
+        } else s2 <- w2 <- character()
+        strict <- c(strict[!miss1 & strict2 == "ORPHANED"], s2)
+        if(length(strict)) bad_depends$orphaned <- strict
+        weak <- c(weak[!miss2 & weak2 == "ORPHANED"], w2)
         if(length(weak)) bad_depends$orphaned2 <- weak
     }
 
