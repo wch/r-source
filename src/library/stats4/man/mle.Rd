@@ -11,7 +11,7 @@
 }
 \usage{
 mle(minuslogl, start = formals(minuslogl), method = "BFGS",
-    fixed = list(), nobs, \dots)
+    fixed = list(), nobs, lower, upper, \dots)
 }
 \arguments{
   \item{minuslogl}{Function to calculate negative log-likelihood.}
@@ -21,6 +21,7 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
     optimization.}
   \item{nobs}{optional integer: the number of observations, to be used for
     e.g.\sspace{}computing \code{\link{BIC}}.}
+  \item{lower, upper}{bounds for \code{\link{optim}}, if relevant.}
   \item{\dots}{Further arguments to pass to \code{\link{optim}}.}
 }
 \details{
@@ -32,7 +33,7 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
   An object of class \code{\link{mle-class}}.
 }
 \note{
-  Be careful to note that the argument is -log L (not -2 log L). It
+  Notice that the argument is -log L (not -2 log L). It
   is for the user to ensure that the likelihood is correct, and that
   asymptotic likelihood inference is valid.
 }
@@ -87,6 +88,13 @@ ll3 <- function(lymax = log(15), lxhalf = log(6))
 (fit3 <- mle(ll3))
 plot(profile(fit3), absVal = FALSE)
 exp(confint(fit3))
+
+# regression tests for bounded cases (this was broken in R 3.x)
+fit4 <- mle(ll, method = "L-BFGS-B", lower = c(0, 4)) # has max on boundary
+confint(fit4)
+
+## direct check that fixed= and constraints work together
+mle(ll, method = "L-BFGS-B", lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
 
 options(od)
 }

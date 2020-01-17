@@ -34,12 +34,13 @@ setClass("profile.mle", representation(profile="list",
                                        summary="summary.mle"))
 
 mle <- function(minuslogl, start = formals(minuslogl), method = "BFGS",
-                fixed = list(), nobs, ...)
+                fixed = list(), nobs, lower, upper, ...)
 {
     # Insert sanity checks here...
     call <- match.call()
     n <- names(fixed)
     fullcoef <- formals(minuslogl)
+    nf <- names(fullcoef)
     if(any(! n %in% names(fullcoef)))
         stop("some named arguments in 'fixed' are not arguments to the supplied log-likelihood")
     fullcoef[n] <- fixed
@@ -59,9 +60,32 @@ mle <- function(minuslogl, start = formals(minuslogl), method = "BFGS",
         l[n] <- fixed
         do.call("minuslogl", l)
     }
-    oout <- if (length(start))
-        optim(start, f, method = method, hessian = TRUE, ...)
-    else list(par = numeric(), value = f(start))
+    useLim <- !missing(lower) || !missing(upper) 
+    if (useLim)
+    {
+        if (missing(lower)) lower <- rep_len(-Inf, length(fullcoef))
+        if (missing(upper)) upper <- rep_len(Inf, length(fullcoef))
+        if (!all(lower <= start & start <= upper))
+        {
+            warning("start values do not satisfy constraints")
+            start <- pmin(pmax(start, lower), upper)
+        }
+        if (length(n)) # any parms kept fixed
+        {
+            names(lower) <- names(upper) <- names(fullcoef)
+            if (!all(lower[n] <= fixed & fixed <= upper[n]))
+                stop("fixed values violate constraints")
+            lower <- lower[!(nf %in% n)]
+            upper <- upper[!(nf %in% n)]
+        }
+    }
+    oout <-
+        if (length(start))
+            if(!useLim)
+                optim(start, f, method = method, hessian = TRUE, ...)
+            else
+                optim(start, f,  method = method, hessian = TRUE, lower = lower, upper = upper, ...)
+        else list(par = numeric(), value = f(start))
     coef <- oout$par
     vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(), 0L, 0L)
     min <- oout$value
