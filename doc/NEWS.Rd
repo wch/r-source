@@ -183,14 +183,21 @@
       cases.
 
       \item \code{sequence()} is now an S3 generic, with an internally
-      implemented default method, and gains arguments to
-      generate more complex sequences. Based on code from the \pkg{S4Vectors}
+      implemented default method, and gains arguments to generate more
+      complex sequences.  Based on code from the \pkg{S4Vectors}
       Bioconductor package and the advice of Hervé Pagès.
 
       \item \code{print()}'s default method and many other methods (by
-      calling the default eventually and passing \code{...}) now obey a new
-      optional \code{width} argument, the user not needing to set and unset
-      the option.
+      calling the default eventually and passing \code{...}) now make
+      use of a new optional \code{width} argument, avoiding the need for
+      the user to set and reset {options("width")}.
+
+      \item \code{memDecompress()} supports the RFC 1652 format
+      (e.g.\sspace{}in-memory copies of \command{gzip}-compressed files)
+      as well as RFC 1650.
+
+      \item \code{memCompress()} and \code{memDecompress()} support long
+      raw vectors for types \code{"gzip"} and \code{"zx"}.
     }
   }% end{ NEW FEATURES }
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2019   The R Core Team.
+ *  Copyright (C) 2000-2020   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1734,7 +1734,7 @@ static int gzfile_fgetc_internal(Rconnection con)
 }
 
 /* This can only seek forwards when writing (when it writes nul bytes).
-   When reading, it either seeks forwards of rewinds and reads again */
+   When reading, it either seeks forwards or rewinds and reads again */
 static double gzfile_seek(Rconnection con, double where, int origin, int rw)
 {
     gzFile  fp = ((Rgzfileconn)(con->private))->fp;
@@ -6294,7 +6294,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	Bytef *buf;
 	/* could use outlen = compressBound(inlen) */
-	uLong inlen = LENGTH(from),
+	uLong inlen = XLENGTH(from),
 	    outlen = (uLong)(1.001*(double)inlen + 20);
 	buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
 	res = compress(buf, &outlen, (Bytef *)RAW(from), inlen);
@@ -6305,6 +6305,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     case 3: /* bzip */
     {
+	// bzlib does not support long inputs
 	char *buf;
 	unsigned int inlen = LENGTH(from),
 	    outlen = (unsigned int)(1.01*inlen + 600);
@@ -6319,7 +6320,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4: /* xz */
     {
 	unsigned char *buf;
-	unsigned int inlen = LENGTH(from), outlen;
+	size_t inlen = XLENGTH(from), outlen;
 	lzma_stream strm = LZMA_STREAM_INIT;
 	lzma_ret ret;
 	lzma_filter filters[LZMA_FILTERS_MAX + 1];
@@ -6335,7 +6336,8 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	ret = lzma_stream_encoder(&strm, filters, LZMA_CHECK_CRC32);
 	if (ret != LZMA_OK) error("internal error %d in memCompress", ret);
 
-	outlen = (unsigned int)(1.01 * inlen + 600); /* FIXME, copied from bzip2 */
+	outlen = (unsigned int)(1.01 * inlen + 600); /* FIXME, copied
+						        from bzip2 case */
 	buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
 	strm.next_in = RAW(from);
 	strm.avail_in = inlen;
@@ -6387,33 +6389,80 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 1: break; /* none */
     case 2: /* gzip */
     {
-	uLong inlen = LENGTH(from), outlen = 3*inlen;
-	int res;
+	uLong inlen = XLENGTH(from), outlen = 3*inlen;
 	Bytef *buf, *p = (Bytef *)RAW(from);
-	/* we check for a file header */
-	if (p[0] == 0x1f && p[1] == 0x8b) { p += 2; inlen -= 2; }
+	int opt = 0;
+
+	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
+	    // in this case we could read outlen from the trailer
+	    opt = 16;  // force gzip format
+	}
 	while(1) {
 	    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
-	    res = uncompress(buf, &outlen, p, inlen);
-	    if(res == Z_BUF_ERROR) { outlen *= 2; continue; }
-	    if(res == Z_OK) break;
-	    error("internal error %d in memDecompress(%d)", res, type);
+	    int res = R_uncompress(buf, &outlen, p, inlen, opt);
+	    if(res == Z_BUF_ERROR) {
+		if(outlen < ULONG_MAX/2) {
+		    outlen *= 2; continue;
+		} else break;
+	    }
+	    if(res >= 0) break;
+	    error("internal error %d in memDecompress(%s)", res,
+		  "type = \"gzip\"");
 	}
+
+	/*
+	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
+	    // in this case we could read outlen from the trailer
+	    while(1) {
+		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+		int res = R_gzuncompress(buf, &outlen, p, inlen, 16); // force gzip format
+		if(res == Z_BUF_ERROR) {
+		    if(outlen < ULONG_MAX/2) {
+			outlen *= 2; continue;
+		    } else break;
+		}
+		if(res >= 0) break;
+		error("internal error %d in memDecompress(%s)", res,
+		      "type = \"gzip\"");
+	    }
+	} else {
+	    while(1) {
+		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+		int res = uncompress(buf, &outlen, p, inlen);
+		if(res == Z_BUF_ERROR) {
+		    if(outlen < ULONG_MAX/2) {
+			outlen *= 2; continue;
+		    } else break;
+		}
+		if(res == Z_OK) break;
+		error("internal error %d in memDecompress(%s)", res,
+		      "type = \"gzip\"");
+	    }
+	}
+	*/
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
 	break;
     }
     case 3: /* bzip2 */
     {
-	unsigned int inlen = LENGTH(from), outlen = 3*inlen;
+	// bzlib does not support long inputs
+	unsigned int inlen = LENGTH(from), outlen;
+	double o0 = 3.0*inlen;
+	outlen = (o0 > UINT_MAX)? UINT_MAX: (unsigned int)o0;
 	int res;
 	char *buf, *p = (char *) RAW(from);
 	while(1) {
 	    buf = R_alloc(outlen, sizeof(char));
 	    res = BZ2_bzBuffToBuffDecompress(buf, &outlen, p, inlen, 0, 0);
-	    if(res == BZ_OUTBUFF_FULL) { outlen *= 2; continue; }
+	    if(res == BZ_OUTBUFF_FULL) {
+		if(outlen < UINT_MAX/2) {
+		    outlen *= 2; continue;
+		} else break;
+	    }
 	    if(res == BZ_OK) break;
-	    error("internal error %d in memDecompress(%d)", res, type);
+	    error("internal error %d in memDecompress(%s)", res,
+		  "type = \"bzip2\"");
 	}
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
@@ -6422,7 +6471,7 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4: /* xz */
     {
 	unsigned char *buf;
-	unsigned int inlen = LENGTH(from);
+	size_t inlen = XLENGTH(from);
 	size_t outlen = 3*inlen;
 	lzma_stream strm = LZMA_STREAM_INIT;
 	lzma_ret ret;
@@ -6459,8 +6508,8 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 		    outlen *= 2;
 		    continue;
 		} else {
-		    error("internal error %d in memDecompress(%d) at %d",
-			  ret, type, strm.avail_in);
+		    error("internal error %d in memDecompress(%s) at %d",
+			  ret, "type = \"xz\"", strm.avail_in);
 		}
 	    } else {
 		break;

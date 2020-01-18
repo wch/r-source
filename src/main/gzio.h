@@ -546,3 +546,58 @@ int R_gzclose (gzFile file)
     }
     return destroy((gz_stream*) file);
 }
+
+/*
+static voidpf
+R_zlib_alloc(voidpf ptr, uInt items, uInt size)
+{
+    return R_alloc(items, size);
+}
+
+static void
+R_zlib_free(voidpf ptr, voidpf addr) {}
+*/
+
+/* added in 4.0.0, modified from uncompress[2] */
+static int
+R_uncompress(Bytef *dest, uLong *destLen, Bytef *source, uLong sourceLen,
+	     int opt)
+{
+    z_stream stream;
+    
+    stream.next_in = source;
+    stream.avail_in = 0;
+    stream.zalloc = (alloc_func)0;
+    stream.zfree = (free_func)0;
+    stream.opaque = (voidpf)0;
+
+    /* 
+       opt is the main difference from uncompress
+       0 means no headers (zlib)
+       16 selects gzip
+       32 allows auto-selection.
+    */
+    int err = inflateInit2( &stream, MAX_WBITS + opt );
+    if(err != Z_OK) return err;
+
+    const uInt max = (uInt)-1;  // could have used UINT_MAX
+    uLong len = sourceLen, left = *destLen;
+    stream.next_out = dest;
+    stream.avail_out = 0;
+
+    do { // do >= 2^32 bits in chunks
+        if (stream.avail_out == 0) {
+            stream.avail_out = left > (uLong)max ? max : (uInt)left;
+            left -= stream.avail_out;
+        }
+        if (stream.avail_in == 0) {
+            stream.avail_in = len > (uLong)max ? max : (uInt)len;
+            len -= stream.avail_in;
+        }
+        err = inflate(&stream, Z_NO_FLUSH);
+    } while (err == Z_OK);
+
+    *destLen = stream.total_out;
+    inflateEnd(&stream);
+    return err;
+}

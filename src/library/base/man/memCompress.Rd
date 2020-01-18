@@ -1,6 +1,6 @@
 % File src/library/base/man/memCompress.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2017 R Core Team
+% Copyright 2009-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memCompress}
@@ -23,12 +23,16 @@ memDecompress(from,
 \arguments{
   \item{from}{A raw vector.  For \code{memCompress} a character vector
     will be converted to a raw vector with character strings separated
-    by \code{"\n"}.}
+    by \code{"\n"}.  Types \code{"gzip"} and \code{"xz"} support long
+    raw vectors as from \R 4.0.0.
+  }
   \item{type}{character string, the type of compression.  May be
     abbreviated to a single letter, defaults to the first of the alternatives.}
   \item{asChar}{logical: should the result be converted to a character
-    string?}
-}
+    string?  NB: character string have a limit of
+    \eqn{2^{31}-1}{2^31 - 1} bytes, so raw vectors should be used for
+    large inputs.}
+  }
 
 \details{
   \code{type = "none"} passes the input through unchanged, but may be
@@ -40,9 +44,13 @@ memDecompress(from,
   header.  It will auto-detect the \sQuote{magic} header
   (\code{"\x1f\x8b"}) added to files by the \command{gzip} program (and
   to files written by \code{\link{gzfile}}), but \code{memCompress} does
-  not add such a header.
+  not add such a header. (It supports RFC 1650 format, sometimes known
+  as \sQuote{zlib} format, for compression and decompression and RFC
+  1952 for decompression only.)
 
-  \command{bzip2} compression always adds a header (\code{"BZh"}).
+  \command{bzip2} compression always adds a header (\code{"BZh"}).  The
+  underlying library only supports in-memory (de)compression of up to
+  \eqn{2^{31}-1}{2^31 - 1} elements.
 
   Compressing with \code{type = "xz"} is equivalent to compressing a
   file with \command{xz -9e} (including adding the \sQuote{magic}
