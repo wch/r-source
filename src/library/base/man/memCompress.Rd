@@ -44,7 +44,7 @@ memDecompress(from,
   header.  It will auto-detect the \sQuote{magic} header
   (\code{"\x1f\x8b"}) added to files by the \command{gzip} program (and
   to files written by \code{\link{gzfile}}), but \code{memCompress} does
-  not add such a header. (It supports RFC 1650 format, sometimes known
+  not add such a header. (It supports RFC 1950 format, sometimes known
   as \sQuote{zlib} format, for compression and decompression and RFC
   1952 for decompression only.)
 

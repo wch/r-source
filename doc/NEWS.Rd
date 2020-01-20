@@ -192,9 +192,9 @@
       use of a new optional \code{width} argument, avoiding the need for
       the user to set and reset {options("width")}.
 
-      \item \code{memDecompress()} supports the RFC 1652 format
+      \item \code{memDecompress()} supports the RFC 1952 format
       (e.g.\sspace{}in-memory copies of \command{gzip}-compressed files)
-      as well as RFC 1650.
+      as well as RFC 1950.
 
       \item \code{memCompress()} and \code{memDecompress()} support long
       raw vectors for types \code{"gzip"} and \code{"zx"}.
