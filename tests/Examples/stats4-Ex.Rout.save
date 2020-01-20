@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2019-12-16 r77583) -- "Unsuffered Consequences"
-Copyright (C) 2019 The R Foundation for Statistical Computing
+R Under development (unstable) (2020-01-18 r77674) -- "Unsuffered Consequences"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -145,6 +145,25 @@ Profiling...
 lymax  17.8815 34.6186
 lxhalf  1.6615  6.4794
 > 
+> # regression tests for bounded cases (this was broken in R 3.x)
+> fit4 <- mle(ll, method = "L-BFGS-B", lower = c(0, 4)) # has max on boundary
+> confint(fit4)
+Profiling...
+       2.5 %  97.5 %
+ymax  17.446 26.5081
+xhalf     NA  6.9109
+> 
+> ## direct check that fixed= and constraints work together
+> mle(ll, method = "L-BFGS-B", lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
+
+Call:
+mle(minuslogl = ll, method = "L-BFGS-B", fixed = list(ymax = 23), 
+    lower = c(0, 4))
+
+Coefficients:
+ ymax xhalf 
+   23     4 
+> 
 > options(od)
 > 
 > 
@@ -186,7 +205,7 @@ Coefficients:
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.417 0.021 1.447 0 0 
+Time elapsed:  0.691 0.01 0.704 0 0 
 > grDevices::dev.off()
 null device 
           1 
