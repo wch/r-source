@@ -753,8 +753,9 @@ include information on the system and version of R being used.  See
 See @url{https://www.R-project.org/mail.html} for more information on
 the R mailing lists.
 
-The R Core Team can be reached at @email{R-core@@lists.R-project.org}
-for comments and reports.
+@c >> No longer want such comments and reports addressed to R-core :
+@c The R Core Team can be reached at @email{R-core@@lists.R-project.org}
+@c for comments and reports.
 
 @c <FIXME>
 @c As of 2017-10, accessing GMANE's gmane.comp.lang.r still says
