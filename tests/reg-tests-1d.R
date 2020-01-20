@@ -3644,12 +3644,20 @@ for(n in Ns)
 ##
 ##--TODO: less severe now (no seg.fault / corrupt memory crashes), but still really bad ! ---
 
+
 ## Corner cases in choose(),
 ## misbehaved when n was _nearly_ int, and n - k < k
-
-## These gave 0 and 4 in R <= 3.6.x
 stopifnot(choose(4 - 1e-7, 4) == 1)
 stopifnot(choose(4 + 1e-7, 4) == 1)
+## These gave 0 and 4 in R <= 3.6.x
+
+
+## correct error message:
+tt <- tryCatch(strptime(100, pi), error=identity)
+stopifnot(inherits(tt, "error"), grepl("'format'", tt$message))
+## had 'x' instead of 'format'
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
