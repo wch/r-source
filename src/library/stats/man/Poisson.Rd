@@ -1,6 +1,6 @@
 % File src/library/stats/man/Poisson.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Poisson}
@@ -45,6 +45,10 @@ rpois(n, lambda)
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
+
+  \code{rpois} returns a vector of type \link{integer}: if generated
+  values exceed the maximum representable integer they are returned as
+  \code{NA} and a warning is given.
 }
 \details{
   The Poisson distribution has density
