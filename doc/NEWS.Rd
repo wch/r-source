@@ -198,6 +198,9 @@
 
       \item \code{memCompress()} and \code{memDecompress()} support long
       raw vectors for types \code{"gzip"} and \code{"zx"}.
+
+      \item \code{sweep()} can now use names of dimnames for its \code{MARGIN}
+      argument (apply has had this for almost a decade)
     }
   }% end{ NEW FEATURES }
 

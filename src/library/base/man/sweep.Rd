@@ -14,9 +14,11 @@
 sweep(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, \dots)
 }
 \arguments{
-  \item{x}{an array.}
+  \item{x}{an array, including a matrix.}
   \item{MARGIN}{a vector of indices giving the extent(s) of \code{x}
-    which correspond to \code{STATS}.}
+    which correspond to \code{STATS}.
+    Where \code{x} has named dimnames, it can be a character
+    vector selecting dimension names.}
   \item{STATS}{the summary statistic which is to be swept out.}
   \item{FUN}{the function to be used to carry out the sweep.}
   \item{check.margin}{logical.  If \code{TRUE} (the default), warn if the
@@ -73,6 +75,14 @@ sweep(A, 1, 6:1)  # STATS is longer
 ## exact recycling:
 sweep(A, 1, 1:2)  # no warning
 sweep(A, 1, as.array(1:2))  # warning
+
+## Using named dimnames
+
+dimnames(A) <- list(fee=1:4, fie=1:3, fum=1:2)
+
+mn_fum_fie <- apply(A, c("fum", "fie"), mean)
+mn_fum_fie
+sweep(A, c("fum", "fie"), mn_fum_fie)
 }
 \keyword{array}
 \keyword{iteration}
