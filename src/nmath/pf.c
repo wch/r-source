@@ -31,7 +31,7 @@ double pf(double x, double df1, double df2, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(df1) || ISNAN(df2))
 	return x + df2 + df1;
 #endif
-    if (df1 <= 0. || df2 <= 0.) ML_ERR_return_NAN;
+    if (df1 <= 0. || df2 <= 0.) ML_WARN_return_NAN;
 
     R_P_bounds_01(x, 0., ML_POSINF);
 

@@ -35,7 +35,7 @@ double rexp(double scale)
     if (!R_FINITE(scale) || scale <= 0.0) {
 	if(scale == 0.) return 0.;
 	/* else */
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     }
     return scale * exp_rand(); // --> in ./sexp.c
 }

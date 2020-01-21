@@ -37,7 +37,7 @@ double dnorm4(double x, double mu, double sigma, int give_log)
     if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
 	return x + mu + sigma;
 #endif
-    if (sigma < 0) ML_ERR_return_NAN;
+    if (sigma < 0) ML_WARN_return_NAN;
     if(!R_FINITE(sigma)) return R_D__0;
     if(!R_FINITE(x) && mu == x) return ML_NAN;/* x-mu is NaN */
     if (sigma == 0) 

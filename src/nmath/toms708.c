@@ -736,7 +736,7 @@ static double bfrac(double a, double b, double x, double y, double lambda,
     brc = brcomp(a, b, x, y, log_p);
     if(ISNAN(brc)) { // e.g. from   L <- 1e308; pnbinom(L, L, mu = 5)
 	R_ifDEBUG_printf(" --> brcomp(a,b,x,y) = NaN\n");
-	ML_ERR_return_NAN; // TODO: could we know better?
+	ML_WARN_return_NAN; // TODO: could we know better?
     }
     if (!log_p && brc == 0.) {
 	R_ifDEBUG_printf(" --> brcomp(a,b,x,y) underflowed to 0.\n");

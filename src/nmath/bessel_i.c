@@ -49,7 +49,7 @@ double bessel_i(double x, double alpha, double expo)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE, "bessel_i");
+	ML_WARNING(ME_RANGE, "bessel_i");
 	return ML_NAN;
     }
     ize = (int)expo;
@@ -101,7 +101,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE, "bessel_i");
+	ML_WARNING(ME_RANGE, "bessel_i");
 	return ML_NAN;
     }
     ize = (int)expo;

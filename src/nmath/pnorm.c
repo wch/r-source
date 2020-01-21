@@ -72,7 +72,7 @@ double pnorm5(double x, double mu, double sigma, int lower_tail, int log_p)
 #endif
     if(!R_FINITE(x) && mu == x) return ML_NAN;/* x-mu is NaN */
     if (sigma <= 0) {
-	if(sigma < 0) ML_ERR_return_NAN;
+	if(sigma < 0) ML_WARN_return_NAN;
 	/* sigma = 0 : */
 	return (x < mu) ? R_DT_0 : R_DT_1;
     }

@@ -727,7 +727,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	return x + alph + scale;
 #endif
     if(alph < 0. || scale <= 0.)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     x /= scale;
 #ifdef IEEE_754
     if (ISNAN(x)) /* eg. original x = scale = +Inf */

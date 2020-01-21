@@ -50,7 +50,7 @@ double bessel_j(double x, double alpha)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE, "bessel_j");
+	ML_WARNING(ME_RANGE, "bessel_j");
 	return ML_NAN;
     }
     na = floor(alpha);
@@ -104,7 +104,7 @@ double bessel_j_ex(double x, double alpha, double *bj)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE, "bessel_j");
+	ML_WARNING(ME_RANGE, "bessel_j");
 	return ML_NAN;
     }
     na = floor(alpha);
@@ -251,7 +251,7 @@ static void J_bessel(double *x, double *alpha, int *nb,
 
 	*ncalc = *nb;
 	if(*x > xlrg_BESS_IJ) {
-	    ML_ERROR(ME_RANGE, "J_bessel");
+	    ML_WARNING(ME_RANGE, "J_bessel");
 	    /* indeed, the limit is 0,
 	     * but the cutoff happens too early */
 	    for(i=1; i <= *nb; i++)

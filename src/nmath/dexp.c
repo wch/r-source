@@ -31,7 +31,7 @@ double dexp(double x, double scale, int give_log)
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(scale)) return x + scale;
 #endif
-    if (scale <= 0.0) ML_ERR_return_NAN;
+    if (scale <= 0.0) ML_WARN_return_NAN;
 
     if (x < 0.)
 	return R_D__0;

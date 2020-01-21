@@ -52,7 +52,7 @@ double dhyper(double x, double r, double b, double n, int give_log)
 #endif
 
     if (R_D_negInonint(r) || R_D_negInonint(b) || R_D_negInonint(n) || n > r+b)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     if(x < 0) return(R_D__0);
     R_D_nonint_check(x);// incl warning
 

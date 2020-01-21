@@ -36,14 +36,14 @@ double qhyper(double p, double NR, double NB, double n,
 	return p + NR + NB + n;
 #endif
     if(!R_FINITE(p) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n))
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     NR = R_forceint(NR);
     NB = R_forceint(NB);
     N = NR + NB;
     n = R_forceint(n);
     if (NR < 0 || NB < 0 || n < 0 || n > N)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     /* Goal:  Find  xr (= #{red balls in sample}) such that
      *   phyper(xr,  NR,NB, n) >= p > phyper(xr - 1,  NR,NB, n)

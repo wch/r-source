@@ -38,7 +38,7 @@ double qcauchy(double p, double location, double scale,
     R_Q_P01_check(p);
     if (scale <= 0 || !R_FINITE(scale)) {
 	if (scale == 0) return location;
-	/* else */ ML_ERR_return_NAN;
+	/* else */ ML_WARN_return_NAN;
     }
 
 #define my_INF location + (lower_tail ? scale : -scale) * ML_POSINF

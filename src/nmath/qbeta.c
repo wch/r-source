@@ -58,7 +58,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(q) || ISNAN(alpha))
 	return p + q + alpha;
 #endif
-    if(p < 0. || q < 0.) ML_ERR_return_NAN;
+    if(p < 0. || q < 0.) ML_WARN_return_NAN;
     // allowing p==0 and q==0  <==> treat as one- or two-point mass
 
     double qbet[2];// = { qbeta(), 1 - qbeta() }
@@ -147,8 +147,8 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 	R_ifDEBUG_printf("qbeta(alpha=%g, %g, %g, .., log_p=%d): %s%s\n",
 			 alpha, p,q, log_p, "alpha not in ",
 			 log_p ? "[-Inf, 0]" : "[0,1]");
-	// ML_ERR_return_NAN :
-	ML_ERROR(ME_DOMAIN, "");
+	// ML_WARN_return_NAN :
+	ML_WARNING(ME_DOMAIN, "");
 	qb[0] = qb[1] = ML_NAN; return;
     }
 
@@ -478,8 +478,8 @@ L_Newton:
 #else
 	    if (errno)
 #endif
-		{ // ML_ERR_return_NAN :
-		    ML_ERROR(ME_DOMAIN, "");
+		{ // ML_WARN_return_NAN :
+		    ML_WARNING(ME_DOMAIN, "");
 		    qb[0] = qb[1] = ML_NAN; return;
 		}
 
@@ -527,7 +527,7 @@ L_Newton:
 
     /*-- NOT converged: Iteration count --*/
     warned = TRUE;
-    ML_ERROR(ME_PRECISION, "qbeta");
+    ML_WARNING(ME_PRECISION, "qbeta");
 
 L_converged:
     log_ = log_p || use_log_x; // only for printing

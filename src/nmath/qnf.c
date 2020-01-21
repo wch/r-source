@@ -29,9 +29,9 @@ double qnf(double p, double df1, double df2, double ncp, int lower_tail,
     if (ISNAN(p) || ISNAN(df1) || ISNAN(df2) || ISNAN(ncp))
 	return p + df1 + df2 + ncp;
 #endif
-    if (df1 <= 0. || df2 <= 0. || ncp < 0) ML_ERR_return_NAN;
-    if (!R_FINITE(ncp)) ML_ERR_return_NAN;
-    if (!R_FINITE(df1) && !R_FINITE(df2)) ML_ERR_return_NAN;
+    if (df1 <= 0. || df2 <= 0. || ncp < 0) ML_WARN_return_NAN;
+    if (!R_FINITE(ncp)) ML_WARN_return_NAN;
+    if (!R_FINITE(df1) && !R_FINITE(df2)) ML_WARN_return_NAN;
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
     if (df2 > 1e8) /* avoid problems with +Inf and loss of accuracy */

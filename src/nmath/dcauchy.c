@@ -33,7 +33,7 @@ double dcauchy(double x, double location, double scale, int give_log)
     if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
 	return x + location + scale;
 #endif
-    if (scale <= 0) ML_ERR_return_NAN;
+    if (scale <= 0) ML_WARN_return_NAN;
 
     y = (x - location) / scale;
     return give_log ?

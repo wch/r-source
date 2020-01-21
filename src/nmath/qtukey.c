@@ -127,13 +127,13 @@ double qtukey(double p, double rr, double cc, double df,
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(rr) || ISNAN(cc) || ISNAN(df)) {
-	ML_ERROR(ME_DOMAIN, "qtukey");
+	ML_WARNING(ME_DOMAIN, "qtukey");
 	return p + rr + cc + df;
     }
 #endif
 
     /* df must be > 1 ; there must be at least two values */
-    if (df < 2 || rr < 1 || cc < 2) ML_ERR_return_NAN;
+    if (df < 2 || rr < 1 || cc < 2) ML_WARN_return_NAN;
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
@@ -185,6 +185,6 @@ double qtukey(double p, double rr, double cc, double df,
     }
 
     /* The process did not converge in 'maxiter' iterations */
-    ML_ERROR(ME_NOCONV, "qtukey");
+    ML_WARNING(ME_NOCONV, "qtukey");
     return ans;
 }

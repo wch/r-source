@@ -32,7 +32,7 @@ double qgeom(double p, double prob, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(prob))
 	return p + prob;
 #endif
-    if (prob <= 0 || prob > 1) ML_ERR_return_NAN;
+    if (prob <= 0 || prob > 1) ML_WARN_return_NAN;
 
     R_Q_P01_check(p);
     if (prob == 1) return(0);

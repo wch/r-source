@@ -34,9 +34,9 @@ double pnbinom(double x, double size, double prob, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(size) || ISNAN(prob))
 	return x + size + prob;
-    if(!R_FINITE(size) || !R_FINITE(prob))	ML_ERR_return_NAN;
+    if(!R_FINITE(size) || !R_FINITE(prob))	ML_WARN_return_NAN;
 #endif
-    if (size < 0 || prob <= 0 || prob > 1)	ML_ERR_return_NAN;
+    if (size < 0 || prob <= 0 || prob > 1)	ML_WARN_return_NAN;
 
     /* limiting case: point mass at zero */
     if (size == 0)
@@ -53,9 +53,9 @@ double pnbinom_mu(double x, double size, double mu, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(size) || ISNAN(mu))
 	return x + size + mu;
-    if(!R_FINITE(mu))	ML_ERR_return_NAN;
+    if(!R_FINITE(mu))	ML_WARN_return_NAN;
 #endif
-    if (size < 0 || mu < 0)	ML_ERR_return_NAN;
+    if (size < 0 || mu < 0)	ML_WARN_return_NAN;
 
     /* limiting case: point mass at zero */
     if (size == 0)

@@ -33,7 +33,7 @@
 double rbeta(double aa, double bb)
 {
     if (ISNAN(aa) || ISNAN(bb) || aa < 0. || bb < 0.)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     if (!R_FINITE(aa) && !R_FINITE(bb)) // a = b = Inf : all mass at 1/2
 	return 0.5;
     if (aa == 0. && bb == 0.) // point mass 1/2 at each of {0,1} :

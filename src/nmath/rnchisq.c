@@ -59,7 +59,7 @@
 double rnchisq(double df, double lambda)
 {
     if (ISNAN(df) || !R_FINITE(lambda) || df < 0. || lambda < 0.)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     if(lambda == 0.) {
 	return (df == 0.) ? 0. : rgamma(df / 2., 2.);

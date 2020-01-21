@@ -32,7 +32,7 @@
 double rlnorm(double meanlog, double sdlog)
 {
     if(ISNAN(meanlog) || !R_FINITE(sdlog) || sdlog < 0.)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     return exp(rnorm(meanlog, sdlog));
 }

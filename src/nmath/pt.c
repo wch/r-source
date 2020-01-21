@@ -33,7 +33,7 @@ double pt(double x, double n, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(n))
 	return x + n;
 #endif
-    if (n <= 0.0) ML_ERR_return_NAN;
+    if (n <= 0.0) ML_WARN_return_NAN;
 
     if(!R_FINITE(x))
 	return (x < 0) ? R_DT_0 : R_DT_1;

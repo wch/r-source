@@ -33,9 +33,9 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
 #endif
     /* Was
      * df = floor(df + 0.5);
-     * if (df < 1 || ncp < 0) ML_ERR_return_NAN;
+     * if (df < 1 || ncp < 0) ML_WARN_return_NAN;
      */
-    if (df <= 0.0) ML_ERR_return_NAN;
+    if (df <= 0.0) ML_WARN_return_NAN;
 
     if(ncp == 0.0 && df >= 1.0) return qt(p, df, lower_tail, log_p);
 

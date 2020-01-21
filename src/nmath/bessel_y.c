@@ -49,7 +49,7 @@ double bessel_y(double x, double alpha)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE, "bessel_y");
+	ML_WARNING(ME_RANGE, "bessel_y");
 	return ML_NAN;
     }
     na = floor(alpha);
@@ -111,7 +111,7 @@ double bessel_y_ex(double x, double alpha, double *by)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE, "bessel_y");
+	ML_WARNING(ME_RANGE, "bessel_y");
 	return ML_NAN;
     }
     na = floor(alpha);
@@ -265,7 +265,7 @@ v for non-negative argument X, and non-negative order N+ALPHA.
 	if(ex < DBL_MIN || ex > xlrg_BESS_Y) {
 	    /* Warning is not really appropriate, give
 	     * proper limit:
-	     * ML_ERROR(ME_RANGE, "Y_bessel"); */
+	     * ML_WARNING(ME_RANGE, "Y_bessel"); */
 	    *ncalc = *nb;
 	    if(ex > xlrg_BESS_Y)  by[0]= 0.; /*was ML_POSINF */
 	    else if(ex < DBL_MIN) by[0]=ML_NEGINF;

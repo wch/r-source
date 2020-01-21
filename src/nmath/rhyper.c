@@ -102,14 +102,14 @@ double rhyper(double nn1in, double nn2in, double kkin)
     /* check parameter validity */
 
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     nn1in = R_forceint(nn1in);
     nn2in = R_forceint(nn2in);
     kkin  = R_forceint(kkin);
 
     if (nn1in < 0 || nn2in < 0 || kkin < 0 || kkin > nn1in + nn2in)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     if (nn1in >= INT_MAX || nn2in >= INT_MAX || kkin >= INT_MAX) {
 	/* large n -- evade integer overflow (and inappropriate algorithms)
 	   -------- */
@@ -246,7 +246,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	n_uv++;
 	if(n_uv >= 10000) {
 	    REprintf("rhyper() branch III: giving up after %d rejections", n_uv);
-	    ML_ERR_return_NAN;
+	    ML_WARN_return_NAN;
         }
 #ifdef DEBUG_rhyper
 	REprintf(" ... L30: new (u=%g, v ~ U[0,1])[%d]\n", u, n_uv);
