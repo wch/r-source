@@ -1,6 +1,6 @@
 % File src/library/stats/man/Geometric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Geometric}
@@ -57,6 +57,10 @@ rgeom(n, prob)
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
+
+  \code{rgeom} returns a vector of type \link{integer}: if generated
+  values exceed the maximum representable integer they are returned as
+  \code{NA} and a warning is given.
 }
 \source{
   \code{dgeom} computes via \code{dbinom}, using code contributed by
