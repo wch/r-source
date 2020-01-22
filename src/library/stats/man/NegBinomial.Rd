@@ -88,9 +88,9 @@ rnbinom(n, size, prob, mu)
   length of the result.  Only the first elements of the logical
   arguments are used.
 
-  \code{rnbinom} returns a vector of type \link{integer}: if generated
-  values exceed the maximum representable integer they are returned as
-  \code{NA} and a warning is given.
+  \code{rnbinom} returns a vector of type \link{integer} unless generated
+  values exceed the maximum representable integer when \code{\link{double}}
+  values are returned since R version 4.0.0.
 }
 \source{
   \code{dnbinom} computes via binomial probabilities, using code
