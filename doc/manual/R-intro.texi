@@ -123,7 +123,7 @@ for granting permission to distribute this modified version of the notes
 in this way, and for being a supporter of @R{} from way back.
 
 Comments and corrections are always welcome.  Please address email
-correspondence to @email{R-core@@R-project.org}.
+correspondence to @email{R-help@@R-project.org}.
 
 @subheading Suggestions to the reader
 
