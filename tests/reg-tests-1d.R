@@ -3657,6 +3657,7 @@ tt <- tryCatch(strptime(100, pi), error=identity)
 stopifnot(inherits(tt, "error"), grepl("'format'", tt$message))
 ## had 'x' instead of 'format'
 
+
 ## r<integer-RV>() now return double if integer would overflow:
 set.seed(47)
 Npi <- rpois(100, 0.9999 *2^31)
@@ -3670,6 +3671,15 @@ stopifnot(is.integer(Npi), is.double(Npd), !anyNA(Npi), !anyNA(Npd),
           is.integer(Ngi), is.double(Ngd), !anyNA(Ngi), !anyNA(Ngd),
           TRUE)
 ## had many NA's in  3.0.0 <= R <= 3.6.x
+
+
+## rhyper() for some large arguments, PR#17694
+n <- 2e9 # => .Machine$integer.max ~= 1.07 * N
+set.seed(6860); N <- rhyper(1, n,n,n)
+x <- 1.99e9; Nhi <- rhyper(256, x,x,x)
+stopifnot(identical(N, 999994112L), is.integer(Nhi),
+          all.equal(mean(Nhi), x/2, tol = 6e-6)) # ==> also: no NAs
+## NA's and warnings, incl "SHOULD NOT HAPPEN!" in R <= 3.6.2
 
 
 

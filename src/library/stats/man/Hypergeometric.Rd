@@ -1,6 +1,6 @@
 % File src/library/stats/man/Hypergeometric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Hypergeometric}
@@ -26,7 +26,8 @@ rhyper(nn, m, n, k)
     white balls.}
   \item{m}{the number of white balls in the urn.}
   \item{n}{the number of black balls in the urn.}
-  \item{k}{the number of balls drawn from the urn.}
+  \item{k}{the number of balls drawn from the urn, hence must be in
+    \eqn{0,1,\dots, m+n}.}
   \item{p}{probability, it must be between 0 and 1.}
   \item{nn}{number of observations.  If \code{length(nn) > 1}, the length
     is taken to be the number required.}
@@ -54,7 +55,8 @@ rhyper(nn, m, n, k)
   The hypergeometric distribution is used for sampling \emph{without}
   replacement.  The density of this distribution with parameters
   \code{m}, \code{n} and \code{k} (named \eqn{Np}, \eqn{N-Np}, and
-  \eqn{n}, respectively in the reference below) is given by
+  \eqn{n}, respectively in the reference below, where \eqn{N := m+n} is also used
+  in other references) is given by
   \deqn{
     p(x) = \left. {m \choose x}{n \choose k-x} \right/ {m+n \choose k}%
   }{p(x) =      choose(m, x) choose(n, k-x) / choose(m+n, k)}
@@ -74,9 +76,10 @@ rhyper(nn, m, n, k)
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 
-  If one of \eqn{m, n, k}, exceeds \code{\link{.Machine}$integer.max},
-  currently the equivalent of \code{qhyper(runif(nn), m,n,k)} is used,
-  when a binomial approximation may be considerably more efficient.
+  In \code{rhyper()}, if one of \eqn{m, n, k} exceeds \code{\link{.Machine}$integer.max},
+  currently the equivalent of \code{qhyper(runif(nn), m,n,k)} is used
+  which is comparably slow while instead a binomial approximation may be
+  considerably more efficient.
 }
 \source{
   \code{dhyper} computes via binomial probabilities, using code
@@ -86,7 +89,7 @@ rhyper(nn, m, n, k)
   \code{phyper(...)/dhyper(...)} (as a summation), based on ideas of Ian
   Smith and Morten Welinder.
 
-  \code{qhyper} is based on inversion.
+  \code{qhyper} is based on inversion (of an earlier \code{phyper()} algorithm).
 
   \code{rhyper} is based on a corrected version of
 
