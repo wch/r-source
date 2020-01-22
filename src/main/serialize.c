@@ -1408,7 +1408,9 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
  * Unserialize Code
  */
 
+// used in saveload.c
 attribute_hidden int R_ReadItemDepth = 0, R_InitReadItemDepth;
+
 static char lastname[8192] = "<unknown>";
 
 #define INITIAL_REFREAD_TABLE_SIZE 128
