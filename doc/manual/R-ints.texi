@@ -4336,6 +4336,12 @@ Default: false (but true for CRAN submission checks except on Windows).
 @item _R_CHECK_ORPHANED_
 Check if dependencies are orphaned packages.
 Default: false (but true for CRAN submission checks)
+
+@item _R_CHECK_EXCESSIVE_IMPORTS_
+A positive integer.  If set, give a NOTE if the number of imports from
+non-base packages exceed this threshold.  Large numbers of imports
+make a package vulnerable to any of them becoming unavailable.
+Default: unset (but 20 for CRAN submission checks)
 @end vtable
 
 CRAN's submission checks use something like

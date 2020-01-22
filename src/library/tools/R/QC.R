@@ -3091,6 +3091,12 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
                                "graphics", "methods", "utils", "stats"))
     if(length(deps) > 5L) bad_depends$many_depends <- deps
 
+    ## and Imports
+    lim <- as.integer(Sys.getenv("_R_CHECK_EXCESSIVE_IMPORTS_", "0"))
+    imps <- setdiff(imports, standard_package_names$base)
+    if(!is.na(lim) && lim > 0 && length(imps) > lim)
+        bad_depends$many_imports <- imps
+
     ## check header-only packages
     if (check_incoming) {
         hdOnly <- c("BH", "RcppArmadillo", "RcppEigen")
@@ -3106,7 +3112,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 
     ## (added in 4.0.0) Check for orphaned packages.
     if (config_val_to_logical(Sys.getenv("_R_CHECK_ORPHANED_", "FALSE"))) {
-        exceptions <- c('XML', 'lpSolve', 'SuppDists')
+        exceptions <- c('lpSolve') # a new maintainer was promised 2020-01-08
         ## empty fields are list().
         strict <- setdiff(unique(c(as.character(depends),
                                    as.character(imports),
@@ -3130,9 +3136,9 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             w2 <- weak[ (weak %in% orphaned)[miss2] ]
         } else s2 <- w2 <- character()
         strict <- c(strict[!miss1 & strict2 == "ORPHANED"], s2)
-        if(length(strict)) bad_depends$orphaned <- strict
+        if(length(strict)) bad_depends$orphaned <- sort(strict)
         weak <- c(weak[!miss2 & weak2 == "ORPHANED"], w2)
-        if(length(weak)) bad_depends$orphaned2 <- weak
+        if(length(weak)) bad_depends$orphaned2 <- sort(weak)
     }
 
     class(bad_depends) <- "check_package_depends"
@@ -3231,6 +3237,15 @@ function(x, ...)
             strwrap(paste("Adding so many packages to the search path",
                           "is excessive",
                           "and importing selectively is preferable."
+                          , collapse = ", ")),
+            "")
+      },
+      if(ly <- length(x$many_imports)) {
+          c(sprintf("Imports includes %d non-default packages.", ly),
+            strwrap(paste("Importing from so many packages",
+                          "makes the package vulnerable to any of them",
+                          "becoming unavailable.  Move as many as possible to",
+                          "Suggests and use conditionally."
                           , collapse = ", ")),
             "")
       },
