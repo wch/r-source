@@ -585,9 +585,13 @@ include the current package, or ones listed in @samp{Depends},
 implicitly appended.  See @ref{Non-Sweave vignettes} for details.  Note
 that if, for example, a vignette has engine @samp{knitr::rmarkdown},
 then @CRANpkg{knitr} provides the engine but both @pkg{knitr} and
-@CRANpkg{rmarkdown} are needed for using it, so both these packages need
-to be at least suggested (as @pkg{rmarkdown} is only suggested by
-@pkg{knitr}, and hence not available automatically along with it).
+@CRANpkg{rmarkdown} are needed for using it, so @emph{both} these
+packages need to be in the @samp{VignetteBuilder} field and at least
+suggested (as @pkg{rmarkdown} is only suggested by @pkg{knitr}, and
+hence not available automatically along with it).  Many packages using
+@CRANpkg{knitr} also need the package @CRANpkg{formatR} which it
+suggests and so the user package needs to do so too and include this in
+@samp{VignetteBuilder}.
 
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
