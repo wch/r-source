@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 2003--2016  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
- *  Copyright (C) 2003--2008  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -83,43 +83,52 @@ static R_INLINE R_xlen_t resultLength(SEXP lengthArgument) {
 
 static R_INLINE SEXP random1(SEXP sn, SEXP sa, ran1 fn, SEXPTYPE type)
 {
-    SEXP x, a;
-    R_xlen_t n, na;
-
     if (!isNumeric(sa)) {
 	error(_("invalid arguments"));
     }
-    n = resultLength(sn);
-    PROTECT(x = allocVector(type, n));
-    if (n == 0) {
-	UNPROTECT(1);
+    R_xlen_t n = resultLength(sn);
+    SEXP x = allocVector(type, n);
+    if (n == 0)
 	return(x);
-    }
-    na = XLENGTH(sa);
+    PROTECT_INDEX pxi;
+    PROTECT_WITH_INDEX(x, &pxi);
+    R_xlen_t na = XLENGTH(sa);
+
     if (na < 1) {
         fillWithNAs(x, n, type);
     } else {
 	Rboolean naflag = FALSE;
-	PROTECT(a = coerceVector(sa, REALSXP));
+	SEXP a = PROTECT(coerceVector(sa, REALSXP));
+	R_xlen_t i0 = 0;
+	SEXPTYPE use_type = type;
 	GetRNGstate();
 	double *ra = REAL(a);
 	errno = 0;
 	if (type == INTSXP) {
-	    double rx;
-	    int *ix = INTEGER(x);
-	    
+	    int *ix = INTEGER(x); double rx;
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na]);
-		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN ) {
+		if (ISNAN(rx)) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
+		} else if (rx > INT_MAX || rx <= INT_MIN) { // (incl. rx = Inf)
+		    /* integer overflow --> use REAL result
+		     * 1. copy result so far from integer to real: coerceVector()
+		     * 2. work "real case" (below) from i0+1 to n
+		     */
+		    i0 = i;
+		    use_type = REALSXP;
+		    REPROTECT(x = coerceVector(x, use_type), pxi);
+		    REAL(x)[i0++] = rx;
+		    break; // out of this for(.) loop and enter the for() loop below
 		}
 		else ix[i] = (int) rx;
 	    }
-	} else {
+	}
+	if (use_type == REALSXP) {
 	    double *rx = REAL(x);
-	    for (R_xlen_t i = 0; i < n; i++) {
+	    for (R_xlen_t i = i0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx[i] = fn(ra[i % na]);
 		if (ISNAN(rx[i])) naflag = TRUE;
@@ -154,44 +163,52 @@ DEFRAND1_INT(rsignrank)
 
 static R_INLINE SEXP random2(SEXP sn, SEXP sa, SEXP sb, ran2 fn, SEXPTYPE type)
 {
-    SEXP x, a, b;
-    R_xlen_t n, na, nb;
-
     if (!isNumeric(sa) || !isNumeric(sb)) {
 	error(_("invalid arguments"));
     }
-    n = resultLength(sn);
-    PROTECT(x = allocVector(type, n));
-    if (n == 0) {
-	UNPROTECT(1);
+    R_xlen_t n = resultLength(sn);
+    SEXP x = allocVector(type, n);
+    if (n == 0)
 	return(x);
-    }
-    na = XLENGTH(sa);
-    nb = XLENGTH(sb);
+    PROTECT_INDEX pxi;
+    PROTECT_WITH_INDEX(x, &pxi);
+    R_xlen_t
+	na = XLENGTH(sa),
+	nb = XLENGTH(sb);
+
     if (na < 1 || nb < 1) {
         fillWithNAs(x, n, type);
-    }
-    else {
+    } else {
 	Rboolean naflag = FALSE;
-	PROTECT(a = coerceVector(sa, REALSXP));
-	PROTECT(b = coerceVector(sb, REALSXP));
+	SEXP
+	    a = PROTECT(coerceVector(sa, REALSXP)),
+	    b = PROTECT(coerceVector(sb, REALSXP));
+	R_xlen_t i0 = 0;
+	SEXPTYPE use_type = type;
 	GetRNGstate();
 	double *ra = REAL(a), *rb = REAL(b);
+	errno = 0;
 	if (type == INTSXP) {
 	    int *ix = INTEGER(x); double rx;
-	    errno = 0;
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na], rb[i % nb]);
-		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN) {
+		if (ISNAN(rx)) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
-		} else ix[i] = (int) rx;
+		} else if (rx > INT_MAX || rx <= INT_MIN) {
+		    i0 = i;
+		    use_type = REALSXP;
+		    REPROTECT(x = coerceVector(x, use_type), pxi);
+		    REAL(x)[i0++] = rx;
+		    break; // out of this for(.) loop and enter the for() loop below
+		}
+		else ix[i] = (int) rx;
 	    }
-	} else {
+	}
+	if (use_type == REALSXP) {
 	    double *rx = REAL(x);
-	    errno = 0;
-	    for (R_xlen_t i = 0; i < n; i++) {
+	    for (R_xlen_t i = i0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx[i] = fn(ra[i % na], rb[i % nb]);
 		if (ISNAN(rx[i])) naflag = TRUE;
@@ -235,47 +252,53 @@ DEFRAND2_REAL(rnbinom_mu)
 static R_INLINE SEXP random3(SEXP sn, SEXP sa, SEXP sb, SEXP sc, ran3 fn,
 			     SEXPTYPE type)
 {
-    SEXP x, a, b, c;
-    R_xlen_t n, na, nb, nc;
-
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc)) {
 	error(_("invalid arguments"));
     }
-    n = resultLength(sn);
-    PROTECT(x = allocVector(type, n));
-    if (n == 0) {
-	UNPROTECT(1);
+    R_xlen_t n = resultLength(sn);
+    SEXP x = allocVector(type, n);
+    if (n == 0)
 	return(x);
-    }
-    na = XLENGTH(sa);
-    nb = XLENGTH(sb);
-    nc = XLENGTH(sc);
+    PROTECT_INDEX pxi;
+    PROTECT_WITH_INDEX(x, &pxi);
+    R_xlen_t
+	na = XLENGTH(sa),
+	nb = XLENGTH(sb),
+	nc = XLENGTH(sc);
+
     if (na < 1 || nb < 1 || nc < 1) {
         fillWithNAs(x, n, type);
-    }
-    else {
+    } else {
 	Rboolean naflag = FALSE;
-	PROTECT(a = coerceVector(sa, REALSXP));
-	PROTECT(b = coerceVector(sb, REALSXP));
-	PROTECT(c = coerceVector(sc, REALSXP));
+	SEXP
+	    a = PROTECT(coerceVector(sa, REALSXP)),
+	    b = PROTECT(coerceVector(sb, REALSXP)),
+	    c = PROTECT(coerceVector(sc, REALSXP));
+	R_xlen_t i0 = 0;
+	SEXPTYPE use_type = type;
 	GetRNGstate();
 	double *ra = REAL(a), *rb = REAL(b), *rc = REAL(c);
 	errno = 0;
 	if (type == INTSXP) {
 	    int *ix = INTEGER(x); double rx;
-	    errno = 0;
 	    for (R_xlen_t i = 0; i < n; i++) {
 //	        if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na], rb[i % nb], rc[i % nc]);
-		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN) {
+		if (ISNAN(rx)) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
+		} else if (rx > INT_MAX || rx <= INT_MIN) {
+		    i0 = i;
+		    use_type = REALSXP;
+		    REPROTECT(x = coerceVector(x, use_type), pxi);
+		    REAL(x)[i0++] = rx;
+		    break; // out of this for(.) loop and enter the for() loop below
 		} else ix[i] = (int) rx;
 	    }
-	} else {
+	}
+	if (use_type == REALSXP) {
 	    double *rx = REAL(x);
-	    errno = 0;
-	    for (R_xlen_t i = 0; i < n; i++) {
+	    for (R_xlen_t i = i0; i < n; i++) {
 //	        if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx[i] = fn(ra[i % na], rb[i % nb], rc[i % nc]);
 		if (ISNAN(rx[i])) naflag = TRUE;

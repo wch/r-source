@@ -3657,6 +3657,20 @@ tt <- tryCatch(strptime(100, pi), error=identity)
 stopifnot(inherits(tt, "error"), grepl("'format'", tt$message))
 ## had 'x' instead of 'format'
 
+## r<integer-RV>() now return double if integer would overflow:
+set.seed(47)
+Npi <- rpois(100, 0.9999 *2^31)
+Npd <- rpois(100, 0.99999*2^31)# had 33 NA's
+Nbi <- rbinom(100, 2^31, 1/2)
+Nbd <- rbinom(100, 2^32, 1/2)# 51 NA's
+Ngi <- rgeom(999, 1e-8)
+Ngd <- rgeom(999, 1e-9) # 106 NA's
+stopifnot(is.integer(Npi), is.double(Npd), !anyNA(Npi), !anyNA(Npd),
+          is.integer(Nbi), is.double(Nbd), !anyNA(Nbi), !anyNA(Nbd),
+          is.integer(Ngi), is.double(Ngd), !anyNA(Ngi), !anyNA(Ngd),
+          TRUE)
+## had many NA's in  3.0.0 <= R <= 3.6.x
+
 
 
 ## keep at end

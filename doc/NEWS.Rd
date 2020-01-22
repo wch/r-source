@@ -190,7 +190,7 @@
       \item \code{print()}'s default method and many other methods (by
       calling the default eventually and passing \code{...}) now make
       use of a new optional \code{width} argument, avoiding the need for
-      the user to set and reset {options("width")}.
+      the user to set and reset \code{options("width")}.
 
       \item \code{memDecompress()} supports the RFC 1952 format
       (e.g.\sspace{}in-memory copies of \command{gzip}-compressed files)
@@ -200,7 +200,13 @@
       raw vectors for types \code{"gzip"} and \code{"zx"}.
 
       \item \code{sweep()} can now use names of dimnames for its \code{MARGIN}
-      argument (apply has had this for almost a decade)
+      argument (\code{apply} has had this for almost a decade).
+
+      \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
+      \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
+      \code{rwilcox()} which have returned integer since R 3.0.0 and hence
+      \code{NA} when the numbers would have been outside the integer range,
+      now return double vectors (without NAs, typically) in these cases.
     }
   }% end{ NEW FEATURES }
 
@@ -406,8 +412,7 @@
 
       \item \code{round()} correctly rounds \dQuote{to even} in more cases,
       thanks to a more careful algorithm prompted by the report from Adam
-      Wheeler in \PR{17668}.
-      (The current algorithm will be tweaked further before release.)
+      Wheeler and then others, in \PR{17668}.
       \cr
       \code{round(x, dig)} for \emph{negative} digits is much more rational
       now, notably for large \eqn{|dig|}.
