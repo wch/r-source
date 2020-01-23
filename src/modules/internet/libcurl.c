@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015-2019 The R Core Team
+ *  Copyright (C) 2015-2020 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -749,7 +749,6 @@ static size_t rcvData(void *ptr, size_t size, size_t nitems, void *ctx)
 
     /* move down any unused data: can overlap */
     if (ctxt->filled) memmove(ctxt->buf, ctxt->current, ctxt->filled);
-    ctxt->current = ctxt->buf;
 
     size_t add = size * nitems;
     if (add) {
@@ -768,6 +767,7 @@ static size_t rcvData(void *ptr, size_t size, size_t nitems, void *ctx)
 	ctxt->filled += add;
 	ctxt->available = TRUE;
     }
+    ctxt->current = ctxt->buf;
     return add;
 }
 

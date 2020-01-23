@@ -455,6 +455,9 @@
       \item Fixed a C level integer overflow in \code{rhyper()}; reported
       by Benjamin Tyner in \PR{17694}.
 
+      \item Uses of \code{url(gzcon(.))} needing to extend buffer size
+      have failed (with HTTP/2 servers), reported by Gábor Csárdi.
+
       \item \code{update(form, new)} in the case of a long \code{new}
       formula sometimes wrongly eliminated the intercept from \code{form},
       or (more rarely) added a garbage term (or seg.faulted !); reported by Mathias Ambühl in
