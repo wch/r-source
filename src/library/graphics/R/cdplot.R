@@ -87,7 +87,7 @@ function(x, y,
 
     ## setup conditional values
     ny <- length(levels(y))
-    yprop <- cumsum(prop.table(table(y)))
+    yprop <- cumsum(proportions(table(y)))
     y1 <- matrix(rep(0, n * (ny - 1L)), nrow = (ny - 1L))
 
     ## setup return value

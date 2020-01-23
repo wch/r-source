@@ -41,12 +41,24 @@ function(data = NA, dim = length(data), dimnames = NULL)
 }
 
 slice.index <-
-function(x, MARGIN)
+function(X, MARGIN)
 {
-    d <- dim(x)
+    d <- dim(X)
     if(is.null(d))
-        d <- length(x)
+        d <- length(X)
     n <- length(d)
+
+    ## Extract the margins and associated dimnames
+
+    if (is.character(MARGIN)) {
+        dn <- dimnames(X)
+        if(is.null(dnn <- names(dn))) # names(NULL) is NULL
+           stop("'X' must have named dimnames")
+        MARGIN <- match(MARGIN, dnn)
+        if (anyNA(MARGIN))
+            stop("not all elements of 'MARGIN' are names of dimensions")
+    }
+
 
     if(!length(MARGIN) || any(MARGIN < 1L) || any(MARGIN > n))
         stop("incorrect value for 'MARGIN'")
@@ -96,27 +108,26 @@ function(x, sep = "", base = list(LETTERS), unique = TRUE)
 }
 
 ## The array split part used by apply():
-## (With 'X' replaced by 'x').
 
 asplit <-
-function(x, MARGIN)
+function(X, MARGIN)
  {
-    ## Ensure that x is an array object
-    dl <- length(dim(x))
-    if(!dl) stop("dim(x) must have a positive length")
-    if(is.object(x))
-        x <- if(dl == 2L) as.matrix(x) else as.array(x)
+    ## Ensure that X is an array object
+    dl <- length(dim(X))
+    if(!dl) stop("dim(X) must have a positive length")
+    if(is.object(X))
+        X <- if(dl == 2L) as.matrix(X) else as.array(X)
     ## now record dim as coercion can change it
     ## (e.g. when a data frame contains a matrix).
-    d <- dim(x)
-    dn <- dimnames(x)
+    d <- dim(X)
+    dn <- dimnames(X)
     ds <- seq_len(dl)
     
     ## Extract the margins and associated dimnames
 
     if (is.character(MARGIN)) {
         if(is.null(dnn <- names(dn))) # names(NULL) is NULL
-           stop("'x' must have named dimnames")
+           stop("'X' must have named dimnames")
         MARGIN <- match(MARGIN, dnn)
         if (anyNA(MARGIN))
             stop("not all elements of 'MARGIN' are names of dimensions")
@@ -129,7 +140,7 @@ function(x, MARGIN)
     dn.ans <- dn[MARGIN]
 
     d2 <- prod(d.ans)
-    newx <- aperm(x, c(s.call, s.ans))
+    newx <- aperm(X, c(s.call, s.ans))
     dim(newx) <- c(prod(d.call), d2)
     ans <- vector("list", d2)
     for(i in seq_len(d2)) {

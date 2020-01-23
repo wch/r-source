@@ -92,7 +92,7 @@ stats::ftable(x)
 ## frequencies standardized to equate the margins for admission
 ## and sex.
 ## Figure 1 in Friendly (1994).
-fourfoldplot(margin.table(x, c(1, 2)))
+fourfoldplot(marginSums(x, c(1, 2)))
 
 ## Fourfold display of x, with frequencies in each table
 ## standardized to equate the margins for admission and sex.

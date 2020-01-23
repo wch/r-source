@@ -121,7 +121,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
                 y <- matrix(c(u, 1 - u, 1 - u, u), nrow = 2L)
             }
             else if(margin %in% c(1, 2))
-                y <- prop.table(tab, margin)
+                y <- proportions(tab, margin)
             else
                 stop("incorrect 'margin' specification")
         }

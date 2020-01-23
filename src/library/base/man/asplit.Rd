@@ -3,29 +3,29 @@
 \title{Split Array/Matrix By Its Margins}
 \description{Split an array or matrix by its margins.}
 \usage{
-asplit(x, MARGIN)
+asplit(X, MARGIN)
 }
 \arguments{
-  \item{x}{an array, including a matrix.}
+  \item{X}{an array, including a matrix.}
   \item{MARGIN}{a vector giving the margins to split by.
     E.g., for a matrix \code{1} indicates rows, \code{2} indicates
     columns, \code{c(1, 2)} indicates rows and columns.
-    Where \code{x} has named dimnames, it can be a character vector
+    Where \code{X} has named dimnames, it can be a character vector
     selecting dimension names.}
 }
 \value{
   A \dQuote{list array} with dimension \eqn{dv} and each element an
   array of dimension \eqn{de} and dimnames preserved as available, where
-  \eqn{dv} and \eqn{de} are, respectively, the dimensions of \code{x}
+  \eqn{dv} and \eqn{de} are, respectively, the dimensions of \code{X}
   included and not included in \code{MARGIN}.
 }
 \details{
   The values of the splits can also be obtained (less efficiently) by
-  \code{split(x, slice.index(x, MARGIN))}.
+  \code{split(X, slice.index(X, MARGIN))}.
 
   \code{\link{apply}} always simplifies common length results, so 
-  attempting to split via \code{apply(x, MARGIN, identity)} does not
-  work (as it simply gives \code{x}).  By chaining \code{asplit} with
+  attempting to split via \code{apply(X, MARGIN, identity)} does not
+  work (as it simply gives \code{X}).  By chaining \code{asplit} with
   \code{\link{lapply}} or \code{\link{vapply}}, one can obtain variants
   of \code{apply} which do not auto-simplify.
 }

@@ -1057,7 +1057,7 @@ stopifnot(sum(x == 1) == 994)
 RNGversion("3.6.0")
 set.seed(12345)
 epsilon <- 1e-10
-p201 <- prop.table( rep( c(1, epsilon), c(201, 999-201)))
+p201 <- proportions( rep( c(1, epsilon), c(201, 999-201)))
 x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
 stopifnot(sum(x <= 201) == 100000)
 

@@ -11,19 +11,19 @@
   statistic.
 }
 \usage{
-sweep(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, \dots)
+sweep(X, MARGIN, STATS, FUN = "-", check.margin = TRUE, \dots)
 }
 \arguments{
-  \item{x}{an array, including a matrix.}
-  \item{MARGIN}{a vector of indices giving the extent(s) of \code{x}
+  \item{X}{an array, including a matrix.}
+  \item{MARGIN}{a vector of indices giving the extent(s) of \code{X}
     which correspond to \code{STATS}.
-    Where \code{x} has named dimnames, it can be a character
+    When \code{X} has named dimnames, it can be a character
     vector selecting dimension names.}
   \item{STATS}{the summary statistic which is to be swept out.}
   \item{FUN}{the function to be used to carry out the sweep.}
   \item{check.margin}{logical.  If \code{TRUE} (the default), warn if the
     length or dimensions of \code{STATS} do not match the specified
-    dimensions of \code{x}.  Set to \code{FALSE} for a small speed gain
+    dimensions of \code{X}.  Set to \code{FALSE} for a small speed gain
     when you \emph{know} that dimensions match.}
   \item{\dots}{optional arguments to \code{FUN}.}
 }
@@ -32,17 +32,17 @@ sweep(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, \dots)
   default, binary operators can be supplied if quoted or backquoted.
 
   \code{FUN} should be a function of two arguments: it will be called
-  with arguments \code{x} and an array of the same dimensions generated
+  with arguments \code{X} and an array of the same dimensions generated
   from \code{STATS} by \code{\link{aperm}}.
 
-  The consistency check among \code{STATS}, \code{MARGIN} and \code{x}
+  The consistency check among \code{STATS}, \code{MARGIN} and \code{X}
   is stricter if \code{STATS} is an array than if it is a vector.
   In the vector case, some kinds of recycling are allowed without a
-  warning.  Use \code{sweep(x, MARGIN, as.array(STATS))} if \code{STATS}
+  warning.  Use \code{sweep(X, MARGIN, as.array(STATS))} if \code{STATS}
   is a vector and you want to be warned if any recycling occurs.
 }
 \value{
-  An array with the same shape as \code{x}, but with the summary
+  An array with the same shape as \code{X}, but with the summary
   statistics swept out.
 }
 \references{

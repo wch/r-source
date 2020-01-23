@@ -16,17 +16,17 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, ...)
+sweep <- function(X, MARGIN, STATS, FUN = "-", check.margin = TRUE, ...)
 {
     FUN <- match.fun(FUN)
-    dims <- dim(x)
+    dims <- dim(X)
 
     ## Extract the margins and associated dimnames
 
     if (is.character(MARGIN)) {
-        dn <- dimnames(x) # possibly NULL
+        dn <- dimnames(X) # possibly NULL
         if(is.null(dnn <- names(dn))) # names(NULL) is NULL
-           stop("'x' must have named dimnames")
+           stop("'X' must have named dimnames")
         MARGIN <- match(MARGIN, dnn)
         if (anyNA(MARGIN))
             stop("not all elements of 'MARGIN' are names of dimensions")
@@ -53,5 +53,5 @@ sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, ...)
         }
     }
     perm <- c(MARGIN, seq_along(dims)[ - MARGIN])
-    FUN(x, aperm(array(STATS, dims[perm]), order(perm)), ...)
+    FUN(X, aperm(array(STATS, dims[perm]), order(perm)), ...)
 }

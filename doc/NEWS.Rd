@@ -199,8 +199,17 @@
       \item \code{memCompress()} and \code{memDecompress()} support long
       raw vectors for types \code{"gzip"} and \code{"zx"}.
 
-      \item \code{sweep()} can now use names of dimnames for its \code{MARGIN}
-      argument (\code{apply} has had this for almost a decade).
+      \item \code{sweep()} and \code{slice.index()} can now use names
+      of dimnames for their \code{MARGIN} argument (\code{apply} has
+      had this for almost a decade). These functions, and also
+      \code{asplit()} have had the name of their first argument
+      changed to \code{X} for consistency with \code{apply()}
+
+      \item New function \code{proportions()} and
+      \code{marginSums()}. The intention is that these should
+      eventually replace the unfortunately named \code{prop.table()}
+      and \code{margin.table()}. They can be drop-in replacements, but
+      also adds named-margin functionality.
 
       \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
       \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
@@ -435,7 +444,7 @@
       \code{n - k} for \code{k} and \code{n} was only \emph{nearly} integer
       (report from Erik Scott Wright).
 
-      \item \code{mle()} in the \code{stats} package had problems
+      \item \code{mle()} in the \code{stats4} package had problems
       combining use of box constraints and fixed starting values (in
       particular, confidence intervals were affected).
     }

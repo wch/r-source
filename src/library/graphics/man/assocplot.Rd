@@ -76,7 +76,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
 }
 \examples{
 ## Aggregate over sex:
-x <- margin.table(HairEyeColor, c(1, 2))
+x <- marginSums(HairEyeColor, c(1, 2))
 x
 assocplot(x, main = "Relation between hair and eye color")
 }

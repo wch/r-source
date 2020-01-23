@@ -133,9 +133,9 @@ improved <- factor(rep(c(1, 2, 3, 1, 2, 3), c(29, 7, 7, 13, 7, 21)),
 
 ## applications and admissions by department at UC Berkeley
 ## (two-way tables)
-(spineplot(margin.table(UCBAdmissions, c(3, 2)),
+(spineplot(marginSums(UCBAdmissions, c(3, 2)),
            main = "Applications at UCB"))
-(spineplot(margin.table(UCBAdmissions, c(3, 1)),
+(spineplot(marginSums(UCBAdmissions, c(3, 1)),
            main = "Admissions at UCB"))
 
 ## NASA space shuttle o-ring failures
