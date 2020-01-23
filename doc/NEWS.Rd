@@ -14,6 +14,12 @@
     }
   }
 
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Uses of \code{url(gzcon(.))} needing to extend buffer size
+      have failed (with HTTP/2 servers), reported by Gábor Csárdi.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.6.2}{
