@@ -36,11 +36,12 @@
     right aligned.  The default is left alignment.}
   \item{max}{a non-null value for \code{max} specifies the approximate
     maximum number of entries to be printed.  The default, \code{NULL},
-    uses \code{\link{getOption}("max.print")}; see that help page for more
+    uses \code{\link{getOption}("max.print")}: see that help page for more
     details.}
   \item{width}{controls the maximum number of columns on a line used in
     printing vectors, matrices, etc.  The default, \code{NULL}, uses
-    \code{\link{getOption}("digits")}; see that help page for more details.}
+    \code{\link{getOption}("width")}: see that help page for more
+    details including allowed values.}
   \item{useSource}{logical, indicating whether to use source
     references or copies rather than deparsing \link{language objects}.
     The default is to use the original source if it is available.}
