@@ -931,6 +931,10 @@ Packages used to run examples or tests conditionally (e.g.@: @emph{via}
 @code{if(require(@var{pkgname}))}) should be listed in @samp{Suggests}
 or @samp{Enhances}.  (This allows checkers to ensure that all the
 packages needed for a complete check are installed.)
+
+@item
+Packages needed to use datasets fron the package should be in
+@samp{Imports}: this includes those needed to define S4 classes used.
 @end itemize
 
 @noindent
@@ -944,10 +948,9 @@ used by @code{library} when it loads the package, and
 @samp{Imports} and (for @code{dependencies = TRUE}) @samp{Suggests}
 fields.
 
-It is increasingly important that the information in these fields is
-complete and accurate: it is for example used to compute which packages
-depend on an updated package and which packages can safely be installed
-in parallel.
+It is important that the information in these fields is complete and
+accurate: it is for example used to compute which packages depend on an
+updated package and which packages can safely be installed in parallel.
 
 This scheme was developed before all packages had namespaces (@R{}
 2.14.0 in October 2011), and good practice changed once that was in
