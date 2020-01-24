@@ -2481,8 +2481,10 @@ add_dummies <- function(dir, Log)
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
-            out <- R_runR0("tools:::.check_package_datasets('.')",
-                           R_opts2, elibs)
+            el <- if (R_check_depends_only_data) {
+                      setRlibs(pkgdir = pkgdir, libdir = libdir)
+                  } else elibs
+            out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2, el)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
             out <- filtergrep("^OMP:", out)
@@ -2492,8 +2494,12 @@ add_dummies <- function(dir, Log)
                 if(any(bad) || bad2) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
                 if(bad2)
-                     printLog0(Log,
-                               "  The dataset(s) may use package(s) not declared in the DESCRIPTION file.\n")
+                    if(R_check_depends_only_data || R_check_suggests_only)
+                        printLog0(Log,
+                                  "  The dataset(s) may use package(s) not declared in Depends/Imports.\n")
+                    else
+                        printLog0(Log,
+                                  "  The dataset(s) may use package(s) not declared in the DESCRIPTION file.\n")
             } else resultLog(Log, "OK")
         }
 
@@ -5969,6 +5975,10 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
+    ## Restrict check of data() to Imports/Depends, if not already done
+    R_check_depends_only_data <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_DATA_",
+                                         "FALSE")) && !R_check_depends_only
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
     R_check_FF_DUP <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
