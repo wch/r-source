@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1760,7 +1760,9 @@ static void src2buff1(SEXP srcref, LocalParseData *d)
     PROTECT(srcref = eval(srcref, R_BaseEnv));
     n = length(srcref);
     for(i = 0 ; i < n ; i++) {
-	print2buff(translateChar(STRING_ELT(srcref, i)), d);
+	/* use EncodeChar also to produce embedded UTF-8 for character
+	   literals (with Rgui) */
+	print2buff(EncodeChar(STRING_ELT(srcref, i)), d);
 	if(i < n-1) writeline(d);
     }
     UNPROTECT(3);
