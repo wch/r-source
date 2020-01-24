@@ -11,18 +11,17 @@
   given array.
 }
 \usage{
-slice.index(X, MARGIN)
+slice.index(x, MARGIN)
 }
 \arguments{
-  \item{X}{an array.  If \code{X} has no dimension attribute, it is
+  \item{x}{an array.  If \code{x} has no dimension attribute, it is
     considered a one-dimensional array.}
   \item{MARGIN}{an integer vector giving the dimension numbers to slice 
-    by.  When \code{X} has named dimnames, it can also be a character
-    vector selecting dimension names.}
+    by.}
 }
 \value{
   An integer array \code{y} with dimensions corresponding to those of
-  \code{X}.
+  \code{x}.
 }
 \details{
   If \code{MARGIN} gives a single dimension, then all elements of slice
@@ -42,7 +41,7 @@ slice.index(X, MARGIN)
   \code{\link{row}} and \code{\link{col}} for determining row and column
   indexes; in fact, these are special cases of \code{slice.index}
   corresponding to \code{MARGIN} equal to 1 and 2, respectively when
-  \code{X} is a matrix.
+  \code{x} is a matrix.
 }
 \examples{
 x <- array(1 : 24, c(2, 3, 4))

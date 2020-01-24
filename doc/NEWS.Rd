@@ -201,9 +201,7 @@
 
       \item \code{sweep()} and \code{slice.index()} can now use names
       of dimnames for their \code{MARGIN} argument (\code{apply} has
-      had this for almost a decade). These functions, and also
-      \code{asplit()} have had the name of their first argument
-      changed to \code{X} for consistency with \code{apply()}
+      had this for almost a decade). 
 
       \item New function \code{proportions()} and
       \code{marginSums()}. The intention is that these should
