@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1094,6 +1094,16 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
     return ans;
 }
 
+static SEXP mkChar2(const char *name)
+{
+    cetype_t enc = CE_NATIVE;
+
+    if(known_to_be_latin1) enc = CE_LATIN1;
+    else if(known_to_be_utf8) enc = CE_UTF8;
+
+    return mkCharLenCE(name, (int) strlen(name), enc);
+}
+
 static SEXP mkString2(const char *s, size_t len, Rboolean escaped)
 {
     SEXP t;
@@ -1608,7 +1618,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 	    SEXP s_filename = install("filename");
 	    defineVar(s_filename, ScalarString(mkChar("")), PS_ORIGINAL);
 	    SEXP s_lines = install("lines");
-	    defineVar(s_lines, ScalarString(mkChar(buf)), PS_ORIGINAL);
+	    defineVar(s_lines, ScalarString(mkChar2(buf)), PS_ORIGINAL);
     	    PROTECT(class = allocVector(STRSXP, 2));
             SET_STRING_ELT(class, 0, mkChar("srcfilecopy"));
             SET_STRING_ELT(class, 1, mkChar("srcfile"));
@@ -3468,7 +3478,7 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 	_ID( ParseState.data_count )           = id ;          
 	_PARENT(ParseState.data_count)         = 0 ; 
 	if ( text_in )
-	    SET_STRING_ELT(PS_TEXT, ParseState.data_count, mkChar(text_in));
+	    SET_STRING_ELT(PS_TEXT, ParseState.data_count, mkChar2(text_in));
 	else
 	    SET_STRING_ELT(PS_TEXT, ParseState.data_count, mkChar(""));
 	
