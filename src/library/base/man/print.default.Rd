@@ -97,7 +97,8 @@
   In all locales, the characters in the ASCII range (\samp{0x00} to
   \samp{0x7f}) are printed in the same way, as-is if printable, otherwise
   via ANSI escape sequences or 3-digit octal escapes as described for
-  single-byte locales.
+  single-byte locales. Whether a character is printable depends on the
+  current locale and the operating system (C library).
 
   Multi-byte non-printing characters are printed as an escape sequence
   of the form \samp{\\uxxxx} or \samp{\\Uxxxxxxxx} (in hexadecimal).
@@ -121,7 +122,8 @@
   In all locales, the characters in the ASCII range (\samp{0x00} to
   \samp{0x7f}) are printed in the same way, as-is if printable, otherwise
   via ANSI escape sequences or 3-digit octal escapes as described for
-  single-byte locales.
+  single-byte locales. Whether a character is printable depends on the
+  current locale and the operating system (C library).
 
   Multi-byte non-printing characters are printed as an escape sequence
   of the form \samp{\\uxxxx} (in hexadecimal). This is the Unicode code
