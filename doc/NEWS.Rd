@@ -16,6 +16,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item Fixed a C level integer overflow in \code{rhyper()}; reported
+      by Benjamin Tyner in \PR{17694}.
+
       \item Uses of \code{url(gzcon(.))} needing to extend buffer size
       have failed (with HTTP/2 servers), reported by Gábor Csárdi.
     }
