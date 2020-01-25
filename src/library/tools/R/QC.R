@@ -3112,7 +3112,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 
     ## (added in 4.0.0) Check for orphaned packages.
     if (config_val_to_logical(Sys.getenv("_R_CHECK_ORPHANED_", "FALSE"))) {
-        exceptions <- c('lpSolve') # a new maintainer was promised 2020-01-08
+        exceptions <- c()
         ## empty fields are list().
         strict <- setdiff(unique(c(as.character(depends),
                                    as.character(imports),
