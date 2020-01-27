@@ -2813,6 +2813,102 @@ static int StringValue(int c, Rboolean forSymbol)
     }
 }
 
+static int RawStringValue(int c)
+{
+    int quote = c;
+    int delim = ')';
+    char currtext[1010], *ct = currtext;
+    char st0[MAXELTSIZE];
+    unsigned int nstext = MAXELTSIZE;
+    char *stext = st0, *bp = st0;
+    PROTECT_INDEX sti;
+    int wcnt = 0;
+    ucs_t wcs[10001];
+    Rboolean oct_or_hex = FALSE, use_wcs = FALSE, currtext_truncated = FALSE;
+
+    if (! nextchar('(')) {
+	if (nextchar('['))
+	    delim = ']';
+	else if (nextchar('{'))
+	    delim = '}';
+	else if (nextchar('|'))
+	    delim = '|';
+	else		
+	    error(_("malformed raw string literal at line %d"),
+		  ParseState.xxlineno);
+    }
+
+    PROTECT_WITH_INDEX(R_NilValue, &sti);
+    CTEXT_PUSH(c);
+    while ((c = xxgetc()) != R_EOF) {
+	if (c == delim && nextchar(quote))
+	    break;
+	CTEXT_PUSH(c);
+	if(mbcslocale) {
+	    int i, clen;
+	    ucs_t wc;
+	    clen = mbcs_get_next2(c, &wc);
+	    WTEXT_PUSH(wc);
+	    ParseState.xxbyteno += clen-1;
+	    
+	    for(i = 0; i < clen - 1; i++){
+		STEXT_PUSH(c);
+		c = xxgetc();
+		if (c == R_EOF) break;
+		CTEXT_PUSH(c);
+	    }
+	    if (c == R_EOF) break;
+	    STEXT_PUSH(c);
+	    continue;
+	}
+	STEXT_PUSH(c);
+	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
+	else { /* have an 8-bit char in the current encoding */
+#ifdef WC_NOT_UNICODE
+	    ucs_t wc;
+	    char s[2] = " ";
+	    s[0] = (char) c;
+	    mbtoucs(&wc, s, 2);
+#else
+	    wchar_t wc;
+	    char s[2] = " ";
+	    s[0] = (char) c;
+	    mbrtowc(&wc, s, 2, NULL);
+#endif
+	    WTEXT_PUSH(wc);
+	}
+    }
+    STEXT_PUSH('\0');
+    WTEXT_PUSH(0);
+    yytext[0] = '\0';
+    if (c == R_EOF) {
+	PRESERVE_SV(yylval = R_NilValue);
+	UNPROTECT(1); /* release stext */
+    	return INCOMPLETE_STRING;
+    } else {
+    	CTEXT_PUSH(c);
+    	CTEXT_PUSH('\0');
+    }
+    if (!currtext_truncated)
+    	strcpy(yytext, currtext);
+    else if (!use_wcs) {
+        size_t total = strlen(stext);
+        snprintf(yytext, MAXELTSIZE, "[%u chars quoted with '%c']", (unsigned int)total, quote);
+    } else 
+        snprintf(yytext, MAXELTSIZE, "[%d wide chars quoted with '%c']", wcnt, quote);
+    if(use_wcs) {
+	if(oct_or_hex)
+	    error(_("mixing Unicode and octal/hex escapes in a string is not allowed"));
+	if(wcnt < 10000)
+	    PRESERVE_SV(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
+	else
+	    error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno);
+    } else
+	PRESERVE_SV(yylval = mkString2(stext,  bp - stext - 1, oct_or_hex));
+    UNPROTECT(1); /* release stext */
+    return STR_CONST;
+}
+
 static int SpecialValue(int c)
 {
     DECLARE_YYTEXT_BUFP(yyp);
@@ -3010,6 +3106,15 @@ static int token(void)
     if (c == '.') return NumericValue(c);
     /* We don't care about other than ASCII digits */
     if (isdigit(c)) return NumericValue(c);
+
+    /* raw string literal */
+
+    if (c == 'r' || c == 'R') {
+	if (nextchar('"'))
+	    return RawStringValue('"');
+	else if (nextchar('\''))
+	    return RawStringValue('\'');
+    }
 
     /* literal strings */
 

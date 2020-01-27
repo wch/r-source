@@ -12,6 +12,7 @@
 \alias{`}%`
 \concept{quotes}
 \concept{backslash}
+\concept{raw character strings}
 \title{Quotes}
 \description{
   Descriptions of the various uses of quoting in \R.
@@ -69,6 +70,11 @@
   Embedded nuls are not allowed in character strings, so using escapes
   (such as \samp{\\0}) for a nul will result in the string being
   truncated at that point (usually with a warning).
+
+  Raw character constants are also available using a syntax similar to
+  the one used in C++; \code{r"(...)"} with \code{...} any character
+  sequence, except that it must not contain the closing sequence
+  \samp{)"}.
 }
 \section{Names and Identifiers}{
   Identifiers consist of a sequence of letters, digits, the period
@@ -171,5 +177,8 @@ stopifnot(identical(nn, n2))
   "foo\0bar"     # Error: nul character not allowed (line 1)
   "foo\u0000bar" # same error
 }
+
+## A Windows path written as a raw string constant:
+r"(c:\Program files\R)"
 }
 \keyword{documentation}
