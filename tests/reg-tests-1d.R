@@ -3683,6 +3683,42 @@ stopifnot(identical(tools::assertError(sqrt("a")),
                     list(     tryCatch(sqrt("a"), error=identity))))
 ## The former contained the error object twice in R <= 3.6.2
 
+## Overriding encoding in parse()
+
+oloc <- Sys.getlocale("LC_CTYPE")
+if (.Platform$OS.type == "windows") {
+  Sys.setlocale("LC_CTYPE", "English_United States.1252")
+} else {
+  ## assumes non-Windows system already all support UTF-8
+  Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
+}
+
+x8 <- "'\uf6'"
+stopifnot(identical(Encoding(x8), "UTF-8"))
+
+x <- eval(parse(text=x8, encoding="UTF-8"))
+stopifnot(identical(Encoding(x), "UTF-8"))
+stopifnot(identical(x, substr(x8,2,2))) ## PR#17696
+
+xl <- iconv(x8, from="UTF-8", to="latin1")
+stopifnot(identical(Encoding(xl), "latin1"))
+stopifnot(identical(x8, iconv(xl, from="latin1", to="UTF-8")))
+
+if (l10n_info()$"UTF-8") {
+    x <- eval(parse(text=x8))
+    stopifnot(identical(x, substr(x8,2,2)))
+    x <- eval(parse(text=xl))
+    stopifnot(identical(x, substr(x8,2,2)))
+}
+
+if (l10n_info()$"Latin-1") {
+    x <- eval(parse(text=xl))
+    stopifnot(identical(x, substr(xl,2,2)))
+    x <- eval(parse(text=xl))
+    stopifnot(identical(x, substr(xl,2,2)))
+}
+
+Sys.setlocale("LC_CTYPE", oloc)
 
 
 ## keep at end
