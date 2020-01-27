@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-01-27 r77725) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-01-27 r77727) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -133,6 +133,7 @@ x -0.89
 +            weights = wts, trace = TRUE)
 112.14 :  0.12345 0.54321
 0.0012128 :  0.0051705 0.9991529
+> ## IGNORE_RDIFF_BEGIN
 > summary(fit, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -150,16 +151,19 @@ Correlation of Parameter Estimates:
   a    
 b -0.89
 
+> ## IGNORE_RDIFF_END
 > stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
 +                     check.attributes = FALSE))
 > stopifnot(df.residual(fit) == df.residual(fit0))
 > cf1 <- coef(summary(fit))[, 1:2]
+> ## IGNORE_RDIFF_BEGIN
 > fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +             weights = wts, trace = TRUE, algorithm = "port")
   0:     56.070572: 0.123450 0.543210
   1:     6.3964587:  1.34546 0.700840
   2: 0.00060639084: 0.00517053 0.999153
   3: 0.00060639084: 0.00517051 0.999153
+> ## IGNORE_RDIFF_END
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -738,4 +742,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.495   0.073   1.553 
+  1.509   0.077   1.570 
