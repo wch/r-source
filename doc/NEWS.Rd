@@ -455,6 +455,7 @@
       the included routines, just bug fixes).
     }
   }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Fixed a C level integer overflow in \code{rhyper()}; reported
@@ -462,6 +463,10 @@
 
       \item Uses of \code{url(gzcon(.))} needing to extend buffer size
       have failed (with HTTP/2 servers), reported by Gábor Csárdi.
+
+      \item \code{predict(loess(..), se=TRUE)} now errors out (instead of
+      seg.faulting etc) for large sample sizes, thanks to a report and
+      patch by Benjamin Tyner in \PR{17121}.
 
       \item \code{update(form, new)} in the case of a long \code{new}
       formula sometimes wrongly eliminated the intercept from \code{form},

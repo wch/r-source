@@ -1,5 +1,5 @@
 #### Regression Tests that need "much" memory
-#### (and are slow even with enough GBytes of mem)
+#### (and / or  are slow even with enough GBytes of memory)
 
 print(si <- sessionInfo(), locale=FALSE)
 Sys.info()
@@ -311,6 +311,23 @@ if(availableGB > 20) withAutoprint({ ## seen 20.9 G
     system.time(stopifnot(identical(x, r))) # 24 sec
     close(zz); rm(r, zz)
 })
+
+
+## predict(loess(.), se=TRUE) for "large" sample size -- PR#17121
+## No need for very much memory, but is slow and should do several ex.
+mkDat <- function(n) {
+    x <- 5*(1:n)/(n+1)
+    data.frame(x = x, y = sin(pi*x^2) * exp(-x/2) + rnorm(n)/8)
+}
+set.seed(1); dat <- mkDat(n = 42000)
+system.time( # 14.5 sec (on lynne ~ 2019)
+    fit <- loess(y~x, data=dat)
+)
+r <- tools::assertError(
+   predict(fit, newdata=data.frame(x=.5), se=TRUE)
+ , verbose=TRUE) #
+## typically would not seg.fault but give Calloc(..) error (with *wrong* size)
+stopifnot(grepl("^workspace .* is too large .* 'se = TRUE'", r[[1]]$message))
 
 
 
