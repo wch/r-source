@@ -412,7 +412,7 @@
       by Johannes Ranke and Kirill Müller.
 
       \item \code{round()} finally rounds \emph{\dQuote{to nearest}}
-      by \emph{measuring} and \emph{\dQuoute{to even}}; thanks to a
+      by \emph{measuring} and \emph{\dQuote{to even}}; thanks to a
       careful algorithm originally prompted by the report from Adam Wheeler
       and then others, in \PR{17668}.
       \cr
