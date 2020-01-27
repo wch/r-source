@@ -411,9 +411,10 @@
       changeover days, fixing \PR{16764}, thanks to proposals and analysis
       by Johannes Ranke and Kirill Müller.
 
-      \item \code{round()} correctly rounds \dQuote{to even} in more cases,
-      thanks to a more careful algorithm prompted by the report from Adam
-      Wheeler and then others, in \PR{17668}.
+      \item \code{round()} finally rounds \emph{\dQuote{to nearest}}
+      by \emph{measuring} and \emph{\dQuoute{to even}}; thanks to a
+      careful algorithm originally prompted by the report from Adam Wheeler
+      and then others, in \PR{17668}.
       \cr
       \code{round(x, dig)} for \emph{negative} digits is much more rational
       now, notably for large \eqn{|dig|}.
