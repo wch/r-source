@@ -29,9 +29,9 @@
        \code{extSoftVersion()}, PCRE1 has versions < 10, PCRE2 versions
        >= 10.
 
-       \code{matrix} objects now also inherit from class \code{"array"},
-       namely, e.g., \code{class(diag(1))} is \code{c("matrix",
-       "array")} which invalidates code assuming that
+       \item \code{matrix} objects now also inherit from class
+       \code{"array"}, namely, e.g., \code{class(diag(1))} is
+       \code{c("matrix", "array")} which invalidates code assuming that
        \code{length(class(obj)) == 1}, an incorrect assumption that is
        less frequently fulfilled now.
 
