@@ -3678,6 +3678,12 @@ stopifnot(identical(N, 999994112L), is.integer(Nhi),
 ## NA's and warnings, incl "SHOULD NOT HAPPEN!" in R <= 3.6.2
 
 
+## assertCondition(*, "error") etc triggered errors *twice* (accidentally)
+stopifnot(identical(tools::assertError(sqrt("a")),
+                    list(     tryCatch(sqrt("a"), error=identity))))
+## The former contained the error object twice in R <= 3.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

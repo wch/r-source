@@ -468,6 +468,9 @@
       seg.faulting etc) for large sample sizes, thanks to a report and
       patch by Benjamin Tyner in \PR{17121}.
 
+      \item \code{tools:assertCondition(., "error")} and hence
+      \code{assertError()} no longer return errors twice (invisibly).
+
       \item \code{update(form, new)} in the case of a long \code{new}
       formula sometimes wrongly eliminated the intercept from \code{form},
       or (more rarely) added a garbage term (or seg.faulted !); reported by Mathias Ambühl in
