@@ -439,6 +439,10 @@
       \item \code{mle()} in the \code{stats4} package had problems
       combining use of box constraints and fixed starting values (in
       particular, confidence intervals were affected).
+
+      \item Operator \code{?} now has lower precedence than \code{=}
+      to work as documented and to behave like \code{<-} in help
+      expressions (\PR{16710}).
     }
   }
 }
