@@ -3734,6 +3734,19 @@ Sys.setlocale("LC_CTYPE", oloc)
 ## parse(text=xl) had failed w/ "EOF whilst reading MBCS char at line 2"
 
 
+## smoothEnds(<integer>, .) - PR#17693
+y1 <- as.integer(c(8,5,4,1,1,1,1))
+y2 <- y1; y2[3] <- 6L
+s1 <- smoothEnds(y1); s1.5 <- smoothEnds(y1, 5)
+s2 <- smoothEnds(y2); s2.5 <- smoothEnds(y2, 5)
+stopifnot(is.integer(y1), is.integer(y2), y1[-3] == y2[-3],
+          is.integer(s1), is.integer(s2),
+          is.integer(s1.5), is.integer(s2.5),
+          s1[1] == 7L, s1[-1] == y1[-1], identical(s1.5, s1),
+          s2[1] == 5L, s2[-1] == y2[-1], identical(s2.5, rep(c(6L, 1L), 3:4)))
+## s1, s1.5 were double in R <= 3.6.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

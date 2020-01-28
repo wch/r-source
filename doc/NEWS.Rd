@@ -444,6 +444,10 @@
       \item Operator \code{?} now has lower precedence than \code{=}
       to work as documented and to behave like \code{<-} in help
       expressions (\PR{16710}).
+
+      \item \code{smoothEnds(x)} now returns \code{integer} type in
+      \emph{both} cases when \code{x} is \code{integer}, thanks to report
+      and proposal by Bill Dunlap \PR{17693}.
     }
   }
 }
