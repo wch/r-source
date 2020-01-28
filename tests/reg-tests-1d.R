@@ -3695,10 +3695,24 @@ if (.Platform$OS.type == "windows") {
 
 x8 <- "'\uf6'"
 stopifnot(identical(Encoding(x8), "UTF-8"))
+f8 <- tempfile()
+writeLines(x8, f8, useBytes=TRUE) # save in UTF-8
 
-x <- eval(parse(text=x8, encoding="UTF-8"))
+x <- eval(parse(text=x8, encoding="UTF-8", keep.source=TRUE))
 stopifnot(identical(Encoding(x), "UTF-8"))
 stopifnot(identical(x, substr(x8,2,2))) ## PR#17696
+
+x <- eval(parse(text=x8, encoding="UTF-8", keep.source=FALSE))
+stopifnot(identical(Encoding(x), "UTF-8"))
+stopifnot(identical(x, substr(x8,2,2)))
+
+x <- eval(parse(file=f8, encoding="UTF-8", keep.source=TRUE))
+stopifnot(identical(Encoding(x), "UTF-8"))
+stopifnot(identical(x, substr(x8,2,2)))
+
+x <- eval(parse(file=f8, encoding="UTF-8", keep.source=FALSE))
+stopifnot(identical(Encoding(x), "UTF-8"))
+stopifnot(identical(x, substr(x8,2,2)))
 
 xl <- iconv(x8, from="UTF-8", to="latin1")
 stopifnot(identical(Encoding(xl), "latin1"))
@@ -3707,14 +3721,20 @@ stopifnot(identical(x8, iconv(xl, from="latin1", to="UTF-8")))
 if (l10n_info()$"UTF-8") {
     x <- eval(parse(text=x8))
     stopifnot(identical(x, substr(x8,2,2)))
-    x <- eval(parse(text=xl))
+    x <- eval(parse(text=xl, keep.source=TRUE))
+    stopifnot(identical(x, substr(x8,2,2)))
+    x <- eval(parse(text=xl, keep.source=FALSE))
+    stopifnot(identical(x, substr(x8,2,2)))
+    x <- eval(parse(file=f8))
     stopifnot(identical(x, substr(x8,2,2)))
 }
 
 if (l10n_info()$"Latin-1") {
     x <- eval(parse(text=xl))
     stopifnot(identical(x, substr(xl,2,2)))
-    x <- eval(parse(text=xl))
+    x <- eval(parse(text=x8, keep.source=TRUE))
+    stopifnot(identical(x, substr(xl,2,2)))
+    x <- eval(parse(text=x8, keep.source=FALSE))
     stopifnot(identical(x, substr(xl,2,2)))
 }
 
