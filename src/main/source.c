@@ -237,8 +237,11 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean allKnown = TRUE;
     /* allow 'encoding' to override declaration on 'text'. */
     if(streql(encoding, "latin1")) {
-	known_to_be_latin1 = TRUE;
-	allKnown = FALSE;
+	if (!mbcslocale) {
+	    known_to_be_latin1 = TRUE;
+	    allKnown = FALSE;
+	} else
+	    warning(_("argument encoding=\"latin1\" is ignored in MBCS locales"));
     } else if(streql(encoding, "UTF-8"))  {
 	known_to_be_utf8 = TRUE;
 	allKnown = FALSE;
