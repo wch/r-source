@@ -933,7 +933,7 @@ or @samp{Enhances}.  (This allows checkers to ensure that all the
 packages needed for a complete check are installed.)
 
 @item
-Packages needed to use datasets fron the package should be in
+Packages needed to use datasets from the package should be in
 @samp{Imports}: this includes those needed to define S4 classes used.
 @end itemize
 
