@@ -3704,9 +3704,7 @@ writeLines(x8, f8, useBytes=TRUE) # save in UTF-8
 chk_x82 <- function(x) stopifnot(identical(Encoding(x), "UTF-8"), identical(x, x8.2))
 ## parse(*, encoding = "UTF-8", ..) :
 for(FF in c(function(.) parse(text=., encoding="UTF-8", keep.source=TRUE),
-            function(.) parse(text=., encoding="UTF-8", keep.source=FALSE),
-            str2lang,
-            str2expression
+            function(.) parse(text=., encoding="UTF-8", keep.source=FALSE)
             )) {
     x <- eval(FF(x8))
     chk_x82(x)
@@ -3724,13 +3722,17 @@ if (l10n_info()$"UTF-8") {
     for(x in c(eval(parse(text=x8)),
                eval(parse(text=xl, keep.source=TRUE)),
                eval(parse(text=xl, keep.source=FALSE)),
-               eval(parse(file=f8))))
+               eval(parse(file=f8)),
+               str2lang(x8),
+               str2expression(x8)))
         stopifnot(identical(x, x8.2))
 }
 if (l10n_info()$"Latin-1") {
     for(x in c(eval(parse(text=xl)),
                eval(parse(text=x8, keep.source=TRUE)),
-               eval(parse(text=x8, keep.source=FALSE))))
+               eval(parse(text=x8, keep.source=FALSE)),
+               str2lang(x8),
+               str2expression(x8)))
         stopifnot(identical(x, x8.2))
 }
 Sys.setlocale("LC_CTYPE", oloc)
