@@ -1,26 +1,25 @@
 % File src/library/base/man/unlink.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unlink}
 \title{Delete Files and Directories}
-\usage{unlink(x, recursive = FALSE, force = FALSE)}
+\usage{unlink(x, recursive = FALSE, force = FALSE, expand = TRUE)}
 \alias{unlink}
 \arguments{
   \item{x}{a character vector with the names of the file(s) or
-    directories to be deleted.
-    Wildcards (normally \file{*} and \file{?}) are allowed.}
+    directories to be deleted.}
   \item{recursive}{logical.  Should directories be deleted recursively?}
   \item{force}{logical.  Should permissions be changed (if possible) to
     allow the file or directory to be removed?}
+  \item{expand}{logical. Should wildcards (see \sQuote{Details} below) and
+    tilde (see \code{\link{path.expand}}) be expanded?}
 }
 \description{
   \code{unlink} deletes the file(s) or directories specified by \code{x}.
 }
 \details{
-  Tilde-expansion (see \code{\link{path.expand}}) is done on \code{x}.
-
   If \code{recursive = FALSE} directories are not deleted,
   not even empty ones.
 
@@ -30,10 +29,10 @@
   deletes the just symbolic link if the target of such a link is a directory.
 
 #endif
-  Wildcard expansion is done by the internal code of
-  \code{\link{Sys.glob}}.  Wildcards never match a leading \file{.} in
-  the filename, and files \file{.} and \file{..} will never be
-  considered for deletion.
+  Wildcard expansion (normally \file{*} and \file{?} are allowed) is done by
+  the internal code of \code{\link{Sys.glob}}.  Wildcards never match a
+  leading \file{.} in the filename, and files \file{.} and \file{..} will
+  never be considered for deletion.
 #ifdef unix
   Wildcards will only be expanded if the system supports it.  Most
   systems will support not only \file{*} and \file{?} but also character

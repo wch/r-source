@@ -1,7 +1,7 @@
 #  File src/library/base/R/files.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -227,8 +227,8 @@ path.expand <- function(path)
 Sys.glob <- function(paths, dirmark = FALSE)
     .Internal(Sys.glob(path.expand(paths), dirmark))
 
-unlink <- function(x, recursive = FALSE, force = FALSE)
-    .Internal(unlink(as.character(x), recursive, force))
+unlink <- function(x, recursive = FALSE, force = FALSE, expand = TRUE)
+    .Internal(unlink(as.character(x), recursive, force, expand))
 
 Sys.chmod <- function(paths, mode = "0777", use_umask = TRUE)
     .Internal(Sys.chmod(paths, as.octmode(mode), use_umask))
