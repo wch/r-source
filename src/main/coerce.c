@@ -1647,8 +1647,23 @@ SEXP attribute_hidden do_str2lang(SEXP call, SEXP op, SEXP args, SEXP rho) {
     cntxt.cend = &parse_cleanup;
     cntxt.cenddata = &pci;
 
-    known_to_be_latin1 = FALSE;
-    known_to_be_utf8 = FALSE;
+    /* Preserve uncertainty in encoding as in do_parse(): if at least one
+       argument is of "unknown" encoding, the result is also flagged
+       "unknown". To be kept in sync with do_parse().
+    */
+    known_to_be_latin1 = known_to_be_utf8 = FALSE;
+    Rboolean allKnown = TRUE;
+    for(int i = 0; i < LENGTH(args); i++)
+	if(!ENC_KNOWN(STRING_ELT(args, i)) &&
+	   !IS_ASCII(STRING_ELT(args, i))) {
+	    allKnown = FALSE;
+	    break;
+	}
+    if (allKnown) {
+	/* strings can be flagged as from known encoding */
+	known_to_be_latin1 = pci.old_latin1;
+	known_to_be_utf8 = pci.old_utf8;
+    }
 
     SEXP srcfile = PROTECT(mkString("<text>"));
     SEXP ans = PROTECT(R_ParseVector(args, -1, &status, srcfile));
