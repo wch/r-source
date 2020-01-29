@@ -3704,16 +3704,13 @@ writeLines(x8, f8, useBytes=TRUE) # save in UTF-8
 chk_x82 <- function(x) stopifnot(identical(Encoding(x), "UTF-8"), identical(x, x8.2))
 ## parse(*, encoding = "UTF-8", ..) :
 for(FF in c(function(.) parse(text=., encoding="UTF-8", keep.source=TRUE),
-            function(.) parse(text=., encoding="UTF-8", keep.source=FALSE)
-            ## give "unknown" Encoding(.) :
-            ## , str2lang
-            ## , str2expression
+            function(.) parse(text=., encoding="UTF-8", keep.source=FALSE),
+            str2lang,
+            str2expression
             )) {
     x <- eval(FF(x8))
     chk_x82(x)
 }
-for(FF in c(str2lang, str2expression))
-    stopifnot(identical(eval(FF(x8)), x8.2)) # Encoding "unknown"
 for(K.S in c(TRUE, FALSE)) {
     x <- eval(parse(file=f8, encoding="UTF-8", keep.source = K.S))
     chk_x82(x)
