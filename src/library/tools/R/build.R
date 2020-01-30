@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1046,7 +1046,8 @@ inRbuildignore <- function(files, pkgdir) {
         exclude <- exclude | grepl("^.Rbuildindex[.]", allfiles)
         ## or simply?  exclude <- exclude | startsWith(allfiles, ".Rbuildindex.")
         exclude <- exclude | (bases %in% .hidden_file_exclusions)
-        unlink(allfiles[exclude], recursive = TRUE, force = TRUE)
+        unlink(allfiles[exclude], recursive = TRUE, force = TRUE,
+               expand = FALSE)
         setwd(owd)
 
         ## Fix up man, R, demo inst/doc directories
