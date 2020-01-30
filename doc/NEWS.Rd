@@ -217,6 +217,9 @@
 
       \item \code{stopifnot()} now allows customizing error messages via
       argument names, thanks to a patch proposal by Neal Fultz in \PR{17688}.
+
+      \item  \code{unlink()} gains a new argument \code{expand} to
+      disable wildcard and tilde expansion.
     }
   }% end{ NEW FEATURES }
 
