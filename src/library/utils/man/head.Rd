@@ -56,7 +56,8 @@ tail(x, \dots)
       length(dim(x))}) select all indices in that dimension. Must
     contain at least one non-missing value.}
   \item{keepnums}{in each dimension, if no names in that dimension are
-    present, create them using the indices included in that dimension.}
+    present, create them using the indices included in that dimension.
+    Ignored if \code{dim(x)} is \code{NULL} or its length 1.}
   \item{addrownums}{deprecated - \code{keepnums} should be used
     instead. Taken as the value of \code{keepnums} if it is explicitly
     set when \code{keepnums} is not.}
@@ -81,10 +82,21 @@ tail(x, \dots)
   For functions, the lines of the deparsed function are returned as
   character strings.
 
-  If an array(/matrix) has no row names, then \code{tail()} will add row
-  names of the form \code{"[n,]"} to the result, so that it looks
-  similar to the last lines of \code{x} when printed.  Setting
-  \code{addrownums = FALSE} suppresses this behaviour.
+  When \code{x} is an array(/matrix) of dimensionality two and more,
+  \code{tail()} will add dimnames similar to how they would appear in a
+  full printing of \code{x} for all dimensions \code{k} where
+  \code{n[k]} is specified and non-missing and \code{dimnames(x)[[k]]}
+  (or \code{dimnames(x)} itself) is \code{NULL}.  Specifically, the
+  form of the added dimnames will vary for different dimensions as follows:
+  \describe{
+    \item{\code{k=1} (rows): }{\code{"[n,]"} (right justified with
+      whitespace padding)}
+    \item{\code{k=2} (columns): }{\code{"[,n]"} (with \emph{no} whitespace
+      padding)}
+    \item{\code{k>2} (higher dims): }{\code{"n"}, i.e., the indices as
+      \emph{character} values}
+  }
+  Setting \code{keepnums = FALSE} suppresses this behaviour.
 
   As \code{\link{data.frame}} subsetting (\sQuote{indexing}) keeps
   \code{\link{attributes}}, so do the \code{head()} and \code{tail()}
@@ -96,14 +108,13 @@ tail(x, \dots)
   For \code{\link{ftable}} objects \code{x}, a transformed \code{format(x)}.
 }
 \note{
-  For the output of \code{tail} when \code{keepnums} is \code{TRUE},
-  dimensions higher than 2 which were subset (i.e., corresponded to a
-  non-missing element of \code{n}), and did not already have
-  non-\code{NULL} dimnames are given dimnames of the \emph{original
-    numeric indices included in that dimension}. This means that, e.g.,
-  for 3-dimensional array \code{arr},  \code{tail(arr, c(2,2,-1))[ , ,
-    2]} and \code{tail(arr, c(2,2,-1))[ , , "2"]} may both be valid but
-  have completely different meanings.
+  For array inputs the output of \code{tail} when \code{keepnums} is \code{TRUE},
+  any dimnames vectors added for dimensions \code{>2} are the original
+  numeric indices in that dimension \emph{as character vectors}.  This
+  means that, e.g., for 3-dimensional array \code{arr},
+  \code{tail(arr, c(2,2,-1))[ , , 2]} and
+  \code{tail(arr, c(2,2,-1))[ , , "2"]} may both be valid but have
+  completely different meanings.
 }
 
 \author{

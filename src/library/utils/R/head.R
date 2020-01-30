@@ -76,7 +76,6 @@ head.array <- function(x, n = 6L, ...)
 
 
 head.ftable <- function(x, n = 6L, ...) {
-    checkHT(n, dim(x))
     r <- format(x)
     dimnames(r) <- list(rep.int("", nrow(r)),
                         rep.int("", ncol(r)))
@@ -85,6 +84,8 @@ head.ftable <- function(x, n = 6L, ...) {
 
 head.function <- function(x, n = 6L, ...)
 {
+    ## Do n check while dim(x) is NULL
+    ## not later when dim(lines) is length 2
     checkHT(n, dim(x))
     lines <- as.matrix(deparse(x))
     dimnames(lines) <- list(seq_along(lines),"")
@@ -119,8 +120,8 @@ tail.array <- function(x, n = 6L, keepnums = TRUE, addrownums, ...)
             keepnums <- addrownums
     }
 
-    d <- dim(x)
-    ## non-specified dimensions (ie dims > length(n) or n[i] is NA) will stay missing / empty:
+    checkHT(n, d <- dim(x))
+    ## non-specified dimensions (ie length(n) < length(d) or n[i] is NA) will stay missing / empty:
     ii <- which(!is.na(n[seq_along(d)]))
     sel <- lapply(ii, function(i) {
         di <- d[i]
@@ -133,19 +134,20 @@ tail.array <- function(x, n = 6L, keepnums = TRUE, addrownums, ...)
     ans <- do.call("[", args)
     if (keepnums && length(d) > 1L) {
         jj <- if(!is.null(adnms <- dimnames(ans)[ii]))
-                  which(vapply(adnms, is.null, NA)) else ii
+                  which(vapply(adnms, is.null, NA)) else seq_along(ii)
         ## For data.frames dimnames(.) never has null elements
         ## but dimnames(.)[numeric()]<-list() converts default
         ## row.names from INTSXP to AltString STRSXP, so avoid it.
         if(length(jj) > 0) {
-            ## jj are indices in dim(x)
-            ## k are indices in jj/sel
-            dimnames(ans)[jj] <- lapply(seq_along(jj),
-                                        function(k) {
+            ## jj are indices in sel/ii
+            dimnames(ans)[ii[jj]] <- lapply(jj,
+                                            function(k) {
+                ## No formatting for cols b/c padding not constant when
+                ## reprinted across higher dimensions
                 ## 1 is rownames, pseudo-col so format [.,]
                 ## 2 is colnames, pseudo-row so straight [,.]
                 ## >2, return correct/orig indices
-                if((dnum <- jj[k]) == 1L)
+                if((dnum <- ii[k]) == 1L)
                     format(sprintf("[%d,]", sel[[k]]),
                            justify = "right")
                 else if(dnum == 2L)
@@ -162,14 +164,23 @@ tail.array <- function(x, n = 6L, keepnums = TRUE, addrownums, ...)
 ## S3method(tail, data.frame, tail.array) ... and ditto for 'table'
 
 tail.ftable <- function(x, n = 6L, keepnums = FALSE, addrownums, ...) {
+    if(!missing(addrownums)) {
+        .Deprecated(msg = gettext("tail(., addrownums=.) is",
+                                  " deprecated.\nUse ",
+                                  "tail(., keepnums=.) instead.\n"))
+        if(missing(keepnums))
+            keepnums <- addrownums
+    }
+
     r <- format(x)
     dimnames(r) <- list(if(!keepnums) rep.int("", nrow(r)),
 			if(!keepnums) rep.int("", ncol(r)))
-    noquote(tail.matrix(r, n = n, keepnums = keepnums, addrownums = addrownums, ...))
+    noquote(tail.matrix(r, n = n, keepnums = keepnums, ...))
 }
 
 tail.function <- function(x, n = 6L, ...)
 {
+    checkHT(n, dim(x))
     lines <- as.matrix(deparse(x))
     dimnames(lines) <- list(seq_along(lines),"")
     noquote(tail(lines, n=n))

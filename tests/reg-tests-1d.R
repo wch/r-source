@@ -3377,8 +3377,8 @@ stopifnot( identical(t3,   tail(iris3[,1,],  keepnums  = FALSE)) )
 ##
 ## 4-dim array
 ## 4th dimension failed transiently when I using switch() in keepnums logic
-adims <- c(11, 3, 3, 3)
-arr <- array(seq_len(prod(adims)) * 100, adims)
+adims <- c(11, 12, 4, 3)
+arr <- array(seq_len(prod(adims)), adims)
 headI4 <- function(M, n) {
     d <- dim(M)
     M[head(seq_len(d[1]), n[1]),
@@ -3405,8 +3405,10 @@ stopifnot(
                                          check.attributes=FALSE), NA))
 
 ## full output
-aco <- capture.output(print(arr))
+aco <- capture.output(arr)
 ## extract all dimnames from full output
+## assumes no spaces in names
+## assumes NO WRAPPING when printing rows!
 getnames <- function(txt, ndim = 4) {
     el <- which(!nzchar(txt))
     ## first handled elsewhere, last is just trailing line
@@ -3414,11 +3416,11 @@ getnames <- function(txt, ndim = 4) {
     hdln  <- c(1L, el[seq(2, length(el), by = 2)] - 1L)
     hdraw <- lapply(txt[hdln], function(tx) strsplit(tx, ", ")[[1L]])
 
-    ## 1 is higher indices, 2 is blank
+    ## line 1 is higher indices, 2 is blank, 3 is columns
     cnms <- strsplit(trimws(txt[3], which = "left"), split = "[[:space:]]+")[[1]]
     cnms <- cnms[nzchar(cnms)]
     matln <- 4:(el[1] - 1L)
-    rnms <- gsub("^([^]]+]).*", "\\1", txt[matln])
+    rnms <- gsub("^([[:space:]]*[^[:space:]]+)[[:space:]].*", "\\1", txt[matln])
     hdnms <- lapply(3:ndim, ## blank ones are left in so this is ok
                     function(i) unique(sapply(hdraw, `[`, i )))
     c(list(rnms, cnms),
@@ -3432,7 +3434,26 @@ stopifnot(
                                                 x = fpnms, ni = n, SIMPLIFY = FALSE)),
            NA)
 )
-##
+## mix named and non-named dimensions to catch bug in initial keepnums patch
+arr2 <- arr
+adnms <- lapply(seq_along(adims),
+                function(i) paste0("dim_", i, "_", seq(1L, adims[i])))
+adnms[3L] <- list(NULL)
+dimnames(arr2) <- adnms
+ii <- seq_along(adnms)
+stopifnot(
+    vapply(n.set2, function(n)
+        identical(dimnames(tail(arr2, n)),
+                  mapply(function(i, ni) {
+                            x <- adnms[[i]]
+                            if(is.null(x))
+                                x <- as.character(seq_len(adims[i]))
+                            if(ni != 0L)
+                                tail(x, ni)
+                         },
+                         i = ii, ni = n, SIMPLIFY = FALSE)),
+        NA)
+)
 ##
 ## matrix of "language" -- with expression()
 is.arr.expr <- function(x) is.array(x) && is.expression(x)
