@@ -214,6 +214,9 @@
       \code{plot()} and \code{lines()}, e.g, when \code{x} is a
       \code{"Date"} or \code{"POSIXct"} object; prompted by Spencer Graves'
       suggestion.
+
+      \item \code{stopifnot()} now allows customizing error messages via
+      argument names, thanks to a patch proposal by Neal Fultz in \PR{17688}.
     }
   }% end{ NEW FEATURES }
 

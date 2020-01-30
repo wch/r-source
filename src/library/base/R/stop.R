@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -61,14 +61,16 @@ stopifnot <- function(..., exprs, exprObject, local = TRUE)
     }
     head <- function(x, n = 6L) ## basically utils:::head.default()
 	x[seq_len(if(n < 0L) max(length(x) + n, 0L) else min(n, length(x)))]
+    hasN <- !is.null(dotnames <- names(match.call(expand.dots = FALSE)[["..."]]))
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
+    m.c <- match.call() # expanding the '...'
     ##
     for (i in seq_len(n)) {
 	r <- ...elt(i)
 	tmp <- if(FALSE) eval(quote(1)) # trick to have ...elt(i) errors *not* show call
 	if (!(is.logical(r) && !anyNA(r) && all(r))) {
-	    cl.i <- match.call()[[i+1L]]
+	    cl.i <- m.c[[i+1L]]
 	    msg <- ## special case for decently written 'all.equal(*)':
 		if(is.call(cl.i) && identical(cl.i[[1]], quote(all.equal)) &&
 		   (is.null(ni <- names(cl.i)) || length(cl.i) == 3L ||
@@ -77,6 +79,8 @@ stopifnot <- function(..., exprs, exprObject, local = TRUE)
 		    sprintf(gettext("%s and %s are not equal:\n  %s"),
 			    Dparse(cl.i[[2]]),
 			    Dparse(cl.i[[3]]), abbrev(r))
+		else if(hasN && nzchar(dotnames[i]))
+		    dotnames[i]
 		else
 		    sprintf(ngettext(length(r),
 				     "%s is not TRUE",

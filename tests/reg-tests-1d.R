@@ -3752,6 +3752,11 @@ stopifnot(is.integer(y1), is.integer(y2), y1[-3] == y2[-3],
 ## s1, s1.5 were double in R <= 3.6.x
 
 
+## stopifnot() custom message now via <named> args:
+e <- tools::assertError(stopifnot("ehmm, you must be kidding!" = 1 == 0), verbose=TRUE)
+stopifnot(grepl("must be kidding!", e[[1]]$message))
+## did not work in original stopifnot(<named>) patch
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

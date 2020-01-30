@@ -27,6 +27,8 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
    expr2
    ....
 \}}
+  If names are provided to \code{\dots}, they will be used in lieu of
+  the default error message.
   }
   \item{exprObject}{alternative to \code{exprs} or \code{...}: a
     an \sQuote{expression-like} object, typically an
@@ -116,6 +118,9 @@ stopifnot(exprObject = TRUE)
 
 # long all.equal() error messages are abbreviated:
 stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415)))
+
+# The default error message can be overridden to be more informative:
+stopifnot("m must be symmetric"= m == t(m))
 
 options(op)  # revert to previous error handler
 }
