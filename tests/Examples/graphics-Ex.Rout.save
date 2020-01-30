@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-01-27 r77725) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-01-29 r77745) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1477,6 +1477,21 @@ List of 2
 +                     sep = "=", collapse= ",  "),
 +         main = "Fisher's Iris Data")
 > par(op)
+> 
+> ## 'x' a "Date" vector :
+> nd <- length(dv <- seq(as.Date("1959-02-21"), by = "weeks", length.out = 100))
+> mSC <- cbind(I=1, sin=sin(pi*(1:nd)/8), cos=cos(pi*(1:nd)/8))
+> matplot(dv, mSC, type = "b", main = "matplot(<Date>, y)")
+> 
+> ## 'x' a "POSIXct" date-time vector :
+> ct <- seq(c(ISOdate(2000,3,20)), by = "15 mins", length.out = 100)
+> matplot(ct, mSC, type = "b", main = "matplot(<POSIXct>, y)")
+> ## or the same with even more axis flexibility:
+> matplot(ct, mSC, type = "b", main = "matplot(<POSIXct>, y)", xaxt="n")
+> Axis(ct, side=1, at = ct[1+4*(0:24)])
+> 
+> ## Also works for data frame columns:
+> matplot(iris[1:50,1:4])
 > 
 > 
 > 
@@ -3107,7 +3122,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.014 0.057 3.087 0 0 
+Time elapsed:  4.324 0.098 4.484 0 0 
 > grDevices::dev.off()
 null device 
           1 

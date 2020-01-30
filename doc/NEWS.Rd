@@ -208,6 +208,12 @@
       \code{rwilcox()} which have returned integer since R 3.0.0 and hence
       \code{NA} when the numbers would have been outside the integer range,
       now return double vectors (without NAs, typically) in these cases.
+
+      \item \code{matplot(x,y)} (and hence \code{matlines()} and
+      \code{matpoints()}) now call the corresponding methods of
+      \code{plot()} and \code{lines()}, e.g, when \code{x} is a
+      \code{"Date"} or \code{"POSIXct"} object; prompted by Spencer Graves'
+      suggestion.
     }
   }% end{ NEW FEATURES }
 
