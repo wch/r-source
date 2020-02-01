@@ -3776,7 +3776,11 @@ stopifnot(is.integer(y1), is.integer(y2), y1[-3] == y2[-3],
 ## stopifnot() custom message now via <named> args:
 e <- tools::assertError(stopifnot("ehmm, you must be kidding!" = 1 == 0), verbose=TRUE)
 stopifnot(grepl("must be kidding!", e[[1]]$message))
+e2 <- tools::assertError(
+ stopifnot("2 is not approximately 2.1" = all.equal(2, 2.1)), verbose=TRUE)
+stopifnot(grepl("not approximately", e2[[1]]$message))
 ## did not work in original stopifnot(<named>) patch
+
 
 
 ## keep at end
