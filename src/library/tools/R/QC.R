@@ -2466,7 +2466,7 @@ function(package, dir, lib.loc = NULL)
         ## error in current S-PLUS versions.)
         if(endsWith(m, ".formula")) {
             if(gArgs[1L] != "...") gArgs <- gArgs[-1L]
-            mArgs <- mArgs[-1L]
+            if(mArgs[1L] != "...") mArgs <- mArgs[-1L]
         }
         dotsPos <- which(gArgs == "...")
         ipos <- if(length(dotsPos))
