@@ -1461,7 +1461,10 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 	    if(has.dim[jj]) {
 		value[[jj]][ri,	 ] <- xij
                 ## copy rownames
-                if(!is.null(r <- rownames(xij))) rownames(value[[jj]])[ri] <- r
+                if(!is.null(r <- rownames(xij)) &&
+                   !(inherits(xij, "data.frame") &&
+                     .row_names_info(xij) <= 0))
+                    rownames(value[[jj]])[ri] <- r
 	    } else {
                 ## coerce factors to vectors, in case lhs is character or
                 ## level set has changed
