@@ -2929,7 +2929,10 @@ static SEXP appendRawToFile(SEXP file, SEXP bytes)
 	error( _("cannot open file '%s': %s"), CHAR(STRING_ELT(file, 0)),
 	       strerror(errno));
     }
-    fseek(fp, 0, SEEK_END);
+    if (fseek(fp, 0, SEEK_END) != 0) {
+	fclose(fp);
+	error(_("seek failed on %s"), CHAR(STRING_ELT(file, 0)));
+    }
 #endif
 
     len = LENGTH(bytes);
