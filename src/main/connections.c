@@ -1238,7 +1238,6 @@ static Rboolean	fifo_open(Rconnection con)
     ** http://msdn.microsoft.com/en-us/library/windows/desktop/aa365150(v=vs.85).aspx
     */
     this->hdl_namedpipe = NULL;
-    this->overlapped_write = (LPOVERLAPPED)malloc(sizeof(OVERLAPPED));
     this->overlapped_write = CreateEventA(NULL, TRUE, TRUE, NULL);
     if (con->canwrite) {
 	SECURITY_ATTRIBUTES win_namedpipe_secattr = {0};
