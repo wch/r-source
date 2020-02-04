@@ -1,7 +1,7 @@
 #  File src/library/tools/R/assertCondition.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2013-2014 The R Core Team
+#  Copyright (C) 2013-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,15 +23,14 @@ assertCondition <-
 {
     getConds <- function(expr) {
 	conds <- list()
-	tryCatch(withCallingHandlers(expr,
-				     warning = function(w) {
-					 conds <<- c(conds, list(w))
-					 invokeRestart("muffleWarning")
-				     },
-				     condition = function(cond)
-					 conds <<- c(conds, list(cond))),
-		 error = function(e)
-		     conds <<- c(conds, list(e)))
+        withCallingHandlers(
+            tryCatch(expr, error = function(e) conds <<- c(conds, list(e))),
+            warning = function(w) {
+                conds <<- c(conds, list(w))
+                invokeRestart("muffleWarning")
+            },
+            condition = function(cond)
+                conds <<- c(conds, list(cond)))
 	conds
     }
     conds <- if(nargs() > 1) c(...) # else NULL
