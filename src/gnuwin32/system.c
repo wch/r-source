@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,6 +65,7 @@ static FILE *ifp = NULL;
 static char ifile[MAX_PATH] = "\0";
 
 __declspec(dllexport) UImode  CharacterMode = RGui; /* some compilers want initialized for export */
+__declspec(dllexport) Rboolean EmitEmbeddedUTF8 = TRUE;
 int ConsoleAcceptCmd;
 void set_workspace_name(const char *fn); /* ../main/startup.c */
 
@@ -754,13 +755,16 @@ void R_SetWin32(Rstart Rp)
     switch(CharacterMode) {
     case RGui:
 	R_GUIType = "Rgui";
+	Rp->EmitEmbeddedUTF8 = TRUE;
 	break;
     case RTerm:
 	R_GUIType = "RTerm";
+	Rp->EmitEmbeddedUTF8 = FALSE;
 	break;
     default:
 	R_GUIType = "unknown";
     }
+    EmitEmbeddedUTF8 = Rp->EmitEmbeddedUTF8;
     TrueReadConsole = Rp->ReadConsole;
     TrueWriteConsole = Rp->WriteConsole;
     TrueWriteConsoleEx = Rp->WriteConsoleEx;
