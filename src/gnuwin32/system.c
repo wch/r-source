@@ -65,7 +65,7 @@ static FILE *ifp = NULL;
 static char ifile[MAX_PATH] = "\0";
 
 __declspec(dllexport) UImode  CharacterMode = RGui; /* some compilers want initialized for export */
-__declspec(dllexport) Rboolean EmitEmbeddedUTF8 = TRUE;
+__declspec(dllexport) Rboolean EmitEmbeddedUTF8 = FALSE;
 int ConsoleAcceptCmd;
 void set_workspace_name(const char *fn); /* ../main/startup.c */
 
