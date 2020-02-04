@@ -1,5 +1,5 @@
 #### Regression Tests that need "much" memory
-#### (and are slow even with enough GBytes of mem)
+#### (and / or  are slow even with enough GBytes of memory)
 
 print(si <- sessionInfo(), locale=FALSE)
 Sys.info()
@@ -31,6 +31,12 @@ availableGB <-
     }
 cat("Available (processor aka CPU) memory: ", round(availableGB, 1),
     "GB (Giga Bytes)\n")
+
+if(.Machine$sizeof.pointer < 8) {
+    cat(".Machine :\n"); str(.Machine)
+    cat("not a 64-bit system -- forget about these tests!\n")
+    q("no")
+}
 
 ### Testing  readLines()  *large* file with embedded nul aka `\0'
 ##
@@ -234,9 +240,9 @@ if(availableGB > 12) withAutoprint({
     stopifnot(is.integer(x31),
               identical(S,   2^62),
               identical(S.4, 2^64))
-    system.time(x32 <- c(x31, x31)) # 14 sec  and 16 GB
+    system.time(x32 <- c(x31, x31)) # 13 user | 20.8 elapsed  (and 16 GB)
     rm(x31)# now,  sum vvv  will switch to use irsum() [double accumulator]
-    system.time(S.2 <- sum(x32))
+    system.time(S.2 <- sum(x32)) # 8 sec
     stopifnot(S.2 == 2^63)
     rm(x32)
 })
@@ -245,30 +251,30 @@ if(availableGB > 12) withAutoprint({
 ## seq() remaining integer: (PR 17497, comment #9)
 if(availableGB > 16) withAutoprint({
     i <- as.integer(2^30)
-    system.time(i2.31 <- seq(-i, by=1L, length=2*i+1)) # 30.6 sec elapsed
+    system.time(i2.31 <- seq(-i, by=1L, length=2*i+1)) # 11.1 user | 19.2 elapsed
     object.size(i2.31) # 8'589'934'648 bytes [ was 17.17 GB in R <= 3.5.x ]
     stopifnot(is.integer(i2.31),  i2.31[1] == -i,  i2.31[length(i2.31)] == i)
 
     ## pmax(), pmin() with long vectors, PR 17533
     if(availableGB > 24) withAutoprint({
-        system.time(i2.31 <- pmin(i2.31, 0L)) # 7.1 sec
+        system.time(i2.31 <- pmin(i2.31, 0L)) # 7.2 sec user | 11.2 elapsed
         str(i2.31)
-        system.time(stopifnot(i2.31[(i+1):length(i2.31)] == 0)) # 16.7 sec
+        system.time(stopifnot(i2.31[(i+1):length(i2.31)] == 0)) # 16.7 user | 28.0 elapsed
     })
 })
 
 
 ## match(<long character>, *)  PR#17552
-if(availableGB > 44) { ## seen 40 G ('RES')
-    print(system.time(m <- match(rep("a", 2^31), "a")))# 52 sec user
+if(availableGB > 44) withAutoprint({ ## seen 40 G ('RES')
+    system.time(m <- match(rep("a", 2^31), "a")) # 34.7 sec user (55 elapsed)
     stopifnot(all(m == 1L))
     rm(m)
-    system.time({x <- character(2^31); x[26:1] <- letters })
-    system.time(m <- match(x, "a"))# 45 sec user
-    print(head(m, 40))
+    system.time({x <- character(2^31); x[26:1] <- letters }) # 1.6 user | 9.4 elapsed
+    system.time(m <- match(x, "a"))# 18.2 user | 51.6 elapsed
+    head(m, 30)
     system.time(stopifnot(m[26] == 1L, is.na(m[-26])))
     rm(x, m)
-}
+})
 
 
 ## readBin() and writeBin() for long rawConnection s, PR#17665
@@ -286,6 +292,44 @@ if(availableGB > 14) withAutoprint({ ## seen 11.6 G
     ## Error in readBin(raw_con, "raw", n = 1e+06) : too large a block specified
 })
 
+## writeBin() for long vectors
+if(availableGB > 20) withAutoprint({ ## seen 20.9 G
+    x <- raw(2^31)
+    writeBin(x, con = nullfile())
+
+    con <- rawConnection(raw(0L), "w")
+    writeBin(x, con = con)
+    stopifnot(identical(x, rawConnectionValue(con)))
+
+    system.time(x <- pi*seq_len(2.1*2^30)) # 25 sec
+    zzfil <- tempfile("test-large-bin")
+    zz <- file(zzfil, "wb") ## file size will be 2.5 GB !!!
+    system.time(z <- writeBin(x, zz)) # 32 sec
+    stopifnot(is.null(z))
+    close(zz); zz <- file(zzfil, "rb")
+    system.time(r <- readBin(zz, double(), n = length(x) + 999)) # 32 sec
+    system.time(stopifnot(identical(x, r))) # 24 sec
+    close(zz); rm(r, zz)
+})
+
+
+## predict(loess(.), se=TRUE) for "large" sample size -- PR#17121
+## No need for very much memory, but is slow and should do several ex.
+mkDat <- function(n) {
+    x <- 5*(1:n)/(n+1)
+    data.frame(x = x, y = sin(pi*x^2) * exp(-x/2) + rnorm(n)/8)
+}
+set.seed(1); dat <- mkDat(n = 42000)
+system.time( # 14.5 sec (on lynne ~ 2019)
+    fit <- loess(y~x, data=dat)
+)
+r <- tools::assertError(
+   predict(fit, newdata=data.frame(x=.5), se=TRUE)
+ , verbose=TRUE) #
+## typically would not seg.fault but give Calloc(..) error (with *wrong* size)
+stopifnot(grepl("^workspace .* is too large .* 'se = TRUE'", r[[1]]$message))
+
+
 
 gc() # NB the "max used"
-proc.time() # total
+proc.time() # total  [ ~ 40 minutes in full case, 2019-04-12]

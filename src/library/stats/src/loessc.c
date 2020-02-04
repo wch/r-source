@@ -1,4 +1,6 @@
 /*
+ * Copyright (C) 1998--2020  The R Core Team
+ *
  * The authors of this software are Cleveland, Grosse, and Shyu.
  * Copyright (c) 1989, 1992 by AT&T.
  * Permission to use, copy, modify, and distribute this software for any
@@ -88,6 +90,7 @@ void F77_SUB(ehg184a)(char *s, int *nc, double *x, int *n, int *inc);
 #define	GAUSSIAN	1
 #define SYMMETRIC	0
 
+// Global variables :
 static int	*iv = NULL, liv, lv, tau;
 static double	*v = NULL;
 
@@ -223,6 +226,7 @@ loess_ifit(int *parameter, int *a, double *xi, double *vert,
     loess_free();
 }
 
+// Called from R's predLoess()  when 'se = TRUE' (and the default surface == "interpolate")
 void
 loess_ise(double *y, double *x, double *x_evaluate, double *weights,
 	  double *span, int *degree, int *nonparametric,
@@ -240,6 +244,7 @@ loess_ise(double *y, double *x, double *x_evaluate, double *weights,
     loess_free();
 }
 
+// Set global variables  tau, lv, liv , and allocate global arrays  v[1..lv],  iv[1..liv]
 void
 loess_workspace(int *d, int *n, double *span, int *degree,
 		int *nonparametric, int *drop_square,
@@ -250,16 +255,24 @@ loess_workspace(int *d, int *n, double *span, int *degree,
     nvmax = max(200, N);
     nf = min(N, (int) floor(N * (*span) + 1e-5));
     if(nf <= 0) error(_("span is too small"));
+    // NB: D := ncol(x) is  <=  3
     tau0 = ((*degree) > 1) ? (int)((D + 2) * (D + 1) * 0.5) : (D + 1);
     tau = tau0 - (*sum_drop_sqr);
-    lv = 50 + (3 * D + 3) * nvmax + N + (tau0 + 2) * nf;
+    double dlv  = 50 + (3 * D + 3) * nvmax + N + (tau0 + 2.) * nf;
     double dliv = 50 + (pow(2.0, (double)D) + 4.0) * nvmax + 2.0 * N;
-    if (dliv < INT_MAX) liv = (int) dliv;
-    else error("workspace required is too large");
     if(*setLf) {
-	lv = lv + (D + 1) * nf * nvmax;
-	liv = liv + nf * nvmax;
+        dlv  = dlv  + (D + 1.) * (double)nf * (double)nvmax;
+	dliv = dliv + (double)nf * (double)nvmax;
     }
+
+    if (max(dlv, dliv) < INT_MAX) {
+      lv  = (int) dlv;
+      liv = (int) dliv;
+    } else {
+	error(_("workspace required (%.0f) is too large%s."), max(dlv, dliv),
+	      setLf ? _(" probably because of setting 'se = TRUE'") : "");
+    }
+
     iv = Calloc(liv, int);
     v = Calloc(lv, double);
 

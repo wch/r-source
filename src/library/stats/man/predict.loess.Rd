@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.loess.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.loess}
@@ -24,7 +24,12 @@
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
-  The standard errors calculation is slower than prediction.
+  The standard errors calculation \code{se = TRUE} is slower than
+  prediction, notably as it needs a relatively large workspace (memory),
+  notably matrices of dimension \eqn{N \times Nf}{N * Nf} where \eqn{f =
+  }\code{span}, i.e., \code{se = TRUE} is \eqn{O(N^2)}
+  and hence stops when the sample size \eqn{N} is larger than about 40'600
+  (for default \code{span = 0.75}).
 
   When the fit was made using \code{surface = "interpolate"} (the
   default), \code{predict.loess} will not extrapolate -- so points outside

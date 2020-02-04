@@ -21,6 +21,10 @@
 
       \item Uses of \code{url(gzcon(.))} needing to extend buffer size
       have failed (with HTTP/2 servers), reported by Gábor Csárdi.
+
+      \item \code{predict(loess(..), se=TRUE)} now errors out (instead of
+      seg.faulting etc) for large sample sizes, thanks to a report and
+      patch by Benjamin Tyner in \PR{17121}.
     }
   }
 }
