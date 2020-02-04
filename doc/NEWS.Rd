@@ -490,10 +490,9 @@
 
       \item \code{update(form, new)} in the case of a long \code{new}
       formula sometimes wrongly eliminated the intercept from \code{form},
-      or (more rarely) added a garbage term (or seg.faulted !); reported by Mathias Ambühl in
-      \PR{16326}.
-      %% There is *still* a bug left but at least no seg.faulting memory corruption
-      %% Will be ported to .. "patched" once that is fixed ..
+      or (more rarely) added a garbage term (or seg.faulted !); the fix
+      happened by simplifying the C-level logic of \code{terms.formula()}.
+      Reported by Mathias Ambühl in \PR{16326}.
     }
   }
 }

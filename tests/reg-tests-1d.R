@@ -3644,19 +3644,18 @@ mkF <- function(nw) as.formula(paste("y ~ x + x1",
                                      paste0("- w", seq_len(nw), collapse="")),
                                env = .GlobalEnv)
 fterms <- function(n, simplify=TRUE) formula(terms.formula(mkF(n), simplify=simplify))
-## Fixed the main bug, which lead to corrupted memory, the following is still wrong:
-for(n in 1:20) print(fterms(66))
+if(interactive())
+    for(n in 1:20) print(fterms(66)) # always correct now:  y ~ x + x1
 ## used to have a '-1'  (and much more, see below) in R <= 3.6.2
 ## NB: had memory / random behavior -- and sometimes ended in
 ##     malloc(): corrupted top size
 ##     Process R... aborted (core dumped)
 set.seed(17)
-N <- 50 # FIXME once it works, take larger value ..
+N <- 1024
 Ns <- sort(1 + rpois(N, 3)+ 16*rpois(N, 3))
-for(n in Ns)
-    if(!identical(y ~ x + x1, F <- fterms(n)))
-        cat("n=",n, "; fterms(n) |--> ", format(F),"\n", sep="")
-    ## stopifnot(identical(y ~ x + x1, fterms(1+32*rpois(1, 1))))
+FN <- lapply(Ns, fterms)
+(UFN <- unique(FN))
+stopifnot(identical(y ~ x + x1, UFN[[1]]))
 ## Ended in this error [which really comes from C code trying to set dimnames !] :
 ##   Error in terms.formula(mkF(n), simplify = simplify) :
 ##     'dimnames' applied to non-array
