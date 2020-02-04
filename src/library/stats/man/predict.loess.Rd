@@ -24,7 +24,7 @@
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
-  The standard errors calculation (\code{se = TRUE} is slower than
+  The standard errors calculation \code{se = TRUE} is slower than
   prediction, notably as it needs a relatively large workspace (memory),
   notably matrices of dimension \eqn{N \times Nf}{N * Nf} where \eqn{f =
   }\code{span}, i.e., \code{se = TRUE} is \eqn{O(N^2)}
