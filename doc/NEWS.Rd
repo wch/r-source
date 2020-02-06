@@ -493,6 +493,10 @@
       or (more rarely) added a garbage term (or seg.faulted !); the fix
       happened by simplifying the C-level logic of \code{terms.formula()}.
       Reported by Mathias Ambühl in \PR{16326}.
+
+      \item The error message from \code{stopifnot(.., <error producing call>)}
+      again contains the full \code{"stopifnot(.......)"} call: Its
+      attempted suppression did not work consistently. % & was an ugly hack
     }
   }
 }
