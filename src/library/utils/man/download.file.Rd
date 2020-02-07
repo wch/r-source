@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -261,9 +261,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   number of variants.  One distinction is between \sQuote{active} and
   \sQuote{(extended) passive} modes: which is used is chosen by the
   client.  The \code{"internal"} and \code{"libcurl"} methods use passive
-  mode, and that is almost universally used by browsers.  Prior to \R
-  3.2.3 the \code{"wininet"} method used active mode: nowadays it first
-  tries passive and then active.
+  mode, and that is almost universally used by browsers.  The
+  \code{"wininet"} method first tries passive and then active.
 }
 \section{Good practice}{
   Setting the \code{method} should be left to the end user.  Neither of
@@ -273,8 +272,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   If you use \code{download.file} in a package or script, you must check
   the return value, since it is possible that the download will fail
-  with a non-zero status but not an \R error. (This was more likely
-  prior to \R 3.4.0.)
+  with a non-zero status but not an \R error.
 
   The supported \code{method}s do change: method \code{libcurl} was
   introduced in \R 3.2.0 and is still optional on Windows -- use
@@ -302,7 +300,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{\link{url.show}}, \code{\link{available.packages}},
   \code{\link{download.packages}} for applications.
 
-  Contributed package \CRANpkg{RCurl} provides more comprehensive
-  facilities to download from URLs.
+  Contributed packages \CRANpkg{RCurl} and \CRANpkg{curl} provide more
+  comprehensive facilities to download from URLs.
 }
 \keyword{utilities}
