@@ -497,6 +497,9 @@
       \item The error message from \code{stopifnot(.., <error producing call>)}
       again contains the full \code{"stopifnot(.......)"} call: Its
       attempted suppression did not work consistently. % & was an ugly hack
+
+      \item On Windows, \code{download.file(., , "wininet", headers=character())}
+      would fail; reported with patch proposal by Kevin Ushey in \PR{17710}.
     }
   }
 }
