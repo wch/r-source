@@ -28,6 +28,12 @@
 
       \item \code{tools:assertCondition(., "error")} and hence
       \code{assertError()} no longer return errors twice (invisibly).
+
+      \item \code{update(form, new)} in the case of a long \code{new}
+      formula sometimes wrongly eliminated the intercept from \code{form},
+      or (more rarely) added a garbage term (or seg.faulted !); the fix
+      happened by simplifying the C-level logic of \code{terms.formula()}.
+      Reported by Mathias Ambühl in \PR{16326}.
     }
   }
 }

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1097,7 +1097,7 @@ static void CheckRHS(SEXP v)
    + and minus.  No checks are made of the other
    ``binary'' operators.  Maybe there should be some. */
 
-static void ExtractVars(SEXP formula, int checkonly)
+static void ExtractVars(SEXP formula)
 {
     int len, i;
     SEXP v;
@@ -1106,7 +1106,6 @@ static void ExtractVars(SEXP formula, int checkonly)
 	return;
     if (isSymbol(formula)) {
 	if (formula == dotSymbol) haveDot = TRUE;
-	if (!checkonly) {
 	    if (formula == dotSymbol && framenames != R_NilValue) {
 		haveDot = TRUE;
 		for (i = 0; i < length(framenames); i++) {
@@ -1115,7 +1114,6 @@ static void ExtractVars(SEXP formula, int checkonly)
 		}
 	    } else
 		InstallVar(formula);
-	}
 	return;
     }
     if (isLanguage(formula)) {
@@ -1125,60 +1123,60 @@ static void ExtractVars(SEXP formula, int checkonly)
 		error(_("invalid model formula"));
 	    if (isNull(CDDR(formula))) {
 		response = 0;
-		ExtractVars(CADR(formula), 0);
+		ExtractVars(CADR(formula));
 	    }
 	    else {
 		response = 1;
 		InstallVar(CADR(formula));
-		ExtractVars(CADDR(formula), 0);
+		ExtractVars(CADDR(formula));
 	    }
 	    return;
 	}
 	if (CAR(formula) == plusSymbol) {
 	    if (length(formula) > 1)
-		ExtractVars(CADR(formula), checkonly);
+		ExtractVars(CADR(formula));
 	    if (length(formula) > 2)
-		ExtractVars(CADDR(formula), checkonly);
+		ExtractVars(CADDR(formula));
 	    return;
 	}
 	if (CAR(formula) == colonSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
 	    return;
 	}
 	if (CAR(formula) == powerSymbol) {
 	    if (!isNumeric(CADDR(formula)))
 		error(_("invalid power in formula"));
-	    ExtractVars(CADR(formula), checkonly);
+	    ExtractVars(CADR(formula));
 	    return;
 	}
 	if (CAR(formula) == timesSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
 	    return;
 	}
 	if (CAR(formula) == inSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
 	    return;
 	}
 	if (CAR(formula) == slashSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
 	    return;
 	}
 	if (CAR(formula) == minusSymbol) {
 	    if (len == 2) {
-		ExtractVars(CADR(formula), 1);
+		ExtractVars(CADR(formula));
 	    }
 	    else {
-		ExtractVars(CADR(formula), checkonly);
-		ExtractVars(CADDR(formula), 1);
+		ExtractVars(CADR(formula));
+		ExtractVars(CADDR(formula));
 	    }
 	    return;
 	}
 	if (CAR(formula) == parenSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
+	    ExtractVars(CADR(formula));
 	    return;
 	}
 	InstallVar(formula);
@@ -1738,7 +1736,7 @@ SEXP termsform(SEXP args)
     parity = 1;
     response = 0;
     PROTECT(varlist = LCONS(install("list"), R_NilValue));
-    ExtractVars(CAR(args), 1);
+    ExtractVars(CAR(args));
     UNPROTECT(1);
     SETCAR(a, varlist);
     SET_TAG(a, install("variables"));
