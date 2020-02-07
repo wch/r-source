@@ -2126,7 +2126,7 @@ add_dummies <- function(dir, Log)
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                if (!all(grepl("Package[s]? unavailable to check", out)))
+                if (!all(grepl("(Package[s]? unavailable to check|Unknown package.*in Rd xrefs)", out)))
                     warningLog(Log)
                 else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
