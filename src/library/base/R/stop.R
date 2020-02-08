@@ -72,7 +72,6 @@ stopifnot <- function(..., exprs, local = TRUE)
     ##
     for (i in seq_len(n)) {
 	r <- ...elt(i)
-	tmp <- if(FALSE) eval(quote(1)) # trick to have ...elt(i) errors *not* show call
 	if (!(is.logical(r) && !anyNA(r) && all(r))) {
 	    cl.i <- match.call()[[i+1L]]
 	    msg <- ## special case for decently written 'all.equal(*)':

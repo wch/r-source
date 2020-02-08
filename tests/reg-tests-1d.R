@@ -845,8 +845,8 @@ stopifnot(identical(one, 1)) # i.e., 'one <<- 2' was *not* evaluated
                 error=identity))
 stopifnot(exprs = {
     inherits(et, "simpleError")
-    ## no condition call, or at least should *not* contain 'stopifnot':
-    !grepl("^stopifnot", deparse(conditionCall(et), width.cutoff=500))
+    ## condition call now *does* contain 'stopifnot':
+    ## !grepl("^stopifnot", deparse(conditionCall(et), width.cutoff=500))
     grepl("'..vaporware..'", conditionMessage(et))
 })
 ## call was the full 'stopifnot(..)' in R < 3.5.0 ...
