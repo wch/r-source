@@ -4,6 +4,7 @@ pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
 tryCid <- function(expr) tryCatch(expr, error = identity)
 identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
+onWindows <- .Platform$OS.type == "windows"
 
 ## body() / formals() notably the replacement versions
 x <- NULL; tools::assertWarning(   body(x) <-    body(mean))	# to be error
@@ -19,7 +20,7 @@ englishMsgs <- {
     if(nzchar(lang <- Sys.getenv("LANGUAGE")))
         lang == "en"
     else { ## query the  locale
-        if(.Platform$OS.type != "windows") {
+        if(!onWindows) {
             ## sub() :
             lc.msgs <- sub("\\..*", "", print(Sys.getlocale("LC_MESSAGES")))
             lc.msgs == "C" || substr(lc.msgs, 1,2) == "en"
@@ -852,12 +853,13 @@ stopifnot(exprs = {
     ## !grepl("^stopifnot", deparse(conditionCall(et), width.cutoff=500))
     grepl("'..vaporware..'", conditionMessage(et))
 })
-## call was the full 'stopifnot(..)' in R < 3.5.0 ...
+## call was the full 'stopifnot(..)' in R < 3.5.0 .. and again in R > 3.6.x
+## (don't afford tryCatch()ing everything)
 
 
 ## path.expand shouldn't translate to local encoding PR#17120
 ## This has been fixed on Windows, but not yet on Unix non-UTF8 systems
-if(.Platform$OS.type == "windows") {
+if(onWindows) {
     filename <- "\U9b3c.R"
     stopifnot(identical(path.expand(paste0("~/", filename)),
 		 	      paste0(path.expand("~/"), filename)))
@@ -2996,7 +2998,6 @@ stopifnot(exprs = { length(prE) >= 3
 str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
 b64 <- .M$sizeof.pointer == 8
 arch <- Sys.info()[["machine"]]
-onWindows <- .Platform$OS.type == "windows"
 if(!(onWindows && arch == "x86")) {
 ## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
 stopifnot(exprs = {
@@ -3708,7 +3709,7 @@ stopifnot(identical(tools::assertError(sqrt("a")),
 
 ## Overriding encoding in parse()
 oloc <- Sys.getlocale("LC_CTYPE")
-if (.Platform$OS.type == "windows") {
+if (onWindows) {
   Sys.setlocale("LC_CTYPE", "English_United States.1252")
 } else {
   ## assumes non-Windows system already all support UTF-8
@@ -3779,6 +3780,12 @@ e2 <- tools::assertError(
  stopifnot("2 is not approximately 2.1" = all.equal(2, 2.1)), verbose=TRUE)
 stopifnot(grepl("not approximately", e2[[1]]$message))
 ## did not work in original stopifnot(<named>) patch
+CHK <- function(...) stopifnot(...)
+e  <- tryCid(CHK(1 == 1, 1 == 0))
+e2 <- tryCid(CHK(1 == 1, "not possible" = 1 == 0))
+stopifnot(inherits(e , "error"), grepl("is not TRUE", e$message),
+          inherits(e2, "error"), identical("not possible", e2$message))
+## wrapping stopifnot() in this way did not work in some unreleased R-devel
 
 
 
