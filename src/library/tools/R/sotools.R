@@ -96,12 +96,14 @@ get_system_ABI <- if(.Platform$OS.type == "windows") {
 system_ABI <- get_system_ABI()
 
 so_symbol_names_table <-
+    ## 'linux' == glibc, principally
     c("linux, C, gcc, abort, abort",
-      ## http://refspecs.freestandards.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/baselib---assert-fail-1.html
-      "linux, C, gcc, assert, __assert_fail",
+      ## https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib---assert-fail-1.html
+      "Linux, C, gcc, assert, __assert_fail",
+      "linux, C, gcc, assert, __assert_fail_base",
       "linux, C, gcc, exit, exit",
       "linux, C, gcc, _exit, _exit",
-      "linux, C, gcc, _Exit, _Exit",
+      "linux, C, gcc, _Exit, _Exit", ## _Exit is C99 and may not be a fn call
       "linux, C, gcc, printf, printf",
       "linux, C, gcc, printf, __printf_chk",
       "linux, C, gcc, printf, puts",
@@ -110,6 +112,7 @@ so_symbol_names_table <-
       "linux, C, gcc, stderr, stderr",
       "linux, C, gcc, stdout, stdout",
       "linux, C, gcc, vprintf, vprintf",
+      "linux, C, gcc, vprintf, __vprintf_chk",
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
       "linux, C, gcc, rand, rand",
@@ -117,8 +120,9 @@ so_symbol_names_table <-
       "linux, C, gcc, rand_r, rand_r",
       "linux, C, gcc, srand, srand",
       "linux, C, gcc, srandom, srandom",
+      "linux, C, gcc, srandom_r, srandom_r",
       "linux, C, gcc, srand48, srand48",
-      ## libcxx variants
+      ## libc++ variants
       "linux, C++, gxx, std::cout, _ZNSt3__14coutE",
       "linux, C++, gxx, std::cerr, _ZNSt3__14cerrE",
       "linux, Fortran, gfortran, open, _gfortran_st_open",
@@ -162,7 +166,7 @@ so_symbol_names_table <-
       "osx, C, gcc, srand, _srand",
       "osx, C, gcc, srandom, _srandom",
       "osx, C, gcc, srand48, _srand48",
-      ## libcxx variants
+      ## libc++ variants
       "osx, C++, gxx, std::cout, __ZNSt3__14coutE",
       "osx, C++, gxx, std::cerr, __ZNSt3__14cerrE",
       "osx, Fortran, gfortran, open, __gfortran_st_open",
