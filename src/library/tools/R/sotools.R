@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2018 The R Core Team
+#  Copyright (C) 2011-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -103,6 +103,7 @@ so_symbol_names_table <-
       "linux, C, gcc, _exit, _exit",
       "linux, C, gcc, _Exit, _Exit",
       "linux, C, gcc, printf, printf",
+      "linux, C, gcc, printf, __printf_chk",
       "linux, C, gcc, printf, puts",
       "linux, C, gcc, puts, puts",
       "linux, C, gcc, putchar, putchar",
