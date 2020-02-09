@@ -1435,8 +1435,11 @@ function(package, dir, lib.loc = NULL)
             }
             bad <- vapply(arg_names_in_arg_list_missing_in_usage,
                           function(x)
-			  !grepl(paste0("\\b", x, "\\b"),
-                                 usage_text),
+                              !grepl(paste0("(^|\\W)",
+                                            reQuote(x),
+                                            "($|\\W)"),
+                                     gsub("\\\\dots", "...",
+                                          usage_text)),
                           NA)
             arg_names_in_arg_list_missing_in_usage <-
                 c(bad_args,
