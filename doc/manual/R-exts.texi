@@ -2631,9 +2631,9 @@ not necessarily installed) on all known @R{} platforms.  As from @R{}
 4.0.0 a C++ compiler will be selected only if it conforms to the 2011
 standard (`C++11').  A minor update@footnote{The changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
-(`C++14') was published in December 2014.  The latest standard (`C++17')
-was published in December 2017, and a further revision (`C++20') is in
-preparation.
+(`C++14') was published in December 2014.  A revision (`C++17') was
+published in December 2017, and a further revision (`C++20', with many
+new features) is scheduled for February 2010.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
