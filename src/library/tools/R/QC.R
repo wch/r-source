@@ -7516,6 +7516,21 @@ function(dir, localOnly = FALSE)
                 out$bad_file_URIs <-
                     cbind(fpaths0[pos], parents[pos])
         }
+        if(remote) {
+            ## Also check arXiv ids.
+            pat <- "<(arXiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>"
+            dsc <- meta["Description"]
+            ids <- .gregexec_at_pos(pat, dsc, gregexpr(pat, dsc), 3L)
+            if(length(ids)) {
+                ini <- "https://arxiv.org/abs/"
+                udb <- url_db(paste0(ini, ids),
+                              rep.int("DESCRIPTION", length(ids)))
+                bad <- tryCatch(check_url_db(udb))
+                if(!inherits(bad, "error") && length(bad))
+                    out$bad_arXiv_ids <-
+                        substring(bad$URL, nchar(ini) + 1L)
+            }
+        }
     }
 
     ## Checks from here down require Internet access, so drop out now if we
@@ -8216,8 +8231,18 @@ function(x, ...)
                               "Found the following (possibly) invalid DOIs:"
                           else
                               "Found the following (possibly) invalid DOI:",
-                          paste0("  ", gsub("\n", "\n    ", format(y), fixed=TRUE))),
+                          paste0("  ", gsub("\n", "\n    ", format(y),
+                                            fixed = TRUE))),
                         collapse = "\n")
+          }),
+      fmt(if(length(y <- x$bad_arXiv_ids)) {
+              paste(c(if(length(y) > 1L)
+                          "The Description field contains the following (possibly) invalid arXiv ids:"
+                      else
+                          "The Description field contains the following (possibly) invalid arXiv id:",
+                      paste0("  ", gsub("\n", "\n    ", format(y),
+                                        fixed = TRUE))),
+                    collapse = "\n")
           }),
       if(length(y <- x$R_files_non_ASCII)) {
           paste(c("No package encoding and non-ASCII characters in the following R files:",
