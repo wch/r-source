@@ -21,6 +21,10 @@ package.skeleton <-
 	     path = ".", force = FALSE,
              code_files = character(), encoding = "unknown")
 {
+    if(!grepl(sprintf("^%s$", .standard_regexps()$valid_package_name),
+              name))
+        stop("Malformed package name.")
+    
     safe.dir.create <- function(path)
     {
 	if(!dir.exists(path) && !dir.create(path))
