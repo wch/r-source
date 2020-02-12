@@ -13403,9 +13403,8 @@ would be
       end
 @end example
 @noindent
-in file @file{rmsg.f}. Using @command{gfortran} 9.2 and
-later@footnote{or 9.1-patched since 2019-05-09.} we can extract the C
-view by
+in file @file{rmsg.f}. Using @command{gfortran} 9.2 and later we can
+extract the C view by
 @example
 gfortran -c -fc-prototypes-external rmsg.f
 @end example
@@ -13513,7 +13512,7 @@ Cdgemm(const char *transa, const char *transb, const int *m,
 @end example
 
 @noindent
-Alternatively, do as @R{} does as from version 3.6.1-patched and pass
+Alternatively, do as @R{} does as from version 3.6.2 and pass
 the character length(s) from C to Fortran. A portable way to do this is
 @example
 // before any R headers, or define in PKG_CPPFLAGS
