@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-01-27 r77725) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-02-12 r77795) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -619,5 +619,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.499 0.101 1.601 0.003 0.003 
+Time elapsed:  1.504 0.093 1.598 0.004 0.002 
 > 
