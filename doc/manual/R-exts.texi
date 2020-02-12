@@ -5085,9 +5085,9 @@ Writing portable C and C++ code is mainly a matter of observing the
 standards (C99, C++11 or where declared C++14/17) and testing that
 extensions (such as POSIX functions) are supported.
 
-@strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
-where available@footnote{which it is on all known platforms, and is
-required as from @R{} 4.0.0} (3.6.2 on Windows).  However, in earlier
+@strong{C++ standards}: As from version 3.6.0 (3.6.2 on Windows), @R{}
+defaults to C++11 where available@footnote{which it is on all known
+platforms, and is required as from @R{} 4.0.0}. However, in earlier
 versions the default standard was that of the compiler used, often C++98
 or C++14.  Packages which are for use only with @R{} 3.6.2 or later can
 assume C++11 or specify a later standard.  However, those which may be
@@ -11729,7 +11729,7 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is scheduled to be replaced in @R{} 4.0.0. To
+This mechanism is to be replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
