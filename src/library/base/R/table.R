@@ -277,28 +277,31 @@ proportions <- function (x, margin = NULL)
     else x/sum(x)
 }
 
-prop.table <- function(x, margin = NULL)
-{
-###    .Deprecated("proportions")
-    if(length(margin))
-	sweep(x, margin, margin.table(x, margin), "/", check.margin=FALSE)
-    else
-	x / sum(x)
-}
+prop.table <- proportions
+margin.table <- marginSums
 
-margin.table <- function(x, margin = NULL)
-{
-###    .Deprecated("marginSums")
-    if(!is.array(x)) stop("'x' is not an array")
-    if (length(margin)) {
-	z <- apply(x, margin, sum)
-	dim(z) <- dim(x)[margin]
-	dimnames(z) <- dimnames(x)[margin]
-    }
-    else return(sum(x))
-    class(z) <- oldClass(x) # avoid adding "matrix"
-    z
-}
+## prop.table <- function(x, margin = NULL)
+## {
+## ###    .Deprecated("proportions")
+##     if(length(margin))
+## 	sweep(x, margin, margin.table(x, margin), "/", check.margin=FALSE)
+##     else
+## 	x / sum(x)
+## }
+
+## margin.table <- function(x, margin = NULL)
+## {
+## ###    .Deprecated("marginSums")
+##     if(!is.array(x)) stop("'x' is not an array")
+##     if (length(margin)) {
+## 	z <- apply(x, margin, sum)
+## 	dim(z) <- dim(x)[margin]
+## 	dimnames(z) <- dimnames(x)[margin]
+##     }
+##     else return(sum(x))
+##     class(z) <- oldClass(x) # avoid adding "matrix"
+##     z
+## }
 
 `[.table` <-
 function(x, i, j, ..., drop = TRUE)

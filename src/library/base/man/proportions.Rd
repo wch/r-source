@@ -5,10 +5,12 @@
 
 \name{proportions}
 \alias{proportions}
+\alias{prop.table}
 \title{Express Table Entries as Fraction of Marginal Table}
 \concept{proportions}
 \usage{
 proportions(x, margin = NULL)
+prop.table(x, margin = NULL)
 }
 \arguments{
  \item{x}{ table }
@@ -24,9 +26,10 @@ proportions(x, margin = NULL)
 \value{
   Table like \code{x} expressed relative to \code{margin}
 }
+\note{\code{prop.table} is an earlier name, retained for back-compatibility.}
 \author{ Peter Dalgaard }
 
-\seealso{\code{\link{marginSums}}}
+\seealso{\code{\link{marginSums}}. \code{\link{apply}}, \code{\link{sweep}} are a more general mechanism for sweeping out marginal statistics.}
 
 \examples{
 m <- matrix(1:4, 2)

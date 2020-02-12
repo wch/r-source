@@ -5,6 +5,7 @@
 
 \name{marginSums}
 \alias{marginSums}
+\alias{margin.table}
 \title{Compute table margins}
 \description{
   For a contingency table in array form, compute the sum of table
@@ -12,6 +13,7 @@
 }
 \usage{
 marginSums(x, margin = NULL)
+margin.table(x, margin = NULL)
 }
 \arguments{
   \item{x}{an array}
@@ -28,6 +30,7 @@ marginSums(x, margin = NULL)
   The relevant marginal table, or just the sum of all entries if \code{margin} has length zero.  The class of \code{x} is copied to the
   output table if \code{margin} is non-NULL.
 }
+\note{\code{margin.table} is an earlier name, retained for back-compatibility.}
 \author{Peter Dalgaard}
 \examples{
 m <- matrix(1:4, 2)

@@ -198,10 +198,11 @@
       had this for almost a decade).
 
       \item New function \code{proportions()} and
-      \code{marginSums()}. The intention is that these should
-      eventually replace the unfortunately named \code{prop.table()}
-      and \code{margin.table()}. They can be drop-in replacements, but
-      also adds named-margin functionality.
+      \code{marginSums()}. These should
+      replace the unfortunately named \code{prop.table()}
+      and \code{margin.table()}. They are drop-in replacements, but
+      also add named-margin functionality. The old names are retained 
+      as aliases for back-compatibility.
 
       \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
       \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
