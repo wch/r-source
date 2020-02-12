@@ -931,6 +931,10 @@ Packages used to run examples or tests conditionally (e.g.@: @emph{via}
 @code{if(require(@var{pkgname}))}) should be listed in @samp{Suggests}
 or @samp{Enhances}.  (This allows checkers to ensure that all the
 packages needed for a complete check are installed.)
+
+@item
+Packages needed to use datasets from the package should be in
+@samp{Imports}: this includes those needed to define S4 classes used.
 @end itemize
 
 @noindent
@@ -944,10 +948,9 @@ used by @code{library} when it loads the package, and
 @samp{Imports} and (for @code{dependencies = TRUE}) @samp{Suggests}
 fields.
 
-It is increasingly important that the information in these fields is
-complete and accurate: it is for example used to compute which packages
-depend on an updated package and which packages can safely be installed
-in parallel.
+It is important that the information in these fields is complete and
+accurate: it is for example used to compute which packages depend on an
+updated package and which packages can safely be installed in parallel.
 
 This scheme was developed before all packages had namespaces (@R{}
 2.14.0 in October 2011), and good practice changed once that was in
@@ -1576,7 +1579,7 @@ expansion is a known issue: see
 for this and others.  Some checks can be done by the
 @code{checkbashisms} Perl script at
 @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}, also
-found in some Linux distributions.})  shell script @file{configure} in
+available in most Linux distributions in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}.}) shell script @file{configure} in
 your package which (if present) is executed by @code{R CMD INSTALL}
 before any other action is performed.  This can be a script created by
 the Autoconf mechanism, but may also be a script written by yourself.
@@ -2635,7 +2638,7 @@ changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
 (`C++14') was published in December 2014.  A revision (`C++17') was
 published in December 2017, and a further revision (`C++20', with many
-new features) is scheduled for February 2010.
+new features) is scheduled for February 2020.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
@@ -4448,7 +4451,7 @@ behaviours are allowed
 (@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
 and both occur as defaults on @R{} platforms: portable applications
 should not use @option{-n} (as the first argument) nor escape
-sequences.  The recommended replacment for @command{echo -n} is the
+sequences.  The recommended replacement for @command{echo -n} is the
 command @command{printf}.
 Another common issue is the construction
 @example
@@ -9432,7 +9435,7 @@ dstup.f:20: note: 'dqrdc' was previously declared here
 @noindent
 @code{dqrdc} is a LINPACK routine from @R{}, @code{jpvt} is an integer
 array and @code{work} is a double precision one so @code{dum} cannot
-match both.  (If @option{--emable-lto=check} had been used the
+match both.  (If @option{--enable-lto=check} had been used the
 comparison would have been with the definition in @R{}.)
 
 For Fortran files all in the package, most inconsistencies can be
@@ -11794,7 +11797,7 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is likely to be replaced in future versions of @R{}. To
+This mechanism is scheduled to be replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
@@ -13468,9 +13471,8 @@ would be
       end
 @end example
 @noindent
-in file @file{rmsg.f}. Using @command{gfortran} 9.2 and
-later@footnote{or 9.1-patched since 2019-05-09.} we can extract the C
-view by
+in file @file{rmsg.f}. Using @command{gfortran} 9.2 and later we can
+extract the C view by
 @example
 gfortran -c -fc-prototypes-external rmsg.f
 @end example
@@ -13576,7 +13578,7 @@ Cdgemm(const char *transa, const char *transb, const int *m,
 @end example
 
 @noindent
-Alternatively, do as @R{} does as from version 3.6.1-patched and pass
+Alternatively, do as @R{} does as from version 3.6.2 and pass
 the character length(s) from C to Fortran. A portable way to do this is
 @example
 // before any R headers, or define in PKG_CPPFLAGS
@@ -14310,8 +14312,10 @@ file is provided as
 Return a pathname for a temporary file with name beginning with
 @var{prefix} and ending with @var{fileext} in directory @var{tmpdir}.
 A @code{NULL} prefix or extension is replaced by @code{""}.  Note that
-the return value is @code{malloc}ed and should be @code{free}d when no
-longer needed (unlike the system call @code{tmpnam}).
+the return value is dynamically allocated and should be freed using
+@code{R_free_tmpnam} when no longer needed (unlike the
+system call @code{tmpnam}). Freeing the result using @code{free} is no
+longer recommended. 
 @end deftypefun
 
 @c ----
