@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C)  2001-2015   The R Core Team.
+ *  Copyright (C)  2001-2020   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ static Rboolean sock_open(Rconnection con)
     this->pend = this->pstart = this->inbuf;
 
     if(this->server) {
-	sock1 = R_SockOpen(this->port);
+	sock1 = R_SockOpen(this->port); /* socket(), bind(), listen() */
 	if(sock1 < 0) {
 	    warning("port %d cannot be opened", this->port);
 	    return FALSE;
@@ -63,7 +63,7 @@ static Rboolean sock_open(Rconnection con)
 			 R_BaseEnv, R_NilValue, R_NilValue);
 	    cntxt.cend = &listencleanup;
 	    cntxt.cenddata = &sock1;
-	    sock = R_SockListen(sock1, buf, 256, timeout);
+	    sock = R_SockListen(sock1, buf, 256, timeout); /* accept() */
 	    endcontext(&cntxt);
 	}
 	if(sock < 0) {
