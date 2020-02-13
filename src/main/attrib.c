@@ -1697,10 +1697,11 @@ static SEXP data_part(SEXP obj) {
     SEXP e, val;
     if(!s_getDataPart)
 	init_slot_handling();
-    PROTECT(e = allocVector(LANGSXP, 2));
+    PROTECT(e = allocVector(LANGSXP, 3));
     SETCAR(e, s_getDataPart);
     val = CDR(e);
     SETCAR(val, obj);
+    SETCADR(val, ScalarLogical(TRUE));
     val = eval(e, R_MethodsNamespace);
     UNSET_S4_OBJECT(val); /* data part must be base vector */
     UNPROTECT(1);

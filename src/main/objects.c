@@ -1725,10 +1725,43 @@ SEXP R_do_new_object(SEXP class_def)
 	TYPEOF(value) == EXTPTRSXP;
     if((TYPEOF(value) == S4SXP || getAttrib(e, R_PackageSymbol) != R_NilValue) &&
        !xDataType)
-    { /* Anything but an object from a base "class" (numeric, matrix,..) */
+    {
 	setAttrib(value, R_ClassSymbol, e);
 	SET_S4_OBJECT(value);
     }
+    UNPROTECT(2); /* value, e */
+    vmaxset(vmax);
+    return value;
+}
+
+SEXP R_do_new_object2(SEXP class_def)
+{
+    static SEXP s_virtual = NULL, s_prototype, s_className;
+    SEXP e, value = R_NilValue;
+    const void *vmax = vmaxget();
+    if(!s_virtual) {
+	s_virtual = install("virtual");
+	s_prototype = install("prototype");
+	s_className = install("className");
+    }
+    if(!class_def)
+	error(_("C level NEW macro called with null class definition pointer"));
+    e = R_do_slot(class_def, s_virtual);
+    if(asLogical(e) != 0)  { /* includes NA, TRUE, or anything other than FALSE */
+    	e = R_do_slot(class_def, s_className);
+    	error(_("trying to generate an object from a virtual class (\"%s\")"),
+    	      translateChar(asChar(e)));
+    }
+    PROTECT(e = R_do_slot(class_def, s_className));
+    PROTECT(value = duplicate(R_do_slot(class_def, s_prototype)));
+    Rboolean xDataType = TYPEOF(value) == ENVSXP || TYPEOF(value) == SYMSXP ||
+    	TYPEOF(value) == EXTPTRSXP;
+    if((TYPEOF(value) == S4SXP || getAttrib(e, R_PackageSymbol) != R_NilValue) &&
+       !xDataType)
+    	{
+    	    setAttrib(value, R_ClassSymbol, e);
+    	    SET_S4_OBJECT(value);
+    	}
     UNPROTECT(2); /* value, e */
     vmaxset(vmax);
     return value;

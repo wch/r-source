@@ -168,7 +168,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
         value[-match("class", value, 0L)]
 }
 
-makeExtends <- function(Class, to,
+makeExtends <- function(Class,
                         coerce = NULL, test = NULL, replace = NULL,
                         by = character(), package,
                         slots = getSlots(classDef1),
@@ -181,6 +181,10 @@ makeExtends <- function(Class, to,
     }
     packageEnv <- .requirePackage(package)
     class1Defined <- missing(slots) # only at this time can we construct methods
+    if (class1Defined) {
+        Class <- classDef1@className # has package slot
+    }
+    to <- classDef2@className # has package slot
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
     distance <- 1
     ##FIX ME:  when by is supplied, should use the existing extension information

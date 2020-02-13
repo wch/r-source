@@ -174,7 +174,7 @@ setIs <-
     prevIs <- !identical(possibleExtends(class1, class2,classDef, classDef2),
                          FALSE) # used in checking for previous coerce
     obj <- if(is.null(extensionObject))
-               makeExtends(class1, class2, coerce, test, replace, by,
+               makeExtends(class1, coerce, test, replace, by,
                            classDef1 = classDef, classDef2 = classDef2,
                            package = getPackageName(where))
            else
@@ -215,7 +215,7 @@ setIs <-
     ## inheritance hierarchy in the cache (the runtime definition);
     ## see cacheMetaData(). This means that the class definition has
     ## diverged between the namespace and the cache. In cases of
-    ## divergence, we need to avoid calling .checkSubclasses(),
+    ## divergence, we need to avoid modifying them with .checkSubclasses(),
     ## because it will overwrite the cache with the saved version. Any
     ## use of setIs() across packages will cause divergence. However,
     ## the divergence is only reconciled in the case of class
@@ -229,7 +229,7 @@ setIs <-
     if(doComplete) {
       classDef@contains <- completeExtends(classDef, class2, obj, where = where)
       if(!onlyRecacheSubclasses) #unions are handled in assignClassDef
-        .checkSubclasses(class1, classDef, class2, classDef2, where1, where2)
+        .checkSubclasses(class1, classDef, class2, classDef2, where)
     }
     assignClassDef(class1, classDef, where1, TRUE,
                    doSubclasses=onlyRecacheSubclasses)
@@ -242,7 +242,7 @@ setIs <-
       whereIs[[1L]]
     else {
         if(purpose != "subclass")
-            warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
+            warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not imported?  Making a copy in package %s",
                          .dQ(class), sQuote(classDef@package), purpose,
                          sQuote(getPackageName(where, FALSE))),
                 call. = FALSE, domain = NA)

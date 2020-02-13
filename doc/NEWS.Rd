@@ -461,6 +461,9 @@
       \item \code{smoothEnds(x)} now returns \code{integer} type in
       \emph{both} cases when \code{x} is \code{integer}, thanks to report
       and proposal by Bill Dunlap \PR{17693}.
+
+      \item The \pkg{methods} package does a better job of tracking
+      inheritance relationships across packages.
     }
   }
 }
