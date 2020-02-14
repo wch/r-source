@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2019   The R Core Team.
+ *  Copyright (C) 2000-2020   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1114,6 +1114,7 @@ R_init_internet(DllInfo *info)
     tmp->download = in_do_download;
     tmp->newurl =  in_R_newurl;
     tmp->newsock = in_R_newsock;
+    tmp->newservsock = in_R_newservsock;
 
     tmp->HTTPOpen = in_R_HTTPOpen;
     tmp->HTTPRead = in_R_HTTPRead;

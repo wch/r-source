@@ -3407,27 +3407,40 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- socket connections  --------------------- */
 
 
-/* socketConnection(host, port, server, blocking, open, encoding) */
+/* socketConnection(host, port, server, blocking, open, encoding, timeout) */
+/* socketAccept(socket, blocking, open, encoding, timeout) */
 SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     const char *host, *open;
-    int ncon, port, server, blocking, timeout;
+    int ncon, port, server, blocking, timeout, serverfd;
     Rconnection con = NULL;
+    Rservsockconn scon = NULL;
 
     checkArity(op, args);
-    scmd = CAR(args);
-    if(!isString(scmd) || LENGTH(scmd) != 1)
-	error(_("invalid '%s' argument"), "host");
-    host = translateCharFP(STRING_ELT(scmd, 0));
-    args = CDR(args);
-    port = asInteger(CAR(args));
-    if(port == NA_INTEGER || port < 0)
-	error(_("invalid '%s' argument"), "port");
-    args = CDR(args);
-    server = asLogical(CAR(args));
-    if(server == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "server");
+    if (PRIMVAL(op) == 0) { /* socketConnection */
+	scmd = CAR(args);
+	if(!isString(scmd) || LENGTH(scmd) != 1)
+	    error(_("invalid '%s' argument"), "host");
+	host = translateCharFP(STRING_ELT(scmd, 0));
+	args = CDR(args);
+	port = asInteger(CAR(args));
+	if(port == NA_INTEGER || port < 0)
+	    error(_("invalid '%s' argument"), "port");
+	args = CDR(args);
+	server = asLogical(CAR(args));
+	if(server == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "server");
+	serverfd = -1;
+    } else { /* socketAccept */
+	if(!inherits(CAR(args), "servsockconn"))
+	    error(_("invalid '%s' argument"), "socket");
+	scon = getConnection(asInteger(CAR(args)))->private;
+	port = scon->port;
+	server = 1;
+	host = "localhost"; /* ignored */
+	serverfd = scon->fd;
+    } 
     args = CDR(args);
     blocking = asLogical(CAR(args));
     if(blocking == NA_LOGICAL)
@@ -3446,7 +3459,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     timeout = asInteger(CAR(args));
 
     ncon = NextConnection();
-    con = R_newsock(host, port, server, open, timeout);
+    con = R_newsock(host, port, server, serverfd, open, timeout);
     Connections[ncon] = con;
     con->blocking = blocking;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
@@ -6130,15 +6143,22 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (i = 0; i < nsock; i++) {
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
-	Rsockconn scp = conn->private;
-	if (strcmp(conn->class, "sockconn") != 0)
+	if (!strcmp(conn->class, "sockconn")) {
+	    Rsockconn scp = conn->private;
+	    INTEGER(insockfd)[i] = scp->fd;
+	    if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
+		LOGICAL(val)[i] = TRUE;
+		immediate = TRUE;
+	    }
+	    else LOGICAL(val)[i] = FALSE;
+	} else if (!strcmp(conn->class, "servsockconn")) {
+	    Rservsockconn sop = conn->private;
+	    INTEGER(insockfd)[i] = sop->fd;
+	    LOGICAL(val)[i] = FALSE;
+	    if (LOGICAL(write)[i])
+		warning(_("a server socket connection cannot be writeable"));
+	} else
 	    error(_("not a socket connection"));
-	INTEGER(insockfd)[i] = scp->fd;
-	if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
-	    LOGICAL(val)[i] = TRUE;
-	    immediate = TRUE;
-	}
-	else LOGICAL(val)[i] = FALSE;
     }
 
     if (! immediate)
@@ -6147,6 +6167,34 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     UNPROTECT(2);
     return val;
+}
+
+SEXP attribute_hidden do_serversocket(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, class;
+    int ncon, port;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+
+    port = asInteger(CAR(args));
+    if(port == NA_INTEGER || port < 0)
+	error(_("invalid '%s' argument"), "port");    
+
+    ncon = NextConnection();
+    con = R_newservsock(port);
+    Connections[ncon] = con;
+    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+
+    PROTECT(ans = ScalarInteger(ncon));
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("servsockconn"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    UNPROTECT(3);
+    return ans;
 }
 
 static lzma_filter filters[LZMA_FILTERS_MAX + 1];

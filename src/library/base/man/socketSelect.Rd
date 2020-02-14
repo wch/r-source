@@ -1,6 +1,6 @@
 % File src/library/base/man/socketSelect.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{socketSelect}
@@ -10,20 +10,23 @@
 socketSelect(socklist, write = FALSE, timeout = NULL)
 }
 \arguments{
-  \item{socklist}{list of open socket connections}
+  \item{socklist}{list of open socket connections and server sockets.}
   \item{write}{logical.  If \code{TRUE} wait for corresponding socket to
                become available for writing; otherwise wait for it to become
-               available for reading.}
+               available for reading or for accepting an incoming
+               connection (server sockets).}
   \item{timeout}{numeric or \code{NULL}. Time in seconds to wait for a
                  socket to become available; \code{NULL} means wait
                  indefinitely.}
 }
 \description{
-  Waits for the first of several socket connections to become available.
+  Waits for the first of several socket connections and server sockets
+  to become available.
 }
 \value{Logical the same length as \code{socklist} indicating
   whether the corresponding socket connection is available for
   output or input, depending on the corresponding value of \code{write}.
+  Server sockets can only become available for input.
 }
 \details{
   The values in \code{write} are recycled if necessary to make up a
