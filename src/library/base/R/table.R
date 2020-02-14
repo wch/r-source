@@ -264,6 +264,18 @@ marginSums <- function (x, margin = NULL)
       
    if (length(margin)) {
       z <- apply(x, margin, sum)
+      ## apply() may lose dims, in which case we need to put them
+      ## back. It is probably only strictly necessary if margin
+      ## has length 1. Need to convert margin to numeric for this 
+      ## to work, but can assume that x has named dimnames in that 
+      ## case (or apply() would have complained.
+      if (! is.array(z))
+      {
+        if (is.character(margin))
+            margin <- match(margin, names(dimnames(x)))
+        dim(z) <- dim(x)[margin] 
+        dimnames(z) <- dimnames(x)[margin]
+      }
       class(z) <- oldClass(x)
       z
    }
