@@ -221,6 +221,14 @@
 
       \item  \code{unlink()} gains a new argument \code{expand} to
       disable wildcard and tilde expansion.
+
+      \item \code{mle()} in the \code{stats4} package has had its
+      interface extended so that arguments to the negative
+      log-likelihood function can be one or more vectors, with similar
+      conventions applying to bounds, start values, and parameter values
+      to be kept fixed. NB: This has required a minor extension to class
+      \code{"mle"}, so saved objects from earlier versions may need to
+      be recomputed.
     }
   }% end{ NEW FEATURES }
 

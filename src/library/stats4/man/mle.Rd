@@ -10,30 +10,53 @@
   Estimate parameters by the method of maximum likelihood.
 }
 \usage{
-mle(minuslogl, start = formals(minuslogl), method = "BFGS",
-    fixed = list(), nobs, lower, upper, \dots)
+mle(minuslogl, start,
+       optim = stats::optim,
+       method = if(!useLim) "BFGS" else "L-BFGS-B",
+       fixed = list(), nobs, lower, upper, \dots)
 }
 \arguments{
   \item{minuslogl}{Function to calculate negative log-likelihood.}
-  \item{start}{Named list. Initial values for optimizer.}
+  \item{start}{Named list of vectors or single vector. Initial values
+    for optimizer. By default taken from the default arguments of \code{minuslogl}}
+  \item{optim}{Optimizer function. (Experimental)}
   \item{method}{Optimization method to use. See \code{\link{optim}}.}
-  \item{fixed}{Named list.  Parameter values to keep fixed during
+  \item{fixed}{Named list of vectors or single vector.  Parameter values to keep fixed during
     optimization.}
   \item{nobs}{optional integer: the number of observations, to be used for
     e.g.\sspace{}computing \code{\link{BIC}}.}
-  \item{lower, upper}{bounds for \code{\link{optim}}, if relevant.}
+  \item{lower, upper}{Named lists of vectors or single vectors. Bounds for \code{\link{optim}}, if relevant.}
   \item{\dots}{Further arguments to pass to \code{\link{optim}}.}
 }
 \details{
-  The \code{\link{optim}} optimizer is used to find the minimum of the
+  The \code{optim} optimizer is used to find the minimum of the
   negative log-likelihood.  An approximate covariance matrix for the
   parameters is obtained by inverting the Hessian matrix at the optimum.
+  By default,  \code{\link{optim}} from the \code{stats} package is used; other
+  optimizers need to be plug-compatible, both with respect to arguments
+  and return values.
+
+  The function \code{minuslogl} should take one or several arguments,
+  each of which can be a vector. The optimizer optimizes a function
+  which takes a single vector argument, containing the
+  concatenation of the arguments to \code{minuslogl}, removing any
+  values that should be held fixed. This function internally unpacks the
+  argument vector, inserts the fixed values and calls \code{minuslogl}.
+
+  The vector arguments \code{start}, \code{fixed}, \code{upper}, and
+  \code{lower}, can be given in both packed and unpacked form, either as
+  a single vector or as a list of vectors. In the latter case, you only
+  need to specify those list elements that are actually affected. For vector
+  arguments, including those inside lists, use a default marker for
+  those values that you don't want to set: \code{NA} for \code{fixed}
+  and \code{start}, and \code{+Inf, -Inf} for \code{upper}, and
+  \code{lower}.
 }
 \value{
   An object of class \code{\link{mle-class}}.
 }
 \note{
-  Notice that the argument is -log L (not -2 log L). It
+  Notice that the \code{mll} argument should calculate -log L (not -2 log L). It
   is for the user to ensure that the likelihood is correct, and that
   asymptotic likelihood inference is valid.
 }
@@ -43,16 +66,23 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
 \examples{
 ## Avoid printing to unwarranted accuracy
 od <- options(digits = 5)
+
+## Simulated EC50 experiment with count data
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
 
 ## Easy one-dimensional MLE:
 nLL <- function(lambda) -sum(stats::dpois(y, lambda, log = TRUE))
 fit0 <- mle(nLL, start = list(lambda = 5), nobs = NROW(y))
+
+## sanity check --- notice that "nobs" must be input
+## (not guaranteed to be meaningful for any likelihood)
+stopifnot(nobs(fit0) == length(y))
+
+
 # For 1D, this is preferable:
 fit1 <- mle(nLL, start = list(lambda = 5), nobs = NROW(y),
             method = "Brent", lower = 1, upper = 20)
-stopifnot(nobs(fit0) == length(y))
 
 ## This needs a constrained parameter space: most methods will accept NA
 ll <- function(ymax = 15, xhalf = 6) {
@@ -62,10 +92,11 @@ ll <- function(ymax = 15, xhalf = 6) {
 }
 (fit <- mle(ll, nobs = length(y)))
 mle(ll, fixed = list(xhalf = 6))
+
 ## alternative using bounds on optimization
 ll2 <- function(ymax = 15, xhalf = 6)
     -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE))
-mle(ll2, method = "L-BFGS-B", lower = rep(0, 2))
+mle(ll2, lower = rep(0, 2))
 
 AIC(fit)
 BIC(fit)
@@ -79,7 +110,7 @@ confint(fit)
 ## Use bounded optimization
 ## The lower bounds are really > 0,
 ## but we use >=0 to stress-test profiling
-(fit2 <- mle(ll, method = "L-BFGS-B", lower = c(0, 0)))
+(fit2 <- mle(ll2, lower = c(0, 0)))
 plot(profile(fit2), absVal = FALSE)
 
 ## a better parametrization:
@@ -90,11 +121,34 @@ plot(profile(fit3), absVal = FALSE)
 exp(confint(fit3))
 
 # regression tests for bounded cases (this was broken in R 3.x)
-fit4 <- mle(ll, method = "L-BFGS-B", lower = c(0, 4)) # has max on boundary
+fit4 <- mle(ll, lower = c(0, 4)) # has max on boundary
 confint(fit4)
 
 ## direct check that fixed= and constraints work together
-mle(ll, method = "L-BFGS-B", lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
+mle(ll, lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
+
+## Linear regression using MLE
+x <- 1:10 
+y <- c(0.48, 2.24, 2.22, 5.15, 4.64, 5.53, 7, 8.8, 7.67, 9.23)
+
+LM_mll <- function(formula, data = environment(formula))
+{
+     X <- model.matrix(formula, data)
+     b0 <- numeric(NCOL(X))
+     names(b0) <- colnames(X)
+     function(b=b0, sigma=1)
+         -sum(dnorm(y, X \%*\% b, sigma, log=TRUE))
+}
+
+mll <- LM_mll(~x)
+
+summary(lm(y~x))
+summary(mle(mll, lower=c(-Inf,-Inf, 0.01)))
+summary(mle(mll, lower=list(sigma=0.01)))
+
+confint(mle(mll, lower=list(sigma=0.01)))
+plot(profile(mle(mll, lower=list(sigma=0.01))))
+
 
 options(od)
 }
