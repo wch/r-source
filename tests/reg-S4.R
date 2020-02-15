@@ -994,8 +994,7 @@ if(require("Matrix")) withAutoprint({
 
     setClassUnion('dMatrixOrMatrix', members = c('dMatrix', 'matrix'))
     ## failed in R <= 3.6.2
-    ## FIXME: temporarily disabled
-    ## stopifnot("dMatrixOrMatrix" %in% names(getClass("dgCMatrix")@contains))
+    stopifnot("dMatrixOrMatrix" %in% names(getClass("dgCMatrix")@contains))
 
     invisible(lapply(c("NumOrMyClass", "MyClass", "dMatrixOrMatrix"),
                      removeClass))

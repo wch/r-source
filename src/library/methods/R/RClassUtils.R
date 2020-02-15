@@ -1089,11 +1089,16 @@ completeSubclasses <-
             obji <- contains[[i]]
             cli <- contains[[i]]@superClass
             cliDef <- getClassDef(cli, package=packageSlot(obji))
-            ## don't override existing relations
-            ## TODO:  have a metric that picks the "closest" relationship
-            if(!extends(classDef2, cliDef))
-                setIs(class2, cli, extensionObject = obji,
-                      doComplete = FALSE, where = where)
+            subcl <- cliDef@subclasses[[class2]]
+            if (is.null(subcl)) {
+                exti <- extends(classDef2, cliDef, fullInfo = TRUE)
+                ## don't override existing relations
+                if (identical(exti, FALSE) ||
+                        (is(exti, "SClassExtension") &&
+                             classDef@className == exti@by))
+                    setIs(class2, cli, extensionObject = obji,
+                          doComplete = FALSE, where = where)
+            }
         }
     }
     subclasses
