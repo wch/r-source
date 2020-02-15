@@ -72,9 +72,12 @@
   truncated at that point (usually with a warning).
 
   Raw character constants are also available using a syntax similar to
-  the one used in C++; \code{r"(...)"} with \code{...} any character
+  the one used in C++: \code{r"(...)"} with \code{...} any character
   sequence, except that it must not contain the closing sequence
-  \samp{)"}.
+  \samp{)"}. The delimiter pairs \code{[]} and \code{\{\}} ran also be
+  used. For  additional flexibility, a number of dashes can be placed
+  between the opeing quote and the opening delimiter, as long as the same
+  number of dashes appear between the closing delimiter and the closing quote.
 }
 \section{Names and Identifiers}{
   Identifiers consist of a sequence of letters, digits, the period
@@ -180,5 +183,10 @@ stopifnot(identical(nn, n2))
 
 ## A Windows path written as a raw string constant:
 r"(c:\Program files\R)"
+
+## More raw strings:
+r"{(\1\2)}"
+r"(use both "double" and 'single' quotes)"
+r"---(\1--)-)---"
 }
 \keyword{documentation}

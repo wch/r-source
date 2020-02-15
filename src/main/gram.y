@@ -2826,6 +2826,10 @@ static int RawStringValue(int c)
     ucs_t wcs[10001];
     Rboolean oct_or_hex = FALSE, use_wcs = FALSE, currtext_truncated = FALSE;
 
+    /* count dashes between the opening quote and opening delimiter */
+    int ndash = 0;
+    while (nextchar('-')) ndash++;
+
     if (! nextchar('(')) {
 	if (nextchar('['))
 	    delim = ']';
@@ -2841,8 +2845,27 @@ static int RawStringValue(int c)
     PROTECT_WITH_INDEX(R_NilValue, &sti);
     CTEXT_PUSH(c);
     while ((c = xxgetc()) != R_EOF) {
-	if (c == delim && nextchar(quote))
-	    break;
+	if (c == delim) {
+	    /* count the dashes after the closing delimiter */
+	    int nd = 0;
+	    while (nd < ndash && nextchar('-')) nd++;
+	    
+	    if (nd == ndash && nextchar(quote))
+		/* right number of dashes, right quote: were done! */
+		break;
+	    else {
+		/* not done: emit closing delimiter, dashes, and continue */
+		CTEXT_PUSH(delim);
+		STEXT_PUSH(delim);
+		WTEXT_PUSH(delim);
+		for (int i = 0; i < nd; i++) {
+		    CTEXT_PUSH('-');
+		    STEXT_PUSH('-');
+		    WTEXT_PUSH('-');
+		}
+		continue;
+	    }
+	}
 	CTEXT_PUSH(c);
 	if(mbcslocale) {
 	    int i, clen;

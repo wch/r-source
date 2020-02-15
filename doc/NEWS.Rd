@@ -45,7 +45,14 @@
        help make the internal code easier to maintain. This change is
        expected to have minimal impact on packages not using unsupported
        coding practices in their C/C++ code.
-    }
+
+       \item \R now provides a syntax for specifying raw character
+       constants similar to the one used in C++: \code{r"(...)"} with
+       \code{...} any character sequence, except that it must not
+       contain the closing sequence \samp{)"}. This makes in easier to
+       write strings that contain backslashes or both single and double
+       quotes.  For more details see \code{?Quotes}.
+     }
   }
 
   \subsection{NEW FEATURES}{
