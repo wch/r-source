@@ -6409,7 +6409,7 @@ available from
 
 @noindent
 and these can be accessed from @R{} via the package @CRANpkg{rggobi}, described at
-@uref{http://www.ggobi.org/rggobi}.
+@uref{http://ggobi.org/rggobi.html}.
 
 Also, package @CRANpkg{rgl} provides ways to interact with 3D plots, for example
 of surfaces.

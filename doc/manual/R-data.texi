@@ -1218,7 +1218,7 @@ Traditionally there had been large (and expensive) commercial RDBMSs
 (@uref{http://www.informix.com, Informix}; @uref{https://www.oracle.com,
 Oracle}; @uref{http://www.sybase.com, Sybase};
 @uref{http://www.ibm.com/db2, IBM's DB2};
-@uref{https://www.microsoft.com/SQL/default.mspx, Microsoft @acronym{SQL}
+@uref{https://www.microsoft.com/sql-server/, Microsoft @acronym{SQL}
 Server} on Windows) and academic and small-system databases (such as
 MySQL@footnote{and forks, notably MariaDB.}, PostgreSQL, Microsoft
 Access, @dots{}), the former marked out by much greater emphasis on data
@@ -1383,8 +1383,8 @@ JDBC driver).
 @c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @c @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
 
-@pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
-@code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
+@pkg{PL/R} (@uref{http://joeconway.com/plr/,
+@code{http://@/joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
 Package @CRANpkg{RMongo} provides an @R{} interface to a Java client for

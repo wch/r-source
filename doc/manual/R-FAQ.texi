@@ -579,12 +579,12 @@ for on-line reading in @HTML{} and PDF formats, and as hardcopy via
 version is always available for web browsing at
 @url{https://stat.ethz.ch/R-manual/}.
 
-Printed copies of the R reference manual for some version(s) are
-available from Network Theory Ltd, at
-@c https: is untrusted
-@url{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
-sold, the publisher donates USD 10 to the R Foundation (@pxref{What is
-the R Foundation?}).
+@c Printed copies of the R reference manual for some version(s) are
+@c available from Network Theory Ltd, at
+@c @c https: is untrusted
+@c @url{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
+@c sold, the publisher donates USD 10 to the R Foundation (@pxref{What is
+@c the R Foundation?}).
 
 The R distribution also comes with the following manuals.
 

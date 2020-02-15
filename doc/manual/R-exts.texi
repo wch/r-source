@@ -15518,7 +15518,7 @@ currently available that interface directly with @R{} and provide a
 @itemize
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available @emph{via} @uref{http://sunsite.univie.ac.at/rcom/},
+Baier available @emph{via} @uref{http://www.autstat.com/},
 which works with @R{} packages to support transfer of data to and from
 @R{} and remote execution of @R{} commands, as well as embedding of an
 @R{} graphics window.
