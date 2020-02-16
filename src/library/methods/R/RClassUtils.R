@@ -1094,7 +1094,7 @@ completeSubclasses <-
                 exti <- extends(classDef2, cliDef, fullInfo = TRUE)
                 ## don't override existing relations
                 if (identical(exti, FALSE) ||
-                        (is(exti, "SClassExtension") &&
+                        (is(exti, "SClassExtension") && exti@distance > 1L &&
                              classDef@className == exti@by))
                     setIs(class2, cli, extensionObject = obji,
                           doComplete = FALSE, where = where)
