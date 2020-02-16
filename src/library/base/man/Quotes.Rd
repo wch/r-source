@@ -76,7 +76,7 @@
   sequence, except that it must not contain the closing sequence
   \samp{)"}. The delimiter pairs \code{[]} and \code{\{\}} ran also be
   used. For  additional flexibility, a number of dashes can be placed
-  between the opeing quote and the opening delimiter, as long as the same
+  between the opening quote and the opening delimiter, as long as the same
   number of dashes appear between the closing delimiter and the closing quote.
 }
 \section{Names and Identifiers}{
