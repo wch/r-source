@@ -133,6 +133,7 @@ y <- c(0.48, 2.24, 2.22, 5.15, 4.64, 5.53, 7, 8.8, 7.67, 9.23)
 
 LM_mll <- function(formula, data = environment(formula))
 {
+     y <- model.response(model.frame(formula, data))
      X <- model.matrix(formula, data)
      b0 <- numeric(NCOL(X))
      names(b0) <- colnames(X)
@@ -140,7 +141,7 @@ LM_mll <- function(formula, data = environment(formula))
          -sum(dnorm(y, X \%*\% b, sigma, log=TRUE))
 }
 
-mll <- LM_mll(~x)
+mll <- LM_mll(y ~ x)
 
 summary(lm(y~x))
 summary(mle(mll, lower=c(-Inf,-Inf, 0.01)))

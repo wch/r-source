@@ -177,6 +177,7 @@ Coefficients:
 > 
 > LM_mll <- function(formula, data = environment(formula))
 + {
++      y <- model.response(model.frame(formula, data))
 +      X <- model.matrix(formula, data)
 +      b0 <- numeric(NCOL(X))
 +      names(b0) <- colnames(X)
@@ -184,7 +185,7 @@ Coefficients:
 +          -sum(dnorm(y, X %*% b, sigma, log=TRUE))
 + }
 > 
-> mll <- LM_mll(~x)
+> mll <- LM_mll(y ~ x)
 > 
 > summary(lm(y~x))
 
@@ -283,7 +284,7 @@ Coefficients:
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.623 0.014 0.638 0 0 
+Time elapsed:  0.653 0.014 0.667 0 0 
 > grDevices::dev.off()
 null device 
           1 
