@@ -3473,7 +3473,7 @@ stopifnot(exprs = {
 
 
 ## Forgotten 'drop=FALSE' in plot.formula()
-df <- data.frame(x=1:3, grp=c("A","A","B"))
+df <- data.frame(x=1:3, grp=c("A","A","B"), stringsAsFactors = TRUE)
 plot( ~grp, data=df, subset = x > 1)
 ## failed in R <= 3.6.1
 
