@@ -1509,7 +1509,7 @@ For a very long time, there was no such thing.
 @c currently beta testing a commercially supported version of R named R+
 @c (read R plus).
 
-@url{http://www.revolution-computing.com/, Revolution Analytics} has
+@url{http://revolutionanalytics.com/, Revolution Analytics} has
 released REvolution R, now available as Microsoft R (see
 @url{http://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
 for more information).

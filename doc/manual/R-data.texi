@@ -1383,8 +1383,8 @@ JDBC driver).
 @c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @c @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
 
-@pkg{PL/R} (@uref{http://joeconway.com/plr/,
-@code{http://@/joeconway.com/@/plr/}}) is a project to embed R into
+@pkg{PL/R} (@uref{http://joeconway.com/plr,
+@code{http://@/joeconway.com/@/plr}}) is a project to embed R into
 PostgreSQL.
 
 Package @CRANpkg{RMongo} provides an @R{} interface to a Java client for
@@ -1818,7 +1818,8 @@ Borland which has a binary flat-file format that became popular, with
 file extension @file{.dbf}.  It has been adopted for the 'Xbase' family
 of databases, covering dBase, Clipper, FoxPro and their Windows
 equivalents Visual dBase, Visual Objects and Visual FoxPro (see
-@uref{http://www.e-bachmann.dk/docs/xbase.htm}).  A dBase file contains
+@uref{https://www.clicketyclick.dk/databases/xbase/format}).
+A dBase file contains
 a header and then a series of fields and so is most similar to an @R{}
 data frame.  The data itself is stored in text format, and can include
 character, logical and numeric fields, and other types in later versions
