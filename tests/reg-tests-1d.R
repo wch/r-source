@@ -3788,6 +3788,11 @@ stopifnot(inherits(e , "error"), grepl("is not TRUE", e$message),
 ## wrapping stopifnot() in this way did not work in some unreleased R-devel
 
 
+## norm(<matrix-w-NA>, "2")
+stopifnot(is.na( norm(diag(c(1, NA)), "2") ))
+## gave error from svd() in R <= 3.6.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
