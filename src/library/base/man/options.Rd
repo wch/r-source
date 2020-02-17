@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -231,9 +231,9 @@ getOption(x, default = NULL)
 	  contain \code{NaN} or \code{Inf} values.  When deemed
 	  beneficial for performance, \code{"default"} may call the
 	  3-loop algorithm unconditionally, i.e., without checking the
-	  input for NaN/Inf values.  The 3-loop algorithm uses (only) a
-	  \code{double} accumulator for summation, which is consistent
-	  with the reference BLAS implementation.}
+	  input for \code{NaN}/\code{Inf} values.  The 3-loop algorithm uses
+          (only) a \code{double} accumulator for summation, which is
+          consistent with the reference BLAS implementation.}
 	\item{\code{"blas"}}{uses BLAS unconditionally without any
 	  checks and should be used with extreme caution.  BLAS
 	  libraries do not propagate \code{\link{NaN}} or
@@ -242,8 +242,8 @@ getOption(x, default = NULL)
 	\item{\code{"default.simd"}}{is experimental and will likely be
 	  removed in future versions of \R.  It provides the same behavior
 	  as \code{"default"}, but the check whether the input contains
-	  NaN/Inf values is faster on some SIMD hardware.  On older
-	  systems it will run correctly, but may be much slower than
+	  \code{NaN}/\code{Inf} values is faster on some SIMD hardware.
+          On older systems it will run correctly, but may be much slower than
 	  \code{"default"}.}
       }
     }
