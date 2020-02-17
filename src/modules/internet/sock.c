@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2019   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@
 
 extern struct hostent *R_gethostbyname(const char *name);
 
-#define MAXBACKLOG 5
+#define MAXBACKLOG SOMAXCONN
 
 static int Sock_error(Sock_error_t perr, int e, int he)
 {
