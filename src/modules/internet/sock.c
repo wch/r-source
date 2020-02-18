@@ -47,6 +47,9 @@
 #  include <netdb.h>
 #  include <sys/socket.h>
 #  include <netinet/in.h>
+#  ifdef HAVE_FCNTL_H
+#    include <fcntl.h>
+#  endif
 #endif
 
 #include <R_ext/Error.h>
@@ -148,6 +151,20 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
     {
 	int val = 1;
 	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &val, sizeof(val));
+    }
+#endif
+
+#if defined(HAVE_FCNTL_H) && defined(HAVE_UNISTD_H) && !defined(Win32)
+    /* Set FD_CLOEXEC so that child processes, including those run via system(),
+       do not inherit the listening socket, thus blocking the port. */
+    int status;
+    if (status = fcntl(sock, F_GETFD, 0) != -1) {
+	status |= FD_CLOEXEC;
+	status = fcntl(sock, F_SETFD, status);
+    }
+    if (status == -1) {
+	close(sock);
+	return Sock_error(perr, errno, 0);
     }
 #endif
 
