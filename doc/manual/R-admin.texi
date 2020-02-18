@@ -4265,7 +4265,28 @@ On some systems it has been necessary that an external
 @acronym{BLAS}/LAPACK was built with the same Fortran compiler used to
 build @R{}.
 
+LAPACK 3.9.0 has a bug in which the DCOMBSSQ subroutine has a bug that
+may cause NA to be interpreted as zero. This is fixed in R 3.6.3, but if
+you use an external LAPACK, you may need to fix it there.
 
+The code (in @code{dlapack.f}) should read
+@example
+*     ..
+*     .. Executable Statements ..
+*
+      IF( V1( 1 ).GE.V2( 1 ) ) THEN
+         IF( V1( 1 ).NE.ZERO ) THEN
+            V1( 2 ) = V1( 2 ) + ( V2( 1 ) / V1( 1 ) )**2 * V2( 2 )
+         ELSE
+            V1( 2 ) = V1( 2 ) + V2( 2 )
+         END IF
+      ELSE
+         V1( 2 ) = V2( 2 ) + ( V1( 1 ) / V2( 1 ) )**2 * V1( 2 )
+         V1( 1 ) = V2( 1 )
+      END IF
+      RETURN
+@end example
+(The inner ELSE clause was missing in LAPACK 3.9.0).
 
 @node Configuration on a Unix-alike, Platform notes, Essential and useful other programs under a Unix-alike, Top
 @appendix Configuration on a Unix-alike
