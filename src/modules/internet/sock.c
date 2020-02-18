@@ -158,7 +158,7 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
     /* Set FD_CLOEXEC so that child processes, including those run via system(),
        do not inherit the listening socket, thus blocking the port. */
     int status;
-    if (status = fcntl(sock, F_GETFD, 0) != -1) {
+    if ((status = fcntl(sock, F_GETFD, 0)) != -1) {
 	status |= FD_CLOEXEC;
 	status = fcntl(sock, F_SETFD, status);
     }
