@@ -485,7 +485,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.6.2 patched}{
+\section{\Rlogo CHANGES IN R 3.6.3}{
 
   \subsection{NEW FEATURES}{
     \itemize{
