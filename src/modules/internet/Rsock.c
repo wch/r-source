@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2019   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -471,11 +471,14 @@ int R_SockConnect(int port, char *host, int timeout)
 	FD_SET(s, &wfd);
 	if(maxfd < s) maxfd = s;
 
+	/* increment used value _before_ the select in case select
+	   modifies tv (as Linux does) */
+	used += tv.tv_sec + 1e-6 * tv.tv_usec;
+
 	switch(R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL))
 	{
 	case 0:
 	    /* Time out */
-	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
 	    if(used < timeout) continue;
 	    CLOSE_N_RETURN(-1);
 	case -1:
