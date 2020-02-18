@@ -999,3 +999,7 @@ if(require("Matrix")) withAutoprint({
     invisible(lapply(c("NumOrMyClass", "MyClass", "dMatrixOrMatrix"),
                      removeClass))
 })
+
+setClass("foo", slots = c(y = "numeric"))
+setClass("bar", contains = "foo")
+body(getClass("bar")@contains[[1]]@coerce)[[2]]

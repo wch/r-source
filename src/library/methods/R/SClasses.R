@@ -69,8 +69,7 @@ setClass <-
         badContains <- character()
         for(ext in classDef@contains) {
             class2 <- ext@superClass
-            if(is(try(setIs(Class, class2, classDef = classDef, where = where,
-                            extensionObject = ext)),
+            if(is(try(setIs(Class, class2, classDef = classDef, where = where)),
                   "try-error"))
                 badContains <- c(badContains, class2)
             else { # update class definition
