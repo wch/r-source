@@ -400,7 +400,7 @@ stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 	  )
 ## the last failed in R 2.7.0 : was not showing  "show"
 
-if(require("Matrix")) {
+if(require("Matrix", lib.loc = .Library)) {
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
     stopifnot(isGeneric("dim", where=as.environment("package:Matrix")),

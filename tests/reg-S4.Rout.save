@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-02-14 r77805) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-02-19 r77831) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin17.7.0 (64-bit)
 
@@ -601,7 +601,7 @@ An object of class "foo"
 + 	  )
 > ## the last failed in R 2.7.0 : was not showing  "show"
 > 
-> if(require("Matrix")) {
+> if(require("Matrix", lib.loc = .Library)) {
 +     D5. <- Diagonal(x = 5:1)
 +     D5N <- D5.; D5N[5,5] <- NA
 +     stopifnot(isGeneric("dim", where=as.environment("package:Matrix")),
