@@ -529,7 +529,7 @@ validObject <- function(object, test = FALSE, complete = FALSE)
 	superClass <- exti@superClass
 	if(!exti@simple && !is(object, superClass))
 	    next ## skip conditional relations that don't hold for this object
-	superDef <- getClassDef(superClass, package = packageSlot(exti))
+	superDef <- getClassDef(superClass)
 	if(is.null(superDef)) {
 	    errors <- c(errors,
 			paste0("superclass \"", superClass,
