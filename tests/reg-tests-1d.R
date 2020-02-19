@@ -3793,6 +3793,13 @@ stopifnot(is.na( norm(diag(c(1, NA)), "2") ))
 ## gave error from svd() in R <= 3.6.x
 
 
+## norm(<matrix-w-NA>, "F")
+(m <- cbind(0, c(NA, 0), 0:-1))
+nTypes <- eval(formals(base::norm)$type) # "O" "I" "F" "M" "2"
+stopifnot(is.na( print(vapply(nTypes, norm, 0., x = m)) )) # print(): show NA *or* NaN
+## "F" gave non-NA with LAPACK 3.9.0, before our patch in R-devel and R-patched
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
