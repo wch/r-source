@@ -1427,7 +1427,9 @@ not attaching them by using @code{requireNamespace(@var{pkg}, quietly =
 TRUE)} and using @code{@var{pkg}::} to refer to objects in the
 namespace).
 
-If your data files are large and you are not using @samp{LazyData} you
+If you are not using @samp{LazyData} and either your data files are large
+or e.g., you use @file{data/foo.R} scripts to produce your data, loading
+your namespace, you 
 can speed up installation by providing a file @file{datalist} in the
 @file{data} subdirectory.  This should have one line per topic that
 @code{data()} will find, in the format @samp{foo} if @code{data(foo)}
@@ -2638,7 +2640,7 @@ changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
 (`C++14') was published in December 2014.  A revision (`C++17') was
 published in December 2017, and a further revision (`C++20', with many
-new features) is scheduled for February 2020.
+new features) is scheduled for publication in May 2020.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
@@ -11797,7 +11799,7 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is scheduled to be replaced in @R{} 4.0.0. To
+This mechanism is to be replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
@@ -15584,7 +15586,7 @@ currently available that interface directly with @R{} and provide a
 @itemize
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available @emph{via} @uref{http://sunsite.univie.ac.at/rcom/},
+Baier available @emph{via} @uref{http://www.autstat.com/},
 which works with @R{} packages to support transfer of data to and from
 @R{} and remote execution of @R{} commands, as well as embedding of an
 @R{} graphics window.
