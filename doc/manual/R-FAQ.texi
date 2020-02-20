@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2020
-@set FAQ_DATE @value{FAQ_YEAR}-01-10
+@set FAQ_DATE @value{FAQ_YEAR}-02-20
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -236,7 +236,7 @@ script files.
 
 The design of R has been heavily influenced by two existing languages:
 Becker, Chambers & Wilks' S (@pxref{What is S?}) and Sussman's
-@url{https://www.cs.indiana.edu/scheme-repository/home.html, Scheme}.
+@url{http://community.schemewiki.org/?scheme-faq, Scheme}.
 Whereas the resulting language is very similar in appearance to S, the
 underlying implementation and semantics are derived from Scheme.
 @xref{What are the differences between R and S?}, for further details.
