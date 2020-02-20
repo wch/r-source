@@ -4596,12 +4596,15 @@ Some of the Fortran code makes use of @code{DOUBLE COMPLEX} and
 well as its equivalence to the @code{Rcomplex} C structure defined in
 @file{R_ext/Complex.h}.
 
-Pre-release versions of @command{gfortran} 10 enforce a previously
-allowed (without even a warning) restriction on the widespread practice
-of passing Fortran array elements where an array is expected.  To
-continue to allow this (with a warning), add
+Pre-release versions of @command{gfortran}@tie{}10 give a compilation
+error for the previously allowed (without even a warning) widespread
+practice of passing a Fortran array element where an array is expected.
+To continue to allow this (with a warning), add
 @option{-fallow-argument-mismatch}@footnote{At the time of writing using
-this with @option{-pedantic} still gave an error.} to @code{FFLAGS}.
+this with @option{-pedantic} still gave an error.
+@uref{https://gcc.gnu.org/@/onlinedocs/@/gfortran/@/Fortran-Dialect-Options.html}
+says this argument is `strongly discouraged' but it is needed for legacy
+code.} to @code{FFLAGS}.
 
 @node Compile and load flags, Maintainer mode, Using Fortran, Configuration on a Unix-alike
 @section Compile and load flags
