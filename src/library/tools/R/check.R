@@ -5004,7 +5004,7 @@ add_dummies <- function(dir, Log)
                               value = TRUE, useBytes = TRUE, invert = TRUE)
                 ## skip for now some c++11-long-long warnings -- no longer needed
                 ## ex_re <- "(/BH/include/boost/|/RcppParallel/include/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+##                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
