@@ -1,7 +1,7 @@
 c-----------------------------------------------------------------------
 c
 c  R : A Computer Language for Statistical Data Analysis
-c  Copyright (C) 1999-2001  The R Core Team
+c  Copyright (C) 1999-2020  The R Core Team
 c
 c  This program is free software; you can redistribute it and/or modify
 c  it under the terms of the GNU General Public License as published by
@@ -49,6 +49,45 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       call dblep0(label, nc, data, ndata)
+      end
+
+      subroutine intpr1(label, nchar, var)
+      integer nchar
+      character*(*) label
+      integer var
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      call intpr0(label, nc, var, 1)
+      end
+
+      subroutine realpr1(label, nchar, var)
+      integer nchar
+      character*(*) label
+      real var
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      call realp0(label, nc, var, 1)
+      end
+
+      subroutine dblepr1(label, nchar, var)
+      integer nchar
+      character*(*) label
+      double precision var
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      call dblep0(label, nc, var, 1)
+      end
+
+      subroutine labelpr(label, nchar)
+      integer nchar
+      character*(*) label
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      call intpr0(label, nc, 0, 0)
       end
 
 C R-only Fortran versions of error and warning

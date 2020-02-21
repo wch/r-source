@@ -296,6 +296,11 @@
       \item Header \file{R_ext/Print.h} defines \samp{R_USE_C99_IN_CXX}
       and hence exposes \code{Rvprintf} and \code{REprintf} if used with
       a C++11 compiler.
+
+      \item There are new Fortran subroutines \code{dblepr1},
+      \code{realpr1} and \code{intpr1} to print a scalar variable
+      (\command{gfortran} 10 enforces the distinction between scalars
+      and length-one arrays).  Also \code{labelpr} to print just a label.
     }
   }
 

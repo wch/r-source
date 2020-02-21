@@ -13260,7 +13260,7 @@ used, but the output may not interleave well with that of C, and will be
 invisible on @acronym{GUI} interfaces.  They are not portable and best
 avoided.
 
-Three subroutines are provided to ease the output of information from
+Some subroutines are provided to ease the output of information from
 Fortran code.
 
 @example
@@ -13272,16 +13272,28 @@ subroutine intpr (@var{label}, @var{nchar}, @var{data}, @var{ndata})
 @end example
 
 @noindent
+and from @R{}@tie{}4.0.0,
+@example
+@group
+subroutine labelpr(@var{label}, @var{nchar})
+subroutine dblepr1(@var{label}, @var{nchar}, @var{var})
+subroutine realpr1(@var{label}, @var{nchar}, @var{var})
+subroutine intpr1 (@var{label}, @var{nchar}, @var{var})
+@end group
+@end example
+
+@noindent
 Here @var{label} is a character label of up to 255 characters,
 @var{nchar} is its length (which can be @code{-1} if the whole label is
-to be used), and @var{data} is an array of length at least @var{ndata}
-of the appropriate type (@code{double precision}, @code{real} and
-@code{integer} respectively).  These routines print the label on one
-line and then print @var{data} as if it were an @R{} vector on
-subsequent line(s).  They work with zero @var{ndata}, and so can be used
-to print a label alone.  Note though that some compilers will give an
-error or warning unless @var{data} is an array: others will accept a
-scalar when @var{ndata} has value one or zero.
+to be used), @var{data} is an array of length at least @var{ndata} of
+the appropriate type (@code{double precision}, @code{real} and
+@code{integer} respectively) and @var{var} is a (scalar) variable.
+These routines print the label on one line and then print @var{data} or
+@var{var} as if it were an @R{} vector on subsequent line(s).  They work
+with zero @var{ndata}, and so can be used to print a label alone.  Note
+though that some compilers will give an error or warning unless
+@var{data} is an array: others will accept a scalar when @var{ndata} has
+value one or zero.
 
 @node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
 @section Calling C from Fortran and vice versa
