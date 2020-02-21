@@ -51,43 +51,49 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       call dblep0(label, nc, data, ndata)
       end
 
+c Avoid 'Rank mismatch warning from gcc 10'
       subroutine intpr1(label, nchar, var)
       integer nchar
       character*(*) label
-      integer var
+      integer var, data(1)
       integer nc
       nc = nchar
       if(nc .lt. 0) nc = len(label)
-      call intpr0(label, nc, var, 1)
+      data(1) = var
+      call intpr0(label, nc, data, 1)
       end
 
       subroutine realpr1(label, nchar, var)
       integer nchar
       character*(*) label
-      real var
+      real var, data(1)
       integer nc
       nc = nchar
       if(nc .lt. 0) nc = len(label)
-      call realp0(label, nc, var, 1)
+      data(1) = var
+      call realp0(label, nc, data, 1)
       end
 
       subroutine dblepr1(label, nchar, var)
       integer nchar
       character*(*) label
-      double precision var
+      double precision var, data(1)
       integer nc
       nc = nchar
       if(nc .lt. 0) nc = len(label)
-      call dblep0(label, nc, var, 1)
+      data(1) = var
+      call dblep0(label, nc, data, 1)
       end
 
       subroutine labelpr(label, nchar)
       integer nchar
       character*(*) label
+      integer data(1)
       integer nc
       nc = nchar
       if(nc .lt. 0) nc = len(label)
-      call intpr0(label, nc, 0, 0)
+      data(1) = 0
+      call intpr0(label, nc, data, 0)
       end
 
 C R-only Fortran versions of error and warning
