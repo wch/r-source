@@ -1,6 +1,6 @@
 % File src/library/base/man/Quotes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Quotes}
@@ -74,7 +74,7 @@
   Raw character constants are also available using a syntax similar to
   the one used in C++: \code{r"(...)"} with \code{...} any character
   sequence, except that it must not contain the closing sequence
-  \samp{)"}. The delimiter pairs \code{[]} and \code{\{\}} ran also be
+  \samp{)"}. The delimiter pairs \code{[]} and \code{\{\}} can also be
   used. For  additional flexibility, a number of dashes can be placed
   between the opening quote and the opening delimiter, as long as the same
   number of dashes appear between the closing delimiter and the closing quote.
