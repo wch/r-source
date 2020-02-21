@@ -913,7 +913,7 @@ aa[["row.names"]] <- A
 aa
 ## wrong printed names in 1.7.1
 
-## assigning to NULL
+## assigning to NULL --- now consistently behaves as if assigning to list() !
 a <- NULL
 a[["a"]] <- 1
 a
@@ -1607,10 +1607,10 @@ m21[which(m21 == 0, arr.ind = TRUE)]
 ## tests of indexing as quoted in Extract.Rd
 x <- NULL
 x$foo <- 2
-x # length-1 vector
+x # now, a list
 x <- NULL
 x[[2]] <- pi
-x # numeric vector
+x # now, a list, too
 x <- NULL
 x[[1]] <- 1:3
 x # list

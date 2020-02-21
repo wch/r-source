@@ -52,6 +52,11 @@
        contain the closing sequence \samp{)"}. %}) \samp{*}: Rd-parser bug for \code{*}"
        This makes it easier to write strings that contain backslashes or
        both single and double quotes.  For more details see \code{?Quotes}.
+
+       \item \code{N <- NULL; N[[1]] <- val} now turns \code{N} into a
+       \code{list} also when \code{length(val) == 1}, consistently.  This
+       also enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
+       \code{r1}, fixing \PR{17719}, reported by Serguei Sokol.
      }
   }
 

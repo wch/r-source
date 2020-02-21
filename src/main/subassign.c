@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2017   The R Core Team
+ *  Copyright (C) 1997-2020   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1743,9 +1743,11 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(2); /* args, y */
 	    return x;
 	}
+#ifdef NO_LONGER_IN_R_4_x_y
 	if (length(y) == 1)
 	    x = allocVector(TYPEOF(y), 0);
 	else
+#endif
 	    x = allocVector(VECSXP, 0);
     }
 

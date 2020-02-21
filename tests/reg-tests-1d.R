@@ -3800,6 +3800,19 @@ stopifnot(is.na( print(vapply(nTypes, norm, 0., x = m)) )) # print(): show NA *o
 ## "F" gave non-NA with LAPACK 3.9.0, before our patch in R-devel and R-patched
 
 
+## dimnames(<matrix>)[[.]] <- v -- inconsistency when length(v) == 1 : PR#17719
+aa <- matrix(1:2); dimnames(aa)[[1]] <- c("a", "b") # OK (always)
+ a <- matrix(1)  ; dimnames(a )[[1]] <-   "a"       # gave error: 'dimnames' must be a list
+stopifnot(exprs = {
+    identical(dimnames(a ), list(  "a",      NULL))
+    identical(dimnames(aa), list(c("a","b"), NULL))
+})
+## The above works, because now, `[[<-` is consistently returning a list:
+N <- NULL; N[["a"]] <- 1:2; stopifnot(identical(N, list(a = 1:2)))
+N <- NULL; N[["a"]] <- 1  ; stopifnot(identical(N, list(a = 1)))
+## the latter gave c(a = 1) in earlier versions of R
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
