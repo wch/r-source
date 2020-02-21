@@ -13279,7 +13279,9 @@ of the appropriate type (@code{double precision}, @code{real} and
 @code{integer} respectively).  These routines print the label on one
 line and then print @var{data} as if it were an @R{} vector on
 subsequent line(s).  They work with zero @var{ndata}, and so can be used
-to print a label alone.
+to print a label alone.  Note though that some compilers will give an
+error or warning unless @var{data} is an array: others will accept a
+scalar when @var{ndata} has value one or zero.
 
 @node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
 @section Calling C from Fortran and vice versa
