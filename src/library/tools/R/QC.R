@@ -7525,10 +7525,28 @@ function(dir, localOnly = FALSE)
                 ini <- "https://arxiv.org/abs/"
                 udb <- url_db(paste0(ini, ids),
                               rep.int("DESCRIPTION", length(ids)))
-                bad <- tryCatch(check_url_db(udb))
+                bad <- tryCatch(check_url_db(udb), error = identity)
                 if(!inherits(bad, "error") && length(bad))
                     out$bad_arXiv_ids <-
                         substring(bad$URL, nchar(ini) + 1L)
+            }
+            ## Also check ORCID iDs.
+            odb <- .ORCID_iD_db_from_package_sources(dir)
+            if(NROW(odb)) {
+                ## Only look at things that may be valid: the others are
+                ## complained about elsewhere.
+                ind <- grepl(.ORCID_iD_variants_regexp, odb[, 1L])
+                odb <- odb[ind, , drop = FALSE]
+            }
+            if(NROW(odb)) {
+                ids <- sub(.ORCID_iD_variants_regexp, "\\3", odb[, 1L])
+                ini <- "https://orcid.org/"
+                udb <- url_db(paste0(ini, ids), odb[, 2L])
+                bad <- tryCatch(check_url_db(udb), error = identity)
+                if(!inherits(bad, "error") && length(bad))
+                    out$bad_ORCID_iDs <-
+                        cbind(substring(bad$URL, nchar(ini) + 1L),
+                              bad[, 2L])
             }
         }
     }
@@ -8242,6 +8260,17 @@ function(x, ...)
                           "The Description field contains the following (possibly) invalid arXiv id:",
                       paste0("  ", gsub("\n", "\n    ", format(y),
                                         fixed = TRUE))),
+                    collapse = "\n")
+          }),
+      fmt(if(length(y <- x$bad_ORCID_iDs)) {
+              paste(c(if(NROW(y) > 1L)
+                          "Found the following (possibly) invalid ORCID iDs:"
+                      else
+                          "Found the following (possibly) invalid ORCID iD:",
+                      sprintf("  iD: %s\t(from: %s)",
+                              unlist(y[, 1L]),
+                              vapply(y[, 2L], paste, "",
+                                     collapse = ", "))),
                     collapse = "\n")
           }),
       if(length(y <- x$R_files_non_ASCII)) {

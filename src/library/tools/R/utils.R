@@ -524,6 +524,37 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 .ORCID_iD_variants_regexp <-
     sprintf("^<?((https?://|)orcid.org/)?(%s)>?$", .ORCID_iD_regexp)
 
+.ORCID_iD_db_from_package_sources <-
+function(dir)
+{
+    meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    ids1 <- ids2 <- character()
+    if(!is.na(aar <- meta["Authors@R"])) {
+        aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
+                        error = identity)
+        if(!inherits(aar, "error")) {
+            ids1 <- unlist(lapply(aar,
+                                  function(e) {
+                                      e <- e$comment
+                                      e[names(e) == "ORCID"]
+                                  }),
+                           use.names = FALSE)
+        }
+    }
+    if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
+        cinfo <- .read_citation_quietly(cfile, meta)
+        if(!inherits(cinfo, "error"))
+            ids2 <- unlist(lapply(cinfo$author,
+                                  function(e) {
+                                      e <- e$comment
+                                      e[names(e) == "ORCID"]
+                                  }),
+                           use.names = FALSE)
+    }
+    rbind(if(length(ids1)) cbind(ids1, "DESCRIPTION"),
+          if(length(ids2)) cbind(ids2, "inst/CITATION"))
+}
+
 ### ** .vc_dir_names
 
 ## Version control directory names: CVS, .svn (Subversion), .arch-ids
