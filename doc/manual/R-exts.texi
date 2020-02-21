@@ -13256,7 +13256,7 @@ their output will be re-directed/logged appropriately.
 @cindex Printing from Fortran
 
 On many systems Fortran @code{write} and @code{print} statements can be
-used, but the output may not interleave well with that of C, and will be
+used, but the output may not interleave well with that of C, and may be
 invisible on @acronym{GUI} interfaces.  They are not portable and best
 avoided.
 
@@ -13289,11 +13289,15 @@ to be used), @var{data} is an array of length at least @var{ndata} of
 the appropriate type (@code{double precision}, @code{real} and
 @code{integer} respectively) and @var{var} is a (scalar) variable.
 These routines print the label on one line and then print @var{data} or
-@var{var} as if it were an @R{} vector on subsequent line(s).  They work
-with zero @var{ndata}, and so can be used to print a label alone.  Note
-though that some compilers will give an error or warning unless
-@var{data} is an array: others will accept a scalar when @var{ndata} has
-value one or zero.
+@var{var} as if it were an @R{} vector on subsequent line(s).  Note that
+some compilers will give an error or warning unless @var{data} is an
+array: others will accept a scalar when @var{ndata} has value one or
+zero.  @strong{NB:} There is no check on the type of @var{data} or
+@var{var}, so using @code{real} (including a real constant) instead of
+@code{double precision} will give incorrect answers.
+
+@code{intpr} works with zero @var{ndata} so can be used to print a
+label in earlier versions of @R{}.
 
 @node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
 @section Calling C from Fortran and vice versa
@@ -13407,9 +13411,9 @@ later, @command{gfortran} 9.2 introduced an option
 and made it the current default but said it might be withdrawn in future.
 
 Suppose we want a function to report a message from Fortran to @R{}'s
-console (one could use @code{intpr} with dummy data, but it might be the
-basis of a custom reporting function).  Suppose the equivalent in Fortran
-would be
+console (one could use @code{labelpr}, or @code{intpr} with dummy data,
+but this might be the basis of a custom reporting function).  Suppose the
+equivalent in Fortran would be
 @example
       subroutine rmsg(msg)
       character*(*) msg
