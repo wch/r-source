@@ -9513,7 +9513,10 @@ Logical values are sent as @code{0} (@code{FALSE}), @code{1}
 (@code{TRUE}) or @code{INT_MIN = -2147483648} (@code{NA}, but only if
 @code{NAOK} is true), and the compiled code should return one of these
 three values.  (Non-zero values other than @code{INT_MIN} are mapped to
-@code{TRUE}.)
+@code{TRUE}.)  Note that the use of @code{int *} for Fortran logical is
+not guaranteed to be portable (although people have gotten away with it
+for many years): it is better to pass integers and convert to/from
+Fortran logical in a Fortran wrapper.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
 checked for missing values @code{NA} and for the @acronym{IEEE} special
@@ -13558,7 +13561,9 @@ type so it is pretty portable to use @code{int *} on the C/C++ side.
 However, recent versions of @command{gfortran} @emph{via} the option
 @option{-fc-prototypes-external} say the C equivalent is
 @code{int_least32_t *}: `Link-Time Optimization' will report @code{int
-*} as a mismatch.
+*} as a mismatch. It is possible to use @code{iso_c_binding} in Fortran
+to map LOGICAL variables to the C99 type @code{_Bool}, but it is usually
+simpler to pass integers to and fro.
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
