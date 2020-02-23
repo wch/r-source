@@ -241,6 +241,16 @@
       to be kept fixed. NB: This has required a minor extension to class
       \code{"mle"}, so saved objects from earlier versions may need to
       be recomputed.
+
+      \item The default for \code{pdf()} is now
+      \code{useDingbats = FALSE}.
+
+      \item The default (fill colour) for both \code{hist()} and
+      \code{boxplot()} is now \code{col = "lightgray"}.
+
+      \item The default order of the levels on the y-axis
+      for both \code{spineplot()} and \code{cdplot()}
+      has been reversed.
     }
   }% end{ NEW FEATURES }
 

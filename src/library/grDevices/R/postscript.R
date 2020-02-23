@@ -679,7 +679,7 @@ assign(".PDF.Options",
 	 pointsize  = 12,
 	 pagecentre = TRUE,
          colormodel = "srgb",
-         useDingbats = TRUE,
+         useDingbats = FALSE,
          useKerning = TRUE,
          fillOddEven = FALSE,
          compress = TRUE), envir = .PSenv)

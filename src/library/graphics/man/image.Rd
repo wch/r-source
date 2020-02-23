@@ -66,6 +66,9 @@ image(x, \dots)
   three-dimensional or spatial data aka \emph{images}.
   This is a generic function.
 
+  \emph{NOTE:} the grid is drawn as a set of rectangles by default;
+  see the \code{useRaster} argument to draw the grid as a raster image.
+  
   The function \code{\link{hcl.colors}} provides a broad range of sequential
   color palettes that are suitable for displaying ordered data, with
   \code{n} giving the number of colors desired.

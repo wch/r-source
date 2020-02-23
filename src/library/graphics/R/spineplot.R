@@ -134,7 +134,9 @@ function(x, y = NULL,
     }
 
     ## compute rectangle positions on y axis
-    yat <- rbind(0, apply(proportions(tab, 1), 1L, cumsum))
+    ## (reversing order compared to version R < 4.0.0)
+    yaxlabels <- rev(yaxlabels)
+    yat <- rbind(0, apply(proportions(tab[, ncol(tab):1L], 1), 1L, cumsum))
     yat[is.na(yat)] <- 1
 
     if(is.null(xlim)) xlim <- c(0, 1 + off * (nx-1L))
