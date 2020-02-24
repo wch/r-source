@@ -886,6 +886,7 @@ FUNTAB R_FunTab[] =
 {"socketAccept",do_sockconn,	1,	11,     5,      {PP_FUNCALL, PREC_FN,	0}},
 {"sockSelect",do_sockselect,	0,	11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"serverSocket",do_serversocket,0,	11,     1,      {PP_FUNCALL, PREC_FN,	0}},
+{"socketTimeout",do_socktimeout,0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"getConnection",do_getconnection,0,	11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getAllConnections",do_getallconnections,0,11, 0,      {PP_FUNCALL, PREC_FN,	0}},
 {"summary.connection",do_sumconnection,0,11,    1,      {PP_FUNCALL, PREC_FN,	0}},

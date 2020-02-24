@@ -504,6 +504,7 @@ SEXP do_getallconnections(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sumconnection(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sockconn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_serversocket(SEXP, SEXP, SEXP, SEXP);
+SEXP do_socktimeout(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sockselect(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gzcon(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memCompress(SEXP, SEXP, SEXP, SEXP);

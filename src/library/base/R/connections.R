@@ -137,6 +137,9 @@ socketAccept <- function(socket, blocking = FALSE, open = "a+",
 serverSocket <- function(port)
     .Internal(serverSocket(port))
 
+socketTimeout <- function(socket, timeout = -1)
+    .Internal(socketTimeout(socket, timeout))
+
 rawConnection <- function(object, open = "r") {
     .Internal(rawConnection(deparse(substitute(object)), object, open))
 }

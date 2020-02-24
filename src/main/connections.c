@@ -6197,6 +6197,30 @@ SEXP attribute_hidden do_serversocket(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* socketTimeout(socket, timeout) */
+SEXP attribute_hidden do_socktimeout(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int tnew, told;
+    Rsockconn scon;
+
+    checkArity(op, args);
+
+    if(!inherits(CAR(args), "sockconn"))
+	error(_("invalid '%s' argument"), "socket");
+
+    scon = getConnection(asInteger(CAR(args)))->private;
+    told = scon->timeout;
+
+    tnew = asInteger(CADR(args));
+    if(tnew == NA_INTEGER)
+	error(_("invalid '%s' argument"), "timeout");
+
+    if (tnew >= 0)
+	scon->timeout = tnew;
+
+    return ScalarInteger(told);
+}
+
 static lzma_filter filters[LZMA_FILTERS_MAX + 1];
 
 static void init_filters(void)

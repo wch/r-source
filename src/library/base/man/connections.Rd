@@ -19,6 +19,7 @@
 \alias{socketConnection}
 \alias{socketAccept}
 \alias{serverSocket}
+\alias{socketTimeout}
 \alias{open}
 \alias{open.connection}
 \alias{isOpen}
@@ -88,6 +89,8 @@ flush(con)
 
 isOpen(con, rw = "")
 isIncomplete(con)
+
+socketTimeout(socket, timeout = -1)
 }
 \arguments{
   \item{description}{character string.  A description of the connection:
@@ -222,6 +225,9 @@ isIncomplete(con)
   for accepting multiple socket connections by \code{socketAccept}.  To stop
   listening for new connections, a server socket needs to be closed
   explicitly by \code{close}.
+
+  \code{socketTimeout} sets connection timeout of a socket connection.  A
+  negative \code{timeout} can be given to query the old value.
 }
 
 \section{URLs}{
@@ -288,6 +294,8 @@ isIncomplete(con)
   \code{isIncomplete} returns a logical value, whether the last read
   attempt was blocked, or for an output text connection whether there is
   unflushed output.
+
+  \code{socketTimeout} returns the old timeout value of a socket connection. 
 }
 
 \section{Modes}{
