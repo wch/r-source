@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snow.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -101,6 +101,7 @@ initDefaultClusterOptions <- function(libname)
     options <- list(port = as.integer(port),
                     setup_timeout = 60 * 2,      # 2 minutes
                     timeout = 60 * 60 * 24 * 30, # 30 days
+                    parallel_setup = FALSE,
                     master = Sys.i[["nodename"]],
                     homogeneous = TRUE,
                     type = "PSOCK",

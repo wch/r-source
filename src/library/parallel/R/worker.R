@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/worker.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,37 +18,46 @@
 
 ## Derived from snow 0.3-6 by Luke Tierney
 
+slaveCommand <- function(master)
+{
+    tryCatch({
+        msg <- recvData(master)
+        # cat(paste("Type:", msg$type, "\n"))
+
+        if (msg$type == "DONE") {
+            closeNode(master)
+            FALSE
+        } else if (msg$type == "EXEC") {
+            success <- TRUE
+            ## This uses the message rather than the exception since
+            ## the exception class/methods may not be available on the
+            ## master.
+            handler <- function(e) {
+                success <<- FALSE
+                structure(conditionMessage(e),
+                          class = c("snow-try-error","try-error"))
+            }
+            t1 <- proc.time()
+            value <- tryCatch(do.call(msg$data$fun, msg$data$args, quote = TRUE),
+                              error = handler)
+            t2 <- proc.time()
+            value <- list(type = "VALUE", value = value, success = success,
+                          time = t2 - t1, tag = msg$data$tag)
+            msg <- NULL ## release for GC
+            sendData(master, value)
+            value <- NULL ## release for GC
+            TRUE
+        } else {
+            ## unknown command / shutdown
+            TRUE
+        }
+    }, interrupt = function(e) TRUE)
+}
+
 slaveLoop <- function(master)
 {
-    repeat
-        tryCatch({
-            msg <- recvData(master)
-            # cat(paste("Type:", msg$type, "\n"))
-
-            if (msg$type == "DONE") {
-                closeNode(master)
-                break;
-            } else if (msg$type == "EXEC") {
-                success <- TRUE
-                ## This uses the message rather than the exception since
-                ## the exception class/methods may not be available on the
-                ## master.
-                handler <- function(e) {
-                    success <<- FALSE
-                    structure(conditionMessage(e),
-                              class = c("snow-try-error","try-error"))
-                }
-                t1 <- proc.time()
-                value <- tryCatch(do.call(msg$data$fun, msg$data$args, quote = TRUE),
-                                  error = handler)
-                t2 <- proc.time()
-                value <- list(type = "VALUE", value = value, success = success,
-                              time = t2 - t1, tag = msg$data$tag)
-                msg <- NULL ## release for GC
-                sendData(master, value)
-                value <- NULL ## release for GC
-            }
-        }, interrupt = function(e) NULL)
+    if (!is.null(master))
+        while(slaveCommand(master)) {}
 }
 
 ## NB: this only sinks the connections, not C-level stdout/err.
