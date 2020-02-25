@@ -5481,6 +5481,10 @@ versions of @command{gcc} and also in @command{clang}.  It is
 recommended that packages are if possible checked with that flag to
 ensure portability.
 
+@option{-fno-common} is said particularly beneficial for ARM cpus and
+has been proposed to be the default for future versions of
+@command{clang}.
+
 This is not pertinent to C++ which does not permit tentative definitions.
 
 @node Binary distribution,  , Portable C and C++ code, Writing portable packages
