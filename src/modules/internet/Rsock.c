@@ -389,6 +389,9 @@ int R_SockConnect(int port, char *host, int timeout)
 {
     SOCKET s;
     fd_set wfd, rfd;
+#ifdef Win32
+    fd_set efd;
+#endif
     struct timeval tv;
     int status = 0;
     double used = 0.0;
@@ -469,13 +472,21 @@ int R_SockConnect(int port, char *host, int timeout)
 #endif
 	FD_ZERO(&wfd);
 	FD_SET(s, &wfd);
+#ifdef Win32
+	FD_ZERO(&efd);
+	FD_SET(s, &efd);
+#endif
 	if(maxfd < s) maxfd = s;
 
 	/* increment used value _before_ the select in case select
 	   modifies tv (as Linux does) */
 	used += tv.tv_sec + 1e-6 * tv.tv_usec;
 
+#ifdef Win32
+	switch(R_SelectEx(maxfd+1, &rfd, &wfd, &efd, &tv, NULL))
+#else
 	switch(R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL))
+#endif
 	{
 	case 0:
 	    /* Time out */
@@ -497,6 +508,15 @@ int R_SockConnect(int port, char *host, int timeout)
 		errno = status;
 		CLOSE_N_RETURN(-1);
 	    } else return(s);
+#ifdef Win32
+	} else if ( FD_ISSET(s, &efd) ) {
+	    R_SOCKLEN_T len;
+	    len = sizeof(status);
+	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) != 0)
+		return (-1);
+	    errno = status;
+	    CLOSE_N_RETURN(-1);
+#endif
 #ifdef Unix
 	} else { /* some other handler needed */
 	    InputHandler *what;
