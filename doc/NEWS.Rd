@@ -501,6 +501,9 @@
       inheritance relationships across packages.
 
       \item \code{norm(diag(c(1, NA)), "2")} now works.
+
+      \item \code{subset()} had problems with 0-col dataframe (Bill Dunlap,
+      \PR{17721})
     }
   }
 }

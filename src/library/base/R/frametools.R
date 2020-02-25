@@ -19,7 +19,7 @@
 subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
 {
     r <- if(missing(subset))
-	rep_len(TRUE, nrow(x))
+	rep_len(TRUE, nrow(x)) # cannot rely on recycling in 0-row case
     else {
 	e <- substitute(subset)
 	r <- eval(e, x, parent.frame())
@@ -27,7 +27,7 @@ subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
 	r & !is.na(r)
     }
     vars <- if(missing(select))
-	TRUE
+	rep_len(TRUE, ncol(x)) # don't rely on recycling here either
     else {
 	nl <- as.list(seq_along(x))
 	names(nl) <- names(x)
