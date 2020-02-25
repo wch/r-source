@@ -139,7 +139,7 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
        pp. 305, Windows sockets are quite happy to allow two servers
        to use the same IPADDR/port, with unpredictable results, if
        SO_REUSEADDR is set.  So setting this option on Windows is not
-       a good idea.  It is unclear whether it is possible on WIndows
+       a good idea.  It is unclear whether it is possible on Windows
        to establish a new server socket while a connection from a
        previous server socket is still active.
 
@@ -147,7 +147,21 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
        disappear as an issue. if the R interface separated the
        `socket'/`bind'/`listen' part of setting up a server socket,
        which is only needed once per server instance, from the
-       `accept' part, which is needed for each connection.  LT */
+       `accept' part, which is needed for each connection.  LT
+       
+       As of 77803,  we have serverSocket() for `socket'/`bind'/`listen', so
+       a listening server socket can be re-used to `accept` multiple
+       connections.  For security reasons on Windows, Microsoft recommends [1]
+       that servers use SO_EXCLUSIVEADDRUSE, with which however they
+       document it is not possible to establish a new server socket while a
+       connection from a previous socket is still active, and that the
+       connection may be active in lower layers of the stack outside of
+       direct control of the application.  Snow/parallel PSOCK clusters have
+       been relying on that it is possible with default options (neither
+       SO_EXCLUSIVEADDRUSE nor SO_REUSEADDR) without receiving bug
+       reports that would suggest otherwise. TK
+       [1] https://docs.microsoft.com/en-us/windows/win32/winsock/using-so-reuseaddr-and-so-exclusiveaddruse
+       */
     {
 	int val = 1;
 	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &val, sizeof(val));
