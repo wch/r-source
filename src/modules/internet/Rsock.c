@@ -194,6 +194,35 @@ static int socket_errno(void)
 #endif
 }
 
+static int make_nonblocking(int s)
+{
+    int status = 0;
+
+#ifdef Win32
+    {
+	u_long one = 1;
+	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
+    }
+#else
+# ifdef HAVE_FCNTL
+    if ((status = fcntl(s, F_GETFL, 0)) != -1) {
+#  ifdef O_NONBLOCK
+	status |= O_NONBLOCK;
+#  else /* O_NONBLOCK */
+#   ifdef F_NDELAY
+	status |= F_NDELAY;
+#   endif
+#  endif /* !O_NONBLOCK */
+	status = fcntl(s, F_SETFL, status);
+    }
+# endif // HAVE_FCNTL
+    if (status < 0) {
+	closesocket(s);
+	return -1;
+    }
+#endif
+    return status;
+}
 
 #ifdef Unix
 #include <R_ext/eventloop.h>
@@ -218,6 +247,25 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 }
 #endif
 
+static void set_timeval(struct timeval *tv, int timeout)
+{
+#ifdef Unix
+    if(R_wait_usec > 0) {
+	tv->tv_sec = 0;
+	tv->tv_usec = R_wait_usec;
+    } else {
+	tv->tv_sec = timeout;
+	tv->tv_usec = 0;
+    }
+#elif defined(Win32)
+    tv->tv_sec = 0;
+    tv->tv_usec = 2e5;
+#else
+    tv->tv_sec = timeout;
+    tv->tv_usec = 0;
+#endif
+}
+
 static int R_SocketWait(int sockfd, int write, int timeout)
 {
     fd_set rfd, wfd;
@@ -227,22 +275,7 @@ static int R_SocketWait(int sockfd, int write, int timeout)
     while(1) {
 	int maxfd = 0, howmany;
 	R_ProcessEvents();
-#ifdef Unix
-	if(R_wait_usec > 0) {
-	    tv.tv_sec = 0;
-	    tv.tv_usec = R_wait_usec;
-	} else {
-	    tv.tv_sec = timeout;
-	    tv.tv_usec = 0;
-	}
-#elif defined(Win32)
-	tv.tv_sec = 0;
-	tv.tv_usec = 2e5;
-#else
-	tv.tv_sec = timeout;
-	tv.tv_usec = 0;
-#endif
-
+	set_timeval(&tv, timeout);
 
 #ifdef Unix
 	maxfd = setSelectMask(R_InputHandlers, &rfd);
@@ -404,28 +437,8 @@ int R_SockConnect(int port, char *host, int timeout)
 
 #define CLOSE_N_RETURN(_ST_) { closesocket(s); return(_ST_); }
 
-#ifdef Win32
-    {
-	u_long one = 1;
-	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
-    }
-#else
-# ifdef HAVE_FCNTL
-    if ((status = fcntl(s, F_GETFL, 0)) != -1) {
-#  ifdef O_NONBLOCK
-	status |= O_NONBLOCK;
-#  else /* O_NONBLOCK */
-#   ifdef F_NDELAY
-	status |= F_NDELAY;
-#   endif
-#  endif /* !O_NONBLOCK */
-	status = fcntl(s, F_SETFL, status);
-    }
-# endif // HAVE_FCNTL
-    if (status < 0) {
-	CLOSE_N_RETURN(-1);
-    }
-#endif
+    if (make_nonblocking(s))
+	return -1;
 
     if (! (hp = R_gethostbyname(host))) CLOSE_N_RETURN(-1);
 
@@ -447,23 +460,7 @@ int R_SockConnect(int port, char *host, int timeout)
     while(1) {
 	int maxfd = 0;
 	R_ProcessEvents();
-#ifdef Unix
-	if(R_wait_usec > 0) {
-	    R_PolledEvents();
-	    tv.tv_sec = 0;
-	    tv.tv_usec = R_wait_usec;
-	} else {
-	    tv.tv_sec = timeout;
-	    tv.tv_usec = 0;
-	}
-#elif defined(Win32)
-	tv.tv_sec = 0;
-	tv.tv_usec = 2e5;
-#else
-	tv.tv_sec = timeout;
-	tv.tv_usec = 0;
-#endif
-
+	set_timeval(&tv, timeout);
 
 #ifdef Unix
 	maxfd = setSelectMask(R_InputHandlers, &rfd);
