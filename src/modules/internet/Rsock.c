@@ -449,7 +449,8 @@ int R_SockConnect(int port, char *host, int timeout)
 	default:
 	    CLOSE_N_RETURN(-1);
 	}
-    }
+    } else
+	return(s);
 
     while(1) {
 	int maxfd = 0;
