@@ -37,8 +37,6 @@
 #endif
 
 #if defined(Win32)
-#  define FD_SETSIZE 1024
-#  include <winsock2.h>
 #  include <io.h>
 #else
 #  ifdef HAVE_UNISTD_H
@@ -54,6 +52,84 @@
 
 #include <R_ext/Error.h>
 #include "sock.h"
+
+#ifndef Win32
+#define SOCKET int
+#endif
+
+int R_close_socket(SOCKET s)
+{
+#ifdef Win32
+    return(closesocket(s));
+#else
+    return(close(s));
+#endif
+}
+
+int R_socket_errno(void)
+{
+#ifdef Win32
+    return(WSAGetLastError());
+#else
+    return(errno);
+#endif
+}
+
+int R_invalid_socket(SOCKET s)
+{
+#ifdef Win32
+    return(s == INVALID_SOCKET);
+#else
+    return s < 0;
+#endif
+}
+
+int R_socket_error(int s)
+{
+#ifdef Win32
+    return(s == SOCKET_ERROR);
+#else
+    return s < 0;
+#endif
+}
+
+int R_invalid_socket_eintr(SOCKET s)
+{
+#ifdef Win32
+    return(s == INVALID_SOCKET && WSAGetLastError() == WSAEINTR);
+#else
+    return(s == -1 && errno == EINTR);
+#endif
+}
+
+int R_socket_error_eintr(int s)
+{
+#ifdef Win32
+    return(s == SOCKET_ERROR && WSAGetLastError() == WSAEINTR);
+#else
+    return(s == -1 && errno == EINTR);
+#endif
+}
+
+char *R_socket_strerror(int errnum)
+{
+#ifdef Win32
+    /* formatError() is not accessible */
+    static char buf[1000];
+    FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                  NULL, errnum,
+                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                  buf, 1000, NULL);
+    size_t i = strlen(buf);
+    if (i > 0 && buf[i-1] == '\n') buf[--i] = '\0';
+    if (i > 0 && buf[i-1] == '\r') buf[--i] = '\0';
+    if (i > 0 && buf[i-1] == '.') buf[--i] = '\0';
+    return buf;
+#else
+    return(strerror(errnum));
+#endif
+}
+
 
 #if defined(__hpux)
    extern int h_errno; /* HP-UX 9.05 forgets to declare this in netdb.h */
@@ -109,12 +185,12 @@ int Sock_init()
 /* open a socket for listening */
 int Sock_open(Sock_port_t port, Sock_error_t perr)
 {
-    int sock;
+    SOCKET sock, status;
     struct sockaddr_in server;
 
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	return Sock_error(perr, errno, 0);
-
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (R_invalid_socket(sock)) 
+	return Sock_error(perr, R_socket_errno(), 0);
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons((short)port);
@@ -171,7 +247,6 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
 #if defined(HAVE_FCNTL_H) && defined(HAVE_UNISTD_H) && !defined(Win32)
     /* Set FD_CLOEXEC so that child processes, including those run via system(),
        do not inherit the listening socket, thus blocking the port. */
-    int status;
     if ((status = fcntl(sock, F_GETFD, 0)) != -1) {
 	status |= FD_CLOEXEC;
 	status = fcntl(sock, F_SETFD, status);
@@ -182,11 +257,18 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
     }
 #endif
 
-    if ((bind(sock, (struct sockaddr *)&server, sizeof(server)) < 0) ||
-	(listen(sock, MAXBACKLOG) < 0)) {
-	close(sock);
-	return Sock_error(perr, errno, 0);
+    status = bind(sock, (struct sockaddr *)&server, sizeof(server));
+    if (R_socket_error(status)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
     }
+    
+    status = listen(sock, MAXBACKLOG);
+    if (R_socket_error(status)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
+    }
+
     return sock;
 }
 
@@ -200,9 +282,9 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 
     do
 	retval = accept(fd, (struct sockaddr *)(&net_client), &len);
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1)
-	return Sock_error(perr, errno, 0);
+    while (R_invalid_socket_eintr(retval));
+    if (R_invalid_socket(retval))
+	return Sock_error(perr, R_socket_errno(), 0);
 
     if (cname != NULL && buflen > 0) {
 	size_t nlen;
@@ -225,12 +307,19 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
 {
     struct sockaddr_in server;
     struct hostent *hp;
-    int sock;
+    SOCKET sock;
     int retval;
 
-    if (! (hp = R_gethostbyname(sname))
-	|| (sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	return Sock_error(perr, errno, h_errno);
+    if (! (hp = R_gethostbyname(sname))) 
+#ifdef Win32
+	return Sock_error(perr, R_socket_errno(), WSAGetLastError());
+#else
+	return Sock_error(perr, R_socket_errno(), h_errno);
+#endif
+
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (R_invalid_socket(sock))
+	return Sock_error(perr, R_socket_errno(), 0);
 
     memcpy((char *)&server.sin_addr, hp->h_addr_list[0], hp->h_length);
     server.sin_port = htons((short)port);
@@ -238,15 +327,10 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
 
     do
 	retval = connect(sock, (struct sockaddr *) &server, sizeof(server));
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1) {
-	Sock_error(perr, errno, 0);
-#ifdef Win32
-	closesocket(sock);
-#else
-	close(sock);
-#endif
-	return -1;
+    while (R_socket_error_eintr(retval));
+    if (R_socket_error(retval)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
     }
     return sock;
 }
@@ -271,9 +355,9 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = recv(fd, buf, size, 0);
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1)
-	return Sock_error(perr, errno, 0);
+    while(R_socket_error_eintr(retval));
+    if (R_socket_error(retval))
+	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;
 }
@@ -284,9 +368,9 @@ ssize_t Sock_write(int fd, const void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = send(fd, buf, size, 0);
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1)
-	return Sock_error(perr, errno, 0);
+    while (R_socket_error_eintr(retval));
+    if (R_socket_error(retval))
+	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;
 }
