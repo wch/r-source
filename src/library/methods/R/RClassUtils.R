@@ -2140,9 +2140,10 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         if (!subclassIsLocal) {
             if (is(def2, "ClassUnionRepresentation"))
                 next
-            warning(gettextf(paste("From .checkSubclasses(): subclass %s is not local to superclass %s, which is not a class union, so inheritance information will be lost."),
-                             .dQ(what), .dQ(class2)),
-                    domain = NA)
+            warning(gettextf(paste("From .checkSubclasses(): subclass %s (of package %s) is not local to superclass %s (of package %s), which is not a class union, so inheritance information will be lost."),
+                             .dQ(what), .dQ(cpkg), .dQ(class2),
+                             .dQ(packageSlot(def)),
+                    domain = NA))
             cwhere <- .requirePackage(cpkg)
         } else {
             cwhere <- where

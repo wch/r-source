@@ -182,9 +182,11 @@ makeExtends <- function(Class,
     packageEnv <- .requirePackage(package)
     class1Defined <- missing(slots) # only at this time can we construct methods
     if (class1Defined) {
-        Class <- classDef1@className # has package slot
+        Class <- classDef1@className
+        packageSlot(Class) <- packageSlot(classDef1)
     }
-    to <- classDef2@className # has package slot
+    to <- classDef2@className
+    packageSlot(to) <- packageSlot(classDef2)
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
     distance <- 1
     ##FIX ME:  when by is supplied, should use the existing extension information
