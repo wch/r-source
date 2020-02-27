@@ -2961,6 +2961,18 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+static Rconnection getConnectionCheck(SEXP rcon, const char *cls,
+				      const char *var)
+{
+    if(!inherits(rcon, cls))
+	error(_("'%s' is not a %s"), var, cls);
+    Rconnection con = getConnection(asInteger(rcon));
+    /* check that the R class and internal class match */
+    if (strcmp(con->class, cls))
+	error(_("internal connection is not a %s"), cls);
+    return con;
+}
+
 SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     Rconnection con=NULL;
@@ -2968,9 +2980,7 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
 
     checkArity(op, args);
-    if(!inherits(CAR(args), "rawConnection"))
-	error(_("'con' is not a rawConnection"));
-    con = getConnection(asInteger(CAR(args)));
+    con = getConnectionCheck(CAR(args), "rawConnection", "con");
     if(!con->canwrite)
 	error(_("'con' is not an output rawConnection"));
     this = con->private;
@@ -3393,9 +3403,7 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     Routtextconn this;
 
     checkArity(op, args);
-    if(!inherits(CAR(args), "textConnection"))
-	error(_("'con' is not a textConnection"));
-    con = getConnection(asInteger(CAR(args)));
+    con = getConnectionCheck(CAR(args), "textConnection", "con");
     if(!con->canwrite)
 	error(_("'con' is not an output textConnection"));
     this = con->private;
@@ -3433,9 +3441,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "server");
 	serverfd = -1;
     } else { /* socketAccept */
-	if(!inherits(CAR(args), "servsockconn"))
-	    error(_("invalid '%s' argument"), "socket");
-	scon = getConnection(asInteger(CAR(args)))->private;
+	scon = getConnectionCheck(CAR(args), "servsockconn", "socket")->private;
 	port = scon->port;
 	server = 1;
 	host = "localhost"; /* ignored */
