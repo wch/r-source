@@ -1097,7 +1097,7 @@ if(FALSE) {
         }
 
         if (install_libs && dir.exists("src") &&
-            length(dir("src", all.files = TRUE) > 2L)) {
+            length(dir("src", all.files = TRUE)) > 2L) {
             starsmsg(stars, "libs")
             if (!file.exists(file.path(R.home("include"), "R.h")))
                 ## maybe even an error?  But installing Fortran-based packages should work
@@ -1497,7 +1497,7 @@ if(FALSE) {
 	}
 
 	if (install_tests && dir.exists("tests") &&
-            length(dir("tests", all.files = TRUE) > 2L)) {
+            length(dir("tests", all.files = TRUE)) > 2L) {
 	    starsmsg(stars, "tests")
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
