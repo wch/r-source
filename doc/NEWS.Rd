@@ -353,6 +353,9 @@
       \item \command{R CMD check} now optionally checks
       \command{configure} and \command{cleanup} scripts for
       non-Bourne-shell code (\sQuote{bashisms}).
+
+      \item \command{R CMD check --as-cran} now uses a
+      \samp{stringsAsFactors = FALSE} default setting.
     }
   }
 
