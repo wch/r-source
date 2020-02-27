@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -968,13 +968,35 @@ SEXP updateform(SEXP old, SEXP new)
  */
 #ifdef DEBUG_terms
 # include <Print.h>
+/* can use  printVector(SEXP x, int indx, int quote)
+ *	    ~~~~~~~~~~~		    ^^^^      ^^^^^
+ * to print R vector x[]; if(indx) print indices; if(quote) quote strings
+ * Print a "pair"List (with all *vector* components): */
+static void printPList(SEXP form)
+{
+    R_xlen_t n = 0;
+    SEXP cl;
+    for (cl = form, n = 0; cl != R_NilValue; cl = CDR(cl), n++) {
+	Rprintf(" L[%d] (|L[.]|=%d): ", n+1, length(CAR(cl)));
+	printVector(CAR(cl), 0, 0);
+    }
+    return;
+}
+static Rboolean trace_GetBit = TRUE;
+static Rboolean trace_InstallVar = TRUE;
+static int n_xVars; // nesting level: use for indentation
 #endif
 
+// word size in *bits* :
 #define WORDSIZE (8*sizeof(int))
 
-static int intercept;		/* intercept term in the model */
-static int parity;		/* +/- parity */
-static int response;		/* response term in the model */
+//  Global "State" Variables for terms() computation :
+//  -------------------------------------------------
+
+static int // 0/1 (Boolean) :
+    intercept,		//  1: have intercept term in the model
+    parity,		//  +/- parity
+    response;		//  1: response term in the model
 static int nwords;		/* # of words (ints) to code a term */
 static SEXP varlist;		/* variables in the model */
 static PROTECT_INDEX vpi;
@@ -1049,9 +1071,16 @@ static int MatchVar(SEXP var1, SEXP var2)
 }
 
 
-/* InstallVar locates a ``variable'' in the model variable list;
+/* InstallVar locates a ''variable'' in the model variable list
    adding it to the global varlist if not found. */
 
+/* FIXME?  This is used in two "almost orthogonal" situations:
+ * 1) Install variable in varlist -- index is *not* used by caller:
+ *    InstallVar(.) called by ExtractVars() always w/o assigning result.
+ * 2) Find the index of 'var' in 'varlist' (but do not change varlist,
+ *    as now *all* variables should have been assigned by ExtractVars());
+ *    called as  'whichBit = InstallVar(.)' *only* by AllocTermSetBit1()
+ */
 static int InstallVar(SEXP var)
 {
     SEXP v;
@@ -1065,6 +1094,11 @@ static int InstallVar(SEXP var)
 	if (MatchVar(var, CADR(v)))
 	    return indx;
     }
+#ifdef DEBUG_terms
+    if(trace_InstallVar)
+	Rprintf("InstallVar(%s): adding it to 'varlist' and return indx+1 = %d\n",
+		CHAR(STRING_ELT(deparse1line(var, 0), 0)), indx + 1);
+#endif
     SETCDR(v, CONS(var, R_NilValue));
     return indx + 1;
 }
@@ -1099,110 +1133,142 @@ static void CheckRHS(SEXP v)
 }
 
 
-/* ExtractVars recursively extracts the variables
-   in a model formula.  It calls InstallVar to do
-   the installation.  The code takes care of unary/
-   + and minus.  No checks are made of the other
-   ``binary'' operators.  Maybe there should be some. */
+/* ExtractVars() recursively extracts the variables in a model formula.
+ * ------------- It calls InstallVar() to do the installation.
+ * The code takes care of unary  '+' and '-' .  No checks are made
+ * of the other ``binary'' operators.  Maybe there should be some.
 
-static void ExtractVars(SEXP formula, int checkonly)
+ * NB: logic here is partly "repeated" in   EncodeVars()  --->> keep in sync !!
+*/
+static void ExtractVars(SEXP formula)
 {
-    if (isNull(formula) || isZeroOne(formula))
-	return;
+#ifdef DEBUG_terms
+    // for(int j=0; j < n_xVars; j++) Rprintf("  ");
+    // indentation by (2 * n_xVars)
+    Rprintf("%*d ExtractVars(%s): ", 2*n_xVars, n_xVars,
+	    CHAR(STRING_ELT(deparse1line(formula, 0), 0)));
+    n_xVars++; // nesting level: use for indentation (by 2):
+    int my_n_x = n_xVars; // so we can restore n_xVars before leaving
+
+#  define Prt_xtrVars(_S_) Rprintf(" case '%s'\n", _S_)
+#  define Return  n_xVars = my_n_x; return
+#else
+#  define Prt_xtrVars(_S_)
+#  define Return  return
+#endif
+
+    if (isNull(formula) || isZeroOne(formula)) {
+	Prt_xtrVars("Null or ZeroOne");
+	Return;
+    }
     if (isSymbol(formula)) {
 	if (formula == dotSymbol) haveDot = TRUE;
-	if (!checkonly) {
+	Prt_xtrVars(haveDot ? "isSym(<Dot>)" : "isSymbol()");
 	    if (haveDot && framenames != R_NilValue) {
+		// install variables of the data frame:
 		for (int i = 0; i < length(framenames); i++) {
 		    SEXP v = installTrChar(STRING_ELT(framenames, i));
 		    if (!MatchVar(v, CADR(varlist))) InstallVar(v);
 		}
 	    } else
 		InstallVar(formula);
-	}
-	return;
+	Return;
     }
     if (isLanguage(formula)) {
 	if (CAR(formula) == tildeSymbol) {
 	    if (response)
-		error(_("invalid model formula"));
+		error(_("invalid model formula")); // more than one '~'
 	    if (isNull(CDDR(formula))) {
+		Prt_xtrVars("isLanguage, tilde, *not* response");
 		response = 0;
-		ExtractVars(CADR(formula), 0);
+		ExtractVars(CADR(formula));
 	    }
 	    else {
+		Prt_xtrVars("isLanguage, tilde, *response*");
 		response = 1;
 		InstallVar(CADR(formula));
-		ExtractVars(CADDR(formula), 0);
+		ExtractVars(CADDR(formula));
 	    }
-	    return;
+	    Return;
 	}
-	int len = length(formula);
-	if (CAR(formula) == plusSymbol) {
+	if (CAR(formula) == plusSymbol) { // '+'
+	    int len = length(formula);
+	    Prt_xtrVars("isLanguage, '+'");
 	    if (len > 1)
-		ExtractVars(CADR(formula), checkonly);
-	    if (len > 2)
-		ExtractVars(CADDR(formula), checkonly);
-	    return;
+		ExtractVars(CADR(formula));
+	    if (len > 2) // binary
+		ExtractVars(CADDR(formula));
+	    Return;
 	}
 	if (CAR(formula) == colonSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
-	    return;
+	    Prt_xtrVars("isLanguage, ':'");
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
+	    Return;
 	}
 	if (CAR(formula) == powerSymbol) {
+	    Prt_xtrVars("isLanguage, '^'");
 	    if (!isNumeric(CADDR(formula)))
 		error(_("invalid power in formula"));
-	    ExtractVars(CADR(formula), checkonly);
-	    return;
+	    ExtractVars(CADR(formula));
+	    Return;
 	}
 	if (CAR(formula) == timesSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
-	    return;
+	    Prt_xtrVars("isLanguage, '*'");
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
+	    Return;
 	}
 	if (CAR(formula) == inSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
-	    return;
+	    Prt_xtrVars("isLanguage, '%in%'");
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
+	    Return;
 	}
 	if (CAR(formula) == slashSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    ExtractVars(CADDR(formula), checkonly);
-	    return;
+	    Prt_xtrVars("isLanguage, '/'");
+	    ExtractVars(CADR(formula));
+	    ExtractVars(CADDR(formula));
+	    Return;
 	}
-	if (CAR(formula) == minusSymbol) {
-	    if (len == 2) {
-		ExtractVars(CADR(formula), 1);
+	if (CAR(formula) == minusSymbol) { // '-'
+	    Prt_xtrVars("isLanguage, '-'");
+	    int len = length(formula);
+	    if (len == 2) { // unary
+		ExtractVars(CADR(formula));
 	    }
 	    else {
-		ExtractVars(CADR(formula), checkonly);
-		ExtractVars(CADDR(formula), 1);
+		ExtractVars(CADR(formula));
+		ExtractVars(CADDR(formula));
 	    }
-	    return;
+	    Return;
 	}
 	if (CAR(formula) == parenSymbol) {
-	    ExtractVars(CADR(formula), checkonly);
-	    return;
+	    Prt_xtrVars("isLanguage, '('");
+	    ExtractVars(CADR(formula));
+	    Return;
 	}
 	// all other calls:
-	// FIXME ?! if (!checkonly)
+	Prt_xtrVars("_otherwise_");
+#ifdef DEBUG_terms
+	Rprintf(" .. {%d} ExtractVars(f): installing formula f='%s'\n",
+		n_xVars,
+		CHAR(STRING_ELT(deparse1line(formula, 0), 0)));
+#endif
 	InstallVar(formula);
-	return;
+	Return;
     }
     error(_("invalid model formula in ExtractVars"));
 }
 
 
-/* AllocTerm allocates an integer array for
-   bit string representation of a model term */
+/* AllocTerm allocates an integer array for bit string representation
+ * of a model term and initializes to __no bit set__ */
 
-static SEXP AllocTerm(void) // global (nwords)
+static SEXP AllocTerm(void) // (<global> nwords)
 {
-    SEXP term = allocVector(INTSXP, nwords);
-    int *term_ = INTEGER(term);
-    for (int i = 0; i < nwords; i++)
-	term_[i] = 0;
+    SEXP term = allocVector(INTSXP, nwords); // caller must PROTECT
+    memset(INTEGER(term), 0, nwords * sizeof(int));
     return term;
 }
 
@@ -1216,27 +1282,27 @@ static void SetBit(SEXP term, int whichBit, int value)
 	word = (whichBit - 1) / WORDSIZE,
 	offset = (- whichBit) % WORDSIZE;
 #ifdef DEBUG_terms
-    printf("SetBit(*, which=%2d, %d):  word= %d, offset= %2d\n",
-	   whichBit, value, word, offset);
+    Rprintf("SetBit(term, which=%3d, value=%d): |term|=%d, word= %d, offset= %2d\n",
+	    whichBit, value, length(term), word, offset);
 #endif
     if (value)
-	((unsigned *) INTEGER(term))[word] |= ((unsigned) 1 << offset);
+	((unsigned *) INTEGER(term))[word] |=  ((unsigned) 1 << offset);
     else
 	((unsigned *) INTEGER(term))[word] &= ~((unsigned) 1 << offset);
 }
 
-/* 1a.  Check if nwords is large enough for 'whichBit'
+/* 0.   Install var (if needed)
+ * 1a.  Check if nwords is large enough for 'whichBit'
  * 1b.  If not, increment nwords
  * 2.  term = AllocTerm();
  * 3.  SetBit(term, whichBit, 1);
  */
-static SEXP AllocTermSetBit1(int whichBit) {
-    if (nwords < (whichBit - 1)/WORDSIZE + 1) {
-	nwords++;
-#     ifdef DEBUG_terms
-	printf("AllocT.SetBit(): incrementing nwords to %d\n", nwords);
-#     endif
-    }
+static SEXP AllocTermSetBit1(SEXP var) { // NB: caller must PROTECT
+    int whichBit = InstallVar(var);
+    if (nwords < (whichBit - 1)/WORDSIZE + 1)
+	error("AllocT..Bit1(%s): Need to increment nwords to %d. Should not happen!\n",
+		CHAR(STRING_ELT(deparse1line(var, 0), 0)),
+		nwords+1);
     SEXP term = AllocTerm();
     SetBit(term, whichBit, 1);
     return term;
@@ -1248,15 +1314,18 @@ static SEXP AllocTermSetBit1(int whichBit) {
 
 static int GetBit(SEXP term, int whichBit)
 {
-    unsigned int
+    int
 	word = (whichBit - 1) / WORDSIZE,
-	offset = (- whichBit) % WORDSIZE;
+	offset = (- whichBit) % WORDSIZE,
+	word_off = INTEGER(term)[word] >> offset;
 #ifdef DEBUG_terms
-    printf("GetBit(*, which=%3d):  word= %d, offset= %2d --> bit= %d\n",
-	   whichBit, word, offset,
-	   ((((unsigned *) INTEGER(term))[word]) >> offset) & 1	);
+    if(trace_GetBit) {
+	Rprintf("GetBit(term,%3d): |term|=%2d, word=%d, offset= %2d --> bit= %d\n",
+		whichBit, length(term), word, offset,
+		word_off & 1);
+    }
 #endif
-    return ((((unsigned *) INTEGER(term))[word]) >> offset) & 1;
+    return word_off & 1;
 }
 
 
@@ -1277,8 +1346,14 @@ static SEXP OrBits(SEXP term1, SEXP term2)
 static int BitCount(SEXP term, int nvar)
 {
     int sum = 0;
+#ifdef DEBUG_terms
+    Rprintf("BitCount(*, nvar=%d): ", nvar);
+#endif
     for (int i = 1; i <= nvar; i++)
 	sum += GetBit(term, i);
+#ifdef DEBUG_terms
+    Rprintf("  end{BitCount}\n");
+#endif
     return sum;
 }
 
@@ -1524,24 +1599,21 @@ static SEXP DeleteTerms(SEXP left, SEXP right)
 }
 
 
-/* EncodeVars performs  model expansion and bit string encoding. */
-/* This is the real workhorse of model expansion. */
-
+/* EncodeVars() performs  model expansion and bit string encoding.
+ * This is the real workhorse of model expansion in terms.formula() == termsform()
+ *
+ * Returns a (pair)list of length 'nterm' containing integer vectors [1:nwords],
+ */
 static SEXP EncodeVars(SEXP formula)
 {
-    if (isNull(formula))
-	return R_NilValue;
-
-    if (isOne(formula)) {
-	if (parity) intercept = 1;
-	else intercept = 0;
-	return R_NilValue;
+    if (isNull(formula))		return R_NilValue;
+    else if (isOne(formula)) {
+	intercept = (parity) ? 1 : 0;	return R_NilValue;
     }
     else if (isZero(formula)) {
-	if (parity) intercept = 0;
-	else intercept = 1;
-	return R_NilValue;
+	intercept = (parity) ? 0 : 1;	return R_NilValue;
     }
+    // else :
     SEXP term;
     if (isSymbol(formula)) {
 	if (formula == dotSymbol && framenames != R_NilValue) {
@@ -1556,7 +1628,10 @@ static SEXP EncodeVars(SEXP formula)
 		    if(!strcmp(c, translateChar(STRING_ELT(framenames, j))))
 			error(_("duplicated name '%s' in data frame using '.'"),
 			      c);
-		term = AllocTermSetBit1(InstallVar(install(c))); // may increment  nwords
+		term = AllocTermSetBit1(install(c));
+#ifdef DEBUG_terms
+		Rprintf(".. in 'isSymbol(<dotSymbol>), after AllocT...1()\n");
+#endif
 		if(i == 0) PROTECT(v = r = cons(term, R_NilValue));
 		else {SETCDR(v, CONS(term, R_NilValue)); v = CDR(v);}
 	    }
@@ -1565,12 +1640,15 @@ static SEXP EncodeVars(SEXP formula)
 	    return r;
 	}
 	else {
-	    term = AllocTermSetBit1(InstallVar(formula)); // may increment  nwords
+	    term = AllocTermSetBit1(formula);
+#ifdef DEBUG_terms
+	    Rprintf(".. in 'isSymbol(%s) [regular], after AllocT...1()\n",
+		    CHAR(STRING_ELT(deparse1line(formula, 0), 0)));
+#endif
 	    return CONS(term, R_NilValue);
 	}
     }
     if (isLanguage(formula)) {
-	int len = length(formula);
 	if (CAR(formula) == tildeSymbol) {
 	    if (isNull(CDDR(formula)))
 		return EncodeVars(CADR(formula));
@@ -1578,7 +1656,8 @@ static SEXP EncodeVars(SEXP formula)
 		return EncodeVars(CADDR(formula));
 	}
 	if (CAR(formula) == plusSymbol) {
-	    if (len == 2)
+	    int len = length(formula);
+	    if (len == 2) // unary '+'
 		return EncodeVars(CADR(formula));
 	    else
 		return PlusTerms(CADR(formula), CADDR(formula));
@@ -1599,14 +1678,19 @@ static SEXP EncodeVars(SEXP formula)
 	    return PowerTerms(CADR(formula), CADDR(formula));
 	}
 	if (CAR(formula) == minusSymbol) {
-	    if (len == 2)
+	    int len = length(formula);
+	    if (len == 2) // unary '-'
 		return DeleteTerms(R_NilValue, CADR(formula));
 	    return DeleteTerms(CADR(formula), CADDR(formula));
 	}
 	if (CAR(formula) == parenSymbol) {
 	    return EncodeVars(CADR(formula));
 	}
-	term = AllocTermSetBit1(InstallVar(formula)); // may increment  nwords
+	term = AllocTermSetBit1(formula);
+#ifdef DEBUG_terms
+	Rprintf(".. before returning from EncodeVars(%s), after AllocT...1()\n",
+		CHAR(STRING_ELT(deparse1line(formula, 0), 0)));
+#endif
 	return CONS(term, R_NilValue);
     }
     error(_("invalid model formula in EncodeVars"));
@@ -1620,6 +1704,7 @@ static SEXP EncodeVars(SEXP formula)
 /* encoded by dummy variables.  This is decided using */
 /* the heuristic described in Statistical Models in S, page 38. */
 
+// called only in one place, in "step 4"
 static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
 {
     int *term_ = INTEGER(term),
@@ -1725,20 +1810,26 @@ SEXP termsform(SEXP args)
     int allowDot = asLogical(CAR(a));
     if (allowDot == NA_LOGICAL) allowDot = 0;
 
+    // a := attributes(<answer>)
     a = allocList((specials == R_NilValue) ? 8 : 9);
     SET_ATTRIB(ans, a);
 
-    /* Step 1: Determine the ``variables'' in the model */
-    /* Here we create an expression of the form */
-    /* list(...).  You can evaluate it to get */
-    /* the model variables or use substitute and then */
-    /* pull the result apart to get the variable names. */
+    /* Step 1: Determine the ``variables'' in the model :
+     * ------ Here we create a call of the form list(...).
+     * You can evaluate it to get the model variables or use substitute
+     * and then pull the result apart to get the variable names. */
 
     intercept = 1;
     parity = 1;
     response = 0;
     PROTECT(varlist = LCONS(install("list"), R_NilValue));
-    ExtractVars(CAR(args), 1);
+#ifdef DEBUG_terms
+    n_xVars = 0; // the nesting level of ExtractVars()
+    Rprintf("termsform(): calling ExtractVars(CAR(args), 1), where\n CAR(args)='%s'\n",
+	    CHAR(STRING_ELT(deparse1line(CAR(args), 0), 0)));
+#endif
+    ExtractVars(CAR(args));
+    //^^^^^^^^^ fills the 'varlist' = attr(<terms>, "variables")
     UNPROTECT(1);
     SETCAR(a, varlist);
     SET_TAG(a, install("variables"));
@@ -1749,12 +1840,16 @@ SEXP termsform(SEXP args)
     /* in allocating words need to allow for intercept term (PR#15735) */
     nwords = nvar/WORDSIZE + 1; // global; used & incremented in EncodeVars()
 #ifdef DEBUG_terms
-    printf("termsform(): nvar = %d, nwords = %d :\n", nvar, nwords);
+    Rprintf(" .. after ExtractVars(): ini. nvar = %d, nwords = %d;%sCalling EncodeVars():%s",
+	    nvar, nwords,
+	    "\n------------------\n",
+	    "\n------------------\n");
 #endif
-    /* Step 2: Recode the model terms in binary form */
-    /* and at the same time, expand the model formula. */
 
-    /* FIXME: this includes specials in the model */
+    /* Step 2: Recode the model terms in binary form
+     * ------  and at the same time, expand the model formula. */
+
+    /* FIXME: this includes 'specials' in the model */
     /* There perhaps needs to be a an extra pass */
     /* through the model to delete any terms which */
     /* contain specials.  Actually, specials should */
@@ -1763,17 +1858,19 @@ SEXP termsform(SEXP args)
 
     /* BDR 2002-01-29: S does include specials, so code may rely on this */
 
-    /* FIXME: this is also the point where nesting */
-    /* needs to be taken care of. */
+    /* FIXME: this is also the point where nesting needs to be taken care of. */
 
     SEXP formula = PROTECT(EncodeVars(CAR(args)));
-
-    nvar = length(varlist) - 1; /* need to recompute, in case
-				   EncodeVars stretched it */
-    // recomputing 'nwords' unnecessary, as EncodeVars() should have incremented it
-
+    //                     ^^^^^^^^^^
+    if(length(varlist) != nvar + 1) {
+	warning(_("'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"),
+		nvar, length(varlist) - 1);
+	nvar = length(varlist) - 1;
+    }
 #ifdef DEBUG_terms
-    printf("after EncodeVars(): final nvar, nwords: (%d, %d)\n", nvar, nwords);
+    Rprintf("after EncodeVars(): final (nvar,nwords) = (%d,%d); formula 'L' =\n", nvar, nwords);
+    // Show the content of formula  [[ Do we have integer(nwords) or just int.(1) ? ]]
+    printPList(formula);
 #endif
 
     /* Step 2a: Compute variable names */
@@ -1785,6 +1882,9 @@ SEXP termsform(SEXP args)
 	    SET_STRING_ELT(varnames, i++,
 			   STRING_ELT(deparse1line(CAR(v), 0), 0));
     }
+#ifdef DEBUG_terms
+    Rprintf("after Step 2a: variable names:\n"); printVector(varnames, 1, 1);
+#endif
 
     /* Step 2b: Find and remove any offset(s) */
 
@@ -1793,6 +1893,9 @@ SEXP termsform(SEXP args)
     for (R_xlen_t l = response; l < nvar; l++)
 	if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7)) k++;
     if (k > 0) {
+#ifdef DEBUG_terms
+	Rprintf(" step 2b: found k=%ld offset(.)s\n", k);
+#endif
 	Rboolean foundOne = FALSE; /* has there been a non-offset term? */
 	/* allocate the "offsets" attribute */
 	SETCAR(a, v = allocVector(INTSXP, k));
@@ -1806,11 +1909,18 @@ SEXP termsform(SEXP args)
 	while (1) {
 	    SEXP thisterm = foundOne ? CDR(call) : call;
 	    Rboolean have_offset = FALSE;
+#ifdef DEBUG_terms
+	    Rprintf(" while (1) : foundOne = %d; length(thisterm) =%d; ",
+		   foundOne, length(thisterm));
+#endif
 	    if(length(thisterm) == 0) break;
 	    for (int i = 1; i <= nvar; i++)
 		if (GetBit(CAR(thisterm), i) &&
 		    !strncmp(CHAR(STRING_ELT(varnames, i-1)), "offset(", 7)) {
 		    have_offset = TRUE;
+#ifdef DEBUG_terms
+		    Rprintf(" i=%d: have_offset, ", i);
+#endif
 		    break;
 		}
 	    if (have_offset) {
@@ -1822,14 +1932,17 @@ SEXP termsform(SEXP args)
 	    }
 	}
     }
-    int nterm = length(formula); /* # of model terms */
+    int nterm = length(formula); /* = #{model terms} */
 #ifdef DEBUG_terms
-    printf("after step 2: #{offsets} = k = %ld;  nterm = %d\n", k, nterm);
-#endif
+    Rprintf("after step 2: k=%ld, nterm:= |formula| = %d\n", k, nterm);
+    // fails: 'formula' is "pairlist", not "vector" !!
+    // Rprintf("formula[1..nterm=%d] = ", nterm); printVector(formula, 1, 0);
 
     /* Step 3: Reorder the model terms by BitCount, otherwise
-       preserving their order. */
+     * ------  preserving their order. */
 
+    Rprintf(" .. step 3 .. reorder model terms by BitCount():\n");
+#endif
     SEXP    ord = PROTECT(allocVector(INTSXP, nterm)),
 	pattern = PROTECT(allocVector(VECSXP, nterm));
     {
@@ -1842,14 +1955,17 @@ SEXP termsform(SEXP args)
 	    SET_VECTOR_ELT(pattern, n, CAR(call));
 	    counts[n] = BitCount(CAR(call), nvar);
 #ifdef DEBUG_terms
-	    printf("  BitCount[n=%ld]=%2d", n+1, counts[n]);
+	    int lc = length(CAR(call));
+	    Rprintf("  -> BitCount(CAR(call),nv) =:counts[n=%ld]=%2d, from bitpat.in int[%s%d]): ",
+		    n+1, counts[n], (lc==1)?"":"1:", lc);
+	    printVector(CAR(call), 0, 0);
 #endif
 	}
 	for (n = 0; n < nterm; n++)
 	    if(counts[n] > bitmax) bitmax = counts[n];
 #ifdef DEBUG_terms
-	printf("step 3 (part I): counts[1..nterm]: "); printVector(sCounts, 1, 0);
-	printf("  bitmax = max(counts[]) = %d\n", bitmax);
+	Rprintf("step 3 (part I): counts[1..nterm]: "); printVector(sCounts, 1, 0);
+	Rprintf("     bitmax = max(counts[]) = %d\n", bitmax);
 #endif
 
 	if(keepOrder) {
@@ -1869,8 +1985,8 @@ SEXP termsform(SEXP args)
 	UNPROTECT(2);
     }
 #ifdef DEBUG_terms
-    printf("after step 3: ord[1:nterm]: "); printVector(ord, 1, 0);
-    printf("--=--\n .. step 4 .. \"factors\" pattern matrix:\n");
+    Rprintf("after step 3: ord[1:nterm]: "); printVector(ord, 1, 0);
+    Rprintf("--=--\n .. step 4: Create \"factors\" pattern matrix:\n");
 #endif
 
     /* Step 4: Compute the factor pattern for the model. */
@@ -1880,8 +1996,6 @@ SEXP termsform(SEXP args)
 
     if (nterm > 0) {
 	SETCAR(a, pattern = allocMatrix(INTSXP, nvar, nterm));
-	SET_TAG(a, install("factors"));
-	a = CDR(a);
 	int *pattn = INTEGER(pattern);
 	for (R_xlen_t i = 0; i < ((R_xlen_t) nterm) * nvar; i++)
 	    pattn[i] = 0;
@@ -1889,11 +2003,18 @@ SEXP termsform(SEXP args)
 	R_xlen_t n_n = -1; // n = 0;  ==>  n_n = -1 + n*nvar = -1
 	for (call = formula; call != R_NilValue; call = CDR(call)) {
 #ifdef DEBUG_terms
-	    printf("  st.4: (bitpattern in int) term: "); printVector(CAR(call), 0, 0);
+	    Rprintf("  st.4: (bitpattern in int) term: "); printVector(CAR(call), 0,0);
 #endif
 	    for (int i = 1; i <= nvar; i++) {
-		if (GetBit(CAR(call), i))
+		if (GetBit(CAR(call), i)) {
+#ifdef DEBUG_terms
+		    Rprintf(" var i=%d --> TermCode(., c., i, t.) {bit[i] := 0}\n", i);
+#endif
 		    pattn[i+n_n] = TermCode(formula, call, i, term);
+#ifdef DEBUG_terms
+		    Rprintf(" => pattn[%d,%d] = %d\n", (n_n+1)/nvar, i, pattn[i+n_n]);
+#endif
+		}
 	    }
 	    n_n += nvar; // n++ ==>  n_n = -1 + n*nvar
 	}
@@ -1901,13 +2022,14 @@ SEXP termsform(SEXP args)
     }
     else {
 	SETCAR(a, pattern = allocVector(INTSXP,0));
-	SET_TAG(a, install("factors"));
-	a = CDR(a);
     }
+    SET_TAG(a, install("factors"));
+    a = CDR(a);
+
 #ifdef DEBUG_terms
-    printf(".. after step 4: \"factors\" matrix (nvar x nterm) = (%d x %d)\n",
-	   nvar, nterm);
-    printf("--=--\n .. step 5 .. computing term labels \"term.labels\":\n");
+    Rprintf(".. after step 4: filled \"factors\" matrix (nvar x nterm) = (%d x %d)\n",
+	    nvar, nterm);
+    Rprintf("--=--\n .. step 5 .. computing term labels \"term.labels\":\n");
 #endif
 
     /* Step 5: Compute term labels */
@@ -1917,10 +2039,9 @@ SEXP termsform(SEXP args)
     for (call = formula; call != R_NilValue; call = CDR(call)) {
 	R_xlen_t l = 0;
 #ifdef DEBUG_terms
-	printf("  st.5: (bitpattern in int) term: "); printVector(CAR(call), 0, 0);
-# define DEBUG_terms_2
-	// such that next GetBit() is not traced :
-# undef DEBUG_terms
+	Rprintf("  st.5: (bitpattern in int) term: "); printVector(CAR(call), 0, 0);
+	Rprintf("  ----  {not tracing GetBit() when determing 'cbuf' length}\n");
+	trace_GetBit = FALSE; // *not* tracing below
 #endif
 	for (int i = 1; i <= nvar; i++) {
 	    if (GetBit(CAR(call), i)) {
@@ -1929,8 +2050,9 @@ SEXP termsform(SEXP args)
 		l += (int) strlen(CHAR(STRING_ELT(varnames, i - 1)));
 	    }
 	}
-#ifdef DEBUG_terms_2
-# define DEBUG_terms
+#ifdef DEBUG_terms
+	trace_GetBit = TRUE; // back to tracing
+	Rprintf("     --> cbuf length %d (+1 for final \\0)\n", l);
 #endif
 	char cbuf[l+1];
 	cbuf[0] = '\0';
@@ -1946,12 +2068,12 @@ SEXP termsform(SEXP args)
 	SET_STRING_ELT(termlabs, n, mkChar(cbuf));
 	n++;
 #ifdef DEBUG_terms
-	printf("  -> term.labels[%ld]: '%s'\n", n, cbuf);
+	Rprintf("  -> term.labels[%ld]: '%s'\n", n, cbuf);
 #endif
     }
 
 #ifdef DEBUG_terms
-    printf(".. step 5: termlabs: "); printVector(termlabs, 1, /* quote */ 1);
+    Rprintf(".. finished step 5: term.labels: "); printVector(termlabs, 1, /* quote */ 1);
 #endif
     UNPROTECT(1); // termlabs
 

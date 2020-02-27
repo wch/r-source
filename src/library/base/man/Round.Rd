@@ -1,6 +1,6 @@
 % File src/library/base/man/Round.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Round}
@@ -90,6 +90,14 @@ signif(x, digits = 6)
   \sQuote{know} that \code{floor(log(x, base = 8))} for \code{x = 8} is
   \code{1}, but \code{0} has been seen on an \R platform.  It is
   normally necessary to use a tolerance.
+
+  Rounding to decimal digits in binary arithmetic is non-trivial (when
+  \code{digits != 0}) and may be surprising.  Be aware that most decimal
+  fractions are \emph{not} exactly representable in binary double precision.
+  In \R 4.0.0, the algorithm for \code{round(x, d)}, for \eqn{d > 0}, has
+  been improved to \emph{measure} and round \dQuote{to nearest even},
+  contrary to earlier versions of \R (or also to \code{\link{sprintf}()}
+  or \code{\link{format}()} based rounding).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -103,6 +111,9 @@ signif(x, digits = 6)
 }
 \seealso{
   \code{\link{as.integer}}.
+  Package \CRANpkg{round}'s \code{\link[round]{roundX}()} for several
+  versions or implementations of rounding, including some previous and the
+  current \R version (as \code{version = "3d.C"}).
 }
 \examples{
 round(.5 + -2:4) # IEEE / IEC rounding: -2  0  0  2  2  4  4

@@ -40,7 +40,7 @@ double dnchisq(double x, double df, double ncp, int give_log)
 #endif
 
     if (!R_FINITE(df) || !R_FINITE(ncp) || ncp < 0 || df < 0)
-    	ML_ERR_return_NAN;
+    	ML_WARN_return_NAN;
 
     if(x < 0) return R_D__0;
     if(x == 0 && df < 2.)

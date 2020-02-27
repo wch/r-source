@@ -92,7 +92,9 @@ Sys.junction(from, to)
   to the limitations of the OS's corresponding system call (see
   something like \command{man 2 rename} on a Unix-alike): in particular
   in the interpretation of \sQuote{file}: most platforms will not rename
-  files from one file system to another.  (On Windows,
+  files from one file system to another.  \strong{NB:} This means that
+  renaming a file from a temporary directory to the user's filespace or
+  during package installation will often fail.  (On Windows,
   \code{file.rename} can rename files but not directories across
   volumes.)  On platforms which allow directories to be renamed,
   typically neither or both of \code{from} and \code{to} must a

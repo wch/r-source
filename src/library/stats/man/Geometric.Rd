@@ -1,6 +1,6 @@
 % File src/library/stats/man/Geometric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Geometric}
@@ -52,11 +52,15 @@ rgeom(n, prob)
 
   The length of the result is determined by \code{n} for
   \code{rgeom}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
+
+  \code{rgeom} returns a vector of type \link{integer} unless generated
+  values exceed the maximum representable integer when \code{\link{double}}
+  values are returned since R version 4.0.0.
 }
 \source{
   \code{dgeom} computes via \code{dbinom}, using code contributed by

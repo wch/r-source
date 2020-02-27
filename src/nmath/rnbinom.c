@@ -48,7 +48,7 @@ double rnbinom(double size, double prob)
 {
     if(!R_FINITE(prob) || ISNAN(size) || size <= 0 || prob <= 0 || prob > 1)
 	/* prob = 1 is ok, PR#1218 */
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     if(!R_FINITE(size)) size = DBL_MAX / 2.; // '/2' to prevent rgamma() returning Inf
     return (prob == 1) ? 0 : rpois(rgamma(size, (1 - prob) / prob));
 }
@@ -56,7 +56,7 @@ double rnbinom(double size, double prob)
 double rnbinom_mu(double size, double mu)
 {
     if(!R_FINITE(mu) || ISNAN(size) || size <= 0 || mu < 0)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     if(!R_FINITE(size)) size = DBL_MAX / 2.;
     return (mu == 0) ? 0 : rpois(rgamma(size, mu / size));
 }

@@ -22,7 +22,7 @@ hist.default <-
     function (x, breaks = "Sturges", freq = NULL,
 	      probability = !freq, include.lowest= TRUE,
 	      right = TRUE, density = NULL, angle = 45,
-	      col = NULL, border = NULL,
+	      col = "lightgray", border = NULL,
 	      main = paste("Histogram of", xname),
 	      xlim = range(breaks), ylim = NULL,
 	      xlab = xname, ylab,

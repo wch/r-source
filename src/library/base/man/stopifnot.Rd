@@ -1,6 +1,6 @@
 % File src/library/base/man/stopifnot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stopifnot}
@@ -27,6 +27,8 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
    expr2
    ....
 \}}
+  If names are provided to \code{\dots}, they will be used in lieu of
+  the default error message.
   }
   \item{exprObject}{alternative to \code{exprs} or \code{...}: a
     an \sQuote{expression-like} object, typically an
@@ -47,7 +49,7 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
 
   Since \R version 3.6.0, \code{stopifnot()} no longer handles potential
   errors or warnings (by \code{\link{tryCatch}()} etc) for each single
-  expression % but currently uses a trick to suppress the *call* in the message
+  expression
   and may use \code{\link{sys.call}(<n>)} to get a meaningful and short
   error message in case an expression did not evaluate to all TRUE.  This
   provides considerably less overhead.
@@ -55,10 +57,11 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   Since \R version 3.5.0, expressions \emph{are} evaluated sequentially,
   and hence evaluation stops as soon as there is a \dQuote{non-TRUE}, as
   indicated by the above conceptual equivalence statement.
-  Further, when such an expression signals an error or
-  \code{\link{warning}}, the message produced no longer
-  contains the full \code{stopifnot} call, but just the erroneous
-  expression.
+  %%__ Too expensive {tryCatch(), in R 3.5.x} :
+  %% Further, when such an expression signals an error or
+  %% \code{\link{warning}}, the message produced no longer
+  %% contains the full \code{stopifnot} call, but just the erroneous
+  %% expression.
 
   Also, since \R version 3.5.0, \code{stopifnot(exprs = { ... })} can be used
   alternatively and may be preferable in the case of several
@@ -116,6 +119,9 @@ stopifnot(exprObject = TRUE)
 
 # long all.equal() error messages are abbreviated:
 stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415)))
+
+# The default error message can be overridden to be more informative:
+stopifnot("m must be symmetric"= m == t(m))
 
 options(op)  # revert to previous error handler
 }

@@ -600,6 +600,8 @@
 
 /* Define if your system has pcre2. */
 /* #undef HAVE_PCRE2 */
+#define HAVE_PCRE2 1
+#define PCRE2_CODE_UNIT_WIDTH 8
 
 /* Define to 1 if you have the <pcre.h> header file. */
 /* #undef HAVE_PCRE_H */

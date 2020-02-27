@@ -683,8 +683,7 @@ reconcilePropertiesAndPrototype <-
                         dQuote(name), dQuote(dataPartClass)),
                domain = NA)
       prototypeClass <- getClass(class(prototype), where = where)
-      if((!is.null(dataPartClass) || length(superClasses))
-         && is.na(match("VIRTUAL", superClasses))) {
+      if((!is.null(dataPartClass) || length(superClasses))) {
           ## Look for a data part in the superclasses, either an inherited
           ## .Data slot, or a basic class.  Uses the first possibility, warns of conflicts
           for(cl in superClasses) {
@@ -1090,13 +1089,16 @@ completeSubclasses <-
             obji <- contains[[i]]
             cli <- contains[[i]]@superClass
             cliDef <- getClassDef(cli, package=packageSlot(obji))
-            ## don't override existing relations
-            ## TODO:  have a metric that picks the "closest" relationship
             subcl <- cliDef@subclasses[[class2]]
-            if (is.null(subcl) ||
-                    !identical(packageSlot(subcl), packageSlot(classDef2)))
-                setIs(class2, cli, extensionObject = obji,
-                      doComplete = FALSE, where = where)
+            if (is.null(subcl)) {
+                exti <- extends(classDef2, cliDef, fullInfo = TRUE)
+                ## don't override existing relations
+                if (identical(exti, FALSE) ||
+                        (is(exti, "SClassExtension") && exti@distance > 1L &&
+                             classDef@className == exti@by))
+                    setIs(class2, cli, extensionObject = obji,
+                          doComplete = FALSE, where = where)
+            }
         }
     }
     subclasses
@@ -1446,7 +1448,8 @@ setDataPart <- function(object, value, check = TRUE) {
     if(is.null(value)) {
         if(.identC(cl, "structure"))
             value <- "vector"
-        else if((extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
+        else if(cl != "VIRTUAL" &&
+                    (extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
             value <- cl
         else if(extends(cl, "oldClass") && isVirtualClass(cl)) {
         }
@@ -2122,9 +2125,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 ## Inferior in that nonlocal subclasses will not be updated, hence the
 ## warning when the subclass is not in where.
 
-.checkSubclasses <- function(class, def, class2, def2, where, where2) {
+.checkSubclasses <- function(class, def, class2, def2, where) {
     where <- as.environment(where)
-    where2 <- as.environment(where2)
     subs <- def@subclasses
     subNames <- names(subs)
     extDefs <- def2@subclasses
@@ -2133,23 +2135,20 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         if(.identC(what, class2))
             next # catch recursive relations
         cname <- classMetaName(what)
-	if(!is.null(subDef <- get0(cname, envir = where, inherits = FALSE))) {
+        cpkg <- packageSlot(subs[[i]]@subClass)
+        subclassIsLocal <- identical(cpkg, packageSlot(def))
+        if (!subclassIsLocal) {
+            if (is(def2, "ClassUnionRepresentation"))
+                next
+            warning(gettextf(paste("From .checkSubclasses(): subclass %s (of package %s) is not local to superclass %s (of package %s), which is not a class union, so inheritance information will be lost."),
+                             .dQ(what), .dQ(cpkg), .dQ(class2),
+                             .dQ(packageSlot(def)),
+                    domain = NA))
+            cwhere <- .requirePackage(cpkg)
+        } else {
             cwhere <- where
         }
-	else if(!is.null(subDef <- get0(cname, envir = where2, inherits = FALSE))) {
-            cwhere <- where2
-        }
-        else {
-            ## happens (wrongly) in a package which imports 'class' but not 'subclass' from another package
-            ## *and* extends 'class', e.g., by defining a class union with it as member.
-            ## Fact is that at the end, the subclass is seen to be updated fine.
-	    message(gettextf(paste("From .checkSubclasses(): subclass %s of class %s is not local and",
-				   "is not updated for new inheritance information currently;",
-                                   "\n[where=%s, where2=%s]"),
-                           .dQ(what), .dQ(class), format(where), format(where2)),
-                    domain = NA)
-	    next
-        }
+        subDef <- get(cname, envir = cwhere, inherits = FALSE)        
         extension <- extDefs[[what]]
         if(is.null(extension)) # not possible if the setIs behaved?
           warning(gettextf("no definition of inheritance from %s to %s, though the relation was implied by the setIs() from %s",

@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/tclsearch.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,7 @@ addTclPath <- function(path = ".")
     ## Tcl uses Unix-style paths on Windows
     if(.Platform$OS.type == "windows")
         path <- gsub("\\", "/", path, fixed=TRUE)
-    a <- tclvalue(tcl("set", "auto_path"))
-    paths <- strsplit(a, " ", fixed=TRUE)[[1L]]
+    paths <- as.character(tcl("set", "auto_path"))
     if (! path %in% paths)
         tcl("lappend", "auto_path", path)
     invisible(paths)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C)  2001-2015   The R Core Team.
+ *  Copyright (C)  2001-2020   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,31 +50,41 @@ static Rboolean sock_open(Rconnection con)
     this->pend = this->pstart = this->inbuf;
 
     if(this->server) {
-	sock1 = R_SockOpen(this->port);
-	if(sock1 < 0) {
-	    warning("port %d cannot be opened", this->port);
-	    return FALSE;
-	}
-	{
-	    RCNTXT cntxt;
+	if (this->serverfd == -1) {
+	    sock1 = R_SockOpen(this->port); /* socket(), bind(), listen() */
+	    if(sock1 < 0) {
+		warning("port %d cannot be opened", this->port);
+		return FALSE;
+	    }
+	    {
+		RCNTXT cntxt;
 
-	    /* set up a context which will close socket on jump. */
-	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv,
-			 R_BaseEnv, R_NilValue, R_NilValue);
-	    cntxt.cend = &listencleanup;
-	    cntxt.cenddata = &sock1;
-	    sock = R_SockListen(sock1, buf, 256, timeout);
-	    endcontext(&cntxt);
-	}
-	if(sock < 0) {
-	    warning("problem in listening on this socket");
+		/* set up a context which will close socket on jump. */
+		begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv,
+			     R_BaseEnv, R_NilValue, R_NilValue);
+		cntxt.cend = &listencleanup;
+		cntxt.cenddata = &sock1;
+		sock = R_SockListen(sock1, buf, 256, timeout); /* accept() */
+		endcontext(&cntxt);
+	    }
 	    R_SockClose(sock1);
-	    return FALSE;
+	    if(sock < 0) {
+		/* NOTE: potentially confusing as the error was in accept() */
+		warning("problem in listening on this socket");
+		return FALSE;
+	    }
+	} else {
+	    /* accept() */
+	    sock = R_SockListen(this->serverfd, buf, 256, timeout);
+	    if(sock < 0) {
+		/* "accepting" as this is used with socketAccept() */
+		warning("problem in accepting connections on this socket");
+		return FALSE;
+	    }
 	}
 	free(con->description);
 	con->description = (char *) malloc(strlen(buf) + 10);
 	sprintf(con->description, "<-%s:%d", buf, this->port);
-	R_SockClose(sock1);
     } else {
 	sock = R_SockConnect(this->port, con->description, timeout);
 	if(sock < 0) {
@@ -98,6 +108,13 @@ static Rboolean sock_open(Rconnection con)
 static void sock_close(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
+    R_SockClose(this->fd);
+    con->isopen = FALSE;
+}
+
+static void servsock_close(Rconnection con)
+{
+    Rservsockconn this = (Rservsockconn)con->private;
     R_SockClose(this->fd);
     con->isopen = FALSE;
 }
@@ -168,7 +185,7 @@ static size_t sock_write(const void *ptr, size_t size, size_t nitems,
     return n > 0 ? n : 0;
 }
 
-Rconnection in_R_newsock(const char *host, int port, int server,
+Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
 			 const char * const mode, int timeout)
 {
     Rconnection new;
@@ -205,5 +222,50 @@ Rconnection in_R_newsock(const char *host, int port, int server,
     ((Rsockconn)new->private)-> port = port;
     ((Rsockconn)new->private)-> server = server;
     ((Rsockconn)new->private)-> timeout = timeout;
+    ((Rsockconn)new->private)-> serverfd = serverfd;
     return new;
 }
+
+Rconnection in_R_newservsock(int port)
+{
+    Rconnection new;
+
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error(_("allocation of server socket connection failed"));
+    new->class = (char *) malloc(strlen("servsockconn") + 1);
+    if(!new->class) {
+	free(new);
+	error(_("allocation of server socket connection failed"));
+        /* for Solaris 12.5 */ new = NULL;
+    }
+    strcpy(new->class, "servsockconn");
+    new->description = (char *) malloc(strlen("localhost") + 10);
+    if(!new->description) {
+	free(new->class); free(new);
+	error(_("allocation of server socket connection failed"));
+        /* for Solaris 12.5 */ new = NULL;
+    }
+    init_con(new, "localhost", CE_NATIVE, "a+");
+    new->close = &servsock_close;
+    new->private = (void *) malloc(sizeof(struct servsockconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error(_("allocation of server socket connection failed"));
+	/* for Solaris 12.5 */ new = NULL;
+    }
+    ((Rservsockconn)new->private)-> port = port;
+
+    /* socket(), bind(), listen() */
+    int sock = R_SockOpen(port); 
+    if(sock < 0) {
+	free(new->private); free(new->description); free(new->class); free(new);
+	error(_("creation of server socket failed: port %d cannot be opened"),
+	      port);
+	/* for Solaris 12.5 */ new = NULL;
+    }
+    ((Rservsockconn)new->private)-> fd = sock;
+    new->isopen = TRUE;
+
+    return new;
+}
+

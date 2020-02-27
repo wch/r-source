@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2019 The R Core Team
+ *  Copyright (C) 1998--2020 The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1634,14 +1634,13 @@ static int R_unlink(const char *name, int recursive, int force)
 
 #endif
 
-
 /* Note that wildcards are allowed in 'names' */
 #ifdef Win32
 # include <dos_wglob.h>
 SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
-    int i, j, nfiles, res, failures = 0, recursive, force;
+    int i, j, nfiles, res, failures = 0, recursive, force, expand;
     const wchar_t *names;
     wglob_t globbuf;
 
@@ -1657,16 +1656,23 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	force = asLogical(CADDR(args));
 	if (force == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "force");
+	expand = asLogical(CADDDR(args));
+	if (expand == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "expand");
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
-		names = filenameToWchar(STRING_ELT(fn, i), TRUE);
-		//Rprintf("do_unlink(%ls)\n", names);
-		res = dos_wglob(names, GLOB_NOCHECK, NULL, &globbuf);
-		if (res == GLOB_NOSPACE)
-		    error(_("internal out-of-memory condition"));
-		for (j = 0; j < globbuf.gl_pathc; j++)
-		    failures += R_unlink(globbuf.gl_pathv[j], recursive, force);
-		dos_wglobfree(&globbuf);
+		names = filenameToWchar(STRING_ELT(fn, i), expand ? TRUE : FALSE);
+		if (expand) {
+		    res = dos_wglob(names, GLOB_NOCHECK, NULL, &globbuf);
+		    if (res == GLOB_NOSPACE)
+			error(_("internal out-of-memory condition"));
+		    for (j = 0; j < globbuf.gl_pathc; j++)
+			failures += R_unlink(globbuf.gl_pathv[j], recursive,
+			                     force);
+		    dos_wglobfree(&globbuf);
+		} else {
+		    failures += R_unlink(names, recursive, force);
+		}
 	    } else failures++;
 	}
     }
@@ -1680,7 +1686,8 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
-    int i, nfiles, failures = 0, recursive, force;
+    int i, nfiles, failures = 0, recursive, force, expand;
+    Rboolean useglob = FALSE;
     const char *names;
 #if defined(HAVE_GLOB)
     int j, res;
@@ -1699,27 +1706,38 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	force = asLogical(CADDR(args));
 	if (force == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "force");
+	expand = asLogical(CADDDR(args));
+	if (expand == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "expand");
+#if defined(HAVE_GLOB)
+	if (expand)
+	    useglob = TRUE;
+#endif	
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
-		names = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
+		if (expand)
+		    names = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
+		else
+		    names = translateChar(STRING_ELT(fn, i));
+		if (useglob) {
 #if defined(HAVE_GLOB)
-		res = glob(names, GLOB_NOCHECK, NULL, &globbuf);
+		    res = glob(names, GLOB_NOCHECK, NULL, &globbuf);
 # ifdef GLOB_ABORTED
-		if (res == GLOB_ABORTED)
-		    warning(_("read error on '%s'"), names);
+		    if (res == GLOB_ABORTED)
+			warning(_("read error on '%s'"), names);
 # endif
 # ifdef GLOB_NOSPACE
-		if (res == GLOB_NOSPACE)
-		    error(_("internal out-of-memory condition"));
+		    if (res == GLOB_NOSPACE)
+			error(_("internal out-of-memory condition"));
 # endif
-		for (j = 0; j < globbuf.gl_pathc; j++)
-		    failures += R_unlink(globbuf.gl_pathv[j], recursive, force);
-		globfree(&globbuf);
-	    } else failures++;
-#else /* HAVE_GLOB */
-		failures += R_unlink(names, recursive, force);
-	    } else failures++;
+		    for (j = 0; j < globbuf.gl_pathc; j++)
+			failures += R_unlink(globbuf.gl_pathv[j], recursive,
+			                     force);
+		    globfree(&globbuf);
 #endif
+		} else
+		    failures += R_unlink(names, recursive, force);
+	    } else failures++;
 	}
     }
     return ScalarInteger(failures ? 1 : 0);

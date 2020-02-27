@@ -63,7 +63,7 @@ void attribute_hidden gammalims(double *xmin, double *xmax)
 
     /* unable to find xmin */
 
-    ML_ERROR(ME_NOCONV, "gammalims");
+    ML_WARNING(ME_NOCONV, "gammalims");
     *xmin = *xmax = ML_NAN;
 
 find_xmax:
@@ -83,7 +83,7 @@ find_xmax:
 
     /* unable to find xmax */
 
-    ML_ERROR(ME_NOCONV, "gammalims");
+    ML_WARNING(ME_NOCONV, "gammalims");
     *xmin = *xmax = ML_NAN;
 
 done:

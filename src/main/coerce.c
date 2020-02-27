@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2019  The R Core Team
+ *  Copyright (C) 1997-2020  The R Core Team
  *  Copyright (C) 2003-2019  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
@@ -1603,6 +1603,18 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     return args;
 }
 
+typedef struct parse_info {
+    Rconnection con;
+    Rboolean old_latin1;
+    Rboolean old_utf8;
+}  parse_cleanup_info;
+
+static void parse_cleanup(void *data)
+{
+    parse_cleanup_info *pci = (parse_cleanup_info *)data;
+    known_to_be_latin1 = pci->old_latin1;
+    known_to_be_utf8 = pci->old_utf8;
+}
 
 /* primitive,
  * op = 0 : str2lang(s)
@@ -1624,6 +1636,35 @@ SEXP attribute_hidden do_str2lang(SEXP call, SEXP op, SEXP args, SEXP rho) {
 	    return(allocVector(EXPRSXP, 0));
 
     ParseStatus status;
+    parse_cleanup_info pci;
+    pci.old_latin1 = known_to_be_latin1;
+    pci.old_utf8 = known_to_be_utf8;
+    RCNTXT cntxt;
+
+    /* set up context to recover known_to_be_* variable */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    cntxt.cend = &parse_cleanup;
+    cntxt.cenddata = &pci;
+
+    /* Preserve uncertainty in encoding as in do_parse(): if at least one
+       argument is of "unknown" encoding, the result is also flagged
+       "unknown". To be kept in sync with do_parse().
+    */
+    known_to_be_latin1 = known_to_be_utf8 = FALSE;
+    Rboolean allKnown = TRUE;
+    for(int i = 0; i < LENGTH(args); i++)
+	if(!ENC_KNOWN(STRING_ELT(args, i)) &&
+	   !IS_ASCII(STRING_ELT(args, i))) {
+	    allKnown = FALSE;
+	    break;
+	}
+    if (allKnown) {
+	/* strings can be flagged as from known encoding */
+	known_to_be_latin1 = pci.old_latin1;
+	known_to_be_utf8 = pci.old_utf8;
+    }
+
     SEXP srcfile = PROTECT(mkString("<text>"));
     SEXP ans = PROTECT(R_ParseVector(args, -1, &status, srcfile));
     if (status != PARSE_OK) parseError(call, R_ParseError);
@@ -1632,6 +1673,11 @@ SEXP attribute_hidden do_str2lang(SEXP call, SEXP op, SEXP args, SEXP rho) {
 	    errorcall(call, _("parsing result not of length one, but %d"), LENGTH(ans));
 	ans = VECTOR_ELT(ans, 0);
     }
+
+    known_to_be_latin1 = pci.old_latin1;
+    known_to_be_utf8 = pci.old_utf8;
+    endcontext(&cntxt);
+
     UNPROTECT(2);
     return ans;
 }

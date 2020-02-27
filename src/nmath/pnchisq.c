@@ -50,10 +50,10 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(df) || ISNAN(ncp))
 	return x + df + ncp;
     if (!R_FINITE(df) || !R_FINITE(ncp))
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 #endif
 
-    if (df < 0. || ncp < 0.) ML_ERR_return_NAN;
+    if (df < 0. || ncp < 0.) ML_WARN_return_NAN;
 
     ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail, log_p);
 
@@ -66,7 +66,7 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
 	} else { /* !lower_tail */
 	    /* since we computed the other tail cancellation is likely */
 	    // FIXME: There are cases where  ans == 0. if(!log_p) is perfect
-	    if(ans < (log_p ? (-10. * M_LN10) : 1e-10)) ML_ERROR(ME_PRECISION, "pnchisq");
+	    if(ans < (log_p ? (-10. * M_LN10) : 1e-10)) ML_WARNING(ME_PRECISION, "pnchisq");
 	    if(!log_p && ans < 0.) ans = 0.;  /* Precaution PR#7099 */
 	}
     }

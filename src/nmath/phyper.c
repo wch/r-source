@@ -96,7 +96,7 @@ double phyper (double x, double NR, double NB, double n,
     n  = R_forceint(n);
 
     if (NR < 0 || NB < 0 || !R_FINITE(NR + NB) || n < 0 || n > NR + NB)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     if (x * (NR + NB) > n * NR) {
 	/* Swap tails.	*/

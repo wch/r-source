@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2019   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,8 +37,6 @@
 #endif
 
 #if defined(Win32)
-#  define FD_SETSIZE 1024
-#  include <winsock2.h>
 #  include <io.h>
 #else
 #  ifdef HAVE_UNISTD_H
@@ -47,10 +45,122 @@
 #  include <netdb.h>
 #  include <sys/socket.h>
 #  include <netinet/in.h>
+#  ifdef HAVE_FCNTL_H
+#    include <fcntl.h>
+#  endif
 #endif
 
 #include <R_ext/Error.h>
 #include "sock.h"
+
+#ifndef Win32
+#define SOCKET int
+#endif
+
+int R_close_socket(SOCKET s)
+{
+#ifdef Win32
+    return(closesocket(s));
+#else
+    return(close(s));
+#endif
+}
+
+int R_socket_errno(void)
+{
+#ifdef Win32
+    return(WSAGetLastError());
+#else
+    return(errno);
+#endif
+}
+
+int R_invalid_socket(SOCKET s)
+{
+#ifdef Win32
+    return(s == INVALID_SOCKET);
+#else
+    return s < 0;
+#endif
+}
+
+int R_socket_error(int s)
+{
+#ifdef Win32
+    return(s == SOCKET_ERROR);
+#else
+    return s < 0;
+#endif
+}
+
+int R_invalid_socket_eintr(SOCKET s)
+{
+#ifdef Win32
+    return(s == INVALID_SOCKET && WSAGetLastError() == WSAEINTR);
+#else
+    return(s == -1 && errno == EINTR);
+#endif
+}
+
+int R_socket_error_eintr(int s)
+{
+#ifdef Win32
+    return(s == SOCKET_ERROR && WSAGetLastError() == WSAEINTR);
+#else
+    return(s == -1 && errno == EINTR);
+#endif
+}
+
+char *R_socket_strerror(int errnum)
+{
+#ifdef Win32
+    /* formatError() is not accessible */
+    static char buf[1000];
+    FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                  NULL, errnum,
+                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                  buf, 1000, NULL);
+    size_t i = strlen(buf);
+    if (i > 0 && buf[i-1] == '\n') buf[--i] = '\0';
+    if (i > 0 && buf[i-1] == '\r') buf[--i] = '\0';
+    if (i > 0 && buf[i-1] == '.') buf[--i] = '\0';
+    return buf;
+#else
+    return(strerror(errnum));
+#endif
+}
+
+int R_set_nonblocking(SOCKET s)
+{
+    int status = 0;
+
+#ifdef Win32
+    {
+	u_long one = 1;
+	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
+    }
+#else
+# ifdef HAVE_FCNTL
+    if ((status = fcntl(s, F_GETFL, 0)) != -1) {
+#  ifdef O_NONBLOCK
+	status |= O_NONBLOCK;
+#  else /* O_NONBLOCK */
+#   ifdef F_NDELAY
+	status |= F_NDELAY;
+#   endif
+#  endif /* !O_NONBLOCK */
+	status = fcntl(s, F_SETFL, status);
+    }
+# endif // HAVE_FCNTL
+    if (status < 0) {
+	R_close_socket(s);
+	return -1;
+    }
+#endif
+    /* Will return 0 (success) when running on Unix without the necessary
+       fcntl support, which is unlikely. */
+    return status; /* 0 */
+}
 
 #if defined(__hpux)
    extern int h_errno; /* HP-UX 9.05 forgets to declare this in netdb.h */
@@ -58,7 +168,7 @@
 
 extern struct hostent *R_gethostbyname(const char *name);
 
-#define MAXBACKLOG 5
+#define MAXBACKLOG SOMAXCONN
 
 static int Sock_error(Sock_error_t perr, int e, int he)
 {
@@ -104,14 +214,19 @@ int Sock_init()
 }
 
 /* open a socket for listening */
-int Sock_open(Sock_port_t port, Sock_error_t perr)
+int Sock_open(Sock_port_t port, int blocking, Sock_error_t perr)
 {
-    int sock;
+    SOCKET sock, status;
     struct sockaddr_in server;
 
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	return Sock_error(perr, errno, 0);
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (R_invalid_socket(sock)) 
+	return Sock_error(perr, R_socket_errno(), 0);
 
+    if (!blocking && R_set_nonblocking(sock)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
+    }
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons((short)port);
@@ -136,7 +251,7 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
        pp. 305, Windows sockets are quite happy to allow two servers
        to use the same IPADDR/port, with unpredictable results, if
        SO_REUSEADDR is set.  So setting this option on Windows is not
-       a good idea.  It is unclear whether it is possible on WIndows
+       a good idea.  It is unclear whether it is possible on Windows
        to establish a new server socket while a connection from a
        previous server socket is still active.
 
@@ -144,18 +259,52 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
        disappear as an issue. if the R interface separated the
        `socket'/`bind'/`listen' part of setting up a server socket,
        which is only needed once per server instance, from the
-       `accept' part, which is needed for each connection.  LT */
+       `accept' part, which is needed for each connection.  LT
+       
+       As of 77803,  we have serverSocket() for `socket'/`bind'/`listen', so
+       a listening server socket can be re-used to `accept` multiple
+       connections.  For security reasons on Windows, Microsoft recommends [1]
+       that servers use SO_EXCLUSIVEADDRUSE, with which however they
+       document it is not possible to establish a new server socket while a
+       connection from a previous socket is still active, and that the
+       connection may be active in lower layers of the stack outside of
+       direct control of the application.  Snow/parallel PSOCK clusters have
+       been relying on that it is possible with default options (neither
+       SO_EXCLUSIVEADDRUSE nor SO_REUSEADDR) without receiving bug
+       reports that would suggest otherwise. TK
+       [1] https://docs.microsoft.com/en-us/windows/win32/winsock/using-so-reuseaddr-and-so-exclusiveaddruse
+       */
     {
 	int val = 1;
 	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &val, sizeof(val));
     }
 #endif
 
-    if ((bind(sock, (struct sockaddr *)&server, sizeof(server)) < 0) ||
-	(listen(sock, MAXBACKLOG) < 0)) {
+#if defined(HAVE_FCNTL_H) && defined(HAVE_UNISTD_H) && !defined(Win32)
+    /* Set FD_CLOEXEC so that child processes, including those run via system(),
+       do not inherit the listening socket, thus blocking the port. */
+    if ((status = fcntl(sock, F_GETFD, 0)) != -1) {
+	status |= FD_CLOEXEC;
+	status = fcntl(sock, F_SETFD, status);
+    }
+    if (status == -1) {
 	close(sock);
 	return Sock_error(perr, errno, 0);
     }
+#endif
+
+    status = bind(sock, (struct sockaddr *)&server, sizeof(server));
+    if (R_socket_error(status)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
+    }
+    
+    status = listen(sock, MAXBACKLOG);
+    if (R_socket_error(status)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
+    }
+
     return sock;
 }
 
@@ -169,9 +318,9 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 
     do
 	retval = accept(fd, (struct sockaddr *)(&net_client), &len);
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1)
-	return Sock_error(perr, errno, 0);
+    while (R_invalid_socket_eintr(retval));
+    if (R_invalid_socket(retval))
+	return Sock_error(perr, R_socket_errno(), 0);
 
     if (cname != NULL && buflen > 0) {
 	size_t nlen;
@@ -194,12 +343,19 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
 {
     struct sockaddr_in server;
     struct hostent *hp;
-    int sock;
+    SOCKET sock;
     int retval;
 
-    if (! (hp = R_gethostbyname(sname))
-	|| (sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	return Sock_error(perr, errno, h_errno);
+    if (! (hp = R_gethostbyname(sname))) 
+#ifdef Win32
+	return Sock_error(perr, R_socket_errno(), WSAGetLastError());
+#else
+	return Sock_error(perr, R_socket_errno(), h_errno);
+#endif
+
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (R_invalid_socket(sock))
+	return Sock_error(perr, R_socket_errno(), 0);
 
     memcpy((char *)&server.sin_addr, hp->h_addr_list[0], hp->h_length);
     server.sin_port = htons((short)port);
@@ -207,15 +363,10 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
 
     do
 	retval = connect(sock, (struct sockaddr *) &server, sizeof(server));
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1) {
-	Sock_error(perr, errno, 0);
-#ifdef Win32
-	closesocket(sock);
-#else
-	close(sock);
-#endif
-	return -1;
+    while (R_socket_error_eintr(retval));
+    if (R_socket_error(retval)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
     }
     return sock;
 }
@@ -240,9 +391,9 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = recv(fd, buf, size, 0);
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1)
-	return Sock_error(perr, errno, 0);
+    while(R_socket_error_eintr(retval));
+    if (R_socket_error(retval))
+	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;
 }
@@ -253,9 +404,9 @@ ssize_t Sock_write(int fd, const void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = send(fd, buf, size, 0);
-    while (retval == -1 && errno == EINTR);
-    if (retval == -1)
-	return Sock_error(perr, errno, 0);
+    while (R_socket_error_eintr(retval));
+    if (R_socket_error(retval))
+	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;
 }

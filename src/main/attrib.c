@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -637,8 +637,6 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 	int nd = length(dim);
 	if(nd > 0) {
 	    if(nd == 2) {
-	      char *p = getenv("_R_CLASS_MATRIX_ARRAY_");
-	      if(p != NULL && StringTrue(p)) {  // "the future" (eventually, unconditionally)
 		if(singleString)
 		    klass = mkChar("matrix");
 		else { // R >= 4.0.0 :  class(<matrix>) |->  c("matrix", "array")
@@ -648,9 +646,6 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 		    UNPROTECT(1);
 		    return klass;
 		}
-	      } else { // back-compatible R <= 3.x.y behavior
-		  klass = mkChar("matrix");
-	      }
 	    }
 	    else
 		klass = mkChar("array");
@@ -772,16 +767,10 @@ static SEXP createDefaultClass(SEXP part1, SEXP part2, SEXP part3, SEXP part4)
     return res;
 }
 
-static Rboolean use_matrix_array = FALSE; // -Wall  (initialized below)
-
 // called when R's main loop is setup :
 attribute_hidden
 void InitS3DefaultTypes()
 {
-    char *p = getenv("_R_CLASS_MATRIX_ARRAY_");
-    use_matrix_array = 
-	((p != NULL && StringTrue(p)) ? TRUE : FALSE); // store globally
-
     for(int type = 0; type < MAX_NUM_SEXPTYPE; type++) {
 	SEXP part3 = R_NilValue;
 	SEXP part4 = R_NilValue;
@@ -819,13 +808,10 @@ void InitS3DefaultTypes()
 	SEXP part2 = PROTECT(mkChar("array"));
 	SEXP part1 = PROTECT(mkChar("matrix"));
 	Type2DefaultClass[type].matrix =
-	    (use_matrix_array
-	     ? createDefaultClass(part1, part2,      part3, part4)
-	     : createDefaultClass(part1, R_NilValue, part3, part4));
-	UNPROTECT(1); // part1
+	    createDefaultClass(part1,      part2, part3, part4);
 	Type2DefaultClass[type].array =
 	    createDefaultClass(R_NilValue, part2, part3, part4);
-	UNPROTECT(1 + nprotected);
+	UNPROTECT(2 + nprotected);
     }
 }
 
@@ -845,16 +831,6 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 	int n = length(dim);
 	SEXPTYPE t = TYPEOF(obj);
 	SEXP defaultClass;
-
-	/* For now, allow the user to change environment variable *during* R session,
-	   hence must check (slow ??!!) : */
-	char *p = getenv("_R_CLASS_MATRIX_ARRAY_");
-	Rboolean new_use_m_a = 
-	    ((p != NULL && StringTrue(p)) ? TRUE : FALSE);
-	if(new_use_m_a != use_matrix_array) { // re-initialize Type2DefaultClass table
-	    use_matrix_array = new_use_m_a; // global
-	    InitS3DefaultTypes();
-	}
 
 	switch(n) {
 	case 0:  defaultClass = Type2DefaultClass[t].vector; break;
@@ -1721,10 +1697,11 @@ static SEXP data_part(SEXP obj) {
     SEXP e, val;
     if(!s_getDataPart)
 	init_slot_handling();
-    PROTECT(e = allocVector(LANGSXP, 2));
+    PROTECT(e = allocVector(LANGSXP, 3));
     SETCAR(e, s_getDataPart);
     val = CDR(e);
     SETCAR(val, obj);
+    SETCADR(val, ScalarLogical(TRUE));
     val = eval(e, R_MethodsNamespace);
     UNSET_S4_OBJECT(val); /* data part must be base vector */
     UNPROTECT(1);

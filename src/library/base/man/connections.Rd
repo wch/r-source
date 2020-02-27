@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -17,6 +17,9 @@
 \alias{xzfile}
 \alias{url}
 \alias{socketConnection}
+\alias{socketAccept}
+\alias{serverSocket}
+\alias{socketTimeout}
 \alias{open}
 \alias{open.connection}
 \alias{isOpen}
@@ -70,6 +73,12 @@ socketConnection(host = "localhost", port, server = FALSE,
                  encoding = getOption("encoding"),
                  timeout = getOption("timeout"))
 
+serverSocket(port)
+
+socketAccept(socket, blocking = FALSE, open = "a+",
+             encoding = getOption("encoding"),
+             timeout = getOption("timeout"))
+
 open(con, \dots)
 \method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
 
@@ -80,6 +89,8 @@ flush(con)
 
 isOpen(con, rw = "")
 isIncomplete(con)
+
+socketTimeout(socket, timeout = -1)
 }
 \arguments{
   \item{description}{character string.  A description of the connection:
@@ -115,6 +126,7 @@ isIncomplete(con)
   \item{host}{character string.  Host name for the port.}
   \item{port}{integer.  The TCP port number.}
   \item{server}{logical.  Should the socket be a client or a server?}
+  \item{socket}{a server socket listening for connections.}
   \item{con}{a connection.}
   \item{type}{character string.  Currently ignored.}
   \item{rw}{character string.  Empty or \code{"read"} or \code{"write"},
@@ -122,8 +134,10 @@ isIncomplete(con)
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
-  The first nine functions create connections.  By default the
-  connection is not opened (except for a \code{socketConnection}), but may
+  The first eleven functions create connections.  By default the
+  connection is not opened (except for a socket connection created by
+  \code{socketConnection} or \code{socketAccept} and for server socket
+  connection created by \code{serverSocket}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
   For \code{file} the description is a path to the file to be opened or
@@ -203,6 +217,17 @@ isIncomplete(con)
   \code{"w+"} mode unless \code{open = "w+b"} is specified) and unlinked
   from the file system.  This provides a temporary file/fifo to write to
   and then read from.
+
+  \code{socketConnection(server=TRUE)} creates a new temporary server socket
+  listening on the given port.  As soon as a new socket connection is
+  accepted on that port, the server socket is automatically closed. 
+  \code{serverSocket} creates a listening server socket which can be used
+  for accepting multiple socket connections by \code{socketAccept}.  To stop
+  listening for new connections, a server socket needs to be closed
+  explicitly by \code{close}.
+
+  \code{socketTimeout} sets connection timeout of a socket connection.  A
+  negative \code{timeout} can be given to query the old value.
 }
 
 \section{URLs}{
@@ -249,7 +274,8 @@ isIncomplete(con)
 
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
-  \code{bzfile}, \code{xzfile}, \code{unz} and \code{socketConnection}
+  \code{bzfile}, \code{xzfile}, \code{unz}, \code{socketConnection},
+  \code{socketAccept} and \code{serverSocket}
   return a connection object which inherits from class
   \code{"connection"} and has a first more specific class.
 
@@ -268,6 +294,8 @@ isIncomplete(con)
   \code{isIncomplete} returns a logical value, whether the last read
   attempt was blocked, or for an output text connection whether there is
   unflushed output.
+
+  \code{socketTimeout} returns the old timeout value of a socket connection. 
 }
 
 \section{Modes}{

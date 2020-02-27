@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2019-12-16 r77583) -- "Unsuffered Consequences"
-Copyright (C) 2019 The R Foundation for Statistical Computing
+R Under development (unstable) (2020-02-19 r77831) -- "Unsuffered Consequences"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -2599,17 +2599,19 @@ In `[.data.frame`(women, "height", drop = TRUE) :
 3  3           6           9
 > ## wrong printed names in 1.7.1
 > 
-> ## assigning to NULL
+> ## assigning to NULL --- now consistently behaves as if assigning to list() !
 > a <- NULL
 > a[["a"]] <- 1
 > a
-a 
-1 
+$a
+[1] 1
+
 > a <- NULL
 > a[["a"]] <- "something"
 > a
-          a 
-"something" 
+$a
+[1] "something"
+
 > a <- NULL
 > a[["a"]] <- 1:3
 > a
@@ -3088,7 +3090,9 @@ $wt.res
          j 
  0.3675473 
 
-> lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.exclude))
+> print(width = 99,
++ lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.exclude))
++ ) ; stopifnot(getOption("width") == 80)
 $hat
 b d c e f g h i j 
 0 0 0 0 0 0 0 0 0 
@@ -3106,16 +3110,12 @@ i
 j
 
 $sigma
-        b         d         c         e         f         g         h         i 
-0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 
-        j 
-0.9366289 
+        b         d         c         e         f         g         h         i         j 
+0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 
 
 $wt.res
-         b          d          c          e          f          g          h 
- 0.3604547  0.1146812         NA -1.1426753  0.7723744  0.6817419  0.1718693 
-         i          j 
- 2.0840918  0.3675473 
+         b          d          c          e          f          g          h          i          j 
+ 0.3604547  0.1146812         NA -1.1426753  0.7723744  0.6817419  0.1718693  2.0840918  0.3675473 
 
 > lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.omit))
 $hat
@@ -4838,14 +4838,19 @@ out-of-range values treated as 0 in coercion to raw
 > ## tests of indexing as quoted in Extract.Rd
 > x <- NULL
 > x$foo <- 2
-> x # length-1 vector
+> x # now, a list
 $foo
 [1] 2
 
 > x <- NULL
 > x[[2]] <- pi
-> x # numeric vector
-[1]       NA 3.141593
+> x # now, a list, too
+[[1]]
+NULL
+
+[[2]]
+[1] 3.141593
+
 > x <- NULL
 > x[[1]] <- 1:3
 > x # list
@@ -5455,14 +5460,17 @@ character(0)
 +                    counts = c(18,17,15,20,10,20,25,13,12))
 > fit <- glm(counts ~ outcome + treatment, family = poisson,
 +            data = d.AD, weights = c(0, rep(1,8)))
-> residuals(fit, type="working") # first was NA < 2.4.0
-          1           2           3           4           5           6 
--0.31250000  0.15546875 -0.13231383 -0.11111111 -0.20909091  0.34622824 
+> print(residuals(fit, type="working"),
++       width = 37) # first was NA < 2.4.0 //  using new 'width'
+          1           2           3 
+-0.31250000  0.15546875 -0.13231383 
+          4           5           6 
+-0.11111111 -0.20909091  0.34622824 
           7           8           9 
  0.11111111  0.02818182 -0.19226306 
 > ## working residuals were NA for zero-weight cases.
 > fit2 <- glm(counts ~ outcome + treatment, family = poisson,
-+            data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
++             data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
 > for(z in c("response", "working", "deviance", "pearson"))
 +     stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
 +                         scale = 1, tolerance = 1e-10))
@@ -6348,7 +6356,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x403b068>
+<bytecode: 0x249da38>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6359,7 +6367,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x403b068>
+<bytecode: 0x249da38>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6371,7 +6379,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x403b068>
+<bytecode: 0x249da38>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6603,7 +6611,8 @@ Error in complete.cases(list(), list()) :
 > ## error messages from (C-level) evalList
 > tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
 > try(tst()) # even nicer since R 3.5.0's change to sequential stopifnot()
-Error : argument "y" is missing, with no default
+Error in stopifnot(is.numeric(y)) : 
+  argument "y" is missing, with no default
 > try(c(1,,2))
 Error in c(1, , 2) : argument 2 is empty
 > ## change in 2.8.0 made these less clear
@@ -7487,27 +7496,27 @@ $foo
 > p <- parse(text = raw)
 > getParseData(p)
    line1 col1 line2 col2 id parent          token terminal          text
-31     2    1     4   15 31      0           expr    FALSE              
-3      2    1     2    8  3     31       FUNCTION     TRUE      function
-4      2    9     2    9  4     31            '('     TRUE             (
-5      2   11     2   11  5     31 SYMBOL_FORMALS     TRUE             a
-6      2   15     2   27  6     31        COMMENT     TRUE # parameter 1
-8      3   10     3   10  8     31            ','     TRUE             ,
-10     3   12     3   12 10     31 SYMBOL_FORMALS     TRUE             b
-11     3   13     3   13 11     31     EQ_FORMALS     TRUE             =
+32     2    1     4   15 32      0           expr    FALSE              
+3      2    1     2    8  3     32       FUNCTION     TRUE      function
+4      2    9     2    9  4     32            '('     TRUE             (
+5      2   11     2   11  5     32 SYMBOL_FORMALS     TRUE             a
+6      2   15     2   27  6     32        COMMENT     TRUE # parameter 1
+8      3   10     3   10  8     32            ','     TRUE             ,
+10     3   12     3   12 10     32 SYMBOL_FORMALS     TRUE             b
+11     3   13     3   13 11     32     EQ_FORMALS     TRUE             =
 12     3   14     3   14 12     13      NUM_CONST     TRUE             2
-13     3   14     3   14 13     31           expr    FALSE              
-14     3   16     3   28 14     31        COMMENT     TRUE # parameter 2
-16     4   10     4   10 16     31            ')'     TRUE             )
-28     4   11     4   15 28     31           expr    FALSE              
-18     4   11     4   11 18     28            '{'     TRUE             {
-25     4   12     4   14 25     28           expr    FALSE              
-19     4   12     4   12 19     21         SYMBOL     TRUE             a
-21     4   12     4   12 21     25           expr    FALSE              
-20     4   13     4   13 20     25            '+'     TRUE             +
-22     4   14     4   14 22     24         SYMBOL     TRUE             b
-24     4   14     4   14 24     25           expr    FALSE              
-23     4   15     4   15 23     28            '}'     TRUE             }
+13     3   14     3   14 13     32           expr    FALSE              
+14     3   16     3   28 14     32        COMMENT     TRUE # parameter 2
+16     4   10     4   10 16     32            ')'     TRUE             )
+29     4   11     4   15 29     32           expr    FALSE              
+19     4   11     4   11 19     29            '{'     TRUE             {
+26     4   12     4   14 26     29           expr    FALSE              
+20     4   12     4   12 20     22         SYMBOL     TRUE             a
+22     4   12     4   12 22     26           expr    FALSE              
+21     4   13     4   13 21     26            '+'     TRUE             +
+23     4   14     4   14 23     25         SYMBOL     TRUE             b
+25     4   14     4   14 25     26           expr    FALSE              
+24     4   15     4   15 24     29            '}'     TRUE             }
 > ## Got some parents wrong
 > 
 > 

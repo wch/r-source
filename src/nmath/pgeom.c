@@ -32,7 +32,7 @@ double pgeom(double x, double p, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(p))
 	return x + p;
 #endif
-    if(p <= 0 || p > 1) ML_ERR_return_NAN;
+    if(p <= 0 || p > 1) ML_WARN_return_NAN;
 
     if (x < 0.) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;

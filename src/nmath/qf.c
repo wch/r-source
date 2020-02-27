@@ -32,7 +32,7 @@ double qf(double p, double df1, double df2, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(df1) || ISNAN(df2))
 	return p + df1 + df2;
 #endif
-    if (df1 <= 0. || df2 <= 0.) ML_ERR_return_NAN;
+    if (df1 <= 0. || df2 <= 0.) ML_WARN_return_NAN;
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 

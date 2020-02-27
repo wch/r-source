@@ -67,13 +67,17 @@ summary(fit0, cor = TRUE)
 cf0 <- coef(summary(fit0))[, 1:2]
 fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
            weights = wts, trace = TRUE)
+## IGNORE_RDIFF_BEGIN
 summary(fit, cor = TRUE)
+## IGNORE_RDIFF_END
 stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
                     check.attributes = FALSE))
 stopifnot(df.residual(fit) == df.residual(fit0))
 cf1 <- coef(summary(fit))[, 1:2]
+## IGNORE_RDIFF_BEGIN
 fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
             weights = wts, trace = TRUE, algorithm = "port")
+## IGNORE_RDIFF_END
 summary(fit2, cor = TRUE)
 cf2 <- coef(summary(fit2))[, 1:2]
 rownames(cf0) <- c("a", "b")

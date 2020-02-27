@@ -1,7 +1,7 @@
 #  File src/library/stats/R/runmed.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2003-2019 The R Foundation
+#  Copyright (C) 2003-2020 The R Foundation
 #  Copyright (C) 1995      Berwin A. Turlach
 #  Ported to R, added interface to Stuetzle's code and further enhanced
 #  by Martin Maechler,
@@ -142,7 +142,8 @@ smoothEnds <- function(y, k = 3)
 
     ##--- For the very first and last pt.:  Use Tukey's end-point rule: ---
     ## Ysm[1L]:= Median(Ysm[2L],X1,Z_0), where Z_0 is extrapol. from Ysm[2L],Ysm[3L]
-    sm[1L] <- med3i(y[1L], sm [2L], 3*sm [2L] - 2*sm [3L])
-    sm[n]  <- med3i(y[n],  sm[n_1], 3*sm[n_1] - 2*sm[n_2])
+    ## (to preserve integer sm[], use integer coefficients:
+    sm[1L] <- med3i(y[1L], sm [2L], sm [2L] - 2L*(sm [3L] - sm[ 2L]))
+    sm[n]  <- med3i(y[n],  sm[n_1], sm[n_1] - 2L*(sm[n_2] - sm[n_1]))
     sm
 }

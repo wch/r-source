@@ -68,7 +68,7 @@
 #define R_Q_P01_check(p)			\
     if ((log_p	&& p > 0) ||			\
 	(!log_p && (p < 0 || p > 1)) )		\
-	ML_ERR_return_NAN
+	ML_WARN_return_NAN
 
 /* Do the boundaries exactly for q*() functions :
  * Often  _LEFT_ = ML_NEGINF , and very often _RIGHT_ = ML_POSINF;
@@ -84,7 +84,7 @@
 #define R_Q_P01_boundaries(p, _LEFT_, _RIGHT_)		\
     if (log_p) {					\
 	if(p > 0)					\
-	    ML_ERR_return_NAN;				\
+	    ML_WARN_return_NAN;				\
 	if(p == 0) /* upper bound*/			\
 	    return lower_tail ? _RIGHT_ : _LEFT_;	\
 	if(p == ML_NEGINF)				\
@@ -92,7 +92,7 @@
     }							\
     else { /* !log_p */					\
 	if(p < 0 || p > 1)				\
-	    ML_ERR_return_NAN;				\
+	    ML_WARN_return_NAN;				\
 	if(p == 0)					\
 	    return lower_tail ? _LEFT_ : _RIGHT_;	\
 	if(p == 1)					\

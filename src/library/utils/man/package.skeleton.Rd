@@ -20,7 +20,7 @@ package.skeleton(name = "anRpackage", list,
 }
 \arguments{
   \item{name}{character string: the package name and directory name for
-    your package.}
+    your package.  Must be a valid package name.}
   \item{list}{character vector naming the \R objects to put in the
     package.  Usually, at most one of \code{list}, \code{environment},
     or \code{code_files} will be supplied.  See \sQuote{Details}.}

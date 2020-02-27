@@ -38,8 +38,6 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   \item{main, sub, xlab, ylab}{character strings for
     \code{\link{title}}.  \code{sub} and \code{xlab} have a non-NULL
     default when there's a \code{tree$call}.}
-  \item{\dots}{Further graphical arguments.  E.g., \code{cex} controls
-    the size of the labels (if plotted) in the same way as \code{\link{text}}.}
 
   \item{hmin}{numeric.  All heights less than \code{hmin} are regarded
     as being \code{hmin}: this can be used to suppress detail at the

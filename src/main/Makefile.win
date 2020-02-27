@@ -64,8 +64,8 @@ sysutils-CPPFLAGS = -I../gnuwin32
 
 connections-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
 dounzip-CPPFLAGS = -I$(EXT_LIBS)/include
-grep-CPPFLAGS = -DPCRE_STATIC -I../extra -I../gnuwin32 -I"$(EXT_LIBS)"/include
-platform-CPPFLAGS += -DPCRE_STATIC -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+grep-CPPFLAGS = -DPCRE2_STATIC -I../extra -I../gnuwin32 -I"$(EXT_LIBS)"/include
+platform-CPPFLAGS += -DPCRE2_STATIC -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
 util-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
 
 ifdef USE_ICU

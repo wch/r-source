@@ -1408,8 +1408,10 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
  * Unserialize Code
  */
 
+// used in saveload.c
 attribute_hidden int R_ReadItemDepth = 0, R_InitReadItemDepth;
-static char lastname[8192];
+
+static char lastname[8192] = "<unknown>";
 
 #define INITIAL_REFREAD_TABLE_SIZE 128
 
@@ -1852,11 +1854,13 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	SETLEVELS(s, levs);
 	SET_OBJECT(s, objf);
 	R_ReadItemDepth++;
+	Rboolean set_lastname = FALSE;
 	SET_ATTRIB(s, hasattr ? ReadItem(ref_table, stream) : R_NilValue);
 	SET_TAG(s, hastag ? ReadItem(ref_table, stream) : R_NilValue);
 	if (hastag && R_ReadItemDepth == R_InitReadItemDepth + 1 &&
 	    isSymbol(TAG(s))) {
 	    snprintf(lastname, 8192, "%s", CHAR(PRINTNAME(TAG(s))));
+	    set_lastname = TRUE;
 	}
 	if (hastag && R_ReadItemDepth <= 0) {
 	    Rprintf("%*s", 2*(R_ReadItemDepth - R_InitReadItemDepth), "");
@@ -1868,6 +1872,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	/* For reading closures and promises stored in earlier versions, convert NULL env to baseenv() */
 	if      (type == CLOSXP && CLOENV(s) == R_NilValue) SET_CLOENV(s, R_BaseEnv);
 	else if (type == PROMSXP && PRENV(s) == R_NilValue) SET_PRENV(s, R_BaseEnv);
+	if (set_lastname) strcpy(lastname, "<unknown>");
 	UNPROTECT(1); /* s */
 	return s;
     default:
@@ -1906,7 +1911,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    }
 	    break;
 	case CHARSXP:
-	    /* Let us suppose these will still be limited to 2^31 -1 bytes */
+	    /* these are currently limited to 2^31 -1 bytes */
 	    length = InInteger(stream);
 	    if (length == -1)
 		PROTECT(s = NA_STRING);
@@ -2924,7 +2929,10 @@ static SEXP appendRawToFile(SEXP file, SEXP bytes)
 	error( _("cannot open file '%s': %s"), CHAR(STRING_ELT(file, 0)),
 	       strerror(errno));
     }
-    fseek(fp, 0, SEEK_END);
+    if (fseek(fp, 0, SEEK_END) != 0) {
+	fclose(fp);
+	error(_("seek failed on %s"), CHAR(STRING_ELT(file, 0)));
+    }
 #endif
 
     len = LENGTH(bytes);

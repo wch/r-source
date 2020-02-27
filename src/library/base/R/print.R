@@ -1,7 +1,7 @@
 #  File src/library/base/R/print.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ print <- function(x, ...) UseMethod("print")
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                           print.gap = NULL, right = FALSE, max = NULL,
+			  width = NULL,
                           useSource = TRUE, ...)
 {
     # Arguments are wrapped in another pairlist because we need to
@@ -32,6 +33,7 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
 	print.gap = print.gap,
 	right = right,
 	max = max,
+	width = width,
 	useSource = useSource,
         ...
     )
@@ -41,6 +43,7 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
     # with S4 objects (if any argument print() is used instead).
     missings <- c(missing(digits), missing(quote), missing(na.print),
 		  missing(print.gap), missing(right), missing(max),
+		  missing(width),
 		  missing(useSource))
 
     .Internal(print.default(x, args, missings))

@@ -30,7 +30,7 @@
 
 double rt(double df)
 {
-    if (ISNAN(df) || df <= 0.0)	ML_ERR_return_NAN;
+    if (ISNAN(df) || df <= 0.0)	ML_WARN_return_NAN;
 
     if(!R_FINITE(df))
 	return norm_rand();

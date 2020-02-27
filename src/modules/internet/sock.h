@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2012   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,12 +32,28 @@ typedef struct Sock_error_t {
 } *Sock_error_t;
 
 int Sock_init(void);
-int Sock_open(Sock_port_t port, Sock_error_t perr);
+int Sock_open(Sock_port_t port, int blocking, Sock_error_t perr);
 int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr);
 int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr);
 int Sock_close(int fd, Sock_error_t perr);
 ssize_t Sock_read(int fd, void *buf, size_t nbytes, Sock_error_t perr);
 ssize_t Sock_write(int fd, const void *buf, size_t nbytes, Sock_error_t perr);
+
+#ifndef Win32
+# define SOCKET int
+#else
+# define FD_SETSIZE 1024
+# include<winsock2.h>
+#endif
+
+int R_close_socket(SOCKET s);
+int R_invalid_socket(SOCKET s);
+int R_socket_error(int s);
+int R_invalid_socket_eintr(SOCKET s);
+int R_socket_error_eintr(int s);
+int R_socket_errno(void);
+char *R_socket_strerror(int errnum);
+int R_set_nonblocking(SOCKET s);
 
 /* R interface (Rsock.c) :*/
 void in_Rsockopen(int *port);

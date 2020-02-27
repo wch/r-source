@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2019-12-16 r77583) -- "Unsuffered Consequences"
-Copyright (C) 2019 The R Foundation for Statistical Computing
+R Under development (unstable) (2020-02-12 r77795) -- "Unsuffered Consequences"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -102,7 +102,7 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > ## Aggregate over sex:
-> x <- margin.table(HairEyeColor, c(1, 2))
+> x <- marginSums(HairEyeColor, c(1, 2))
 > x
        Eye
 Hair    Brown Blue Hazel Green
@@ -954,7 +954,7 @@ Female Yes                89  17 202 131  94  24
 > ## frequencies standardized to equate the margins for admission
 > ## and sex.
 > ## Figure 1 in Friendly (1994).
-> fourfoldplot(margin.table(x, c(1, 2)))
+> fourfoldplot(marginSums(x, c(1, 2)))
 > 
 > ## Fourfold display of x, with frequencies in each table
 > ## standardized to equate the margins for admission and sex.
@@ -1477,6 +1477,21 @@ List of 2
 +                     sep = "=", collapse= ",  "),
 +         main = "Fisher's Iris Data")
 > par(op)
+> 
+> ## 'x' a "Date" vector :
+> nd <- length(dv <- seq(as.Date("1959-02-21"), by = "weeks", length.out = 100))
+> mSC <- cbind(I=1, sin=sin(pi*(1:nd)/8), cos=cos(pi*(1:nd)/8))
+> matplot(dv, mSC, type = "b", main = "matplot(<Date>, y)")
+> 
+> ## 'x' a "POSIXct" date-time vector :
+> ct <- seq(c(ISOdate(2000,3,20)), by = "15 mins", length.out = 100)
+> matplot(ct, mSC, type = "b", main = "matplot(<POSIXct>, y)")
+> ## or the same with even more axis flexibility:
+> matplot(ct, mSC, type = "b", main = "matplot(<POSIXct>, y)", xaxt="n")
+> Axis(ct, side=1, at = ct[1+4*(0:24)])
+> 
+> ## Also works for data frame columns:
+> matplot(iris[1:50,1:4])
 > 
 > 
 > 
@@ -2156,7 +2171,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1781760>
+<bytecode: 0x2dee2e0>
 <environment: namespace:graphics>
 > 
 > 
@@ -2587,7 +2602,7 @@ treatment none some marked
 > 
 > ## applications and admissions by department at UC Berkeley
 > ## (two-way tables)
-> (spineplot(margin.table(UCBAdmissions, c(3, 2)),
+> (spineplot(marginSums(UCBAdmissions, c(3, 2)),
 +            main = "Applications at UCB"))
     Gender
 Dept Male Female
@@ -2597,7 +2612,7 @@ Dept Male Female
    D  417    375
    E  191    393
    F  373    341
-> (spineplot(margin.table(UCBAdmissions, c(3, 1)),
+> (spineplot(marginSums(UCBAdmissions, c(3, 1)),
 +            main = "Admissions at UCB"))
     Admit
 Dept Admitted Rejected
@@ -3026,7 +3041,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x36ade68>
+<bytecode: 0x469f9e8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3107,7 +3122,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.888 0.238 6.172 0 0 
+Time elapsed:  3.008 0.067 3.088 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -122,7 +122,7 @@ double dsignrank(double x, double n, int give_log)
 #endif
     n = R_forceint(n);
     if (n <= 0)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     if (fabs(x - R_forceint(x)) > 1e-7)
 	return(R_D__0);
@@ -146,9 +146,9 @@ double psignrank(double x, double n, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(n))
     return(x + n);
 #endif
-    if (!R_FINITE(n)) ML_ERR_return_NAN;
+    if (!R_FINITE(n)) ML_WARN_return_NAN;
     n = R_forceint(n);
-    if (n <= 0) ML_ERR_return_NAN;
+    if (n <= 0) ML_WARN_return_NAN;
 
     x = R_forceint(x + 1e-7);
     if (x < 0.0)
@@ -183,12 +183,12 @@ double qsignrank(double x, double n, int lower_tail, int log_p)
 	return(x + n);
 #endif
     if (!R_FINITE(x) || !R_FINITE(n))
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     R_Q_P01_check(x);
 
     n = R_forceint(n);
     if (n <= 0)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     if (x == R_DT_0)
 	return(0);
@@ -237,7 +237,7 @@ double rsignrank(double n)
     if (ISNAN(n)) return(n);
 #endif
     n = R_forceint(n);
-    if (n < 0) ML_ERR_return_NAN;
+    if (n < 0) ML_WARN_return_NAN;
 
     if (n == 0)
 	return(0);

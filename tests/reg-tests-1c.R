@@ -1036,7 +1036,7 @@ for(mat in mat.l) {
     n.set <- if(nrow(mat) < 999) -3:3 else 0:3
     stopifnot(
         vapply(n.set, function(n) identCO (head(mat, n), headI(mat, n)), NA),
-        vapply(n.set, function(n) identCO (tail (mat, n, addrownums=FALSE),
+        vapply(n.set, function(n) identCO (tail (mat, n, keepnums=FALSE),
                                            tailI(mat, n)), NA),
         vapply(n.set, function(n) all.equal(tail(mat, n), tailI(mat, n),
                                             check.attributes=FALSE), NA))

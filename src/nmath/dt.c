@@ -41,7 +41,7 @@ double dt(double x, double n, int give_log)
     if (ISNAN(x) || ISNAN(n))
 	return x + n;
 #endif
-    if (n <= 0) ML_ERR_return_NAN;
+    if (n <= 0) ML_WARN_return_NAN;
     if(!R_FINITE(x))
 	return R_D__0;
     if(!R_FINITE(n))

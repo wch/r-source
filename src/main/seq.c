@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2018  The R Core Team.
+ *  Copyright (C) 1998-2020  The R Core Team.
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -220,7 +220,6 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	    SEXP elt = lazy_duplicate(VECTOR_ELT(s, i)); \
 	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		SET_VECTOR_ELT(a, n++, elt); \
-	    if (j > 1) ENSURE_NAMEDMAX(elt); \
 	} \
 	break; \
     case RAWSXP: \
@@ -531,8 +530,9 @@ static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, R_xlen_t each, R_xlen_t nt)
 	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
 	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
 	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    SEXP elt = lazy_duplicate(VECTOR_ELT(x, i));		\
 	    for(k3 = 0; k3 < sum; k3++) {				\
-		SET_VECTOR_ELT(a, k2++, VECTOR_ELT(x, i));		\
+		SET_VECTOR_ELT(a, k2++, elt);				\
 		if(k2 == len) goto done;				\
 	    }								\
 	}								\
@@ -587,7 +587,8 @@ static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, R_xlen_t each, R_xlen_t nt)
 	case EXPRSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		SET_VECTOR_ELT(a, i, VECTOR_ELT(x, (i/each) % lx));
+		SEXP elt = lazy_duplicate(VECTOR_ELT(x, (i/each) % lx));
+		SET_VECTOR_ELT(a, i, elt);
 	    }
 	    break;
 	case RAWSXP:
@@ -1068,7 +1069,7 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_xlen_t lengths_len, from_len, by_len, ans_len, i, i2, i3;
-    int from_elt, by_elt, length, j, k, to, *ans_elt;
+    int from_elt, by_elt, length, j, k, *ans_elt;
     const int *lengths_elt;
     SEXP ans, lengths, from, by;
 
@@ -1120,7 +1121,7 @@ SEXP attribute_hidden do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1);
 	    error(_("'by' contains NAs"));
 	}
-	to = from_elt + (length - 1) * by_elt;
+	// int to = from_elt + (length - 1) * by_elt;
 	for (k = 0, j = from_elt; k < length; j += by_elt, k++)
 	    *(ans_elt++) = j;
     }

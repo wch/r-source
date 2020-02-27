@@ -65,10 +65,10 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
 	return x + a + b + ncp;
 #endif
     if (ncp < 0 || a <= 0 || b <= 0)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     if (!R_FINITE(a) || !R_FINITE(b) || !R_FINITE(ncp))
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     if (x < 0 || x > 1) return(R_D__0);
     if(ncp == 0)

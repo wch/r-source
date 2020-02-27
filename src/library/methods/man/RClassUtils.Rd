@@ -85,7 +85,7 @@ isVirtualClass(Class, where)
 
 newBasic(Class, ...)
 
-makeExtends(Class, to, coerce, test, replace, by, package, slots,
+makeExtends(Class, coerce, test, replace, by, package, slots,
             classDef1, classDef2)
 
 reconcilePropertiesAndPrototype(name, properties, prototype,
@@ -236,7 +236,8 @@ setDataPart(object, value, check = TRUE)
     }
 
     \item{\code{makeExtends}:}{
-      convert the argument to a list defining the extension mechanism.
+      Construct an SClassExtension object representing the relationship
+      from \code{Class} to the class defined by \code{classDef2}. 
     }
 
     \item{\code{reconcilePropertiesAndPrototype}:}{

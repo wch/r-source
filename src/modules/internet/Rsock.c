@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2019   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -51,8 +51,6 @@ extern void R_ProcessEvents(void);
 
 static int sock_inited = 0;
 
-static struct Sock_error_t perr;
-
 static int enter_sock(int fd)
 {
 #ifdef DEBUG
@@ -63,10 +61,11 @@ static int enter_sock(int fd)
 
 static int close_sock(int fd)
 {
+    struct Sock_error_t perr;
     perr.error = 0;
     int res = Sock_close(fd, &perr);
     if (res == -1) {
-	REprintf("socket error: %s\n", strerror(perr.error));
+	REprintf("socket error: %s\n", R_socket_strerror(perr.error));
 	return -1;
     }
     return 0;
@@ -85,22 +84,28 @@ static void check_init(void)
 
 void in_Rsockopen(int *port)
 {
+    struct Sock_error_t perr;
     check_init();
     perr.error = 0;
-    *port = enter_sock(Sock_open((Sock_port_t)*port, &perr));
-    if(perr.error) REprintf("socket error: %s\n", strerror(perr.error));
+    *port = enter_sock(Sock_open((Sock_port_t)*port, 1 /* blocking */,
+                                  &perr));
+    if(perr.error)
+	REprintf("socket error: %s\n", R_socket_strerror(perr.error));
 }
 
 void in_Rsocklisten(int *sockp, char **buf, int *len)
 {
+    struct Sock_error_t perr;
     check_init();
     perr.error = 0;
     *sockp = enter_sock(Sock_listen(*sockp, *buf , *len, &perr));
-    if(perr.error) REprintf("socket error: %s\n", strerror(perr.error));
+    if(perr.error)
+	REprintf("socket error: %s\n", R_socket_strerror(perr.error));
 }
 
 void in_Rsockconnect(int *port, char **host)
 {
+    struct Sock_error_t perr;
     check_init();
 #ifdef DEBUG
     printf("connect to %d at %s\n",*port, *host);
@@ -109,7 +114,7 @@ void in_Rsockconnect(int *port, char **host)
     *port = enter_sock(Sock_connect((Sock_port_t)*port, *host, &perr));
 //    if(perr.h_error) REprintf("host lookup error: %s\n", hstrerror(perr.h_error));
     if(perr.error)
-	REprintf("socket error: %s\n", strerror(perr.error));
+	REprintf("socket error: %s\n", R_socket_strerror(perr.error));
 }
 
 void in_Rsockclose(int *sockp)
@@ -119,17 +124,20 @@ void in_Rsockclose(int *sockp)
 
 void in_Rsockread(int *sockp, char **buf, int *maxlen)
 {
+    struct Sock_error_t perr;
     check_init();
 #ifdef DEBUG
     printf("Reading from %d\n",*sockp);
 #endif
     perr.error = 0;
     *maxlen = (int) Sock_read(*sockp, *buf, *maxlen, &perr);
-    if(perr.error) REprintf("socket error: %s\n", strerror(perr.error));
+    if(perr.error)
+	REprintf("socket error: %s\n", R_socket_strerror(perr.error));
 }
 
 void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 {
+    struct Sock_error_t perr;
     ssize_t n;
     if (*end > *len)
 	*end = *len;
@@ -146,7 +154,8 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
     perr.error = 0;
     n = Sock_write(*sockp, *buf + *start, *end - *start, &perr);
     *len = (int) n;
-    if(perr.error) REprintf("socket error: %s\n", strerror(perr.error));
+    if(perr.error)
+	REprintf("socket error: %s\n", R_socket_strerror(perr.error));
 }
 
 /* --------- for use in socket connections ---------- */
@@ -154,11 +163,11 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 #include <R_ext/R-ftp-http.h>
 
 #ifdef Win32
-#define FD_SETSIZE 1024
-#include <winsock2.h>
 #include <io.h>
-#define EWOULDBLOCK             WSAEWOULDBLOCK
+#define ECONNABORTED            WSAECONNABORTED
 #define EINPROGRESS             WSAEINPROGRESS
+#define EINTR                   WSAEINTR
+#define EWOULDBLOCK             WSAEWOULDBLOCK
 #else
 # include <netdb.h>
 # include <sys/socket.h>
@@ -179,21 +188,6 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 #endif
 
 struct hostent *R_gethostbyname(const char *name);
-
-#ifndef Win32
-#define closesocket(s) close(s)
-#define SOCKET int
-#endif
-
-static int socket_errno(void)
-{
-#ifdef Win32
-    return(WSAGetLastError());
-#else
-    return(errno);
-#endif
-}
-
 
 #ifdef Unix
 #include <R_ext/eventloop.h>
@@ -218,6 +212,25 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 }
 #endif
 
+static void set_timeval(struct timeval *tv, int timeout)
+{
+#ifdef Unix
+    if(R_wait_usec > 0) {
+	tv->tv_sec = 0;
+	tv->tv_usec = R_wait_usec;
+    } else {
+	tv->tv_sec = timeout;
+	tv->tv_usec = 0;
+    }
+#elif defined(Win32)
+    tv->tv_sec = 0;
+    tv->tv_usec = 2e5;
+#else
+    tv->tv_sec = timeout;
+    tv->tv_usec = 0;
+#endif
+}
+
 static int R_SocketWait(int sockfd, int write, int timeout)
 {
     fd_set rfd, wfd;
@@ -227,22 +240,7 @@ static int R_SocketWait(int sockfd, int write, int timeout)
     while(1) {
 	int maxfd = 0, howmany;
 	R_ProcessEvents();
-#ifdef Unix
-	if(R_wait_usec > 0) {
-	    tv.tv_sec = 0;
-	    tv.tv_usec = R_wait_usec;
-	} else {
-	    tv.tv_sec = timeout;
-	    tv.tv_usec = 0;
-	}
-#elif defined(Win32)
-	tv.tv_sec = 0;
-	tv.tv_usec = 2e5;
-#else
-	tv.tv_sec = timeout;
-	tv.tv_usec = 0;
-#endif
-
+	set_timeval(&tv, timeout);
 
 #ifdef Unix
 	maxfd = setSelectMask(R_InputHandlers, &rfd);
@@ -259,8 +257,8 @@ static int R_SocketWait(int sockfd, int write, int timeout)
 
 	howmany = R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL);
 
-	if (howmany < 0) {
-	    return -socket_errno();
+	if (R_socket_error(howmany)) {
+	    return -R_socket_errno();
 	}
 	if (howmany == 0) {
 	    if(used >= timeout) return 1;
@@ -344,8 +342,8 @@ int R_SocketWaitMultiple(int nsock, int *insockfd, int *ready, int *write,
 
 	howmany = R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL);
 
-	if (howmany < 0) {
-	    return -socket_errno();
+	if (R_socket_error(howmany)) {
+	    return -R_socket_errno();
 	}
 	if (howmany == 0) {
 	    if(mytimeout >= 0 && used >= mytimeout) {
@@ -389,6 +387,9 @@ int R_SockConnect(int port, char *host, int timeout)
 {
     SOCKET s;
     fd_set wfd, rfd;
+#ifdef Win32
+    fd_set efd;
+#endif
     struct timeval tv;
     int status = 0;
     double used = 0.0;
@@ -397,32 +398,12 @@ int R_SockConnect(int port, char *host, int timeout)
 
     check_init();
     s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (s == -1)  return -1;
+    if (R_invalid_socket(s))  return -1;
 
-#define CLOSE_N_RETURN(_ST_) { closesocket(s); return(_ST_); }
+#define CLOSE_N_RETURN(_ST_) { R_close_socket(s); return(_ST_); }
 
-#ifdef Win32
-    {
-	u_long one = 1;
-	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
-    }
-#else
-# ifdef HAVE_FCNTL
-    if ((status = fcntl(s, F_GETFL, 0)) != -1) {
-#  ifdef O_NONBLOCK
-	status |= O_NONBLOCK;
-#  else /* O_NONBLOCK */
-#   ifdef F_NDELAY
-	status |= F_NDELAY;
-#   endif
-#  endif /* !O_NONBLOCK */
-	status = fcntl(s, F_SETFL, status);
-    }
-# endif // HAVE_FCNTL
-    if (status < 0) {
-	CLOSE_N_RETURN(-1);
-    }
-#endif
+    if (R_set_nonblocking(s))
+	return -1;
 
     if (! (hp = R_gethostbyname(host))) CLOSE_N_RETURN(-1);
 
@@ -430,37 +411,23 @@ int R_SockConnect(int port, char *host, int timeout)
     server.sin_port = htons((short)port);
     server.sin_family = AF_INET;
 
-    if ((connect(s, (struct sockaddr *) &server, sizeof(server)) == -1)) {
+    if (R_socket_error(connect(s, (struct sockaddr *) &server,
+                               sizeof(server)))) {
 
-	switch (socket_errno()) {
+	switch (R_socket_errno()) {
 	case EINPROGRESS:
 	case EWOULDBLOCK:
 	    break;
 	default:
 	    CLOSE_N_RETURN(-1);
 	}
-    }
+    } else
+	return(s);
 
     while(1) {
 	int maxfd = 0;
 	R_ProcessEvents();
-#ifdef Unix
-	if(R_wait_usec > 0) {
-	    R_PolledEvents();
-	    tv.tv_sec = 0;
-	    tv.tv_usec = R_wait_usec;
-	} else {
-	    tv.tv_sec = timeout;
-	    tv.tv_usec = 0;
-	}
-#elif defined(Win32)
-	tv.tv_sec = 0;
-	tv.tv_usec = 2e5;
-#else
-	tv.tv_sec = timeout;
-	tv.tv_usec = 0;
-#endif
-
+	set_timeval(&tv, timeout);
 
 #ifdef Unix
 	maxfd = setSelectMask(R_InputHandlers, &rfd);
@@ -469,21 +436,30 @@ int R_SockConnect(int port, char *host, int timeout)
 #endif
 	FD_ZERO(&wfd);
 	FD_SET(s, &wfd);
+#ifdef Win32
+	FD_ZERO(&efd);
+	FD_SET(s, &efd);
+#endif
 	if(maxfd < s) maxfd = s;
 
-	switch(R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL))
-	{
-	case 0:
-	    /* Time out */
-	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
-	    if(used < timeout) continue;
-	    CLOSE_N_RETURN(-1);
-	case -1:
+	/* increment used value _before_ the select in case select
+	   modifies tv (as Linux does) */
+	used += tv.tv_sec + 1e-6 * tv.tv_usec;
+
+#ifdef Win32
+	status = R_SelectEx(maxfd+1, &rfd, &wfd, &efd, &tv, NULL);
+#else
+	status = R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL);
+#endif
+	if (R_socket_error(status))
 	    /* Ermm.. ?? */
 	    CLOSE_N_RETURN(-1);
-	}
-
-	if ( FD_ISSET(s, &wfd) ) {
+	    
+	if (status == 0) {
+	    /* Time out */
+	    if(used < timeout) continue;
+	    CLOSE_N_RETURN(-1);
+	} else if ( FD_ISSET(s, &wfd) ) {
 	    R_SOCKLEN_T len;
 	    len = sizeof(status);
 	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) < 0){
@@ -494,6 +470,15 @@ int R_SockConnect(int port, char *host, int timeout)
 		errno = status;
 		CLOSE_N_RETURN(-1);
 	    } else return(s);
+#ifdef Win32
+	} else if ( FD_ISSET(s, &efd) ) {
+	    R_SOCKLEN_T len;
+	    len = sizeof(status);
+	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) != 0)
+		return (-1);
+	    errno = status;
+	    CLOSE_N_RETURN(-1);
+#endif
 #ifdef Unix
 	} else { /* some other handler needed */
 	    InputHandler *what;
@@ -509,7 +494,7 @@ int R_SockConnect(int port, char *host, int timeout)
 
 int R_SockClose(int sockp)
 {
-    return closesocket(sockp);
+    return R_close_socket(sockp);
 }
 
 ssize_t R_SockRead(int sockp, void *buf, size_t len, int blocking, int timeout)
@@ -519,28 +504,93 @@ ssize_t R_SockRead(int sockp, void *buf, size_t len, int blocking, int timeout)
     if(blocking && (res = R_SocketWait(sockp, 0, timeout)) != 0)
         return res < 0 ? res : 0; /* socket error or timeout */
     res = recv(sockp, buf, len, 0);
-    return (res >= 0) ? res : -socket_errno();
+    return R_socket_error(res) ? -R_socket_errno() : res;
 }
 
 int R_SockOpen(int port)
 {
     check_init();
-    return Sock_open((Sock_port_t)port, NULL);
+    return Sock_open((Sock_port_t)port, 0 /* non-blocking */, NULL);
 }
 
 int R_SockListen(int sockp, char *buf, int len, int timeout)
 {
+    fd_set rfd;
+    struct timeval tv;
+    double used = 0.0;
+    int maxfd = 0;
+    int status = 0;
+
     check_init();
-    /* inserting a wait here will eliminate most blocking, but there
-       are scenarios under which the Sock_listen call might block
-       after the wait has completed. LT */
-    int res = 0;
-    do {
-        res = R_SocketWait(sockp, 0, timeout);
-    } while (res < 0 && -res == EINTR);
-    if(res != 0)
-        return -1;              /* socket error or timeout */
-    return Sock_listen(sockp, buf, len, NULL);
+    /* The listening socket sockp has been opened in non-blocking mode,
+       via R_SockOpen. With a blocking listening socket, there would be a
+       race condition between select() and the following accept():
+       the connection may be reset by the client just after select() and
+       before accept(), which depending on the OS may lead to accept()
+       blocking indefinitely, hence timeout not enforced. See chapter
+       16.6 of "UNIX Network Programming: The sockets networking API", vol 1,
+       Stevens, Fenner, Rudoff.
+    */
+       
+    while(1) {
+	R_ProcessEvents();
+	set_timeval(&tv, timeout);
+
+#ifdef Unix
+	maxfd = setSelectMask(R_InputHandlers, &rfd);
+#else
+	FD_ZERO(&rfd);
+#endif
+	FD_SET(sockp, &rfd);
+	if(maxfd < sockp) maxfd = sockp;
+
+	/* increment used value _before_ the select in case select
+	   modifies tv (as Linux does) */
+	double maybe_used = used + tv.tv_sec + 1e-6 * tv.tv_usec;
+
+	status = R_SelectEx(maxfd+1, &rfd, NULL, NULL, &tv, NULL);
+
+	if (R_socket_error_eintr(status))
+	    /* do not advance used on EINTR */
+	    continue;
+	if (R_socket_error(status))
+	    return -1;
+
+	used = maybe_used;
+	if (status == 0) {
+	    /* time out */
+	    if (used < timeout) continue;
+	    return -1;
+	} else if (FD_ISSET(sockp, &rfd)) {
+	    /* the socket was ready, but maybe no longer is */
+	    struct Sock_error_t perr;
+	    perr.error = 0;
+	    int s = Sock_listen(sockp, buf, len, &perr);
+	    if (s == -1) {
+		switch(perr.error) {
+		case EINPROGRESS:
+		case EWOULDBLOCK:
+		case ECONNABORTED:
+#ifndef Win32
+		case EPROTO:
+#endif
+		    continue;
+		default:
+		    return -1; /* socket error */
+		}
+	    }
+	    return s; /* got a connection */
+#ifdef Unix
+	} else {
+	    /* was one of the extras */
+	    InputHandler *what;
+	    what = getSelectedHandler(R_InputHandlers, &rfd);
+	    if(what != NULL) what->handler((void*) NULL);
+	    continue;
+#endif
+	}
+    }
+    /* not reached */
 }
 
 ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)
@@ -557,8 +607,8 @@ ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)
 	if((res = R_SocketWait(sockp, 1, timeout)) != 0)
 	    return res < 0 ? res : 0; /* socket error or timeout */
 	res = send(sockp, buf, len, 0);
-	if (res < 0 && socket_errno() != EWOULDBLOCK)
-	    return -socket_errno();
+	if (R_socket_error(res) && R_socket_errno() != EWOULDBLOCK)
+	    return -R_socket_errno();
 	else {
 	    { const char *cbuf = buf; cbuf += res; buf = cbuf; }
 	    len -= res;

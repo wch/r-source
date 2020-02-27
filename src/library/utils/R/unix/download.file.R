@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,20 +36,18 @@ download.file <-
 
     nh <- names(headers)
     if(length(nh) != length(headers) || any(nh == "") || anyNA(headers) || anyNA(nh))
-        stop("'headers' must have names and must not be NA")
+	stop("'headers' must have names and must not be NA")
 
     switch(method,
 	   "internal" = {
-	       if(!is.null(headers))
-		   headers <- paste0(nh, ": ", headers, "\r\n", collapse = "")
+	       headers <- if(length(headers)) paste0(nh, ": ", headers, "\r\n", collapse = "")
 	       status <- .External(C_download, url, destfile, quiet, mode,
 				   cacheOK, headers)
 	       ## needed for Mac GUI from download.packages etc
 	       if(!quiet) flush.console()
 	   },
 	   "libcurl" = {
-	       if(!is.null(headers))
-		   headers <- paste0(nh, ": ", headers)
+	       headers <- if(length(headers)) paste0(nh, ": ", headers)
 	       status <- .Internal(curlDownload(url, destfile, quiet, mode,
 						cacheOK, headers))
 	       if(!quiet) flush.console()

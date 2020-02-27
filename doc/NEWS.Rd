@@ -29,15 +29,9 @@
        \code{extSoftVersion()}, PCRE1 has versions < 10, PCRE2 versions
        >= 10.
 
-       \item For now only active when environment variable
-       \env{_R_CLASS_MATRIX_ARRAY_} is set to something true (i.e., one
-       of \samp{TRUE}, \samp{True}, \samp{true}, or \samp{T}), but
-       planned to be the new unconditional behavior when R 4.0.0 is
-       released:
-
-       \code{matrix} objects now also inherit from class \code{"array"},
-       namely, e.g., \code{class(diag(1))} is \code{c("matrix",
-       "array")} which invalidates code assuming that
+       \item \code{matrix} objects now also inherit from class
+       \code{"array"}, namely, e.g., \code{class(diag(1))} is
+       \code{c("matrix", "array")} which invalidates code assuming that
        \code{length(class(obj)) == 1}, an incorrect assumption that is
        less frequently fulfilled now.
 
@@ -51,7 +45,19 @@
        help make the internal code easier to maintain. This change is
        expected to have minimal impact on packages not using unsupported
        coding practices in their C/C++ code.
-    }
+
+       \item \R now provides a syntax for specifying raw character
+       constants similar to the one used in C++: \code{r"(...)"} with
+       \code{...} any character sequence, except that it must not
+       contain the closing sequence \samp{)"}. %}) \samp{*}: Rd-parser bug for \code{*}"
+       This makes it easier to write strings that contain backslashes or
+       both single and double quotes.  For more details see \code{?Quotes}.
+
+       \item \code{N <- NULL; N[[1]] <- val} now turns \code{N} into a
+       \code{list} also when \code{length(val) == 1}, consistently.  This
+       also enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
+       \code{r1}, fixing \PR{17719}, reported by Serguei Sokol.
+     }
   }
 
   \subsection{NEW FEATURES}{
@@ -150,6 +156,9 @@
       notably for \emph{vector} \code{n}, e.g. to get a \dQuote{corner} of
       a matrix, also extended for \code{array}'s of higher dimension,
       thanks to the patch proposal by Gabe Becker in \PR{17652}.
+      Consequently, optional argument \code{addrownums} is deprecated and
+      replaced by the (more general) \code{keepnums}.  Invalid (2nd arg.)
+      \code{n} now leads to typically more easily readable error messages.
 
       \item New function \code{.class2()} provides the full character
       vector of class names used for S3 method dispatch.
@@ -180,9 +189,68 @@
       cases.
 
       \item \code{sequence()} is now an S3 generic, with an internally
-      implemented default method, and gains arguments to
-      generate more complex sequences. Based on code from the S4Vectors
+      implemented default method, and gains arguments to generate more
+      complex sequences.  Based on code from the \pkg{S4Vectors}
       Bioconductor package and the advice of Hervé Pagès.
+
+      \item \code{print()}'s default method and many other methods (by
+      calling the default eventually and passing \code{...}) now make
+      use of a new optional \code{width} argument, avoiding the need for
+      the user to set and reset \code{options("width")}.
+
+      \item \code{memDecompress()} supports the RFC 1952 format
+      (e.g.\sspace{}in-memory copies of \command{gzip}-compressed files)
+      as well as RFC 1950.
+
+      \item \code{memCompress()} and \code{memDecompress()} support long
+      raw vectors for types \code{"gzip"} and \code{"zx"}.
+
+      \item \code{sweep()} and \code{slice.index()} can now use names
+      of dimnames for their \code{MARGIN} argument (\code{apply} has
+      had this for almost a decade).
+
+      \item New function \code{proportions()} and
+      \code{marginSums()}. These should
+      replace the unfortunately named \code{prop.table()}
+      and \code{margin.table()}. They are drop-in replacements, but
+      also add named-margin functionality. The old names are retained
+      as aliases for back-compatibility.
+
+      \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
+      \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
+      \code{rwilcox()} which have returned integer since R 3.0.0 and hence
+      \code{NA} when the numbers would have been outside the integer range,
+      now return double vectors (without NAs, typically) in these cases.
+
+      \item \code{matplot(x,y)} (and hence \code{matlines()} and
+      \code{matpoints()}) now call the corresponding methods of
+      \code{plot()} and \code{lines()}, e.g, when \code{x} is a
+      \code{"Date"} or \code{"POSIXct"} object; prompted by Spencer Graves'
+      suggestion.
+
+      \item \code{stopifnot()} now allows customizing error messages via
+      argument names, thanks to a patch proposal by Neal Fultz in \PR{17688}.
+
+      \item  \code{unlink()} gains a new argument \code{expand} to
+      disable wildcard and tilde expansion.
+
+      \item \code{mle()} in the \code{stats4} package has had its
+      interface extended so that arguments to the negative
+      log-likelihood function can be one or more vectors, with similar
+      conventions applying to bounds, start values, and parameter values
+      to be kept fixed. NB: This has required a minor extension to class
+      \code{"mle"}, so saved objects from earlier versions may need to
+      be recomputed.
+
+      \item The default for \code{pdf()} is now
+      \code{useDingbats = FALSE}.
+
+      \item The default (fill colour) for both \code{hist()} and
+      \code{boxplot()} is now \code{col = "lightgray"}.
+
+      \item The default order of the levels on the y-axis
+      for both \code{spineplot()} and \code{cdplot()}
+      has been reversed.
     }
   }% end{ NEW FEATURES }
 
@@ -243,6 +311,11 @@
       \item Header \file{R_ext/Print.h} defines \samp{R_USE_C99_IN_CXX}
       and hence exposes \code{Rvprintf} and \code{REprintf} if used with
       a C++11 compiler.
+
+      \item There are new Fortran subroutines \code{dblepr1},
+      \code{realpr1} and \code{intpr1} to print a scalar variable
+      (\command{gfortran} 10 enforces the distinction between scalars
+      and length-one arrays).  Also \code{labelpr} to print just a label.
     }
   }
 
@@ -280,6 +353,9 @@
       \item \command{R CMD check} now optionally checks
       \command{configure} and \command{cleanup} scripts for
       non-Bourne-shell code (\sQuote{bashisms}).
+
+      \item \command{R CMD check --as-cran} now uses a
+      \samp{stringsAsFactors = FALSE} default setting.
     }
   }
 
@@ -386,9 +462,13 @@
       changeover days, fixing \PR{16764}, thanks to proposals and analysis
       by Johannes Ranke and Kirill Müller.
 
-      \item \code{round()} correctly rounds \dQuote{to even} in more cases,
-      thanks to increased internal accuracy via code simplification
-      proposed by Adam Wheeler in his report (\PR{17668}).
+      \item \code{round()} finally rounds \emph{\dQuote{to nearest}}
+      by \emph{measuring} and \emph{\dQuote{to even}}; thanks to a
+      careful algorithm originally prompted by the report from Adam Wheeler
+      and then others, in \PR{17668}.
+      \cr
+      \code{round(x, dig)} for \emph{negative} digits is much more rational
+      now, notably for large \eqn{|dig|}.
 
       \item Inheritance information on S4 classes is maintained more
       consistently, particularly in the case of class unions (in part
@@ -397,14 +477,41 @@
       \item \code{is()} behaves more robustly when \code{class2} is a
       \code{classRepresentation} object.
 
-      \item The warning message when attempting to export an nonexistant
+      \item The warning message when attempting to export an nonexistent
       class is now more readable; thanks to Thierry Onkelinx for
       recognizing the problem.
+
+      \item \code{scan()} issues with UTF-8 data when running in DBCS locale
+      have been resolved (\PR{16520},\PR{16584}).
+
+      \item \code{choose()} misbehaved in corner cases where it switched
+      \code{n - k} for \code{k} and \code{n} was only \emph{nearly} integer
+      (report from Erik Scott Wright).
+
+      \item \code{mle()} in the \code{stats4} package had problems
+      combining use of box constraints and fixed starting values (in
+      particular, confidence intervals were affected).
+
+      \item Operator \code{?} now has lower precedence than \code{=}
+      to work as documented and to behave like \code{<-} in help
+      expressions (\PR{16710}).
+
+      \item \code{smoothEnds(x)} now returns \code{integer} type in
+      \emph{both} cases when \code{x} is \code{integer}, thanks to report
+      and proposal by Bill Dunlap \PR{17693}.
+
+      \item The \pkg{methods} package does a better job of tracking
+      inheritance relationships across packages.
+
+      \item \code{norm(diag(c(1, NA)), "2")} now works.
+
+      \item \code{subset()} had problems with 0-col dataframe (Bill Dunlap,
+      \PR{17721})
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.6.2 patched}{
+\section{\Rlogo CHANGES IN R 3.6.3}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -412,14 +519,34 @@
       the included routines, just bug fixes).
     }
   }
+
   \subsection{BUG FIXES}{
     \itemize{
+      \item Fixed a C level integer overflow in \code{rhyper()}; reported
+      by Benjamin Tyner in \PR{17694}.
+
+      \item Uses of \code{url(gzcon(.))} needing to extend buffer size
+      have failed (with HTTP/2 servers), reported by Gábor Csárdi.
+
+      \item \code{predict(loess(..), se=TRUE)} now errors out (instead of
+      seg.faulting etc) for large sample sizes, thanks to a report and
+      patch by Benjamin Tyner in \PR{17121}.
+
+      \item \code{tools:assertCondition(., "error")} and hence
+      \code{assertError()} no longer return errors twice (invisibly).
+
       \item \code{update(form, new)} in the case of a long \code{new}
       formula sometimes wrongly eliminated the intercept from \code{form},
-      or (more rarely) added a garbage term (or seg.faulted !); reported by Mathias Ambühl in
-      \PR{16326}.
-      %% There is *still* a bug left but at least no seg.faulting memory corruption
-      %% Will be ported to .. "patched" once that is fixed ..
+      or (more rarely) added a garbage term (or seg.faulted !); the fix
+      happened by simplifying the C-level logic of \code{terms.formula()}.
+      Reported by Mathias Ambühl in \PR{16326}.
+
+      \item The error message from \code{stopifnot(.., <error producing call>)}
+      again contains the full \code{"stopifnot(.......)"} call: Its
+      attempted suppression did not work consistently. % & was an ugly hack
+
+      \item On Windows, \code{download.file(., , "wininet", headers=character())}
+      would fail; reported with patch proposal by Kevin Ushey in \PR{17710}.
     }
   }
 }

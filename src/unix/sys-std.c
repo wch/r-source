@@ -95,7 +95,7 @@ void attribute_hidden Rstd_Suicide(const char *s)
   e.g. after invoking a resume restart. If the interrupt handler
   returns then the select call is retried. If the timeout is not NULL
   then the timeout is adjusted for the elapsed time before the retry.
-  If the supplied timout value is zero, select is called without
+  If the supplied timeout value is zero, select is called without
   setting up an error handler since it should return immediately.
  */
 

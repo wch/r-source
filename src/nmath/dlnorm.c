@@ -33,7 +33,7 @@ double dlnorm(double x, double meanlog, double sdlog, int give_log)
     if (ISNAN(x) || ISNAN(meanlog) || ISNAN(sdlog))
 	return x + meanlog + sdlog;
 #endif
-    if(sdlog < 0) ML_ERR_return_NAN;
+    if(sdlog < 0) ML_WARN_return_NAN;
     if(!R_FINITE(x) && log(x) == meanlog) return ML_NAN;/* log(x) - meanlog is NaN */
     if(sdlog == 0)
 	return (log(x) == meanlog) ? ML_POSINF : R_D__0;

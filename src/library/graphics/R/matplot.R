@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/matplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,16 +51,31 @@ matplot <- function(x, y, type = "p",
 	y <- x;	 ylabel <- xlabel
 	x <- seq_len(NROW(y)); xlabel <- ""
     }
-    kx <- ncol(x <- as.matrix(x))
-    ky <- ncol(y <- as.matrix(y))
-    n <- nrow(x)
+    ## To preserve class, typically don't use as.matrix() or matrix() but only `dim<-`:
+    if(is.matrix(x)) {
+        n <- nrow(x)
+    } else if(!is.null(dim(x))) { # matrix-like: data.frame, sparseMatrix, ..
+        n <- nrow(x <- as.matrix(x))
+    } else {
+        n <- length(x)
+        dim(x) <- c(n, 1L)
+    }
+    if(is.matrix(y)) {
+        ## nothing
+    } else if(!is.null(dim(y))) { # matrix-like
+        y <- as.matrix(y)
+    } else {
+        dim(y) <- c(length(y), 1L)
+    }
     if(n != nrow(y)) stop("'x' and 'y' must have same number of rows")
-
+    kx <- ncol(x)
+    ky <- ncol(y)
+    if(!kx || !ky) return(invisible())
+    ## otherwise kx, ky >= 1
+    if(FALSE) ## No longer needed:
     if(kx > 1L && ky > 1L && kx != ky)
 	stop("'x' and 'y' must have only 1 or the same number of columns")
-    if(kx == 1L) x <- matrix(x, nrow = n, ncol = ky)
-    if(ky == 1L) y <- matrix(y, nrow = n, ncol = kx)
-    k <- max(kx, ky) ## k == kx == ky
+    k <- max(kx, ky)
 
     type <- str2vec(type)
     if(is.null(pch)) {
@@ -74,19 +89,19 @@ matplot <- function(x, y, type = "p",
 		paste0(" col= (", paste.ch(col), ")"),
 		paste0(" pch= (", paste.ch(pch), ")"),
 		" ...\n", domain=NA)
-    xy <- xy.coords(x, y, xlabel, ylabel, log = log)
-    xlab <- if (is.null(xlab)) xy$xlab else xlab
-    ylab <- if (is.null(ylab)) xy$ylab else ylab
-    xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
-    ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
+    xy <- xy.coords(x, y, xlabel, ylabel, log = log, recycle=TRUE) # recycle if kx or ky is 1
+    if(is.null(xlab)) xlab <- xy$xlab
+    if(is.null(ylab)) ylab <- xy$ylab
+    if(is.null(xlim)) xlim <- range(xy$x[is.finite(xy$x)])
+    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
     if(length(type)< k) type <- rep_len(type,k)
-    if(length(lty) < k) lty <- rep_len(lty, k)
-    if(length(lend)< k) lend <- rep_len(lend, k)
+    if(length(lty) < k) lty  <- rep_len(lty, k)
+    if(length(lend)< k) lend <- rep_len(lend,k)
     ## sciplot passes NULL
     if(length(lwd) < k && !is.null(lwd)) lwd <- rep_len(lwd, k)
     if(length(pch) < k) pch <- rep_len(pch, k)
     if(length(col) < k) col <- rep_len(col, k)
-    if(length(bg) < k)	bg  <- rep_len(bg,  k)
+    if(length(bg)  < k)	bg  <- rep_len(bg,  k)
     ## should not be able to call rep() on NULL
     if(is.null(cex)) cex <- 1
     if(length(cex) < k) cex <- rep_len(cex, k)
@@ -100,7 +115,8 @@ matplot <- function(x, y, type = "p",
              bg = bg[1L], log = log, ...)
     }
     for (i in ii)
-	lines(x[,i], y[,i], type = type[i], lty = lty[i], lwd = lwd[i],
+	lines(x[, 1L + (i-1L) %% kx], y[, 1L + (i-1L) %% ky],
+              type = type[i], lty = lty[i], lwd = lwd[i],
               lend = lend[i], pch = pch[i], col = col[i], cex = cex[i],
               bg = bg[i])
     invisible()

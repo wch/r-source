@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2018  The R Core Team.
+ *  Copyright (C) 2000-2020  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1048,7 +1048,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString((x = CAR(args))))
 	error(_("invalid '%s' argument"), "x");
     if(!isString((sformat = CADR(args))) || XLENGTH(sformat) == 0)
-	error(_("invalid '%s' argument"), "x");
+	error(_("invalid '%s' argument"), "format");
     if(!isString((stz = CADDR(args))) || LENGTH(stz) != 1)
 	error(_("invalid '%s' value"), "tz");
     tz = CHAR(STRING_ELT(stz, 0));

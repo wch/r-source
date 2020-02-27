@@ -87,10 +87,10 @@ double rgamma(double a, double scale)
     double e, p, q, r, t, u, v, w, x, ret_val;
 
     if (ISNAN(a) || ISNAN(scale))
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     if (a <= 0.0 || scale <= 0.0) {
 	if(scale == 0. || a == 0.) return 0.;
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     }
     if(!R_FINITE(a) || !R_FINITE(scale)) return ML_POSINF;
 

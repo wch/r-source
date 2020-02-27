@@ -1,6 +1,6 @@
 % File src/library/stats4/man/mle-class.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mle-class}
@@ -21,7 +21,9 @@
     \item{\code{coef}:}{Object of class \code{"numeric"}.  Estimated
       parameters.}
     \item{\code{fullcoef}:}{Object of class \code{"numeric"}.
-      Fixed and estimated parameters.}
+      Full parameter set of fixed and estimated parameters.}
+    \item{\code{fixed}:}{Object of class \code{"numeric"}.
+      Fixed parameter values (\code{NA} for non-fixed parameters).}
     \item{\code{vcov}:}{Object of class \code{"matrix"}.  Approximate
       variance-covariance matrix.}
     \item{\code{min}:}{Object of class \code{"numeric"}.  Minimum value

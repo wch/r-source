@@ -75,8 +75,11 @@ function(x, y,
     xorig <- x
     x <- as.numeric(x)
     if(!is.factor(y)) stop("dependent variable should be a factor")
-    if(!is.null(ylevels))
-      y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
+
+    ## reverse ordering on y-axis compared to R < 4.0.0
+    ylevels <- if(is.null(ylevels)) nlevels(y):1L else rev(ylevels)
+    y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
+    yaxlabels <- yaxlabels[ylevels]
 
     ## unconditional density of x
     dx <- if(is.null(from) & is.null(to))
@@ -87,7 +90,7 @@ function(x, y,
 
     ## setup conditional values
     ny <- length(levels(y))
-    yprop <- cumsum(prop.table(table(y)))
+    yprop <- cumsum(proportions(table(y)))
     y1 <- matrix(rep(0, n * (ny - 1L)), nrow = (ny - 1L))
 
     ## setup return value

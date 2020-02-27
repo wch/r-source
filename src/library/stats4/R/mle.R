@@ -19,6 +19,7 @@
 setClass("mle", representation(call = "language",
                                coef = "numeric",
                                fullcoef = "numeric",
+                               fixed = "numeric",
                                vcov = "matrix",
                                min = "numeric",
                                details = "list",
@@ -33,40 +34,117 @@ setClass("summary.mle", representation(call = "language",
 setClass("profile.mle", representation(profile="list",
                                        summary="summary.mle"))
 
-mle <- function(minuslogl, start = formals(minuslogl), method = "BFGS",
-                fixed = list(), nobs, ...)
+mle <- function(minuslogl, start, optim = stats::optim,
+                method = if(!useLim) "BFGS" else "L-BFGS-B",
+                fixed = list(), nobs, lower, upper, ...)
 {
-    # Insert sanity checks here...
+    ## Insert more sanity checks here?
     call <- match.call()
-    n <- names(fixed)
-    fullcoef <- formals(minuslogl)
-    if(any(! n %in% names(fullcoef)))
-        stop("some named arguments in 'fixed' are not arguments to the supplied log-likelihood")
-    fullcoef[n] <- fixed
-    if(!missing(start) && (!is.list(start) || is.null(names(start))))
-        stop("'start' must be a named list")
-    start[n] <- NULL
-    start <- sapply(start, eval.parent) # expressions are allowed
-    nm <- names(start)
-    oo <- match(nm, names(fullcoef))
-    if (anyNA(oo))
-        stop("some named arguments in 'start' are not arguments to the supplied log-likelihood")
-    start <- start[order(oo)]
-    nm <- names(start) ## reordered names needed
+
+    ## Need some care here: formals(minuslogl) may have
+    ## - default expressions, which need evaluation (to know the lengths)
+    ## - missing defaults, which gives an error if evaluated, assume scalar
+    ## It is assumed that default expressions can be evaluated in the environment
+    ## of "minuslogl". I.e., they cannot refer to internal variables.
+    ## If defaults are missing, they _must_ be supplied by "start"
+    ## (We could be marginally smarter about this and infer lengths from "start",
+    ## but only if "start" is given as a list.)
+    fullcoef <- lapply(formals(minuslogl), function(i)
+        if (mode(i) == "name" && as.character(i) == "")
+            NA_real_ else eval(i, envir=environment(minuslogl))
+        )
+
+    nf <- names(fullcoef)
+    signature <- list(lengths = sapply(fullcoef, length),
+                      names = lapply(fullcoef, names))
+    sigindex <- factor(rep(nf, signature$lengths), levels=nf)
+    npars <- sum(signature$lengths)
+    l2v <- function(l, default=NA_real_) { # not just NA (logical) because of S4 check
+        nm <- names(l)
+        if (length(l) && is.null(nm)) # Don't require names on empty list
+            stop("named list expected")
+        oo <- match(nm, nf)
+        if (anyNA(oo))
+            stop("some named values are not arguments to the supplied log-likelihood")
+        ## First make a "skeleton" list to be filled in with values from "l".
+        ## Elements in "skeleton" but not in "l" are filled with the default value 
+        skeleton <- lapply(signature$lengths, rep_len, x=default)
+        for (i in names(skeleton))
+            names(skeleton[[i]]) <- signature$names[[i]]
+        skeleton[oo] <- l
+        ## There is a marginal risk that unlisting "skeleton" results in non-unique names
+        ## (e.g., unlist(list(beta=1:2, beta1=3)) uses "beta1" twice).
+        v <- unlist(skeleton)
+        names(v) <- make.unique(names(v))
+        v
+    }
+    
+    v2l <- function(v)
+        split(v, sigindex)
+        
+    if (is.list(fixed))      
+        fixed <- l2v(fixed)
+    
+    isfixed <- !is.na(fixed)
+
+    if (missing(start))
+        start <- l2v(fullcoef)
+    else if (is.list(start)){
+        nm <- names(start)
+        if (anyNA(match(nf, nm))) { # get from defaults
+            extras <- setdiff(nf, nm)
+            start[extras] <- fullcoef[extras]
+        }
+        start <- l2v(start)
+    }
+    if (length(start) != npars)
+        stop ("Mismatch in length of start values")
+            
+    start <- start[!isfixed]
+
+    ## "Onion skin" routine:
+    ## Call minuslogl with vector arg, possibly inserting fixed arg values
     f <- function(p){
-        l <- as.list(p)
-	names(l) <- nm
-        l[n] <- fixed
+        v <- numeric(npars)
+        v[isfixed] <- fixed[isfixed]
+        v[!isfixed] <- p
+        l <- v2l(v)
         do.call("minuslogl", l)
     }
-    oout <- if (length(start))
-        optim(start, f, method = method, hessian = TRUE, ...)
-    else list(par = numeric(), value = f(start))
+    useLim <- !missing(lower) || !missing(upper) 
+    if (useLim)
+    {
+        if (missing(lower)) lower <- rep_len(-Inf, npars)
+        if (missing(upper)) upper <- rep_len(Inf, npars)
+        if (is.list(lower)) lower <- l2v(lower, -Inf)
+        if (is.list(upper)) upper <- l2v(upper, Inf)
+        if (any(isfixed)) # any parms kept fixed
+        {
+            if (!all(lower[isfixed] <= fixed[isfixed] & fixed[isfixed] <= upper[isfixed]))
+                stop("fixed values violate constraints")
+            lower <- lower[!isfixed]
+            upper <- upper[!isfixed]
+        }
+        if (!all(lower <= start & start <= upper))
+        {
+            warning("start values do not satisfy constraints")
+            start <- pmin(pmax(start, lower), upper)
+        }
+    }
+    oout <-
+        if (length(start))
+            if(!useLim)
+                optim(start, f, method = method, hessian = TRUE, ...)
+            else
+                optim(start, f,  method = method, hessian = TRUE, lower = lower, upper = upper, ...)
+        else list(par = numeric(), value = f(start))
     coef <- oout$par
     vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(), 0L, 0L)
     min <- oout$value
-    fullcoef[nm] <- coef
-    new("mle", call = call, coef = coef, fullcoef = unlist(fullcoef),
+    fullcoef <- l2v(fullcoef) # to get the names right
+    fullcoef[!isfixed] <- coef
+    fullcoef[isfixed] <- fixed[isfixed]
+    new("mle", call = call, coef = coef, fullcoef = fullcoef, fixed = fixed,
         vcov = vcov, min = min, details = oout, minuslogl = minuslogl,
         nobs = if(missing(nobs)) NA_integer_ else nobs,
         method = method)
@@ -108,9 +186,11 @@ setMethod("profile", "mle",
     onestep <- function(step)
     {
         bi <- B0[i] + sgn * step * del * std.err[i]
-        fix <- list(bi)
-        names(fix) <- pi
-        call$fixed <- c(fix, fix0)
+        fix <- fix0
+        fix[[ixfix]] <- bi
+
+        call$fixed <- fix
+        
         pfit <- tryCatch(eval.parent(call, 2L), error = identity)
         if(inherits(pfit, "error")) return(NA)
         else {
@@ -134,6 +214,7 @@ setMethod("profile", "mle",
     summ <- summary(fitted)
     std.err <- summ@coef[, "Std. Error"]
     Pnames <- names(B0 <- fitted@coef)
+    B0full <- fitted@fullcoef
     pv0 <- t(as.matrix(B0))
     p <- length(Pnames)
     prof <- vector("list", length = length(which))
@@ -142,11 +223,14 @@ setMethod("profile", "mle",
     call$minuslogl <- fitted@minuslogl
     ndeps <- eval.parent(call$control$ndeps)
     parscale <- eval.parent(call$control$parscale)
-    fix0 <- eval.parent(call$fixed)
+    fix0 <- fitted@fixed
+    isfixed0 <- !is.na(fix0)
+    ixnfix0 <- seq_along(fix0)[!isfixed0] # index of (initially) non-fixed parameters
     for (i in which) {
         zi <- 0
         pvi <- pv0
-        pi <- Pnames[i]
+        pi <- Pnames[[i]]
+        ixfix <- ixnfix0[[i]] # index of add'l param to hold fixed
         if (!is.null(ndeps)) call$control$ndeps <- ndeps[-i]
         if (!is.null(parscale)) call$control$parscale <- parscale[-i]
         for (sgn in c(-1, 1)) {
@@ -161,7 +245,7 @@ setMethod("profile", "mle",
             ## because the parameter gets stepped outside the domain.
             ## (We now have.)
 
-            call$start <- as.list(B0)
+            call$start <- B0full
             lastz <- 0
             while ((step <- step + 1) < maxsteps && abs(z) < zmax) {
                 z <- onestep(step)

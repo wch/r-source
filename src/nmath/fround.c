@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2019 The R Core Team
+ *  Copyright (C) 2000-2020 The R Core Team
  *  Copyright (C) 1998 Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,10 @@ double fround(double x, double digits) {
 
     if (digits > MAX_DIGITS || x == 0.)
 	return x;
-    else if(digits == ML_NEGINF) return 0.0;
+    else if(digits < -max10e) // includes -Inf {aka ML_NEGINF}
+	return 0.;
+    else if (digits == 0.) // common
+	return nearbyint(x);
 
     int dig = (int)floor(digits + 0.5);
     double sgn = +1.;
@@ -52,23 +55,33 @@ double fround(double x, double digits) {
 	sgn = -1.;
 	x = -x;
     } // now  x > 0
-    if (dig == 0) {
-	return sgn * nearbyint(x);
-    } else if (dig > 0) {
-	double l10x = log10(x);
-	if(l10x + dig > DBL_DIG) { // rounding to so many digits that no rounding is needed
-	    return sgn * x;
-	} else if (dig <= DBL_MAX_10_EXP) { // both pow10 := 10^d and (x * pow10) do *not* overflow
-	    LDOUBLE pow10 = R_pow_di(10., dig);
-	    return sgn *  (double)(nearbyint((double)(x * pow10)) / pow10);
-	} else { // DBL_MAX_10_EXP < dig <= DBL_DIG - log10(x) : case of |x| << 1; ~ 10^-305
+    double l10x = M_LOG10_2*(0.5 + logb(x)); // ~= log10(x), but cheaper (presumably)
+    if(l10x + dig > DBL_DIG) // rounding to so many digits that no rounding is needed
+	return sgn * x;
+    else {
+	double pow10, x10, i10,
+	    xd, xu; // x, rounded _d_own or _u_p
+	if (dig <= max10e) { // both pow10 := 10^d and x10 := x * pow10 do *not* overflow
+	    pow10 = R_pow_di(10., dig);
+	    x10 = x * pow10;
+	    i10 = floor(x10);
+	    xd =    i10     / pow10;
+	    xu = ceil (x10) / pow10;
+	} else { // DBL_MAX_10_EXP =: max10e < dig <= DBL_DIG - l10x: case of |x| << 1; ~ 10^-305
 	    int e10 = dig - max10e; // > 0
-	    LDOUBLE p10 = R_pow_di(10., e10),
-		  pow10 = R_pow_di(10., max10e);
-	    return  sgn * (double) (nearbyint((double)((x*pow10)*p10))/pow10/p10);
+	    double
+		p10 = R_pow_di(10., e10);
+	    pow10   = R_pow_di(10., max10e);
+	    x10 = (x * pow10) * p10;
+	    i10 = floor(x10);
+	    xd =    i10     / pow10 / p10;
+	    xu = ceil (x10) / pow10 / p10;
 	}
-    } else {
-	LDOUBLE pow10 = R_pow_di(10., -dig);
-        return sgn *  (double) (nearbyint((double)(x/pow10)) * pow10);
+	double
+	    du = xu - x,
+	    dd = x  - xd;
+	//  D =  du - dd
+	//  return sgn * ((D < 0 || (is_odd_i10 && D == 0)) ? xu : xd);
+	return sgn * ((du < dd || (fmod(i10, 2.) == 1 && du == dd)) ? xu : xd);
     }
 }

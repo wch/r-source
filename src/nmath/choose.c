@@ -122,7 +122,8 @@ double choose(double n, double k)
 	MATHLIB_WARNING2(_("'k' (%.2f) must be integer, rounded to %.0f"), k0, k);
     if (k < k_small_max) {
 	int j;
-	if(n-k < k && n >= 0 && R_IS_INT(n)) k = n-k; /* <- Symmetry */
+	if(n-k < k && n >= 0 && R_IS_INT(n))
+	    k = R_forceint(n-k); /* <- Symmetry, ensure k still integer */
 	if (k <	 0) return 0.;
 	if (k == 0) return 1.;
 	/* else: k >= 1 */

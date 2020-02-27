@@ -67,10 +67,10 @@ setClass <-
         classDef@sealed <- FALSE # to allow setIs to work anyway; will be reset later
         assignClassDef(Class, classDef, where)
         badContains <- character()
-### FIXME: need to iterate over contains, not superclass to get
-### package for getClassDef()
-        for(class2 in superClasses) {
-            if(is(try(setIs(Class, class2, classDef = classDef, where = where)), "try-error"))
+        for(ext in classDef@contains) {
+            class2 <- ext@superClass
+            if(is(try(setIs(Class, class2, classDef = classDef, where = where)),
+                  "try-error"))
                 badContains <- c(badContains, class2)
             else { # update class definition
                 classDef <- getClassDef(Class, where = where)
@@ -205,8 +205,9 @@ makeClassRepresentation <-
         what <- whatClassDef@className # includes package name as attribute
         ## Create the SClassExtension objects (will be simple, possibly dataPart).
         ## The slots are supplied explicitly, since `name' is currently an undefined class
-        contains[[what]] <- makeExtends(name, what, slots = slots,
-                                              classDef2 = whatClassDef, package = package)
+        contains[[what]] <- makeExtends(name, slots = slots,
+                                        classDef2 = whatClassDef,
+                                        package = package)
     }
     validity <- .makeValidityMethod(name, validity)
     if(is.na(virtual)) {
@@ -528,7 +529,7 @@ validObject <- function(object, test = FALSE, complete = FALSE)
 	superClass <- exti@superClass
 	if(!exti@simple && !is(object, superClass))
 	    next ## skip conditional relations that don't hold for this object
-	superDef <- getClassDef(superClass, package = packageSlot(exti))
+	superDef <- getClassDef(superClass)
 	if(is.null(superDef)) {
 	    errors <- c(errors,
 			paste0("superclass \"", superClass,

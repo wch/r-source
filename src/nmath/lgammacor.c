@@ -73,9 +73,9 @@ double attribute_hidden lgammacor(double x)
 #define xmax  3.745194030963158e306
 
     if (x < 10)
-	ML_ERR_return_NAN
+	ML_WARN_return_NAN
     else if (x >= xmax) {
-	ML_ERROR(ME_UNDERFLOW, "lgammacor");
+	ML_WARNING(ME_UNDERFLOW, "lgammacor");
 	/* allow to underflow below */
     }
     else if (x < xbig) {

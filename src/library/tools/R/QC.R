@@ -819,7 +819,7 @@ function(x, ...)
             writeLines("")
         }
     }
-    
+
     ## In general, functions in the code which only have an \alias but
     ## no \usage entry are not necessarily a problem---they might be
     ## mentioned in other parts of the Rd object documenting them, or be
@@ -1471,8 +1471,11 @@ function(package, dir, lib.loc = NULL)
             }
             bad <- vapply(arg_names_in_arg_list_missing_in_usage,
                           function(x)
-			  !grepl(paste0("\\b", x, "\\b"),
-                                 usage_text),
+                              !grepl(paste0("(^|\\W)",
+                                            reQuote(x),
+                                            "($|\\W)"),
+                                     gsub("\\\\dots", "...",
+                                          usage_text)),
                           NA)
             arg_names_in_arg_list_missing_in_usage <-
                 c(bad_args,
@@ -2466,7 +2469,7 @@ function(package, dir, lib.loc = NULL)
         ## error in current S-PLUS versions.)
         if(endsWith(m, ".formula")) {
             if(gArgs[1L] != "...") gArgs <- gArgs[-1L]
-            mArgs <- mArgs[-1L]
+            if(mArgs[1L] != "...") mArgs <- mArgs[-1L]
         }
         dotsPos <- which(gArgs == "...")
         ipos <- if(length(dotsPos))
@@ -2960,6 +2963,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     ## VignetteBuilder packages are needed to ascertain what is a vignette.
     VB <- .get_requires_from_package_db(db, "VignetteBuilder")
 
+    ## FIXME: use vapply to get a character vector.
     depends <- sapply(ldepends, `[[`, 1L)
     imports <- sapply(limports, `[[`, 1L)
     links <- sapply(llinks, `[[`, 1L)
@@ -3090,6 +3094,12 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
                                "graphics", "methods", "utils", "stats"))
     if(length(deps) > 5L) bad_depends$many_depends <- deps
 
+    ## and Imports
+    lim <- as.integer(Sys.getenv("_R_CHECK_EXCESSIVE_IMPORTS_", "0"))
+    imps <- setdiff(imports, standard_package_names$base)
+    if(!is.na(lim) && lim > 0 && length(imps) > lim)
+        bad_depends$many_imports <- imps
+
     ## check header-only packages
     if (check_incoming) {
         hdOnly <- c("BH", "RcppArmadillo", "RcppEigen")
@@ -3102,6 +3112,37 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     RM <- setdiff(.get_requires_from_package_db(db, "RdMacros"),
                   c(depends, imports, suggests))
     if(length(RM)) bad_depends$missing_rdmacros_depends <- RM
+
+    ## (added in 4.0.0) Check for orphaned packages.
+    if (config_val_to_logical(Sys.getenv("_R_CHECK_ORPHANED_", "FALSE"))) {
+        exceptions <- c()
+        ## empty fields are list().
+        strict <- setdiff(unique(c(as.character(depends),
+                                   as.character(imports),
+                                   as.character(links))),
+                          c(exceptions, bad_depends$required_but_not_installed))
+        ## First use dependencies which are installed: strict dependencies
+        ## need to be for a full check.
+        ## Suggests might not even exist, so we suppress warnings.
+        mt <- utils::maintainer
+        strict2 <- sapply(strict, function(x) suppressWarnings(mt(x)))
+        miss1 <- is.na(strict2)
+        weak <- setdiff(as.character(suggests),
+                        c(exceptions, bad_depends$suggested_but_not_installed))
+        weak2 <- sapply(weak, function(x) suppressWarnings(mt(x)))
+        miss2 <- is.na(weak2)
+        if (any(miss1) || any(miss2)) {
+            ## This may not be local and needs a complete CRAN mirror
+            db <- CRAN_package_db()[, c("Package", "Maintainer")]
+            orphaned <- db[db$Maintainer == "ORPHANED" , 1L]
+            s2 <- strict[ (strict %in% orphaned)[miss1] ]
+            w2 <- weak[ (weak %in% orphaned)[miss2] ]
+        } else s2 <- w2 <- character()
+        strict <- c(strict[!miss1 & strict2 == "ORPHANED"], s2)
+        if(length(strict)) bad_depends$orphaned <- sort(strict)
+        weak <- c(weak[!miss2 & weak2 == "ORPHANED"], w2)
+        if(length(weak)) bad_depends$orphaned2 <- sort(weak)
+    }
 
     class(bad_depends) <- "check_package_depends"
     bad_depends
@@ -3202,6 +3243,15 @@ function(x, ...)
                           , collapse = ", ")),
             "")
       },
+      if(ly <- length(x$many_imports)) {
+          c(sprintf("Imports includes %d non-default packages.", ly),
+            strwrap(paste("Importing from so many packages",
+                          "makes the package vulnerable to any of them",
+                          "becoming unavailable.  Move as many as possible to",
+                          "Suggests and use conditionally."
+                          , collapse = ", ")),
+            "")
+      },
       if(length(y <- x$bad_engine)) {
           c(y, "")
       },
@@ -3210,6 +3260,20 @@ function(x, ...)
             c("Packages in Depends/Imports which should probably only be in LinkingTo:", .pretty_format(bad))
           else
             sprintf("Package in Depends/Imports which should probably only be in LinkingTo: %s", sQuote(bad)),
+            "")
+      },
+      if(length(bad <- x[["orphaned"]])) {
+          c(if(length(bad) > 1L)
+            c("Requires orphaned packages:", .pretty_format(bad))
+          else
+            sprintf("Requires orphaned package: %s", sQuote(bad)),
+            "")
+      },
+      if(length(bad <- x[["orphaned2"]])) {
+          c(if(length(bad) > 1L)
+            c("Suggests orphaned packages:", .pretty_format(bad))
+          else
+            sprintf("Suggests orphaned package: %s", sQuote(bad)),
             "")
       }
       )
@@ -4393,15 +4457,16 @@ function(package, dir, lib.loc = NULL)
     }
 
     unknown <- unique(unknown)
-    obsolete <- unknown %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva", "nls", "stepfun", "ts")
-    if (any(obsolete)) {
-        message(sprintf(ngettext(sum(obsolete),
-                                 "Obsolete package %s in Rd xrefs",
-                                 "Obsolete packages %s in Rd xrefs"),
-                        paste(sQuote(unknown[obsolete]), collapse = ", ")),
-                domain = NA)
-    }
-    unknown <- unknown[!obsolete]
+    ## Ancient history ....
+    ## obsolete <- unknown %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva", "nls", "stepfun", "ts")
+    ## if (any(obsolete)) {
+    ##     message(sprintf(ngettext(sum(obsolete),
+    ##                              "Obsolete package %s in Rd xrefs",
+    ##                              "Obsolete packages %s in Rd xrefs"),
+    ##                     paste(sQuote(unknown[obsolete]), collapse = ", ")),
+    ##             domain = NA)
+    ## }
+    ## unknown <- unknown[!obsolete]
     if (length(unknown)) {
         repos <- .get_standard_repository_URLs()
         ## Also allow for additionally specified repositories.
@@ -4893,7 +4958,7 @@ function(dir)
     ## so as from R 2.5.0 we try to set a locale.
     ## Any package with no declared encoding should have only ASCII R
     ## code.
-    on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))    
+    on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
     if(!is.na(enc)) {  ## try to use the declared encoding
         if(.Platform$OS.type == "windows") {
             ## "C" is in fact "en", and there are no UTF-8 locales
@@ -7363,7 +7428,7 @@ function(dir, localOnly = FALSE)
         if(any(vapply(exprs, tst, NA)))
             out$R_files_set_random_seed <- basename(fp)
     }
-    
+
     size <- Sys.getenv("_R_CHECK_SIZE_OF_TARBALL_",
                        unset = NA_character_)
     if(!is.na(size) && (as.integer(size) > 5000000))
@@ -7419,7 +7484,7 @@ function(dir, localOnly = FALSE)
             ## server which handles
             ##   /doc/html /demo /library
             ## and relative paths from help system components resolving
-            ## to such. 
+            ## to such.
             ## (Note that these will not work in general, e.g. for the
             ## pdf refmans.)
             if(any(ind <- (startsWith(fpaths0, "../") &
@@ -7450,6 +7515,39 @@ function(dir, localOnly = FALSE)
             if(length(pos))
                 out$bad_file_URIs <-
                     cbind(fpaths0[pos], parents[pos])
+        }
+        if(remote) {
+            ## Also check arXiv ids.
+            pat <- "<(arXiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>"
+            dsc <- meta["Description"]
+            ids <- .gregexec_at_pos(pat, dsc, gregexpr(pat, dsc), 3L)
+            if(length(ids)) {
+                ini <- "https://arxiv.org/abs/"
+                udb <- url_db(paste0(ini, ids),
+                              rep.int("DESCRIPTION", length(ids)))
+                bad <- tryCatch(check_url_db(udb), error = identity)
+                if(!inherits(bad, "error") && length(bad))
+                    out$bad_arXiv_ids <-
+                        substring(bad$URL, nchar(ini) + 1L)
+            }
+            ## Also check ORCID iDs.
+            odb <- .ORCID_iD_db_from_package_sources(dir)
+            if(NROW(odb)) {
+                ## Only look at things that may be valid: the others are
+                ## complained about elsewhere.
+                ind <- grepl(.ORCID_iD_variants_regexp, odb[, 1L])
+                odb <- odb[ind, , drop = FALSE]
+            }
+            if(NROW(odb)) {
+                ids <- sub(.ORCID_iD_variants_regexp, "\\3", odb[, 1L])
+                ini <- "https://orcid.org/"
+                udb <- url_db(paste0(ini, ids), odb[, 2L])
+                bad <- tryCatch(check_url_db(udb), error = identity)
+                if(!inherits(bad, "error") && length(bad))
+                    out$bad_ORCID_iDs <-
+                        cbind(substring(bad$URL, nchar(ini) + 1L),
+                              bad[, 2L])
+            }
         }
     }
 
@@ -8151,8 +8249,29 @@ function(x, ...)
                               "Found the following (possibly) invalid DOIs:"
                           else
                               "Found the following (possibly) invalid DOI:",
-                          paste0("  ", gsub("\n", "\n    ", format(y), fixed=TRUE))),
+                          paste0("  ", gsub("\n", "\n    ", format(y),
+                                            fixed = TRUE))),
                         collapse = "\n")
+          }),
+      fmt(if(length(y <- x$bad_arXiv_ids)) {
+              paste(c(if(length(y) > 1L)
+                          "The Description field contains the following (possibly) invalid arXiv ids:"
+                      else
+                          "The Description field contains the following (possibly) invalid arXiv id:",
+                      paste0("  ", gsub("\n", "\n    ", format(y),
+                                        fixed = TRUE))),
+                    collapse = "\n")
+          }),
+      fmt(if(length(y <- x$bad_ORCID_iDs)) {
+              paste(c(if(NROW(y) > 1L)
+                          "Found the following (possibly) invalid ORCID iDs:"
+                      else
+                          "Found the following (possibly) invalid ORCID iD:",
+                      sprintf("  iD: %s\t(from: %s)",
+                              unlist(y[, 1L]),
+                              vapply(y[, 2L], paste, "",
+                                     collapse = ", "))),
+                    collapse = "\n")
           }),
       if(length(y <- x$R_files_non_ASCII)) {
           paste(c("No package encoding and non-ASCII characters in the following R files:",
@@ -9259,10 +9378,10 @@ function(package, lib.loc = NULL)
         stop("argument 'package' must be of length 1")
 
     if(package == "base") return()
-    
+
     dir <- find.package(package, lib.loc)
     if(!dir.exists(file.path(dir, "R"))) return()
-    
+
     db <- .read_description(file.path(dir, "DESCRIPTION"))
     suggests <- unname(.get_requires_from_package_db(db, "Suggests"))
     if(!length(suggests)) return()

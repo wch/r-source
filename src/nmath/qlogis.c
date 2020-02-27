@@ -30,7 +30,7 @@ double qlogis(double p, double location, double scale, int lower_tail, int log_p
 #endif
     R_Q_P01_boundaries(p, ML_NEGINF, ML_POSINF);
 
-    if (scale <	 0.) ML_ERR_return_NAN;
+    if (scale <	 0.) ML_WARN_return_NAN;
     if (scale == 0.) return location;
 
     /* p := logit(p) = log( p / (1-p) )	 : */

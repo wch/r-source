@@ -397,8 +397,8 @@ function(formula, data = NULL, ...,
         data <- as.table(data)
         varnames <- attr(stats::terms.formula(formula), "term.labels")
         if(all(varnames != "."))
-            data <- margin.table(data,
-                                 match(varnames, names(dimnames(data))))
+            data <- marginSums(data, varnames)
+                                 # was match(varnames, names(dimnames(data))))
         mosaicplot(data, main = main, ...)
     } else {
         if(is.matrix(edata))

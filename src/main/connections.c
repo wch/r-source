@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2019   The R Core Team.
+ *  Copyright (C) 2000-2020   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1238,7 +1238,6 @@ static Rboolean	fifo_open(Rconnection con)
     ** http://msdn.microsoft.com/en-us/library/windows/desktop/aa365150(v=vs.85).aspx
     */
     this->hdl_namedpipe = NULL;
-    this->overlapped_write = (LPOVERLAPPED)malloc(sizeof(OVERLAPPED));
     this->overlapped_write = CreateEventA(NULL, TRUE, TRUE, NULL);
     if (con->canwrite) {
 	SECURITY_ATTRIBUTES win_namedpipe_secattr = {0};
@@ -1734,7 +1733,7 @@ static int gzfile_fgetc_internal(Rconnection con)
 }
 
 /* This can only seek forwards when writing (when it writes nul bytes).
-   When reading, it either seeks forwards of rewinds and reads again */
+   When reading, it either seeks forwards or rewinds and reads again */
 static double gzfile_seek(Rconnection con, double where, int origin, int rw)
 {
     gzFile  fp = ((Rgzfileconn)(con->private))->fp;
@@ -2962,6 +2961,18 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+static Rconnection getConnectionCheck(SEXP rcon, const char *cls,
+				      const char *var)
+{
+    if(!inherits(rcon, cls))
+	error(_("'%s' is not a %s"), var, cls);
+    Rconnection con = getConnection(asInteger(rcon));
+    /* check that the R class and internal class match */
+    if (strcmp(con->class, cls))
+	error(_("internal connection is not a %s"), cls);
+    return con;
+}
+
 SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     Rconnection con=NULL;
@@ -2969,9 +2980,7 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
 
     checkArity(op, args);
-    if(!inherits(CAR(args), "rawConnection"))
-	error(_("'con' is not a rawConnection"));
-    con = getConnection(asInteger(CAR(args)));
+    con = getConnectionCheck(CAR(args), "rawConnection", "con");
     if(!con->canwrite)
 	error(_("'con' is not an output rawConnection"));
     this = con->private;
@@ -3394,9 +3403,7 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     Routtextconn this;
 
     checkArity(op, args);
-    if(!inherits(CAR(args), "textConnection"))
-	error(_("'con' is not a textConnection"));
-    con = getConnection(asInteger(CAR(args)));
+    con = getConnectionCheck(CAR(args), "textConnection", "con");
     if(!con->canwrite)
 	error(_("'con' is not an output textConnection"));
     this = con->private;
@@ -3408,27 +3415,38 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- socket connections  --------------------- */
 
 
-/* socketConnection(host, port, server, blocking, open, encoding) */
+/* socketConnection(host, port, server, blocking, open, encoding, timeout) */
+/* socketAccept(socket, blocking, open, encoding, timeout) */
 SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     const char *host, *open;
-    int ncon, port, server, blocking, timeout;
+    int ncon, port, server, blocking, timeout, serverfd;
     Rconnection con = NULL;
+    Rservsockconn scon = NULL;
 
     checkArity(op, args);
-    scmd = CAR(args);
-    if(!isString(scmd) || LENGTH(scmd) != 1)
-	error(_("invalid '%s' argument"), "host");
-    host = translateCharFP(STRING_ELT(scmd, 0));
-    args = CDR(args);
-    port = asInteger(CAR(args));
-    if(port == NA_INTEGER || port < 0)
-	error(_("invalid '%s' argument"), "port");
-    args = CDR(args);
-    server = asLogical(CAR(args));
-    if(server == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "server");
+    if (PRIMVAL(op) == 0) { /* socketConnection */
+	scmd = CAR(args);
+	if(!isString(scmd) || LENGTH(scmd) != 1)
+	    error(_("invalid '%s' argument"), "host");
+	host = translateCharFP(STRING_ELT(scmd, 0));
+	args = CDR(args);
+	port = asInteger(CAR(args));
+	if(port == NA_INTEGER || port < 0)
+	    error(_("invalid '%s' argument"), "port");
+	args = CDR(args);
+	server = asLogical(CAR(args));
+	if(server == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "server");
+	serverfd = -1;
+    } else { /* socketAccept */
+	scon = getConnectionCheck(CAR(args), "servsockconn", "socket")->private;
+	port = scon->port;
+	server = 1;
+	host = "localhost"; /* ignored */
+	serverfd = scon->fd;
+    } 
     args = CDR(args);
     blocking = asLogical(CAR(args));
     if(blocking == NA_LOGICAL)
@@ -3447,7 +3465,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     timeout = asInteger(CAR(args));
 
     ncon = NextConnection();
-    con = R_newsock(host, port, server, open, timeout);
+    con = R_newsock(host, port, server, serverfd, open, timeout);
     Connections[ncon] = con;
     con->blocking = blocking;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
@@ -5201,7 +5219,7 @@ SEXP attribute_hidden do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef Win32
 void WinCheckUTF8(void)
 {
-    if(CharacterMode == RGui)
+    if(EmitEmbeddedUTF8) /* RGui */
 	WinUTF8out = (SinkCons[R_SinkNumber] == 1 ||
 	              SinkCons[R_SinkNumber] == 2);
     else
@@ -6131,15 +6149,22 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (i = 0; i < nsock; i++) {
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
-	Rsockconn scp = conn->private;
-	if (strcmp(conn->class, "sockconn") != 0)
+	if (!strcmp(conn->class, "sockconn")) {
+	    Rsockconn scp = conn->private;
+	    INTEGER(insockfd)[i] = scp->fd;
+	    if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
+		LOGICAL(val)[i] = TRUE;
+		immediate = TRUE;
+	    }
+	    else LOGICAL(val)[i] = FALSE;
+	} else if (!strcmp(conn->class, "servsockconn")) {
+	    Rservsockconn sop = conn->private;
+	    INTEGER(insockfd)[i] = sop->fd;
+	    LOGICAL(val)[i] = FALSE;
+	    if (LOGICAL(write)[i])
+		warning(_("a server socket connection cannot be writeable"));
+	} else
 	    error(_("not a socket connection"));
-	INTEGER(insockfd)[i] = scp->fd;
-	if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
-	    LOGICAL(val)[i] = TRUE;
-	    immediate = TRUE;
-	}
-	else LOGICAL(val)[i] = FALSE;
     }
 
     if (! immediate)
@@ -6148,6 +6173,58 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     UNPROTECT(2);
     return val;
+}
+
+SEXP attribute_hidden do_serversocket(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, class;
+    int ncon, port;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+
+    port = asInteger(CAR(args));
+    if(port == NA_INTEGER || port < 0)
+	error(_("invalid '%s' argument"), "port");    
+
+    ncon = NextConnection();
+    con = R_newservsock(port);
+    Connections[ncon] = con;
+    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+
+    PROTECT(ans = ScalarInteger(ncon));
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("servsockconn"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    UNPROTECT(3);
+    return ans;
+}
+
+/* socketTimeout(socket, timeout) */
+SEXP attribute_hidden do_socktimeout(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int tnew, told;
+    Rsockconn scon;
+
+    checkArity(op, args);
+
+    if(!inherits(CAR(args), "sockconn"))
+	error(_("invalid '%s' argument"), "socket");
+
+    scon = getConnection(asInteger(CAR(args)))->private;
+    told = scon->timeout;
+
+    tnew = asInteger(CADR(args));
+    if(tnew == NA_INTEGER)
+	error(_("invalid '%s' argument"), "timeout");
+
+    if (tnew >= 0)
+	scon->timeout = tnew;
+
+    return ScalarInteger(told);
 }
 
 static lzma_filter filters[LZMA_FILTERS_MAX + 1];
@@ -6294,7 +6371,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	Bytef *buf;
 	/* could use outlen = compressBound(inlen) */
-	uLong inlen = LENGTH(from),
+	uLong inlen = XLENGTH(from),
 	    outlen = (uLong)(1.001*(double)inlen + 20);
 	buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
 	res = compress(buf, &outlen, (Bytef *)RAW(from), inlen);
@@ -6305,6 +6382,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     case 3: /* bzip */
     {
+	// bzlib does not support long inputs
 	char *buf;
 	unsigned int inlen = LENGTH(from),
 	    outlen = (unsigned int)(1.01*inlen + 600);
@@ -6319,7 +6397,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4: /* xz */
     {
 	unsigned char *buf;
-	unsigned int inlen = LENGTH(from), outlen;
+	size_t inlen = XLENGTH(from), outlen;
 	lzma_stream strm = LZMA_STREAM_INIT;
 	lzma_ret ret;
 	lzma_filter filters[LZMA_FILTERS_MAX + 1];
@@ -6335,7 +6413,8 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	ret = lzma_stream_encoder(&strm, filters, LZMA_CHECK_CRC32);
 	if (ret != LZMA_OK) error("internal error %d in memCompress", ret);
 
-	outlen = (unsigned int)(1.01 * inlen + 600); /* FIXME, copied from bzip2 */
+	outlen = (unsigned int)(1.01 * inlen + 600); /* FIXME, copied
+						        from bzip2 case */
 	buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
 	strm.next_in = RAW(from);
 	strm.avail_in = inlen;
@@ -6387,33 +6466,80 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 1: break; /* none */
     case 2: /* gzip */
     {
-	uLong inlen = LENGTH(from), outlen = 3*inlen;
-	int res;
+	uLong inlen = XLENGTH(from), outlen = 3*inlen;
 	Bytef *buf, *p = (Bytef *)RAW(from);
-	/* we check for a file header */
-	if (p[0] == 0x1f && p[1] == 0x8b) { p += 2; inlen -= 2; }
+	int opt = 0;
+
+	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
+	    // in this case we could read outlen from the trailer
+	    opt = 16;  // force gzip format
+	}
 	while(1) {
 	    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
-	    res = uncompress(buf, &outlen, p, inlen);
-	    if(res == Z_BUF_ERROR) { outlen *= 2; continue; }
-	    if(res == Z_OK) break;
-	    error("internal error %d in memDecompress(%d)", res, type);
+	    int res = R_uncompress(buf, &outlen, p, inlen, opt);
+	    if(res == Z_BUF_ERROR) {
+		if(outlen < ULONG_MAX/2) {
+		    outlen *= 2; continue;
+		} else break;
+	    }
+	    if(res >= 0) break;
+	    error("internal error %d in memDecompress(%s)", res,
+		  "type = \"gzip\"");
 	}
+
+	/*
+	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
+	    // in this case we could read outlen from the trailer
+	    while(1) {
+		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+		int res = R_gzuncompress(buf, &outlen, p, inlen, 16); // force gzip format
+		if(res == Z_BUF_ERROR) {
+		    if(outlen < ULONG_MAX/2) {
+			outlen *= 2; continue;
+		    } else break;
+		}
+		if(res >= 0) break;
+		error("internal error %d in memDecompress(%s)", res,
+		      "type = \"gzip\"");
+	    }
+	} else {
+	    while(1) {
+		buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+		int res = uncompress(buf, &outlen, p, inlen);
+		if(res == Z_BUF_ERROR) {
+		    if(outlen < ULONG_MAX/2) {
+			outlen *= 2; continue;
+		    } else break;
+		}
+		if(res == Z_OK) break;
+		error("internal error %d in memDecompress(%s)", res,
+		      "type = \"gzip\"");
+	    }
+	}
+	*/
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
 	break;
     }
     case 3: /* bzip2 */
     {
-	unsigned int inlen = LENGTH(from), outlen = 3*inlen;
+	// bzlib does not support long inputs
+	unsigned int inlen = LENGTH(from), outlen;
+	double o0 = 3.0*inlen;
+	outlen = (o0 > UINT_MAX)? UINT_MAX: (unsigned int)o0;
 	int res;
 	char *buf, *p = (char *) RAW(from);
 	while(1) {
 	    buf = R_alloc(outlen, sizeof(char));
 	    res = BZ2_bzBuffToBuffDecompress(buf, &outlen, p, inlen, 0, 0);
-	    if(res == BZ_OUTBUFF_FULL) { outlen *= 2; continue; }
+	    if(res == BZ_OUTBUFF_FULL) {
+		if(outlen < UINT_MAX/2) {
+		    outlen *= 2; continue;
+		} else break;
+	    }
 	    if(res == BZ_OK) break;
-	    error("internal error %d in memDecompress(%d)", res, type);
+	    error("internal error %d in memDecompress(%s)", res,
+		  "type = \"bzip2\"");
 	}
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
@@ -6422,7 +6548,7 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4: /* xz */
     {
 	unsigned char *buf;
-	unsigned int inlen = LENGTH(from);
+	size_t inlen = XLENGTH(from);
 	size_t outlen = 3*inlen;
 	lzma_stream strm = LZMA_STREAM_INIT;
 	lzma_ret ret;
@@ -6459,8 +6585,8 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 		    outlen *= 2;
 		    continue;
 		} else {
-		    error("internal error %d in memDecompress(%d) at %d",
-			  ret, type, strm.avail_in);
+		    error("internal error %d in memDecompress(%s) at %d",
+			  ret, "type = \"xz\"", strm.avail_in);
 		}
 	    } else {
 		break;

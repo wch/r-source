@@ -44,7 +44,7 @@
 
 double rgeom(double p)
 {
-    if (!R_FINITE(p) || p <= 0 || p > 1) ML_ERR_return_NAN;
+    if (!R_FINITE(p) || p <= 0 || p > 1) ML_WARN_return_NAN;
 
     return rpois(exp_rand() * ((1 - p) / p));
 }

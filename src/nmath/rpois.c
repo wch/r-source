@@ -73,7 +73,7 @@ double rpois(double mu)
     int k, kflag, big_mu, new_big_mu = FALSE;
 
     if (!R_FINITE(mu) || mu < 0)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
 
     if (mu <= 0.)
 	return 0.;

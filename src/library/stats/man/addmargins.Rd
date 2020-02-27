@@ -59,7 +59,7 @@ addmargins(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
 \author{
   Bendix Carstensen, Steno Diabetes Center & Department of
   Biostatistics, University of Copenhagen,
-  \url{http://www.biostat.ku.dk/~bxc}, autumn 2003.
+  \url{http://BendixCarstensen.com}, autumn 2003.
   Margin naming enhanced by Duncan Murdoch.
 }
 
@@ -80,10 +80,12 @@ ftable(A)
 ftable(addmargins(A))
 
 # Non-commutative functions - note differences between resulting tables:
-ftable(addmargins(A, c(1, 3),
-       FUN = list(Sum = sum, list(Min = min, Max = max))))
-ftable(addmargins(A, c(3, 1),
-       FUN = list(list(Min = min, Max = max), Sum = sum)))
+ftable( addmargins( A, c(3, 1),
+                   FUN = list( list(Min = min, Max = max), 
+                               Sum = sum ) ) )
+ftable( addmargins( A, c(1, 3),
+                   FUN = list( Sum = sum,
+                               list(Min = min, Max = max) ) ) )
 
 # Weird function needed to return the N when computing percentages
 sqsm <- function(x) sum(x)^2/100

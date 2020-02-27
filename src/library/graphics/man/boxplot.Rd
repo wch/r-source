@@ -22,7 +22,7 @@ boxplot(x, \dots)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, outline = TRUE, names, plot = TRUE,
-        border = par("fg"), col = NULL, log = "",
+        border = par("fg"), col = "lightgray", log = "",
         pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
          ann = !add, horizontal = FALSE, add = FALSE, at = NULL)
 }

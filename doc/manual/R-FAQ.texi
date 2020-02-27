@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2018
-@set FAQ_DATE @value{FAQ_YEAR}-10-18
+@set FAQ_YEAR 2020
+@set FAQ_DATE @value{FAQ_YEAR}-02-20
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -236,7 +236,7 @@ script files.
 
 The design of R has been heavily influenced by two existing languages:
 Becker, Chambers & Wilks' S (@pxref{What is S?}) and Sussman's
-@url{https://www.cs.indiana.edu/scheme-repository/home.html, Scheme}.
+@url{http://community.schemewiki.org/?scheme-faq, Scheme}.
 Whereas the resulting language is very similar in appearance to S, the
 underlying implementation and semantics are derived from Scheme.
 @xref{What are the differences between R and S?}, for further details.
@@ -579,12 +579,12 @@ for on-line reading in @HTML{} and PDF formats, and as hardcopy via
 version is always available for web browsing at
 @url{https://stat.ethz.ch/R-manual/}.
 
-Printed copies of the R reference manual for some version(s) are
-available from Network Theory Ltd, at
-@c https: is untrusted
-@url{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
-sold, the publisher donates USD 10 to the R Foundation (@pxref{What is
-the R Foundation?}).
+@c Printed copies of the R reference manual for some version(s) are
+@c available from Network Theory Ltd, at
+@c @c https: is untrusted
+@c @url{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
+@c sold, the publisher donates USD 10 to the R Foundation (@pxref{What is
+@c the R Foundation?}).
 
 The R distribution also comes with the following manuals.
 
@@ -753,8 +753,9 @@ include information on the system and version of R being used.  See
 See @url{https://www.R-project.org/mail.html} for more information on
 the R mailing lists.
 
-The R Core Team can be reached at @email{R-core@@lists.R-project.org}
-for comments and reports.
+@c >> No longer want such comments and reports addressed to R-core :
+@c The R Core Team can be reached at @email{R-core@@lists.R-project.org}
+@c for comments and reports.
 
 @c <FIXME>
 @c As of 2017-10, accessing GMANE's gmane.comp.lang.r still says
@@ -812,10 +813,10 @@ Please always use the @acronym{URL} of the master site when referring to
 
 R is released under the
 @url{https://www.gnu.org/licenses/old-licenses/gpl-2.0.html,,
-@acronym{GNU} General Public License (@acronym{GPL}), version 2}.  If
-you have any questions regarding the legality of using R in any
-particular situation you should bring it up with your legal counsel.  We
-are in no position to offer legal advice.
+@acronym{GNU} General Public License (@acronym{GPL}), version 2 or
+version 3}.  If you have any questions regarding the legality of using R
+in any particular situation you should bring it up with your legal
+counsel.  We are in no position to offer legal advice.
 
 It is the opinion of the R Core Team that one can use R for commercial
 purposes (e.g., in business or in consulting).  The @acronym{GPL}, like
@@ -1508,7 +1509,7 @@ For a very long time, there was no such thing.
 @c currently beta testing a commercially supported version of R named R+
 @c (read R plus).
 
-@url{http://www.revolution-computing.com/, Revolution Analytics} has
+@url{http://revolutionanalytics.com/, Revolution Analytics} has
 released REvolution R, now available as Microsoft R (see
 @url{http://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
 for more information).

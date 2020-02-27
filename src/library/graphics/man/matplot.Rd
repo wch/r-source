@@ -1,6 +1,6 @@
 % File src/library/graphics/man/matplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matplot}
@@ -8,6 +8,10 @@
 \alias{matpoints}
 \alias{matlines}
 \title{Plot Columns of Matrices}
+\description{
+  Plot the columns of one matrix against the columns of another (which
+  often is just a vector treated as 1-column matrix).
+}
 \usage{
 matplot(x, y, type = "p", lty = 1:5, lwd = 1, lend = par("lend"),
         pch = NULL,
@@ -25,7 +29,9 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
   \item{x,y}{vectors or matrices of data for plotting.  The number of
     rows should match.  If one of them are missing, the other is taken
     as \code{y} and an \code{x} vector of \code{1:n} is used.
-    Missing values (\code{NA}s) are allowed.}
+    Missing values (\code{NA}s) are allowed.  Since \R 4.0.0,
+    \code{\link{class}(.)}es of \code{x} and \code{y} such as
+    \code{"\link{Date}"} are typically preserved.}
   \item{type}{character string (length 1 vector) or vector of 1-character
     strings indicating the type of plot for each
     column of \code{y}, see \code{\link{plot}} for all possible
@@ -39,15 +45,10 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
     columns. Line types will be used cyclically until all plots are
     drawn.}
   \item{pch}{character string or vector of 1-characters or integers for
-    plotting characters, see \code{\link{points}}.
+    plotting characters, see \code{\link{points}} for details.
     The first character is the plotting-character for the first plot,
     the second for the second, etc.  The default is the digits (1
     through 9, 0) then the lowercase and uppercase letters.
-%%__FIXME__ Which of the following is still true; what's the "right" UI ?
-%  To mix special plotting symbols (those specified by integers) and
-%  plotting characters, either use character escapes \code{pch = "Xe002"}
-%  or figure out the numeric equivalent of the ASCII character,
-%  \code{pch = c(88, 2)}.
   }
   \item{col}{vector of colors.  Colors are used cyclically.}
   \item{cex}{vector of character expansion sizes, used cyclically.
@@ -72,10 +73,18 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
 }
 \section{Side Effects}{Function \code{matplot} generates a new plot;
   \code{matpoints} and \code{matlines} add to the current one.}
-\description{
-  Plot the columns of one matrix against the columns of another.
-}
 \details{
+  \code{matplot(x,y, ..)} is basically a wrapper for
+  \enumerate{
+    \item calling (the generic function) \code{\link{plot}(x[,1], y[,1], ..)}
+    for the first columns (only if \code{add = TRUE}).
+    \item calling (the generic) \code{\link{lines}(x[,j], y[,j], ..)} for
+    subsequent columns.
+  }
+  Since \R 4.0.0, care is taken to keep the \code{\link{class}(.)} of
+  \code{x} and \code{y}, such that the corresponding \code{plot()} and
+  \code{lines()} \emph{methods} will be called.
+
   Points involving missing values are not plotted.
 
   The first column of \code{x} is plotted against the first column of
@@ -145,6 +154,21 @@ matplot(iris.S[, "Petal.Length",], iris.S[, "Petal.Width",], pch = "SCV",
                     sep = "=", collapse= ",  "),
         main = "Fisher's Iris Data")
 par(op)
+
+## 'x' a "Date" vector :
+nd <- length(dv <- seq(as.Date("1959-02-21"), by = "weeks", length.out = 100))
+mSC <- cbind(I=1, sin=sin(pi*(1:nd)/8), cos=cos(pi*(1:nd)/8))
+matplot(dv, mSC, type = "b", main = "matplot(<Date>, y)")
+
+## 'x' a "POSIXct" date-time vector :
+ct <- seq(c(ISOdate(2000,3,20)), by = "15 mins", length.out = 100)
+matplot(ct, mSC, type = "b", main = "matplot(<POSIXct>, y)")
+## or the same with even more axis flexibility:
+matplot(ct, mSC, type = "b", main = "matplot(<POSIXct>, y)", xaxt="n")
+Axis(ct, side=1, at = ct[1+4*(0:24)])
+
+## Also works for data frame columns:
+matplot(iris[1:50,1:4])
 }
 \keyword{hplot}
 \keyword{aplot}

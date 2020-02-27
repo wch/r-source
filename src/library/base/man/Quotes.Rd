@@ -1,6 +1,6 @@
 % File src/library/base/man/Quotes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Quotes}
@@ -12,6 +12,7 @@
 \alias{`}%`
 \concept{quotes}
 \concept{backslash}
+\concept{raw character strings}
 \title{Quotes}
 \description{
   Descriptions of the various uses of quoting in \R.
@@ -69,6 +70,14 @@
   Embedded nuls are not allowed in character strings, so using escapes
   (such as \samp{\\0}) for a nul will result in the string being
   truncated at that point (usually with a warning).
+
+  Raw character constants are also available using a syntax similar to
+  the one used in C++: \code{r"(...)"} with \code{...} any character
+  sequence, except that it must not contain the closing sequence
+  \samp{)"}. The delimiter pairs \code{[]} and \code{\{\}} can also be
+  used. For  additional flexibility, a number of dashes can be placed
+  between the opening quote and the opening delimiter, as long as the same
+  number of dashes appear between the closing delimiter and the closing quote.
 }
 \section{Names and Identifiers}{
   Identifiers consist of a sequence of letters, digits, the period
@@ -171,5 +180,13 @@ stopifnot(identical(nn, n2))
   "foo\0bar"     # Error: nul character not allowed (line 1)
   "foo\u0000bar" # same error
 }
+
+## A Windows path written as a raw string constant:
+r"(c:\Program files\R)"
+
+## More raw strings:
+r"{(\1\2)}"
+r"(use both "double" and 'single' quotes)"
+r"---(\1--)-)---"
 }
 \keyword{documentation}

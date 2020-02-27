@@ -400,7 +400,7 @@ stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 	  )
 ## the last failed in R 2.7.0 : was not showing  "show"
 
-if(require("Matrix")) {
+if(require("Matrix", lib.loc = .Library)) {
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
     stopifnot(isGeneric("dim", where=as.environment("package:Matrix")),
@@ -848,6 +848,8 @@ setClass("myInteger", contains=c("integer", "VIRTUAL"))
 setClass("mySubInteger", contains="myInteger")
 new("mySubInteger", 1L)
 ## caused infinite recursion in R 3.3.0
+new("mySubInteger")
+## failed due to lack of prototype in R 3.6.0
 
 detach("package:methods", force=TRUE)
 methods::setClass("test1", methods::representation(date="POSIXct"))
@@ -980,3 +982,24 @@ setAs("foo", "A", function(from) new("A", foo=from))
 o3 <- structure(1:7, class = c("foo", "bar"))
 stopifnot( canCoerce(o3, "A") )
 ## failed in R <= 3.6.1
+
+if(require("Matrix")) withAutoprint({
+    (sci <- names(getClass("integer")@contains))
+    # These 2 classes have *nothing* to do with Matrix:
+    setClass("MyClass")
+    setClassUnion("NumOrMyClass", c("numeric", "MyClass"))
+    (nsci <- names(getClass("integer")@contains))
+    ## failed in R <= 3.6.2
+    stopifnot(sci %in% nsci)
+
+    setClassUnion('dMatrixOrMatrix', members = c('dMatrix', 'matrix'))
+    ## failed in R <= 3.6.2
+    stopifnot("dMatrixOrMatrix" %in% names(getClass("dgCMatrix")@contains))
+
+    invisible(lapply(c("NumOrMyClass", "MyClass", "dMatrixOrMatrix"),
+                     removeClass))
+})
+
+setClass("foo", slots = c(y = "numeric"))
+setClass("bar", contains = "foo")
+body(getClass("bar")@contains[[1]]@coerce)[[2]]

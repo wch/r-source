@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997,  Robert Gentleman and Ross Ihaka
- *                2007-2014 The R Core Team
+ *                2007-2020 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -184,6 +184,18 @@ static void transferChars(unsigned char *p, const char *q)
     *p++ = '\0';
 }
 
+/* respect encoding override from parser invocation - do_parse */
+static const char *translateCharWithOverride(SEXP x)
+{
+    if (!IS_LATIN1(x) && !mbcslocale && known_to_be_utf8)
+	/* A hack to allow UTF-8 string literals, comments when
+	   parsing on Windows. Note that the parser cannot handle
+	   invalid characters when running in UTF-8 locale. */
+	return CHAR(x);
+    else
+	return translateChar(x);
+}
+
 int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 {
     int i, k, l, n;
@@ -194,7 +206,7 @@ int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 	l = 0;
 	for (i = 0; i < n; i++) {
 	    if (STRING_ELT(text, i) != R_NilValue) {
-		k = (int) strlen(translateChar(STRING_ELT(text, i)));
+		k = (int) strlen(translateCharWithOverride(STRING_ELT(text, i)));
 		if (k > l)
 		    l = k;
 	    }
@@ -207,7 +219,7 @@ int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 	txtb->ntext = n;
 	txtb->offset = 0;
 	transferChars(txtb->buf,
-		      translateChar(STRING_ELT(txtb->text, txtb->offset)));
+		      translateCharWithOverride(STRING_ELT(txtb->text, txtb->offset)));
 	txtb->offset++;
 	return 1;
     }
@@ -243,7 +255,8 @@ int attribute_hidden R_TextBufferGetc(TextBuffer *txtb)
 	} else {
 	    const void *vmax = vmaxget();
 	    transferChars(txtb->buf,
-			  translateChar(STRING_ELT(txtb->text, txtb->offset)));
+			  translateCharWithOverride(STRING_ELT(txtb->text,
+			                                       txtb->offset)));
 	    txtb->bufp = txtb->buf;
 	    txtb->offset++;
 	    vmaxset(vmax);

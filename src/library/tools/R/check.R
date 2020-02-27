@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1221,7 +1221,10 @@ add_dummies <- function(dir, Log)
                     any <- TRUE
                     warningLog(Log)
                 }
-                printLog0(Log, "A complete check needs the 'checkbashisms' script\n")
+                printLog0(Log,
+                          "A complete check needs the 'checkbashisms' script.\n")
+                wrapLog("See section 'Configure and cleanup'",
+                        "in the 'Writing R Extensions' manual.\n")
             } else {
                 for (f in c("configure", "cleanup")) {
                     ## /bin/bash is not portable
@@ -2190,7 +2193,7 @@ add_dummies <- function(dir, Log)
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                if (!all(grepl("Package[s]? unavailable to check", out)))
+                if (!all(grepl("(Package[s]? unavailable to check|Unknown package.*in Rd xrefs)", out)))
                     warningLog(Log)
                 else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -2481,8 +2484,10 @@ add_dummies <- function(dir, Log)
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
-            out <- R_runR0("tools:::.check_package_datasets('.')",
-                           R_opts2, elibs)
+            el <- if (R_check_depends_only_data) {
+                      setRlibs(pkgdir = pkgdir, libdir = libdir)
+                  } else elibs
+            out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2, el)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
             out <- filtergrep("^OMP:", out)
@@ -2492,8 +2497,12 @@ add_dummies <- function(dir, Log)
                 if(any(bad) || bad2) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
                 if(bad2)
-                     printLog0(Log,
-                               "  The dataset(s) may use package(s) not declared in the DESCRIPTION file.\n")
+                    if(R_check_depends_only_data || R_check_suggests_only)
+                        printLog0(Log,
+                                  "  The dataset(s) may use package(s) not declared in Depends/Imports.\n")
+                    else
+                        printLog0(Log,
+                                  "  The dataset(s) may use package(s) not declared in the DESCRIPTION file.\n")
             } else resultLog(Log, "OK")
         }
 
@@ -4993,9 +5002,9 @@ add_dummies <- function(dir, Log)
                 ## some from -Walloc-size-larger-than= and -Wstringop-overflow=
                 lines <- grep("exceeds maximum object size.*-W(alloc-size-larger-than|stringop-overflow)", lines,
                               value = TRUE, useBytes = TRUE, invert = TRUE)
-                ## skip for now some c++11-long-long warnings.
-                ex_re <- "(/BH/include/boost/|/RcppParallel/include/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
-                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+                ## skip for now some c++11-long-long warnings -- no longer needed
+                ## ex_re <- "(/BH/include/boost/|/RcppParallel/include/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
+##                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
@@ -5010,7 +5019,8 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and gfortran 10 warnings
-                ex_re <- "^(Warning: Rank mismatch between actual argument|Warning: Array.*is larger than limit set)"
+                ex_re <- "^Warning: Array.*is larger than limit set"
+##                ex_re <- "^(Warning: Rank mismatch between actual argument|Warning: Array.*is larger than limit set)"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## And deprecated declarations in Eigen and boost
@@ -5447,9 +5457,10 @@ add_dummies <- function(dir, Log)
             out <- format(res)
             allowed <- c("suggests_but_not_installed",
                          "enhances_but_not_installed",
-                         "many_depends",
+                         "many_depends", "many_imports",
                          "skipped",
                          "hdOnly",
+                         "orphaned2", "orphaned",
                          if(!check_incoming) "bad_engine")
             if(!all(names(res) %in% allowed)) {
                 errorLog(Log)
@@ -5465,8 +5476,12 @@ add_dummies <- function(dir, Log)
                 summaryLog(Log)
                 do_exit(1L)
             } else {
-                noteLog(Log)
+                if(length(res[["orphaned"]])) warningLog(Log) else noteLog(Log)
                 printLog0(Log, paste(out, collapse = "\n"))
+                ## if(length(res$orphaned2))
+                ##     wrapLog("\nSuggested packages need to be used conditionally:",
+                ##             "this is particularly important for",
+                ##             "orphaned ones.\n")
             }
         } else resultLog(Log, "OK")
     }
@@ -5964,6 +5979,10 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
+    ## Restrict check of data() to Imports/Depends, if not already done
+    R_check_depends_only_data <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_DATA_",
+                                         "FALSE")) && !R_check_depends_only
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
     R_check_FF_DUP <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
@@ -6026,7 +6045,10 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_CODOC_VARIABLES_IN_USAGES_" = "TRUE")
         Sys.setenv("_R_CHECK_DATALIST_" = "TRUE")
         if(!WINDOWS) Sys.setenv("_R_CHECK_BASHISMS_" = "TRUE")
-        Sys.setenv("_R_CLASS_MATRIX_ARRAY_" = "TRUE")
+        Sys.setenv("_R_CHECK_ORPHANED_" = "TRUE")
+        Sys.setenv("_R_CHECK_EXCESSIVE_IMPORTS_" = "20")
+        Sys.setenv("_R_CHECK_DEPENDS_ONLY_DATA_" = "TRUE")
+        Sys.setenv("_R_OPTIONS_STRINGS_AS_FACTORS_" = "FALSE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

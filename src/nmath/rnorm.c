@@ -33,7 +33,7 @@
 double rnorm(double mu, double sigma)
 {
     if (ISNAN(mu) || !R_FINITE(sigma) || sigma < 0.)
-	ML_ERR_return_NAN;
+	ML_WARN_return_NAN;
     if (sigma == 0. || !R_FINITE(mu))
 	return mu; /* includes mu = +/- Inf with finite sigma */
     else

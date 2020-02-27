@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2019  The R Core Team
+ *  Copyright (C) 1999--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -543,8 +543,10 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 
     if (s == NA_STRING) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
-	cnt = i = (int)(quote ? strlen(CHAR(R_print.na_string)) :
-			strlen(CHAR(R_print.na_string_noquote)));
+	cnt = (int)(quote ? strlen(CHAR(R_print.na_string)) :
+		strlen(CHAR(R_print.na_string_noquote)));
+	i = (quote ? Rstrlen(R_print.na_string, 0) :
+		Rstrlen(R_print.na_string_noquote, 0));
 	quote = 0;
     } else {
 	if(IS_BYTES(s)) {

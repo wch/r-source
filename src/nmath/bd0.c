@@ -39,7 +39,7 @@ double attribute_hidden bd0(double x, double np)
     double ej, s, s1, v;
     int j;
 
-    if(!R_FINITE(x) || !R_FINITE(np) || np == 0.0) ML_ERR_return_NAN;
+    if(!R_FINITE(x) || !R_FINITE(np) || np == 0.0) ML_WARN_return_NAN;
 
     if (fabs(x-np) < 0.1*(x+np)) {
 	v = (x-np)/(x+np);  // might underflow to 0

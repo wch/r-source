@@ -1,7 +1,7 @@
 c-----------------------------------------------------------------------
 c
 c  R : A Computer Language for Statistical Data Analysis
-c  Copyright (C) 1999-2001  The R Core Team
+c  Copyright (C) 1999-2020  The R Core Team
 c
 c  This program is free software; you can redistribute it and/or modify
 c  it under the terms of the GNU General Public License as published by
@@ -49,6 +49,51 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       nc = nchar
       if(nc .lt. 0) nc = len(label)
       call dblep0(label, nc, data, ndata)
+      end
+
+c Avoid 'Rank mismatch warning from gcc 10'
+      subroutine intpr1(label, nchar, var)
+      integer nchar
+      character*(*) label
+      integer var, data(1)
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      data(1) = var
+      call intpr0(label, nc, data, 1)
+      end
+
+      subroutine realpr1(label, nchar, var)
+      integer nchar
+      character*(*) label
+      real var, data(1)
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      data(1) = var
+      call realp0(label, nc, data, 1)
+      end
+
+      subroutine dblepr1(label, nchar, var)
+      integer nchar
+      character*(*) label
+      double precision var, data(1)
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      data(1) = var
+      call dblep0(label, nc, data, 1)
+      end
+
+      subroutine labelpr(label, nchar)
+      integer nchar
+      character*(*) label
+      integer data(1)
+      integer nc
+      nc = nchar
+      if(nc .lt. 0) nc = len(label)
+      data(1) = 0
+      call intpr0(label, nc, data, 0)
       end
 
 C R-only Fortran versions of error and warning
