@@ -87,7 +87,8 @@ void in_Rsockopen(int *port)
     struct Sock_error_t perr;
     check_init();
     perr.error = 0;
-    *port = enter_sock(Sock_open((Sock_port_t)*port, &perr));
+    *port = enter_sock(Sock_open((Sock_port_t)*port, 1 /* blocking */,
+                                  &perr));
     if(perr.error)
 	REprintf("socket error: %s\n", R_socket_strerror(perr.error));
 }
@@ -163,9 +164,10 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 #ifdef Win32
 #include <io.h>
-#define EWOULDBLOCK             WSAEWOULDBLOCK
+#define ECONNABORTED            WSAECONNABORTED
 #define EINPROGRESS             WSAEINPROGRESS
 #define EINTR                   WSAEINTR
+#define EWOULDBLOCK             WSAEWOULDBLOCK
 #else
 # include <netdb.h>
 # include <sys/socket.h>
@@ -186,36 +188,6 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 #endif
 
 struct hostent *R_gethostbyname(const char *name);
-
-static int make_nonblocking(int s)
-{
-    int status = 0;
-
-#ifdef Win32
-    {
-	u_long one = 1;
-	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
-    }
-#else
-# ifdef HAVE_FCNTL
-    if ((status = fcntl(s, F_GETFL, 0)) != -1) {
-#  ifdef O_NONBLOCK
-	status |= O_NONBLOCK;
-#  else /* O_NONBLOCK */
-#   ifdef F_NDELAY
-	status |= F_NDELAY;
-#   endif
-#  endif /* !O_NONBLOCK */
-	status = fcntl(s, F_SETFL, status);
-    }
-# endif // HAVE_FCNTL
-    if (status < 0) {
-	R_close_socket(s);
-	return -1;
-    }
-#endif
-    return status; /* 0 */
-}
 
 #ifdef Unix
 #include <R_ext/eventloop.h>
@@ -430,7 +402,7 @@ int R_SockConnect(int port, char *host, int timeout)
 
 #define CLOSE_N_RETURN(_ST_) { R_close_socket(s); return(_ST_); }
 
-    if (make_nonblocking(s))
+    if (R_set_nonblocking(s))
 	return -1;
 
     if (! (hp = R_gethostbyname(host))) CLOSE_N_RETURN(-1);
@@ -538,22 +510,87 @@ ssize_t R_SockRead(int sockp, void *buf, size_t len, int blocking, int timeout)
 int R_SockOpen(int port)
 {
     check_init();
-    return Sock_open((Sock_port_t)port, NULL);
+    return Sock_open((Sock_port_t)port, 0 /* non-blocking */, NULL);
 }
 
 int R_SockListen(int sockp, char *buf, int len, int timeout)
 {
+    fd_set rfd;
+    struct timeval tv;
+    double used = 0.0;
+    int maxfd = 0;
+    int status = 0;
+
     check_init();
-    /* inserting a wait here will eliminate most blocking, but there
-       are scenarios under which the Sock_listen call might block
-       after the wait has completed. LT */
-    int res = 0;
-    do {
-        res = R_SocketWait(sockp, 0, timeout);
-    } while (res < 0 && -res == EINTR);
-    if(res != 0)
-        return -1;              /* socket error or timeout */
-    return Sock_listen(sockp, buf, len, NULL);
+    /* The listening socket sockp has been opened in non-blocking mode,
+       via R_SockOpen. With a blocking listening socket, there would be a
+       race condition between select() and the following accept():
+       the connection may be reset by the client just after select() and
+       before accept(), which depending on the OS may lead to accept()
+       blocking indefinitely, hence timeout not enforced. See chapter
+       16.6 of "UNIX Network Programming: The sockets networking API", vol 1,
+       Stevens, Fenner, Rudoff.
+    */
+       
+    while(1) {
+	R_ProcessEvents();
+	set_timeval(&tv, timeout);
+
+#ifdef Unix
+	maxfd = setSelectMask(R_InputHandlers, &rfd);
+#else
+	FD_ZERO(&rfd);
+#endif
+	FD_SET(sockp, &rfd);
+	if(maxfd < sockp) maxfd = sockp;
+
+	/* increment used value _before_ the select in case select
+	   modifies tv (as Linux does) */
+	double maybe_used = used + tv.tv_sec + 1e-6 * tv.tv_usec;
+
+	status = R_SelectEx(maxfd+1, &rfd, NULL, NULL, &tv, NULL);
+
+	if (R_socket_error_eintr(status))
+	    /* do not advance used on EINTR */
+	    continue;
+	if (R_socket_error(status))
+	    return -1;
+
+	used = maybe_used;
+	if (status == 0) {
+	    /* time out */
+	    if (used < timeout) continue;
+	    return -1;
+	} else if (FD_ISSET(sockp, &rfd)) {
+	    /* the socket was ready, but maybe no longer is */
+	    struct Sock_error_t perr;
+	    perr.error = 0;
+	    int s = Sock_listen(sockp, buf, len, &perr);
+	    if (s == -1) {
+		switch(perr.error) {
+		case EINPROGRESS:
+		case EWOULDBLOCK:
+		case ECONNABORTED:
+#ifndef Win32
+		case EPROTO:
+#endif
+		    continue;
+		default:
+		    return -1; /* socket error */
+		}
+	    }
+	    return s; /* got a connection */
+#ifdef Unix
+	} else {
+	    /* was one of the extras */
+	    InputHandler *what;
+	    what = getSelectedHandler(R_InputHandlers, &rfd);
+	    if(what != NULL) what->handler((void*) NULL);
+	    continue;
+#endif
+	}
+    }
+    /* not reached */
 }
 
 ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)

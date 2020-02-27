@@ -32,7 +32,7 @@ typedef struct Sock_error_t {
 } *Sock_error_t;
 
 int Sock_init(void);
-int Sock_open(Sock_port_t port, Sock_error_t perr);
+int Sock_open(Sock_port_t port, int blocking, Sock_error_t perr);
 int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr);
 int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr);
 int Sock_close(int fd, Sock_error_t perr);
@@ -53,6 +53,7 @@ int R_invalid_socket_eintr(SOCKET s);
 int R_socket_error_eintr(int s);
 int R_socket_errno(void);
 char *R_socket_strerror(int errnum);
+int R_set_nonblocking(SOCKET s);
 
 /* R interface (Rsock.c) :*/
 void in_Rsockopen(int *port);

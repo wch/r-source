@@ -130,6 +130,37 @@ char *R_socket_strerror(int errnum)
 #endif
 }
 
+int R_set_nonblocking(SOCKET s)
+{
+    int status = 0;
+
+#ifdef Win32
+    {
+	u_long one = 1;
+	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
+    }
+#else
+# ifdef HAVE_FCNTL
+    if ((status = fcntl(s, F_GETFL, 0)) != -1) {
+#  ifdef O_NONBLOCK
+	status |= O_NONBLOCK;
+#  else /* O_NONBLOCK */
+#   ifdef F_NDELAY
+	status |= F_NDELAY;
+#   endif
+#  endif /* !O_NONBLOCK */
+	status = fcntl(s, F_SETFL, status);
+    }
+# endif // HAVE_FCNTL
+    if (status < 0) {
+	R_close_socket(s);
+	return -1;
+    }
+#endif
+    /* Will return 0 (success) when running on Unix without the necessary
+       fcntl support, which is unlikely. */
+    return status; /* 0 */
+}
 
 #if defined(__hpux)
    extern int h_errno; /* HP-UX 9.05 forgets to declare this in netdb.h */
@@ -183,7 +214,7 @@ int Sock_init()
 }
 
 /* open a socket for listening */
-int Sock_open(Sock_port_t port, Sock_error_t perr)
+int Sock_open(Sock_port_t port, int blocking, Sock_error_t perr)
 {
     SOCKET sock, status;
     struct sockaddr_in server;
@@ -191,6 +222,11 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (R_invalid_socket(sock)) 
 	return Sock_error(perr, R_socket_errno(), 0);
+
+    if (!blocking && R_set_nonblocking(sock)) {
+	R_close_socket(sock);
+	return Sock_error(perr, R_socket_errno(), 0);
+    }
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons((short)port);
