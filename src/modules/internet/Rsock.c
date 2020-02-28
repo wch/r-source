@@ -512,10 +512,34 @@ ssize_t R_SockRead(int sockp, void *buf, size_t len, int blocking, int timeout)
 {
     ssize_t res;
 
-    if(blocking && (res = R_SocketWait(sockp, 0, timeout)) != 0)
-        return res < 0 ? res : 0; /* socket error or timeout */
-    res = recv(sockp, buf, len, 0);
-    return R_socket_error(res) ? -R_socket_errno() : res;
+    /* EINTR is propagated to the caller (sock_read_helper). When !"blocking",
+       the caller expects also EAGAIN/EWOULDBLOCK.
+
+       A known bug in Linux may cause recv() to block with a blocking socket,
+       even when select() reported readability. To be robust against spurious
+       readability, "sockp" is always non-blocking, even when "blocking" is
+       TRUE. */
+
+    for(;;) {
+	if(blocking && (res = R_SocketWait(sockp, 0, timeout)) != 0)
+	    return res < 0 ? res : 0; /* socket error or timeout */
+	res = recv(sockp, buf, len, 0);
+	if (R_socket_error(res)) {
+	    switch(R_socket_errno()) {
+	    case EWOULDBLOCK:
+#if !defined(Win32) && EAGAIN != EWOULDBLOCK
+	    case EAGAIN:
+#endif
+		if (blocking)
+		    /* spurious readability, can happen on Linux */
+		    continue;
+		/* fall through */
+	    default:
+		    return -R_socket_errno();
+	    }
+	} else
+	    return res;
+    }
 }
 
 int R_SockOpen(int port)
@@ -593,7 +617,10 @@ int R_SockListen(int sockp, char *buf, int len, int timeout)
 		    return -1; /* socket error */
 		}
 	    }
-	    return s; /* got a connection */
+	    /* got a connection */
+	    if (R_set_nonblocking(s))
+		return -1;
+	    return s;
 #ifdef Unix
 	} else {
 	    /* was one of the extras */
