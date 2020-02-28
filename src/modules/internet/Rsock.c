@@ -164,10 +164,18 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 #ifdef Win32
 #include <io.h>
-#define ECONNABORTED            WSAECONNABORTED
-#define EINPROGRESS             WSAEINPROGRESS
-#define EINTR                   WSAEINTR
-#define EWOULDBLOCK             WSAEWOULDBLOCK
+# ifndef ECONNABORTED
+#  define ECONNABORTED            WSAECONNABORTED
+# endif
+# ifndef EINPROGRESS
+#  define EINPROGRESS             WSAEINPROGRESS
+# endif
+# ifndef EINTR
+#  define EINTR                   WSAEINTR
+# endif
+# ifndef EWOULDBLOCK
+#  define EWOULDBLOCK             WSAEWOULDBLOCK
+# endif
 #else
 # include <netdb.h>
 # include <sys/socket.h>
@@ -417,6 +425,9 @@ int R_SockConnect(int port, char *host, int timeout)
 	switch (R_socket_errno()) {
 	case EINPROGRESS:
 	case EWOULDBLOCK:
+#if !defined(Win32) && EAGAIN != EWOULDBLOCK
+	case EAGAIN:
+#endif
 	    break;
 	default:
 	    CLOSE_N_RETURN(-1);
@@ -572,6 +583,9 @@ int R_SockListen(int sockp, char *buf, int len, int timeout)
 		case EWOULDBLOCK:
 		case ECONNABORTED:
 #ifndef Win32
+# if EAGAIN != EWOULDBLOCK
+		case EAGAIN:
+# endif
 		case EPROTO:
 #endif
 		    continue;
@@ -608,11 +622,16 @@ ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)
 	    return res < 0 ? res : 0; /* socket error or timeout */
 	res = send(sockp, buf, len, 0);
 	if (R_socket_error(res)) {
-	    if (R_socket_errno() != EWOULDBLOCK)
-		return -R_socket_errno();
-	    else
+	    switch(R_socket_errno()) {
+	    case EWOULDBLOCK:
+#if !defined(Win32) && EAGAIN != EWOULDBLOCK
+	    case EAGAIN:
+#endif
 		/* Spurious writability to the socket, should not happen. */
 		continue;
+	    default:
+		return -R_socket_errno();
+	    }
 	} else {
 	    { const char *cbuf = buf; cbuf += res; buf = cbuf; }
 	    len -= res;
