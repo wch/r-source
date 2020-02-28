@@ -50,6 +50,8 @@ export("CRAN_package_db",
        "CRAN_memtest_notes",
        "summarize_CRAN_check_status")
 
+export("R_user_dir")
+
 export(".print.via.format")
 
 exportPattern("^SIG.+")

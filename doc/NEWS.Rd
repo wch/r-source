@@ -256,6 +256,10 @@
       set to a true value, \command{R CMD INSTALL} behaves as if
       the \option{--install-tests} option is always specified. Thanks to
       Reinhold Koch for the suggestion.
+
+      \item New function \code{R_user_dir()} in package \pkg{tools} for
+      paths appropriate for storing R-related user-specific data,
+      configuration and cache files.
     }
   }% end{ NEW FEATURES }
 
