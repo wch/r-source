@@ -251,6 +251,11 @@
       \item The default order of the levels on the y-axis
       for both \code{spineplot()} and \code{cdplot()}
       has been reversed.
+
+      \item If the \env{R_ALWAYS_INSTALL_TESTS} environment variable is
+      set to a true value, \command{R CMD INSTALL} behaves as if
+      the \option{--install-tests} option is always specified. Thanks to
+      Reinhold Koch for the suggestion.
     }
   }% end{ NEW FEATURES }
 

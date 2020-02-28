@@ -119,7 +119,13 @@
   (see the \code{keep.source} argument to \code{\link{source}}): this
   can be enabled by the option \option{--with-keep.source} or by setting
   environment variable \env{R_KEEP_PKG_SOURCE} to \code{yes}.
-  
+
+  Specifying the \option{--install-tests} option copies the contents
+  of the \file{tests} directory into the package installation. If the
+  \env{R_ALWAYS_INSTALL_TESTS} environment variable is set to a true
+  value, the tests will be installed even if \option{--install-tests} is
+  omitted.
+
   Use \command{R CMD INSTALL --help} for concise usage information,
   including all the available options.
 }

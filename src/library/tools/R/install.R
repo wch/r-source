@@ -1496,6 +1496,9 @@ if(FALSE) {
             }
 	}
 
+        rait <- Sys.getenv("R_ALWAYS_INSTALL_TESTS", "FALSE")
+        install_tests <- install_tests || config_val_to_logical(rait)
+        
 	if (install_tests && dir.exists("tests") &&
             length(dir("tests", all.files = TRUE)) > 2L) {
 	    starsmsg(stars, "tests")
