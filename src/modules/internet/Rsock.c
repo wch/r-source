@@ -607,9 +607,13 @@ ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)
 	if((res = R_SocketWait(sockp, 1, timeout)) != 0)
 	    return res < 0 ? res : 0; /* socket error or timeout */
 	res = send(sockp, buf, len, 0);
-	if (R_socket_error(res) && R_socket_errno() != EWOULDBLOCK)
-	    return -R_socket_errno();
-	else {
+	if (R_socket_error(res)) {
+	    if (R_socket_errno() != EWOULDBLOCK)
+		return -R_socket_errno();
+	    else
+		/* Spurious writability to the socket, should not happen. */
+		continue;
+	} else {
 	    { const char *cbuf = buf; cbuf += res; buf = cbuf; }
 	    len -= res;
 	    out += res;
