@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -142,7 +142,7 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 		   by timeval, which is what select() on Linux does as
 		   well. */
 		double new_time = currentTime();
-		double elapsed = new_time = base_time;
+		double elapsed = new_time - base_time;
 		base_time = new_time;
 		time_t elapsed_sec = (time_t) elapsed;
 		if (tm.tv_sec > elapsed_sec)
