@@ -5002,9 +5002,10 @@ add_dummies <- function(dir, Log)
                 ## some from -Walloc-size-larger-than= and -Wstringop-overflow=
                 lines <- grep("exceeds maximum object size.*-W(alloc-size-larger-than|stringop-overflow)", lines,
                               value = TRUE, useBytes = TRUE, invert = TRUE)
-                ## skip for now some c++11-long-long warnings -- no longer needed
-                ## ex_re <- "(/BH/include/boost/|/RcppParallel/include/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
-##                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out boost header warning
+                ex_re <- "BH/include/boost/.*\\[-Wtautological-overlap-compare\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
