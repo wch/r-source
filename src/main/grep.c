@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2967,7 +2967,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    // initiialization needed for NA inputs: PR#16484
 	    for (i = 0 ; i < n * (int) capture_count ; i++)
 		is[i] = il[i] = NA_INTEGER;
-	} else is = il = NULL; /* not actually used */
+	} else is = il = INTEGER(ans); // not actually used, but is + i has to be legal
 	vmax = vmaxget();
 	for (i = 0 ; i < n ; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
