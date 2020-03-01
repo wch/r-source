@@ -440,10 +440,10 @@
       \code{*.colors()} functions and \code{rainbow()} behave
       consistently and have the same non-explicit default (\PR{17659}).
 
-      \item \code{dnorm} had a problematic corner case with \code{sd == -Inf} and
-      negative \code{sd} was not flagged as error in all cases. Thanks to Stephen
-      D. Weigand for reporting and Wang Jiefei for analyzing this; similar
-      change in \code{dlnorm()}.
+      \item \code{dnorm} had a problematic corner case with \code{sd ==
+      -Inf} and negative \code{sd} was not flagged as error in all
+      cases. Thanks to Stephen D. Weigand for reporting and Wang Jiefei
+      for analyzing this; similar change in \code{dlnorm()}.
 
       \item The optional \code{iter.smooth} argument of \code{plot.lm()},
       i.e., the \code{plot()} method for \code{lm} and \code{glm} fits, now
@@ -458,9 +458,10 @@
       residuals, leading to inconsistencies.  Replaced with usual weighted
       version. (\PR{16056})
 
-      \item Time-series \code{ts(*, start, end, frequency)} with fractional
-      \code{frequency} are supported more consistently; thanks to a report
-      from Johann Kleinbub and analysis and patch by Duncan Murdoch in \PR{17669}.
+      \item Time-series \code{ts(*, start, end, frequency)} with
+      fractional \code{frequency} are supported more consistently;
+      thanks to a report from Johann Kleinbub and analysis and patch by
+      Duncan Murdoch in \PR{17669}.
 
       \item \code{mcmapply} in case of errors now preserves attributes of
       returned \code{"try-error"} objects and avoids simplification,
@@ -516,6 +517,11 @@
 
       \item \code{subset()} had problems with 0-col dataframe (Bill Dunlap,
       \PR{17721})
+
+      \item Several cases of integer overflow detected by the
+      \sQuote{undefined behaviour analyser} of clang 10 have been
+      circumvented.  One in \code{rhyper()} may change the generated
+      value for large input values.
     }
   }
 }
