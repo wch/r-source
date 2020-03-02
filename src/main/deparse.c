@@ -35,7 +35,7 @@
  *    do_dump() -> deparse1() -> deparse1WithCutoff()
  *  ---------
  *  Workhorse: deparse1WithCutoff() -> deparse2() -> deparse2buff() --> {<itself>, ...}
- *  ---------  ~~~~~~~~~~~~~~~~~~ `-- implicit arg R_BrowseLines == getOption("deparse.max.lines")
+ *  ---------  ~~~~~~~~~~~~~~~~~~  implicit arg R_BrowseLines == getOption("deparse.max.lines")
  *
  *  ./errors.c: PrintWarnings() | warningcall_dflt() ... -> deparse1s() -> deparse1WithCutoff()
  *  ./print.c : Print[Language|Closure|Expression]()    --> deparse1w() -> deparse1WithCutoff()
@@ -1712,7 +1712,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		    strp = hex;
 		} else
 		    strp = EncodeElement(vector, i, quote, '.');
-	    } else if (TYPEOF(vector) == REALSXP && (d->opts & DIGITS16)) {
+	    } else if (TYPEOF(vector) == REALSXP && (d->opts & DIGITS17)) {
 		double x = REAL(vector)[i];
 		if (R_FINITE(x)) {
 		    snprintf(hex, 32, "%.17g", x);
@@ -1726,7 +1726,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		    strp = hex;
 		} else
 		    strp = EncodeElement(vector, i, quote, '.');
-	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & DIGITS16)) {
+	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & DIGITS17)) {
 		Rcomplex z =  COMPLEX(vector)[i];
 		if (R_FINITE(z.r) && R_FINITE(z.i)) {
 		    snprintf(hex, 64, "%.17g%+.17gi", z.r, z.i);

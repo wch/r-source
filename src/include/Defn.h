@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2019  The R Core Team.
+ *  Copyright (C) 1998--2020  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1097,7 +1097,7 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define KEEPNA			64
 #define S_COMPAT       		128
 #define HEXNUMERIC             	256
-#define DIGITS16             	512
+#define DIGITS17		512
 #define NICE_NAMES             	1024
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
