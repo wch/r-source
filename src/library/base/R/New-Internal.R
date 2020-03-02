@@ -122,10 +122,8 @@ rbind <- function(..., deparse.level = 1)
                               "deparse options %s are not recognized"),
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
-    if (any(opts == 1L)) # "all".  NB now == former ("all", "digits17") -- remain compatible
-        ## ensuring  c("all", "hexNumeric") does not give error below:
-        opts <- unique(c(opts[opts != 1L], 2:6, 8L, if(!any(opts == 10L)) 11L,
-                         12L)) # not {7,9} + 10 *or* 11
+    if (any(opts == 1L)) # "all"
+        opts <- unique(c(opts[opts != 1L], 2L,3L,4L,5L,6L,8L, 12L)) # not (7,9:11)
     if(10L %in% opts && 11L %in% opts)
         stop('"hexNumeric" and "digits17" are mutually exclusive')
     sum(2^(opts-2))
