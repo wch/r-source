@@ -101,7 +101,7 @@ initDefaultClusterOptions <- function(libname)
     options <- list(port = as.integer(port),
                     setup_timeout = 60 * 2,      # 2 minutes
                     timeout = 60 * 60 * 24 * 30, # 30 days
-                    parallel_setup = FALSE,
+                    setup_strategy = "parallel",
                     master = Sys.i[["nodename"]],
                     homogeneous = TRUE,
                     type = "PSOCK",
