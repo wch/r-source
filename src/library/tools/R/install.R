@@ -368,13 +368,25 @@ if(FALSE) {
             sys_requires <- desc["SystemRequirements"]
             if (!is.na(sys_requires)) {
                 sys_requires <- unlist(strsplit(sys_requires, ","))
-                for (i in cxx_standards) {
-                    pattern <- paste0("^[[:space:]]*C[+][+]",i,"[[:space:]]*$")
-                    if(any(grepl(pattern, sys_requires, ignore.case=TRUE))) {
-                        Sys.setenv("R_PKG_CXX_STD"=i)
-                        on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
-                        break
-                    }
+                if(any(grepl("^[[:space:]]*C[+][+]17[[:space:]]*$",
+                             sys_requires, ignore.case=TRUE))) {
+                    Sys.setenv("R_PKG_CXX_STD"="CXX17")
+                    on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
+                }
+                else if(any(grepl("^[[:space:]]*C[+][+]14[[:space:]]*$",
+                             sys_requires, ignore.case=TRUE))) {
+                    Sys.setenv("R_PKG_CXX_STD"="CXX14")
+                    on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
+                }
+                else if(any(grepl("^[[:space:]]*C[+][+]11[[:space:]]*$",
+                             sys_requires, ignore.case=TRUE))) {
+                    Sys.setenv("R_PKG_CXX_STD"="CXX11")
+                    on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
+                }
+                else if(any(grepl("^[[:space:]]*C[+][+]98[[:space:]]*$",
+                                  sys_requires, ignore.case=TRUE))) {
+                    stop("C++98 standard requested but unsupported",
+                         call. = FALSE, domain = NA)
                 }
             }
         }
@@ -1486,7 +1498,7 @@ if(FALSE) {
 
         rait <- Sys.getenv("R_ALWAYS_INSTALL_TESTS", "FALSE")
         install_tests <- install_tests || config_val_to_logical(rait)
-
+        
 	if (install_tests && dir.exists("tests") &&
             length(dir("tests", all.files = TRUE)) > 2L) {
 	    starsmsg(stars, "tests")
@@ -2313,7 +2325,9 @@ if(FALSE) {
     with_f77 <- FALSE
     with_f9x <- FALSE
     with_objc <- FALSE
-    use_cxxstd <- NULL
+    use_cxx11 <- FALSE
+    use_cxx14 <- FALSE
+    use_cxx17 <- FALSE
     use_fc_link <- FALSE
     pkg_libs <- character()
     clean <- FALSE
@@ -2412,13 +2426,24 @@ if(FALSE) {
         if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes = TRUE)))
             makeobjs <- ""
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
-                              value = TRUE, useBytes = TRUE)) == 1) {
-            val <- gsub("^CXX_STD *= *CXX", "", ll)
-            val <- gsub(" +$", "", cxxstd)
-            if (val %in% cxx_standards) {
-                use_cxxstd <- val
+                              value = TRUE, useBytes = TRUE))) {
+            cxxstd <- gsub("^CXX_STD *=", "", ll)
+            cxxstd <- gsub(" *", "", cxxstd)
+            if (cxxstd == "CXX17") {
+                use_cxx17 <- TRUE
                 with_cxx <- TRUE
             }
+            else if (cxxstd == "CXX14") {
+                use_cxx14 <- TRUE
+                with_cxx <- TRUE
+            }
+            else if (cxxstd == "CXX11") {
+                use_cxx11 <- TRUE
+                with_cxx <- TRUE
+            }
+            else if (cxxstd == "CXX98")
+                stop("C++98 standard requested but unsupported",
+                     call. = FALSE, domain = NA)
         }
         if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
             use_fc_link <- TRUE
@@ -2428,29 +2453,55 @@ if(FALSE) {
         if (length(grep("^OBJECTS *=", lines, perl = TRUE, useBytes = TRUE)))
             makeobjs <- ""
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
-                              value = TRUE, useBytes = TRUE)) == 1) {
-            val <- gsub("^CXX_STD *= *CXX", "", ll)
-            val <- gsub(" +$", "", val)
-            if (val %in% cxx_standards) {
-                use_cxxstd <- val
+                              value = TRUE, useBytes = TRUE))) {
+            cxxstd <- gsub("^CXX_STD *=", "", ll)
+            cxxstd <- gsub(" *", "", cxxstd)
+            if (cxxstd == "CXX17") {
+                use_cxx17 <- TRUE
                 with_cxx <- TRUE
             }
+            else if (cxxstd == "CXX14") {
+                use_cxx14 <- TRUE
+                with_cxx <- TRUE
+            }
+            else if (cxxstd == "CXX11") {
+                use_cxx11 <- TRUE
+                with_cxx <- TRUE
+            }
+            else if (cxxstd == "CXX98")
+                stop("C++98 standard requested but unsupported",
+                     call. = FALSE, domain = NA)
         }
         if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
             use_fc_link <- TRUE
     }
-    if (is.null(use_cxxstd)) {
-        for (i in cxx_standards) {
-            if (nzchar(Sys.getenv(paste0("USE_CXX", i)))) {
-                use_cxxstd <- i
-                break
-            }
+    if (!is.na(Sys.getenv("USE_CXX98", NA_character_)))
+        stop("C++98 standard requested but unsupported",
+             call. = FALSE, domain = NA)
+    if (!use_cxx11 && !use_cxx14 && !use_cxx17) {
+        val17 <- Sys.getenv("USE_CXX17", NA_character_)
+        val14 <- Sys.getenv("USE_CXX14", NA_character_)
+        val11 <- Sys.getenv("USE_CXX11", NA_character_)
+        if (!is.na(val17)) {
+            use_cxx17 <- TRUE
         }
-    }
-    if (is.null(use_cxxstd)) {
-        val <- Sys.getenv("R_PKG_CXX_STD")
-        if (val %in% cxx_standards) {
-            use_cxxstd <- val
+        else if(!is.na(val14)) {
+            use_cxx14 <- TRUE
+        }
+        else if (!is.na(val11)) {
+            use_cxx11 <- TRUE
+        }
+        else {
+            val <- Sys.getenv("R_PKG_CXX_STD")
+            if (val == "CXX17") {
+                use_cxx17 <- TRUE
+            }
+            else if (val == "CXX14") {
+                use_cxx14 <- TRUE
+            }
+            else if (val == "CXX11") {
+                use_cxx11 <- TRUE
+            }
         }
     }
 
@@ -2458,7 +2509,7 @@ if(FALSE) {
         checkCXX <- function(cxxstd) {
             for (i in rev(seq_along(makefiles))) {
                 lines <- readLines(makefiles[i], warn = FALSE)
-                pattern <- paste0("^CXX", cxxstd, " *= *")
+                pattern <- paste0("^", cxxstd, " *= *")
                 ll <- grep(pattern, lines, perl = TRUE, value = TRUE,
                            useBytes = TRUE)
                 for (j in rev(seq_along(ll))) {
@@ -2468,34 +2519,43 @@ if(FALSE) {
             }
             return(FALSE)
         }
-        if (!is.null(use_cxxstd)) {
-            if (use_cxxstd == "98") {
-                stop("C++98 standard requested but unsupported",
-                     call. = FALSE, domain = NA)
-            }
-            if (!checkCXX(use_cxxstd)) {
-                stop(paste0("C++", use_cxxstd, " standard requested but CXX",
-                            use_cxxstd, " is not defined"),
-                     call. = FALSE, domain = NA)
-            }
+        if (use_cxx17 && !checkCXX("CXX17")) {
+            stop("C++17 standard requested but CXX17 is not defined",
+                 call. = FALSE, domain = NA)
+        }
+        if (use_cxx14 && !checkCXX("CXX14")) {
+            stop("C++14 standard requested but CXX14 is not defined",
+                 call. = FALSE, domain = NA)
+        }
+        if (use_cxx11 && !checkCXX("CXX11")) {
+            stop("C++11 standard requested but CXX11 is not defined",
+                 call. = FALSE, domain = NA)
         }
     }
 
     makeargs <- paste0("SHLIB=", shQuote(shlib))
     if (with_cxx) {
-        if (!is.null(use_cxxstd)) {
-            cxx_makeargs <- sprintf(c("CXX='$(CXX%s) $(CXX%sSTD)'",
-                                      "CXXFLAGS='$(CXX%sFLAGS)'",
-                                      "CXXPICFLAGS='$(CXX%sPICFLAGS)'",
-                                      "SHLIB_LDFLAGS='$(SHLIB_CXX%sLDFLAGS)'",
-                                      "SHLIB_LD='$(SHLIB_CXX%sLD)'"),
-                                    use_cxxstd, use_cxxstd)
-            makeargs <- c(cxx_makeargs, makeargs)
-        }
-        else {
+        makeargs <- if (use_cxx17)
+            c("CXX='$(CXX17) $(CXX17STD)'",
+              "CXXFLAGS='$(CXX17FLAGS)'",
+              "CXXPICFLAGS='$(CXX17PICFLAGS)'",
+              "SHLIB_LDFLAGS='$(SHLIB_CXX17LDFLAGS)'",
+              "SHLIB_LD='$(SHLIB_CXX17LD)'", makeargs)
+        else if (use_cxx14)
+            c("CXX='$(CXX14) $(CXX14STD)'",
+              "CXXFLAGS='$(CXX14FLAGS)'",
+              "CXXPICFLAGS='$(CXX14PICFLAGS)'",
+              "SHLIB_LDFLAGS='$(SHLIB_CXX14LDFLAGS)'",
+              "SHLIB_LD='$(SHLIB_CXX14LD)'", makeargs)
+        else if (use_cxx11)
+            c("CXX='$(CXX11) $(CXX11STD)'",
+              "CXXFLAGS='$(CXX11FLAGS)'",
+              "CXXPICFLAGS='$(CXX11PICFLAGS)'",
+              "SHLIB_LDFLAGS='$(SHLIB_CXX11LDFLAGS)'",
+              "SHLIB_LD='$(SHLIB_CXX11LD)'", makeargs)
+        else
             c("SHLIB_LDFLAGS='$(SHLIB_CXXLDFLAGS)'",
               "SHLIB_LD='$(SHLIB_CXXLD)'", makeargs)
-        }
     } else if (use_fc_link && (with_f77 || with_f9x))
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
                       "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
@@ -2956,7 +3016,6 @@ function()
     m
 }
 
-cxx_standards <- c("17", "14", "11", "98")
 
 ### Local variables: ***
 ### mode: outline-minor ***
