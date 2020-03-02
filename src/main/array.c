@@ -434,6 +434,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SEXP x = CAR(args), ans;
 
+    /* DispatchOrEval internal generic: length */
     if (isObject(x) &&
        DispatchOrEval(call, op, "length", args, rho, &ans, 0, 1)) {
 	if (length(ans) == 1 && TYPEOF(ans) == REALSXP) {
@@ -472,6 +473,7 @@ R_xlen_t attribute_hidden dispatch_xlength(SEXP x, SEXP call, SEXP rho) {
         if (length_op == NULL)
             length_op = R_Primitive("length");
         PROTECT(args = list1(x));
+	/* DispatchOrEval internal generic: length */
         if (DispatchOrEval(call, length_op, "length", args, rho, &len, 0, 1)) {
             UNPROTECT(1);
             return (R_xlen_t)
@@ -519,6 +521,7 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (useNames == NA_LOGICAL)
 	error(_("invalid '%s' value"), "use.names");
 
+    /* DispatchOrEval internal generic: lengths */
     if (DispatchOrEval(call, op, "lengths", args, rho, &ans, 0, 1))
       return(ans);
 

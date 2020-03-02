@@ -3227,6 +3227,7 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
     check1arg(args, call, "object");
     if(isEnvironment(arg))
 	return arg;
+    /* DispatchOrEval internal generic: as.environment */
     if(isObject(arg) &&
        DispatchOrEval(call, op, "as.environment", args, rho, &ans, 0, 1))
 	return ans;

@@ -230,6 +230,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 			   (unsigned long) nargs),
 	      nargs, PRIMNAME(op), 3, 4);
 #endif
+    /* DispatchOrEval internal generic: nchar */
     if (DispatchOrEval(call, op, "nchar", args, env, &ans, 0, 1))
       return(ans);
     if (isFactor(CAR(args)))

@@ -945,6 +945,7 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     x = CAR(args);
 
+    /* DispatchOrEval internal generic: length<- */
     if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
 				     rho, &ans, 0, 1))
 	return(ans);
