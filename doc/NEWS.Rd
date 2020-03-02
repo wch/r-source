@@ -260,6 +260,9 @@
       \item New function \code{R_user_dir()} in package \pkg{tools} for
       paths appropriate for storing R-related user-specific data,
       configuration and cache files.
+
+      \item \code{capabilities()} gains a new logical option \code{Xchk}
+      to avoid warnings about X11-related capabilities.
     }
   }% end{ NEW FEATURES }
 
