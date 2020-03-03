@@ -157,6 +157,7 @@ stopifnot(identical(iOpt.all, .deparseOpts(oa)))
 ## ditto for "exact" instead of "all":
 int2bits(iOpt.X <- .deparseOpts("exact"))
 (oX <- depO.indiv[int2bits(iOpt.X) == 1])
+diffXall <- oa != oX
 stopifnot(identical(iOpt.X, .deparseOpts(oX)),
           identical(oX[diffXall], "hexNumeric"),
           identical(oa[diffXall], "digits17"))
