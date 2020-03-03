@@ -3814,6 +3814,20 @@ N <- NULL; N[["a"]] <- 1  ; stopifnot(identical(N, list(a = 1)))
 ## the latter gave c(a = 1) in earlier versions of R
 
 
+## deparse(), dput(), etc :  "all" now includes "digits17"; new "exact"
+x <- 1 - 2^-51 ; dput(x, , "all")
+stopifnot(exprs = {
+    identical(deparse(x), as.character(x))
+    identical(deparse(x), "1") # default only uses 15 (= DBL_DIG) digits
+    identical(x, as.numeric(deparse(x, control="all")))
+    identical(x, as.numeric(deparse(x, control="exact") -> dx.x))
+    identical(print(dx.x),  deparse(x, control="hexNumeric"))
+    TRUE || ## maybe not on all platforms ?
+        identical(dx.x, "0x1.ffffffffffffcp-1") # on 32-bit, too
+})
+## "all" gave "1" in R <= 3.6.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

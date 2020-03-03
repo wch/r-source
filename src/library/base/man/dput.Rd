@@ -1,6 +1,6 @@
 % File src/library/base/man/dput.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dput}
@@ -8,8 +8,8 @@
 \alias{dget}
 \title{Write an Object to a File or Recreate it}
 \description{
-  Writes an ASCII text representation of an \R object to a file
-  or connection, or uses one to recreate the object.
+  Writes an ASCII text representation of an \R object to a file, the \R
+  console, or a connection, or uses one to recreate the object.
 }
 \usage{
 dput(x, file = "",
@@ -56,10 +56,10 @@ dget(file, keep.source = FALSE)
 }
 \note{
   This is \bold{not} a good way to transfer objects between \R sessions.
-  \code{\link{dump}} is better, but the function \code{\link{save}} is
-  designed to be used for transporting \R data, and will work with \R
-  objects that \code{dput} does not handle correctly as well as being
-  much faster.
+  \code{\link{dump}} is better, but the functions \code{\link{save}} and
+  \code{\link{saveRDS}} are designed to be used for transporting \R data,
+  and will work with \R objects that \code{dput} does not handle correctly
+  as well as being much faster.
 
   To avoid the risk of a source attribute out of sync with the actual
   function definition, the source attribute of a function will never
