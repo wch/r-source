@@ -62,6 +62,14 @@
 	 control="all")} now include using control option \code{"digits17"}
        which typically ensures 1:1 invertibility.  New option \code{control
 	 = "exact"} ensures numeric exact invertibility via \code{"hexDigits"}.
+
+       \item \R now uses a \samp{stringsAsFactors = FALSE} default, and
+       hence by default no longer converts strings to factors in calls
+       to \code{data.frame()} and \code{read.table()}.
+
+       \item When loading data sets via \code{read.table()},
+       \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
+       independent results for possible string to factor conversions.
      }
   }
 
