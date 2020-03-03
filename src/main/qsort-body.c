@@ -54,7 +54,7 @@
     /* 1-indexing for I[], v[]  (and `i' and `j') : */
     --v;
 #ifdef qsort_Index
-    --I;
+    if(I) --I; // precaution for use in package bnlearn
 #endif
 
     ii = i;/* save */
