@@ -263,6 +263,14 @@
 
       \item \code{capabilities()} gains a new logical option \code{Xchk}
       to avoid warnings about X11-related capabilities.
+
+      \item The internal implementation of \pkg{grid} units has changed,
+      but the only visible effect at user-level should be: a slightly
+      different print format for some units (especially unit
+      arithmetic); faster performance (for unit operations); and two new
+      functions \code{unitType()} and \code{unit.psum()}.  Original code
+      contributed by Thomas Lin Pedersen.
+
     }
   }% end{ NEW FEATURES }
 

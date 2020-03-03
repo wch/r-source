@@ -6,6 +6,7 @@
 \name{unit.pmin}
 \alias{unit.pmin}
 \alias{unit.pmax}
+\alias{unit.psum}
 \title{ Parallel Unit Minima and Maxima }
 \description{
   Returns a unit object whose i'th value is the minimum (or maximum)
@@ -14,6 +15,7 @@
 \usage{
 unit.pmin(...)
 unit.pmax(...)
+unit.psum(...)
 }
 \arguments{
   \item{\dots}{ One or more unit objects. }
