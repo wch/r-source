@@ -32,12 +32,15 @@ as.environment(x)
 \value{
   The corresponding environment object.
 }
-\note{
-  This is a \link{primitive} function.
+\details{
+  This is a \link{primitive} generic function: you can write methods to
+  handle specific classes of objects, see \link{InternalMethods}.
 }
 \author{ John Chambers }
-\seealso{\code{\link{environment}} for creation and manipulation,
-  \code{\link{search}}; \code{\link{list2env}}.
+\seealso{
+  \code{\link{environment}} for creation and manipulation,
+  \code{\link{search}};
+  \code{\link{list2env}}.
 }
 \examples{
 as.environment(1) ## the global environment

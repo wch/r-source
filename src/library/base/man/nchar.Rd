@@ -16,7 +16,7 @@ nzchar(x, keepNA = FALSE)
   \code{nchar} takes a character vector as an argument and
   returns a vector whose elements contain the sizes of
   the corresponding elements of \code{x}. Internally, it is a generic,
-  for which methods can be defined.
+  for which methods can be defined (see \link{InternalMethods}).
 
   \code{nzchar} is a fast way to find out if elements of a character
   vector are non-empty strings.

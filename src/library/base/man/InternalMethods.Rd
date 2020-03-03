@@ -37,6 +37,8 @@
   \code{\link{length}},%      % do_length()          [array.c]
   % DispatchOrEval internal generic: length<-
   \code{\link{length<-}},%    % do_lengthgets()      [builtin.c]
+  % DispatchOrEval internal generic: lengths
+  \code{\link{lengths}},%     % do_lengths()         [array.c]
   % DispatchOrEval internal generic: dimnames
   \code{\link{dimnames}},%    % do_dimnames()        [attrib.c]
   % DispatchOrEval internal generic: dimnames<-
@@ -51,6 +53,8 @@
   \code{\link{names<-}},%     % do_namesgets()       [attrib.c]
   % DispatchOrEval internal generic: levels<-
   \code{\link{levels<-}},%    % do_levelsgets()      [attrib.c]
+  % DispatchOrEval internal generic: @<-
+  \code{\link{@<-}},%         % do_attrgets()        [attrib.c]  
 
   % DispatchOrEval internal generic: c  
   \code{\link{c}},%           % do_c()               [bind.c]
@@ -72,22 +76,40 @@
   % DispatchOrEval internal generic: as.raw
   \code{\link{as.raw}},
   % DispatchOrEval internal generic: as.vector
-  \code{\link{as.vector}},%   % do_asvector()        [coerce.c]
+  \code{\link{as.vector}},%    % do_asvector()       [coerce.c]
+  % DispatchOrEval internal generic: as.call
+  \code{\link{as.call}},%      % do_ascall()         [coerce.c]
+  % DispatchOrEval internal generic: as.environment
+  \code{\link{as.environment}}%% do_as_environment() [envir.c]
   % DispatchOrEval internal generic: is.array
   \code{\link{is.array}},
   % DispatchOrEval internal generic: is.matrix
   \code{\link{is.matrix}},
   % DispatchOrEval internal generic: is.na
   \code{\link{is.na}},%       % do_isna()            [coerce.c]
+  % DispatchOrEval internal generic: anyNA
+  \code{\link{anyNA}},%       % do_anyNA()           [coerce.c]  
   % DispatchOrEval internal generic: is.nan
   \code{\link{is.nan}},%      % do_isnan()           [coerce.c]
+  % DispatchOrEval internal generic: is.finite
+  \code{\link{is.finite}}%    % do_isfinite()        [coerce.c]
+  % DispatchOrEval internal generic: is.infinite
+  \code{\link{is.infinite}}%    % do_isinfinite()    [coerce.c]
   % DispatchOrEval internal generic: is.numeric
   \code{\link{is.numeric}},
+  % DispatchOrEval internal generic: nchar
+  \code{\link{nchar}}%          % do_nchar()         [character.c]
   % DispatchOrEval internal generic: rep
   \code{\link{rep}},%                                [seq.c]
+  % DispatchOrEval internal generic: rep.int
+  \code{\link{rep.int}}%        % do_rep_int()       [seq.c]
+  % DispatchOrEval internal generic: rep_len
+  \code{\link{rep_len}}%        % do_rep_len()       [seq.c]
   % DispatchOrEval internal generic: seq.int
   \code{\link{seq.int}}
-  (which dispatches methods for \code{"seq"})%       [seq.c]
+  (which dispatches methods for \code{"seq"}),%      [seq.c]
+  % DispatchOrEval internal generic: is.unsorted
+  \code{\link{is.unsorted}}%    % do_isunsorted()    [sort.c]
   and
   % DispatchOrEval internal generic: xtfrm
   \code{\link{xtfrm}}%                               [sort.c]
