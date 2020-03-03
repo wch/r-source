@@ -28,6 +28,14 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         ans
     }
 
+    my_read_table <- function(...) {
+        ## Try canonicalizing the sort order for possible string to
+        ## factor conversions.
+        lcc <- Sys.setlocale("LC_COLLATE", "C")
+        on.exit(Sys.setlocale("LC_COLLATE", lcc))
+        read.table(...)
+    }
+
     names <- c(as.character(substitute(list(...))[-1L]), list)
 
     ## Find the directories of the given packages and maybe the working
@@ -192,13 +200,17 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                                assign(name,
                                       ## ensure default for as.is has not been
                                       ## overridden by options(stringsAsFactor)
-                                      read.table(zfile, header = TRUE, as.is = FALSE),
+                                      my_read_table(zfile,
+                                                    header = TRUE,
+                                                    as.is = FALSE),
                                       envir = tmp_env),
                                CSV = , csv = ,
                                csv.gz = , csv.bz2 = , csv.xz =
                                assign(name,
-                                      read.table(zfile, header = TRUE,
-                                                 sep = ";", as.is = FALSE),
+                                      my_read_table(zfile,
+                                                    header = TRUE,
+                                                    sep = ";",
+                                                    as.is = FALSE),
                                       envir = tmp_env),
                                found <- FALSE)
                     }
