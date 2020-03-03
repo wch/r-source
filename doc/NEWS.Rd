@@ -57,6 +57,11 @@
        \code{list} also when \code{length(val) == 1}, consistently.  This
        also enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
        \code{r1}, fixing \PR{17719}, reported by Serguei Sokol.
+
+       \item \code{deparse(..)}, \code{dump(..)}, and \code{dput(x,
+	 control="all")} now include using control option \code{"digits17"}
+       which typically ensures 1:1 invertibility.  New option \code{control
+	 = "exact"} ensures numeric exact invertibility via \code{"hexDigits"}.
      }
   }
 
