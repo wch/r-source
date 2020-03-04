@@ -3819,7 +3819,8 @@ x <- 1 - 2^-51 ; dput(x, , "all")
 stopifnot(exprs = {
     identical(deparse(x), as.character(x))
     identical(deparse(x), "1") # default only uses 15 (= DBL_DIG) digits
-    identical(x, as.numeric(deparse(x, control="all")))
+    if(!capabilities("long.double")) TRUE else
+        identical(x, as.numeric(deparse(x, control="all")))
     identical(x, as.numeric(deparse(x, control="exact") -> dx.x))
     identical(print(dx.x),  deparse(x, control="hexNumeric"))
     TRUE || ## maybe not on all platforms ?
