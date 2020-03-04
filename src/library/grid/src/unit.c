@@ -1689,19 +1689,27 @@ SEXP asUnit(SEXP simpleUnit) {
 	return units;
 }
 SEXP conformingUnits(SEXP unitList) {
-	int n = LENGTH(unitList);
-	int unitType;
-	SEXP uAttrib = install("unit");
-	for (int i = 0; i < n; i++) {
-		SEXP unit = VECTOR_ELT(unitList, i);
-		if (!inherits(unit, "unit")) error(_("object is not a unit"));
-		if (!inherits(unit, "unit_v2")) error(_("old version of unit class is no longer allowed"));
-		if (!inherits(unit, "simpleUnit")) return R_NilValue;
-		int tempUnit = INTEGER(getAttrib(unit, uAttrib))[0];
-		if (i == 0) unitType = tempUnit;
-		else if (unitType != tempUnit) return R_NilValue;
-	}
-	return Rf_ScalarInteger(unitType);
+    int n = LENGTH(unitList);
+    int unitType = -1;
+    SEXP uAttrib = install("unit");
+    for (int i = 0; i < n; i++) {
+        SEXP unit = VECTOR_ELT(unitList, i);
+        if (!inherits(unit, "unit")) 
+            error(_("object is not a unit"));
+        if (!inherits(unit, "unit_v2")) 
+            error(_("old version of unit class is no longer allowed"));
+        if (!inherits(unit, "simpleUnit")) 
+            return R_NilValue;
+        int tempUnit = INTEGER(getAttrib(unit, uAttrib))[0];
+        if (i == 0) 
+            unitType = tempUnit;
+        else if (unitType != tempUnit) 
+            return R_NilValue;
+    }
+    if (unitType < 0)
+        return R_NilValue;
+    else
+        return Rf_ScalarInteger(unitType);
 }
 
 SEXP matchUnit(SEXP units, SEXP unit) {
