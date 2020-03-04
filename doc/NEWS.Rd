@@ -284,6 +284,9 @@
       functions \code{unitType()} and \code{unit.psum()}.  Original code
       contributed by Thomas Lin Pedersen.
 
+      \item When internal dispatch for \code{rep.int()}
+      and \code{rep_len()} fails, there is an attempt to dispatch on the
+      equivalent call to \code{rep()}.
     }
   }% end{ NEW FEATURES }
 

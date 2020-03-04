@@ -350,6 +350,9 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (DispatchOrEval(call, op, "rep.int", args, rho, &a, 0, 0))
       return(a);
 
+    if (DispatchOrEval(call, op, "rep", args, rho, &a, 0, 0))
+      return(a);
+    
     if (!isVector(ncopy))
 	error(_("invalid type (%s) for '%s' (must be a vector)"),
 	      type2char(TYPEOF(ncopy)), "times");
@@ -413,6 +416,19 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     s = CAR(args);
 
+    if (isObject(s)) {
+	SEXP rep_call, rep_args;
+	PROTECT(rep_call = shallow_duplicate(call));
+	SETCAR(rep_call, install("rep"));
+	SET_TAG(CDDR(rep_call), install("length.out"));
+	SET_TAG(CDR(args), install("length.out"));
+	if (DispatchOrEval(rep_call, op, "rep", args, rho, &a, 0, 0)) {
+	    UNPROTECT(1);
+	    return(a);
+	}
+	UNPROTECT(1);
+    }
+    
     if (!isVector(s) && s != R_NilValue)
 	error(_("attempt to replicate non-vector"));
 
