@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-03-03 r77889) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-04 r77906) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -25,11 +25,10 @@ Type 'q()' to quit R.
 > pd0 <- function(expr, backtick = TRUE, ...) parse(text = deparse(expr, 
 +     backtick = backtick, ...))
 
-> id_epd <- function(expr, control = c("all", "digits17"), 
-+     ...) eval(pd0(expr, control = control, ...))
+> id_epd <- function(expr, control = "all", ...) eval(pd0(expr, 
++     control = control, ...))
 
-> dPut <- function(x, control = c("all", "digits17")) dput(x, 
-+     control = control)
+> dPut <- function(x, control = "all") dput(x, control = control)
 
 > hasReal <- function(x) {
 +     if (is.double(x) || is.complex(x)) 
@@ -407,14 +406,14 @@ as.pairlist(alist(obj = , show = quote(!hasReal(obj)), oNam = quote(deparse(subs
     "t2", "ydata")), eq.tol = quote(if (noLdbl) 2 * .Machine$double.eps else 0)))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
-dPut: function (x, control = c("all", "digits17")) 
+dPut: function (x, control = "all") 
 dput(x, control = control)
  --> checking list(*): Ok
 checking body(.):
 quote(dput(x, control = control))
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(x = , control = quote(c("all", "digits17"))))
+as.pairlist(alist(x = , control = "all"))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 dn: list(c("A", "B", "C"), c("a", "b", "c", "d", "e"))
@@ -489,14 +488,14 @@ __ not parse()able __: hasMissObj(.) is true
 i: c(1, 3, 4, 5, 6, 7, 8)
  --> checking list(*): Ok
 --=--=--=--=--
-id_epd: function (expr, control = c("all", "digits17"), ...) 
+id_epd: function (expr, control = "all", ...) 
 eval(pd0(expr, control = control, ...))
  --> checking list(*): Ok
 checking body(.):
 quote(eval(pd0(expr, control = control, ...)))
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(expr = , control = quote(c("all", "digits17")), ... = ))
+as.pairlist(alist(expr = , control = "all", ... = ))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 isMissObj: function (obj) 
@@ -619,5 +618,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.556 0.091 1.664 0 0.005 
+Time elapsed:  1.489 0.104 1.595 0.003 0.004 
 > 
