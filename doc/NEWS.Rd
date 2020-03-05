@@ -13,7 +13,8 @@
 
        \item \R now builds by default against a PCRE2 library for Perl-like
        regular expressions if available at build time on non-Windows
-       platforms (otherwise PCRE1 is used as in older versions of \R).
+       platforms (otherwise PCRE1 is used as in older versions of \R). On
+       Windows, \R always builds against PCRE2 by default.
 
        PCRE2 is stricter in some cases and reports errors for some
        regular expressions that were accepted by PCRE1.  A hyphen now
