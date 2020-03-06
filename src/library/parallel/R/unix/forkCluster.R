@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/forkCluster.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,54 +18,55 @@
 
 makeForkCluster <- function(nnodes = getOption("mc.cores", 2L), ...)
 {
+    options <- addClusterOptions(defaultClusterOptions, list(...)) 
+    port <- getClusterOption("port", options)
+
     nnodes <- as.integer(nnodes)
     if(is.na(nnodes) || nnodes < 1L) stop("'nnodes' must be >= 1")
     .check_ncores(nnodes)
     cl <- vector("list", nnodes)
-    for (i in seq_along(cl)) cl[[i]] <- newForkNode(..., rank = i)
+    socket <- serverSocket(port = port)
+    on.exit(close(socket))
+    for (i in seq_along(cl)) {
+        node <- tryCatch( newForkNode(..., rank = i, socket = socket,
+                                      server_socket = socket),
+                          error = identity )
+        if (inherits(node, "forknode"))
+            cl[[i]] <- node
+        else {
+            if (i > 1)
+                for(j in 1:i) stopNode(cl[[j]])
+            stop("Cluster setup failed.")
+        }
+    }
     class(cl) <- c("SOCKcluster", "cluster")
     cl
 }
 
 
-newForkNode <- function(..., options = defaultClusterOptions, rank)
+newForkNode <- function(..., options = defaultClusterOptions, rank, socket,
+                        setup_timeout, server_socket)
 {
     options <- addClusterOptions(options, list(...))
     outfile <- getClusterOption("outfile", options)
     port <- getClusterOption("port", options)
     timeout <- getClusterOption("timeout", options)
     renice <- getClusterOption("renice", options)
+    setup_timeout <- 10
 
     f <- mcfork(TRUE)
     if (inherits(f, "masterProcess")) { # the slave
         on.exit(mcexit(1L, structure("fatal error in wrapper code",
                                   class = "try-error")))
         # closeStdout()
+        close(server_socket)
         master <- "localhost"
         makeSOCKmaster <- function(master, port, timeout)
         {
             port <- as.integer(port)
-
-            ## FIXME: common code with .slaveRSOCK
-            retryDelay <- 0.05   # 0.05 seconds initial delay before retrying
-            retryScale <- 1.5    # 50% increase of delay at each retry
-            setup_timeout <- 10  # retry setup for 10 seconds before failing
-
-            ## Retry multiple times in case the master is not yet ready
-            t0 <- Sys.time()
-            repeat { 
-                con <- tryCatch({
-                    socketConnection(master, port = port, blocking = TRUE,
-                                     open = "a+b", timeout = timeout)
-                }, error = identity)
-                if (inherits(con, "connection")) break
-                if (difftime(Sys.time(), t0, units="secs") > setup_timeout)
-                    break
-                Sys.sleep(retryDelay)
-                retryDelay <- retryScale * retryDelay
-            }
-            if (inherits(con, "error")) stop(con)
-
+            con <- socketConnection(master, port = port, blocking = TRUE,
+                                    open = "a+b", timeout = setup_timeout)
+            socketTimeout(socket = con, timeout = timeout)
             structure(list(con = con), class = "SOCK0node")
         }
         sinkWorkerOutput(outfile)
@@ -79,8 +80,10 @@ newForkNode <- function(..., options = defaultClusterOptions, rank)
         mcexit(0L)
     }
 
-    con <- socketConnection("localhost", port = port, server = TRUE,
-                            blocking = TRUE, open = "a+b", timeout = timeout)
+
+    con <- socketAccept(socket = socket, blocking = TRUE, open = "a+b",
+                        timeout = setup_timeout + 5)
+    socketTimeout(socket = con, timeout = timeout)
     structure(list(con = con, host = "localhost", rank = rank),
               class = c("forknode", "SOCK0node"))
 }
