@@ -71,8 +71,16 @@
        \item When loading data sets via \code{read.table()},
        \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
        independent results for possible string to factor conversions.
+
+       \item The \code{plot()} generic function is now in package
+       \pkg{base} rather than package \pkg{graphics}, as it is
+       reasonable to have methods that do not use the \pkg{graphics}
+       package. The generic is currently re-exported from the
+       \pkg{graphics} namespace to allow packages importing it from
+       there to continue working, but this may change in future versions
+       of \R.
      }
-  }
+   }
 
   \subsection{NEW FEATURES}{
     \itemize{
