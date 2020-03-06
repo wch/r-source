@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.glob.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.glob}
@@ -24,13 +24,13 @@ Sys.glob(paths, dirmark = FALSE)
     have a slash appended?  May not be supported on all platforms.}
 }
 \details{
+  This expands tilde (see \link{tilde expansion}) and wildcards in file paths. 
 #ifdef unix
-  This expands wildcards in file paths.  For precise details, see your
+  For precise details of wildcards expansion, see your
   system's documentation on the \code{glob} system call.  There is a
   POSIX 1003.2 standard (see
   \url{http://pubs.opengroup.org/onlinepubs/9699919799/functions/glob.html})
-  but some OSes will go beyond this.  The \R implementation will always
-  do \link{tilde expansion}.
+  but some OSes will go beyond this.
 
   All systems should interpret \code{*} (match zero or more characters),
   \code{?} (match a single character) and (probably) \code{[} (begin a
@@ -70,7 +70,7 @@ Sys.glob(paths, dirmark = FALSE)
 #endif
 #ifdef windows
   The \code{glob} system call is not part of Windows, and we supply a
-  partial emulation.
+  partial emulation for wildcards expansion.
 
   Wildcards are \code{*} (match zero or more characters) and \code{?} (match
   a single character).  If a filename starts with \code{.} this must be
