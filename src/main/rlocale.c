@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2017   The R Core Team
+ *  Copyright (C) 2005-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -152,7 +152,7 @@ static cjk_locale_name_t cjk_locale_name[] = {
 };
 
 // used in character.c, ../gnuwin32/console.c , ../library/grDevices/src/devP*.c :
-int Ri18n_wcwidth(Rwchar_t c)
+int Ri18n_wcwidth(R_wchar_t c)
 {
     char lc_str[128];
     unsigned int i, j;

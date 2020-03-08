@@ -1230,6 +1230,8 @@ int Rf_isBasicClass(const char *);
 
 Rboolean R_cycle_detected(SEXP s, SEXP child);
 
+/* cetype_t is an identifier reseved by POSIX, but it is
+   well established as public.  Could remap by a #define though */
 typedef enum {
     CE_NATIVE = 0,
     CE_UTF8   = 1,

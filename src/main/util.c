@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -373,7 +373,7 @@ static const char UCS2ENC[] = "UCS-2LE";
 /* Note: this does not terminate out, as all current uses are to look
  * at 'out' a wchar at a time, and sometimes just one char.
  */
-size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
+size_t mbcsToUcs2(const char *in, R_ucs2_t *out, int nout, int enc)
 {
     void   *cd = NULL ;
     const char *i_buf;
@@ -389,7 +389,7 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
     i_buf = (char *)in;
     i_len = strlen(in); /* not including terminator */
     o_buf = (char *)out;
-    o_len = ((size_t) nout) * sizeof(ucs2_t);
+    o_len = ((size_t) nout) * sizeof(R_ucs2_t);
     status = Riconv(cd, &i_buf, (size_t *)&i_len, &o_buf, (size_t *)&o_len);
     int serrno = errno;
     Riconv_close(cd);
@@ -1249,7 +1249,7 @@ int attribute_hidden utf8clen(char c)
     return 1 + utf8_table4[c & 0x3f];
 }
 
-static Rwchar_t
+static R_wchar_t
 utf16toucs(wchar_t high, wchar_t low) 
 {
     return 0x10000 + ((int) (high & 0x3FF) << 10 ) + (int) (low & 0x3FF);
@@ -1262,7 +1262,7 @@ utf8toutf16low(const char *s)
     return (unsigned int) LOW_SURROGATE_START | ((s[2] & 0x0F) << 6) | (s[3] & 0x3F);
 }
 
-Rwchar_t attribute_hidden
+R_wchar_t attribute_hidden
 utf8toucs32(wchar_t high, const char *s)
 {
     return utf16toucs(high, utf8toutf16low(s));
@@ -1379,7 +1379,7 @@ static const unsigned int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
 
 /* s is NULL, or it contains at least n bytes.  Just write a a terminator if it's not big enough. */
 
-static size_t Rwcrtomb32(char *s, Rwchar_t cvalue, size_t n)
+static size_t Rwcrtomb32(char *s, R_wchar_t cvalue, size_t n)
 {
     register size_t i, j;
     if (!n) return 0;
@@ -1412,11 +1412,11 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
     if (!n) return 0;
     for(p = wc, t = s; ; p++) {
     	if (IS_SURROGATE_PAIR(*p, *(p+1))) {
-    	    Rwchar_t cvalue =  ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
+    	    R_wchar_t cvalue =  ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
 	    m = Rwcrtomb32(t, cvalue, n - res);
 	    p++;
     	} else 
-    	    m = Rwcrtomb32(t, (Rwchar_t)(*p), n - res);
+    	    m = Rwcrtomb32(t, (R_wchar_t)(*p), n - res);
     	if (!m) break;
 	res += m;
 	if (t)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2017   The R Core Team
+ *  Copyright (C) 2005-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,15 +39,15 @@
 #include <wctype.h>
 
 /*
- * The Rwchar_t typedef represents a single Unicode code point.  On most systems it's the same
+ * The R_wchar_t typedef represents a single Unicode code point.  On most systems it's the same
  * as wchar_t, but on Windows (and others?) where wchar_t is too small and UTF-16 is used,
  * it is an unsigned int instead.
  */
  
 #ifdef Win32
-typedef unsigned int Rwchar_t;
+typedef unsigned int R_wchar_t;
 #else
-typedef wchar_t Rwchar_t;
+typedef wchar_t R_wchar_t;
 #endif 
 
 /*
@@ -79,7 +79,7 @@ typedef wchar_t Rwchar_t;
  *
  */
  
-extern int Ri18n_wcwidth(Rwchar_t);
+extern int Ri18n_wcwidth(R_wchar_t);
 extern int Ri18n_wcswidth (const wchar_t *, size_t);
 
 /* macOS CJK and WindowXP(Japanese)
@@ -144,6 +144,6 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define IS_SURROGATE_PAIR(hs, ls) (IS_HIGH_SURROGATE (hs) && IS_LOW_SURROGATE (ls))
 
 # define utf8toucs32		Rf_utf8toucs32
-Rwchar_t utf8toucs32(wchar_t high, const char *s);
+R_wchar_t utf8toucs32(wchar_t high, const char *s);
 
 #endif /* R_LOCALE_H */
