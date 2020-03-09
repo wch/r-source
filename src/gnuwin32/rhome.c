@@ -81,7 +81,8 @@ char *get_R_HOME(void)
 
     /* First try the C environment space */
     if(getenv("R_HOME")) {
-	strncpy(rhomebuf, getenv("R_HOME"), MAX_PATH);
+	strncpy(rhomebuf, getenv("R_HOME"), MAX_PATH - 1);
+	rhomebuf[MAX_PATH - 1] = '\0';
 	return (rhomebuf);
     }
 

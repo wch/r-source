@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto and Brian Ripley
- *             (C) 2007-2019  The R Core Team
+ *             (C) 2007-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ static void pcreate(const char* cmd, cetype_t enc,
     DWORD ret;
     STARTUPINFO si;
     STARTUPINFOW wsi;
-    HANDLE dupIN, dupOUT, dupERR, job, port;
+    HANDLE dupIN, dupOUT, dupERR, job, port = NULL;
     WORD showWindow = SW_SHOWDEFAULT;
     DWORD flags;
     BOOL inJob;

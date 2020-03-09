@@ -3,7 +3,7 @@
  *  file selectlist.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2017  The R Core Team
+ *  Copyright (C) 2005--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,7 +53,8 @@ static void cancel(button b)
 
 static void finish(button b)
 {
-    strncpy(selected, GA_gettext(f_list), 100);
+    strncpy(selected, GA_gettext(f_list), 100 - 1);
+    selected[100 - 1] = '\0';
     done = 1;
 }
 

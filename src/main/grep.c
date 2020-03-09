@@ -655,7 +655,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			if ((slen == 1 && *bufp != *split) ||
 			    (slen > 1 && strncmp(bufp, split, slen))) continue;
 			if (slen) {
-			    strncpy(pt, laststart, bufp - laststart);
+			    if (bufp > laststart)
+				strncpy(pt, laststart, bufp - laststart);
 			    pt[bufp - laststart] = '\0';
 			} else {
 			    pt[0] = *bufp; pt[1] ='\0';

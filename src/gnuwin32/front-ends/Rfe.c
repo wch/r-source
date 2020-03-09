@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2010--2017  R Core Team
+ *  Copyright (C) 2010--2020  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,8 +60,10 @@ int main (int argc, char **argv)
 	    fprintf(stderr, "valid values for --arch are i386, x64, 32, 64\n");
 	    exit(1);
 	}
-    } else if ((p = getenv("R_ARCH")))
-	strncpy(arch, p+1, 10); /* skip leading slash */
+    } else if ((p = getenv("R_ARCH"))) {
+	strncpy(arch, p+1, 10 - 1); /* skip leading slash */
+	arch[10 - 1] = '\0';
+    }
     
     if (stricmp(argv[0] + strlen(argv[0]) - 11, "Rscript.exe") == 0
 	|| stricmp(argv[0] + strlen(argv[0]) - 7, "Rscript") == 0)

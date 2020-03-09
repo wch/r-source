@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2019   The R Core Team
+ *  Copyright (C) 2004-2020   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
@@ -3721,10 +3721,12 @@ SEXP devga(SEXP args)
 	char type[100], *file = NULL, fn[MAX_PATH];
 	strcpy(type, "windows");
 	if (display[0]) {
-	    strncpy(type, display, 100);
+	    strncpy(type, display, 100 - 1);
+	    type[100 - 1] = '\0';
 	    char *p = strchr(display, ':');
 	    if (p) {
-		strncpy(fn, p+1, MAX_PATH);
+		strncpy(fn, p+1, MAX_PATH - 1);
+		fn[MAX_PATH - 1] = '\0';
 		file = fn;
 	    }
 	    // Package tkrplot assumes the exact form here,

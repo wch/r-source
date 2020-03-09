@@ -1511,7 +1511,7 @@ static int delReparsePoint(const wchar_t *name)
     return res == 0;
 }
 
-static int R_unlink(wchar_t *name, int recursive, int force)
+static int R_unlink(const wchar_t *name, int recursive, int force)
 {
     R_CheckStack(); // called recursively
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
