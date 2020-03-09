@@ -524,7 +524,7 @@ ssize_t R_SockRead(int sockp, void *buf, size_t len, int blocking, int timeout)
 	if(blocking && (res = R_SocketWait(sockp, 0, timeout)) != 0)
 	    return res < 0 ? res : 0; /* socket error or timeout */
 	res = recv(sockp, buf, len, 0);
-	if (R_socket_error(res)) {
+	if (R_socket_error((int)res)) {
 	    switch(R_socket_errno()) {
 	    case EWOULDBLOCK:
 #if !defined(Win32) && EAGAIN != EWOULDBLOCK
@@ -648,7 +648,7 @@ ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)
 	if((res = R_SocketWait(sockp, 1, timeout)) != 0)
 	    return res < 0 ? res : 0; /* socket error or timeout */
 	res = send(sockp, buf, len, 0);
-	if (R_socket_error(res)) {
+	if (R_socket_error((int)res)) {
 	    switch(R_socket_errno()) {
 	    case EWOULDBLOCK:
 #if !defined(Win32) && EAGAIN != EWOULDBLOCK

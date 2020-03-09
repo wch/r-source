@@ -418,8 +418,8 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = recv(fd, buf, size, 0);
-    while(R_socket_error_eintr(retval));
-    if (R_socket_error(retval))
+    while(R_socket_error_eintr((int)retval));
+    if (R_socket_error((int)retval))
 	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;
@@ -431,8 +431,8 @@ ssize_t Sock_write(int fd, const void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = send(fd, buf, size, 0);
-    while (R_socket_error_eintr(retval));
-    if (R_socket_error(retval))
+    while (R_socket_error_eintr((int)retval));
+    if (R_socket_error((int)retval))
 	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;
