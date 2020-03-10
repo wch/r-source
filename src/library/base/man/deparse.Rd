@@ -65,9 +65,10 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   been output and e.g.\sspace{}\code{arg = value} expressions will not be split
   across lines.
 
-  \code{deparse1()} is a simple utility to ensure a string result
-  (\code{\link{character}} vector of length one), typically used in
-  name construction, as \code{deparse1(\link{substitute}(.))}.
+  \code{deparse1()} is a simple utility added in \R{} 4.0.0 to ensure a
+  string result (\code{\link{character}} vector of length one),
+  typically used in name construction, as
+  \code{deparse1(\link{substitute}(.))}.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual
