@@ -77,12 +77,9 @@ int main (int argc, char **argv)
 	if (interactive && !strcmp(argv[i], "CMD"))
 	    interactive = 0;
 	strcat(cmd, " ");
-	if(strchr(argv[i], ' ')) {
-	    strcat(cmd, "\"");
-	    /* We should really escape " here, I believe */
-	    strcat(cmd, argv[i]);
-	    strcat(cmd, "\"");
-	} else strcat(cmd, argv[i]);
+	strcat(cmd, "\"");
+	strcat(cmd, argv[i]);
+	strcat(cmd, "\"");
     }
     /* the outermost double quotes are needed for cmd.exe */
     strcat(cmd, "\"");

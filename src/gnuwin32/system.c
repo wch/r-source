@@ -566,8 +566,8 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 			warning(buf);
 		    }
 		} else {
-		    /* Quote path if necessary */
-		    if(pager[0] != '"' && Rf_strchr(pager, ' '))
+		    /* Quote path if not quoted */
+		    if(pager[0] != '"')
 			snprintf(buf, 1024, "\"%s\" \"%s\"", pager, file[i]);
 		    else
 			snprintf(buf, 1024, "%s \"%s\"", pager, file[i]);
@@ -613,8 +613,8 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 	    if (!strcmp(editor, "internal")) {
 		Rgui_Edit(file[i], CE_UTF8, title[i], 0);
 	    } else {
-		/* Quote path if necessary */
-		if (editor[0] != '"' && Rf_strchr(editor, ' '))
+		/* Quote path if not quoted */
+		if (editor[0] != '"')
 		    snprintf(buf, 1024, "\"%s\" \"%s\"", editor, file[i]);
 		else
 		    snprintf(buf, 1024, "%s \"%s\"", editor, file[i]);
