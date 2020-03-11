@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -91,22 +91,40 @@
   \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}
+
+  \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{when
+    \code{\link{capabilities}["long.double"]} is true, there are 10 such
+    \code{"longdouble.<kind>"} values, specifying the \code{long double}
+    property corresponding to its \code{"double.*"} counterpart, above, see
+    also \sQuote{Note}.}
 }
 \details{
   The algorithm is based on Cody's (1988) subroutine MACHAR.  As all
   current implementations of \R use 32-bit integers and use IEC 60559
-  floating-point (double precision) arithmetic, all but three of the
-  last four values are the same for almost all \R builds. % sizeof.(long|longdouble|pointer)
+  floating-point (double precision) arithmetic, the \code{"integer"} and
+  \code{"double"} related values are the same for almost all \R builds.
+  % differing sizeof.(long|longdouble|pointer)
 
   Note that on most platforms smaller positive values than
   \code{.Machine$double.xmin} can occur.  On a typical \R platform the
   smallest positive double is about \code{5e-324}.
 }
 \note{
+  In the (typical) case where \code{\link{capabilities}["long.double"]} is
+  true, \R uses the \code{long double} C type in quite a few places internally
+  for accumulators in e.g.\sspace{}\code{\link{sum}}, reading non-integer
+  numeric constants into (binary) double precision numbers, or arithmetic
+  such as \code{x \%\% y}; also, \code{long double} can be read by
+  \code{\link{readBin}}.
+  \cr%--------------------------------
+  For this reason, in that case, \code{.Machine} contains ten further components,
+  \code{longdouble.eps}, \code{*.neg.eps}, \code{*.digits}, \code{*.rounding}
+  \code{*.guard}, \code{*.ulp.digits}, \code{*.neg.ulp.digits},
+  \code{*.exponent}, \code{*.min.exp}, and \code{*.max.exp}, computed
+  entirely analogously to their \code{double.*} counterparts, see there.
+
   \code{sizeof.longdouble} only tells you the amount of storage
-  allocated for a long double (which are normally used internally by \R for
-  accumulators in e.g.\sspace{}\code{\link{sum}}, and can be read by
-  \code{\link{readBin}}).  Often what is stored is the 80-bit extended
+  allocated for a long double.  Often what is stored is the 80-bit extended
   double type of IEC 60559, padded to the double alignment used on the
   platform --- this seems to be the case for the common \R platforms
   using ix86 and x86_64 chips.

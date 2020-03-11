@@ -296,6 +296,9 @@
       \item When internal dispatch for \code{rep.int()}
       and \code{rep_len()} fails, there is an attempt to dispatch on the
       equivalent call to \code{rep()}.
+
+      \item \code{.Machine} now contains new \code{longdouble.*} entries
+      (when \R internally uses long double).
     }
   }% end{ NEW FEATURES }
 
