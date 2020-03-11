@@ -11,10 +11,11 @@
        \item The internal version number of R-devel has been set to 4.0.0,
        reflecting the intention that the next non-patch release should be 4.0.0.
 
-       \item \R now builds by default against a PCRE2 library for Perl-like
-       regular expressions if available at build time on non-Windows
-       platforms (otherwise PCRE1 is used as in older versions of \R). On
-       Windows, \R always builds against PCRE2 by default.
+       \item \R is now built by default against a PCRE2 library for
+       Perl-like regular expressions.  On non-Windows platforms PCRE1 is
+       used if PCRE2 is not available at build.time.  The version of
+       PCRE used can be obtained via \code{extSoftVersion()}: PCRE1 has
+       versions < 10, PCRE2 versions >= 10.
 
        PCRE2 is stricter in some cases and reports errors for some
        regular expressions that were accepted by PCRE1.  A hyphen now
@@ -25,10 +26,6 @@
 
        Option \code{PCRE_study} is no longer used, and reported as
        \code{FALSE}.
-
-       The version of PCRE used can be obtained via
-       \code{extSoftVersion()}, PCRE1 has versions < 10, PCRE2 versions
-       >= 10.
 
        \item \code{matrix} objects now also inherit from class
        \code{"array"}, namely, e.g., \code{class(diag(1))} is
@@ -72,13 +69,19 @@
        \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
        independent results for possible string to factor conversions.
 
-       \item The \code{plot()} generic function is now in package
+       \item The \code{plot()} S3 generic function is now in package
        \pkg{base} rather than package \pkg{graphics}, as it is
        reasonable to have methods that do not use the \pkg{graphics}
        package. The generic is currently re-exported from the
        \pkg{graphics} namespace to allow packages importing it from
        there to continue working, but this may change in future versions
        of \R.
+
+       Packages which define S4 generics for \code{plot()} should be
+       re-installed and package code using such generics from other
+       packages needs to ensure that they are imported rather than rely
+       on their being found on the search path (as in a namespace, the
+       base namespace has priority over the search path).
      }
    }
 
@@ -554,7 +557,7 @@
 
       \item \code{norm(diag(c(1, NA)), "2")} now works.
 
-      \item \code{subset()} had problems with 0-col dataframe (Bill Dunlap,
+      \item \code{subset()} had problems with 0-col dataframes (Bill Dunlap,
       \PR{17721})
 
       \item Several cases of integer overflow detected by the
