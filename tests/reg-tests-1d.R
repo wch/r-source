@@ -3079,7 +3079,16 @@ stopifnot(exprs = {
     x[1:52] %% 3 == 2:1
    -x[1:52] %% 3 == 1:2
 }) # larger x suffer from cancellation (well, warning too early now):
-tools::assertWarning(x[60:68] %% 3)
+(iCrit <- ## depends on the presence and version of "long double":
+    if(noLdbl)
+        50:55
+    else if(is.integer(digLd <- .Machine$longdouble.digits) && digLd == 64)
+        60:68
+    else if(is.integer(digLd) && digLd == 113) ## aarch64 {PR#17718}
+        110:118
+    else 250:258 # "wild guess" should always work
+)
+tools::assertWarning(x[iCrit] %% 3, verbose=TRUE)
 
 
 ## Hilmar Berger's on R-devel list: 'data.frame() == NULL' etc
