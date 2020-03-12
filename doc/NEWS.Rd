@@ -177,13 +177,14 @@
       aspect ratio, fulfilling the wish and extending the proposal of
       Michael Chirico in \PR{17648}.
 
-      \item \code{head(x, n)} and \code{tail()} default and other S3 methods
-      notably for \emph{vector} \code{n}, e.g. to get a \dQuote{corner} of
-      a matrix, also extended for \code{array}'s of higher dimension,
-      thanks to the patch proposal by Gabe Becker in \PR{17652}.
-      Consequently, optional argument \code{addrownums} is deprecated and
-      replaced by the (more general) \code{keepnums}.  Invalid (2nd arg.)
-      \code{n} now leads to typically more easily readable error messages.
+      \item \code{head(x, n)} and \code{tail()} default and other S3
+      methods notably for \emph{vector} \code{n}, e.g. to get a
+      \dQuote{corner} of a matrix, also extended for \code{array}'s of
+      higher dimension, thanks to the patch proposal by Gabe Becker in
+      \PR{17652}.  Consequently, optional argument \code{addrownums} is
+      deprecated and replaced by the (more general) \code{keepnums}.
+      Invalid (second argument) \code{n} now leads to typically more
+      easily readable error messages.
 
       \item New function \code{.class2()} provides the full character
       vector of class names used for S3 method dispatch.
@@ -194,8 +195,8 @@
       and \code{method="auto"} (default) or \code{"radix"} in cases
       \code{order(x)} works.
 
-      \item Where long vectors are available (i.e., almost everywhere),
-      \code{writeBin()} now allows long vectors, i.e., of length >= 2^31.
+      \item Where available, \code{writeBin()} now allows long vectors
+      (those of length \eqn{\ge 2^{31}}{>= 2^31}).
 
       \item New function \code{deparse1()} produces one string, wrapping
       \code{deparse()}, to be used typically in
@@ -203,10 +204,11 @@
 
       \item \code{wilcox.test()} enhancements: In the (non-paired)
       two-sample case, \code{Inf} values are treated as very large for
-      robustness consistency.  If exact computations are used, the result
-      now has \code{"exact"} in its \code{method}.  New arguments
-      \code{tol.root} and \code{digits.rank}.  The latter may be used for
-      stability to treat very close numbers as ties.
+      robustness consistency.  If exact computations are used, the
+      result now has \code{"exact"} in the \code{method} element of its
+      return value.  New arguments \code{tol.root} and
+      \code{digits.rank}.  The latter may be used for stability to treat
+      very close numbers as ties.
 
       \item \code{readBin()} and \code{writeBin()} now report an error for
       invalid \code{endian} value.  The affected code needs to be fixed with
@@ -235,11 +237,10 @@
       had this for almost a decade).
 
       \item New function \code{proportions()} and
-      \code{marginSums()}. These should
-      replace the unfortunately named \code{prop.table()}
-      and \code{margin.table()}. They are drop-in replacements, but
-      also add named-margin functionality. The old names are retained
-      as aliases for back-compatibility.
+      \code{marginSums()}. These should replace the unfortunately named
+      \code{prop.table()} and \code{margin.table()}. They are drop-in
+      replacements, but also add named-margin functionality. The old
+      function names are retained as aliases for back-compatibility.
 
       \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
       \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
@@ -263,7 +264,7 @@
       interface extended so that arguments to the negative
       log-likelihood function can be one or more vectors, with similar
       conventions applying to bounds, start values, and parameter values
-      to be kept fixed. NB: This has required a minor extension to class
+      to be kept fixed.  This required a minor extension to class
       \code{"mle"}, so saved objects from earlier versions may need to
       be recomputed.
 
@@ -290,10 +291,10 @@
       to avoid warnings about X11-related capabilities.
 
       \item The internal implementation of \pkg{grid} units has changed,
-      but the only visible effect at user-level should be: a slightly
+      but the only visible effects at user-level should be: a slightly
       different print format for some units (especially unit
       arithmetic); faster performance (for unit operations); and two new
-      functions \code{unitType()} and \code{unit.psum()}.  Original code
+      functions \code{unitType()} and \code{unit.psum()}.  Based on code
       contributed by Thomas Lin Pedersen.
 
       \item When internal dispatch for \code{rep.int()}
@@ -323,8 +324,9 @@
       part of the name when opening via Windows file associations
       (reported by Christian Asseburg).
 
-      \item \command{Rterm} now accepts ALT+xxx sequences also with NumLock
-      on. Tilde can be pasted with Italian keyboard (\PR{17679}).
+      \item \command{Rterm} now accepts \code{ALT+xxx} sequences also
+      with NumLock on.  Tilde can be pasted with Italian keyboard
+      (\PR{17679}).
    }
   }
 
@@ -361,7 +363,7 @@
 
       \item Header \file{R_ext/Print.h} defines \samp{R_USE_C99_IN_CXX}
       and hence exposes \code{Rvprintf} and \code{REprintf} if used with
-      a C++11 compiler.
+      a C++11 (or later) compiler.
 
       \item There are new Fortran subroutines \code{dblepr1},
       \code{realpr1} and \code{intpr1} to print a scalar variable
@@ -405,8 +407,9 @@
       \command{configure} and \command{cleanup} scripts for
       non-Bourne-shell code (\sQuote{bashisms}).
 
-      \item \command{R CMD check --as-cran} now uses a
-      \samp{stringsAsFactors = FALSE} default setting.
+      %% is now the overall default
+      %% \item \command{R CMD check --as-cran} now uses a
+      %% \samp{stringsAsFactors = FALSE} default setting.
     }
   }
 
@@ -457,9 +460,9 @@
 
       \item \code{write.dcf()} no longer mangles field names (\PR{17589}).
 
-      \item \code{Sys.glob()} on Windows now supports all characters from
-      the BMP, no longer corrupting (less commonly used) characters
-      (\PR{17638}).
+      \item \code{Sys.glob()} on Windows now supports all characters
+      from the Unicode Basic Multilingual Plane, no longer corrupting
+      (less commonly used) characters (\PR{17638}).
 
       \item Primitive replacement functions no longer mutate a
       referenced first argument when used outside of a complex
@@ -467,34 +470,36 @@
 
       \item Better error message for \code{contour(*, levels = Inf)}.
 
-      \item \code{contourLines()}' value is no longer \code{invisible()}.
+      \item The return value of \code{contourLines()} is no longer
+      \code{invisible()}.
 
       \item (Windows) \command{Rterm} now correctly displays multi-byte
       coded characters representable in the current native encoding (at least
       on Windows 10 they were sometimes omitted, \PR{17632}).
 
       \item The Fortran code for calculating the \code{coefficients}
-      component in \code{lm.influence} was very inefficient. It has (for
-      now) been replaced with much faster R code (\PR{17624}).
+      component in \code{lm.influence()} was very inefficient. It has
+      (for now) been replaced with much faster \R{} code (\PR{17624}).
 
-      \item \code{cm.colors(n)} etc no longer append the code for
+      \item \code{cm.colors(n)} \emph{etc} no longer append the code for
       \code{alpha = 1}, \code{"FF"}, to all colors.  Hence all eight
       \code{*.colors()} functions and \code{rainbow()} behave
       consistently and have the same non-explicit default (\PR{17659}).
 
       \item \code{dnorm} had a problematic corner case with \code{sd ==
-      -Inf} and negative \code{sd} was not flagged as error in all
+      -Inf} and negative \code{sd} which was not flagged as error in all
       cases. Thanks to Stephen D. Weigand for reporting and Wang Jiefei
-      for analyzing this; similar change in \code{dlnorm()}.
+      for analyzing this; similar change has been made in
+      \code{dlnorm()}.
 
-      \item The optional \code{iter.smooth} argument of \code{plot.lm()},
-      i.e., the \code{plot()} method for \code{lm} and \code{glm} fits, now
-      defaults to \code{0} for all glm.  Especially for binary observations
-      with high or low fitted probabilities, this effectively deleted all
-      observations of 1 or 0, respectively.  Also, the type of residuals
-      used in the \code{glm} case has been switched to \code{"pearson"}
-      since deviance residuals do not in general have approximately zero
-      mean.
+      \item The optional \code{iter.smooth} argument of
+      \code{plot.lm()}, (the \code{plot()} method for \code{lm} and
+      \code{glm} fits) now defaults to \code{0} for all \code{glm} fits.
+      Especially for binary observations with high or low fitted
+      probabilities, this effectively deleted all observations of 1 or
+      0, respectively.  Also, the type of residuals used in the
+      \code{glm} case has been switched to \code{"pearson"} since
+      deviance residuals do not in general have approximately zero mean.
 
       \item In \code{plot.lm}, Cook's distance was computed from unweighted
       residuals, leading to inconsistencies.  Replaced with usual weighted
@@ -505,14 +510,14 @@
       thanks to a report from Johann Kleinbub and analysis and patch by
       Duncan Murdoch in \PR{17669}.
 
-      \item \code{mcmapply} in case of errors now preserves attributes of
-      returned \code{"try-error"} objects and avoids simplification,
+      \item In case of errors \code{mcmapply()} now preserves attributes
+      of returned \code{"try-error"} objects and avoids simplification,
       overriding \code{SIMPLIFY} to \code{FALSE}. (\PR{17653})
 
       \item \code{as.difftime()} gets new optional \code{tz = "UTC"}
-      argument which should fix behaviour during daylight savings
-      changeover days, fixing \PR{16764}, thanks to proposals and analysis
-      by Johannes Ranke and Kirill Müller.
+      argument which should fix behaviour during
+      daylight-savings-changeover days, fixing \PR{16764}, thanks to
+      proposals and analysis by Johannes Ranke and Kirill Müller.
 
       \item \code{round()} finally rounds \emph{\dQuote{to nearest}}
       by \emph{measuring} and \emph{\dQuote{to even}}; thanks to a
@@ -526,8 +531,8 @@
       consistently, particularly in the case of class unions (in part
       due to \PR{17596} and a report from Ezra Tucker).
 
-      \item \code{is()} behaves more robustly when \code{class2} is a
-      \code{classRepresentation} object.
+      \item \code{is()} behaves more robustly when its argument
+      \code{class2} is a \code{classRepresentation} object.
 
       \item The warning message when attempting to export an nonexistent
       class is now more readable; thanks to Thierry Onkelinx for
