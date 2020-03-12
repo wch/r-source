@@ -6,7 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  \subsection{USER-VISIBLE CHANGES}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
        \item The internal version number of R-devel has been set to 4.0.0,
        reflecting the intention that the next non-patch release should be 4.0.0.
@@ -36,14 +36,6 @@
        S3 methods for \code{"array"}, i.e., \code{<someFun>.array()}, are
        now also dispatched for \code{matrix} objects.
 
-       \item \R now uses reference counting instead of the \code{NAMED}
-       mechanism for determining when objects can be safely mutated in
-       base C code. This reduces the need for copying is some cases and
-       should allow further optimizations in the future. It should also
-       help make the internal code easier to maintain. This change is
-       expected to have minimal impact on packages not using unsupported
-       coding practices in their C/C++ code.
-
        \item \R now provides a syntax for specifying raw character
        constants similar to the one used in C++: \code{r"(...)"} with
        \code{...} any character sequence, except that it must not
@@ -67,7 +59,7 @@
 
        \item When loading data sets via \code{read.table()},
        \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
-       independent results for possible string to factor conversions.
+       independent results for possible string-to-factor conversions.
 
        \item The \code{plot()} S3 generic function is now in package
        \pkg{base} rather than package \pkg{graphics}, as it is
@@ -84,6 +76,18 @@
        base namespace has priority over the search path).
      }
    }
+
+  \subsection{IMPORTANT INTERNAL CHANGE}{
+    \itemize{
+       \item \R now uses reference counting instead of the \code{NAMED}
+       mechanism for determining when objects can be safely mutated in
+       base C code.  This reduces the need for copying in some cases and
+       should allow further optimizations in the future.  It should also
+       help make the internal code easier to maintain.  This change is
+       expected to have minimal impact on packages not using unsupported
+       coding practices in their C/C++ code.
+    }
+  }
 
   \subsection{NEW FEATURES}{
     \itemize{

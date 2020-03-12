@@ -5183,11 +5183,12 @@ directory does not need to be on the path as a full path can be used for
 @code{FC}: see below.
 
 @item
-Binary components @code{pcre} and @code{xz} (for @code{libzma}) from
-@uref{https://mac.R-project.org/libs}, as recent macOS versions provide
-libraries but not headers for these (and the system @code{pcre} is too
-old at 8.02 for versions up to Sierra, although High Sierra had 8.40).
-For example
+Binary components @code{pcre}@footnote{unless you have a local
+installation of PCRE2, which is preferred.} and @code{xz} (for
+@code{libzma}) from @uref{https://mac.R-project.org/libs}, as recent
+macOS versions provide libraries but not headers for these (and the
+system @code{pcre} is too old at 8.02 for versions up to Sierra,
+although High Sierra had 8.40).  For example
 @example
 curl -OL https://mac.r-project.org/libs/pcre-8.40-darwin.15-x86_64.tar.gz
 sudo tar -fvxz pcre-8.40-darwin.15-x86_64.tar.gz -C /
