@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-03-06 r77910) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-12 r77934) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -873,9 +873,11 @@ temperature no yes
 > ### ** Examples
 > 
 > dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
+> 
 > op <- par(xaxs = "i")  # 0 -- 100%
 > dotchart(t(VADeaths), xlim = c(0,100), bg = "skyblue",
-+          main = "Death Rates in Virginia - 1940")
++          main = "Death Rates in Virginia - 1940", xlab = "rate [ % ]",
++          ylab = "Grouping:  Age  x   Urbanity . Gender")
 > par(op)
 > 
 > 
@@ -2142,7 +2144,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x5638cd02b950>
+<bytecode: 0x2f09c60>
 <environment: namespace:graphics>
 > 
 > 
@@ -3012,7 +3014,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x5638ce918050>
+<bytecode: 0x4797778>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3093,7 +3095,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.59 0.426 2.466 0 0 
+Time elapsed:  3.976 0.059 4.056 0 0 
 > grDevices::dev.off()
 null device 
           1 
