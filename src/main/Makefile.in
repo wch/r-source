@@ -56,6 +56,7 @@ HEADERS = \
 	datetime.h \
 	duplicate.h \
 	gzio.h \
+	machar.c \
 	qsort-body.c \
 	rlocale_data.h \
 	split-incl.c \
