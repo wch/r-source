@@ -569,6 +569,10 @@
       \sQuote{undefined behaviour analyser} of clang 10 have been
       circumvented.  One in \code{rhyper()} may change the generated
       value for large input values.
+
+      \item \code{dotchart()} now places the y-axis label (\code{ylab})
+      much better, not overplotting labels, thanks to a report and
+      suggestion by Alexey Shipunov.
     }
   }
 }
