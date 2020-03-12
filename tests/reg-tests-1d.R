@@ -3240,8 +3240,8 @@ stopifnot(exprs = {
 ## improved error message from contour():
 tt <- tryCatch(contour(volcano, levels = c(20*c(4:6, -Inf, 8:10))), error=identity)
 print(tt)
-## the rest of this message is OS-dependent: gcc 5.x on Solaris has '-Inf'
-stopifnot(inherits(tt, "error"), grepl("non-finite level.*\\[4\\]", tt$message))
+## this message is OS-dependent: gcc 5.x on Solaris has '-Inf'
+stopifnot(inherits(tt, "error"), grepl("non-finite level.*\\[4\\] = -inf", tt$message, ignore.case = TRUE))
 ## had "invalid NA contour values"
 
 
