@@ -30,14 +30,15 @@ stopifnot(\dots, exprs, exprObject, local = TRUE)
   If names are provided to \code{\dots}, they will be used in lieu of
   the default error message.
   }
-  \item{exprObject}{alternative to \code{exprs} or \code{...}: a
+  \item{exprObject}{alternative to \code{exprs} or \code{...}:
     an \sQuote{expression-like} object, typically an
     \code{\link{expression}}, but also a \code{\link{call}}, a
     \code{\link{name}}, or atomic constant such as \code{TRUE}.
   }
   \item{local}{(only when \code{exprs} is used:) indicates the
     \code{\link{environment}} in which the expressions should be
-    evaluated; by default the one where \code{stopifnot()} has been called from.}
+    evaluated; by default the one from where \code{stopifnot()} has been
+    called.}
 }
 \details{
   This function is intended for use in regression tests or also argument
