@@ -165,7 +165,6 @@ b -0.89
   1:     6.3964587:  1.34546 0.700840
   2: 0.00060639084: 0.00517053 0.999153
   3: 0.00060639084: 0.00517051 0.999153
-> ## IGNORE_RDIFF_END
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -185,6 +184,7 @@ b -0.89
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
 
+> ## IGNORE_RDIFF_END
 > cf2 <- coef(summary(fit2))[, 1:2]
 > rownames(cf0) <- c("a", "b")
 > # expect relative errors ca 2e-08

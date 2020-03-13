@@ -79,8 +79,8 @@ cf1 <- coef(summary(fit))[, 1:2]
 ## IGNORE_RDIFF_BEGIN
 fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
             weights = wts, trace = TRUE, algorithm = "port")
-## IGNORE_RDIFF_END
 summary(fit2, cor = TRUE)
+## IGNORE_RDIFF_END
 cf2 <- coef(summary(fit2))[, 1:2]
 rownames(cf0) <- c("a", "b")
 # expect relative errors ca 2e-08
