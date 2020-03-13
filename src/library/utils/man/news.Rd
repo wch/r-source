@@ -127,21 +127,21 @@ db <- news()
   vv <- capture.output(print(db, doBrowse=FALSE))  # without an error
   stopifnot(is.character(vv), length(vv) >= 3) # was wrong (for weeks during devel.)
 }
-## Obsolete as news for 3.x is in a separate file.
-\dontrun{
-## Bug fixes with PR number in 3.0.1.
-db3 <- news(Version == "3.0.1" & grepl("^BUG", Category) & grepl("PR#", Text),
+## Bug fixes with PR number in 4.0.0.
+db3 <- news(Version == "4.0.0" & grepl("^BUG", Category) & grepl("PR#", Text),
             db = db)
-\dontshow{stopifnot( !any(attr(db3,"bad")) && nrow(db3) == 12 )}
+\dontrun{stopifnot( !any(attr(db3,"bad")) && nrow(db3) == 12 )}
+
+## print db3 to show in an HTML browser.
 
 ## News from a date range ('Matrix' is there in a regular R installation):
-if(length(iM <- find.package("Matrix", quiet=TRUE)) && nzchar(iM)) {
+if(length(iM <- find.package("Matrix", quiet = TRUE)) && nzchar(iM)) {
    dM <- news(package="Matrix")
    stopifnot(identical(dM, news(db=dM)))
    dM2014 <- news("2014-01-01" <= Date & Date <= "2014-12-31", db = dM)
    stopifnot(paste0("1.1-", 2:4) \%in\% dM2014[,"Version"])
 }
-}
+
 \donttest{% <- is not sensibly diff-ed against previous versions
 ## Which categories have been in use? % R-core maybe should standardize a bit more
 sort(table(db[, "Category"]), decreasing = TRUE)
