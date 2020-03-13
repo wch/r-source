@@ -10,7 +10,7 @@
   Draw a Cleveland dot plot.
 }
 \usage{
-dotchart(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = .25,
+dotchart(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = 1/8,
          ann = par("ann"), xaxt = par("xaxt"), frame.plot = TRUE, log = "",
          cex = par("cex"), pt.cex = cex,
          pch = 21, gpch = 21, bg = par("bg"),
