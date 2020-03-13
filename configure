@@ -40831,7 +40831,7 @@ $as_echo "$r_cv_has_cairo" >&6; }
           ;;
       esac
 
-      CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
+      CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS} ${CAIROX11_CPPFLAGS}"
       LIBS="${LIBS} ${CAIRO_LIBS}"
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether cairo is >= 1.2 and works" >&5
