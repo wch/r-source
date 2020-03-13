@@ -5,12 +5,9 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN 4.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-       \item The internal version number of R-devel has been set to 4.0.0,
-       reflecting the intention that the next non-patch release should be 4.0.0.
-
        \item \code{matrix} objects now also inherit from class
        \code{"array"}, namely, e.g., \code{class(diag(1))} is
        \code{c("matrix", "array")} which invalidates code assuming that
@@ -28,8 +25,8 @@
        both single and double quotes.  For more details see \code{?Quotes}.
 
        \item \code{N <- NULL; N[[1]] <- val} now turns \code{N} into a
-       \code{list} also when \code{length(val) == 1}, consistently.  This
-       also enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
+       \code{list} also when \code{length(val) == 1}, for consistency.
+       This enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
        \code{r1}, fixing \PR{17719}, reported by Serguei Sokol.
 
        \item \code{deparse(..)}, \code{dump(..)}, and \code{dput(x,
@@ -72,17 +69,17 @@
        coding practices in their C/C++ code.
 
        \item \R is now built by default against a PCRE2 library for
-       Perl-like regular expressions.  On non-Windows platforms PCRE1 is
-       used if PCRE2 is not available at build time.  The version of
+       Perl-like regular expressions.  (On non-Windows platforms PCRE1
+       is used if PCRE2 is not available at build time.)  The version of
        PCRE used can be obtained via \code{extSoftVersion()}: PCRE1 has
        versions < 10, PCRE2 versions >= 10.
 
-       PCRE2 is stricter in some cases and reports errors for some
-       regular expressions that were accepted by PCRE1.  A hyphen now
-       has to be escaped in a character class to be interpreted as a
-       literal (unless first or last in the class definition).
-       \samp{\\R}, \samp{\\B} and \samp{\\X} are no longer allowed in
-       character classes (PCRE1 treated these as literals).
+       PCRE2 reports errors for some regular expressions that were
+       accepted by PCRE1.  A hyphen now has to be escaped in a character
+       class to be interpreted as a literal (unless first or last in the
+       class definition).  \samp{\\R}, \samp{\\B} and \samp{\\X} are no
+       longer allowed in character classes (PCRE1 treated these as
+       literals).
 
        Option \code{PCRE_study} is no longer used with PCRE2, and is
        reported as \code{FALSE} when that is in use.
@@ -310,8 +307,8 @@
       and \code{rep_len()} fails, there is an attempt to dispatch on the
       equivalent call to \code{rep()}.
 
-      \item \code{.Machine} now contains new \code{longdouble.*} entries
-      (when \R internally uses long double).
+      \item Object \code{.Machine} now contains new \code{longdouble.*}
+      entries (when \R uses long doubles internally).
     }
   }% end{ NEW FEATURES }
 
@@ -334,7 +331,7 @@
       (reported by Christian Asseburg).
 
       \item \command{Rterm} now accepts \code{ALT+xxx} sequences also
-      with NumLock on.  Tilde can be pasted with Italian keyboard
+      with NumLock on.  Tilde can be pasted with an Italian keyboard
       (\PR{17679}).
    }
   }
@@ -351,7 +348,7 @@
       to the value of \samp{FC}, which is set for package compilation.
       But portable code should not rely on this.)
 
-      \item The deprecated support for specifying C++98 in package
+      \item The deprecated support for specifying C++98 for package
       installation has been removed.
 
       \item \command{R CMD config} no longer knows about the
@@ -371,8 +368,8 @@
       \code{installChar} can replace it if they depend on \samp{R >= 3.6.2}.
 
       \item Header \file{R_ext/Print.h} defines \samp{R_USE_C99_IN_CXX}
-      and hence exposes \code{Rvprintf} and \code{REprintf} if used with
-      a C++11 (or later) compiler.
+      and hence exposes \code{Rvprintf} and \code{REvprintf} if used
+      with a C++11 (or later) compiler.
 
       \item There are new Fortran subroutines \code{dblepr1},
       \code{realpr1} and \code{intpr1} to print a scalar variable
@@ -428,10 +425,11 @@
       silently been truncated, not detecting previous errors.
 
       \item Long-standing issue where the X11 device could lose events
-      shortly after startup has been addressed \PR{16702}.
+      shortly after startup has been addressed (\PR{16702}).
 
-      \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
-      from factor columns by default, \PR{17562}.
+      \item The \code{data.frame} method for \code{rbind()} no longer
+      drops \code{<NA>} levels from factor columns by default
+      (\PR{17562}).
 
       \item \code{available.packages()} and hence \code{install.packages()}
       now pass their \code{...} argument to \code{download.file()},
@@ -480,9 +478,10 @@
       \item The return value of \code{contourLines()} is no longer
       \code{invisible()}.
 
-      \item (Windows) \command{Rterm} now correctly displays multi-byte
-      coded characters representable in the current native encoding (at least
-      on Windows 10 they were sometimes omitted, \PR{17632}).
+      \item (Windows) \command{Rterm} now correctly displays
+      multi-byte-coded characters representable in the current native
+      encoding (at least on Windows 10 they were sometimes omitted,
+      \PR{17632}).
 
       \item The Fortran code for calculating the \code{coefficients}
       component in \code{lm.influence()} was very inefficient. It has
@@ -494,9 +493,9 @@
       consistently and have the same non-explicit default (\PR{17659}).
 
       \item \code{dnorm} had a problematic corner case with \code{sd ==
-      -Inf} and negative \code{sd} which was not flagged as error in all
-      cases. Thanks to Stephen D. Weigand for reporting and Wang Jiefei
-      for analyzing this; similar change has been made in
+      -Inf} and negative \code{sd} which was not flagged as an error in
+      all cases. Thanks to Stephen D. Weigand for reporting and Wang
+      Jiefei for analyzing this; similar change has been made in
       \code{dlnorm()}.
 
       \item The optional \code{iter.smooth} argument of
@@ -504,9 +503,9 @@
       \code{glm} fits) now defaults to \code{0} for all \code{glm} fits.
       Especially for binary observations with high or low fitted
       probabilities, this effectively deleted all observations of 1 or
-      0, respectively.  Also, the type of residuals used in the
-      \code{glm} case has been switched to \code{"pearson"} since
-      deviance residuals do not in general have approximately zero mean.
+      0.  Also, the type of residuals used in the \code{glm} case has
+      been switched to \code{"pearson"} since deviance residuals do not
+      in general have approximately zero mean.
 
       \item In \code{plot.lm}, Cook's distance was computed from unweighted
       residuals, leading to inconsistencies.  Replaced with usual weighted
@@ -526,13 +525,12 @@
       daylight-savings-changeover days, fixing \PR{16764}, thanks to
       proposals and analysis by Johannes Ranke and Kirill Müller.
 
-      \item \code{round()} finally rounds \emph{\dQuote{to nearest}}
-      by \emph{measuring} and \emph{\dQuote{to even}}; thanks to a
-      careful algorithm originally prompted by the report from Adam Wheeler
-      and then others, in \PR{17668}.
-      \cr
-      \code{round(x, dig)} for \emph{negative} digits is much more rational
-      now, notably for large \eqn{|dig|}.
+      \item \code{round()} does a better job of rounding
+      \emph{\dQuote{to nearest}} by \emph{measuring} and
+      \emph{\dQuote{to even}}; thanks to a careful algorithm originally
+      prompted by the report from Adam Wheeler and then others, in
+      \PR{17668}.  \cr \code{round(x, dig)} for \emph{negative} digits
+      is much more rational now, notably for large \eqn{|dig|}.
 
       \item Inheritance information on S4 classes is maintained more
       consistently, particularly in the case of class unions (in part
@@ -545,8 +543,8 @@
       class is now more readable; thanks to Thierry Onkelinx for
       recognizing the problem.
 
-      \item \code{scan()} issues with UTF-8 data when running in DBCS locale
-      have been resolved (\PR{16520},\PR{16584}).
+      \item \code{scan()} issues with UTF-8 data when running in a DBCS
+      locale (on Windows) have been resolved (\PR{16520},\PR{16584}).
 
       \item \code{choose()} misbehaved in corner cases where it switched
       \code{n - k} for \code{k} and \code{n} was only \emph{nearly} integer
@@ -573,9 +571,9 @@
       \PR{17721})
 
       \item Several cases of integer overflow detected by the
-      \sQuote{undefined behaviour analyser} of clang 10 have been
-      circumvented.  One in \code{rhyper()} may change the generated
-      value for large input values.
+      \sQuote{undefined behaviour analyser} of \command{clang} 10 have
+      been circumvented.  One in \code{rhyper()} may change the
+      generated value for large input values.
 
       \item \code{dotchart()} now places the y-axis label (\code{ylab})
       much better, not overplotting labels, thanks to a report and
