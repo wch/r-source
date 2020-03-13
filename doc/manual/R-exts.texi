@@ -4885,16 +4885,18 @@ tests on your platform achieve a particular tolerance says little about
 other platforms.  @R{} is configured by default to make use of long
 doubles where available, but they may not be available or be too slow
 for routine use.  Most @R{} platforms use @cputype{ix86} or
-@cputype{x86_64} CPUs: these may use extended precision registers on some
-but not all of their FPU instructions.  Thus the achieved precision can
-depend on the compiler version and optimization flags---our experience
-is that 32-bit builds tend to be less precise than 64-bit ones.  But not
-all platforms use those CPUs, and not all@footnote{Not doing so is the
-default on Windows, overridden for the @R{} executables.  It is also the
-default on some Solaris compilers.} which use them configure them to
-allow the use of extended precision.  In particular, ARM CPUs do not
-(currently) have extended precision nor long doubles, and long double
-was 64-bit on HP/PA Linux.
+@cputype{x86_64} CPUs: these may use extended precision registers on
+some but not all of their FPU instructions.  Thus the achieved precision
+can depend on the compiler version and optimization flags---our
+experience is that 32-bit builds tend to be less precise than 64-bit
+ones.  But not all platforms use those CPUs, and not all@footnote{Not
+doing so is the default on Windows, overridden for the @R{} executables.
+It is also the default on some Solaris compilers.} which use them
+configure them to allow the use of extended precision.  In particular,
+32-bit ARM CPUs do not (currently) have extended precision nor long
+doubles, and long double was 64-bit on HP/PA Linux.  On the other hand
+some CPUs have higher-precision modes than @cputype{x86_64} used for
+@code{long double}, notably 64-bit ARM and Sparc (as from v9).
 
 If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-double} and use appropriate
