@@ -93,7 +93,7 @@ ll <- function(ymax = 15, xhalf = 6) {
 (fit <- mle(ll, nobs = length(y)))
 mle(ll, fixed = list(xhalf = 6))
 
-## alternative using bounds on optimization
+## Alternative using bounds on optimization
 ll2 <- function(ymax = 15, xhalf = 6)
     -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE))
 mle(ll2, lower = rep(0, 2))
@@ -113,14 +113,14 @@ confint(fit)
 (fit2 <- mle(ll2, lower = c(0, 0)))
 plot(profile(fit2), absVal = FALSE)
 
-## a better parametrization:
+## A better parametrization:
 ll3 <- function(lymax = log(15), lxhalf = log(6))
     -sum(stats::dpois(y, lambda = exp(lymax)/(1+x/exp(lxhalf)), log = TRUE))
 (fit3 <- mle(ll3))
 plot(profile(fit3), absVal = FALSE)
 exp(confint(fit3))
 
-# regression tests for bounded cases (this was broken in R 3.x)
+# Regression tests for bounded cases (this was broken in R 3.x)
 fit4 <- mle(ll, lower = c(0, 4)) # has max on boundary
 confint(fit4)
 
@@ -143,12 +143,42 @@ LM_mll <- function(formula, data = environment(formula))
 
 mll <- LM_mll(y ~ x)
 
-summary(lm(y~x))
+summary(lm(y~x)) # for comparison -- notice variance bias in MLE
 summary(mle(mll, lower=c(-Inf,-Inf, 0.01)))
-summary(mle(mll, lower=list(sigma=0.01)))
+summary(mle(mll, lower=list(sigma = 0.01))) # alternative specification
 
-confint(mle(mll, lower=list(sigma=0.01)))
-plot(profile(mle(mll, lower=list(sigma=0.01))))
+confint(mle(mll, lower=list(sigma = 0.01)))
+plot(profile(mle(mll, lower=list(sigma = 0.01))))
+
+Binom_mll <- function(x, n)
+{
+    force(x); force(n) ## beware lazy evaluation
+    function(p=.5) -dbinom(x, n, p, log=TRUE)
+}
+
+## Likelihood functions for different x.
+## This code goes wrong, if force(x) is not used in Binom_mll:
+
+curve(Binom_mll(0, 10)(p), xname="p", ylim=c(0, 10))
+mll_list <- list(10)
+for (x in 1:10)
+    mll_list[[x]] <- Binom_mll(x, 10)
+for (mll in mll_list)
+    curve(mll(p), xname="p", add=TRUE)
+
+mll <- Binom_mll(4,10)
+mle(mll, lower = 1e-16, upper = 1-1e-16) # limits must be inside (0,1)
+
+## Boundary case: This works, but fails if limits are set closer to 0 and 1  
+mll <- Binom_mll(0, 10)
+mle(mll, lower=.005, upper=.995)
+
+\dontrun{
+## We can use limits closer to the boundaries if we use the
+## drop-in replacement optimr() from the optimx package.
+
+mle(mll, lower = 1e-16, upper = 1-1e-16, optim=optimx::optimr)
+}
 
 
 options(od)
