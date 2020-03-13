@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015 R Core Team
+ *  Copyright (C) 2015-2020 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,9 @@
    of the trio replacements.  We need the replacements because msvcrt.dll
    doesn't support hex formatting of floating point numbers, and all (?)
    versions of the MS run-time use three digits in floating point
-   E formats, e.g. 1.E000. */
+   E formats, e.g. 1.E000. The replacements also allow printing long long
+   integers via %lld which the MS run-time does not (and "%I64d" is not
+   C99). */
 
 #ifndef R_TRIOREMAP_H
 #define R_TRIOREMAP_H
