@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 dotchart <-
-function(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = 1/8,
+function(x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8,
          ann = par("ann"), xaxt = par("xaxt"), frame.plot = TRUE, log = "",
          cex = par("cex"), pt.cex = cex,
 	 pch = 21, gpch = 21, bg = par("bg"),
@@ -62,7 +62,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = 1/8,
     }
     else {
 	ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
-	goffset <- lab.offset
+	goffset <- offset
     }
     nmai <- opar[["mai"]]
     if(ann)
@@ -70,7 +70,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = 1/8,
     if (!(is.null(labels) && is.null(glabels))) {
         ## The intention seems to be to balance the whitespace
         ## on each side (2 & 4) of the labels+plot.
-	yi <- if(is.null(ylab) || !ann) 0 else lab.offset
+	yi <- if(is.null(ylab) || !ann) 0 else offset
 	nm.2 <- nmai[4L] + max(yi + linch + goffset, ginch) + 1/16
 	if (nmai[2L] <	nm.2) { ## add space for ylab + glabels on left margin
 	    nmai[2L] <- nm.2
@@ -108,7 +108,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = 1/8,
     if (!is.null(groups)) {
 	gpos <- rev(cumsum(rev(tapply(groups, groups, length)) + 2) - 1)
 	ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
-	goffset <- (max(linch+lab.offset, ginch, na.rm = TRUE) + 1/16)/lheight
+	goffset <- (max(linch+offset, ginch, na.rm = TRUE) + 1/16)/lheight
         mtext(glabels, side = 2, line = goffset, at = gpos,
               adj = 0, col = gcolor, las = 2, cex = cex, ...)
 	if (!is.null(gdata)) {

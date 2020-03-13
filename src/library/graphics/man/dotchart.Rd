@@ -10,7 +10,7 @@
   Draw a Cleveland dot plot.
 }
 \usage{
-dotchart(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = 1/8,
+dotchart(x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8,
          ann = par("ann"), xaxt = par("xaxt"), frame.plot = TRUE, log = "",
          cex = par("cex"), pt.cex = cex,
          pch = 21, gpch = 21, bg = par("bg"),
@@ -35,7 +35,7 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL, lab.offset = 1/8,
   \item{gdata}{data values for the groups.
     This is typically a summary such as the median or mean
     of each group.}
-  \item{lab.offset}{offset in inches of \code{ylab} and \code{labels}; was
+  \item{offset}{offset in inches of \code{ylab} and \code{labels}; was
     hardwired to 0.4 before \R 4.0.0.}
   \item{ann}{a \code{\link{logical}} value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
