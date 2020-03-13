@@ -6,26 +6,10 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  \subsection{USER-VISIBLE CHANGES}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
        \item The internal version number of R-devel has been set to 4.0.0,
        reflecting the intention that the next non-patch release should be 4.0.0.
-
-       \item \R is now built by default against a PCRE2 library for
-       Perl-like regular expressions.  On non-Windows platforms PCRE1 is
-       used if PCRE2 is not available at build.time.  The version of
-       PCRE used can be obtained via \code{extSoftVersion()}: PCRE1 has
-       versions < 10, PCRE2 versions >= 10.
-
-       PCRE2 is stricter in some cases and reports errors for some
-       regular expressions that were accepted by PCRE1.  A hyphen now
-       has to be escaped in a character class to be interpreted as a
-       literal (unless first or last in the class definition).
-       \samp{\\R}, \samp{\\B} and \samp{\\X} are no longer allowed in
-       character classes (PCRE1 treated these as literals).
-
-       Option \code{PCRE_study} is no longer used, and reported as
-       \code{FALSE}.
 
        \item \code{matrix} objects now also inherit from class
        \code{"array"}, namely, e.g., \code{class(diag(1))} is
@@ -35,14 +19,6 @@
 
        S3 methods for \code{"array"}, i.e., \code{<someFun>.array()}, are
        now also dispatched for \code{matrix} objects.
-
-       \item \R now uses reference counting instead of the \code{NAMED}
-       mechanism for determining when objects can be safely mutated in
-       base C code. This reduces the need for copying is some cases and
-       should allow further optimizations in the future. It should also
-       help make the internal code easier to maintain. This change is
-       expected to have minimal impact on packages not using unsupported
-       coding practices in their C/C++ code.
 
        \item \R now provides a syntax for specifying raw character
        constants similar to the one used in C++: \code{r"(...)"} with
@@ -67,7 +43,7 @@
 
        \item When loading data sets via \code{read.table()},
        \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
-       independent results for possible string to factor conversions.
+       independent results for possible string-to-factor conversions.
 
        \item The \code{plot()} S3 generic function is now in package
        \pkg{base} rather than package \pkg{graphics}, as it is
@@ -84,6 +60,39 @@
        base namespace has priority over the search path).
      }
    }
+
+  \subsection{IMPORTANT INTERNAL CHANGES}{
+    \itemize{
+       \item \R now uses reference counting instead of the \code{NAMED}
+       mechanism for determining when objects can be safely mutated in
+       base C code.  This reduces the need for copying in some cases and
+       should allow further optimizations in the future.  It should also
+       help make the internal code easier to maintain.  This change is
+       expected to have minimal impact on packages not using unsupported
+       coding practices in their C/C++ code.
+
+       \item \R is now built by default against a PCRE2 library for
+       Perl-like regular expressions.  On non-Windows platforms PCRE1 is
+       used if PCRE2 is not available at build time.  The version of
+       PCRE used can be obtained via \code{extSoftVersion()}: PCRE1 has
+       versions < 10, PCRE2 versions >= 10.
+
+       PCRE2 is stricter in some cases and reports errors for some
+       regular expressions that were accepted by PCRE1.  A hyphen now
+       has to be escaped in a character class to be interpreted as a
+       literal (unless first or last in the class definition).
+       \samp{\\R}, \samp{\\B} and \samp{\\X} are no longer allowed in
+       character classes (PCRE1 treated these as literals).
+
+       Option \code{PCRE_study} is no longer used with PCRE2, and is
+       reported as \code{FALSE} when that is in use.
+
+       Making PCRE2 available when building \R from source is strongly
+       recommended (preferably version 10.30 or later) as PCRE1 is no
+       longer developed (it only receives bug fixes and has outdated
+       Unicode tables)
+     }
+  }
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -384,13 +393,11 @@
       \item A C++ compiler default is set only if the C++11 standard is
       supported: it no longer falls back to C++98.
 
-      \item PCRE2 is used if available: this is strongly recommended as
-      PCRE1 is no longer developed (it only receives bug fixes and has
-      outdated Unicode tables).  \command{configure} will warn if PCRE2
-      is not found and fall back to PCRE1.  \command{configure} options
-      \option{--without-pcre1} and \option{--without-pcre2} can be used
-      to exclude one or the other (but at least one of PCRE2 and PCRE1
-      is required).
+      \item PCRE2 is used if available.  \command{configure} will warn
+      if PCRE2 is not found and fall back to PCRE1.  \command{configure}
+      options \option{--without-pcre1} and \option{--without-pcre2} can
+      be used to exclude one or the other (but at least one of PCRE2 and
+      PCRE1 is required).
 
       \item The minimum required version of \code{libcurl} is now 7.28.0
       (Oct 2012).
