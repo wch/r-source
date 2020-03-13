@@ -4659,7 +4659,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* FIXME: could do any MBCS locale, but would need pushback */
 static SEXP
-readFixedString(Rconnection con, int len, int useBytes)
+readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
 {
     SEXP ans;
     char *buf;
@@ -4684,6 +4684,9 @@ readFixedString(Rconnection con, int len, int useBytes)
 		/* NB: this only checks validity of multi-byte characters */
 		if((int)mbrtowc(NULL, q, clen, NULL) < 0)
 		    error(_("invalid UTF-8 input in readChar()"));
+	    } else if (*q == '\0' && *warnOnNul) {
+		*warnOnNul = FALSE;
+		warning(_("truncating string with embedded nuls"));
 	    }
 	}
     } else {
@@ -4691,9 +4694,13 @@ readFixedString(Rconnection con, int len, int useBytes)
 	memset(buf, 0, len+1);
 	m = (int) con->read(buf, sizeof(char), len, con);
 	if(len && !m) return R_NilValue;
+	if (strlen(buf) < m && *warnOnNul) {
+	    *warnOnNul = FALSE;
+	    warning(_("truncating string with embedded nuls"));
+	}
     }
     /* String may contain nuls which we now (R >= 2.8.0) assume to be
-       padding and ignore silently */
+       padding and ignore */
     ans = mkChar(buf);
     vmaxset(vmax);
     return ans;
@@ -4711,6 +4718,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 	if (!len) return(R_NilValue);
     }
 
+    /* Note: mkCharLenCE signals an error on embedded nuls. */
     if(utf8locale && !useBytes) {
 	int i, clen, iread = *np;
 	char *p;
@@ -4748,7 +4756,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans = R_NilValue, onechar, nchars;
     R_xlen_t i, n, m = 0;
     int nbytes = 0, np = 0, useBytes;
-    Rboolean wasopen = TRUE, isRaw = FALSE;
+    Rboolean wasopen = TRUE, isRaw = FALSE, warnOnNul = TRUE;
     Rconnection con = NULL;
     Rbyte *bytes = NULL;
     RCNTXT cntxt;
@@ -4802,7 +4810,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(len == NA_INTEGER || len < 0)
 	    error(_("invalid '%s' argument"), "nchars");
 	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np, useBytes)
-	    : readFixedString(con, len, useBytes);
+	    : readFixedString(con, len, useBytes, &warnOnNul);
 	if(onechar != R_NilValue) {
 	    SET_STRING_ELT(ans, i, onechar);
 	    m++;
