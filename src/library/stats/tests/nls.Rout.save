@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-03-03 r77889) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-13 r77938) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -98,12 +98,13 @@ a 1.00875 1.037847
 b 0.84138 0.914645
 c      NA 0.042807
 > 
-> ## weighted nls fit: unsupported < 2.3.0
+> ## weighted nls fit
 > set.seed(123)
 > y <- x <- 1:10
 > yeps <- y + rnorm(length(y), sd = 0.01)
 > wts <- rep(c(1, 2), length = 10); wts[5] <- 0
 > fit0 <- lm(yeps ~ x, weights = wts)
+> ## IGNORE_RDIFF_BEGIN
 > summary(fit0, cor = TRUE)
 
 Call:
@@ -128,6 +129,7 @@ Correlation of Coefficients:
   (Intercept)
 x -0.89      
 
+> ## IGNORE_RDIFF_END
 > cf0 <- coef(summary(fit0))[, 1:2]
 > fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +            weights = wts, trace = TRUE)
