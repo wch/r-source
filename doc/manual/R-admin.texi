@@ -4930,7 +4930,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 28 we used
+on @cputype{x86_64} with Fedora 30 we used
 
 @example
 CC="gcc -m32"
@@ -4959,10 +4959,22 @@ certificates: this is worked around in @R{}'s test suite.
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
 
-Note that 32-bit @code{glibc} currently@footnote{This has been announced
-to change in version 2.29, having been postponed from 2.28.} uses a
-32-bit @code{time_t} type, so to pass all the date-time checks needs
-@R{} built with flag @option{--with-internal-tzcode}.
+Note that 32-bit @code{glibc} before version 2.29 uses a 32-bit
+@code{time_t} type, so to pass all the date-time checks needs @R{} built
+with flag @option{--with-internal-tzcode}.
+
+Users of @cputype{ix86} CPUs with SSE2 support@footnote{Likely all since
+2005, including Pentium 4 and all @cputype{x86_64} CPUs with 32-bit
+compilers.} may prefer to use the C/C++/Fortran flags
+
+@example
+-mfpmath=sse -msse2
+@end example
+
+@noindent
+to force floating-point to use the same instructions as @cputype{x86_64}
+builds and hence not make use of 80-bit `extended precision'
+intermediate results.
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-ji Nakama used

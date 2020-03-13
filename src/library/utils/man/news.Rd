@@ -1,6 +1,6 @@
 % File src/library/utils/man/news.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{news}
@@ -127,6 +127,8 @@ db <- news()
   vv <- capture.output(print(db, doBrowse=FALSE))  # without an error
   stopifnot(is.character(vv), length(vv) >= 3) # was wrong (for weeks during devel.)
 }
+## Obsolete as news for 3.x is in a separate file.
+\dontrun{
 ## Bug fixes with PR number in 3.0.1.
 db3 <- news(Version == "3.0.1" & grepl("^BUG", Category) & grepl("PR#", Text),
             db = db)
@@ -138,6 +140,7 @@ if(length(iM <- find.package("Matrix", quiet=TRUE)) && nzchar(iM)) {
    stopifnot(identical(dM, news(db=dM)))
    dM2014 <- news("2014-01-01" <= Date & Date <= "2014-12-31", db = dM)
    stopifnot(paste0("1.1-", 2:4) \%in\% dM2014[,"Version"])
+}
 }
 \donttest{% <- is not sensibly diff-ed against previous versions
 ## Which categories have been in use? % R-core maybe should standardize a bit more
