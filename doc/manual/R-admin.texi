@@ -5126,14 +5126,14 @@ SAFE_FFLAGS=-axsse2
 
 (`macOS' was known as `OS X' from 2012--2016.)
 
-The instructions here are for 64-bit (@cputype{x86_64}) builds on 10.11
-(El Capitan) or later.  @R{} can in principle be built for 10.6 and
+The instructions here are for 64-bit (@cputype{x86_64}) builds on 10.13
+(High Sierra) or later.  @R{} can in principle be built for 10.6 and
 later, although this is little tested and it may be necessary to install
 later versions of software such as @code{libcurl}.
 
 @menu
 * Prerequisites::
-* Recommended C/C++ compilers::
+* Other C/C++ compilers::
 * Other libraries::
 * Tcl/Tk headers and libraries::
 * Java (macOS)::
@@ -5141,7 +5141,7 @@ later versions of software such as @code{libcurl}.
 * Building R.app::
 @end menu
 
-@node Prerequisites, Recommended C/C++ compilers, macOS, macOS
+@node Prerequisites, Other C/C++ compilers, macOS, macOS
 @subsection Prerequisites
 
 The following are essential to build @R{}
@@ -5155,7 +5155,8 @@ of the command-line tools.  If you have installed Xcode, this provides
 the command-line tools.  The tools may need to be reinstalled when macOS
 is upgraded, as upgrading partially removes them.)
 
-The Command Line Tools provide C and C++ compilers.
+The Command Line Tools provide C and C++ compilers derived from LLVM's
+@command{clang}.
 
 @item
 A Fortran compiler.  Installers@footnote{Some of these are
@@ -5165,12 +5166,6 @@ select @code{Open with -> Installer}.} are available at
 @itemize
 
 @item
-El Capitan and later@*
-@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/gfortran-6.1.pkg},@*
-which is a re-packaged (signed) version of@*
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.1/@/gfortran-6.1-ElCapitan.dmg}
-
-@item
 Sierra and High Sierra@*
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.3/@/gfortran-6.3-Sierra.dmg}
 
@@ -5178,46 +5173,43 @@ Sierra and High Sierra@*
 Mojave and later@*
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.
 @end itemize
-These all install into @file{/usr/local/gfortran}.  Its @file{bin}
-directory does not need to be on the path as a full path can be used for
+These install into @file{/usr/local/gfortran}: its @file{bin} directory
+does not need to be on the path as a full path can be used for
 @code{FC}: see below.
 
 @item
-Binary components @code{pcre}@footnote{unless you have a local
-installation of PCRE2, which is preferred.} and @code{xz} (for
-@code{libzma}) from @uref{https://mac.R-project.org/libs}, as recent
-macOS versions provide libraries but not headers for these (and the
-system @code{pcre} is too old at 8.02 for versions up to Sierra,
-although High Sierra had 8.40).  For example
+Binary components @code{pcre2} and @code{xz} (for
+@code{libzma}) from @uref{https://mac.R-project.org/libs-4}.  For example
 @example
-curl -OL https://mac.r-project.org/libs/pcre-8.40-darwin.15-x86_64.tar.gz
-sudo tar -fvxz pcre-8.40-darwin.15-x86_64.tar.gz -C /
-curl -OL https://mac.r-project.org/libs/xz-5.2.3-darwin.15-x86_64.tar.gz
-sudo tar -fvxz xz-5.2.3-darwin.15-x86_64.tar.gz -C /
+curl -OL https://mac.r-project.org/libs-4/pcre2-10.34-darwin.17-x86_64.tar.gz
+sudo tar -fvxz pcre2-10.34-darwin.17-x86_64.tar.gz -C /
+curl -OL https://mac.r-project.org/libs-4/xz-5.2.4-darwin.17-x86_64.tar.gz
+sudo tar -fvxz xz-5.2.4-darwin.17-x86_64.tar.gz -C /
 @end example
 @end itemize
 
 and desirable
 @itemize
 @item
-GNU @code{readline} from @uref{https://mac.R-project.org/libs},
-or configure with @option{--without-readline}.
+GNU @code{readline} from @uref{https://mac.R-project.org/libs}, or
+configure with @option{--without-readline}.
 
 @item
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig},
 @code{pkgconfig-system-stubs} and @code{tiff} from
+@uref{https://mac.R-project.org/libs-4} or
 @uref{https://mac.R-project.org/libs}, for the full range of bitmapped
 graphics devices.
 
-@item
-An build of PCRE2, currently only available by building from the sources
-at @uref{https://www.pcre.org/}.  Unpack a source tarball and configure
-by something like
-@example
-./configure --enable-jit CC=clang CFLAGS=-O2
-@end example
-@noindent
-(or give the full path to an alternative C compiler).
+@c @item
+@c A build of PCRE2, from @uref{https://mac.R-project.org/libs-4} or the
+@c sources at @uref{https://www.pcre.org/}.  Unpack a source tarball and
+@c configure by something like
+@c @example
+@c ./configure --enable-jit CC=clang CFLAGS=-O2
+@c @end example
+@c @noindent
+@c (or give the full path to an alternative C compiler).
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5248,7 +5240,7 @@ example by setting
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 @noindent
-or appending that variable to the @command{configure} command.
+or appending that variable to the @command{configure} command (as below).
 
 @item
 A TeX installation. @xref{Other libraries}.
@@ -5258,9 +5250,8 @@ A TeX installation. @xref{Other libraries}.
 @command{perl} (currently part of macOS but it has been announced that
 it will not be from macOS 10.16).  (An old version of @command{texi2any}
 has been included in the binary distribution of @R{}.)
-@item
-Compilers supporting OpenMP: see the next subsection.
 @end itemize
+For compilers supporting OpenMP, see the next subsection.
 
 To build @R{} itself from the sources with the compilers in the Command
 Line Tools (or Xcode) and one of the @command{gfortran} installers, use
@@ -5307,30 +5298,28 @@ and @samp{Open} if you get a further warning message.
 This applies also to some @R{} distributions, including @R{} 3.6.2 and
 `nightly builds' from @uref{https://mac.r-project.org/}.
 
-@node Recommended C/C++ compilers, Other libraries, Prerequisites, macOS
-@subsection Recommended C/C++ compilers
+@node Other C/C++ compilers, Other libraries, Prerequisites, macOS
+@subsection Other C/C++ compilers
 
-Current @acronym{CRAN} binary distributions use the build of
-@command{clang} 8.0.0 contained in
-@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-8.0.0.pkg}.
-Other recent distributions of @command{clang} (including 9.0.0) are
-available from @uref{http://releases.llvm.org/} (which the above
-re-packages).  In particular, these include support for OpenMP which
-Apple builds of @command{clang} do not.
+Other distributions of @command{clang} are available from
+@uref{http://releases.llvm.org/}.  In particular, these include support
+for OpenMP which Apple builds of @command{clang} do not, and may contain
+more bugfixes and new features (such as better diagnostics) than that in
+Command Line Tools/XCode.
 
 Suppose one of these distributions is installed under
-@file{/usr/local/clang8}. Use a file @file{config.site} containing
+@file{/usr/local/clang}. Use a file @file{config.site} containing
 @example
-CC=/usr/local/clang8/bin/clang
+CC=/usr/local/clang/bin/clang
 OBJC=$CC
 FC=/usr/local/gfortran/bin/gfortran
-CXX=/usr/local/clang8/bin/clang++
-LDFLAGS="-L/usr/local/clang8/lib -L/usr/local/lib"
-R_LD_LIBRARY_PATH=/usr/local/clang8/lib:/usr/local/lib
+CXX=/usr/local/clang/bin/clang++
+LDFLAGS="-L/usr/local/clang/lib -L/usr/local/lib"
+R_LD_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/clang8/lib/libomp.dylib}, is found when
+library, here @file{/usr/local/clang/lib/libomp.dylib}, is found when
 needed.  If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
@@ -5355,17 +5344,17 @@ Line Tools.)
 
 Alternatively, change the system paths @emph{via}
 @example
-CC="/usr/local/clang8/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="/usr/local/clang8/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CC="/usr/local/clang/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CXX="/usr/local/clang/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 @end example
 @noindent
 (The location of the SDK can be found by running @command{xcrun
 -show-sdk-path}.)
 
 This alternative approach is needed for versions 11.x of the Command
-Line Tools/Xcode.
+Line Tools/Xcode (as used for Catalina).
 
-@node Other libraries, Tcl/Tk headers and libraries, Recommended C/C++ compilers, macOS
+@node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
@@ -5391,8 +5380,8 @@ This also includes a full LAPACK which can be used @emph{via}
 often seriously old.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
-In recent versions of macOS, threading in Accelerate is controlled by
-`Grand Central Dispatch' and is said not to need user control.
+Threading in Accelerate is controlled by `Grand Central Dispatch' and is
+said not to need user control.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -5427,8 +5416,9 @@ page.
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
 @uref{https://www.tug.org/mactex/morepackages.html}) and @command{qpdf}
-(an early version of which is in the @file{bin} directory of a binary
-installation of @R{}, usually @file{/Library/Frameworks/R.framework/Resources/bin/qpdf}).
+(from @uref{https://mac.r-project.org/libs-4}, a version of which is in
+the @file{bin} directory of a binary installation of @R{}, usually
+@file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
@@ -5458,14 +5448,15 @@ Note that this requires a matching XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native macOS style: this will not work with @Rapp{} because of
-conflicts over the macOS menu, but for those only using command-line @R{}
-this provides a much more intuitive interface to Tk for experienced Mac
-users.  Most versions of macOS come with Aqua Tcl/Tk libraries, but these
-are not at all recent versions of Tcl/Tk (8.5.9 in Sierra, which is
-not even the latest patched version in that series).  It is better to
-install Tcl/Tk 8.6.x from the sources or a binary distribution from
-@uref{https://www.activestate.com/@/activetcl/@/downloads}.  Configure @R{}
-with
+conflicts over the macOS menu, but for those only using command-line
+@R{} this provides a much more intuitive interface to Tk for experienced
+Mac users.  Most versions of macOS come with Aqua Tcl/Tk libraries, but
+these are often not at all recent versions of Tcl/Tk (8.5.9 in High
+Sierra, which is not even the latest patched version in that series).
+It is better to install Tcl/Tk 8.6.x from the sources or a binary
+distribution from
+@uref{https://www.activestate.com/@/activetcl/@/downloads}.  Configure
+@R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
@@ -5559,7 +5550,7 @@ selected by the option
 @end example
 
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly but those from @code{llvm.org} do.)
+support frameworks correctly but those from @code{releases.llvm.org} do.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
