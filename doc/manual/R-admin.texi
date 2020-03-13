@@ -1845,8 +1845,8 @@ Windows' CRLF line endings.
 
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X'. Click on that, then download the file
-@file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.11
-and later (El Capitan, Sierra, High Sierra, Mojave, Catalina, @dots{}).
+@file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
+and later (High Sierra, Mojave, Catalina, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -3438,23 +3438,26 @@ later are required.
 @c OpenCSW has 10.20.
 @c PCRE2 10.30 is from Aug 2017.  Ubuntu 18.04LTS has 10.31.
 Either PCRE1 (version 8.32 or later, formerly known as just PCRE) or
-PCRE2 is required: PCRE2 is preferred.  Only the 8-bit library and
-headers are needed if these are packaged separately. JIT support
-(optional) is desirable for the best performance.  If building PCRE1 for
-use with @R{} a suitable @command{configure} command might be
+PCRE2 is required: PCRE2 is preferred and using PCRE1 requires
+@command{configure} option @option{--with-pcre1}.  Only the 8-bit
+library and headers are needed if these are packaged separately. JIT
+support (optional) is desirable for the best performance.  For PCRE2 >=
+10.30 (which is desirable as matching has been re-written not to use
+recursion and the Unicode tables were updated to version 10)
+@example
+./configure --enable-jit
+@end example
+@noindent
+suffices.  If building PCRE1 for use with @R{} a suitable
+@command{configure} command might be
 @example
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
 @noindent  
 The @option{--enable-jit} flag is supported for most common CPUs.  (See
-also the comments for Solaris.)  For PCRE2 >= 10.30 (which is desirable
-as matching has been re-written not to use recursion and the Unicode
-tables were updated to version 10)
-@example
-./configure --enable-jit
-@end example
-@noindent
-suffices.  Some packages require the `Unicode properties' which are
+also the comments for Solaris.)
+
+Some packages require the `Unicode properties' which are
 optional for PCRE1: support for this and JIT can be checked at run-time
 by calling @code{pcre_config()}.
 
@@ -5194,9 +5197,9 @@ Binary components @code{pcre2} and @code{xz} (for
 @code{libzma}) from @uref{https://mac.R-project.org/libs-4}.  For example
 @example
 curl -OL https://mac.r-project.org/libs-4/pcre2-10.34-darwin.17-x86_64.tar.gz
-sudo tar -fvxz pcre2-10.34-darwin.17-x86_64.tar.gz -C /
+sudo tar -xvzf pcre2-10.34-darwin.17-x86_64.tar.gz -C /
 curl -OL https://mac.r-project.org/libs-4/xz-5.2.4-darwin.17-x86_64.tar.gz
-sudo tar -fvxz xz-5.2.4-darwin.17-x86_64.tar.gz -C /
+sudo tar -xvzf xz-5.2.4-darwin.17-x86_64.tar.gz -C /
 @end example
 @end itemize
 

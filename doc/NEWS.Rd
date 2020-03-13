@@ -68,11 +68,11 @@
        expected to have minimal impact on packages not using unsupported
        coding practices in their C/C++ code.
 
-       \item \R is now built by default against a PCRE2 library for
-       Perl-like regular expressions.  (On non-Windows platforms PCRE1
-       is used if PCRE2 is not available at build time.)  The version of
-       PCRE used can be obtained via \code{extSoftVersion()}: PCRE1 has
-       versions < 10, PCRE2 versions >= 10.
+       \item \R is now built against a PCRE2 library for Perl-like
+       regular expressions.  (On non-Windows platforms PCRE1 can
+       optionally be used if PCRE2 is not available at build time.)  The
+       version of PCRE in use can be obtained via \code{extSoftVersion()}:
+       PCRE1 has versions < 10, PCRE2 versions >= 10.
 
        PCRE2 reports errors for some regular expressions that were
        accepted by PCRE1.  A hyphen now has to be escaped in a character
@@ -390,11 +390,8 @@
       \item A C++ compiler default is set only if the C++11 standard is
       supported: it no longer falls back to C++98.
 
-      \item PCRE2 is used if available.  \command{configure} will warn
-      if PCRE2 is not found and fall back to PCRE1.  \command{configure}
-      options \option{--without-pcre1} and \option{--without-pcre2} can
-      be used to exclude one or the other (but at least one of PCRE2 and
-      PCRE1 is required).
+      \item PCRE2 is used if available.  To make use of PCRE1 if PCRE2
+      is unavailable, configure with option \option{--with-pcre1}.
 
       \item The minimum required version of \code{libcurl} is now 7.28.0
       (Oct 2012).
