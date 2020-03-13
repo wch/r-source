@@ -389,7 +389,7 @@ AC_ARG_WITH([pcre2],
 AC_ARG_WITH([pcre1],
 [AS_HELP_STRING([--with-pcre1],[use PCRE1 library (if available and PCRE2 is not) @<:@yes@:>@])],
 [R_ARG_USE(pcre1)],
-[use_pcre1=yes])
+[use_pcre1=no])
 
 ## Aqua.
 AC_ARG_WITH([aqua],
@@ -2941,9 +2941,6 @@ if test -n "${warn_fcpicflags}"; then
 fi
 if test -n "${warn_tcltk_version}"; then
   AC_MSG_WARN([${warn_tcltk_version}])
-fi
-if test -n "${warn_pcre2}"; then
-  AC_MSG_WARN([${warn_pcre2}])
 fi
 if test -n "${warn_info}"; then
   AC_MSG_WARN([${warn_info}])
