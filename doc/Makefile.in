@@ -19,6 +19,7 @@ INSTFILES2 = NEWS.rds NEWS NEWS.pdf
 NON_SVN_INSTFILES = FAQ RESOURCES NEWS NEWS.pdf
 ## generated later.
 SUBDIRS = html manual
+INSTDIRS = notes
 
 HELP2MAN = perl $(top_srcdir)/tools/help2man.pl
 
@@ -210,4 +211,9 @@ distdir: $(DISTFILES)
 	  chmod 755 $(distdir)/$${d}; \
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
+	done
+	@for d in $(INSTDIRS); do \
+	  cp -pr $(srcdir)/$${d} $(distdir) || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  chmod 644 $(distdir)/$${d}/*; \
 	done
