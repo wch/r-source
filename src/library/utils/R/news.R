@@ -25,9 +25,9 @@ function(query, package = "R", lib.loc = NULL,
         db <- if(package == "R")
                   tools:::.build_news_db_from_R_NEWS_Rd()
               else if (package == "R-3")
-                  tools:::.build_news_db_from_R_NEWS_Rd(Rfile = "NEWS.3.Rds")
+                  tools:::.build_news_db_from_R_NEWS_Rd(Rfile = "NEWS.3.rds")
               else if (package == "R-2")
-                  tools:::.build_news_db_from_R_NEWS_Rd(Rfile = "NEWS.2.Rds")
+                  tools:::.build_news_db_from_R_NEWS_Rd(Rfile = "NEWS.2.rds")
               else
                   tools:::.build_news_db(package, lib.loc, format, reader)
     }
