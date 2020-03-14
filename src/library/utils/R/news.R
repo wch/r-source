@@ -1,7 +1,7 @@
 #  File src/library/utils/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,9 +23,13 @@ function(query, package = "R", lib.loc = NULL,
 {
     if(new.db <- is.null(db)) {
         db <- if(package == "R")
-            tools:::.build_news_db_from_R_NEWS_Rd()
-        else
-            tools:::.build_news_db(package, lib.loc, format, reader)
+                  tools:::.build_news_db_from_R_NEWS_Rd()
+              else if (package == "R-3")
+                  tools:::.build_news_db_from_R_NEWS_Rd(Rfile = "NEWS.3.Rds")
+              else if (package == "R-2")
+                  tools:::.build_news_db_from_R_NEWS_Rd(Rfile = "NEWS.2.Rds")
+              else
+                  tools:::.build_news_db(package, lib.loc, format, reader)
     }
     if(is.null(db))
         return(NULL)
@@ -71,7 +75,7 @@ function(query, package = "R", lib.loc = NULL,
 	if(!all(r))
 	    attr(db, "subset") <- r
     }
-    
+
     db
 }
 

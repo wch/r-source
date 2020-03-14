@@ -58,7 +58,7 @@
      }
    }
 
-  \subsection{IMPORTANT INTERNAL CHANGES}{
+  \subsection{REFERENCE COUNTING}{
     \itemize{
        \item \R now uses reference counting instead of the \code{NAMED}
        mechanism for determining when objects can be safely mutated in
@@ -67,27 +67,31 @@
        help make the internal code easier to maintain.  This change is
        expected to have minimal impact on packages not using unsupported
        coding practices in their C/C++ code.
+     }
+   }
 
+  \subsection{MIGRATION TO PCRE2}{
+    \itemize{
        \item \R is now built against a PCRE2 library for Perl-like
        regular expressions.  (On non-Windows platforms PCRE1 can
        optionally be used if PCRE2 is not available at build time.)  The
        version of PCRE in use can be obtained via \code{extSoftVersion()}:
        PCRE1 has versions < 10, PCRE2 versions >= 10.
 
-       PCRE2 reports errors for some regular expressions that were
+       \item Making PCRE2 available when building \R from source is
+       strongly recommended (preferably version 10.30 or later) as PCRE1
+       is no longer developed (it only receives bug fixes and has
+       outdated Unicode tables)
+
+       \item PCRE2 reports errors for some regular expressions that were
        accepted by PCRE1.  A hyphen now has to be escaped in a character
        class to be interpreted as a literal (unless first or last in the
        class definition).  \samp{\\R}, \samp{\\B} and \samp{\\X} are no
        longer allowed in character classes (PCRE1 treated these as
        literals).
 
-       Option \code{PCRE_study} is no longer used with PCRE2, and is
+       \item Option \code{PCRE_study} is no longer used with PCRE2, and is
        reported as \code{FALSE} when that is in use.
-
-       Making PCRE2 available when building \R from source is strongly
-       recommended (preferably version 10.30 or later) as PCRE1 is no
-       longer developed (it only receives bug fixes and has outdated
-       Unicode tables)
      }
   }
 
@@ -309,6 +313,9 @@
 
       \item Object \code{.Machine} now contains new \code{longdouble.*}
       entries (when \R uses long doubles internally).
+
+      \item \code{news()} has been enhanced to cover the news on R 3.x
+      and 2.x.
     }
   }% end{ NEW FEATURES }
 
