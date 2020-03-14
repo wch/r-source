@@ -145,12 +145,11 @@ if(length(iM <- find.package("Matrix", quiet = TRUE)) && nzchar(iM)) {
    stopifnot(paste0("1.1-", 2:4) \%in\% dM2014[,"Version"])
 }
 
-\donttest{% <- is not sensibly diff-ed against previous versions
 ## Which categories have been in use? % R-core maybe should standardize a bit more
 sort(table(db[, "Category"]), decreasing = TRUE)
 ## Entries with version >= 4.0.0
 table(news(Version >= "4.0.0", db = db)$Version)
-}
+
 ## do the same for R 3.x.y, more slowly
 db3 <- news(package = "R-3")
 sort(table(db3[, "Category"]), decreasing = TRUE)

@@ -22,6 +22,8 @@ function(query, package = "R", lib.loc = NULL,
          format = NULL, reader = NULL, db = NULL)
 {
     if(new.db <- is.null(db)) {
+        ## we could allow vector 'package' here by rbind-ing,
+        ## preserving the classes.
         db <- if(package == "R")
                   tools:::.build_news_db_from_R_NEWS_Rd()
               else if (package == "R-3")
