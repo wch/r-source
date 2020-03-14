@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2020-03-04 r77906) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-13 r77956) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin19.3.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,7 +20,8 @@ Type 'q()' to quit R.
 > ####  Part 2
 > ####  ======  Recommended packages allowed  .. output tests *sloppily*
 > 
-> source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
+> invisible(file.copy(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), "eval-fns.R"))
+> source("./eval-fns.R", echo = TRUE)
 
 > pd0 <- function(expr, backtick = TRUE, ...) parse(text = deparse(expr, 
 +     backtick = backtick, ...))
@@ -50,7 +51,6 @@ Type 'q()' to quit R.
 +     stopifnot(is.environment(env))
 +     for (nm in ls(envir = env)) {
 +         cat(nm, ": ", sep = .... [TRUNCATED] 
->                                         #---------
 > 
 > if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
 +     D5. <- Diagonal(x = 5:1)
@@ -618,5 +618,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.489 0.104 1.595 0.003 0.004 
+Time elapsed:  1.374 0.105 1.482 0.003 0.004 
 > 

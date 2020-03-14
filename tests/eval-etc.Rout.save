@@ -209,9 +209,8 @@ Levels: a b <NA>
 > ## partly failed in R 3.4.0 alpha
 > rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
 > 
-> ## this file  will not be present when testing an installed R.
-> srcfile <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
-> if (file.exists(srcfile)) source(srcfile, echo = TRUE)
+> invisible(file.copy(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), "eval-fns.R"))
+> source("./eval-fns.R", echo = TRUE)
 
 > pd0 <- function(expr, backtick = TRUE, ...) parse(text = deparse(expr, 
 +     backtick = backtick, ...))
@@ -942,9 +941,6 @@ sii: structure(4:7, foo = list(B = "bar", G = "grizzly", vec = structure(1:2, .N
 "b")), v2 = structure(5:6, .Names = c("e", "f")), v0 = structure(logical(0), .Names = character(0))))
  --> checking list(*): Ok
 --=--=--=--=--
-srcfile: "/Users/ripley/R/svn/R-devel/tests/eval-fns.R"
- --> checking list(*): Ok
---=--=--=--=--
 t1:  --> checking list(*): Ok
 --=--=--=--=--
 t2:  --> checking list(*): Ok
@@ -1003,5 +999,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.312 0.019 0.337 0 0 
+Time elapsed:  0.313 0.018 0.335 0 0 
 > 

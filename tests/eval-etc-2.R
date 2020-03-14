@@ -3,8 +3,8 @@
 ####  Part 2
 ####  ======  Recommended packages allowed  .. output tests *sloppily*
 
-source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
-                                        #---------
+invisible(file.copy(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), "eval-fns.R"))
+source("./eval-fns.R", echo = TRUE)
 
 if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
     D5. <- Diagonal(x = 5:1)

@@ -152,9 +152,8 @@ stopifnot(
 ## partly failed in R 3.4.0 alpha
 rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
 
-## this file  will not be present when testing an installed R.
-srcfile <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
-if (file.exists(srcfile)) source(srcfile, echo = TRUE)
+invisible(file.copy(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), "eval-fns.R"))
+source("./eval-fns.R", echo = TRUE)
 
 library(stats)
 ## some more "critical" cases
