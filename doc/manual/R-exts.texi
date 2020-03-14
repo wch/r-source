@@ -5317,6 +5317,10 @@ The POSIX standard reserves (in §2.2.2) all identifiers ending in
 @code{_t}.
 
 @item
+Some compilers do allow a space between @code{-D} and the macro to be
+defined.  Similarly for @code{-U}.
+
+@item
 If you use OpenMP, check carefully that you have followed the advice in
 the subsection on @ref{OpenMP support}.  In particular, any use of
 OpenMP in C/C++ code will need to use
