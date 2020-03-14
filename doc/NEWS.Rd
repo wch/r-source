@@ -594,7 +594,7 @@
       and \href{../NEWS.3}{NEWS.3}}{\file{NEWS.0}, \file{NEWS.1},
       \file{NEWS.2} and \file{NEWS.3}}
     in the \file{doc} directory.  News in HTML format for
-    \Rversions 3.x and from 2.10.0 to 2.15.3 is in
+    \R  versions 3.x and from 2.10.0 to 2.15.3 is in
     \ifelse{html}{\url{NEWS.3.html}}{\file{doc/html/NEWS.3.html}}.
     and
     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
