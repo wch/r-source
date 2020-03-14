@@ -20,8 +20,8 @@ Type 'q()' to quit R.
 > ####  Part 2
 > ####  ======  Recommended packages allowed  .. output tests *sloppily*
 > 
-> invisible(file.copy(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), "eval-fns.R"))
-> source("./eval-fns.R", echo = TRUE)
+> srcdir <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
+> source(if(file.exists(srcdir)) srcdir else "./eval-fns.R", echo = TRUE)
 
 > pd0 <- function(expr, backtick = TRUE, ...) parse(text = deparse(expr, 
 +     backtick = backtick, ...))
@@ -51,6 +51,7 @@ Type 'q()' to quit R.
 +     stopifnot(is.environment(env))
 +     for (nm in ls(envir = env)) {
 +         cat(nm, ": ", sep = .... [TRUNCATED] 
+> rm("srcdir")
 > 
 > if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
 +     D5. <- Diagonal(x = 5:1)
@@ -618,5 +619,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.374 0.105 1.482 0.003 0.004 
+Time elapsed:  1.566 0.118 1.74 0.003 0.005 
 > 

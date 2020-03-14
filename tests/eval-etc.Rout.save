@@ -209,8 +209,8 @@ Levels: a b <NA>
 > ## partly failed in R 3.4.0 alpha
 > rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
 > 
-> invisible(file.copy(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), "eval-fns.R"))
-> source("./eval-fns.R", echo = TRUE)
+> srcdir <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
+> source(if(file.exists(srcdir)) srcdir else "./eval-fns.R", echo = TRUE)
 
 > pd0 <- function(expr, backtick = TRUE, ...) parse(text = deparse(expr, 
 +     backtick = backtick, ...))
@@ -240,6 +240,7 @@ Levels: a b <NA>
 +     stopifnot(is.environment(env))
 +     for (nm in ls(envir = env)) {
 +         cat(nm, ": ", sep = .... [TRUNCATED] 
+> rm("srcdir")
 > 
 > library(stats)
 > ## some more "critical" cases
@@ -999,5 +1000,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.313 0.018 0.335 0 0 
+Time elapsed:  0.501 0.03 0.545 0 0 
 > 
