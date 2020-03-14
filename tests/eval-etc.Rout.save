@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2020-03-03 r77897) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-13 r77956) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin19.3.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -209,7 +209,9 @@ Levels: a b <NA>
 > ## partly failed in R 3.4.0 alpha
 > rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
 > 
-> source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
+> ## this file  will not be present when testing an installed R.
+> srcfile <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
+> if (file.exists(srcfile)) source(srcfile, echo = TRUE)
 
 > pd0 <- function(expr, backtick = TRUE, ...) parse(text = deparse(expr, 
 +     backtick = backtick, ...))
@@ -239,7 +241,6 @@ Levels: a b <NA>
 +     stopifnot(is.environment(env))
 +     for (nm in ls(envir = env)) {
 +         cat(nm, ": ", sep = .... [TRUNCATED] 
->                                         #---------
 > 
 > library(stats)
 > ## some more "critical" cases
@@ -941,6 +942,9 @@ sii: structure(4:7, foo = list(B = "bar", G = "grizzly", vec = structure(1:2, .N
 "b")), v2 = structure(5:6, .Names = c("e", "f")), v0 = structure(logical(0), .Names = character(0))))
  --> checking list(*): Ok
 --=--=--=--=--
+srcfile: "/Users/ripley/R/svn/R-devel/tests/eval-fns.R"
+ --> checking list(*): Ok
+--=--=--=--=--
 t1:  --> checking list(*): Ok
 --=--=--=--=--
 t2:  --> checking list(*): Ok
@@ -999,5 +1003,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.349 0.021 0.382 0 0 
+Time elapsed:  0.312 0.019 0.337 0 0 
 > 
