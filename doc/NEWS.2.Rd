@@ -6982,6 +6982,8 @@
 }
 
 \section{OLDER NEWS}{
-  News for \R 2.9.2 patched and earlier can be found in files
-  such as \file{NEWS.2} in the \file{doc} directory.
+  \itemize{
+    \item News for \R 2.9.2 patched and earlier can be found in files
+    such as \file{NEWS.2} in the \file{doc} directory.
+  }
 }

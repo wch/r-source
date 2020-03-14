@@ -24,23 +24,9 @@
        This makes it easier to write strings that contain backslashes or
        both single and double quotes.  For more details see \code{?Quotes}.
 
-       \item \code{N <- NULL; N[[1]] <- val} now turns \code{N} into a
-       \code{list} also when \code{length(val) == 1}, for consistency.
-       This enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
-       \code{r1}, fixing \PR{17719}, reported by Serguei Sokol.
-
-       \item \code{deparse(..)}, \code{dump(..)}, and \code{dput(x,
-	 control="all")} now include using control option \code{"digits17"}
-       which typically ensures 1:1 invertibility.  New option \code{control
-	 = "exact"} ensures numeric exact invertibility via \code{"hexDigits"}.
-
        \item \R now uses a \samp{stringsAsFactors = FALSE} default, and
        hence by default no longer converts strings to factors in calls
        to \code{data.frame()} and \code{read.table()}.
-
-       \item When loading data sets via \code{read.table()},
-       \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
-       independent results for possible string-to-factor conversions.
 
        \item The \code{plot()} S3 generic function is now in package
        \pkg{base} rather than package \pkg{graphics}, as it is
@@ -254,7 +240,7 @@
 
       \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
       \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
-      \code{rwilcox()} which have returned integer since R 3.0.0 and hence
+      \code{rwilcox()} which have returned integer since \R 3.0.0 and hence
       \code{NA} when the numbers would have been outside the integer range,
       now return double vectors (without NAs, typically) in these cases.
 
@@ -314,8 +300,22 @@
       \item Object \code{.Machine} now contains new \code{longdouble.*}
       entries (when \R uses long doubles internally).
 
-      \item \code{news()} has been enhanced to cover the news on R 3.x
+      \item \code{news()} has been enhanced to cover the news on \R 3.x
       and 2.x.
+
+       \item \code{N <- NULL; N[[1]] <- val} now turns \code{N} into a
+       \code{list} also when \code{length(val) == 1}, for consistency.
+       This enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
+       \code{r1}, fixing \PR{17719}, reported by Serguei Sokol.
+
+       \item \code{deparse(..)}, \code{dump(..)}, and \code{dput(x,
+	 control="all")} now include using control option \code{"digits17"}
+       which typically ensures 1:1 invertibility.  New option \code{control
+	 = "exact"} ensures numeric exact invertibility via \code{"hexDigits"}.
+
+      \item When loading data sets via \code{read.table()},
+       \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
+       independent results for possible string-to-factor conversions.
     }
   }% end{ NEW FEATURES }
 
@@ -594,7 +594,7 @@
       and \href{../NEWS.3}{NEWS.3}}{\file{NEWS.0}, \file{NEWS.1},
       \file{NEWS.2} and \file{NEWS.3}}
     in the \file{doc} directory.  News in HTML format for
-    \R versions 3.x and from 2.10.0 to 2.15.3 is in
+    \Rversions 3.x and from 2.10.0 to 2.15.3 is in
     \ifelse{html}{\url{NEWS.3.html}}{\file{doc/html/NEWS.3.html}}.
     and
     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
