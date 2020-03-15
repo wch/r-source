@@ -580,6 +580,10 @@
       \item \code{dotchart()} now places the y-axis label (\code{ylab})
       much better, not overplotting labels, thanks to a report and
       suggestion by Alexey Shipunov.
+
+      %% detected by clang-ASAN in examples/tests of adehabitatHR.
+      \item A rare C-level array overflow in \code{chull()} has been
+      worked around.
     }
   }
 
