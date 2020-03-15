@@ -158,7 +158,7 @@ day_of_the_week (stm *tm)
 	    + (corr_year / 4)
 	    - ((corr_year / 4) / 25) + ((corr_year / 4) % 25 < 0)
 	    + (((corr_year / 4) / 25) / 4)
-	    + __mon_yday[0][tm->tm_mon]
+	    + __mon_yday[0][tm->tm_mon] // no check on month in range
 	    + tm->tm_mday - 1);
     tm->tm_wday = ((wday % 7) + 7) % 7;
 }
@@ -637,12 +637,15 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	if ( !(have_mon && have_mday) && have_yday)  {
 	    /* We don't have tm_mon and/or tm_mday, compute them. */
 	    int t_mon = 0;
-	    while (__mon_yday[__isleap(1900 + tm->tm_year)][t_mon] <= tm->tm_yday)
+	    int yr = 1900 + tm->tm_year;
+	    if(tm->tm_yday > (__isleap(yr) ? 365 : 364))
+		error("(0-based) yday %d in year %d is invalid\n", tm->tm_yday, yr);
+	    while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		t_mon++;
 	    if (!have_mon)
 		tm->tm_mon = t_mon - 1;
 	    if (!have_mday)
-		tm->tm_mday = (tm->tm_yday - __mon_yday[__isleap(1900 + tm->tm_year)][t_mon - 1] + 1);
+		tm->tm_mday = (tm->tm_yday - __mon_yday[__isleap(yr)][t_mon - 1] + 1);
 	}
 	day_of_the_week (tm);
     }
@@ -674,15 +677,17 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
       if (!have_mday || !have_mon)
       {
 	  int t_mon = 0;
-	  while (__mon_yday[__isleap(1900 + tm->tm_year)][t_mon]
-		 <= tm->tm_yday)
+	  int yr = 1900 + tm->tm_year;
+	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364))
+	      error("(0-based) yday %d in year %d is invalid\n", tm->tm_yday, yr);
+	  while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 	      t_mon++;
 	  if (!have_mon)
 	      tm->tm_mon = t_mon - 1;
 	  if (!have_mday)
 	      tm->tm_mday =
 		  (tm->tm_yday
-		   - __mon_yday[__isleap(1900 + tm->tm_year)][t_mon - 1] + 1);
+		   - __mon_yday[__isleap(yr)][t_mon - 1] + 1);
       }
 
       tm->tm_wday = save_wday;
@@ -1104,12 +1109,15 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	if ( !(have_mon && have_mday) && have_yday)  {
 	    /* We don't have tm_mon and/or tm_mday, compute them. */
 	    int t_mon = 0;
-	    while (__mon_yday[__isleap(1900 + tm->tm_year)][t_mon] <= tm->tm_yday)
+	    int yr = 1900 + tm->tm_year;	    
+	    if(tm->tm_yday > (__isleap(yr) ? 365 : 364))
+		error("(0-based) yday %d in year %d is invalid\n", tm->tm_yday, yr);
+	    while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		t_mon++;
 	    if (!have_mon)
 		tm->tm_mon = t_mon - 1;
 	    if (!have_mday)
-		tm->tm_mday = (tm->tm_yday - __mon_yday[__isleap(1900 + tm->tm_year)][t_mon - 1] + 1);
+		tm->tm_mday = (tm->tm_yday - __mon_yday[__isleap(yr)][t_mon - 1] + 1);
 	}
 	day_of_the_week (tm);
     }
@@ -1139,7 +1147,10 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
       if (!have_mday || !have_mon)
       {
 	  int t_mon = 0;
-	  while (__mon_yday[__isleap(1900 + tm->tm_year)][t_mon]
+	  int yr = 1900 + tm->tm_year;
+	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364))
+	      error("(0-based)  yday %d in year %d is invalid\n", tm->tm_yday, yr);
+	  while (__mon_yday[__isleap(yr)][t_mon]
 		 <= tm->tm_yday)
 	      t_mon++;
 	  if (!have_mon)
@@ -1147,7 +1158,7 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	  if (!have_mday)
 	      tm->tm_mday =
 		  (tm->tm_yday
-		   - __mon_yday[__isleap(1900 + tm->tm_year)][t_mon - 1] + 1);
+		   - __mon_yday[__isleap(yr)][t_mon - 1] + 1);
       }
 
       tm->tm_wday = save_wday;

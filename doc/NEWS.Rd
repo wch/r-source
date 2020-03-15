@@ -584,6 +584,10 @@
       %% detected by clang-ASAN in examples/tests of adehabitatHR.
       \item A rare C-level array overflow in \code{chull()} has been
       worked around.
+
+      \item Some invalid specifications of the day-of-the-year
+      (\emph{via} \code{\%j}) are now detected by \code{strptime()} and
+      give an error.
     }
   }
 
@@ -599,7 +603,7 @@
       \PR{17632}).
 
       \item \code{scan()} issues with UTF-8 data when running in a DBCS
-      locale have been resolved (\PR{16520},\PR{16584}).
+      locale have been resolved (\PR{16520}, \PR{16584}).
     }
   }
 }
