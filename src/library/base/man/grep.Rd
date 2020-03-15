@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -107,12 +107,12 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   Both \code{grep} and \code{grepl} take missing values in \code{x} as
   not matching a non-missing \code{pattern}.
 
-  The main effect of \code{useBytes} is to avoid errors/warnings about
-  invalid inputs and spurious matches in multibyte locales, but for
-  \code{regexpr} it changes the interpretation of the output.
-  It inhibits the conversion of inputs with marked encodings, and is
-  forced if any input is found which is marked as \code{"bytes"}
-  (see \code{\link{Encoding}}).
+  The main effect of \code{useBytes = TRUE} is to avoid errors/warnings
+  about invalid inputs and spurious matches in multibyte locales, but
+  for \code{regexpr} it changes the interpretation of the output.  It
+  inhibits the conversion of inputs with marked encodings, and is forced
+  if any input is found which is marked as \code{"bytes"} (see
+  \code{\link{Encoding}}).
 
   Caseless matching does not make much sense for bytes in a multibyte
   locale, and you should expect it only to work for ASCII characters if
@@ -125,7 +125,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   Caseless matching with \code{perl = TRUE} for non-ASCII characters
   depends on the PCRE library being compiled with \sQuote{Unicode
-  property support}.
+  property support}, which PCRE2 is by default.
 }
 
 \value{
@@ -156,7 +156,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   integer vector giving the length of the matched text (or \eqn{-1} for
   no match).  The match positions and lengths are in characters unless
   \code{useBytes = TRUE} is used, when they are in bytes (as they are
-  for an ASCII-only matching: in either case an attribute
+  for ASCII-only matching: in either case an attribute
   \code{useBytes} with value \code{TRUE} is set on the result).  If
   named capture is used there are further attributes
   \code{"capture.start"}, \code{"capture.length"} and
@@ -176,8 +176,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   interpretation of positions and length and the attributes follows
   \code{regexpr}.
 
-  Where matching failed because of resource limits (especially for PCRE)
-  this is regarded as a non-match, usually with a warning.
+  Where matching failed because of resource limits (especially for
+  \code{perl = TRUE}) this is regarded as a non-match, usually with a
+  warning.
 }
 
 \section{Warning}{
@@ -192,9 +193,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 \section{Performance considerations}{
   If you are doing a lot of regular expression matching, including on
   very long strings, you will want to consider the options used.
-  Generally PCRE will be faster than the default regular expression
-  engine, and \code{fixed = TRUE} faster still (especially when each
-  pattern is matched only a few times).
+  Generally \code{perl = TRUE} will be faster than the default regular
+  expression engine, and \code{fixed = TRUE} faster still (especially
+  when each pattern is matched only a few times).
 
   If you are working in a single-byte locale and have marked UTF-8
   strings that are representable in that locale, convert them first as
@@ -207,13 +208,13 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   Often byte-based matching suffices in a UTF-8 locale since byte
   patterns of one character never match part of another.
 
-  PCRE-based matching by default puts additional effort into
+  PCRE-based matching by default used to put additional effort into
   \sQuote{studying} the compiled pattern when \code{x}/\code{text} has
-  length at least 10.  As from \R 3.4.0 that study may use the PCRE JIT
-  compiler on platforms where it is available (see
-  \code{\link{pcre_config}}). As from PCRE2 (PCRE version >= 10.00 as
-  reported by \code{\link{extSoftVersion}}), there is no study phase, but
-  the patterns are optimized automatically when possible, and PCRE JIT is
+  length 10 or more.  That study may use the PCRE JIT compiler on
+  platforms where it is available (see \code{\link{pcre_config}}). As
+  from PCRE2 (PCRE version >= 10.00 as reported by
+  \code{\link{extSoftVersion}}), there is no study phase, but the
+  patterns are optimized automatically when possible, and PCRE JIT is
   used when enabled.  The details are controlled by
   \code{\link{options}} \code{PCRE_study} and \code{PCRE_use_JIT}.
   (Some timing comparisons can be seen by running file
@@ -221,9 +222,10 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   People working with PCRE and very long strings can adjust the maximum
   size of the JIT stack by setting environment variable
   \env{R_PCRE_JIT_STACK_MAXSIZE} before JIT is used to a value between
-  \code{1} and \code{1000} in MB: the default is \code{64}. When JIT is not
-  used with PCRE version < 10.30 (that is with PCRE1 and old versions of
-  PCRE2), it might also be wise to set the option \code{PCRE_limit_recursion}.
+  \code{1} and \code{1000} in MB: the default is \code{64}. When JIT is
+  not used with PCRE version < 10.30 (that is with PCRE1 and old
+  versions of PCRE2), it might also be wise to set the option
+  \code{PCRE_limit_recursion}.
 }
 
 \source{
@@ -234,8 +236,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   handling of invalid regular expressions and the collation of character
   ranges, so the results will have changed slightly over the years.
 
-  For Perl-style matching PCRE (\url{http://www.pcre.org}) is used:
-  again the results may depend (slightly) on the version of PCRE in use. 
+  For Perl-style matching PCRE2 or PCRE (\url{http://www.pcre.org}) is
+  used: again the results may depend (slightly) on the version of PCRE
+  in use.
 }
 
 \references{
