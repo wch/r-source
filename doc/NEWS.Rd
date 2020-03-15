@@ -11,17 +11,18 @@
        \item \code{matrix} objects now also inherit from class
        \code{"array"}, so e.g., \code{class(diag(1))} is \code{c("matrix",
        "array")}.  This invalidates code incorrectly assuming that
-       \code{length(class(obj)) == 1}.
+       \code{class(matrix_obj))} has length one.
 
        S3 methods for class \code{"array"} are now dispatched for
        \code{matrix} objects.
 
-       \item \R now provides a syntax for specifying raw character
+       \item There is a new syntax for specifying \emph{raw} character
        constants similar to the one used in C++: \code{r"(...)"} with
-       \code{...} any character sequence, except that it must not
-       contain the closing sequence \samp{)"}. %}) \samp{*}: Rd-parser bug for \code{*}"
+       \code{...} any character sequence not containing the sequence
+       \samp{)"}. %}) \samp{*}: Rd-parser bug for \code{*}"
        This makes it easier to write strings that contain backslashes or
-       both single and double quotes.  For more details see \code{?Quotes}.
+       both single and double quotes.  For more details see
+       \code{?Quotes}.
 
        \item \R now uses a \samp{stringsAsFactors = FALSE} default, and
        hence by default no longer converts strings to factors in calls
@@ -47,10 +48,10 @@
 
   \subsection{REFERENCE COUNTING}{
     \itemize{
-       \item \R now uses reference counting instead of the \code{NAMED}
+       \item Reference counting is now used instead of the \code{NAMED}
        mechanism for determining when objects can be safely mutated in
        base C code.  This reduces the need for copying in some cases and
-       should allow further optimizations in the future.  It should also
+       should allow further optimizations in the future.  It should
        help make the internal code easier to maintain.
 
        This change is expected to have almost no impact on packages 
@@ -60,18 +61,19 @@
 
   \subsection{MIGRATION TO PCRE2}{
     \itemize{
-       \item \R is built against a PCRE2 library for Perl-like regular
-       expressions, if available.  (On non-Windows platforms PCRE1 can
-       optionally be used if PCRE2 is not available at build time.)  The
-       version of PCRE in use can be obtained via
-       \code{extSoftVersion()}: PCRE1 has versions < 10, PCRE2 versions
-       >= 10.
+       \item This version of \R is built against the PCRE2 library for
+       Perl-like regular expressions, if available.  (On non-Windows
+       platforms PCRE1 can optionally be used if PCRE2 is not available
+       at build time.)  The version of PCRE in use can be obtained via
+       \code{extSoftVersion()}: PCRE1 (formerly known as \sQuote{PCRE})
+       has versions <= 8, PCRE2 versions >= 10.
 
        \item Making PCRE2 available when building \R from source is
        strongly recommended (preferably version 10.30 or later) as PCRE1
-       is no longer developed (it only receives bug fixes and has
-       outdated Unicode tables)
-
+       is no longer developed: version 8.44 is
+       \sQuote{likely to be the final release}.
+       % https://lists.exim.org/lurker/message/20200212.174850.6edd8277.en.html
+      
        \item PCRE2 reports errors for some regular expressions that were
        accepted by PCRE1.  A hyphen now has to be escaped in a character
        class to be interpreted as a literal (unless first or last in the
@@ -110,8 +112,8 @@
       signalled (\code{.Traceback}), now contains the \code{call}s
       rather than the \emph{\code{deparse()}d} calls, deferring the
       deparsing to the user-level functions \code{.traceback()} and
-      \code{traceback()}, fulfilling the wish of \PR{17580}, reported
-      incl.\sspace{}two patch proposals by Brodie Gaslam.
+      \code{traceback()}.  This fulfils the wish of \PR{17580}, reported
+      including two patch proposals by Brodie Gaslam.
 
       \item \code{data.matrix()} now converts character columns to
       factors and from this to integers.
@@ -135,16 +137,16 @@
       \code{normalizePath()} and \code{path.expand()}) treat this like
       any other non-existent file, often with a warning.
 
+      \item There is a new help document accessed by
+      \code{help("file path encoding")} detailing how file paths with
+      marked encodings are handled.
+
       \item New function \code{list2DF()} for creating data frames from
       lists of variables.
 
       \item \code{iconv()} has a new option \code{sub = "Unicode"} to
       translate UTF-8 input invalid in the \samp{to} encoding using
       \samp{<U+xxxx>} escapes.
-
-      \item There is a new help document accessed by
-      \code{help("file path encoding")}
-      detailing how file paths with marked encodings are handled.
 
       \item There is a new function \code{infoRDS()} providing information
       about the serialization format of a serialized object.
@@ -176,26 +178,26 @@
       aspect ratio, fulfilling the wish and extending the proposal of
       Michael Chirico in \PR{17648}.
 
-      \item \code{head(x, n)} and \code{tail()} default and other S3
-      methods notably for \emph{vector} \code{n}, e.g. to get a
-      \dQuote{corner} of a matrix, also extended for \code{array}'s of
-      higher dimension, thanks to the patch proposal by Gabe Becker in
+      \item For \code{head(x, n)} and \code{tail()} the default and
+      other S3 methods notably for \emph{vector} \code{n}, e.g. to get a
+      \dQuote{corner} of a matrix, hace been extended to \code{array}'s
+      of higher dimension thanks to the patch proposal by Gabe Becker in
       \PR{17652}.  Consequently, optional argument \code{addrownums} is
-      deprecated and replaced by the (more general) \code{keepnums}.
-      Invalid (second argument) \code{n} now leads to typically more
-      easily readable error messages.
+      deprecated and replaced by the (more general) arguemnt
+      \code{keepnums}.  An invalid second argument \code{n} now leads
+      to typically more easily readable error messages.
 
       \item New function \code{.class2()} provides the full character
       vector of class names used for S3 method dispatch.
 
-      \item Printing \code{methods(..)} now uses new \code{format()} method.
+      \item Printing \code{methods(..)} now uses a new \code{format()} method.
 
-      \item \code{sort.list(x)} now works for non-atomic objects \code{x}
-      and \code{method="auto"} (default) or \code{"radix"} in cases
-      \code{order(x)} works.
+      \item \code{sort.list(x)} now works for non-atomic objects
+      \code{x} and \code{method = "auto"} (the default) or
+      \code{"radix"} in cases \code{order(x)} works.
 
-      \item Where available, \code{writeBin()} now allows long vectors
-      (those of length \eqn{\ge 2^{31}}{>= 2^31}).
+      \item Where they are thavailable, \code{writeBin()} allows
+      long vectors.% (those of length \eqn{\ge 2^{31}}{>= 2^31}).
 
       \item New function \code{deparse1()} produces one string, wrapping
       \code{deparse()}, to be used typically in
@@ -206,15 +208,15 @@
       robustness consistency.  If exact computations are used, the
       result now has \code{"exact"} in the \code{method} element of its
       return value.  New arguments \code{tol.root} and
-      \code{digits.rank}.  The latter may be used for stability to treat
-      very close numbers as ties.
+      \code{digits.rank} where the latter may be used for stability to
+      treat very close numbers as ties.
 
-      \item \code{readBin()} and \code{writeBin()} now report an error for
-      invalid \code{endian} value.  The affected code needs to be fixed with
-      care as the old undocumented behavior was to swap endian-ness in such
-      cases.
+      \item \code{readBin()} and \code{writeBin()} now report an error
+      for an invalid \code{endian} value.  The affected code needs to be
+      fixed with care as the old undocumented behavior was to swap
+      endian-ness in such cases.
 
-      \item \code{sequence()} is now an S3 generic, with an internally
+      \item \code{sequence()} is now an S3 generic with an internally
       implemented default method, and gains arguments to generate more
       complex sequences.  Based on code from the \pkg{S4Vectors}
       Bioconductor package and the advice of Hervé Pagès.
@@ -270,31 +272,33 @@
       \item The default for \code{pdf()} is now
       \code{useDingbats = FALSE}.
 
-      \item The default (fill colour) for both \code{hist()} and
+      \item The default fill colour for \code{hist()} and
       \code{boxplot()} is now \code{col = "lightgray"}.
 
-      \item The default order of the levels on the y-axis
-      for both \code{spineplot()} and \code{cdplot()}
-      has been reversed.
+      \item The default order of the levels on the y-axis for
+      \code{spineplot()} and \code{cdplot()} has been reversed.
 
       \item If the \env{R_ALWAYS_INSTALL_TESTS} environment variable is
       set to a true value, \command{R CMD INSTALL} behaves as if
       the \option{--install-tests} option is always specified. Thanks to
       Reinhold Koch for the suggestion.
 
-      \item New function \code{R_user_dir()} in package \pkg{tools} for
-      paths appropriate for storing R-related user-specific data,
-      configuration and cache files.
+      \item New function \code{R_user_dir()} in package \pkg{tools}
+      suggests paths appropriate for storing \R-related user-specific
+      data, configuration and cache files.
 
       \item \code{capabilities()} gains a new logical option \code{Xchk}
       to avoid warnings about X11-related capabilities.
 
       \item The internal implementation of \pkg{grid} units has changed,
-      but the only visible effects at user-level should be: a slightly
-      different print format for some units (especially unit
-      arithmetic); faster performance (for unit operations); and two new
-      functions \code{unitType()} and \code{unit.psum()}.  Based on code
-      contributed by Thomas Lin Pedersen.
+      but the only visible effects at user-level should be
+      \itemize{
+	\item a slightly different print format for some units
+	(especially unit arithmetic),
+	\item faster performance (for unit operations) and
+	\item two new functions \code{unitType()} and \code{unit.psum()}.
+      }
+      Based on code contributed by Thomas Lin Pedersen.
 
       \item When internal dispatch for \code{rep.int()}
       and \code{rep_len()} fails, there is an attempt to dispatch on the
@@ -306,19 +310,21 @@
       \item \code{news()} has been enhanced to cover the news on \R 3.x
       and 2.x.
 
-       \item \code{N <- NULL; N[[1]] <- val} now turns \code{N} into a
-       \code{list} also when \code{length(val) == 1}, for consistency.
+       \item For consistency, \code{N <- NULL; N[[1]] <- val} now turns
+       \code{N} into a \code{list} also when \code{val)} has length one.
        This enables \code{dimnames(r1)[[1]] <- "R1"} for a 1-row matrix
-       \code{r1}, fixing \PR{17719}, reported by Serguei Sokol.
+       \code{r1}, fixing \PR{17719} reported by Serguei Sokol.
 
        \item \code{deparse(..)}, \code{dump(..)}, and \code{dput(x,
-	 control="all")} now include using control option \code{"digits17"}
-       which typically ensures 1:1 invertibility.  New option \code{control
-	 = "exact"} ensures numeric exact invertibility via \code{"hexDigits"}.
+	 control = "all")} now include control option \code{"digits17"}
+       which typically ensures 1:1 invertibility.  New option
+       \code{control = "exact"} ensures numeric exact invertibility
+       via \code{"hexDigits"}.
 
       \item When loading data sets via \code{read.table()},
-       \code{data()} now uses \samp{LC_COLLATE=C} to ensure locale
-       independent results for possible string-to-factor conversions.
+       \code{data()} now uses \samp{LC_COLLATE=C} to ensure
+       locale-independent results for possible string-to-factor
+       conversions.
     }
   }% end{ NEW FEATURES }
 
@@ -337,7 +343,7 @@
 
       \item \command{Rterm} gains a new option \option{--workspace} to
       specify the workspace to be restored.  This allows equals to be
-      part of the name when opening via Windows file associations
+      part of the name when opening \emph{via} Windows file associations
       (reported by Christian Asseburg).
 
       \item \command{Rterm} now accepts \code{ALT+xxx} sequences also
@@ -365,7 +371,7 @@
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}, nor
       \samp{CXX98} and similar.
 
-      \item Either PCRE >= 8.32 (Nov 2012) or PCRE2 is required: the
+      \item Either PCRE2 or PCRE1 >= 8.32 (Nov 2012) is required: the
       deprecated provision for 8.20--8.31 has been removed.
     }
   }
@@ -460,9 +466,9 @@
 
       \item \code{format(as.symbol("foo"))} now works (returning \code{"foo"}).
 
-      \item \code{postscript(.., title = *)} now signals an error when the
-      title string contains a character which produces corrupt PostScript,
-      thanks to Daisuko Ogawa's \PR{17607}.
+      \item \code{postscript(.., title = *)} now signals an error when
+      the title string contains a character which would produce corrupt
+      PostScript, thanks to \PR{17607} by Daisuko Ogawa.
 
       \item Certain \code{Ops} (notably comparison such as \code{==}) now
       also work for 0-length data frames, after reports by Hilmar Berger.
@@ -472,23 +478,15 @@
 
       \item \code{write.dcf()} no longer mangles field names (\PR{17589}).
 
-      \item \code{Sys.glob()} on Windows now supports all characters
-      from the Unicode Basic Multilingual Plane, no longer corrupting
-      (less commonly used) characters (\PR{17638}).
-
       \item Primitive replacement functions no longer mutate a
       referenced first argument when used outside of a complex
       assignment context.
 
-      \item Better error message for \code{contour(*, levels = Inf)}.
+      \item  A better error message for \code{contour(*, levels = Inf)}.
 
       \item The return value of \code{contourLines()} is no longer
       \code{invisible()}.
 
-      \item (Windows) \command{Rterm} now correctly displays
-      multi-byte-coded characters representable in the current native
-      encoding (at least on Windows 10 they were sometimes omitted,
-      \PR{17632}).
 
       \item The Fortran code for calculating the \code{coefficients}
       component in \code{lm.influence()} was very inefficient. It has
@@ -500,7 +498,7 @@
       consistently and have the same non-explicit default (\PR{17659}).
 
       \item \code{dnorm} had a problematic corner case with \code{sd ==
-      -Inf} and negative \code{sd} which was not flagged as an error in
+      -Inf} or negative \code{sd} which was not flagged as an error in
       all cases. Thanks to Stephen D. Weigand for reporting and Wang
       Jiefei for analyzing this; similar change has been made in
       \code{dlnorm()}.
@@ -550,9 +548,6 @@
       class is now more readable; thanks to Thierry Onkelinx for
       recognizing the problem.
 
-      \item \code{scan()} issues with UTF-8 data when running in a DBCS
-      locale (on Windows) have been resolved (\PR{16520},\PR{16584}).
-
       \item \code{choose()} misbehaved in corner cases where it switched
       \code{n - k} for \code{k} and \code{n} was only \emph{nearly} integer
       (report from Erik Scott Wright).
@@ -561,21 +556,21 @@
       combining use of box constraints and fixed starting values (in
       particular, confidence intervals were affected).
 
-      \item Operator \code{?} now has lower precedence than \code{=}
-      to work as documented and to behave like \code{<-} in help
+      \item Operator \code{?} now has lower precedence than \code{=} to
+      work as documented, so \code{=} behaves like \code{<-} in help
       expressions (\PR{16710}).
 
       \item \code{smoothEnds(x)} now returns \code{integer} type in
-      \emph{both} cases when \code{x} is \code{integer}, thanks to report
-      and proposal by Bill Dunlap \PR{17693}.
+      \emph{both} cases when \code{x} is \code{integer}, thanks to a
+      report and proposal by Bill Dunlap \PR{17693}.
 
       \item The \pkg{methods} package does a better job of tracking
       inheritance relationships across packages.
 
       \item \code{norm(diag(c(1, NA)), "2")} now works.
 
-      \item \code{subset()} had problems with 0-col dataframes (Bill Dunlap,
-      \PR{17721})
+      \item \code{subset()} had problems with 0-col dataframes (reported
+      by Bill Dunlap, \PR{17721}).
 
       \item Several cases of integer overflow detected by the
       \sQuote{undefined behaviour analyser} of \command{clang} 10 have
@@ -585,6 +580,22 @@
       \item \code{dotchart()} now places the y-axis label (\code{ylab})
       much better, not overplotting labels, thanks to a report and
       suggestion by Alexey Shipunov.
+    }
+  }
+
+  \subsection{BUG FIXES (Windows)}{
+    \itemize{
+      \item \code{Sys.glob()} now supports all characters
+      from the Unicode Basic Multilingual Plane, no longer corrupting
+      some (less commonly used) characters (\PR{17638}).
+
+      \item \command{Rterm} now correctly displays
+      multi-byte-coded characters representable in the current native
+      encoding (at least on Windows 10 they were sometimes omitted,
+      \PR{17632}).
+
+      \item \code{scan()} issues with UTF-8 data when running in a DBCS
+      locale have been resolved (\PR{16520},\PR{16584}).
     }
   }
 }
@@ -597,8 +608,8 @@
       and \href{../NEWS.3}{NEWS.3}}{\file{NEWS.0}, \file{NEWS.1},
       \file{NEWS.2} and \file{NEWS.3}}
     in the \file{doc} directory.  News in HTML format for
-    \R  versions 3.x and from 2.10.0 to 2.15.3 is in
-    \ifelse{html}{\url{NEWS.3.html}}{\file{doc/html/NEWS.3.html}}.
+    \R  versions 3.x and from 2.10.0 to 2.15.3 is available at
+    \ifelse{html}{\url{NEWS.3.html}}{\file{doc/html/NEWS.3.html}}
     and
     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
   }
