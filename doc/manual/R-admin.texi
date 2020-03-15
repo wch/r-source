@@ -4290,7 +4290,7 @@ The code (in @code{dlapack.f}) should read
       END IF
       RETURN
 @end example
-(The inner ELSE clause was missing in LAPACK 3.9.0).
+(The inner ELSE clause was missing in LAPACK 3.9.0.)
 
 @node Configuration on a Unix-alike, Platform notes, Essential and useful other programs under a Unix-alike, Top
 @appendix Configuration on a Unix-alike
