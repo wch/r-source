@@ -9,13 +9,12 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
        \item \code{matrix} objects now also inherit from class
-       \code{"array"}, namely, e.g., \code{class(diag(1))} is
-       \code{c("matrix", "array")} which invalidates code assuming that
-       \code{length(class(obj)) == 1}, an incorrect assumption that is
-       less frequently fulfilled now.
+       \code{"array"}, so e.g., \code{class(diag(1))} is \code{c("matrix",
+       "array")}.  This invalidates code incorrectly assuming that
+       \code{length(class(obj)) == 1}.
 
-       S3 methods for \code{"array"}, i.e., \code{<someFun>.array()}, are
-       now also dispatched for \code{matrix} objects.
+       S3 methods for class \code{"array"} are now dispatched for
+       \code{matrix} objects.
 
        \item \R now provides a syntax for specifying raw character
        constants similar to the one used in C++: \code{r"(...)"} with
@@ -28,19 +27,21 @@
        hence by default no longer converts strings to factors in calls
        to \code{data.frame()} and \code{read.table()}.
 
+       A large number of packages relied on the previous behaviour and
+       so have needed/wlll need updating.
+
        \item The \code{plot()} S3 generic function is now in package
        \pkg{base} rather than package \pkg{graphics}, as it is
        reasonable to have methods that do not use the \pkg{graphics}
-       package. The generic is currently re-exported from the
+       package.  The generic is currently re-exported from the
        \pkg{graphics} namespace to allow packages importing it from
-       there to continue working, but this may change in future versions
-       of \R.
+       there to continue working, but this may change in future.
 
        Packages which define S4 generics for \code{plot()} should be
        re-installed and package code using such generics from other
        packages needs to ensure that they are imported rather than rely
-       on their being found on the search path (as in a namespace, the
-       base namespace has priority over the search path).
+       on their being looked for on the search path (as in a namespace,
+       the base namespace has priority over the search path).
      }
    }
 
@@ -50,19 +51,21 @@
        mechanism for determining when objects can be safely mutated in
        base C code.  This reduces the need for copying in some cases and
        should allow further optimizations in the future.  It should also
-       help make the internal code easier to maintain.  This change is
-       expected to have minimal impact on packages not using unsupported
-       coding practices in their C/C++ code.
+       help make the internal code easier to maintain.
+
+       This change is expected to have almost no impact on packages 
+       using supported coding practices in their C/C++ code.
      }
    }
 
   \subsection{MIGRATION TO PCRE2}{
     \itemize{
-       \item \R is now built against a PCRE2 library for Perl-like
-       regular expressions.  (On non-Windows platforms PCRE1 can
+       \item \R is built against a PCRE2 library for Perl-like regular
+       expressions, if available.  (On non-Windows platforms PCRE1 can
        optionally be used if PCRE2 is not available at build time.)  The
-       version of PCRE in use can be obtained via \code{extSoftVersion()}:
-       PCRE1 has versions < 10, PCRE2 versions >= 10.
+       version of PCRE in use can be obtained via
+       \code{extSoftVersion()}: PCRE1 has versions < 10, PCRE2 versions
+       >= 10.
 
        \item Making PCRE2 available when building \R from source is
        strongly recommended (preferably version 10.30 or later) as PCRE1
