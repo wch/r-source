@@ -15,7 +15,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Brazil (SP 1) [https]",Brazil,"Sao Paulo",https://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br,"secure_mirror_from_master"
 "Brazil (SP 2) [https]",Brazil,Piracicaba,https://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba","A Augusto F Garcia <aafgarci # gmail.com>, augusto.garcia # usp.br",1,br,"secure_mirror_from_master"
 "Bulgaria [https]",Bulgaria,Sofia,https://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg,"secure_mirror_from_master"
-"Canada (BC) [https]",Canada,Burnaby,https://mirror.its.sfu.ca/mirror/CRAN/,"Simon Fraser University, Burnaby","research-support # sfu.ca",1,ca
+"Canada (BC)",Canada,Burnaby,http://mirror.its.sfu.ca/mirror/CRAN/,"Simon Fraser University, Burnaby","research-support # sfu.ca",1,ca
 "Canada (MB) [https]",Canada,Winnipeg,https://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca
 "Canada (NS) [https]",Canada,Halifax,https://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",1,ca
 "Canada (ON)",Canada,Toronto,http://cran.utstat.utoronto.ca/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
@@ -60,7 +60,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Korea (Seoul 1) [https]",Korea,Seoul,https://cran.seoul.go.kr/,"Bigdata Campus, Seoul Metropolitan Govermment","leewj # seoul.go.kr",1,kr,"secure_mirror_from_master"
 "Korea (Seoul 2)",Korea,Seoul,http://healthstat.snu.ac.kr/CRAN/,"Graduate School of Public Health, Seoul National University, Seoul","Sunghow # gmail.com",1,kr,
 "Korea (Ulsan) [https]",Korea,Ulsan,https://cran.biodisk.org/,"The Genome Institute of UNIST (Ulsan National Institute of Science and Technology)","ldsrman # gmail.com",1,kr,"secure_mirror_from_master"
-"Malaysia [https]",Malaysia,Serdang,https://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my,"secure_mirror_from_master"
+"Malaysia",Malaysia,Serdang,http://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",0,my,"secure_mirror_from_master"
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
 "Mexico (Texcoco)",Mexico,Texcoco,http://www.est.colpos.mx/R-mirror/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx
 "Morocco [https]",Morocco,Rabat,https://mirror.marwan.ma/cran/,"MARWAN","noc # marwan.ma",1,ma,"secure_mirror_from_master"
@@ -84,7 +84,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Oliver Johnson <O.Johnson # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
-"USA (IN) [https]",USA,Bloomington,https://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
+"USA (IN)",USA,Bloomington,http://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (KS) [https]",USA,Lawrence,https://rweb.crmda.ku.edu/cran/,"University of Kansas, Lawrence, KS","Paul Johnson <pauljohn # ku.edu>",1,us,"secure_mirror_from_master"
 "USA (MI 1) [https]",USA,Houghton,https://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us,"secure_mirror_from_master"
 "USA (MI 2) [https]",USA,"Ann Arbor",https://repo.miserver.it.umich.edu/cran/,"MBNI, University of Michigan, Ann Arbor, MI","linux-mirrors # umich.edu",1,us,"secure_mirror_from_master"
