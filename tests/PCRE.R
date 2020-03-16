@@ -65,7 +65,7 @@ st(for(i in 1:1e3) grep(pat, rep(long_string, N), perl = TRUE))
 
 ## This needed to test 50 strings to see much gain from study
 txt <- rep("a test of capitalizing", 50)
-options(CRE_use_JIT = FALSE)
+options(PCRE_use_JIT = FALSE)
 st(for(i in 1:1e4) gsub("(\\w)(\\w*)", "\\U\\1\\L\\2", txt, perl = TRUE))
 options(PCRE_use_JIT = TRUE)
 st(for(i in 1:1e4) gsub("(\\w)(\\w*)", "\\U\\1\\L\\2", txt, perl = TRUE))
@@ -74,7 +74,7 @@ if(grepl("^10", extSoftVersion()["PCRE"])) q()
 
 ### previous test suite for PCRE1
 ## here JIT is slightly slower
-options(PCRE_study = FALSE, PCRE_use_JIT = FALSE))
+options(PCRE_study = FALSE, PCRE_use_JIT = FALSE)
 st(for(i in 1:1e4) grep("[gu]", txt2, perl = TRUE))
 options(PCRE_study = TRUE, PCRE_use_JIT = FALSE)
 st(for(i in 1:1e4) grep("[gu]", txt2, perl = TRUE))
@@ -84,7 +84,7 @@ st(for(i in 1:1e4) grep("[gu]", txt2, perl = TRUE))
 
 ## and for more inputs, study starts to pay off
 txt3 <- rep(txt2, 10)
-options(PCRE_study = FALSE, PCRE_use_JIT = FALSE))
+options(PCRE_study = FALSE, PCRE_use_JIT = FALSE)
 st(for(i in 1:1e3) grep("[gu]", txt3, perl = TRUE))
 options(PCRE_study = TRUE, PCRE_use_JIT = FALSE)
 st(for(i in 1:1e3) grep("[gu]", txt3, perl = TRUE))
@@ -112,5 +112,5 @@ options(PCRE_study = TRUE, PCRE_use_JIT = FALSE)
 st(for(i in 1:1e4) gsub("(\\w)(\\w*)", "\\U\\1\\L\\2", txt, perl = TRUE))
 options(PCRE_study = TRUE, PCRE_use_JIT = TRUE)
 st(for(i in 1:1e4) gsub("(\\w)(\\w*)", "\\U\\1\\L\\2", txt, perl = TRUE))
-})}
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
