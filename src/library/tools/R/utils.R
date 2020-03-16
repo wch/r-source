@@ -1738,6 +1738,7 @@ nonS3methods <- function(package)
              sac = "cumsum.test",
              sfsmisc = "cumsum.test",
              sm = "print.graph",
+             spatstat = "lengths.psp",
              splusTimeDate = "sort.list",
              splusTimeSeries = "sort.list",
 	     stats = c("anova.lmlist", "expand.model.frame", "fitted.values",
