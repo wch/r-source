@@ -29,7 +29,7 @@
        to \code{data.frame()} and \code{read.table()}.
 
        A large number of packages relied on the previous behaviour and
-       so have needed/wlll need updating.
+       so have needed/will need updating.
 
        \item The \code{plot()} S3 generic function is now in package
        \pkg{base} rather than package \pkg{graphics}, as it is
@@ -180,10 +180,10 @@
 
       \item For \code{head(x, n)} and \code{tail()} the default and
       other S3 methods notably for \emph{vector} \code{n}, e.g. to get a
-      \dQuote{corner} of a matrix, hace been extended to \code{array}'s
+      \dQuote{corner} of a matrix, has been extended to \code{array}'s
       of higher dimension thanks to the patch proposal by Gabe Becker in
       \PR{17652}.  Consequently, optional argument \code{addrownums} is
-      deprecated and replaced by the (more general) arguemnt
+      deprecated and replaced by the (more general) argument
       \code{keepnums}.  An invalid second argument \code{n} now leads
       to typically more easily readable error messages.
 
@@ -196,7 +196,7 @@
       \code{x} and \code{method = "auto"} (the default) or
       \code{"radix"} in cases \code{order(x)} works.
 
-      \item Where they are thavailable, \code{writeBin()} allows
+      \item Where they are available, \code{writeBin()} allows
       long vectors.% (those of length \eqn{\ge 2^{31}}{>= 2^31}).
 
       \item New function \code{deparse1()} produces one string, wrapping
