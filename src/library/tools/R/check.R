@@ -3664,7 +3664,7 @@ add_dummies <- function(dir, Log)
 
     run_examples <- function()
     {
-        run_one_arch <- function(exfile, exout, arch = "")
+        run_one_arch <- function(exfile, exout, arch = "", do_diff = TRUE)
         {
             any <- FALSE
             ## moved here to avoid WARNING + OK
@@ -3786,7 +3786,7 @@ add_dummies <- function(dir, Log)
             if (!any && !(check_incoming && do_timings))
                 resultLog(Log, "OK")
 
-            if (do_timings) {
+            if (do_timings && do_diff) { ## do_diff = false is for re-running
                 theta <-
                     as.numeric(Sys.getenv("_R_CHECK_EXAMPLE_TIMING_THRESHOLD_",
                                           "5"))
@@ -3842,7 +3842,7 @@ add_dummies <- function(dir, Log)
             ## a saved previous version.
             exsave <- file.path(pkgdir, test_dir, "Examples",
                                 paste0(pkgname, "-Ex.Rout.save"))
-            if (file.exists(exsave)) {
+            if (do_diff && file.exists(exsave)) {
                 checkingLog(Log, "differences from ",
                             sQuote(basename(exout)),
                             " to ", sQuote(basename(exsave)))
@@ -3919,7 +3919,34 @@ add_dummies <- function(dir, Log)
                 cntFile <- paste0(exfile, "-cnt")
                 if (file.exists(cntFile)) {
                     unlink(cntFile)
-                    if (as_cran)
+                    test_donttest <- !run_donttest &&
+                        config_val_to_logical(Sys.getenv("_R_CHECK_DONTTEST_EXAMPLES_", "FALSE"))
+                    if (test_donttest) {
+                        printLog(Log, "* found \\donttest examples:",
+                                 " re-checking with --run-donttest\n")
+                        cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s, commentDontrun = %s, commentDonttest = %s)',
+                                       pkgname, pkgtopdir, use_gct, do_timings,
+                                       !run_dontrun, FALSE)
+                        Rout <- tempfile("Rout")
+                        ## any arch will do here
+                        status <- R_runR0(cmd, R_opts2, "LC_ALL=C",
+                                          stdout = Rout, stderr = Rout)
+                        exfile <- paste0(pkgname, "-Ex.R")
+                        if (status) {
+                            errorLog(Log,
+                                     paste("Running massageExamples to create",
+                                           sQuote(exfile), "failed"))
+                            printLog0(Log,
+                                      paste(readLines(Rout, warn = FALSE),
+                                            collapse = "\n"),
+                                      "\n")
+                            maybe_exit(1L)
+                        }
+                        exout <- paste0(pkgname, "-Ex.Rout")
+                        if(!run_one_arch(exfile, exout, do_diff = FALSE))
+                            maybe_exit(1L)
+                    }
+                    else if (as_cran)
                         printLog(Log, "** found \\donttest examples:",
                                  " check also with --run-donttest\n")
                 }

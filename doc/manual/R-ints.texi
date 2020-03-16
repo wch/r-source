@@ -4349,6 +4349,15 @@ A positive integer.  If set, give a NOTE if the number of imports from
 non-base packages exceed this threshold.  Large numbers of imports
 make a package vulnerable to any of them becoming unavailable.
 Default: unset (but 20 for CRAN submission checks)
+
+@item _R_CHECK_DONTTEST_EXAMPLES_
+If true and examples are found with @code{\donttest} sections, the
+tests are run in one pass with these commented out and then in a
+second pass including the @code{\donttest} sections, (for the main
+architecture only).  Only for the first pass are the results compared
+to any @file{.Rout.save} file and timings analysed.  Overridden by
+@option{--run-donttest}.
+Default: false
 @end vtable
 
 CRAN's submission checks use something like
