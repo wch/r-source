@@ -339,8 +339,11 @@ strptime(x, format, tz = "")
 
 \references{
   International Organization for Standardization (2004, 2000, \dots)
-  \emph{ISO 8601.  Data elements and interchange formats --
-    Information interchange -- Representation of dates and times.}
+  \sQuote{ISO 8601.  Data elements and interchange formats --
+    Information interchange -- Representation of dates and times.},
+  slightly updated to International Organization for Standardization (2019)
+  \sQuote{ISO 8601-1:2019.  Date and time -- Representations for
+    information interchange -- Part 1: Basic rules}.
   For links to versions available on-line see (at the time of writing)
   \url{https://dotat.at/tmp/ISO_8601-2004_E.pdf} and
   \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
