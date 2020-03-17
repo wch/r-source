@@ -360,6 +360,9 @@
       \item \command{Rterm} now accepts \code{ALT+xxx} sequences also
       with NumLock on.  Tilde can be pasted with an Italian keyboard
       (\PR{17679}).
+
+      \item \R falls back to copying when junction creation fails during
+      package checking (patch from Duncan Murdoch).
    }
   }
 
@@ -498,7 +501,6 @@
       \item The return value of \code{contourLines()} is no longer
       \code{invisible()}.
 
-
       \item The Fortran code for calculating the \code{coefficients}
       component in \code{lm.influence()} was very inefficient. It has
       (for now) been replaced with much faster \R{} code (\PR{17624}).
@@ -605,9 +607,6 @@
       \item \code{socketConnection(server = FALSE)} now respects connection
       timeout also on Linux.
 
-      \item \code{socketConnection(server = FALSE)} now returns instantly
-      also on Windows when connection failure is signalled.
-
       \item \code{socketConnection(server = FALSE)} no longer leaks a
       connection that is available right away without waiting (e.g. on
       \samp{localhost}).
@@ -633,6 +632,19 @@
 
       \item \code{scan()} issues with UTF-8 data when running in a DBCS
       locale have been resolved (\PR{16520}, \PR{16584}).
+
+      \item \command{RTerm} now accepts enhanced/arrow keys also with
+      ConPTY.
+
+      \item \R can can now start in user documents directory not
+      representable in the system encoding via the launcher icon.
+
+      \item \code{socketConnection(server = FALSE)} now returns instantly
+      also on Windows when connection failure is signalled.
+
+      \item Problems with surrogate pairs have been fixed in several
+      functions, including \command{tolower()} and \command{toupper()}
+      (\PR{17645}).
     }
   }
 }
