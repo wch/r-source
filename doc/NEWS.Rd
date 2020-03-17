@@ -325,6 +325,17 @@
        \code{data()} now uses \samp{LC_COLLATE=C} to ensure
        locale-independent results for possible string-to-factor
        conversions.
+
+      \item Server socket connection, a new connection type representing a
+      listening server socket, is created via \code{serverSocket()} and can
+      accept multiple socket connections via \code{socketAccept()}.
+
+      \item New function \code{socketTimeout()} changes connection timeout
+      of a socket connection.
+
+      \item The time needed to start a homogeneous \samp{PSOCK} cluster on
+      \samp{localhost} with many nodes has been significantly reduced
+      (package \pkg{parallel}).
     }
   }% end{ NEW FEATURES }
 
@@ -590,6 +601,22 @@
       plus day-of-the-week are now detected by \code{strptime()}.
       They now return \code{NA} but give a warning as they may have
       given random results or corrupted memory in earlier versions of \R.
+
+      \item \code{socketConnection(server = FALSE)} now respects connection
+      timeout also on Linux.
+
+      \item \code{socketConnection(server = FALSE)} now returns instantly
+      also on Windows when connection failure is signalled.
+
+      \item \code{socketConnection(server = FALSE)} no longer leaks a
+      connection that is available right away without waiting (e.g. on
+      \samp{localhost}).
+
+      \item Socket connections are now robust against spurious readability
+      and spurious availability of an incoming connection.
+
+      \item \code{blocking = FALSE} is now respected also on the server side
+      of a socket connection, allowing non-blocking read operations.   
     }
   }
 
