@@ -586,8 +586,10 @@
       worked around.
 
       \item Some invalid specifications of the day-of-the-year
-      (\emph{via} \code{\%j}) are now detected by \code{strptime()} and
-      give an error.
+      (\emph{via} \code{\%j}, e.g.\sspace{}day 366 in 2017) or week
+      plus day-of-the-week are now detected by \code{strptime()}.
+      They now return \code{NA} but give a warning as they may have
+      given random results or corrupted memory in earlier versions of \R.
     }
   }
 
