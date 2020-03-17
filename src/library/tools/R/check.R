@@ -3923,7 +3923,7 @@ add_dummies <- function(dir, Log)
                         config_val_to_logical(Sys.getenv("_R_CHECK_DONTTEST_EXAMPLES_", "FALSE"))
                     if (test_donttest) {
                         printLog(Log, "* found \\donttest examples:",
-                                 " re-checking with --run-donttest\n")
+                                 " re-checking with --run-donttest ...")
                         cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s, commentDontrun = %s, commentDonttest = %s)',
                                        pkgname, pkgtopdir, use_gct, do_timings,
                                        !run_dontrun, FALSE)
