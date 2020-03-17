@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2019	The R Core Team.
+ *  Copyright (C) 1998--2020	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2045,10 +2045,11 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
 	       data until it it is needed. If the data are duplicated,
 	       then the wrapper can be discarded at the end of the
 	       assignment process in try_assign_unwrap(). */
+	    PROTECT(vl);
 	    PROTECT(vl = R_shallow_duplicate_attr(vl));
 	    defineVar(symbol, vl, rho);
 	    INCREMENT_NAMED(vl);
-	    UNPROTECT(1);
+	    UNPROTECT(2);
 	}
 	PROTECT(vl); /* R_findVarLocInFrame allocates for user databases */
 	*ploc = R_findVarLocInFrame(rho, symbol);
