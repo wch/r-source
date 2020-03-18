@@ -75,7 +75,7 @@
   the one used in C++: \code{r"(...)"} with \code{...} any character
   sequence, except that it must not contain the closing sequence
   \samp{)"}. The delimiter pairs \code{[]} and \code{\{\}} can also be
-  used, and \code{R} can be uses in place of \code{r}. For  additional
+  used, and \code{R} can be used in place of \code{r}. For  additional
   flexibility, a number of dashes can be placed between the opening quote
   and the opening delimiter, as long as the same number of dashes appear
   between the closing delimiter and the closing quote.
