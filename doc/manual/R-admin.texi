@@ -5164,12 +5164,13 @@ The following are essential to build @R{}
 
 @itemize
 @item 
-Apple's `Command Line Tools': these can be (re-)installed by
-@command{xcode-select --install}.  (If you have a fresh OS installation,
-running e.g.@: @command{make} in a terminal will offer the installation
-of the command-line tools.  If you have installed Xcode, this provides
-the command-line tools.  The tools may need to be reinstalled when macOS
-is upgraded, as upgrading partially removes them.)
+Apple's `Command Line Tools': these can be (re-)installed by running
+@command{xcode-select --install} in a terminal.  (If you have a fresh OS
+installation, running e.g.@: @command{make} in a terminal will offer the
+installation of the command-line tools.  If you have installed Xcode,
+this provides the command-line tools.  The tools may need to be
+reinstalled when macOS is upgraded, as upgrading partially removes
+them.)
 
 The Command Line Tools provide C and C++ compilers derived from LLVM's
 @command{clang}.
@@ -5207,7 +5208,7 @@ sudo tar -xvzf xz-5.2.4-darwin.17-x86_64.tar.gz -C /
 and desirable
 @itemize
 @item
-GNU @code{readline} from @uref{https://mac.R-project.org/libs}, or
+GNU @code{readline} from @uref{https://mac.R-project.org/libs-4}, or
 configure with @option{--without-readline}.
 
 @item
@@ -5267,7 +5268,7 @@ A TeX installation. @xref{Other libraries}.
 it will not be from macOS 10.16).  (An old version of @command{texi2any}
 has been included in the binary distribution of @R{}.)
 @end itemize
-For compilers supporting OpenMP, see the next subsection.
+For C/C++ compilers supporting OpenMP, see the next subsection.
 
 To build @R{} itself from the sources with the compilers in the Command
 Line Tools (or Xcode) and one of the @command{gfortran} installers, use
@@ -5321,7 +5322,7 @@ Other distributions of @command{clang} are available from
 @uref{http://releases.llvm.org/}.  In particular, these include support
 for OpenMP which Apple builds of @command{clang} do not, and may contain
 more bugfixes and new features (such as better diagnostics) than that in
-Command Line Tools/XCode.
+Command Line Tools/Xcode.
 
 Suppose one of these distributions is installed under
 @file{/usr/local/clang}. Use a file @file{config.site} containing
@@ -5345,9 +5346,18 @@ in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
-For macOS 10.14 (`Mojave') and versions 10.x of the Command Line Tools,
-an additional step is needed to install the headers to
-@file{/usr/include}: from a Terminal run
+For Catalina, the system paths need to be specified @emph{via}
+@example
+CC="/usr/local/clang/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CXX="/usr/local/clang/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+@end example
+@noindent
+(Should the location of the SDK change, it can be found by running
+@command{xcrun -show-sdk-path}.)
+
+The approach in the previous paragraph also works for Mojave, but for
+versions 10.x of the Command Line Tools an alternative as to install
+the headers to @file{/usr/include}: from a Terminal run
 @c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
 @example
 sudo installer -pkg \
@@ -5357,18 +5367,6 @@ sudo installer -pkg \
 @noindent
 (This will need to be re-run if the OS decides to update the Command
 Line Tools.)
-
-Alternatively, change the system paths @emph{via}
-@example
-CC="/usr/local/clang/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="/usr/local/clang/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-@end example
-@noindent
-(The location of the SDK can be found by running @command{xcrun
--show-sdk-path}.)
-
-This alternative approach is needed for versions 11.x of the Command
-Line Tools/Xcode (as used for Catalina).
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
