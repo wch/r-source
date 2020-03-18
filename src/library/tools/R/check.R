@@ -5011,7 +5011,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wtautological",  # also gcc
                              ": warning: .* \\[-Wincompatible-pointer-types\\]",
                              ": warning: format string contains '[\\]0'",
-                             ": warning: .* \\[-Wc[+][+]11-long-long\\]",
+                             ## Apple's clang warns about this even in C++11 mode
+                             ## ": warning: .* \\[-Wc[+][+]11-long-long\\]",
                              ": warning: empty macro arguments are a C99 feature",
                              ": warning: .* \\[-Winvalid-source-encoding\\]",
                              ": warning: .* \\[-Wunused-command-line-argument\\]",
