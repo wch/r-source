@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2020-03-13 r77956) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-18 r77998) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin19.3.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -619,5 +619,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.566 0.118 1.74 0.003 0.005 
+Time elapsed:  1.54 0.111 1.656 0.004 0.003 
 > 
