@@ -42496,7 +42496,9 @@ fi
 $as_echo_n "checking whether PCRE support suffices... " >&6; }
 if test "x${r_cv_have_pcre2utf}" != xyes && \
    test "x${r_cv_have_pcre832}" != xyes; then
-  as_fn_error $? "pcre2 library and headers are required, or use --with-pcre1" "$LINENO" 5
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+  as_fn_error $? "PCRE2 library and headers are required, or use --with-pcre1 and PCRE >= 8.32 with UTF-8 support" "$LINENO" 5
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }

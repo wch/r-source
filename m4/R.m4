@@ -3108,7 +3108,8 @@ fi
 AC_MSG_CHECKING([whether PCRE support suffices])
 if test "x${r_cv_have_pcre2utf}" != xyes && \
    test "x${r_cv_have_pcre832}" != xyes; then
-  AC_MSG_ERROR([pcre2 library and headers are required, or use --with-pcre1])
+  AC_MSG_RESULT([no])
+  AC_MSG_ERROR([PCRE2 library and headers are required, or use --with-pcre1 and PCRE >= 8.32 with UTF-8 support])
 else
   AC_MSG_RESULT([yes])
 fi
