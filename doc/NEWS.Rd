@@ -636,15 +636,16 @@
       \item \command{RTerm} now accepts enhanced/arrow keys also with
       ConPTY.
 
-      \item \R can can now start in user documents directory not
-      representable in the system encoding via the launcher icon.
+      \item \R can can now be started \emph{via} the launcher icon in a
+      user documents directory whose path is not representable in the
+      system encoding.
 
       \item \code{socketConnection(server = FALSE)} now returns instantly
       also on Windows when connection failure is signalled.
 
-      \item Problems with surrogate pairs have been fixed in several
-      functions, including \command{tolower()} and \command{toupper()}
-      (\PR{17645}).
+      \item Problems with UTF-16 surrogate pairs have been fixed in
+      several functions, including \command{tolower()} and
+      \command{toupper()} (\PR{17645}).
     }
   }
 }
