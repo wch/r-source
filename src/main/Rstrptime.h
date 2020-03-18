@@ -642,7 +642,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
 		warning("day-of-year %d in year %d is invalid\n",
 			tm->tm_yday+1, yr);
-		t_mon = -1;
+		t_mon = 12; // this will give an invalid mday, so invalid tm
 	    } else {
 		while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		    t_mon++;
@@ -688,7 +688,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
 	      warning("(0-based) yday %d in year %d is invalid\n",
 		      tm->tm_yday, yr);
-	      t_mon = -1;
+	      t_mon = 12;
 	  } else {
 	      while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		  t_mon++;
@@ -1124,7 +1124,7 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
 		warning("day-of-year %d in year %d is invalid\n",
 			tm->tm_yday+1, yr);
-		t_mon = -1;
+		t_mon = 12;
 	    } else {
 		while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		    t_mon++;
@@ -1166,7 +1166,7 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
 		warning("(0-based) yday %d in year %d is invalid\n",
 			tm->tm_yday, yr);
-		t_mon = -1;
+		t_mon = 12;
 	  } else {
 	      while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		  t_mon++;
