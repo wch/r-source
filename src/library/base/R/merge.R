@@ -152,7 +152,7 @@ merge.data.frame <-
             zap <- (lxy+1L):(lxy+nxx)
             for(i in seq_along(y)) {
                 ## do it this way to invoke methods for e.g. factor
-                if(is.matrix(y[[1]])) y[[1]][zap, ] <- NA
+                if(is.matrix(y[[i]])) y[[i]][zap, ] <- NA
                 else is.na(y[[i]]) <- zap
             }
         }
