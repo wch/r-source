@@ -616,6 +616,10 @@
 
       \item \code{blocking = FALSE} is now respected also on the server side
       of a socket connection, allowing non-blocking read operations.   
+      
+      \item \code{anova.glm()} and \code{anova.glmlist()} computed 
+      incorrect score (Rao) tests in no-intercept cases. (André
+      Gillibert, \PR{17734}) 
     }
   }
 
