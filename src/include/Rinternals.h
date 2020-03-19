@@ -1451,7 +1451,6 @@ Rboolean R_has_methods_attached(void);
 Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
 Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
 SEXP R_do_new_object(SEXP class_def);
-SEXP R_do_new_object2(SEXP class_def);
 /* supporting  a C-level version of  is(., .) : */
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
 int R_check_class_etc      (SEXP x, const char **valid);
