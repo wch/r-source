@@ -4978,7 +4978,9 @@ compilers.} may prefer to use the C/C++/Fortran flags
 @noindent
 to force floating-point to use the same instructions as @cputype{x86_64}
 builds and hence not make use of 80-bit `extended precision'
-intermediate results.
+intermediate results.  (NB: this affects more than floating-point
+operations.  For some OSes and versions of @command{gcc} it might be
+necessary to add @option{-mstackrealign}.)
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-ji Nakama used
