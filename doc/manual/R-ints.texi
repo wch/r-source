@@ -4357,7 +4357,8 @@ second pass including the @code{\donttest} sections, (for the main
 architecture only).  Only for the first pass are the results compared
 to any @file{.Rout.save} file and timings analysed.  Overridden by
 @option{--run-donttest}.
-Default: false
+Default: false unless @option{-as-cran} is specified (which can be
+overridden by setting @samp{_R_CHECK_DONTTEST_EXAMPLES_=false}).
 @end vtable
 
 CRAN's submission checks use something like

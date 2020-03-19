@@ -3783,7 +3783,7 @@ add_dummies <- function(dir, Log)
             }
             any <- any || bad
 
-            if (!any && !(check_incoming && do_timings))
+            if (!any && !(check_incoming && do_timings && do_diff))
                 resultLog(Log, "OK")
 
             if (do_timings && do_diff) { ## do_diff = false is for re-running
@@ -3919,8 +3919,9 @@ add_dummies <- function(dir, Log)
                 cntFile <- paste0(exfile, "-cnt")
                 if (file.exists(cntFile)) {
                     unlink(cntFile)
+                    x <- Sys.getenv("_R_CHECK_DONTTEST_EXAMPLES_", "NA")
                     test_donttest <- !run_donttest &&
-                        config_val_to_logical(Sys.getenv("_R_CHECK_DONTTEST_EXAMPLES_", "FALSE"))
+                        (if (x == "NA") as_cran else config_val_to_logical(x))
                     if (test_donttest) {
                         printLog(Log, "* found \\donttest examples:",
                                  " re-checking with --run-donttest ...")
