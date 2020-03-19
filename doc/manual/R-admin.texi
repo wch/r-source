@@ -5501,7 +5501,7 @@ also install directly a recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 Builds of OpenJDK may also be available, e.g.@: from
 @uref{http://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 (but not 9, 10 or 12 which have/had a
+long-term support, e.g.@: 8 or 11 (but not 9, 10--14 which have/had a
 6-month lifetime).
 
 Binary distributions of @R{} are built against a specific version
