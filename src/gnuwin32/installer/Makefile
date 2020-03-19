@@ -90,7 +90,7 @@ imagedir:
 	unzip -qao dosfiles.zip
 	$(RM) dosfiles.zip
 	$(CP) -p $(R_HOME)/doc/NEWS.pdf $(RPREFIX)/doc
-	$(CP) -p $(R_HOME)/doc/NEWS.rds $(R_HOME)/doc/CHANGES.rds $(RPREFIX)/doc
+	$(CP) -p $(R_HOME)/doc/NEWS.rds $(R_HOME)/doc/NEWS.2.rds  $(R_HOME)/doc/NEWS.3.rds $(R_HOME)/doc/CHANGES.rds $(RPREFIX)/doc
 #
 # files to make source packages
 	$(MKDIR) -p $(RPREFIX)/share \
