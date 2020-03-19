@@ -8,10 +8,20 @@ include ../src/gnuwin32/MkRules
 
 R_EXE = ../$(BINDIR)/Rterm --vanilla --no-echo
 
-all: NEWS.rds html/NEWS.html NEWS NEWS.pdf \
+all: NEWS.rds html/NEWS.html NEWS NEWS.pdf NEWS.2.rds NEWS.3.rds \
   CHANGES.rds CHANGES html/CHANGES.html
 
 NEWS.rds: NEWS.Rd
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
+	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
+	  warningCalls = FALSE), \"$@\")" | $(R_EXE)
+
+NEWS.2.rds: NEWS.2.Rd
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
+	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
+	  warningCalls = FALSE), \"$@\")" | $(R_EXE)
+
+NEWS.3.rds: NEWS.3.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
 	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
 	  warningCalls = FALSE), \"$@\")" | $(R_EXE)

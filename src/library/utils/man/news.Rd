@@ -150,9 +150,11 @@ sort(table(db[, "Category"]), decreasing = TRUE)
 ## Entries with version >= 4.0.0
 table(news(Version >= "4.0.0", db = db)$Version)
 
+\donttest{
 ## do the same for R 3.x.y, more slowly
 db3 <- news(package = "R-3")
 sort(table(db3[, "Category"]), decreasing = TRUE)
 ## Entries with version >= 3.6.0
 table(news(Version >= "3.6.0", db = db3)$Version)
+}
 }
