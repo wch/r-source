@@ -284,7 +284,8 @@ distclean: clean
 	$(RM) ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/NEWS.html \
-	../../doc/NEWS.rds ../../doc/NEWS ../../doc/NEWS.pdf \
+	../../doc/NEWS.rds ../../doc/NEWS.3.rds ../../doc/NEWS.2.rds \
+	../../doc/NEWS ../../doc/NEWS.pdf \
 	../../doc/CHANGES.rds ../../doc/html/CHANGES.html
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
 	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \
