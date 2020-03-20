@@ -27,6 +27,7 @@
 \alias{withRestarts}
 \alias{suspendInterrupts}
 \alias{allowInterrupts}
+\alias{globalCallingHandlers}
 
 \alias{.signalSimpleWarning}
 \alias{.handleSimpleError}
@@ -48,6 +49,7 @@
 \usage{
 tryCatch(expr, \dots, finally)
 withCallingHandlers(expr, \dots)
+globalCallingHandlers(\dots)
 
 signalCondition(cond)
 
@@ -165,6 +167,25 @@ allowInterrupts(expr)
    handler stack.  If the handler returns, then the next handler is
    tried; once the last handler has been tried, \code{signalCondition}
    returns \code{NULL}.
+
+   \code{globalCallingHandlers} establishes calling handlers globally.
+   These handlers are only called as a last resort, after the other
+   handlers dynamically registered with \code{withCallingHandlers} have
+   been invoked. They are called before the \code{error} global option
+   (which is the legacy interface for global handling of errors). Global
+   handlers are a good place to define a general purpose logger (for
+   instance saving the last error object in the global workspace) or a
+   general recovery strategy (e.g. installing missing packages via the
+   \code{retry_loadNamespace} restart).
+
+   Like \code{withCallingHandlers} and \code{tryCatch},
+   \code{globalCallingHandlers} takes named handlers. Unlike these
+   functions, it also has an \code{\link{options}}-like interface: you
+   can establish handlers by passing a single list of named handlers.
+   To unregister all global handlers, supply a single `NULL`. The list
+   of deleted handlers is returned invisibly. Finally, calling
+   \code{globalCallingHandlers} without arguments returns the list of
+   currently established handlers, visibly.
 
    User interrupts signal a condition of class \code{interrupt} that
    inherits directly from class \code{condition} before executing the

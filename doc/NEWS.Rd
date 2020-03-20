@@ -337,6 +337,11 @@
       \item The time needed to start a homogeneous \samp{PSOCK} cluster on
       \samp{localhost} with many nodes has been significantly reduced
       (package \pkg{parallel}).
+
+      \item New \code{globalCallingHandlers()} function to establish
+      global condition handlers. This allows registering multiple
+      handlers for any condition class. Developed colaboration with
+      Lionel Henry.
     }
   }% end{ NEW FEATURES }
 

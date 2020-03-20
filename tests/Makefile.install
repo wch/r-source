@@ -26,7 +26,7 @@ MK = $(MAKE)
 all-basic-tests = BasePackages Specific Reg Internet
 ## Keep in line with Makefile.common.
 ## not Docs Standalone Packages
-all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 CRANtools Segfault
+all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 CRANtools Segfault Conditions
 
 
 ## <NOTE>

@@ -46,6 +46,7 @@ test-src-random = p-r-random-tests.R
 test-src-regexp = utf8-regex.R PCRE.R
 test-src-segfault = no-segfault.R
 test-src-tz = timezone.R
+test-src-cond = conditions.R
 
 test-src-reg-1 = array-subset.R \
   reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-1d.R reg-tests-2.R \
@@ -79,6 +80,7 @@ test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 test-out-tz = $(test-src-tz:.R=.Rout)
+test-out-cond = $(test-src-cond:.R=.Rout)
 
 ## This macro is used only for dependencies and for distclean
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
@@ -175,7 +177,7 @@ test-all-basics:
 ## if you change this, also edit Makefile.install
 ## The definitions for Standalone are in Makefile.{in,win}.
 all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp \
-    Internet2 CRANtools Segfault Standalone Packages
+    Internet2 CRANtools Segfault Standalone Conditions Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MK) test-$${name} || exit 1; \
@@ -311,6 +313,10 @@ test-Segfault:
 test-UTF-8:
 	@$(ECHO) "running regression tests for UTF-8 <--> int conversion (slow)"
 	@$(R2) < $(srcdir)/utf8.R > utf8.Rout 2>&1 || (mv utf8.Rout utf8.Rout.fail && exit 1)
+
+test-Conditions:
+	@$(ECHO) "running unit tests for the condition system"
+	@$(MK) $(test-out-cond) RVAL_IF_DIFF=0
 
 ## Avoid site library, which could be very large
 no-segfault.Rout: no-segfault.R
