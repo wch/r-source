@@ -85,7 +85,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     font is one of the 14 guaranteed to be available in all PDF viewers,
     that guarantee is not always honoured.
 
-    On Unix-alikes (incl. Mac), see the \sQuote{Note} for a possible fix for some viewers.}
+    For Unix-alikes (including macOS) see the \sQuote{Note} for a
+    possible fix for some viewers.}
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
@@ -244,8 +245,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   they may be offered for download as needed).
 
   \describe{
-    \item{On some Unix-alike systems}{the default plotting character
-      \code{pch = 1} was
+    \item{On some Unix-alike systems:}{
+      The default plotting character \code{pch = 1} was
   displayed in some PDF viewers incorrectly as a \code{"q"}
   character.  (These seem to be viewers based on the \samp{poppler} PDF
   rendering library).  This may be due to incorrect or incomplete mapping
@@ -273,9 +274,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
  }
 }%end{describe}
 
-  There is a different font bug in the \command{pdf.js} viewer included
-  in Firefox 19 and later: that maps Dingbats to the Symbol font and so
-  displays symbols such \code{pch = 1} as lambda.
+  There was a different font bug in the \command{pdf.js} viewer included
+  in Firefox: that mapped Dingbats to the Symbol font and so displayed
+  symbols such \code{pch = 1} as lambda.
 }
 
 \seealso{

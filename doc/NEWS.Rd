@@ -42,7 +42,7 @@
        re-installed and package code using such generics from other
        packages needs to ensure that they are imported rather than rely
        on their being looked for on the search path (as in a namespace,
-       the base namespace has priority over the search path).
+       the base namespace has precedence over the search path).
      }
    }
 
@@ -64,9 +64,9 @@
        \item This version of \R is built against the PCRE2 library for
        Perl-like regular expressions, if available.  (On non-Windows
        platforms PCRE1 can optionally be used if PCRE2 is not available
-       at build time.)  The version of PCRE in use can be obtained via
-       \code{extSoftVersion()}: PCRE1 (formerly known as \sQuote{PCRE})
-       has versions <= 8, PCRE2 versions >= 10.
+       at build time.)  The version of PCRE in use can be obtained
+       \emph{via} \code{extSoftVersion()}: PCRE1 (formerly known as
+       \sQuote{PCRE}) has versions <= 8, PCRE2 versions >= 10.
 
        \item Making PCRE2 available when building \R from source is
        strongly recommended (preferably version 10.30 or later) as PCRE1
@@ -326,12 +326,13 @@
        locale-independent results for possible string-to-factor
        conversions.
 
-      \item Server socket connection, a new connection type representing a
-      listening server socket, is created via \code{serverSocket()} and can
-      accept multiple socket connections via \code{socketAccept()}.
+      \item A server socket connection, a new connection type
+      representing a listening server socket, is created via
+      \code{serverSocket()} and can accept multiple socket connections
+      via \code{socketAccept()}.
 
-      \item New function \code{socketTimeout()} changes connection timeout
-      of a socket connection.
+      \item New function \code{socketTimeout()} changes the connection
+      timeout of a socket connection.
 
       \item The time needed to start a homogeneous \samp{PSOCK} cluster on
       \samp{localhost} with many nodes has been significantly reduced
@@ -438,9 +439,11 @@
       \command{configure} and \command{cleanup} scripts for
       non-Bourne-shell code (\sQuote{bashisms}).
 
-      %% is now the overall default
-      %% \item \command{R CMD check --as-cran} now uses a
-      %% \samp{stringsAsFactors = FALSE} default setting.
+      \item \command{R CMD check --as-cran} now runs \code{\\donttest}
+      examples (which are run by \code{example()}) instead of
+      instructing the tester to do so.  This can be temporarily
+      circumvented during development by setting environment variable
+      \env{_R_CHECK_DONTTEST_EXAMPLES_} to a false value.
     }
   }
 
@@ -586,7 +589,7 @@
       by Bill Dunlap, \PR{17721}).
 
       \item Several cases of integer overflow detected by the
-      \sQuote{undefined behaviour analyser} of \command{clang} 10 have
+      \sQuote{undefined behaviour sanitizer} of \command{clang} 10 have
       been circumvented.  One in \code{rhyper()} may change the
       generated value for large input values.
 

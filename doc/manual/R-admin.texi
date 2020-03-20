@@ -4602,10 +4602,10 @@ well as its equivalence to the @code{Rcomplex} C structure defined in
 
 Pre-release versions of @command{gfortran}@tie{}10 give a compilation
 error for the previously allowed (without even a warning) widespread
-practice of passing a Fortran array element where an array is expected.
-To continue to allow this (with a warning), add
-@option{-fallow-argument-mismatch}@footnote{At the time of writing using
-this with @option{-pedantic} still gave an error.
+practice of passing a Fortran array element where an array is expected,
+or a scalar instead of a length-one array.  To continue to allow this
+(with a warning), add @option{-fallow-argument-mismatch}@footnote{At the
+time of writing using this with @option{-pedantic} still gave an error.
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gfortran/@/Fortran-Dialect-Options.html}
 says this argument is `strongly discouraged' but it is needed for legacy
 code.} to @code{FFLAGS}.
