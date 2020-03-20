@@ -1743,6 +1743,10 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "expand");
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
+		/* FIXME: does not convert encodings, currently matching
+		          filenameToWchar */
+		if (streql(STRING_ELT(fn, i),"~"))
+		    continue;
 		names = filenameToWchar(STRING_ELT(fn, i), expand ? TRUE : FALSE);
 		if (expand) {
 		    res = dos_wglob(names, GLOB_NOCHECK, NULL, &globbuf);
@@ -1797,10 +1801,11 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
+		names = translateChar(STRING_ELT(fn, i));
+		if (streql(names, "~"))
+		    continue;
 		if (expand)
-		    names = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
-		else
-		    names = translateChar(STRING_ELT(fn, i));
+		    names = R_ExpandFileName(names);
 		if (useglob) {
 #if defined(HAVE_GLOB)
 		    res = glob(names, GLOB_NOCHECK, NULL, &globbuf);

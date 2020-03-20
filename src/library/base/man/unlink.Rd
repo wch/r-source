@@ -31,8 +31,8 @@
 #endif
   Wildcard expansion (normally \file{*} and \file{?} are allowed) is done by
   the internal code of \code{\link{Sys.glob}}.  Wildcards never match a
-  leading \file{.} in the filename, and files \file{.} and \file{..} will
-  never be considered for deletion.
+  leading \file{.} in the filename, and files \file{.}, \file{..} and
+  \file{~} will never be considered for deletion.
 #ifdef unix
   Wildcards will only be expanded if the system supports it.  Most
   systems will support not only \file{*} and \file{?} but also character
