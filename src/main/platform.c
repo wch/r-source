@@ -1745,7 +1745,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		/* FIXME: does not convert encodings, currently matching
 		          filenameToWchar */
-		if (streql(STRING_ELT(fn, i),"~"))
+		if (streql(CHAR(STRING_ELT(fn, i)),"~"))
 		    continue;
 		names = filenameToWchar(STRING_ELT(fn, i), expand ? TRUE : FALSE);
 		if (expand) {
