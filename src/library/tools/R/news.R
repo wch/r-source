@@ -553,7 +553,8 @@ function(file = NULL, Rfile = "NEWS.rds")
     }
 
     db <- .extract_news_from_Rd(x)
-    db <- db[db[,1L] != "CHANGES in previous versions",,drop = FALSE]
+    skip <- c("CHANGES in previous versions", "LATER NEWS", "OLDER NEWS")
+    db <- db[!(db[,1L] %in% skip),,drop = FALSE]
 
     ## Squeeze in an empty date column.
     .make_news_db(cbind(sub("^CHANGES IN (R )?(VERSION )?", "", db[, 1L]),
