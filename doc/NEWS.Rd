@@ -339,9 +339,9 @@
       (package \pkg{parallel}).
 
       \item New \code{globalCallingHandlers()} function to establish
-      global condition handlers. This allows registering multiple
-      handlers for any condition class. Developed colaboration with
-      Lionel Henry.
+      global condition handlers. This allows registering default
+      handlers for specific condition classes. Developed in
+      collaboration with Lionel Henry.
     }
   }% end{ NEW FEATURES }
 
