@@ -79,9 +79,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     \code{"grey"}) and \code{"cmyk"}.  Defaults to \code{"srgb"}.  See section
     \sQuote{Color models}.}
   \item{useDingbats}{logical.  Should small circles be rendered
-    \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces
-    smaller and better output.  Setting this to \code{FALSE} can work
-    around font display problems in broken PDF viewers: although this
+    \emph{via} the Dingbats font?  Defaults to \code{FALSE}.
+    If \code{TRUE}, this can produce smaller and better output, but
+    there can font display problems in broken PDF viewers: although this
     font is one of the 14 guaranteed to be available in all PDF viewers,
     that guarantee is not always honoured.
 
@@ -203,8 +203,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch, with a minimum
     of 0.01 enforced.
-    \item Circles of any radius are allowed.  Unless \code{useDingbats =
-      FALSE}, opaque circles of less than 10 big points radius are
+    \item Circles of any radius are allowed.  If \code{useDingbats =
+      TRUE}, opaque circles of less than 10 big points radius are
     rendered using char 108 in the Dingbats font: all semi-transparent
     and larger circles using a \enc{Bézier}{Bezier} curve for each
     quadrant.
@@ -246,7 +246,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
   \describe{
     \item{On some Unix-alike systems:}{
-      The default plotting character \code{pch = 1} was
+      If \code{useDingbats = TRUE},
+      the default plotting character \code{pch = 1} was
   displayed in some PDF viewers incorrectly as a \code{"q"}
   character.  (These seem to be viewers based on the \samp{poppler} PDF
   rendering library).  This may be due to incorrect or incomplete mapping
