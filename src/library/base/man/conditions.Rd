@@ -11,6 +11,7 @@
 \alias{conditionMessage}
 \alias{findRestart}
 \alias{invokeRestart}
+\alias{tryInvokeRestart}
 \alias{invokeRestartInteractively}
 \alias{isRestart}
 \alias{restartDescription}
@@ -76,6 +77,7 @@ withRestarts(expr, \dots)
 computeRestarts(cond = NULL)
 findRestart(name, cond = NULL)
 invokeRestart(r, \dots)
+tryInvokeRestart(r, \dots)
 invokeRestartInteractively(r)
 
 isRestart(x)
@@ -206,7 +208,19 @@ allowInterrupts(expr)
    arguments, if any, given as additional arguments to
    \code{invokeRestart}.  The restart argument to \code{invokeRestart}
    can be a character string, in which case \code{findRestart} is used
-   to find the restart.
+   to find the restart. If no restart is found, an error is thrown.
+
+   \code{tryInvokeRestart} is a variant of \code{invokeRestart} that
+   returns silently when the restart cannot be found with
+   \code{findRestart}. Because a condition of a given class might be
+   signalled with arbitrary protocols (error, warning, etc), it is
+   recommended to use this permissive variant whenever you are handling
+   conditions signalled from a foreign context. For instance, invokation
+   of a \code{"muffleWarnings"} restart should be optional because the
+   warning might have been signalled by the user or from a different
+   package with the \code{stop} or \code{message} protocols. Only use
+   \code{invokeRestart} when you have control of the signalling context,
+   or when it is a logical error if the restart is not available.
 
    New restarts for \code{withRestarts} can be specified in several ways.
    The simplest is in \code{name = function} form where the function is

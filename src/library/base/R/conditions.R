@@ -88,7 +88,7 @@ suppressWarnings <- function(expr) {
     on.exit(options(ops))     ## calls are removed from methods code
     withCallingHandlers(expr,
                         warning=function(w)
-                            invokeRestart("muffleWarning"))
+                            tryInvokeRestart("muffleWarning"))
 }
 
 
@@ -213,6 +213,16 @@ invokeRestart <- function(r, ...) {
         r <- res
     }
     .Internal(.invokeRestart(r, list(...)))
+}
+
+tryInvokeRestart <- function(r, ...) {
+    if (!isRestart(r))
+        r <- findRestart(r)
+
+    if (is.null(r))
+        invisible(NULL)
+    else
+        .Internal(.invokeRestart(r, list(...)))
 }
 
 invokeRestartInteractively <- function(r) {

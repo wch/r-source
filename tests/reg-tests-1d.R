@@ -3842,6 +3842,15 @@ stopifnot(exprs = {
 ## "all" gave "1" in R <= 3.6.z
 
 
+## Can suppress warnings with missing restarts
+cnd <- simpleWarning("foo")
+out <- tryCatch(suppressWarnings(stop(cnd)), warning = identity)
+stopifnot(identical(out, cnd))
+## Can suppress messages with missing restarts
+cnd <- simpleMessage("foo")
+out <- tryCatch(suppressMessages(stop(cnd)), message = identity)
+stopifnot(identical(out, cnd))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

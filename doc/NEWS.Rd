@@ -342,6 +342,11 @@
       global condition handlers. This allows registering default
       handlers for specific condition classes. Developed in
       collaboration with Lionel Henry.
+
+      \item New function \code{tryInvokeRestart()} to invoke a specified
+      restart if one is available and return without signaling an error
+      if no such restart is found. Contributed by Lionel Henry in
+      \PR{17598}.
     }
   }% end{ NEW FEATURES }
 
