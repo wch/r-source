@@ -436,6 +436,12 @@
 
       \item The minimum required version of \code{libcurl} is now 7.28.0
       (Oct 2012).
+
+      \item New make target \command{distcheck} checks that: R can be
+      rebuilt from the tarball created by \command{dist}; the tarball
+      build passes \command{check-all}; the build installs and
+      uninstalls ; and the source files are properly cleaned by
+      \command{distclean}.
     }
   }
 
