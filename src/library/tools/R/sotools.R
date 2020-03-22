@@ -791,7 +791,7 @@ function(dir)
 
     predicate <- function(e) {
         (length(e) > 1L) &&
-            !is.na(match(deparse(e[[1L]]), ff_call_names))
+            !is.na(match(deparse(e[[1L]])[1L], ff_call_names))
     }
 
     calls <- .find_calls_in_package_code(dir,
