@@ -35,14 +35,14 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Ecuador (Cuenca) [https]",Ecuador,Cuenca,https://mirror.cedia.org.ec/CRAN/,CEDIA,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "Ecuador (Quito) [https]",Ecuador,Quito,https://mirror.epn.edu.ec/CRAN/,Escuela Politécnica Nacional,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "El Salvador","El Salvador","San Salvador",http://cran.salud.gob.sv/,"Ministry of Health (Ministerio de Salud)","mirror # salud.gob.sv",1,sv
-"Estonia [https]",Estonia,Tartu,https://ftp.eenet.ee/pub/cran/,"EENet","eenet # eenet.ee",1,ee,"maintainer_address_bounces"
+"Estonia [https]",Estonia,Tartu,https://ftp.eenet.ee/pub/cran/,"EENet","eenet # eenet.ee",1,ee,
 "France (Lyon 1) [https]",France,Lyon,https://pbil.univ-lyon1.fr/CRAN/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr,"secure_mirror_from_master"
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille) [https]",France,Marseille,https://cran.biotools.fr/,"IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr,"secure_mirror_from_master"
 "France (Montpellier) [https]",France,Montpellier,https://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr,
 "France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
 "Germany (Erlangen) [https]",Germany,Erlangen,https://ftp.fau.de/cran/,"Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)","rrze-ftp-admins # fau.de",1,de,"secure_mirror_from_master"
-"Germany (Göttingen) [https]",Germany,Göttingen,https://ftp.gwdg.de/pub/misc/cran/,"GWDG Göttingen","ftpadmin # gwdg.de",1,de,"maintainer_address_bounces"
+"Germany (Göttingen) [https]",Germany,Göttingen,https://ftp.gwdg.de/pub/misc/cran/,"GWDG Göttingen","ftpadmin # gwdg.de",1,de,
 "Germany (Münster) [https]",Germany,Münster,https://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
 "Germany (Regensburg) [https]",Germany,Regensburg,https://packages.othr.de/cran/,"OTH Regensburg","admin-storage # oth-regensburg.de",1,de,"secure_mirror_from_master"
 "Greece [https]",Greece,Crete,https://ftp.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr,"secure_mirror_from_master"
