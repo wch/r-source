@@ -92,7 +92,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
                                                  warningCalls, macros, warndups),
 		       warning = function(w)
 			    if (grepl("unknown macro", conditionMessage(w)))
-				invokeRestart("muffleWarning") )
+				tryInvokeRestart("muffleWarning"))
     else
 	result <- .External2(C_parseRd, tcon, srcfile, "UTF-8",
                              verbose, basename, fragment, warningCalls,

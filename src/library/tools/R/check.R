@@ -1713,7 +1713,7 @@ add_dummies <- function(dir, Log)
                                 warning = function(e) {
                                     .warnings <<- c(.warnings,
                                                     conditionMessage(e))
-                                    invokeRestart("muffleWarning")
+                                    tryInvokeRestart("muffleWarning")
                                 })
             msg <- c(.warnings, .error)
             if(length(msg)) {

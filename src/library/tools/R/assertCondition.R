@@ -27,7 +27,7 @@ assertCondition <-
             tryCatch(expr, error = function(e) conds <<- c(conds, list(e))),
             warning = function(w) {
                 conds <<- c(conds, list(w))
-                invokeRestart("muffleWarning")
+                tryInvokeRestart("muffleWarning")
             },
             condition = function(cond)
                 conds <<- c(conds, list(cond)))
