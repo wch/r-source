@@ -350,6 +350,11 @@
 
       \item \code{str(x)} now shows the length of \code{attributes} in some
       cases for a data frame \code{x}.
+
+      \item \code{Rprof()} gains a new argument \code{filter.callframes}
+      to request that intervening call frames due to lazy evaluation or
+      explicit \code{eval()} calls be omitted from the recorded profile
+      data. Contributed by Lionel Henry in \PR{17595}.
     }
   }% end{ NEW FEATURES }
 

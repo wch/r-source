@@ -1080,6 +1080,7 @@ static void SymbolShortcuts(void)
     R_DollarSymbol = install("$");
     R_DotsSymbol = install("...");
     R_DropSymbol = install("drop");
+    R_EvalSymbol = install("eval");
 
     /* The last value symbol is used by the interpreter for recording
        the value of the most recently evaluated top level

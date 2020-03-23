@@ -1301,6 +1301,8 @@ SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
+RCNTXT *R_findExecContext(RCNTXT *, SEXP);
+RCNTXT *R_findParentContext(RCNTXT *, int);
 
 void R_run_onexits(RCNTXT *);
 void NORET R_jumpctxt(RCNTXT *, int, SEXP);

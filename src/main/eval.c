@@ -104,6 +104,7 @@ static char **R_Srcfiles;			   /* an array of pointers into the filename buffer 
 static size_t R_Srcfile_bufcount;                  /* how big is the array above? */
 static SEXP R_Srcfiles_buffer = NULL;              /* a big RAWSXP to use as a buffer for filenames and pointers to them */
 static int R_Profiling_Error;		   /* record errors here */
+static int R_Filter_Callframes = 0;	      	   /* whether to record only the trailing branch of call trees */
 
 #ifdef Win32
 HANDLE MainThread;
@@ -183,9 +184,36 @@ static void lineprof(char* buf, SEXP srcref)
 static pthread_t R_profiled_thread;
 #endif
 
+static RCNTXT * findProfContext(RCNTXT *cptr)
+{
+    if (! R_Filter_Callframes)
+	return cptr->nextcontext;
+
+    /* Find parent context, same algorithm as in `parent.frame()`. */
+    RCNTXT * parent = R_findParentContext(cptr, 1);
+
+    /* If we're in a frame called by `eval()`, find the evaluation
+       environment higher up the stack, if any. */
+    if (parent && parent->callfun == INTERNAL(R_EvalSymbol))
+	parent = R_findExecContext(parent->nextcontext, cptr->sysparent);
+
+    if (parent)
+	return parent;
+
+    /* Base case, this interrupts the iteration over context frames */
+    if (cptr->nextcontext == R_ToplevelContext)
+	return NULL;
+
+    /* There is no parent frame and we haven't reached the top level
+       context. Find the very first context on the stack which should
+       always be included in the profiles. */
+    while (cptr->nextcontext != R_ToplevelContext)
+	cptr = cptr->nextcontext;
+    return cptr;
+}
+
 static void doprof(int sig)  /* sig is ignored in Windows */
 {
-    RCNTXT *cptr;
     char buf[PROFBUFSIZ];
     size_t bigv, smallv, nodes;
     size_t len;
@@ -218,7 +246,8 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     if (R_Line_Profiling)
 	lineprof(buf, R_getCurrentSrcref());
 
-    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+    RCNTXT *cptr = R_GlobalContext;
+    while ((cptr = findProfContext(cptr)) != NULL) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
@@ -363,7 +392,8 @@ static void R_EndProfiling(void)
 
 static void R_InitProfiling(SEXP filename, int append, double dinterval,
 			    int mem_profiling, int gc_profiling,
-			    int line_profiling, int numfiles, int bufsize)
+			    int line_profiling, int filter_callframes,
+			    int numfiles, int bufsize)
 {
 #ifndef Win32
     struct itimerval itv;
@@ -394,6 +424,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
     R_Profiling_Error = 0;
     R_Line_Profiling = line_profiling;
     R_GC_Profiling = gc_profiling;
+    R_Filter_Callframes = filter_callframes;
+
     if (line_profiling) {
 	/* Allocate a big RAW vector to use as a buffer.  The first len1 bytes are an array of pointers
 	   to strings; the actual strings are stored in the second len2 bytes. */
@@ -437,7 +469,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 SEXP do_Rprof(SEXP args)
 {
     SEXP filename;
-    int append_mode, mem_profiling, gc_profiling, line_profiling;
+    int append_mode, mem_profiling, gc_profiling, line_profiling,
+	filter_callframes;
     double dinterval;
     int numfiles, bufsize;
 
@@ -455,6 +488,7 @@ SEXP do_Rprof(SEXP args)
     mem_profiling = asLogical(CAR(args));     args = CDR(args);
     gc_profiling = asLogical(CAR(args));      args = CDR(args);
     line_profiling = asLogical(CAR(args));    args = CDR(args);
+    filter_callframes = asLogical(CAR(args));  args = CDR(args);
     numfiles = asInteger(CAR(args));	      args = CDR(args);
     if (numfiles < 0)
 	error(_("invalid '%s' argument"), "numfiles");
@@ -465,7 +499,8 @@ SEXP do_Rprof(SEXP args)
     filename = STRING_ELT(filename, 0);
     if (LENGTH(filename))
 	R_InitProfiling(filename, append_mode, dinterval, mem_profiling,
-			gc_profiling, line_profiling, numfiles, bufsize);
+			gc_profiling, line_profiling, filter_callframes,
+			numfiles, bufsize);
     else
 	R_EndProfiling();
     return R_NilValue;
