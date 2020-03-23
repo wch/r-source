@@ -3132,3 +3132,10 @@ cat("Error: ", M3, "\n")
 ## print.htest() with small 'digits'
 print(t.test(1:28), digits = 3)
 ## showed 'df = 30' from signif(*, digits=1) and too many digits for CI, in R <= 3.5.1
+
+
+## str(<d.frame w/ attrib>):
+treeA <- trees
+attr(treeA, "someA") <- 1:77
+str(treeA)
+## now shows the *length* of "someA"

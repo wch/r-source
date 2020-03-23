@@ -54,7 +54,7 @@
        should allow further optimizations in the future.  It should
        help make the internal code easier to maintain.
 
-       This change is expected to have almost no impact on packages 
+       This change is expected to have almost no impact on packages
        using supported coding practices in their C/C++ code.
      }
    }
@@ -73,7 +73,7 @@
        is no longer developed: version 8.44 is
        \sQuote{likely to be the final release}.
        % https://lists.exim.org/lurker/message/20200212.174850.6edd8277.en.html
-      
+
        \item PCRE2 reports errors for some regular expressions that were
        accepted by PCRE1.  A hyphen now has to be escaped in a character
        class to be interpreted as a literal (unless first or last in the
@@ -347,6 +347,9 @@
       restart if one is available and return without signaling an error
       if no such restart is found. Contributed by Lionel Henry in
       \PR{17598}.
+
+      \item \code{str(x)} now shows the length of \code{attributes} in some
+      cases for a data frame \code{x}.
     }
   }% end{ NEW FEATURES }
 
@@ -634,11 +637,11 @@
       and spurious availability of an incoming connection.
 
       \item \code{blocking = FALSE} is now respected also on the server side
-      of a socket connection, allowing non-blocking read operations.   
-      
-      \item \code{anova.glm()} and \code{anova.glmlist()} computed 
+      of a socket connection, allowing non-blocking read operations.
+
+      \item \code{anova.glm()} and \code{anova.glmlist()} computed
       incorrect score (Rao) tests in no-intercept cases. (André
-      Gillibert, \PR{17734}) 
+      Gillibert, \PR{17734})
     }
   }
 
