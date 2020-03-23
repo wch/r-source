@@ -268,6 +268,13 @@ distcleancheck: distclean
 	    `find . -type f -print`; \
 	    exit 1; } >&2
 
+checkdistcomplete:
+	@distname=`$(srcdir)/tools/GETDISTNAME`; \
+	dirname=`$(ECHO) $${distname} | sed -e s/_.*//`; \
+	rm -Rf $${dirname}; \
+	$(R_GZIPCMD) -d -c $${distname}.tar.gz | $(TAR) -x -f -; \
+	diff -r $${dirname} $(srcdir) | grep "^Only in $(srcdir)"; \
+	rm -Rf $${dirname}
 
 info pdf:
 	-@(cd doc && $(MAKE) $@)
