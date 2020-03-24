@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015  The R Core Team
+ *  Copyright (C) 1998--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1662,7 +1662,7 @@ static void doSpreadKey(DEstruct DE, int key, DEEvent * event)
 	    jumpwin(DE, DE->colmin, DE->rowmax);
 	else {
 	    int i = DE->ymaxused - DE->nhigh + 2;
-            jumpwin(DE, DE->colmin, min(i, DE->rowmax));
+            jumpwin(DE, DE->colmin, max(1, min(i, DE->rowmax)));
 	}
 	cell_cursor_init(DE);
     }
@@ -1672,7 +1672,7 @@ static void doSpreadKey(DEstruct DE, int key, DEEvent * event)
 	    jumpwin(DE, DE->colmin, DE->rowmax);
 	else {
 	    int i = DE->ymaxused - DE->nhigh + 2;
-            jumpwin(DE, DE->colmin, min(i, DE->rowmax));
+            jumpwin(DE, DE->colmin, max(1, min(i, DE->rowmax)));
 	}
 	cell_cursor_init(DE);
     }
