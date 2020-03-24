@@ -660,6 +660,11 @@
       \code{Rprof(*, memory.profiling=TRUE)} case with small chunk size (and
       \code{"tseries"} or similar) thanks to a patch proposal by Benjamin
       Tyner, in \PR{15886}.
+
+      \item \code{xgettext()} ignores strings passed to
+      \code{ngettext()}, since the latter is handled by
+      \code{xngettext()}. Thanks to Daniele Medri for the report and all
+      the recent work he has done on the Italian translations.
     }
   }
 

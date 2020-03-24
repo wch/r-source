@@ -53,7 +53,8 @@ function(dir, verbose = FALSE, asCall = TRUE)
                               !is.null(names(e))) {
                         e <- e[!(names(e) == "domain")] # remove domain arg
                     }
-                }
+                } else if (identical(e[[1L]], quote(ngettext)))
+                    return()
                 for(i in seq_along(e)) find_strings2(e[[i]], suppress)
             }
         }
