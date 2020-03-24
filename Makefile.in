@@ -247,7 +247,8 @@ distcheck-unix: dist
 	  && cd "$$save__cwd" \
 	  || exit 1; \
 	rm -Rf $${dirname}; \
-	$(ECHO) "$${distname}.tar.gz ready for distribution" \
+	$(ECHO) "$${distname}.tar.gz ready for distribution"
+
 distcheck-win:
 distuninstallcheck:
 	@test -n '$(distuninstallcheck_dir)' || { \
