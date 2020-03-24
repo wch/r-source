@@ -258,9 +258,10 @@
       \item \code{stopifnot()} now allows customizing error messages via
       argument names, thanks to a patch proposal by Neal Fultz in \PR{17688}.
 
-      \item  \code{unlink()} gains a new argument \code{expand} to
-      disable wildcard and tilde expansion.
-
+      \item  \code{unlink()} gains a new argument \code{expand} to disable
+      wildcard and tilde expansion.  Elements of \code{x} of value
+      \code{"~"} are now ignored.
+  
       \item \code{mle()} in the \code{stats4} package has had its
       interface extended so that arguments to the negative
       log-likelihood function can be one or more vectors, with similar
