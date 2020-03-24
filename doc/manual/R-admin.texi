@@ -5239,7 +5239,9 @@ location of @file{/opt/X11}, e.g.@: by
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 @noindent
-although linked versions under @file{/usr/X11} will be found.
+although linked versions under @file{/usr/X11} will be found.  (However,
+it seems that for recent versions of macOS/XQuartz @file{/usr/X11} may exist
+but be a link to a non-existent directory.)
 
 @item
 An Objective-C compiler, as provided by @command{clang} in the Command
