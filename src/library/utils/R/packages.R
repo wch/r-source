@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -93,8 +93,8 @@ function(contriburl = contrib.url(repos, type), method,
                 options(op)
                 if(!inherits(z, "error")) {
                     z <- res0 <- tryCatch(readRDS(dest), error = identity)
-                     if(ignore_repo_cache) unlink(dest)
-               }
+                    if(ignore_repo_cache) unlink(dest)
+                }
 
                 if(inherits(z, "error")) {
                     ## Downloading or reading .rds failed, so try the
@@ -133,6 +133,9 @@ function(contriburl = contrib.url(repos, type), method,
                                      repos),
                             ":\n  ", conditionMessage(z),
                             call. = FALSE, immediate. = TRUE, domain = NA)
+                    ## Do not cache incorrect results. It can be a page
+                    ## from a web proxy about inaccessible network.
+                    unlink(dest)
                     next
                 }
 
