@@ -3,12 +3,12 @@
 pdf("reg-tests-1b.pdf", encoding = "ISOLatin1.enc")
 
 ## force standard handling for data frames
-options(stringsAsFactors = TRUE)
+options(stringsAsFactors=FALSE) # R >= 4.0.0
 ## .Machine
 (Meps <- .Machine$double.eps)# and use it in this file
 
 assertWarning <- tools::assertWarning
-assertError <- tools::assertError
+assertError   <- tools::assertError
 
 ## str() for list-alikes :
 "[[.foo" <- function(x,i) x
@@ -1817,7 +1817,7 @@ d <- dist(matrix(round(rnorm(n*p), digits = 2), n,p), "manhattan")
 d[] <- d[] * sample(1 + (-4:4)/100, length(d), replace=TRUE)
 hc <- hclust(d, method = "median")
 stopifnot(all.equal(hc$height[5:11],
-		    c(1.70595, 1.657675, 1.8909, 1.619973438, 
+		    c(1.70595, 1.657675, 1.8909, 1.619973438,
                       1.548624609, 3.097474902, 6.097159351),
                     tolerance = 1e-9))
 ## Also ensure that hclust() remains fast:

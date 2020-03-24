@@ -18,7 +18,7 @@ Type 'q()' to quit R.
 > ## tests of boundary cases in read.table()
 > 
 > ## force standard handling for character cols
-> options(stringsAsFactors=TRUE)
+> options(stringsAsFactors=FALSE) # R >= 4.0.0
 > 
 > # empty file
 > file.create("foo1")
@@ -120,7 +120,7 @@ Error in read.table("foo6", header = TRUE, fill = TRUE) :
 +     "2 NA NA NA NA NA NA\n",
 +     "3 1 2 3 NA TRUE def\n",
 +     sep = "", file = "foo7")
-> (res <- read.table("foo7"))
+> (res <- read.table("foo7", stringsAsFactors=TRUE))
    A   B      C  D     E    F
 1  1 1.1 1.1+0i NA FALSE  abc
 2 NA  NA     NA NA    NA <NA>

@@ -2808,12 +2808,12 @@ str(max(NA_character_, "bla"))
 
 ## When two entries needed to be cut to width, str() mixed up
 ## the values (reported by Gerrit Eichner)
-oldopts <- options(width=70, stringsAsFactors=TRUE)
+oldopts <- options(width=70)
 n <- 11      # number of rows of data frame
 M <- 10000   # order of magnitude of numerical values
 longer.char.string <- "zjtvorkmoydsepnxkabmeondrjaanutjmfxlgzmrbjp"
 X <- data.frame( A = 1:n * M,
-                 B = rep( longer.char.string, n))
+                 B = factor(rep(longer.char.string, n)))
 str( X, strict.width = "cut")
 options(oldopts)
 ## The first row of the str() result was duplicated.
