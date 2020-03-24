@@ -340,13 +340,13 @@
       (package \pkg{parallel}).
 
       \item New \code{globalCallingHandlers()} function to establish
-      global condition handlers. This allows registering default
+      global condition handlers.  This allows registering default
       handlers for specific condition classes. Developed in
       collaboration with Lionel Henry.
 
       \item New function \code{tryInvokeRestart()} to invoke a specified
       restart if one is available and return without signaling an error
-      if no such restart is found. Contributed by Lionel Henry in
+      if no such restart is found.  Contributed by Lionel Henry in
       \PR{17598}.
 
       \item \code{str(x)} now shows the length of \code{attributes} in some
@@ -355,7 +355,14 @@
       \item \code{Rprof()} gains a new argument \code{filter.callframes}
       to request that intervening call frames due to lazy evaluation or
       explicit \code{eval()} calls be omitted from the recorded profile
-      data. Contributed by Lionel Henry in \PR{17595}.
+      data.  Contributed by Lionel Henry in \PR{17595}.
+
+      \item The handling of \code{$\{FOO-bar\}} and \code{$\{FOO:-bar\}}
+      in \file{Renviron} files now follows POSIX shells (at least on a
+      Unix-alike), so the first treats empty environment variables as
+      set and the second does not.  Previously both ignored empty
+      variables.  There are several uses of the first form in
+      \file{etc/Renviron}.
     }
   }% end{ NEW FEATURES }
 

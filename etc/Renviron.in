@@ -4,6 +4,11 @@
 ###
 ### Record R system environment variables.
 
+## As from R 4.0.0 the C code reading this follows the POSIX rules
+## for parameter substitution in shells, section 2.6.2 of
+## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18
+## In earlier versions ${FOO-bar} was interpreted the same as ${FOO:-bar}
+
 R_PLATFORM=${R_PLATFORM-'@R_PLATFORM@'}
 ## Default printer paper size: first record if user set R_PAPERSIZE
 R_PAPERSIZE_USER=${R_PAPERSIZE}

@@ -1,6 +1,6 @@
 % File src/library/base/man/Startup.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Startup}
@@ -117,11 +117,13 @@
   variable \code{\var{name}} to \code{\var{value}}, overriding an
   existing value.  If \code{\var{value}} contains an expression of the
   form \code{${foo-bar}}, the value is that of the environmental
-  variable \code{foo} if that exists and is set to a non-empty value,
-  otherwise \code{bar}.  (If it is of the form \code{${foo}}, the
-  default is \code{""}.)  This construction can be nested, so \code{bar}
-  can be of the same form (as in \code{${foo-${bar-blah}}}).  Note that
-  the braces are essential: for example \code{$HOME} will not be interpreted.
+  variable \code{foo} if that is set, otherwise \code{bar}.  For
+  \code{${foo:-bar}}, the value is that of \code{foo} if that is set to
+  a non-empty value, otherwise \code{bar}.  (If it is of the form
+  \code{${foo}}, the default is \code{""}.)  This construction can be
+  nested, so \code{bar} can be of the same form (as in
+  \code{${foo-${bar-blah}}}).  Note that the braces are essential: for
+  example \code{$HOME} will not be interpreted.
 
   Leading and trailing white space in \code{\var{value}} are stripped.
   \code{\var{value}} is then processed in a similar way to a Unix shell:
@@ -176,6 +178,10 @@
   \command{R CMD build}), set the appropriate environment variable
   \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} to (if possible, which it
   is not on Windows) \code{""} or to the name of a non-existent file.
+
+  Prior to \R 4.0.0, \code{${foo-bar}} in an environment file skipped an
+  empty \code{foo}: this has been changed to match the POSIX rules for
+  parameter substitution in shells.
 }
 %% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
 %% R_ENVIRON, R_ENVIRON_USER are used in src/main/Renviron.c
