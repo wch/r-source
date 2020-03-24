@@ -21,3 +21,14 @@ x <- sprintf("%a", 1:8)
 y <- c("0x1p+0", "0x1p+1", "0x1.8p+1", "0x1p+2", "0x1.4p+2", "0x1.8p+2",
        "0x1.cp+2", "0x1p+3")
 stopifnot(identical(x, y))
+
+## binary mode in download.file(,method="wininet") (PR#17715)
+
+src <- file.path(tempdir(), "source.bin")
+dst <- file.path(tempdir(), "target.bin")
+url <- file.path("file://", src)
+d <- as.raw(0x1a)
+writeBin(d, src)
+download.file(url, dst, method = "wininet", mode = "wb")
+dstbin <- readBin(dst, "raw")
+stopifnot(identical(d, dstbin))
