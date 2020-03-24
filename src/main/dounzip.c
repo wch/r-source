@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-2018  The R Core Team
+ *  first part Copyright (C) 2002-2020  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -402,6 +402,7 @@ static Rboolean unz_open(Rconnection con)
     unzFile uf;
     char path[2*PATH_MAX], *p;
     const char *tmp;
+    int mlen;
 
     if(con->mode[0] != 'r') {
 	warning(_("unz connections can only be opened for reading"));
@@ -434,7 +435,8 @@ static Rboolean unz_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = FALSE;
     con->canread = TRUE;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    mlen = (int) strlen(con->mode);
+    if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     /* set_iconv(); not yet */
     con->save = -1000;

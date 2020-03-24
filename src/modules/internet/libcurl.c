@@ -854,6 +854,7 @@ static Rboolean Curl_open(Rconnection con)
 {
     char *url = con->description;
     RCurlconn ctxt = (RCurlconn)(con->private);
+    int mlen;
 
     if (con->mode[0] != 'r') {
 	REprintf("can only open URLs for reading");
@@ -892,7 +893,8 @@ static Rboolean Curl_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
-    if (strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    mlen = (int) strlen(con->mode);
+    if (mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
     set_iconv(con);

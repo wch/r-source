@@ -102,6 +102,7 @@ static Rboolean url_open(Rconnection con)
     void *ctxt;
     char *url = con->description;
     UrlScheme type = ((Rurlconn)(con->private))->type;
+    int mlen;
 
     if(con->mode[0] != 'r') {
 	REprintf("can only open URLs for reading");
@@ -159,7 +160,8 @@ static Rboolean url_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    mlen = (int) strlen(con->mode);
+    if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
     set_iconv(con);
@@ -233,6 +235,7 @@ static Rboolean url_open2(Rconnection con)
     void *ctxt;
     char *url = con->description;
     UrlScheme type = ((Rurlconn)(con->private))->type;
+    int mlen;
 
     if(con->mode[0] != 'r') {
 	REprintf("can only open URLs for reading");
@@ -283,7 +286,8 @@ static Rboolean url_open2(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    mlen = (int) strlen(con->mode);
+    if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
     set_iconv(con);
@@ -508,7 +512,7 @@ static SEXP in_do_download(SEXP args)
 	FILE *in, *out;
 	static char buf[CPBUFSIZE];
 	size_t n;
-	int nh = 7;
+	int nh = 7, mlen;
 #ifdef Win32
 	/* on Windows we have file:///d:/path/to
 	   whereas on Unix it is file:///path/to */
@@ -516,7 +520,9 @@ static SEXP in_do_download(SEXP args)
 #endif
 
 	/* Use binary transfers? */
-	in = R_fopen(R_ExpandFileName(url+nh), (mode[2] == 'b') ? "rb" : "r");
+	mlen = (int) strlen(mode);
+	in = R_fopen(R_ExpandFileName(url+nh),
+	             (mlen >= 2 && mode[mlen - 1] == 'b') ? "rb" : "r");
 	if(!in) {
 	    error(_("cannot open URL '%s', reason '%s'"),
 		  url, strerror(errno));
