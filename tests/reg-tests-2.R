@@ -4,7 +4,7 @@
 pdf("reg-tests-2.pdf", encoding = "ISOLatin1.enc")
 
 ## force standard handling for data frames
-options(stringsAsFactors=TRUE)
+options(stringsAsFactors=FALSE) # R >= 4.0.0
 options(useFancyQuotes=FALSE)
 
 ### moved from various .Rd files
@@ -62,7 +62,8 @@ summary(bI <- besselI(x = x <- 10:700, 1))
 ## data.frame
 set.seed(123)
 L3 <- LETTERS[1:3]
-d <- data.frame(cbind(x=1, y=1:10), fac = sample(L3, 10, replace=TRUE))
+d <- data.frame(cbind(x=1, y=1:10), fac = sample(L3, 10, replace=TRUE),
+                stringsAsFactors=TRUE)
 str(d)
 (d0  <- d[, FALSE]) # NULL dataframe with 10 rows
 (d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
@@ -174,7 +175,7 @@ kronecker(fred, bill, make=TRUE)
 authors <- data.frame(
     surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
     nationality = c("US", "Australia", "US", "UK", "Australia"),
-    deceased = c("yes", rep("no", 4)))
+    deceased = c("yes", rep("no", 4)), stringsAsFactors=TRUE)
 books <- data.frame(
     name = c("Tukey", "Venables", "Tierney",
              "Ripley", "Ripley", "McNeil", "R Core"),
@@ -185,7 +186,8 @@ books <- data.frame(
               "Interactive Data Analysis",
               "An Introduction to R"),
     other.author = c(NA, "Ripley", NA, NA, NA, NA,
-                     "Venables & Smith"))
+		     "Venables & Smith"),
+	   stringsAsFactors=TRUE)
 b2 <- books; names(b2)[1] <- names(authors)[1]
 
 merge(authors, b2, all.x = TRUE)
@@ -1321,11 +1323,13 @@ Mat <- matrix(c(1:3, letters[1:3], 1:3, LETTERS[1:3],
               3, 6)
 foo <- tempfile()
 write.table(Mat, foo, col.names = FALSE, row.names = FALSE)
-read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"))
+read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"),
+           stringsAsFactors=TRUE)
 unlist(sapply(.Last.value, class))
-read.table(foo, colClasses = c("factor",NA,"NULL","factor","Date","POSIXct"))
+read.table(foo, colClasses = c("factor",NA,"NULL","factor","Date","POSIXct"),
+           stringsAsFactors=TRUE)
 unlist(sapply(.Last.value, class))
-read.table(foo, colClasses = c(V4="character"))
+read.table(foo, colClasses = c(V4="character"), stringsAsFactors=TRUE)
 unlist(sapply(.Last.value, class))
 unlink(foo)
 ## added in 2.0.0
@@ -2697,7 +2701,8 @@ substitute(f(x), list(f = quote(g(y))))
 
 
 ## PR#15247 : str() on invalid data frame names (where print() works):
-d <- data.frame(1:3, "B", 4); names(d) <- c("A", "B\xba","C\xabcd")
+d <- data.frame(1:3, "B", 4, stringsAsFactors=TRUE)
+names(d) <- c("A", "B\xba","C\xabcd")
 str(d)
 ## gave an error in R <= 3.0.0
 
@@ -3139,3 +3144,13 @@ treeA <- trees
 attr(treeA, "someA") <- 1:77
 str(treeA)
 ## now shows the *length* of "someA"
+
+
+## summaryRprof() bug PR#15886 :
+Rprof(tf <- tempfile("Rprof.out"), memory.profiling=TRUE, line.profiling=FALSE)
+out <- lapply(1:10000, rnorm, n= 512)
+Rprof(NULL)
+length(readLines(tf)) # ca. 10 .. 20 lines
+op <- options(warn = 2) # no warnings, even !
+for (cs in 1:21) s <- summaryRprof(tf, memory="tseries", chunksize=cs)
+options(op) ## "always" triggered an error (or a warning) in R <= 3.6.3

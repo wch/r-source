@@ -261,7 +261,7 @@
       \item  \code{unlink()} gains a new argument \code{expand} to disable
       wildcard and tilde expansion.  Elements of \code{x} of value
       \code{"~"} are now ignored.
-  
+
       \item \code{mle()} in the \code{stats4} package has had its
       interface extended so that arguments to the negative
       log-likelihood function can be one or more vectors, with similar
@@ -655,6 +655,11 @@
       \item \code{anova.glm()} and \code{anova.glmlist()} computed
       incorrect score (Rao) tests in no-intercept cases. (André
       Gillibert, \PR{17734})
+
+      \item \code{summaryRprof()} now should work correctly for the
+      \code{Rprof(*, memory.profiling=TRUE)} case with small chunk size (and
+      \code{"tseries"} or similar) thanks to a patch proposal by Benjamin
+      Tyner, in \PR{15886}.
     }
   }
 
