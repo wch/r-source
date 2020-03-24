@@ -221,6 +221,7 @@ distdir: $(DISTFILES) vignettes
 	  cp library/$${d}/doc/*.pdf $(distdir)/src/library/$${d}/inst/doc; \
 	done
 	@(cd $(distdir); tools/link-recommended)
+
 distcheck: distcheck-unix
 distcheck-unix: dist
 	distname=`$(srcdir)/tools/GETDISTNAME`; \
@@ -268,12 +269,18 @@ distcleancheck: distclean
 	    `find . -type f -print`; \
 	    exit 1; } >&2
 
+## For developers: from an svn checkout expect .svn to be only in the srcdir
 checkdistcomplete:
 	@distname=`$(srcdir)/tools/GETDISTNAME`; \
 	dirname=`$(ECHO) $${distname} | sed -e s/_.*//`; \
+	if test -d $${dirname}; then \
+	  echo "Please remove directory $${dirname} first"; \
+	  exit 1; \
+	fi; \
 	rm -Rf $${dirname}; \
+	echo "Checking $${distname}.tar.gz"; \
 	$(R_GZIPCMD) -d -c $${distname}.tar.gz | $(TAR) -x -f -; \
-	diff -r $${dirname} $(srcdir) | grep "^Only in $(srcdir)"; \
+	diff -r $${dirname} $(srcdir) | grep "^Only in $(srcdir)" | grep -v "^Only in.*[.]svn"; \
 	rm -Rf $${dirname}
 
 info pdf:
