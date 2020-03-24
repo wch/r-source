@@ -83,7 +83,7 @@ distclean: clean
 	-@rm -f *.fail
 
 install-tests:
-	@for f in $(INSTFILES); do \
+	@for f in Makefile.common $(INSTFILES) eval-fns.R; do \
 	  cp $(srcdir)/$${f} "$(INST_TO)"; \
 	done
 	@$(MAKE) -C Examples -f Makefile.win install-tests INST_TO="$(INST_TO)"
