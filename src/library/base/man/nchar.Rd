@@ -1,6 +1,6 @@
 % File src/library/base/man/nchar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nchar}
@@ -43,7 +43,7 @@ nzchar(x, keepNA = FALSE)
   \describe{
     \item{\code{bytes}}{The number of bytes needed to store the string
       (plus in C a final terminator which is not counted).}
-    \item{\code{chars}}{The number of human-readable characters.}
+    \item{\code{chars}}{The number of characters.}
     \item{\code{width}}{The number of columns \code{\link{cat}} will use to
       print the string in a monospaced font.  The same as \code{chars}
       if this cannot be calculated.}
