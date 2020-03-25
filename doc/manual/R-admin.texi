@@ -5185,12 +5185,12 @@ select @code{Open with -> Installer}.} are available at
 @itemize
 
 @item
-Sierra and High Sierra@*
+For Sierra and High Sierra@*
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.3/@/gfortran-6.3-Sierra.dmg}
 
 @item
-Mojave and later@*
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.
+For Mojave and later (but seems to work well enough on High Sierra)@*
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}
 @end itemize
 These install into @file{/usr/local/gfortran}: its @file{bin} directory
 does not need to be on the path as a full path can be used for
@@ -5198,7 +5198,7 @@ does not need to be on the path as a full path can be used for
 
 @item
 Binary components @code{pcre2} and @code{xz} (for
-@code{libzma}) from @uref{https://mac.R-project.org/libs-4}.  For example
+@code{liblzma}) from @uref{https://mac.R-project.org/libs-4}.  For example
 @example
 curl -OL https://mac.r-project.org/libs-4/pcre2-10.34-darwin.17-x86_64.tar.gz
 sudo tar -xvzf pcre2-10.34-darwin.17-x86_64.tar.gz -C /
@@ -5214,11 +5214,9 @@ GNU @code{readline} from @uref{https://mac.R-project.org/libs-4}, or
 configure with @option{--without-readline}.
 
 @item
-Components @code{jpeg}, @code{libpng}, @code{pkgconfig},
-@code{pkgconfig-system-stubs} and @code{tiff} from
-@uref{https://mac.R-project.org/libs-4} or
-@uref{https://mac.R-project.org/libs}, for the full range of bitmapped
-graphics devices.
+Components @code{jpeg}, @code{libpng}, @code{pkgconfig} and @code{tiff}
+from @uref{https://mac.R-project.org/libs-4}, for the full range of
+bitmapped graphics devices.
 
 @c @item
 @c A build of PCRE2, from @uref{https://mac.R-project.org/libs-4} or the
@@ -5239,9 +5237,10 @@ location of @file{/opt/X11}, e.g.@: by
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 @noindent
-although linked versions under @file{/usr/X11} will be found.  (However,
-it seems that for recent versions of macOS/XQuartz @file{/usr/X11} may exist
-but be a link to a non-existent directory.)
+although linked versions under @file{/usr/X11} will be found.  (It
+seems that for recent versions of macOS/XQuartz @file{/usr/X11} may
+exist but be a link to a non-existent directory: reinstalling XQuartz
+might help.)
 
 @item
 An Objective-C compiler, as provided by @command{clang} in the Command
@@ -5270,7 +5269,8 @@ A TeX installation. @xref{Other libraries}.
 @command{texi2any} from a @samp{texinfo} distribution, which requires
 @command{perl} (currently part of macOS but it has been announced that
 it will not be from macOS 10.16).  (An old version of @command{texi2any}
-has been included in the binary distribution of @R{}.)
+has been included in the binary distribution of @R{} and there is a
+@code{texinfo} component at @uref{https://mac.R-project.org/libs-4}.)
 @end itemize
 For C/C++ compilers supporting OpenMP, see the next subsection.
 
