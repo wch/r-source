@@ -22,10 +22,11 @@ function(message, call = NULL)
               class = c("simpleMessage", "message", "condition"))
 
 suppressMessages <-
-function(expr)
+function(expr, classes = "message")
     withCallingHandlers(expr,
                         message = function(c)
-                        tryInvokeRestart("muffleMessage"))
+                            if (inherits(c, classes))
+                                tryInvokeRestart("muffleMessage"))
 
 message <-
 function(..., domain = NULL, appendLF = TRUE)

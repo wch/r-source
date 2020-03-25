@@ -3108,6 +3108,32 @@ for(DF in list(d0., d0, d30., d30))
 ## many of these '==' calls failed in R <= 3.6.x
 
 
+## Can selectively suppress warnings
+w <- function(class) {
+    w <- simpleWarning("warned")
+    w <- structure(w, class = c(class, class(w)))
+    warning(w)
+}
+catch <- function(expr) tryCatch({ expr; FALSE }, warning = function(...) TRUE)
+stopifnot(! catch(suppressWarnings(w("foo"))))
+stopifnot(! catch(suppressWarnings(w("foo"), classes = c("bar", "foo"))))
+stopifnot(catch(suppressWarnings(w("foo"), classes = c("bar", "baz"))))
+rm(w, catch)
+
+
+## Can selectively suppress messages
+m <- function(class) {
+    m <- simpleMessage("notified")
+    m <- structure(m, class = c(class, class(m)))
+    message(m)
+}
+catch <- function(expr) tryCatch({ expr; FALSE }, message = function(...) TRUE)
+stopifnot(! catch(suppressMessages(m("foo"))))
+stopifnot(! catch(suppressMessages(m("foo"), classes = c("bar", "foo"))))
+stopifnot(catch(suppressMessages(m("foo"), classes = c("bar", "baz"))))
+rm(m, catch)
+
+
 ## grepl(<NA>, ...)
 N <- grepl(NA_character_, "something")
 stopifnot(is.na(N), is.logical(N))

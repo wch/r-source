@@ -363,6 +363,11 @@
       set and the second does not.  Previously both ignored empty
       variables.  There are several uses of the first form in
       \file{etc/Renviron}.
+
+      \item New \code{classes} argument for \code{suppressWarnings()}
+      and \code{suppressMessages()} to selectively only suppress
+      warnings or messages that inherit from particular classes.
+      Based on patch from Lionel Henry submitted with \PR{17619}.
     }
   }% end{ NEW FEATURES }
 

@@ -16,7 +16,7 @@
 }
 \usage{
 message(\dots, domain = NULL, appendLF = TRUE)
-suppressMessages(expr)
+suppressMessages(expr, classes = "message")
 
 packageStartupMessage(\dots, domain = NULL, appendLF = TRUE)
 suppressPackageStartupMessages(expr)
@@ -32,6 +32,8 @@ suppressPackageStartupMessages(expr)
   \item{appendLF}{logical: should messages given as a character string
     have a newline appended?}
   \item{expr}{expression to evaluate.}
+  \item{classes}{character, indicating which classes of messages should
+    be suppressed.}
 }
 \details{
   \code{message} is used for generating \sQuote{simple} diagnostic
