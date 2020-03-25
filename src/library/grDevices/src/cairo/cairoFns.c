@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2008--2013  R Core Team
+ *  Copyright (C) 2008--2020  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -563,6 +563,8 @@ PangoCairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
+
+    if (!utf8Valid(str)) error("invalid string in PangoCairo_StrWidth");
     PangoFontDescription *desc = 
 	PG_getFont(gc, xd->fontscale, xd->basefontfamily);
     PangoLayout *layout = PG_layout(desc, xd->cc, str);
@@ -578,6 +580,7 @@ PangoCairo_Text(double x, double y,
 		const char *str, double rot, double hadj,
 		const pGEcontext gc, pDevDesc dd)
 {
+    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
     if (R_ALPHA(gc->col) > 0) {
 	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	gint ascent, lbearing, width;
