@@ -3150,7 +3150,8 @@ str(treeA)
 Rprof(tf <- tempfile("Rprof.out"), memory.profiling=TRUE, line.profiling=FALSE)
 out <- lapply(1:10000, rnorm, n= 512)
 Rprof(NULL)
-length(readLines(tf)) # ca. 10 .. 20 lines
+if(interactive())
+    print(length(readLines(tf))) # ca. 10 .. 20 lines
 op <- options(warn = 2) # no warnings, even !
 for (cs in 1:21) s <- summaryRprof(tf, memory="tseries", chunksize=cs)
 options(op) ## "always" triggered an error (or a warning) in R <= 3.6.3
