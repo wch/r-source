@@ -1955,7 +1955,11 @@ SEXP summaryUnits(SEXP units, SEXP op_type) {
 				first_data = uData(unit_temp);
 			}
 			is_type[j] = current_type == type;
-			all_type = j == 0 || (current_type == first_type && R_compute_identical(uData(unit_temp), first_data, 15));
+			all_type = all_type &&
+                            (j == 0 || 
+                             (current_type == first_type && 
+                              R_compute_identical(uData(unit_temp), 
+                                                  first_data, 15)));
 			k += is_type[j] ? LENGTH(uData(unit_temp)) : 1;
 			UNPROTECT(1);
 		}
