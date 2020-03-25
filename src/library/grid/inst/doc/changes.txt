@@ -12,6 +12,16 @@ Changes from grid_3.6.* to grid_4.0.0:
 
     Reported by Nicolas Coutin.
 
+2.  Internal reimplementation of units, thanks to Thomas Lin Pedersen,
+    which makes operations on units MUCH faster.
+
+    Only user-visible change is printing of results of unit arithmetic,
+    which now always looks like a call to sum(), and a new unit.psum()
+    function.
+
+    Internally, there are now just "simpleUnit" and "unit" (no more
+    "unit.arithmetic" and "unit.list").
+
 
 Changes from grid_3.5.* to grid_3.6.0:
 -------------------------------------
