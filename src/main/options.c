@@ -489,7 +489,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNIMPLEMENTED_TYPE("options", args);
     }
 
-    R_Visible = FALSE;
+    Rboolean visible = FALSE;
     for (int i = 0 ; i < n ; i++) { /* i-th argument */
 	SEXP argi = R_NilValue, namei = R_NilValue;
 	switch (TYPEOF(args)) {
@@ -838,10 +838,11 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(FindTaggedItem(options, install(tag)))));
 	    SET_STRING_ELT(names, i, STRING_ELT(argi, 0));
-	    R_Visible = TRUE;
+	    visible = TRUE;
 	}
     } /* for() */
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
+    R_Visible = visible;
     return value;
 }

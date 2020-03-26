@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015   The R Core Team.
+ *  Copyright (C) 1998-2020   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -225,6 +225,7 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP object, previous, ans, argList;
     char buffer[21];
     static SEXP do_retracemem_formals = NULL;
+    Rboolean visible; 
 
     if (do_retracemem_formals == NULL)
 	do_retracemem_formals = allocFormalsList2(install("x"),
@@ -246,9 +247,10 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (RTRACE(object)) {
 	snprintf(buffer, 21, "<%p>", (void *) object);
+	visible = TRUE;
 	ans = mkString(buffer);
     } else {
-	R_Visible = 0;
+	visible = FALSE;
 	ans = R_NilValue;
     }
 
@@ -263,9 +265,10 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     UNPROTECT(1);
+    R_Visible = visible;
     return ans;
 #else
-    R_Visible = 0; /* for consistency with other case */
+    R_Visible = FALSE; /* for consistency with other case */
     return R_NilValue;
 #endif
 }

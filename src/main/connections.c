@@ -4653,8 +4653,8 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
         checkClose(con);
     }
     if(isRaw) {
-	R_Visible = TRUE;
 	UNPROTECT(1);
+	R_Visible = TRUE;
     } else R_Visible = FALSE;
     return ans;
 }
@@ -4997,8 +4997,8 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
         checkClose(con);
     }
     if(isRaw) {
-	R_Visible = TRUE;
 	UNPROTECT(1);
+	R_Visible = TRUE;
     } else {
 	ans = R_NilValue;
 	R_Visible = FALSE;
