@@ -33,6 +33,18 @@
 #include <R_ext/Print.h>
 #include <stdarg.h>
 
+/* eval() sets R_Visible = TRUE. Thas may not be wanted when eval() is
+   used in C code. This is a version that saves/restores R_Visible.
+   This should probably be moved to eval.c, be make public, and used
+   in  more places. LT */
+static SEXP evalKeepVis(SEXP e, SEXP rho)
+{
+    int oldvis = R_Visible;
+    SEXP val = eval(e, rho);
+    R_Visible = oldvis;
+    return val;
+}
+
 #ifndef min
 #define min(a, b) (a<b?a:b)
 #endif
@@ -406,7 +418,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	cptr = R_GlobalContext;
 	while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
 	    cptr = cptr->nextcontext;
-	eval(s, cptr->cloenv);
+	evalKeepVis(s, cptr->cloenv);
 	return;
     }
 
@@ -1710,7 +1722,7 @@ static void vsignalWarning(SEXP call, const char *format, va_list ap)
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
 	hcall = LCONS(mkString(buf), hcall);
 	PROTECT(hcall = LCONS(hooksym, hcall));
-	eval(hcall, R_GlobalEnv);
+	evalKeepVis(hcall, R_GlobalEnv);
 	UNPROTECT(4);
     }
     else vwarningcall_dflt(call, format, ap);
@@ -1865,7 +1877,7 @@ static void signalInterrupt(void)
 	    SEXP h = ENTRY_HANDLER(entry);
 	    SEXP hcall = LCONS(h, LCONS(cond, R_NilValue));
 	    PROTECT(hcall);
-	    eval(hcall, R_GlobalEnv);
+	    evalKeepVis(hcall, R_GlobalEnv);
 	    UNPROTECT(1);
 	}
 	else gotoExitingHandler(cond, R_NilValue, entry);
@@ -1877,7 +1889,7 @@ static void signalInterrupt(void)
     SEXP h = GetOption1(install("interrupt"));
     if (h != R_NilValue) {
 	SEXP call = PROTECT(LCONS(h, R_NilValue));
-	eval(call, R_GlobalEnv);
+	evalKeepVis(call, R_GlobalEnv);
     }
 }
 
@@ -2339,7 +2351,7 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
     SEXP tcdptr = R_MakeExternalPtr(&tcd, R_NilValue, R_NilValue);
     SEXP expr = lang4(trycatch_callback, tcdptr, conds, fin);
     PROTECT(expr);
-    SEXP val = eval(expr, R_GlobalEnv);
+    SEXP val = evalKeepVis(expr, R_GlobalEnv);
     UNPROTECT(2); /* conds, expr */
     R_interrupts_suspended = tcd.suspended;
     return val;
