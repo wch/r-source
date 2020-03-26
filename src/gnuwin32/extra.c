@@ -438,6 +438,83 @@ const char *formatError(DWORD res)
 }
 
 #if _WIN32_WINNT < 0x0600
+/* FIXME: also used in sysutils.c */
+/* available from Windows Vista */
+typedef enum _FILE_INFO_BY_HANDLE_CLASS {
+  FileBasicInfo,
+  FileStandardInfo,
+  FileNameInfo,
+  FileRenameInfo,
+  FileDispositionInfo,
+  FileAllocationInfo,
+  FileEndOfFileInfo,
+  FileStreamInfo,
+  FileCompressionInfo,
+  FileAttributeTagInfo,
+  FileIdBothDirectoryInfo,
+  FileIdBothDirectoryRestartInfo,
+  FileIoPriorityHintInfo,
+  FileRemoteProtocolInfo,
+  FileFullDirectoryInfo,
+  FileFullDirectoryRestartInfo,
+  FileStorageInfo,
+  FileAlignmentInfo,
+  FileIdInfo,
+  FileIdExtdDirectoryInfo,
+  FileIdExtdDirectoryRestartInfo,
+  FileDispositionInfoEx,
+  FileRenameInfoEx,
+  MaximumFileInfoByHandleClass,
+  FileCaseSensitiveInfo,
+  FileNormalizedNameInfo
+} FILE_INFO_BY_HANDLE_CLASS, *PFILE_INFO_BY_HANDLE_CLASS;
+
+/* Older versions of MinGW define this differently */
+/*
+typedef struct _FILE_ID_128 {
+  BYTE Identifier[16];
+} FILE_ID_128, *PFILE_ID_128;
+*/
+
+typedef struct _FILE_ID_INFO {
+  ULONGLONG   VolumeSerialNumber;
+  FILE_ID_128 FileId;
+} FILE_ID_INFO, *PFILE_ID_INFO;
+#endif
+
+typedef BOOL (WINAPI *LPFN_GFIBH_EX) (HANDLE, FILE_INFO_BY_HANDLE_CLASS,
+                                      LPVOID, DWORD);
+
+static int isSameFile(HANDLE a, HANDLE b)
+{
+    static LPFN_GFIBH_EX gfibh = NULL;
+    static Rboolean initialized = FALSE;
+    FILE_ID_INFO aid, bid;
+
+    if (!initialized) {
+	initialized = TRUE;
+	gfibh = (LPFN_GFIBH_EX) GetProcAddress(
+	    GetModuleHandle(TEXT("kernel32")),
+	    "GetFileInformationByHandleEx");
+    }
+    if (gfibh == NULL)
+	return -1;
+
+    memset(&aid, 0, sizeof(FILE_ID_INFO));
+    memset(&bid, 0, sizeof(FILE_ID_INFO));
+    if (!gfibh(a, FileIdInfo, &aid, sizeof(FILE_ID_INFO)) ||
+        !gfibh(b, FileIdInfo, &bid, sizeof(FILE_ID_INFO)))
+	return -1;
+
+    if (aid.VolumeSerialNumber == bid.VolumeSerialNumber &&
+	!memcmp(&aid.FileId, &bid.FileId, sizeof(FILE_ID_128)))
+
+	return 1;
+    else
+	return 0;
+}
+
+#if _WIN32_WINNT < 0x0600
 /* available from Windows Vista */
 typedef DWORD (WINAPI *LPFN_GFPNBH) (HANDLE, LPSTR, DWORD, DWORD);
 typedef DWORD (WINAPI *LPFN_GFPNBHW) (HANDLE, LPWSTR, DWORD, DWORD);
@@ -462,7 +539,7 @@ DWORD GetFinalPathNameByHandleW(
 */
 static Rboolean getFinalPathName(const char *orig, char *res)
 {
-    HANDLE h;
+    HANDLE horig, hres;
     int ret;
     static LPFN_GFPNBH gfpnbh = NULL;
     static Rboolean initialized = FALSE;
@@ -476,26 +553,30 @@ static Rboolean getFinalPathName(const char *orig, char *res)
     if (gfpnbh == NULL)
 	return FALSE;
 
-    h = CreateFile(orig, 0,
-                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		   NULL, OPEN_EXISTING,
-                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
-		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
-    if (h == INVALID_HANDLE_VALUE) 
+    /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+    horig = CreateFile(orig, 0,
+                       FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                       NULL, OPEN_EXISTING,
+	               FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS,
+                       NULL);
+    if (horig == INVALID_HANDLE_VALUE) 
 	return FALSE;
 
-    ret = gfpnbh(h, res, MAX_PATH, VOLUME_NAME_DOS);
-    CloseHandle(h);
+    ret = gfpnbh(horig, res, MAX_PATH, VOLUME_NAME_DOS);
 
-    if (!ret || ret > MAX_PATH)
+    if (!ret || ret > MAX_PATH) {
+	CloseHandle(horig);
 	return FALSE;
+    }
     
     /* get rid of the \\?\ prefix */
     int len = strlen(res);
     int strip = 0;
-    if (len < 4 || strncmp("\\\\?\\", res, 4))
+    if (len < 4 || strncmp("\\\\?\\", res, 4)) {
 	/* res should start with \\?\ */
+	CloseHandle(horig);
 	return FALSE;
+    }
     
     if (len > 8 && !strncmp("UNC\\", res+4, 4)) {
 	/* UNC path \\?\UNC */
@@ -504,22 +585,33 @@ static Rboolean getFinalPathName(const char *orig, char *res)
     } else if (len >= 6 && isalpha(res[4]) && res[5] == ':' && res[6] == '\\')
 	/* \\?\D: */
 	strip = 4;
-    else
+    else {
+	CloseHandle(horig);
 	return FALSE;
+    }
     memmove(res, res+strip, len-strip+1);
 
     /* sanity check if the file exists using the normalized path, a normalized
        path to an existing file should still be working */
-    h = CreateFile(orig, 0,
-                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		   NULL, OPEN_EXISTING,
-                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
-		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
-    if (h == INVALID_HANDLE_VALUE)
+    /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+    hres = CreateFile(res, 0,
+                      FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                      NULL, OPEN_EXISTING,
+                      FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS,
+                      NULL);
+    if (hres == INVALID_HANDLE_VALUE) {
+	CloseHandle(horig);
 	return FALSE;
-    CloseHandle(h);
+    }
 
-    return TRUE;	
+    /* check that the handles point to the same file, which may not be
+       always the case because of silent best-fit encoding conversion
+       done by Windows */
+    ret = isSameFile(horig, hres);
+    CloseHandle(horig);
+    CloseHandle(hres);
+
+    return (ret == 1) ? TRUE : FALSE;
 }
 
 /*
@@ -527,7 +619,7 @@ static Rboolean getFinalPathName(const char *orig, char *res)
 */
 static Rboolean getFinalPathNameW(const wchar_t *orig, wchar_t *res)
 {
-    HANDLE h;
+    HANDLE horig, hres;
     int ret;
     static LPFN_GFPNBHW gfpnbhw = NULL;
     static Rboolean initialized = FALSE;
@@ -541,26 +633,30 @@ static Rboolean getFinalPathNameW(const wchar_t *orig, wchar_t *res)
     if (gfpnbhw == NULL)
 	return FALSE;
 
-    h = CreateFileW(orig, 0,
-                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		   NULL, OPEN_EXISTING,
-                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
-		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
-    if (h == INVALID_HANDLE_VALUE) 
+    /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+    horig = CreateFileW(orig, 0,
+                        FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                        NULL, OPEN_EXISTING,
+                        FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS,
+                        NULL);
+    if (horig == INVALID_HANDLE_VALUE) 
 	return FALSE;
 
-    ret = gfpnbhw(h, res, 32767, VOLUME_NAME_DOS);
-    CloseHandle(h);
+    ret = gfpnbhw(horig, res, 32767, VOLUME_NAME_DOS);
 
-    if (!ret || ret > 32768)
+    if (!ret || ret > 32768) {
+	CloseHandle(horig);
 	return FALSE;
+    }
     
     /* get rid of the \\?\ prefix */
     size_t len = wcslen(res);
     int strip = 0;
-    if (len < 4 || wcsncmp(L"\\\\?\\", res, 4))
+    if (len < 4 || wcsncmp(L"\\\\?\\", res, 4)) {
 	/* res should start with \\?\ */
+	CloseHandle(horig);
 	return FALSE;
+    }
     
     if (len > 8 && !wcsncmp(L"UNC\\", res+4, 4)) {
 	/* UNC path \\?\UNC */
@@ -570,25 +666,33 @@ static Rboolean getFinalPathNameW(const wchar_t *orig, wchar_t *res)
 	     && res[5] == L':' && res[6] == L'\\')
 	/* \\?\D: */
 	strip = 4;
-    else
+    else {
+	CloseHandle(horig);
 	return FALSE;
+    }
     wmemmove(res, res+strip, len-strip+1);
 
     /* sanity check if the file exists using the normalized path, a normalized
        path to an existing file should still be working */
-    h = CreateFileW(orig, 0,
-                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		   NULL, OPEN_EXISTING,
-                   /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
-		   FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS, NULL);
-    if (h == INVALID_HANDLE_VALUE)
+    /* FILE_FLAG_BACKUP_SEMANTICS needed to open a directory */
+    hres = CreateFileW(res, 0,
+                       FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                       NULL, OPEN_EXISTING,
+                       FILE_ATTRIBUTE_HIDDEN | FILE_FLAG_BACKUP_SEMANTICS,
+                       NULL);
+    if (hres == INVALID_HANDLE_VALUE) {
+	CloseHandle(horig);
 	return FALSE;
-    CloseHandle(h);
+    }
 
-    return TRUE;	
+    /* sanity check that the handles point to the same file; they should, but
+       better be safe wrt to undocumented features/changes of gfpnbhw */
+    ret = isSameFile(horig, hres);
+    CloseHandle(horig);
+    CloseHandle(hres);
+
+    return ret ? TRUE : FALSE; /* return TRUE when isSameFile fails with -1 */
 }
-
-
 
 void R_UTF8fixslash(char *s); /* from main/util.c */
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
