@@ -5157,6 +5157,7 @@ later versions of software such as @code{libcurl}.
 * Java (macOS)::
 * Frameworks::
 * Building R.app::
+* Building binary packages::
 @end menu
 
 @node Prerequisites, Other C/C++ compilers, macOS, macOS
@@ -5588,7 +5589,7 @@ non-standard location) and Unix utilities may not support it (e.g.@: the
 @command{pkg-config} file @file{libR.pc} will be put somewhere unknown
 to @command{pkg-config}).
 
-@node Building R.app,  , Frameworks, macOS
+@node Building R.app, Building binary packages, Frameworks, macOS
 @subsection Building R.app
 
 Note that building the @Rapp{} GUI console is a separate project, using
@@ -5615,6 +5616,32 @@ See also the @file{INSTALL} file in the checkout or directly at
 application bundle can be run anywhere and it is customary to place it
 in the @file{/Applications} folder.
 
+@node Building binary packages,  , Building R.app, macOS
+@subsection Building binary packages
+
+CRAN macOS binary packages are distributed as tarballs with suffix
+@file{.tar.gz} to distinguish them from source tarballs.  One can
+@command{tar} an existing installed package, or use @command{R CMD
+INSTALL --build}.
+
+However, there are some details which matter.
+@itemize
+
+@item
+Current CRAN macOS distributions are targeted at High Sierra so it is
+wise to ensure that the compilers used generate code that will run on
+High Sierra ir later.  With the recommended compilers we can use
+@example
+CC="clang -mmacosx-version-min=10.13"
+CXX="clang++ -mmacosx-version-min=10.13"
+FC="gfortran -mmacosx-version-min=10.13"
+@end example
+
+@item
+Check that any compiled code is not dynamically linked to libraries only
+on your machine, for example by using @command{otool -L} or
+@command{objdump -macho -dylibs-used}.
+@end itemize
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
@@ -5722,17 +5749,16 @@ FCLIBS_XTRA="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
 @noindent
 has been needed.
 
-Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
-@code{FFLAGS} allows more system mathematical functions
-to be inlined.
+Using @code{-xlibmil} in @code{CFLAGS} or @code{FFLAGS} allows more
+system mathematical functions to be inlined.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
 @example
 CFLAGS="-xO5 -xlibmieee -xlibmil -nofstore -xtarget=native"
-FFLAGS="-xO5 -libmil -nofstore -xtarget=native"
+FFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
 CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
-SAFE_FFLAGS="-O -libmil -fstore -xtarget=native"
+SAFE_FFLAGS="-O -xlibmil -fstore -xtarget=native"
 @end example
 
 @noindent
