@@ -436,6 +436,10 @@
       \code{realpr1} and \code{intpr1} to print a scalar variable
       (\command{gfortran} 10 enforces the distinction between scalars
       and length-one arrays).  Also \code{labelpr} to print just a label.
+
+      \item \code{R_withCallingErrorHandler} is now avaiable for
+      establishing a calling handler in C code for conditions inheriting
+      from class \code{error}.
     }
   }
 

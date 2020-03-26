@@ -14348,7 +14348,7 @@ Free the resources of an encoding object.
 @cindex Cleanup code
 @cindex Error handling
 
-Two functions are available for establishing condition handlers from
+Three functions are available for establishing condition handlers from
 within C code:
 
 @example
@@ -14361,6 +14361,8 @@ SEXP R_tryCatch(SEXP (*fun)(void *data), void *data,
 		SEXP,
 		SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata,
 		void (*clean)(void *cdata), void *cdata);
+SEXP R_withCallingErrorHandler(SEXP (*fun)(void *data), void *data,
+			       SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata)
 @end example
 
 @code{R_tryCatchError} establishes an exiting handler for conditions
@@ -14374,6 +14376,11 @@ if condition handling or cleanup are not needed.
 
 These are currently implemented using the R-level @code{tryCatch}
 mechanism so are subject to some overhead.
+
+@code{R_withCallingErrorHandler} establishes a calling handler for
+conditions inheriting form class @code{error}.  It establishes the
+handler without calling back into @R{} and will therefore be more
+efficient.
 
 The function @code{R_UnwindProtect} can be used to ensure that a cleanup
 action takes place on ordinary return as well as on a non-local transfer

@@ -1743,7 +1743,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
     char localbuf[BUFSIZE];
     SEXP list, oldstack;
 
-    oldstack = R_HandlerStack;
+    PROTECT(oldstack = R_HandlerStack);
     Rvsnprintf(localbuf, BUFSIZE - 1, format, ap);
     while ((list = findSimpleErrorHandler()) != R_NilValue) {
 	char *buf = errbuf;
@@ -1780,6 +1780,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	else gotoExitingHandler(R_NilValue, call, entry);
     }
     R_HandlerStack = oldstack;
+    UNPROTECT(1); /* oldstack */
 }
 
 static SEXP findConditionHandler(SEXP cond)
@@ -2340,7 +2341,7 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
     };
 
     /* Interrupts are suspended while in the infrastructure R code and
-       enabled, if they were on entry to R_TryCatch, while calling the
+       enabled, if they were on entry to R_tryCatch, while calling the
        body function in do_tryCatchHelper */
 
     R_interrupts_suspended = TRUE;
@@ -2394,6 +2395,72 @@ SEXP do_tryCatchHelper(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     default: return R_NilValue; /* should not happen */
     }
+}
+
+
+/* R_withCallingErrorHandler establishes a calling handler for
+   conditions inheriting from class 'error'. The handler is
+   established without calling back into the R implementation. This
+   should therefore be much more efficient than the current R_tryCatch
+   implementation. */
+
+SEXP R_withCallingErrorHandler(SEXP (*body)(void *), void *bdata,
+			       SEXP (*handler)(SEXP, void *), void *hdata)
+{
+    /* This defines the lambda expression for th handler. The `addr`
+       variable wil be defined in the closure environment and contain
+       an external pointer to the callback data. */
+    static const char* wceh_callback_source =
+	"function(cond) .Internal(C_tryCatchHelper(addr, 1L, cond))";
+
+    static SEXP wceh_callback = NULL;
+    static SEXP wceh_class = NULL;
+    static SEXP addr_sym = NULL;
+
+    if (body == NULL) error("must supply a body function");
+
+    if (wceh_callback == NULL) {
+	wceh_callback = R_ParseEvalString(wceh_callback_source,
+					  R_BaseNamespace);
+	R_PreserveObject(wceh_callback);
+	wceh_class = mkChar("error");
+	R_PreserveObject(wceh_class);
+	addr_sym = install("addr");
+    }
+
+    /* record the C-level handler information */
+    tryCatchData_t tcd = {
+	.handler = handler != NULL ? handler : default_tryCatch_handler,
+	.hdata = hdata
+    };
+    SEXP tcdptr = R_MakeExternalPtr(&tcd, R_NilValue, R_NilValue);
+
+    /* create the R handler function closure */
+    SEXP env = CONS(tcdptr, R_NilValue);
+    SET_TAG(env, addr_sym);
+    env = NewEnvironment(R_NilValue, env, R_BaseNamespace);
+    PROTECT(env);
+    SEXP h = duplicate(wceh_callback);
+    SET_CLOENV(h, env);
+    UNPROTECT(1); /* env */
+
+    /* push the handler on the handler stack */
+    SEXP oldstack = R_HandlerStack;
+    PROTECT(oldstack);
+    PROTECT(h);
+    SEXP entry = mkHandlerEntry(wceh_class, R_GlobalEnv, h, R_NilValue,
+				R_NilValue, /* OK for a calling handler */
+				TRUE);
+    R_HandlerStack = CONS(entry, R_HandlerStack);
+    UNPROTECT(1); /* h */
+
+    SEXP val = body(bdata);
+
+    /* restore the handler stack */
+    R_HandlerStack = oldstack;
+    UNPROTECT(1); /* oldstack */
+
+    return val;
 }
 
 SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
