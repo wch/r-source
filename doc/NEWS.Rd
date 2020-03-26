@@ -8,43 +8,42 @@
 \section{\Rlogo CHANGES IN 4.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-       \item \code{matrix} objects now also inherit from class
-       \code{"array"}, so e.g., \code{class(diag(1))} is \code{c("matrix",
-       "array")}.  This invalidates code incorrectly assuming that
-       \code{class(matrix_obj))} has length one.
+      \item \code{matrix} objects now also inherit from class
+      \code{"array"}, so e.g., \code{class(diag(1))} is \code{c("matrix",
+	"array")}.  This invalidates code incorrectly assuming that
+      \code{class(matrix_obj))} has length one.
 
-       S3 methods for class \code{"array"} are now dispatched for
-       \code{matrix} objects.
+      S3 methods for class \code{"array"} are now dispatched for
+      \code{matrix} objects.
 
-       \item There is a new syntax for specifying \emph{raw} character
-       constants similar to the one used in C++: \code{r"(...)"} with
-       \code{...} any character sequence not containing the sequence
-       \samp{)"}. %}) \samp{*}: Rd-parser bug for \code{*}"
-       This makes it easier to write strings that contain backslashes or
-       both single and double quotes.  For more details see
-       \code{?Quotes}.
+      \item There is a new syntax for specifying \emph{raw} character
+      constants similar to the one used in C++: \code{r"(...)"} with
+      \code{...} any character sequence not containing the sequence
+      \samp{)"}. %}) \samp{*}: Rd-parser bug for \code{*}"
+      This makes it easier to write strings that contain backslashes or
+      both single and double quotes.  For more details see \code{?Quotes}.
 
-       \item \R now uses a \samp{stringsAsFactors = FALSE} default, and
-       hence by default no longer converts strings to factors in calls
-       to \code{data.frame()} and \code{read.table()}.
+      \item \R now uses a \samp{stringsAsFactors = FALSE} default, and
+      hence by default no longer converts strings to factors in calls
+      to \code{data.frame()} and \code{read.table()}.
 
-       A large number of packages relied on the previous behaviour and
-       so have needed/will need updating.
+      A large number of packages relied on the previous behaviour and
+      so have needed/will need updating.
 
-       \item The \code{plot()} S3 generic function is now in package
-       \pkg{base} rather than package \pkg{graphics}, as it is
-       reasonable to have methods that do not use the \pkg{graphics}
-       package.  The generic is currently re-exported from the
-       \pkg{graphics} namespace to allow packages importing it from
-       there to continue working, but this may change in future.
+      \item The \code{plot()} S3 generic function is now in package
+      \pkg{base} rather than package \pkg{graphics}, as it is
+      reasonable to have methods that do not use the \pkg{graphics}
+      package.  The generic is currently re-exported from the
+      \pkg{graphics} namespace to allow packages importing it from
+      there to continue working, but this may change in future.
 
-       Packages which define S4 generics for \code{plot()} should be
-       re-installed and package code using such generics from other
-       packages needs to ensure that they are imported rather than rely
-       on their being looked for on the search path (as in a namespace,
-       the base namespace has precedence over the search path).
-     }
-   }
+      Packages which define S4 generics for \code{plot()} should be
+      re-installed and package code using such generics from other
+      packages needs to ensure that they are imported rather than rely
+      on their being looked for on the search path (as in a namespace,
+      the base namespace has precedence over the search path).
+    }
+  }
 
   \subsection{REFERENCE COUNTING}{
     \itemize{
