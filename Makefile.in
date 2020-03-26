@@ -229,6 +229,9 @@ distcheck-unix: dist
 	rm -Rf $${dirname}; \
 	$(R_GZIPCMD) -d -c $${distname}.tar.gz | $(TAR) -x -f -; \
 	chmod u+w $${dirname}; \
+	if test -f config.site; then \
+	  cp config.site $${dirname}; \
+	fi; \
 	mkdir $${dirname}/_build $${dirname}/_inst; \
 	test -d $${dirname}/_build || exit 0; \
 	dc_install_base=`cd $${dirname}/_inst && pwd` \
