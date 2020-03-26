@@ -34,7 +34,7 @@ summaryRprof <-
     firstline <- readLines(con, n = 1L)
     if(!length(firstline))
         stop(gettextf("no lines found in %s", sQuote(filename)), domain = NA)
-    sample.interval <- as.numeric(strsplit(firstline, "=")[[1L]][2L])/1e6
+    sample.interval <- as.numeric(strsplit(firstline, "=")[[1L]][2L]) / 1e6
     memory.profiling <- startsWith(firstline, "memory")
     line.profiling <- grepl("line profiling", firstline)
     if (line.profiling)
@@ -44,11 +44,11 @@ summaryRprof <-
     if(memory != "none" && !memory.profiling)
         stop("profile does not contain memory information")
     if (memory == "tseries")
-        return(Rprof_memory_summary(filename = con, chunksize = chunksize,
+        return(Rprof_memory_summary(con, chunksize = chunksize,
                                     label = index, diff = diff, exclude = exclude,
                                     sample.interval = sample.interval))
     else if (memory == "stats")
-        return(Rprof_memory_summary(filename = con,  chunksize = chunksize,
+        return(Rprof_memory_summary(con, chunksize = chunksize,
                                     aggregate = index, diff = diff, exclude = exclude,
                                     sample.interval = sample.interval))
 
@@ -63,7 +63,6 @@ summaryRprof <-
     umem <- NULL
 
     repeat {
-
         chunk <- readLines(con, n = chunksize)
 
         if (line.profiling) {
@@ -86,7 +85,6 @@ summaryRprof <-
        	   	chunk <- chunk[-filenamelines]
             }
         }
-
         if (length(chunk) == 0L)
             break
 
@@ -94,24 +92,24 @@ summaryRprof <-
             memprefix <- attr(regexpr(":[0-9]+:[0-9]+:[0-9]+:[0-9]+:", chunk), "match.length")
             if (memory == "both") {
                 memstuff <- substr(chunk, 2L, memprefix-1L)
-                memcounts <- pmax(apply(sapply(strsplit(memstuff, ":"), as.numeric), 1, diff), 0)
+                memcounts <- pmax(apply(vapply(strsplit(memstuff, ":"), as.numeric, numeric(4L)),
+                                        1L, diff), 0)
                 if (!is.matrix(memcounts)) # Need a matrix result (PR#16395)
                     memcounts <- matrix(memcounts, nrow = 1)
-                ##  memcounts <- c(0, rowSums(memcounts[, 1L:3L]))
-                ## convert to bytes.
-                memcounts <- c(0, rowSums(cbind(memcounts[, 1L:2L, drop = FALSE] * 8,
+                memcounts <- c(0, rowSums(cbind(memcounts[, 1L:2L, drop = FALSE] * 8, ## convert to bytes
                                                 memcounts[, 3L,    drop = FALSE])))
-                rm(memstuff)
             }
             chunk <- substr(chunk, memprefix+1L, nchar(chunk,  "c"))
             if(any((nc <- nchar(chunk, "c")) == 0L)) {
-                chunk <- chunk[nc > 0L]
+                chunk     <- chunk    [nc > 0L]
                 memcounts <- memcounts[nc > 0L]
             }
+            if(!length(chunk))
+                next # chunk
         }
 
         chunk <- strsplit(chunk, " ")
-        if (line.profiling)
+        if(line.profiling)
             chunk <- lapply(chunk, function(x) {
            	locations <- !startsWith(x, '"')
            	if (lines != "hide") {
@@ -119,13 +117,13 @@ summaryRprof <-
            	    lnum <- sub(".*#", "", x[locations])
            	    x[locations] <- paste0(filenames[as.integer(fnum)], "#", lnum)
                 }
-           	switch(lines,
-                       hide = x <- x[!locations],
-                       show = x <- x[locations]
-                       )
-       	      	if (length(x)) x else "<no location>"
+           	if(lines != "both")
+                    x <- x[switch(lines,
+                                  "hide" = !locations,
+                                  "show" =  locations)]
+       	      	if(length(x)) x else "<no location>"
             })
-        newfirsts <- sapply(chunk,  "[[",  1L)
+        newfirsts  <- vapply(chunk, "[[", "char", 1L)
         newuniques <- lapply(chunk,  unique)
         ulen <- lengths(newuniques)
         newuniques <- unlist(newuniques)
@@ -190,23 +188,22 @@ summaryRprof <-
       sampling.time = sum(fcounts)*sample.interval)
 }
 
-Rprof_memory_summary <- function(filename, chunksize = 5000,
+Rprof_memory_summary <- function(con, chunksize = 5000,
                                  label = c(1, -1), aggregate = 0, diff = FALSE,
                                  exclude = NULL, sample.interval)
 {
-
     memcounts <- NULL
     firsts <- NULL
     labels <- vector("list", length(label))
     index <- NULL
 
     repeat {
-       chunk <- readLines(filename, n = chunksize)
-       if (length(chunk) == 0L)
-           break
+       chunk <- readLines(con, n = chunksize)
+       if(!length(chunk))
+           break # finished reading
        memprefix <- attr(regexpr(":[0-9]+:[0-9]+:[0-9]+:[0-9]+:", chunk),
                          "match.length")
-       memstuff <- substr(chunk, 2L, memprefix-1L)
+       memstuff <- substr(chunk, 2L, memprefix-1L)# drop boundary ":"
        mcnt <- rbind(t(sapply(strsplit(memstuff, ":"), as.numeric)))
        ## convert to bytes
        mcnt <- cbind(mcnt[, 1L:2L, drop = FALSE] * 8,
@@ -216,6 +213,8 @@ Rprof_memory_summary <- function(filename, chunksize = 5000,
            mcnt  <- mcnt [!c0, ]
            chunk <- chunk[!c0]
        }
+       if(!length(chunk))
+           next # chunk
 
        memcounts <- rbind(memcounts, mcnt)
        chunk <- strsplit(chunk, " ")
@@ -270,7 +269,7 @@ Rprof_memory_summary <- function(filename, chunksize = 5000,
     }
 
     if (diff)
-        memcounts[-1L, 1L:3L]  <-  pmax(0L, apply(memcounts[, 1L:3L], 2L, diff))
+        memcounts[-1L, 1L:3L] <- pmax(0L, apply(memcounts[, 1L:3L], 2L, diff))
 
     if (aggregate)
         by(memcounts, index,
