@@ -174,7 +174,9 @@ allowInterrupts(expr)
    These handlers are only called as a last resort, after the other
    handlers dynamically registered with \code{withCallingHandlers} have
    been invoked. They are called before the \code{error} global option
-   (which is the legacy interface for global handling of errors). Global
+   (which is the legacy interface for global handling of errors).
+   Registering the same handler multiple times moves that handler on
+   top of the stack, which ensures that it is called first. Global
    handlers are a good place to define a general purpose logger (for
    instance saving the last error object in the global workspace) or a
    general recovery strategy (e.g. installing missing packages via the

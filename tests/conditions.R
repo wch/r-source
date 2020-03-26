@@ -88,3 +88,36 @@ handlers <- withCallingHandlers(foo = function(...) NULL,
                                 globalCallingHandlers())
 stopifnot(identical(handlers, foobars))
 globalCallingHandlers(NULL)
+
+## Registering a handler again moves it to the top of the stack
+globalCallingHandlers(
+    warning = function(...) "foo",
+    error = function(...) "foo",
+    condition = function(...) "foo",
+    error = function(...) "bar"
+)
+globalCallingHandlers(
+    error = function(...) "foo"
+)
+bumped <- list(
+    error = function(...) "foo",
+    warning = function(...) "foo",
+    condition = function(...) "foo",
+    error = function(...) "bar"
+)
+stopifnot(identical(globalCallingHandlers(), bumped))
+globalCallingHandlers(NULL)
+
+## Attributes and closure environments are detected in the duplicate
+## handlers check
+hnd1 <- function(...) "foo"
+hnd2 <- structure(function(...) "foo", bar = TRUE)
+hnd3 <- local(function(...) "foo")
+expectedList <- list(
+    error = hnd1,
+    error = hnd2,
+    error = hnd3
+)
+globalCallingHandlers(error = hnd1, error = hnd2, error = hnd3)
+stopifnot(identical(globalCallingHandlers(), expectedList))
+globalCallingHandlers(NULL)
