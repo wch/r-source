@@ -8,6 +8,9 @@
 \section{\Rlogo CHANGES IN 4.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
+      \item Packages need to be (re-)installed under this version
+      (4.0.0) of \R.
+      
       \item \code{matrix} objects now also inherit from class
       \code{"array"}, so e.g., \code{class(diag(1))} is \code{c("matrix",
 	"array")}.  This invalidates code incorrectly assuming that
