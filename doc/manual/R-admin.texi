@@ -5219,16 +5219,6 @@ Components @code{jpeg}, @code{libpng}, @code{pkgconfig} and @code{tiff}
 from @uref{https://mac.R-project.org/libs-4}, for the full range of
 bitmapped graphics devices.
 
-@c @item
-@c A build of PCRE2, from @uref{https://mac.R-project.org/libs-4} or the
-@c sources at @uref{https://www.pcre.org/}.  Unpack a source tarball and
-@c configure by something like
-@c @example
-@c ./configure --enable-jit CC=clang CFLAGS=-O2
-@c @end example
-@c @noindent
-@c (or give the full path to an alternative C compiler).
-
 @item
 An X sub-system unless configuring using @option{--without-x}: see
 @uref{https://xquartz.macosforge.org/}. @R{}'s @command{configure}
@@ -5269,9 +5259,9 @@ A TeX installation. @xref{Other libraries}.
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
 @command{perl} (currently part of macOS but it has been announced that
-it will not be from macOS 10.16).  (An old version of @command{texi2any}
+it will not be from macOS 10.16).  An old version of @command{texi2any}
 has been included in the binary distribution of @R{} and there is a
-@code{texinfo} component at @uref{https://mac.R-project.org/libs-4}.)
+@code{texinfo} component at @uref{https://mac.R-project.org/libs-4}.
 @end itemize
 For C/C++ compilers supporting OpenMP, see the next subsection.
 
@@ -5620,7 +5610,7 @@ in the @file{/Applications} folder.
 @subsection Building binary packages
 
 CRAN macOS binary packages are distributed as tarballs with suffix
-@file{.tar.gz} to distinguish them from source tarballs.  One can
+@file{.tgz} to distinguish them from source tarballs.  One can
 @command{tar} an existing installed package, or use @command{R CMD
 INSTALL --build}.
 
