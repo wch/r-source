@@ -5219,16 +5219,6 @@ Components @code{jpeg}, @code{libpng}, @code{pkgconfig} and @code{tiff}
 from @uref{https://mac.R-project.org/libs-4}, for the full range of
 bitmapped graphics devices.
 
-@c @item
-@c A build of PCRE2, from @uref{https://mac.R-project.org/libs-4} or the
-@c sources at @uref{https://www.pcre.org/}.  Unpack a source tarball and
-@c configure by something like
-@c @example
-@c ./configure --enable-jit CC=clang CFLAGS=-O2
-@c @end example
-@c @noindent
-@c (or give the full path to an alternative C compiler).
-
 @item
 An X sub-system unless configuring using @option{--without-x}: see
 @uref{https://xquartz.macosforge.org/}. @R{}'s @command{configure}
@@ -5269,9 +5259,9 @@ A TeX installation. @xref{Other libraries}.
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
 @command{perl} (currently part of macOS but it has been announced that
-it will not be from macOS 10.16).  (An old version of @command{texi2any}
+it will not be from macOS 10.16).  An old version of @command{texi2any}
 has been included in the binary distribution of @R{} and there is a
-@code{texinfo} component at @uref{https://mac.R-project.org/libs-4}.)
+@code{texinfo} component at @uref{https://mac.R-project.org/libs-4}.
 @end itemize
 For C/C++ compilers supporting OpenMP, see the next subsection.
 
@@ -5620,17 +5610,17 @@ in the @file{/Applications} folder.
 @subsection Building binary packages
 
 CRAN macOS binary packages are distributed as tarballs with suffix
-@file{.tar.gz} to distinguish them from source tarballs.  One can
+@file{.tgz} to distinguish them from source tarballs.  One can
 @command{tar} an existing installed package, or use @command{R CMD
 INSTALL --build}.
 
-However, there are some details which matter.
+However, there are some important details.
 @itemize
 
 @item
 Current CRAN macOS distributions are targeted at High Sierra so it is
 wise to ensure that the compilers used generate code that will run on
-High Sierra ir later.  With the recommended compilers we can use
+High Sierra or later.  With the recommended compilers we can use
 @example
 CC="clang -mmacosx-version-min=10.13"
 CXX="clang++ -mmacosx-version-min=10.13"
@@ -5638,9 +5628,28 @@ FC="gfortran -mmacosx-version-min=10.13"
 @end example
 
 @item
+Using the flag @option{-Werror=partial-availability} can help trigger
+compilation errors on functionality not in High Sierra.
+
+@item
 Check that any compiled code is not dynamically linked to libraries only
 on your machine, for example by using @command{otool -L} or
-@command{objdump -macho -dylibs-used}.
+@command{objdump -macho -dylibs-used}.  This can include C++ and Fortran
+run-time libraries under @file{/usr/local}: one can use
+@command{install_name_tools} to point these at system versions or those
+shipped with @R{}, for example
+@example
+install_name_tool -change /usr/local/clang/lib/libc++.1.dylib \
+/usr/lib/libc++.1.dylib \
+@var{pkg}.so
+
+install_name_tool -change /usr/local/gfortran/lib/libgfortran.5.dylib \
+/Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libgfortran.5.dylib \
+@var{pkg}.so
+@end example
+
+@noindent
+(where the details depend on the compilers and CRAN macOS @R{} release).
 @end itemize
 
 @node Solaris, FreeBSD, macOS, Platform notes
