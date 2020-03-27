@@ -42,6 +42,11 @@ bindingIsActive <- function(sym, env) {
     .Internal(bindingIsActive(sym, env))
 }
 
+activeBindingFunction <- function(sym, env) {
+    if (is.character(sym)) sym <- as.name(sym)
+    .Internal(activeBindingFunction(sym, env))
+}
+
 unlockBinding <- function(sym, env) {
     if (is.character(sym)) sym <- as.name(sym)
     .Internal(unlockBinding(sym, env))

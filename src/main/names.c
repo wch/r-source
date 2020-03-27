@@ -905,6 +905,7 @@ FUNTAB R_FunTab[] =
 {"bindingIsLocked", do_bndIsLocked,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"makeActiveBinding", do_mkActiveBnd,	0, 111,	3,      {PP_FUNCALL, PREC_FN,	0}},
 {"bindingIsActive", do_bndIsActive,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
+{"activeBindingFunction", do_activeBndFun,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 /* looks like mkUnbound is unused in base R */
 {"mkUnbound",	do_mkUnbound,		0, 111,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"isNamespaceEnv",do_isNSEnv,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},

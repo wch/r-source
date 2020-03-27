@@ -1335,6 +1335,7 @@ void R_unLockBinding(SEXP sym, SEXP env);
 void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
 Rboolean R_BindingIsLocked(SEXP sym, SEXP env);
 Rboolean R_BindingIsActive(SEXP sym, SEXP env);
+SEXP R_ActiveBindingFunction(SEXP sym, SEXP env);
 Rboolean R_HasFancyBindings(SEXP rho);
 
 

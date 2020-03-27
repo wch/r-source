@@ -3483,6 +3483,35 @@ Rboolean R_HasFancyBindings(SEXP rho)
     }
 }
 
+SEXP R_ActiveBindingFunction(SEXP sym, SEXP env)
+{
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    if (TYPEOF(env) == NILSXP)
+	error(_("use of NULL environment is defunct"));
+    if (TYPEOF(env) != ENVSXP &&
+	TYPEOF((env = simple_as_environment(env))) != ENVSXP)
+	error(_("not an environment"));
+    if (env == R_BaseEnv || env == R_BaseNamespace) {
+	SEXP val = SYMVALUE(sym);
+	if (val == R_UnboundValue)
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
+	if (! IS_ACTIVE_BINDING(sym))
+	    error(_("no active binding for \"%s\""),
+		  EncodeChar(PRINTNAME(sym)));
+	return val;
+    }
+    else {
+	SEXP binding = findVarLocInFrame(env, sym, NULL);
+	if (binding == R_NilValue)
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
+	if (! IS_ACTIVE_BINDING(binding))
+	    error(_("no active binding for \"%s\""),
+		  EncodeChar(PRINTNAME(sym)));
+	return CAR(binding);
+    }
+}
+
 SEXP attribute_hidden do_lockBnd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sym, env;
@@ -3529,6 +3558,15 @@ SEXP attribute_hidden do_bndIsActive(SEXP call, SEXP op, SEXP args, SEXP rho)
     sym = CAR(args);
     env = CADR(args);
     return ScalarLogical(R_BindingIsActive(sym, env));
+}
+
+SEXP attribute_hidden do_activeBndFun(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sym, env;
+    checkArity(op, args);
+    sym = CAR(args);
+    env = CADR(args);
+    return R_ActiveBindingFunction(sym, env);
 }
 
 /* This is a .Internal with no wrapper, currently unused in base R */
