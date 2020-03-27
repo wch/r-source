@@ -210,7 +210,10 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    na_action = installTrChar(STRING_ELT(na_action, 0));
 	PROTECT(na_action);
 	PROTECT(tmp = lang2(na_action, data));
-	PROTECT(ans = eval(tmp, rho));
+	ans = eval(tmp, rho);
+	if (MAYBE_REFERENCED(ans))
+	    ans = shallow_duplicate(ans);
+	PROTECT(ans);
 	if (!isNewList(ans) || length(ans) != length(data))
 	    error(_("invalid result from na.action"));
 	/* need to transfer _all but tsp and dim_ attributes, possibly lost
@@ -218,8 +221,12 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* But if data is unchanged, don't mess with it (PR#16436) */
 
 	for ( i = length(ans) ; i-- ; )
-	    if (VECTOR_ELT(data, i) != VECTOR_ELT(ans, i))
+	    if (VECTOR_ELT(data, i) != VECTOR_ELT(ans, i)) {
+		if (MAYBE_REFERENCED(VECTOR_ELT(ans, i)))
+		    SET_VECTOR_ELT(ans, i,
+				   shallow_duplicate(VECTOR_ELT(ans, i)));
 		copyMostAttribNoTs(VECTOR_ELT(data, i),VECTOR_ELT(ans, i));
+	    }
 
 	UNPROTECT(3);
     }
