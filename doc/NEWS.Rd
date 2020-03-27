@@ -370,6 +370,9 @@
       and \code{suppressMessages()} to selectively only suppress
       warnings or messages that inherit from particular classes.
       Based on patch from Lionel Henry submitted with \PR{17619}.
+
+      \item New function \code{activeBindingFunction()} retrieves the
+      function of an active binding.
     }
   }% end{ NEW FEATURES }
 
