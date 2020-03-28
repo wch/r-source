@@ -367,7 +367,7 @@
       \file{etc/Renviron}.
 
       \item New \code{classes} argument for \code{suppressWarnings()}
-      and \code{suppressMessages()} to selectively only suppress
+      and \code{suppressMessages()} to selectively suppress only
       warnings or messages that inherit from particular classes.
       Based on patch from Lionel Henry submitted with \PR{17619}.
 
@@ -467,11 +467,14 @@
       \item The minimum required version of \code{libcurl} is now 7.28.0
       (Oct 2012).
 
-      \item New make target \command{distcheck} checks that: R can be
-      rebuilt from the tarball created by \command{dist}; the tarball
-      build passes \command{check-all}; the build installs and
-      uninstalls ; and the source files are properly cleaned by
-      \command{distclean}.
+      \item New make target \command{distcheck} checks
+      \itemize{
+	\item \R can be rebuilt from the tarball created by
+	\command{make dist},
+	\item the build from the tarball passes \command{make check-all},
+	\item the build installs and uninstalls,
+	\item the source files are properly cleaned by \command{make distclean}.
+      }
     }
   }
 
@@ -653,8 +656,8 @@
       They now return \code{NA} but give a warning as they may have
       given random results or corrupted memory in earlier versions of \R.
 
-      \item \code{socketConnection(server = FALSE)} now respects connection
-      timeout also on Linux.
+      \item \code{socketConnection(server = FALSE)} now respects the
+      connection timeout also on Linux.
 
       \item \code{socketConnection(server = FALSE)} no longer leaks a
       connection that is available right away without waiting (e.g. on
