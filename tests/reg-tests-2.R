@@ -484,7 +484,7 @@ rowsum(matrix(1:12, 3,4), c("Y","X","Y"))
 ## PR#1115 (saving strings with ascii=TRUE)
 x <- y <- unlist(as.list(
     parse(text=paste("\"\\", as.character(as.octmode(1:255)), "\"",sep=""))))
-save(x, ascii=TRUE, file=(fn <- tempfile()))
+save(x, ascii=TRUE, file=(fn <- tempfile(tmpdir = getwd())))
 load(fn)
 all(x==y)
 unlink(fn)
@@ -1321,7 +1321,7 @@ Mat <- matrix(c(1:3, letters[1:3], 1:3, LETTERS[1:3],
                 c("2004-01-01", "2004-02-01", "2004-03-01"),
                 c("2004-01-01 12:00", "2004-02-01 12:00", "2004-03-01 12:00")),
               3, 6)
-foo <- tempfile()
+foo <- tempfile(tmpdir = getwd())
 write.table(Mat, foo, col.names = FALSE, row.names = FALSE)
 read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"),
            stringsAsFactors=TRUE)
@@ -1465,7 +1465,7 @@ stopifnot(inherits(res, "try-error"))
 
 
 ## (PR#7789) escaped quotes in the first five lines for read.table
-tf <- tempfile()
+tf <- tempfile(tmpdir = getwd())
 x <- c("6 'TV2  Shortland Street'",
        "2 'I don\\\'t watch TV at 7'",
        "1 'I\\\'m not bothered, whatever that looks good'",
@@ -2015,7 +2015,7 @@ dput(x, control="keepNA")
 dput(x)
 dput(x, control="all")
 dput(x, control=c("all", "S_compatible"))
-tmp <- tempfile()
+tmp <- tempfile(tmpdir = getwd())
 dput(x, tmp, control="all")
 stopifnot(identical(dget(tmp), x))
 dput(x, tmp, control=c("all", "S_compatible"))
@@ -2229,7 +2229,7 @@ qr.coef(qr(matrix(0:1, 1, dimnames=list(NULL, c("zero","one")))), 5)
 ## readChar read extra items, terminated on zeros
 x <- as.raw(65:74)
 readChar(x, nchar=c(3,3,0,3,3,3))
-f <- tempfile()
+f <- tempfile(tmpdir = getwd())
 writeChar("ABCDEFGHIJ", con=f, eos=NULL)
 readChar(f, nchar=c(3,3,0,3,3,3))
 unlink(f)
@@ -3147,7 +3147,7 @@ str(treeA)
 
 
 ## summaryRprof() bug PR#15886 :
-Rprof(tf <- tempfile("Rprof.out"), memory.profiling=TRUE, line.profiling=FALSE)
+Rprof(tf <- tempfile("Rprof.out", tmpdir = getwd()), memory.profiling=TRUE, line.profiling=FALSE)
 out <- lapply(1:10000, rnorm, n= 512)
 Rprof(NULL)
 if(interactive())

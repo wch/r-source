@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-03-24 r78039) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-26 r78075) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1441,7 +1441,7 @@ Y    4   10   16   22
 > ## PR#1115 (saving strings with ascii=TRUE)
 > x <- y <- unlist(as.list(
 +     parse(text=paste("\"\\", as.character(as.octmode(1:255)), "\"",sep=""))))
-> save(x, ascii=TRUE, file=(fn <- tempfile()))
+> save(x, ascii=TRUE, file=(fn <- tempfile(tmpdir = getwd())))
 > load(fn)
 > all(x==y)
 [1] TRUE
@@ -4180,7 +4180,7 @@ Warning message:
 +                 c("2004-01-01", "2004-02-01", "2004-03-01"),
 +                 c("2004-01-01 12:00", "2004-02-01 12:00", "2004-03-01 12:00")),
 +               3, 6)
-> foo <- tempfile()
+> foo <- tempfile(tmpdir = getwd())
 > write.table(Mat, foo, col.names = FALSE, row.names = FALSE)
 > read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"),
 +            stringsAsFactors=TRUE)
@@ -4516,7 +4516,7 @@ Error in stats:::add1.default(fit, ~. + x2) :
 > 
 > 
 > ## (PR#7789) escaped quotes in the first five lines for read.table
-> tf <- tempfile()
+> tf <- tempfile(tmpdir = getwd())
 > x <- c("6 'TV2  Shortland Street'",
 +        "2 'I don\\\'t watch TV at 7'",
 +        "1 'I\\\'m not bothered, whatever that looks good'",
@@ -5725,7 +5725,7 @@ list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
 list(a = NA, b = as.integer(NA), c = as.double(NA), d = as.complex(NA), 
     e = 1., f = as.integer(1), g = 1:3, h = as.integer(c(NA, 
     1, 2, 3)), i = as.character(NA), j = c("foo", NA, "bar"))
-> tmp <- tempfile()
+> tmp <- tempfile(tmpdir = getwd())
 > dput(x, tmp, control="all")
 > stopifnot(identical(dget(tmp), x))
 > dput(x, tmp, control=c("all", "S_compatible"))
@@ -6132,7 +6132,7 @@ zero  one
 > x <- as.raw(65:74)
 > readChar(x, nchar=c(3,3,0,3,3,3))
 [1] "ABC" "DEF" ""    "GHI" "J"  
-> f <- tempfile()
+> f <- tempfile(tmpdir = getwd())
 > writeChar("ABCDEFGHIJ", con=f, eos=NULL)
 > readChar(f, nchar=c(3,3,0,3,3,3))
 [1] "ABC" "DEF" ""    "GHI" "J"  
@@ -8046,7 +8046,7 @@ mean of x
 > 
 > 
 > ## summaryRprof() bug PR#15886 :
-> Rprof(tf <- tempfile("Rprof.out"), memory.profiling=TRUE, line.profiling=FALSE)
+> Rprof(tf <- tempfile("Rprof.out", tmpdir = getwd()), memory.profiling=TRUE, line.profiling=FALSE)
 > out <- lapply(1:10000, rnorm, n= 512)
 > Rprof(NULL)
 > if(interactive())
