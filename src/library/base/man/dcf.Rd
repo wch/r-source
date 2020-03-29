@@ -126,7 +126,7 @@ x <- read.dcf(file = system.file("DESCRIPTION", package = "splines"),
 write.dcf(x)
 
 ## An online DCF file with multiple records
-con <- url("http://cran.r-project.org/src/contrib/PACKAGES")
+con <- url("https://cran.r-project.org/src/contrib/PACKAGES")
 y <- read.dcf(con, all = TRUE)
 close(con)
 utils::str(y)

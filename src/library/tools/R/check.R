@@ -668,7 +668,7 @@ add_dummies <- function(dir, Log)
         ## see e.g.
         ## http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
         ## http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#naming_conventions
-        ## and http://en.wikipedia.org/wiki/Filename (which as of
+        ## and https://en.wikipedia.org/wiki/Filename (which as of
         ## 2007-04-22 is wrong about claiming that COM0 and LPT0 are
         ## disallowed):
         ##

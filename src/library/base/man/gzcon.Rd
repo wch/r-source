@@ -51,7 +51,7 @@ gzcon(con, level = 6, allowNonCompressed = TRUE, text = FALSE)
 \seealso{\code{\link{gzfile}}}
 \examples{
 \donttest{## Uncompress a data file from a URL
-z <- gzcon(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch12.dat.gz"))
+z <- gzcon(url("https://www.stats.ox.ac.uk/pub/datasets/csb/ch12.dat.gz"))
 # read.table can only read from a text-mode connection.
 raw <- textConnection(readLines(z))
 close(z)

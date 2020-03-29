@@ -308,7 +308,7 @@ function(x, header = TRUE, ...)
     }
 
     htmlify <- function(s, a = TRUE) {
-        ## See <http://en.wikipedia.org/wiki/Character_encodings_in_HTML>
+        ## See <https://en.wikipedia.org/wiki/Character_encodings_in_HTML>
         ## which in turn refers to
         ## <http://www.w3.org/TR/REC-html40/sgml/sgmldecl.html>: HTML
         ## forbids characters with Unicode code points
