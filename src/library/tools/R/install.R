@@ -2414,7 +2414,7 @@ if(FALSE) {
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE)) == 1) {
             val <- gsub("^CXX_STD *= *CXX", "", ll)
-            val <- gsub(" +$", "", cxxstd)
+            val <- gsub(" +$", "", val)
             if (val %in% cxx_standards) {
                 use_cxxstd <- val
                 with_cxx <- TRUE
