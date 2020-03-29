@@ -5516,7 +5516,7 @@ JRE@footnote{As from Java 11, there is no separate client JRE
 distribution.}.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  A JDK can be
+need some help, e.g.@: by setting @env{JAVA_HOME}.  A Oracle JDK can be
 specified explicitly by something like
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
@@ -5535,13 +5535,14 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm"
 @noindent
 in @file{config.site}.
 
-To use the builds of OpenJDK (tarballs) from @uref{http://jdk.java.net/},
-set @env{JAVA_HOME}:
+To use the builds of OpenJDK from @uref{http://jdk.java.net/} (tarball) or
+@uref{https://adoptopenjdk.net} set @env{JAVA_HOME} to e.g.@: one of
 @example
 JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
 @end example
 @noindent
-where @file{@var{/path/to/JDK}} is wherever the distribution tarball was
+where @file{@var{/path/to/JDK}} is wherever the tarball was
 unpacked.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
