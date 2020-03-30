@@ -496,6 +496,17 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item There is the beginnings of support for the recently approved
+      C++20 standard, specified analogously to C++14 and C++17.  There is
+      currently only limited support for this in compilers, with flags
+      such as \option{-std=c++20} and \option{-std=c++2a}.  For the time
+      being the \command{configure} test is of accepting one of these
+      flags and compiling C++17 code. 
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{formula(x)} with \code{length(x) > 1} character vectors,

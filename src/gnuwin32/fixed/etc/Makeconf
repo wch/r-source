@@ -73,10 +73,10 @@ CXX = $(BINPREF)g++ -std=gnu++11 $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
 CXXPICFLAGS =
-CXX98 = $(BINPREF)g++ $(M_ARCH)
-CXX98FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
-CXX98PICFLAGS = 
-CXX98STD = -std=gnu++98
+#CXX98 = $(BINPREF)g++ $(M_ARCH)
+#CXX98FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
+#CXX98PICFLAGS = 
+#CXX98STD = -std=gnu++98
 CXX11 = $(BINPREF)g++ $(M_ARCH)
 CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
 CXX11PICFLAGS =
@@ -89,6 +89,10 @@ CXX17 =
 CXX17FLAGS = 
 CXX17PICFLAGS =
 CXX17STD = 
+CXX17 = 
+CXX20FLAGS = 
+CXX20PICFLAGS =
+CXX20STD = 
 DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
@@ -156,18 +160,17 @@ SHLIB_CXXFLAGS =
 SHLIB_CXXLD = $(CXX)
 ## ideally -shared -static-libstdc++, but not for gcc 4.2.1
 SHLIB_CXXLDFLAGS = -shared
-SHLIB_CXX98LD = $(CXX98)
-SHLIB_CXX98LDFLAGS = -shared
+#SHLIB_CXX98LD = $(CXX98)
+#SHLIB_CXX98LDFLAGS = -shared
 SHLIB_CXX11LD = $(CXX11)
 SHLIB_CXX11LDFLAGS = -shared
 SHLIB_CXX14LD = $(CXX14)
 SHLIB_CXX14LDFLAGS = -shared
 SHLIB_CXX17LD = $(CXX17)
 SHLIB_CXX17LDFLAGS = -shared
+SHLIB_CXX20LD = $(CXX20)
+SHLIB_CXX20LDFLAGS = -shared
 SHLIB_EXT = .dll
-SHLIB_FCLD = $(FC)
-## ideally -shared -static-libgfortran, but not for gcc 4.2.1
-SHLIB_FCLDFLAGS = -shared
 SHLIB_FFLAGS = 
 SHLIB_LD = $(CC)
 SHLIB_LDFLAGS = -shared
@@ -182,6 +185,11 @@ STRIP_SHARED_LIB = $(BINPREF)strip --strip-unneeded
 STRIP_STATIC_LIB = $(BINPREF)strip --strip-debug
 TCLTK_CPPFLAGS = -I "$(TCL_HOME)/include" -DWin32
 TCLTK_LIBS = -L"$(TCL_HOME)/bin" -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
+
+## Legacy settings: these might be used in a src/Makefile
+SHLIB_FCLD = $(FC)
+## ideally -shared -static-libgfortran, but not for gcc 4.2.1
+SHLIB_FCLDFLAGS = -shared
 
 STATIC_LIBR =
 

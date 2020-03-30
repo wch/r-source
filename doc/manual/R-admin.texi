@@ -1040,50 +1040,49 @@ CXX17
 CXX17STD
 CXX17FLAGS
 CXX17PICFLAGS
+
+CXX20
+CXX20STD
+CXX20FLAGS
+CXX20PICFLAGS
 @end example
 @noindent
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
-@code{CXX11STD} a suitable flag such as @option{-std=c++11} for C++11
-support. Similarly, configure will if possible choose for
-@code{CXX14STD} a flag@footnote{Currently this is a valid option for
+@code{CXXSTD} and @code{CXX11STD} a suitable flag such as
+@option{-std=c++11} for C++11 support (which is required if C++ is to be
+supported at all).  Similarly, @command{configure} will if possible
+choose for @code{CXX14STD} a flag@footnote{This was a valid option for
 @command{g++} 5 and later and 2016 versions of the Intel and Solaris
 compilers.  For earlier versions of @command{g++} one could try
-@option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support and
-@option{-std=c++17} or @option{-std=c++1z} for support for the C++17
-standard.  The inferred values can be overridden in file
-@file{config.site} or on the @command{configure} command line:
-user-supplied values will be tested by compiling some C++11/14/17 code.
+@option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support,
+@option{-std=c++17} or @option{-std=c++1z} for support for C++17 and
+@option{-std=c++20} or @option{-std=c++2a} for support for C++20..  The
+inferred values can be overridden in file @file{config.site} or on the
+@command{configure} command line: user-supplied values will be tested by
+compiling some C++11/14/17/20 code.
 
-@R{} versions 3.1.0 to 3.3.3 used @code{CXX1X} rather than @code{CXX11}:
-these forms were deprecated in 3.4.4 and removed in 3.6.0.
+@c @R{} versions 3.1.0 to 3.3.3 used @code{CXX1X} rather than @code{CXX11}:
+@c these forms were deprecated in 3.4.4 and removed in 3.6.0.
 
-It may be@footnote{This is true for earlier versions of @command{g++}
-such as 4.2.1, and also for earlier versions of the Solaris
-compiler @code{CC}.} that there is no suitable flag for C++11 support,
-in which case a different compiler could be selected for @code{CXX11}
-and its corresponding flags.  Likewise, a different compiler can be
-specified for C++14 support with @code{CXX14} and for C++17 support with
-@code{CXX17}.
+It may be that there is no suitable flag for C++14/17/20 support with
+the default compiler, in which case a different compiler could be
+selected for @code{CXX14} or @code{CXX17} or @code{CXX20} with its
+corresponding flags.
 
 The @option{-std} flag is supported by the GCC, @command{clang++}, Intel
 and Solaris compilers (the latter from version 12.4).  Currently
 accepted values are (plus some synonyms)
 @example
-g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++17 gnu++17
-Intel:   gnu+98 c++11 c++14 (from 16.0) c++17 (from 17.0)
-Solaris: c++03 c++11 c++14 (from 12.5)
+g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
+         c++20 gnu++20 (from 9)
+Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0)
+Solaris: c++11 c++14 (from 12.5)
 @end example
 @noindent
-(Those for @command{clang++} are not documented, but seem to be based on
-@code{g++}.)  Versions 4.3.x to 4.8.x of @command{g++} accepted flag
-@option{-std=c++0x} with partial support@footnote{For when features were
-supported, see
-@uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx11}.} for
-C++11: this is currently still accepted as a deprecated synonym for
-@option{-std=c++11}.  (At least for versions 4.8.x it has sufficient
-support to be picked by @command{configure}.)  Option
-@option{-std=c++14} was introduced in version 5.x.
+(Those for @command{clang++} are documented at
+@uref{https://clang.llvm.org/cxx_status.html}, and follow @code{g++}:
+@code{-std=c++20} is supported from Clang 10.)
 
 @c c++1y does not pass the configure test in 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
@@ -1099,6 +1098,10 @@ Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
 that of the compiler used: currently it is C++11: this can be overridden
 by setting @samp{CXXSTD} when @R{} is configured, for example to
 @samp{-std=gnu++14}.
+
+@uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
+which versions of common compilers support (parts of) which C++
+standards.
 
 @node Link-Time Optimization,  , C++ Support, Other Options
 @subsection Link-Time Optimization
@@ -2431,8 +2434,8 @@ or in a file such as @file{~/.R/Makevars} (see the next section).
 Entries which may need to be changed include @samp{CC}, @samp{CXX},
 @samp{FC}, @samp{FLIBS} and the corresponding flags, and perhaps
 @samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD} and
-@samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14} and
-@samp{CXX17} variants
+@samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14},
+@samp{CXX17} and @samp{CXX20} variants
 
 So for example you could select a specific build of @command{clang} for
 both C and C++ with extensive checking by having in @file{~/.R/Makevars}
@@ -5513,7 +5516,7 @@ Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used by packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the latter requires a JDK (Java SDK) and not just a
 JRE@footnote{As from Java 11, there is no separate client JRE
-distribution.}.
+distribution from Oracle, but there may be from OpenJDK.}.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
 need some help, e.g.@: by setting @env{JAVA_HOME}.  A Oracle JDK can be

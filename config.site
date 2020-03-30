@@ -297,6 +297,24 @@
 ## SHLIB_CXX17LD=
 ## SHLIB_CXX17LDFLAGS=
 
+## C++20 compiler, optional for use in packages.
+## Introduced in R 4.0.0
+## The command which runs the C++20 compiler: defaults to $(CXX17), but
+## empty if that (plus standard) cannot compile the tested C++20 code.
+## CXX20=
+
+## The 'standard' for the C++20 compiler, which is invoked as
+## $(CXX20) $(CXX20STD) for both compiling and linking DSOs/DLLs.  
+## '-std=gnu++20' and '-std=gnu++2a" are tried by configure, also
+## '-std=c++20' and '-std=c++2a"
+## CXX20STD=
+
+## Analogues for the C++20 compiler: default to the settings for C++17
+## CXX20FLAGS=
+## CXX20PICFLAGS=
+## SHLIB_CXX20LD=
+## SHLIB_CXX20LDFLAGS=
+
 ## Additional libraries to link the internet module against.
 ## Some claim Solaris needs -lsocket -lnsl
 ## INTERNET_LIBS=
