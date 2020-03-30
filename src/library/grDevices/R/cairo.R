@@ -20,42 +20,43 @@
 svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
                 width = 7, height = 7, pointsize = 12,
                 onefile = FALSE, family = "sans", bg = "white",
-                antialias = c("default", "none", "gray", "subpixel"))
+                antialias = c("default", "none", "gray", "subpixel"),
+                symbolfamily = "symbol")
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(C_devCairo, filename, 4L, 72*width, 72*height,
                         pointsize, bg, NA_integer_, antialias, onefile,
-                        family, 300))
+                        family, 300, symbolfamily))
 }
 
 cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
                       width = 7, height = 7, pointsize = 12,
                       onefile = FALSE, family = "sans", bg = "white",
                       antialias = c("default", "none", "gray", "subpixel"),
-                      fallback_resolution = 300)
+                      fallback_resolution = 300, symbolfamily = "symbol")
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(C_devCairo, filename, 6L, 72*width, 72*height,
                         pointsize, bg, NA_integer_, antialias, onefile,
-                        family, fallback_resolution))
+                        family, fallback_resolution, symbolfamily))
 }
 
 cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
                      width = 7, height = 7, pointsize = 12,
                      onefile = FALSE, family = "sans", bg = "white",
                      antialias = c("default", "none", "gray", "subpixel"),
-                     fallback_resolution = 300)
+                     fallback_resolution = 300, symbolfamily = "symbol")
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(C_devCairo, filename, 7L, 72*width, 72*height,
                         pointsize, bg, NA_integer_, antialias, onefile,
-                        family, fallback_resolution))
+                        family, fallback_resolution, symbolfamily))
 }
 
 cairoVersion <- function() .Call(C_cairoVersion)

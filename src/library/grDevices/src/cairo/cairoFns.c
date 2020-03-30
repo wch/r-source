@@ -450,7 +450,8 @@ static SEXP Cairo_Cap(pDevDesc dd)
 /* ------------- pangocairo section --------------- */
 
 static PangoFontDescription 
-*PG_getFont(const pGEcontext gc, double fs, const char *family)
+*PG_getFont(const pGEcontext gc, double fs, const char *family,
+            const char *symbolfamily)
 {
     PangoFontDescription *fontdesc;
     gint face = gc->fontface;
@@ -463,9 +464,9 @@ static PangoFontDescription
     if (face < 1 || face > 5) face = 1;
 
     fontdesc = pango_font_description_new();
-    if (face == 5)
-	pango_font_description_set_family(fontdesc, "symbol");
-    else {
+    if (face == 5) {
+	pango_font_description_set_family(fontdesc, symbolfamily);
+    } else {
 	const char *fm = gc->fontfamily;
 	if (!fm[0]) fm = family;
 	if (streql(fm, "mono")) fm = "courier";
@@ -530,7 +531,7 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     char str[16];
     int Unicode = mbcslocale;
     PangoFontDescription *desc = 
-	PG_getFont(gc, xd->fontscale, xd->basefontfamily);
+	PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
     PangoLayout *layout;
     gint iascent, idescent, iwidth;
 
@@ -566,7 +567,7 @@ PangoCairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 
     if (!utf8Valid(str)) error("invalid string in PangoCairo_StrWidth");
     PangoFontDescription *desc = 
-	PG_getFont(gc, xd->fontscale, xd->basefontfamily);
+	PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
     PangoLayout *layout = PG_layout(desc, xd->cc, str);
 
     PG_text_extents(xd->cc, layout, NULL, NULL, &width, NULL, NULL, 0);
@@ -586,7 +587,7 @@ PangoCairo_Text(double x, double y,
 	gint ascent, lbearing, width;
 	PangoLayout *layout;
 	PangoFontDescription *desc = 
-	    PG_getFont(gc, xd->fontscale, xd->basefontfamily);
+	    PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
 	cairo_save(xd->cc);
 	layout = PG_layout(desc, xd->cc, str);
 	PG_text_extents(xd->cc, layout, &lbearing, NULL, &width,
@@ -771,7 +772,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 #ifdef Win32
 	if (!*family) family = "Standard Symbols L";
 #else
-	if (!*family) family = "Symbol";
+	if (!*family) family = xd->symbolfamily;
 #endif
     } else {
 	if (!*family) family = xd->basefontfamily;
@@ -808,7 +809,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 #endif
 
     if (face < 1 || face > 5) face = 1;
-    if (face == 5) family = "Symbol";
+    if (face == 5) family = xd->symbolfamily;
     if (face == 2 || face == 4) wt = CAIRO_FONT_WEIGHT_BOLD;
     if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
     if (face != 5) {
