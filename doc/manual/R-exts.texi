@@ -1861,8 +1861,7 @@ licence).
 * Configure example::
 * Using F9x code::
 * Using C++11 code::
-* Using C++14 code::
-* Using C++17 code::
+* Using C++14 and later::
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2623,7 +2622,7 @@ define a module of the same name in multiple source files.
 @c As was done by frailtypack in 2018-12: gfortran accepted this, ODS
 @c on Solaris did not.
 
-@node Using C++11 code, Using C++14 code, Using F9x code, Configure and cleanup
+@node Using C++11 code, Using C++14 and later, Using F9x code, Configure and cleanup
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -2636,14 +2635,14 @@ published in December 2017, and a further revision (`C++20', with many
 new features) is scheduled for publication in May 2020.
 
 What standard a C++ compiler aims to support can be hard to determine:
-the value@footnote{Values @code{199711}, @code{201103L} and
-@code{201402L} are most commonly used for C++98, C++11 and C++14
-respectively, but some compilers set @code{1L}.  The official value for
-C++17 is @code{201703L} but some compiler versions have smaller values
-so a test of @code{__cplusplus > 201402L} is safer.} of
-@code{__cplusplus} may help but some compilers use it to denote a
-standard which is partially supported and some the latest standard which
-is (almost) fully supported.
+the value@footnote{Values @code{199711}, @code{201103L}, @code{201402L}
+and @code{201703L} are most commonly used for C++98, C++11, C++14 and
+C++17 respectively, but some compilers set @code{1L}.  At the time of
+writing there was no official value for C++20, but some compilers are
+using @code{202002L}, others @code{201703L}.} of @code{__cplusplus} may
+help but some compilers use it to denote a standard which is partially
+supported and some the latest standard which is (almost) fully
+supported.
 
 The webpage
 @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
@@ -2710,11 +2709,11 @@ by @command{R CMD SHLIB} as used by default by @command{R CMD INSTALL}.
 They do not necessarily apply if there is a @file{src/Makefile} file,
 nor to compilation done in vignettes or @emph{via} other packages.
 
-@node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
-@subsection Using C++14 code
+@node Using C++14 and later,  , Using C++11 code, Configure and cleanup
+@subsection Using C++14 and later
 
-Support for a C++14 compiler (where available) was been added to @R{}
-from version 3.4.0.  Similar considerations to C++11 apply, with the
+Support for a C++14 compiler (where available) has been in @R{}
+since version 3.4.0.  Similar considerations to C++11 apply, with the
 variables associated with the C++14 compiler using the prefix
 @samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in a
 package, the package's @file{Makevars} file (or @file{Makevars.win} on
@@ -2724,7 +2723,7 @@ CXX_STD = CXX14
 @end example
 
 In the absence of a @file{Makevars} file, C++14 support can also be
-requested by the line:
+requested by the line
 @example
 SystemRequirements: C++14
 @end example
@@ -2732,7 +2731,7 @@ SystemRequirements: C++14
 in the @file{DESCRIPTION} file. Finally, the C++14 compiler can be
 used systematically by setting the environment variable @env{USE_CXX14}.
 
-Note that code written for C++11 that emulates features of C++14 will
+Code written for C++11 that emulates features of C++14 will
 not necessarily compile under a C++14 compiler@footnote{As from @R{}
 3.4.0, @command{configure} attempts to supply a C++14 compiler only if
 explicitly requested.  However, earlier versions of @R{} will use the
@@ -2781,42 +2780,16 @@ CXX14STD=-std=gnu1y
 @noindent
 in @file{@var{HOME}/.R/Makevars.win}.
 
+C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
+specified in an analogous way, replacing @code{14} by @code{17} or
+@code{20}, but compiler/OS support is platform-dependent.  Feature tests
+can be used (and probably should be as support is still patchy,
+especially library support).
 
-@node Using C++17 code,  , Using C++14 code, Configure and cleanup
-@subsection Using C++17 code
+No C++17/20 support is enabled in the current default build of @R{} on
+Windows.  C++17 and C++20 support are available with the default
+build of @R{} on macOS.
 
-Support for C++17 was added to @R{} version 3.4.0. The @file{configure}
-script tests a subset of C++17 features.  @code{clang 4.0.0} and
-@code{gcc 7.1} and later versions passed these tests (with flag
-@option{-std=gnu++17} or @option{-std=gnu++1z} chosen by the
-@file{configure} script).  Note that the C++17 feature tests are
-incomplete and are subject to change in future @R{} versions as
-support for the standard improves.
-@c Both the compiler and the library are involved, conceivably also the
-@c OS headers.
-
-The variables associated with the C++17 compiler use the prefix
-@samp{CXX17}.  Hence to use C++17 code in a package, the package's
-@file{Makevars} file (or @file{Makevars.win} on Windows) should
-include the line
-@example
-CXX_STD = CXX17
-@end example
-
-In the absence of a @file{Makevars} file, C++17 support can also be
-requested by the line:
-@example
-SystemRequirements: C++17
-@end example
-@noindent
-in the @file{DESCRIPTION} file. Finally, the C++17 compiler can be
-used systematically by setting the environment variable @env{USE_CXX17}.
-
-As for C++14, feature tests can be used (and probably should be as
-support is still patchy, especially library support).
-
-No C++17 support is enabled in the current default build of @R{} on
-Windows.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -4441,10 +4414,11 @@ personal @file{Makevars} files.
 R-admin, R Installation and Administration},
 @end ifset
 
-Portable C++ code needs to follow the 2011 standard or to specify a C+14
-or C++17 (see @ref{Using C++14 code}) where available (which is
+Portable C++ code needs to follow the 2011 standard or to specify
+C+14/17/20 (see @ref{Using C++14 and later}) where available (which is
 not the case on all @R{} platforms).  Currently C++14 code is less
-portable than C++11 and C++17 support is patchy across @R{} platforms.
+portable than C++11 and C++17/20 support is patchy across @R{}
+platforms.
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
