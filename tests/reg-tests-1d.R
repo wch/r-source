@@ -3748,37 +3748,32 @@ stopifnot(identical(tools::assertError(sqrt("a")),
 
 
 ## Overriding encoding in parse()
-oloc <- Sys.getlocale("LC_CTYPE")
-if (onWindows) {
-  Sys.setlocale("LC_CTYPE", "English_United States.1252")
-} else {
-  ## assumes non-Windows system already all support UTF-8
-  Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
+if (l10n_info()$"UTF-8" || l10n_info()$"Latin-1") {
+    x8 <- "'\uf6'"
+    x8.2 <- substr(x8, 2, 2)
+    stopifnot(identical(Encoding(x8), "UTF-8"))
+    f8 <- tempfile()
+    writeLines(x8, f8, useBytes=TRUE) # save in UTF-8
+    ##
+    chk_x82 <- function(x) stopifnot(identical(Encoding(x), "UTF-8"),
+                                     identical(x, x8.2))
+    ## parse(*, encoding = "UTF-8", ..) :
+    for(FF in c(function(.) parse(text=., encoding="UTF-8", keep.source=TRUE),
+                function(.) parse(text=., encoding="UTF-8", keep.source=FALSE)
+                )) {
+        x <- eval(FF(x8))
+        chk_x82(x)
+    }
+    for(K.S in c(TRUE, FALSE)) {
+        x <- eval(parse(file=f8, encoding="UTF-8", keep.source = K.S))
+        chk_x82(x)
+    }
+    ## latin1 <--> UTF-8
+    xl <- iconv(x8, from="UTF-8", to="latin1")
+    stopifnot(identical(Encoding(xl), "latin1"))
+    stopifnot(identical(x8, iconv(xl, from="latin1", to="UTF-8")))
+    unlist(l10n_info()) # to see ..
 }
-##
-x8 <- "'\uf6'"
-(x8.2 <- substr(x8, 2,2))
-stopifnot(identical(Encoding(x8), "UTF-8"))
-f8 <- tempfile()
-writeLines(x8, f8, useBytes=TRUE) # save in UTF-8
-##
-chk_x82 <- function(x) stopifnot(identical(Encoding(x), "UTF-8"), identical(x, x8.2))
-## parse(*, encoding = "UTF-8", ..) :
-for(FF in c(function(.) parse(text=., encoding="UTF-8", keep.source=TRUE),
-            function(.) parse(text=., encoding="UTF-8", keep.source=FALSE)
-            )) {
-    x <- eval(FF(x8))
-    chk_x82(x)
-}
-for(K.S in c(TRUE, FALSE)) {
-    x <- eval(parse(file=f8, encoding="UTF-8", keep.source = K.S))
-    chk_x82(x)
-}
-## latin1 <--> UTF-8
-xl <- iconv(x8, from="UTF-8", to="latin1")
-stopifnot(identical(Encoding(xl), "latin1"))
-stopifnot(identical(x8, iconv(xl, from="latin1", to="UTF-8")))
-unlist(l10n_info()) # to see ..
 if (l10n_info()$"UTF-8") {
     for(x in c(eval(parse(text=x8)),
                eval(parse(text=xl, keep.source=TRUE)),
@@ -3796,7 +3791,6 @@ if (l10n_info()$"Latin-1") {
                str2expression(x8)))
         stopifnot(identical(x, x8.2))
 }
-Sys.setlocale("LC_CTYPE", oloc)
 ## parse(text=xl) had failed w/ "EOF whilst reading MBCS char at line 2"
 
 
