@@ -1252,13 +1252,13 @@ static void InitMmapRealClass(DllInfo *dll)
 #ifdef Win32
 static void mmap_finalize(SEXP eptr)
 {
-    error("mmop objects not supported on Windows yet");
+    error("mmap objects not supported on Windows yet");
 }
 
 static SEXP mmap_file(SEXP file, int type, Rboolean ptrOK, Rboolean wrtOK,
 		      Rboolean serOK, Rboolean warn)
 {
-    error("mmop objects not supported on Windows yet");
+    error("mmap objects not supported on Windows yet");
 }
 #else
 /* derived from the example in
@@ -1961,7 +1961,7 @@ SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* When a wrapper has no useful meta-data, is no longer referenced
-   anywhere, and its data is unly accessible from the wrapper, then
+   anywhere, and its data is only accessible from the wrapper, then
    the wrapper can be unwrapped to its wrapped data, and its
    attributes can be transferred to the data.
 
