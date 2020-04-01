@@ -2440,33 +2440,28 @@ Entries which may need to be changed include @samp{CC}, @samp{CXX},
 So for example you could select a specific build of @command{clang} for
 both C and C++ with extensive checking by having in @file{~/.R/Makevars}
 @example
-CC = /usr/local/clang8/bin/clang
-CXX = /usr/local/clang8/bin/clang++
+CC = /usr/local/clang/bin/clang
+CXX = /usr/local/clang/bin/clang++
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
+CXX20 = $CXX
 CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11FLAGS = $CXXFLAGS
 CXX14FLAGS = $CXXFLAGS
 CXX17FLAGS = $CXXFLAGS
+CXX20FLAGS = $CXXFLAGS
 @end example
 @noindent
 and @command{gfortran} by
-(El Capitan)
-@example
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
-  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
-@end example
-@noindent
-or (Sierra or High Sierra)
+(Sierra or later)
 @example
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
-or (Mojave or later)
+or (Mojave or later, but also works on High Sierra)
 @example
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
@@ -2475,21 +2470,21 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
 @noindent
 (with lines broken here for legibility).
 
-If using the C/C++ compilers from the Command Line Tools (which do not
-have OpenMP support) one will need to include
-@example
-SHLIB_OPENMP_CFLAGS =
-SHLIB_OPENMP_CXXFLAGS =
-@end example
-@noindent
-to compile OpenMP-using packages.
+@c If using the C/C++ compilers from the Command Line Tools (which do not
+@c have OpenMP support) one will need to include
+@c @example
+@c SHLIB_OPENMP_CFLAGS =
+@c SHLIB_OPENMP_CXXFLAGS =
+@c @end example
+@c @noindent
+@c to compile OpenMP-using packages.
 
 Apple includes many Open Source libraries in macOS but increasingly
 without the corresponding headers (not even in Xcode nor the Command
 Line Tools): they are often rather old versions.  If installing packages
 from source using them it is usually easiest to install a
 statically-linked up-to-date copy of the Open Source package from its
-sources or from @uref{https://mac.R-project.org/libs}.  But sometimes
+sources or from @uref{https://mac.R-project.org/libs-4}.  But sometimes
 it is desirable/necessary to use Apple's dynamically linked library, in
 which case appropriate headers could be extracted from the
 sources@footnote{Note that capitalization and version may differ from
@@ -5655,6 +5650,9 @@ install_name_tool -change /usr/local/gfortran/lib/libgfortran.5.dylib \
 @noindent
 (where the details depend on the compilers and CRAN macOS @R{} release).
 @end itemize
+@noindent
+The CRAN binary packages are built on High Sierra, which avoids the
+first two.
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
