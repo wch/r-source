@@ -292,31 +292,33 @@ getOption(x, default = NULL)
 
     \item{\code{PCRE_limit_recursion}:}{Logical: should
       \code{\link{grep}(perl = TRUE)} and similar limit the maximal
-      recursion allowed when matching?  PCRE can be built not to use a
-      recursion stack (see \code{\link{pcre_config}}), but it is by
-      default with a recursion limit of 10000000 which potentially needs
-      a very large C stack: see the discussion at
+      recursion allowed when matching?  Only relevant for PCRE1 and
+      PCRE2 <= 10.23.
+
+      PCRE can be built not to use a recursion stack (see
+      \code{\link{pcre_config}}), but it uses by default with a
+      recursion limit of 10000000 which potentially needs a very large C
+      stack: see the discussion at
       \url{http://www.pcre.org/original/doc/html/pcrestack.html}.  If
       true, the limit is reduced using \R's estimate of the C stack size
       available (if known), otherwise 10000.  If \code{NA}, the limit is
-      imposed only if any input string has 1000 or more bytes. The limit
-      has no impact when PCRE's Just-in-Time compiler is used and it is
-      ignored with PCRE2 version >= 10.30, which no longer uses function
-      recursion for remembering backtracking positions.}
+      imposed only if any input string has 1000 or more bytes.  The
+      limit has no effect when PCRE's Just-in-Time compiler is used.}
 
      \item{\code{PCRE_study}:}{Logical or integer: should
       \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
       patterns?  Either logical or a numerical threshold for the minimum
       number of strings to be matched for the pattern to be studied (the
       default is \code{10})).  Missing values and negative numbers are
-      treated as false. This option is ignore with PCRE2 (PCRE version >=
+      treated as false.  This option is ignored with PCRE2 (PCRE version >=
       10.00) which does not have a separate study phase and patterns are
       automatically optimized when possible.}
 
     \item{\code{PCRE_use_JIT}:}{Logical: should \code{\link{grep}(perl =
 	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
-      of PCRE's Just-In-Time compiler for studied patterns, if
-      available?  Missing values are treated as false.}
+      of PCRE's Just-In-Time compiler if available? (This applies only
+      studied patterns with PCRE1.)  Default: true.  Missing values are
+      treated as false.}
 
     \item{\code{pdfviewer}:}{default PDF viewer.
       The default is set from the environment variable \env{R_PDFVIEWER},
