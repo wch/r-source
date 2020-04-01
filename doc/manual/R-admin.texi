@@ -1860,7 +1860,8 @@ For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
 
 It is important that if you use a binary installer package that your OS
-is fully updated: look at `Updates' from the `App Store' to be sure.
+is fully updated: look at `Updates' from the `App Store'
+(`Software Update' in 'System Preferences' on Catalina) to be sure.
 (If using XQuartz, check that is current.)
 
 To install, just double-click on the icon of the file you downloaded.
@@ -1961,8 +1962,8 @@ some third-party packages.
 @section Uninstalling under macOS
 
 @R{} for macOS consists of two parts: the GUI (@Rapp{}) and the R
-framework. The un-installation is as simple as removing those folders
-(e.g.@: by dragging them onto the Trash). The typical installation will
+framework. Un-installation is as simple as removing those folders
+(e.g.@: by dragging them onto the Trash aka Bin). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  The
 links to @file{R} and @file{Rscript} in @file{/usr/local/bin} should
@@ -1976,11 +1977,9 @@ sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/local/bin/R /usr/local/bin/Rscript
 @end example
 
-The installation consists of up to four Apple packages:@footnote{The
-framework for @R{} 3.3.x was named
-@code{org.r-project.R.mavericks.fw.pkg}: use @command{pkgutil --pkgs |
-grep org.r-project} to check for earlier versions of @R{}.}
-@code{org.r-project.R.el-capitan.fw.pkg},
+The installation consists of up to four Apple packages:@footnote{At the
+time of writing: use @command{pkgutil --pkgs | grep org.r-project} to
+check..}  @code{org.r-project.R.el-capitan.fw.pkg},
 @code{org.r-project.R.el-capitan.GUI.pkg},
 @code{org.r-project.x86_64.tcltk.x11} and
 @code{org.r-project.x86_64.texinfo}. You can use @code{pkgutil --forget}
@@ -2024,7 +2023,7 @@ using @command{pkgutil --forget} (see the previous section).  However,
 note that different versions are installed under
 @file{/Library/Frameworks/R.framework/Versions} as @file{4.0},
 @file{3.6} and so on, so it is not possible to have different
-@samp{3.x.y} versions installed for the same @samp{x}.
+@samp{3.x.y} or @samp{4.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
