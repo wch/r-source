@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2018  The R Core Team.
+ *  Copyright (C) 1995--2020  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1752,9 +1752,10 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	Rstrncpy(buf, localbuf, BUFSIZE);
 	/*	Rvsnprintf(buf, BUFSIZE - 1, format, ap);*/
 	if (IS_CALLING_ENTRY(entry)) {
-	    if (ENTRY_HANDLER(entry) == R_RestartToken)
+	    if (ENTRY_HANDLER(entry) == R_RestartToken) {
+		UNPROTECT(1); /* oldstack */
 		return; /* go to default error handling; do not reset stack */
-	    else {
+	    } else {
 		/* if we are in the process of handling a C stack
 		   overflow, treat all calling handlers as failed */
 		if (R_OldCStackLimit)
@@ -1767,6 +1768,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		hooksym = install(".handleSimpleError");
 		qfun = lang3(R_DoubleColonSymbol, R_BaseSymbol,
 		             R_QuoteSymbol);
+		PROTECT(qfun);
 		PROTECT(qcall = LCONS(qfun,
 				      LCONS(call, R_NilValue)));
 		PROTECT(hcall = LCONS(qcall, R_NilValue));
@@ -1891,6 +1893,7 @@ static void signalInterrupt(void)
     if (h != R_NilValue) {
 	SEXP call = PROTECT(LCONS(h, R_NilValue));
 	evalKeepVis(call, R_GlobalEnv);
+	UNPROTECT(1);
     }
 }
 
