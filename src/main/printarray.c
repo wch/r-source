@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000--2018	The R Core Team
+ *  Copyright (C) 2000--2020	The R Core Team
  *  Copyright (C) 2001--2012	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -390,7 +390,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 {
 /* == printArray(.) */
     const void *vmax = vmaxget();
-    int ndim = LENGTH(dim);
+    int ndim = LENGTH(dim), nprotect = 0;
     const char *rn = NULL, *cn = NULL;
 
     if (ndim == 1)
@@ -420,6 +420,8 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    dnn = getAttrib(dimnames, R_NamesSymbol);
 	    has_dnn = !isNull(dnn);
 	    if ( has_dnn ) {
+		PROTECT(dnn);
+		nprotect++;
 		rn = (char *) translateChar(STRING_ELT(dnn, 0));
 		cn = (char *) translateChar(STRING_ELT(dnn, 1));
 	    }
@@ -499,6 +501,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    Rprintf(" %d matrix slice(s) ]\n", nb - nb_pr);
 	}
     }
+    UNPROTECT(nprotect);
     vmaxset(vmax);
 }
 

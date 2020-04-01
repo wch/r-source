@@ -2480,6 +2480,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, names, dims;
     R_xlen_t i, n;
+    int nprotect = 0;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -2494,6 +2495,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = xlength(x);
     PROTECT(ans = allocVector(LGLSXP, n));
+    nprotect++;
     int *pa = LOGICAL(ans);
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
@@ -2501,6 +2503,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));
 	else
 	    PROTECT(names = getAttrib(x, R_NamesSymbol));
+	nprotect++;
     }
     else dims = names = R_NilValue;
     switch (TYPEOF(x)) {
@@ -2537,9 +2540,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    setAttrib(ans, R_NamesSymbol, names);
     }
-    if (isVector(x))
-	UNPROTECT(1); /* names */
-    UNPROTECT(1); /* ans */
+    UNPROTECT(nprotect);
     return ans;
 }
 
@@ -2548,6 +2549,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, x, names, dims;
     double xr, xi;
     R_xlen_t i, n;
+    int nprotect = 0;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -2562,6 +2564,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = xlength(x);
     PROTECT(ans = allocVector(LGLSXP, n));
+    nprotect++;
     int *pa = LOGICAL(ans);
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
@@ -2569,6 +2572,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));
 	else
 	    PROTECT(names = getAttrib(x, R_NamesSymbol));
+	nprotect++;
     }
     else	dims = names = R_NilValue;
     switch (TYPEOF(x)) {
@@ -2612,9 +2616,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    setAttrib(ans, R_NamesSymbol, names);
     }
-    if (isVector(x))
-	UNPROTECT(1); /* names */
-    UNPROTECT(1); /* ans */
+    UNPROTECT(nprotect);
     return ans;
 }
 

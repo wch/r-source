@@ -367,19 +367,16 @@ static void con_cleanup(void *data)
 SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-
-    SEXP tval = CAR(args),
-	saveenv = R_NilValue; // -Wall
-    if (TYPEOF(tval) == CLOSXP) {
-	PROTECT(saveenv = CLOENV(tval));
-	SET_CLOENV(tval, R_GlobalEnv);
-    }
+    SEXP tval = CAR(args);
     int opts = isNull(CADDR(args)) ? SHOWATTRIBUTES : asInteger(CADDR(args));
-    tval = deparse1(tval, 0, opts);
-    if (TYPEOF(CAR(args)) == CLOSXP) {
-	SET_CLOENV(CAR(args), saveenv);
+
+    if (TYPEOF(tval) == CLOSXP) {
+	SEXP clo = PROTECT(duplicate(tval));
+	SET_CLOENV(clo, R_GlobalEnv);
+	tval = deparse1(clo, 0, opts);
 	UNPROTECT(1);
-    }
+    } else
+	tval = deparse1(tval, 0, opts);
     PROTECT(tval); /* against Rconn_printf */
     if(!inherits(CADR(args), "connection"))
 	error(_("'file' must be a character string or connection"));
@@ -1565,6 +1562,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	if(isNull(nv))
 	    do_names = FALSE;
     }
+    PROTECT(nv);
     Rboolean
 	STR_names, // if true, use structure(.,*) for names even if(nice_names)
 	need_c = tlen > 1; // (?) only TRUE iff SHOW_ATTR_OR_NMS
@@ -1748,6 +1746,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
     }
     if(attr >= STRUC_ATTR) attr2(vector, d, (attr == STRUC_ATTR));
     if (STR_names) d->opts = d_opts_in;
+    UNPROTECT(1); /* nv */
 } // vector2buff()
 
 
@@ -1793,13 +1792,13 @@ static void vec2buff(SEXP v, LocalParseData *d,
     Rboolean lbreak = FALSE;
     const void *vmax = vmaxget();
     int n = length(v);
-    SEXP nv;
+    SEXP nv = R_NilValue;
     if(do_names) {
 	nv = getAttrib(v, R_NamesSymbol); // only "do names" if have names:
 	if (isNull(nv))
 	    do_names = FALSE;
     }
-
+    PROTECT(nv);
     SEXP sv; // Srcref or NULL
     if (d->opts & USESOURCE) {
 	sv = getAttrib(v, R_SrcrefSymbol);
@@ -1820,6 +1819,7 @@ static void vec2buff(SEXP v, LocalParseData *d,
     if (lbreak)
 	d->indent--;
     vmaxset(vmax);
+    UNPROTECT(1); /* nv */
 }
 
 static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)

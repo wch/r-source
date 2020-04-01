@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2018  The R Core Team
+ *  Copyright (C) 2000-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -262,8 +262,9 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		UNPROTECT(1);
 	    }
 	}
+	UNPROTECT(2); /* names and rowNames */
     }
-    UNPROTECT(useNames ? 6 : 4); /* X, XX, value, ans, and maybe names and rowNames */
+    UNPROTECT(4); /* X, XX, value, ans */
     return ans;
 }
 

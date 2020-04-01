@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2019   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -362,8 +362,8 @@ SEXP DropDims(SEXP x)
 	    if (dim[i] != 1)
 		INTEGER(newdims)[n++] = dim[i];
 	if(!isNull(getAttrib(dims, R_NamesSymbol))) {
-	    SEXP nms_d = getAttrib(dims, R_NamesSymbol),
-		new_nms = PROTECT(allocVector(STRSXP, n));
+	    SEXP new_nms = PROTECT(allocVector(STRSXP, n));
+	    SEXP nms_d = getAttrib(dims, R_NamesSymbol);
 	    for (i = 0, n = 0; i < ndims; i++)
 		if (dim[i] != 1)
 		    SET_STRING_ELT(new_nms, n++, STRING_ELT(nms_d, i));

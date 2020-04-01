@@ -2158,16 +2158,15 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 
     int len = length(s);
     if (len > 1) {
-	/* needed as per PR#15990.  call gets protected by warningcall() */
-	/* FIXME: should be protected by caller, not here */
-	PROTECT(s);
+	/* PROTECT(s) needed as per PR#15990.  call gets protected by
+	   warningcall(). Now "s" is protected by caller and also
+	   R_BadValueInRCode disables GC. */
 	R_BadValueInRCode(s, call, rho,
 	    "the condition has length > 1",
 	    _("the condition has length > 1"),
 	    _("the condition has length > 1 and only the first element will be used"),
 	    "_R_CHECK_LENGTH_1_CONDITION_",
 	    TRUE /* by default issue warning */);
-	UNPROTECT(1);
     }
     if (len > 0) {
 	/* inline common cases for efficiency */
@@ -2188,9 +2187,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 			   _("missing value where TRUE/FALSE needed") :
 			   _("argument is not interpretable as logical")) :
 	    _("argument is of length zero");
-	PROTECT(s);	/* Maybe needed in some weird circumstance. */
 	errorcall(call, msg);
-	UNPROTECT(1);
     }
     return cond;
 }
@@ -2426,7 +2423,11 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
-	while (asLogicalNoNA(eval(CAR(args), rho), call, rho)) {
+	for(;;) {
+	    SEXP cond = PROTECT(eval(CAR(args), rho));
+	    int condl = asLogicalNoNA(cond, call, rho);
+	    UNPROTECT(1);
+	    if (!condl) break;
 	    if (RDEBUG(rho) && !bgn && !R_GlobalContext->browserfinish) {
 		SrcrefPrompt("debug", R_Srcref);
 		PrintValue(body);
@@ -2909,8 +2910,11 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (PRIMVAL(op) == 2)                       /* <<- */
 	setVar(lhsSym, value, ENCLOS(rho));
     else {                                      /* <-, = */
-	if (ALTREP(value))
+	if (ALTREP(value)) {
+	    PROTECT(value);
 	    value = try_assign_unwrap(value, lhsSym, rho, NULL);
+	    UNPROTECT(1);
+	}
 	defineVar(lhsSym, value, rho);
     }
     INCREMENT_NAMED(value);
@@ -6209,7 +6213,10 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 	    return lval;
     }
     SEXP call = VECTOR_ELT(constants, callidx);
-    return asLogicalNoNA(value, call, rho);
+    PROTECT(value);
+    Rboolean ans = asLogicalNoNA(value, call, rho);
+    UNPROTECT(1);
+    return ans;
 }
 
 #define GETSTACK_LOGICAL(n) GETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (n))

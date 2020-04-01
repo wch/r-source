@@ -807,11 +807,12 @@ void InitS3DefaultTypes()
 
 	SEXP part2 = PROTECT(mkChar("array"));
 	SEXP part1 = PROTECT(mkChar("matrix"));
+	nprotected += 2;
 	Type2DefaultClass[type].matrix =
 	    createDefaultClass(part1,      part2, part3, part4);
 	Type2DefaultClass[type].array =
 	    createDefaultClass(R_NilValue, part2, part3, part4);
-	UNPROTECT(2 + nprotected);
+	UNPROTECT(nprotected);
     }
 }
 
@@ -1348,10 +1349,12 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 	names = R_NilValue; // -Wall
 
+    PROTECT(names);
     if (object == R_NilValue) {
-	if (attrs == R_NilValue)
+	if (attrs == R_NilValue) {
+	    UNPROTECT(1); /* names */
 	    return R_NilValue;
-	else
+	} else
 	    PROTECT(object = allocVector(VECSXP, 0));
     } else {
 	/* Unlikely to have NAMED == 0 here.
@@ -1402,7 +1405,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		      VECTOR_ELT(attrs, i));
 	}
     }
-    UNPROTECT(1);
+    UNPROTECT(2); /* names, object */
     return object;
 }
 

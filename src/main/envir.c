@@ -1872,6 +1872,7 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = LENGTH(x);
     xnms = getAttrib(x, R_NamesSymbol);
+    PROTECT(xnms);
     if (n && (TYPEOF(xnms) != STRSXP || LENGTH(xnms) != n))
 	error(_("names(x) must be a character vector of the same length as x"));
     envir = CADR(args);
@@ -1882,6 +1883,7 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP name = installTrChar(STRING_ELT(xnms, i));
 	defineVar(name, lazy_duplicate(VECTOR_ELT(x, i)), envir);
     }
+    UNPROTECT(1); /* xnms */
 
     return envir;
 }
