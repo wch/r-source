@@ -60,3 +60,5 @@ cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
 }
 
 cairoVersion <- function() .Call(C_cairoVersion)
+
+pangoVersion <- function() .Call(C_pangoVersion)

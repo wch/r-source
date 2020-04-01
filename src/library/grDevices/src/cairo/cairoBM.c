@@ -642,3 +642,15 @@ SEXP in_CairoVersion(void)
     UNPROTECT(1);
     return ans;
 }
+
+SEXP in_PangoVersion(void)
+{
+#ifdef HAVE_PANGOCAIRO
+    SEXP ans = PROTECT(allocVector(STRSXP, 1));
+    SET_STRING_ELT(ans, 0, mkChar(pango_version_string()));
+    UNPROTECT(1);
+    return ans;
+#else
+    return mkString("");
+#endif
+}

@@ -3839,6 +3839,8 @@ static HINSTANCE hRcairoDll;
 
 typedef SEXP (*R_cairoVersion_t)(void);
 static R_cairoVersion_t R_cairoVersion = NULL;
+typedef SEXP (*R_pangoVersion_t)(void);
+static R_pangoVersion_t R_pangoVersion = NULL;
 
 static int Load_Rcairo_Dll()
 {
@@ -3854,6 +3856,8 @@ static int Load_Rcairo_Dll()
 	     != NULL)) {
 	    R_cairoVersion = (R_cairoVersion_t)
 		GetProcAddress(hRcairoDll, "in_CairoVersion");
+	    R_pangoVersion = (R_pangoVersion_t)
+		GetProcAddress(hRcairoDll, "in_PangoVersion");
 	    RcairoAlreadyLoaded = 1;
 	} else {
 	    if (hRcairoDll != NULL) FreeLibrary(hRcairoDll);
@@ -3881,6 +3885,12 @@ SEXP cairoVersion(void)
 {
     if (!Load_Rcairo_Dll() || R_cairoVersion == NULL) return mkString("");
     else return (R_cairoVersion)();
+}
+
+SEXP pangoVersion(void)
+{
+    if (!Load_Rcairo_Dll() || R_cairoVersion == NULL) return mkString("");
+    else return (R_pangoVersion)();
 }
 
 SEXP bmVersion(void)

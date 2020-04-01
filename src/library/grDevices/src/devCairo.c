@@ -29,9 +29,11 @@ int R_cairoCdynload(int local, int now);
 
 typedef SEXP (*R_cairo)(SEXP args);
 typedef SEXP (*R_cairoVersion_t)(void);
+typedef SEXP (*R_pangoVersion_t)(void);
 
 static R_cairo R_devCairo;
 static R_cairoVersion_t R_cairoVersion;
+static R_pangoVersion_t R_pangoVersion;
 
 static int Load_Rcairo_Dll(void)
 {
@@ -45,6 +47,7 @@ static int Load_Rcairo_Dll(void)
     R_devCairo = (R_cairo) R_FindSymbol("in_Cairo", "cairo", NULL);
     if (!R_devCairo) error("failed to load cairo DLL");
     R_cairoVersion = (R_cairoVersion_t) R_FindSymbol("in_CairoVersion", "cairo", NULL);
+    R_pangoVersion = (R_pangoVersion_t) R_FindSymbol("in_PangoVersion", "cairo", NULL);
     initialized = 1;
     return initialized;
 }
@@ -62,6 +65,16 @@ SEXP cairoVersion(void)
 #ifdef HAVE_WORKING_CAIRO
     if (Load_Rcairo_Dll() < 0) return mkString("");
     else return (R_cairoVersion)();
+#else
+    return mkString("");
+#endif
+}
+
+SEXP pangoVersion(void)
+{
+#ifdef HAVE_WORKING_CAIRO
+    if (Load_Rcairo_Dll() < 0) return mkString("");
+    else return (R_pangoVersion)();
 #else
     return mkString("");
 #endif
