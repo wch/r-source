@@ -296,9 +296,9 @@ getOption(x, default = NULL)
       PCRE2 <= 10.23.
 
       PCRE can be built not to use a recursion stack (see
-      \code{\link{pcre_config}}), but it uses by default with a
-      recursion limit of 10000000 which potentially needs a very large C
-      stack: see the discussion at
+      \code{\link{pcre_config}}), but it uses recursion by default with
+      a recursion limit of 10000000 which potentially needs a very large
+      C stack: see the discussion at
       \url{http://www.pcre.org/original/doc/html/pcrestack.html}.  If
       true, the limit is reduced using \R's estimate of the C stack size
       available (if known), otherwise 10000.  If \code{NA}, the limit is
@@ -316,7 +316,7 @@ getOption(x, default = NULL)
 
     \item{\code{PCRE_use_JIT}:}{Logical: should \code{\link{grep}(perl =
 	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
-      of PCRE's Just-In-Time compiler if available? (This applies only
+      of PCRE's Just-In-Time compiler if available? (This applies only to
       studied patterns with PCRE1.)  Default: true.  Missing values are
       treated as false.}
 
