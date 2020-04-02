@@ -125,7 +125,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     .External2(C_X11, d$display, d$width, d$height, d$pointsize, d$gamma,
                d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
                NA_integer_, d$xpos, d$ypos, d$title,
-               type, antialias, d$family, d$symbolfamily)
+               type, antialias, d$family, checkSymbolFont(d$symbolfamily))
     invisible()
 }
 

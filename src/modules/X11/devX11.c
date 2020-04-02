@@ -2747,7 +2747,8 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 			 int useCairo,
 			 int antialias,
 			 const char *family,
-			 const char *symbolfamily)
+			 const char *symbolfamily,
+                         Rboolean usePUA)
 {
     pX11Desc xd;
     const char *fn;
@@ -2794,9 +2795,11 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 	if(strlen(fn = CHAR(STRING_ELT(sfonts, 1))) > 499)
 	    strcpy(xd->symbolfamily, symbolname);
 	else strcpy(xd->symbolfamily, fn);
+        xd->usePUA = TRUE;
     } else {
         strcpy(xd->basefontfamily, family);
         strcpy(xd->symbolfamily, symbolfamily);
+        xd->usePUA = usePUA;
     }
 
     /*	Start the Device Driver and Hardcopy.  */
@@ -2907,6 +2910,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->locator = X11_Locator;
     dd->mode = X11_Mode;
     dd->useRotatedTextInContour = FALSE;
+    dd->symbolsAvoidPUA = !xd->usePUA;
 
     /* Set required graphics parameters. */
 
@@ -3108,7 +3112,7 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 		int bgcolor, int canvascolor, const char *devname, SEXP sfonts,
 		int res, int xpos, int ypos, const char *title,
 		int useCairo, int antialias, const char * family, 
-                const char * symbolfamily, SEXP call)
+                const char * symbolfamily, Rboolean usePUA, SEXP call)
 {
     pDevDesc dev = NULL;
     pGEDevDesc dd;
@@ -3122,7 +3126,7 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 			     ps, gamma, colormodel, maxcubesize,
 			     bgcolor, canvascolor, sfonts, res,
 			     xpos, ypos, title, useCairo, antialias, family,
-                             symbolfamily)) {
+                             symbolfamily, usePUA)) {
 	    free(dev);
 	    errorcall(call, _("unable to start device %s"), devname);
 	}
@@ -3142,7 +3146,8 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     double height, width, ps, gamma;
     int colormodel, maxcubesize, bgcolor, canvascolor, res, xpos, ypos,
 	useCairo, antialias;
-    SEXP sc, sfonts, scsymbol;
+    SEXP sc, sfonts, scsymbol, scusePUA;
+    Rboolean usePUA;
 
     checkArity(op, args);
     vmax = vmaxget();
@@ -3226,6 +3231,9 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(scsymbol) || LENGTH(scsymbol) != 1)
 	errorcall(call, _("invalid '%s' value"), "symbolfamily");
     symbolfamily = CHAR(STRING_ELT(scsymbol, 0));
+    /* scsymbol forced to have "usePUA" attribute in R code */
+    scusePUA = getAttrib(scsymbol, install("usePUA"));
+    usePUA = LOGICAL(scusePUA)[0];
 
     if (!strncmp(display, "png::", 5)) devname = "PNG";
     else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
@@ -3238,7 +3246,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_addX11Device(display, width, height, ps, gamma, colormodel,
 		    maxcubesize, bgcolor, canvascolor, devname, sfonts,
 		    res, xpos, ypos, title, useCairo, antialias, family, 
-                    symbolfamily, call);
+                    symbolfamily, usePUA, call);
     vmaxset(vmax);
     return R_NilValue;
 }

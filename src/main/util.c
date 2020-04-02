@@ -1756,14 +1756,20 @@ static int s2unicode[224] = {
     0x23A0, 0x23A4, 0x23A5, 0x23A6, 0x23AB, 0x23AC, 0x23AD, 0x0020
 };
 
-void *Rf_AdobeSymbol2utf8(char *work, const char *c0, size_t nwork)
+void *Rf_AdobeSymbol2utf8(char *work, const char *c0, size_t nwork,
+                          Rboolean usePUA)
 {
     const unsigned char *c = (unsigned char *) c0;
     unsigned char *t = (unsigned char *) work;
     while (*c) {
 	if (*c < 32) *t++ = ' ';
 	else {
-	    unsigned int u = (unsigned int) s2u[*c - 32];
+	    unsigned int u;
+            if (usePUA) {
+                u = (unsigned int) s2u[*c - 32];
+            } else {
+                u = (unsigned int) s2unicode[*c - 32];
+            }
 	    if (u < 128) *t++ = (unsigned char) u;
 	    else if (u < 0x800) {
 		*t++ = (unsigned char) (0xc0 | (u >> 6));

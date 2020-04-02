@@ -393,7 +393,7 @@ static Rboolean
 BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
 	       int quality, int width, int height, int ps,
 	       int bg, int res, int antialias, const char *family,
-	       double dpi, const char *symbolfamily)
+	       double dpi, const char *symbolfamily, Rboolean usePUA)
 {
     pX11Desc xd;
     int res0 = (res > 0) ? res : 72;
@@ -425,6 +425,7 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     xd->basefontfamily[499] = '\0';
     strncpy(xd->symbolfamily, symbolfamily, 499);
     xd->symbolfamily[499] = '\0';
+    xd->usePUA = usePUA;
 #ifdef HAVE_PANGOCAIRO
     /* Pango's default resolution is 96 dpi */
     dps *= res0/96.0;
@@ -484,6 +485,7 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
 #else
     dd->wantSymbolUTF8 = TRUE;
 #endif
+    dd->symbolsAvoidPUA = !usePUA;
     dd->useRotatedTextInContour = FALSE;
 
     dd->haveTransparency = 2;
@@ -559,6 +561,7 @@ SEXP in_Cairo(SEXP args)
     pGEDevDesc gdd;
     SEXP sc;
     const char *family, *symbolfamily;
+    Rboolean usePUA;
     int type, quality, width, height, pointsize, bgcolor, res, antialias;
     double dpi;
     SEXP filename;
@@ -611,6 +614,8 @@ SEXP in_Cairo(SEXP args)
     if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
 	error(_("invalid '%s' argument"), "symbolfamily");
     symbolfamily = translateChar(STRING_ELT(CAR(args), 0));
+    /* scsymbol forced to have "usePUA" attribute in R code */
+    usePUA = LOGICAL(getAttrib(CAR(args), install("usePUA")))[0];
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -621,7 +626,7 @@ SEXP in_Cairo(SEXP args)
 	if (!BMDeviceDriver(dev, devtable[type].gtype, filename, quality,
 			    width, height, pointsize,
 			    bgcolor, res, antialias, family, dpi,
-                            symbolfamily)) {
+                            symbolfamily, usePUA)) {
 	    free(dev);
 	    error(_("unable to start device '%s'"), devtable[type].name);
 	}

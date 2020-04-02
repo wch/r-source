@@ -1340,10 +1340,10 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     if(ce_in == ce_out || ce_out == CE_SYMBOL ||
        ce_in == CE_ANY || ce_out == CE_ANY) return x;
     if(ce_in == CE_SYMBOL) {
-	if(ce_out == CE_UTF8) {
+	if(ce_out == CE_UTF8 || ce_out == CE_UTF8noPUA) {
 	    size_t nc = 3*strlen(x)+1; /* all in BMP */
 	    p = R_alloc(nc, 1);
-	    Rf_AdobeSymbol2utf8(p, x, nc);
+	    Rf_AdobeSymbol2utf8(p, x, nc, ce_out == CE_UTF8);
 	    return p;
 	} else return x;
     }

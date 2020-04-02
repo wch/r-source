@@ -1702,13 +1702,22 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 	    const void *vmax = vmaxget();
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
-	    if(enc2 != CE_SYMBOL)
-		enc2 = (dd->dev->hasTextUTF8 == TRUE) ? CE_UTF8 : CE_NATIVE;
-	    else if(dd->dev->wantSymbolUTF8 == TRUE) enc2 = CE_UTF8;
-	    else if(dd->dev->wantSymbolUTF8 == NA_LOGICAL) {
-		enc = CE_LATIN1;
-		enc2 = CE_UTF8;
-	    }
+            if (enc2 != CE_SYMBOL) {
+                enc2 = (dd->dev->hasTextUTF8 == TRUE) ? CE_UTF8 : CE_NATIVE;
+            } else if (dd->dev->wantSymbolUTF8 == TRUE) {
+                if (dd->dev->symbolsAvoidPUA) {
+                    enc2 = CE_UTF8noPUA;
+                } else {
+                    enc2 = CE_UTF8;
+                }
+            } else if (dd->dev->wantSymbolUTF8 == NA_LOGICAL) {
+                enc = CE_LATIN1;
+                if (dd->dev->symbolsAvoidPUA) {
+                    enc2 = CE_UTF8noPUA;
+                } else {
+                    enc2 = CE_UTF8;
+                }
+            }
 
 #ifdef DEBUG_MI
 	    printf("string %s, enc %d, %d\n", str, enc, enc2);
@@ -2478,9 +2487,15 @@ double GEStrWidth(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc
 	    const void *vmax = vmaxget();
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
-	    if(enc2 != CE_SYMBOL)
-		enc2 = (dd->dev->hasTextUTF8 == TRUE) ? CE_UTF8 : CE_NATIVE;
-	    else if(dd->dev->wantSymbolUTF8 == TRUE) enc2 = CE_UTF8;
+            if (enc2 != CE_SYMBOL) {
+                enc2 = (dd->dev->hasTextUTF8 == TRUE) ? CE_UTF8 : CE_NATIVE;
+            } else if (dd->dev->wantSymbolUTF8 == TRUE) {
+                if (dd->dev->symbolsAvoidPUA) {
+                    enc2 = CE_UTF8noPUA;
+                } else {
+                    enc2 = CE_UTF8;
+                }
+            } 
 
 	    sb = sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
 	    for(s = str; ; s++) {
@@ -2601,12 +2616,21 @@ void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
         noMetricInfo = (asc == 0 && dsc == 0 && wid == 0) ? 1 : 0;
 
         enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
-        if(enc2 != CE_SYMBOL)
+        if (enc2 != CE_SYMBOL) {
             enc2 = (dd->dev->hasTextUTF8 == TRUE) ? CE_UTF8 : CE_NATIVE;
-        else if(dd->dev->wantSymbolUTF8 == TRUE) enc2 = CE_UTF8;
-        else if(dd->dev->wantSymbolUTF8 == NA_LOGICAL) {
+        } else if (dd->dev->wantSymbolUTF8 == TRUE) {
+            if (dd->dev->symbolsAvoidPUA) {
+                enc2 = CE_UTF8noPUA;
+            } else {
+                enc2 = CE_UTF8;
+            }
+        } else if (dd->dev->wantSymbolUTF8 == NA_LOGICAL) {
             enc = CE_LATIN1;
-            enc2 = CE_UTF8;
+            if (dd->dev->symbolsAvoidPUA) {
+                enc2 = CE_UTF8noPUA;
+            } else {
+                enc2 = CE_UTF8;
+            }
         }
 
         /* Put the first line in a string */

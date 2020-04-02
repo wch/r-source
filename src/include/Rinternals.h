@@ -1239,6 +1239,7 @@ typedef enum {
     CE_LATIN1 = 2,
     CE_BYTES  = 3,
     CE_SYMBOL = 5,
+    CE_UTF8noPUA = 6,
     CE_ANY    =99
 } cetype_t;
 

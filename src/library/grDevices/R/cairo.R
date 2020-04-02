@@ -62,3 +62,18 @@ cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
 cairoVersion <- function() .Call(C_cairoVersion)
 
 pangoVersion <- function() .Call(C_pangoVersion)
+
+cairoSymbolFont <- function(family, usePUA = TRUE) {
+    font <- as.character(family)
+    attr(font, "usePUA") <- as.logical(usePUA)
+    class(font) <- "CairoSymbolFont"
+    font
+}
+
+checkSymbolFont <- function(x) {
+    if (inherits(x, "CairoSymbolFont")) {
+        x
+    } else {
+        cairoSymbolFont(x)
+    }
+}
