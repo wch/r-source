@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"POT-Creation-Date: 2020-03-24 10:53-0700\n"
 "PO-Revision-Date: 2011-11-28 23:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
+
+#: gpar.c:473
+msgid "updateGContext must only be called after initGContext"
+msgstr ""
 
 #: grid.c:212
 #, fuzzy
@@ -27,58 +31,58 @@ msgstr "Kan ikke klippe til roteret viewport"
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "Kan ikke pop topniveau-viewporten (gitter og grafiks uddata blandet?)"
 
-#: grid.c:977
+#: grid.c:979
 msgid "attempt to plot on null device"
 msgstr "forsøg på at plotte på null-enhed"
 
-#: grid.c:1309
+#: grid.c:1400
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "Der er ingen layout defineret"
 
-#: grid.c:1529
+#: grid.c:1620
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkant ikke fundet (nulbredde eller nulhøjde?)"
 
-#: grid.c:1538
+#: grid.c:1629
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "Polygonkant ikke fundet"
 
-#: grid.c:1692
+#: grid.c:1783
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Kræver mindst to punkter at tegne pil"
 
-#: grid.c:2008
+#: grid.c:2102
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ikkebegrænsende kontrolpunkter i Xspline"
 
-#: grid.c:2873
+#: grid.c:2982
 msgid "non-finite x or y in graphics path"
 msgstr "ikkebegrænsende x eller y i grafiksti"
 
-#: grid.c:2914
+#: grid.c:3026
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3368
+#: grid.c:3509
 msgid "invalid plotting symbol"
 msgstr "ugyldigt plotsymbol"
 
-#: grid.c:3454
+#: grid.c:3597
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Kan ikke klippe til roteret rektangel"
 
-#: layout.c:589
+#: layout.c:600
 #, fuzzy
 msgid "invalid 'layout.pos.row'"
 msgstr "ugyldig layout.pos.row"
 
-#: layout.c:593
+#: layout.c:604
 #, fuzzy
 msgid "invalid 'layout.pos.col'"
 msgstr "ugyldig layout.pos.col"
@@ -92,39 +96,80 @@ msgstr "entalstransformationsmatrix"
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "Kan ikke lagre gittertilstand.  For mange enheder åbne?"
 
-#: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
-#, fuzzy
-msgid "unimplemented unit function"
-msgstr "Ikke implementeret enhedsfunktion"
+#: unit.c:65
+msgid "Cannot create unit scalar from 0-length unit vector"
+msgstr ""
 
-#: unit.c:893 unit.c:1645
+#: unit.c:789 unit.c:1288
 #, fuzzy
 msgid "invalid unit or unit not yet implemented"
 msgstr "Illegal enhed eller enhed er endnu ikke implementeret"
 
-#: unit.c:1702 unit.c:1733
+#: unit.c:1345 unit.c:1376
 msgid "Viewport has zero dimension(s)"
 msgstr ""
 
-#: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
+#: unit.c:1408 unit.c:1423 unit.c:1438 unit.c:1453
 msgid "Unsupported unit conversion"
 msgstr ""
 
-#: unit.c:1898
+#: unit.c:1545
 msgid "Invalid unit"
 msgstr "Ugyldig enhed"
 
-#: unit.c:1914
+#: unit.c:1560
 #, fuzzy
 msgid "'units' must be character"
 msgstr "Enheder skal være tegn"
 
-#: unit.c:1917
+#: unit.c:1563
 #, fuzzy
 msgid "'units' must be of length > 0"
 msgstr "Enheder skal have længde > 0"
+
+#: unit.c:1574
+msgid ""
+"data must be either NULL, have length 1, or match the length of the final "
+"unit vector"
+msgstr ""
+
+#: unit.c:1586
+msgid "no string supplied for 'strwidth/height' unit"
+msgstr ""
+
+#: unit.c:1590
+msgid "no 'grob' supplied for 'grobwidth/height' unit"
+msgstr ""
+
+#: unit.c:1608
+msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+msgstr ""
+
+#: unit.c:1613
+msgid "non-NULL value supplied for plain unit"
+msgstr ""
+
+#: unit.c:1666 unit.c:1700 unit.c:1749
+msgid "old version of unit class is no longer allowed"
+msgstr ""
+
+#: unit.c:1672
+msgid "object is not coercible to a unit"
+msgstr ""
+
+#: unit.c:1698
+msgid "object is not a unit"
+msgstr ""
+
+#: unit.c:1830
+msgid "units can only be multiplied with numerics and integers"
+msgstr ""
 
 #: viewport.c:315
 #, fuzzy
 msgid "non-finite location and/or size for viewport"
 msgstr "Ikkebegrænsende placeirng og/eller størrelse for viewport"
+
+#, fuzzy
+#~ msgid "unimplemented unit function"
+#~ msgstr "Ikke implementeret enhedsfunktion"

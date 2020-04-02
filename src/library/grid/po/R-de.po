@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:33\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-16 10:31+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -126,8 +126,10 @@ msgstr "es dürfen nur ein gültige 'gpar' Namen angegeben werden"
 msgid "invalid display list element"
 msgstr "ungültiges Displaylisten-Element"
 
+#, fuzzy
 msgid ""
-"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
+"TRUE')"
 msgstr ""
 "ein oder mehrere grobs überschrieben (grab NICHT zuverlässig; versuche "
 "'wrap=TRUE'"
@@ -364,6 +366,10 @@ msgstr "'x' und 'y' müssen Einheiten oder NULL sein"
 msgid "corrupt 'arrows' object"
 msgstr "beschädigtes 'arrows' Objekt"
 
+#, fuzzy
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr "'x', 'y' und 'id.length' müssen dieselbe Gesamtlänge angeben"
+
 msgid "x and y must be units"
 msgstr "x und y müssen Einheiten sein"
 
@@ -406,26 +412,21 @@ msgstr "'x', 'y', 'width' und 'height' müssen alle Länge 1 haben"
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' und 'units' müssen Länge > 0 haben"
 
-msgid "'x' argument must be a unit object"
-msgstr "'x' Argument muss ein Einheiten-Objekt sein"
-
 msgid "invalid 'axis' or 'type'"
 msgstr "Ungültige 'axis' oder ungültiger 'type'"
 
-msgid "no string supplied for 'strwidth/height' unit"
-msgstr "keine Zeichenkette für 'strwidth/height' Einheit angegeben"
+#, fuzzy
+msgid "Not a unit object"
+msgstr "Unzulässiges 'unit' Objekt"
 
-msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr "kein 'grob' angegeben für 'grobwidth/height' Einheit"
-
-msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr "'gPath' muss Tiefe 1 haben in 'grobwidth/height' Einheiten"
-
-msgid "non-NULL value supplied for plain unit"
-msgstr "nicht-NULL Wert angegeben für eine plain unit"
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "'Summary'-Funktion '%s' hat für Einheiten keine Bedeutung"
 
 msgid "operator '%s' not meaningful for units"
 msgstr "Operator '%s' hat für Einheiten keine Bedeutung"
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr ""
 
 msgid "only one operand may be a unit"
 msgstr "nur ein Operand darf eine Einheit sein"
@@ -433,38 +434,26 @@ msgstr "nur ein Operand darf eine Einheit sein"
 msgid "non-unit operand must be numeric"
 msgstr "non-unit Operand muss numerisch sein"
 
+msgid "can't divide with a unit"
+msgstr ""
+
 msgid "both operands must be units"
 msgstr "beide Operanden müssen Einheiten sein"
 
-msgid "'Summary' function '%s' not meaningful for units"
-msgstr "'Summary'-Funktion '%s' hat für Einheiten keine Bedeutung"
-
-msgid "no arguments where at least one expected"
-msgstr "kein Argument, wo zumindest eines erwartet"
-
-msgid "Zero arguments where at least one expected"
-msgstr "Kein Argument, wo zumindest eines erwartet"
-
-msgid "cannot mix signs of indices"
-msgstr "Vorzeichen von Indizes können nicht gemischt werden"
-
-msgid "index out of bounds ('unit' subsetting)"
+#, fuzzy
+msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "Index außerhalb des Bereichs ('unit' Teilauswahl)"
 
-msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr "Index außerhalb des Bereichs (arithmetische Teilsauswahl)"
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
+msgstr ""
 
-msgid "index out of bounds (unit list subsetting)"
-msgstr "Index außerhalb des Bereichs (Einheitenlistenteilauswahl)"
+#, fuzzy
+msgid "index must be of length 1"
+msgstr "'x' und 'y' müssen alle Einheiten der Länge 1 sein"
 
-msgid "Value being assigned must be a unit"
-msgstr "zugewiesener Wert muss eine Einheit sein"
-
-msgid "it is invalid to combine 'unit' objects with other types"
-msgstr "unzulässig 'unit' Objekte mit anderen Typen zu kombinieren"
-
-msgid "invalid 'unit' object"
-msgstr "Unzulässiges 'unit' Objekt"
+#, fuzzy
+msgid "replacement must be of length 1"
+msgstr "'gpar' Element '%s' darf nicht Länge 0 haben"
 
 msgid "invalid 'theta'"
 msgstr "unzulässiges 'theta'"
@@ -528,6 +517,42 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "Unzulässiger Viewport-Name"
 msgstr[1] "Unzulässige Viewport-Namen"
+
+#~ msgid "'x' argument must be a unit object"
+#~ msgstr "'x' Argument muss ein Einheiten-Objekt sein"
+
+#~ msgid "no string supplied for 'strwidth/height' unit"
+#~ msgstr "keine Zeichenkette für 'strwidth/height' Einheit angegeben"
+
+#~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
+#~ msgstr "kein 'grob' angegeben für 'grobwidth/height' Einheit"
+
+#~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+#~ msgstr "'gPath' muss Tiefe 1 haben in 'grobwidth/height' Einheiten"
+
+#~ msgid "non-NULL value supplied for plain unit"
+#~ msgstr "nicht-NULL Wert angegeben für eine plain unit"
+
+#~ msgid "no arguments where at least one expected"
+#~ msgstr "kein Argument, wo zumindest eines erwartet"
+
+#~ msgid "Zero arguments where at least one expected"
+#~ msgstr "Kein Argument, wo zumindest eines erwartet"
+
+#~ msgid "cannot mix signs of indices"
+#~ msgstr "Vorzeichen von Indizes können nicht gemischt werden"
+
+#~ msgid "index out of bounds (unit arithmetic subsetting)"
+#~ msgstr "Index außerhalb des Bereichs (arithmetische Teilsauswahl)"
+
+#~ msgid "index out of bounds (unit list subsetting)"
+#~ msgstr "Index außerhalb des Bereichs (Einheitenlistenteilauswahl)"
+
+#~ msgid "Value being assigned must be a unit"
+#~ msgstr "zugewiesener Wert muss eine Einheit sein"
+
+#~ msgid "it is invalid to combine 'unit' objects with other types"
+#~ msgstr "unzulässig 'unit' Objekte mit anderen Typen zu kombinieren"
 
 #~ msgid "invalid element in the display list"
 #~ msgstr "unzulässiges Element in der Display-Liste"

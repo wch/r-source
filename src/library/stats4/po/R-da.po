@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2011-11-28 00:28+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,22 +13,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-msgid ""
-"some named arguments in 'fixed' are not arguments to the supplied log-"
-"likelihood"
+msgid "named list expected"
+msgstr ""
+
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 "nogle navngivne argumenter i 'fixed' er ikke argumenter for den angivne log-"
 "likelihood"
 
-msgid "'start' must be a named list"
-msgstr "'start' skal være en navngivet liste"
-
-msgid ""
-"some named arguments in 'start' are not arguments to the supplied log-"
-"likelihood"
+msgid "Mismatch in length of start values"
 msgstr ""
-"nogle navngivne argumenter i 'start' er ikke argumenter for den angivne log-"
-"likelihood"
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
+msgstr ""
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
@@ -41,3 +42,13 @@ msgstr "niveauer afkortet til kun positive værdier"
 
 msgid "extra arguments discarded"
 msgstr "ekstra argumenter fjernet"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' skal være en navngivet liste"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "nogle navngivne argumenter i 'start' er ikke argumenter for den angivne "
+#~ "log-likelihood"

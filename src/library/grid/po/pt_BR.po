@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"POT-Creation-Date: 2020-03-24 10:53-0700\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.0.5\n"
+
+#: gpar.c:473
+msgid "updateGContext must only be called after initGContext"
+msgstr ""
 
 #: grid.c:212
 #, fuzzy
@@ -29,58 +33,58 @@ msgstr ""
 "Não é possível mostrar a viewport de nível máximo (saidas gráficas e grid "
 "misturadas?) "
 
-#: grid.c:977
+#: grid.c:979
 msgid "attempt to plot on null device"
 msgstr "tentativa de fazer um gráfico no dispositivo nulo"
 
-#: grid.c:1309
+#: grid.c:1400
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "Não há layout definido"
 
-#: grid.c:1529
+#: grid.c:1620
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Limite do polígono não encontrado (largura ou altura zero?)"
 
-#: grid.c:1538
+#: grid.c:1629
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "Limite do polígono não encontrado"
 
-#: grid.c:1692
+#: grid.c:1783
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Pelo menos dois pontos são necessários para desenhar uma seta"
 
-#: grid.c:2008
+#: grid.c:2102
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ponto de controle não-finito em Xspline"
 
-#: grid.c:2873
+#: grid.c:2982
 msgid "non-finite x or y in graphics path"
 msgstr "valores não-finitos de x ou y no caminho do gráfico"
 
-#: grid.c:2914
+#: grid.c:3026
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3368
+#: grid.c:3509
 msgid "invalid plotting symbol"
 msgstr "simbolo para gráfico inválido"
 
-#: grid.c:3454
+#: grid.c:3597
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"
 
-#: layout.c:589
+#: layout.c:600
 #, fuzzy
 msgid "invalid 'layout.pos.row'"
 msgstr "layout.pos.row inválido"
 
-#: layout.c:593
+#: layout.c:604
 #, fuzzy
 msgid "invalid 'layout.pos.col'"
 msgstr "layout.pos.col inválido"
@@ -95,42 +99,83 @@ msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 "Não foi possível guardar o estado do grid. Muitos dispositivos abertos?"
 
-#: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
-#, fuzzy
-msgid "unimplemented unit function"
-msgstr "Função unidade não implementada"
+#: unit.c:65
+msgid "Cannot create unit scalar from 0-length unit vector"
+msgstr ""
 
-#: unit.c:893 unit.c:1645
+#: unit.c:789 unit.c:1288
 #, fuzzy
 msgid "invalid unit or unit not yet implemented"
 msgstr "Unidade inválida ou unidade ainda não implementada"
 
-#: unit.c:1702 unit.c:1733
+#: unit.c:1345 unit.c:1376
 msgid "Viewport has zero dimension(s)"
 msgstr ""
 
-#: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
+#: unit.c:1408 unit.c:1423 unit.c:1438 unit.c:1453
 msgid "Unsupported unit conversion"
 msgstr ""
 
-#: unit.c:1898
+#: unit.c:1545
 msgid "Invalid unit"
 msgstr "Unidade inválida"
 
-#: unit.c:1914
+#: unit.c:1560
 #, fuzzy
 msgid "'units' must be character"
 msgstr "Unidades devem ser do tipo caractere"
 
-#: unit.c:1917
+#: unit.c:1563
 #, fuzzy
 msgid "'units' must be of length > 0"
 msgstr "Unidades devem ter comprimento > 0"
+
+#: unit.c:1574
+msgid ""
+"data must be either NULL, have length 1, or match the length of the final "
+"unit vector"
+msgstr ""
+
+#: unit.c:1586
+msgid "no string supplied for 'strwidth/height' unit"
+msgstr ""
+
+#: unit.c:1590
+msgid "no 'grob' supplied for 'grobwidth/height' unit"
+msgstr ""
+
+#: unit.c:1608
+msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+msgstr ""
+
+#: unit.c:1613
+msgid "non-NULL value supplied for plain unit"
+msgstr ""
+
+#: unit.c:1666 unit.c:1700 unit.c:1749
+msgid "old version of unit class is no longer allowed"
+msgstr ""
+
+#: unit.c:1672
+msgid "object is not coercible to a unit"
+msgstr ""
+
+#: unit.c:1698
+msgid "object is not a unit"
+msgstr ""
+
+#: unit.c:1830
+msgid "units can only be multiplied with numerics and integers"
+msgstr ""
 
 #: viewport.c:315
 #, fuzzy
 msgid "non-finite location and/or size for viewport"
 msgstr "Localização e/ou tamanhos não finitos para viewport"
+
+#, fuzzy
+#~ msgid "unimplemented unit function"
+#~ msgstr "Função unidade não implementada"
 
 #~ msgid "Invalid circle radius (must be non-negative)"
 #~ msgstr "Raio de círculo inválido (deve ser não negativo)"

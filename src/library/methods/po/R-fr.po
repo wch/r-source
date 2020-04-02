@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2014-03-17 10:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -531,11 +531,13 @@ msgstr ""
 "%s, ainsi que d'autres utilisations des objets metadonnées \"MethodList\", "
 "sont obsolètes"
 
-msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr ""
 "dans %s : l'utilisation des objets de métadonnée \"MethodList\" est obsolète."
 
-msgid "use %s instead."
+#, fuzzy
+msgid "Use %s instead."
 msgstr "utilisez %s à la place."
 
 #, fuzzy
@@ -546,7 +548,7 @@ msgstr ""
 "sont obsolètes"
 
 #, fuzzy
-msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr ""
 "dans %s : l'utilisation des objets de métadonnée \"MethodList\" est obsolète."
 
@@ -708,15 +710,20 @@ msgstr ""
 "un prototype de classe %s est fourni, mais la définition de classe nécessite "
 "un objet de classe %s"
 
+#, fuzzy
 msgid ""
-"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
-"with an inherited definition in class %s"
+"Definition of slot %s, in class %s, as %s conflicts with definition, "
+"inherited from class %s, as %s"
 msgstr ""
 "le slot %s de la classe %s est actuellement défini (ou hérité) comme \"%s\", "
 "conflits avec une définition héritée de la classe %s"
 
 msgid "class %s extends an undefined class (%s)"
 msgstr "la classe %s étend une classe non définie (%s)"
+
+#, fuzzy
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr "la liste '%s' pour la classe %s inclut une classe non définie %s"
 
 msgid ""
 "%s is not eligible to be the data part of another class (must be a basic "
@@ -814,18 +821,19 @@ msgstr ""
 "jour "
 
 msgid ""
-"subclass %s of class %s is not local and cannot be updated for new "
-"inheritance information; consider setClassUnion()"
-msgstr ""
-"La sous-classe %s de la classe %s n'est pas locale et ne peut être mise à "
-"jour pour une nouvelle information d'héritage ; considérez setClassUnion()"
-
-msgid ""
 "no definition of inheritance from %s to %s, though the relation was implied "
 "by the setIs() from %s"
 msgstr ""
 "pas de définition d'héritage de %s à %s, bien qu'une telle relation était "
 "supposée par setIs() de %s"
+
+msgid ""
+"Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+msgstr ""
+
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr ""
 
 msgid ""
 "argument 'includeSubclasses' must be a logical, either one value or a vector "
@@ -1337,9 +1345,10 @@ msgstr ""
 "la classe %s est scellée ; De nouvelles superclasses ne peuvent être "
 "définies, à l'exception de 'setClassUnion'"
 
+#, fuzzy
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
-"revise %s information---not exported?  Making a copy in package %s"
+"revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
 "la classe %s est définie (avec le slot %s du package) mais aucun objet de "
 "métadonnées n'est trouvé pour réviser l'information %s -- il n'est pas "
@@ -2074,6 +2083,13 @@ msgstr[0] ""
 msgstr[1] ""
 "aucune définition de la classe %s n'existe à la position spécifiée, %s, "
 "définitions dans : %s"
+
+#~ msgid ""
+#~ "subclass %s of class %s is not local and cannot be updated for new "
+#~ "inheritance information; consider setClassUnion()"
+#~ msgstr ""
+#~ "La sous-classe %s de la classe %s n'est pas locale et ne peut être mise à "
+#~ "jour pour une nouvelle information d'héritage ; considérez setClassUnion()"
 
 #~ msgid ""
 #~ "Note: the specification for S3 class %s in package %s seems equivalent to "

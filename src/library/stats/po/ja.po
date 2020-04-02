@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"POT-Creation-Date: 2020-03-24 10:54-0700\n"
 "PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -19,25 +19,43 @@ msgstr ""
 "X-Generator: Pootle 2.5.1.1 \n"
 "X-POOTLE-MTIME: 1427436568.000000 \n"
 
-#: Srunmed.c:54
+#: Srunmed.c:63
 msgid "bandwidth/span of running medians is larger than n"
 msgstr " 移動中央値のバンド幅・バンド範囲 (span) が n より大きくなっています "
+
+#: Srunmed.c:262
+#, c-format
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
+msgstr ""
+
+#: Srunmed.c:265
+msgid "runmed(): invalid 'na.action'"
+msgstr ""
+
+#: Srunmed.c:315
+#, c-format
+msgid "na_action logic error (%d), please report!"
+msgstr ""
 
 #: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
 msgstr " qansari() 中で確率が [0, 1] の範囲外です "
 
-#: approx.c:113
+#: approx.c:114
 msgid "approx(): invalid f value"
 msgstr " approx(): 不正な f 値 "
 
-#: approx.c:116
+#: approx.c:117
 msgid "approx(): invalid interpolation method"
 msgstr " approx(): 不正な補間法 "
 
-#: approx.c:122
+#: approx.c:124
 msgid "approx(): attempted to interpolate NA values"
 msgstr " approx(): NA 値を補間しようとしました "
+
+#: approx.c:128
+msgid "approx(x,y, .., na.rm=FALSE): NA values in x are not allowed"
+msgstr ""
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:39
 msgid "invalid argument type"
@@ -73,37 +91,27 @@ msgstr " 引数の中に異なった長さのものがあります "
 msgid "missing observations in cov/cor"
 msgstr " cov/cor 関数に欠損した観測値があります "
 
-#: cov.c:643
+#: cov.c:650
 msgid "'x' is NULL"
 msgstr " 'x' が NULL です "
 
-#: cov.c:645
-#, fuzzy
-msgid "'x' is a factor"
-msgstr " 'x' が行列ではありません "
-
-#: cov.c:665
-#, fuzzy
-msgid "'y' is a factor"
-msgstr " 'fn' が関数ではありません "
-
-#: cov.c:673 cov.c:679
+#: cov.c:682 cov.c:688
 msgid "incompatible dimensions"
 msgstr " 互換性のない次元です "
 
-#: cov.c:698 cov.c:739 cov.c:772
+#: cov.c:707 cov.c:748 cov.c:781
 msgid "no complete element pairs"
 msgstr " 完全な要素のペアがありません "
 
-#: cov.c:711
+#: cov.c:720
 msgid "invalid 'use' (computational method)"
 msgstr " 'use' (計算法) が不正です "
 
-#: cov.c:714
+#: cov.c:723
 msgid "'x' is empty"
 msgstr " 'x' が空です "
 
-#: cov.c:808
+#: cov.c:817
 msgid "the standard deviation is zero"
 msgstr " 標準偏差が 0 です "
 
@@ -226,25 +234,53 @@ msgid ""
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
 
-#: fourier.c:66 fourier.c:161
+#: fourier.c:70 fourier.c:165
 msgid "non-numeric argument"
 msgstr " 引数が数値でありません "
 
-#: fourier.c:84 fourier.c:102 fourier.c:175
+#: fourier.c:88 fourier.c:106 fourier.c:179
 msgid "fft factorization error"
 msgstr " fft の因数分解エラーです "
 
-#: fourier.c:147
+#: fourier.c:151
 msgid "vector-valued (multivariate) series required"
 msgstr " ベクトル値 (多変量) の系列が必要です "
 
-#: fourier.c:223
+#: fourier.c:221
+#, c-format
+msgid ""
+"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
+"instead of 'n'"
+msgstr ""
+
+#: fourier.c:233
+#, c-format
+msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
+msgstr ""
+
+#: fourier.c:249
 msgid "no factors"
 msgstr " 因子がありません "
 
-#: fourier.c:226
+#: fourier.c:250
+#, fuzzy
+msgid "too many factors"
+msgstr " 因子がありません "
+
+#: fourier.c:253
 msgid "invalid factors"
 msgstr " 因子 (factor) が不正です "
+
+#: fourier.c:257
+msgid "'n' must have typeof(.) \"integer\" or \"double\""
+msgstr ""
+
+#: fourier.c:295
+#, c-format
+msgid ""
+"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
+"\")"
+msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, fuzzy, c-format
@@ -269,9 +305,18 @@ msgstr " 'x' (%d,%d) と 'y' (%d)の次元が一致しません "
 msgid "NA/NaN/Inf in '%s'"
 msgstr " '%s' の中に NA/NaN/Inf があります "
 
-#: loessc.c:240
+#: loessc.c:242
 msgid "span is too small"
 msgstr " 範囲 (span) が小さすぎます "
+
+#: loessc.c:257
+#, c-format
+msgid "workspace required (%.0f) is too large%s."
+msgstr ""
+
+#: loessc.c:258
+msgid " probably because of setting 'se = TRUE'"
+msgstr ""
 
 #: loglin.c:371
 msgid "this should not happen"
@@ -348,7 +393,7 @@ msgstr " 変数 ('%s' に基づく) の長さが異なります "
 msgid "invalid result from na.action"
 msgstr " na.action の結果が不正です "
 
-#: model.c:372 model.c:380 optim.c:199
+#: model.c:372 model.c:380 optim.c:227
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
@@ -404,52 +449,59 @@ msgstr " モデル行列中では複素数は現在許されていません "
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr " タイプ '%s' の変数はモデル行列中では許されません "
 
-#: model.c:884
+#: model.c:887
 msgid "invalid formula in 'update'"
 msgstr " 'update' 中の式が不正です "
 
-#: model.c:918
+#: model.c:921
 msgid "formula expected"
 msgstr " 式が期待されています "
 
-#: model.c:1050
+#: model.c:1089
 msgid "invalid term in model formula"
 msgstr " モデル式に不正な項があります "
 
-#: model.c:1125
+#: model.c:1180
 msgid "invalid model formula"
 msgstr " モデル式が不正です "
 
-#: model.c:1151 model.c:1411
+#: model.c:1212 model.c:1518
 msgid "invalid power in formula"
 msgstr " モデル式中に不正なべき乗があります "
 
-#: model.c:1187
+#: model.c:1261
 msgid "invalid model formula in ExtractVars"
 msgstr " ExtractVars 中のモデル式が不正です "
 
-#: model.c:1534
+#: model.c:1629
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr " データフレーム中の重複した名前 '%s' を '.' を使って複製しました "
 
-#: model.c:1595
+#: model.c:1696
 msgid "invalid model formula in EncodeVars"
 msgstr " EncodeVars 中のモデル式が不正です "
 
-#: model.c:1681
+#: model.c:1773
 msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
-#: model.c:1691
+#: model.c:1783
 msgid "'specials' must be NULL or a character vector"
 msgstr " 'specials' は NULL または文字ベクタでなくてはなりません "
 
-#: model.c:1703
+#: model.c:1794
 msgid "'data' argument is of the wrong type"
 msgstr " 'data' 引数が誤った型です "
 
-#: model.c:1974
+#: model.c:1866
+#, c-format
+msgid ""
+"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
+"no longer happen!"
+msgstr ""
+
+#: model.c:2150
 msgid "'.' in formula and no 'data' argument"
 msgstr " '.' が式中にありますが, 'data' 引数がありません "
 
@@ -505,7 +557,7 @@ msgstr " 収束しました "
 msgid "'theta' should be of type character"
 msgstr " 'theta' は文字型でなければなりません "
 
-#: nls.c:292 port.c:376
+#: nls.c:292 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr " NULL 環境の使用は廃止されました "
 
@@ -545,31 +597,31 @@ msgstr " optim の目的関数が 1 つではなくて %d 個の結果を評価�
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr " optim 中で勾配は長さ %d (長さ %d ではなく) で評価されました "
 
-#: optim.c:195 optim.c:401
+#: optim.c:223 optim.c:429
 msgid "'fn' is not a function"
 msgstr " 'fn' が関数ではありません "
 
-#: optim.c:213 optim.c:407
+#: optim.c:241 optim.c:435
 msgid "'parscale' is of the wrong length"
 msgstr " 'parscale' の長さが不正です "
 
-#: optim.c:242
+#: optim.c:270
 msgid "'maxit' is not an integer"
 msgstr " 'maxit' が整数ではありません "
 
-#: optim.c:262
+#: optim.c:290
 msgid "'tmax' is not a positive integer"
 msgstr " 'tmax' が正の整数ではありません "
 
-#: optim.c:264 optim.c:281 optim.c:306 optim.c:336 optim.c:415
+#: optim.c:292 optim.c:309 optim.c:334 optim.c:364 optim.c:443
 msgid "'gr' is not a function"
 msgstr " 'gr' は関数ではありません "
 
-#: optim.c:287 optim.c:312 optim.c:342 optim.c:421
+#: optim.c:315 optim.c:340 optim.c:370 optim.c:449
 msgid "'ndeps' is of the wrong length"
 msgstr " 'ndeps' の長さが誤っています "
 
-#: optim.c:372
+#: optim.c:400
 msgid "unknown 'method'"
 msgstr " 未知の 'method' です "
 
@@ -777,66 +829,66 @@ msgstr " Rf_divset: alg = %d は 1, 2, 3, または 4 でなければなりま�
 msgid "port algorithms 3 or higher are not supported"
 msgstr " 3 以上のポートアルゴリズムはサポートされていません "
 
-#: port.c:313
+#: port.c:317
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr " グラディエント関数は長さ %d の数値ベクトルを返さなければなりません "
 
-#: port.c:325
+#: port.c:329
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr " ヘッシアン関数は次数 %d の正方数値行列を返さなければなりません "
 
-#: port.c:380
+#: port.c:386
 msgid "'rho' must be an environment"
 msgstr " 'rho' は環境 (environment) でなければなりません "
 
-#: port.c:382 port.c:548
+#: port.c:388 port.c:554
 msgid "'d' must be a nonempty numeric vector"
 msgstr " 'd' は空でない数値ベクトルでなければなりません "
 
-#: port.c:384
+#: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr " ヘッシアンを定義した際は、グラディエントも定義しなければなりません "
 
-#: port.c:387
+#: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr " 環境 'rho' は長さが %d の数値ベクトル '.par' を含まねばなりません "
 
-#: port.c:401
+#: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr " 'lower' と 'upper' は数値ベクトルでなければなりません "
 
-#: port.c:460
+#: port.c:466
 msgid "'getElement' applies only to named lists"
 msgstr " 'getElement' は名前つきリストにだけ適用されます "
 
-#: port.c:481
+#: port.c:487
 #, c-format
 msgid "%s$%s() not found"
 msgstr " %s$%s() が見つかりません "
 
-#: port.c:494
+#: port.c:500
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr " 'gradient' は次元 (%d, %d) の数値行列でなければなりません "
 
-#: port.c:515
+#: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 " モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした "
 
-#: port.c:528
+#: port.c:534
 msgid "invalid type for eval_check_store"
 msgstr " eval_check_store に対する不正なタイプです "
 
-#: port.c:549
+#: port.c:555
 msgid "m must be a list"
 msgstr " m はリストでなければなりません "
 
-#: port.c:569
+#: port.c:575
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr " 'lowerb' と 'upperb' は数値ベクトルでなければなりません "
 
@@ -852,32 +904,32 @@ msgstr " 'scal' は正方な実行列である必要があります "
 msgid "'scal' matrix is not positive-definite"
 msgstr " 行列 'scal' が正定値行列ではありません "
 
-#: random.c:53 random.c:128 random.c:200 random.c:284
+#: random.c:53 random.c:137 random.c:217 random.c:307
 msgid "NAs produced"
 msgstr " NA が生成されました "
 
-#: random.c:60 random.c:66 random.c:72 random.c:90 random.c:161 random.c:242
-#: random.c:376
+#: random.c:60 random.c:66 random.c:72 random.c:87 random.c:167 random.c:256
+#: random.c:399
 msgid "invalid arguments"
 msgstr " 引数 (複数) が不正です "
 
-#: random.c:310
+#: random.c:333
 msgid "NA in probability vector"
 msgstr " 確率ベクトル中にNAがあります "
 
-#: random.c:312
+#: random.c:335
 msgid "negative probability"
 msgstr " 負の確率 "
 
-#: random.c:318
+#: random.c:341
 msgid "no positive probabilities"
 msgstr " 正の確率がありません "
 
-#: random.c:330
+#: random.c:353
 msgid "invalid first argument 'n'"
 msgstr " 一番目の引数 'n' が不正です "
 
-#: random.c:332
+#: random.c:355
 msgid "invalid second argument 'size'"
 msgstr " 二番目の引数 'size' が不正です "
 
@@ -897,6 +949,14 @@ msgstr " 3 点移動中央値計算の終了ルールが不正です: %d "
 #, c-format
 msgid "missing value in last %d observations"
 msgstr " 直前の %d 個の観測値中に欠損値があります "
+
+#, fuzzy
+#~ msgid "'x' is a factor"
+#~ msgstr " 'x' が行列ではありません "
+
+#, fuzzy
+#~ msgid "'y' is a factor"
+#~ msgstr " 'fn' が関数ではありません "
 
 #~ msgid "stats"
 #~ msgstr " stats "

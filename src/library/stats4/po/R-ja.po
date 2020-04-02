@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2013-02-23 17:49+0200 \n"
 "Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -13,21 +13,23 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
 
-msgid ""
-"some named arguments in 'fixed' are not arguments to the supplied log-"
-"likelihood"
+msgid "named list expected"
+msgstr ""
+
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 " 'fixed' 中のある名前付き引数は、与えられた対数尤度に対する引数ではありませ"
 "ん "
 
-msgid "'start' must be a named list"
-msgstr " 'start' は名前付きリストでなければなりません "
-
-msgid ""
-"some named arguments in 'start' are not arguments to the supplied log-"
-"likelihood"
+msgid "Mismatch in length of start values"
 msgstr ""
-" 'start' 中の名前のある引数は、与えられた対数尤度に対する引数ではありません "
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
+msgstr ""
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
@@ -40,3 +42,13 @@ msgstr " 水準 (levels) は正の値のみに切りつめられました "
 
 msgid "extra arguments discarded"
 msgstr " 余分な引数が破棄されました "
+
+#~ msgid "'start' must be a named list"
+#~ msgstr " 'start' は名前付きリストでなければなりません "
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ " 'start' 中の名前のある引数は、与えられた対数尤度に対する引数ではありませ"
+#~ "ん "

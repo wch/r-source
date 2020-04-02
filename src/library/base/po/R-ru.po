@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:33\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-07 01:08-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -33,6 +33,9 @@ msgstr "См. help(\"Defunct\") и help(\"%s-defunct\")."
 msgid "See help(\"Defunct\")"
 msgstr "См. help(\"Defunct\")"
 
+msgid "defunctError"
+msgstr ""
+
 msgid "'%s' is deprecated."
 msgstr "'%s' устарел"
 
@@ -42,6 +45,9 @@ msgstr "См. help(\"Deprecated\") и help(\"%s-deprecated\")."
 msgid "See help(\"Deprecated\")"
 msgstr "См. help(\"Deprecated\")"
 
+msgid "deprecatedWarning"
+msgstr ""
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "аргумент 'La.svd' должен быть действительным или комплексным числом"
 
@@ -50,6 +56,10 @@ msgstr "неопределенные или пропущенные значения в 'x'"
 
 msgid "a dimension is zero"
 msgstr "нулевое измерение"
+
+#, fuzzy
+msgid "\"all\" and \"exact\" are mutually exclusive"
+msgstr "\"hexNumeric\" и \"digits17\" несовместимы"
 
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr "\"hexNumeric\" и \"digits17\" несовместимы"
@@ -71,6 +81,10 @@ msgstr "'normal.kind' должен быть текстовой строкой длины 1"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' не является правильным выбором"
+
+#, fuzzy
+msgid "'sample.kind' must be a character string of length 1"
+msgstr "'normal.kind' должен быть текстовой строкой длины 1"
 
 msgid "malformed version string"
 msgstr "неправильно сформирована строка версии"
@@ -96,14 +110,26 @@ msgstr "'x' должен иметь именованные измерения"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "не все элементы 'MARGIN' есть имена измерений"
 
-msgid "'dims' cannot be of length 0"
+msgid "'MARGIN' does not match dim(X)"
+msgstr ""
+
+#, fuzzy
+msgid "'dim' cannot be of length 0"
 msgstr "'dims' не могут быть нулевой длины"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' определяет слишком большую многомерную матрицу"
 
+#, fuzzy
+msgid "'x' must have named dimnames"
+msgstr "'x' должен иметь именованные измерения"
+
 msgid "incorrect value for 'MARGIN'"
 msgstr "неправильное значение 'MARGIN'"
+
+#, fuzzy
+msgid "dim(x) must have a positive length"
+msgstr "dim(X) должен иметь положительную длину"
 
 msgid "'pos=1' is not possible and has been warned about for years"
 msgstr "'pos=1' невозможна, об этом предупреждали годами"
@@ -150,6 +176,9 @@ msgstr "объект с таким именем уже есть"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "автозагрузчик не нашел '%s' в '%s'"
 
+msgid "can only splice inside a call"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "в настоящее время комплексные матрицы не разрешены"
 
@@ -174,6 +203,13 @@ msgstr "неправильное указание 'restart'"
 msgid "argument 'where' of length 0"
 msgstr "аргумент 'where' нулевой длины"
 
+msgid "can only write character objects"
+msgstr "могу записать только текстовые объекты"
+
+#, fuzzy
+msgid "'headers' must have names and must not be NA"
+msgstr "'x' должен иметь именованные измерения"
+
 msgid "argument 'object' must deparse to a single character string"
 msgstr "аргумент 'object' должно быть возможно сконвертировать в строку"
 
@@ -183,11 +219,12 @@ msgstr "'origin' должен быть одним из: 'start', 'current' или 'end'"
 msgid "can only truncate an open connection"
 msgstr "могу обрезать только открытое соединение"
 
+#, fuzzy
+msgid "invalid 'endian' argument"
+msgstr "неправильный аргумент 'name'"
+
 msgid "can only write vector objects"
 msgstr "могу записать только векторные объекты"
-
-msgid "can only write character objects"
-msgstr "могу записать только текстовые объекты"
 
 msgid "'timeout' must be NULL or a non-negative number"
 msgstr "тайм-аут должен быть или NULL, или неотрицательным числом"
@@ -312,9 +349,6 @@ msgstr "замена элемента в несуществующей колонке: %s"
 msgid "only a single element should be replaced"
 msgstr "только одиночный элемент можно заменить"
 
-msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "Частичное соответствие '%s' и '%s' в таблице данных"
-
 msgid "names do not match previous names"
 msgstr "имена не соответствуют прежним именам"
 
@@ -326,6 +360,9 @@ msgstr "неправильный аргумент списка: длины всех переменных должны быть равны"
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 строк> (или 'row.names' нулевой длины)"
+
+msgid "invalid 'max' / getOption(\"max.print\"):"
+msgstr ""
 
 msgid "non-numeric variable(s) in data frame:"
 msgstr "нечисловая переменн(ая) в таблице данных:"
@@ -473,6 +510,10 @@ msgstr "'from' должен быть объектом \"POSIXt\""
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' должен быть объектом \"POSIXt\""
 
+#, fuzzy
+msgid "component subscript must be a character string"
+msgstr "аргумент 'object' должно быть возможно сконвертировать в строку"
+
 msgid "no Olson database found"
 msgstr "база данных Olson не найдена"
 
@@ -528,7 +569,8 @@ msgstr "только диагонали матрицы могут быть заменены"
 msgid "replacement diagonal has wrong length"
 msgstr "у замены диагонали -- неправильная длина"
 
-msgid "MARGIN = %d is invalid for dim = %d"
+#, fuzzy
+msgid "MARGIN = %s is invalid for dim = %s"
 msgstr "MARGIN = %d неправильно для dim = %d"
 
 msgid "must pass a package name, %s or %s object"
@@ -602,6 +644,9 @@ msgstr ""
 "'recursive' будет проигнорирован, так как 'to' не является одиночным "
 "каталогом"
 
+msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "файл не может быть скопирован одновременно 'from' и 'to'"
 
@@ -635,6 +680,9 @@ msgstr "'fun' должен быть функцией"
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "использую первый элемент 'value' типа \"expression\""
 
+msgid "Found no format() method for class \"%s\""
+msgstr ""
+
 msgid "class of 'x' was discarded"
 msgstr "класс 'x' удален"
 
@@ -666,6 +714,11 @@ msgstr "'zero.print' имеет длину > 1"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print' должен быть символом, логическим или NULL"
+
+msgid ""
+"'zero.print' is truncated to fit into formatted zeros; consider "
+"'replace=TRUE'"
+msgstr ""
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
 msgstr "'big.mark' и 'decimal.mark' оба '%s', что может быть неправильно"
@@ -724,8 +777,11 @@ msgstr "norm '%s' сейчас всегда использует exact = FALSE"
 msgid "triangular matrix should be square"
 msgstr "треугольная матрица должна быть квадратной"
 
-msgid "'object' must be a list"
-msgstr "'object' должен быть списком"
+msgid "unknown conflict policy: %s"
+msgstr ""
+
+msgid "only one of 'include.only' and 'exclude' can be used"
+msgstr ""
 
 msgid "package %s has not been installed properly"
 msgstr "пакет %s как следует не установлен"
@@ -744,6 +800,15 @@ msgstr "пакет %s был собран для %s"
 
 msgid "package %s is not installed for 'arch = %s'"
 msgstr "пакет %s не установлен для 'arch=%s'"
+
+#, fuzzy
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
+msgstr "Присоединяю пакет: %s"
+
+msgid "packageConflictError"
+msgstr ""
 
 msgid "Attaching package: %s"
 msgstr "Присоединяю пакет: %s"
@@ -1018,6 +1083,13 @@ msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 msgid "namespace is already attached"
 msgstr "пространство имен уже присоединено"
 
+#, fuzzy
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
+msgstr "не загружаю пространство имен"
+
 msgid "%s not found"
 msgstr "%s не найден"
 
@@ -1053,6 +1125,10 @@ msgstr "пакет %s не имеет пространства имен"
 
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "пространство имен %s %s загружается, но нужно %s %s"
+
+#, fuzzy
+msgid "package %s has no 'package.rds' in Meta/"
+msgstr "у пакета %s нет файла NAMESPACE"
 
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
@@ -1158,6 +1234,10 @@ msgstr "не могу добавить к экспорту из запечатанного пространства имен"
 msgid "undefined exports: %s"
 msgstr "неопределенные экспорты: %s"
 
+#, fuzzy
+msgid "unable to re-encode some lines in NAMESPACE file"
+msgstr "пустое имя в директиве '%s' из файла 'NAMESPACE'"
+
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "у пакета %s нет файла NAMESPACE"
 
@@ -1181,6 +1261,13 @@ msgstr "неправильный метод"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "в процессе загрузки пространства имен '%s' объект '%s' не найден"
+
+msgid ""
+"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgstr ""
+
+msgid "Maybe package installed with version of R newer than %s ?"
+msgstr ""
 
 msgid "'%s' is not implemented yet"
 msgstr "'%s' пока не разработан"
@@ -1367,15 +1454,16 @@ msgstr "не конечная 'partial'"
 msgid "argument lengths differ"
 msgstr "длины аргументов различаются"
 
+msgid "method = \"quick\" is only for numeric 'x'"
+msgstr "method=\"quick\" -- только для числовых 'x'"
+
+#, fuzzy
 msgid ""
-"'x' must be atomic for 'sort.list'\n"
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
 "'x' для 'sort.list' должен быть атомарным\n"
 "Вы вызывали 'sort' на этот список?"
-
-msgid "method = \"quick\" is only for numeric 'x'"
-msgstr "method=\"quick\" -- только для числовых 'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' должен быть TRUE, FALSE, или environment"
@@ -1417,8 +1505,8 @@ msgstr "'x' и 'y' должны указывать на один и тот же файл"
 msgid "additional arguments ignored in stop()"
 msgstr "дополнительные аргументы пропущены в stop()"
 
-msgid "Must use 'exprs' or unnamed expressions, but not both"
-msgstr "Must use 'exprs' or unnamed expressions, but not both"
+msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
+msgstr ""
 
 msgid ""
 "%s and %s are not equal:\n"
@@ -1500,8 +1588,20 @@ msgstr "число уровней >= 2^31"
 msgid "handler must be a function"
 msgstr "обработчик должен быть функцией"
 
+#, fuzzy
+msgid "'which' must be of length 1"
+msgstr "'to' должен быть длиной 1"
+
 msgid "no such element '%s'"
 msgstr "нет такого элемента '%s'"
+
+#, fuzzy
+msgid "invalid 'which' argument"
+msgstr "неправильный аргумент 'path'"
+
+#, fuzzy
+msgid "'which' must be character or numeric"
+msgstr "'tim' не является функцией или буквой"
 
 msgid "Removing %s"
 msgstr "Удаление %s"
@@ -1608,6 +1708,9 @@ msgstr "'minimized' должен быть TRUE или FALSE"
 
 msgid "'invisible' must be TRUE or FALSE"
 msgstr "'invisible' должен быть TRUE или FALSE"
+
+msgid "running command '%s' had status %d"
+msgstr ""
 
 msgid "'%s' could not be run"
 msgstr "'%s' не запускается"
@@ -1862,6 +1965,15 @@ msgstr[1] ""
 msgstr[2] ""
 "В %s :\n"
 " дополнительные аргументы %s не будут учтены"
+
+#~ msgid "Partial match of '%s' to '%s' in data frame"
+#~ msgstr "Частичное соответствие '%s' и '%s' в таблице данных"
+
+#~ msgid "'object' must be a list"
+#~ msgstr "'object' должен быть списком"
+
+#~ msgid "Must use 'exprs' or unnamed expressions, but not both"
+#~ msgstr "Must use 'exprs' or unnamed expressions, but not both"
 
 #~ msgid "*** Note that 'pos=1' will give an error in the future"
 #~ msgstr "*** Заметьте, что в будущем 'pos=1' будет приводить к ошибке"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -26,6 +26,9 @@ msgstr "Sjå help(\"Defunct\") og help(\"%s-defunct\")."
 msgid "See help(\"Defunct\")"
 msgstr "Sjå help(\"Defunct\")"
 
+msgid "defunctError"
+msgstr ""
+
 msgid "'%s' is deprecated."
 msgstr "«%s» er forelda."
 
@@ -35,6 +38,9 @@ msgstr "Sjå help(\"Deprecated\") og help(\"%s-deprecated\")."
 msgid "See help(\"Deprecated\")"
 msgstr "Sjå help(\"Deprecated\")"
 
+msgid "deprecatedWarning"
+msgstr ""
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument til «La.svd» må vera numeriske eller komplekse"
 
@@ -42,6 +48,9 @@ msgid "infinite or missing values in 'x'"
 msgstr "uendelege eller manglande verdiar i «x»"
 
 msgid "a dimension is zero"
+msgstr ""
+
+msgid "\"all\" and \"exact\" are mutually exclusive"
 msgstr ""
 
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
@@ -66,6 +75,10 @@ msgstr "«normal.kind» må vera ein teiknstreng av lengd 1"
 
 msgid "'%s' is not a valid choice"
 msgstr "«%s» er ikkje eit gyldig val"
+
+#, fuzzy
+msgid "'sample.kind' must be a character string of length 1"
+msgstr "«normal.kind» må vera ein teiknstreng av lengd 1"
 
 msgid "malformed version string"
 msgstr "ugyldig versjonsstreng"
@@ -94,15 +107,26 @@ msgstr "«X» må namn namngjevne «dimnames»"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "ikkje alle elementa i «MARGIN» er namn på dimensjonar"
 
+msgid "'MARGIN' does not match dim(X)"
+msgstr ""
+
 #, fuzzy
-msgid "'dims' cannot be of length 0"
+msgid "'dim' cannot be of length 0"
 msgstr "«from» må ha lengd 1"
 
 msgid "'dim' specifies too large an array"
 msgstr "«dim» definerer for stort array-objekt"
 
+#, fuzzy
+msgid "'x' must have named dimnames"
+msgstr "«X» må namn namngjevne «dimnames»"
+
 msgid "incorrect value for 'MARGIN'"
 msgstr "ugyldig verdi av «MARGIN»"
+
+#, fuzzy
+msgid "dim(x) must have a positive length"
+msgstr "dim(X) må ha lengd større enn 0"
 
 #, fuzzy
 msgid "'pos=1' is not possible and has been warned about for years"
@@ -154,6 +178,9 @@ msgstr "det finst alt eit objekt med dette namnet"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "autolastaren fann ikkje «%s» i «%s»"
 
+msgid "can only splice inside a call"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "komplekse matriser er førebels ikkje støtta"
 
@@ -178,6 +205,13 @@ msgstr "ikkje ein gyldig omstartsdefinisjon"
 msgid "argument 'where' of length 0"
 msgstr "argument «where» av lengd 0"
 
+msgid "can only write character objects"
+msgstr "kan berre skriva teiknobjekt"
+
+#, fuzzy
+msgid "'headers' must have names and must not be NA"
+msgstr "«X» må namn namngjevne «dimnames»"
+
 msgid "argument 'object' must deparse to a single character string"
 msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
 
@@ -187,11 +221,12 @@ msgstr "«origin» må vera éin av «start», «current» og «end»"
 msgid "can only truncate an open connection"
 msgstr "kan berre trunkera eit ope samband"
 
+#, fuzzy
+msgid "invalid 'endian' argument"
+msgstr "ugyldig «name»-argument"
+
 msgid "can only write vector objects"
 msgstr "kan berre skriva vektorobjekt"
-
-msgid "can only write character objects"
-msgstr "kan berre skriva teiknobjekt"
 
 #, fuzzy
 msgid "'timeout' must be NULL or a non-negative number"
@@ -324,10 +359,6 @@ msgstr "byt ut element i ikkje-eksisterande kolonne:"
 msgid "only a single element should be replaced"
 msgstr "berre eit enkeltelement skal erstattast"
 
-#, fuzzy
-msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "ikkje numerisk variabel i dataramme:"
-
 msgid "names do not match previous names"
 msgstr "namna er ikkje i samsvar med dei gamle namna"
 
@@ -339,6 +370,9 @@ msgstr "ugyldig listeargument: alle variablar må vera like lange"
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 rader> (eller row.names av lengd null)"
+
+msgid "invalid 'max' / getOption(\"max.print\"):"
+msgstr ""
 
 #, fuzzy
 msgid "non-numeric variable(s) in data frame:"
@@ -501,6 +535,10 @@ msgid "'to' must be a \"POSIXt\" object"
 msgstr "«to» må vera eit «POSIXt»-objekt"
 
 #, fuzzy
+msgid "component subscript must be a character string"
+msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
+
+#, fuzzy
 msgid "no Olson database found"
 msgstr "fann ingen filer"
 
@@ -559,7 +597,7 @@ msgid "replacement diagonal has wrong length"
 msgstr "erstattingsdiagonalen har feil lengd"
 
 #, fuzzy
-msgid "MARGIN = %d is invalid for dim = %d"
+msgid "MARGIN = %s is invalid for dim = %s"
 msgstr "er ugyldig for dim ="
 
 #, fuzzy
@@ -639,6 +677,9 @@ msgstr ""
 "«recursive» vert ikkje brukt, sidan «to» ikkje er ei enkeltmappe som finst "
 "frå før"
 
+msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "fil kan ikkje kopierast både «from» og «to»"
 
@@ -675,6 +716,9 @@ msgstr "handsamaren må vera ein funksjon"
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "brukar første element av «value» i uttrykket"
 
+msgid "Found no format() method for class \"%s\""
+msgstr ""
+
 msgid "class of 'x' was discarded"
 msgstr ""
 
@@ -707,6 +751,11 @@ msgstr "«zero.print» har lengd > 1"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "«zero.print» må vera ein teiknstreng, ein boolsk verdi eller NULL"
+
+msgid ""
+"'zero.print' is truncated to fit into formatted zeros; consider "
+"'replace=TRUE'"
+msgstr ""
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
 msgstr ""
@@ -768,8 +817,11 @@ msgstr "norma «%s» brukar alltid «exact = FALSE»"
 msgid "triangular matrix should be square"
 msgstr "trekantmatrise må vera kvadratisk"
 
-msgid "'object' must be a list"
-msgstr "«object» må vera ei liste"
+msgid "unknown conflict policy: %s"
+msgstr ""
+
+msgid "only one of 'include.only' and 'exclude' can be used"
+msgstr ""
 
 msgid "package %s has not been installed properly"
 msgstr "pakken «%s» er ikkje skikkeleg installert"
@@ -790,6 +842,15 @@ msgstr "pakken %s vart bygd for %s"
 #, fuzzy
 msgid "package %s is not installed for 'arch = %s'"
 msgstr "pakken %s er ikkje installert for «arch = %s»"
+
+#, fuzzy
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
+msgstr "Koplar til pakke: %s"
+
+msgid "packageConflictError"
+msgstr ""
 
 msgid "Attaching package: %s"
 msgstr "Koplar til pakke: %s"
@@ -1068,6 +1129,13 @@ msgstr "«%s» er ikkje eit eksportert objekt frå «namespace:%s»"
 msgid "namespace is already attached"
 msgstr "namnerommet er alt kopla til"
 
+#, fuzzy
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
+msgstr "lastar ikkje eit namnerom"
+
 msgid "%s not found"
 msgstr "fann ikkje «%s»"
 
@@ -1101,6 +1169,10 @@ msgstr "pakken «%s» har ikkje noko namnerom"
 #, fuzzy
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
+
+#, fuzzy
+msgid "package %s has no 'package.rds' in Meta/"
+msgstr "pakken «%s» har inga NAMESPACE-fil"
 
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
@@ -1223,6 +1295,10 @@ msgid "undefined exports: %s"
 msgstr "udefinerte eksportar:"
 
 #, fuzzy
+msgid "unable to re-encode some lines in NAMESPACE file"
+msgstr "tomt namn i direktivet «%s» i NAMESPACE-fila"
+
+#, fuzzy
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "pakken «%s» har inga NAMESPACE-fil"
 
@@ -1248,6 +1324,13 @@ msgstr "ugyldig metode"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "fann ikkje objektet «%s» ved lasting av namnerommet «%s»"
+
+msgid ""
+"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgstr ""
+
+msgid "Maybe package installed with version of R newer than %s ?"
+msgstr ""
 
 msgid "'%s' is not implemented yet"
 msgstr "«%s» er ikkje implementert enno"
@@ -1441,16 +1524,17 @@ msgstr "ikkje-endeleg «partial»"
 msgid "argument lengths differ"
 msgstr "argumentlengda er forskjellige"
 
+#, fuzzy
+msgid "method = \"quick\" is only for numeric 'x'"
+msgstr "«method=\"quick\"» er berre for numerisk «x»"
+
+#, fuzzy
 msgid ""
-"'x' must be atomic for 'sort.list'\n"
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
 "«x» må vera atomsk for «sort.list».\n"
 "Har du kalla «sort» på ei liste?"
-
-#, fuzzy
-msgid "method = \"quick\" is only for numeric 'x'"
-msgstr "«method=\"quick\"» er berre for numerisk «x»"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "«local» må vera TRUE, FALSE eller ein omgjevnad"
@@ -1494,7 +1578,7 @@ msgstr "«x» og «y» må ha same lengd"
 msgid "additional arguments ignored in stop()"
 msgstr "fleire argument ignorerte i stop()"
 
-msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
 msgstr ""
 
 msgid ""
@@ -1575,8 +1659,20 @@ msgstr "talet på nivå er forskjellig"
 msgid "handler must be a function"
 msgstr "handsamaren må vera ein funksjon"
 
+#, fuzzy
+msgid "'which' must be of length 1"
+msgstr "«to» må ha lengd 1"
+
 msgid "no such element '%s'"
 msgstr "elementet «%s» finst ikkje"
+
+#, fuzzy
+msgid "invalid 'which' argument"
+msgstr "ugyldig «path»-argument"
+
+#, fuzzy
+msgid "'which' must be character or numeric"
+msgstr "«tim» er ikkje teiknstreng eller numerisk"
 
 #, fuzzy
 msgid "Removing %s"
@@ -1689,6 +1785,9 @@ msgstr "«minimized» må vera TRUE eller FALSE"
 
 msgid "'invisible' must be TRUE or FALSE"
 msgstr "«invisible» må vera TRUE eller FALSE"
+
+msgid "running command '%s' had status %d"
+msgstr ""
 
 msgid "'%s' could not be run"
 msgstr "klarte ikkje køyra «%s»"
@@ -1900,6 +1999,13 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#, fuzzy
+#~ msgid "Partial match of '%s' to '%s' in data frame"
+#~ msgstr "ikkje numerisk variabel i dataramme:"
+
+#~ msgid "'object' must be a list"
+#~ msgstr "«object» må vera ei liste"
 
 #~ msgid "*** Note that 'pos=1' will give an error in the future"
 #~ msgstr "*** Merk at «pos = 1» vil gje feilmelding i framtida."

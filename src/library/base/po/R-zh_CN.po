@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -29,6 +29,9 @@ msgstr "见help(\"Defunct\"))和help(\"%s-defunct\")。"
 msgid "See help(\"Defunct\")"
 msgstr "见help(\"Defunct\"))"
 
+msgid "defunctError"
+msgstr ""
+
 msgid "'%s' is deprecated."
 msgstr "%s不再有用。"
 
@@ -38,6 +41,9 @@ msgstr "见help(\"Deprecated\")和help(\"%s-deprecated\")。"
 msgid "See help(\"Deprecated\")"
 msgstr "见help(\"Deprecated\")"
 
+msgid "deprecatedWarning"
+msgstr ""
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd'的参数必需是数值或复数值"
 
@@ -46,6 +52,9 @@ msgstr "'x'里有无穷值或遗漏值"
 
 msgid "a dimension is zero"
 msgstr "维度为零"
+
+msgid "\"all\" and \"exact\" are mutually exclusive"
+msgstr ""
 
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr ""
@@ -67,6 +76,10 @@ msgstr "'normal.kind'必需是字符串，而且其长度只能为一。"
 
 msgid "'%s' is not a valid choice"
 msgstr "%s'不是正当的选择"
+
+#, fuzzy
+msgid "'sample.kind' must be a character string of length 1"
+msgstr "'normal.kind'必需是字符串，而且其长度只能为一。"
 
 msgid "malformed version string"
 msgstr "版本字串格式有错"
@@ -95,14 +108,26 @@ msgstr "'X'必需有带名字的维名"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "所有'MARGIN'的元素都必需是维的名字不是'缘'的所有元素都是尺寸名称"
 
-msgid "'dims' cannot be of length 0"
+msgid "'MARGIN' does not match dim(X)"
+msgstr ""
+
+#, fuzzy
+msgid "'dim' cannot be of length 0"
 msgstr "'dims'的长度不能为零"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim'的值太大"
 
+#, fuzzy
+msgid "'x' must have named dimnames"
+msgstr "'X'必需有带名字的维名"
+
 msgid "incorrect value for 'MARGIN'"
 msgstr "'MARGIN'的值有错"
+
+#, fuzzy
+msgid "dim(x) must have a positive length"
+msgstr "dim(X)的值必需是正数"
 
 #, fuzzy
 msgid "'pos=1' is not possible and has been warned about for years"
@@ -150,6 +175,9 @@ msgstr "对象的名字已经存在"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "自动载入器在'%2$s'找不到'%1$s' "
 
+msgid "can only splice inside a call"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "复数矩阵现在不能用"
 
@@ -174,6 +202,13 @@ msgstr "重新开始的规格不对"
 msgid "argument 'where' of length 0"
 msgstr "参数长度为零"
 
+msgid "can only write character objects"
+msgstr "只能写字符对象"
+
+#, fuzzy
+msgid "'headers' must have names and must not be NA"
+msgstr "'X'必需有带名字的维名"
+
 msgid "argument 'object' must deparse to a single character string"
 msgstr "参数'object'必需解析成单一个字符串"
 
@@ -183,11 +218,12 @@ msgstr "'origin'参数的值必需是'start'，'current'或'end'中的一个"
 msgid "can only truncate an open connection"
 msgstr "只能截断已经打开了的链结"
 
+#, fuzzy
+msgid "invalid 'endian' argument"
+msgstr "'name'参数不对"
+
 msgid "can only write vector objects"
 msgstr "只能写矢量对象"
-
-msgid "can only write character objects"
-msgstr "只能写字符对象"
 
 msgid "'timeout' must be NULL or a non-negative number"
 msgstr "'timeout'的值要么是NULL，要么是非负数"
@@ -311,10 +347,6 @@ msgstr "在不存在的列里替换单元: %s"
 msgid "only a single element should be replaced"
 msgstr "只能替换一个单元"
 
-#, fuzzy
-msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "数据框里有非数值的参数"
-
 msgid "names do not match previous names"
 msgstr "名字同原来已有的名字不相对"
 
@@ -326,6 +358,9 @@ msgstr "串列参数有错：所有变数的长度都应该是一样的"
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 行> (或0-长度的row.names)"
+
+msgid "invalid 'max' / getOption(\"max.print\"):"
+msgstr ""
 
 #, fuzzy
 msgid "non-numeric variable(s) in data frame:"
@@ -475,6 +510,10 @@ msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to'一定得是\"POSIXt\"对象"
 
 #, fuzzy
+msgid "component subscript must be a character string"
+msgstr "参数'object'必需解析成单一个字符串"
+
+#, fuzzy
 msgid "no Olson database found"
 msgstr "找不到文件"
 
@@ -530,7 +569,8 @@ msgstr "只能替换矩阵的对角"
 msgid "replacement diagonal has wrong length"
 msgstr "对角替换值的长度不对"
 
-msgid "MARGIN = %d is invalid for dim = %d"
+#, fuzzy
+msgid "MARGIN = %s is invalid for dim = %s"
 msgstr "MARGIN = %d不能适用于dim = %d"
 
 msgid "must pass a package name, %s or %s object"
@@ -600,6 +640,9 @@ msgstr "'from'的文件比'to'的文件要多"
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr "'recursive'将被忽略，因为'to'不是一个单一的现有目录"
 
+msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "不能同时又读又写同一个文件"
 
@@ -635,6 +678,9 @@ msgstr "處置程式必需是函数"
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "用种类为\"expression\"的'value'的第一个元素"
 
+msgid "Found no format() method for class \"%s\""
+msgstr ""
+
 msgid "class of 'x' was discarded"
 msgstr ""
 
@@ -668,6 +714,11 @@ msgstr "'zero.print'的长度一定得大于一"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print'只能取字符，逻辑或NULL值"
+
+msgid ""
+"'zero.print' is truncated to fit into formatted zeros; consider "
+"'replace=TRUE'"
+msgstr ""
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
 msgstr ""
@@ -728,8 +779,11 @@ msgstr "范数'%s'现在总是用exact = FALSE"
 msgid "triangular matrix should be square"
 msgstr "三角矩阵必需的正方形的"
 
-msgid "'object' must be a list"
-msgstr "'object'必需是串列"
+msgid "unknown conflict policy: %s"
+msgstr ""
+
+msgid "only one of 'include.only' and 'exclude' can be used"
+msgstr ""
 
 msgid "package %s has not been installed properly"
 msgstr "没有正确安装程辑包%s "
@@ -748,6 +802,15 @@ msgstr "程辑包%s是为%s建造的"
 
 msgid "package %s is not installed for 'arch = %s'"
 msgstr "程辑包%s没有安装在'arch=%s'中"
+
+#, fuzzy
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
+msgstr "载入程辑包：%s"
+
+msgid "packageConflictError"
+msgstr ""
 
 msgid "Attaching package: %s"
 msgstr "载入程辑包：%s"
@@ -1014,6 +1077,13 @@ msgstr "'%s'不是'namespace:%s'内的出口对象："
 msgid "namespace is already attached"
 msgstr "已经连接上名字空间了"
 
+#, fuzzy
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
+msgstr "不载入名字空间"
+
 msgid "%s not found"
 msgstr "%s不存在"
 
@@ -1044,6 +1114,10 @@ msgstr "程辑包%s没有名字空间"
 
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "载入了名字空间%1$s %2$s，但需要的是%3$s %4$s"
+
+#, fuzzy
+msgid "package %s has no 'package.rds' in Meta/"
+msgstr "程辑包%s 没有'NAMESPACE'这一文件"
 
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
@@ -1152,6 +1226,10 @@ msgstr "不能在封闭名字空间里进行出口加入"
 msgid "undefined exports: %s"
 msgstr "出口不存在：%s"
 
+#, fuzzy
+msgid "unable to re-encode some lines in NAMESPACE file"
+msgstr "'NAMESPACE'文件里'%s'指示中有空的名字"
+
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "程辑包%s 没有'NAMESPACE'这一文件"
 
@@ -1176,6 +1254,13 @@ msgstr "方法有错"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "在载入名字空间'%2$s'的时候没有找到'%1$s'对象"
+
+msgid ""
+"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgstr ""
+
+msgid "Maybe package installed with version of R newer than %s ?"
+msgstr ""
 
 msgid "'%s' is not implemented yet"
 msgstr "'%s'还没有编程实现"
@@ -1365,15 +1450,16 @@ msgstr "无穷'partial'"
 msgid "argument lengths differ"
 msgstr "参数的长度不一样"
 
+msgid "method = \"quick\" is only for numeric 'x'"
+msgstr "method=\"quick\"只适用于数值的'x'"
+
+#, fuzzy
 msgid ""
-"'x' must be atomic for 'sort.list'\n"
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
 "'sort.list'的'x'必需为原子值\n"
 "你是不是在串列上调用了'sort'函数？"
-
-msgid "method = \"quick\" is only for numeric 'x'"
-msgstr "method=\"quick\"只适用于数值的'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local'的值必需是'TRUE'，或是'FALSE'，或是环境"
@@ -1416,7 +1502,7 @@ msgstr "'x'和'y'的长度必需一致"
 msgid "additional arguments ignored in stop()"
 msgstr "stop()里的附加参数略过不用"
 
-msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
 msgstr ""
 
 msgid ""
@@ -1494,8 +1580,20 @@ msgstr "层次数目不同"
 msgid "handler must be a function"
 msgstr "處置程式必需是函数"
 
+#, fuzzy
+msgid "'which' must be of length 1"
+msgstr "'to'的长度必需为一"
+
 msgid "no such element '%s'"
 msgstr "没有这样的单元'%s'"
+
+#, fuzzy
+msgid "invalid 'which' argument"
+msgstr "'path'参数不对"
+
+#, fuzzy
+msgid "'which' must be character or numeric"
+msgstr "'tim'不是字符，也不是数值"
 
 msgid "Removing %s"
 msgstr "删除 %s"
@@ -1602,6 +1700,9 @@ msgstr "'minimized'的值必需是'TRUE'或'FALSE'值"
 
 msgid "'invisible' must be TRUE or FALSE"
 msgstr "'invisible'的值必需是'TRUE'或'FALSE'值"
+
+msgid "running command '%s' had status %d"
+msgstr ""
 
 msgid "'%s' could not be run"
 msgstr "无法運行'%s'"
@@ -1774,6 +1875,13 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#, fuzzy
+#~ msgid "Partial match of '%s' to '%s' in data frame"
+#~ msgstr "数据框里有非数值的参数"
+
+#~ msgid "'object' must be a list"
+#~ msgstr "'object'必需是串列"
 
 #~ msgid "*** Note that 'pos=1' will give an error in the future"
 #~ msgstr "*** 请注意将来再用'pos=1'的话会引起错误信条"

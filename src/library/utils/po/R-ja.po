@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:14\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -210,9 +210,6 @@ msgstr ""
 " 無効なエントリ %d を取り除いています: \n"
 " %s "
 
-msgid "package %s not found"
-msgstr " パッケージ %s が見付かりません "
-
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr " パッケージ %s の DESCRIPTION ファイル中に date 欄がありません "
 
@@ -255,6 +252,9 @@ msgstr " ディレクトリ %s に対するファイル 'filelist' がありま�
 
 msgid "data set %s not found"
 msgstr " データセット %s がありません "
+
+msgid "an object named %s already exists and will not be overwritten"
+msgstr ""
 
 msgid "only 'html = TRUE' is supported on this platform"
 msgstr " このプラットフォームでは 'html = TRUE' のみがサポートされています "
@@ -390,6 +390,39 @@ msgstr " 'form' は両辺に項を持つ公式でなければなりません "
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr " 'form' は両辺にそれぞれ一つの項を持つ両辺項公式でなければなりません "
 
+msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
+msgstr ""
+
+msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
+msgstr ""
+
+#, fuzzy
+msgid "no method found for %s(., n=%s) and class %s"
+msgstr ""
+" 関数 %s でシグネチャが %s であるものに対して定義されたメソッドはありません "
+
+msgid ""
+"tail(., addrownums = V) is deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums = V) instead."
+msgstr ""
+
+msgid "tail(., addrownums=.) is"
+msgstr ""
+
+msgid ""
+"deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums=.) instead."
+msgstr ""
+
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr " 'topic' は名前、長さ 1 の文字列、または予約語でなければなりません "
 
@@ -472,9 +505,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr " 不正確な 'agrep' 指定 "
-
-msgid "could not find package %s"
-msgstr " パッケージ %s を見付けることが出来ませんでした "
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr " パッケージ %s は空の hsearch データを持っています - 奇妙ですが "
@@ -573,6 +603,9 @@ msgstr ""
 " 関数 '%s' はS3ジェネリックでは無いようです; S3メソッドのように見える関数があ"
 "ります "
 
+msgid "'class' is of length > 1; only the first element will be used"
+msgstr ""
+
 msgid "must supply 'generic.function' or 'class'"
 msgstr " 'generic.function' か 'class' を与える必要があります "
 
@@ -596,6 +629,9 @@ msgstr " 'fixInNamespace' は名前を必要とします "
 
 msgid "only numeric indices can be used"
 msgstr " 数値的添字だけが使えます "
+
+msgid "Malformed package name."
+msgstr ""
 
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を作成できません "
@@ -999,6 +1035,9 @@ msgstr " ローカルな機械上でのコールだけを受け取ることが�
 msgid "socket not established"
 msgstr " ソケットを確立できませんでした "
 
+msgid "argument is not a function or language object:"
+msgstr ""
+
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
 " str.data.frame() が非データフレームで呼び出されました -- データフレーム強制"
@@ -1016,6 +1055,9 @@ msgstr " 'str.default': 'le' が NA です、'le' を 0 として扱います "
 msgid "'nchar.max = %d' is too small"
 msgstr ""
 
+msgid "Not a validObject():"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr " 'object' は有効な levels() を持ちません "
 
@@ -1025,6 +1067,16 @@ msgstr ""
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr ""
+
+msgid "The number of tokens != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens is not consistent across 'x'"
+msgstr ""
+
+#, fuzzy
+msgid "cannot coerce %s to logical"
+msgstr " 'x' を roman に変換できません "
 
 msgid "no lines found in %s"
 msgstr " %s には一行も存在しません "
@@ -1038,11 +1090,27 @@ msgstr " プロファイルは lines の情報を含んでいません "
 msgid "no events were recorded"
 msgstr " 如何なるイベントも記録されませんでした "
 
+msgid "argument 'compressed' is ignored for the internal method"
+msgstr ""
+
 msgid "invalid 'tarfile' argument"
 msgstr " 不正な 'tarfile' 引数 "
 
 msgid "'compressed' must be logical or character"
 msgstr " 'compress' は論理値か文字でなければなりません "
+
+#, fuzzy
+msgid "No %s command found"
+msgstr " オブジェクト '%s' が見付かりません "
+
+msgid "gzip"
+msgstr ""
+
+msgid "bzip2"
+msgstr ""
+
+msgid "xz"
+msgstr ""
 
 msgid "failed to create directory %s"
 msgstr " ディレクトリ %s を作ることが出来ません "
@@ -1055,6 +1123,9 @@ msgstr " 'tarfile' は文字列かコネクションでなければなりませ�
 
 msgid "incomplete block on file"
 msgstr " ファイルに不完全なブロック "
+
+msgid "incomplete block: rather use gzfile(.) created connection?"
+msgstr ""
 
 msgid "invalid name field in tarball"
 msgstr " tarball 中に不正な name 欄があります "
@@ -1105,8 +1176,9 @@ msgstr " select.list() は対話的にしか使えません "
 msgid "'title' must be NULL or a length-1 character vector"
 msgstr " 'title' は NULL か長さ 1 の文字ベクトルでなければなりません "
 
+#, fuzzy
 msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
+"Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
 msgstr ""
 " スペースで区切られた 1 つ以上の数を入力するか、キャンセルするには空白行を入"
 "力してください "
@@ -1162,6 +1234,9 @@ msgstr " 'ccaddress' は長さ 1 の整数でなければなりません "
 
 msgid "'url' must be a length-one character vector"
 msgstr " 'url' は長さ1の文字ベクトルでなければなりません "
+
+msgid "'headers' must have names and must not be NA"
+msgstr ""
 
 msgid "'destfile' must be a length-one character vector"
 msgstr " 'destfile' は長さ1の文字ベクトルでなければなりません "
@@ -1230,6 +1305,14 @@ msgstr " %s を作成できませんでした "
 
 msgid "there is no 'libs' directory in package %s"
 msgstr " パッケージ %s には 'libs' ディレクトリはありません "
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s, copying instead"
+msgstr " 一時的なインストール %s を %s へ移動できませんでした "
+
+#, fuzzy
+msgid "unable to copy temporary installation %s to %s"
+msgstr " 一時的なインストール %s を %s へ移動できませんでした "
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr ""
@@ -1300,6 +1383,10 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] " 依存対象 (dependency) %s もインストールします "
 
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+
 msgid ""
 "Installing package into %s\n"
 "(as %s is unspecified)"
@@ -1361,9 +1448,11 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] " 不正なローマ数字です: %s "
 
-msgid "package %s is in use and will not be installed"
-msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+#~ msgid "package %s not found"
+#~ msgstr " パッケージ %s が見付かりません "
+
+#~ msgid "could not find package %s"
+#~ msgstr " パッケージ %s を見付けることが出来ませんでした "
 
 #~ msgid "Do you want to attempt to install these from sources?"
 #~ msgstr " ソースファイルからのインストールを試みますか？ "

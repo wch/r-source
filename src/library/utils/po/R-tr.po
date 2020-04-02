@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:14\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -200,9 +200,6 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "package %s not found"
-msgstr ""
-
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr ""
 
@@ -239,6 +236,9 @@ msgid "file 'filelist' is missing for directory %s"
 msgstr ""
 
 msgid "data set %s not found"
+msgstr ""
+
+msgid "an object named %s already exists and will not be overwritten"
 msgstr ""
 
 msgid "only 'html = TRUE' is supported on this platform"
@@ -371,6 +371,37 @@ msgstr ""
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 
+msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
+msgstr ""
+
+msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
+msgstr ""
+
+msgid "no method found for %s(., n=%s) and class %s"
+msgstr ""
+
+msgid ""
+"tail(., addrownums = V) is deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums = V) instead."
+msgstr ""
+
+msgid "tail(., addrownums=.) is"
+msgstr ""
+
+msgid ""
+"deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums=.) instead."
+msgstr ""
+
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 
@@ -446,10 +477,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr ""
-
-#, fuzzy
-msgid "could not find package %s"
-msgstr "paketler yüklenemedi"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr ""
@@ -539,6 +566,9 @@ msgid ""
 "S3 methods"
 msgstr ""
 
+msgid "'class' is of length > 1; only the first element will be used"
+msgstr ""
+
 msgid "must supply 'generic.function' or 'class'"
 msgstr ""
 
@@ -561,6 +591,9 @@ msgid "'fixInNamespace' requires a name"
 msgstr ""
 
 msgid "only numeric indices can be used"
+msgstr ""
+
+msgid "Malformed package name."
 msgstr ""
 
 msgid "cannot create directory '%s'"
@@ -913,6 +946,9 @@ msgstr ""
 msgid "socket not established"
 msgstr ""
 
+msgid "argument is not a function or language object:"
+msgstr ""
+
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
 
@@ -928,6 +964,9 @@ msgstr ""
 msgid "'nchar.max = %d' is too small"
 msgstr ""
 
+msgid "Not a validObject():"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr ""
 
@@ -935,6 +974,15 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens is not consistent across 'x'"
+msgstr ""
+
+msgid "cannot coerce %s to logical"
 msgstr ""
 
 msgid "no lines found in %s"
@@ -949,10 +997,25 @@ msgstr ""
 msgid "no events were recorded"
 msgstr ""
 
+msgid "argument 'compressed' is ignored for the internal method"
+msgstr ""
+
 msgid "invalid 'tarfile' argument"
 msgstr ""
 
 msgid "'compressed' must be logical or character"
+msgstr ""
+
+msgid "No %s command found"
+msgstr ""
+
+msgid "gzip"
+msgstr ""
+
+msgid "bzip2"
+msgstr ""
+
+msgid "xz"
 msgstr ""
 
 msgid "failed to create directory %s"
@@ -965,6 +1028,9 @@ msgid "'tarfile' must be a character string or a connection"
 msgstr ""
 
 msgid "incomplete block on file"
+msgstr ""
+
+msgid "incomplete block: rather use gzfile(.) created connection?"
 msgstr ""
 
 msgid "invalid name field in tarball"
@@ -1015,7 +1081,7 @@ msgid "'title' must be NULL or a length-1 character vector"
 msgstr ""
 
 msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
+"Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
 msgstr ""
 
 msgid "Invalid input, please try again"
@@ -1065,6 +1131,9 @@ msgid "'ccaddress' must be of length 1"
 msgstr ""
 
 msgid "'url' must be a length-one character vector"
+msgstr ""
+
+msgid "'headers' must have names and must not be NA"
 msgstr ""
 
 msgid "'destfile' must be a length-one character vector"
@@ -1128,6 +1197,12 @@ msgid "failed to create %s"
 msgstr "oluşturulamadı"
 
 msgid "there is no 'libs' directory in package %s"
+msgstr ""
+
+msgid "unable to move temporary installation %s to %s, copying instead"
+msgstr ""
+
+msgid "unable to copy temporary installation %s to %s"
 msgstr ""
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
@@ -1208,6 +1283,11 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid ""
 "Installing package into %s\n"
 "(as %s is unspecified)"
@@ -1273,10 +1353,9 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "package %s is in use and will not be installed"
-msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] ""
-msgstr[1] ""
+#, fuzzy
+#~ msgid "could not find package %s"
+#~ msgstr "paketler yüklenemedi"
 
 #~ msgid ":"
 #~ msgstr ":"

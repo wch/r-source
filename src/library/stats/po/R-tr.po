@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -254,6 +254,9 @@ msgid "Refitting model to allow projection"
 msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
+msgstr ""
+
+msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
 msgstr ""
 
 msgid "collapsing to unique 'x' values"
@@ -830,7 +833,8 @@ msgstr "geçersiz argüman 'lambda'"
 msgid "%s link not recognised"
 msgstr "bağlantı tanınmadı"
 
-msgid "link \"%s\" not available for poisson family; available links are %s"
+#, fuzzy
+msgid "link \"%s\" not available for %s family; available links are %s"
 msgstr ""
 "bağlantı \"%s\" poisson ailesi için mevcut değil; mevcut bağlantılar: %s"
 
@@ -841,68 +845,37 @@ msgstr "Poisson ailesi için negatif değerlere izin verilmiyor"
 msgid "ignoring prior weights"
 msgstr "önceki sıklıklar görmezden geliniyor"
 
-msgid ""
-"link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-"bağlantı \"%s\" quasipoisson ailesi için mevcut değil; mevcut bağlantılar: %s"
-
 #, fuzzy
 msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "quasiPoisson ailesi için negatif değerlere izin verilmiyor"
 
-msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr "bağlantı \"%s\" gauss ailesi için mevcut değil; mevcut bağlantılar: %s"
-
 msgid "cannot find valid starting values: please specify some"
 msgstr "başlangıç değerleri belirlenemiyor: lütfen birkaç tane belirleyin"
-
-msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr "bağlantı \"%s\" binom ailesi için mevcut değil; mevcut bağlantılar: %s"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y değerleri 0 <= y <= 1 olmalı"
 
-msgid "non-integer #successes in a binomial glm!"
+msgid "non-integer #successes in a %s glm!"
 msgstr ""
 
-msgid "non-integer counts in a binomial glm!"
+msgid "non-integer counts in a %s glm!"
 msgstr ""
 
 #, fuzzy
 msgid ""
-"for the 'binomial' family, y must be a vector of 0 and 1's\n"
+"for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "quasibinomial ailesi için, y 0 ve 1'lerin olduğu bir vektör olmalı"
 
 msgid "cannot simulate from non-integer prior.weights"
 msgstr "tamsayı olmayan prior.weights'den simülasyon yapılamıyor"
 
-msgid ""
-"link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-"bağlantı \"%s\" quasibinomial ailesi için mevcut değil; mevcut bağlantılar: "
-"%s"
-
 #, fuzzy
-msgid ""
-"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
-"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
-msgstr "quasibinomial ailesi için, y 0 ve 1'lerin olduğu bir vektör olmalı"
-
-msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr "bağlantı \"%s\" gama ailesi için mevcut değil; mevcut bağlantılar: %s"
-
-#, fuzzy
-msgid "non-positive values not allowed for the 'gamma' family"
+msgid "non-positive values not allowed for the 'Gamma' family"
 msgstr "gama ailesi için pozitif olmayan değerlere izin verilmiyor"
 
 msgid "using weights as shape parameters"
 msgstr ""
-
-msgid ""
-"link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr ""
-"bağlantı \"%s\" ters gauss ailesi için mevcut değil; mevcut bağlantılar: %s"
 
 #, fuzzy
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
@@ -977,11 +950,11 @@ msgstr "bir 2 x 2 tablo için 'hybrid' görmezden gelindi"
 msgid "all groups must contain data"
 msgstr "tüm gruplar veri içermeli"
 
-msgid "all group levels must be finite"
-msgstr "tüm grup seviyeleri sonlu olmalı"
-
 msgid "not enough observations"
 msgstr "yetersiz gözlem sayısı"
+
+msgid "data are essentially constant"
+msgstr ""
 
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr ""
@@ -1387,7 +1360,8 @@ msgstr ""
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 
-msgid "too few cases, n < k"
+#, fuzzy
+msgid "too few cases i with h_ii > 0), n < k"
 msgstr "çok az durum, n < k"
 
 msgid "predictors must all be numeric"
@@ -1440,11 +1414,8 @@ msgstr "geçersiz argüman 'c'"
 msgid "invalid argument 'degree'"
 msgstr "geçersiz argüman 'r'"
 
-msgid "iterTrace ="
-msgstr ""
-
 #, fuzzy
-msgid "not obeyed as iterations ="
+msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "sonlu gözlem yok"
 
 msgid "first argument must be a \"loess\" object"
@@ -1579,11 +1550,39 @@ msgstr ""
 msgid "cannot create a formula from a zero-column data frame"
 msgstr ""
 
+#, fuzzy
+msgid "invalid formula: %s"
+msgstr "geçersiz formül"
+
+#, fuzzy
+msgid "invalid formula %s: not a call"
+msgstr "geçersiz formül"
+
+msgid "invalid formula %s: assignment is deprecated"
+msgstr ""
+
+msgid "invalid formula %s: extraneous call to `%s` is deprecated"
+msgstr ""
+
+#, fuzzy
+msgid "invalid formula %s"
+msgstr "geçersiz formül"
+
 msgid "no terms component nor attribute"
 msgstr ""
 
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' en az bir uzunluğunda bir karakter vektörü olmalı"
+
+msgid ""
+"Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
+msgstr ""
+
+msgid "reformulate"
+msgstr ""
+
+msgid "deprecatedWarning"
+msgstr ""
 
 #, fuzzy
 msgid "'termobj' must be a object of class %s"
@@ -1607,8 +1606,13 @@ msgstr "'offset' sayısal olmalı"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()'de model çerçevesi ve formül uyumsuzluğu"
 
-msgid "invalid 'contrasts.arg' argument"
+#, fuzzy
+msgid "non-list contrasts argument ignored"
 msgstr "geçersiz 'contrasts.arg' argümanı"
+
+#, fuzzy
+msgid "'contrasts.arg' argument must be named"
+msgstr "'split' argümanı bir liste olmalı"
 
 #, fuzzy
 msgid "variable '%s' is absent, its contrast will be ignored"
@@ -1833,10 +1837,10 @@ msgstr "'sig.level' [0,1] aralığında bir sayı olmalı"
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
-msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgid "No p1 in [0, p2] can be found to achieve the desired power"
 msgstr ""
 
-msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr ""
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
@@ -2240,9 +2244,6 @@ msgstr "'mu' tek bir sayı olmalı"
 msgid "'y' is missing for paired test"
 msgstr ""
 
-msgid "data are essentially constant"
-msgstr ""
-
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' TRUE, FALSE, NULL veya karakter vektörü olmalı"
 
@@ -2258,10 +2259,18 @@ msgstr ""
 msgid "'start' cannot be after 'end'"
 msgstr "'start' 'end' den sonra olamaz"
 
+#, fuzzy
+msgid "'end' must be a whole number of cycles after 'start'"
+msgstr "'centers' bir matris veya bir sayı olmalı"
+
 msgid "no time series supplied"
 msgstr "zaman serisi verilmedi"
 
 msgid "not all series have the same frequency"
+msgstr "tüm seriler aynı sıklığa sahip değil"
+
+#, fuzzy
+msgid "not all series have the same phase"
 msgstr "tüm seriler aynı sıklığa sahip değil"
 
 msgid "non-intersecting series"
@@ -2289,7 +2298,8 @@ msgstr "scatter grafikleri sadece tek değişkenli zaman serileri içindir"
 msgid "'xy.labels' must be logical or character"
 msgstr "'xy.labels' karakter veya mantıksal olmalı"
 
-msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
+#, fuzzy
+msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
 msgstr "uyuşmadığı halde 'frequency' ve 'deltat'ın ikiside verildi"
 
 #, fuzzy
@@ -2368,7 +2378,8 @@ msgstr "'ratio' tek bir pozitif tamsayı olmalı"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' ve 'w' aynı uzunlukta olmalı"
 
-msgid "not enough (finite) 'x' observations"
+#, fuzzy
+msgid "not enough (non-missing) 'x' observations"
 msgstr "yetersiz (sonlu) 'x' gözlemleri"
 
 #, fuzzy
@@ -2603,6 +2614,49 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasipoisson family; available links are %s"
+#~ msgstr ""
+#~ "bağlantı \"%s\" quasipoisson ailesi için mevcut değil; mevcut "
+#~ "bağlantılar: %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for gaussian family; available links are %s"
+#~ msgstr ""
+#~ "bağlantı \"%s\" gauss ailesi için mevcut değil; mevcut bağlantılar: %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family; available links are %s"
+#~ msgstr ""
+#~ "bağlantı \"%s\" binom ailesi için mevcut değil; mevcut bağlantılar: %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasibinomial family; available links are %s"
+#~ msgstr ""
+#~ "bağlantı \"%s\" quasibinomial ailesi için mevcut değil; mevcut "
+#~ "bağlantılar: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
+#~ "or a 2 column matrix where col 1 is no. successes and col 2 is no. "
+#~ "failures"
+#~ msgstr "quasibinomial ailesi için, y 0 ve 1'lerin olduğu bir vektör olmalı"
+
+#~ msgid "link \"%s\" not available for gamma family; available links are %s"
+#~ msgstr ""
+#~ "bağlantı \"%s\" gama ailesi için mevcut değil; mevcut bağlantılar: %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse.gaussian family; available links "
+#~ "are %s"
+#~ msgstr ""
+#~ "bağlantı \"%s\" ters gauss ailesi için mevcut değil; mevcut bağlantılar: "
+#~ "%s"
+
+#~ msgid "all group levels must be finite"
+#~ msgstr "tüm grup seviyeleri sonlu olmalı"
 
 #, fuzzy
 #~ msgid "'invalid value of 'k'"

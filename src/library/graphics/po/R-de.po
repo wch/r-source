@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:33\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-16 10:30+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -31,7 +31,9 @@ msgstr "entweder 'x1' oder 'y1' müssen angegeben werden"
 msgid ""
 "'length', 'angle', or 'code' greater than length 1; values after the first "
 "are ignored"
-msgstr "'length', 'angle' oder 'code' größere Länge als 1; Werte nach dem Ersten werden ignoriert"
+msgstr ""
+"'length', 'angle' oder 'code' größere Länge als 1; Werte nach dem Ersten "
+"werden ignoriert"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' muss eine 2-D Kontingenztafel sein"
@@ -82,11 +84,22 @@ msgstr "Log-Skalen-Fehler: 'ylim' <= 0"
 msgid "incorrect number of names"
 msgstr "falsche Anzahl von Namen"
 
-msgid "invalid first argument"
-msgstr "ungültiges erstes Argument"
-
 msgid "'formula' missing or incorrect"
 msgstr "'formula' fehlt oder fehlerhaft"
+
+#, fuzzy
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr "'formula' sollte genau zwei Variablen spezifizieren"
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr ""
+
+#, fuzzy
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr "'formula' sollte genau zwei Variablen spezifizieren"
+
+msgid "invalid first argument"
+msgstr "ungültiges erstes Argument"
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' muss dieselbe Länge wie 'z$n' haben, insb. %d"
@@ -119,7 +132,8 @@ msgid "no proper 'z' matrix specified"
 msgstr "keine geeignete 'z' Matrix spezifiziert"
 
 msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
-msgstr "'labels' hat Länge 0. Nutze 'drawlabels = FALSE', um Label zu unterdrücken."
+msgstr ""
+"'labels' hat Länge 0. Nutze 'drawlabels = FALSE', um Label zu unterdrücken."
 
 msgid "invalid conditioning formula"
 msgstr "ungeeignete bedingende Formel"
@@ -470,6 +484,12 @@ msgstr "y ist logarithmische Skala: yinch() ergibt keinen Sinn"
 msgid "log scale:  xyinch() is nonsense"
 msgstr "logarithmische Skala: xyinch ergibt keinen Sinn"
 
+#, fuzzy
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] "zusätzliches Argument %s wird verworfen"
+msgstr[1] "zusätzliche Argumente %s werden verworfen"
+
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Ausreißer (%s) im Boxplot %d wird nicht gezeichnet"
@@ -479,11 +499,6 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "Argument (%s) wird nicht benutzt"
 msgstr[1] "Argumente (%s) werden nicht benutzt"
-
-#~ msgid "extra argument %s will be disregarded"
-#~ msgid_plural "extra arguments %s will be disregarded"
-#~ msgstr[0] "zusätzliches Argument %s wird verworfen"
-#~ msgstr[1] "zusätzliche Argumente %s werden verworfen"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "negative 'counts'. Interner Fehler im C-Kode für\"bincount\""

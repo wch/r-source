@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"POT-Creation-Date: 2020-03-24 10:53-0700\n"
 "PO-Revision-Date: 2011-11-29 09:15+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,102 +17,102 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#: fork.c:181
+#: fork.c:215
 #, fuzzy, c-format
 msgid "unable to terminate child process: %s"
 msgstr "kan ikke forgrene, mulig årsag: %s"
 
-#: fork.c:208
+#: fork.c:242
 #, fuzzy, c-format
 msgid "unable to terminate child: %s"
 msgstr "kan ikke oprette en datakanal"
 
-#: fork.c:287 fork.c:556
+#: fork.c:321 fork.c:602
 msgid "memory allocation error"
 msgstr "allokeringsfejl for hukommelse"
 
-#: fork.c:337 fork.c:341 fork.c:345
+#: fork.c:373 fork.c:377 fork.c:381
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""
 
-#: fork.c:401
+#: fork.c:437
 msgid ""
 "Error while shutting down parallel: unable to terminate some child "
 "processes\n"
 msgstr ""
 
-#: fork.c:490 fork.c:493
+#: fork.c:526 fork.c:529
 msgid "unable to create a pipe"
 msgstr "kan ikke oprette en datakanal"
 
-#: fork.c:515
+#: fork.c:551
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "kan ikke forgrene, mulig årsag: %s"
 
-#: fork.c:683
+#: fork.c:743
 msgid "only children can send data to the master process"
 msgstr "kun underprocesser kan sende data til overprocessen"
 
-#: fork.c:685
+#: fork.c:745
 msgid "there is no pipe to the master process"
 msgstr "der er ingen datakanal til overprocessen"
 
-#: fork.c:687
+#: fork.c:747
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "indhold at sende skal være RAW (RÅ), brug serialize() hvis krævet"
 
-#: fork.c:696 fork.c:704 fork.c:1080
+#: fork.c:756 fork.c:764 fork.c:1174
 msgid "write error, closing pipe to the master"
 msgstr "skrivefejl, lukke datakanal til overproces"
 
-#: fork.c:714
+#: fork.c:774
 msgid "only the master process can send data to a child process"
 msgstr "kun overprocessen kan sende data til en underproces"
 
-#: fork.c:722
+#: fork.c:782
 #, c-format
 msgid "child %d does not exist"
 msgstr "underproces %d findes ikke"
 
-#: fork.c:728
+#: fork.c:788
 msgid "write error"
 msgstr "skrivefejl"
 
-#: fork.c:781
+#: fork.c:874
 #, fuzzy, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr "underproces %d findes ikke"
 
-#: fork.c:848 fork.c:971
+#: fork.c:933 fork.c:1053
 #, c-format
 msgid "error '%s' in select"
 msgstr "fejl '%s' i select"
 
-#: fork.c:1062
+#: fork.c:1143
 #, fuzzy
 msgid "'mckill' failed"
 msgstr "mckill fejlede"
 
-#: fork.c:1072
+#: fork.c:1156
 #, fuzzy
 msgid "'mcexit' can only be used in a child process"
 msgstr "mcexit kan kun bruges i en underproces"
 
-#: fork.c:1094
+#: fork.c:1188
 #, fuzzy
 msgid "'mcexit' failed"
 msgstr "mcexit fejlede"
 
-#: fork.c:1123 fork.c:1132
+#: fork.c:1217 fork.c:1226
 msgid "invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:1143
+#: fork.c:1237
 msgid "requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:1166
+#: fork.c:1260
 msgid "retrieving CPU affinity set failed"
 msgstr ""

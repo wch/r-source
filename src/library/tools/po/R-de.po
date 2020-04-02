@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:34\n"
+"POT-Creation-Date: 2020-03-24 14:56\n"
 "PO-Revision-Date: 2018-04-16 10:34+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -66,6 +66,11 @@ msgstr ""
 "nicht im Code"
 
 msgid "Data with usage in documentation object '%s' but not in code:"
+msgstr ""
+"Datensätze mit Anleitung im Dokumentations-Objekt '%s', jedoch nicht im Code"
+
+#, fuzzy
+msgid "Variables with usage in documentation object '%s' but not in code:"
 msgstr ""
 "Datensätze mit Anleitung im Dokumentations-Objekt '%s', jedoch nicht im Code"
 
@@ -296,6 +301,10 @@ msgstr ""
 "Das Authors@R Feld enthält keine Person als Maintainer mit zulässiger\n"
 "Mailadresse und nicht-leerem Namen"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ORCID identifiers:"
+msgstr "Das Authors@R Feld enthält Personen ohne Namen:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "Kodierung '%s' ist nicht portabel"
 
@@ -326,8 +335,15 @@ msgstr "Lizenzkomponenten, die Templates sind und '+ file LICENCE' benötigen:"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
 
+#, fuzzy
+msgid "Non-portable flags in file '%s':"
+msgstr "Nicht portierbare Flags in der Variablen '%s'"
+
 msgid "Variables overriding user/site settings:"
 msgstr "Variablen überschreiben Nutzer- bzw. Rechnereinstellungen:"
+
+msgid "invalid 'OS.type' \"%s\".  Should not happen"
+msgstr ""
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
@@ -343,6 +359,18 @@ msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 "Bitte im Abschnitt \"Cross-references\" im 'Writing R Extensions' Handbuch "
 "nachsehen!"
+
+msgid "Call sequence:"
+msgstr "Aufrufsequenz:"
+
+msgid "..."
+msgstr "..."
+
+msgid "No dataset created in 'envir'"
+msgstr ""
+
+msgid "Search path was changed"
+msgstr ""
 
 msgid "File %s:"
 msgstr "Datei %s:"
@@ -599,9 +627,10 @@ msgstr "DESCRIPTION Datei ist für Paket '%s', nicht für '%s'"
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "Vignetten-Ergebnis %s hat keine bekannte Dateinamenserweiterung (%s)"
 
+#, fuzzy
 msgid ""
-"Failed to locate the %s output file (by engine %s) for vignette with name "
-"%s. The following files exist in directory %s: %s"
+"Failed to locate %s output file %s or %s for vignette with name %s and "
+"engine %s. The following files exist in working directory %s: %s"
 msgstr ""
 "Konnte %s Ausgabedadatei (von Treiber %s) für Vignette namens %s nicht "
 "finden. Folgende Dateien existieren im Verzeichnis %s: %s"
@@ -612,6 +641,14 @@ msgid ""
 msgstr ""
 "Mehr als eine %s Ausgabedatei (von Treiber %s) für Vignette namens %s "
 "gefunden: %s"
+
+#, fuzzy
+msgid ""
+"Failed to locate %s output file %s for vignette with name %s and engine %s. "
+"The following files exist in working directory %s: %s"
+msgstr ""
+"Konnte %s Ausgabedadatei (von Treiber %s) für Vignette namens %s nicht "
+"finden. Folgende Dateien existieren im Verzeichnis %s: %s"
 
 msgid "unable to create temp directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
@@ -625,26 +662,42 @@ msgstr "Ausführen"
 msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr "Vignette %s überschreibt die folgende %s Ausgabe von Vignette %s: %s"
 
+#, fuzzy
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
-"risking overwriting each others output files"
+"risking overwriting each other's output files"
 msgstr ""
 "Vignetten-Quelldateien (%s) mit gemeinsamen Namen (%s) entdeckt, weshalb die "
 "Gefahr gegenseitigen Überschreibens besteht"
 
+#, fuzzy
+msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr "Vignette '%s' ist nicht-ASCII aber deklariert kein Enkoding"
+
+msgid "--- re-building %s using %s"
+msgstr ""
+
+#, fuzzy
 msgid ""
-"processing vignette '%s' failed with diagnostics:\n"
+"Error: processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 "Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
 "%s"
 
+#, fuzzy
 msgid ""
-"tangling vignette '%s' failed with diagnostics:\n"
+"Error: tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 "Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
 "%s"
+
+msgid "--- finished re-building %s"
+msgstr ""
+
+msgid "--- failed re-building %s"
+msgstr ""
 
 msgid "running 'make' failed"
 msgstr "Ausführen von 'make ' fehlgeschlagen"
@@ -655,11 +708,11 @@ msgstr "Datei '%s' nicht gefunden"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "Vignetten-Dateiname '%s' passt zu keinem der %s' Dateinamenmuster"
 
+msgid "+-+"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignetten-Namen"
-
-msgid "argument 'vignette' must be of length 1"
-msgstr "Argument 'vignette' muss Länge 1 haben"
 
 msgid "Vignette engine package not specified"
 msgstr "Vignetten-Treiberpaket nicht angegeben"
@@ -790,12 +843,6 @@ msgstr "Der Standard JSS style darf nicht geändert werden"
 msgid "inst/doc"
 msgstr "inst/doc"
 
-msgid "file"
-msgstr "Datei"
-
-msgid "files"
-msgstr "Dateien"
-
 msgid ","
 msgstr ","
 
@@ -803,7 +850,9 @@ msgid "ignored as vignettes have been rebuilt."
 msgstr "ignoriert, da Vignetten neu erzeugt wurden."
 
 msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
-msgstr "Starte R CMD build with --no-build-vignettes um das erneute Erzeugen der Vignetten zu unterdrücken"
+msgstr ""
+"Starte R CMD build with --no-build-vignettes um das erneute Erzeugen der "
+"Vignetten zu unterdrücken"
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "unzulässiger Wert für '--compact-vignettes', nehme %s an"
@@ -929,6 +978,10 @@ msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 msgid ".install_packages() exit status"
 msgstr "install_packages() Exitstatus"
 
+#, fuzzy
+msgid "restoration failed"
+msgstr "Laden fehlgeschlagen"
+
 msgid "error reading file '%s'"
 msgstr "Fehler beim Lesen der Datei '%s'"
 
@@ -948,8 +1001,31 @@ msgstr "erzeuge Debug-Symbole (%s)"
 msgid "no DLL was created"
 msgstr "keine DLL erzeugt"
 
+msgid "NOTE: fixed path"
+msgstr ""
+
+msgid "NOTE: fixed library identification name"
+msgstr ""
+
+msgid "NOTE: fixed library path"
+msgstr ""
+
+msgid "NOTE: fixed rpath"
+msgstr ""
+
+msgid ""
+"WARNING: shared objects/dynamic libraries with hard-coded temporary "
+"installation paths"
+msgstr ""
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "Paket %s erfolgreich entpackt und MD5 Summen überprüft"
+
+msgid "not using staged install with --libs-only"
+msgstr ""
+
+msgid "staged installation is only possible with locking"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -966,6 +1042,9 @@ msgstr "kein Quellkode gefunden"
 
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
+
+msgid "WARNING: moving package to final location failed, copying instead"
+msgstr ""
 
 msgid "cannot create unique directory for build"
 msgstr "kann kein eindeutiges Verzeichnis für den Build erzeugen"
@@ -991,18 +1070,6 @@ msgstr "Fehler: keine ausreichenden Rechte zur Installation in das Verzeichnis"
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
-msgid "C++17 standard requested but CXX17 is not defined"
-msgstr "C++17 Standard verlangt, aber CXX17 nicht definiert"
-
-msgid "C++14 standard requested but CXX14 is not defined"
-msgstr "C++14 Standard verlangt, aber CXX14 nicht definiert"
-
-msgid "C++11 standard requested but CXX11 is not defined"
-msgstr "C++11 Standard verlangt, aber CXX11 nicht definiert"
-
-msgid "C++98 standard requested but CXX98 is not defined"
-msgstr "C++98 Standard verlangt, aber CXX98 nicht definiert"
-
 msgid ""
 "See\n"
 "  %s\n"
@@ -1010,9 +1077,6 @@ msgid ""
 msgstr ""
 "Für Details siehe\n"
 "  %s ."
-
-msgid "there is no package called '%s'"
-msgstr "es gibt kein Paket names '%s'"
 
 msgid "namespace must not be already loaded"
 msgstr "Namensraum darf nicht bereits geladen sein"
@@ -1099,6 +1163,18 @@ msgstr ""
 "enthält mehr als ein \\itemize.\n"
 "Nutze das erste."
 
+#, fuzzy
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\item."
+msgstr ""
+"Schlecht formatierte NEWS.Rd Datei:\n"
+"Abschnitt beginnend\n"
+" %s\n"
+"enthält kein \\itemize."
+
 msgid "Processing packages:"
 msgstr "Bearbeitete Pakete:"
 
@@ -1108,81 +1184,6 @@ msgid ""
 msgstr ""
 "Einlesen der DESCRIPTION für Paket %s fehlgeschlagen mit Nachricht:\n"
 " %s"
-
-msgid "%s must be a character string or a file/raw connection"
-msgstr "%s muss eine Zeichenkette oder eine Datei/raw -Verbindung sein"
-
-msgid "PDF header not found"
-msgstr "PDF Header nicht gefunden"
-
-msgid "EOF marker not found"
-msgstr "EOF Markierung nicht gefunden"
-
-msgid "cannot find 'startxref' keyword"
-msgstr "kann das Schlüsselwort 'startxref' nicht finden"
-
-msgid "cannot find xref table"
-msgstr "kann xref Tabelle nicht finden"
-
-msgid "cannot read xref table"
-msgstr "kann xref Tabelle nicht lesen"
-
-msgid "attempting to select less than one element"
-msgstr "Versuch weniger als ein Element auszuwählen"
-
-msgid "attempting to select more than one element"
-msgstr "Versuch mehr als ein Element auszuwählen"
-
-msgid "looking at %s"
-msgstr "schaue auf %s"
-
-msgid "cannot read literal string object"
-msgstr "kann literales Zeichenkettenobjekt nicht lesen"
-
-msgid "cannot read hexadecimal string object"
-msgstr "kann hexadezimales Zeichenkettenobjekt nicht lesen"
-
-msgid "cannot read name object"
-msgstr "kann Namensobjekt nicht lesen"
-
-msgid "cannot read array object"
-msgstr "kann Array-Objekt nicht lesen"
-
-msgid "cannot read dictionary object"
-msgstr "kann Dictionary-Objekt nicht lesen"
-
-msgid "cannot read stream object"
-msgstr "kann Stream-Objekt nicht lesen"
-
-msgid "cannot read indirect reference object"
-msgstr "kann indirektes Referenzobjekt nicht lesen"
-
-msgid "cannot find object header at xrefed position %d"
-msgstr "kann Objektheader an der xref (-erenzieren) Position %d nicht finden"
-
-msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr "verschiedene Objektzahlen (angegeben: %d, gefunden: %d)"
-
-msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr "verschiedene Erzeugungszahlen (angegeben: %d, gefunden: %d)"
-
-msgid "cannot read stream data"
-msgstr "kann Streamdaten nicht lesen"
-
-msgid "invalid index in object stream lookup"
-msgstr "unzulässiger Index beim Lesen eines Objektstroms"
-
-msgid "expanding %s"
-msgstr "erweitere %s"
-
-msgid "unsupported filter %s"
-msgstr "nicht unterstützter Filter %s"
-
-msgid "unsupported %s predictor %d"
-msgstr "nichtunterstützter %s Prädiktor %d"
-
-msgid "unsupported PNG filter %d"
-msgstr "nicht unterstützter PNG Filter %d"
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "Argument '%s' muss eine Zeichenkette oder eine Verbindung sein"
@@ -1257,9 +1258,6 @@ msgstr "Unbekannte Header-Spezifikation"
 msgid "argument 'pkg' must be of length 1"
 msgstr "Argument 'pkg' muss Länge 1 haben"
 
-msgid "package '%s' was not found"
-msgstr "Paket '%s' nicht gefunden"
-
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 msgstr "das 'lib.loc' Argument wurde nie genutzt und ist nun veraltet"
 
@@ -1269,8 +1267,75 @@ msgstr "ungeeigneter Operand"
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr "Abhängigkeiten von Paket '%s' auf minimale Menge reduziert."
 
+msgid "argument 'vignette' must be of length 1"
+msgstr "Argument 'vignette' muss Länge 1 haben"
+
 msgid "R CMD build failed"
 msgstr "R CMD buils fehlgeschlagen"
+
+msgid "PACKAGES files do not include MD5 sums in the win.binary case"
+msgstr ""
+
+msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
+msgstr ""
+
+msgid "directly."
+msgstr ""
+
+msgid "No existing PACKAGES file found at"
+msgstr ""
+
+msgid "Existing PACKAGES file contained no rows and/or no columns"
+msgstr ""
+
+msgid "Specified fields no present in existing PACKAGES file:"
+msgstr ""
+
+msgid ""
+"Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgstr ""
+
+msgid "Updating existing repository [strict mode:"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid ""
+"]\n"
+"Detected PACKAGES file with"
+msgstr ""
+
+msgid "entries at"
+msgstr ""
+
+msgid "unable to find any package tarballs in"
+msgstr ""
+
+msgid "All existing entry MD5sums match tarballs."
+msgstr ""
+
+#, fuzzy
+msgid "Found"
+msgstr "'%s' gefunden"
+
+msgid "package versions to process."
+msgstr ""
+
+msgid "No new packages or updated package versions detected"
+msgstr ""
+
+msgid "[dryrun mode] Dryrun complete."
+msgstr ""
+
+msgid "Writing final updated PACKAGES files."
+msgstr ""
+
+msgid "update_PACKAGES complete."
+msgstr ""
 
 msgid "'x' must be a single character string"
 msgstr "'x' muss eine Zeichenkette sein"
@@ -1293,14 +1358,11 @@ msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen."
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen"
 
-msgid "unable to run '%s' on '%s'"
-msgstr "kann %s nicht auf '%s' ausführen"
-
 msgid "unable to run %s on '%s'"
 msgstr "kann %s nicht für '%s' ausführen"
 
-msgid "cannot coerce %s to logical"
-msgstr "kann %s nicht in logischen Wert umwandeln"
+msgid "unable to run '%s' on '%s'"
+msgstr "kann %s nicht auf '%s' ausführen"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "Datei 'DESCRIPTION' fehlt."
@@ -1323,19 +1385,11 @@ msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"
 msgid "cannot source package code:"
 msgstr "kann Paketquelltext nicht einlesen:"
 
-msgid "Call sequence:"
-msgstr "Aufrufsequenz:"
-
 msgid "'text' must be a character vector"
 msgstr "'text' muss ein Zeichenkettenvektor sein"
 
 msgid "parsing '%s'"
 msgstr "parse '%s'"
-
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] "Veraltetes Paket %s in Rd Kreuzreferenzen"
-msgstr[1] "Veraltete Pakete %s in Rd Kreuzreferenzen"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1464,13 +1518,26 @@ msgstr[1] ""
 "fehlendes bzw. leeres \\name Feld in Rd Dateien\n"
 "%s"
 
+msgid "duplicated vignette title:"
+msgid_plural "duplicated vignette titles:"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "SUMMARY: processing the following file failed:"
+msgid_plural "SUMMARY: processing the following files failed:"
+msgstr[0] "Evtl. globales 'T' oder 'F' in folgender Rd Beispieldatei gefunden:"
+msgstr[1] ""
+"Evtl. globales 'T' oder 'F' in folgenden Rd Beispieldateien gefunden:"
+
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "kann %s Zeile %s nicht rekodieren"
 msgstr[1] "kann '%s' Zeilen %s nicht rekodieren"
 
-msgid " file\n"
-msgid_plural " files\n"
+#, fuzzy
+msgid "%s file\n"
+msgid_plural "%s files\n"
 msgstr[0] "Datei\n"
 msgstr[1] "Dateien\n"
 
@@ -1498,6 +1565,114 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Zugehöriger BibTeX Eintrag:"
 msgstr[1] "Zugehörige BibTeX Einträge:"
+
+#~ msgid "file"
+#~ msgstr "Datei"
+
+#~ msgid "files"
+#~ msgstr "Dateien"
+
+#~ msgid "C++17 standard requested but CXX17 is not defined"
+#~ msgstr "C++17 Standard verlangt, aber CXX17 nicht definiert"
+
+#~ msgid "C++14 standard requested but CXX14 is not defined"
+#~ msgstr "C++14 Standard verlangt, aber CXX14 nicht definiert"
+
+#~ msgid "C++11 standard requested but CXX11 is not defined"
+#~ msgstr "C++11 Standard verlangt, aber CXX11 nicht definiert"
+
+#~ msgid "C++98 standard requested but CXX98 is not defined"
+#~ msgstr "C++98 Standard verlangt, aber CXX98 nicht definiert"
+
+#~ msgid "there is no package called '%s'"
+#~ msgstr "es gibt kein Paket names '%s'"
+
+#~ msgid "%s must be a character string or a file/raw connection"
+#~ msgstr "%s muss eine Zeichenkette oder eine Datei/raw -Verbindung sein"
+
+#~ msgid "PDF header not found"
+#~ msgstr "PDF Header nicht gefunden"
+
+#~ msgid "EOF marker not found"
+#~ msgstr "EOF Markierung nicht gefunden"
+
+#~ msgid "cannot find 'startxref' keyword"
+#~ msgstr "kann das Schlüsselwort 'startxref' nicht finden"
+
+#~ msgid "cannot find xref table"
+#~ msgstr "kann xref Tabelle nicht finden"
+
+#~ msgid "cannot read xref table"
+#~ msgstr "kann xref Tabelle nicht lesen"
+
+#~ msgid "attempting to select less than one element"
+#~ msgstr "Versuch weniger als ein Element auszuwählen"
+
+#~ msgid "attempting to select more than one element"
+#~ msgstr "Versuch mehr als ein Element auszuwählen"
+
+#~ msgid "looking at %s"
+#~ msgstr "schaue auf %s"
+
+#~ msgid "cannot read literal string object"
+#~ msgstr "kann literales Zeichenkettenobjekt nicht lesen"
+
+#~ msgid "cannot read hexadecimal string object"
+#~ msgstr "kann hexadezimales Zeichenkettenobjekt nicht lesen"
+
+#~ msgid "cannot read name object"
+#~ msgstr "kann Namensobjekt nicht lesen"
+
+#~ msgid "cannot read array object"
+#~ msgstr "kann Array-Objekt nicht lesen"
+
+#~ msgid "cannot read dictionary object"
+#~ msgstr "kann Dictionary-Objekt nicht lesen"
+
+#~ msgid "cannot read stream object"
+#~ msgstr "kann Stream-Objekt nicht lesen"
+
+#~ msgid "cannot read indirect reference object"
+#~ msgstr "kann indirektes Referenzobjekt nicht lesen"
+
+#~ msgid "cannot find object header at xrefed position %d"
+#~ msgstr ""
+#~ "kann Objektheader an der xref (-erenzieren) Position %d nicht finden"
+
+#~ msgid "mismatch in object numbers (given: %d, found: %d)"
+#~ msgstr "verschiedene Objektzahlen (angegeben: %d, gefunden: %d)"
+
+#~ msgid "mismatch in generation numbers (given: %d, found: %d)"
+#~ msgstr "verschiedene Erzeugungszahlen (angegeben: %d, gefunden: %d)"
+
+#~ msgid "cannot read stream data"
+#~ msgstr "kann Streamdaten nicht lesen"
+
+#~ msgid "invalid index in object stream lookup"
+#~ msgstr "unzulässiger Index beim Lesen eines Objektstroms"
+
+#~ msgid "expanding %s"
+#~ msgstr "erweitere %s"
+
+#~ msgid "unsupported filter %s"
+#~ msgstr "nicht unterstützter Filter %s"
+
+#~ msgid "unsupported %s predictor %d"
+#~ msgstr "nichtunterstützter %s Prädiktor %d"
+
+#~ msgid "unsupported PNG filter %d"
+#~ msgstr "nicht unterstützter PNG Filter %d"
+
+#~ msgid "package '%s' was not found"
+#~ msgstr "Paket '%s' nicht gefunden"
+
+#~ msgid "cannot coerce %s to logical"
+#~ msgstr "kann %s nicht in logischen Wert umwandeln"
+
+#~ msgid "Obsolete package %s in Rd xrefs"
+#~ msgid_plural "Obsolete packages %s in Rd xrefs"
+#~ msgstr[0] "Veraltetes Paket %s in Rd Kreuzreferenzen"
+#~ msgstr[1] "Veraltete Pakete %s in Rd Kreuzreferenzen"
 
 #~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 #~ msgstr "ungültiger Wert für 'compress': muss FALSE, TRUE, 2 oder 3 sein"
@@ -1626,9 +1801,6 @@ msgstr[1] "Zugehörige BibTeX Einträge:"
 #~ msgid "engine"
 #~ msgstr "engine"
 
-#~ msgid "found %s"
-#~ msgstr "'%s' gefunden"
-
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"
 #~ msgid_plural "Foreign function calls without 'PACKAGE' argument:"
@@ -1682,14 +1854,6 @@ msgstr[1] "Zugehörige BibTeX Einträge:"
 #~ msgstr[1] ""
 #~ "nicht-ASCII Zeichen in CITATION Datei, ohne eine Zeichenkodierung "
 #~ "anzugeben"
-
-#, fuzzy
-#~ msgid "Found the following executable file:"
-#~ msgid_plural "Found the following executable files:"
-#~ msgstr[0] ""
-#~ "Evtl. globales 'T' oder 'F' in folgender Rd Beispieldatei gefunden:"
-#~ msgstr[1] ""
-#~ "Evtl. globales 'T' oder 'F' in folgenden Rd Beispieldateien gefunden:"
 
 #~ msgid "name"
 #~ msgstr "Name"
@@ -1838,9 +2002,6 @@ msgstr[1] "Zugehörige BibTeX Einträge:"
 
 #~ msgid "to"
 #~ msgstr "mit"
-
-#~ msgid "..."
-#~ msgstr "..."
 
 #~ msgid "Comparing"
 #~ msgstr "Vergleiche"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2014-03-17 10:46+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -59,6 +59,15 @@ msgstr "les valeurs de 'rgb' doivent être dans [0, maxColorValue]"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "'start' et 'end' doivent être différents et dans [0, 1]."
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' doit être une valeur simple ou 'sRGB'"
@@ -145,6 +154,9 @@ msgstr "pas de nom de fichier utilisable disponible pour postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new() : utilisation de postscript(file=\"%s\")"
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
 
@@ -171,6 +183,9 @@ msgstr "famille inconnue '%s'"
 
 msgid "invalid 'family' argument"
 msgstr "argument 'family' incorrect"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 msgid "invalid 'file' argument '%s'"
 msgstr "argument 'file' incorrect '%s'"
@@ -264,6 +279,9 @@ msgstr "aucun périphérique à partir duquel enregistrer"
 
 msgid "argument is not of class %s"
 msgstr "l'argument n'est pas de classe %s"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 #, fuzzy
 msgid "snapshot recorded in different R version (pre 3.3.0)"
@@ -371,6 +389,9 @@ msgstr ""
 
 msgid "invalid value for 'rescale'"
 msgstr "valeur incorrecte pour 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr ""

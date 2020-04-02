@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -60,6 +60,15 @@ msgstr "rgb 값들은 반드시 [0, maxColorValue]내에 있어야 합니다"
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr ""
 "'start'와 'end'는 반드시 다른 값이어야 하고 [0, 1]범위내에 있어야 합니다"
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma'는 반드시 스칼라 또는 'sRGB'이어야 합니다"
@@ -145,6 +154,9 @@ msgstr ""
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): postscript(file=\"%s\")를 사용합니다"
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'에 유효하지 않은 인자들입니다 (named args가 필요합니다)"
 
@@ -161,14 +173,16 @@ msgid "NOT changing %s"
 msgstr "%s를 변경하지 않습니다"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
-"'append'는 back-compatibility를 위한 것이므로 사용되지 않을 것입니다"
+msgstr "'append'는 back-compatibility를 위한 것이므로 사용되지 않을 것입니다"
 
 msgid "unknown family '%s'"
 msgstr "알 수 없는 페밀리 '%s'입니다"
 
 msgid "invalid 'family' argument"
 msgstr "유효하지 않은 'family' 인자입니다"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 msgid "invalid 'file' argument '%s'"
 msgstr "'file' 인자 '%s'가 올바르지 않습니다"
@@ -207,8 +221,7 @@ msgid "font %s already in use"
 msgstr "폰트 %s는 이미 사용중입니다"
 
 msgid "invalid arguments in '%s' (must be font names)"
-msgstr ""
-"'%s'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
+msgstr "'%s'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
 
 msgid "unknown font"
 msgstr "알수없는 폰트입니다"
@@ -261,6 +274,9 @@ msgstr "다음으로부터 기록을 할 수 있는 장치가 없습니다"
 
 msgid "argument is not of class %s"
 msgstr "인자는 클래스 %s가 아닙니다"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr ""
@@ -335,18 +351,15 @@ msgstr "유효하지 않은 Quartz 폰트이므로 반드시 4 문자열이어�
 
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
 msgstr ""
-"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합"
-"니다)"
+"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr ""
-"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (named args가 필요합니"
-"다)"
+"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (named args가 필요합니다)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr ""
-"cairo-기반의 타입들은 현재 빌드에서 지원하지 않습니다 - \"Xlib\"를 이용"
-"하세요"
+"cairo-기반의 타입들은 현재 빌드에서 지원하지 않습니다 - \"Xlib\"를 이용하세요"
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "X11(type = \"XLib\")에 알 수 없는 페밀리입니다"
@@ -356,13 +369,12 @@ msgstr "유효하지 않은 X11 폰트 지정입니다: "
 
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
 msgstr ""
-"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니"
-"다)"
+"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
 
 msgid "invalid arguments in 'X11Fonts' (need named args)"
 msgstr ""
-"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 named args를 필요"
-"로 합니다)"
+"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 named args를 필요로 합니"
+"다)"
 
 msgid "no such device"
 msgstr "그런 장치가 없습니다"
@@ -372,6 +384,9 @@ msgstr "'X11(type=\"*cairo\")' 장치들로부터 복사만을 할 수 있습니
 
 msgid "invalid value for 'rescale'"
 msgstr "'rescale'에 유효하지 않은 값입니다"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "윈도우즈 장치들을 맨 앞으로 가져올수만 있습니다"
@@ -389,13 +404,11 @@ msgid "subscript out of range"
 msgstr "첨자가 범위외에 있습니다"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr ""
-"유효한 Windows 폰트가 아닙니다: 반드시 싱글폰트 페밀리명이어야 합니다"
+msgstr "유효한 Windows 폰트가 아닙니다: 반드시 싱글폰트 페밀리명이어야 합니다"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr ""
-"'windowsFonts'내에 유효하지 않은 인자들입니다 (반드시 폰트명이어야 합니"
-"다)"
+"'windowsFonts'내에 유효하지 않은 인자들입니다 (반드시 폰트명이어야 합니다)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
 msgstr ""

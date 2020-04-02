@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -36,6 +36,9 @@ msgstr "Se help(\"Defunct\") og help(\"%s-defunct\")."
 msgid "See help(\"Defunct\")"
 msgstr "Se hjælp(\"Defunct\")"
 
+msgid "defunctError"
+msgstr ""
+
 msgid "'%s' is deprecated."
 msgstr "'%s' er forældet."
 
@@ -45,6 +48,9 @@ msgstr "Se help(\"Deprecated\") og help(\"%s-deprecated\")."
 msgid "See help(\"Deprecated\")"
 msgstr "Se help(\"Deprecated\")"
 
+msgid "deprecatedWarning"
+msgstr ""
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument for 'La.svd' skal være numerisk eller kompleks"
 
@@ -53,6 +59,10 @@ msgstr "uendelig eller manglende værdier i 'x'"
 
 msgid "a dimension is zero"
 msgstr "en dimension er nul"
+
+#, fuzzy
+msgid "\"all\" and \"exact\" are mutually exclusive"
+msgstr "\"hexNumeric\" og \"digits17\" udelukker hinanden"
 
 #, fuzzy
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
@@ -75,6 +85,10 @@ msgstr "'normal.kind' skal være en tegnstreng af længde 1"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' er ikke et gyldigt valg"
+
+#, fuzzy
+msgid "'sample.kind' must be a character string of length 1"
+msgstr "'normal.kind' skal være en tegnstreng af længde 1"
 
 msgid "malformed version string"
 msgstr "forkert udformet versionsstreng"
@@ -100,14 +114,26 @@ msgstr "'X' skal have navngivne dimnavne"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "ikke alle elementer for 'MARGIN' er navne på dimensioner"
 
-msgid "'dims' cannot be of length 0"
+msgid "'MARGIN' does not match dim(X)"
+msgstr ""
+
+#, fuzzy
+msgid "'dim' cannot be of length 0"
 msgstr "'dims' kan ikke have længden 0"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' angiver en for stor array"
 
+#, fuzzy
+msgid "'x' must have named dimnames"
+msgstr "'X' skal have navngivne dimnavne"
+
 msgid "incorrect value for 'MARGIN'"
 msgstr "ukorrekt værdi for 'MARGIN'"
+
+#, fuzzy
+msgid "dim(x) must have a positive length"
+msgstr "dim(X) skal have en positiv længde"
 
 #, fuzzy
 msgid "'pos=1' is not possible and has been warned about for years"
@@ -155,6 +181,9 @@ msgstr "et objekt med det navn findes allerede"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "autoindlæser fandt ikke '%s' i '%s'"
 
+msgid "can only splice inside a call"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "kompleks matricer er ikke tilladt i øjeblikket"
 
@@ -179,6 +208,13 @@ msgstr "ikke en gyldig genstartsspecifikation"
 msgid "argument 'where' of length 0"
 msgstr "argument 'where' med længden 0"
 
+msgid "can only write character objects"
+msgstr "kan kun skrive tegnobjekter"
+
+#, fuzzy
+msgid "'headers' must have names and must not be NA"
+msgstr "'X' skal have navngivne dimnavne"
+
 msgid "argument 'object' must deparse to a single character string"
 msgstr "argument 'object' skal deparse til en enkel tegnstreng"
 
@@ -188,11 +224,12 @@ msgstr "'origin' skal være en af 'start', 'current' eller 'end'"
 msgid "can only truncate an open connection"
 msgstr "kan kun afkorte en åben forbindelse"
 
+#, fuzzy
+msgid "invalid 'endian' argument"
+msgstr "ugyldigt 'name'-argument"
+
 msgid "can only write vector objects"
 msgstr "kan kun skrive vektorobjekter"
-
-msgid "can only write character objects"
-msgstr "kan kun skrive tegnobjekter"
 
 msgid "'timeout' must be NULL or a non-negative number"
 msgstr "'timeout' skal være NULL eller et tal der ikke er negativt"
@@ -317,9 +354,6 @@ msgstr "erstatter element i ikkeeksisterende kolonne: %s"
 msgid "only a single element should be replaced"
 msgstr "kun et enkelt element skal erstattes"
 
-msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "Delvis match for '%s' til '%s' i dataramme"
-
 msgid "names do not match previous names"
 msgstr "navne matcher ikke tidligere navne"
 
@@ -331,6 +365,9 @@ msgstr "ugyldigt listeargument: alle variabler skal have den samme længde"
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 rækker> (eller 0-længde row.names)"
+
+msgid "invalid 'max' / getOption(\"max.print\"):"
+msgstr ""
 
 #, fuzzy
 msgid "non-numeric variable(s) in data frame:"
@@ -479,6 +516,10 @@ msgstr "'from' skal være et »POSIXt«-objekt"
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' skal være et »POSIXt«-objekt"
 
+#, fuzzy
+msgid "component subscript must be a character string"
+msgstr "argument 'object' skal deparse til en enkel tegnstreng"
+
 msgid "no Olson database found"
 msgstr "ingen Olson-database fundet"
 
@@ -534,7 +575,8 @@ msgstr "kun matrixdiagonaler kan erstattes"
 msgid "replacement diagonal has wrong length"
 msgstr "erstatningsdiagonal har forkert længde"
 
-msgid "MARGIN = %d is invalid for dim = %d"
+#, fuzzy
+msgid "MARGIN = %s is invalid for dim = %s"
 msgstr "MARGIN = %d er ugyldig for dim = %d"
 
 msgid "must pass a package name, %s or %s object"
@@ -607,6 +649,9 @@ msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
 "'rekursive' vil blive ignoreret da 'to' ikke er en enkelt eksisterende mappe"
 
+msgid "cannot overwrite a non-directory with a directory"
+msgstr ""
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "fil kan ikke blive kopieret både 'from' og 'to'"
 
@@ -642,6 +687,9 @@ msgstr "håndtag skal være en funktion"
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "bruger det første element for 'value' for type »expression«"
 
+msgid "Found no format() method for class \"%s\""
+msgstr ""
+
 msgid "class of 'x' was discarded"
 msgstr "klasse for 'x' blev fjernet"
 
@@ -675,6 +723,11 @@ msgstr "'zero.print' har længde > 1"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print' skal være tegn, logisk eller NULL"
+
+msgid ""
+"'zero.print' is truncated to fit into formatted zeros; consider "
+"'replace=TRUE'"
+msgstr ""
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
 msgstr ""
@@ -735,8 +788,11 @@ msgstr "norm '%s' bruger i øjeblikket altid præcis = FALSE"
 msgid "triangular matrix should be square"
 msgstr "triangulær matrix skal være kvadratisk"
 
-msgid "'object' must be a list"
-msgstr "'object' skal være en liste"
+msgid "unknown conflict policy: %s"
+msgstr ""
+
+msgid "only one of 'include.only' and 'exclude' can be used"
+msgstr ""
 
 msgid "package %s has not been installed properly"
 msgstr "pakke %s er ikke blevet installeret korrekt"
@@ -755,6 +811,15 @@ msgstr "pakke %s blev bygget for %s"
 
 msgid "package %s is not installed for 'arch = %s'"
 msgstr "pakke %s er ikke installeret for 'arch = %s'"
+
+#, fuzzy
+msgid ""
+"Conflicts attaching package %s:\n"
+"%s"
+msgstr "Vedhæfter pakke: %s"
+
+msgid "packageConflictError"
+msgstr ""
 
 msgid "Attaching package: %s"
 msgstr "Vedhæfter pakke: %s"
@@ -1028,6 +1093,13 @@ msgstr "'%s' er ikke et eksporteret objekt fra 'namespace:%s'"
 msgid "namespace is already attached"
 msgstr "navnerum er allerede vedhæftet"
 
+#, fuzzy
+msgid ""
+"not found in namespace %s: \n"
+"\n"
+"%s"
+msgstr "indlæser ikke et navnerum"
+
 msgid "%s not found"
 msgstr "%s blev ikke fundet"
 
@@ -1063,6 +1135,10 @@ msgstr "pakke %s har ikke et navnerum"
 
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "navnerum %s %s bliver indlæst, men %s %s er krævet"
+
+#, fuzzy
+msgid "package %s has no 'package.rds' in Meta/"
+msgstr "pakke %s har ikke en 'NAMESPACE'-fil"
 
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
@@ -1172,6 +1248,10 @@ msgstr "kan ikke tilføje eksport for et forseglet navnerum"
 msgid "undefined exports: %s"
 msgstr "ej defineret eksport: %s"
 
+#, fuzzy
+msgid "unable to re-encode some lines in NAMESPACE file"
+msgstr "tomt navn i direktiv '%s' i 'NAMESPACE'-fil"
+
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "pakke %s har ikke en 'NAMESPACE'-fil"
 
@@ -1195,6 +1275,13 @@ msgstr "ugyldig metode"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "objekt '%s' blev ikke fundet under indlæsning af navnerum '%s'"
+
+msgid ""
+"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgstr ""
+
+msgid "Maybe package installed with version of R newer than %s ?"
+msgstr ""
 
 msgid "'%s' is not implemented yet"
 msgstr "'%s' er ikke implementeret endnu"
@@ -1385,15 +1472,16 @@ msgstr "ikkefinitte 'partial'"
 msgid "argument lengths differ"
 msgstr "argumenternes længde er forskellig"
 
+msgid "method = \"quick\" is only for numeric 'x'"
+msgstr "metode = »quick« er kun for numerisk 'x'"
+
+#, fuzzy
 msgid ""
-"'x' must be atomic for 'sort.list'\n"
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
 "'x' skal være atomisk for 'sort.list'\n"
 "Har du kaldt 'sort' på en liste?"
-
-msgid "method = \"quick\" is only for numeric 'x'"
-msgstr "metode = »quick« er kun for numerisk 'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' skal være TRUE, FALSE eller et miljø"
@@ -1436,7 +1524,7 @@ msgstr "'x' og 'y' skal have samme længde"
 msgid "additional arguments ignored in stop()"
 msgstr "yderligere argumenter ignoreret i stop()"
 
-msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
 msgstr ""
 
 msgid ""
@@ -1514,8 +1602,20 @@ msgstr "niveauantal er forskelligt"
 msgid "handler must be a function"
 msgstr "håndtag skal være en funktion"
 
+#, fuzzy
+msgid "'which' must be of length 1"
+msgstr "'to' skal være af længde 1"
+
 msgid "no such element '%s'"
 msgstr "intet sådant element '%s'"
+
+#, fuzzy
+msgid "invalid 'which' argument"
+msgstr "ugyldigt 'path'-argument"
+
+#, fuzzy
+msgid "'which' must be character or numeric"
+msgstr "'tim' er ikke et tegn eller numerisk"
 
 msgid "Removing %s"
 msgstr "Fjerner %s"
@@ -1623,6 +1723,9 @@ msgstr "'minimized' skal være TRUE eller FALSE"
 
 msgid "'invisible' must be TRUE or FALSE"
 msgstr "'invisible' skal være TRUE eller FALSE"
+
+msgid "running command '%s' had status %d"
+msgstr ""
 
 msgid "'%s' could not be run"
 msgstr "'%s' kunne ikke køres"
@@ -1833,6 +1936,12 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstra argument %s vil blive ignoreret"
 msgstr[1] "ekstra argumentet %s vil blive ignoreret"
+
+#~ msgid "Partial match of '%s' to '%s' in data frame"
+#~ msgstr "Delvis match for '%s' til '%s' i dataramme"
+
+#~ msgid "'object' must be a list"
+#~ msgstr "'object' skal være en liste"
 
 #~ msgid "*** Note that 'pos=1' will give an error in the future"
 #~ msgstr "** Bemærk at 'pos=1' vil give en fejl fremover"

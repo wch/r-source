@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: parallel 3.6.0\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"Project-Id-Version: parallel 4.0.0\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,10 +43,16 @@ msgstr ""
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr ""
 
+msgid "Connection setup failed or timed out."
+msgstr ""
+
 msgid "PORT must be specified"
 msgstr ""
 
 msgid "'nnodes' must be >= 1"
+msgstr ""
+
+msgid "Cluster setup failed."
 msgstr ""
 
 msgid "invalid 'child' argument"
@@ -97,12 +103,32 @@ msgstr ""
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr ""
 
+msgid        "Cluster setup failed. %d worker of %d failed to connect."
+msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
 msgstr[0]    ""
 msgstr[1]    ""
 
+msgid        "%d parallel function call did not deliver a result"
+msgid_plural "%d parallel function calls did not deliver results"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "scheduled core %s did not deliver a result, all values of the job will be affected"
+msgid_plural "scheduled cores %s did not deliver results, all values of the jobs will be affected"
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "scheduled core %s encountered error in user code, all values of the job will be affected"
 msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "%d parallel job did not deliver a result"
+msgid_plural "%d parallel jobs did not deliver results"
 msgstr[0]    ""
 msgstr[1]    ""

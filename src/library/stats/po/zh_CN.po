@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"POT-Creation-Date: 2020-03-24 10:54-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -17,25 +17,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: Srunmed.c:54
+#: Srunmed.c:63
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "移动中位数的帶寬/跨距的值不能大于n"
+
+#: Srunmed.c:262
+#, c-format
+msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
+msgstr ""
+
+#: Srunmed.c:265
+msgid "runmed(): invalid 'na.action'"
+msgstr ""
+
+#: Srunmed.c:315
+#, c-format
+msgid "na_action logic error (%d), please report!"
+msgstr ""
 
 #: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qansari()里的概率值在[0,1]范围外"
 
-#: approx.c:113
+#: approx.c:114
 msgid "approx(): invalid f value"
 msgstr "approx(): f值不对"
 
-#: approx.c:116
+#: approx.c:117
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): 内插方法不对"
 
-#: approx.c:122
+#: approx.c:124
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): 不能内插NA值"
+
+#: approx.c:128
+msgid "approx(x,y, .., na.rm=FALSE): NA values in x are not allowed"
+msgstr ""
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:39
 msgid "invalid argument type"
@@ -71,37 +89,27 @@ msgstr "不是所有的参数都一样长"
 msgid "missing observations in cov/cor"
 msgstr "cov/cor中有遗漏值"
 
-#: cov.c:643
+#: cov.c:650
 msgid "'x' is NULL"
 msgstr "'x'为NULL"
 
-#: cov.c:645
-#, fuzzy
-msgid "'x' is a factor"
-msgstr "'tmax'不是整数"
-
-#: cov.c:665
-#, fuzzy
-msgid "'y' is a factor"
-msgstr "'fn'不是函数"
-
-#: cov.c:673 cov.c:679
+#: cov.c:682 cov.c:688
 msgid "incompatible dimensions"
 msgstr "不兼容的量度"
 
-#: cov.c:698 cov.c:739 cov.c:772
+#: cov.c:707 cov.c:748 cov.c:781
 msgid "no complete element pairs"
 msgstr "不存在完的一对"
 
-#: cov.c:711
+#: cov.c:720
 msgid "invalid 'use' (computational method)"
 msgstr "'use'不对(计算方法)"
 
-#: cov.c:714
+#: cov.c:723
 msgid "'x' is empty"
 msgstr "'x'是空的"
 
-#: cov.c:808
+#: cov.c:817
 msgid "the standard deviation is zero"
 msgstr "标准差为零"
 
@@ -224,25 +232,53 @@ msgid ""
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
 
-#: fourier.c:66 fourier.c:161
+#: fourier.c:70 fourier.c:165
 msgid "non-numeric argument"
 msgstr "非数值参数"
 
-#: fourier.c:84 fourier.c:102 fourier.c:175
+#: fourier.c:88 fourier.c:106 fourier.c:179
 msgid "fft factorization error"
 msgstr "fft因数分解错误"
 
-#: fourier.c:147
+#: fourier.c:151
 msgid "vector-valued (multivariate) series required"
 msgstr "需要矢量值系列(多变数)"
 
-#: fourier.c:223
+#: fourier.c:221
+#, c-format
+msgid ""
+"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
+"instead of 'n'"
+msgstr ""
+
+#: fourier.c:233
+#, c-format
+msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
+msgstr ""
+
+#: fourier.c:249
 msgid "no factors"
 msgstr "非因子"
 
-#: fourier.c:226
+#: fourier.c:250
+#, fuzzy
+msgid "too many factors"
+msgstr "非因子"
+
+#: fourier.c:253
 msgid "invalid factors"
 msgstr "因子不对"
+
+#: fourier.c:257
+msgid "'n' must have typeof(.) \"integer\" or \"double\""
+msgstr ""
+
+#: fourier.c:295
+#, c-format
+msgid ""
+"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
+"\")"
+msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, fuzzy, c-format
@@ -268,9 +304,18 @@ msgstr ""
 msgid "NA/NaN/Inf in '%s'"
 msgstr ""
 
-#: loessc.c:240
+#: loessc.c:242
 msgid "span is too small"
 msgstr "跨距太小"
+
+#: loessc.c:257
+#, c-format
+msgid "workspace required (%.0f) is too large%s."
+msgstr ""
+
+#: loessc.c:258
+msgid " probably because of setting 'se = TRUE'"
+msgstr ""
 
 #: loglin.c:371
 msgid "this should not happen"
@@ -347,7 +392,7 @@ msgstr "变数的长度不一样('%s')"
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: model.c:372 model.c:380 optim.c:199
+#: model.c:372 model.c:380 optim.c:227
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
@@ -402,52 +447,59 @@ msgstr "模型矩阵里目前不能有复数"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "模型矩阵里不能有种类为'%s'的参数"
 
-#: model.c:884
+#: model.c:887
 msgid "invalid formula in 'update'"
 msgstr "'update'里的公式不对"
 
-#: model.c:918
+#: model.c:921
 msgid "formula expected"
 msgstr "需要公式"
 
-#: model.c:1050
+#: model.c:1089
 msgid "invalid term in model formula"
 msgstr "模型公式里有错误的项"
 
-#: model.c:1125
+#: model.c:1180
 msgid "invalid model formula"
 msgstr "模型公式不对"
 
-#: model.c:1151 model.c:1411
+#: model.c:1212 model.c:1518
 msgid "invalid power in formula"
 msgstr "公式里的幂不对"
 
-#: model.c:1187
+#: model.c:1261
 msgid "invalid model formula in ExtractVars"
 msgstr "ExtractVars里的模型公式不对"
 
-#: model.c:1534
+#: model.c:1629
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 
-#: model.c:1595
+#: model.c:1696
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars中的模型公式不对"
 
-#: model.c:1681
+#: model.c:1773
 msgid "argument is not a valid model"
 msgstr "参数不是正确的模型"
 
-#: model.c:1691
+#: model.c:1783
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials'的值要么是NULL要么是字符矢量"
 
-#: model.c:1703
+#: model.c:1794
 msgid "'data' argument is of the wrong type"
 msgstr "'data'参数种类有错"
 
-#: model.c:1974
+#: model.c:1866
+#, c-format
+msgid ""
+"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
+"no longer happen!"
+msgstr ""
+
+#: model.c:2150
 msgid "'.' in formula and no 'data' argument"
 msgstr "公式里有'.'，而没有'data'这一参数"
 
@@ -503,7 +555,7 @@ msgstr "收敛了"
 msgid "'theta' should be of type character"
 msgstr "'theta'的种类必需是字符"
 
-#: nls.c:292 port.c:376
+#: nls.c:292 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用了"
 
@@ -543,32 +595,32 @@ msgstr "optim内的目标函数长度被评估为%d，而不是一"
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "optim梯度长度被评估为%d，而不是%d"
 
-#: optim.c:195 optim.c:401
+#: optim.c:223 optim.c:429
 msgid "'fn' is not a function"
 msgstr "'fn'不是函数"
 
-#: optim.c:213 optim.c:407
+#: optim.c:241 optim.c:435
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale'的长度不对"
 
-#: optim.c:242
+#: optim.c:270
 msgid "'maxit' is not an integer"
 msgstr "'maxit'不是整数"
 
-#: optim.c:262
+#: optim.c:290
 #, fuzzy
 msgid "'tmax' is not a positive integer"
 msgstr "'tmax'不是整数"
 
-#: optim.c:264 optim.c:281 optim.c:306 optim.c:336 optim.c:415
+#: optim.c:292 optim.c:309 optim.c:334 optim.c:364 optim.c:443
 msgid "'gr' is not a function"
 msgstr "'gr'不是函数"
 
-#: optim.c:287 optim.c:312 optim.c:342 optim.c:421
+#: optim.c:315 optim.c:340 optim.c:370 optim.c:449
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps'长度不对"
 
-#: optim.c:372
+#: optim.c:400
 msgid "unknown 'method'"
 msgstr "没有这样的'method'"
 
@@ -771,65 +823,65 @@ msgstr "Rf_divset: alg = %d其值应该是1, 2, 3, 或4"
 msgid "port algorithms 3 or higher are not supported"
 msgstr ""
 
-#: port.c:313
+#: port.c:317
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "梯度函数必需回覆长度为%d的数字向量"
 
-#: port.c:325
+#: port.c:329
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "Hessian函数必需回覆一个度数为%d的正方形数值矩阵"
 
-#: port.c:380
+#: port.c:386
 msgid "'rho' must be an environment"
 msgstr "'rho'必需是环境"
 
-#: port.c:382 port.c:548
+#: port.c:388 port.c:554
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'必需是非空数字向量"
 
-#: port.c:384
+#: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr "如果Hessian有定义的话梯度也必需有定义"
 
-#: port.c:387
+#: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "'rho'环境必包含长度为%d的数字向量'.par'"
 
-#: port.c:401
+#: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'和'upper'必需为数字向量"
 
-#: port.c:460
+#: port.c:466
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement'只适用于带名串列"
 
-#: port.c:481
+#: port.c:487
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()不存在"
 
-#: port.c:494
+#: port.c:500
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'必需是一个维数为(%d,%d)的数值矩阵"
 
-#: port.c:515
+#: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn运行结果的模式为%d , 长度为%d - 但正确的模式应该是%d，长度为%d"
 
-#: port.c:528
+#: port.c:534
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store的种类不对"
 
-#: port.c:549
+#: port.c:555
 msgid "m must be a list"
 msgstr "m必需为串列"
 
-#: port.c:569
+#: port.c:575
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'和'upperb'必需为数字向量"
 
@@ -845,32 +897,32 @@ msgstr "'scal'必需是正文形的实数矩阵"
 msgid "'scal' matrix is not positive-definite"
 msgstr "'scal'不是正定矩阵"
 
-#: random.c:53 random.c:128 random.c:200 random.c:284
+#: random.c:53 random.c:137 random.c:217 random.c:307
 msgid "NAs produced"
 msgstr "产生了NA"
 
-#: random.c:60 random.c:66 random.c:72 random.c:90 random.c:161 random.c:242
-#: random.c:376
+#: random.c:60 random.c:66 random.c:72 random.c:87 random.c:167 random.c:256
+#: random.c:399
 msgid "invalid arguments"
 msgstr "参数不对"
 
-#: random.c:310
+#: random.c:333
 msgid "NA in probability vector"
 msgstr ""
 
-#: random.c:312
+#: random.c:335
 msgid "negative probability"
 msgstr ""
 
-#: random.c:318
+#: random.c:341
 msgid "no positive probabilities"
 msgstr ""
 
-#: random.c:330
+#: random.c:353
 msgid "invalid first argument 'n'"
 msgstr "第一参数'n'不对"
 
-#: random.c:332
+#: random.c:355
 msgid "invalid second argument 'size'"
 msgstr "第二参数'size'不对"
 
@@ -888,6 +940,14 @@ msgstr "三移动中位数的结尾规则出了错: %d"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "最后%d个观测值里出现了缺省值"
+
+#, fuzzy
+#~ msgid "'x' is a factor"
+#~ msgstr "'tmax'不是整数"
+
+#, fuzzy
+#~ msgid "'y' is a factor"
+#~ msgstr "'fn'不是函数"
 
 #~ msgid "allocation error in smooth(*, '3RSR')."
 #~ msgstr "smooth(*, '3RSR')分配出错。"
