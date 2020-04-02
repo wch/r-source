@@ -2384,16 +2384,15 @@ source}.
 @node macOS packages, Customizing package compilation, Windows packages, Installing packages
 @subsection macOS
 
-On macOS (formerly OS X) @code{install.packages} works as it does on
-other Unix-alike systems, but there are additional types starting with
+On macOS @code{install.packages} works as it does on
+other Unix-alike systems, but there is an additional type
 @code{mac.binary} (available for the @acronym{CRAN} distribution but not
-when compiling @R{} from source: @code{mac.binary.el-capitan} for an 
-`El Capitan and later' build with @code{"default"} a synonym for the
-appropriate variant) which can be passed to @code{install.packages} in
-order to download and install binary packages from a suitable
-repository.  These binary package files for macOS have the extension
-@samp{.tgz}.  The @Rapp{} GUI provides menus for installation of either
-binary or source packages, from @acronym{CRAN} or local files.
+when compiling @R{} from source) which can be passed to
+@code{install.packages} in order to download and install binary packages
+from a suitable repository.  These binary package files for macOS have
+the extension @samp{.tgz}.  The @Rapp{} GUI provides menus for
+installation of either binary or source packages, from @acronym{CRAN} or
+local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -2427,8 +2426,8 @@ appropriate version at the time of writing was
 
 The default compilers specified are shown in file
 @file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At
-the time of writing these setting assumed that the C, Fortran and C++
-compilers were on the path, using @command{gfortran} 6.1.0 (see
+the time of writing those settings assumed that the C, Fortran and C++
+compilers were on the path, using @command{gfortran} 8.2.0 (see
 @ref{macOS}).  The settings can be changed, either by editing that file
 or in a file such as @file{~/.R/Makevars} (see the next section).
 Entries which may need to be changed include @samp{CC}, @samp{CXX},

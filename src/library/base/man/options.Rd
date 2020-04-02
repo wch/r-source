@@ -712,11 +712,12 @@ getOption(x, default = NULL)
 	\item{on Windows}{
 	  \code{"win.binary"}, \code{"source"} and
 	  \code{"both"} (the default).}
-	\item{on unix-alikes}{\code{"source"} (the default except under a
-	  CRAN macOS build), \code{"mac.binary.el-capitan"} and
+	\item{on Unix-alikes}{\code{"source"} (the default except under a
+	  CRAN macOS build), \code{"mac.binary"} and
 	  \code{"both"} (the default for CRAN macOS builds).
-	  (\code{"mac.binary.mavericks"}, \code{"mac.binary.leopard"},
-	  \code{"mac.binary.universal"} are no longer in use.)}
+	  (\code{"mac.binary.el-capitan"},
+	  \code{"mac.binary.mavericks"}, \code{"mac.binary.leopard"}
+	  and \code{"mac.binary.universal"} are no longer in use.)} 
       }
       Value \code{"binary"} is a synonym for the native binary type (if
       there is one); \code{"both"} is used by
