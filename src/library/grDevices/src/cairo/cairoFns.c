@@ -445,7 +445,19 @@ static SEXP Cairo_Cap(pDevDesc dd)
     return raster;
 }
 #endif
-                         
+
+static const char* utf8Toutf8NoPUA(const char *in)
+{
+    /* Will be at least bytes required because 'symbolstr' is single-byte */
+    int ncsymbol = strlen(in);  
+    char *symbolstr = R_alloc(ncsymbol, sizeof(char));
+    /* Also at least long enough because UTF8 symbols max 3 bytes */
+    int ncutf8 = 3*utf8toAdobeSymbol(symbolstr, in) + 1;
+    char *utf8str = R_alloc(ncutf8, sizeof(char));
+    Rf_AdobeSymbol2utf8(utf8str, symbolstr, ncutf8, FALSE);
+    return utf8str;
+}                         
+
 #ifdef HAVE_PANGOCAIRO
 /* ------------- pangocairo section --------------- */
 
@@ -539,7 +551,14 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     if (c < 0) {c = -c; Unicode = 1;}
 
     if (Unicode) {
+        const char *textstr; 
 	Rf_ucstoutf8(str, (unsigned int) c);
+        /* c == 77 means 'M' which we do NOT want to re-encode */
+        if (c != 77 && gc->fontface == 5 && !xd->usePUA) {
+            textstr = utf8Toutf8NoPUA(str);
+            /* At most 3 bytes (plus null) in textstr */
+            for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
+        } 
     } else {
 	/* Here we assume that c < 256 */
 	str[0] = (char) c; str[1] = (char) 0;
@@ -565,10 +584,16 @@ PangoCairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
 
-    if (!utf8Valid(str)) error("invalid string in PangoCairo_StrWidth");
+    const char *textstr;
+    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
     PangoFontDescription *desc = 
 	PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
-    PangoLayout *layout = PG_layout(desc, xd->cc, str);
+    PangoLayout *layout = PG_layout(desc, xd->cc, textstr);
 
     PG_text_extents(xd->cc, layout, NULL, NULL, &width, NULL, NULL, 0);
     g_object_unref(layout);
@@ -581,15 +606,21 @@ PangoCairo_Text(double x, double y,
 		const char *str, double rot, double hadj,
 		const pGEcontext gc, pDevDesc dd)
 {
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    const char *textstr;
     if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
     if (R_ALPHA(gc->col) > 0) {
-	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	gint ascent, lbearing, width;
 	PangoLayout *layout;
 	PangoFontDescription *desc = 
 	    PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
 	cairo_save(xd->cc);
-	layout = PG_layout(desc, xd->cc, str);
+	layout = PG_layout(desc, xd->cc, textstr);
 	PG_text_extents(xd->cc, layout, &lbearing, NULL, &width,
 			&ascent, NULL, 0);
 	cairo_move_to(xd->cc, x, y);
@@ -844,7 +875,14 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
     if (c < 0) {c = -c; Unicode = 1;}
 
     if (Unicode) {
+        const char *textstr;
 	Rf_ucstoutf8(str, (unsigned int) c);
+        /* c == 77 means 'M' which we do NOT want to re-encode */
+        if (c != 77 && gc->fontface == 5 && !xd->usePUA) {
+            textstr = utf8Toutf8NoPUA(str);
+            /* At most 3 bytes (plus null) in textstr */
+            for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
+        } 
     } else {
 	/* Here, we assume that c < 256 */
 	str[0] = (char)c; str[1] = 0;
@@ -862,9 +900,15 @@ static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     cairo_text_extents_t exts;
 
-    if (!utf8Valid(str)) error("invalid string in Cairo_StrWidth");
+    const char *textstr;
+    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
     FT_getFont(gc, dd, xd->fontscale);
-    cairo_text_extents(xd->cc, str, &exts);
+    cairo_text_extents(xd->cc, textstr, &exts);
     return exts.x_advance;
 }
 
@@ -872,7 +916,13 @@ static void Cairo_Text(double x, double y,
 		       const char *str, double rot, double hadj,
 		       pGEcontext gc, pDevDesc dd)
 {
-    if (!utf8Valid(str)) error("invalid string in Cairo_Text");
+    const char *textstr;
+    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
     if (R_ALPHA(gc->col) > 0) {
 	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	cairo_save(xd->cc);
@@ -880,13 +930,13 @@ static void Cairo_Text(double x, double y,
 	cairo_move_to(xd->cc, x, y);
 	if (hadj != 0.0 || rot != 0.0) {
 	    cairo_text_extents_t te;
-	    cairo_text_extents(xd->cc, str, &te);
+	    cairo_text_extents(xd->cc, textstr, &te);
 	    if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
 	    if (hadj != 0.0)
 		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
 	}
 	CairoColor(gc->col, xd);
-	cairo_show_text(xd->cc, str);
+	cairo_show_text(xd->cc, textstr);
 	cairo_restore(xd->cc);
     }
 }

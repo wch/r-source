@@ -485,7 +485,6 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
 #else
     dd->wantSymbolUTF8 = TRUE;
 #endif
-    dd->symbolsAvoidPUA = !usePUA;
     dd->useRotatedTextInContour = FALSE;
 
     dd->haveTransparency = 2;

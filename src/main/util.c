@@ -1787,6 +1787,39 @@ void *Rf_AdobeSymbol2utf8(char *work, const char *c0, size_t nwork,
     return (char*) work;
 }
 
+/* Convert UTF8 symbol back to single-byte symbol 
+ * ASSUME fontface == 5 and 'str' is UTF8, i.e., we are dealing with
+ * a UTF8 string that has been through Rf_AdobeSymbol2utf8(usePUA=TRUE)
+ * i.e., we are dealing with CE_UTF8 string that has come from CE_SYMBOL string.
+*/
+int Rf_utf8toAdobeSymbol(char *out, const char *in) {
+    int i, j, k, used, tmp, nc = 0, found;
+    int *symbolint;
+    const char *s = in;
+    const char *p = in;
+    for ( ; *p; p += utf8clen(*p)) nc++;
+    symbolint = (int *) R_alloc(nc, sizeof(int));
+    for (i = 0, j = 0; i < nc; i++, j++) {
+	used = mbrtoint(&tmp, s);
+        if (used < 0) 
+            error(_("invalid UTF-8 string"));
+	symbolint[j] = tmp;
+        found = 0;
+        for (k = 0; k < 224; k++) {
+            if (symbolint[j] == s2u[k]) {
+                out[j] = k + 32;
+                found = 1;
+            }
+            if (found) break;
+        }
+        if (!found) 
+            error(_("Conversion failed"));
+	s += used;
+    }
+    out[nc] = '\0';
+    return nc;
+}
+
 int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
 {
     if(n >= 32 && n < 256) return s2u[n-32];

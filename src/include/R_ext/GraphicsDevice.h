@@ -675,10 +675,6 @@ struct _DevDesc {
     int haveRaster; /* 1 = no, 2 = yes, 3 = except for missing values */
     int haveCapture, haveLocator;  /* 1 = no, 2 = yes */
 
-    /* Added in 4.0.0
-     * Allow device to convert symbols to UTF8 WITHOUT PUA code points
-     */
-    Rboolean symbolsAvoidPUA;
 
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
@@ -776,6 +772,7 @@ struct _DevDesc {
 #define prevDevice		Rf_prevDevice
 #define selectDevice		Rf_selectDevice
 #define AdobeSymbol2utf8	Rf_AdobeSymbol2utf8
+#define utf8toAdobeSymbol	Rf_utf8toAdobeSymbol
 
 /* Properly declared version of devNumber */
 int ndevNumber(pDevDesc );
@@ -864,6 +861,7 @@ LibExtern Rboolean mbcslocale;
 /* Useful for devices: translates Adobe symbol encoding to UTF-8 */
 extern void *AdobeSymbol2utf8(char*out, const char *in, size_t nwork,
                               Rboolean usePUA);
+extern int utf8toAdobeSymbol(char* out, const char *in);
 /* Translates Unicode point to UTF-8 */
 extern size_t Rf_ucstoutf8(char *s, const unsigned int c);
 

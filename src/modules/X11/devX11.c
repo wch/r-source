@@ -2910,7 +2910,6 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->locator = X11_Locator;
     dd->mode = X11_Mode;
     dd->useRotatedTextInContour = FALSE;
-    dd->symbolsAvoidPUA = !xd->usePUA;
 
     /* Set required graphics parameters. */
 

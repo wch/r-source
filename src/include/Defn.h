@@ -1346,6 +1346,8 @@ const char *EncodeString(SEXP, int, int, Rprt_adj);
 const char *EncodeReal2(double, int, int, int);
 const char *EncodeChar(SEXP);
 
+/* main/raw.c */
+int mbrtoint(int *w, const char *s);
 
 /* main/sort.c */
 void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
