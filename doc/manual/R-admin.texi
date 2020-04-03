@@ -5651,10 +5651,28 @@ install_name_tool -change /usr/local/gfortran/lib/libgfortran.5.dylib \
 
 @noindent
 (where the details depend on the compilers and CRAN macOS @R{} release).
+
+@item
+For C++ code there is the possibility that calls will be generated to
+entry points not in the system @file{/usr/lib/libc++.1.dylib}.  The
+previous step allows this to be tested again the system library on the
+build OS, but not against earlier ones.  It may be possible to
+circumvent that by static linking to @file{libc++.a} and
+@file{libc++abi.a} by something like
+@example
+SHLIB_CXXLD = /usr/local/clang/bin/clang
+PKG_LIBS = /usr/local/clang/lib/libc++.a /usr/local/clang/lib/libc++abi.a
+@end example
+@noindent
+in @file{src/Makevars}.  It would also be possible to static link the
+Fortran runtime libraries @file{/usr/local/gfortran/lib/libgfortran.a}
+and @file{/usr/local/gfortran/lib/libquadmath.a} should the Fortran
+compiler have later versions (but @command{gfortran} 8, 9 and 10 all
+have version @code{5.0.0}).
 @end itemize
 @noindent
-The CRAN binary packages are built on High Sierra, which avoids the
-first two.
+The CRAN binary packages are built with the Apple compiler on High
+Sierra, which avoids the first two and any issues with C++ libraries.
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
