@@ -2417,12 +2417,12 @@ Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer.  These are required by a number
 of @acronym{CRAN} and Bioconductor packages.
 
-A few of the binary packages need other software to be installed on your
-system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
-@CRANpkg{cairoDevice} and those that depend on them) need the GTK
-framework installed from @uref{https://mac.R-project.org/libs/}: the
-appropriate version at the time of writing was
-@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
+@c A few of the binary packages need other software to be installed on your
+@c system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
+@c @CRANpkg{cairoDevice} and those that depend on them) need the GTK
+@c framework installed from @uref{https://mac.R-project.org/libs/}: the
+@c appropriate version at the time of writing was
+@c @uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
 
 The default compilers specified are shown in file
 @file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At
@@ -2436,11 +2436,12 @@ Entries which may need to be changed include @samp{CC}, @samp{CXX},
 @samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14},
 @samp{CXX17} and @samp{CXX20} variants
 
-So for example you could select a specific build of @command{clang} for
-both C and C++ with extensive checking by having in @file{~/.R/Makevars}
+So for example on Mojave or Catalina you could select a specific build
+of @command{clang} for both C and C++ with extensive checking by having
+in @file{~/.R/Makevars}
 @example
-CC = /usr/local/clang/bin/clang
-CXX = /usr/local/clang/bin/clang++
+CC=/usr/local/clang/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+CXX=/usr/local/clang/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
@@ -2467,16 +2468,17 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 @noindent
-(with lines broken here for legibility).
-
-@c If using the C/C++ compilers from the Command Line Tools (which do not
-@c have OpenMP support) one will need to include
-@c @example
-@c SHLIB_OPENMP_CFLAGS =
-@c SHLIB_OPENMP_CXXFLAGS =
-@c @end example
-@c @noindent
-@c to compile OpenMP-using packages.
+(with lines broken here for legibility).  If that @command{clang} build
+supports OpenMP, you can add
+@example
+SHLIB_OPENMP_CFLAGS = -fopenmp
+SHLIB_OPENMP_CXXFLAGS = -fopenmp
+@end example
+@noindent
+to compile OpenMP-using packages.  It will also be necessary to arrange
+for the @code{libomp.dylib} library to be found at both install time and run
+time, for example by copying/linking it somewhere that is searched such
+as @file{/usr/local/lib}.
 
 Apple includes many Open Source libraries in macOS but increasingly
 without the corresponding headers (not even in Xcode nor the Command
@@ -2486,9 +2488,10 @@ statically-linked up-to-date copy of the Open Source package from its
 sources or from @uref{https://mac.R-project.org/libs-4}.  But sometimes
 it is desirable/necessary to use Apple's dynamically linked library, in
 which case appropriate headers could be extracted from the
-sources@footnote{Note that capitalization and version may differ from
+sources@footnote{Note that capitalization and versioning may differ from
 the Open Source project.} available @emph{via}
-@uref{https://opensource.apple.com}.
+@uref{https://opensource.apple.com} -- this has been used for
+@code{OpenSSL} and @code{iodbc}.
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
