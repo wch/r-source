@@ -548,13 +548,13 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     gint iascent, idescent, iwidth;
 
     if (c == 0) c = 77;
-    if (c < 0) {c = -c; Unicode = 1;}
+    if (c < 0) {c = -c; Unicode = 2;}
 
     if (Unicode) {
         const char *textstr; 
 	Rf_ucstoutf8(str, (unsigned int) c);
-        /* c == 77 means 'M' which we do NOT want to re-encode */
-        if (c != 77 && gc->fontface == 5 && !xd->usePUA) {
+        /* Unicode == 2 means we have a Unicode point */
+        if (Unicode > 1 && gc->fontface == 5 && !xd->usePUA) {
             textstr = utf8Toutf8NoPUA(str);
             /* At most 3 bytes (plus null) in textstr */
             for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
@@ -872,13 +872,13 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
     int Unicode = mbcslocale;
 
     if (c == 0) c = 77;
-    if (c < 0) {c = -c; Unicode = 1;}
+    if (c < 0) {c = -c; Unicode = 2;}
 
     if (Unicode) {
         const char *textstr;
 	Rf_ucstoutf8(str, (unsigned int) c);
-        /* c == 77 means 'M' which we do NOT want to re-encode */
-        if (c != 77 && gc->fontface == 5 && !xd->usePUA) {
+        /* Unicode == 2 means we have a Unicode point */
+        if (Unicode > 1 && gc->fontface == 5 && !xd->usePUA) {
             textstr = utf8Toutf8NoPUA(str);
             /* At most 3 bytes (plus null) in textstr */
             for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
