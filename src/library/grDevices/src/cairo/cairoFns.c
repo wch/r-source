@@ -800,11 +800,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     if (face < 1 || face > 5) face = 1;
     family = gc->fontfamily;
     if (face == 5) {
-#ifdef Win32
-	if (!*family) family = "Standard Symbols L";
-#else
 	if (!*family) family = xd->symbolfamily;
-#endif
     } else {
 	if (!*family) family = xd->basefontfamily;
 	if (streql(family, "sans")) family = hv;
