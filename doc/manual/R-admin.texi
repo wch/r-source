@@ -2417,12 +2417,12 @@ Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer.  These are required by a number
 of @acronym{CRAN} and Bioconductor packages.
 
-@c A few of the binary packages need other software to be installed on your
-@c system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
-@c @CRANpkg{cairoDevice} and those that depend on them) need the GTK
-@c framework installed from @uref{https://mac.R-project.org/libs/}: the
-@c appropriate version at the time of writing was
-@c @uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
+A few of the binary packages need other software to be installed on your
+system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
+@CRANpkg{cairoDevice} and those that depend on them) need the GTK
+framework installed from @uref{https://mac.R-project.org/libs/}: the
+appropriate version at the time of writing was
+@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
 
 The default compilers specified are shown in file
 @file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At
@@ -2436,9 +2436,9 @@ Entries which may need to be changed include @samp{CC}, @samp{CXX},
 @samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14},
 @samp{CXX17} and @samp{CXX20} variants
 
-So for example on Mojave or Catalina you could select a specific build
-of @command{clang} for both C and C++ with extensive checking by having
-in @file{~/.R/Makevars}
+So for example on Mojave or Catalina you could select a specific
+non-Apple build of @command{clang} for both C and C++ with extensive
+checking by having in @file{~/.R/Makevars}
 @example
 CC=/usr/local/clang/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 CXX=/usr/local/clang/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
