@@ -67,7 +67,11 @@ tiff(filename = "Rplot\%03d.tiff",
 
     For types \code{"cairo"} and \code{"quartz"}, the \code{family}
     argument can be supplied.  See the \sQuote{Cairo fonts}
-    section in the help for \code{\link{X11}}.}
+    section in the help for \code{\link{X11}}.
+    
+    For type \code{"cairo"}, the \code{symbolfamily}
+    argument can be supplied.  See \code{\link{X11.options}}.
+  }
 
   \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
     (some macOS builds) or \code{"cairo"}.  The latter will only be
