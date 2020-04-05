@@ -29,7 +29,7 @@ assign(".X11.Options",
             fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
             family = "sans",
-            symbolfamily = "symbol",
+            symbolfamily = "Symbol",
             xpos = NA_integer_, ypos = NA_integer_,
 	    title = "", type = "cairo", antialias = "default"),
        envir = .X11env)
