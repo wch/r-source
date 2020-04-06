@@ -912,6 +912,7 @@ static void Cairo_Text(double x, double y,
 		       const char *str, double rot, double hadj,
 		       pGEcontext gc, pDevDesc dd)
 {
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     const char *textstr;
     if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
     if (gc->fontface == 5 && !xd->usePUA) {
@@ -920,7 +921,6 @@ static void Cairo_Text(double x, double y,
         textstr = str;
     }
     if (R_ALPHA(gc->col) > 0) {
-	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	cairo_save(xd->cc);
 	FT_getFont(gc, dd, xd->fontscale);
 	cairo_move_to(xd->cc, x, y);
