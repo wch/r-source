@@ -17,19 +17,19 @@ svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
     width = 7, height = 7, pointsize = 12,
     onefile = FALSE, family = "sans", bg = "white",
     antialias = c("default", "none", "gray", "subpixel"),
-    symbolfamily = "symbol")
+    symbolfamily)
 
 cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
           onefile = FALSE, family = "sans", bg = "white",
           antialias = c("default", "none", "gray", "subpixel"),
-          fallback_resolution = 300, symbolfamily = "symbol")
+          fallback_resolution = 300, symbolfamily)
 
 cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
          width = 7, height = 7, pointsize = 12,
          onefile = FALSE, family = "sans", bg = "white",
          antialias = c("default", "none", "gray", "subpixel"),
-         fallback_resolution = 300, symbolfamily = "symbol")
+         fallback_resolution = 300, symbolfamily)
 }
 \arguments{
   \item{filename}{the name of the output file.

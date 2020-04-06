@@ -29,7 +29,7 @@ assign(".X11.Options",
             fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
             family = "sans",
-            symbolfamily = "Symbol",
+            symbolfamily = "default",
             xpos = NA_integer_, ypos = NA_integer_,
 	    title = "", type = "cairo", antialias = "default"),
        envir = .X11env)
@@ -125,7 +125,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     .External2(C_X11, d$display, d$width, d$height, d$pointsize, d$gamma,
                d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
                NA_integer_, d$xpos, d$ypos, d$title,
-               type, antialias, d$family, checkSymbolFont(d$symbolfamily))
+               type, antialias, d$family, optionSymbolFont(d$symbolfamily))
     invisible()
 }
 
@@ -234,4 +234,17 @@ savePlot <- function(filename = paste0("Rplot.", type),
     if(devname != "X11cairo")
         stop("can only copy from 'X11(type=\"*cairo\")' devices")
     invisible(.External2(C_savePlot, filename, type, device))
+}
+
+
+optionSymbolFont <- function(family) {
+    if (family == "default") {
+        if (symbolType1support()) {
+            cairoSymbolFont("Symbol")
+        } else {
+            cairoSymbolFont("sans", usePUA = FALSE)
+        }
+    } else {
+        cairoSymbolFont(family)
+    }
 }
