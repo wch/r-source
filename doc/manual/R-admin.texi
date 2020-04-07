@@ -1074,7 +1074,7 @@ and Solaris compilers (the latter from version 12.4).  Currently
 accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
-         c++20 gnu++20 (from 9)
+         c++20 gnu++20 (from 10)
 Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0)
 Solaris: c++11 c++14 (from 12.5)
 @end example
@@ -2453,13 +2453,6 @@ CXX20FLAGS = $CXXFLAGS
 @end example
 @noindent
 (long lines split for the manual only) and @command{gfortran} by
-(Sierra or later)
-@example
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
-  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
-@end example
-or (Mojave or later, but also works on High Sierra)
 @example
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
@@ -2746,8 +2739,7 @@ macOS for @R{} versions @var{4.y.z}, containing
 @item 
 @code{"mac.binary.el-capitan"}: located at
 @file{bin/macosx/el-capitan/contrib/@var{3.y}} for the CRAN builds for
-`El Capitan' (and later) for @R{} versions @var{3.y.z}, containing
-@file{.tgz} files.
+@R{} versions @var{3.y.z}, containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -2757,10 +2749,9 @@ simplest way to set up such a file is to use function
 @code{write_PACKAGES} in the @pkg{tools} package, and its help explains
 which fields are needed.  Optionally there can also be
 @file{PACKAGES.rds} and @file{PACKAGES.gz} files, downloaded in
-preference to @file{PACKAGES}.  (These files will be smaller:
-@file{PACKAGES.rds} is used only from @R{} 3.4.0.  If you have a
-mis-configured server that does not report correctly non-existent files
-you may need these files.)
+preference to @file{PACKAGES}.  (If you have a mis-configured server
+that does not report correctly non-existent files you may need these
+files.)
 
 To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
@@ -5701,8 +5692,7 @@ or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 identify themselves is slightly confusing: commands @command{CC -V} with
 Developer Studio 12.5 and 12.6 report as versions 5.14 and 5.15.  We
 will only consider Developer Studio versions 12.5 (May 2016) and 12.6
-(July 2017): instructions for 12.3 can be found in versions of this
-manual for @R{} 3.3.x.
+(July 2017).
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -6024,6 +6014,8 @@ have had a fair amount of practice at porting @R{} to new platforms
 
 @node The Windows toolset, Function and variable index, Platform notes, Top
 @appendix The Windows toolset
+
+@center @strong{The toolset described here is that used for R 3.6.x: it may change for 4.0.0.}
 
 If you want to build @R{} or add-on packages from source in Windows, you
 will need to collect, install and test an extensive set of tools.  See
