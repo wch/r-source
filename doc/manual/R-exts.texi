@@ -2761,7 +2761,7 @@ using std::make_unique;
 #endif
 @end example
 
-Note that @command{g++} 4.9.x (as used for @R{} on Windows up to 3.6.x)
+Note that @command{g++} 4.9.x (as used on Windows prior to @R{} 4.0.0)
 has only partial C++14 support, and the flag to obtain that support is
 not included in the default Windows build of @R{} --- one could try
 something like
@@ -2773,7 +2773,9 @@ CXX14STD=-std=gnu1y
 @end example
 
 @noindent
-in @file{@var{HOME}/.R/Makevars.win}.
+in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version
+expected to be used from @R{} 4.0.0 supports C++14 with flag
+@option{-std=gnu14} and for back-compatibility @option{-std=gnu1y}.
 
 C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
 specified in an analogous way (replacing @code{14} by @code{17} or
@@ -2781,9 +2783,8 @@ specified in an analogous way (replacing @code{14} by @code{17} or
 can be used (and probably should be as support is still patchy,
 especially library support).
 
-No C++14/17/20 support is enabled in the current default build of @R{} on
-Windows.  C++17 and C++20 support are available with the default
-build of @R{} on macOS.
+C++17 and C++20 support are available with the default build of @R{} on
+macOS, and may be on Windows.
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages

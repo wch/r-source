@@ -1071,7 +1071,7 @@ and Solaris compilers (the latter from version 12.4).  Currently
 accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
-         c++20 gnu++20 (from 9)
+         c++20 gnu++20 (from 10)
 Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0)
 Solaris: c++11 c++14 (from 12.5)
 @end example
@@ -6012,6 +6012,8 @@ have had a fair amount of practice at porting @R{} to new platforms
 
 @node The Windows toolset, Function and variable index, Platform notes, Top
 @appendix The Windows toolset
+
+@center @strong{The toolset described here is that used for R 3.6.x: it may change for 4.0.0.}
 
 If you want to build @R{} or add-on packages from source in Windows, you
 will need to collect, install and test an extensive set of tools.  See
