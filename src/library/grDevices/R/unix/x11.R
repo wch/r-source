@@ -240,7 +240,7 @@ savePlot <- function(filename = paste0("Rplot.", type),
 optionSymbolFont <- function(family) {
     if (family == "default") {
         if (symbolType1support()) {
-            cairoSymbolFont("Symbol")
+            cairoSymbolFont("symbol")
         } else {
             cairoSymbolFont("sans", usePUA = FALSE)
         }
