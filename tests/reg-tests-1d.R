@@ -3873,6 +3873,16 @@ out <- tryCatch(suppressMessages(stop(cnd)), message = identity)
 stopifnot(identical(out, cnd))
 
 
+## PR#17730 -- data() should no longer "lie" and warn {already have getOption("warn") == 2
+for(p in c("base", "stats")) {
+    dd <- data(package=p)
+    stopifnot(inherits(dd, "packageIQR"), is.list(dd),
+              nrow(dd$results) == 0)
+}
+## gave all data from pkg 'datasets'  *and* warned in  R <= 3.6.3
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
