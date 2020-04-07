@@ -912,7 +912,7 @@ static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
     cairo_text_extents_t exts;
 
     const char *textstr;
-    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (!utf8Valid(str)) error("invalid string in Cairo_StrWidth");
     if (gc->fontface == 5 && !xd->usePUA) {
         textstr = utf8Toutf8NoPUA(str);
     } else {
@@ -929,7 +929,7 @@ static void Cairo_Text(double x, double y,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     const char *textstr;
-    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (!utf8Valid(str)) error("invalid string in Cairo_Text");
     if (gc->fontface == 5 && !xd->usePUA) {
         textstr = utf8Toutf8NoPUA(str);
     } else {
