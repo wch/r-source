@@ -832,7 +832,7 @@ e.g.@: @samp{MASS (>= 3.1-20)}.
 
 The @samp{Depends} field can also specify a dependence on a certain
 version of @R{} --- e.g., if the package works only with @R{} version
-3.6.0 or later, include @samp{R (>= 3.6)} in the @samp{Depends}
+4.0.0 or later, include @samp{R (>= 4.0)} in the @samp{Depends}
 field. (As here, trailing zeroes can be dropped and it is recommended
 that they are.)  You can also require a certain SVN revision for R-devel
 or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)} requires a
@@ -924,13 +924,12 @@ C which package B suggests or enhances, then package C needs to be in
 the @samp{Suggests} list for package A.  Nor will undeclared uses in
 included files be reported, nor unconditional uses of packages listed
 under @samp{Enhances}.  @command{R CMD check --as-cran} will detect more
-of the subtler uses, especially for re-building of vignettes as from
-@R{} 3.5.0.}  to successfully run @code{R CMD check} on the package must
-be listed in one of @samp{Depends} or @samp{Suggests} or @samp{Imports}.
-Packages used to run examples or tests conditionally (e.g.@: @emph{via}
-@code{if(require(@var{pkgname}))}) should be listed in @samp{Suggests}
-or @samp{Enhances}.  (This allows checkers to ensure that all the
-packages needed for a complete check are installed.)
+of the subtler uses.} to successfully run @code{R CMD check} on the
+package must be listed in one of @samp{Depends} or @samp{Suggests} or
+@samp{Imports}.  Packages used to run examples or tests conditionally
+(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed
+in @samp{Suggests} or @samp{Enhances}.  (This allows checkers to ensure
+that all the packages needed for a complete check are installed.)
 
 @item
 Packages needed to use datasets from the package should be in
@@ -1708,11 +1707,7 @@ both the command and the appropriate flags, so that for example
 @samp{CC} must always be used with @samp{CFLAGS} and (for code to be
 linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
 to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and 
-@samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.  (Packages intended to
-be used with @R{} versions before 3.6.0 should use the legacy forms
-@samp{F77 FFLAGS FPICFLAGS} and @samp{FC FCFLAGS FCPICFLAGS}, but
-@samp{F77} and @samp{FCPICFLAGS} are no longer defined, so such packages
-should depend on @samp{R (< 4.0)}.)
+@samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.
 
 To check for an external BLAS library using the @code{AX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
@@ -2766,10 +2761,10 @@ using std::make_unique;
 #endif
 @end example
 
-Note that @command{g++} 4.9.x (as used for @R{} on Windows at
-least up to 3.6.x) has only partial C++14 support, and the flag to
-obtain that support is not included in the default Windows build of @R{}
---- one could try something like
+Note that @command{g++} 4.9.x (as used for @R{} on Windows up to 3.6.x)
+has only partial C++14 support, and the flag to obtain that support is
+not included in the default Windows build of @R{} --- one could try
+something like
 
 @example
 CXX14="$(BINPREF)g++ $(M_ARCH)"
@@ -10632,9 +10627,7 @@ resetting buffers on open files).
 Most @R{} header files can be included within C++ programs but they
 should @strong{not} be included within an @code{extern "C"} block (as
 they include system headers@footnote{Even including C system headers in
-such a block has caused compilation errors.}).  The inclusion of system
-headers in C++ changed in @R{} 3.3.0, so if you care about earlier
-versions of @R{} please check your package there.
+such a block has caused compilation errors.}).
 
 Legacy header @file{S.h} cannot be used with C++.
 
@@ -12557,8 +12550,8 @@ the external pointer represents, if that memory is allocated from the
 @R{} heap.  Both @code{tag} and @code{prot} can be @code{R_NilValue},
 and often are.
 
-An alternative way as from @R{} 3.4.0 to create an external pointer from
-a function pointer is
+An alternative way to create an external pointer from a function pointer
+is
 
 @example
 typedef void * (*R_DL_FUNC)();
@@ -13463,10 +13456,9 @@ void F77_NAME(rmsg)(char *msg)
 @end example
 
 
-An alternative is to use Fortran 2003 features@footnote{These started to
-be implemented in compilers @emph{ca} 2007, e.g.@: in @command{gfortran}
-4.3.} to set up the Fortran routine to pass a C-compatible character
-string.  We could use something like
+An alternative is to use Fortran 2003 features to set up the Fortran
+routine to pass a C-compatible character string.  We could use something
+like
 @example
       module cfuncs
         use iso_c_binding, only: c_char, c_null_char
@@ -14535,15 +14527,13 @@ Fortran entry points, but there is a more comprehensive scheme used by,
 for example package @pkg{stats}.  Most compilers which allow control of
 visibility will allow control of visibility for all symbols @emph{via} a
 flag, and where known the flag is encapsulated in the macros
-@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{As from @R{} 3.5.2:
-This applies to the compiler for the default C++ dialect (currently
-C++11) and not necessarily to other dialects.} and @samp{F_VISIBILITY}
-for C, C++ and Fortran compilers.@footnote{@samp{F77_VISIBILITY} was
-used prior to @R 3.6.0 and was still available in 3.6.x.  In some cases
-the Fortran compilers accept the flag but do not actually hide their
-symbols.}  These are defined in @file{etc/Makeconf} and so available for
-normal compilation of package code.  For example, @file{src/Makevars}
-could include some of
+@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{This applies to the
+compiler for the default C++ dialect (currently C++11) and not
+necessarily to other dialects.} and @samp{F_VISIBILITY} for C, C++ and
+Fortran compilers.@footnote{In some cases Fortran compilers accept the
+flag but do not actually hide their symbols.}  These are defined in
+@file{etc/Makeconf} and so available for normal compilation of package
+code.  For example, @file{src/Makevars} could include some of
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
@@ -15175,7 +15165,6 @@ extern int  (*ptr_R_EditFile)(const char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
-// added in R 3.0.0
 extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
 extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_dataentry)(SEXP, SEXP, SEXP, SEXP);
