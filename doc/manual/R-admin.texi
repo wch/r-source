@@ -142,7 +142,7 @@ by spaces.)
 A patched version of the current release, @samp{r-patched}, and the
 current development version, @samp{r-devel}, are available as daily
 tarballs and via access to the @R{} Subversion repository.  (For the two
-weeks prior to the release of a minor (3.x.0) version, @samp{r-patched}
+weeks prior to the release of a minor (4.x.0) version, @samp{r-patched}
 tarballs may refer to beta/release candidates of the upcoming release,
 the patched version of the current release being available via
 Subversion.)
@@ -227,15 +227,14 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @R{} will configure and build under most common Unix and Unix-alike
 platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @cputype{alpha}, @cputype{arm64}, @cputype{hppa}, @cputype{ix86},
-@cputype{m68k}, @cputype{mips}, @cputype{mipsel}, @cputype{ppc64},
-@cputype{s390}, @cputype{sparc64}, and @cputype{x86_64} @acronym{CPU}s,
+@cputype{m68k}, @cputype{mips}, @cputype{mipsel}#, @cputype{ppc64},
+@cputype{s390x}, @cputype{sparc64}, and @cputype{x86_64} @acronym{CPU}s,
 @c (see e.g.@:  @uref{https://buildd.debian.org/build.php?&pkg=r-base}),
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd64, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin}, @samp{i386-@/sun-@/solaris} and
-@samp{sparc-@/sun-@/solaris} as well as
-perhaps (it is tested less frequently on these platforms)
+@samp{x86_64-@/apple-@/darwin} and @samp{i386-@/sun-@/solaris} as well
+as perhaps (it is tested less frequently on these platforms)
 @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
 @samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
@@ -397,8 +396,8 @@ some do not have @file{/usr/local/bin} on the default path.
 @node Help options, Making the manuals, Simple compilation, Installing R under Unix-alikes
 @section Help options
 
-@R{} by default provides help pages a plain text displayed in a pager,
-with the options (see the help for @code{help} of displaying help as
+@R{} by default provides help pages as plain text displayed in a pager,
+with the options (see the help for @code{help}) of displaying help as
 HTML or PDF.
 
 By default @HTML{} help pages are created when needed rather than being
@@ -432,7 +431,7 @@ There is a set of manuals that can be built from the sources,
 @table @samp
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
-(around 3600 pages).
+(around 3750 pages).
 @item refman
 Printed versions of the help pages for selected base packages (around
 2200 pages)
@@ -931,7 +930,7 @@ and recommended packages are not byte-compiled.  (Alternatively the
 non-empty value for the duration of the build.)
 
 Option @option{--with-internal-tzcode} makes use of @R{}'s own code and
-copy of the Olson database for managing timezones.  This will be
+copy of the IANA database for managing timezones.  This will be
 preferred where there are issues with the system implementation, usually
 involving times after 2037 or before 1916.  An alternative time-zone
 directory@footnote{How to prepare such a directory is described in file
@@ -1169,13 +1168,13 @@ LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019.
 
 With @command{gcc}/@command{gfortran} 9.x@footnote{probably also 8.4 and
-later when released.} this will flag inconsistencies in calls to Fortran
+later.} this will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
-Fortran and C/C++.  @command{gfortran} 9.2@footnote{or 9.1-patched since
-2019-05-09.} can help understanding these by extracting C prototypes
-from Fortran source files with its @option{-fc-prototypes-external}
-option, e.g.@: that (at the time of writing) Fortran @code{LOGICAL}
-corresponds to @code{int_least32_t *}.
+Fortran and C/C++.  @command{gfortran} 9.2 and later can help
+understanding these by extracting C prototypes from Fortran source files
+with its @option{-fc-prototypes-external} option, e.g.@: that (at the
+time of writing) Fortran @code{LOGICAL} corresponds to
+@code{int_least32_t *}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -2018,7 +2017,7 @@ These are paths relative to @file{/}, the root of the file system.
 
 The installer will remove any previous version@footnote{More precisely,
 of the Apple package of the same name: this means that installing a package for
-3.3.x does not remove an installation for 3.4.x or later.} of
+3.6.x does not remove an installation for 4.0 or later.} of
 the @R{} framework which it finds installed.  This can be avoided by
 using @command{pkgutil --forget} (see the previous section).  However,
 note that different versions are installed under
@@ -2310,8 +2309,7 @@ Windows binary packages for @R{} are distributed as a single binary
 containing either or both architectures (32- and 64-bit).
 
 A few of the binary packages need other software to be installed on your
-system: see for example
-@uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/3.2/@/@@ReadMe}.
+system.
 Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution of Gtk2 from
@@ -2440,8 +2438,10 @@ So for example on Mojave or Catalina you could select a specific
 non-Apple build of @command{clang} for both C and C++ with extensive
 checking by having in @file{~/.R/Makevars}
 @example
-CC=/usr/local/clang/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
-CXX=/usr/local/clang/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+CC=/usr/local/clang/bin/clang -isysroot
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+CXX=/usr/local/clang/bin/clang++ -isysroot
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
@@ -2454,7 +2454,7 @@ CXX17FLAGS = $CXXFLAGS
 CXX20FLAGS = $CXXFLAGS
 @end example
 @noindent
-and @command{gfortran} by
+(long lines split for the manual only) and @command{gfortran} by
 (Sierra or later)
 @example
 FC = /usr/local/gfortran/bin/gfortran
@@ -2740,9 +2740,15 @@ wise to have a @file{src/contrib} area with a possibly empty
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
+@code{"mac.binary"}: located at
+@file{bin/macosx/contrib/@var{4.y}} for the CRAN builds for
+macOS for @R{} versions @var{4.y.z}, containing
+@file{.tgz} files.
+
+@item 
 @code{"mac.binary.el-capitan"}: located at
 @file{bin/macosx/el-capitan/contrib/@var{3.y}} for the CRAN builds for
-`El Capitan (and later) for @R{} versions @var{3.y.z}, containing
+`El Capitan' (and later) for @R{} versions @var{3.y.z}, containing
 @file{.tgz} files.
 @end itemize
 
@@ -3761,8 +3767,9 @@ JAVA_HOME=/usr/lib/jvm/java-1.8.0/jre
 @noindent
 worked.
 
-`Non-server' distributions of Java as from version 11 are of a full JDK.
-However, Linux distributions can be confusing: for example Fedora 30 had
+`Non-server' Oracle distributions of Java as from version 11 are of a
+full JDK.  However, Linux distributions can be confusing: for example
+Fedora 30 had
 @example
 java-1.8.0-openjdk
 java-1.8.0-openjdk-devel
@@ -3909,12 +3916,13 @@ in OpenMP sections in packages such as @pkg{mgcv}.  The reference
 implementations are thread-safe but external ones may not be (even
 single-threaded ones): this can lead to hard-to-track-down incorrect
 results or segfaults.
-@c Seen for OpenBLAS 3.2 in 2018.
+@c Seen for OpenBLAS 0.3.2 in 2018.
 
 @strong{NOTE:} BLAS libraries built with @command{gfortran}@tie{}9 (and
-future versions 8.4, 7.5 and later) require calls from C/C++ to handle
-`hidden' character lengths --- @R{} itself does so but many packages do
-not and some segfault. (This applies also to external LAPACK libraries.)
+versions 8.4, 7.5 and later in those series) require calls from C/C++ to
+handle `hidden' character lengths --- @R{} itself does so but many
+packages do not and some segfault. (This applies also to external LAPACK
+libraries.)
 
 @menu
 * ATLAS::
@@ -4270,8 +4278,9 @@ On some systems it has been necessary that an external
 build @R{}.
 
 LAPACK 3.9.0 has a bug in which the DCOMBSSQ subroutine has a bug that
-may cause NA to be interpreted as zero. This is fixed in R 3.6.3, but if
-you use an external LAPACK, you may need to fix it there.
+may cause NA to be interpreted as zero. This is fixed in the @R{} 3.6.3
+and later sources, but if you use an external LAPACK, you may need to
+fix it there.
 
 The code (in @code{dlapack.f}) should read
 @example
@@ -4372,7 +4381,7 @@ by option @option{--with-system-valgrind-headers}: they will be used if
 present (on Linux they may be in a separate package such as
 @pkg{valgrind-devel}).  Note though that there is no guarantee that the
 code in @R{} will be compatible with very old@footnote{We believe that
-versions 3.4.0 to 3.13.0 are compatible.} or future @command{valgrind}
+versions 3.4.0 to 3.15.0 are compatible.} or future @command{valgrind}
 headers.
 
 If you need to re-configure @R{} with different options you may need to run
@@ -5343,12 +5352,14 @@ rather than the system ones.
 
 For Catalina, the system paths need to be specified @emph{via}
 @example
-CC="/usr/local/clang/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
-CXX="/usr/local/clang/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CC="/usr/local/clang/bin/clang -isysroot
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CXX="/usr/local/clang/bin/clang++ -isysroot
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 @end example
 @noindent
-(Should the location of the SDK change, it can be found by running
-@command{xcrun -show-sdk-path}.)
+(Long lines split for the manual, only.)  Should the location of the SDK
+change, it can be found by running @command{xcrun -show-sdk-path}.
 
 The approach in the previous paragraph also works for Mojave, but for
 versions 10.x of the Command Line Tools an alternative as to install
@@ -5637,7 +5648,7 @@ Check that any compiled code is not dynamically linked to libraries only
 on your machine, for example by using @command{otool -L} or
 @command{objdump -macho -dylibs-used}.  This can include C++ and Fortran
 run-time libraries under @file{/usr/local}: one can use
-@command{install_name_tools} to point these at system versions or those
+@command{install_name_tool} to point these at system versions or those
 shipped with @R{}, for example
 @example
 install_name_tool -change /usr/local/clang/lib/libc++.1.dylib \
