@@ -101,7 +101,9 @@ X11.options(\dots, reset = FALSE)
 
   \item{symbolfamily}{for cairo-based devices only:
       a length-one character string that specifies the font family to
-      be used as the "symbol" font (e.g., for \link{plotmath} output).}
+      be used as the "symbol" font (e.g., for \link{plotmath} output).
+      The default value is "default", which means that R will choose
+      a default "symbol" font based on the graphics device capabilities.}
 
   \item{reset}{logical: should the defaults be reset to their defaults?}
 
