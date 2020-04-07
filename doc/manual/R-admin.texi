@@ -1976,8 +1976,7 @@ sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
 
 The installation consists of up to four Apple packages:@footnote{At the
 time of writing: use @command{pkgutil --pkgs | grep org.r-project} to
-check..}  @code{org.r-project.R.el-capitan.fw.pkg},
-@code{org.r-project.R.el-capitan.GUI.pkg},
+check..}  @code{org.r-project.R.fw.pkg}, @code{org.r-project.R.GUI.pkg},
 @code{org.r-project.x86_64.tcltk.x11} and
 @code{org.r-project.x86_64.texinfo}. You can use @code{pkgutil --forget}
 if you want the Apple Installer to forget about the package without
