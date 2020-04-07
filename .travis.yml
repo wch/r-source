@@ -94,7 +94,7 @@ script:
   - git update-ref refs/remotes/git-svn refs/heads/build-trunk
   - git svn rebase
   - mkdir build;pushd build
-  - ../configure --enable-R-shlib --enable-memory-profiling --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
+  - ../configure --enable-R-shlib --enable-memory-profiling --with-pcre1 --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
   - (cd doc/manual && make front-matter html-non-svn)
   - export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
   - make
