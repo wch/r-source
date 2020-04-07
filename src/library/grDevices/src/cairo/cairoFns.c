@@ -461,6 +461,11 @@ static const char* utf8Toutf8NoPUA(const char *in)
 #ifdef HAVE_PANGOCAIRO
 /* ------------- pangocairo section --------------- */
 
+SEXP in_CairoFT(void) 
+{
+    return mkString("");
+}
+
 static PangoFontDescription 
 *PG_getFont(const pGEcontext gc, double fs, const char *family,
             const char *symbolfamily)
@@ -650,6 +655,11 @@ PangoCairo_Text(double x, double y,
 
 #if CAIRO_HAS_FT_FONT && USE_FC
 
+SEXP in_CairoFT(void) 
+{
+    return mkString("yes");
+}
+
 /* FT implies FC in Cairo */
 #include <cairo-ft.h>
 
@@ -821,6 +831,11 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 }
 
 #else
+
+SEXP in_CairoFT(void) 
+{
+    return mkString("");
+}
 
 static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 {

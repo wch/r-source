@@ -18,6 +18,8 @@ grSoftVersion()
 
   \item{cairo}{the version of cairographics in use, or \code{""} if
     cairographics is not available.}
+  \item{cairoFT}{\code{"yes"} if cairographics is using the FreeType
+    library (and FontConfig); otherwise, \code{""}.}
   \item{pango}{the version of pango in use, or \code{""} if
     pango is not available.}
 

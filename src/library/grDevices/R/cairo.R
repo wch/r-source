@@ -67,6 +67,8 @@ cairoVersion <- function() .Call(C_cairoVersion)
 
 pangoVersion <- function() .Call(C_pangoVersion)
 
+cairoFT <- function() .Call(C_cairoFT)
+
 symbolType1support <- function() {
     pangoVersion <- grSoftVersion()["pango"]
     pangoVersion == "" ||
@@ -90,8 +92,12 @@ checkSymbolFont <- function(x) {
 
 symbolfamilyDefault <- function(family) {
     if (symbolType1support()) {
-        if (.Platform$OS.type == "windows") {
-            "Standard Symbols L"
+        if (grSoftVersion()["cairoFT"] == "yes") {
+            if (.Platform$OS.type == "windows") {
+                "Standard Symbols L"
+            } else {
+                "Symbol"
+            }
         } else {
             "Symbol"
         }
