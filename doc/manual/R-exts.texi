@@ -1757,7 +1757,7 @@ used on that platform.  (Optionally, there can be a @file{cleanup.win}
 script.  Both should be shell scripts to be executed by @command{ash},
 which is a minimal version of Bourne-style @command{sh}.)  When
 @file{configure.win} is run the environment variables @env{R_HOME}
-(which uses @samp{/} as the file separator), @env{R_ARCH} and Use
+(which uses @samp{/} as the file separator), @env{R_ARCH} and
 @env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to decide if this is a
 64-bit build (its value there is @samp{/x64}) and to install DLLs to the
 correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
@@ -2249,23 +2249,21 @@ macro has value a date which can be mapped to an OpenMP version: for
 example, value @code{201307} is the date of version 4.0 (July
 2013). However this may be used to denote the latest version which is
 partially supported, not that which is fully implemented.}  to say what
-version of OpenMP is supported: version 3.1 (and much of 4.0) is
-supported by recent versions of the Linux, Windows and Solaris
+version of OpenMP is supported: version 3.1 (and much of 4.0, 4.5 or
+5.0) is supported by recent versions of the Linux, Windows and Solaris
 platforms, but portable packages cannot assume that end users have
-recent versions.  Apple builds of @command{clang}
-on macOS currently have no OpenMP support, but @acronym{CRAN} binary
-packages are built with a @command{clang}-based toolchain which supports
-OpenMP.  @uref{http://www.openmp.org/@/resources/@/openmp-compilers-tools}
-gives some idea of what compilers support what versions.
+recent versions.  Apple builds of @command{clang} on macOS have no
+OpenMP support.
+@uref{http://www.openmp.org/@/resources/@/openmp-compilers-tools} gives
+some idea of what compilers support what versions.
 
 The performance of OpenMP varies substantially between platforms.  The
-Windows implementation has substantial overheads@footnote{as did the
-GCC-based Apple implementation, but not the Intel/LLVM OpenMP runtime
-on macOS.}, so is only beneficial if quite substantial tasks are run in
-parallel.  Also, on Windows new threads are started with the
-default@footnote{Windows default, not MinGW-w64 default.} FPU control
-word, so computations done on OpenMP threads will not make use of
-extended-precision arithmetic which is the default for the main process.
+Windows implementation has substantial overheads, so is only beneficial
+if quite substantial tasks are run in parallel.  Also, on Windows new
+threads are started with the default@footnote{Windows default, not
+MinGW-w64 default.} FPU control word, so computations done on OpenMP
+threads will not make use of extended-precision arithmetic which is the
+default for the main process.
 @c mingw64-public, 2015-02-02.
 @c https://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
@@ -2791,9 +2789,8 @@ macOS, and may be on Windows.
 @section Checking and building packages
 
 Before using these tools, please check that your package can be
-installed (which checked it can be loaded).  @code{R CMD check} will
-@emph{inter alia} do this, but you may get more detailed error messages
-doing the install directly.
+installed.  @code{R CMD check} will @emph{inter alia} do this, but you
+may get more detailed error messages doing the install directly.
 
 @menu
 * Checking packages::
@@ -2919,7 +2916,7 @@ used in the same locale.
 @item
 It is checked that the package can be loaded, first with the usual
 default packages and then only with package @pkg{base} already
-loaded. It is checked that the namespace this can be loaded in an empty
+loaded. It is checked that the namespace can be loaded in an empty
 session with only the @pkg{base} namespace loaded.  (Namespaces and
 packages can be loaded very early in the session, before the default
 packages are available, so packages should work then.)
@@ -2930,7 +2927,7 @@ Package startup functions are checked for correct argument lists and
 (incorrect) calls to functions which modify the search path or
 inappropriately generate messages.  The @R{} code is checked for
 possible problems using @CRANpkg{codetools}.  In addition, it is checked
-whether S3 methods have all arguments of the corresponding generic, and
+whether S3 methods have all the arguments of the corresponding generic, and
 whether the final argument of replacement functions is called
 @samp{value}.  All foreign function calls (@code{.C}, @code{.Fortran},
 @code{.Call} and @code{.External} calls) are tested to see if they have
@@ -3358,7 +3355,7 @@ and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
 A special case is @emph{package vignettes}.  Vignettes are documents in
-PDF or @HTML{} format obtained from plain text literate source files
+PDF or @HTML{} format obtained from plain-text literate source files
 from which @R{} knows how to extract @R{} code and create output (in
 PDF/@HTML{} or intermediate @LaTeX{}).  Vignette engines do this work,
 using ``tangle'' and ``weave'' functions respectively.  Sweave, provided
@@ -3658,14 +3655,15 @@ to be accessed @emph{via} @code{::}, e.g.@:
 Namespaces are @emph{sealed} once they are loaded.  Sealing means that
 imports and exports cannot be changed and that internal variable
 bindings cannot be changed.  Sealing allows a simpler implementation
-strategy for the namespace mechanism.  Sealing also allows code
-analysis and compilation tools to accurately identify the definition
-corresponding to a global variable reference in a function body.
+strategy for the namespace mechanism and allows code analysis and
+compilation tools to accurately identify the definition corresponding to
+a global variable reference in a function body.
 
 The namespace controls the search strategy for variables used by
 functions in the package.  If not found locally, @R{} searches the
 package namespace first, then the imports, then the base namespace and
-then the normal search path.
+then the normal search path (so the base namespace precedes the normal
+search rather than being at the end of it).
 
 
 @menu
@@ -3709,8 +3707,8 @@ broad patterns are not recommended for production code: it is better to
 list all exports or use narrowly-defined groups.  (This pattern applies
 to S4 classes.)  Beware of patterns which include names starting with a
 period: some of these are internal-only variables and should never be
-exported, e.g.@: @samp{.__S3MethodsTable__.} (and the code nowadays
-excludes known cases).
+exported, e.g.@: @samp{.__S3MethodsTable__.} (and loading excludes known
+cases).
 
 Packages implicitly import the base namespace.
 Variables exported from other packages with namespaces need to be
@@ -3738,7 +3736,9 @@ importFrom(foo, f, g)
 specifies that the exported variables @code{f} and @code{g} of the
 package @pkg{foo} are to be imported.  Using @code{importFrom}
 selectively rather than @code{import} is good practice and recommended
-notably when importing from packages with more than a dozen exports.
+notably when importing from packages with more than a dozen exports and
+especially from those written by others (so what they export can change
+in future).
 
 To import every symbol from a package but for a few exceptions,
 pass the @code{except} argument to @code{import}. The directive
@@ -3809,8 +3809,8 @@ S3method(print, check_so_symbols, .print.via.format)
 @noindent
 when @code{print.check_so_symbols} is not needed.
 
-As of @R{} version 3.6.0, one can also use @code{S3method()} directives
-to perform @emph{delayed} registration.  With
+As from @R{} 3.6.0 one can also use @code{S3method()} directives to
+perform @emph{delayed} registration.  With
 @example
 if(getRversion() >= "3.6.0") @{
     S3method(pkg::gen, cls)
@@ -3822,7 +3822,7 @@ function @code{gen.cls} will get registered as an S3 method for class
 namespace of @code{pkg} is loaded.  This can be employed to deal with
 situations where the method is not ``immediately'' needed, and having to
 pre-load the namespace of @code{pkg} (and all its strong dependencies)
-in order to perform immediate registration is considered too ``costly''.
+in order to perform immediate registration is considered too onerous.
 
 @node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
@@ -3849,8 +3849,9 @@ path to the installed package.  There is also a hook @code{.onUnload}
 which is called when the namespace is unloaded (@emph{via} a call to
 @code{unloadNamespace}, perhaps called by @code{detach(unload = TRUE)})
 with argument the full path to the installed package's directory.
-@code{.onUnload} and @code{.onDetach} should be defined in the namespace
-and not exported, but @code{.Last.lib} does need to be exported.
+Functions @code{.onUnload} and @code{.onDetach} should be defined in the
+namespace and not exported, but @code{.Last.lib} does need to be
+exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
@@ -3921,7 +3922,7 @@ rather than
 There are at least two benefits to this approach.  Firstly, the symbol
 lookup is done just once for each symbol rather than each time the
 routine is invoked.  Secondly, this removes any ambiguity in resolving
-symbols that might be present in several compiled DLLs.  However, this
+symbols that might be present in more than one DLL.  However, this
 approach is nowadays deprecated in favour of supplying registration
 information (see below).
 
@@ -4049,10 +4050,10 @@ which makes the @R{} variables corresponding to the Fortran symbols
 namespace.
 
 @strong{NB}: Using these arguments for a package which does not register
-native symbols merely slows down the package loading (although at the
-time of writing 90 @acronym{CRAN} packages did so).  Once symbols are
-registered, check that the corresponding @R{} variables are not
-accidentally exported by a pattern in the @file{NAMESPACE} file.
+native symbols merely slows down the package loading (although many
+@acronym{CRAN} packages have done so).  Once symbols are registered,
+check that the corresponding @R{} variables are not accidentally
+exported by a pattern in the @file{NAMESPACE} file.
 
 
 @node An example, Namespaces with S4 classes and methods, useDynLib, Package namespaces
@@ -4144,7 +4145,7 @@ example, the @pkg{stats4} package has
 @example
 export(mle) # exporting methods implicitly exports the generic
 importFrom("graphics", plot)
-importFrom("stats", optim, qchisq)
+importFrom("stats", approx, optim, pchisq, predict, qchisq, qnorm, spline)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
 importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile,
            update, vcov)
@@ -4494,7 +4495,8 @@ note that @code{long long} is not a standard C++98 type, and C++
 compilers for earlier versions of @R{} set up for strict C++98
 conformance will reject it.  C++11 (the default since @R{} 3.6.2)
 includes @code{long long}.}) and typedef your own type, or use another
-suitable type (such as @code{size_t}).
+suitable type (such as @code{size_t}, but beware that is unsigned and
+@code{ssize_t} is not portable).
 @c https://en.cppreference.com/w/cpp/language/types claims long long is
 @c >= 64-bit, but that is not obvious in the standard.
 
@@ -4696,7 +4698,7 @@ names, which are (confusingly)
 1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13
 @end example
 @noindent
-and as from 2018 a year.month scheme such as @samp{18.3} is also in use.
+and as from 2018 a year.month scheme such as @samp{18.9} is also in use.
 
 A suitable test for Java at least version 8 for packages using
 @CRANpkg{rJava} would be something like
@@ -4740,6 +4742,11 @@ Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
 interface.
 
+Java 8 is still in widespread use (and may remain so because of licence
+changes, although Oracle will end its support even for personal use at
+the end of 2020), but Java 7 was the latest provided by Oracle for
+several platforms.
+
 @item
 A package with a hard-to-satisfy system requirement is by definition not
 portable, annoyingly so if this is not declared in the
@@ -4747,11 +4754,13 @@ portable, annoyingly so if this is not declared in the
 @command{pandoc}, which is only available for a very limited range of
 platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
-URLs, which even the build in some major Linux distributions in 2018 did
+URLs, which even the build in some major Linux distributions in 2020 did
 not possess.  Further, Linux and macOS builds from late 2017 with
 @samp{https://} support were unable to download from some sites using or
 redirecting to @samp{https://} URLs.} that vary by build but are not
-documented.
+documented.  Some recent versions of @command{pandoc} for macOS do not
+install on @R{}'s target of High Sierra (and this too was undocumented):
+at the time of writing the latest that did was @samp{2.7.3}.
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
@@ -4771,7 +4780,8 @@ applies also to a Java interpreter (which macOS does not have by default).
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
-and @code{macroman} is.  See the help for @code{file} for more details.
+and @code{macroman} is portable.  See the help for @code{file} for more
+details.
 
 
 @item
@@ -4822,8 +4832,8 @@ practice seen in distributed packages include:
 It is not reasonable to test the time taken by a command: you cannot
 know how fast or how heavily loaded an @R{} platform might be.  At best
 you can test a ratio of times, and even that is fraught with
-difficulties and not advisable: the just-in-time compiler (JIT) and the GC
-may trigger at unpredictable times, following heuristics that may change
+difficulties and not advisable: for example, the garbage collector may
+trigger at unpredictable times following heuristics that may change
 without notice.
 
 @item
@@ -4927,7 +4937,7 @@ and suitable options might be
 @end example
 
 @noindent
-; see @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
+See @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
