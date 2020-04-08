@@ -448,14 +448,41 @@ static SEXP Cairo_Cap(pDevDesc dd)
 
 static const char* utf8Toutf8NoPUA(const char *in)
 {
-    /* Will be at least bytes required because 'symbolstr' is single-byte */
-    int ncsymbol = strlen(in);  
-    char *symbolstr = R_alloc(ncsymbol, sizeof(char));
-    /* Also at least long enough because UTF8 symbols max 3 bytes */
-    int ncutf8 = 3*utf8toAdobeSymbol(symbolstr, in) + 1;
-    char *utf8str = R_alloc(ncutf8, sizeof(char));
-    Rf_AdobeSymbol2utf8(utf8str, symbolstr, ncutf8, FALSE);
-    return utf8str;
+    int i, j, used, tmp;
+    /* At least enough because assumes each incoming char only one byte */
+    int nChar = 3*strlen(in) + 1;
+    char *result = R_alloc(nChar, sizeof(char));
+    const char *s = in;
+    char *p = result;
+    for (i = 0; i < nChar; i++) {
+        /* Convert UTF8 char to int */
+	used = mbrtoint(&tmp, s);
+        /* Only re-encode if necessary 
+         * This is more efficient AND protects against input that is 
+         * NOT from Rf_AdobeSymbol2utf8(), e.g., plotmath on Windows
+         * (which is from reEnc(CE_LATIN1, CE_UTF8))
+         */
+        if (tmp > 0xF600) {
+            char inChar[4], symbolChar[2], utf8Char[4];
+            char *q;
+            for (j = 0; j < used; j++) {
+                inChar[j] = *s++;
+            }
+            inChar[used] = '\0';
+            Rf_utf8toAdobeSymbol(symbolChar, inChar);
+            Rf_AdobeSymbol2utf8(utf8Char, symbolChar, 4, FALSE);
+            q = utf8Char;
+            while (*q) {
+                *p++ = *q++;
+            }
+        } else {
+            for (j = 0; j < used; j++) {
+                *p++ = *s++;
+            }
+        }
+    }
+    *p = '\0';
+    return result;
 }                         
 
 #ifdef HAVE_PANGOCAIRO
