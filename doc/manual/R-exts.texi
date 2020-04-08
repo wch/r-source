@@ -4144,7 +4144,6 @@ example, the @pkg{stats4} package has
 
 @example
 export(mle) # exporting methods implicitly exports the generic
-importFrom("graphics", plot)
 importFrom("stats", approx, optim, pchisq, predict, qchisq, qnorm, spline)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
 importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile,
@@ -4173,7 +4172,7 @@ export the generic, and exporting a generic in the namespace will also
 export its methods.  If the generic function is not local to this
 package, either because it was imported as a generic function or because
 the non-generic version has been made generic solely to add S4 methods
-to it (as for functions such as @code{plot} in the example above), it
+to it (as for functions such as @code{coef} in the example above), it
 can be declared @emph{via} either or both of @code{export} or
 @code{exportMethods}, but the latter is clearer (and is used in the
 @pkg{stats4} example above).  In particular, for primitive functions
@@ -4242,8 +4241,8 @@ Note that @code{importMethodsFrom} will also import any generics defined
 in the namespace on those methods.
 
 It is important if you export S4 methods that the corresponding generics
-are available.  You may for example need to import @code{plot} from
-@pkg{graphics} to make visible a function to be converted into its
+are available.  You may for example need to import @code{coef} from
+@pkg{stats} to make visible a function to be converted into its
 implicit generic.  But it is better practice to make use of the generics
 exported by @pkg{stats4} as this enables multiple packages to
 unambiguously set methods on those generics.
