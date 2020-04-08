@@ -1,7 +1,7 @@
 export(mle) # exporting methods implicitly exports the generics
 
 importFrom("grDevices", dev.flush, dev.hold)
-importFrom("graphics", abline, lines, par, plot)
+importFrom("graphics", abline, lines, par)
 importFrom("methods", new, show, slotNames)
 importFrom("stats", approx, optim, pchisq, predict, qchisq, qnorm, spline)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
