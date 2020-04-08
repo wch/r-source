@@ -5310,7 +5310,14 @@ OpenMP in C/C++ code will need to use
 @end example
 @noindent
 Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads}, also
-needs to be conditioned.
+needs to be conditioned.  To avoid incessant warnings such as
+@example
+warning: ignoring #pragma omp parallel [-Wunknown-pragmas]
+@end example
+
+@noindent
+uses of such pragmas should also be conditioned (or commented out if
+they are used in code in a package not enabling OpenMP on any platform).
 
 Do not hardcode @option{-lgomp}: not only is that specific to the
 GCC family of compilers, using the correct linker flag often sets up the
@@ -5470,8 +5477,8 @@ versions of @command{gcc} and also in @command{clang}.  It is
 recommended that packages are if possible checked with that flag to
 ensure portability.
 
-@option{-fno-common} is said particularly beneficial for ARM cpus and
-has been proposed to be the default for future versions of
+@option{-fno-common} is said to be particularly beneficial for ARM cpus
+and has been proposed to be the default for future versions of
 @command{clang}.
 
 This is not pertinent to C++ which does not permit tentative definitions.
@@ -5521,9 +5528,9 @@ WinBuilder, and write a @file{configure.win} file to install them.
 @end itemize
 
 @noindent
-Be aware that license requirements will need to be met so you may need
-to supply the sources for the additional components (and will if your
-package has a GPL-like license).
+Be aware that license requirements you may require you to supply the
+sources for the additional components (and will if your package has a
+GPL-like license).
 
 
 @node Diagnostic messages, Internationalization, Writing portable packages, Creating R packages
@@ -7641,10 +7648,11 @@ particular these allow call graphs to be studied.
 Measuring memory use in @R{} code is useful either when the code takes
 more memory than is conveniently available or when memory allocation and
 copying of objects is responsible for slow code. There are three ways to
-profile memory use over time in @R{} code. All three require @R{} to
-have been compiled with @option{--enable-memory-profiling}, which is not
-the default, but is currently used for the macOS and Windows binary
-distributions. All can be misleading, for different reasons.
+profile memory use over time in @R{} code. The seond and third require
+@R{} to have been compiled with @option{--enable-memory-profiling},
+which is not the default, but is currently used for the macOS and
+Windows binary distributions. All can be misleading, for different
+reasons.
 
 In understanding the memory profiles it is useful to know a little more
 about @R{}'s memory allocation. Looking at the results of @code{gc()}
@@ -8144,7 +8152,7 @@ scope).
 Suppose your @R{} program gives an error message.  The first thing to
 find out is what @R{} was doing at the time of the error, and the most
 useful tool is @code{traceback()}.  We suggest that this is run whenever
-the cause of the error is not immediately obvious.  Daily, errors are
+the cause of the error is not immediately obvious.  Errors are often
 reported to the @R{} mailing lists as being in some package when
 @code{traceback()} would show that the error was being reported by some
 other package or base @R{}.  Here is an example from the regression
@@ -8780,7 +8788,7 @@ More recent versions@footnote{including @command{gcc} 7.1 and
 @option{-fsanitize-address-use-after-scope}: see
 @uref{https://github.com/@/google/@/sanitizers/@/wiki/@/AddressSanitizerUseAfterScope}.
 
-One of the checks done by ASAN is that @code{malloc/free} and in C++
+One of the checks done by ASan is that @code{malloc/free} and in C++
 @code{new/delete} and @code{new[]/delete[]} are used consistently
 (rather than say @code{free} being used to dealloc memory allocated by
 @code{new[]}).  This matters on some systems but not all: unfortunately
@@ -8791,7 +8799,7 @@ environment variable @env{RGL_USE_NULL=true}.} are not consistent.  The
 check can be suppressed by including @samp{alloc_dealloc_mismatch=0} in
 @env{ASAN_OPTIONS}.
 
-ASAN also checks system calls and sometimes reports can refer to
+ASan also checks system calls and sometimes reports can refer to
 problems in the system software and not the package nor @R{}.  A couple
 of reports have been of `heap-use-after-free' errors in the X11
 libraries called from Tcl/Tk.
@@ -8821,7 +8829,7 @@ However, this was made the default as from @command{clang} 3.5 and
 When LSan is enabled, leaks give the process a failure error status (by
 default @code{23}).  For an @R{} package this means the @R{} process,
 and as the parser retains some memory to the end of the process, if @R{}
-itself was built against ASan, all runs will have a failure error status
+itself was built against ASan all runs will have a failure error status
 (which may include running @R{} as part of building @R{} itself).
 
 To disable this, allocation-mismatch checking and some strict C++
@@ -8898,25 +8906,21 @@ For GCC see
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Instrumentation-Options.html}
 (or the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/@/onlinedocs/}: look for `Program
-Instrumentation Options') for the options supported by GCC: 6 and 7 supported
+Instrumentation Options') for the options supported by GCC: 8 supported
 @example
--fsanitize=alignment,bool,bounds,enum,integer-divide-by-zero,
-nonnull-attribute,null,object-size,return,returns-nonnull-attribute,
-shift,signed-integer-overflow,unreachable,vla-bound,vptr
+-fsanitize=alignment,bool,bounds,builtin,enum,integer-divide-by-zero,
+nonnull-attribute,null,object-size,pointer-overflow,return,
+returns-nonnull-attribute,shift,unreachable,vla-bound,vptr
 @end example
 @noindent
 plus the more specific versions @code{shift-base} and
 @code{shift-exponent} and non-default options
 @example
-bound-strict,float-cast-overflow,float-divide-by-zero
+bound-strict,float-cast-overflow,float-divide-by-zero,signed-integer-overflow
 @end example
 @noindent
 where @code{float-divide-by-zero} is not desirable for @R{} uses and
-@code{bounds-strict} is an extension of @code{bounds}. From GCC 8
-@code{signed-integer-overflow} is no longer a default part of
-@option{-fsanitize=undefined}, but can be specified separately.  It adds
-options @option{-fsanitize=pointer-overflow} and
-@option{-fsanitize=builtin}.
+@code{bounds-strict} is an extension of @code{bounds}.
 
 Other useful flags include
 @example
@@ -9331,7 +9335,7 @@ where the package author forgot to declare
       external ddot
 @end example
 @noindent
-in @file{boot.f}.  This package had its own copy of @code{ddot}: to
+in @file{boot.f}.  That package had its own copy of @code{ddot}: to
 detect misuse of the one in @R{}'s BLAS library would have needed @R{}
 configured with @option{--enable-lto=check}.
 
@@ -9524,7 +9528,7 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.  
+directive will be used.) 
 @c However, prior to @R{} 2.15.2 the detection of the correct namespace is
 @c unreliable and you are strongly recommended to use the @code{PACKAGE}
 @c argument for packages to be used with earlier versions of @R{}.
