@@ -373,6 +373,13 @@
 
       \item New function \code{activeBindingFunction()} retrieves the
       function of an active binding.
+
+      \item New \code{"cairoFT"} and \code{"pango"} components in the
+      output of \code{grSoftVersion()}.
+      
+      \item New argument \code{symbolfamily} in cairo-based graphics
+      devices and new function \code{cairoSymbolFont()} that can be used
+      to provide the value for that argument.
     }
   }% end{ NEW FEATURES }
 

@@ -35,7 +35,7 @@
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
-    fonts, family, xpos, ypos, title, type, antialias)
+    fonts, family, xpos, ypos, title, type, antialias, symbolfamily)
 
 X11.options(\dots, reset = FALSE)
 }
@@ -98,6 +98,12 @@ X11.options(\dots, reset = FALSE)
 
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
+
+  \item{symbolfamily}{for cairo-based devices only:
+      a length-one character string that specifies the font family to
+      be used as the "symbol" font (e.g., for \link{plotmath} output).
+      The default value is "default", which means that R will choose
+      a default "symbol" font based on the graphics device capabilities.}
 
   \item{reset}{logical: should the defaults be reset to their defaults?}
 
@@ -227,6 +233,12 @@ X11.options(\dots, reset = FALSE)
   \code{"Times New Roman"}, \code{"DejaVu Serif"} and \code{"Liberation
   Serif"}.  To match LaTeX text, use something like \code{"CM Roman"}.
 
+  Fedora systems from version 31 on do not like the default \code{"symbol"}
+  font family for rendering symbols (e.g., \link{plotmath}).  For those
+  systems, users should specify a different font via
+  \code{symbolfamily}.  The default can also be changed via
+  \code{X11.options}. 
+  
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g., of
   \code{quote(pi)} and \code{expression(10^degree)})
