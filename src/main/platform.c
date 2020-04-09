@@ -372,10 +372,20 @@ void attribute_hidden R_check_locale(void)
     {
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;
 	p = strrchr(ctype, '.');
-	if (p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 0;
+	if (p) {
+	    if (isdigit(p[1]))
+		localeCP = atoi(p+1);
+	    else if (!strcasecmp(p+1, "UTF-8") || !strcasecmp(p+1, "UTF8"))
+		localeCP = 65001;
+	    else
+		localeCP = 0;
+	}
 	/* Not 100% correct, but CP1252 is a superset */
 	known_to_be_latin1 = latin1locale = (localeCP == 1252);
-	if (localeCP) {
+	known_to_be_utf8 = utf8locale = (localeCP == 65001);
+	if (localeCP == 65001)
+	    strcpy(native_enc, "UTF-8");
+	else if (localeCP) {
 	    /* CP1252 when latin1locale is true */
 	    snprintf(native_enc, R_CODESET_MAX, "CP%d", localeCP);
 	    native_enc[R_CODESET_MAX] = 0;

@@ -5222,7 +5222,7 @@ void WinCheckUTF8(void)
 {
     if(EmitEmbeddedUTF8) /* RGui */
 	WinUTF8out = (SinkCons[R_SinkNumber] == 1 ||
-	              SinkCons[R_SinkNumber] == 2);
+	              SinkCons[R_SinkNumber] == 2) && localeCP != 65001;
     else
 	WinUTF8out = FALSE;
 }
