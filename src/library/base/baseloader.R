@@ -1,7 +1,7 @@
 #  File src/library/base/baseloader.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@
     ## bootstrapping definitions so we can load base
     ##
     glue <- function (..., sep = " ", collapse = NULL)
-        .Internal(paste(list(...), sep, collapse))
+##      .Internal(paste(list(...), sep, collapse, TRUE))# recycle0=TRUE
+        .Internal(paste(list(...), sep, collapse, FALSE))
     readRDS <- function (file) {
         halt <- function (message) .Internal(stop(TRUE, message))
         gzfile <- function (description, open)
@@ -94,8 +95,8 @@
 
     existsInBase <- function (x)
         .Internal(exists(x, .BaseNamespaceEnv, "any", TRUE))
-    glue <- function (..., sep = " ", collapse = NULL)
-        .Internal(paste(list(...), sep, collapse))
+    glue <- function(..., sep = " ")
+        .Internal(paste(list(...), sep, collapse=NULL, FALSE))
 
     basedb <- glue(.Internal(R.home()), "library", "base", "R",
                    "base", sep= .Platform$file.sep)

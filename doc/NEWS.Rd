@@ -376,10 +376,15 @@
 
       \item New \code{"cairoFT"} and \code{"pango"} components in the
       output of \code{grSoftVersion()}.
-      
+
       \item New argument \code{symbolfamily} in cairo-based graphics
       devices and new function \code{cairoSymbolFont()} that can be used
       to provide the value for that argument.
+
+      \item \code{paste()} and \code{paste0()} get new optional argument
+      \code{recycle0 = FALSE}.  When set to true, zero length arguments
+      (and all zero-length or no arguments when \code{collapse} is not
+      \code{NULL}) lead to the zero-length \code{character(0)}.
     }
   }% end{ NEW FEATURES }
 
