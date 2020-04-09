@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-03-24 r78039) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-04-09 r78185) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -537,6 +537,34 @@ $out
 17  5.00  =    13.00  =   
 > ## End(Don't show)
 > 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cairoSymbolFont")
+> ### * cairoSymbolFont
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cairoSymbolFont
+> ### Title: Specify a Symbol Font
+> ### Aliases: cairoSymbolFont
+> ### Keywords: device
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ## If a font uses PUA, we can just specify the font name ...
+> ##D cairo_pdf(symbolfamily="OpenSymbol")
+> ##D dev.off()
+> ##D ## ... or equivalently ...
+> ##D cairo_pdf(symbolfamily=cairoSymbolFont("OpenSymbol"))
+> ##D dev.off()
+> ##D 
+> ##D ## If a font does not use PUA, we must indicate that ...
+> ##D cairo_pdf(symbolfamily=cairoSymbolFont("Nimbus Sans", usePUA=FALSE))
+> ##D dev.off()
+> ## End(Not run)
 > 
 > 
 > 
@@ -3981,6 +4009,40 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 + X11Fonts(utopia = utopia)
 + })
+> X11Fonts()
+$serif
+[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$sans
+[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Times
+[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Helvetica
+[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrTimes
+[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrHelvetica
+[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Arial
+[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Mincho
+[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> X11Fonts("mono")
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
+> X11Fonts(utopia = utopia)
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -4240,7 +4302,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  49.801 0.658 50.606 0 0 
+Time elapsed:  36.468 0.428 36.974 0 0 
 > grDevices::dev.off()
 null device 
           1 
