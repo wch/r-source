@@ -3882,6 +3882,42 @@ for(p in c("base", "stats")) {
 ## gave all data from pkg 'datasets'  *and* warned in  R <= 3.6.3
 
 
+## PR#17756: x[[Inf]] and also x[[ -i ]] ,  for i in (Inf, 1,2,...):
+obj <- list(
+    a = 1:3
+  , L3 = as.list(1:3)
+  , L  = list(a = 1:2)
+  , L2 = list(a = 1:2, b = 3:5)
+  , LL2 = list(a = list(a1=1:3, a2=letters[1:4]),
+               b = list(b1=10, b2=-(1:3)))
+    )
+obj$ LL3 <- c(obj$ LL2, list(c = list(c1= 7, c2= -11)))
+stopifnot( print(vapply(obj[-1], function(x) is.null(x[[Inf]]), NA)) )
+t_mInf <- lapply(obj, function(x) tryCid(x[[-Inf]]))
+getMsg <- function(tryClist) vapply(tryClist, conditionMessage, "..")
+stopifnot(length(print(table(msg_Inf <- getMsg(t_mInf)))) == 1)
+## in R <= 3.6.3:
+## attempt to select less than one element in get1index <real> : 1 x
+## attempt to select more than one element in get1index <real> : 5 x
+
+umInf <- unique(msg_Inf)
+str(t_m1 <- lapply(obj, function(x) tryCid(x[[-1]]))) # L2, LL2 "work" - why?
+    t_m2 <- lapply(obj, function(x) tryCid(x[[-2]]))  # L2, LL2 "work" - why?
+    t_m3 <- lapply(obj, function(x) tryCid(x[[-3]]))
+nonL2 <- grep("L2$", names(t_m1), value=TRUE, invert=TRUE)
+stopifnot(exprs = {
+    identical(getMsg(t_m3), msg_Inf)
+    identical(t_m2$L2, 1:2)
+    identical(t_m2$LL2, obj$LL2[[1]])
+    identical(getMsg(t_m1[nonL2]), msg_Inf[nonL2])
+    identical(getMsg(t_m2[nonL2]), msg_Inf[nonL2])
+})
+if(englishMsgs) { cat("checking (default = ) English error messages\n")
+    stopifnot(grepl("negative subscript", umInf))
+}
+##
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
