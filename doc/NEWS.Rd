@@ -10,7 +10,7 @@
     \itemize{
       \item Packages need to be (re-)installed under this version
       (4.0.0) of \R.
-      
+
       \item \code{matrix} objects now also inherit from class
       \code{"array"}, so e.g., \code{class(diag(1))} is \code{c("matrix",
 	"array")}.  This invalidates code incorrectly assuming that
@@ -503,7 +503,7 @@
       currently only limited support for this in compilers, with flags
       such as \option{-std=c++20} and \option{-std=c++2a}.  For the time
       being the \command{configure} test is of accepting one of these
-      flags and compiling C++17 code. 
+      flags and compiling C++17 code.
     }
   }
 
@@ -693,6 +693,11 @@
       \code{ngettext()}, since the latter is handled by
       \code{xngettext()}. Thanks to Daniele Medri for the report and all
       the recent work he has done on the Italian translations.
+
+      \item \code{data(package = P)} for \code{P} in \pkg{base} and
+      \pkg{stats} no longer reports the data sets from package
+      \pkg{datasets} (which it did for back compatibility for 16 years),
+      fixing \PR{17730}.
     }
   }
 
