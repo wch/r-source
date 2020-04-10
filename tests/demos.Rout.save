@@ -1,5 +1,5 @@
 
-R version 4.0.0 alpha (2020-03-28 r78095)
+R version 4.0.0 beta (2020-04-10 r78193) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1526,5 +1526,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  3.202 0.109 3.352 0 0 
+Time elapsed:  3.051 0.11 3.208 0 0 
 > 

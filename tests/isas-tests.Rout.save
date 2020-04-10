@@ -1,5 +1,5 @@
 
-R version 4.0.0 alpha (2020-03-28 r78095)
+R version 4.0.0 beta (2020-04-10 r78193) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2591,6 +2591,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.343 0.044 0.39 0 0 
+Time elapsed:  0.311 0.04 0.359 0 0 
 > 
 > 
