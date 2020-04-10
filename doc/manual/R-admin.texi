@@ -5365,7 +5365,8 @@ Line Tools.)
 @subsection Other libraries
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
-are available from @uref{https://mac.R-project.org/libs/}.
+are available from @uref{https://mac.R-project.org/libs-4/} or
+@uref{https://mac.R-project.org/libs/}.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -5396,7 +5397,8 @@ will show the compilers and configuration options used for the
 @acronym{CRAN} binary package for @R{}: at the time of writing the
 non-default options
 @example
---enable-memory-profiling --enable-R-framework --x-libraries=/opt/X11/lib
+--enable-memory-profiling --enable-R-framework
+--x-libraries=/opt/X11/lib --x-includes=/opt/X11/include
 @end example
 @noindent
 were used. (@option{--enable-R-framework} implies @option{--enable-R-shlib}.)
@@ -5405,18 +5407,20 @@ Configure option @option{--with-internal-tzcode} is the default on macOS,
 as the system implementation of time zones does not work correctly for
 times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
-The @TeX{} implementation used by the developers is MacTeX
+The @TeX{} implementation used by the developers is MacTeX@footnote{An
+essentially equivalent @TeX{} installation can be obtained by the Unix
+TeX Live installation scripts: MacTeX also contains GhostScript.}
 (@uref{https://www.tug.org/mactex/}): the full installation is about
 7GB, but a smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
-need to add some packages to build @R{}, e.g.@: for the 2019 version we
+need to add some packages to build @R{}, e.g.@: for the 2020 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super
 helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
-@pkg{inconsolata}, @pkg{letltxmacro} and @pkg{texinfo} which brought
-this to about 390MB.  @samp{TeX Live Utility} (available @emph{via} the
-MacTeX front page) provides a graphical means to manage @TeX{} packages.
-This is documented to require Sierra or later: for earlier versions see
-the instructions on the MacTeX front page.
+@pkg{inconsolata} and @pkg{texinfo} which brought this to about 380MB.
+@samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
+provides a graphical means to manage @TeX{} packages.  This is
+documented to require Sierra or later: for earlier versions see the
+instructions on the MacTeX front page.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
@@ -5439,7 +5443,7 @@ install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
 Unix-alikes), which is installed as part of the CRAN binary for @R{} and
 available as separate @code{tcl} and @code{tk} components from
-@uref{https://mac.R-project.org/libs/}.  This may need
+@uref{https://mac.R-project.org/libs-4/}.  This may need
 @command{configure} options
 @example
 -with-tcltk=/usr/local/lib

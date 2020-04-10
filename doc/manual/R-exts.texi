@@ -4671,7 +4671,7 @@ However, some Linux distributions micro-package, so locales defined by
 
 @item
 Avoid spaces in file names, not least as they can cause difficulties for
-external tools.  A recent example was a package with a @CRANpkg{knitr}
+external tools.  An example was a package with a @CRANpkg{knitr}
 vignette that used spaces in plot names: this caused some versions of
 @command{pandoc} to fail with a baffling error message.
 @c msmtools in June 2016 failed with pandoc 1.12 but not 1.16.
@@ -4754,12 +4754,11 @@ portable, annoyingly so if this is not declared in the
 platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
 URLs, which even the build in some major Linux distributions in 2020 did
-not possess.  Further, Linux and macOS builds from late 2017 with
-@samp{https://} support were unable to download from some sites using or
-redirecting to @samp{https://} URLs.} that vary by build but are not
-documented.  Some recent versions of @command{pandoc} for macOS do not
-install on @R{}'s target of High Sierra (and this too was undocumented):
-at the time of writing the latest that did was @samp{2.7.3}.
+not possess (and some of those builds were of far-from-current
+versions).} that vary by build but are not documented.  Some recent
+versions of @command{pandoc} for macOS do not work on @R{}'s target of
+High Sierra (and this too was undocumented): at the time of writing the
+latest that did was @samp{2.7.3}.
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
@@ -7808,6 +7807,9 @@ to be different for a compiled executable and for dynamic/shared
 libraries/objects as used by @R{} packages.  We know of no good way to
 profile DLLs on Windows.
 
+This chapter is based on reports from users and the information may not
+be current.
+
 @menu
 * Linux::
 * Solaris::
@@ -8049,13 +8051,7 @@ up to those for Snow Leopard), and @command{Instruments} (part of
 
 This chapter covers the debugging of @R{} extensions, starting with the
 ways to get useful error information and moving on to how to deal with
-errors that crash @R{}.  For those who prefer other styles there are
-contributed packages such as @CRANpkg{debug} on @acronym{CRAN}
-(described in an article in
-@uref{https://CRAN.R-project.org/@/doc/@/Rnews/@/Rnews_2003-3.pdf, R-News
-3/3}).  (There are notes from 2002 provided by Roger Peng at
-@uref{http://www.biostat.jhsph.edu/@/~rpeng/@/docs/@/R-debug-tools.pdf}
-which provide complementary examples to those given here.)
+errors that crash @R{}.
 
 @menu
 * Browsing::
@@ -8955,9 +8951,8 @@ For more details on the topic see
 (which has 3 parts).
 
 It may or may not be possible to build @R{} itself with
-@option{-fsanitize=undefined}: when last tried it worked with
-@command{clang} but there were problems with OpenMP-using code with
-@command{gcc}.
+@option{-fsanitize=undefined}: problems have been seen with OpenMP-using
+code with @command{gcc} but there has been success with @command{clang}.
 
 
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
@@ -14894,7 +14889,7 @@ base::foo}.  This is @strong{not} a good idea, as it captures the base
 function at the time of installation and it might be changed as @R{} is
 patched or updated.
 
-The same idea can be applied for functions in other packages with namespaces.
+The same idea can be applied for functions in other packages.
 
 @node Linking GUIs and other front-ends to R, Function and variable index, Generic functions and methods, Top
 @chapter Linking GUIs and other front-ends to R
@@ -14905,8 +14900,7 @@ to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
 example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
 @uref{https://www.rforge.net/@/Rserve/}) and connections to Java in
-@samp{JRI} (part of the @CRANpkg{rJava} package on @acronym{CRAN}) and
-the Omegahat/Bioconductor package @samp{SJava}.
+@samp{JRI} (part of the @CRANpkg{rJava} package on @acronym{CRAN}).
 
 Note that the APIs described in this chapter are only intended to be
 used in an alternative front-end: they are not part of the API made
@@ -15100,7 +15094,7 @@ and for a static @R{} library
 
 @example
 pkg-config --cflags libR
-pkg-config --libs --static libR
+pkg-config --static --libs libR
 @end example
 
 @noindent
