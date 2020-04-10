@@ -1,6 +1,6 @@
 % File src/library/stats/man/SSweibull.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SSweibull}
@@ -50,7 +50,9 @@ SSweibull(Chick.6$Time, 160, 115, -5.5, 2.5)   # response only
 local({ Asym <- 160; Drop <- 115; lrc <- -5.5; pwr <- 2.5
   SSweibull(Chick.6$Time, Asym, Drop, lrc, pwr) # response _and_ gradient
 })
+## IGNORE_RDIFF_BEGIN
 getInitial(weight ~ SSweibull(Time, Asym, Drop, lrc, pwr), data = Chick.6)
+## IGNORE_RDIFF_END
 ## Initial values are in fact the converged values
 fm1 <- nls(weight ~ SSweibull(Time, Asym, Drop, lrc, pwr), data = Chick.6)
 summary(fm1)
