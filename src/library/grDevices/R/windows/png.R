@@ -40,7 +40,7 @@ png <-
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo", "cairo-png"),
              antialias = c("default", "none", "cleartype", "gray", "subpixel"),
-             symbolfamily="Standard Symbols L")
+             symbolfamily="default")
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -50,14 +50,14 @@ png <-
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans", 300,
-                            checkSymbolFont(d$symbolfamily)))
+                            chooseSymbolFont(symbolfamily)))
     } else if(match.arg(type) == "cairo-png") {
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 5L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans", 300,
-                            checkSymbolFont(d$symbolfamily)))
+                            chooseSymbolFont(symbolfamily)))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -81,7 +81,7 @@ bmp <-
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
              antialias = c("default", "none", "cleartype", "gray", "subpixel"),
-             symbolfamily="Standard Symbols L")
+             symbolfamily="default")
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -91,7 +91,7 @@ bmp <-
                             9L, g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans", 300,
-                            checkSymbolFont(d$symbolfamily)))
+                            chooseSymbolFont(symbolfamily)))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -115,7 +115,7 @@ jpeg <-
              quality = 75, bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
              antialias = c("default", "none", "cleartype", "gray", "subpixel"),
-             symbolfamily="Standard Symbols L")
+             symbolfamily="default")
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -124,7 +124,7 @@ jpeg <-
         invisible(.External(C_devCairo, filename, 3L, g$width, g$height, pointsize,
                             bg, res, antialias, quality,
                             if(nzchar(family)) family else "sans", 300,
-                            checkSymbolFont(d$symbolfamily)))
+                            chooseSymbolFont(symbolfamily)))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -151,7 +151,7 @@ tiff <-
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
              antialias = c("default", "none", "cleartype", "gray", "subpixel"),
-             symbolfamily="Standard Symbols L")
+             symbolfamily="default")
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -165,7 +165,7 @@ tiff <-
                             g$width, g$height, pointsize,
                             bg, res, antialias, comp,
                             if(nzchar(family)) family else "sans", 300,
-                            checkSymbolFont(d$symbolfamily)))
+                            chooseSymbolFont(symbolfamily)))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -188,4 +188,16 @@ grSoftVersion <- function() {
     bm <- .Call(C_bmVersion)
     if(nzchar(bm[3L])) bm[3L] <- strsplit(bm[3L], "\n")[[1L]][1L]
     c(cairo = cairoVersion(), cairoFT = cairoFT(), pango = pangoVersion(), bm)
+}
+
+chooseSymbolFont <- function(family) {
+    if (family == "default") {
+        if (grSoftVersion()["cairoFT"] == "yes") {
+            "Standard Symbols L"
+        } else {
+            "Symbol"
+        }
+    } else {
+        checkSymbolFont(family)
+    }
 }
