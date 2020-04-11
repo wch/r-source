@@ -245,6 +245,6 @@ optionSymbolFont <- function(family) {
             cairoSymbolFont("sans", usePUA = FALSE)
         }
     } else {
-        cairoSymbolFont(family)
+        checkSymbolFont(family)
     }
 }
