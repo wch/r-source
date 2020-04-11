@@ -39,18 +39,18 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 /*
   .Internal(paste (args, sep, collapse, recycle0))
-  .Internal(paste0(args, collapse, recycle0))
-
- * do_paste uses two passes to paste the arguments (in CAR(args)) together.
- * The first pass calculates the width of the paste buffer,
- * then it is alloc-ed and the second pass stuffs the information in.
- */
-
-/* Note that NA_STRING is not handled separately here.  This is
-   deliberate -- see ?paste -- and implicitly coerces it to "NA"
+  .Internal(paste0(args,      collapse, recycle0))
 */
 SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+/* do_paste uses two passes to paste the arguments (in CAR(args)) together.
+ * The first pass calculates the width of the paste buffer,
+ * then it is alloc-ed and the second pass stuffs the information in.
+
+ * Note that NA_STRING is not handled separately here.  This is
+ *  deliberate -- see ?paste -- and implicitly coerces it to "NA"
+*/
+
     SEXP ans, collapse, sep, x;
     int sepw, u_sepw, ienc;
     R_xlen_t i, j, k, nx, pwidth;
@@ -61,7 +61,25 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	use_sep = (PRIMVAL(op) == 0), recycle_0;
     const void *vmax;
 
+#ifdef future_R_4_1_or_newer
     checkArity(op, args);
+#else
+    int nargs = length(args);
+    Rboolean correct_nargs = (PRIMARITY(op) == nargs);
+    if(!correct_nargs) { // not perfect -- we allow one less
+	if(PRIMARITY(op) == nargs + 1) { // a "NOTE":
+	    REprintf("%d arguments passed to .Internal(%s) which requires %d;\n an S4 method"
+		     " may need to be redefined, typically by re-installing a package\n",
+		     nargs, PRIMNAME(op), PRIMARITY(op));
+	    recycle_0 = FALSE;
+	}
+	else // not even "ok":
+	    error(ngettext("%d argument passed to .Internal(%s) which requires %d",
+			   "%d arguments passed to .Internal(%s) which requires %d",
+			   (unsigned long) nargs),
+		  nargs, PRIMNAME(op), PRIMARITY(op));
+    }
+#endif
 
     /* We use formatting and so we must initialize printing. */
 
@@ -86,10 +104,12 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	sepUTF8 = IS_UTF8(sep);
 	sepBytes = IS_BYTES(sep);
 	collapse = CADDR(args);
+	if(correct_nargs)
 	recycle_0 = asLogical(CADDDR(args));
     } else { /* paste0(..., .) */
 	u_sepw = sepw = 0; sep = R_NilValue;/* -Wall */
 	collapse = CADR(args);
+	if(correct_nargs)
 	recycle_0 = asLogical(CADDR(args));
     }
     if (!isNull(collapse))
