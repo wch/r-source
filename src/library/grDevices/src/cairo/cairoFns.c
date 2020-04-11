@@ -446,45 +446,6 @@ static SEXP Cairo_Cap(pDevDesc dd)
 }
 #endif
 
-static const char* utf8Toutf8NoPUA(const char *in)
-{
-    int i, j, used, tmp;
-    /* At least enough because assumes each incoming char only one byte */
-    int nChar = 3*strlen(in) + 1;
-    char *result = R_alloc(nChar, sizeof(char));
-    const char *s = in;
-    char *p = result;
-    for (i = 0; i < nChar; i++) {
-        /* Convert UTF8 char to int */
-	used = mbrtoint(&tmp, s);
-        /* Only re-encode if necessary 
-         * This is more efficient AND protects against input that is 
-         * NOT from Rf_AdobeSymbol2utf8(), e.g., plotmath on Windows
-         * (which is from reEnc(CE_LATIN1, CE_UTF8))
-         */
-        if (tmp > 0xF600) {
-            char inChar[4], symbolChar[2], utf8Char[4];
-            char *q;
-            for (j = 0; j < used; j++) {
-                inChar[j] = *s++;
-            }
-            inChar[used] = '\0';
-            Rf_utf8toAdobeSymbol(symbolChar, inChar);
-            Rf_AdobeSymbol2utf8(utf8Char, symbolChar, 4, FALSE);
-            q = utf8Char;
-            while (*q) {
-                *p++ = *q++;
-            }
-        } else {
-            for (j = 0; j < used; j++) {
-                *p++ = *s++;
-            }
-        }
-    }
-    *p = '\0';
-    return result;
-}                         
-
 #ifdef HAVE_PANGOCAIRO
 /* ------------- pangocairo section --------------- */
 
@@ -915,8 +876,14 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
     if (Unicode) {
         const char *textstr;
 	Rf_ucstoutf8(str, (unsigned int) c);
-        /* Unicode == 2 means we have a Unicode point */
-        if (Unicode > 1 && gc->fontface == 5 && !xd->usePUA) {
+	if (Unicode > 1 && gc->fontface == 5 &&
+	    dd->wantSymbolUTF8 == NA_LOGICAL &&
+	    strcmp(xd->symbolfamily, "Symbol") != 0) {
+            /* Single-byte Windows */
+            textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
+            /* At most 3 bytes (plus null) in textstr */
+            for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
+	} else if (Unicode > 1 && gc->fontface == 5 && !xd->usePUA) {
             textstr = utf8Toutf8NoPUA(str);
             /* At most 3 bytes (plus null) in textstr */
             for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
@@ -940,7 +907,11 @@ static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
 
     const char *textstr;
     if (!utf8Valid(str)) error("invalid string in Cairo_StrWidth");
-    if (gc->fontface == 5 && !xd->usePUA) {
+    if (gc->fontface == 5 && dd->wantSymbolUTF8 == NA_LOGICAL &&
+	strcmp(xd->symbolfamily, "Symbol") != 0) {
+        /* Single-byte Windows */
+        textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
+    } else if (gc->fontface == 5 && !xd->usePUA) {
         textstr = utf8Toutf8NoPUA(str);
     } else {
         textstr = str;
@@ -957,7 +928,12 @@ static void Cairo_Text(double x, double y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     const char *textstr;
     if (!utf8Valid(str)) error("invalid string in Cairo_Text");
-    if (gc->fontface == 5 && !xd->usePUA) {
+
+    if (gc->fontface == 5 && dd->wantSymbolUTF8 == NA_LOGICAL &&
+	strcmp(xd->symbolfamily, "Symbol") != 0) {
+        /* Single-byte Windows */
+        textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
+    } else if (gc->fontface == 5 && !xd->usePUA) {
         textstr = utf8Toutf8NoPUA(str);
     } else {
         textstr = str;

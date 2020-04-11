@@ -773,6 +773,8 @@ struct _DevDesc {
 #define selectDevice		Rf_selectDevice
 #define AdobeSymbol2utf8	Rf_AdobeSymbol2utf8
 #define utf8toAdobeSymbol	Rf_utf8toAdobeSymbol
+#define utf8Toutf8NoPUA         Rf_utf8Toutf8NoPUA
+#define utf8ToLatin1AdobeSymbol2utf8 Rf_utf8ToLatin1AdobeSymbol2utf8
 
 /* Properly declared version of devNumber */
 int ndevNumber(pDevDesc );
@@ -862,6 +864,8 @@ LibExtern Rboolean mbcslocale;
 extern void *AdobeSymbol2utf8(char*out, const char *in, size_t nwork,
                               Rboolean usePUA);
 extern int utf8toAdobeSymbol(char* out, const char *in);
+const char* utf8Toutf8NoPUA(const char *in);
+const char* utf8ToLatin1AdobeSymbol2utf8(const char *in, Rboolean usePUA);
 /* Translates Unicode point to UTF-8 */
 extern size_t Rf_ucstoutf8(char *s, const unsigned int c);
 
