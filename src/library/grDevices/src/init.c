@@ -72,6 +72,8 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(palette, 1),
     CALLDEF(palette2, 1),
     CALLDEF(cairoVersion, 0),
+    CALLDEF(pangoVersion, 0),
+    CALLDEF(cairoFT, 0),
     CALLDEF(bmVersion, 0),
 
 #ifndef _WIN32
@@ -91,7 +93,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(PostScript, 19),
     EXTDEF(XFig, 14),
     EXTDEF(PDF, 20),
-    EXTDEF(devCairo, 11),
+    EXTDEF(devCairo, 12),
     EXTDEF(devcap, 0),
     EXTDEF(devcapture, 1),
     EXTDEF(devcontrol, 1),
@@ -118,7 +120,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
 #else
     EXTDEF(savePlot, 3),
     EXTDEF(Quartz, 11),
-    EXTDEF(X11, 17),
+    EXTDEF(X11, 18),
 #endif
     {NULL, NULL, 0}
 };

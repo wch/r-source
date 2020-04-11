@@ -1,7 +1,8 @@
 useDynLib(grDevices, .registration = TRUE, .fixes = "C_")
 
 export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks,
-       blues9, boxplot.stats, check.options, chull, CIDFont, col2rgb,
+       blues9, boxplot.stats, cairoSymbolFont,
+       check.options, chull, CIDFont, col2rgb,
        colors, colours, cm, colorRamp, colorRampPalette, contourLines,
        convertColor, colorConverter, colorspaces, cm.colors, densCols,
        devAskNewPage, dev.capabilities, dev.capture, dev.control,

@@ -194,7 +194,7 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* Simplified version for RFC3629 definition of UTF-8 */
-static int mbrtoint(int *w, const char *s)
+int mbrtoint(int *w, const char *s)
 {
     unsigned int byte;
     byte = *((unsigned char *)s);
