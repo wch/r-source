@@ -67,7 +67,7 @@ png <- function(filename = "Rplot%03d.png",
                              paste0("png::", filename),
                              g$width, g$height, pointsize, d$gamma,
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                             0L, 0L, "", 0, 0, d$family, d$symbolfamily,
+                             0L, 0L, "", 0, 0, d$family, 
                              optionSymbolFont(d$symbolfamily)))
 }
 

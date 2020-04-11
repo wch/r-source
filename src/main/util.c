@@ -1823,6 +1823,56 @@ int Rf_utf8toAdobeSymbol(char *out, const char *in) {
     return nc;
 }
 
+const char* Rf_utf8Toutf8NoPUA(const char *in)
+{
+    int i, j, used, tmp;
+    /* At least enough because assumes each incoming char only one byte */
+    int nChar = 3*strlen(in) + 1;
+    char *result = R_alloc(nChar, sizeof(char));
+    const char *s = in;
+    char *p = result;
+    for (i = 0; i < nChar; i++) {
+        /* Convert UTF8 char to int */
+	used = mbrtoint(&tmp, s);
+        /* Only re-encode if necessary 
+         * This is more efficient AND protects against input that is 
+         * NOT from Rf_AdobeSymbol2utf8(), e.g., plotmath on Windows
+         * (which is from reEnc(CE_LATIN1, CE_UTF8))
+         */
+        if (tmp > 0xF600) {
+            char inChar[4], symbolChar[2], utf8Char[4];
+            char *q;
+            for (j = 0; j < used; j++) {
+                inChar[j] = *s++;
+            }
+            inChar[used] = '\0';
+            Rf_utf8toAdobeSymbol(symbolChar, inChar);
+            Rf_AdobeSymbol2utf8(utf8Char, symbolChar, 4, FALSE);
+            q = utf8Char;
+            while (*q) {
+                *p++ = *q++;
+            }
+        } else {
+            for (j = 0; j < used; j++) {
+                *p++ = *s++;
+            }
+        }
+    }
+    *p = '\0';
+    return result;
+}                         
+
+const char* Rf_utf8ToLatin1AdobeSymbol2utf8(const char *in, Rboolean usePUA)
+{
+  const char *latinStr;
+  char *utf8str;
+  latinStr = reEnc(in, CE_UTF8, CE_LATIN1, 2);
+  int nc = 3*strlen(latinStr) + 1;
+  utf8str = R_alloc(nc, sizeof(char));
+  Rf_AdobeSymbol2utf8(utf8str, latinStr, nc, usePUA);
+  return utf8str;
+}
+
 int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
 {
     if(n >= 32 && n < 256) return s2u[n-32];

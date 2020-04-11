@@ -193,9 +193,9 @@ grSoftVersion <- function() {
 chooseSymbolFont <- function(family) {
     if (family == "default") {
         if (grSoftVersion()["cairoFT"] == "yes") {
-            "Standard Symbols L"
+            cairoSymbolFont("Standard Symbols L")
         } else {
-            "Symbol"
+            cairoSymbolFont("Symbol")
         }
     } else {
         checkSymbolFont(family)
