@@ -69,10 +69,30 @@ pangoVersion <- function() .Call(C_pangoVersion)
 
 cairoFT <- function() .Call(C_cairoFT)
 
+## Modelled on utils::compareVersion()
+comparePangoVersion <- function(a, b) {
+    a <- as.integer(strsplit(a, "[.]")[[1L]])
+    b <- as.integer(strsplit(b, "[.]")[[1L]])
+    for (k in seq_along(a)) {
+        if (k <= length(b)) {
+            if (a[k] > b[k]) 
+                return(1)
+            else if (a[k] < b[k]) 
+                return(-1L)
+        } else {
+            return(1L)
+        }
+    }
+    if (length(b) > length(a)) 
+        return(-1L)
+    else
+        return(0L)
+}
+
 symbolType1support <- function() {
     pangoVersion <- grSoftVersion()["pango"]
     pangoVersion == "" ||
-        compareVersion(pangoVersion, "1.44") < 0
+        comparePangoVersion(pangoVersion, "1.44") < 0
 }
     
 cairoSymbolFont <- function(family, usePUA = TRUE) {
