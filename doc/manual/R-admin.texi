@@ -2407,9 +2407,8 @@ Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
 Tk.  See @ref{macOS} and @ref{Java (macOS)}.
 
-Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
-Tcl/Tk contained in the @R{} installer.  These are required by a number
-of @acronym{CRAN} and Bioconductor packages.
+Tcl/Tk extensions @code{BWidget} and @code{Tktable} used to be
+distributed with @R{} but no longer are.
 
 A few of the binary packages need other software to be installed on your
 system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},

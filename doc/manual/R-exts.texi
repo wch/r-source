@@ -1500,14 +1500,15 @@ package---the source files should not be installed.
 If your package requires one of these interpreters or an extension then
 this should be declared in the @samp{SystemRequirements} field of its
 @file{DESCRIPTION} file.  (Users of Java most often do so @emph{via}
-@CRANpkg{rJava}, when depending on/importing that suffices.)
+@CRANpkg{rJava}, when depending on/importing that suffices unless there
+is a version requirement on Java code in the package.)
 
 Windows and Mac users should be aware that the Tcl extensions
 @samp{BWidget} and @samp{Tktable} which are currently included with the
-@R{} for Windows and in the macOS installers @emph{are} extensions and do
-need to be declared for users of other platforms (and that
-@samp{Tktable} is less widely available than it used to be, including
-not in the main repositories for major Linux distributions).
+@R{} for Windows (and formerly in the macOS installer) @emph{are}
+extensions and do need to be declared for users of other platforms (and
+that @samp{Tktable} is less widely available than it used to be,
+including not in the main repositories for major Linux distributions).
 @c Not in Fedora since 17, only in launchpad for Ubuntu.
 
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
@@ -1524,8 +1525,8 @@ then download the sources from
 at the command line run something like
 
 @example
-tar xf bwidget-1.9.8.tar.gz
-sudo mv bwidget-1.9.8 /usr/local/lib
+tar xf bwidget-1.9.14.tar.gz
+sudo mv bwidget-1.9.14 /usr/local/lib
 @end example
 
 @noindent
