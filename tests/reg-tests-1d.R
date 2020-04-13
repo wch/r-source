@@ -3952,6 +3952,20 @@ stopifnot(exprs = {
 ## -----------------  with     recycle0 = TRUE      returns 0-length i.e. character(0)
 
 
+## aov() formula deparsing  {Jan Hauffa, Apr 11, 2020, on R-devel}
+mkAov <- function(nms, n = 50) {
+    dflong <- as.data.frame(matrix(pi, n, length(nms),
+                                   dimnames = list(NULL, nms)))
+    forml <- as.formula(paste0("cbind(", paste(nms, collapse = ","), ") ~ 1 + Error(1)"))
+    aov(forml, data=dflong)
+}
+nLng <- paste0("someReallyLongVariableName", 1:20)
+cf1 <- coef(fm1 <- mkAov(vnms <- paste0("v", 1:20)))
+cfL <- coef(fmL <- mkAov(nLng)); colnames(cfL[[1]]) <- vnms
+stopifnot(all.equal(cf1, cfL))
+## mkAov(nLng)  failed in R <= 4.0.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

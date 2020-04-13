@@ -5,7 +5,21 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R-devel}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{paste()} and \code{paste0()} get new optional argument
+      \code{recycle0 = FALSE}.  When set to true, zero length arguments
+      (and all zero-length or no arguments when \code{collapse} is not
+      \code{NULL}) lead to the zero-length \code{character(0)}.
+    }
+  }
+
+}
+
 \section{\Rlogo CHANGES IN 4.0.0}{
+
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Packages need to be (re-)installed under this version
@@ -380,11 +394,6 @@
       \item New argument \code{symbolfamily} in cairo-based graphics
       devices and new function \code{cairoSymbolFont()} that can be used
       to provide the value for that argument.
-
-      \item \code{paste()} and \code{paste0()} get new optional argument
-      \code{recycle0 = FALSE}.  When set to true, zero length arguments
-      (and all zero-length or no arguments when \code{collapse} is not
-      \code{NULL}) lead to the zero-length \code{character(0)}.
     }
   }% end{ NEW FEATURES }
 
@@ -715,6 +724,10 @@
       undefined behavior, thanks to a report by Kirill Müller in
       \PR{17756}.  Further, \code{x[[-Inf]]} and \code{x[[-n]]} now give
       more helpful error messages.
+
+      \item \code{aov(frml, ...)} now also works in case the \code{formula}
+      deparses to more than 500 characters, thanks to a report and patch
+      proposal by Jan Hauffa.
     }
   }
 
