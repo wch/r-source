@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-03-26 r78075) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-04-12 r78210) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -810,7 +810,8 @@ attr(,"scaled:scale")
 > ## end of moved from tabulate.Rd
 > 
 > ## ts
-> # Ensure working arithmetic for `ts' objects :
+> # Ensure working arithmetic for 'ts' objects :
+> z <- ts(matrix(1:900, 100, 3), start = c(1961, 1), frequency = 12)
 > stopifnot(z == z)
 > stopifnot(z-z == 0)
 > 

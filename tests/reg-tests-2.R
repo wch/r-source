@@ -225,7 +225,8 @@ tabulate(numeric(0))
 ## end of moved from tabulate.Rd
 
 ## ts
-# Ensure working arithmetic for `ts' objects :
+# Ensure working arithmetic for 'ts' objects :
+z <- ts(matrix(1:900, 100, 3), start = c(1961, 1), frequency = 12)
 stopifnot(z == z)
 stopifnot(z-z == 0)
 
