@@ -41,7 +41,7 @@ if(file.exists("myTst2")) unlink("myTst2", recursive=TRUE)
 package.skeleton("myTst2", code_files = tmp)
 ##- end_2_ # failed in R 2.11.0
 stopifnot(1 == grep("setClass",
-	  readLines(list.files("myTst/R", full.names=TRUE))),
+		    readLines(list.files("myTst/R", full.names=TRUE))),
 	  c("foo-class.Rd","show-methods.Rd") %in% list.files("myTst/man"))
 ## failed for several reasons in R < 2.7.0
 ##
@@ -75,7 +75,7 @@ install.packages("myTst", lib = "myLib", repos=NULL, type = "source") # with war
 print(installed.packages(lib.loc= "myLib", priority= "NA"))## (PR#13332)
 stopifnot(require("myTst",lib = "myLib"))
 sm <- findMethods(show, where= as.environment("package:myTst"))
-stopifnot(names(sm@names) == "foo")
+stopifnot(sm@names == "foo")
 unlink("myTst_*")
 
 ## getPackageName()  for "package:foo":
