@@ -1,6 +1,6 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
@@ -143,25 +143,25 @@ manglePackageName(pkgName, pkgVersion)
 # Defunct in 2.14.0
 .First.lib(lib, pkg)
 
-# Defunct in 2.15.0
+# Defunct in 2.15.0, removed for 4.0.0
 mem.limits(nsize = NA, vsize = NA)
 .saveRDS(\dots)
 .readRDS(\dots)
-Sys.putenv(\dots)
+Sys.putenv(\dots) # (removed much earlier)
 
 # Defunct in 3.0.0
 real(length = 0)
 as.real(x, \dots)
 is.real(x)
 
-# Defunct in 3.1.0
+# Defunct in 3.1.0, removed for 4.1.0
 .find.package(\dots)
 .path.package(\dots)
 }
 \details{
   Some of these have stubs which report that they are defunct, but most
   have been removed completely (apart from being documented here).
-  
+
   \code{category} has been an old-S function before there were factors;
   should be replaced by \code{\link{factor}} throughout!
 

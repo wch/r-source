@@ -42,16 +42,9 @@
 ## consider keeping one (commented) entry here, for easier additions
 
 ## <entry>
-## Deprecated in 3.0.0
-## .find.package <- function(...)
-## {
-##     .Deprecated("find.package")
-##     find.package(...)
-## }
-
-## .path.package <- function(...)
-## {
-##     .Deprecated("path.package")
-##     path.package(...)
-## }
+## Deprecated in 3.4.0
+unix.time <- function(...) {
+    .Deprecated("system.time")
+    system.time(...)
+}
 ## </entry>

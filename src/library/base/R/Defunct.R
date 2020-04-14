@@ -1,7 +1,7 @@
 #  File src/library/base/R/Defunct.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -185,25 +185,28 @@
 ## <entry>
 ## Deprecated in 2.14.0
 ## Defunct in 2.15.0
-mem.limits <- function(nsize=NA, vsize=NA) .Defunct("gc")
+## Removed for 4.0.0
+## mem.limits <- function(nsize=NA, vsize=NA) .Defunct("gc")
 ## </entry>
 
 ## <entry>
 ## Deprecated in 2.13.1
 ## Defunct in 2.15.0
-.readRDS <- function(...) .Defunct("readRDS")
-.saveRDS <- function(...) .Defunct("saveRDS")
+## Removed for 4.0.0
+## .readRDS <- function(...) .Defunct("readRDS")
+## .saveRDS <- function(...) .Defunct("saveRDS")
 ## </entry>
 
 ## <entry>
 ## Deprecated in 2.5.0
-## Removed in 2.15.0
+## Defunct and Removed in 2.15.0
 # Sys.putenv <- function(...) .Defunct("Sys.setenv")
 ## </entry>
 
 ## <entry>
 ## Deprecated in 3.0.0
 ## Defunct in 3.1.0
-.find.package <- function(...).Defunct("find.package")
-.path.package <- function(...).Defunct("path.package")
+## Removed for 4.1.0
+## .find.package <- function(...).Defunct("find.package")
+## .path.package <- function(...).Defunct("path.package")
 ## </entry>

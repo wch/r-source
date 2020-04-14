@@ -8,6 +8,8 @@
 \alias{utils-deprecated}
 \title{Deprecated Functions in Package \pkg{utils}}
 \description{
+  (Currently none)
+
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
 }
