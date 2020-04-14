@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -139,6 +139,8 @@ install.packages <-
              keep_outputs = FALSE,
              ...)
 {
+    if (!is.character(type))
+        stop("invalid 'type'; must be a character string")
     type2 <- .Platform$pkgType
     if (type == "binary") {
         if (type2 == "source")
