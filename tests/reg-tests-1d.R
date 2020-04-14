@@ -3965,6 +3965,8 @@ cfL <- coef(fmL <- mkAov(nLng)); colnames(cfL[[1]]) <- vnms
 stopifnot(all.equal(cf1, cfL))
 ## mkAov(nLng)  failed in R <= 4.0.0
 
+## UTF8 validity checking internal in R (from PCRE, PR#17755)
+stopifnot(identical(validUTF8('\ud800'), FALSE))
 
 
 ## keep at end
