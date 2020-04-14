@@ -728,6 +728,9 @@
       \item \code{aov(frml, ...)} now also works in case the \code{formula}
       deparses to more than 500 characters, thanks to a report and patch
       proposal by Jan Hauffa.
+
+      \item (PENDING) \code{Gamma()} family sometimes had trouble storing
+      link name \PR{15891}
     }
   }
 
