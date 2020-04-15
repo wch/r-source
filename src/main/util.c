@@ -1268,7 +1268,7 @@ utf8toucs32(wchar_t high, const char *s)
     return utf16toucs(high, utf8toutf16low(s));
 }
 
-/* These return the result in wchar_t.  If wchar_t is 16 bit (e.g. UTF-16LE on Windows
+/* These return the result in wchar_t.  If wchar_t is 16 bit (e.g. UTF-16LE on Windows)
    only the high surrogate is returned; call utf8toutf16low next. */
 size_t attribute_hidden
 utf8toucs(wchar_t *wc, const char *s)
