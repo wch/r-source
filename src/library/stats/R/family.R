@@ -444,7 +444,10 @@ Gamma <- function (link = "inverse")
     family <- "Gamma"
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
-    else if(is.character(link)) stats <- make.link(link)
+    else if(is.character(link)) {
+        stats <- make.link(link)
+	linktemp <- link
+    }
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {

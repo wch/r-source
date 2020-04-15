@@ -710,6 +710,9 @@
       undefined behavior, thanks to a report by Kirill Müller in
       \PR{17756}.  Further, \code{x[[-Inf]]} and \code{x[[-n]]} now give
       more helpful error messages.
+
+      \item \code{Gamma()} family sometimes had trouble storing
+      link name \PR{15891}
     }
   }
 
