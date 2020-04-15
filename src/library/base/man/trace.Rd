@@ -1,6 +1,6 @@
 % File src/library/base/man/trace.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright (C) 1995-2018 R Core Team
+% Copyright (C) 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{trace}
@@ -115,7 +115,11 @@ returnValue(default = NULL)
   functions \code{\link{browser}} and \code{\link{recover}} the
   likeliest candidates; the former browses in the frame of the function
   being traced, and the latter allows browsing in any of the currently
-  active calls.
+  active calls. The arguments \code{tracer} and \code{exit} are evaluated to
+  see whether they are functions, but only their names are used in the
+  tracing expressions.  The lookup is done again when the traced function
+  executes, so it may not be \code{tracer} or \code{exit} that will be called
+  while tracing.
 
   The \code{tracer} or \code{exit} argument can also be an unevaluated
   expression (such as returned by a call to \code{\link{quote}} or
