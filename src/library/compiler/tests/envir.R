@@ -27,12 +27,12 @@ stopifnot(identical(findHomeNS("dnorm", parent.env(getNamespace("stats"))),
                     getNamespace("stats")))
 stopifnot(is.null(findHomeNS("dnorm", getNamespace("base"))))
 
-## plot is available via the stats namespace since stats imports graphics
-stopifnot(identical(findHomeNS("plot", getNamespace("stats")),
+## par is available via the stats namespace since stats imports graphics
+stopifnot(identical(findHomeNS("par", getNamespace("stats")),
                     getNamespace("graphics")))
-stopifnot(identical(findHomeNS("plot", parent.env(getNamespace("stats"))),
+stopifnot(identical(findHomeNS("par", parent.env(getNamespace("stats"))),
                     getNamespace("graphics")))
-stopifnot(is.null(findHomeNS("plot", getNamespace("base"))))
+stopifnot(is.null(findHomeNS("par", getNamespace("base"))))
 
 ## palette is one of a small set of selective imports from grDevices
 stopifnot(identical(findHomeNS("palette", getNamespace("stats")),

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -128,8 +128,10 @@ msgstr "只能用正确的'gpar'名字"
 msgid "invalid display list element"
 msgstr "显示列成分不对"
 
+#, fuzzy
 msgid ""
-"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
+"TRUE')"
 msgstr "grob被覆盖(grab不会保持原状态；用'wrap=TRUE'试一试)"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
@@ -364,6 +366,10 @@ msgstr "'x'和'y'要么是单元值，要么是NULL"
 msgid "corrupt 'arrows' object"
 msgstr "'arrows'对象出了错"
 
+#, fuzzy
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr "'x'，'y'和'id.lengths'必需设定整体长度"
+
 msgid "x and y must be units"
 msgstr "x和y必需为单元值"
 
@@ -406,26 +412,21 @@ msgstr "'x', 'y', 'width'和'height'的长度都应该是为一"
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'和'unit'的长度必需大于零"
 
-msgid "'x' argument must be a unit object"
-msgstr "'x'参数必需是单元对象"
-
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis'或'type'的值不对"
 
-msgid "no string supplied for 'strwidth/height' unit"
-msgstr "'strwidth/height'单元值缺少字符串"
+#, fuzzy
+msgid "Not a unit object"
+msgstr "'unit'对象不对"
 
-msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr "'grobwidth/height'单元值缺少'grob'的值"
-
-msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr "'grobwidth/height'单元值里的'gPath'其深度必需为一"
-
-msgid "non-NULL value supplied for plain unit"
-msgstr "简单单元里不能有非NULL值"
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "'Summary'函数'%s'对这个单元没有意义"
 
 msgid "operator '%s' not meaningful for units"
 msgstr "运算符号'%s'对这个单元没有意义"
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr ""
 
 msgid "only one operand may be a unit"
 msgstr "只能有一个单元运算对象"
@@ -433,39 +434,26 @@ msgstr "只能有一个单元运算对象"
 msgid "non-unit operand must be numeric"
 msgstr "非单元运算对象必需为数字"
 
+msgid "can't divide with a unit"
+msgstr ""
+
 msgid "both operands must be units"
 msgstr "两个运算对象都必需为单元"
 
-msgid "'Summary' function '%s' not meaningful for units"
-msgstr "'Summary'函数'%s'对这个单元没有意义"
-
-msgid "no arguments where at least one expected"
-msgstr "不能没有参数，至少需要有一个"
-
-msgid "Zero arguments where at least one expected"
-msgstr "不能没有参数，至少需要有一个"
-
-msgid "cannot mix signs of indices"
-msgstr "不能混用索引符号"
-
-msgid "index out of bounds ('unit' subsetting)"
+#, fuzzy
+msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "索引值出界(取'unit'子集时)"
 
-msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr "索引值出界(取单元数字子集时)"
-
-msgid "index out of bounds (unit list subsetting)"
-msgstr "索引值出界(取单元串子集时)"
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
+msgstr ""
 
 #, fuzzy
-msgid "Value being assigned must be a unit"
-msgstr "x和y必需为单元值"
+msgid "index must be of length 1"
+msgstr "'x'和'y'必需是长度为一的单元"
 
-msgid "it is invalid to combine 'unit' objects with other types"
-msgstr "不能将'unit'对象同其它类别的对象相结合"
-
-msgid "invalid 'unit' object"
-msgstr "'unit'对象不对"
+#, fuzzy
+msgid "replacement must be of length 1"
+msgstr "'gpar'成分'%s'的长度不能为零"
 
 msgid "invalid 'theta'"
 msgstr "'theta'值不对"
@@ -526,6 +514,43 @@ msgstr[0] "'grob'名字不对"
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "视口名字不对"
+
+#~ msgid "'x' argument must be a unit object"
+#~ msgstr "'x'参数必需是单元对象"
+
+#~ msgid "no string supplied for 'strwidth/height' unit"
+#~ msgstr "'strwidth/height'单元值缺少字符串"
+
+#~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
+#~ msgstr "'grobwidth/height'单元值缺少'grob'的值"
+
+#~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+#~ msgstr "'grobwidth/height'单元值里的'gPath'其深度必需为一"
+
+#~ msgid "non-NULL value supplied for plain unit"
+#~ msgstr "简单单元里不能有非NULL值"
+
+#~ msgid "no arguments where at least one expected"
+#~ msgstr "不能没有参数，至少需要有一个"
+
+#~ msgid "Zero arguments where at least one expected"
+#~ msgstr "不能没有参数，至少需要有一个"
+
+#~ msgid "cannot mix signs of indices"
+#~ msgstr "不能混用索引符号"
+
+#~ msgid "index out of bounds (unit arithmetic subsetting)"
+#~ msgstr "索引值出界(取单元数字子集时)"
+
+#~ msgid "index out of bounds (unit list subsetting)"
+#~ msgstr "索引值出界(取单元串子集时)"
+
+#, fuzzy
+#~ msgid "Value being assigned must be a unit"
+#~ msgstr "x和y必需为单元值"
+
+#~ msgid "it is invalid to combine 'unit' objects with other types"
+#~ msgstr "不能将'unit'对象同其它类别的对象相结合"
 
 #~ msgid "invalid element in the display list"
 #~ msgstr "显示单里的成分不对"

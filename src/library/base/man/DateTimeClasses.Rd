@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -98,7 +98,7 @@
     \item{\code{mon}}{0--11: months after the first of the year.}
     \item{\code{year}}{years since 1900.}
     \item{\code{wday}}{0--6 day of the week, starting on Sunday.}
-    \item{\code{yday}}{0--365: day of the year.}
+    \item{\code{yday}}{0--365: day of the year (365 only in leap years).}
     \item{\code{isdst}}{Daylight Saving Time flag.  Positive if in
       force, zero if not, negative if unknown.}
     \item{\code{zone}}{(Optional.) The abbreviation for the time zone in

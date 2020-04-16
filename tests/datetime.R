@@ -35,3 +35,9 @@ as.POSIXlt(ISOdate(2071,1,13,0,1,tz="Etc/GMT-1"))$wday
 ## Incorrect use of %b should work even though abbreviation does match
 old <- Sys.setlocale("LC_TIME", "C") # to be sure
 stopifnot(!is.na(strptime("11-August-1903", "%d-%b-%Y")))
+
+## Prior to R 4.0.0 this oveflowed an array.  Now gives a warning
+
+z <- paste("2017", c(1,365,366), sep = "-")
+(zz <- strptime(z, "%Y-%j"))
+stopifnot(identical(is.na(zz), c(FALSE, FALSE, TRUE)))

@@ -517,8 +517,8 @@ FUNTAB R_FunTab[] =
 {"asCharacterFactor",	do_asCharacterFactor,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"as.vector",	do_asvector,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"paste",	do_paste,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"paste0",	do_paste,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"paste",	do_paste,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"paste0",	do_paste,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.path",	do_filepath,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"format",	do_format,	0,	11,	9,	{PP_FUNCALL, PREC_FN,	0}},
 {"format.info",	do_formatinfo,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
@@ -905,6 +905,7 @@ FUNTAB R_FunTab[] =
 {"bindingIsLocked", do_bndIsLocked,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"makeActiveBinding", do_mkActiveBnd,	0, 111,	3,      {PP_FUNCALL, PREC_FN,	0}},
 {"bindingIsActive", do_bndIsActive,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
+{"activeBindingFunction", do_activeBndFun,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 /* looks like mkUnbound is unused in base R */
 {"mkUnbound",	do_mkUnbound,		0, 111,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"isNamespaceEnv",do_isNSEnv,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
@@ -1080,6 +1081,7 @@ static void SymbolShortcuts(void)
     R_DollarSymbol = install("$");
     R_DotsSymbol = install("...");
     R_DropSymbol = install("drop");
+    R_EvalSymbol = install("eval");
 
     /* The last value symbol is used by the interpreter for recording
        the value of the most recently evaluated top level

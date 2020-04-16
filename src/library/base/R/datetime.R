@@ -1421,4 +1421,10 @@ as.list.POSIXlt <- function(x, ...)
     x
 }
 
+## Added in 4.0.0.
+
+as.list.difftime <- function(x, ...)
+    lapply(unclass(x), .difftime, attr(x, "units"), oldClass(x))
+
+
 

@@ -66,11 +66,11 @@ characters is still checked.
 static int
 valid_utf8(const char *string, size_t length) // R change int->size_t
 {
-    const char *p;
+    const unsigned char *p;
 
-    for (p = string; length-- > 0; p++) {
-	int ab, c, d;
-	c = (unsigned char)*p;
+    for (p = (unsigned char *)string; length-- > 0; p++) {
+	unsigned ab, c, d;
+	c = *p;
 	if (c < 128) continue;                /* ASCII character */
 	if (c < 0xc0) return 1;               /* Isolated 10xx xxxx byte */
 	if (c >= 0xfe) return 1;             /* Invalid 0xfe or 0xff bytes */

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:14\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -212,9 +212,6 @@ msgstr ""
 "删除无效的条目%d:\n"
 "%s"
 
-msgid "package %s not found"
-msgstr "没有%s这一个程序包"
-
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "程序包%s里的DESCRIPTION文件中没有日期这一域"
 
@@ -253,6 +250,9 @@ msgstr "目录%s里没有'filelist'这一文件"
 
 msgid "data set %s not found"
 msgstr "没有%s这个数据集"
+
+msgid "an object named %s already exists and will not be overwritten"
+msgstr ""
 
 msgid "only 'html = TRUE' is supported on this platform"
 msgstr "本平台只支持'html = TRUE'"
@@ -386,6 +386,38 @@ msgstr "'form'必需是双边公式"
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form'必需是双边公式，每一边至少带一项"
 
+msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
+msgstr ""
+
+msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
+msgstr ""
+
+#, fuzzy
+msgid "no method found for %s(., n=%s) and class %s"
+msgstr "函数%s和标签%s没有设定方法"
+
+msgid ""
+"tail(., addrownums = V) is deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums = V) instead."
+msgstr ""
+
+msgid "tail(., addrownums=.) is"
+msgstr ""
+
+msgid ""
+"deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums=.) instead."
+msgstr ""
+
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
 
@@ -461,9 +493,6 @@ msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'reb
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
-
-msgid "could not find package %s"
-msgstr "找不到程序包%s"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "程序包%s的hsearch数据是空的-很奇怪"
@@ -556,6 +585,9 @@ msgid ""
 "S3 methods"
 msgstr "函数'%s'好象不是同属的"
 
+msgid "'class' is of length > 1; only the first element will be used"
+msgstr ""
+
 msgid "must supply 'generic.function' or 'class'"
 msgstr "必需提供'generic.function'或'class'两个中的一个"
 
@@ -579,6 +611,9 @@ msgstr "'fixInNamespace'需要名字值"
 
 msgid "only numeric indices can be used"
 msgstr "只能用数值的指标"
+
+msgid "Malformed package name."
+msgstr ""
 
 msgid "cannot create directory '%s'"
 msgstr "无法产生'%s'目录"
@@ -955,6 +990,9 @@ msgstr "只能在局部电脑上接收調用"
 msgid "socket not established"
 msgstr "套介面还没有建立"
 
+msgid "argument is not a function or language object:"
+msgstr ""
+
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame()被調用时使用了非数据的框--将之強制改变。"
 
@@ -970,6 +1008,9 @@ msgstr "'str.default': 'le'的值是NA，当零来用"
 msgid "'nchar.max = %d' is too small"
 msgstr ""
 
+msgid "Not a validObject():"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr "'object'的levels()的值不对"
 
@@ -978,6 +1019,16 @@ msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr ""
+
+msgid "The number of tokens != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens is not consistent across 'x'"
+msgstr ""
+
+#, fuzzy
+msgid "cannot coerce %s to logical"
+msgstr "无法将'x'转变成罗马数"
 
 msgid "no lines found in %s"
 msgstr "%s里找不到信息"
@@ -991,11 +1042,27 @@ msgstr "程序资料不包含行信息"
 msgid "no events were recorded"
 msgstr "没有记录下任何事件"
 
+msgid "argument 'compressed' is ignored for the internal method"
+msgstr ""
+
 msgid "invalid 'tarfile' argument"
 msgstr "'tarfile'参数不对"
 
 msgid "'compressed' must be logical or character"
 msgstr "'compressed'必需是字符向量"
+
+#, fuzzy
+msgid "No %s command found"
+msgstr "找不到'%s'这个对象"
+
+msgid "gzip"
+msgstr ""
+
+msgid "bzip2"
+msgstr ""
+
+msgid "xz"
+msgstr ""
 
 msgid "failed to create directory %s"
 msgstr "无法建立目录%s"
@@ -1008,6 +1075,9 @@ msgstr "'tarfile'的值必需是字符串或联结"
 
 msgid "incomplete block on file"
 msgstr "不完全文件锁"
+
+msgid "incomplete block: rather use gzfile(.) created connection?"
+msgstr ""
 
 msgid "invalid name field in tarball"
 msgstr "tarball里的名字域不对"
@@ -1060,8 +1130,9 @@ msgstr "select.list()不能在非互交形式下使用"
 msgid "'title' must be NULL or a length-1 character vector"
 msgstr "'title'值要么是NULL，要么是长度为一的字符向量"
 
+#, fuzzy
 msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
+"Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
 msgstr "请输入一个或多个由空格分开的数字，或输入空行来好取消"
 
 msgid "Invalid input, please try again"
@@ -1113,6 +1184,9 @@ msgstr "'ccaddress'的长度必需为一"
 #, fuzzy
 msgid "'url' must be a length-one character vector"
 msgstr "'title'值要么是NULL，要么是长度为一的字符向量"
+
+msgid "'headers' must have names and must not be NA"
+msgstr ""
 
 #, fuzzy
 msgid "'destfile' must be a length-one character vector"
@@ -1182,6 +1256,14 @@ msgstr "无法建立%s"
 
 msgid "there is no 'libs' directory in package %s"
 msgstr "在程序包%s里找不到'libs'这个目录"
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s, copying instead"
+msgstr "无法将临时安装%s搬到%s"
+
+#, fuzzy
+msgid "unable to copy temporary installation %s to %s"
+msgstr "无法将临时安装%s搬到%s"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr ""
@@ -1253,6 +1335,10 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] "还安装相依关系%s"
 
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
 msgid ""
 "Installing package into %s\n"
 "(as %s is unspecified)"
@@ -1312,9 +1398,11 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "罗马数字不对：%s"
 
-msgid "package %s is in use and will not be installed"
-msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+#~ msgid "package %s not found"
+#~ msgstr "没有%s这一个程序包"
+
+#~ msgid "could not find package %s"
+#~ msgstr "找不到程序包%s"
 
 #~ msgid "Do you want to attempt to install these from sources?"
 #~ msgstr "你想从源代码尝试安装这些"

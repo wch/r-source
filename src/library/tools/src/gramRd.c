@@ -3782,7 +3782,7 @@ static keywords[] = {
     { "\\preformatted", VERBMACRO },
     
     { "\\samp",    VERBMACRO },
-    { "\\special", VERBMACRO },
+    { "\\special", RCODEMACRO },
     { "\\url",     VERBMACRO },
     { "\\verb",    VERBMACRO },
     
@@ -4123,6 +4123,31 @@ static int mkComment(int c)
     return COMMENT;
 }
 
+#define EAT_DASHES(n_var) do {				\
+	for (c = xxgetc(); c == '-'; c = xxgetc()) {	\
+	    n_var++;					\
+	    TEXT_PUSH(c);				\
+	}						\
+    } while (0)
+
+#define EAT_CHARS_TO_DELIM_OR_EOF(delim) do {	\
+	while (c != delim && c != R_EOF) {	\
+	    TEXT_PUSH(c);			\
+	    c = xxgetc();			\
+	}					\
+    } while (0)
+
+static int closingRawStringDelim(int c)
+{
+    switch(c) {
+    case '(': return ')';
+    case '{': return '}';
+    case '[': return ']';
+    case '|': return '|';
+    default:  return 0;
+    }
+}
+
 static int mkCode(int c)
 {
     char st0[INITBUFSIZE];
@@ -4134,6 +4159,37 @@ static int mkCode(int c)
     if (c == RBRACE && !parseState.xxinRString) parseState.xxbraceDepth++; 
     
     while(1) {
+	/* handle a raw string */
+	if (parseState.xxinRString == 0 && (c == 'r' || c == 'R')) {
+    	    int lookahead = xxgetc();
+	    if (lookahead == '"' || lookahead == '\'') {
+		TEXT_PUSH(c);
+		int quote = lookahead;
+		parseState.xxinRString = quote;
+    	    	parseState.xxQuoteLine = parseState.xxlineno;
+    	    	parseState.xxQuoteCol  = parseState.xxcolno;
+		TEXT_PUSH(quote);
+		int ndash = 0;
+		EAT_DASHES(ndash);
+		int delim = closingRawStringDelim(c);
+		if (delim != 0) {
+		    int done = FALSE;
+		    do {
+			EAT_CHARS_TO_DELIM_OR_EOF(delim);
+			if (c == delim) {
+			    TEXT_PUSH(c);
+			    int nndash = 0;
+			    EAT_DASHES(nndash);
+			    if (nndash == ndash && c == quote)
+				done = TRUE; // close quote is handled below
+			}
+			else done = TRUE; // EOF; move on
+		    } while (! done);
+		}
+	    }
+	    else xxungetc(lookahead);
+	}
+
 	int escaped = 0;
     	if (c == '\\') {
     	    int lookahead = xxgetc();

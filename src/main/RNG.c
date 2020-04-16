@@ -66,7 +66,7 @@ typedef struct {
 } RNGTAB;
 
 
-static Int32 dummy[625];
+static Int32 dummy[628]; // allow for optimizing compilers to read over bound
 static
 RNGTAB RNG_Table[] =
 {

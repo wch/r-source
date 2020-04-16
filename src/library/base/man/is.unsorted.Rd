@@ -20,6 +20,10 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   \item{strictly}{logical indicating if the check should be for
     \emph{strictly} increasing values.}
 }
+\details{
+  \code{is.unsorted} is generic: you can write methods to handle
+  specific classes of objects, see \link{InternalMethods}.
+}
 \value{
   A length-one logical value.  All objects of length 0 or 1 are sorted.
   Otherwise, the result will be \code{NA} except for atomic vectors and

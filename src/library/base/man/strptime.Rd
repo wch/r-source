@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -116,7 +116,8 @@ strptime(x, format, tz = "")
       exception strings such as \samp{24:00:00} are accepted for input,
       since ISO 8601 allows these.}
     \item{\code{\%I}}{Hours as decimal number (01--12).}
-    \item{\code{\%j}}{Day of year as decimal number (001--366).}
+    \item{\code{\%j}}{Day of year as decimal number (001--366):  For
+      input, 366 is only valid in a leap year.}
     \item{\code{\%m}}{Month as decimal number (01--12).}
     \item{\code{\%M}}{Minute as decimal number (00--59).}
     \item{\code{\%n}}{Newline on output, arbitrary whitespace on input.}
@@ -160,13 +161,13 @@ strptime(x, format, tz = "")
       \code{"\%H:\%M:\%S"} on input.}
     \item{\code{\%y}}{Year without century (00--99).  On input, values
       00 to 68 are prefixed by 20 and 69 to 99 by 19 -- that is the
-      behaviour specified by the 2004 and 2008 POSIX standards, but they do
+      behaviour specified by the 2018 POSIX standard, but it does
       also say \sQuote{it is expected that in a future version the
 	default century inferred from a 2-digit year will change}.}
     \item{\code{\%Y}}{Year with century.  Note that whereas there was no
       zero in the original Gregorian calendar, ISO 8601:2004 defines it
       to be valid (interpreted as 1BC): see
-      \url{https://en.wikipedia.org/wiki/0_(year)}.  Note that the standards
+      \url{https://en.wikipedia.org/wiki/0_(year)}.  However, the standards
       also say that years before 1582 in its calendar should only be used
       with agreement of the parties involved.
   
@@ -338,8 +339,11 @@ strptime(x, format, tz = "")
 
 \references{
   International Organization for Standardization (2004, 2000, \dots)
-  \emph{ISO 8601.  Data elements and interchange formats --
-    Information interchange -- Representation of dates and times.}
+  \sQuote{ISO 8601.  Data elements and interchange formats --
+    Information interchange -- Representation of dates and times.},
+  slightly updated to International Organization for Standardization (2019)
+  \sQuote{ISO 8601-1:2019.  Date and time -- Representations for
+    information interchange -- Part 1: Basic rules}.
   For links to versions available on-line see (at the time of writing)
   \url{https://dotat.at/tmp/ISO_8601-2004_E.pdf} and
   \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the

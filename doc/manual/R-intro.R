@@ -2,7 +2,7 @@
 ####  -- in a way that this should be(come) an executable script.
 
 options(digits=5, width=65)##--- for outputs !
-options(stringsAsFactors=TRUE) ## factory-fresh defaults
+options(stringsAsFactors=FALSE) ## for R >= 4.0.0
 options(useFancyQuotes=FALSE) ## avoid problems on Windows
 
 ## 2. Simple Manipulations
@@ -102,7 +102,7 @@ alpha <- 10*(1:10)
 alpha <- alpha[2 * 1:5]
 alpha
 
-winter <- data.frame(temp = c(-1,3,2,-2), cat = rep(c("A","B"), 2))
+winter <- data.frame(temp = c(-1,3,2,-2), cat = factor(rep(c("A","B"), 2)))
 winter
 unclass(winter)
 

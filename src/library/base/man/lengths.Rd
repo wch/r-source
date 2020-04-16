@@ -26,6 +26,9 @@ lengths(x, use.names = TRUE)
   containing the length of each element in \code{x}.  Effectively,
   \code{length(x[[i]])} is called for all \code{i}, so any methods on
   \code{length} are considered.
+
+  \code{lengths} is generic: you can write methods to handle
+  specific classes of objects, see \link{InternalMethods}.
 }
 \note{
   One raison d'\enc{être}{etre} of \code{lengths(x)} is its use as a

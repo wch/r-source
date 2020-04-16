@@ -81,15 +81,26 @@ const char *formatError(DWORD res);  /* extra.c */
 
 /* Machine Constants */
 
-static void
-machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
-       int *iexp, int *minexp, int *maxexp, double *eps,
-       double *epsneg, double *xmin, double *xmax);
+#define DTYPE double
+#define MACH_NAME machar
+#define ABS fabs
+#include "machar.c"
+#undef DTYPE
+#undef MACH_NAME
+#undef ABS
+
+#ifdef HAVE_LONG_DOUBLE
+# define DTYPE long double
+# define MACH_NAME machar_LD
+# define ABS fabsl
+# include "machar.c"
+# undef DTYPE
+# undef MACH_NAME
+# undef ABS
+#endif
 
 static void Init_R_Machine(SEXP rho)
 {
-    SEXP ans, nms;
-
     machar(&R_AccuracyInfo.ibeta,
 	   &R_AccuracyInfo.it,
 	   &R_AccuracyInfo.irnd,
@@ -105,8 +116,15 @@ static void Init_R_Machine(SEXP rho)
 	   &R_AccuracyInfo.xmax);
 
     R_dec_min_exponent = (int) floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
-    PROTECT(ans = allocVector(VECSXP, 18));
-    PROTECT(nms = allocVector(STRSXP, 18));
+
+#ifdef HAVE_LONG_DOUBLE
+# define MACH_SIZE 18+10
+#else
+# define MACH_SIZE 18
+#endif
+    SEXP ans = PROTECT(allocVector(VECSXP, MACH_SIZE)),
+	 nms = PROTECT(allocVector(STRSXP, MACH_SIZE));
+
     SET_STRING_ELT(nms, 0, mkChar("double.eps"));
     SET_VECTOR_ELT(ans, 0, ScalarReal(R_AccuracyInfo.eps));
 
@@ -164,6 +182,70 @@ static void Init_R_Machine(SEXP rho)
 
     SET_STRING_ELT(nms, 17, mkChar("sizeof.pointer"));
     SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));
+
+#ifdef HAVE_LONG_DOUBLE
+    static struct {
+	int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
+	long double eps, epsneg, xmin, xmax;
+    } R_LD_AccuracyInfo;
+
+    machar_LD(&R_LD_AccuracyInfo.ibeta,
+	      &R_LD_AccuracyInfo.it,
+	      &R_LD_AccuracyInfo.irnd,
+	      &R_LD_AccuracyInfo.ngrd,
+	      &R_LD_AccuracyInfo.machep,
+	      &R_LD_AccuracyInfo.negep,
+	      &R_LD_AccuracyInfo.iexp,
+	      &R_LD_AccuracyInfo.minexp,
+	      &R_LD_AccuracyInfo.maxexp,
+	      &R_LD_AccuracyInfo.eps,
+	      &R_LD_AccuracyInfo.epsneg,
+	      &R_LD_AccuracyInfo.xmin,
+	      &R_LD_AccuracyInfo.xmax);
+
+    SET_STRING_ELT(nms, 18+0, mkChar("longdouble.eps"));
+    SET_VECTOR_ELT(ans, 18+0, ScalarReal((double) R_LD_AccuracyInfo.eps));
+
+    SET_STRING_ELT(nms, 18+1, mkChar("longdouble.neg.eps"));
+    SET_VECTOR_ELT(ans, 18+1, ScalarReal((double) R_LD_AccuracyInfo.epsneg));
+
+    /*
+    SET_STRING_ELT(nms, 18+2, mkChar("longdouble.xmin"));     // not representable as double
+    SET_VECTOR_ELT(ans, 18+2, ScalarReal(R_LD_AccuracyInfo.xmin));
+
+    SET_STRING_ELT(nms, 18+3, mkChar("longdouble.xmax"));    // not representable as double
+    SET_VECTOR_ELT(ans, 18+3, ScalarReal(R_LD_AccuracyInfo.xmax));
+
+    SET_STRING_ELT(nms, 18+4, mkChar("longdouble.base"));    // same as "all"
+    SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ibeta));
+    */
+
+    SET_STRING_ELT(nms, 18+2, mkChar("longdouble.digits"));
+    SET_VECTOR_ELT(ans, 18+2, ScalarInteger(R_LD_AccuracyInfo.it));
+
+    SET_STRING_ELT(nms, 18+3, mkChar("longdouble.rounding"));
+    SET_VECTOR_ELT(ans, 18+3, ScalarInteger(R_LD_AccuracyInfo.irnd));
+
+    SET_STRING_ELT(nms, 18+4, mkChar("longdouble.guard"));
+    SET_VECTOR_ELT(ans, 18+4, ScalarInteger(R_LD_AccuracyInfo.ngrd));
+
+    SET_STRING_ELT(nms, 18+5, mkChar("longdouble.ulp.digits"));
+    SET_VECTOR_ELT(ans, 18+5, ScalarInteger(R_LD_AccuracyInfo.machep));
+
+    SET_STRING_ELT(nms, 18+6, mkChar("longdouble.neg.ulp.digits"));
+    SET_VECTOR_ELT(ans, 18+6, ScalarInteger(R_LD_AccuracyInfo.negep));
+
+    SET_STRING_ELT(nms, 18+7, mkChar("longdouble.exponent"));
+    SET_VECTOR_ELT(ans, 18+7, ScalarInteger(R_LD_AccuracyInfo.iexp));
+
+    SET_STRING_ELT(nms, 18+8, mkChar("longdouble.min.exp"));
+    SET_VECTOR_ELT(ans, 18+8, ScalarInteger(R_LD_AccuracyInfo.minexp));
+
+    SET_STRING_ELT(nms, 18+9, mkChar("longdouble.max.exp"));
+    SET_VECTOR_ELT(ans, 18+9, ScalarInteger(R_LD_AccuracyInfo.maxexp));
+
+#endif
+
     setAttrib(ans, R_NamesSymbol, nms);
     defineVar(install(".Machine"), ans, rho);
     UNPROTECT(2);
@@ -290,10 +372,20 @@ void attribute_hidden R_check_locale(void)
     {
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;
 	p = strrchr(ctype, '.');
-	if (p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 0;
+	if (p) {
+	    if (isdigit(p[1]))
+		localeCP = atoi(p+1);
+	    else if (!strcasecmp(p+1, "UTF-8") || !strcasecmp(p+1, "UTF8"))
+		localeCP = 65001;
+	    else
+		localeCP = 0;
+	}
 	/* Not 100% correct, but CP1252 is a superset */
 	known_to_be_latin1 = latin1locale = (localeCP == 1252);
-	if (localeCP) {
+	known_to_be_utf8 = utf8locale = (localeCP == 65001);
+	if (localeCP == 65001)
+	    strcpy(native_enc, "UTF-8");
+	else if (localeCP) {
 	    /* CP1252 when latin1locale is true */
 	    snprintf(native_enc, R_CODESET_MAX, "CP%d", localeCP);
 	    native_enc[R_CODESET_MAX] = 0;
@@ -920,7 +1012,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #define WINDOWS_TICK 10000000
 #define SEC_TO_UNIX_EPOCH 11644473600LL
 	    {
-		FILETIME c_ft, a_ft, m_ft; 
+		FILETIME c_ft, a_ft, m_ft;
 		HANDLE h;
 		int success = 0;
 		h = CreateFileW(wfn, 0,
@@ -929,7 +1021,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (h != INVALID_HANDLE_VALUE) {
 		    int res  = GetFileTime(h, &c_ft, &a_ft, &m_ft);
 		    CloseHandle(h);
-		    if (res) { 
+		    if (res) {
 			ULARGE_INTEGER time;
 			time.LowPart = m_ft.dwLowDateTime;
 			time.HighPart = m_ft.dwHighDateTime;
@@ -1344,7 +1436,7 @@ SEXP attribute_hidden do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
     int count = 0;
     for (int i = 0; i < LENGTH(d) ; i++) {
 	if (STRING_ELT(d, i) == NA_STRING) continue;
-	const char *p = translateCharFP2(STRING_ELT(d, i)); 
+	const char *p = translateCharFP2(STRING_ELT(d, i));
 	if (!p) continue;
 	const char *dnp = R_ExpandFileName(p);
 	list_dirs(dnp, "", fullnames, &count, &ans, &countmax, idx, recursive);
@@ -1511,7 +1603,7 @@ static int delReparsePoint(const wchar_t *name)
     return res == 0;
 }
 
-static int R_unlink(wchar_t *name, int recursive, int force)
+static int R_unlink(const wchar_t *name, int recursive, int force)
 {
     R_CheckStack(); // called recursively
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
@@ -1661,6 +1753,10 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "expand");
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
+		/* FIXME: does not convert encodings, currently matching
+		          filenameToWchar */
+		if (streql(CHAR(STRING_ELT(fn, i)),"~"))
+		    continue;
 		names = filenameToWchar(STRING_ELT(fn, i), expand ? TRUE : FALSE);
 		if (expand) {
 		    res = dos_wglob(names, GLOB_NOCHECK, NULL, &globbuf);
@@ -1712,13 +1808,14 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 #if defined(HAVE_GLOB)
 	if (expand)
 	    useglob = TRUE;
-#endif	
+#endif
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
+		names = translateChar(STRING_ELT(fn, i));
+		if (streql(names, "~"))
+		    continue;
 		if (expand)
-		    names = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
-		else
-		    names = translateChar(STRING_ELT(fn, i));
+		    names = R_ExpandFileName(names);
 		if (useglob) {
 #if defined(HAVE_GLOB)
 		    res = glob(names, GLOB_NOCHECK, NULL, &globbuf);
@@ -1961,7 +2058,7 @@ SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (p && tmp != NA_STRING)
 	    tmp = markKnown(R_ExpandFileName(p), tmp);
 #else
-/* Windows can have files and home directories that aren't representable 
+/* Windows can have files and home directories that aren't representable
    in the native encoding (e.g. latin1), so we need to translate
    everything to UTF8.
 */
@@ -2875,6 +2972,7 @@ SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     int mode;
     mode_t res = 0;
+    Rboolean visible;
 
     checkArity(op, args);
     mode = asInteger(CAR(args));
@@ -2882,18 +2980,19 @@ SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
     if (mode == NA_INTEGER) {
 	res = umask(0);
 	umask(res);
-	R_Visible = TRUE;
+	visible = TRUE;
     } else {
 	res = umask((mode_t) mode);
-	R_Visible = FALSE;
+	visible = FALSE;
     }
 #else
     warning(_("insufficient OS support on this platform"));
-    R_Visible = FALSE;
+    visible = FALSE;
 #endif
     PROTECT(ans = ScalarInteger(res));
     setAttrib(ans, R_ClassSymbol, mkString("octmode"));
     UNPROTECT(1);
+    R_Visible = visible;
     return ans;
 }
 
@@ -3292,306 +3391,3 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-
-/* Formerly src/appl/machar.c:
- * void machar()  -- computes ALL `machine constants' at once.
- * -------------  -- compare with ../nmath/i1mach.c & ../nmath/d1mach.c
- *		     which use the C  <float.h> constants !
- *      algorithm 665, collected algorithms from acm.
- *      this work published in transactions on mathematical software,
- *      vol. 14, no. 4, pp. 303-311.
- *
- *  this fortran 77 subroutine is intended to determine the parameters
- *   of the floating-point arithmetic system specified below.  the
- *   determination of the first three uses an extension of an algorithm
- *   due to m. malcolm, cacm 15 (1972), pp. 949-951, incorporating some,
- *   but not all, of the improvements suggested by m. gentleman and s.
- *   marovich, cacm 17 (1974), pp. 276-277.  an earlier version of this
- *   program was published in the book software manual for the
- *   elementary functions by w. j. cody and w. waite, prentice-hall,
- *   englewood cliffs, nj, 1980.
- *
- *  the program as given here must be modified before compiling.  if
- *   a single (double) precision version is desired, change all
- *   occurrences of cs (  ) in columns 1 and 2 to blanks.
- *
- *  parameter values reported are as follows:
- *
- *       ibeta   - the radix for the floating-point representation
- *       it      - the number of base ibeta digits in the floating-point
- *                 significand
- *       irnd    - 0 if floating-point addition chops
- *                 1 if floating-point addition rounds, but not in the
- *                   ieee style
- *                 2 if floating-point addition rounds in the ieee style
- *                 3 if floating-point addition chops, and there is
- *                   partial underflow
- *                 4 if floating-point addition rounds, but not in the
- *                   ieee style, and there is partial underflow
- *                 5 if floating-point addition rounds in the ieee style,
- *                   and there is partial underflow
- *       ngrd    - the number of guard digits for multiplication with
- *                 truncating arithmetic.  it is
- *                 0 if floating-point arithmetic rounds, or if it
- *                   truncates and only  it  base  ibeta digits
- *                   participate in the post-normalization shift of the
- *                   floating-point significand in multiplication;
- *                 1 if floating-point arithmetic truncates and more
- *                   than  it  base  ibeta  digits participate in the
- *                   post-normalization shift of the floating-point
- *                   significand in multiplication.
- *       machep  - the largest negative integer such that
- *                 1.0+float(ibeta)**machep .ne. 1.0, except that
- *                 machep is bounded below by  -(it+3)
- *       negeps  - the largest negative integer such that
- *                 1.0-float(ibeta)**negeps .ne. 1.0, except that
- *                 negeps is bounded below by  -(it+3)
- *       iexp    - the number of bits (decimal places if ibeta = 10)
- *                 reserved for the representation of the exponent
- *                 (including the bias or sign) of a floating-point
- *                 number
- *       minexp  - the largest in magnitude negative integer such that
- *                 float(ibeta)**minexp is positive and normalized
- *       maxexp  - the smallest positive power of  beta  that overflows
- *       eps     - the smallest positive floating-point number such
- *                 that  1.0+eps .ne. 1.0. in particular, if either
- *                 ibeta = 2  or  irnd = 0, eps = float(ibeta)**machep.
- *                 otherwise,  eps = (float(ibeta)**machep)/2
- *       epsneg  - a small positive floating-point number such that
- *                 1.0-epsneg .ne. 1.0. in particular, if ibeta = 2
- *                 or  irnd = 0, epsneg = float(ibeta)**negeps.
- *                 otherwise,  epsneg = (ibeta**negeps)/2.  because
- *                 negeps is bounded below by -(it+3), epsneg may not
- *                 be the smallest number that can alter 1.0 by
- *                 subtraction.
- *       xmin    - the smallest non-vanishing normalized floating-point
- *                 power of the radix, i.e.,  xmin = float(ibeta)**minexp
- *       xmax    - the largest finite floating-point number.  in
- *                 particular  xmax = (1.0-epsneg)*float(ibeta)**maxexp
- *                 note - on some machines  xmax  will be only the
- *                 second, or perhaps third, largest number, being
- *                 too small by 1 or 2 units in the last digit of
- *                 the significand.
- *
- *     latest revision - april 20, 1987
- *
- *     author - w. j. cody
- *              argonne national laboratory
- *
- */
-
-
-static void
-machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
-       int *iexp, int *minexp, int *maxexp, double *eps,
-       double *epsneg, double *xmin, double *xmax)
-{
-	volatile double a, b, beta, betain, betah, one,
-		t, temp, tempa, temp1, two, y, z, zero;
-	int i, itemp, iz, j, k, mx, nxres;
-
-	one = 1;
-	two = one+one;
-	zero = one-one;
-
-		/* determine ibeta, beta ala malcolm. */
-
-	a = one;
-	do {
-		a = a + a;
-		temp = a + one;
-		temp1 = temp - a;
-	}
-	while(temp1 - one == zero);
-	b = one;
-	do {
-		b = b + b;
-		temp = a + b;
-		itemp = (int)(temp - a);
-	}
-	while (itemp == 0);
-	*ibeta = itemp;
-	beta = *ibeta;
-
-		/* determine it, irnd */
-
-	*it = 0;
-	b = one;
-	do {
-		*it = *it + 1;
-		b = b * beta;
-		temp = b + one;
-		temp1 = temp - b;
-	}
-	while(temp1 - one == zero);
-	*irnd = 0;
-	betah = beta / two;
-	temp = a + betah;
-	if (temp - a != zero)
-		*irnd = 1;
-	tempa = a + beta;
-	temp = tempa + betah;
-	if (*irnd == 0 && temp - tempa != zero)
-		*irnd = 2;
-
-		/* determine negep, epsneg */
-
-	*negep = *it + 3;
-	betain = one / beta;
-	a = one;
-	for(i=1 ; i<=*negep ; i++)
-		a = a * betain;
-	b = a;
-	for(;;) {
-		temp = one - a;
-		if (temp - one != zero)
-			break;
-		a = a * beta;
-		*negep = *negep - 1;
-	}
-	*negep = -*negep;
-	*epsneg = a;
-	if (*ibeta != 2 && *irnd != 0) {
-		a = (a * (one + a)) / two;
-		temp = one - a;
-		if (temp - one != zero)
-			*epsneg = a;
-	}
-
-		/* determine machep, eps */
-
-	*machep = -*it - 3;
-	a = b;
-	for(;;) {
-		temp = one + a;
-		if (temp - one != zero)
-			break;
-		a = a * beta;
-		*machep = *machep + 1;
-	}
-	*eps = a;
-	temp = tempa + beta * (one + *eps);
-	if (*ibeta != 2 && *irnd != 0) {
-		a = (a * (one + a)) / two;
-		temp = one + a;
-		if (temp - one != zero)
-			*eps = a;
-	}
-
-		/* determine ngrd */
-
-	*ngrd = 0;
-	temp = one + *eps;
-	if (*irnd == 0 && temp * one - one != zero)
-		*ngrd = 1;
-
-	/* determine iexp, minexp, xmin */
-
-	/* loop to determine largest i and k = 2**i such that */
-	/*        (1/beta) ** (2**(i)) */
-	/* does not underflow. */
-	/* exit from loop is signaled by an underflow. */
-
-	i = 0;
-	k = 1;
-	z = betain;
-	t = one + *eps;
-	nxres = 0;
-	for(;;) {
-		y = z;
-		z = y * y;
-
-		/* check for underflow here */
-
-		a = z * one;
-		temp = z * t;
-		if (a+a == zero || fabs(z) >= y)
-			break;
-		temp1 = temp * betain;
-		if (temp1 * beta == z)
-			break;
-		i = i+1;
-		k = k+k;
-	}
-	if (*ibeta != 10) {
-		*iexp = i + 1;
-		mx = k + k;
-	}
-	else {
-		/* this segment is for decimal machines only */
-
-		*iexp = 2;
-		iz = *ibeta;
-		while (k >= iz) {
-			iz = iz * *ibeta;
-			iexp = iexp + 1;
-		}
-		mx = iz + iz - 1;
-	}
-	do {
-		/* loop to determine minexp, xmin */
-		/* exit from loop is signaled by an underflow */
-
-		*xmin = y;
-		y = y * betain;
-
-		/* check for underflow here */
-
-		a = y * one;
-		temp = y * t;
-		if (a+a == zero || fabs(y) >= *xmin)
-			goto L10;
-		k = k + 1;
-		temp1 = temp * betain;
-	}
-	while(temp1 * beta != y);
-	nxres = 3;
-	*xmin = y;
-L10:	*minexp = -k;
-
-	/* determine maxexp, xmax */
-
-	if (mx <= k + k - 3 && *ibeta != 10) {
-		mx = mx + mx;
-		*iexp = *iexp + 1;
-	}
-	*maxexp = mx + *minexp;
-
-	/* adjust irnd to reflect partial underflow */
-
-	*irnd = *irnd + nxres;
-
-	/* adjust for ieee-style machines */
-
-	if (*irnd == 2 || *irnd == 5)
-		*maxexp = *maxexp - 2;
-
-	/* adjust for non-ieee machines with partial underflow */
-
-	if (*irnd == 3 || *irnd == 4)
-		*maxexp = *maxexp - *it;
-
-	/* adjust for machines with implicit leading bit in binary */
-	/* significand, and machines with radix point at extreme */
-	/* right of significand. */
-
-	i = *maxexp + *minexp;
-	if (*ibeta == 2 && i == 0)
-		*maxexp = *maxexp - 1;
-	if (i > 20)
-		*maxexp = *maxexp - 1;
-	if (a != y)
-		*maxexp = *maxexp - 2;
-	*xmax = one - *epsneg;
-	if (*xmax * one != *xmax)
-		*xmax = one - beta * *epsneg;
-	*xmax = *xmax / (beta * beta * beta * *xmin);
-	i = *maxexp + *minexp + 3;
-	if (i>0)
-		for(j=1 ; j<=i ; j++) {
-			if (*ibeta == 2)
-				*xmax = *xmax + *xmax;
-			if (*ibeta != 2)
-				*xmax = *xmax * beta;
-		}
-}

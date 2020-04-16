@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2018  The R Core Team
+ *  Copyright (C) 1999-2020  The R Core Team
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -945,6 +945,7 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     x = CAR(args);
 
+    /* DispatchOrEval internal generic: length<- */
     if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
 				     rho, &ans, 0, 1))
 	return(ans);
@@ -1061,8 +1062,8 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    if (TAG(y) == R_NilValue) dflt = setDflt(y, dflt);
 			}
 			if (y == R_NilValue) {
-			    R_Visible = FALSE;
 			    UNPROTECT(2);
+			    R_Visible = FALSE;
 			    return R_NilValue;
 			}
 			/* Check for multiple defaults following y.  This loop

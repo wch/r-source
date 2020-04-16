@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -48,7 +48,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     } else {
 	if(pmatch("weights", names(Call), 0L))
             stop("weights are not supported in a multistratum aov() fit")
-        deparseb <- function(expr) deparse(expr, width.cutoff = 500L, backtick = TRUE)
+        deparseb <- function(expr) deparse1(expr, backtick = TRUE)
         ##  Helmert contrasts can be helpful: do we want to force them?
         ##  this version does for the Error model.
         opcons <- options("contrasts")

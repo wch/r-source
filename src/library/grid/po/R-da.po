@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,7 +143,8 @@ msgid "invalid display list element"
 msgstr ""
 
 msgid ""
-"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
+"TRUE')"
 msgstr ""
 
 msgid "viewport overwritten (grab MAY not be faithful)"
@@ -393,6 +394,9 @@ msgstr ""
 msgid "corrupt 'arrows' object"
 msgstr ""
 
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr ""
+
 msgid "x and y must be units"
 msgstr ""
 
@@ -438,26 +442,21 @@ msgstr ""
 msgid "'x' and 'units' must have length > 0"
 msgstr ""
 
-msgid "'x' argument must be a unit object"
-msgstr ""
-
 #, fuzzy
 msgid "invalid 'axis' or 'type'"
 msgstr "Ugyldig »grob«"
 
-msgid "no string supplied for 'strwidth/height' unit"
-msgstr ""
+#, fuzzy
+msgid "Not a unit object"
+msgstr "Ugyldig »grob«"
 
-msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr ""
-
-msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
-
-msgid "non-NULL value supplied for plain unit"
+msgid "'Summary' function '%s' not meaningful for units"
 msgstr ""
 
 msgid "operator '%s' not meaningful for units"
+msgstr ""
+
+msgid "'*' or '/' cannot be used as a unary operator"
 msgstr ""
 
 msgid "only one operand may be a unit"
@@ -466,39 +465,23 @@ msgstr ""
 msgid "non-unit operand must be numeric"
 msgstr ""
 
+msgid "can't divide with a unit"
+msgstr ""
+
 msgid "both operands must be units"
 msgstr ""
 
-msgid "'Summary' function '%s' not meaningful for units"
+msgid "index out of bounds (\"unit\" subsetting)"
 msgstr ""
 
-msgid "no arguments where at least one expected"
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
 msgstr ""
 
-msgid "Zero arguments where at least one expected"
+msgid "index must be of length 1"
 msgstr ""
 
-msgid "cannot mix signs of indices"
+msgid "replacement must be of length 1"
 msgstr ""
-
-msgid "index out of bounds ('unit' subsetting)"
-msgstr ""
-
-msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr ""
-
-msgid "index out of bounds (unit list subsetting)"
-msgstr ""
-
-msgid "Value being assigned must be a unit"
-msgstr ""
-
-msgid "it is invalid to combine 'unit' objects with other types"
-msgstr ""
-
-#, fuzzy
-msgid "invalid 'unit' object"
-msgstr "Ugyldig »grob«"
 
 #, fuzzy
 msgid "invalid 'theta'"

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-02-12 r77795) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-03-24 r78039) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -873,9 +873,11 @@ temperature no yes
 > ### ** Examples
 > 
 > dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
+> 
 > op <- par(xaxs = "i")  # 0 -- 100%
 > dotchart(t(VADeaths), xlim = c(0,100), bg = "skyblue",
-+          main = "Death Rates in Virginia - 1940")
++          main = "Death Rates in Virginia - 1940", xlab = "rate [ % ]",
++          ylab = "Grouping:  Age  x   Urbanity . Gender")
 > par(op)
 > 
 > 
@@ -1865,35 +1867,6 @@ armed.forces
 > 
 > 
 > cleanEx()
-> nameEx("plot")
-> ### * plot
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: plot
-> ### Title: Generic X-Y Plotting
-> ### Aliases: plot
-> ### Keywords: hplot
-> 
-> ### ** Examples
-> 
-> require(stats) # for lowess, rpois, rnorm
-> plot(cars)
-> lines(lowess(cars))
-> 
-> plot(sin, -pi, 2*pi) # see ?plot.function
-> 
-> ## Discrete Distribution Plot:
-> plot(table(rpois(100, 5)), type = "h", col = "red", lwd = 10,
-+      main = "rpois(100, lambda = 5)")
-> 
-> ## Simple quantiles/ECDF, see ecdf() {library(stats)} for a better one:
-> plot(x <- sort(rnorm(47)), type = "s", main = "plot(x, type = \"s\")")
-> points(x, cex = .5, col = "dark red")
-> 
-> 
-> 
-> cleanEx()
 > nameEx("plot.dataframe")
 > ### * plot.dataframe
 > 
@@ -1924,7 +1897,7 @@ armed.forces
 > 
 > ### Name: plot.default
 > ### Title: The Default Scatterplot Function
-> ### Aliases: plot.default
+> ### Aliases: plot.default plot
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -2171,7 +2144,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x2dee2e0>
+<bytecode: 0x1b8dda0>
 <environment: namespace:graphics>
 > 
 > 
@@ -3041,7 +3014,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x469f9e8>
+<bytecode: 0x33490f0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3122,7 +3095,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.008 0.067 3.088 0 0 
+Time elapsed:  3.991 0.054 4.062 0 0 
 > grDevices::dev.off()
 null device 
           1 

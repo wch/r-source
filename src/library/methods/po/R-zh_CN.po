@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -434,10 +434,12 @@ msgid ""
 "deprecated."
 msgstr "%s和其他\"MethodsList\"元数据目标对象都已经不推荐使用了"
 
-msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr "%s里：\"MethodsList\"元数据目标对象已经不推荐使用了。"
 
-msgid "use %s instead."
+#, fuzzy
+msgid "Use %s instead."
 msgstr "请用%s。"
 
 #, fuzzy
@@ -446,7 +448,7 @@ msgid ""
 msgstr "%s和其他\"MethodsList\"元数据目标对象都已经不推荐使用了"
 
 #, fuzzy
-msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr "%s里：\"MethodsList\"元数据目标对象已经不推荐使用了。"
 
 msgid "invalid object for formal method definition: type %s"
@@ -578,15 +580,20 @@ msgid ""
 "object that is class %s"
 msgstr "被提供的原型的类别为%s, 类别定义需要类别为%s的对象"
 
+#, fuzzy
 msgid ""
-"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
-"with an inherited definition in class %s"
+"Definition of slot %s, in class %s, as %s conflicts with definition, "
+"inherited from class %s, as %s"
 msgstr ""
 "类别%s里的槽%s目前被定义为(或继承于)\"%s\"，这与类别%s里所继承的定义相互有矛"
 "盾"
 
 msgid "class %s extends an undefined class (%s)"
 msgstr "类别%s擴充不存在的类别(%s)"
+
+#, fuzzy
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr "类别为%2$s的'%1$s'串列，包含不存在的类别%3$s"
 
 msgid ""
 "%s is not eligible to be the data part of another class (must be a basic "
@@ -670,16 +677,17 @@ msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "%2$s类别的子类别%1$s没有定义；因此没有更新"
 
 msgid ""
-"subclass %s of class %s is not local and cannot be updated for new "
-"inheritance information; consider setClassUnion()"
-msgstr ""
-"%2$s类别的%1$s子类别不是局部的，因此无法按新的繼承信息进行更新；考虑用"
-"setClassUnion()"
-
-msgid ""
 "no definition of inheritance from %s to %s, though the relation was implied "
 "by the setIs() from %s"
 msgstr "不存在从%s到\"%s\"类别的繼承定义，虽然%s的setIs()暗示其存在"
+
+msgid ""
+"Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+msgstr ""
+
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr ""
 
 msgid ""
 "argument 'includeSubclasses' must be a logical, either one value or a vector "
@@ -1091,9 +1099,10 @@ msgid ""
 "'setClassUnion'"
 msgstr "类别%s被封闭了；除了'setClassUnion'之外无法设定新的父类别"
 
+#, fuzzy
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
-"revise %s information---not exported?  Making a copy in package %s"
+"revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
 "%s类别已经(在%s程序包槽里)被定义过了，但没有可用于修改%s信息的元数据对象--没"
 "有被出口？在%s程序包里复制"
@@ -1664,6 +1673,13 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
+
+#~ msgid ""
+#~ "subclass %s of class %s is not local and cannot be updated for new "
+#~ "inheritance information; consider setClassUnion()"
+#~ msgstr ""
+#~ "%2$s类别的%1$s子类别不是局部的，因此无法按新的繼承信息进行更新；考虑用"
+#~ "setClassUnion()"
 
 #, fuzzy
 #~ msgid ""

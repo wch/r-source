@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2019   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1644,7 +1644,8 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
     PROTECT(e = allocVector(LANGSXP, 5 + useData));
     SETCAR(e, VECTOR_ELT(f, 0));
     cur = CDR(e);
-    SETCAR(cur, tmp = allocVector(LANGSXP, 2));
+    tmp = allocVector(LANGSXP, 2);
+    SETCAR(cur, tmp);
 	SETCAR(tmp, lang3(R_DoubleColonSymbol, R_BaseSymbol, R_QuoteSymbol));
 	SETCAR(CDR(tmp), expr);
     cur = CDR(cur);

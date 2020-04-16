@@ -1,28 +1,28 @@
-# Italian translations for R graphics package
-# Copyright (C) 2005 The R Foundation for Statistical Computing
+# R Italian translation
+# Copyright (C) The R Foundation for Statistical Computing
 # This file is distributed under the same license as the R package.
-# Stefano M. Iacus <Stefano.Iacus@R-Project.org>, 2005.
+# Daniele Medri <dmedri@gmail.com>, 2005-2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R-grDevices 3.6.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2005-02-27 13:33+0100\n"
-"Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
-"Language-Team: Italian\n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"X-Generator: Poedit 2.2.1\n"
 
-#, fuzzy
 msgid "invalid 'filename'"
-msgstr "argomento 'family' non valido"
+msgstr "'filename' non valido"
 
 msgid "'coef' must not be negative"
-msgstr "'coef' deve essere non negativo"
+msgstr "'coef' dev'essere non negativo"
 
 msgid "no 'z' matrix specified"
 msgstr "la matrice 'z' non è stata specificata"
@@ -34,71 +34,61 @@ msgid "no proper 'z' matrix specified"
 msgstr "nessuna matrice 'z' opportuna specificata"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
-msgstr ""
+msgstr "le dimensioni di 'x', 'y' e 'z' non corrispondono"
 
 msgid "finite coordinates are needed"
-msgstr ""
+msgstr "sono richieste coordinate finite"
 
 msgid "'bias' must be positive"
-msgstr "'bias' deve essere positivo"
+msgstr "'bias' dev'essere positivo"
 
 msgid "'alpha' must be false if 'space' is specified"
-msgstr ""
+msgstr "'alpha' dev'essere falso se 'space' è specificato"
 
-#, fuzzy
 msgid "at least 3 columns needed"
-msgstr "necessarie almeno 2 colonne"
+msgstr "sono richieste almeno 3 colonne"
 
 msgid "rgb matrix must be numeric"
-msgstr "matrice rgb deve essere numerica"
+msgstr "la matrice rgb dev'essere numerica"
 
 msgid "rgb matrix must have 3 rows"
 msgstr "matrice rgb deve avere 3 righe"
 
 msgid "rgb values must be in [0, maxColorValue]"
-msgstr "valori rgb devono essere in [0, maxColorValue]"
+msgstr "i valori rgb devono essere in [0, maxColorValue]"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
-msgstr "'start' e 'end' devo essere distinti e in [0, 1]"
+msgstr "'start' e 'end' devono essere distinti e in [0, 1]"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
-msgstr "'gamma' deve essere uno scalre o 'sRGB'"
+msgstr "'gamma' dev'essere uno scalare o 'sRGB'"
 
-#, fuzzy
 msgid "Color space converter: %s"
-msgstr "Convertitore spazio colore:"
+msgstr "Convertitore dello spazio di colore: %s"
 
-#, fuzzy
 msgid "Reference white: %s"
-msgstr "Bianco di riferimento:"
+msgstr "Bianco di riferimento: %s"
 
-#, fuzzy
 msgid "display gamma = %s"
-msgstr "mostra gamma"
+msgstr "gamma del display = %s"
 
-#, fuzzy
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr "'from' deve essere un colorConverter o una stringa"
+msgstr "'from' dev'essere un oggetto \"colorConverter\" o una stringa"
 
-#, fuzzy
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr "'to' deve essere un colorConverter o una stringa"
+msgstr "'to' dev'essere un oggetto \"colorConverter\" o una stringa"
 
-#, fuzzy
 msgid "'from.ref.white' disagrees with definition of %s"
-msgstr "'from.ref.white' non in accordo con la definizione di"
+msgstr "'from.ref.white' non concorda con la definizione di %s"
 
-#, fuzzy
 msgid "'to.ref.white' disagrees with definition of %s"
-msgstr "'to.refwhite' non in accordo con la definizione di"
+msgstr "'to.ref.white' non concorda con la definizione di %s"
 
-#, fuzzy
 msgid "color spaces use different reference whites"
-msgstr "spazi colori usano binachi di riferimento differenti."
+msgstr "gli spazi di colore utilizzano differenti riferimenti di bianco"
 
-#, fuzzy
 msgid "'name' must be a character vector"
-msgstr "'file' deve essere una stringa carattere non vuota"
+msgstr "'name' dev'essere un vettore di caratteri"
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr "non posso chiudere il dispositivo 1 (dispositivo null)"
@@ -121,12 +111,11 @@ msgstr "'device' dovrebbe essere una funzione"
 msgid "no device to print from"
 msgstr "nessun dispositivo da cui stampare"
 
-#, fuzzy
 msgid "can only print from a screen device"
-msgstr "posso stampare solo da dispositivi schermo"
+msgstr "può solo stampare da un dispositivo schermo"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr ""
+msgstr "è richiesta la specificazione di 'width' e 'height'"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
@@ -134,34 +123,38 @@ msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 msgid "argument is missing with no default"
 msgstr "argomento mancante senza valore di default"
 
-#, fuzzy
 msgid "dev.displaylist() called without an open graphics device"
-msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
+msgstr "dev.displaylist() chiamata senza un dispositivo grafico aperto"
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr ""
+msgstr "impostazioni non valide per 'getOption(\"device\")'"
 
-#, fuzzy
 msgid "device '%s' not found"
-msgstr "device '%s' non disponibile"
+msgstr "dispositivo '%s' non trovato"
 
 msgid "no suitable unused file name for pdf()"
-msgstr ""
+msgstr "nessun nome file utilizzabile per pdf()"
 
 msgid "dev.new(): using pdf(file=\"%s\")"
-msgstr ""
+msgstr "dev.new(): si utilizza pdf(file=\"%s\")"
 
 msgid "no suitable unused file name for postscript()"
-msgstr ""
+msgstr "nessun nome file utilizzabile per postscript()"
 
 msgid "dev.new(): using postscript(file=\"%s\")"
-msgstr ""
+msgstr "dev.new(): si utilizza postscript(file=\"%s\")"
+
+msgid "'palette' does not match any given palette"
+msgstr "'palette' non corrisponde ad alcuna delle palette esistenti"
+
+msgid "'palette' is ambiguous"
+msgstr "'palette' è ambiguo"
 
 msgid "invalid arguments in '%s' (need named args)"
-msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"
+msgstr "argomenti non validi in '%s' (devono essere argomenti nominati)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr "'name.opt' deve essere di tipo carattere, nome di una lista esistente"
+msgstr "'name.opt' dev'essere di tipo character, il nome di una lista esistente"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "non posso re-inizializzare '%s' perché non esistente"
@@ -169,152 +162,137 @@ msgstr "non posso re-inizializzare '%s' perché non esistente"
 msgid "invalid options in '%s'"
 msgstr "opzioni non valide in '%s'"
 
-#, fuzzy
 msgid "NOT changing %s"
-msgstr "NON cambio"
+msgstr "NON cambiando %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
+msgstr "l'argomento 'append' è per retro-compatibilità e sarà ignorato"
 
 msgid "unknown family '%s'"
-msgstr ""
+msgstr "famiglia '%s' sconosciuta"
 
 msgid "invalid 'family' argument"
 msgstr "argomento 'family' non valido"
 
-#, fuzzy
 msgid "invalid 'file' argument '%s'"
-msgstr "argomento 'family' non valido"
+msgstr "argomento 'file' non valido '%s'"
 
 msgid "invalid PDF version"
 msgstr "versione PDF non valida"
 
 msgid "Invalid font type"
-msgstr ""
+msgstr "Tipo di carattere non valido"
 
-#, fuzzy
 msgid "invalid family name in font specification"
-msgstr "specificazione font %s non valida"
+msgstr "nella specificazione del carattere il nome della famiglia non è valido"
 
-#, fuzzy
 msgid "invalid metric information in font specification"
-msgstr "specificazione font %s non valida"
+msgstr "informazione metrica non valida nella specificazione del carattere"
 
-#, fuzzy
 msgid "invalid encoding in font specification"
-msgstr "specificazione font %s non valida"
+msgstr "codifica non valida nella specificazione del carattere"
 
 msgid "Not a CID font"
-msgstr ""
+msgstr "Non è un carattere CID"
 
-#, fuzzy
 msgid "invalid CMap name in font specification"
-msgstr "specificazione font %s non valida"
+msgstr "nome CMap non valido nella specificazione del carattere"
 
-#, fuzzy
 msgid "invalid 'cmapEncoding' in font specification"
-msgstr "specificazione font %s non valida"
+msgstr "'cmapEncoding' non valido nella specificazione del carattere"
 
-#, fuzzy
 msgid "invalid PDF resource in font specification"
-msgstr "specificazione font %s non valida"
+msgstr "risorsa PDF non valida nella specificazione del carattere"
 
 msgid "Invalid font database name"
-msgstr ""
+msgstr "Nome del database caratteri non valido"
 
-#, fuzzy
 msgid "font %s already in use"
-msgstr "già in uso"
+msgstr "carattere %s già in uso"
 
 msgid "invalid arguments in '%s' (must be font names)"
-msgstr "argomenti non validi in '%s' (deve essere 'font names')"
+msgstr "argomenti non validi in '%s' (devono essere nomi di caratteri)"
 
 msgid "unknown font"
-msgstr ""
+msgstr "carattere sconosciuto"
 
 msgid "font encoding mismatch '%s'/'%s'"
-msgstr ""
+msgstr "codifica dei caratteri non corrispondente '%s'/'%s'"
 
 msgid "'file' must be a non-empty character string"
-msgstr "'file' deve essere una stringa carattere non vuota"
+msgstr "'file' dev'essere una stringa di caratteri non vuota"
 
 msgid "GhostScript was not found"
-msgstr ""
+msgstr "Non è stato trovato GhostScript"
 
 msgid "invalid output format"
-msgstr ""
+msgstr "formato di uscita non valido"
 
 msgid "status %d in running command '%s'"
-msgstr ""
+msgstr "status %d durante l'esecuzione del comando '%s'"
 
 msgid "failed to add more ticks; 'min.n' too large?"
-msgstr ""
+msgstr "aggiunta di segni fallita; 'min.n' troppo grande?"
 
 msgid "a raster matrix must be character, or numeric, or logical"
-msgstr ""
+msgstr "una matrice raster dev'essere di tipo character, numerica o logica"
 
-#, fuzzy
 msgid "a raster array must be numeric"
-msgstr "matrice rgb deve essere numerica"
+msgstr "un array raster dev'essere numerico"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 dimensions"
-msgstr "matrice rgb deve essere numerica"
+msgstr "un array raster dev'essere esattamente di 3 dimensioni"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr "matrice rgb deve essere numerica"
+msgstr "un array raster dev'essere esattamente di 3 o 4 planes"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
-msgstr ""
+msgstr "'drop' è sempre implicitamente FALSE in '[.raster'"
 
 msgid "invalid raster subsetting"
-msgstr ""
+msgstr "subsetting raster non valido"
 
-#, fuzzy
 msgid "invalid raster subassignment"
-msgstr "argomento 'family' non valido"
+msgstr "sotto-assegnamento raster non valido"
 
 msgid "operator not meaningful for raster objects"
-msgstr ""
+msgstr "operatore non significativo per gli oggetti raster"
 
 msgid "no current device to record from"
 msgstr "nessun dispositivo da cui registrare"
 
-#, fuzzy
 msgid "argument is not of class %s"
-msgstr "l'argomento non è di classe \"recordedplot\""
+msgstr "l'argomento non è della classe %s"
 
-#, fuzzy
+msgid "invalid \"recordedplot\":"
+msgstr "\"recordedplot\" non valido:"
+
 msgid "snapshot recorded in different R version (pre 3.3.0)"
-msgstr "carico uno snapshot da una versione differente di R"
+msgstr "snapshot registrata in differenti versioni di R (pre 3.3.0)"
 
-#, fuzzy
 msgid "snapshot recorded in different R version (%s)"
-msgstr "carico uno snapshot da una versione differente di R"
+msgstr "snapshot registrata in differenti versioni di R (%s)"
 
 msgid "snapshot contains invalid graphics call"
-msgstr ""
+msgstr "snapshot contiene chiamate grafiche non valide"
 
 msgid "'nbin' must be numeric of length 1 or 2"
-msgstr ""
+msgstr "'nbin' dev'essere numerico di lunghezza 1 o 2"
 
-#, fuzzy
 msgid "'bandwidth' must be numeric"
-msgstr "matrice rgb deve essere numerica"
+msgstr "'bandwidth' dev'essere numerico"
 
-#, fuzzy
 msgid "'bandwidth' must be positive"
-msgstr "'bias' deve essere positivo"
+msgstr "'bandwidth' dev'essere positivo"
 
 msgid "'r' must be a \"range\", hence of length 2"
-msgstr ""
+msgstr "'r' dev'essere un \"intervallo\", quindi di lunghezza 2"
 
 msgid "invalid first argument"
-msgstr ""
+msgstr "primo argomento non valido"
 
 msgid "'x' is a list, but does not have components 'x' and 'y'"
-msgstr ""
+msgstr "'x' è una lista, ma non ha componenti 'x' e 'y'"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "le lunghezze di 'x' e 'y' differiscono"
@@ -326,7 +304,7 @@ msgid "at least 2 columns needed"
 msgstr "necessarie almeno 2 colonne"
 
 msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
-msgstr ""
+msgstr "'x' è una lista, ma non ha componenti 'x', 'y' e 'z'"
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
@@ -335,75 +313,71 @@ msgid "'file' is missing with no default"
 msgstr "'file' manca senza valore di default"
 
 msgid "unrecognized format of gs -help"
-msgstr ""
+msgstr "formato non riconosciuto di gs -help"
 
 msgid "device '%s' is not available"
 msgstr "device '%s' non disponibile"
 
-#, fuzzy
 msgid ""
 "Available devices are:\n"
 "%s"
-msgstr "I dispositivi disponibili sono %s"
+msgstr ""
+"Dispositivi disponibili:\n"
+"%s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
-msgstr ""
+msgstr "'res' dev'essere specificato finché 'units = \"px\"'"
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr "argomento 'family' non valido"
+msgstr "'title' non valido"
 
-#, fuzzy
 msgid "invalid 'file'"
-msgstr "argomento 'family' non valido"
+msgstr "'file' non valido"
 
 msgid "invalid Quartz font:  must be 4 strings"
-msgstr "font Quartz non valido: deve essere una stringa di 4"
+msgstr "carattere Quartz non valido: devono essere 4 stringhe"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "argomenti non validi in quartzFonts (deve essere 'font names')"
+msgstr "argomenti non validi in 'quartzFonts' (devono essere nomi di caratteri)"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr "argomenti non validi in quartzFonts (necessita argomenti con nome)"
+msgstr "argomenti non validi in 'quartzFonts' (devono essere argomenti nominati)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
+msgstr "tipo cairo-based non supportati su questa build - si utilizza \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
-msgstr ""
+msgstr "famiglia sconosciuta per X11(type = \"XLib\")"
 
 msgid "invalid X11 font specification:"
-msgstr "specificazione font X11 non valida"
+msgstr "specificazione carattere X11 non valida:"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
-msgstr "argomenti non validi in '%s' (deve essere 'font names')"
+msgstr "argomenti non validi in 'X11Fonts' (devono essere nomi di caratteri)"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"
+msgstr "argomenti non validi in 'X11Fonts' (devono essere argomenti nominati)"
 
 msgid "no such device"
 msgstr "dispositivo non trovato"
 
-#, fuzzy
 msgid "can only copy from 'X11(type=\"*cairo\")' devices"
-msgstr "posso copiare solo da dispositivi 'windows'"
+msgstr "si può unicamente copiare da 'X11(type=\"*cairo\")' dispositivi"
 
 msgid "invalid value for 'rescale'"
-msgstr ""
+msgstr "valore non valido per 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr "Le chiamate tipo '%s' sono poco sicure e dovrebbero essere sostituite da '%s'"
 
 msgid "can only bring windows devices to the front"
 msgstr "posso portare in primo piano dispositivi 'windows'"
 
 msgid "'type' not applicable to the R console"
-msgstr ""
+msgstr "'type' non è applicabile nella console di R"
 
-#, fuzzy
 msgid "can only manipulate windows devices"
-msgstr "posso copiare solo da dispositivi 'windows'"
+msgstr "si possono unicamente manipolare dispositivi windows"
 
 msgid "can only copy from 'windows' devices"
 msgstr "posso copiare solo da dispositivi 'windows'"
@@ -412,14 +386,13 @@ msgid "subscript out of range"
 msgstr "indice fuori range"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr "font Windows non valido: deve essere una 'font family name' singola"
+msgstr "carattere Windows non valido: dev'essere il singolo nome di una famiglia di caratteri"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr "argomenti non validi in 'windowsFonts' (deve essere 'font names')"
+msgstr "argomenti non validi in 'windowsFonts' (devono essere nomi di caratteri)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
-"argomenti non validi in 'windowsFonts' (necessita di argomenti con nome)"
+msgstr "argomenti non validi in 'windowsFonts' (necessita di argomenti nominati)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
@@ -445,16 +418,3 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
-
-#~ msgid "sorry, 'gs' cannot be found"
-#~ msgstr "spiacente, ma non trovo 'gs'"
-
-#, fuzzy
-#~ msgid "loading snapshot from pre-3.0.0 R version"
-#~ msgstr "carico snapshot di una versione di R pre-2.0.0"
-
-#~ msgid "can only print from screen device"
-#~ msgstr "posso stampare solo da dispositivi schermo"
-
-#~ msgid "quartz() device interactivity reduced without an event loop manager"
-#~ msgstr "interattività del device quartz() ridotta senza un manager eventi"

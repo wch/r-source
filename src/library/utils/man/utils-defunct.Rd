@@ -1,11 +1,13 @@
 % File src/library/utils/man/utils-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{utils-defunct}
 %------ NOTE:  ../R/utils-defunct.R   must be synchronized with this!
 \alias{utils-defunct}
+\title{Defunct Functions in Package \pkg{utils}}
+%------ PLEASE: put \alias{.} here for *each* (and keep them) !
 \alias{package.contents}
 \alias{zip.file.extract}
 \alias{CRAN.packages}
@@ -14,7 +16,6 @@
 \alias{setInternet2}
 #endif
 
-\title{Defunct Functions in Package \pkg{utils}}
 \description{
   The functions or variables listed here are no longer part of \R as
   they are not needed (any more).

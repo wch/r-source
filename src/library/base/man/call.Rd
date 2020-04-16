@@ -59,6 +59,9 @@ as.call(x)
     }
   }
   All three are \link{primitive} functions.
+
+  \code{as.call} is generic: you can write methods to handle specific
+  classes of objects, see \link{InternalMethods}.
 }
 \section{Warning}{
   \code{call} should not be used to attempt to evade restrictions on the

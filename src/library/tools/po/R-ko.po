@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 14:56\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -67,6 +67,12 @@ msgstr ""
 "에는 없습니다:"
 
 msgid "Data with usage in documentation object '%s' but not in code:"
+msgstr ""
+"객체 '%s'에 대한 데이터셋의 사용법은 문서로부터 찾을 수 있으나, 코드에는 없습"
+"니다:"
+
+#, fuzzy
+msgid "Variables with usage in documentation object '%s' but not in code:"
 msgstr ""
 "객체 '%s'에 대한 데이터셋의 사용법은 문서로부터 찾을 수 있으나, 코드에는 없습"
 "니다:"
@@ -303,6 +309,12 @@ msgid ""
 "and non-empty name."
 msgstr ""
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ORCID identifiers:"
+msgstr ""
+"Authors@R 항목에서 메인테이너의 역할을 담당하는 저자의 수가 한명이상임을 확인"
+"하게 되었습니다:"
+
 msgid "Encoding '%s' is not portable"
 msgstr "인코딩 '%s'은 포터블(portable)하지 않습니다."
 
@@ -333,7 +345,14 @@ msgstr ""
 msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
+#, fuzzy
+msgid "Non-portable flags in file '%s':"
+msgstr "파일 '%s'에서 파싱에러가 발생했습니다:"
+
 msgid "Variables overriding user/site settings:"
+msgstr ""
+
+msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 msgid ""
@@ -350,6 +369,18 @@ msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 "매뉴얼 'Writing R Extensions'에 있는 섹션 'Cross-references'을 살펴보시길 바"
 "랍니다."
+
+msgid "Call sequence:"
+msgstr "호출 시퀀스: "
+
+msgid "..."
+msgstr ""
+
+msgid "No dataset created in 'envir'"
+msgstr ""
+
+msgid "Search path was changed"
+msgstr ""
 
 msgid "File %s:"
 msgstr "파일 %s:"
@@ -615,9 +646,10 @@ msgstr ""
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "비니에트 프로덕트 %s는 알려진 파일확장자 (%s)를 가지고 있지 않습니다"
 
+#, fuzzy
 msgid ""
-"Failed to locate the %s output file (by engine %s) for vignette with name "
-"%s. The following files exist in directory %s: %s"
+"Failed to locate %s output file %s or %s for vignette with name %s and "
+"engine %s. The following files exist in working directory %s: %s"
 msgstr ""
 "%3$s 이름을 가진 비니에트에 대해서 %1$s 출력파일 (엔진 %2$s에 의해서)을 위치"
 "시키는데 실패했습니다. 디렉토리 %4$s내에 다음과 같은 파일들이 있습니다: %5$s"
@@ -628,6 +660,14 @@ msgid ""
 msgstr ""
 "이름 %3$s을 가진 비니에트에 대해서 다음과 같은 한 개이상의 %1$s 출력파일 (엔"
 "진 %2$s에 의하여)들이 놓여졌습니다: %4$s"
+
+#, fuzzy
+msgid ""
+"Failed to locate %s output file %s for vignette with name %s and engine %s. "
+"The following files exist in working directory %s: %s"
+msgstr ""
+"%3$s 이름을 가진 비니에트에 대해서 %1$s 출력파일 (엔진 %2$s에 의해서)을 위치"
+"시키는데 실패했습니다. 디렉토리 %4$s내에 다음과 같은 파일들이 있습니다: %5$s"
 
 msgid "unable to create temp directory %s"
 msgstr "임시디렉토리 %s를 생성하지 못했습니다"
@@ -645,23 +685,43 @@ msgstr ""
 "비니에트 %1$s은 다음의 %2$s 출력물을 비니에트 %3$s에 의하여 덮어썼습니다: "
 "%4$s"
 
+#, fuzzy
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
-"risking overwriting each others output files"
+"risking overwriting each other's output files"
 msgstr ""
 "같은 이름들 (%2$s)을 가지고 있는 비니에트 소스 파일들 (%1$s)이 발견되었기 때"
 "문에 출력된 파일들이 서로 덮어쓸 위험이 있습니다"
 
+#, fuzzy
+msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+"비그네트 '%s'는 ASCII 형식이 아니며 이에 대하여 선언된 인코딩을 찾을 수 없습"
+"니다."
+
+msgid "--- re-building %s using %s"
+msgstr ""
+
+#, fuzzy
 msgid ""
-"processing vignette '%s' failed with diagnostics:\n"
+"Error: processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 "비니에트 '%s'를 프로세스하는데 다음과 같은 이유로 실패했습니다:\n"
 "%s"
 
+#, fuzzy
 msgid ""
-"tangling vignette '%s' failed with diagnostics:\n"
+"Error: tangling vignette '%s' failed with diagnostics:\n"
 "%s"
+msgstr ""
+"비니에트 '%s'를 프로세스하는데 다음과 같은 이유로 실패했습니다:\n"
+"%s"
+
+msgid "--- finished re-building %s"
+msgstr ""
+
+msgid "--- failed re-building %s"
 msgstr ""
 
 msgid "running 'make' failed"
@@ -674,12 +734,12 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 "비니에트 파일명 '%1$s'은 '%2$s' 파일명 패턴들 중 어느것과도 일치하지 않습니다"
 
+msgid "+-+"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
 "'%1$s' 비니에트 내에서 '%2$s'와 '%3$s'은 같은 비니에트 이름을 가지고 있습니다"
-
-msgid "argument 'vignette' must be of length 1"
-msgstr "인자 'vignette'는 반드시 길이가 1 이어야 합니다"
 
 msgid "Vignette engine package not specified"
 msgstr "비니에트 엔진 패키지가 지정되지 않았습니다"
@@ -807,12 +867,6 @@ msgid "The default JSS style may not be modified."
 msgstr "기본 JSS 스타일은 아마도 변경되지 않을 것입니다."
 
 msgid "inst/doc"
-msgstr ""
-
-msgid "file"
-msgstr ""
-
-msgid "files"
 msgstr ""
 
 msgid ","
@@ -948,6 +1002,10 @@ msgstr "파일 '%s'에 있는 인덱스 정보를 읽을 수 없습니다"
 msgid ".install_packages() exit status"
 msgstr ""
 
+#, fuzzy
+msgid "restoration failed"
+msgstr "로딩에 실패했습니다"
+
 msgid "error reading file '%s'"
 msgstr "파일 '%s'를 읽는데 에러가 발생했습니다"
 
@@ -967,8 +1025,31 @@ msgstr "디버그 기호 %s를 생성합니다"
 msgid "no DLL was created"
 msgstr "DLL이 생성되지 않았습니다"
 
+msgid "NOTE: fixed path"
+msgstr ""
+
+msgid "NOTE: fixed library identification name"
+msgstr ""
+
+msgid "NOTE: fixed library path"
+msgstr ""
+
+msgid "NOTE: fixed rpath"
+msgstr ""
+
+msgid ""
+"WARNING: shared objects/dynamic libraries with hard-coded temporary "
+"installation paths"
+msgstr ""
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "패키지 %s는 성공적으로 압축해제되었고, MD5 sums 이 확인되었습니다"
+
+msgid "not using staged install with --libs-only"
+msgstr ""
+
+msgid "staged installation is only possible with locking"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -983,6 +1064,9 @@ msgstr "소스파일들을 찾을 수 없습니다"
 
 msgid "empty 'data' directory"
 msgstr "비어있는 'data' 디렉토리입니다"
+
+msgid "WARNING: moving package to final location failed, copying instead"
+msgstr ""
 
 msgid "cannot create unique directory for build"
 msgstr "build를 위한 고유의 디렉토리를 생성할 수 없습니다."
@@ -1008,26 +1092,11 @@ msgstr "에러: 디렉토리에 설치할 권한이 없습니다"
 msgid "building a fake installation is disallowed"
 msgstr ""
 
-msgid "C++17 standard requested but CXX17 is not defined"
-msgstr ""
-
-msgid "C++14 standard requested but CXX14 is not defined"
-msgstr ""
-
-msgid "C++11 standard requested but CXX11 is not defined"
-msgstr ""
-
-msgid "C++98 standard requested but CXX98 is not defined"
-msgstr ""
-
 msgid ""
 "See\n"
 "  %s\n"
 "for details."
 msgstr ""
-
-msgid "there is no package called '%s'"
-msgstr "'%s'이라는 패키지가 없습니다"
 
 msgid "namespace must not be already loaded"
 msgstr "네임스페이스가 반드시 먼저 로드되어져야 합니다"
@@ -1096,6 +1165,13 @@ msgid ""
 "Using the first one."
 msgstr ""
 
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\item."
+msgstr ""
+
 msgid "Processing packages:"
 msgstr "다음의 패키지들을 프로세싱하고 있습니다:"
 
@@ -1103,81 +1179,6 @@ msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
 "  %s"
 msgstr ""
-
-msgid "%s must be a character string or a file/raw connection"
-msgstr "%s는 문자열 또는 파일/raw 커넥션이어야 합니다."
-
-msgid "PDF header not found"
-msgstr "PDF 헤더를 찾을 수 없습니다"
-
-msgid "EOF marker not found"
-msgstr "EOF 표시자를 찾을 수 없습니다"
-
-msgid "cannot find 'startxref' keyword"
-msgstr "'startxref' 키워드를 찾을 수 없습니다"
-
-msgid "cannot find xref table"
-msgstr "xref 테이블을 찾을 수 없습니다"
-
-msgid "cannot read xref table"
-msgstr "xref 테이블을 읽을 수 없습니다"
-
-msgid "attempting to select less than one element"
-msgstr ""
-
-msgid "attempting to select more than one element"
-msgstr ""
-
-msgid "looking at %s"
-msgstr "%s를 살펴보는 중입니다."
-
-msgid "cannot read literal string object"
-msgstr "literal 문자열 객체를 읽을 수 없습니다"
-
-msgid "cannot read hexadecimal string object"
-msgstr "hexadecimal 문자열 객체를 읽을 수 없습니다"
-
-msgid "cannot read name object"
-msgstr "이름 객체(name object)를 읽을 수 없습니다."
-
-msgid "cannot read array object"
-msgstr "배열 객체(array object)를 읽을 수 없습니다."
-
-msgid "cannot read dictionary object"
-msgstr "사전 객체(dictionary object)를 읽을 수 없습니다."
-
-msgid "cannot read stream object"
-msgstr "스트림 객체(stream object)를 읽을 수 없습니다."
-
-msgid "cannot read indirect reference object"
-msgstr "간접적 레퍼런스 객체(indirect reference object)를 읽을 수 없습니다"
-
-msgid "cannot find object header at xrefed position %d"
-msgstr ""
-
-msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr ""
-
-msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr ""
-
-msgid "cannot read stream data"
-msgstr "스트림 데이터를 읽을 수 없습니다"
-
-msgid "invalid index in object stream lookup"
-msgstr ""
-
-msgid "expanding %s"
-msgstr "%s을 확장하고 있습니다"
-
-msgid "unsupported filter %s"
-msgstr "지원되지 않는 필터 %s입니다"
-
-msgid "unsupported %s predictor %d"
-msgstr ""
-
-msgid "unsupported PNG filter %d"
-msgstr "지원되지 않는 PNG 필터 %d입니다"
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "인자 '%s'는 반드시 문자열 또는 연결이어야 합니다"
@@ -1251,9 +1252,6 @@ msgstr ""
 msgid "argument 'pkg' must be of length 1"
 msgstr "인자 'pkg'는 반드시 길이가 1이어야 합니다"
 
-msgid "package '%s' was not found"
-msgstr "패키지 '%s'를 찾을 수 없습니다"
-
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 msgstr ""
 
@@ -1263,8 +1261,74 @@ msgstr "잘못된 연산자입니다"
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr ""
 
+msgid "argument 'vignette' must be of length 1"
+msgstr "인자 'vignette'는 반드시 길이가 1 이어야 합니다"
+
 msgid "R CMD build failed"
 msgstr "R CMD build가 실패했습니다"
+
+msgid "PACKAGES files do not include MD5 sums in the win.binary case"
+msgstr ""
+
+msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
+msgstr ""
+
+msgid "directly."
+msgstr ""
+
+msgid "No existing PACKAGES file found at"
+msgstr ""
+
+msgid "Existing PACKAGES file contained no rows and/or no columns"
+msgstr ""
+
+msgid "Specified fields no present in existing PACKAGES file:"
+msgstr ""
+
+msgid ""
+"Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgstr ""
+
+msgid "Updating existing repository [strict mode:"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid ""
+"]\n"
+"Detected PACKAGES file with"
+msgstr ""
+
+msgid "entries at"
+msgstr ""
+
+msgid "unable to find any package tarballs in"
+msgstr ""
+
+msgid "All existing entry MD5sums match tarballs."
+msgstr ""
+
+msgid "Found"
+msgstr ""
+
+msgid "package versions to process."
+msgstr ""
+
+msgid "No new packages or updated package versions detected"
+msgstr ""
+
+msgid "[dryrun mode] Dryrun complete."
+msgstr ""
+
+msgid "Writing final updated PACKAGES files."
+msgstr ""
+
+msgid "update_PACKAGES complete."
+msgstr ""
 
 msgid "'x' must be a single character string"
 msgstr "'x'는 반드시 한개의 문자열이어야 합니다"
@@ -1287,14 +1351,11 @@ msgstr "'%s'에 'texi2dvi'를 실행하는데 실패했습니다"
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "'%s'에 'texi2dvi'를 실행하는데 실패했습니다"
 
-msgid "unable to run '%s' on '%s'"
-msgstr "'%2$s'에 '%1$s'를 실행할 수 없습니다"
-
 msgid "unable to run %s on '%s'"
 msgstr "'%2$s'에 %1$s를 실행할 수 없습니다"
 
-msgid "cannot coerce %s to logical"
-msgstr "%s를 논리형(logical)로 강제변환을 할 수 없습니다."
+msgid "unable to run '%s' on '%s'"
+msgstr "'%2$s'에 '%1$s'를 실행할 수 없습니다"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "'DESCRIPTION' 파일을 찾을 수 없습니다."
@@ -1319,18 +1380,11 @@ msgstr ""
 msgid "cannot source package code:"
 msgstr "패키지 코드를 읽어들일 수 없습니다:"
 
-msgid "Call sequence:"
-msgstr "호출 시퀀스: "
-
 msgid "'text' must be a character vector"
 msgstr "'text'는 반드시 문자형 벡터이어야 합니다."
 
 msgid "parsing '%s'"
 msgstr "'%s'을 파싱(parsing)합니다"
-
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] ""
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1426,12 +1480,20 @@ msgid_plural ""
 "%s"
 msgstr[0] ""
 
+msgid "duplicated vignette title:"
+msgid_plural "duplicated vignette titles:"
+msgstr[0] ""
+
+msgid "SUMMARY: processing the following file failed:"
+msgid_plural "SUMMARY: processing the following files failed:"
+msgstr[0] ""
+
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] ""
 
-msgid " file\n"
-msgid_plural " files\n"
+msgid "%s file\n"
+msgid_plural "%s files\n"
 msgstr[0] ""
 
 msgid "Required field missing or empty:"
@@ -1453,3 +1515,66 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "there is no package called '%s'"
+#~ msgstr "'%s'이라는 패키지가 없습니다"
+
+#~ msgid "%s must be a character string or a file/raw connection"
+#~ msgstr "%s는 문자열 또는 파일/raw 커넥션이어야 합니다."
+
+#~ msgid "PDF header not found"
+#~ msgstr "PDF 헤더를 찾을 수 없습니다"
+
+#~ msgid "EOF marker not found"
+#~ msgstr "EOF 표시자를 찾을 수 없습니다"
+
+#~ msgid "cannot find 'startxref' keyword"
+#~ msgstr "'startxref' 키워드를 찾을 수 없습니다"
+
+#~ msgid "cannot find xref table"
+#~ msgstr "xref 테이블을 찾을 수 없습니다"
+
+#~ msgid "cannot read xref table"
+#~ msgstr "xref 테이블을 읽을 수 없습니다"
+
+#~ msgid "looking at %s"
+#~ msgstr "%s를 살펴보는 중입니다."
+
+#~ msgid "cannot read literal string object"
+#~ msgstr "literal 문자열 객체를 읽을 수 없습니다"
+
+#~ msgid "cannot read hexadecimal string object"
+#~ msgstr "hexadecimal 문자열 객체를 읽을 수 없습니다"
+
+#~ msgid "cannot read name object"
+#~ msgstr "이름 객체(name object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read array object"
+#~ msgstr "배열 객체(array object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read dictionary object"
+#~ msgstr "사전 객체(dictionary object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read stream object"
+#~ msgstr "스트림 객체(stream object)를 읽을 수 없습니다."
+
+#~ msgid "cannot read indirect reference object"
+#~ msgstr "간접적 레퍼런스 객체(indirect reference object)를 읽을 수 없습니다"
+
+#~ msgid "cannot read stream data"
+#~ msgstr "스트림 데이터를 읽을 수 없습니다"
+
+#~ msgid "expanding %s"
+#~ msgstr "%s을 확장하고 있습니다"
+
+#~ msgid "unsupported filter %s"
+#~ msgstr "지원되지 않는 필터 %s입니다"
+
+#~ msgid "unsupported PNG filter %d"
+#~ msgstr "지원되지 않는 PNG 필터 %d입니다"
+
+#~ msgid "package '%s' was not found"
+#~ msgstr "패키지 '%s'를 찾을 수 없습니다"
+
+#~ msgid "cannot coerce %s to logical"
+#~ msgstr "%s를 논리형(logical)로 강제변환을 할 수 없습니다."

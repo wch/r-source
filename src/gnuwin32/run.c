@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto and Brian Ripley
- *             (C) 2007-2019  The R Core Team
+ *             (C) 2007-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ static void pcreate(const char* cmd, cetype_t enc,
     DWORD ret;
     STARTUPINFO si;
     STARTUPINFOW wsi;
-    HANDLE dupIN, dupOUT, dupERR, job, port;
+    HANDLE dupIN, dupOUT, dupERR, job, port = NULL;
     WORD showWindow = SW_SHOWDEFAULT;
     DWORD flags;
     BOOL inJob;
@@ -827,7 +827,7 @@ typedef struct Wpipeconn {
 static Rboolean Wpipe_open(Rconnection con)
 {
     rpipe *rp;
-    int visible = -1, io;
+    int visible = -1, io, mlen;
 
     io = con->mode[0] == 'w';
     if(io) visible = 1; /* Somewhere to put the output */
@@ -840,7 +840,8 @@ static Rboolean Wpipe_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = io;
     con->canread = !con->canwrite;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    mlen = (int) strlen(con->mode);
+    if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
     return TRUE;

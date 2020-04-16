@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2019   The R Core Team
+ *  Copyright (C) 1998-2020   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -362,8 +362,8 @@ SEXP DropDims(SEXP x)
 	    if (dim[i] != 1)
 		INTEGER(newdims)[n++] = dim[i];
 	if(!isNull(getAttrib(dims, R_NamesSymbol))) {
-	    SEXP nms_d = getAttrib(dims, R_NamesSymbol),
-		new_nms = PROTECT(allocVector(STRSXP, n));
+	    SEXP new_nms = PROTECT(allocVector(STRSXP, n));
+	    SEXP nms_d = getAttrib(dims, R_NamesSymbol);
 	    for (i = 0, n = 0; i < ndims; i++)
 		if (dim[i] != 1)
 		    SET_STRING_ELT(new_nms, n++, STRING_ELT(nms_d, i));
@@ -434,6 +434,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SEXP x = CAR(args), ans;
 
+    /* DispatchOrEval internal generic: length */
     if (isObject(x) &&
        DispatchOrEval(call, op, "length", args, rho, &ans, 0, 1)) {
 	if (length(ans) == 1 && TYPEOF(ans) == REALSXP) {
@@ -472,6 +473,7 @@ R_xlen_t attribute_hidden dispatch_xlength(SEXP x, SEXP call, SEXP rho) {
         if (length_op == NULL)
             length_op = R_Primitive("length");
         PROTECT(args = list1(x));
+	/* DispatchOrEval internal generic: length */
         if (DispatchOrEval(call, length_op, "length", args, rho, &len, 0, 1)) {
             UNPROTECT(1);
             return (R_xlen_t)
@@ -519,6 +521,7 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (useNames == NA_LOGICAL)
 	error(_("invalid '%s' value"), "use.names");
 
+    /* DispatchOrEval internal generic: lengths */
     if (DispatchOrEval(call, op, "lengths", args, rho, &ans, 0, 1))
       return(ans);
 

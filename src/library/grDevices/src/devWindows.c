@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2019   The R Core Team
+ *  Copyright (C) 2004-2020   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
@@ -3721,10 +3721,12 @@ SEXP devga(SEXP args)
 	char type[100], *file = NULL, fn[MAX_PATH];
 	strcpy(type, "windows");
 	if (display[0]) {
-	    strncpy(type, display, 100);
+	    strncpy(type, display, 100 - 1);
+	    type[100 - 1] = '\0';
 	    char *p = strchr(display, ':');
 	    if (p) {
-		strncpy(fn, p+1, MAX_PATH);
+		strncpy(fn, p+1, MAX_PATH - 1);
+		fn[MAX_PATH - 1] = '\0';
 		file = fn;
 	    }
 	    // Package tkrplot assumes the exact form here,
@@ -3837,6 +3839,10 @@ static HINSTANCE hRcairoDll;
 
 typedef SEXP (*R_cairoVersion_t)(void);
 static R_cairoVersion_t R_cairoVersion = NULL;
+typedef SEXP (*R_pangoVersion_t)(void);
+static R_pangoVersion_t R_pangoVersion = NULL;
+typedef SEXP (*R_cairoFT_t)(void);
+static R_cairoFT_t R_cairoFT = NULL;
 
 static int Load_Rcairo_Dll()
 {
@@ -3852,6 +3858,10 @@ static int Load_Rcairo_Dll()
 	     != NULL)) {
 	    R_cairoVersion = (R_cairoVersion_t)
 		GetProcAddress(hRcairoDll, "in_CairoVersion");
+	    R_pangoVersion = (R_pangoVersion_t)
+		GetProcAddress(hRcairoDll, "in_PangoVersion");
+	    R_cairoFT = (R_cairoFT_t)
+		GetProcAddress(hRcairoDll, "in_CairoFT");
 	    RcairoAlreadyLoaded = 1;
 	} else {
 	    if (hRcairoDll != NULL) FreeLibrary(hRcairoDll);
@@ -3879,6 +3889,18 @@ SEXP cairoVersion(void)
 {
     if (!Load_Rcairo_Dll() || R_cairoVersion == NULL) return mkString("");
     else return (R_cairoVersion)();
+}
+
+SEXP pangoVersion(void)
+{
+    if (!Load_Rcairo_Dll() || R_cairoVersion == NULL) return mkString("");
+    else return (R_pangoVersion)();
+}
+
+SEXP cairoFT(void)
+{
+    if (!Load_Rcairo_Dll() || R_cairoVersion == NULL) return mkString("");
+    else return (R_cairoFT)();
 }
 
 SEXP bmVersion(void)

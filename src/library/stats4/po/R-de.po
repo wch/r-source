@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2009-10-07 14:34+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -16,22 +16,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-msgid ""
-"some named arguments in 'fixed' are not arguments to the supplied log-"
-"likelihood"
+msgid "named list expected"
 msgstr ""
-"einige benannte Argumente in 'fixed' sind keine Argumente für die "
-"angegebene Log-Likelihood"
 
-msgid "'start' must be a named list"
-msgstr "'start' muss eine benannte Liste sein"
-
-msgid ""
-"some named arguments in 'start' are not arguments to the supplied log-"
-"likelihood"
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
-"einige benannte Argumente in 'start' sind keine Argumente für die angegebene "
+"einige benannte Argumente in 'fixed' sind keine Argumente für die angegebene "
 "Log-Likelihood"
+
+msgid "Mismatch in length of start values"
+msgstr ""
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
+msgstr ""
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
@@ -44,3 +45,13 @@ msgstr "Stufen auf rein positive Werte eingeschränkt"
 
 msgid "extra arguments discarded"
 msgstr "zusätzliche Argumente verworfen"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' muss eine benannte Liste sein"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "einige benannte Argumente in 'start' sind keine Argumente für die "
+#~ "angegebene Log-Likelihood"

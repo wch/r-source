@@ -2,16 +2,16 @@ make_sysdata_rda <-
 function()    
 {
     ## Get the codes and descriptions from the
-    ##   <http://www.loc.gov/marc/relators/relaterm.html>
+    ##   <https://www.loc.gov/marc/relators/relaterm.html>
     ## web page, and merge with the information on usage for R.
 
     ## Codes are also listed at
-    ##   <http://www.loc.gov/marc/relators/relacode.html>
+    ##   <https://www.loc.gov/marc/relators/relacode.html>
     ## which also contains discontinued codes, identified by a hyphen
     ## preceding the code.
 
-    ## <http://www.loc.gov/marc/relators/relaterm.html>
-    doc <- xml2::read_html("http://www.loc.gov/marc/relators/relaterm.html")
+    ## <https://www.loc.gov/marc/relators/relaterm.html>
+    doc <- xml2::read_html("https://www.loc.gov/marc/relators/relaterm.html")
     dt <- trimws(xml2::xml_text(xml2::xml_find_all(doc, "//dl[4]//dt")))
     dd <- trimws(xml2::xml_text(xml2::xml_find_all(doc, "//dl[4]//dd")))
 

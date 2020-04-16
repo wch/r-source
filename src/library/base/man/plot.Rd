@@ -1,20 +1,25 @@
-% File src/library/graphics/man/plot.Rd
+% File src/library/base/man/plot.Rd
+% (Previously src/library/graphics/man/plot.Rd for R < 4.0.0)
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot}
 \title{Generic X-Y Plotting}
 \alias{plot}
 \description{
-  Generic function for plotting of \R objects.  For more details about
-  the graphical parameter arguments, see \code{\link{par}}.
+  Generic function for plotting of \R objects.
 
   For simple scatter plots, \code{\link{plot.default}} will be used.
   However, there are \code{plot} methods for many \R objects,
   including \code{\link{function}}s, \code{\link{data.frame}}s,
   \code{\link{density}} objects, etc.  Use \code{methods(plot)} and
-  the documentation for these.
+  the documentation for these. Most of these methods are implemented
+  using traditional graphics (the \pkg{graphics} package), but this is
+  not mandatory.
+
+  For more details about graphical parameter arguments used by
+  traditional graphics, see \code{\link{par}}.
 }
 \usage{
 plot(x, y, \dots)
@@ -62,6 +67,12 @@ plot(x, y, \dots)
   moves first horizontal, then vertical, whereas \code{type = "S"} moves
   the other way around.
 }
+\note{
+  The \code{plot} generic was moved from the \pkg{graphics} package to
+  the \pkg{base} package in \R 4.0.0. It is currently re-exported from
+  the \pkg{graphics} namespace to allow packages importing it from there
+  to continue working, but this may change in future versions of \R.
+}
 \seealso{
   \code{\link{plot.default}}, \code{\link{plot.formula}} and other
   methods; \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
@@ -73,6 +84,7 @@ plot(x, y, \dots)
 }
 \examples{
 require(stats) # for lowess, rpois, rnorm
+require(graphics) # for plot methods
 plot(cars)
 lines(lowess(cars))
 

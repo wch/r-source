@@ -12,13 +12,14 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = AUTHORS COPYING COPYRIGHTS CRAN_mirrors.csv BioC_mirrors.csv \
-	KEYWORDS KEYWORDS.db THANKS NEWS.0 NEWS.1 NEWS.2
+	KEYWORDS KEYWORDS.db THANKS NEWS.0 NEWS.1 NEWS.2 NEWS.3
 DISTFILES = Makefile.in Makefile.win $(INSTFILES) R.aux Rscript.1 \
-  NEWS.Rd NEWS.2.Rd
-INSTFILES2 = NEWS.rds NEWS NEWS.pdf
+  NEWS.Rd NEWS.2.Rd NEWS.3.Rd
+INSTFILES2 = NEWS.rds NEWS NEWS.pdf NEWS.2.rds NEWS.3.rds
 NON_SVN_INSTFILES = FAQ RESOURCES NEWS NEWS.pdf
 ## generated later.
 SUBDIRS = html manual
+INSTDIRS = notes
 
 HELP2MAN = perl $(top_srcdir)/tools/help2man.pl
 
@@ -38,7 +39,7 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs: R.1 NEWS.rds NEWS html/NEWS.html NEWS.pdf
+docs: R.1 NEWS.rds NEWS html/NEWS.html NEWS.pdf NEWS.2.rds NEWS.3.rds
 	@(cd manual && $(MAKE) $@)
 
 R.1:
@@ -68,6 +69,29 @@ NEWS.pdf: NEWS.rds
 	else \
 	 $(ECHO) "creating doc/NEWS.pdf"; \
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
+	fi
+
+docs3: NEWS.3.rds NEWS.3.html NEWS.3.pdf
+
+NEWS.3.rds: $(srcdir)/NEWS.3.Rd
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.3.Rd\", \
+	  macros = \"../share/Rd/macros/system.Rd\"), stages = 'install', warningCalls = FALSE), \
+	  'NEWS.3.rds')" | $(R_EXE)
+
+NEWS.3: NEWS.3.rds
+	@$(ECHO) "creating NEWS.3"
+	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.3.rds", "NEWS.3")' |  $(R_EXE)
+
+NEWS.3.html: NEWS.3.rds
+	@$(ECHO) "creating NEWS.3.html"
+	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.html")' |  $(R_EXE)
+
+NEWS.3.pdf: NEWS.3.rds
+	@if test -z "$(PDFLATEX)"; then \
+	  $(ECHO) "'pdflatex' is needed to make NEWS.3.pdf but is missing on your system."; \
+	else \
+	 $(ECHO) "creating NEWS.3.pdf"; \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.3.rds", "NEWS.3.pdf")' |  LC_COLLATE=C $(R_EXE); \
 	fi
 
 ## NEWS.2.html ships as doc/html/NEWS.2.html in the sources.
@@ -150,7 +174,8 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES) R.1; \
 	fi
-	-@rm -f $(INSTFILES2) NEWS.2.rds NEWS.2.html NEWS.2.pdf
+	-@rm -f $(INSTFILES2) NEWS.2.rds NEWS.2.html NEWS.2.pdf \
+	  NEWS.3.rds NEWS.3.html NEWS.3.pdf
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
@@ -187,4 +212,9 @@ distdir: $(DISTFILES)
 	  chmod 755 $(distdir)/$${d}; \
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
+	done
+	@for d in $(INSTDIRS); do \
+	  cp -pr $(srcdir)/$${d} $(distdir) || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  chmod 644 $(distdir)/$${d}/*; \
 	done

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2011-04-01 04:27+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -20,20 +20,22 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid ""
-"some named arguments in 'fixed' are not arguments to the supplied log-"
-"likelihood"
+msgid "named list expected"
+msgstr ""
+
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 "'fixed' içindeki bazı argümanlar log-likelihood'a verilen argümanlar değil"
 
-msgid "'start' must be a named list"
-msgstr "'start' isimlendirilmiş bir liste olmalı"
-
-msgid ""
-"some named arguments in 'start' are not arguments to the supplied log-"
-"likelihood"
+msgid "Mismatch in length of start values"
 msgstr ""
-"'start' içindeki bazı argümanlar log-likelihood'a verilen argümanlar değil"
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
+msgstr ""
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
@@ -44,3 +46,12 @@ msgstr "seviyeler sadece pozitif değerlere kısaltıldı"
 
 msgid "extra arguments discarded"
 msgstr "ekstra argümanlar çıkarıldı"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' isimlendirilmiş bir liste olmalı"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "'start' içindeki bazı argümanlar log-likelihood'a verilen argümanlar değil"

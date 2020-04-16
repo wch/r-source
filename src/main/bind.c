@@ -772,6 +772,7 @@ SEXP attribute_hidden do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Attempt method dispatch. */
 
+    /* DispatchOrEval internal generic: c */
     if (DispatchAnyOrEval(call, op, "c", args, env, &ans, 1, 1))
 	//      ^^^ "Any" => all args are eval()ed and checked => correct multi-arg dispatch
 	return(ans);
@@ -891,6 +892,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Attempt method dispatch. */
 
+    /* DispatchOrEval internal generic: unlist */
     if (DispatchOrEval(call, op, "unlist", args, env, &ans, 0, 1))
 	return(ans);
 

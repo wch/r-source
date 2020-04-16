@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 14:56\n"
 "PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -64,6 +64,12 @@ msgstr ""
 "はメソッド: "
 
 msgid "Data with usage in documentation object '%s' but not in code:"
+msgstr ""
+" ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセッ"
+"ト: "
+
+#, fuzzy
+msgid "Variables with usage in documentation object '%s' but not in code:"
 msgstr ""
 " ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセッ"
 "ト: "
@@ -300,6 +306,10 @@ msgstr ""
 " Authors@R にMaintainerロールをもち，かつ正しいe-mail アドレスをもち，かつ空"
 "白でない名前を持っている人がひとりもいません. "
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ORCID identifiers:"
+msgstr " Authors@Rフィールドに役割が明示されていない人がいます "
+
 msgid "Encoding '%s' is not portable"
 msgstr " エンコーディング '%s' は移植出来ません "
 
@@ -332,8 +342,15 @@ msgstr ""
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable フラグ: "
 
+#, fuzzy
+msgid "Non-portable flags in file '%s':"
+msgstr " 変数 '%s' 中に non-portable フラグ: "
+
 msgid "Variables overriding user/site settings:"
 msgstr " ユーザまたはサイトの設定を上書きしている変数です "
+
+msgid "invalid 'OS.type' \"%s\".  Should not happen"
+msgstr ""
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
@@ -349,6 +366,18 @@ msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 " マニュアル 'Writing R Extensions' の節 'Cross-references' 中の情報を参照して"
 "ください. "
+
+msgid "Call sequence:"
+msgstr " 呼び出しシーケンス: "
+
+msgid "..."
+msgstr " ... "
+
+msgid "No dataset created in 'envir'"
+msgstr ""
+
+msgid "Search path was changed"
+msgstr ""
 
 msgid "File %s:"
 msgstr " ファイル %s: "
@@ -625,9 +654,10 @@ msgstr "DESCRIPTION ファイルはパッケージ '%s' のものです．'%s' �
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr " ビニエットの生成物 %s は既知の拡張子を持っていません( %s ) "
 
+#, fuzzy
 msgid ""
-"Failed to locate the %s output file (by engine %s) for vignette with name "
-"%s. The following files exist in directory %s: %s"
+"Failed to locate %s output file %s or %s for vignette with name %s and "
+"engine %s. The following files exist in working directory %s: %s"
 msgstr ""
 " ビニエット %3$s について、エンジン %2$s による出力ファイル %1$s を見つけるこ"
 "とができません。ディレクトリ %4$s には以下のファイルがあります: %5$s "
@@ -638,6 +668,14 @@ msgid ""
 msgstr ""
 " ビニエット %3$s について、エンジン%2$s による出力ファイル %1$s が２つ以上見"
 "つかりました: %4$s "
+
+#, fuzzy
+msgid ""
+"Failed to locate %s output file %s for vignette with name %s and engine %s. "
+"The following files exist in working directory %s: %s"
+msgstr ""
+" ビニエット %3$s について、エンジン %2$s による出力ファイル %1$s を見つけるこ"
+"とができません。ディレクトリ %4$s には以下のファイルがあります: %5$s "
 
 msgid "unable to create temp directory %s"
 msgstr " 一時ディレクトリ %s を生成することが出来ません "
@@ -655,26 +693,44 @@ msgstr ""
 " ビニエット %1$s は、ビニエット %3$s による以下の %2$s の出力を上書きします: "
 "%4$s "
 
+#, fuzzy
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
-"risking overwriting each others output files"
+"risking overwriting each other's output files"
 msgstr ""
 " ビニエットのソースファイル( %s )が共有の名前 ( %s ) を持っており、したがって"
 "お互いが出力ファイルを上書きしあうリスクがあることを検出しました "
 
+#, fuzzy
+msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+" ビニエット '%s' はASCII文字のみではありませんが，エンコーディングが宣言され"
+"ていません "
+
+msgid "--- re-building %s using %s"
+msgstr ""
+
+#, fuzzy
 msgid ""
-"processing vignette '%s' failed with diagnostics:\n"
+"Error: processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 " ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
 " %s "
 
+#, fuzzy
 msgid ""
-"tangling vignette '%s' failed with diagnostics:\n"
+"Error: tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 " ビニエット '%s' のtangling に失敗しました。診断情報: \n"
 " %s "
+
+msgid "--- finished re-building %s"
+msgstr ""
+
+msgid "--- failed re-building %s"
+msgstr ""
 
 msgid "running 'make' failed"
 msgstr " 'make' の実行に失敗しました "
@@ -687,12 +743,12 @@ msgstr ""
 " ビニエットファイル名 '%s' が、ファイル名パターン '%s' のいずれとも一致しませ"
 "ん "
 
+msgid "+-+"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
 " '%s' において、ビニエット '%s' と '%s' は同じビニエット名になっています "
-
-msgid "argument 'vignette' must be of length 1"
-msgstr " 引数 'vignette' は長さ1でなければなりません "
 
 msgid "Vignette engine package not specified"
 msgstr " ビニエットエンジンパッケージが指定されていません "
@@ -829,13 +885,6 @@ msgstr " 既定の JSS スタイルは変更できないかもしれません "
 msgid "inst/doc"
 msgstr ""
 
-msgid "file"
-msgstr " ファイル "
-
-#, fuzzy
-msgid "files"
-msgstr " ファイル "
-
 msgid ","
 msgstr " , "
 
@@ -970,6 +1019,10 @@ msgstr " ファイル '%s' 中のインデックス情報を読み取ること�
 msgid ".install_packages() exit status"
 msgstr " 不正なパッケージです "
 
+#, fuzzy
+msgid "restoration failed"
+msgstr " ロードに失敗しました "
+
 msgid "error reading file '%s'"
 msgstr " ファイル '%s' の読み込みにエラーが発生 "
 
@@ -989,8 +1042,31 @@ msgstr " デバッグシンボル (%s) を生成中 "
 msgid "no DLL was created"
 msgstr "DLLは生成されませんでした "
 
+msgid "NOTE: fixed path"
+msgstr ""
+
+msgid "NOTE: fixed library identification name"
+msgstr ""
+
+msgid "NOTE: fixed library path"
+msgstr ""
+
+msgid "NOTE: fixed rpath"
+msgstr ""
+
+msgid ""
+"WARNING: shared objects/dynamic libraries with hard-coded temporary "
+"installation paths"
+msgstr ""
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr " パッケージ %s の解凍および MD5 サムの検証に成功しました "
+
+msgid "not using staged install with --libs-only"
+msgstr ""
+
+msgid "staged installation is only possible with locking"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -1008,6 +1084,9 @@ msgstr " ソースファイルが見つかりません "
 
 msgid "empty 'data' directory"
 msgstr " 'data' ディレクトリが空です "
+
+msgid "WARNING: moving package to final location failed, copying instead"
+msgstr ""
 
 #, fuzzy
 msgid "cannot create unique directory for build"
@@ -1034,26 +1113,11 @@ msgstr " エラー: ディレクトリへのインストール許可がありま
 msgid "building a fake installation is disallowed"
 msgstr " まがい物 (fake) インストールの構築は許されていません "
 
-msgid "C++17 standard requested but CXX17 is not defined"
-msgstr ""
-
-msgid "C++14 standard requested but CXX14 is not defined"
-msgstr ""
-
-msgid "C++11 standard requested but CXX11 is not defined"
-msgstr ""
-
-msgid "C++98 standard requested but CXX98 is not defined"
-msgstr ""
-
 msgid ""
 "See\n"
 "  %s\n"
 "for details."
 msgstr ""
-
-msgid "there is no package called '%s'"
-msgstr " '%s' という名前のパッケージが見当たりません "
 
 msgid "namespace must not be already loaded"
 msgstr " 名前空間はロードされてはいけません。 "
@@ -1141,6 +1205,18 @@ msgstr ""
 " ではじまるチャンクに、2 つ以上の \\itemize が含まれています。 \n"
 " 最初の 1 つを使用します。 "
 
+#, fuzzy
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\item."
+msgstr ""
+" NEWS.Rd ファイルが壊れています: \n"
+" \n"
+" %s \n"
+" で始まるチャンクに、\\itemize が含まれていません。 "
+
 msgid "Processing packages:"
 msgstr " パッケージを処理中: "
 
@@ -1149,81 +1225,6 @@ msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
 "  %s"
 msgstr " %s の読み込みに失敗しました．メッセージは以下の通りです: %s "
-
-msgid "%s must be a character string or a file/raw connection"
-msgstr " %s は文字列かファイル,Rawコネクションでなければなりません "
-
-msgid "PDF header not found"
-msgstr " PDF ヘッダが見つかりませんでした "
-
-msgid "EOF marker not found"
-msgstr " EOF マーカーが見つかりませんでした "
-
-msgid "cannot find 'startxref' keyword"
-msgstr " 'startxref' キーワードが見つかりません "
-
-msgid "cannot find xref table"
-msgstr " xref テーブルが見つかりません "
-
-msgid "cannot read xref table"
-msgstr " xref テーブルを読み込めません "
-
-msgid "attempting to select less than one element"
-msgstr " 1 個未満の要素を選択しようとしました "
-
-msgid "attempting to select more than one element"
-msgstr " 2 個以上の要素を選択しようとしました "
-
-msgid "looking at %s"
-msgstr " %s を見ています "
-
-msgid "cannot read literal string object"
-msgstr " 文字列リテラルオブジェクトを読めません "
-
-msgid "cannot read hexadecimal string object"
-msgstr " 16 進数文字列オブジェクトを読めません "
-
-msgid "cannot read name object"
-msgstr " 名前オブジェクトを読めません "
-
-msgid "cannot read array object"
-msgstr " 配列オブジェクトを読めません "
-
-msgid "cannot read dictionary object"
-msgstr " ディレクトリオブジェクトを読めません "
-
-msgid "cannot read stream object"
-msgstr " ストリームオブジェクトを読めません "
-
-msgid "cannot read indirect reference object"
-msgstr " 間接参照オブジェクトを読めません "
-
-msgid "cannot find object header at xrefed position %d"
-msgstr " クロスリファレンスされた位置 %d にオブジェクトヘッダが見つかりません "
-
-msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr " オブジェクト数に不一致があります (%d のはずが、%d 見つかりました) "
-
-msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr " 生成数に不一致があります (%d のはずが、%d 見つかりました) "
-
-msgid "cannot read stream data"
-msgstr " ストリームデータを読めません "
-
-msgid "invalid index in object stream lookup"
-msgstr " オブジェクトストリームの検索で不正なインデックスがあります "
-
-msgid "expanding %s"
-msgstr " %s を展開中 "
-
-msgid "unsupported filter %s"
-msgstr " 未サポートのフィルタ %s "
-
-msgid "unsupported %s predictor %d"
-msgstr " サポートされていない %s 予測子 %d "
-
-msgid "unsupported PNG filter %d"
-msgstr " 未サポートの PNG フィルタ %d "
 
 msgid "argument '%s' must be a character string or connection"
 msgstr " 引数 '%s' は文字列かコネクションでなければなりません "
@@ -1299,9 +1300,6 @@ msgstr " 標準ではないライセンス指定: "
 msgid "argument 'pkg' must be of length 1"
 msgstr " 引数 'pkg' は長さ 1 でなければなりません "
 
-msgid "package '%s' was not found"
-msgstr " パッケージ '%s' は見つかりませんでした "
-
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 msgstr ""
 
@@ -1311,8 +1309,75 @@ msgstr " 誤ったオペランド "
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr " パッケージ '%s' は最小のセットに縮小された依存関係を持ちます "
 
+msgid "argument 'vignette' must be of length 1"
+msgstr " 引数 'vignette' は長さ1でなければなりません "
+
 msgid "R CMD build failed"
 msgstr " R CMD によるビルドに失敗 "
+
+msgid "PACKAGES files do not include MD5 sums in the win.binary case"
+msgstr ""
+
+msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
+msgstr ""
+
+msgid "directly."
+msgstr ""
+
+msgid "No existing PACKAGES file found at"
+msgstr ""
+
+msgid "Existing PACKAGES file contained no rows and/or no columns"
+msgstr ""
+
+msgid "Specified fields no present in existing PACKAGES file:"
+msgstr ""
+
+msgid ""
+"Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgstr ""
+
+msgid "Updating existing repository [strict mode:"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid ""
+"]\n"
+"Detected PACKAGES file with"
+msgstr ""
+
+msgid "entries at"
+msgstr ""
+
+msgid "unable to find any package tarballs in"
+msgstr ""
+
+msgid "All existing entry MD5sums match tarballs."
+msgstr ""
+
+#, fuzzy
+msgid "Found"
+msgstr " %s が見つかりました "
+
+msgid "package versions to process."
+msgstr ""
+
+msgid "No new packages or updated package versions detected"
+msgstr ""
+
+msgid "[dryrun mode] Dryrun complete."
+msgstr ""
+
+msgid "Writing final updated PACKAGES files."
+msgstr ""
+
+msgid "update_PACKAGES complete."
+msgstr ""
 
 msgid "'x' must be a single character string"
 msgstr " 'x' は 1 つの文字でなければなりません "
@@ -1335,14 +1400,11 @@ msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 
-msgid "unable to run '%s' on '%s'"
-msgstr " '%s' を '%s' に対して実行出来ません "
-
 msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "
 
-msgid "cannot coerce %s to logical"
-msgstr " %s を論理値に強制変換できません "
+msgid "unable to run '%s' on '%s'"
+msgstr " '%s' を '%s' に対して実行出来ません "
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr " ファイル 'DESCRIPTION' が見当たりません。 "
@@ -1366,18 +1428,11 @@ msgstr " 非 ASCII データをもつ未知のエンコーディングです: AS
 msgid "cannot source package code:"
 msgstr " パッケージコードを読み込めません "
 
-msgid "Call sequence:"
-msgstr " 呼び出しシーケンス: "
-
 msgid "'text' must be a character vector"
 msgstr " 'text' は文字型ベクトルでなければなりません "
 
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
-
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] " もう使われていないパッケージ %s が Rd xrefs 中にあります "
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1484,13 +1539,23 @@ msgstr[0] ""
 " ame 欄 \n"
 " %s "
 
+msgid "duplicated vignette title:"
+msgid_plural "duplicated vignette titles:"
+msgstr[0] ""
+
+#, fuzzy
+msgid "SUMMARY: processing the following file failed:"
+msgid_plural "SUMMARY: processing the following files failed:"
+msgstr[0] ""
+" 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました: "
+
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] " %s (%s行) を再エンコード出来ません "
 
 #, fuzzy
-msgid " file\n"
-msgid_plural " files\n"
+msgid "%s file\n"
+msgid_plural "%s files\n"
 msgstr[0] " ファイル "
 
 msgid "Required field missing or empty:"
@@ -1512,6 +1577,102 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "file"
+#~ msgstr " ファイル "
+
+#, fuzzy
+#~ msgid "files"
+#~ msgstr " ファイル "
+
+#~ msgid "there is no package called '%s'"
+#~ msgstr " '%s' という名前のパッケージが見当たりません "
+
+#~ msgid "%s must be a character string or a file/raw connection"
+#~ msgstr " %s は文字列かファイル,Rawコネクションでなければなりません "
+
+#~ msgid "PDF header not found"
+#~ msgstr " PDF ヘッダが見つかりませんでした "
+
+#~ msgid "EOF marker not found"
+#~ msgstr " EOF マーカーが見つかりませんでした "
+
+#~ msgid "cannot find 'startxref' keyword"
+#~ msgstr " 'startxref' キーワードが見つかりません "
+
+#~ msgid "cannot find xref table"
+#~ msgstr " xref テーブルが見つかりません "
+
+#~ msgid "cannot read xref table"
+#~ msgstr " xref テーブルを読み込めません "
+
+#~ msgid "attempting to select less than one element"
+#~ msgstr " 1 個未満の要素を選択しようとしました "
+
+#~ msgid "attempting to select more than one element"
+#~ msgstr " 2 個以上の要素を選択しようとしました "
+
+#~ msgid "looking at %s"
+#~ msgstr " %s を見ています "
+
+#~ msgid "cannot read literal string object"
+#~ msgstr " 文字列リテラルオブジェクトを読めません "
+
+#~ msgid "cannot read hexadecimal string object"
+#~ msgstr " 16 進数文字列オブジェクトを読めません "
+
+#~ msgid "cannot read name object"
+#~ msgstr " 名前オブジェクトを読めません "
+
+#~ msgid "cannot read array object"
+#~ msgstr " 配列オブジェクトを読めません "
+
+#~ msgid "cannot read dictionary object"
+#~ msgstr " ディレクトリオブジェクトを読めません "
+
+#~ msgid "cannot read stream object"
+#~ msgstr " ストリームオブジェクトを読めません "
+
+#~ msgid "cannot read indirect reference object"
+#~ msgstr " 間接参照オブジェクトを読めません "
+
+#~ msgid "cannot find object header at xrefed position %d"
+#~ msgstr ""
+#~ " クロスリファレンスされた位置 %d にオブジェクトヘッダが見つかりません "
+
+#~ msgid "mismatch in object numbers (given: %d, found: %d)"
+#~ msgstr " オブジェクト数に不一致があります (%d のはずが、%d 見つかりました) "
+
+#~ msgid "mismatch in generation numbers (given: %d, found: %d)"
+#~ msgstr " 生成数に不一致があります (%d のはずが、%d 見つかりました) "
+
+#~ msgid "cannot read stream data"
+#~ msgstr " ストリームデータを読めません "
+
+#~ msgid "invalid index in object stream lookup"
+#~ msgstr " オブジェクトストリームの検索で不正なインデックスがあります "
+
+#~ msgid "expanding %s"
+#~ msgstr " %s を展開中 "
+
+#~ msgid "unsupported filter %s"
+#~ msgstr " 未サポートのフィルタ %s "
+
+#~ msgid "unsupported %s predictor %d"
+#~ msgstr " サポートされていない %s 予測子 %d "
+
+#~ msgid "unsupported PNG filter %d"
+#~ msgstr " 未サポートの PNG フィルタ %d "
+
+#~ msgid "package '%s' was not found"
+#~ msgstr " パッケージ '%s' は見つかりませんでした "
+
+#~ msgid "cannot coerce %s to logical"
+#~ msgstr " %s を論理値に強制変換できません "
+
+#~ msgid "Obsolete package %s in Rd xrefs"
+#~ msgid_plural "Obsolete packages %s in Rd xrefs"
+#~ msgstr[0] " もう使われていないパッケージ %s が Rd xrefs 中にあります "
 
 #~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 #~ msgstr ""
@@ -1632,9 +1793,6 @@ msgstr[0] ""
 #~ msgid "engine"
 #~ msgstr " エンジン "
 
-#~ msgid "found %s"
-#~ msgstr " %s が見つかりました "
-
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"
 #~ msgid_plural "Foreign function calls without 'PACKAGE' argument:"
@@ -1662,13 +1820,6 @@ msgstr[0] ""
 #~ msgid "Warning: found non-ASCII string"
 #~ msgid_plural "Warning: found non-ASCII strings"
 #~ msgstr[0] " 警告: 未知のオプションです "
-
-#, fuzzy
-#~ msgid "Found the following executable file:"
-#~ msgid_plural "Found the following executable files:"
-#~ msgstr[0] ""
-#~ " 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありまし"
-#~ "た: "
 
 #~ msgid "name"
 #~ msgstr " 名前 "
@@ -1814,9 +1965,6 @@ msgstr[0] ""
 
 #~ msgid "to"
 #~ msgstr " へ "
-
-#~ msgid "..."
-#~ msgstr " ... "
 
 #~ msgid "Comparing"
 #~ msgstr " 比較中 "

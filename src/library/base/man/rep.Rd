@@ -19,7 +19,7 @@
 
   \code{rep.int} and \code{rep_len} are faster simplified versions for
   two common cases.  Internally, they are generic, so methods can be
-  defined for them.
+  defined for them (see \link{InternalMethods}).
 }
 \usage{
 rep(x, \dots)

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 14:56\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -63,6 +63,11 @@ msgstr ""
 
 #, fuzzy
 msgid "Data with usage in documentation object '%s' but not in code:"
+msgstr ""
+"Arquivos de dados com uso no objeto de documentação '%s' mas não no código:"
+
+#, fuzzy
+msgid "Variables with usage in documentation object '%s' but not in code:"
 msgstr ""
 "Arquivos de dados com uso no objeto de documentação '%s' mas não no código:"
 
@@ -275,6 +280,9 @@ msgid ""
 "and non-empty name."
 msgstr ""
 
+msgid "Authors@R field gives persons with invalid ORCID identifiers:"
+msgstr ""
+
 msgid "Encoding '%s' is not portable"
 msgstr ""
 
@@ -305,7 +313,13 @@ msgstr ""
 msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
+msgid "Non-portable flags in file '%s':"
+msgstr ""
+
 msgid "Variables overriding user/site settings:"
+msgstr ""
+
+msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 msgid ""
@@ -319,6 +333,18 @@ msgstr ""
 "Arquivos de dados com uso no objeto de documentação '%s' mas não no código:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
+msgstr ""
+
+msgid "Call sequence:"
+msgstr ""
+
+msgid "..."
+msgstr ""
+
+msgid "No dataset created in 'envir'"
+msgstr ""
+
+msgid "Search path was changed"
 msgstr ""
 
 msgid "File %s:"
@@ -559,13 +585,18 @@ msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr ""
 
 msgid ""
-"Failed to locate the %s output file (by engine %s) for vignette with name "
-"%s. The following files exist in directory %s: %s"
+"Failed to locate %s output file %s or %s for vignette with name %s and "
+"engine %s. The following files exist in working directory %s: %s"
 msgstr ""
 
 msgid ""
 "Located more than one %s output file (by engine %s) for vignette with name "
 "%s: %s"
+msgstr ""
+
+msgid ""
+"Failed to locate %s output file %s for vignette with name %s and engine %s. "
+"The following files exist in working directory %s: %s"
 msgstr ""
 
 msgid "unable to create temp directory %s"
@@ -582,17 +613,29 @@ msgstr ""
 
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
-"risking overwriting each others output files"
+"risking overwriting each other's output files"
+msgstr ""
+
+msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
+msgid "--- re-building %s using %s"
 msgstr ""
 
 msgid ""
-"processing vignette '%s' failed with diagnostics:\n"
+"Error: processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 
 msgid ""
-"tangling vignette '%s' failed with diagnostics:\n"
+"Error: tangling vignette '%s' failed with diagnostics:\n"
 "%s"
+msgstr ""
+
+msgid "--- finished re-building %s"
+msgstr ""
+
+msgid "--- failed re-building %s"
 msgstr ""
 
 msgid "running 'make' failed"
@@ -604,12 +647,11 @@ msgstr ""
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
-msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
+msgid "+-+"
 msgstr ""
 
-#, fuzzy
-msgid "argument 'vignette' must be of length 1"
-msgstr "argumento 'package' deve ter comprimento 1"
+msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
+msgstr ""
 
 msgid "Vignette engine package not specified"
 msgstr ""
@@ -731,12 +773,6 @@ msgid "The default JSS style may not be modified."
 msgstr ""
 
 msgid "inst/doc"
-msgstr ""
-
-msgid "file"
-msgstr ""
-
-msgid "files"
 msgstr ""
 
 msgid ","
@@ -870,6 +906,9 @@ msgstr ""
 msgid ".install_packages() exit status"
 msgstr ""
 
+msgid "restoration failed"
+msgstr ""
+
 msgid "error reading file '%s'"
 msgstr ""
 
@@ -887,7 +926,30 @@ msgstr ""
 msgid "no DLL was created"
 msgstr ""
 
+msgid "NOTE: fixed path"
+msgstr ""
+
+msgid "NOTE: fixed library identification name"
+msgstr ""
+
+msgid "NOTE: fixed library path"
+msgstr ""
+
+msgid "NOTE: fixed rpath"
+msgstr ""
+
+msgid ""
+"WARNING: shared objects/dynamic libraries with hard-coded temporary "
+"installation paths"
+msgstr ""
+
 msgid "package %s successfully unpacked and MD5 sums checked"
+msgstr ""
+
+msgid "not using staged install with --libs-only"
+msgstr ""
+
+msgid "staged installation is only possible with locking"
 msgstr ""
 
 msgid ""
@@ -902,6 +964,9 @@ msgid "no source files found"
 msgstr ""
 
 msgid "empty 'data' directory"
+msgstr ""
+
+msgid "WARNING: moving package to final location failed, copying instead"
 msgstr ""
 
 msgid "cannot create unique directory for build"
@@ -928,25 +993,10 @@ msgstr ""
 msgid "building a fake installation is disallowed"
 msgstr ""
 
-msgid "C++17 standard requested but CXX17 is not defined"
-msgstr ""
-
-msgid "C++14 standard requested but CXX14 is not defined"
-msgstr ""
-
-msgid "C++11 standard requested but CXX11 is not defined"
-msgstr ""
-
-msgid "C++98 standard requested but CXX98 is not defined"
-msgstr ""
-
 msgid ""
 "See\n"
 "  %s\n"
 "for details."
-msgstr ""
-
-msgid "there is no package called '%s'"
 msgstr ""
 
 msgid "namespace must not be already loaded"
@@ -1016,87 +1066,19 @@ msgid ""
 "Using the first one."
 msgstr ""
 
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\item."
+msgstr ""
+
 msgid "Processing packages:"
 msgstr ""
 
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
 "  %s"
-msgstr ""
-
-msgid "%s must be a character string or a file/raw connection"
-msgstr ""
-
-msgid "PDF header not found"
-msgstr ""
-
-msgid "EOF marker not found"
-msgstr ""
-
-msgid "cannot find 'startxref' keyword"
-msgstr ""
-
-msgid "cannot find xref table"
-msgstr ""
-
-msgid "cannot read xref table"
-msgstr ""
-
-msgid "attempting to select less than one element"
-msgstr ""
-
-msgid "attempting to select more than one element"
-msgstr ""
-
-msgid "looking at %s"
-msgstr ""
-
-msgid "cannot read literal string object"
-msgstr ""
-
-msgid "cannot read hexadecimal string object"
-msgstr ""
-
-msgid "cannot read name object"
-msgstr ""
-
-msgid "cannot read array object"
-msgstr ""
-
-msgid "cannot read dictionary object"
-msgstr ""
-
-msgid "cannot read stream object"
-msgstr ""
-
-msgid "cannot read indirect reference object"
-msgstr ""
-
-msgid "cannot find object header at xrefed position %d"
-msgstr ""
-
-msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr ""
-
-msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr ""
-
-msgid "cannot read stream data"
-msgstr ""
-
-msgid "invalid index in object stream lookup"
-msgstr ""
-
-msgid "expanding %s"
-msgstr ""
-
-msgid "unsupported filter %s"
-msgstr ""
-
-msgid "unsupported %s predictor %d"
-msgstr ""
-
-msgid "unsupported PNG filter %d"
 msgstr ""
 
 msgid "argument '%s' must be a character string or connection"
@@ -1172,9 +1154,6 @@ msgstr ""
 msgid "argument 'pkg' must be of length 1"
 msgstr "argumento 'package' deve ter comprimento 1"
 
-msgid "package '%s' was not found"
-msgstr ""
-
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 msgstr ""
 
@@ -1184,7 +1163,74 @@ msgstr ""
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr ""
 
+#, fuzzy
+msgid "argument 'vignette' must be of length 1"
+msgstr "argumento 'package' deve ter comprimento 1"
+
 msgid "R CMD build failed"
+msgstr ""
+
+msgid "PACKAGES files do not include MD5 sums in the win.binary case"
+msgstr ""
+
+msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
+msgstr ""
+
+msgid "directly."
+msgstr ""
+
+msgid "No existing PACKAGES file found at"
+msgstr ""
+
+msgid "Existing PACKAGES file contained no rows and/or no columns"
+msgstr ""
+
+msgid "Specified fields no present in existing PACKAGES file:"
+msgstr ""
+
+msgid ""
+"Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgstr ""
+
+msgid "Updating existing repository [strict mode:"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid ""
+"]\n"
+"Detected PACKAGES file with"
+msgstr ""
+
+msgid "entries at"
+msgstr ""
+
+msgid "unable to find any package tarballs in"
+msgstr ""
+
+msgid "All existing entry MD5sums match tarballs."
+msgstr ""
+
+msgid "Found"
+msgstr ""
+
+msgid "package versions to process."
+msgstr ""
+
+msgid "No new packages or updated package versions detected"
+msgstr ""
+
+msgid "[dryrun mode] Dryrun complete."
+msgstr ""
+
+msgid "Writing final updated PACKAGES files."
+msgstr ""
+
+msgid "update_PACKAGES complete."
 msgstr ""
 
 msgid "'x' must be a single character string"
@@ -1208,13 +1254,10 @@ msgstr ""
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr ""
 
-msgid "unable to run '%s' on '%s'"
-msgstr ""
-
 msgid "unable to run %s on '%s'"
 msgstr ""
 
-msgid "cannot coerce %s to logical"
+msgid "unable to run '%s' on '%s'"
 msgstr ""
 
 msgid "File 'DESCRIPTION' is missing."
@@ -1238,19 +1281,11 @@ msgstr ""
 msgid "cannot source package code:"
 msgstr ""
 
-msgid "Call sequence:"
-msgstr ""
-
 msgid "'text' must be a character vector"
 msgstr ""
 
 msgid "parsing '%s'"
 msgstr ""
-
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] ""
-msgstr[1] ""
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1363,13 +1398,23 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "duplicated vignette title:"
+msgid_plural "duplicated vignette titles:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "SUMMARY: processing the following file failed:"
+msgid_plural "SUMMARY: processing the following files failed:"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid " file\n"
-msgid_plural " files\n"
+msgid "%s file\n"
+msgid_plural "%s files\n"
 msgstr[0] ""
 msgstr[1] ""
 

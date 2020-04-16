@@ -1,7 +1,7 @@
 #  File src/library/utils/R/data.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,14 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         ans
     }
 
+    my_read_table <- function(...) {
+        ## Try canonicalizing the sort order for possible string to
+        ## factor conversions.
+        lcc <- Sys.setlocale("LC_COLLATE", "C")
+        on.exit(Sys.setlocale("LC_COLLATE", lcc))
+        read.table(...)
+    }
+
     names <- c(as.character(substitute(list(...))[-1L]), list)
 
     ## Find the directories of the given packages and maybe the working
@@ -35,11 +43,13 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
     if (!is.null(package)) {
         if (!is.character(package))
             stop("'package' must be a character string or NULL")
+      if(FALSE) { # From 2004  to R 3.6.x {2020}
         if (any(package %in% "base"))
             warning("datasets have been moved from package 'base' to package 'datasets'")
         if (any(package %in% "stats"))
            warning("datasets have been moved from package 'stats' to package 'datasets'")
         package[package %in% c("base", "stats")] <- "datasets"
+      }
     }
     paths <- find.package(package, lib.loc, verbose = verbose)
     if (is.null(lib.loc))
@@ -192,13 +202,17 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                                assign(name,
                                       ## ensure default for as.is has not been
                                       ## overridden by options(stringsAsFactor)
-                                      read.table(zfile, header = TRUE, as.is = FALSE),
+                                      my_read_table(zfile,
+                                                    header = TRUE,
+                                                    as.is = FALSE),
                                       envir = tmp_env),
                                CSV = , csv = ,
                                csv.gz = , csv.bz2 = , csv.xz =
                                assign(name,
-                                      read.table(zfile, header = TRUE,
-                                                 sep = ";", as.is = FALSE),
+                                      my_read_table(zfile,
+                                                    header = TRUE,
+                                                    sep = ";",
+                                                    as.is = FALSE),
                                       envir = tmp_env),
                                found <- FALSE)
                     }

@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2019 R Core Team
+### Copyright (C) 1998-2020 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -3108,7 +3108,8 @@ fi
 AC_MSG_CHECKING([whether PCRE support suffices])
 if test "x${r_cv_have_pcre2utf}" != xyes && \
    test "x${r_cv_have_pcre832}" != xyes; then
-  AC_MSG_ERROR([Either pcre >= 8.32 or pcre2 library and headers are required])
+  AC_MSG_RESULT([no])
+  AC_MSG_ERROR([PCRE2 library and headers are required, or use --with-pcre1 and PCRE >= 8.32 with UTF-8 support])
 else
   AC_MSG_RESULT([yes])
 fi
@@ -3157,8 +3158,6 @@ int main() {
   if test "x${r_cv_have_pcre2utf}" = "xyes"; then
     AC_DEFINE(HAVE_PCRE2, 1, [Define if your system has pcre2.])
   else
-    warn_pcre2="PCRE2 is preferred but unavailable"
-    AC_MSG_WARN([${warn_pcre2}])
     CPPFLAGS="${r_save_CPPFLAGS}"
     LIBS="${r_save_LIBS}"
   fi

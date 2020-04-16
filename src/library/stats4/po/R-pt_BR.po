@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -17,22 +17,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.0.5\n"
 
-msgid ""
-"some named arguments in 'fixed' are not arguments to the supplied log-"
-"likelihood"
+msgid "named list expected"
+msgstr ""
+
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 "alguns argumentos em 'fixed' não são argumentos para a log-verossimilhança "
 "fornecida"
 
-msgid "'start' must be a named list"
-msgstr "'start' deve ser uma lista noemada"
-
-msgid ""
-"some named arguments in 'start' are not arguments to the supplied log-"
-"likelihood"
+msgid "Mismatch in length of start values"
 msgstr ""
-"alguns argumentos nomeados em 'start' não são argumentos para a log-"
-"verossimilhança fornecida"
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
+msgstr ""
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
@@ -45,6 +46,16 @@ msgstr "níveis truncados para valores positivos"
 
 msgid "extra arguments discarded"
 msgstr "argumentos extras descartados"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' deve ser uma lista noemada"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "alguns argumentos nomeados em 'start' não são argumentos para a log-"
+#~ "verossimilhança fornecida"
 
 #~ msgid "empty model supplied"
 #~ msgstr "modelo provido é vazio"

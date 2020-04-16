@@ -1,7 +1,7 @@
 #  File src/library/stats/R/model.tables.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2019 The R Core Team
+#  Copyright (C) 1998-2020 The R Core Team
 #  Copyright     1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -471,14 +471,12 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     indError <- attr(Terms, "specials")$Error
     errorterm <-  attr(Terms, "variables")[[1 + indError]]
     form <- update.formula(Terms,
-                           paste(". ~ .-", deparse(errorterm, width.cutoff=500L,
-                                                   backtick = TRUE),
-                                 "+", deparse(errorterm[[2L]], width.cutoff=500L,
-                                              backtick = TRUE)))
+                           paste(". ~ .-", deparse1(errorterm, backtick = TRUE),
+                                 "+", deparse1(errorterm[[2L]], backtick = TRUE)))
     nargs <- as.list(call)
     oargs <- as.list(oc)
     nargs <- nargs[match(c("data", "na.action", "subset"), names(nargs), 0)]
-    args <- oargs[match(c("data", "na.action", "subset"), names(oargs), 0)]
+    args  <- oargs[match(c("data", "na.action", "subset"), names(oargs), 0)]
     args[names(nargs)] <- nargs
     args$formula <- form
     env <- environment(Terms)

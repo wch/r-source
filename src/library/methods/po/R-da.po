@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -432,17 +432,17 @@ msgid ""
 "deprecated."
 msgstr ""
 
-msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr ""
 
-msgid "use %s instead."
+msgid "Use %s instead."
 msgstr ""
 
 msgid ""
 "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
 msgstr ""
 
-msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr ""
 
 msgid "invalid object for formal method definition: type %s"
@@ -566,11 +566,14 @@ msgid ""
 msgstr ""
 
 msgid ""
-"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
-"with an inherited definition in class %s"
+"Definition of slot %s, in class %s, as %s conflicts with definition, "
+"inherited from class %s, as %s"
 msgstr ""
 
 msgid "class %s extends an undefined class (%s)"
+msgstr ""
+
+msgid "The prototype for class %s has undefined slot(s): %s"
 msgstr ""
 
 msgid ""
@@ -648,13 +651,16 @@ msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
 
 msgid ""
-"subclass %s of class %s is not local and cannot be updated for new "
-"inheritance information; consider setClassUnion()"
+"no definition of inheritance from %s to %s, though the relation was implied "
+"by the setIs() from %s"
 msgstr ""
 
 msgid ""
-"no definition of inheritance from %s to %s, though the relation was implied "
-"by the setIs() from %s"
+"Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+msgstr ""
+
+msgid "E := environment(): %s; parent.env(E): %s"
 msgstr ""
 
 msgid ""
@@ -1041,7 +1047,7 @@ msgstr ""
 
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
-"revise %s information---not exported?  Making a copy in package %s"
+"revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
 
 msgid "class %s cannot extend class %s"

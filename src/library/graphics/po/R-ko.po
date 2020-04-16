@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -86,11 +86,22 @@ msgstr "로그스케일 에러: 'ylim'가 0 보다 작거나 같습니다"
 msgid "incorrect number of names"
 msgstr "names의 개수가 잘못되었습니다"
 
-msgid "invalid first argument"
-msgstr "첫번째 인자가 잘못되었습니다"
-
 msgid "'formula' missing or incorrect"
 msgstr "'formula'가 없거나 잘못되었습니다"
+
+#, fuzzy
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr "'formula'는 반드시 두 변수들을 정확히 지정해야 합니다"
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr ""
+
+#, fuzzy
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr "'formula'는 반드시 두 변수들을 정확히 지정해야 합니다"
+
+msgid "invalid first argument"
+msgstr "첫번째 인자가 잘못되었습니다"
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at'의 길이는 반드시 'z$n'와 같아야 합니다 (즉, %d이어야 합니다)"
@@ -232,8 +243,8 @@ msgstr "'probability'은 '!freq'의 alias이지만, 이 둘은 다릅니다"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr ""
-"일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하"
-"지 않은 것 같습니다"
+"일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하지 "
+"않은 것 같습니다"
 
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "플랏내의 AREAS가 잘못되었으므로 'freq = FALSE'를 사용합니다"
@@ -469,6 +480,10 @@ msgstr "y log scale:  yinch()는 아무런 의미가 없습니다."
 
 msgid "log scale:  xyinch() is nonsense"
 msgstr "log scale: xyinch()는 아무런 의미가 없습니다."
+
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] ""
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"

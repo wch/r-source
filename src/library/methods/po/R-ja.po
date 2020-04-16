@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2015-03-27 14:52+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -508,11 +508,13 @@ msgstr ""
 " %s を別の \"MethodsList\" のメタデータオブジェクトとともに使うことは廃止され"
 "ました。 "
 
-msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr ""
 " %s 中：\"MethodsList\" メタデータオブジェクトの使用は廃止されました． "
 
-msgid "use %s instead."
+#, fuzzy
+msgid "Use %s instead."
 msgstr " %s を代わりに使ってください． "
 
 msgid ""
@@ -521,7 +523,8 @@ msgstr ""
 " %s を別の \"MethodsList\" メタデータオブジェクトとともに使うことは廃止されま"
 "した "
 
-msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr " %s ：\"MethodsList\" メタデータオブジェクトの使用は廃止されました "
 
 msgid "invalid object for formal method definition: type %s"
@@ -674,15 +677,20 @@ msgstr ""
 " クラス %s のプロトタイプが与えられましたが、クラス定義はクラス %s であるオブ"
 "ジェクトを必要とします "
 
+#, fuzzy
 msgid ""
-"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
-"with an inherited definition in class %s"
+"Definition of slot %s, in class %s, as %s conflicts with definition, "
+"inherited from class %s, as %s"
 msgstr ""
 " スロット %s (クラス %s 中の) は現在 \"%s\" として定義 (もしくは継承) されて"
 "いますが、クラス %s 中の継承された定義と相克します "
 
 msgid "class %s extends an undefined class (%s)"
 msgstr " クラス %s は未定義のクラス (%s) に拡張されます "
+
+#, fuzzy
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr " '%s' リスト (クラス %s に対する) は未定義のクラス %s を含みます "
 
 msgid ""
 "%s is not eligible to be the data part of another class (must be a basic "
@@ -774,18 +782,19 @@ msgid "undefined subclass %s of class %s; definition not updated"
 msgstr " 未定義のサブクラス %s (クラスは %s) です; 定義は更新されません "
 
 msgid ""
-"subclass %s of class %s is not local and cannot be updated for new "
-"inheritance information; consider setClassUnion()"
-msgstr ""
-" サブクラス %s (クラスは %s) は局所的でなく、新しい継承情報のために更新できま"
-"せん; setClassUnion() の使用を考えてください "
-
-msgid ""
 "no definition of inheritance from %s to %s, though the relation was implied "
 "by the setIs() from %s"
 msgstr ""
 " %s から %s への継承定義がありません。しかし関係は %s からの setIs() によって"
 "含意されています "
+
+msgid ""
+"Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+msgstr ""
+
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr ""
 
 msgid ""
 "argument 'includeSubclasses' must be a logical, either one value or a vector "
@@ -1253,9 +1262,10 @@ msgstr ""
 " クラス %s は封印されています; 新しい上位クラスは、'setClassUnion' を使わない"
 "限り、定義できません "
 
+#, fuzzy
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
-"revise %s information---not exported?  Making a copy in package %s"
+"revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
 " クラス %s が（パッケージスロット %s とともに) 定義されていますが、%s の情報"
 "を改訂するためのメタデータオブジェクトがありません。エクスポートされていない"
@@ -1921,6 +1931,13 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 " クラス %s の定義は指定された位置 %s にありません、以下に関する定義です: %s "
+
+#~ msgid ""
+#~ "subclass %s of class %s is not local and cannot be updated for new "
+#~ "inheritance information; consider setClassUnion()"
+#~ msgstr ""
+#~ " サブクラス %s (クラスは %s) は局所的でなく、新しい継承情報のために更新で"
+#~ "きません; setClassUnion() の使用を考えてください "
 
 #~ msgid ""
 #~ "Note: the specification for S3 class %s in package %s seems equivalent to "

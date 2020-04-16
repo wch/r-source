@@ -114,7 +114,7 @@ install-tests:
 	@$(ECHO) "installing specific tests"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/Packages"
-	@for f in Makefile.common $(INSTFILES); do \
+	@for f in Makefile.common $(INSTFILES) eval-fns.R; do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)/tests"; \
 	done
 	@$(INSTALL_DATA) $(srcdir)/Makefile.install \

@@ -35,6 +35,9 @@
 #include <Rmath.h>
 #include <Print.h>
 
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
 
 /* This section of code handles type conversion for elements */
 /* of data vectors.  Type coercion throughout R should use these */
@@ -1450,6 +1453,12 @@ SEXP attribute_hidden do_asatomic(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 5:
 	name = "as.raw"; type = RAWSXP; break;
     }
+    /* DispatchOrEval internal generic: as.character */
+    /* DispatchOrEval internal generic: as.integer */
+    /* DispatchOrEval internal generic: as.double */
+    /* DispatchOrEval internal generic: as.complex */
+    /* DispatchOrEval internal generic: as.logical */
+    /* DispatchOrEval internal generic: as.raw */
     if (DispatchOrEval(call, op, name, args, rho, &ans, 0, 1))
 	return(ans);
 
@@ -1476,6 +1485,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x, ans;
     int type;
 
+    /* DispatchOrEval internal generic: as.vector */
     if (DispatchOrEval(call, op, "as.vector", args, rho, &ans, 0, 1))
 	return(ans);
 
@@ -1689,6 +1699,7 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
     check1arg(args, call, "x");
 
     SEXP ans;
+    /* DispatchOrEval internal generic: as.call */
     if (DispatchOrEval(call, op, "as.call", args, rho, &ans, 0, 1))
 	return(ans);
 
@@ -1946,6 +1957,9 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 102: nm = "is.array"; break;
 	default: nm = ""; /* -Wall */
 	}
+	/* DispatchOrEval internal generic: is.numeric */
+	/* DispatchOrEval internal generic: is.matrix */
+	/* DispatchOrEval internal generic: is.array */
 	if(DispatchOrEval(call, op, nm, args, rho, &ans, 0, 1))
 	    return(ans);
     }
@@ -2175,6 +2189,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    /* DispatchOrEval internal generic: is.na */
     if (DispatchOrEval(call, op, "is.na", args, rho, &ans, 1, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -2346,6 +2361,7 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 	call2 = PROTECT(shallow_duplicate(call));
 	for (i = 0; i < n; i++, x = CDR(x)) {
 	    SETCAR(args2, CAR(x)); SETCADR(call2, CAR(x));
+	    /* DispatchOrEval internal generic: anyNA */
 	    if ((DispatchOrEval(call2, op, "anyNA", args2, env, &ans, 0, 1)
 		 && asLogical(ans)) || anyNA(call2, op, args2, env)) {
 		UNPROTECT(2);
@@ -2362,6 +2378,7 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 	call2 = PROTECT(shallow_duplicate(call));
 	for (i = 0; i < n; i++) {
 	    SETCAR(args2, VECTOR_ELT(x, i)); SETCADR(call2, VECTOR_ELT(x, i));
+	    /* DispatchOrEval internal generic: anyNA */
 	    if ((DispatchOrEval(call2, op, "anyNA", args2, env, &ans, 0, 1)
 		 && asLogical(ans)) || anyNA(call2, op, args2, env)) {
 		UNPROTECT(2);
@@ -2387,6 +2404,7 @@ SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(args) < 1 || length(args) > 2)
 	errorcall(call, "anyNA takes 1 or 2 arguments");
 
+    /* DispatchOrEval internal generic: anyNA */
     if (DispatchOrEval(call, op, "anyNA", args, rho, &ans, 0, 1))
 	return ans;
 
@@ -2417,6 +2435,7 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    /* DispatchOrEval internal generic: is.nan */
     if (DispatchOrEval(call, op, "is.nan", args, rho, &ans, 1, 1))
 	return(ans);
 
@@ -2461,10 +2480,12 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, names, dims;
     R_xlen_t i, n;
+    int nprotect = 0;
 
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    /* DispatchOrEval internal generic: is.finite */
     if (DispatchOrEval(call, op, "is.finite", args, rho, &ans, 0, 1))
 	return(ans);
 #ifdef stringent_is
@@ -2474,6 +2495,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = xlength(x);
     PROTECT(ans = allocVector(LGLSXP, n));
+    nprotect++;
     int *pa = LOGICAL(ans);
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
@@ -2481,6 +2503,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));
 	else
 	    PROTECT(names = getAttrib(x, R_NamesSymbol));
+	nprotect++;
     }
     else dims = names = R_NilValue;
     switch (TYPEOF(x)) {
@@ -2517,9 +2540,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    setAttrib(ans, R_NamesSymbol, names);
     }
-    if (isVector(x))
-	UNPROTECT(1); /* names */
-    UNPROTECT(1); /* ans */
+    UNPROTECT(nprotect);
     return ans;
 }
 
@@ -2528,10 +2549,12 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, x, names, dims;
     double xr, xi;
     R_xlen_t i, n;
+    int nprotect = 0;
 
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    /* DispatchOrEval internal generic: is.infinite */
     if (DispatchOrEval(call, op, "is.infinite", args, rho, &ans, 0, 1))
 	return(ans);
 #ifdef stringent_is
@@ -2541,6 +2564,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = xlength(x);
     PROTECT(ans = allocVector(LGLSXP, n));
+    nprotect++;
     int *pa = LOGICAL(ans);
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
@@ -2548,6 +2572,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));
 	else
 	    PROTECT(names = getAttrib(x, R_NamesSymbol));
+	nprotect++;
     }
     else	dims = names = R_NilValue;
     switch (TYPEOF(x)) {
@@ -2591,9 +2616,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    setAttrib(ans, R_NamesSymbol, names);
     }
-    if (isVector(x))
-	UNPROTECT(1); /* names */
-    UNPROTECT(1); /* ans */
+    UNPROTECT(nprotect);
     return ans;
 }
 

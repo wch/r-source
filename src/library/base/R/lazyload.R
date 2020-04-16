@@ -1,7 +1,7 @@
 #  File src/library/base/R/lazyload.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,10 +27,11 @@ lazyLoadDBexec <- function(filebase, fun, filter)
 {
     ##
     ## bootstrapping definitions so we can load base
-    ## - not that this version is actually used to load base
+    ## - not that this version is actually used to load base (but the ../baseloader.R  one is!)
     ##
     glue <- function (..., sep = " ", collapse = NULL)
-        .Internal(paste(list(...), sep, collapse))
+##      .Internal(paste(list(...), sep, collapse, TRUE))# recycle0=TRUE
+        .Internal(paste(list(...), sep, collapse, FALSE))
     readRDS <- function (file) {
         halt <- function (message) .Internal(stop(TRUE, message))
         gzfile <- function (description, open)
@@ -44,15 +45,14 @@ lazyLoadDBexec <- function(filebase, fun, filter)
     `parent.env<-` <-
         function (env, value) .Internal(`parent.env<-`(env, value))
     existsInFrame <- function (x, env) .Internal(exists(x, env, "any", FALSE))
-    ## getFromFrame <- function (x,  env) .Internal(get(x,  env,  "any",  FALSE))
-    ## set <- function (x,  value,  env) .Internal(assign(x,  value,  env,  FALSE))
+    list2env <- function (x, envir) .Internal(list2env(x, envir))
     environment <- function () .Internal(environment(NULL))
     mkenv <- function() .Internal(new.env(TRUE, baseenv(), 29L))
 
     ##
     ## main body
     ##
-    mapfile <- glue(filebase, "rdx", sep = ".")
+    mapfile  <- glue(filebase, "rdx", sep = ".")
     datafile <- glue(filebase, "rdb", sep = ".")
     env <- mkenv()
     map <- readRDS(mapfile)

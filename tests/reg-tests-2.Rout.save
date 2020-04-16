@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-02-19 r77831) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-04-12 r78210) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -21,7 +21,7 @@ Type 'q()' to quit R.
 > pdf("reg-tests-2.pdf", encoding = "ISOLatin1.enc")
 > 
 > ## force standard handling for data frames
-> options(stringsAsFactors=TRUE)
+> options(stringsAsFactors=FALSE) # R >= 4.0.0
 > options(useFancyQuotes=FALSE)
 > 
 > ### moved from various .Rd files
@@ -351,7 +351,8 @@ There were 22 warnings (use warnings() to see them)
 > ## data.frame
 > set.seed(123)
 > L3 <- LETTERS[1:3]
-> d <- data.frame(cbind(x=1, y=1:10), fac = sample(L3, 10, replace=TRUE))
+> d <- data.frame(cbind(x=1, y=1:10), fac = sample(L3, 10, replace=TRUE),
++                 stringsAsFactors=TRUE)
 > str(d)
 'data.frame':	10 obs. of  3 variables:
  $ x  : num  1 1 1 1 1 1 1 1 1 1
@@ -689,7 +690,7 @@ C: 864000 720000 864000 1008000 1152000
 > authors <- data.frame(
 +     surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
 +     nationality = c("US", "Australia", "US", "UK", "Australia"),
-+     deceased = c("yes", rep("no", 4)))
++     deceased = c("yes", rep("no", 4)), stringsAsFactors=TRUE)
 > books <- data.frame(
 +     name = c("Tukey", "Venables", "Tierney",
 +              "Ripley", "Ripley", "McNeil", "R Core"),
@@ -700,7 +701,8 @@ C: 864000 720000 864000 1008000 1152000
 +               "Interactive Data Analysis",
 +               "An Introduction to R"),
 +     other.author = c(NA, "Ripley", NA, NA, NA, NA,
-+                      "Venables & Smith"))
++ 		     "Venables & Smith"),
++ 	   stringsAsFactors=TRUE)
 > b2 <- books; names(b2)[1] <- names(authors)[1]
 > 
 > merge(authors, b2, all.x = TRUE)
@@ -808,7 +810,8 @@ attr(,"scaled:scale")
 > ## end of moved from tabulate.Rd
 > 
 > ## ts
-> # Ensure working arithmetic for `ts' objects :
+> # Ensure working arithmetic for 'ts' objects :
+> z <- ts(matrix(1:900, 100, 3), start = c(1961, 1), frequency = 12)
 > stopifnot(z == z)
 > stopifnot(z-z == 0)
 > 
@@ -1439,7 +1442,7 @@ Y    4   10   16   22
 > ## PR#1115 (saving strings with ascii=TRUE)
 > x <- y <- unlist(as.list(
 +     parse(text=paste("\"\\", as.character(as.octmode(1:255)), "\"",sep=""))))
-> save(x, ascii=TRUE, file=(fn <- tempfile()))
+> save(x, ascii=TRUE, file=(fn <- tempfile(tmpdir = getwd())))
 > load(fn)
 > all(x==y)
 [1] TRUE
@@ -4106,6 +4109,8 @@ In readBin(zz, "character", 100) :
 [1] 18
 > readChar(zz, length(xx)) # truncates at embedded nul
 [1] "A test string"
+Warning message:
+In readChar(zz, length(xx)) : truncating string with embedded nuls
 > seek(zz) # make sure current position is reported properly
 [1] 18
 > close(zz)
@@ -4176,9 +4181,10 @@ Warning message:
 +                 c("2004-01-01", "2004-02-01", "2004-03-01"),
 +                 c("2004-01-01 12:00", "2004-02-01 12:00", "2004-03-01 12:00")),
 +               3, 6)
-> foo <- tempfile()
+> foo <- tempfile(tmpdir = getwd())
 > write.table(Mat, foo, col.names = FALSE, row.names = FALSE)
-> read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"))
+> read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"),
++            stringsAsFactors=TRUE)
   V1 V2 V4         V5                  V6
 1  1  a  A 2004-01-01 2004-01-01 12:00:00
 2  2  b  B 2004-02-01 2004-02-01 12:00:00
@@ -4186,7 +4192,8 @@ Warning message:
 > unlist(sapply(.Last.value, class))
          V1          V2          V4          V5         V61         V62 
   "integer"    "factor" "character"      "Date"   "POSIXct"    "POSIXt" 
-> read.table(foo, colClasses = c("factor",NA,"NULL","factor","Date","POSIXct"))
+> read.table(foo, colClasses = c("factor",NA,"NULL","factor","Date","POSIXct"),
++            stringsAsFactors=TRUE)
   V1 V2 V4         V5                  V6
 1  1  a  A 2004-01-01 2004-01-01 12:00:00
 2  2  b  B 2004-02-01 2004-02-01 12:00:00
@@ -4194,7 +4201,7 @@ Warning message:
 > unlist(sapply(.Last.value, class))
        V1        V2        V4        V5       V61       V62 
  "factor"  "factor"  "factor"    "Date" "POSIXct"  "POSIXt" 
-> read.table(foo, colClasses = c(V4="character"))
+> read.table(foo, colClasses = c(V4="character"), stringsAsFactors=TRUE)
   V1 V2 V3 V4         V5               V6
 1  1  a  1  A 2004-01-01 2004-01-01 12:00
 2  2  b  2  B 2004-02-01 2004-02-01 12:00
@@ -4510,7 +4517,7 @@ Error in stats:::add1.default(fit, ~. + x2) :
 > 
 > 
 > ## (PR#7789) escaped quotes in the first five lines for read.table
-> tf <- tempfile()
+> tf <- tempfile(tmpdir = getwd())
 > x <- c("6 'TV2  Shortland Street'",
 +        "2 'I don\\\'t watch TV at 7'",
 +        "1 'I\\\'m not bothered, whatever that looks good'",
@@ -5719,7 +5726,7 @@ list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
 list(a = NA, b = as.integer(NA), c = as.double(NA), d = as.complex(NA), 
     e = 1., f = as.integer(1), g = 1:3, h = as.integer(c(NA, 
     1, 2, 3)), i = as.character(NA), j = c("foo", NA, "bar"))
-> tmp <- tempfile()
+> tmp <- tempfile(tmpdir = getwd())
 > dput(x, tmp, control="all")
 > stopifnot(identical(dget(tmp), x))
 > dput(x, tmp, control=c("all", "S_compatible"))
@@ -6126,7 +6133,7 @@ zero  one
 > x <- as.raw(65:74)
 > readChar(x, nchar=c(3,3,0,3,3,3))
 [1] "ABC" "DEF" ""    "GHI" "J"  
-> f <- tempfile()
+> f <- tempfile(tmpdir = getwd())
 > writeChar("ABCDEFGHIJ", con=f, eos=NULL)
 > readChar(f, nchar=c(3,3,0,3,3,3))
 [1] "ABC" "DEF" ""    "GHI" "J"  
@@ -6356,7 +6363,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x249da38>
+<bytecode: 0x2b0e1e8>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6367,7 +6374,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x249da38>
+<bytecode: 0x2b0e1e8>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6379,7 +6386,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x249da38>
+<bytecode: 0x2b0e1e8>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -7109,7 +7116,8 @@ g(y)(x)
 > 
 > 
 > ## PR#15247 : str() on invalid data frame names (where print() works):
-> d <- data.frame(1:3, "B", 4); names(d) <- c("A", "B\xba","C\xabcd")
+> d <- data.frame(1:3, "B", 4, stringsAsFactors=TRUE)
+> names(d) <- c("A", "B\xba","C\xabcd")
 > str(d)
 'data.frame':	3 obs. of  3 variables:
  $ A      : int  1 2 3
@@ -7300,12 +7308,12 @@ elem2 2 12   14
 > 
 > ## When two entries needed to be cut to width, str() mixed up
 > ## the values (reported by Gerrit Eichner)
-> oldopts <- options(width=70, stringsAsFactors=TRUE)
+> oldopts <- options(width=70)
 > n <- 11      # number of rows of data frame
 > M <- 10000   # order of magnitude of numerical values
 > longer.char.string <- "zjtvorkmoydsepnxkabmeondrjaanutjmfxlgzmrbjp"
 > X <- data.frame( A = 1:n * M,
-+                  B = rep( longer.char.string, n))
++                  B = factor(rep(longer.char.string, n)))
 > str( X, strict.width = "cut")
 'data.frame':	11 obs. of  2 variables:
  $ A: num  1e+04 2e+04 3e+04 4e+04 5e+04 6e+04 7e+04 8e+04 9e+04 1e+..
@@ -8024,4 +8032,27 @@ mean of x
      14.5 
 
 > ## showed 'df = 30' from signif(*, digits=1) and too many digits for CI, in R <= 3.5.1
+> 
+> 
+> ## str(<d.frame w/ attrib>):
+> treeA <- trees
+> attr(treeA, "someA") <- 1:77
+> str(treeA)
+'data.frame':	31 obs. of  3 variables:
+ $ Girth : num  8.3 8.6 8.8 10.5 10.7 10.8 11 11 11.1 11.2 ...
+ $ Height: num  70 65 63 72 81 83 66 75 80 75 ...
+ $ Volume: num  10.3 10.3 10.2 16.4 18.8 19.7 15.6 18.2 22.6 19.9 ...
+ - attr(*, "someA")= int [1:77] 1 2 3 4 5 6 7 8 9 10 ...
+> ## now shows the *length* of "someA"
+> 
+> 
+> ## summaryRprof() bug PR#15886 :
+> Rprof(tf <- tempfile("Rprof.out", tmpdir = getwd()), memory.profiling=TRUE, line.profiling=FALSE)
+> out <- lapply(1:10000, rnorm, n= 512)
+> Rprof(NULL)
+> if(interactive())
++     print(length(readLines(tf))) # ca. 10 .. 20 lines
+> op <- options(warn = 2) # no warnings, even !
+> for (cs in 1:21) s <- summaryRprof(tf, memory="tseries", chunksize=cs)
+> options(op) ## "always" triggered an error (or a warning) in R <= 3.6.3
 > 

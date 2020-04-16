@@ -79,13 +79,14 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     \code{"grey"}) and \code{"cmyk"}.  Defaults to \code{"srgb"}.  See section
     \sQuote{Color models}.}
   \item{useDingbats}{logical.  Should small circles be rendered
-    \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces
-    smaller and better output.  Setting this to \code{FALSE} can work
-    around font display problems in broken PDF viewers: although this
+    \emph{via} the Dingbats font?  Defaults to \code{FALSE}.
+    If \code{TRUE}, this can produce smaller and better output, but
+    there can font display problems in broken PDF viewers: although this
     font is one of the 14 guaranteed to be available in all PDF viewers,
     that guarantee is not always honoured.
 
-    On Unix-alikes (incl. Mac), see the \sQuote{Note} for a possible fix for some viewers.}
+    For Unix-alikes (including macOS) see the \sQuote{Note} for a
+    possible fix for some viewers.}
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
@@ -202,8 +203,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch, with a minimum
     of 0.01 enforced.
-    \item Circles of any radius are allowed.  Unless \code{useDingbats =
-      FALSE}, opaque circles of less than 10 big points radius are
+    \item Circles of any radius are allowed.  If \code{useDingbats =
+      TRUE}, opaque circles of less than 10 big points radius are
     rendered using char 108 in the Dingbats font: all semi-transparent
     and larger circles using a \enc{Bézier}{Bezier} curve for each
     quadrant.
@@ -244,8 +245,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   they may be offered for download as needed).
 
   \describe{
-    \item{On some Unix-alike systems}{the default plotting character
-      \code{pch = 1} was
+    \item{On some Unix-alike systems:}{
+      If \code{useDingbats = TRUE},
+      the default plotting character \code{pch = 1} was
   displayed in some PDF viewers incorrectly as a \code{"q"}
   character.  (These seem to be viewers based on the \samp{poppler} PDF
   rendering library).  This may be due to incorrect or incomplete mapping
@@ -273,9 +275,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
  }
 }%end{describe}
 
-  There is a different font bug in the \command{pdf.js} viewer included
-  in Firefox 19 and later: that maps Dingbats to the Symbol font and so
-  displays symbols such \code{pch = 1} as lambda.
+  There was a different font bug in the \command{pdf.js} viewer included
+  in Firefox: that mapped Dingbats to the Symbol font and so displayed
+  symbols such \code{pch = 1} as lambda.
 }
 
 \seealso{

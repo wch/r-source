@@ -807,11 +807,12 @@ void InitS3DefaultTypes()
 
 	SEXP part2 = PROTECT(mkChar("array"));
 	SEXP part1 = PROTECT(mkChar("matrix"));
+	nprotected += 2;
 	Type2DefaultClass[type].matrix =
 	    createDefaultClass(part1,      part2, part3, part4);
 	Type2DefaultClass[type].array =
 	    createDefaultClass(R_NilValue, part2, part3, part4);
-	UNPROTECT(2 + nprotected);
+	UNPROTECT(nprotected);
     }
 }
 
@@ -894,6 +895,7 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     // 2 args ("x", "value")
 
+    /* DispatchOrEval internal generic: names<- */
     if (DispatchOrEval(call, op, "names<-", args, env, &ans, 0, 1))
 	return(ans);
     /* Special case: removing non-existent names, to avoid a copy */
@@ -1014,6 +1016,7 @@ SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     checkArity(op, args);
     check1arg(args, call, "x");
+    /* DispatchOrEval internal generic: names */
     if (DispatchOrEval(call, op, "names", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -1033,6 +1036,7 @@ SEXP attribute_hidden do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     // 2 args ("x", "value")
+    /* DispatchOrEval internal generic: dimnames<- */
     if (DispatchOrEval(call, op, "dimnames<-", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -1147,6 +1151,7 @@ SEXP attribute_hidden do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     checkArity(op, args);
     check1arg(args, call, "x");
+    /* DispatchOrEval internal generic: dimnames */
     if (DispatchOrEval(call, op, "dimnames", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -1160,6 +1165,7 @@ SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     checkArity(op, args);
     check1arg(args, call, "x");
+    /* DispatchOrEval internal generic: dim */
     if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -1172,6 +1178,7 @@ SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x;
     checkArity(op, args);
+    /* DispatchOrEval internal generic: dim<- */
     if (DispatchOrEval(call, op, "dim<-", args, env, &ans, 0, 1))
 	return(ans);
     x = CAR(args);
@@ -1293,6 +1300,7 @@ SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     // 2 args ("x", "value")
+    /* DispatchOrEval internal generic: levels<- */
     if (DispatchOrEval(call, op, "levels<-", args, env, &ans, 0, 1))
 	/* calls, e.g., levels<-.factor() */
 	return(ans);
@@ -1341,10 +1349,12 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 	names = R_NilValue; // -Wall
 
+    PROTECT(names);
     if (object == R_NilValue) {
-	if (attrs == R_NilValue)
+	if (attrs == R_NilValue) {
+	    UNPROTECT(1); /* names */
 	    return R_NilValue;
-	else
+	} else
 	    PROTECT(object = allocVector(VECSXP, 0));
     } else {
 	/* Unlikely to have NAMED == 0 here.
@@ -1395,7 +1405,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		      VECTOR_ELT(attrs, i));
 	}
     }
-    UNPROTECT(1);
+    UNPROTECT(2); /* names, object */
     return object;
 }
 
@@ -1579,6 +1589,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	SETCADR(args, input);
 	UNPROTECT(1); // 'input' is now protected
 
+	/* DispatchOrEval internal generic: @<- */
 	if(DispatchOrEval(call, op, "@<-", args, env, &ans, 0, 0))
 	    return(ans);
 

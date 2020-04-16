@@ -29,6 +29,7 @@ assign(".X11.Options",
             fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
             family = "sans",
+            symbolfamily = "default",
             xpos = NA_integer_, ypos = NA_integer_,
 	    title = "", type = "cairo", antialias = "default"),
        envir = .X11env)
@@ -70,7 +71,7 @@ check_for_XQuartz <- function()
 
 X11 <- function(display = "", width, height, pointsize, gamma,
                 bg, canvas, fonts, family,
-                xpos, ypos, title, type, antialias)
+                xpos, ypos, title, type, antialias, symbolfamily)
 {
     if(display != "XImage") { # used by tkrplot
         check <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", "")
@@ -105,6 +106,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(fonts)) new$fonts <- fonts
     if(!missing(antialias) && type != "Xlib")
         new$antialias <- match.arg(antialias, aa.cairo)
+    if(!missing(symbolfamily)) new$symbolfamily <- symbolfamily
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     if(d$type == "Xlib" && !missing(family)) {
         fns <- X11Fonts()
@@ -123,7 +125,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     .External2(C_X11, d$display, d$width, d$height, d$pointsize, d$gamma,
                d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
                NA_integer_, d$xpos, d$ypos, d$title,
-               type, antialias, d$family)
+               type, antialias, d$family, optionSymbolFont(d$symbolfamily))
     invisible()
 }
 
@@ -232,4 +234,17 @@ savePlot <- function(filename = paste0("Rplot.", type),
     if(devname != "X11cairo")
         stop("can only copy from 'X11(type=\"*cairo\")' devices")
     invisible(.External2(C_savePlot, filename, type, device))
+}
+
+
+optionSymbolFont <- function(family) {
+    if (family == "default") {
+        if (symbolType1support()) {
+            cairoSymbolFont("symbol")
+        } else {
+            cairoSymbolFont("sans", usePUA = FALSE)
+        }
+    } else {
+        checkSymbolFont(family)
+    }
 }

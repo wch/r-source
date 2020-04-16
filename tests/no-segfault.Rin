@@ -80,11 +80,14 @@ stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
                           "CRAN_check_results",
                           "CRAN_check_details",
                           "CRAN_memtest_notes",
-                          "summarize_CRAN_check_status"
+                          "summarize_CRAN_check_status",
+                          "startDynamicHelp"       # makes R hang on exit
+                                                   # on Windows
                           )
 stop.list[["grDevices"]] <- dev.int
 stop.list[["utils"]] <- c("Rprof", "aspell", # hangs on Windows
                           "winProgressBar",
+                          "chooseBioCmirror",# too slow, R code 
                           inet.list, socket.fun, edit.int, misc.int, misc.2)
 
 sink("no-segfault.R")

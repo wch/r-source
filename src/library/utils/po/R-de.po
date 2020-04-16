@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:34\n"
+"POT-Creation-Date: 2020-03-24 10:14\n"
 "PO-Revision-Date: 2018-04-16 10:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -213,9 +213,6 @@ msgstr ""
 "Ignoriere ungültigen Eintrag %d:\n"
 "%s"
 
-msgid "package %s not found"
-msgstr "Paket %s nicht gefunden"
-
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "kein Datumsfeld in der Datei DESCRIPTION des Paketes %s"
 
@@ -256,6 +253,9 @@ msgstr "Datei 'filelist' fehlt für Verzeichnis %s"
 msgid "data set %s not found"
 msgstr "Datensatz %s nicht gefunden"
 
+msgid "an object named %s already exists and will not be overwritten"
+msgstr ""
+
 msgid "only 'html = TRUE' is supported on this platform"
 msgstr "nur 'html = TRUE' wird auf dieser Plattform unterstützt"
 
@@ -286,7 +286,9 @@ msgstr "habe nichts assign()-ed"
 msgid ""
 "Cannot debug primitive functions unless they are implicit generics (requires "
 "loading the methods package)"
-msgstr "Kann primitive Funktionen nicht debuggen, außer sie sind implizite Generische (benötigt das geladene methods Paket)"
+msgstr ""
+"Kann primitive Funktionen nicht debuggen, außer sie sind implizite "
+"Generische (benötigt das geladene methods Paket)"
 
 msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
@@ -391,6 +393,38 @@ msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 "'form' muss eine zweiseitige Formel mit einem Term auf jeder Seite sein"
 
+msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
+msgstr ""
+
+msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
+msgstr ""
+
+#, fuzzy
+msgid "no method found for %s(., n=%s) and class %s"
+msgstr "keine Methode für Funktion %s und Signatur %s definiert"
+
+msgid ""
+"tail(., addrownums = V) is deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums = V) instead."
+msgstr ""
+
+msgid "tail(., addrownums=.) is"
+msgstr ""
+
+msgid ""
+"deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums=.) instead."
+msgstr ""
+
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 "'topic' sollte ein Name, ein Zeichenkettenvektor der Länge 1 oder ein "
@@ -474,9 +508,6 @@ msgstr ""
 msgid "incorrect 'agrep' specification"
 msgstr "falsche 'agrep' Spezifikation"
 
-msgid "could not find package %s"
-msgstr "konnte Paket %s nicht finden"
-
 msgid "package %s has empty hsearch data - strangely"
 msgstr "Paket %s hat leere hsearch Daten - seltsam"
 
@@ -543,7 +574,8 @@ msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Geben Sie Menüpunkt ein oder 0 zum Abbruch"
 
 msgid "%d errors caught in %s.  The error messages and their frequencies are"
-msgstr "%d Fehler in %s abgefangen. Die Fehlermeldungen und ihre Häufigkeiten sind"
+msgstr ""
+"%d Fehler in %s abgefangen. Die Fehlermeldungen und ihre Häufigkeiten sind"
 
 msgid "invalid query"
 msgstr "unzulässige Anfrage"
@@ -573,6 +605,9 @@ msgstr ""
 "Funktion '%s' scheint nicht S3 generisch sein; habe Funktionen\n"
 "gefunden, die wie S3 Methoden aussehen"
 
+msgid "'class' is of length > 1; only the first element will be used"
+msgstr ""
+
 msgid "must supply 'generic.function' or 'class'"
 msgstr "'generic.function' oder 'class' muss angegeben werden"
 
@@ -596,6 +631,9 @@ msgstr "'fixInNamespace' benötigt einen Namen"
 
 msgid "only numeric indices can be used"
 msgstr "nur numerische Indizes können benutzt werden"
+
+msgid "Malformed package name."
+msgstr ""
 
 msgid "cannot create directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
@@ -681,7 +719,8 @@ msgid "'download.file()' error code '%d'"
 msgstr "'download.file()' Fehlercode '%d'"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
-msgstr "Herunterladen der Mirrorliste (%s) fehlgeschlagen; nutze lokale Datei '%s'"
+msgstr ""
+"Herunterladen der Mirrorliste (%s) fehlgeschlagen; nutze lokale Datei '%s'"
 
 msgid "cannot choose a"
 msgstr "kann nicht wählen"
@@ -745,7 +784,9 @@ msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr "type == \"both\" kann nur unter Windows oder einem CRAN-build für macOS benutzt werden"
+msgstr ""
+"type == \"both\" kann nur unter Windows oder einem CRAN-build für macOS "
+"benutzt werden"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" kann nicht mit 'repos = NULL' benutzt werden"
@@ -782,7 +823,8 @@ msgid "files: %s"
 msgstr "files: %s"
 
 msgid "timeouts for parallel installs require the 'timeout' command"
-msgstr "Zeitgrenzen für parallele Installationen benötigen ein 'timeout' Kommando"
+msgstr ""
+"Zeitgrenzen für parallele Installationen benötigen ein 'timeout' Kommando"
 
 msgid ""
 "installation of one or more packages failed,\n"
@@ -975,6 +1017,9 @@ msgstr "kann Aufrufe nur auf der lokalen Maschine entgegennehmen"
 msgid "socket not established"
 msgstr "socket nicht etabliert"
 
+msgid "argument is not a function or language object:"
+msgstr ""
+
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
 "str.data.frame() nicht mit einem data.frame aufgerufen -- umgewandelt in "
@@ -992,6 +1037,9 @@ msgstr "'str.default': 'le' is NA, also als 0 betrachtet"
 msgid "'nchar.max = %d' is too small"
 msgstr "'nchar.max = %d' ist zu klein"
 
+msgid "Not a validObject():"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr "'object' hat keine gültigen levels()"
 
@@ -1001,6 +1049,17 @@ msgstr ""
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr "Die Anzahl von Treffern in 'pattern' != 'length(proto)'"
+
+#, fuzzy
+msgid "The number of tokens != 'length(proto)'"
+msgstr "Die Anzahl von Treffern in 'pattern' != 'length(proto)'"
+
+msgid "The number of tokens is not consistent across 'x'"
+msgstr ""
+
+#, fuzzy
+msgid "cannot coerce %s to logical"
+msgstr "kann 'x' nicht nach in römische Zahl unwandeln"
 
 msgid "no lines found in %s"
 msgstr "keine Zeilen in '%s'"
@@ -1014,11 +1073,27 @@ msgstr "Profil enthält keine Zeileninformation"
 msgid "no events were recorded"
 msgstr "keine Ereignisse aufgezeichnet"
 
+msgid "argument 'compressed' is ignored for the internal method"
+msgstr ""
+
 msgid "invalid 'tarfile' argument"
 msgstr "unzulässiges 'tarfile' Argument"
 
 msgid "'compressed' must be logical or character"
 msgstr "'compressed' muss boolesch oder eine Zeichenkette sein"
+
+#, fuzzy
+msgid "No %s command found"
+msgstr "Objekt '%s' nicht gefunden"
+
+msgid "gzip"
+msgstr ""
+
+msgid "bzip2"
+msgstr ""
+
+msgid "xz"
+msgstr ""
 
 msgid "failed to create directory %s"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
@@ -1031,6 +1106,9 @@ msgstr "'tarfile' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "incomplete block on file"
 msgstr "unvollständiger Block in Datei"
+
+msgid "incomplete block: rather use gzfile(.) created connection?"
+msgstr ""
 
 msgid "invalid name field in tarball"
 msgstr "ungültiger Name in tar-Datei"
@@ -1081,8 +1159,9 @@ msgstr "select.list() kann nicht nicht-interaktiv benutzt werden"
 msgid "'title' must be NULL or a length-1 character vector"
 msgstr "'title' muss NULL oder ein Zeichenkettenvektor mit Länge 1 sein"
 
+#, fuzzy
 msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
+"Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
 msgstr ""
 "Bitte eine oder mehrere durch Leerstellen getrennte Zahlen oder eine leere "
 "Zeile eingeben, um abzubrechen"
@@ -1138,6 +1217,9 @@ msgstr "'ccaddress' muss die Länge 1 haben"
 
 msgid "'url' must be a length-one character vector"
 msgstr "'url' muss ein Zeichenkettenvektor mit Länge 1 sein"
+
+msgid "'headers' must have names and must not be NA"
+msgstr ""
 
 msgid "'destfile' must be a length-one character vector"
 msgstr "'destfile' muss ein Zeichenkettenvektor mit Länge 1 sein"
@@ -1203,6 +1285,14 @@ msgstr "Erzeugen von %s fehlgeschlagen"
 
 msgid "there is no 'libs' directory in package %s"
 msgstr "kein 'libs' Verzeichnis im Paket %s"
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s, copying instead"
+msgstr "kann temporäre Installation %s nicht nach %s verschieben"
+
+#, fuzzy
+msgid "unable to copy temporary installation %s to %s"
+msgstr "kann temporäre Installation %s nicht nach %s verschieben"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Nur '*.zip' und '*.tar.gz' Dateien können installiert werden."
@@ -1286,6 +1376,11 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] "installiere auch Abhängigkeit %s"
 msgstr[1] "installiere auch Abhängigkeiten %s"
 
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
+msgstr[1] "Pakete %s werden gerade benutzt und deshalb nicht installiert"
+
 msgid ""
 "Installing package into %s\n"
 "(as %s is unspecified)"
@@ -1368,10 +1463,11 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ungültige römische Zahl: %s"
 msgstr[1] "ungültige römische Zahlen: %s"
 
-msgid "package %s is in use and will not be installed"
-msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
-msgstr[1] "Pakete %s werden gerade benutzt und deshalb nicht installiert"
+#~ msgid "package %s not found"
+#~ msgstr "Paket %s nicht gefunden"
+
+#~ msgid "could not find package %s"
+#~ msgstr "konnte Paket %s nicht finden"
 
 #~ msgid "cannot choose a BioC mirror non-interactively"
 #~ msgstr "kann keinen BioC-Spiegelserver nicht-interaktiv wählen"

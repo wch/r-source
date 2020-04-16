@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
 	    }					  \
 	}					  \
     } while (0)
-    
+
 SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
 {
     if (x == R_NilValue)
@@ -649,6 +649,7 @@ SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* to the generic code below.  Note that evaluation */
     /* retains any missing argument indicators. */
 
+    /* DispatchOrEval internal generic: [ */
     if(R_DispatchOrEvalSP(call, op, "[", args, rho, &ans)) {
 /*     if(DispatchAnyOrEval(call, op, "[", args, rho, &ans, 0, 0)) */
 	if (NAMED(ans))
@@ -901,6 +902,7 @@ SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */
 
+    /* DispatchOrEval internal generic: [[ */
     if(R_DispatchOrEvalSP(call, op, "[[", args, rho, &ans)) {
 	if (NAMED(ans))
 	    ENSURE_NAMEDMAX(ans);
@@ -917,7 +919,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, dimnames, indx, subs, x;
     int i, ndims, nsubs;
-    int drop = 1, pok, exact = -1;
+    int drop = 1;
     R_xlen_t offset = 0;
 
     PROTECT(args);
@@ -925,7 +927,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Is partial matching ok?  When the exact arg is NA, a warning is
        issued if partial matching occurs.
      */
-    exact = ExtractExactArg(args);
+    int exact = ExtractExactArg(args), pok;
     if (exact == -1)
 	pok = exact;
     else
@@ -1032,7 +1034,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else errorcall(call, R_MSG_subs_o_b);
 	}
-    } else { /* matrix indexing */
+    } else { /* nsubs == ndims >= 2 : matrix|array indexing */
 	/* Here we use the fact that: */
 	/* CAR(R_NilValue) = R_NilValue */
 	/* CDR(R_NilValue) = R_NilValue */
@@ -1214,6 +1216,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */
 
+    /* DispatchOrEval internal generic: $ */
     if(R_DispatchOrEvalSP(call, op, "$", args, env, &ans)) {
 	UNPROTECT(1); /* args */
 	if (NAMED(ans))

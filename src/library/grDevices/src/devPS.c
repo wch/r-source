@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2019  The R Core Team
+ *  Copyright (C) 1998--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -729,8 +729,8 @@ static double
 	ucslen = mbcsToUcs2((char *)str, NULL, 0, enc);
 	if (ucslen != (size_t)-1) {
 	    /* We convert the characters but not the terminator here */
-	    R_CheckStack2(ucslen * sizeof(ucs2_t));
-	    ucs2_t ucs2s[ucslen];
+	    R_CheckStack2(ucslen * sizeof(R_ucs2_t));
+	    R_ucs2_t ucs2s[ucslen];
 	    status = (int) mbcsToUcs2((char *)str, ucs2s, (int) ucslen, enc);
 	    if (status >= 0)
 		for(i = 0 ; i < ucslen ; i++) {
@@ -885,7 +885,7 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
 	else {
 	    /* convert to UCS-2 to use wcwidth. */
 	    char str[2]={0,0};
-	    ucs2_t out;
+	    R_ucs2_t out;
 	    str[0] = (char) c;
 	    if(mbcsToUcs2(str, &out, 1, CE_NATIVE) == (size_t)-1)
 		error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
@@ -4411,7 +4411,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	if (ucslen != (size_t)-1) {
 	    void *cd;
 	    const char  *i_buf; char *o_buf;
-	    size_t nb, i_len,  o_len, buflen = ucslen * sizeof(ucs2_t);
+	    size_t nb, i_len,  o_len, buflen = ucslen * sizeof(R_ucs2_t);
 	    size_t status;
 
 	    cd = (void*) Riconv_open(cidfont->encoding,
@@ -7926,7 +7926,7 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 	if (ucslen != (size_t)-1) {
 	    void *cd;
 	    const char *i_buf; char *o_buf;
-	    size_t i, nb, i_len,  o_len, buflen = ucslen*sizeof(ucs2_t);
+	    size_t i, nb, i_len,  o_len, buflen = ucslen*sizeof(R_ucs2_t);
 	    size_t status;
 
 	    cd = (void*)Riconv_open(cidfont->encoding,

@@ -11,6 +11,7 @@
 \alias{conditionMessage}
 \alias{findRestart}
 \alias{invokeRestart}
+\alias{tryInvokeRestart}
 \alias{invokeRestartInteractively}
 \alias{isRestart}
 \alias{restartDescription}
@@ -27,6 +28,7 @@
 \alias{withRestarts}
 \alias{suspendInterrupts}
 \alias{allowInterrupts}
+\alias{globalCallingHandlers}
 
 \alias{.signalSimpleWarning}
 \alias{.handleSimpleError}
@@ -48,6 +50,7 @@
 \usage{
 tryCatch(expr, \dots, finally)
 withCallingHandlers(expr, \dots)
+globalCallingHandlers(\dots)
 
 signalCondition(cond)
 
@@ -74,6 +77,7 @@ withRestarts(expr, \dots)
 computeRestarts(cond = NULL)
 findRestart(name, cond = NULL)
 invokeRestart(r, \dots)
+tryInvokeRestart(r, \dots)
 invokeRestartInteractively(r)
 
 isRestart(x)
@@ -166,6 +170,27 @@ allowInterrupts(expr)
    tried; once the last handler has been tried, \code{signalCondition}
    returns \code{NULL}.
 
+   \code{globalCallingHandlers} establishes calling handlers globally.
+   These handlers are only called as a last resort, after the other
+   handlers dynamically registered with \code{withCallingHandlers} have
+   been invoked. They are called before the \code{error} global option
+   (which is the legacy interface for global handling of errors).
+   Registering the same handler multiple times moves that handler on
+   top of the stack, which ensures that it is called first. Global
+   handlers are a good place to define a general purpose logger (for
+   instance saving the last error object in the global workspace) or a
+   general recovery strategy (e.g. installing missing packages via the
+   \code{retry_loadNamespace} restart).
+
+   Like \code{withCallingHandlers} and \code{tryCatch},
+   \code{globalCallingHandlers} takes named handlers. Unlike these
+   functions, it also has an \code{\link{options}}-like interface: you
+   can establish handlers by passing a single list of named handlers.
+   To unregister all global handlers, supply a single `NULL`. The list
+   of deleted handlers is returned invisibly. Finally, calling
+   \code{globalCallingHandlers} without arguments returns the list of
+   currently established handlers, visibly.
+
    User interrupts signal a condition of class \code{interrupt} that
    inherits directly from class \code{condition} before executing the
    default interrupt action.
@@ -185,7 +210,19 @@ allowInterrupts(expr)
    arguments, if any, given as additional arguments to
    \code{invokeRestart}.  The restart argument to \code{invokeRestart}
    can be a character string, in which case \code{findRestart} is used
-   to find the restart.
+   to find the restart. If no restart is found, an error is thrown.
+
+   \code{tryInvokeRestart} is a variant of \code{invokeRestart} that
+   returns silently when the restart cannot be found with
+   \code{findRestart}. Because a condition of a given class might be
+   signalled with arbitrary protocols (error, warning, etc), it is
+   recommended to use this permissive variant whenever you are handling
+   conditions signalled from a foreign context. For instance, invocation
+   of a \code{"muffleWarnings"} restart should be optional because the
+   warning might have been signalled by the user or from a different
+   package with the \code{stop} or \code{message} protocols. Only use
+   \code{invokeRestart} when you have control of the signalling context,
+   or when it is a logical error if the restart is not available.
 
    New restarts for \code{withRestarts} can be specified in several ways.
    The simplest is in \code{name = function} form where the function is

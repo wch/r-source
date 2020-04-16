@@ -72,6 +72,6 @@ setRepositories(graphics = getOption("menu.graphics"),
 }
 \examples{\dontrun{
 setRepositories(addURLs =
-                c(CRANxtras = "http://www.stats.ox.ac.uk/pub/RWin"))
+                c(CRANxtras = "https://www.stats.ox.ac.uk/pub/RWin"))
 }}
 \keyword{ utilities }

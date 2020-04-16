@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2019   The R Core Team.
+ *  Copyright (C) 1998-2020   The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -408,6 +408,8 @@ SEXP attribute_hidden do_getOption(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+static Rboolean warned_on_strings_as_fact = FALSE; // -> once-per-session warning
+
 /* This needs to manage R_Visible */
 SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -486,8 +488,9 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	UNIMPLEMENTED_TYPE("options", args);
     }
+    PROTECT(argnames);
 
-    R_Visible = FALSE;
+    Rboolean visible = FALSE;
     for (int i = 0 ; i < n ; i++) { /* i-th argument */
 	SEXP argi = R_NilValue, namei = R_NilValue;
 	switch (TYPEOF(args)) {
@@ -808,6 +811,19 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* could warn for PCRE2 >= 10.30, but the value is ignored also when
 		   JIT is used  */
 	    }
+	    else if (streql(CHAR(namei), "stringsAsFactors")) {
+		int strings_as_fact;
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1 ||
+		    (strings_as_fact = asLogical(argi)) == NA_LOGICAL)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		if(strings_as_fact && !warned_on_strings_as_fact) {
+		    warned_on_strings_as_fact = TRUE;
+		    warning(_("'%s' is deprecated and will be disabled"),
+			    "options(stringsAsFactors = TRUE)");
+		}
+		SET_VECTOR_ELT(value, i,
+			       SetOption(tag, ScalarLogical(strings_as_fact)));
+	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
@@ -823,10 +839,11 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(FindTaggedItem(options, install(tag)))));
 	    SET_STRING_ELT(names, i, STRING_ELT(argi, 0));
-	    R_Visible = TRUE;
+	    visible = TRUE;
 	}
     } /* for() */
     setAttrib(value, R_NamesSymbol, names);
-    UNPROTECT(2);
+    UNPROTECT(3); /* value, names, argnames */
+    R_Visible = visible;
     return value;
 }

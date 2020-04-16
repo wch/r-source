@@ -1,7 +1,7 @@
 /*
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2019  The R Core Team
+ *  Copyright (C) 2001--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -455,7 +455,7 @@ static double PicTeX_StrWidth(const char *str,
 	/* This version at least uses the state of the MBCS */
 	size_t i, ucslen = mbcsToUcs2(str, NULL, 0, CE_NATIVE);
 	if (ucslen != (size_t)-1) {
-	    ucs2_t ucs[ucslen];
+	    R_ucs2_t ucs[ucslen];
 	    int status = (int) mbcsToUcs2(str, ucs, (int)ucslen, CE_NATIVE);
 	    if (status >= 0) 
 		for (i = 0; i < ucslen; i++)

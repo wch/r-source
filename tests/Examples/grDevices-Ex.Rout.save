@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-02-23 r77848) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-04-09 r78185) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -537,6 +537,34 @@ $out
 17  5.00  =    13.00  =   
 > ## End(Don't show)
 > 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cairoSymbolFont")
+> ### * cairoSymbolFont
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cairoSymbolFont
+> ### Title: Specify a Symbol Font
+> ### Aliases: cairoSymbolFont
+> ### Keywords: device
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ## If a font uses PUA, we can just specify the font name ...
+> ##D cairo_pdf(symbolfamily="OpenSymbol")
+> ##D dev.off()
+> ##D ## ... or equivalently ...
+> ##D cairo_pdf(symbolfamily=cairoSymbolFont("OpenSymbol"))
+> ##D dev.off()
+> ##D 
+> ##D ## If a font does not use PUA, we must indicate that ...
+> ##D cairo_pdf(symbolfamily=cairoSymbolFont("Nimbus Sans", usePUA=FALSE))
+> ##D dev.off()
+> ## End(Not run)
 > 
 > 
 > 
@@ -4274,7 +4302,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  45.908 0.56 46.544 0 0 
+Time elapsed:  36.468 0.428 36.974 0 0 
 > grDevices::dev.off()
 null device 
           1 

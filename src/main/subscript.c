@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -167,15 +167,12 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
    pok : is "partial ok" ?
 	 if pok is -1, warn if partial matching occurs, but allow.
 */
-    int  warn_pok = 0;
     const char *ss, *cur_name;
-    R_xlen_t indx;
     const void *vmax;
 
-    if (pok == -1) {
+    int warn_pok = (pok == -1);
+    if (warn_pok)
 	pok = 1;
-	warn_pok = 1;
-    }
 
     if (pos < 0 && length(s) != 1) {
 	if (length(s) > 1) {
@@ -183,12 +180,11 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 	} else {
 	    ECALL3(call, _("attempt to select less than one element in %s"), "get1index");
 	}
-    } else
-	if(pos >= length(s)) {
-	    ECALL(call, _("internal error in use of recursive indexing"));
-	}
+    } else if(pos >= length(s)) {
+	ECALL(call, _("internal error in use of recursive indexing"));
+    }
     if(pos < 0) pos = 0;
-    indx = -1;
+    R_xlen_t indx = -1;
     switch (TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
@@ -203,13 +199,20 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 	double dblind = REAL_ELT(s, pos);
 	if(!ISNAN(dblind)) {
 	    /* see comment above integerOneIndex */
-	    if (dblind > 0) indx = (R_xlen_t)(dblind - 1);
-	    else if (dblind == 0 || len < 2) {
-		ECALL3(call, _("attempt to select less than one element in %s"), "get1index <real>");
-	    } else if (len == 2 && dblind > -3)
+	    if (dblind > 0) {
+		if(R_FINITE(dblind)) indx = (R_xlen_t)(dblind - 1);
+	    } else if (dblind == 0 || len < 2) {
+		ECALL3(call,
+		       _((dblind < 0) ? "invalid negative subscript in %s"
+			 : "attempt to select less than one element in %s"),
+		       "get1index <real>");
+	    } else if (len == 2 && dblind > -3) // dblind = -2 or -1 {why exception ?}
 		indx = (R_xlen_t)(2 + dblind);
 	    else {
-		ECALL3(call, _("attempt to select more than one element in %s"), "get1index <real>");
+		ECALL3(call,
+		       _((dblind < 0) ? "invalid negative subscript in %s"
+			 : "attempt to select more than one element in %s"),
+		       "get1index <real>");
 	    }
 	}
 	break;
@@ -814,9 +817,11 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
     int canstretch = *stretch > 0;
     /* product may overflow, so check factors as well. */
     Rboolean usehashing = ( ((ns > 1000 && nx) || (nx > 1000 && ns)) || (ns * nx > 15*nx + ns) );
+    int nprotect = 0;
 
     PROTECT(s);
     PROTECT(names);
+    nprotect += 2;
     nnames = nx;
     extra = nnames;
 
@@ -832,13 +837,15 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
 	/* NB: this does not behave in the same way with respect to ""
 	   and NA names: they will match */
 	PROTECT(indx = match(names, s, 0)); /**** guaranteed to be fresh???*/
+	nprotect++;
 	/* second pass to correct this */
 	int *pindx = INTEGER(indx);
 	for (i = 0; i < ns; i++)
 	    if(STRING_ELT(s, i) == NA_STRING || !CHAR(STRING_ELT(s, i))[0])
-		pindx[i] = 0;	
+		pindx[i] = 0;
     } else {
 	PROTECT(indx = allocVector(INTSXP, ns));
+	nprotect++;
 	int *pindx = INTEGER(indx);
 	for (i = 0; i < ns; i++) {
 	    sub = 0;
@@ -863,6 +870,7 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
 	    if (sindx == NULL) {
 		sindx = PROTECT(match(s, s, 0));
 		indexnames = PROTECT(allocVector(VECSXP, ns));
+		nprotect += 2;
 		for (int z = 0; z < ns; z++)
 		    SET_VECTOR_ELT(indexnames, z, R_NilValue);
 	    }
@@ -886,12 +894,9 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
        subscript vector. */
     if (extra != nnames)
 	setAttrib(indx, R_UseNamesSymbol, indexnames);
-    if (sindx != NULL) {
-	UNPROTECT(2);
-    }
     if (canstretch)
 	*stretch = extra;
-    UNPROTECT(3);
+    UNPROTECT(nprotect);
     return indx;
 }
 

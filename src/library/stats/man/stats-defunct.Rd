@@ -1,6 +1,6 @@
 % File src/library/stats/man/stats-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stats-defunct}
@@ -23,6 +23,7 @@
 \alias{glm.fit.null}
 \alias{mauchley.test}
 \alias{clearNames}
+\alias{plclust}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -68,6 +69,9 @@ mauchley.test(object, Sigma = diag(nrow = p),
 
 # Defunct in 2.10.0
 clearNames(object)
+
+# Defunct in 4.1.0
+clearNames(object)
 }
 \details{
   The \code{*chisq()} functions now take an optional non-centrality
@@ -78,7 +82,7 @@ clearNames(object)
   multiple time-varying variables.
 
   \code{arima0.diag} has been replaced by \code{\link{tsdiag.arima0}}.
-  
+
   \code{plot.mts} has been removed, as \code{\link{plot.ts}} now has the
   same functionality.
 
@@ -97,6 +101,9 @@ clearNames(object)
 
   \code{clearNames} had been introduced at about the same time as
   \code{\link{unname}}, but is less general and has been used rarely.
+
+  \code{plclust} has been drawing dendrograms (\dQuote{cluster - trees}) and been replaced by the
+  \code{plot()} method for class \code{"dendrogram"}.
 }
 \seealso{
   \code{\link{Defunct}}

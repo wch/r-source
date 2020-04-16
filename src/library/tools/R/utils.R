@@ -900,8 +900,9 @@ function(primitive = TRUE) # primitive means 'include primitives'
     out <-
         ## Get the names of R internal S3 generics (via DispatchOrEval(),
         ## cf. ?InternalMethods).
-        c("[", "[[", "$", "[<-", "[[<-", "$<-",
+        c("[", "[[", "$", "[<-", "[[<-", "$<-", "@<-",
           "as.vector", "cbind", "rbind", "unlist",
+          "is.unsorted", "lengths", "nchar", "rep.int", "rep_len",
           .get_S3_primitive_generics()
           ## ^^^^^^^ now contains the members of the group generics from
           ## groupGeneric.Rd.
@@ -1151,15 +1152,28 @@ function(include_group_generics = TRUE)
 {
     if(include_group_generics)
         c(base::.S3PrimitiveGenerics,
-          "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round",
-          "signif", "exp", "log", "expm1", "log1p",
-          "cos", "sin", "tan", "acos", "asin", "atan",
-          "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
+          ## Keep this in sync with ? groupGeneric:
+          ## Group 'Math':
+          "abs", "sign", "sqrt",
+          "floor", "ceiling", "trunc",
+          "round", "signif",
+          "exp", "log", "expm1", "log1p",
+          "cos", "sin", "tan",
+          "cospi", "sinpi", "tanpi",
+          "acos", "asin", "atan",
+          "cosh", "sinh", "tanh",
+          "acosh", "asinh", "atanh",
           "lgamma", "gamma", "digamma", "trigamma",
           "cumsum", "cumprod", "cummax", "cummin",
-          "+", "-", "*", "/", "^", "%%", "%/%", "&", "|", "!", "==",
-          "!=", "<", "<=", ">=", ">",
+          ## Group 'Ops':
+          "+", "-", "*", "/",
+          "^", "%%", "%/%",
+          "&", "|", "!",
+          "==", "!=",
+          "<", "<=", ">=", ">",
+          ## Group 'Summary':
           "all", "any", "sum", "prod", "max", "min", "range",
+          ## Group 'Complex':
           "Arg", "Conj", "Im", "Mod", "Re")
     else
         base::.S3PrimitiveGenerics
@@ -1523,7 +1537,7 @@ function(package)
         if(sum(.call_names(calls) == "loadNamespace") == 1L)
             signalCondition(e)
         else
-            invokeRestart("muffleWarning")
+            tryInvokeRestart("muffleWarning")
     }
     expr <- substitute(loadNamespace(package), list(package = package))
     invisible(withCallingHandlers(suppressMessages(eval(expr)),
@@ -1724,6 +1738,7 @@ nonS3methods <- function(package)
              sac = "cumsum.test",
              sfsmisc = "cumsum.test",
              sm = "print.graph",
+             spatstat = "lengths.psp",
              splusTimeDate = "sort.list",
              splusTimeSeries = "sort.list",
 	     stats = c("anova.lmlist", "expand.model.frame", "fitted.values",

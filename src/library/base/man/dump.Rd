@@ -1,6 +1,6 @@
 % File src/library/base/man/dump.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dump}
@@ -38,7 +38,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   omitted, with a warning.  If \code{file} is a file and no objects
   exist then no file is created.
 
-  \code{source}ing may not produce an identical copy of
+  \code{\link{source}}ing may not produce an identical copy of
   \code{dump}ed objects.  A warning is issued if it is likely that
   problems will arise, for example when dumping exotic or complex
   objects (see the Note).
@@ -47,7 +47,8 @@ dump(list, file = "dumpdata.R", append = FALSE,
   than expected, which may indicate a full or corrupt file system.
 
   A \code{dump} file can be \code{\link{source}}d into another \R (or
-  perhaps S) session, but the function \code{\link{save}} is designed to
+  perhaps S) session, but the functions \code{\link{save}} and
+  \code{\link{saveRDS}} are designed to
   be used for transporting \R data, and will work with \R objects that
   \code{dump} does not handle.  For maximal reproducibility use
   \code{control = c("all", "hexNumeric")}.
@@ -62,7 +63,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
     "warnIncomplete", "keepNA")}.  This will lose all formatting and
   comments, but may be useful in those cases where the saved source is
   no longer correct.
-  
+
   Promises will normally only be encountered by users as a result of
   lazy-loading (when the default \code{evaluate = TRUE} is essential)
   and after the use of \code{\link{delayedAssign}},
@@ -95,8 +96,15 @@ dump(list, file = "dumpdata.R", append = FALSE,
 }
 
 \seealso{
-  \code{\link{dput}}, \code{\link{dget}}, \code{\link{write}}.\cr
-  \code{\link{save}} for a more reliable way to save \R objects.
+  \code{\link{.deparseOpts}} for available \code{control} settings;
+  \code{\link{dput}()}, \code{\link{dget}()} and \code{\link{deparse}()}
+  for related functions using identical internal deparsing functionality.
+
+  \code{\link{write}}, \code{\link{write.table}}, etc for \dQuote{dumping}
+  data to (text) files.
+
+  \code{\link{save}} and \code{\link{saveRDS}} for a more reliable way to
+  save \R objects.
 }
 \examples{
 x <- 1; y <- 1:10

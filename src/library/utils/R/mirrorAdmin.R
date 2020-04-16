@@ -53,7 +53,7 @@ function(mirrors = NULL, file = "mirrors.html",
 checkCRAN <-
 function(method)
 {
-    master <- available.packages(contrib.url("http://CRAN.R-project.org"),
+    master <- available.packages(contrib.url("https://CRAN.R-project.org"),
                                  method = method)
     m <- getCRANmirrors()
     z <- list()

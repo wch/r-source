@@ -147,7 +147,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
     }
     if (setup2) { // k
 	ks = kk; // save
-	if (kk + kk >= N) {
+	if ((double)kk + kk >= N) { // this could overflow
 	    k = (int)(N - kk);
 	} else {
 	    k = kk;
@@ -373,7 +373,7 @@ L_finis:  /* return appropriate variate */
 #ifdef DEBUG_rhyper
     REprintf(" L_finis: ix = %d, then", ix);
 #endif
-    if (kk + kk >= N) {
+    if ((double)kk + kk >= N) {
 	if (nn1 > nn2) {
 	    ix = kk - nn2 + ix;
 	} else {

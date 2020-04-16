@@ -56,16 +56,19 @@ png <- function(filename = "Rplot%03d.png",
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 2L, g$width, g$height,
-                            pointsize, bg, res, antialias, 100L, d$family, 300))
+                            pointsize, bg, res, antialias, 100L, d$family, 300,
+                            optionSymbolFont(d$symbolfamily)))
     else if (type == "cairo-png" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 5L, g$width, g$height,
-                            pointsize, bg, res, antialias, 100L, d$family, 300))
+                            pointsize, bg, res, antialias, 100L, d$family, 300,
+                            optionSymbolFont(d$symbolfamily)))
     else
         invisible(.External2(C_X11,
                              paste0("png::", filename),
                              g$width, g$height, pointsize, d$gamma,
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                             0L, 0L, "", 0, 0, d$family))
+                             0L, 0L, "", 0, 0, d$family, 
+                             optionSymbolFont(d$symbolfamily)))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
@@ -91,13 +94,14 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 3L, g$width, g$height,
                             pointsize, bg, res, antialias, quality, d$family,
-                            300))
+                            300, optionSymbolFont(d$symbolfamily)))
     else
         invisible(.External2(C_X11,
                             paste0("jpeg::", quality, ":", filename),
                             g$width, g$height, pointsize, d$gamma,
                             d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                            0L, 0L, "", 0, 0, d$family))
+                            0L, 0L, "", 0, 0, d$family, 
+                            optionSymbolFont(d$symbolfamily)))
 }
 
 tiff <- function(filename = "Rplot%03d.tiff",
@@ -127,13 +131,14 @@ tiff <- function(filename = "Rplot%03d.tiff",
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 8L, g$width, g$height,
                             pointsize, bg, res, antialias, comp, d$family,
-                            300))
+                            300, optionSymbolFont(d$symbolfamily)))
     else
         invisible(.External2(C_X11,
                              paste0("tiff::", comp, ":", filename),
                              g$width, g$height, pointsize, d$gamma,
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                             0L, 0L, "", 0, 0, d$family))
+                             0L, 0L, "", 0, 0, d$family, 
+                             optionSymbolFont(d$symbolfamily)))
 }
 
 bmp <- function(filename = "Rplot%03d.bmp",
@@ -158,16 +163,17 @@ bmp <- function(filename = "Rplot%03d.bmp",
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 9L, g$width, g$height,
                             pointsize, bg, res, antialias, 100L, d$family,
-                            300))
+                            300, optionSymbolFont(d$symbolfamily)))
     else
         invisible(.External2(C_X11, paste0("bmp::", filename),
                              g$width, g$height, pointsize, d$gamma,
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                             0L, 0L, "", 0, 0, d$family))
+                             0L, 0L, "", 0, 0, d$family, 
+                             optionSymbolFont(d$symbolfamily)))
 }
 
 grSoftVersion <- function() {
     bm <- .Call(C_bmVersion)
     if(nzchar(bm[3L])) bm[3L] <- strsplit(bm[3L], "\n")[[1L]][1L]
-    c(cairo = cairoVersion(), bm)
+    c(cairo = cairoVersion(), cairoFT = cairoFT(), pango = pangoVersion(), bm)
 }

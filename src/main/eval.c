@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2019	The R Core Team.
+ *  Copyright (C) 1998--2020	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -104,6 +104,7 @@ static char **R_Srcfiles;			   /* an array of pointers into the filename buffer 
 static size_t R_Srcfile_bufcount;                  /* how big is the array above? */
 static SEXP R_Srcfiles_buffer = NULL;              /* a big RAWSXP to use as a buffer for filenames and pointers to them */
 static int R_Profiling_Error;		   /* record errors here */
+static int R_Filter_Callframes = 0;	      	   /* whether to record only the trailing branch of call trees */
 
 #ifdef Win32
 HANDLE MainThread;
@@ -183,9 +184,36 @@ static void lineprof(char* buf, SEXP srcref)
 static pthread_t R_profiled_thread;
 #endif
 
+static RCNTXT * findProfContext(RCNTXT *cptr)
+{
+    if (! R_Filter_Callframes)
+	return cptr->nextcontext;
+
+    /* Find parent context, same algorithm as in `parent.frame()`. */
+    RCNTXT * parent = R_findParentContext(cptr, 1);
+
+    /* If we're in a frame called by `eval()`, find the evaluation
+       environment higher up the stack, if any. */
+    if (parent && parent->callfun == INTERNAL(R_EvalSymbol))
+	parent = R_findExecContext(parent->nextcontext, cptr->sysparent);
+
+    if (parent)
+	return parent;
+
+    /* Base case, this interrupts the iteration over context frames */
+    if (cptr->nextcontext == R_ToplevelContext)
+	return NULL;
+
+    /* There is no parent frame and we haven't reached the top level
+       context. Find the very first context on the stack which should
+       always be included in the profiles. */
+    while (cptr->nextcontext != R_ToplevelContext)
+	cptr = cptr->nextcontext;
+    return cptr;
+}
+
 static void doprof(int sig)  /* sig is ignored in Windows */
 {
-    RCNTXT *cptr;
     char buf[PROFBUFSIZ];
     size_t bigv, smallv, nodes;
     size_t len;
@@ -218,7 +246,8 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     if (R_Line_Profiling)
 	lineprof(buf, R_getCurrentSrcref());
 
-    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+    RCNTXT *cptr = R_GlobalContext;
+    while ((cptr = findProfContext(cptr)) != NULL) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
@@ -363,7 +392,8 @@ static void R_EndProfiling(void)
 
 static void R_InitProfiling(SEXP filename, int append, double dinterval,
 			    int mem_profiling, int gc_profiling,
-			    int line_profiling, int numfiles, int bufsize)
+			    int line_profiling, int filter_callframes,
+			    int numfiles, int bufsize)
 {
 #ifndef Win32
     struct itimerval itv;
@@ -394,6 +424,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
     R_Profiling_Error = 0;
     R_Line_Profiling = line_profiling;
     R_GC_Profiling = gc_profiling;
+    R_Filter_Callframes = filter_callframes;
+
     if (line_profiling) {
 	/* Allocate a big RAW vector to use as a buffer.  The first len1 bytes are an array of pointers
 	   to strings; the actual strings are stored in the second len2 bytes. */
@@ -437,7 +469,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 SEXP do_Rprof(SEXP args)
 {
     SEXP filename;
-    int append_mode, mem_profiling, gc_profiling, line_profiling;
+    int append_mode, mem_profiling, gc_profiling, line_profiling,
+	filter_callframes;
     double dinterval;
     int numfiles, bufsize;
 
@@ -455,6 +488,7 @@ SEXP do_Rprof(SEXP args)
     mem_profiling = asLogical(CAR(args));     args = CDR(args);
     gc_profiling = asLogical(CAR(args));      args = CDR(args);
     line_profiling = asLogical(CAR(args));    args = CDR(args);
+    filter_callframes = asLogical(CAR(args));  args = CDR(args);
     numfiles = asInteger(CAR(args));	      args = CDR(args);
     if (numfiles < 0)
 	error(_("invalid '%s' argument"), "numfiles");
@@ -465,7 +499,8 @@ SEXP do_Rprof(SEXP args)
     filename = STRING_ELT(filename, 0);
     if (LENGTH(filename))
 	R_InitProfiling(filename, append_mode, dinterval, mem_profiling,
-			gc_profiling, line_profiling, numfiles, bufsize);
+			gc_profiling, line_profiling, filter_callframes,
+			numfiles, bufsize);
     else
 	R_EndProfiling();
     return R_NilValue;
@@ -2045,10 +2080,11 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
 	       data until it it is needed. If the data are duplicated,
 	       then the wrapper can be discarded at the end of the
 	       assignment process in try_assign_unwrap(). */
+	    PROTECT(vl);
 	    PROTECT(vl = R_shallow_duplicate_attr(vl));
 	    defineVar(symbol, vl, rho);
 	    INCREMENT_NAMED(vl);
-	    UNPROTECT(1);
+	    UNPROTECT(2);
 	}
 	PROTECT(vl); /* R_findVarLocInFrame allocates for user databases */
 	*ploc = R_findVarLocInFrame(rho, symbol);
@@ -2122,16 +2158,15 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 
     int len = length(s);
     if (len > 1) {
-	/* needed as per PR#15990.  call gets protected by warningcall() */
-	/* FIXME: should be protected by caller, not here */
-	PROTECT(s);
+	/* PROTECT(s) needed as per PR#15990.  call gets protected by
+	   warningcall(). Now "s" is protected by caller and also
+	   R_BadValueInRCode disables GC. */
 	R_BadValueInRCode(s, call, rho,
 	    "the condition has length > 1",
 	    _("the condition has length > 1"),
 	    _("the condition has length > 1 and only the first element will be used"),
 	    "_R_CHECK_LENGTH_1_CONDITION_",
 	    TRUE /* by default issue warning */);
-	UNPROTECT(1);
     }
     if (len > 0) {
 	/* inline common cases for efficiency */
@@ -2152,9 +2187,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 			   _("missing value where TRUE/FALSE needed") :
 			   _("argument is not interpretable as logical")) :
 	    _("argument is of length zero");
-	PROTECT(s);	/* Maybe needed in some weird circumstance. */
 	errorcall(call, msg);
-	UNPROTECT(1);
     }
     return cond;
 }
@@ -2390,7 +2423,11 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
-	while (asLogicalNoNA(eval(CAR(args), rho), call, rho)) {
+	for(;;) {
+	    SEXP cond = PROTECT(eval(CAR(args), rho));
+	    int condl = asLogicalNoNA(cond, call, rho);
+	    UNPROTECT(1);
+	    if (!condl) break;
 	    if (RDEBUG(rho) && !bgn && !R_GlobalContext->browserfinish) {
 		SrcrefPrompt("debug", R_Srcref);
 		PrintValue(body);
@@ -2873,8 +2910,11 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (PRIMVAL(op) == 2)                       /* <<- */
 	setVar(lhsSym, value, ENCLOS(rho));
     else {                                      /* <-, = */
-	if (ALTREP(value))
+	if (ALTREP(value)) {
+	    PROTECT(value);
 	    value = try_assign_unwrap(value, lhsSym, rho, NULL);
+	    UNPROTECT(1);
+	}
 	defineVar(lhsSym, value, rho);
     }
     INCREMENT_NAMED(value);
@@ -6173,7 +6213,10 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 	    return lval;
     }
     SEXP call = VECTOR_ELT(constants, callidx);
-    return asLogicalNoNA(value, call, rho);
+    PROTECT(value);
+    Rboolean ans = asLogicalNoNA(value, call, rho);
+    UNPROTECT(1);
+    return ans;
 }
 
 #define GETSTACK_LOGICAL(n) GETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (n))

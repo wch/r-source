@@ -3973,7 +3973,8 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
     if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 
-    prefixes <- c("CPP", "C", "CXX", "CXX98", "CXX11", "CXX14", "CXX17", "F", "FC", "OBJC", "OBJCXX")
+    prefixes <- c("CPP", "C", "CXX", "CXX98", "CXX11", "CXX14", "CXX17",
+                  "CXX20", "F", "FC", "OBJC", "OBJCXX")
 
     uflags_re <- sprintf("^(%s)FLAGS: *(.*)$",
                          paste(prefixes, collapse = "|"))
@@ -5011,7 +5012,7 @@ function(dir)
                                 warning = function(e) {
                                     .warnings <<- c(.warnings,
                                                     conditionMessage(e))
-                                    invokeRestart("muffleWarning")
+                                    tryInvokeRestart("muffleWarning")
                                 })
         } else {
             withCallingHandlers(tryCatch(parse(file),
@@ -5020,7 +5021,7 @@ function(dir)
                                 warning = function(e) {
                                     .warnings <<- c(.warnings,
                                                     conditionMessage(e))
-                                    invokeRestart("muffleWarning")
+                                    tryInvokeRestart("muffleWarning")
                                 })
         }
         ## (We show offending file paths starting with the base of the

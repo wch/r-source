@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: tools 3.6.0\n"
+"Project-Id-Version: tools 4.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"POT-Creation-Date: 2020-03-24 14:56-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Rmd5.c:36
+#: Rmd5.c:47
 msgid "argument 'files' must be character"
 msgstr ""
 
-#: Rmd5.c:50
+#: Rmd5.c:63
+#, c-format
+msgid "md5 failed on file '%ls'"
+msgstr ""
+
+#: Rmd5.c:65
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr ""
@@ -53,81 +58,86 @@ msgstr ""
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: gramLatex.c:2376 gramRd.c:3898
+#: gramLatex.c:2390 gramRd.c:3790
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 
-#: gramLatex.c:2613 gramRd.c:4387 gramRd.c:4393
+#: gramLatex.c:2626 gramRd.c:4335 gramRd.c:4341
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
 
-#: gramRd.c:2531 gramRd.c:2534
+#: gramRd.c:2411 gramRd.c:2414
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr ""
 
-#: gramRd.c:3113
+#: gramRd.c:2939
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr ""
 
-#: gramRd.c:3123
+#: gramRd.c:2949
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
 
-#: gramRd.c:3157
+#: gramRd.c:2991
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr ""
 
-#: gramRd.c:3313 gramRd.c:3317
+#: gramRd.c:3053
+#, c-format
+msgid "Not enough arguments passed to user macro '%s'"
+msgstr ""
+
+#: gramRd.c:3193 gramRd.c:3197
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr ""
 
-#: gramRd.c:3336
+#: gramRd.c:3216
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr ""
 
-#: gramRd.c:3366
+#: gramRd.c:3246
 msgid "macros nested too deeply: infinite recursion?"
 msgstr ""
 
-#: gramRd.c:3760
+#: gramRd.c:3652
 #, c-format
 msgid "Unable to find macro %s"
 msgstr ""
 
-#: gramRd.c:3958
+#: gramRd.c:3850
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
 
-#: gramRd.c:4400
+#: gramRd.c:4348
 msgid "cannot open the connection"
 msgstr ""
 
-#: gramRd.c:4407
+#: gramRd.c:4355
 msgid "cannot read from this connection"
 msgstr ""
 
-#: gramRd.c:4415
+#: gramRd.c:4363
 msgid "invalid Rd file"
 msgstr ""
 
-#: gramRd.c:4434
+#: gramRd.c:4382
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 
-#: gramRd.c:4437
+#: gramRd.c:4385
 msgid "bad state"
 msgstr ""
 
-#: gramRd.c:4450
+#: gramRd.c:4398
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr ""

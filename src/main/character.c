@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -176,7 +176,7 @@ int R_nchar(SEXP string, nchar_type type_,
 		return NA_INTEGER;
 	    } else {
 		wchar_t wc1;
-		Rwchar_t ucs;
+		R_wchar_t ucs;
 		int nc = 0;
 		for( ; *p; p += utf8clen(*p)) {
 		    utf8toucs(&wc1, p);
@@ -230,6 +230,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 			   (unsigned long) nargs),
 	      nargs, PRIMNAME(op), 3, 4);
 #endif
+    /* DispatchOrEval internal generic: nchar */
     if (DispatchOrEval(call, op, "nchar", args, env, &ans, 0, 1))
       return(ans);
     if (isFactor(CAR(args)))
@@ -1581,7 +1582,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 	    mbs_init(&mb_st);
 	    for (p = This, w0 = 0, q = buf; *p ;) {
 		nb =  (int) Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
-		w0 = Ri18n_wcwidth((Rwchar_t)wc);
+		w0 = Ri18n_wcwidth((R_wchar_t)wc);
 		if (w0 < 0) { p += nb; continue; } /* skip non-printable chars */
 		wsum += w0;
 		if (wsum <= w) {

@@ -1,25 +1,26 @@
-# Italian translations for R package.
-# Copyright (C) 2005 The R Foundation
+# R Italian translation
+# Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# stefano iacus <>, 2005.
+# Daniele Medri <dmedri@gmail.com>, 2005-2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: tools 3.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-29 07:06-0700\n"
-"PO-Revision-Date: 2005-04-17 16:57+0200\n"
-"Last-Translator: stefano iacus <>\n"
-"Language-Team: Italian <it@li.org>\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
-msgstr "argomento 'files' deve essere di tipo chararcter"
+msgstr "l'argomento 'files' dev'essere di tipo character"
 
 #: Rmd5.c:50
 #, c-format
@@ -29,129 +30,129 @@ msgstr "md5 fallito sul file '%s'"
 #: getfmts.c:61
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr "sono ammessi solo %d argomenti"
 
 #: getfmts.c:66
 msgid "'fmt' is not a character vector"
-msgstr ""
+msgstr "'fmt' non è un vettore di caratteri"
 
 #: getfmts.c:69
 msgid "'fmt' must be length 1"
-msgstr ""
+msgstr "'fmt' dev'essere di lunghezza 1"
 
 #: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr ""
+msgstr "la lunghezza di 'fmt' eccede la lunghezza massima del formato %d"
 
 #: getfmts.c:96
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr ""
+msgstr "specificazione formato '%s' non riconosciuto"
 
 #: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr ""
+msgstr "almeno un asterisco '*' è supportato in ogni specificazione di conversione"
 
 #: gramLatex.c:2376 gramRd.c:3898
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr ""
+msgstr "non è possibile allocare un buffer stringhe long alla linea %d"
 
 #: gramLatex.c:2613 gramRd.c:4387 gramRd.c:4393
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "tipo argomento non valido"
+msgstr "valore '%s' non valido"
 
 #: gramRd.c:2531 gramRd.c:2534
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr ""
+msgstr "markup errato (troppi spazi?) in %s:%d:%d"
 
 #: gramRd.c:3113
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr ""
+msgstr "Macro '%s' precedentemente definita."
 
 #: gramRd.c:3123
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr ""
+msgstr "Almeno 4 argomenti sono ammessi per le macro definite dall'utente."
 
 #: gramRd.c:3157
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr ""
+msgstr "Nessuna definizione macro per '%s'."
 
 #: gramRd.c:3313 gramRd.c:3317
 #, c-format
 msgid "newline within quoted string at %s:%d"
-msgstr ""
+msgstr "newline dentro una stringa virgolettata in %s: %d"
 
 #: gramRd.c:3336
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr ""
+msgstr "non è possibile allocare il buffer per macro long in %d"
 
 #: gramRd.c:3366
 msgid "macros nested too deeply: infinite recursion?"
-msgstr ""
+msgstr "macro annidate troppo profondamente: ricorsione infinita?"
 
 #: gramRd.c:3760
 #, c-format
 msgid "Unable to find macro %s"
-msgstr ""
+msgstr "Non è possibile trovare la macro %s"
 
 #: gramRd.c:3958
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr ""
+msgstr "Fine inattesa dell'input (nella %c stringa virgolettata aperta in %s:%d:%d)"
 
 #: gramRd.c:4400
 msgid "cannot open the connection"
-msgstr ""
+msgstr "non è possibile aprire la connessione"
 
 #: gramRd.c:4407
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "non è possibile leggere da questa connessione"
 
 #: gramRd.c:4415
 msgid "invalid Rd file"
-msgstr ""
+msgstr "file Rd non valido"
 
 #: gramRd.c:4434
 msgid "'deparseRd' only supports deparsing character elements"
-msgstr ""
+msgstr "'deparseRd' supporta unicamente il deparsing di elementi carattere"
 
 #: gramRd.c:4437
 msgid "bad state"
-msgstr ""
+msgstr "stato errato"
 
 #: gramRd.c:4450
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr ""
+msgstr "modalità testo errata %d in 'deparseRd'"
 
 #: http.c:32
 msgid "invalid bind address specification"
-msgstr ""
+msgstr "specificazione indirizzo bind non valida"
 
 #: install.c:112 install.c:131 install.c:133
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "tipo argomento non valido"
+msgstr "argomento '%s' non valido"
 
 #: install.c:162
 msgid "write error during file append"
-msgstr ""
+msgstr "errore di scrittura durante file append"
 
 #: signals.c:42
 msgid "pskill() is not supported on this platform"
-msgstr ""
+msgstr "pskill() non è supportata su questa piattaforma"
 
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
-msgstr ""
+msgstr "psnice() non è supportata su questa piattaforma"
 
 #: text.c:67
 msgid "invalid argument type"
@@ -159,4 +160,4 @@ msgstr "tipo argomento non valido"
 
 #: text.c:225 text.c:247
 msgid "out of memory"
-msgstr ""
+msgstr "memoria esausta"

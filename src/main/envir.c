@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2019  The R Core Team.
+ *  Copyright (C) 1999--2020  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1581,6 +1581,8 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     int hashcode;
     SEXP frame, c;
 
+    if (value == R_UnboundValue)
+	error("attempt to bind a variable to R_UnboundValue");
     /* R_DirtyImage should only be set if assigning to R_GlobalEnv. */
     if (rho == R_GlobalEnv) R_DirtyImage = 1;
 
@@ -1870,6 +1872,7 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = LENGTH(x);
     xnms = getAttrib(x, R_NamesSymbol);
+    PROTECT(xnms);
     if (n && (TYPEOF(xnms) != STRSXP || LENGTH(xnms) != n))
 	error(_("names(x) must be a character vector of the same length as x"));
     envir = CADR(args);
@@ -1880,6 +1883,7 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP name = installTrChar(STRING_ELT(xnms, i));
 	defineVar(name, lazy_duplicate(VECTOR_ELT(x, i)), envir);
     }
+    UNPROTECT(1); /* xnms */
 
     return envir;
 }
@@ -3227,6 +3231,7 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
     check1arg(args, call, "object");
     if(isEnvironment(arg))
 	return arg;
+    /* DispatchOrEval internal generic: as.environment */
     if(isObject(arg) &&
        DispatchOrEval(call, op, "as.environment", args, rho, &ans, 0, 1))
 	return ans;
@@ -3480,6 +3485,35 @@ Rboolean R_HasFancyBindings(SEXP rho)
     }
 }
 
+SEXP R_ActiveBindingFunction(SEXP sym, SEXP env)
+{
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    if (TYPEOF(env) == NILSXP)
+	error(_("use of NULL environment is defunct"));
+    if (TYPEOF(env) != ENVSXP &&
+	TYPEOF((env = simple_as_environment(env))) != ENVSXP)
+	error(_("not an environment"));
+    if (env == R_BaseEnv || env == R_BaseNamespace) {
+	SEXP val = SYMVALUE(sym);
+	if (val == R_UnboundValue)
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
+	if (! IS_ACTIVE_BINDING(sym))
+	    error(_("no active binding for \"%s\""),
+		  EncodeChar(PRINTNAME(sym)));
+	return val;
+    }
+    else {
+	SEXP binding = findVarLocInFrame(env, sym, NULL);
+	if (binding == R_NilValue)
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
+	if (! IS_ACTIVE_BINDING(binding))
+	    error(_("no active binding for \"%s\""),
+		  EncodeChar(PRINTNAME(sym)));
+	return CAR(binding);
+    }
+}
+
 SEXP attribute_hidden do_lockBnd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sym, env;
@@ -3526,6 +3560,15 @@ SEXP attribute_hidden do_bndIsActive(SEXP call, SEXP op, SEXP args, SEXP rho)
     sym = CAR(args);
     env = CADR(args);
     return ScalarLogical(R_BindingIsActive(sym, env));
+}
+
+SEXP attribute_hidden do_activeBndFun(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sym, env;
+    checkArity(op, args);
+    sym = CAR(args);
+    env = CADR(args);
+    return R_ActiveBindingFunction(sym, env);
 }
 
 /* This is a .Internal with no wrapper, currently unused in base R */

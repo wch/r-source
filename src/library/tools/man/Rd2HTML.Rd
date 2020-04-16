@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2018 R Core Team
+% Copyright 2008-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -78,12 +78,9 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   links are looked in them in turn, so lazy-evaluation can be used to
   only do a second-level search for links if required.
 
-  Note that the default for \code{Rd2latex} is to output ASCII,
-  including using the second option of \verb{\enc} markup.  This was
-  chosen because use of UTF-8 in LaTeX requires version
-  \sQuote{2005/12/01} or later, and even with that version the coverage
-  of UTF-8 glyphs is not extensive (and not even as complete as
-  Latin-1).
+  Before \R 3.6.0, the default for \code{Rd2latex} was \code{outputEncoding = "ASCII"},
+  including using the second option of \verb{\enc} markup, because \LaTeX
+  versions did not provide enough coverage of UTF-8 glyphs for a long time.
 
   \code{Rd2txt} will format text paragraphs to a width determined by
   \code{width}, with appropriate margins.  The default is to be close to

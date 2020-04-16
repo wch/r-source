@@ -120,8 +120,8 @@ Binary components
 
 The Windows binary distribution contains components that have been
 compiled separately.  Most of these are from the Rtools distribution
-at http://www.murdoch-sutherland.com/Rtools/;
-http://www.murdoch-sutherland.com/Rtools/Rtools.txt lists the current
+at https://cran.r-project.org/bin/windows/Rtools/;
+https://cran.r-project.org/bin/windows/Rtools/Rtools.txt lists the current
 contents.
 
 The build of Tcl/Tk contained in the binary installer was produced
@@ -135,12 +135,10 @@ src/gnuwin32/bitmap direcctory.  The exact sources used for these
 libraries are available on request to R-windows@r-project.org (you
 will need to specify which binary installer version).
 
-A binay build may contain compiled sources from cairographics,
+A binary build may contain compiled sources from cairographics,
 distributed under LGPL 2.1 (our choice) or MPL 1.1.  The binary
 distribution used is that at https://www.rforge.net/Cairo/files/ .
 
 A binary build may contain compiled components from ICU, whose license
 can be viewed at
-http://source.icu-project.org/repos/icu/icu/trunk/LICENSE: the
-sources and binary libraries used are available at
-http://www.stats.ox.ac.uk/pub/Rtools/ .
+https://raw.githubusercontent.com/unicode-org/icu/master/icu4c/LICENSE

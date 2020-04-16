@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2015-03-27 14:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -80,11 +80,22 @@ msgstr " 対数スケールのエラー: 'ylim' <= 0 "
 msgid "incorrect number of names"
 msgstr " 名前の数が誤りです "
 
-msgid "invalid first argument"
-msgstr " 最初の引数が無効です "
-
 msgid "'formula' missing or incorrect"
 msgstr " 'formula' が無いか不正確です "
+
+#, fuzzy
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr " 'formula' は丁度二つの変数を特定すべきです "
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr ""
+
+#, fuzzy
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr " 'formula' は丁度二つの変数を特定すべきです "
+
+msgid "invalid first argument"
+msgstr " 最初の引数が無効です "
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr " 'at' は 'z$n' と同じ長さ (すなわち %d) を持たなければなりません "
@@ -465,6 +476,11 @@ msgstr " y は対数スケールです: yinch() は意味をなしていませ�
 msgid "log scale:  xyinch() is nonsense"
 msgstr " x または y が対数スケールです: xyinch() は意味をなしていません "
 
+#, fuzzy
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] " 余分な引数 %s は無視されます "
+
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] " 外れ値 (%s) は描かれません 箱型図 %d 中では "
@@ -472,10 +488,6 @@ msgstr[0] " 外れ値 (%s) は描かれません 箱型図 %d 中では "
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] " 引数 %s は使用されていません "
-
-#~ msgid "extra argument %s will be disregarded"
-#~ msgid_plural "extra arguments %s will be disregarded"
-#~ msgstr[0] " 余分な引数 %s は無視されます "
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr ""

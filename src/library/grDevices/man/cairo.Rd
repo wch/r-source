@@ -16,19 +16,20 @@
 svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
     width = 7, height = 7, pointsize = 12,
     onefile = FALSE, family = "sans", bg = "white",
-    antialias = c("default", "none", "gray", "subpixel"))
+    antialias = c("default", "none", "gray", "subpixel"),
+    symbolfamily)
 
 cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
           onefile = FALSE, family = "sans", bg = "white",
           antialias = c("default", "none", "gray", "subpixel"),
-          fallback_resolution = 300)
+          fallback_resolution = 300, symbolfamily)
 
 cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
          width = 7, height = 7, pointsize = 12,
          onefile = FALSE, family = "sans", bg = "white",
          antialias = c("default", "none", "gray", "subpixel"),
-         fallback_resolution = 300)
+         fallback_resolution = 300, symbolfamily)
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -56,6 +57,9 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{fallback_resolution}{numeric: the resolution in dpi used when
     falling back to bitmap output.  Prior to \R 3.3.0 this depended on
     the cairo implementation but was commonly 300.}
+  \item{symbolfamily}{
+      a length-one character string that specifies the font family to
+      be used as the "symbol" font (e.g., for \link{plotmath} output).}
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.

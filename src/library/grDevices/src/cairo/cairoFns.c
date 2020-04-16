@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2008--2013  R Core Team
+ *  Copyright (C) 2008--2020  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -921,12 +921,18 @@ static SEXP Cairo_Cap(pDevDesc dd)
     return raster;
 }
 #endif
-                         
+
 #ifdef HAVE_PANGOCAIRO
 /* ------------- pangocairo section --------------- */
 
+SEXP in_CairoFT(void) 
+{
+    return mkString("");
+}
+
 static PangoFontDescription 
-*PG_getFont(const pGEcontext gc, double fs, const char *family)
+*PG_getFont(const pGEcontext gc, double fs, const char *family,
+            const char *symbolfamily)
 {
     PangoFontDescription *fontdesc;
     gint face = gc->fontface;
@@ -939,9 +945,9 @@ static PangoFontDescription
     if (face < 1 || face > 5) face = 1;
 
     fontdesc = pango_font_description_new();
-    if (face == 5)
-	pango_font_description_set_family(fontdesc, "symbol");
-    else {
+    if (face == 5) {
+	pango_font_description_set_family(fontdesc, symbolfamily);
+    } else {
 	const char *fm = gc->fontfamily;
 	if (!fm[0]) fm = family;
 	if (streql(fm, "mono")) fm = "courier";
@@ -1006,15 +1012,22 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     char str[16];
     int Unicode = mbcslocale;
     PangoFontDescription *desc = 
-	PG_getFont(gc, xd->fontscale, xd->basefontfamily);
+	PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
     PangoLayout *layout;
     gint iascent, idescent, iwidth;
 
     if (c == 0) c = 77;
-    if (c < 0) {c = -c; Unicode = 1;}
+    if (c < 0) {c = -c; Unicode = 2;}
 
     if (Unicode) {
+        const char *textstr; 
 	Rf_ucstoutf8(str, (unsigned int) c);
+        /* Unicode == 2 means we have a Unicode point */
+        if (Unicode > 1 && gc->fontface == 5 && !xd->usePUA) {
+            textstr = utf8Toutf8NoPUA(str);
+            /* At most 3 bytes (plus null) in textstr */
+            for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
+        } 
     } else {
 	/* Here we assume that c < 256 */
 	str[0] = (char) c; str[1] = (char) 0;
@@ -1039,9 +1052,17 @@ PangoCairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
+
+    const char *textstr;
+    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
     PangoFontDescription *desc = 
-	PG_getFont(gc, xd->fontscale, xd->basefontfamily);
-    PangoLayout *layout = PG_layout(desc, xd->cc, str);
+	PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
+    PangoLayout *layout = PG_layout(desc, xd->cc, textstr);
 
     PG_text_extents(xd->cc, layout, NULL, NULL, &width, NULL, NULL, 0);
     g_object_unref(layout);
@@ -1062,13 +1083,21 @@ PangoCairo_Text(double x, double y,
     if (xd->appending) 
         return;
 
+    const char *textstr;
+    if (!utf8Valid(str)) error("invalid string in PangoCairo_Text");
+    if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
+
     if (R_ALPHA(gc->col) > 0) {
 	gint ascent, lbearing, width;
 	PangoLayout *layout;
 	PangoFontDescription *desc = 
-	    PG_getFont(gc, xd->fontscale, xd->basefontfamily);
+	    PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
 	cairo_save(xd->cc);
-	layout = PG_layout(desc, xd->cc, str);
+	layout = PG_layout(desc, xd->cc, textstr);
 	PG_text_extents(xd->cc, layout, &lbearing, NULL, &width,
 			&ascent, NULL, 0);
 	cairo_move_to(xd->cc, x, y);
@@ -1097,6 +1126,11 @@ PangoCairo_Text(double x, double y,
 #endif
 
 #if CAIRO_HAS_FT_FONT && USE_FC
+
+SEXP in_CairoFT(void) 
+{
+    return mkString("yes");
+}
 
 /* FT implies FC in Cairo */
 #include <cairo-ft.h>
@@ -1248,11 +1282,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     if (face < 1 || face > 5) face = 1;
     family = gc->fontfamily;
     if (face == 5) {
-#ifdef Win32
-	if (!*family) family = "Standard Symbols L";
-#else
-	if (!*family) family = "Symbol";
-#endif
+	if (!*family) family = xd->symbolfamily;
     } else {
 	if (!*family) family = xd->basefontfamily;
 	if (streql(family, "sans")) family = hv;
@@ -1274,6 +1304,11 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 
 #else
 
+SEXP in_CairoFT(void) 
+{
+    return mkString("");
+}
+
 static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
@@ -1288,7 +1323,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 #endif
 
     if (face < 1 || face > 5) face = 1;
-    if (face == 5) family = "Symbol";
+    if (face == 5) family = xd->symbolfamily;
     if (face == 2 || face == 4) wt = CAIRO_FONT_WEIGHT_BOLD;
     if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
     if (face != 5) {
@@ -1320,10 +1355,23 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
     int Unicode = mbcslocale;
 
     if (c == 0) c = 77;
-    if (c < 0) {c = -c; Unicode = 1;}
+    if (c < 0) {c = -c; Unicode = 2;}
 
     if (Unicode) {
+        const char *textstr;
 	Rf_ucstoutf8(str, (unsigned int) c);
+	if (Unicode > 1 && gc->fontface == 5 &&
+	    dd->wantSymbolUTF8 == NA_LOGICAL &&
+	    strcmp(xd->symbolfamily, "Symbol") != 0) {
+            /* Single-byte Windows */
+            textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
+            /* At most 3 bytes (plus null) in textstr */
+            for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
+	} else if (Unicode > 1 && gc->fontface == 5 && !xd->usePUA) {
+            textstr = utf8Toutf8NoPUA(str);
+            /* At most 3 bytes (plus null) in textstr */
+            for (int i = 0; i < 4; i++) str[i] = textstr[i]; 
+        } 
     } else {
 	/* Here, we assume that c < 256 */
 	str[0] = (char)c; str[1] = 0;
@@ -1341,9 +1389,19 @@ static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     cairo_text_extents_t exts;
 
+    const char *textstr;
     if (!utf8Valid(str)) error("invalid string in Cairo_StrWidth");
+    if (gc->fontface == 5 && dd->wantSymbolUTF8 == NA_LOGICAL &&
+	strcmp(xd->symbolfamily, "Symbol") != 0) {
+        /* Single-byte Windows */
+        textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
+    } else if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
     FT_getFont(gc, dd, xd->fontscale);
-    cairo_text_extents(xd->cc, str, &exts);
+    cairo_text_extents(xd->cc, textstr, &exts);
     return exts.x_advance;
 }
 
@@ -1351,6 +1409,9 @@ static void Cairo_Text(double x, double y,
 		       const char *str, double rot, double hadj,
 		       pGEcontext gc, pDevDesc dd)
 {
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    const char *textstr;
+
     /*
      * Cairo "toy" text does not add to the clipping path (yet?)
      */
@@ -1358,20 +1419,29 @@ static void Cairo_Text(double x, double y,
         return;
 
     if (!utf8Valid(str)) error("invalid string in Cairo_Text");
+
+    if (gc->fontface == 5 && dd->wantSymbolUTF8 == NA_LOGICAL &&
+	strcmp(xd->symbolfamily, "Symbol") != 0) {
+        /* Single-byte Windows */
+        textstr = utf8ToLatin1AdobeSymbol2utf8(str, xd->usePUA);
+    } else if (gc->fontface == 5 && !xd->usePUA) {
+        textstr = utf8Toutf8NoPUA(str);
+    } else {
+        textstr = str;
+    }
     if (R_ALPHA(gc->col) > 0) {
-	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	cairo_save(xd->cc);
 	FT_getFont(gc, dd, xd->fontscale);
 	cairo_move_to(xd->cc, x, y);
 	if (hadj != 0.0 || rot != 0.0) {
 	    cairo_text_extents_t te;
-	    cairo_text_extents(xd->cc, str, &te);
+	    cairo_text_extents(xd->cc, textstr, &te);
 	    if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
 	    if (hadj != 0.0)
 		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
 	}
 	CairoColor(gc->col, xd);
-	cairo_show_text(xd->cc, str);
+	cairo_show_text(xd->cc, textstr);
 	cairo_restore(xd->cc);
     }
 }

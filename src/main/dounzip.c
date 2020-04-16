@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-2018  The R Core Team
+ *  first part Copyright (C) 2002-2020  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -213,6 +213,7 @@ zipunzip(const char *zipname, const char *dest, int nfiles, const char **files,
     if (nfiles == 0) { /* all files */
 	unz_global_info64 gi;
 	unzGetGlobalInfo64(uf, &gi);
+	PROTECT(names = allocVector(STRSXP, 5000));
 	for (i = 0; i < gi.number_entry; i++) {
 	    if (i > 0) if ((err = unzGoToNextFile(uf)) != UNZ_OK) break;
 	    if (*nnames+1 >= LENGTH(names)) {
@@ -231,6 +232,7 @@ zipunzip(const char *zipname, const char *dest, int nfiles, const char **files,
 #endif
 	}
     } else {
+	PROTECT(names = allocVector(STRSXP, nfiles));
 	for (i = 0; i < nfiles; i++) {
 	    if ((err = unzLocateFile(uf, files[i], 1)) != UNZ_OK) break;
 	    if ((err = extract_one(uf, dest, files[i], names, nnames,
@@ -244,6 +246,7 @@ zipunzip(const char *zipname, const char *dest, int nfiles, const char **files,
     }
     *pnames = names;
     unzClose(uf);
+    UNPROTECT(1); /* names */
     return err;
 }
 
@@ -354,12 +357,9 @@ SEXP Runzip(SEXP args)
     if (setTime == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "setTime");
 
-    if (ntopics > 0)
-	PROTECT(names = allocVector(STRSXP, ntopics));
-    else
-	PROTECT(names = allocVector(STRSXP, 5000));
     rc = zipunzip(zipname, dest, ntopics, topics, &names, &nnames,
 		  overwrite, junk, setTime);
+    PROTECT(names);
     if (rc != UNZ_OK)
 	switch(rc) {
 	case UNZ_END_OF_LIST_OF_FILE:
@@ -384,7 +384,7 @@ SEXP Runzip(SEXP args)
     PROTECT(ans = ScalarInteger(rc));
     PROTECT(names = lengthgets(names, nnames));
     setAttrib(ans, install("extracted"), names);
-    UNPROTECT(3);
+    UNPROTECT(3); /* old names, ans, names */
     vmaxset(vmax);
     return ans;
 }
@@ -402,6 +402,7 @@ static Rboolean unz_open(Rconnection con)
     unzFile uf;
     char path[2*PATH_MAX], *p;
     const char *tmp;
+    int mlen;
 
     if(con->mode[0] != 'r') {
 	warning(_("unz connections can only be opened for reading"));
@@ -434,7 +435,8 @@ static Rboolean unz_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = FALSE;
     con->canread = TRUE;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    mlen = (int) strlen(con->mode);
+    if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     /* set_iconv(); not yet */
     con->save = -1000;

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004--2018  The R Foundation
+ *  Copyright (C) 2004--2020  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -673,7 +673,7 @@ static void menuabout(control m)
 
 static void menuRhome(control m)
 {
-    ShellExecute(NULL, "open", "http://www.r-project.org", NULL, NULL, SW_SHOW);
+    ShellExecute(NULL, "open", "https://www.r-project.org", NULL, NULL, SW_SHOW);
 }
 
 static void menuCRAN(control m)

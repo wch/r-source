@@ -24,7 +24,7 @@
 */
 
 /* Copyright (C) 2004--2008	The R Foundation
-   Copyright (C) 2013		The R Core Team
+   Copyright (C) 2013--2020	The R Core Team
 
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
@@ -661,8 +661,10 @@ char *askcdstring(const char *question, const char *default_str)
     browserInfo info;
     OSVERSIONINFOEX osvi;
 
-    strncpy(info.question, question, 40);
-    strncpy(info.default_str, default_str, MAX_PATH);
+    strncpy(info.question, question, 40 - 1);
+    info.question[40 - 1] = '\0';
+    strncpy(info.default_str, default_str, MAX_PATH - 1);
+    info.default_str[MAX_PATH - 1] = '\0';
 
     /* Get the shell's allocator. */
     if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return NULL;

@@ -1,6 +1,6 @@
 % File src/library/base/man/deparseOpts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
@@ -77,7 +77,8 @@
     }
     \item{\code{"all"}:}{
       An abbreviated way to specify all of the options
-      listed above.  This is the default for \code{dump}, and the options
+      listed above \emph{plus} \code{"digits17"} (since \R version 4.0.0).
+      This is the default for \code{dump}, and, without \code{"digits17"}, the options
       used by \code{\link{edit}} (which are fixed).
     }
     \item{\code{"delayPromises"}:}{
@@ -106,6 +107,10 @@
       (but the output will depend on the platform and there may be loss
       of precision when read back).  Complex numbers with one or both
       non-finite components are output as if this option were not set.
+    }
+    \item{\code{"exact"}:}{
+      An abbreviated way to specify \code{control = c("all", "hexNumeric")}
+      which is guaranteed to be exact for numbers, see also below.
     }
   }
   For the most readable (but perhaps incomplete) display, use
@@ -145,7 +150,16 @@ int2bits <- function(x, base = 2L,
 }
 int2bits(iOpt.all)
 ## what options does  "all" contain ?
-(oa <- ..deparseOpts[-1][int2bits(iOpt.all) == 1])
+depO.indiv <- setdiff(..deparseOpts, c("all", "exact"))
+(oa <- depO.indiv[int2bits(iOpt.all) == 1])
 stopifnot(identical(iOpt.all, .deparseOpts(oa)))
+
+## ditto for "exact" instead of "all":
+int2bits(iOpt.X <- .deparseOpts("exact"))
+(oX <- depO.indiv[int2bits(iOpt.X) == 1])
+diffXall <- oa != oX
+stopifnot(identical(iOpt.X, .deparseOpts(oX)),
+          identical(oX[diffXall], "hexNumeric"),
+          identical(oa[diffXall], "digits17"))
 }
 \keyword{programming}

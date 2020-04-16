@@ -3,9 +3,9 @@
 ## Hopefully typically the identity():
 pd0 <- function(expr, backtick = TRUE, ...)
     parse(text = deparse(expr, backtick=backtick, ...))
-id_epd <- function(expr, control = c("all","digits17"), ...)
+id_epd <- function(expr, control = "all", ...)
     eval(pd0(expr, control=control, ...))
-dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
+dPut <- function(x, control = "all") dput(x, control=control)
 ##' Does 'x' contain "real" numbers
 ##' with > 3 digits after "." where deparse may be platform dependent?
 hasReal <- function(x) {

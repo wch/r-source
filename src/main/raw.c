@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2017 The R Core Team
+ *  Copyright (C) 2001--2020 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -194,7 +194,7 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* Simplified version for RFC3629 definition of UTF-8 */
-static int mbrtoint(int *w, const char *s)
+int mbrtoint(int *w, const char *s)
 {
     unsigned int byte;
     byte = *((unsigned char *)s);
@@ -369,7 +369,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 		this = 0x10000 + (hi << 10) + lo;
 	    }
 	    used = inttomb(buf, this);
-	    strncpy(tmp + len, buf, used);
+	    memcpy(tmp + len, buf, used);
 	    len += used;
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));

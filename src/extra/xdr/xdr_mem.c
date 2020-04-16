@@ -8,8 +8,8 @@
  typedef unsigned long uintptr_t;
 #endif
 
-/* Local mod: assumes _WIN32 is i386 and little-endian generic is 32-bit */
-#if defined(_WIN32) || defined(__CYGWIN__)
+/* Local mod: the assembly assumes i386 and little-endian generic is 32-bit */
+#if defined(_WIN32) && !defined(_WIN64)
 static uint32_t ntohl(uint32_t x)
 { /* could write VC++ inline assembler, but not worth it for now */
 #ifdef _MSC_VER

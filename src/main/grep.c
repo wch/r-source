@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -471,6 +471,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* treat split = NULL as split = "" */
     if (!tlen) { tlen = 1; SETCADR(args0, tok = mkString("")); }
+    PROTECT(tok);
 
     if (!useBytes) {
 	for (i = 0; i < tlen; i++)
@@ -655,7 +656,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			if ((slen == 1 && *bufp != *split) ||
 			    (slen > 1 && strncmp(bufp, split, slen))) continue;
 			if (slen) {
-			    strncpy(pt, laststart, bufp - laststart);
+			    if (bufp > laststart)
+				strncpy(pt, laststart, bufp - laststart);
 			    pt[bufp - laststart] = '\0';
 			} else {
 			    pt[0] = *bufp; pt[1] ='\0';
@@ -973,6 +975,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
     if (tables) pcre_free((void *)tables);
 #endif
+    UNPROTECT(1); /* tok */
     return ans;
 }
 
@@ -1502,13 +1505,15 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		    R_size_t pos = 0;
 		    SEXP elt, mvec = NULL;
 		    int *fmatches = (int*) matches; /* either the minbuffer or an allocated maxibuffer */
+		    int nprotect = 0;
 
 		    if (!nmatches) return text;
 
 		    /* if there are more matches than in the buffer,
 		       we actually need to get them first */
 		    if (nmatches > MAX_MATCHES_MINIBUF) {
-			mvec = PROTECT(allocVector(INTSXP, nmatches));
+			PROTECT(mvec = allocVector(INTSXP, nmatches));
+			nprotect++;
 			fmatches = INTEGER(mvec);
 			memcpy(fmatches, matches, sizeof(matches));
 			nmatches = MAX_MATCHES_MINIBUF;
@@ -1524,6 +1529,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		    /* there are always nmatches + 1 pieces (unlike strsplit) */
 		    ans = PROTECT(allocVector(VECSXP, nmatches + 1));
+		    nprotect++;
 		    /* add all pieces before matches */
 		    for (i = 0; i < nmatches; i++) {
 			R_size_t elt_size = fmatches[i] - 1 - pos;
@@ -1538,9 +1544,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_VECTOR_ELT(ans, nmatches, elt);
 		    if (LENGTH(elt))
 			memcpy(RAW(elt), RAW(text) + LENGTH(text) - LENGTH(elt), LENGTH(elt));
-		    UNPROTECT(1); /* ans */
-		    if (mvec)
-			UNPROTECT(1);
+		    UNPROTECT(nprotect);
 		    return ans;
 		}
 
@@ -2967,7 +2971,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    // initiialization needed for NA inputs: PR#16484
 	    for (i = 0 ; i < n * (int) capture_count ; i++)
 		is[i] = il[i] = NA_INTEGER;
-	} else is = il = NULL; /* not actually used */
+	} else is = il = INTEGER(ans); // not actually used, but is + i has to be legal
 	vmax = vmaxget();
 	for (i = 0 ; i < n ; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();

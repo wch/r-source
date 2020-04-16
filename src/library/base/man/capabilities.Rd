@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -11,11 +11,16 @@
   build of \R.
 }
 \usage{
-capabilities(what = NULL)
+capabilities(what = NULL,
+             Xchk = any(nas \%in\% c("X11", "jpeg", "png", "tiff")))
 }
 \arguments{
   \item{what}{character vector or \code{NULL}, specifying
     required components.  \code{NULL} implies that all are required.}
+  \item{Xchk}{\code{\link{logical}} with a smart default, indicating if
+    X11-related capabilities should be fully checked, notably on macOS.
+    If set to false, may avoid a warning \dQuote{No protocol specified}
+    and e.g., the "X11" capability may be returned as \code{NA}.}
 }
 #ifdef unix
 \section{Note to macOS users}{
@@ -115,6 +120,9 @@ capabilities()
 
 if(!capabilities("ICU"))
    warning("ICU is not available")
+
+## Does not call the internal X11-checking function:
+capabilities(Xchk = FALSE)
 
 ## See also the examples for 'connections'.
 }

@@ -1,7 +1,7 @@
 # Refer to all C routines by their name prefixed by C_
 useDynLib(utils, .registration = TRUE, .fixes = "C_")
 
-export("?", .DollarNames, .S3methods, .romans, CRAN.packages, Rprof,
+export("?", .DollarNames, .S3methods, .romans, Rprof,
        Rprofmem, RShowDoc, RSiteSearch, URLdecode, URLencode, View,
        adist, alarm, apropos, aregexec, argsAnywhere, asDateBuilt, askYesNo,
        assignInMyNamespace, assignInNamespace, as.roman, as.person,

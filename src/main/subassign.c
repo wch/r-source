@@ -292,6 +292,7 @@ static Rboolean dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
     if (op == NULL)
         op = INTERNAL(install("as.vector"));
     PROTECT(args = list2(*x, mkString("any")));
+    /* DispatchOrEval internal generic: as.vector */
     ans = DispatchOrEval(call, op, "as.vector", args, rho, x, 0, 1);
     UNPROTECT(1);
     return ans;
@@ -543,7 +544,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 	    ii++;
 	}
     }
-    xnames = getAttrib(x, R_NamesSymbol);
+    PROTECT(xnames = getAttrib(x, R_NamesSymbol));
     if (xnames != R_NilValue) {
 	PROTECT(xnewnames = allocVector(STRSXP, ii));
 	ii = 0;
@@ -557,7 +558,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 	UNPROTECT(1);
     }
     copyMostAttrib(x, xnew);
-    UNPROTECT(2);
+    UNPROTECT(3);
     return xnew;
 }
 
@@ -1562,6 +1563,7 @@ SEXP attribute_hidden do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* We evaluate the first argument and attempt to dispatch on it. */
     /* If the dispatch fails, we "drop through" to the default code below. */
 
+    /* DispatchOrEval internal generic: [<- */
     if(R_DispatchOrEvalSP(call, op, "[<-", args, rho, &ans))
 /*     if(DispatchAnyOrEval(call, op, "[<-", args, rho, &ans, 0, 0)) */
       return(ans);
@@ -1687,7 +1689,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 		SET_VECTOR_ELT(y, k++, VECTOR_ELT(x, i));
 	    CLEAR_VECTOR_ELT(x, i);
 	}
-	xnames = getAttrib(x, R_NamesSymbol);
+	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	if (xnames != R_NilValue) {
 	    PROTECT(ynames = allocVector(STRSXP, n - 1));
 	    k = 0;
@@ -1698,7 +1700,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 	    UNPROTECT(1);
 	}
 	copyMostAttrib(x, y);
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return y;
     }
     return x;
@@ -1713,6 +1715,7 @@ SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
+    /* DispatchOrEval internal generic: [[<- */
     if(R_DispatchOrEvalSP(call, op, "[[<-", args, rho, &ans))
 /*     if(DispatchAnyOrEval(call, op, "[[<-", args, rho, &ans, 0, 0)) */
       return(ans);
@@ -2082,6 +2085,7 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Note the RHS has already been evaluated at this point */
     PROTECT(args = fixSubset3Args(call, args, env, &nlist));
 
+    /* DispatchOrEval internal generic: $<- */
     if(R_DispatchOrEvalSP(call, op, "$<-", args, env, &ans)) {
 	UNPROTECT(1); /* args */
 	return(ans);
@@ -2100,9 +2104,11 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     SEXP t;
     PROTECT_INDEX pvalidx, pxidx;
     Rboolean S4; SEXP xS4 = R_NilValue;
+    int nprotect = 0;
 
     PROTECT_WITH_INDEX(x, &pxidx);
     PROTECT_WITH_INDEX(val, &pvalidx);
+    nprotect += 2;
     S4 = IS_S4_OBJECT(x);
 
     if (MAYBE_SHARED(x) ||
@@ -2186,7 +2192,8 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	    warning(_("Coercing LHS to a list"));
 	    REPROTECT(x = coerceVector(x, VECSXP), pxidx);
 	}
-	names = getAttrib(x, R_NamesSymbol);
+	names = PROTECT(getAttrib(x, R_NamesSymbol));
+	nprotect++;
 	nx = xlength(x);
 	nlist = PRINTNAME(nlist);
 	if (isNull(val)) {
@@ -2269,7 +2276,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	    }
 	}
     }
-    UNPROTECT(2);
+    UNPROTECT(nprotect);
     if(xS4 != R_NilValue)
 	x = xS4; /* x was an env't, the data slot of xS4 */
     SETTER_CLEAR_NAMED(x);

@@ -18,7 +18,7 @@
 
 ### xy.coords() is now in the imported 'grDevices' package
 
-plot <- function (x, y, ...)  UseMethod("plot")
+## plot <- function (x, y, ...)  UseMethod("plot")
 
 
 ## xlim = NULL (instead of "missing", since it will be passed to plot.default):

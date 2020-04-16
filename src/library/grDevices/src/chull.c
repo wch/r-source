@@ -15,6 +15,7 @@
 
 #include <R_ext/Boolean.h>	/* TRUE,... */
 
+
 static void split(int n, double *x,
 		  int m, int *in,
 		  int ii, int jj,
@@ -358,8 +359,9 @@ static void in_chull(int *n, double *x, int *m, int *in,
 	do {
 	    inh = il[inh];
 	    ++ma;
-	    nia -= ia[ma];
+	    // Next two lines swapped in R 4.0.0 as nia is not used in Finis.
 	    if (ma == mp1) goto Finis;
+	    nia -= ia[ma];
 	} while(ia[ma] == 0);
 	ilinh = il[inh];
 /* on the right side of the tree, the left son of a left son */

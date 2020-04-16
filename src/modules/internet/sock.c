@@ -218,8 +218,28 @@ int Sock_open(Sock_port_t port, int blocking, Sock_error_t perr)
 {
     SOCKET sock, status;
     struct sockaddr_in server;
+#ifdef Win32
+    static int use_no_handle_inherit = 1;
 
+    if (use_no_handle_inherit) {
+# ifndef WSA_FLAG_NO_HANDLE_INHERIT
+#  define WSA_FLAG_NO_HANDLE_INHERIT 0x80
+# endif
+	/* WSA_FLAG_NO_HANDLE_INHERIT is supported from Windows 7 SP1,
+	   on older versions of Windows, WSASocket will fail when used.
+	   Try once, fall back to socket() which does not use the flag. */
+	sock = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0,
+			 WSA_FLAG_NO_HANDLE_INHERIT);
+	if (R_invalid_socket(sock)) {
+	    use_no_handle_inherit = 0;
+	    sock = socket(AF_INET, SOCK_STREAM, 0);
+	}
+    } else
+	    sock = socket(AF_INET, SOCK_STREAM, 0);
+#else
     sock = socket(AF_INET, SOCK_STREAM, 0);
+#endif
+
     if (R_invalid_socket(sock)) 
 	return Sock_error(perr, R_socket_errno(), 0);
 
@@ -291,6 +311,13 @@ int Sock_open(Sock_port_t port, int blocking, Sock_error_t perr)
 	close(sock);
 	return Sock_error(perr, errno, 0);
     }
+#elif defined(Win32)
+    if (!use_no_handle_inherit) 
+	/* Clearing the flag after WSASocket does not work with non-IFS LSPs
+	   where "sock" is just a proxy for a real socket, hence we use
+	   WSASocket with WSA_FLAG_NO_HANDLE_INHERIT when supported. */
+	SetHandleInformation((HANDLE)(uintptr_t)sock,
+	                     HANDLE_FLAG_INHERIT, 0);
 #endif
 
     status = bind(sock, (struct sockaddr *)&server, sizeof(server));
@@ -391,8 +418,8 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = recv(fd, buf, size, 0);
-    while(R_socket_error_eintr(retval));
-    if (R_socket_error(retval))
+    while(R_socket_error_eintr((int)retval));
+    if (R_socket_error((int)retval))
 	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;
@@ -404,8 +431,8 @@ ssize_t Sock_write(int fd, const void *buf, size_t size, Sock_error_t perr)
     ssize_t retval;
     do
 	retval = send(fd, buf, size, 0);
-    while (R_socket_error_eintr(retval));
-    if (R_socket_error(retval))
+    while (R_socket_error_eintr((int)retval));
+    if (R_socket_error((int)retval))
 	return Sock_error(perr, R_socket_errno(), 0);
     else
 	return retval;

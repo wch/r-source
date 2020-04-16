@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -264,6 +264,9 @@ msgstr "projection을 허용하도록 모델을 재적합합니다"
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
 "'contrast.obj'의 열들은 반드시 합이 0이 되도록 constrast를 정의해야 합니다"
+
+msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
+msgstr ""
 
 msgid "collapsing to unique 'x' values"
 msgstr "고유한 'x'값들로 범위를 축소합니다"
@@ -832,7 +835,8 @@ msgstr "유효하지 않은 인자 'lambda'입니다"
 msgid "%s link not recognised"
 msgstr "인식되지 않는 %s 링크입니다"
 
-msgid "link \"%s\" not available for poisson family; available links are %s"
+#, fuzzy
+msgid "link \"%s\" not available for %s family; available links are %s"
 msgstr ""
 "링크 \"%s\"는 포아송 페밀리에서 사용할 수 없습니다.  사용가능한 링크들은 %s입"
 "니다"
@@ -843,39 +847,26 @@ msgstr "'Poisson' 페밀리에 음의 값들은 허용되지 않습니다"
 msgid "ignoring prior weights"
 msgstr "prior weights를 무시합니다"
 
-msgid ""
-"link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-"링크 \"%s\"는 쿼시포아송 페밀리에서 사용할 수 없습니다.  사용가능한 링크들은 "
-"%s입니다"
-
 msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "'quasiPoisson' 페밀리에서 음의 값들은 허용되지 않습니다"
-
-msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr ""
-"링크 \"%s\"는 가우시안 페밀리에서 사용할 수 없습니다.  사용가능한 링크들은 %s"
-"입니다"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr "유효한 시작값들을 찾을 수 없습니다.  일부를 정해주시길 바랍니다"
 
-msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr ""
-"링크 \"%s\"는 바이노미얼 페밀리에서 사용할 수 없습니다.  사용가능한 링크들은 "
-"%s입니다"
-
 msgid "y values must be 0 <= y <= 1"
 msgstr "y 값들은 반드시 0 이상 1 이하이어야 합니다"
 
-msgid "non-integer #successes in a binomial glm!"
+#, fuzzy
+msgid "non-integer #successes in a %s glm!"
 msgstr "binomial glm에서 number of success가 정수가 아닙니다"
 
-msgid "non-integer counts in a binomial glm!"
+#, fuzzy
+msgid "non-integer counts in a %s glm!"
 msgstr "binomial glm에서 정수가 아닌 count가 있습니다"
 
+#, fuzzy
 msgid ""
-"for the 'binomial' family, y must be a vector of 0 and 1's\n"
+"for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 "'binomial' 페밀리에서 y는 반드시 0과 1로만 구성된 벡터이어야 합니다\n"
@@ -885,35 +876,12 @@ msgstr ""
 msgid "cannot simulate from non-integer prior.weights"
 msgstr "정수가 아닌 prior.weights로부터 simulate 할 수 없습니다"
 
-msgid ""
-"link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-"링크 \"%s\"는 쿼시바이노미얼 페밀리에서 사용할 수 없습니다.  사용가능한 링크"
-"는 %s입니다"
-
-msgid ""
-"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
-"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
-msgstr ""
-"'quasibinomial' 페밀리에서 y는 반드시 0과 1로만 구성된 벡터이어야 합니다\n"
-"또는 첫번째 열은 성공의 수, 두번째 열은 실패의 수를 나타내는 2개의 열로된 행"
-"렬이어야 합니다"
-
-msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr ""
-"링크 \"%s\"는 감마 페밀리에서 사용할 수 없습니다.  사용가능한 링크는 %s입니다"
-
-msgid "non-positive values not allowed for the 'gamma' family"
+#, fuzzy
+msgid "non-positive values not allowed for the 'Gamma' family"
 msgstr "'gamma' 페밀리에서는 양수가 아닌 값들은 사용할 수없습니다"
 
 msgid "using weights as shape parameters"
 msgstr "shape 파라미터로서 weight를 사용합니다"
-
-msgid ""
-"link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr ""
-"링크 \"%s\"는 inverse.gaussian 페밀리에서 사용할 수 없습니다.  사용가능한 링"
-"크는 %s입니다"
 
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "'inverse.gaussian' 페밀링에서는 양수값들만 사용할 수 있습니다"
@@ -988,11 +956,11 @@ msgstr "2 x 2 분할표에서 'hybrid'는 무시됩니다"
 msgid "all groups must contain data"
 msgstr "모든 그룹들은 반드시 데이터를 가지고 있어야 합니다"
 
-msgid "all group levels must be finite"
-msgstr "모든 그룹 레벨들은 반드시 유한해야 합니다"
-
 msgid "not enough observations"
 msgstr ""
+
+msgid "data are essentially constant"
+msgstr "데이터는 본질적으로 상수입니다"
 
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr "NA는 'groups' 또는 'blocks'내에서 허용되지 않습니다"
@@ -1402,7 +1370,8 @@ msgstr ""
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 
-msgid "too few cases, n < k"
+#, fuzzy
+msgid "too few cases i with h_ii > 0), n < k"
 msgstr "관측치의 수가 너무 적습니다, 즉, n < k 입니다"
 
 msgid "predictors must all be numeric"
@@ -1450,10 +1419,7 @@ msgstr "유효하지 않은 인자 'cell'입니다"
 msgid "invalid argument 'degree'"
 msgstr "유효하지 않은 인자 'degree'입니다"
 
-msgid "iterTrace ="
-msgstr ""
-
-msgid "not obeyed as iterations ="
+msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr ""
 
 msgid "first argument must be a \"loess\" object"
@@ -1588,11 +1554,40 @@ msgid "cannot create a formula from a zero-column data frame"
 msgstr ""
 "아무런 열을 가지고 있지 않은 데이터 프레임은 formula를 생성할 수 없습니다"
 
+#, fuzzy
+msgid "invalid formula: %s"
+msgstr "유효하지 않은 formula입니다"
+
+#, fuzzy
+msgid "invalid formula %s: not a call"
+msgstr "deriv에 유효하지 않은 formula입니다"
+
+#, fuzzy
+msgid "invalid formula %s: assignment is deprecated"
+msgstr "deriv에 유효하지 않은 formula입니다"
+
+msgid "invalid formula %s: extraneous call to `%s` is deprecated"
+msgstr ""
+
+#, fuzzy
+msgid "invalid formula %s"
+msgstr "유효하지 않은 formula입니다"
+
 msgid "no terms component nor attribute"
 msgstr ""
 
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels'는 반드시 적어도 길이가 1인 문자형 벡터이어야 합니다"
+
+msgid ""
+"Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
+msgstr ""
+
+msgid "reformulate"
+msgstr ""
+
+msgid "deprecatedWarning"
+msgstr ""
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj'은 반드시 클래스 %s인 객체이어야 합니다"
@@ -1617,8 +1612,13 @@ msgstr "'offset'은 반드시 수치형이어야 합니다"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()에서 model frame과 formula가 일치하지 않습니다"
 
-msgid "invalid 'contrasts.arg' argument"
+#, fuzzy
+msgid "non-list contrasts argument ignored"
 msgstr "유효하지 않은 'contrasts.arg' 인자입니다"
+
+#, fuzzy
+msgid "'contrasts.arg' argument must be named"
+msgstr "'control' 인자는 반드시 named list이어야 합니다"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "변수 '%s'가 없으므로 이에 대한 contrast는 무시될 것입니다"
@@ -1842,10 +1842,10 @@ msgstr ""
 "'n', 'p1', 'p2', 'power', 그리고 'sig.level' 중의 하나는 반드시 NULL이어야 합"
 "니다"
 
-msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgid "No p1 in [0, p2] can be found to achieve the desired power"
 msgstr ""
 
-msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr ""
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
@@ -2243,9 +2243,6 @@ msgstr "'mu'는 반드시 한개의 숫자이어야 합니다"
 msgid "'y' is missing for paired test"
 msgstr ""
 
-msgid "data are essentially constant"
-msgstr "데이터는 본질적으로 상수입니다"
-
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main'은 반드시 TRUE, FALSE, NULL 또는 문자 (벡터)입니다."
 
@@ -2261,11 +2258,19 @@ msgstr "'ts' 객체는 반드시 하나 또는 그 이상의 관찰값들을 가
 msgid "'start' cannot be after 'end'"
 msgstr "'start'는 'end' 뒤에 올 수 없습니다."
 
+#, fuzzy
+msgid "'end' must be a whole number of cycles after 'start'"
+msgstr "'centers'는 반드시 숫자 또는 행렬이어야 합니다"
+
 msgid "no time series supplied"
 msgstr "주어진 시계열(time series)이 없습니다"
 
 msgid "not all series have the same frequency"
 msgstr ""
+
+#, fuzzy
+msgid "not all series have the same phase"
+msgstr "모든 관측치는 같은 그룹내에 있어야 합니다"
 
 msgid "non-intersecting series"
 msgstr ""
@@ -2292,7 +2297,8 @@ msgid "'xy.labels' must be logical or character"
 msgstr ""
 "'xy.labels'는 반드시 논리형(logical) 또는 문자형(character)이어야 합니다."
 
-msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
+#, fuzzy
+msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
 msgstr "'frequency'와 'deltat' 모두 제공되었으나 서로 일치하지 않습니다."
 
 msgid "'frequency' not changed"
@@ -2366,8 +2372,9 @@ msgstr "'ratio'는 반드시 양의 값을 가지는 하나의 숫자이어야 �
 msgid "'x' and 'w' must have the same length"
 msgstr "'x'와 'w'는 반드시 같은 길이를 가져야 합니다."
 
-msgid "not enough (finite) 'x' observations"
-msgstr ""
+#, fuzzy
+msgid "not enough (non-missing) 'x' observations"
+msgstr "'x' 관측값들이 충분하지 않습니다"
 
 msgid "requested conf.level not achievable"
 msgstr "수행할 수 없는 conf.level의 값이 주어졌습니다."
@@ -2559,3 +2566,51 @@ msgstr[0] ""
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasipoisson family; available links are %s"
+#~ msgstr ""
+#~ "링크 \"%s\"는 쿼시포아송 페밀리에서 사용할 수 없습니다.  사용가능한 링크들"
+#~ "은 %s입니다"
+
+#~ msgid ""
+#~ "link \"%s\" not available for gaussian family; available links are %s"
+#~ msgstr ""
+#~ "링크 \"%s\"는 가우시안 페밀리에서 사용할 수 없습니다.  사용가능한 링크들"
+#~ "은 %s입니다"
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family; available links are %s"
+#~ msgstr ""
+#~ "링크 \"%s\"는 바이노미얼 페밀리에서 사용할 수 없습니다.  사용가능한 링크들"
+#~ "은 %s입니다"
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasibinomial family; available links are %s"
+#~ msgstr ""
+#~ "링크 \"%s\"는 쿼시바이노미얼 페밀리에서 사용할 수 없습니다.  사용가능한 링"
+#~ "크는 %s입니다"
+
+#~ msgid ""
+#~ "for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
+#~ "or a 2 column matrix where col 1 is no. successes and col 2 is no. "
+#~ "failures"
+#~ msgstr ""
+#~ "'quasibinomial' 페밀리에서 y는 반드시 0과 1로만 구성된 벡터이어야 합니다\n"
+#~ "또는 첫번째 열은 성공의 수, 두번째 열은 실패의 수를 나타내는 2개의 열로된 "
+#~ "행렬이어야 합니다"
+
+#~ msgid "link \"%s\" not available for gamma family; available links are %s"
+#~ msgstr ""
+#~ "링크 \"%s\"는 감마 페밀리에서 사용할 수 없습니다.  사용가능한 링크는 %s입"
+#~ "니다"
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse.gaussian family; available links "
+#~ "are %s"
+#~ msgstr ""
+#~ "링크 \"%s\"는 inverse.gaussian 페밀리에서 사용할 수 없습니다.  사용가능한 "
+#~ "링크는 %s입니다"
+
+#~ msgid "all group levels must be finite"
+#~ msgstr "모든 그룹 레벨들은 반드시 유한해야 합니다"

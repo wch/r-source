@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2014-03-17 11:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -274,6 +274,9 @@ msgstr "Réajustement du modèle pour permettre la projection"
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
 "les colonnes de 'contrast.obj' doivent définir un contraste (somme nulle)"
+
+msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
+msgstr ""
 
 msgid "collapsing to unique 'x' values"
 msgstr "suppression des ex-aequos de 'x'"
@@ -850,7 +853,8 @@ msgstr "argument 'lambda' incorrect"
 msgid "%s link not recognised"
 msgstr "lien %s non reconnu"
 
-msgid "link \"%s\" not available for poisson family; available links are %s"
+#, fuzzy
+msgid "link \"%s\" not available for %s family; available links are %s"
 msgstr ""
 "le lien \"%s\" n'est pas disponible pour la famille 'poisson' ; les liens "
 "possibles sont %s"
@@ -861,40 +865,27 @@ msgstr "les valeurs négatives sont interdites pour la famille 'Poisson'"
 msgid "ignoring prior weights"
 msgstr "les pondération initiales sont ignorées"
 
-msgid ""
-"link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-"le lien \"%s\" n'est pas disponible pour la famille 'quasipoisson' ; les "
-"liens possibles sont %s"
-
 msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "les valeurs négatives sont interdites pour la famille 'quasiPoisson'"
-
-msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr ""
-"le lien \"%s\" n'est pas disponible pour la famille 'gaussian' ; les liens "
-"possibles sont %s"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr ""
 "impossible de trouver des valeurs initiales correctes : prière d'en fournir"
 
-msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr ""
-"le lien \"%s\" n'est pas disponible pour la famille 'binomial' ; les liens "
-"possibles sont %s"
-
 msgid "y values must be 0 <= y <= 1"
 msgstr "les valeurs de y doivent être 0 <= y <= 1"
 
-msgid "non-integer #successes in a binomial glm!"
+#, fuzzy
+msgid "non-integer #successes in a %s glm!"
 msgstr "nombre de succès non entier dans un glm binomial !"
 
-msgid "non-integer counts in a binomial glm!"
+#, fuzzy
+msgid "non-integer counts in a %s glm!"
 msgstr "effectifs non entier dans un glm binomial !"
 
+#, fuzzy
 msgid ""
-"for the 'binomial' family, y must be a vector of 0 and 1's\n"
+"for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 "pour la famille 'binomial', y doit être un vecteur de 0 ou de 1\n"
@@ -905,38 +896,14 @@ msgid "cannot simulate from non-integer prior.weights"
 msgstr ""
 "impossible de réaliser des simulations à l'aide de prior.weights non entiers"
 
-msgid ""
-"link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-"le lien \"%s\" n'est pas disponible pour la famille 'quasibinomial' ; les "
-"liens possibles sont %s"
-
-msgid ""
-"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
-"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
-msgstr ""
-"pour la famille 'quasibinomial', y doit être un vecteur de 0 ou de 1\n"
-"ou une matrice à 2 colonnes où la col 1 est le nombre de succès et la col 2 "
-"le nombre d'échecs"
-
-msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr ""
-"le lien \"%s\" n'est pas disponible pour la famille 'gamma' ; les liens "
-"possibles sont %s"
-
-msgid "non-positive values not allowed for the 'gamma' family"
+#, fuzzy
+msgid "non-positive values not allowed for the 'Gamma' family"
 msgstr ""
 "les valeurs inférieurs ou égales à zéro ne sont pas autorisées pour la "
 "famille 'gamma'"
 
 msgid "using weights as shape parameters"
 msgstr "utilisation des pondérations comme paramètres de forme"
-
-msgid ""
-"link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr ""
-"le lien \"%s\" n'est pas disponible pour la famille 'inverse.gaussian' ; les "
-"liens possibles sont %s"
 
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr ""
@@ -1015,11 +982,11 @@ msgstr "'hybrid' est ignoré pour une table 2 x 2"
 msgid "all groups must contain data"
 msgstr "tous les groupes doivent contenir des données"
 
-msgid "all group levels must be finite"
-msgstr "tous les niveaux des groupes doivent être définis"
-
 msgid "not enough observations"
 msgstr "pas assez d'observations"
+
+msgid "data are essentially constant"
+msgstr "les données sont pratiquement constantes"
 
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr "les NA ne sont pas autorisés dans 'groups' ou 'blocks'"
@@ -1455,7 +1422,8 @@ msgstr ""
 "le nombre de résidus non manquants ne correspond pas a l'effectif utilisé "
 "pour l'ajustement"
 
-msgid "too few cases, n < k"
+#, fuzzy
+msgid "too few cases i with h_ii > 0), n < k"
 msgstr "trop peu de cas, n < k"
 
 msgid "predictors must all be numeric"
@@ -1509,11 +1477,8 @@ msgstr "argument 'cell' incorrect"
 msgid "invalid argument 'degree'"
 msgstr "argument 'degree' incorrect"
 
-msgid "iterTrace ="
-msgstr ""
-
 #, fuzzy
-msgid "not obeyed as iterations ="
+msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "aucune observation finie"
 
 msgid "first argument must be a \"loess\" object"
@@ -1651,11 +1616,40 @@ msgstr ""
 "impossible de créer une formule à partir d'une tableau de données à zéro "
 "colonnes"
 
+#, fuzzy
+msgid "invalid formula: %s"
+msgstr "'formula' incorrecte"
+
+#, fuzzy
+msgid "invalid formula %s: not a call"
+msgstr "formule incorrecte dans deriv"
+
+#, fuzzy
+msgid "invalid formula %s: assignment is deprecated"
+msgstr "formule incorrecte dans deriv"
+
+msgid "invalid formula %s: extraneous call to `%s` is deprecated"
+msgstr ""
+
+#, fuzzy
+msgid "invalid formula %s"
+msgstr "'formula' incorrecte"
+
 msgid "no terms component nor attribute"
 msgstr "pas de composante 'terms' ni d'attribut"
 
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' doit être un vecteur de caractères de longueur >= 1"
+
+msgid ""
+"Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
+msgstr ""
+
+msgid "reformulate"
+msgstr ""
+
+msgid "deprecatedWarning"
+msgstr ""
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' doit être un objet de classe %s"
@@ -1684,8 +1678,13 @@ msgid "model frame and formula mismatch in model.matrix()"
 msgstr ""
 "le tableau du modèle et la formule ne correspondent pas dans model.matrix()"
 
-msgid "invalid 'contrasts.arg' argument"
+#, fuzzy
+msgid "non-list contrasts argument ignored"
 msgstr "argument 'contrasts.arg' incorrect"
+
+#, fuzzy
+msgid "'contrasts.arg' argument must be named"
+msgstr "l'argument 'control' doit être une liste nommée"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "la variable %s est absente, son contraste sera ignoré"
@@ -1924,10 +1923,10 @@ msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 "un et un seul parmi 'n', 'p1', 'p2', 'power', et 'sig.level' doit être NULL"
 
-msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgid "No p1 in [0, p2] can be found to achieve the desired power"
 msgstr ""
 
-msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr ""
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
@@ -2349,9 +2348,6 @@ msgstr "'mu' doit être un nombre"
 msgid "'y' is missing for paired test"
 msgstr "'y' est manquant pour un test apparié"
 
-msgid "data are essentially constant"
-msgstr "les données sont pratiquement constantes"
-
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' doit être TRUE, FALSE, NULL or caractère (vecteur)."
 
@@ -2367,10 +2363,18 @@ msgstr "un objet 'ts' doit avoir au moins une observation"
 msgid "'start' cannot be after 'end'"
 msgstr "'start' ne peut pas être après 'end'"
 
+#, fuzzy
+msgid "'end' must be a whole number of cycles after 'start'"
+msgstr "'centers' doit être une matrice numérique"
+
 msgid "no time series supplied"
 msgstr "aucune série temporelle fournie"
 
 msgid "not all series have the same frequency"
+msgstr "toutes les séries n'ont pas la même fréquence"
+
+#, fuzzy
+msgid "not all series have the same phase"
 msgstr "toutes les séries n'ont pas la même fréquence"
 
 msgid "non-intersecting series"
@@ -2400,7 +2404,8 @@ msgstr ""
 msgid "'xy.labels' must be logical or character"
 msgstr "'xy.labels' doit être logique ou caractère"
 
-msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
+#, fuzzy
+msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
 msgstr ""
 "'frequency' et 'deltat' sont fournis tous les deux et sont incompatibles"
 
@@ -2478,7 +2483,8 @@ msgstr "'ratio' doit être un nombre positif"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' et 'w' doivent avoir la même longueur"
 
-msgid "not enough (finite) 'x' observations"
+#, fuzzy
+msgid "not enough (non-missing) 'x' observations"
 msgstr "pas assez d'observations 'x' (définies)"
 
 msgid "requested conf.level not achievable"
@@ -2716,6 +2722,54 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' est trop court : il faut %d point"
 msgstr[1] "'start.innov' est trop court : il faut %d points"
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasipoisson family; available links are %s"
+#~ msgstr ""
+#~ "le lien \"%s\" n'est pas disponible pour la famille 'quasipoisson' ; les "
+#~ "liens possibles sont %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for gaussian family; available links are %s"
+#~ msgstr ""
+#~ "le lien \"%s\" n'est pas disponible pour la famille 'gaussian' ; les "
+#~ "liens possibles sont %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family; available links are %s"
+#~ msgstr ""
+#~ "le lien \"%s\" n'est pas disponible pour la famille 'binomial' ; les "
+#~ "liens possibles sont %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasibinomial family; available links are %s"
+#~ msgstr ""
+#~ "le lien \"%s\" n'est pas disponible pour la famille 'quasibinomial' ; les "
+#~ "liens possibles sont %s"
+
+#~ msgid ""
+#~ "for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
+#~ "or a 2 column matrix where col 1 is no. successes and col 2 is no. "
+#~ "failures"
+#~ msgstr ""
+#~ "pour la famille 'quasibinomial', y doit être un vecteur de 0 ou de 1\n"
+#~ "ou une matrice à 2 colonnes où la col 1 est le nombre de succès et la col "
+#~ "2 le nombre d'échecs"
+
+#~ msgid "link \"%s\" not available for gamma family; available links are %s"
+#~ msgstr ""
+#~ "le lien \"%s\" n'est pas disponible pour la famille 'gamma' ; les liens "
+#~ "possibles sont %s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse.gaussian family; available links "
+#~ "are %s"
+#~ msgstr ""
+#~ "le lien \"%s\" n'est pas disponible pour la famille 'inverse.gaussian' ; "
+#~ "les liens possibles sont %s"
+
+#~ msgid "all group levels must be finite"
+#~ msgstr "tous les niveaux des groupes doivent être définis"
 
 #~ msgid "invalid value of length(x)"
 #~ msgstr "valeur incorrectye pour length(x)"

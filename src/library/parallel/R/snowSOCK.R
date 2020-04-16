@@ -19,7 +19,7 @@
 ## Derived from snow 0.3-6 by Luke Tierney
 ## Uses solely Rscript, and a function in the package rather than scripts.
 
-workerCommand <- function(machine, options, parallel_setup = FALSE)
+workerCommand <- function(machine, options, setup_strategy = "sequential")
 {
     outfile <- getClusterOption("outfile", options)
     master <- if (machine == "localhost") "localhost"
@@ -38,7 +38,7 @@ workerCommand <- function(machine, options, parallel_setup = FALSE)
                  " SETUPTIMEOUT=", setup_timeout,
                  " TIMEOUT=", timeout,
                  " XDR=", useXDR,
-                 " PARALLELSETUP=", parallel_setup)
+                 " SETUPSTRATEGY=", setup_strategy)
     arg <- "parallel:::.slaveRSOCK()"
     rscript <- if (getClusterOption("homogeneous", options)) {
         shQuote(getClusterOption("rscript", options))
@@ -136,7 +136,9 @@ makePSOCKcluster <- function(names, ...)
     options <- addClusterOptions(defaultClusterOptions, list(...))
     manual <- getClusterOption("manual", options)
     homogeneous <- getClusterOption("homogeneous", options)
-    parallel_setup <- getClusterOption("parallel_setup", options)
+    setup_strategy <- match.arg(getClusterOption("setup_strategy",
+                                                  options),
+                                c("sequential", "parallel"))
     setup_timeout <- getClusterOption("setup_timeout", options)
     local <- is.numeric(names) || (is.character(names) &&
                  identical(names, rep('localhost', length(names))))
@@ -148,11 +150,12 @@ makePSOCKcluster <- function(names, ...)
     .check_ncores(length(names))
 
     cl <- vector("list", length(names))
-    if (!manual && homogeneous && local && parallel_setup) {
+    if (!manual && homogeneous && local && setup_strategy == "parallel") {
         port <- getClusterOption("port", options)
         timeout <- getClusterOption("timeout", options)
         useXDR <- getClusterOption("useXDR", options)
-        cmd <- workerCommand("localhost", options, parallel_setup = TRUE)
+        cmd <- workerCommand("localhost", options,
+                             setup_strategy = "parallel" )
 
         ## Start listening and start workers.
         socket <- serverSocket(port = port)
@@ -256,7 +259,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
 .slaveRSOCK <- function()
 {
     makeSOCKmaster <- function(master, port, setup_timeout, timeout, useXDR,
-                               parallel_setup)
+                               setup_strategy)
     {
         port <- as.integer(port)
         timeout <- as.integer(timeout)
@@ -276,7 +279,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
             ## setup, which is needed to deal with half-opened connections
             ## (opened on client, closed on server).  The final connection
             ## timeout defaults to a large number, updated after the setup.
-            if (parallel_setup)
+            if (setup_strategy == "parallel")
                 scon_timeout <- scon_timeout + 0.2
             else
                 ## Using "timeout" makes socketConnection() essentially
@@ -294,14 +297,14 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
             hres <- NULL
             if (inherits(con, "connection")) {
                 scon <- structure(list(con = con), class = cls)
-                if (!parallel_setup)
+                if (setup_strategy == "sequential")
                     return(scon)
 
                 ## Serve the first command as a handshake during connection
                 ## setup.  This is to get rid of half-opened connections.
                 hres <- tryCatch({ slaveCommand(scon) }, error = identity)
                 if (identical(hres, TRUE)) {
-                    if (parallel_setup)
+                    if (setup_strategy == "parallel")
                         socketTimeout(socket = con, timeout = timeout)
                     return(scon)
                 } else if (identical(hres, FALSE)) {
@@ -332,7 +335,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
     setup_timeout <- 120  # retry setup for 2 minutes before failing
     timeout <- 2592000L   # wait 30 days for new cmds before failing
     useXDR <- TRUE        # binary serialization
-    parallel_setup <- FALSE # handshake, timeouts for parallel setup
+    setup_strategy <- "sequential"
 
     for (a in commandArgs(TRUE)) {
         ## Or use strsplit?
@@ -346,7 +349,10 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
                SETUPTIMEOUT = {setup_timeout <- as.numeric(value)},
                TIMEOUT = {timeout <- value},
                XDR = {useXDR <- as.logical(value)},
-               PARALLELSETUP = {parallel_setup <- as.logical(value)})
+               SETUPSTRATEGY = {
+                   setup_strategy <- match.arg(value,
+                                               c("sequential", "parallel"))
+               })
     }
     if (is.na(port)) stop("PORT must be specified")
 
@@ -358,5 +364,5 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
                    format(Sys.time(), "%H:%M:%OS3"))
     cat(msg)
     slaveLoop(makeSOCKmaster(master, port, setup_timeout, timeout, useXDR,
-                             parallel_setup))
+                             setup_strategy))
 }

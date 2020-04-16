@@ -20,7 +20,7 @@ get_IANA_character_sets <-
 function(file = NULL)
 {
     ## Master URI is
-    ##   http://www.iana.org/assignments/character-sets
+    ##   https://www.iana.org/assignments/character-sets
     if(is.null(file))
         file <- file.path(R.home("share"), "encodings",
                           "character-sets")

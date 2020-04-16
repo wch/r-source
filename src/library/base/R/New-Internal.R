@@ -1,7 +1,7 @@
 #  File src/library/base/R/New-Internal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -111,7 +111,9 @@ rbind <- function(..., deparse.level = 1)
       "keepInteger", "quoteExpressions", "showAttributes", # 2,3,4
       "useSource", "warnIncomplete", "delayPromises",      # 5,6,7
       "keepNA", "S_compatible", "hexNumeric",              # 8,9,10
-      "digits17", "niceNames")                             # 11,12
+      "digits17", "niceNames"                              # 11,12
+    , "exact"						   # 13
+      )
 
 .deparseOpts <- function(control) {
     if(!length(control)) return(0) # fast exit
@@ -122,8 +124,15 @@ rbind <- function(..., deparse.level = 1)
                               "deparse options %s are not recognized"),
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
-    if (any(opts == 1L)) # "all"
-        opts <- unique(c(opts[opts != 1L], 2L,3L,4L,5L,6L,8L, 12L)) # not (7,9:11)
+    if(any(opts == 1L)) { # "all" now == former ("all", "digits17") -- remain compatible
+        if(any(opts == 13L))
+            stop('"all" and "exact" are mutually exclusive')
+        ## ensuring  c("all", "hexNumeric") does not give error below:
+        opts <- unique(c(opts[opts != 1L], 2:6, 8L, if(!any(opts == 10L)) 11L,
+                         12L)) # not {7,9} + 10 *or* 11
+    } else if(any(opts == 13L)) { ## "exact" := ("all", "hexNumeric")
+        opts <- unique(c(opts[opts != 13L], 2:6, 8L, 10L, 12L))
+    }
     if(10L %in% opts && 11L %in% opts)
         stop('"hexNumeric" and "digits17" are mutually exclusive')
     sum(2^(opts-2))
@@ -205,15 +214,17 @@ typeof <- function(x) .Internal(typeof(x))
 
 memory.profile <- function() .Internal(memory.profile())
 
-capabilities <- function(what = NULL)
+capabilities <- function(what = NULL,
+			 Xchk = any(nas %in% c("X11", "jpeg", "png", "tiff")))
 {
     z  <- .Internal(capabilities())
     if(!is.null(what))
         z <- z[match(what, names(z), 0L)]
-    if(.Platform$OS.type == "windows") return(z)
+    if(.Platform$OS.type == "windows" || (!missing(Xchk) && isFALSE(Xchk)))
+	return(z)
     ## Now we need to deal with any NA entries if X11 is unknown.
     nas <- names(z[is.na(z)])
-    if(any(nas %in% c("X11", "jpeg", "png", "tiff"))) {
+    if(Xchk) {
         ## This might throw an X11 error
          z[nas] <- tryCatch(.Internal(capabilitiesX11()),
                             error = function(e) FALSE)

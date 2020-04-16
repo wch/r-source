@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ str.data.frame <- function(object, ...)
     ## calling next method, usually  str.default:
     if(length(l <- list(...)) && any("give.length" == names(l)))
 	invisible(NextMethod("str", ...))
-    else invisible(NextMethod("str", give.length=FALSE,...))
+    else invisible(NextMethod("str", give.length=structure(FALSE, from="data.frame"), ...))
 }
 
 str.Date <- str.POSIXt <- function(object, ...) {
@@ -622,10 +622,11 @@ str.default <-
 
     if(give.attr) { ## possible: || has.class && any(cl == "terms")
 	nam <- names(a)
+	give.L <- give.length || identical(attr(give.length,"from"), "data.frame")
 	for (i in seq_along(a))
 	    if (all(nam[i] != std.attr)) {# only `non-standard' attributes:
 		cat(indent.str, paste0('- attr(*, "', nam[i], '")='), sep = "")
-		strSub(a[[i]], give.length = give.length,
+		strSub(a[[i]], give.length = give.L,
 		       indent.str = paste(indent.str, ".."), nest.lev = nest.lev+1)
 	    }
     }

@@ -1,6 +1,6 @@
 % File src/library/base/man/deparse.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparse}
@@ -28,7 +28,7 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
     See \code{\link{.deparseOpts}}.}
   \item{nlines}{integer: the maximum number of lines to produce.
     Negative values indicate no limit.}
-  \item{collapse}{a string, passed to \code{\link{parse}()}.}
+  \item{collapse}{a string, passed to \code{\link{paste}()}.}
   \item{\dots}{further arguments passed to \code{deparse()}.}
 }
 \details{
@@ -48,12 +48,16 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   symbols but only composite expressions.  This is a compromise to
   avoid breaking existing code.
 
-  Using \code{control = "all"} comes closest to making \code{deparse()}
-  an inverse of \code{parse()}.  However, not all objects are
-  deparse-able even with this option and a warning will be issued if the
-  function recognizes that it is being asked to do the impossible.
+  Using \code{control = c("all", "hexDigits")} comes closest to making \code{deparse()}
+  an inverse of \code{parse()} (but we have not yet seen an example where
+  \code{"all"}, now including \code{"digits17"}, would not have been as
+  good).  However, not all objects are deparse-able even with these options
+  and a warning will be issued if the function recognizes that it is being
+  asked to do the impossible.
 
-  Numeric and complex vectors are converted using 15 significant digits:
+  Unless \code{control} contains \code{"digits17"} or \code{"hexDigits"},
+  (or \code{"all"} or \code{"exact"} which include one of these), numeric
+  and complex vectors are converted using 15 significant digits:
   see \code{\link{as.character}} for more details.
 
   \code{width.cutoff} is a lower bound for the line lengths: deparsing a
@@ -61,9 +65,10 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   been output and e.g.\sspace{}\code{arg = value} expressions will not be split
   across lines.
 
-  \code{deparse1()} is a simple utility to ensure a string result
-  (\code{\link{character}} vector of length one), typically used in
-  name construction, as \code{deparse1(\link{substitute}(.))}.
+  \code{deparse1()} is a simple utility added in \R{} 4.0.0 to ensure a
+  string result (\code{\link{character}} vector of length one),
+  typically used in name construction, as
+  \code{deparse1(\link{substitute}(.))}.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual
@@ -81,6 +86,10 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
+  \code{\link{.deparseOpts}} for available \code{control} settings;
+  \code{\link{dput}()} and \code{\link{dump}()} for related functions using
+  identical internal deparsing functionality.
+
   \code{\link{substitute}},
   \code{\link{parse}},
   \code{\link{expression}}.

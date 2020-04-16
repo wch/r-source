@@ -1,6 +1,6 @@
 % File src/library/graphics/man/dotchart.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dotchart}
@@ -10,7 +10,7 @@
   Draw a Cleveland dot plot.
 }
 \usage{
-dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
+dotchart(x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8,
          ann = par("ann"), xaxt = par("xaxt"), frame.plot = TRUE, log = "",
          cex = par("cex"), pt.cex = cex,
          pch = 21, gpch = 21, bg = par("bg"),
@@ -35,6 +35,8 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
   \item{gdata}{data values for the groups.
     This is typically a summary such as the median or mean
     of each group.}
+  \item{offset}{offset in inches of \code{ylab} and \code{labels}; was
+    hardwired to 0.4 before \R 4.0.0.}
   \item{ann}{a \code{\link{logical}} value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
   \item{xaxt}{a string indicating the x-axis style; use \code{"n"} to
@@ -84,9 +86,11 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
 }
 \examples{
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
+
 op <- par(xaxs = "i")  # 0 -- 100\%
 dotchart(t(VADeaths), xlim = c(0,100), bg = "skyblue",
-         main = "Death Rates in Virginia - 1940")
+         main = "Death Rates in Virginia - 1940", xlab = "rate [ \% ]",
+         ylab = "Grouping:  Age  x   Urbanity . Gender")
 par(op)
 }
 \keyword{hplot}

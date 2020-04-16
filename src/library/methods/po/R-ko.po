@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-09 12:09-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -500,19 +500,23 @@ msgstr ""
 "\"MethodsList\" 메타데이터 객체의 다른 용도에 함께 이용되는 %s는 더 이상 제공"
 "되지 않습니다."
 
-msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr ""
 "%s내에서:  \"MethodsList\" 메타데이터 객체들의 사용은 지원되지 않습니다."
 
-msgid "use %s instead."
+#, fuzzy
+msgid "Use %s instead."
 msgstr "대신 %s을 사용하세요."
 
 msgid ""
 "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
 msgstr ""
 
-msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr ""
+"%s내에서:  \"MethodsList\" 메타데이터 객체들의 사용은 지원되지 않습니다."
 
 msgid "invalid object for formal method definition: type %s"
 msgstr "형식 메소드 정의에 대한 객체가 올바르지 않습니다: 유형 %s"
@@ -663,15 +667,19 @@ msgstr ""
 "프로토타입은 클래스 %1$s와 함께 제공되었습니다, 그러나 클래스 정의는 클래스 "
 "%2$s의 객체를 필요로합니다"
 
+#, fuzzy
 msgid ""
-"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
-"with an inherited definition in class %s"
+"Definition of slot %s, in class %s, as %s conflicts with definition, "
+"inherited from class %s, as %s"
 msgstr ""
 "클래스 %2$s내에 있는 슬롯 %1$s은 \"%3$s\"으로서 정의 (또는 상속)되었습니다, "
 "그러나 이는 클래스 %4$s내의 상속된 정의와 일치하지 않습니다"
 
 msgid "class %s extends an undefined class (%s)"
 msgstr "클래스 %1$s는 정의되지 않은 클래스 (%2$s)를 확장합니다"
+
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr ""
 
 msgid ""
 "%s is not eligible to be the data part of another class (must be a basic "
@@ -763,18 +771,19 @@ msgstr ""
 "니다"
 
 msgid ""
-"subclass %s of class %s is not local and cannot be updated for new "
-"inheritance information; consider setClassUnion()"
-msgstr ""
-"클래스 %2$s의 서브클래스 %1$s는 지역적이지 않으므로 새로운 상속정보에 대해서 "
-"갱신될 수 없습니다; setClassUnion()를 이용해보세요"
-
-msgid ""
 "no definition of inheritance from %s to %s, though the relation was implied "
 "by the setIs() from %s"
 msgstr ""
 "%1$s에서 %2$s로의 상속에 대한 정의가 없습니다, 그럼에도 setls()에 의하여 %3$s"
 "으로부터의 관계가 있음을 알 수 있습니다"
+
+msgid ""
+"Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+msgstr ""
+
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr ""
 
 msgid ""
 "argument 'includeSubclasses' must be a logical, either one value or a vector "
@@ -1224,9 +1233,10 @@ msgstr ""
 "클래스 %s는 변경할 수 없습니다; 그러나 새로운 슈퍼클래스는  'setClassUnion'만"
 "을 이용하여 정의되어질 수 있습니다."
 
+#, fuzzy
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
-"revise %s information---not exported?  Making a copy in package %s"
+"revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
 "클래스 %1$s는 (패키지 슬롯 %2$s와 함께) 정의되어 있으나 %3$s 정보를 변경할 "
 "수 있는 메타 데이터 객체를 찾을 수 없습니다 --- 내보내어지지 않았나요?  패키"
@@ -1836,3 +1846,10 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
+
+#~ msgid ""
+#~ "subclass %s of class %s is not local and cannot be updated for new "
+#~ "inheritance information; consider setClassUnion()"
+#~ msgstr ""
+#~ "클래스 %2$s의 서브클래스 %1$s는 지역적이지 않으므로 새로운 상속정보에 대해"
+#~ "서 갱신될 수 없습니다; setClassUnion()를 이용해보세요"

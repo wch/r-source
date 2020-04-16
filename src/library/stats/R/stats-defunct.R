@@ -1,7 +1,7 @@
 #  File src/library/stats/R/stats-defunct.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,3 +63,15 @@
 ## </entry>
 
 ### all of the above stubs removed in 3.0.0.
+
+## <entry>
+## Deprecated in 3.1.0
+## Defunct in 4.1.0
+plclust <- function(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
+                    square = TRUE, labels = NULL, plot. = TRUE,
+                    axes = TRUE, frame.plot = FALSE, ann = TRUE,
+                    main = "", sub = NULL, xlab = NULL, ylab = "Height")
+{
+    .Defunct("plot")
+}
+## </Entry>

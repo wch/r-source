@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,6 +54,15 @@ msgstr "rgb-værdier skal være i [0, maxColorValue]"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "»start« og »end« skal være unik og i [0, 1]."
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "»gamma« skal være en skala eller »sRGB«"
@@ -147,6 +156,9 @@ msgstr "intet egnet ubrugt filnavn for postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): bruger postscript(file=\"%s\")"
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "ugyldige argumenter i »%s« (kræver navngivet argumenter)"
 
@@ -171,6 +183,9 @@ msgstr "ukendt familie »%s«"
 
 msgid "invalid 'family' argument"
 msgstr "ugyldigt argument for »family«"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 #, fuzzy
 msgid "invalid 'file' argument '%s'"
@@ -269,6 +284,9 @@ msgstr "ingen aktuel enhed at optage fra"
 #, fuzzy
 msgid "argument is not of class %s"
 msgstr "argument er ikke af klasse »recordedplot«"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 #, fuzzy
 msgid "snapshot recorded in different R version (pre 3.3.0)"
@@ -375,6 +393,9 @@ msgstr "kan kun kopiere fra enheder af typen »X11(type=\"*cairo\")«"
 
 msgid "invalid value for 'rescale'"
 msgstr "ugyldig værdi for »rescale«"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "kan kun bringe windowsenheder forrest"

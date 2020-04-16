@@ -545,7 +545,10 @@ TRIO_ARGS3((target, max, source),
   assert(source);
   assert(max > 0); /* Includes != 0 */
 
-  (void)strncpy(target, source, max - 1);
+  if (max > 1)
+    {
+    (void)strncpy(target, source, max - 1);
+    }
   target[max - 1] = (char)0;
   return TRUE;
 }

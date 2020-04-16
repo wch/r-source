@@ -1,6 +1,7 @@
 #### Regression tests for GRAPHICS & PLOTS
 
-pdf("reg-plot.pdf", paper="a4r", encoding ="ISOLatin1.enc", compress = FALSE)
+pdf("reg-plot.pdf", paper="a4r", encoding ="ISOLatin1.enc", compress = FALSE,
+    useDingbats = TRUE)
 
 ## since we supply the font metrics, the results depend only on
 ## the encoding used: Windows is different from Unix by default.

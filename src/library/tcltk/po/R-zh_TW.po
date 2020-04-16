@@ -1,0 +1,106 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@avaya.com>, 2005, 07.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2014-08-03 12:17\n"
+"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "cannot handle object of mode '%s'"
+msgstr "無法處理 '%s' 模式的目標物件"
+
+msgid "cannot change names on Tcl array"
+msgstr "無法在 Tcl 排列上改名"
+
+msgid "cannot set length of Tcl array"
+msgstr "無法為 Tcl 排列設定長度"
+
+msgid "Tcl package '%s' not found"
+msgstr "沒有 '%s' 這個 Tcl 程式套件"
+
+msgid "The tkGUI is not available under Windows"
+msgstr "Windows 下沒有 tkGUI 這個功能"
+
+msgid "File"
+msgstr "檔案"
+
+msgid "Demos"
+msgstr "Demos"
+
+msgid "Packages"
+msgstr "程式套件"
+
+msgid "Help"
+msgstr "求助"
+
+msgid "Source R code"
+msgstr "R 原始碼"
+
+msgid "Quit"
+msgstr "退離"
+
+msgid "Save workspace"
+msgstr "儲存工作空間"
+
+msgid "Don't save workspace"
+msgstr "不要儲存工作空間"
+
+msgid "t test"
+msgstr "t 檢驗"
+
+msgid "Density"
+msgstr "密度"
+
+msgid "Interactive linear fitting"
+msgstr "交互線性擬合"
+
+msgid "R FAQ"
+msgstr "R FAQ"
+
+msgid "Load"
+msgstr "載入"
+
+msgid "Go get them!"
+msgstr "動手吧！"
+
+msgid "Load packages"
+msgstr "載入程式套件"
+
+msgid "Install packages from CRAN"
+msgstr "用 CRAN 安裝程式套件"
+
+msgid "Help topic:"
+msgstr "求助題目："
+
+msgid "Manuals in PDF format"
+msgstr "說明書是 PDF 格式的"
+
+msgid "OK"
+msgstr "好"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "'pb' is not from class %s"
+msgstr "'pb' 不屬 %s 此一類別"
+
+msgid "'filters' must be a 2-column character matrix"
+msgstr "'filters' 必須是有兩個列的字元矩陣"
+
+msgid "Tcl/Tk support is not available on this system"
+msgstr "這個系統不支援 Tcl/Tk"
+
+msgid "Tcl/Tk support files were not installed"
+msgstr "沒有安裝 Tcl/Tk 支援檔案"

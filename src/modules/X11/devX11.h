@@ -66,7 +66,8 @@ typedef enum {
 
 Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
 			 double, X_COLORTYPE, int, int, int, SEXP,
-			 int, int, int, const char *, int, int, const char *);
+			 int, int, int, const char *, int, int, const char *,
+                         const char *, Rboolean);
 
 
 	/********************************************************/
@@ -119,6 +120,8 @@ typedef struct {
     R_XFont *font;
     char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
+    Rboolean usePUA;
+
     X_GTYPE type;			/* Window or pixmap? */
     int npages;				/* counter for a bitmap device */
     FILE *fp;				/* file for a bitmap device */

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:14\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -215,9 +215,6 @@ msgstr ""
 "잘못된 항목 %d를 뺍니다:\n"
 "%s"
 
-msgid "package %s not found"
-msgstr "패키지 %s를 찾을 수 없습니다"
-
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "패키지 %s에 있는 DESCRIPTION 파일에 날짜 항목이 없습니다"
 
@@ -257,6 +254,9 @@ msgstr "파일 'filelist'이 디렉토리 %s에 빠져있습니다"
 
 msgid "data set %s not found"
 msgstr "데이터셋 %s을 찾을 수 없습니다"
+
+msgid "an object named %s already exists and will not be overwritten"
+msgstr ""
 
 msgid "only 'html = TRUE' is supported on this platform"
 msgstr "이 플랫폼에서는 오로지 'html = TRUE'만이 지원됩니다"
@@ -390,6 +390,38 @@ msgstr "'form'은 반드시 양변을 가지고 있는 formula이어야 합니�
 msgid "'form' must be a two-sided formula with one term on each side"
 msgstr "'form'은 반드시 각 변에 하나의 항을 가진 양변이 있는 formula입니다"
 
+msgid "invalid 'n' -  must contain at least one non-missing element, got none."
+msgstr ""
+
+msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
+msgstr ""
+
+msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
+msgstr ""
+
+#, fuzzy
+msgid "no method found for %s(., n=%s) and class %s"
+msgstr "함수 %s와 signature %s에 정의된 메소드가 없습니다"
+
+msgid ""
+"tail(., addrownums = V) is deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums = V) instead."
+msgstr ""
+
+msgid "tail(., addrownums=.) is"
+msgstr ""
+
+msgid ""
+"deprecated.\n"
+"Use"
+msgstr ""
+
+msgid "tail(., keepnums=.) instead."
+msgstr ""
+
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 "'topic'은 반드시 이름, 길이가 하나인 문자벡터, 또는 예약어이어야 합니다"
@@ -474,9 +506,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 지정이 잘못되었습니다"
-
-msgid "could not find package %s"
-msgstr "패키지 %s를 찾을 수 없었습니다"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "패키지 %s는 비어있는 hsearch data를 가집니다 - 이상합니다"
@@ -573,6 +602,9 @@ msgid ""
 "S3 methods"
 msgstr ""
 
+msgid "'class' is of length > 1; only the first element will be used"
+msgstr ""
+
 msgid "must supply 'generic.function' or 'class'"
 msgstr "'generic.function' 또는 'class'를 반드시 제공해야 합니다"
 
@@ -596,6 +628,9 @@ msgstr "'fixInNamespace'은 이름을 필요로 합니다"
 
 msgid "only numeric indices can be used"
 msgstr "오로지 숫자형 색인만을 사용할 수 있습니다"
+
+msgid "Malformed package name."
+msgstr ""
 
 msgid "cannot create directory '%s'"
 msgstr "디렉토리 '%s'를 생성할 수 없습니다"
@@ -966,6 +1001,9 @@ msgstr "오로지 로컬머신에서만 호출을 받을 수 있습니다"
 msgid "socket not established"
 msgstr "소켓이 연결되지 않았습니다"
 
+msgid "argument is not a function or language object:"
+msgstr ""
+
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
 "데이터 프레임이 아닌 것과 함께 호출된 str.data.frame()이므로 1로 강제형변환합"
@@ -983,6 +1021,9 @@ msgstr "'str.default': 'le'는 NA이므로 0으로 처리됩니다"
 msgid "'nchar.max = %d' is too small"
 msgstr ""
 
+msgid "Not a validObject():"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr "'object'는 올바른 levels()들을 가지고 있지 않습니다"
 
@@ -992,6 +1033,16 @@ msgstr ""
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr ""
+
+msgid "The number of tokens != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens is not consistent across 'x'"
+msgstr ""
+
+#, fuzzy
+msgid "cannot coerce %s to logical"
+msgstr "'x'를 roman으로 강제변환을 할 수 없습니다"
 
 msgid "no lines found in %s"
 msgstr "%s에서 발견된 라인들은 없습니다"
@@ -1005,11 +1056,27 @@ msgstr "프로파일은 라인정보를 포함하지 않습니다"
 msgid "no events were recorded"
 msgstr "어떠한 이벤트들도 기록되지 않았습니다"
 
+msgid "argument 'compressed' is ignored for the internal method"
+msgstr ""
+
 msgid "invalid 'tarfile' argument"
 msgstr "'tarfile' 인자가 잘못되었습니다"
 
 msgid "'compressed' must be logical or character"
 msgstr "'compressed'는 반드시 논리값 또는 문자이어야 합니다"
+
+#, fuzzy
+msgid "No %s command found"
+msgstr "객체 '%s'를 찾을 수 없습니다"
+
+msgid "gzip"
+msgstr ""
+
+msgid "bzip2"
+msgstr ""
+
+msgid "xz"
+msgstr ""
 
 msgid "failed to create directory %s"
 msgstr "디렉토리 %s를 생성하는데 실패했습니다"
@@ -1022,6 +1089,9 @@ msgstr "'tarfile'은 반드시 문자열 또는 연결이어야 합니다"
 
 msgid "incomplete block on file"
 msgstr "파일에 완성되지 않은 블럭이 있습니다"
+
+msgid "incomplete block: rather use gzfile(.) created connection?"
+msgstr ""
 
 msgid "invalid name field in tarball"
 msgstr "tarball 내에 잘못된 이름 항목이 있습니다"
@@ -1072,8 +1142,9 @@ msgstr "select.list()는 비대화식으로 사용될 수 없습니다"
 msgid "'title' must be NULL or a length-1 character vector"
 msgstr "'title'은 반드시 NULL 또는 길이가 1인 문자형 벡터이어야 합니다"
 
+#, fuzzy
 msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
+"Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
 msgstr ""
 "하나 또는 그 이상의 숫자를 공백을 이용하여 입력하거나, 취소를 하고자 한다면 "
 "빈 라인을 입력해주세요"
@@ -1129,6 +1200,9 @@ msgstr "'ccaddress'의 길이는 반드시 1이어야 합니다."
 
 msgid "'url' must be a length-one character vector"
 msgstr "'url'은 반드시 길이가 1인 문자형 벡터이어야 합니다."
+
+msgid "'headers' must have names and must not be NA"
+msgstr ""
 
 msgid "'destfile' must be a length-one character vector"
 msgstr "'destfile'은 반드시 길이가 1인 문자형 벡터이어야 합니다."
@@ -1192,6 +1266,14 @@ msgstr "%s를 생성하는데 실패했습니다"
 
 msgid "there is no 'libs' directory in package %s"
 msgstr "패키지 %s내에 'libs'이라는 디렉토리가 없습니다"
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s, copying instead"
+msgstr "임시 설치 %s를 %s로 이동할 수 없습니다"
+
+#, fuzzy
+msgid "unable to copy temporary installation %s to %s"
+msgstr "임시 설치 %s를 %s로 이동할 수 없습니다"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr ""
@@ -1260,6 +1342,10 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] "%s(들)을 또한 설치합니다."
 
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
+
 msgid ""
 "Installing package into %s\n"
 "(as %s is unspecified)"
@@ -1325,6 +1411,8 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
 
-msgid "package %s is in use and will not be installed"
-msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
+#~ msgid "package %s not found"
+#~ msgstr "패키지 %s를 찾을 수 없습니다"
+
+#~ msgid "could not find package %s"
+#~ msgstr "패키지 %s를 찾을 수 없었습니다"

@@ -5,6 +5,7 @@
 
 \name{plot.default}
 \alias{plot.default}
+\alias{plot}
 \title{The Default Scatterplot Function}
 \description{
   Draw a scatter plot with decorations such as axes and titles
@@ -109,6 +110,11 @@
   \code{\link{title}}, and plots can be built up by calling these
   individually, or by calling \code{plot(type = "n")} and adding further
   elements.
+
+  The \code{plot} generic was moved from the \pkg{graphics} package to
+  the \pkg{base} package in \R 4.0.0. It is currently re-exported from
+  the \pkg{graphics} namespace to allow packages importing it from there
+  to continue working, but this may change in future versions of \R.
 }
 
 \references{

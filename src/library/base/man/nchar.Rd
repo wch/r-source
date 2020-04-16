@@ -1,6 +1,6 @@
 % File src/library/base/man/nchar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nchar}
@@ -16,7 +16,7 @@ nzchar(x, keepNA = FALSE)
   \code{nchar} takes a character vector as an argument and
   returns a vector whose elements contain the sizes of
   the corresponding elements of \code{x}. Internally, it is a generic,
-  for which methods can be defined.
+  for which methods can be defined (see \link{InternalMethods}).
 
   \code{nzchar} is a fast way to find out if elements of a character
   vector are non-empty strings.
@@ -43,7 +43,7 @@ nzchar(x, keepNA = FALSE)
   \describe{
     \item{\code{bytes}}{The number of bytes needed to store the string
       (plus in C a final terminator which is not counted).}
-    \item{\code{chars}}{The number of human-readable characters.}
+    \item{\code{chars}}{The number of characters.}
     \item{\code{width}}{The number of columns \code{\link{cat}} will use to
       print the string in a monospaced font.  The same as \code{chars}
       if this cannot be calculated.}

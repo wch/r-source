@@ -14,6 +14,7 @@ bindingIsLocked(sym, env)
 
 makeActiveBinding(sym, fun, env)
 bindingIsActive(sym, env)
+activeBindingFunction(sym, env)
 }
 \alias{bindenv}
 \alias{lockEnvironment}
@@ -23,6 +24,7 @@ bindingIsActive(sym, env)
 \alias{makeActiveBinding}
 \alias{bindingIsLocked}
 \alias{bindingIsActive}
+\alias{activeBindingFunction}
 \arguments{
   \item{env}{an environment.}
   \item{bindings}{logical specifying whether bindings should be locked.}

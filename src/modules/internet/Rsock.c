@@ -164,10 +164,18 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 #ifdef Win32
 #include <io.h>
-#define ECONNABORTED            WSAECONNABORTED
-#define EINPROGRESS             WSAEINPROGRESS
-#define EINTR                   WSAEINTR
-#define EWOULDBLOCK             WSAEWOULDBLOCK
+# ifndef ECONNABORTED
+#  define ECONNABORTED            WSAECONNABORTED
+# endif
+# ifndef EINPROGRESS
+#  define EINPROGRESS             WSAEINPROGRESS
+# endif
+# ifndef EINTR
+#  define EINTR                   WSAEINTR
+# endif
+# ifndef EWOULDBLOCK
+#  define EWOULDBLOCK             WSAEWOULDBLOCK
+# endif
 #else
 # include <netdb.h>
 # include <sys/socket.h>
@@ -417,6 +425,9 @@ int R_SockConnect(int port, char *host, int timeout)
 	switch (R_socket_errno()) {
 	case EINPROGRESS:
 	case EWOULDBLOCK:
+#if !defined(Win32) && EAGAIN != EWOULDBLOCK
+	case EAGAIN:
+#endif
 	    break;
 	default:
 	    CLOSE_N_RETURN(-1);
@@ -501,10 +512,34 @@ ssize_t R_SockRead(int sockp, void *buf, size_t len, int blocking, int timeout)
 {
     ssize_t res;
 
-    if(blocking && (res = R_SocketWait(sockp, 0, timeout)) != 0)
-        return res < 0 ? res : 0; /* socket error or timeout */
-    res = recv(sockp, buf, len, 0);
-    return R_socket_error(res) ? -R_socket_errno() : res;
+    /* EINTR is propagated to the caller (sock_read_helper). When !"blocking",
+       the caller expects also EAGAIN/EWOULDBLOCK.
+
+       A known bug in Linux may cause recv() to block with a blocking socket,
+       even when select() reported readability. To be robust against spurious
+       readability, "sockp" is always non-blocking, even when "blocking" is
+       TRUE. */
+
+    for(;;) {
+	if(blocking && (res = R_SocketWait(sockp, 0, timeout)) != 0)
+	    return res < 0 ? res : 0; /* socket error or timeout */
+	res = recv(sockp, buf, len, 0);
+	if (R_socket_error((int)res)) {
+	    switch(R_socket_errno()) {
+	    case EWOULDBLOCK:
+#if !defined(Win32) && EAGAIN != EWOULDBLOCK
+	    case EAGAIN:
+#endif
+		if (blocking)
+		    /* spurious readability, can happen on Linux */
+		    continue;
+		/* fall through */
+	    default:
+		    return -R_socket_errno();
+	    }
+	} else
+	    return res;
+    }
 }
 
 int R_SockOpen(int port)
@@ -572,6 +607,9 @@ int R_SockListen(int sockp, char *buf, int len, int timeout)
 		case EWOULDBLOCK:
 		case ECONNABORTED:
 #ifndef Win32
+# if EAGAIN != EWOULDBLOCK
+		case EAGAIN:
+# endif
 		case EPROTO:
 #endif
 		    continue;
@@ -579,7 +617,10 @@ int R_SockListen(int sockp, char *buf, int len, int timeout)
 		    return -1; /* socket error */
 		}
 	    }
-	    return s; /* got a connection */
+	    /* got a connection */
+	    if (R_set_nonblocking(s))
+		return -1;
+	    return s;
 #ifdef Unix
 	} else {
 	    /* was one of the extras */
@@ -607,9 +648,18 @@ ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)
 	if((res = R_SocketWait(sockp, 1, timeout)) != 0)
 	    return res < 0 ? res : 0; /* socket error or timeout */
 	res = send(sockp, buf, len, 0);
-	if (R_socket_error(res) && R_socket_errno() != EWOULDBLOCK)
-	    return -R_socket_errno();
-	else {
+	if (R_socket_error((int)res)) {
+	    switch(R_socket_errno()) {
+	    case EWOULDBLOCK:
+#if !defined(Win32) && EAGAIN != EWOULDBLOCK
+	    case EAGAIN:
+#endif
+		/* Spurious writability to the socket, should not happen. */
+		continue;
+	    default:
+		return -R_socket_errno();
+	    }
+	} else {
 	    { const char *cbuf = buf; cbuf += res; buf = cbuf; }
 	    len -= res;
 	    out += res;

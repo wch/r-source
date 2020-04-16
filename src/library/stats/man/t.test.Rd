@@ -54,10 +54,8 @@ t.test(x, \dots)
   \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
-  The formula interface is only applicable for the 2-sample tests.
-
   \code{alternative = "greater"} is the alternative that \code{x} has a
-  larger mean than \code{y}.
+  larger mean than \code{y}. For the one-sample case: that the mean is positive.
 
   If \code{paired} is \code{TRUE} then both \code{x} and \code{y} must
   be specified and they must be the same length.  Missing values are

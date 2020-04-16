@@ -17,27 +17,31 @@
 stopifnot(\dots, exprs, exprObject, local = TRUE)
 }
 \arguments{
-  \item{\dots, exprs}{any number of (typically but not necessarily
-    \code{\link{logical}}) \R expressions, which should each evaluate to
-    (a logical vector of all)
-    \code{\link{TRUE}}.  Use \emph{either} \code{\dots} \emph{or}
+  \item{\dots, exprs}{any number of \R expressions, which should each
+    evaluate to (a logical vector of all) \code{\link{TRUE}}.  Use
+    \emph{either} \code{\dots} \emph{or}
     \code{exprs}, the latter typically an unevaluated expression of the
     form \preformatted{\{
    expr1
    expr2
    ....
 \}}
+  Note that e.g., positive numbers are \emph{not} \code{TRUE}, even when
+  they are coerced to \code{TRUE}, e.g., inside \code{if(.)} or in
+  arithmetic computations in \R.
+
   If names are provided to \code{\dots}, they will be used in lieu of
   the default error message.
   }
-  \item{exprObject}{alternative to \code{exprs} or \code{...}: a
+  \item{exprObject}{alternative to \code{exprs} or \code{...}:
     an \sQuote{expression-like} object, typically an
     \code{\link{expression}}, but also a \code{\link{call}}, a
     \code{\link{name}}, or atomic constant such as \code{TRUE}.
   }
   \item{local}{(only when \code{exprs} is used:) indicates the
     \code{\link{environment}} in which the expressions should be
-    evaluated; by default the one where \code{stopifnot()} has been called from.}
+    evaluated; by default the one from where \code{stopifnot()} has been
+    called.}
 }
 \details{
   This function is intended for use in regression tests or also argument
@@ -102,16 +106,19 @@ stopifnot(m == t(m), diag(m) == rep(1, 2)) # all(.) |=>  TRUE
 op <- options(error = expression(NULL))
 # "disabling stop(.)"  << Use with CARE! >>
 
-stopifnot(all.equal(pi, 3.141593),  2 < 2, all(1:10 < 12), "a" < "b")
+stopifnot(length(10)) # gives an error: '1' is *not* TRUE
+## even when   if(1) "ok"   works
+
+stopifnot(all.equal(pi, 3.141593),  2 < 2, (1:10 < 12), "a" < "b")
 ## More convenient for interactive "line by line" evaluation:
 stopifnot(exprs = {
   all.equal(pi, 3.1415927)
   2 < 2
-  all(1:10 < 12)
+  1:10 < 12
   "a" < "b"
 })
 
-eObj <- expression(2 < 3, 3 <= 3:6, all(1:10 < 2))
+eObj <- expression(2 < 3, 3 <= 3:6, 1:10 < 2)
 stopifnot(exprObject = eObj)
 stopifnot(exprObject = quote(3 == 3))
 stopifnot(exprObject = TRUE)
@@ -121,7 +128,9 @@ stopifnot(exprObject = TRUE)
 stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415)))
 
 # The default error message can be overridden to be more informative:
+m[1,2] <- 12
 stopifnot("m must be symmetric"= m == t(m))
+#=> Error: m must be symmetric
 
 options(op)  # revert to previous error handler
 }

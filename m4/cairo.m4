@@ -136,7 +136,7 @@ int main(void) {
           ;;
       esac
 
-      CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
+      CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS} ${CAIROX11_CPPFLAGS}"
       LIBS="${LIBS} ${CAIRO_LIBS}"
 
       AC_CACHE_CHECK([whether cairo is >= 1.2 and works], 

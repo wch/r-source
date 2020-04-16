@@ -516,6 +516,7 @@ SEXP do_lockBnd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bndIsLocked(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkActiveBnd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bndIsActive(SEXP, SEXP, SEXP, SEXP);
+SEXP do_activeBndFun(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkUnbound(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isNSEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho);

@@ -1,7 +1,7 @@
 #  File src/library/base/R/paste.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-paste <- function (..., sep = " ", collapse = NULL)
-    .Internal(paste(list(...), sep, collapse))
-paste0 <- function(..., collapse = NULL)
-    .Internal(paste0(list(...), collapse))
+paste <- function (..., sep = " ", collapse = NULL, recycle0=FALSE)
+    .Internal(paste(list(...), sep, collapse, recycle0))
+paste0 <- function(..., collapse = NULL, recycle0=FALSE)
+    .Internal(paste0(list(...), collapse, recycle0))
 
 ##=== Could we extend  paste(.) to (optionally) accept a
 ##    2-vector for collapse ?	 With the following functionality

@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2019   The R Core Team
+ *  Copyright (C) 2004-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1278,7 +1278,9 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 		w0 += Ri18n_wcwidth(*P);
 		*s++ = *P++;
 	    }
-	    if(w0 < x11) *s++ = L'\r'; *s++ = L'\n';
+	    if(w0 < x11) {
+		*s++ = L'\r'; *s++ = L'\n';
+	    }
 	    i++;
 	}
     } else {
