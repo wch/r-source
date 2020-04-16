@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN 4.0.0}{
+
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Packages need to be (re-)installed under this version
@@ -376,7 +377,7 @@
 
       \item New \code{"cairoFT"} and \code{"pango"} components in the
       output of \code{grSoftVersion()}.
-      
+
       \item New argument \code{symbolfamily} in cairo-based graphics
       devices and new function \code{cairoSymbolFont()} that can be used
       to provide the value for that argument.
@@ -431,6 +432,17 @@
 
       \item Either PCRE2 or PCRE1 >= 8.32 (Nov 2012) is required: the
       deprecated provision for 8.20--8.31 has been removed.
+
+      \item Defunct functions \code{mem.limits()}, \code{.readRDS()},
+      \code{.saveRDS()},.\code{.find.package()}, and \code{.path.package()}
+      from package \pkg{base}
+      and \code{allGenerics()}, \code{getAccess()}, \code{getAllMethods()},
+      \code{getClassName()}, \code{getClassPackage()}, \code{getExtends()},
+      \code{getProperties()}, \code{getPrototype()},
+      \code{getSubclasses()}, \code{getVirtual()}, \code{mlistMetaName()},
+      \code{removeMethodsObject()}, \code{seemsS4Object()},
+      \code{traceOff()}, and \code{traceOn()} from \pkg{methods} have been
+      removed.
     }
   }
 
