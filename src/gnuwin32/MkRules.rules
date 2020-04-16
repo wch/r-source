@@ -23,6 +23,7 @@ CAIRO_HOME ?=
 USE_CAIRO ?= $(if $(CAIRO_HOME),YES)
 CAIRO_CPPFLAGS ?= "-I$(CAIRO_HOME)/win$(WIN)"
 CAIRO_LIBS ?= "-L$(CAIRO_HOME)/win$(WIN) -lcairo -lpixman-1 -lpng -lz -lgdi32 -lmsimg32"
+CURL_CA_BUNDLE ?= /usr/ssl/certs/curl-ca-bundle.crt
 BUILD_HTML ?= NO
 MIKTEX ?= TRUE
 TEXI2ANY ?= missing

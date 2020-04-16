@@ -145,6 +145,8 @@ fixfiles: Rpwd.exe
 ifdef USE_LIBCURL
 	@if test -f "$(CURL_PATH)/etc/curl-ca-bundle.crt"; then \
 	  $(CP) -p "$(CURL_PATH)/etc/curl-ca-bundle.crt" ../../etc; \
+	elif test -f "$(CURL_CA_BUNDLE)"; then \
+	  $(CP) -p "$(CURL_CA_BUNDLE)" ../../etc/curl-ca-bundle.crt; \
 	fi
 endif
 
