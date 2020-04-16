@@ -7,10 +7,8 @@
 \title{CPU Time Used}
 \usage{
 system.time(expr, gcFirst = TRUE)
-%Deprecated unix.time(expr, gcFirst = TRUE)
 }
 \alias{system.time}
-\alias{unix.time}
 \arguments{
   \item{expr}{Valid \R expression to be timed.}
   \item{gcFirst}{Logical - should a garbage collection be performed
