@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2020-04-10 r78191) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-04-16 r78240) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin19.3.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3926,7 +3926,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x7fea7184b6b0>
+<environment: 0x42c6f40>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4963,7 +4963,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x7fea7141d138>
+<bytecode: 0x52450f0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7587,7 +7587,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x7fea713a0df0>
+<environment: 0x5062078>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12281,14 +12281,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7fea7155bb90>
-<environment: 0x7fea715661b0>
+<bytecode: 0x2c4b438>
+<environment: 0x2c3aad0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x7fea7155ba08>
-<environment: 0x7fea715661b0>
+<bytecode: 0x2c4b588>
+<environment: 0x2c3aad0>
 
 > 
 > 
@@ -16497,8 +16497,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x7fea72701848>
-<environment: 0x7fea6d4d6c98>
+<bytecode: 0x5e0d808>
+<environment: 0x3cc0470>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18907,7 +18907,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.659 0.546 6.297 0 0 
+Time elapsed:  7.319 0.236 7.618 0 0 
 > grDevices::dev.off()
 null device 
           1 
