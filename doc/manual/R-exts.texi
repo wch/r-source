@@ -280,8 +280,8 @@ For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @uref{https://www.gnu.org/@/prep/@/standards/@/standards.html#Documentation}.
 
 The package subdirectory should be given the same name as the package.
-Because some file systems (e.g., those on Windows and by default on OS
-X) are not case-sensitive, to maintain portability it is strongly
+Because some file systems (e.g., those on Windows and by default on
+macOS) are not case-sensitive, to maintain portability it is strongly
 recommended that case distinctions not be used to distinguish different
 packages.  For example, if you have a package named @file{foo}, do not
 also create a package named @file{Foo}.
@@ -2760,10 +2760,10 @@ using std::make_unique;
 #endif
 @end example
 
-Note that @command{g++} 4.9.x (as used on Windows prior to @R{} 4.0.0)
-has only partial C++14 support, and the flag to obtain that support is
-not included in the default Windows build of @R{} --- one could try
-something like
+Note that Windows builds prior to @R{} 4.0.0 used @command{g++} 4.9.x
+which had only partial C++14 support, and the flag to obtain that
+support was not included in the default Windows build of @R{} --- one
+could try something like
 
 @example
 CXX14="$(BINPREF)g++ $(M_ARCH)"
@@ -2772,9 +2772,9 @@ CXX14STD=-std=gnu1y
 @end example
 
 @noindent
-in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version
-expected to be used from @R{} 4.0.0 supports C++14 with flag
-@option{-std=gnu14} and for back-compatibility @option{-std=gnu1y}.
+in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
+from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
+back-compatibility @option{-std=gnu1y}.
 
 C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
 specified in an analogous way (replacing @code{14} by @code{17} or
@@ -2782,8 +2782,8 @@ specified in an analogous way (replacing @code{14} by @code{17} or
 can be used (and probably should be as support is still patchy,
 especially library support).
 
-C++17 and C++20 support are available with the default build of @R{} on
-macOS, and may be on Windows.
+C++17 and C++20 support are available with the default builds of @R{} on
+macOS and Windows as from @R{} 4.0.0.
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
@@ -15484,9 +15484,9 @@ so include the header and define @code{HAVE_UINTPTR_T} before including
 
 These will be set@footnote{at least on platforms where the values are
 available, that is having @code{getrlimit} and on Linux or having
-@code{sysctl} supporting @code{KERN_USRSTACK}, including FreeBSD and OS
-X.} when @code{Rf_initialize_R} is called, to values appropriate to the
-main thread.  Stack-checking can be disabled by setting
+@code{sysctl} supporting @code{KERN_USRSTACK}, including FreeBSD and
+macOS.} when @code{Rf_initialize_R} is called, to values appropriate to
+the main thread.  Stack-checking can be disabled by setting
 @code{R_CStackLimit = (uintptr_t)-1} immediately after
 @code{Rf_initialize_R} is called, but it is better to if possible set
 appropriate values.  (What these are and how to determine them are
