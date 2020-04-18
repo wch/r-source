@@ -28,6 +28,14 @@
       been removed.
     }
   }
+
+    \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{aov(frml, ...)} now also works in case the \code{formula}
+      deparses to more than 500 characters, thanks to a report and patch
+      proposal by Jan Hauffa.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN 4.0.0}{
@@ -747,10 +755,6 @@
       undefined behavior, thanks to a report by Kirill Müller in
       \PR{17756}.  Further, \code{x[[-Inf]]} and \code{x[[-n]]} now give
       more helpful error messages.
-
-      \item \code{aov(frml, ...)} now also works in case the \code{formula}
-      deparses to more than 500 characters, thanks to a report and patch
-      proposal by Jan Hauffa.
 
       \item \code{Gamma()} family sometimes had trouble storing
       link name \PR{15891}
