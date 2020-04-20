@@ -360,8 +360,9 @@ struct _DevDesc {
      * A new page might mean just clearing the
      * device (e.g., X11) or moving to a new page
      * (e.g., postscript)
+     * The background of the new page should be filled with gc->fill
+     * (if that is opaque).
      * An example is ...
-     *
      *
      * static void X11_NewPage(const pGEcontext gc,
      *                         pDevDesc dd);
