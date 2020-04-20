@@ -26,8 +26,6 @@
 #include <Internal.h>
 #include <Rmath.h>
 
-extern int R_removeVarFromFrame(SEXP, SEXP); // #include <Rinternals.h> (fails)
-
 static SEXP installAttrib(SEXP, SEXP, SEXP);
 static SEXP removeAttrib(SEXP, SEXP);
 
