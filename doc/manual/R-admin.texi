@@ -1321,8 +1321,7 @@ is set using macro @code{EXT_LIBS} with default setting
 setting @code{EXT_LIBS} to a different path in
 @file{src/gnuwin32/MkRules.local}. A suitable collection of files can
 also be obtained from 
-@uref{https://CRAN.R-project.org/@/bin/@/windows/@/extsoft} or
-@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/extsoft}.
 
 @menu
 * Getting the tools::
@@ -1400,20 +1399,11 @@ make rsync-recommended
 @end example
 
 @item
-The binary distributions of external software.  Download
-
+The binary distributions of external software by
 @example
-https://www.stats.ox.ac.uk/pub/Rtools/goodies/multilib/local323.zip
+make rsync-extsoft
 @end example
-
-@noindent
-(or a more recent version if appropriate), create an empty directory, 
-say @file{c:/R/extsoft}, and unpack it in
-that directory by e.g.@:
-
-@example
-unzip local323.zip -d c:/R/extsoft
-@end example
+or see above.
 
 @item
 Make a local copy of the configuration rules by
@@ -1429,7 +1419,7 @@ it to the appropriate path (in our example @file{c:/R/extsoft}).
 
 Look through the file @file{MkRules.local} and make any other changes
 needed: in particular, this is where a 64-bit build is selected and the
-locations are set of external software for ICU collation and the
+locations are set for external software for ICU collation and the
 cairo-based devices.
 
 @end itemize
@@ -1740,6 +1730,8 @@ the 32-bit build as it builds the installer image.
 
 @node Building the MSI installer, 64-bit Windows builds, Building the Inno Setup installer, Building from source
 @subsection Building the MSI installer
+
+@center @strong{This has not be tested recently}
 
 It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
@@ -6227,12 +6219,12 @@ To select a 32-bit or 64-bit build of @R{}, set the options in
 @file{MkRules.local} appropriately (following the comments in the file).
 
 Some external software libraries will need to be re-compiled under the
-new toolchain: especially those providing a C++ interface.  Many of
-those used by @acronym{CRAN} packages are available from
-@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
-developing packages with @CRANpkg{Rcpp} need to ensure that they use a
-version built with exactly the same toolchain as their package: the
-recommendation is to build @CRANpkg{Rcpp} from its sources yourself.
+new toolchain: especially those providing a C++ interface.
+@c Many of those used by @acronym{CRAN} packages are available from
+@c @uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
+@c developing packages with @CRANpkg{Rcpp} need to ensure that they use a
+@c version built with exactly the same toolchain as their package: the
+@c recommendation is to build @CRANpkg{Rcpp} from its sources yourself.
 
 There is support for OpenMP and pthreads in this toolchain.  As the
 performance of OpenMP on Windows is poor for small tasks, it is not used
