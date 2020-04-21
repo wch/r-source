@@ -3381,6 +3381,7 @@ add_dummies <- function(dir, Log)
                 machs <- setdiff(machs,
                                  c(except, c("-m", # not a flag
                                              "-msse2", "-mfpmath=sse", # SAFE_FFLAGS
+                                             "-mstackrealign", # SAFE_* / Windows EOPTS
                                              "-m32", # BRugs
                                              "-m64", # RcppParallel
                                              "-multiply_defined" # macOS
