@@ -4209,7 +4209,12 @@ for the rationale of this check (and why even @option{-Werror} is
 unsafe).  Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_}
 can be set to a space-separated set of flags which come from the @R{}
 build used for testing (flags such as @option{-Wall} and
-@option{-Wextra} are already known).
+@option{-Wextra} are already known).  For example, for  CRAN build of 
+@R{} >= 4.0.0 on macOS one could use
+@example
+_R_CHECK_COMPILATION_FLAGS_KNOWN_="-mmacosx-version-min=10.13" 
+@end example
+@noindent
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_R_DEPENDS_
@@ -4828,5 +4833,4 @@ gigabytes), many cores and a multi-threaded @acronym{BLAS}.
 
 @c Local Variables: ***
 @c mode: TeXinfo ***
-@c TeX-master: t
 @c End: ***
