@@ -3386,6 +3386,7 @@ add_dummies <- function(dir, Log)
                                              "-multiply_defined" # macOS
                                              )))
                 machs <- machs[!startsWith(machs, "-mtune=")]
+                machs <- machs[!startsWith(machs, "-mmacosx-")]  # macOS target flags
                 warns <- c(warns, diags, opts, machs)
                 if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)
