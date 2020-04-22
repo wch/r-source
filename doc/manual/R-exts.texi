@@ -1797,7 +1797,7 @@ quoted in makefiles and configure scripts.
 One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
 Unix-alikes (but not by default@footnote{but it is available on the machines
-used to produce the CRAN binary packages.} on macOS) to do this is
+used to produce the @acronym{CRAN} binary packages.} on macOS) to do this is
 @command{pkg-config}.  The @file{configure} script will need to test for
 the presence of the command itself (see for example package
 @CRANpkg{Cairo}), and if present it can be asked if the software is
@@ -9019,8 +9019,10 @@ Sooner or later programmers will be faced with the need to debug
 compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with other debuggers such as @command{lldb}
-(@uref{http://lldb.llvm.org/}, used on macOS) and Sun's @command{dbx}:
-some debuggers have graphical front-ends available.
+(@uref{http://lldb.llvm.org/}, used on macOS: however `notarized'
+executable such as distributed @acronym{CRAN} builds are not allowed to be
+debuggeed) and Sun's @command{dbx}: some debuggers have graphical
+front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
 an illegal memory access (a `segfault' or `bus error'), illegal

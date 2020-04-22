@@ -2723,14 +2723,14 @@ wise to have a @file{src/contrib} area with a possibly empty
 
 @item 
 @code{"mac.binary"}: located at
-@file{bin/macosx/contrib/@var{4.y}} for the CRAN builds for
+@file{bin/macosx/contrib/@var{4.y}} for the @acronym{CRAN} builds for
 macOS for @R{} versions @var{4.y.z}, containing
 @file{.tgz} files.
 
 @item 
 @code{"mac.binary.el-capitan"}: located at
-@file{bin/macosx/el-capitan/contrib/@var{3.y}} for the CRAN builds for
-@R{} versions @var{3.y.z}, containing @file{.tgz} files.
+@file{bin/macosx/el-capitan/contrib/@var{3.y}} for the @acronym{CRAN}
+builds for @R{} versions @var{3.y.z}, containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -5434,9 +5434,9 @@ versions.
 If you plan to use the @code{tcltk} package for @R{}, you need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
-Unix-alikes), which is installed as part of the CRAN binary for @R{} and
-available as separate @code{tcl} and @code{tk} components from
-@uref{https://mac.R-project.org/libs-4/}.  This may need
+Unix-alikes), which is installed as part of the @acronym{CRAN} binary
+for @R{} and available as separate @code{tcl} and @code{tk} components
+from @uref{https://mac.R-project.org/libs-4/}.  This may need
 @command{configure} options
 @example
 -with-tcltk=/usr/local/lib
@@ -5603,8 +5603,8 @@ in the @file{/Applications} folder.
 @node Building binary packages,  , Building R.app, macOS
 @subsection Building binary packages
 
-CRAN macOS binary packages are distributed as tarballs with suffix
-@file{.tgz} to distinguish them from source tarballs.  One can
+@acronym{CRAN} macOS binary packages are distributed as tarballs with
+suffix @file{.tgz} to distinguish them from source tarballs.  One can
 @command{tar} an existing installed package, or use @command{R CMD
 INSTALL --build}.
 
@@ -5612,7 +5612,7 @@ However, there are some important details.
 @itemize
 
 @item
-Current CRAN macOS distributions are targeted at High Sierra so it is
+Current @acronym{CRAN} macOS distributions are targeted at High Sierra so it is
 wise to ensure that the compilers used generate code that will run on
 High Sierra or later.  With the recommended compilers we can use
 @example
@@ -5643,7 +5643,8 @@ install_name_tool -change /usr/local/gfortran/lib/libgfortran.5.dylib \
 @end example
 
 @noindent
-(where the details depend on the compilers and CRAN macOS @R{} release).
+(where the details depend on the compilers and @acronym{CRAN} macOS @R{}
+release).
 
 @item
 For C++ code there is the possibility that calls will be generated to
@@ -5664,7 +5665,7 @@ compiler have later versions (but @command{gfortran} 8, 9 and 10 all
 have version @code{5.0.0}).
 @end itemize
 @noindent
-The CRAN binary packages are built with the Apple compiler on High
+The @acronym{CRAN} binary packages are built with the Apple compiler on High
 Sierra, which avoids the first two and any issues with C++ libraries.
 
 @node Solaris, FreeBSD, macOS, Platform notes
