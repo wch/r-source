@@ -9024,8 +9024,10 @@ Sooner or later programmers will be faced with the need to debug
 compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with other debuggers such as @command{lldb}
-(@uref{http://lldb.llvm.org/}, used on macOS) and Sun's @command{dbx}:
-some debuggers have graphical front-ends available.
+(@uref{http://lldb.llvm.org/}, used on macOS: however `notarized'
+executable such as distributed @acronym{CRAN} builds are not allowed to be
+debuggeed) and Sun's @command{dbx}: some debuggers have graphical
+front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
 an illegal memory access (a `segfault' or `bus error'), illegal
