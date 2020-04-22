@@ -24,7 +24,7 @@
 ## ../../../include/R_ext/GraphicsEngine.h
 #######################################################
 
-patternTypes <- c("LinearGradient", "RadialGradient")
+patternTypes <- c("LinearGradient", "RadialGradient", "Function")
 
 extendOptions <- c("pad", "repeat", "reflect", "none")
 
@@ -64,10 +64,10 @@ linearGradient <- function(colours = c("black", "white"),
 }
 
 radialGradient <- function(colours = c("black", "white"),
-                              stops = seq(0, 1, length.out = length(colours)),
-                              cx1 = 0, cy1 = 0, r1 = 0,
-                              cx2 = 1, cy2 = 1, r2 = .5,
-                              extend = "pad") {
+                           stops = seq(0, 1, length.out = length(colours)),
+                           cx1 = 0, cy1 = 0, r1 = 0,
+                           cx2 = 1, cy2 = 1, r2 = .5,
+                           extend = "pad") {
     ## Vectorising colours & stops
     nstops <- max(length(colours), length(stops))
     colours <- rep(colours, length.out = nstops)
@@ -89,6 +89,11 @@ radialGradient <- function(colours = c("black", "white"),
             r2 = as.numeric(r2),
             stops = as.numeric(stops), colours = colours,
             extend = as.integer(extend))
+}
+
+functionPattern <- function(fun) {
+    pattern("Function",
+            f = fun)
 }
 
 setPattern <- function(pattern) {

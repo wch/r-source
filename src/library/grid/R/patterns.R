@@ -70,6 +70,28 @@ radialGradient <- function(colours = c("black", "white"),
     grad
 }
 
+## Wrap the pattern grob in a gTree with "initial" 'gp' settings
+## for the grob to inherit
+## (we are particularly concerned about the grob inheriting the
+##  fill from its parent, which would mean infinite recursion)
+## AND wrap that gTree in a function that draws it.
+pattern <- function(x, gp=gpar(fill="transparent")) {
+    force(x)
+    ## Do NOT want x$gp$fill to be NULL because that would mean
+    ## that 'x' inherits its fill from the grob that it is
+    ## filling, which means infinite recursion
+    if (is.null(gp$fill)) {
+        gp$fill <- "transparent"
+        warning("Missing pattern fill has been set to transparent")
+    }
+    patternFun <- function() {
+        grid.draw(gTree(children=gList(x), gp=gp), recording=FALSE)
+    }
+    pat <- list(f=patternFun)
+    class(pat) <- c("GridFunctionPattern", "GridPattern")
+    pat
+}
+
 resolvedPattern <- function(pattern, index) {
     index <- as.integer(index)
     pattern$index <- index
@@ -156,6 +178,11 @@ resolvePattern.GridRadialGradient <- function(pattern) {
                                                   c1$x, c1$y, r1,
                                                   c2$x, c2$y, r2,
                                                   extend=pattern$extend))
+    resolvedPattern(pattern, index)
+}
+
+resolvePattern.GridFunctionPattern <- function(pattern) {
+    index <- setPattern(grDevices::functionPattern(pattern$f))
     resolvedPattern(pattern, index)
 }
 

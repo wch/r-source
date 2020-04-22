@@ -187,10 +187,10 @@ static cairo_pattern_t* CairoLinearGradient(SEXP gradient, pX11Desc xd)
                                               red, green, blue, alpha/255.0);
     }
     switch(R_GE_linearGradientExtend(gradient)) {
-    case R_GE_gradientExtendNone: extend = CAIRO_EXTEND_NONE; break;
-    case R_GE_gradientExtendPad: extend = CAIRO_EXTEND_PAD; break;
-    case R_GE_gradientExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
-    case R_GE_gradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
+    case R_GE_patternExtendNone: extend = CAIRO_EXTEND_NONE; break;
+    case R_GE_patternExtendPad: extend = CAIRO_EXTEND_PAD; break;
+    case R_GE_patternExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
+    case R_GE_patternExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
     }
     cairo_pattern_set_extend(cairo_gradient, extend);    
     return cairo_gradient;
@@ -225,24 +225,41 @@ static cairo_pattern_t* CairoRadialGradient(SEXP gradient, pX11Desc xd)
                                               red, green, blue, alpha/255.0);
     }
     switch(R_GE_radialGradientExtend(gradient)) {
-    case R_GE_gradientExtendNone: extend = CAIRO_EXTEND_NONE; break;
-    case R_GE_gradientExtendPad: extend = CAIRO_EXTEND_PAD; break;
-    case R_GE_gradientExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
-    case R_GE_gradientExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
+    case R_GE_patternExtendNone: extend = CAIRO_EXTEND_NONE; break;
+    case R_GE_patternExtendPad: extend = CAIRO_EXTEND_PAD; break;
+    case R_GE_patternExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
+    case R_GE_patternExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
     }
     cairo_pattern_set_extend(cairo_gradient, extend);    
     return cairo_gradient;
 }
 
+static cairo_pattern_t *CairoFunctionPattern(SEXP pattern, pX11Desc xd)
+{
+    cairo_t *cc = xd->cc;
+    SEXP R_fcall;
+    /* Start new group - drawing is redirected to this group */
+    cairo_push_group(cc);
+    /* Play the pattern function to build the pattern */
+    R_fcall = PROTECT(lang1(R_GE_functionPatternFunction(pattern)));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+    /* Close group and return resulting pattern */
+    cairo_pop_group(cc);
+}
+
 static cairo_pattern_t *CairoCreatePattern(SEXP pattern, pX11Desc xd)
 {
-    cairo_pattern_t *cairo_pattern;
+    cairo_pattern_t *cairo_pattern = NULL;
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
         cairo_pattern = CairoLinearGradient(pattern, xd);
         break;
     case R_GE_radialGradientPattern:
         cairo_pattern = CairoRadialGradient(pattern, xd);            
+        break;
+    case R_GE_functionPattern:
+        cairo_pattern = CairoFunctionPattern(pattern, xd);
         break;
     }
     return cairo_pattern;

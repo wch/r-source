@@ -177,3 +177,19 @@ int R_GE_radialGradientExtend(SEXP pattern)
     checkRadialGradient();
     return INTEGER(VECTOR_ELT(pattern, radial_gradient_extend))[0];
 }
+
+/* Function patterns */
+#define function_pattern_function 1
+
+#define checkFunctionPattern() \
+    if (!(R_GE_patternType(pattern) == R_GE_functionPattern)) \
+        error(_("pattern is not a function pattern"))
+
+SEXP R_GE_functionPatternFunction(SEXP pattern) 
+{
+    checkFunctionPattern();
+    return VECTOR_ELT(pattern, function_pattern_function);
+}
+
+
+
