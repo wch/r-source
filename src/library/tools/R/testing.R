@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -605,6 +605,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
     scope <- match.arg(scope)
 
     ## We need to force C collation: might not work
+    oLCcoll <- Sys.getlocale("LC_COLLATE") ; on.exit(Sys.setlocale("LC_COLLATE", oLCcoll))
     Sys.setlocale("LC_COLLATE", "C")
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "array-subset",
@@ -662,9 +663,10 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             else if (!diffOK) return(1L)
         }
         0L
-    }
+    } # end{runone}
+
     owd <- setwd(file.path(R.home(), "tests"))
-    on.exit(setwd(owd))
+    on.exit(setwd(owd), add=TRUE)
 
     if (scope %in% c("basic", "both")) {
         message("running strict specific tests", domain = NA)
@@ -720,7 +722,6 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         runone("internet2")
         runone("libcurl")
     }
-
     invisible(0L)
 }
 

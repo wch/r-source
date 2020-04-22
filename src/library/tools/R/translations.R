@@ -1,7 +1,7 @@
 #  File src/library/tools/R/translations.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
 
     ## Follow previous version by always collating in C.
     pwd <- getwd()
-    coll <- Sys.getlocale("LC_COLLATE")
+    coll <-  Sys.getlocale("LC_COLLATE")
     on.exit({Sys.setlocale("LC_COLLATE", coll); setwd(pwd)})
     Sys.setlocale("LC_COLLATE", "C")
     setwd(pkgdir)
@@ -247,7 +247,7 @@ update_RGui_po <- function(srcdir)
     }
     ## Follow previous version by always collating in C.
     pwd <- getwd()
-    coll <- Sys.getlocale("LC_COLLATE")
+    coll <-  Sys.getlocale("LC_COLLATE")
     on.exit({Sys.setlocale("LC_COLLATE", coll); setwd(pwd)})
     Sys.setlocale("LC_COLLATE", "C")
     setwd(srcdir)

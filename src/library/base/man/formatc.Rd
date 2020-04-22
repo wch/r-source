@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -304,8 +304,9 @@ options(op)
 
 ## The  '  flag :
 doLC <- FALSE # <= R warns, so change to TRUE manually if you want see the effect
-if(doLC)
-  oldLC <- Sys.setlocale("LC_NUMERIC", "de_CH.UTF-8")
+if(doLC) {
+  oldLC <- Sys.getlocale("LC_NUMERIC")
+           Sys.setlocale("LC_NUMERIC", "de_CH.UTF-8") }
 formatC(1.234 + 10^(0:4), format = "fg", width = 11, flag = "'")
 ## -->  .....  "      1'001" "     10'001"   on supported platforms
 if(doLC) ## revert, typically to  "C"  :
