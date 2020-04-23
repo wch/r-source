@@ -357,6 +357,31 @@ SEXP doSetViewport(SEXP vp,
         SET_VECTOR_ELT(vp, PVP_CLIPRECT, currentClip);
     }
     /*
+     * Establish the mask for this viewport
+     */
+    if (isMask(viewportMaskSXP(vp))) {
+        /* Resolve AFTER doSetViewport() so that the current viewport
+         * is the context for resolving the mask
+         */
+    } else {
+        if (viewportMask(vp)) {
+            /* TRUE = "inherit" means use the parent mask 
+             * So we record the parent mask in this pushed vp to restore on pop 
+             */
+            /* NOTE that we are relying on grid.R setting mask = FALSE
+             * (so pushedvp$mask = NULL)
+             * for the top-level viewport, else *BOOM*!
+             */
+            SET_VECTOR_ELT(vp, PVP_MASK, 
+                           VECTOR_ELT(viewportParent(vp), PVP_MASK));
+        } else {
+            /* FALSE = "none" means DO NOT use any masks */
+            SET_VECTOR_ELT(vp, PVP_MASK, R_NilValue);
+            /* We can enforce this immediately */
+            resolveMask(R_NilValue, dd);
+        }
+    }
+    /*
      * Save the current device size
      */
     PROTECT(widthCM = allocVector(REALSXP, 1));
@@ -420,6 +445,20 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
             /* Record the resolved clipping path for subsequent up/down/pop */
             PROTECT(resolvedclip = resolveClipPath(clip, dd));
             SET_VECTOR_ELT(pushedvp, PVP_CLIPPATH, resolvedclip);
+            UNPROTECT(1);
+        }
+        UNPROTECT(1);
+    }
+    /* 
+     * Resolve mask for this viewport
+     */
+    {
+        SEXP mask, resolvedmask;
+        PROTECT(mask = viewportMaskSXP(pushedvp));
+        if (isMask(mask)) {
+            /* Record resolved mask for subsequent up/down/pop */
+            PROTECT(resolvedmask = resolveMask(mask, dd));
+            SET_VECTOR_ELT(pushedvp, PVP_MASK, resolvedmask);
             UNPROTECT(1);
         }
         UNPROTECT(1);
@@ -609,6 +648,22 @@ SEXP L_downviewport(SEXP name, SEXP strict)
             }
             UNPROTECT(1);
         }
+        /* 
+         * Restore masks for this viewport.
+         * This may resolve the mask again if device does
+         * not maintain mask cache.
+         */
+        {
+            SEXP mask, resolvedmask;
+            PROTECT(mask = VECTOR_ELT(vp, PVP_MASK));
+            if (isMask(mask)) {
+                /* Record the resolved mask for subsequent up/down/pop */
+                PROTECT(resolvedmask = resolveMask(mask, dd));
+                SET_VECTOR_ELT(vp, PVP_MASK, resolvedmask);
+                UNPROTECT(1);
+            }
+            UNPROTECT(1);
+        }
         UNPROTECT(1);    
     } else {
         /* Important to have an error here, rather than back in
@@ -769,6 +824,22 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
             }
             UNPROTECT(1);
         }
+        /* 
+         * Restore masks for this viewport.
+         * This may resolve the mask again if device does
+         * not maintain mask cache.
+         */
+        {
+            SEXP mask, resolvedmask;
+            PROTECT(mask = VECTOR_ELT(vp, PVP_MASK));
+            if (isMask(mask)) {
+                /* Record the resolved mask for subsequent up/down/pop */
+                PROTECT(resolvedmask = resolveMask(mask, dd));
+                SET_VECTOR_ELT(vp, PVP_MASK, resolvedmask);
+                UNPROTECT(1);
+            }
+            UNPROTECT(1);
+        }
         UNPROTECT(1);    
     } else {
         /* Important to have an error here, rather than back in
@@ -882,6 +953,8 @@ SEXP L_unsetviewport(SEXP n)
         }
         UNPROTECT(2);
     }
+    /* Set the mask to the parent's mask */
+    resolveMask(VECTOR_ELT(newvp, PVP_MASK), dd);
     /* 
      * Remove the parent from the child
      * This is not strictly necessary, but it is conceptually
@@ -959,6 +1032,8 @@ SEXP L_upviewport(SEXP n)
         }
         UNPROTECT(2);
     }
+    /* Set the mask to the parent's mask */
+    resolveMask(VECTOR_ELT(newvp, PVP_MASK), dd);
     return R_NilValue;
 }
 

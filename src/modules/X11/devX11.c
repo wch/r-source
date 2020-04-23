@@ -1689,6 +1689,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 
             CairoInitPatterns(xd);
             CairoInitClipPaths(xd);
+            CairoInitMasks(xd);
             xd->appending = 0;
 #endif
 	}
@@ -2077,6 +2078,7 @@ static void X11_Close(pDevDesc dd)
 
 #ifdef HAVE_WORKING_CAIRO
 	if(xd->useCairo) {
+            CairoDestroyMasks(xd);
             CairoDestroyClipPaths(xd);
             CairoDestroyPatterns(xd);
 	    if(xd->cs) cairo_surface_destroy(xd->cs);
@@ -2883,6 +2885,8 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
         dd->releasePattern = Cairo_ReleasePattern;
         dd->setClipPath = Cairo_SetClipPath;
         dd->releaseClipPath = Cairo_ReleaseClipPath;
+        dd->setMask = Cairo_SetMask;
+        dd->releaseMask = Cairo_ReleaseMask;
 
     } else
 #endif

@@ -700,6 +700,18 @@ struct _DevDesc {
     void (*releaseClipPath)();
 #endif
 
+#if R_USE_PROTOTYPES
+    SEXP (*setMask)(SEXP path, SEXP ref, pDevDesc dd);
+#else
+    SEXP (*setMask)();
+#endif
+
+#if R_USE_PROTOTYPES
+    void (*releaseMask)(SEXP ref, pDevDesc dd);
+#else
+    void (*releaseMask)();
+#endif
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

@@ -119,6 +119,9 @@ typedef struct {
     cairo_path_t **clippaths;
     int *clippathStack;
     int appending;
+    int numMasks;
+    cairo_pattern_t **masks;
+    int currentMask;
 
     double fontscale;
 } X11Desc;

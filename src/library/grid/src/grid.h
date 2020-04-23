@@ -80,6 +80,7 @@
 #define VP_VALIDLPOSROW 14
 #define VP_VALIDLPOSCOL 15
 #define VP_NAME 16
+#define VP_MASK 31
 /* 
  * Additional structure of a pushedvp
  */
@@ -97,6 +98,7 @@
 #define PVP_DEVWIDTHCM 28
 #define PVP_DEVHEIGHTCM 29
 #define PVP_CLIPPATH 30
+#define PVP_MASK 32
 
 /*
  * Structure of a layout
@@ -528,6 +530,11 @@ Rboolean isClipPath(SEXP clip);
 
 SEXP resolveClipPath(SEXP path, pGEDevDesc dd);
 
+/* From mask.c */
+Rboolean isMask(SEXP mask);
+
+SEXP resolveMask(SEXP mask, pGEDevDesc dd);
+
 /* From viewport.c */
 SEXP viewportX(SEXP vp);
 
@@ -549,6 +556,9 @@ double viewportLineHeight(SEXP vp);
 
 SEXP viewportClipSXP(SEXP vp);
 Rboolean viewportClip(SEXP vp);
+
+SEXP viewportMaskSXP(SEXP vp);
+Rboolean viewportMask(SEXP vp);
 
 SEXP viewportClipRect(SEXP vp);
 

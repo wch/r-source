@@ -196,6 +196,7 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 
     CairoInitPatterns(xd);
     CairoInitClipPaths(xd);
+    CairoInitMasks(xd);
     xd->appending = 0;
 
     return TRUE;
@@ -385,6 +386,7 @@ static void BM_Close(pDevDesc dd)
 	    xd->type == TIFF || xd->type == BMP || xd->type == PNGdirect)
 	    BM_Close_bitmap(xd);
     if (xd->fp) fclose(xd->fp);
+    CairoDestroyMasks(xd);
     CairoDestroyClipPaths(xd);
     CairoDestroyPatterns(xd);
     if (xd->cc) cairo_show_page(xd->cc);
@@ -517,6 +519,8 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->releasePattern = Cairo_ReleasePattern;
     dd->setClipPath = Cairo_SetClipPath;
     dd->releaseClipPath = Cairo_ReleaseClipPath;
+    dd->setMask = Cairo_SetMask;
+    dd->releaseMask = Cairo_ReleaseMask;
 
     dd->left = 0;
     dd->right = width;

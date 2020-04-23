@@ -245,7 +245,7 @@ static cairo_pattern_t *CairoFunctionPattern(SEXP pattern, pX11Desc xd)
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
     /* Close group and return resulting pattern */
-    cairo_pop_group(cc);
+    return cairo_pop_group(cc);
 }
 
 static cairo_pattern_t *CairoCreatePattern(SEXP pattern, pX11Desc xd)
@@ -510,6 +510,120 @@ static void CairoReleaseClipPath(int index, pX11Desc xd)
     }
 }
 
+/*
+ ***************************
+ * Masks
+ ***************************
+ */
+static void CairoInitMasks(pX11Desc xd)
+{
+    int i;
+    xd->numMasks = 20;
+    xd->masks = malloc(sizeof(cairo_pattern_t*) * xd->numMasks);
+    for (i = 0; i < xd->numMasks; i++) {
+        xd->masks[i] = NULL;
+    }
+    xd->currentMask = -1;
+}
+
+static void CairoCleanMasks(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numMasks; i++) {
+        if (xd->masks[i] != NULL) {
+            cairo_pattern_destroy(xd->masks[i]);
+            xd->masks[i] = NULL;
+        }
+    }    
+    xd->currentMask = -1;
+}
+
+static void CairoDestroyMasks(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numMasks; i++) {
+        if (xd->masks[i] != NULL) {
+            cairo_pattern_destroy(xd->masks[i]);
+        }
+    }    
+    free(xd->masks);
+}
+
+static int CairoNewMaskIndex(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numMasks; i++) {
+        if (xd->masks[i] == NULL) {
+            return i;
+        }
+    }    
+    error(_("Cairo masks exhausted (try opening device with more masks)"));
+}
+
+static cairo_pattern_t *CairoCreateMask(SEXP mask, pX11Desc xd)
+{
+    cairo_t *cc = xd->cc;
+    SEXP R_fcall;
+    /* Start new group - drawing is redirected to this group */
+    cairo_push_group(cc);
+    /* Play the mask function to build the mask */
+    R_fcall = PROTECT(lang1(mask));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+    /* Close group and return resulting mask */
+    return cairo_pop_group(cc);
+}
+
+static SEXP CairoSetMask(SEXP mask, SEXP ref, pX11Desc xd)
+{
+    int index;
+    cairo_pattern_t *cairo_mask;
+    SEXP newref = R_NilValue;
+
+    if (isNull(mask)) {
+        /* Set NO mask */
+        index = -1;
+    } else {
+        if (isNull(ref)) {
+            /* Create a new mask */
+            index = CairoNewMaskIndex(xd);
+            cairo_mask = CairoCreateMask(mask, xd);
+            xd->masks[index] = cairo_mask;
+        } else {
+            /* Reuse existing mask */
+            index = INTEGER(ref)[0];
+            if (!xd->masks[index]) {
+                /* But if it does not exist, make a new one */
+                index = CairoNewMaskIndex(xd);
+                cairo_mask = CairoCreateMask(mask, xd);
+                xd->masks[index] = cairo_mask;
+            }
+        }
+        newref = PROTECT(allocVector(INTSXP, 1));
+        INTEGER(newref)[0] = index;
+        UNPROTECT(1);
+    }
+
+    xd->currentMask = index;
+
+    return newref;
+}
+
+static void CairoReleaseMask(int index, pX11Desc xd)
+{
+    if (xd->masks[index]) {
+        cairo_pattern_destroy(xd->masks[index]);
+        xd->masks[index] = NULL;
+    } else {
+        warning(_("Attempt to release non-existent mask"));
+    }
+}
+
+/*
+ ***************************
+ * Rendering
+ ***************************
+ */
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
@@ -601,12 +715,17 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
         cairo_new_path(xd->cc);
     }
 
     cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
 
     if (!xd->appending) {
+
         /* patternFill overrides fill */
         if (gc->patternFill >= 0) { 
             CairoPatternFill(gc->patternFill, xd);
@@ -616,11 +735,17 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
             cairo_fill_preserve(xd->cc);
             cairo_set_antialias(xd->cc, xd->antialias);
         }
-
         if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
             CairoColor(gc->col, xd);
             CairoLineType(gc, xd);
             cairo_stroke(xd->cc);
+        }
+        if (xd->currentMask >= 0) {
+            /* If masking, use temporary pattern as source and mask that */
+            cairo_pattern_t *source = cairo_pop_group(xd->cc);
+            cairo_pattern_t *mask = xd->masks[xd->currentMask];
+            cairo_set_source(xd->cc, source);
+            cairo_mask(xd->cc, mask);
         }
     }
 }
@@ -1499,6 +1624,28 @@ static void Cairo_ReleaseClipPath(SEXP ref, pDevDesc dd)
             int i;
             for (i = 0; i < LENGTH(ref); i++) {
                 CairoReleaseClipPath(INTEGER(ref)[i], xd);
+            }
+        }
+    }
+}
+
+static SEXP Cairo_SetMask(SEXP mask, SEXP ref, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    return CairoSetMask(mask, ref, xd);
+}
+
+static void Cairo_ReleaseMask(SEXP ref, pDevDesc dd) 
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    /* Negative index means release all patterns */
+    if (LENGTH(ref)) {
+        if (INTEGER(ref)[0] < 0) {
+            CairoCleanMasks(xd);
+        } else {
+            int i;
+            for (i = 0; i < LENGTH(ref); i++) {
+                CairoReleaseMask(INTEGER(ref)[i], xd);
             }
         }
     }

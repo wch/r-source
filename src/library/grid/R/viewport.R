@@ -31,7 +31,7 @@ vpAutoName <- initvpAutoName()
 # VERY IMPORTANT because the C code accesses them using constant
 # indices (i.e., if you change the order here the world will end!
 valid.viewport <- function(x, y, width, height, just,
-                           gp, clip,
+                           gp, clip, mask,
                            xscale, yscale, angle,
                            layout, layout.pos.row, layout.pos.col,
                            name) {
@@ -49,6 +49,16 @@ valid.viewport <- function(x, y, width, height, just,
                          off=NA,
                          inherit=FALSE,
                          stop("invalid 'clip' value"))
+      }
+  }
+  if (!is.logical(mask)) {
+      if (is.grob(mask)) {
+          mask <- createMask(mask)
+      } else {
+          mask <- switch(as.character(mask),
+                         inherit=TRUE,
+                         none=FALSE,
+                         stop("invalid 'mask' value"))
       }
   }
   # Ensure both 'xscale' and 'yscale' are numeric (brute force defense)
@@ -93,7 +103,26 @@ valid.viewport <- function(x, y, width, height, just,
              valid.just = valid.just(just),
              valid.pos.row = layout.pos.row,
              valid.pos.col = layout.pos.col,
-             name=name)
+             name = name,
+             ## A whole lot of blank slots that pushedvp() fills in
+             parentgpar = NULL,
+             gpar = NULL,
+             trans = NULL,
+             widths = NULL,
+             heights = NULL,
+             width.cm = NULL,
+             height.cm = NULL,
+             rotation = NULL,
+             cliprect = NULL,
+             parent = NULL,
+             children = NULL,
+             devwidth = NULL,
+             devheight = NULL,
+             clippath = NULL,
+             ## Some viewport slots that were added later on
+             ## (pairs of 'vp' and 'pushedvp' slots)
+             mask = mask,
+             resolvedmask = NULL)
   class(vp) <- "viewport"
   vp
 }
@@ -107,25 +136,17 @@ pushedvp <- function(vp) {
     # either directly from L_setviewport() or indirectly from initVP()
     # via grid.top.level.vp()
     # vp$gpar and vp$parentgpar are both set previously in push.vp.viewport()
-  pvp <- c(vp, list(trans = NULL,
-                    widths = NULL,
-                    heights = NULL,
-                    width.cm = NULL,
-                    height.cm = NULL,
-                    rotation = NULL,
-                    cliprect = NULL,
-                    parent = NULL,
-                    # Children of this pushedvp will be stored
-                    # in an environment
-                    children = new.env(hash=TRUE, parent=baseenv()),
-                    # Initial value of 0 means that the viewport will
-                    # be pushed "properly" the first time, calculating
-                    # transformations, etc ...
-                    devwidthcm = 0,
-                    devheightcm = 0,
-                    clippath = NULL))
-  class(pvp) <- c("pushedvp", class(vp))
-  pvp
+    pvp <- vp
+    ## Children of this pushedvp will be stored
+    ## in an environment
+    pvp$children = new.env(hash=TRUE, parent=baseenv())
+    ## Initial value of 0 means that the viewport will
+    ## be pushed "properly" the first time, calculating
+    ## transformations, etc ...
+    pvp$devwidthcm <- 0
+    pvp$devheightcm <- 0
+    class(pvp) <- c("pushedvp", class(vp))
+    pvp
 }
 
 vpFromPushedvp <- function(pvp) {
@@ -227,6 +248,7 @@ viewport <- function(x = unit(0.5, "npc"),
                      just = "centre",
                      gp = gpar(),
                      clip = "inherit",
+                     mask = "inherit", # or "none" or grob
                      # FIXME: scales are only linear at the moment
                      xscale = c(0, 1),
                      yscale = c(0, 1),
@@ -239,17 +261,17 @@ viewport <- function(x = unit(0.5, "npc"),
                      # This is down here to avoid breaking
                      # existing code
                      name=NULL) {
-  if (!is.unit(x))
-    x <- unit(x, default.units)
-  if (!is.unit(y))
-    y <- unit(y, default.units)
-  if (!is.unit(width))
-    width <- unit(width, default.units)
-  if (!is.unit(height))
-    height <- unit(height, default.units)
-  valid.viewport(x, y, width, height, just,
-                 gp, clip, xscale, yscale, angle,
-                 layout, layout.pos.row, layout.pos.col, name)
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
+    if (!is.unit(width))
+        width <- unit(width, default.units)
+    if (!is.unit(height))
+        height <- unit(height, default.units)
+    valid.viewport(x, y, width, height, just,
+                   gp, clip, mask, xscale, yscale, angle,
+                   layout, layout.pos.row, layout.pos.col, name)
 }
 
 is.viewport <- function(vp) {
