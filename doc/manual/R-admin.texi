@@ -1403,6 +1403,7 @@ The binary distributions of external software by
 @example
 make rsync-extsoft
 @end example
+@noindent
 or see above.
 
 @item
