@@ -756,6 +756,10 @@ static void Cairo_Circle(double x, double y, double r,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
         cairo_new_path(xd->cc);
     }
 
@@ -777,6 +781,13 @@ static void Cairo_Circle(double x, double y, double r,
             CairoLineType(gc, xd);
             cairo_stroke(xd->cc);
         }
+        if (xd->currentMask >= 0) {
+            /* If masking, use temporary pattern as source and mask that */
+            cairo_pattern_t *source = cairo_pop_group(xd->cc);
+            cairo_pattern_t *mask = xd->masks[xd->currentMask];
+            cairo_set_source(xd->cc, source);
+            cairo_mask(xd->cc, mask);
+        }
     }
 }
 
@@ -787,6 +798,10 @@ static void Cairo_Line(double x1, double y1, double x2, double y2,
 
     if (R_ALPHA(gc->col) > 0) {
         if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                /* If masking, draw temporary pattern */
+                cairo_push_group(xd->cc);
+            }
             CairoColor(gc->col, xd);
             CairoLineType(gc, xd);
             cairo_new_path(xd->cc);
@@ -797,6 +812,13 @@ static void Cairo_Line(double x1, double y1, double x2, double y2,
 
         if (!xd->appending) {
             cairo_stroke(xd->cc);
+            if (xd->currentMask >= 0) {
+                /* If masking, use temporary pattern as source and mask that */
+                cairo_pattern_t *source = cairo_pop_group(xd->cc);
+                cairo_pattern_t *mask = xd->masks[xd->currentMask];
+                cairo_set_source(xd->cc, source);
+                cairo_mask(xd->cc, mask);
+            }
         }
     }
 }
@@ -809,6 +831,10 @@ static void Cairo_Polyline(int n, double *x, double *y,
 
     if (R_ALPHA(gc->col) > 0) {
         if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                /* If masking, draw temporary pattern */
+                cairo_push_group(xd->cc);
+            }
             CairoColor(gc->col, xd);
             CairoLineType(gc, xd);
             cairo_new_path(xd->cc);
@@ -819,6 +845,13 @@ static void Cairo_Polyline(int n, double *x, double *y,
         
         if (!xd->appending) {
             cairo_stroke(xd->cc);
+            if (xd->currentMask >= 0) {
+                /* If masking, use temporary pattern as source and mask that */
+                cairo_pattern_t *source = cairo_pop_group(xd->cc);
+                cairo_pattern_t *mask = xd->masks[xd->currentMask];
+                cairo_set_source(xd->cc, source);
+                cairo_mask(xd->cc, mask);
+            }
         }
     }
 }
@@ -830,6 +863,10 @@ static void Cairo_Polygon(int n, double *x, double *y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
         cairo_new_path(xd->cc);
     }
 
@@ -852,6 +889,13 @@ static void Cairo_Polygon(int n, double *x, double *y,
             CairoLineType(gc, xd);
             cairo_stroke(xd->cc);
         }
+        if (xd->currentMask >= 0) {
+            /* If masking, use temporary pattern as source and mask that */
+            cairo_pattern_t *source = cairo_pop_group(xd->cc);
+            cairo_pattern_t *mask = xd->masks[xd->currentMask];
+            cairo_set_source(xd->cc, source);
+            cairo_mask(xd->cc, mask);
+        }
     }
 }
 
@@ -864,6 +908,10 @@ static void Cairo_Path(double *x, double *y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
         cairo_new_path(xd->cc);
     }
 
@@ -901,6 +949,13 @@ static void Cairo_Path(double *x, double *y,
             CairoColor(gc->col, xd);
             CairoLineType(gc, xd);
             cairo_stroke(xd->cc);
+        }
+        if (xd->currentMask >= 0) {
+            /* If masking, use temporary pattern as source and mask that */
+            cairo_pattern_t *source = cairo_pop_group(xd->cc);
+            cairo_pattern_t *mask = xd->masks[xd->currentMask];
+            cairo_set_source(xd->cc, source);
+            cairo_mask(xd->cc, mask);
         }
     }
 }
@@ -956,6 +1011,11 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
     
     cairo_save(xd->cc);
 
+    if (xd->currentMask >= 0) {
+        /* If masking, draw temporary pattern */
+        cairo_push_group(xd->cc);
+    }
+
     /* If we are going to use the graphics engine for interpolation
      * the image used for the Cairo surface is going to be a
      * different size
@@ -1007,6 +1067,14 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
     cairo_rectangle(xd->cc, 0, 0, imageWidth, imageHeight);
     cairo_clip(xd->cc);
     cairo_paint(xd->cc); 
+
+    if (xd->currentMask >= 0) {
+        /* If masking, use temporary pattern as source and mask that */
+        cairo_pattern_t *source = cairo_pop_group(xd->cc);
+        cairo_pattern_t *mask = xd->masks[xd->currentMask];
+        cairo_set_source(xd->cc, source);
+        cairo_mask(xd->cc, mask);
+    }
 
     cairo_restore(xd->cc);
     cairo_surface_destroy(image);
@@ -1239,6 +1307,12 @@ PangoCairo_Text(double x, double y,
 	PangoFontDescription *desc = 
 	    PG_getFont(gc, xd->fontscale, xd->basefontfamily, xd->symbolfamily);
 	cairo_save(xd->cc);
+
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
+
 	layout = PG_layout(desc, xd->cc, textstr);
 	PG_text_extents(xd->cc, layout, &lbearing, NULL, &width,
 			&ascent, NULL, 0);
@@ -1248,6 +1322,15 @@ PangoCairo_Text(double x, double y,
 	cairo_rel_move_to(xd->cc, -lbearing - width*hadj, -ascent);
 	CairoColor(gc->col, xd);
 	pango_cairo_show_layout(xd->cc, layout);
+
+        if (xd->currentMask >= 0) {
+            /* If masking, use temporary pattern as source and mask that */
+            cairo_pattern_t *source = cairo_pop_group(xd->cc);
+            cairo_pattern_t *mask = xd->masks[xd->currentMask];
+            cairo_set_source(xd->cc, source);
+            cairo_mask(xd->cc, mask);
+        }
+
 	cairo_restore(xd->cc);
 	g_object_unref(layout);
 	pango_font_description_free(desc);
@@ -1573,6 +1656,12 @@ static void Cairo_Text(double x, double y,
     }
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
+
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(xd->cc);
+        }
+
 	FT_getFont(gc, dd, xd->fontscale);
 	cairo_move_to(xd->cc, x, y);
 	if (hadj != 0.0 || rot != 0.0) {
@@ -1584,6 +1673,15 @@ static void Cairo_Text(double x, double y,
 	}
 	CairoColor(gc->col, xd);
 	cairo_show_text(xd->cc, textstr);
+
+        if (xd->currentMask >= 0) {
+            /* If masking, use temporary pattern as source and mask that */
+            cairo_pattern_t *source = cairo_pop_group(xd->cc);
+            cairo_pattern_t *mask = xd->masks[xd->currentMask];
+            cairo_set_source(xd->cc, source);
+            cairo_mask(xd->cc, mask);
+        }
+
 	cairo_restore(xd->cc);
     }
 }

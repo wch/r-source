@@ -27,6 +27,49 @@ initvpAutoName <- function() {
 
 vpAutoName <- initvpAutoName()
 
+vpObject <- function(x, y, width, height, just,
+                     gp, clip, mask,
+                     xscale, yscale, angle,
+                     layout, layout.pos.row, layout.pos.col,
+                     name) {
+    
+    vp <- list(x = x, y = y, width = width, height = height,
+               justification = just,
+               gp = gp,
+               clip = clip,
+               xscale = xscale,
+               yscale = yscale,
+               angle = angle,
+               layout = layout,
+               layout.pos.row = layout.pos.row,
+               layout.pos.col = layout.pos.col,
+               valid.just = valid.just(just),
+               valid.pos.row = layout.pos.row,
+               valid.pos.col = layout.pos.col,
+               name = name,
+               ## A whole lot of blank slots that pushedvp() fills in
+               parentgpar = NULL,
+               gpar = NULL,
+               trans = NULL,
+               widths = NULL,
+               heights = NULL,
+               width.cm = NULL,
+               height.cm = NULL,
+               rotation = NULL,
+               cliprect = NULL,
+               parent = NULL,
+               children = NULL,
+               devwidth = NULL,
+               devheight = NULL,
+               clippath = NULL,
+               ## Some viewport slots that were added later on
+               ## (pairs of 'vp' and 'pushedvp' slots)
+               mask = mask,
+               resolvedmask = NULL)
+    class(vp) <- "viewport"
+    vp
+}
+
 # NOTE: The order of the elements in viewports and pushedvps are
 # VERY IMPORTANT because the C code accesses them using constant
 # indices (i.e., if you change the order here the world will end!
@@ -90,41 +133,11 @@ valid.viewport <- function(x, y, width, height, just,
   if (is.null(name))
     name <- vpAutoName()
   # Put all the valid things first so that are found quicker
-  vp <- list(x = x, y = y, width = width, height = height,
-             justification = just,
-             gp = gp,
-             clip = clip,
-             xscale = xscale,
-             yscale = yscale,
-             angle = angle,
-             layout = layout,
-             layout.pos.row = layout.pos.row,
-             layout.pos.col = layout.pos.col,
-             valid.just = valid.just(just),
-             valid.pos.row = layout.pos.row,
-             valid.pos.col = layout.pos.col,
-             name = name,
-             ## A whole lot of blank slots that pushedvp() fills in
-             parentgpar = NULL,
-             gpar = NULL,
-             trans = NULL,
-             widths = NULL,
-             heights = NULL,
-             width.cm = NULL,
-             height.cm = NULL,
-             rotation = NULL,
-             cliprect = NULL,
-             parent = NULL,
-             children = NULL,
-             devwidth = NULL,
-             devheight = NULL,
-             clippath = NULL,
-             ## Some viewport slots that were added later on
-             ## (pairs of 'vp' and 'pushedvp' slots)
-             mask = mask,
-             resolvedmask = NULL)
-  class(vp) <- "viewport"
-  vp
+  ## Order is VERY important
+  vpObject(x, y, width, height, valid.just(just),
+           gp, clip, mask, xscale, yscale,
+           angle, layout, layout.pos.row, layout.pos.col,
+           name)
 }
 
 # When a viewport is pushed, an internal copy is stored along
@@ -150,19 +163,23 @@ pushedvp <- function(vp) {
 }
 
 vpFromPushedvp <- function(pvp) {
-    ## Only keep non-pushedvp content
-    vp <- pvp[c("x", "y", "width", "height",
-                "justification", "gp", "clip",
-                "xscale", "yscale", "angle",
-                "layout", "layout.pos.row", "layout.pos.col",
-                "valid.just", "valid.pos.row", "valid.pos.col",
-                "name")]
     ## Unresolve any resolved fills
-    if (!is.null(vp$gp$fill)) {
-        vp$gp$fill <- unresolveFill(vp$gp$fill)
+    if (!is.null(pvp$gp$fill)) {
+        pvp$gp$fill <- unresolveFill(pvp$gp$fill)
     }
-    class(vp) <- "viewport"
-    vp
+    ## Unresolve any clip paths or masks
+    if (isClipPath(pvp$clip)) {
+        pvp$clip <- unresolveClipPath(pvp$clip)
+    }
+    if (isMask(pvp$mask)) {
+        pvp$mask <- unresolveMask(pvp$mask)
+    }
+    ## Only keep non-pushedvp content
+    with(pvp,
+         vpObject(x, y, width, height, justification,
+                  gp, clip, mask, xscale, yscale,
+                  angle, layout, layout.pos.row, layout.pos.col,
+                  name))
 }
 
 as.character.viewport <- function(x, ...) {

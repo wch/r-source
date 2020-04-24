@@ -9,6 +9,10 @@ createMask <- function(mask) {
     result
 }   
 
+isMask <- function(x) {
+    inherits(x, "GridMask")
+}
+
 ## "resolve" masks
 resolveMask <- function(path) {
     UseMethod("resolveMask")
@@ -39,4 +43,19 @@ resolvedMask.GridResolvedMask <- function(mask, ref) {
     mask
 }    
 
+unresolveMask <- function(mask) {
+    UseMethod("unresolveMask")
+}
+    
+## Unresolved masks just pass through
+unresolveMask.GridMask <- function(mask) {
+    mask
+}
+
+unresolveMask.GridResolvedMask <- function(mask) {
+    mask$ref <- NULL
+    class(mask) <-
+        class(mask)[!(class(mask) %in% "GridResolvedMask")]
+    mask
+}
 

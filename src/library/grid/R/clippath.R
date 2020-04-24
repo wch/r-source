@@ -9,6 +9,10 @@ createClipPath <- function(clip) {
     path
 }   
 
+isClipPath <- function(x) {
+    inherits(x, "GridClipPath")
+}
+
 ## "resolve" clipping paths
 resolveClipPath <- function(path) {
     UseMethod("resolveClipPath")
@@ -39,4 +43,20 @@ resolvedClipPath.GridResolvedClipPath <- function(path, ref) {
     path$ref <- ref
     path
 }    
+
+unresolveClipPath <- function(path) {
+    UseMethod("unresolveClipPath")
+}
+    
+## Unresolved clipPaths just pass through
+unresolveClipPath.GridClipPath <- function(path) {
+    path
+}
+
+unresolveClipPath.GridResolvedClipPath <- function(path) {
+    path$ref <- NULL
+    class(path) <-
+        class(path)[!(class(path) %in% "GridResolvedClipPath")]
+    path
+}
 
