@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict}
@@ -64,7 +64,8 @@ predict (object, \dots)
   Wadsworth & Brooks/Cole.
 }
 \examples{
-\dontshow{old <- Sys.setlocale("LC_COLLATE", "C")}
+\dontshow{old <- Sys.getlocale("LC_COLLATE")
+       invisible(Sys.setlocale("LC_COLLATE", "C"))}
 require(utils)
 
 ## All the "predict" methods found
@@ -77,6 +78,6 @@ for(fn in methods("predict"))
        cat(fn, ":\n\t", deparse(args(f)), "\n")
        }, silent = TRUE)
 ## IGNORE_RDIFF_END
-\dontshow{old <- Sys.setlocale("LC_COLLATE", old)}
+\dontshow{invisible(Sys.setlocale("LC_COLLATE", old))}
 }
 \keyword{methods}

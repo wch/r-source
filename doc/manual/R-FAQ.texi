@@ -1563,7 +1563,6 @@ Angelo Mineo and Alfredo Pontillo (2006),
 @menu
 * Add-on packages in R::
 * Add-on packages from CRAN::
-* Add-on packages from Omegahat::
 * Add-on packages from Bioconductor::
 * Other add-on packages::
 @end menu
@@ -1617,7 +1616,7 @@ former @pkg{base} was split into the four packages @pkg{base},
 recommended package @CRANpkg{MASS}, and package @pkg{mle} moved to
 @pkg{stats4}.
 
-@node Add-on packages from CRAN, Add-on packages from Omegahat, Add-on packages in R, Which add-on packages exist for R?
+@node Add-on packages from CRAN, Add-on packages from Bioconductor, Add-on packages in R, Which add-on packages exist for R?
 @subsection Add-on packages from @acronym{CRAN}
 
 The @CRAN{} @file{src/contrib} area contains a wealth of add-on
@@ -1681,27 +1680,27 @@ Many of these packages are categorized into
 to browse packages by topic and providing tools to automatically install
 all packages for special areas of interest.
 
-Some @CRAN{} packages that do not build out of the box on Windows,
-require additional software, or are shipping third party libraries for
-Windows cannot be made available on @CRAN{} in form of a Windows binary
-packages.  Nevertheless, some of these packages are available at the
-``@CRAN{} extras'' repository at
-@url{https://www.stats.ox.ac.uk/pub/RWin/} kindly provided by Brian
-D. Ripley.  Note that this repository is a default repository for recent
-versions of R for Windows.
+@c Some @CRAN{} packages that do not build out of the box on Windows,
+@c require additional software, or are shipping third party libraries for
+@c Windows cannot be made available on @CRAN{} in form of a Windows binary
+@c packages.  Nevertheless, some of these packages are available at the
+@c ``@CRAN{} extras'' repository at
+@c @url{https://www.stats.ox.ac.uk/pub/RWin/} kindly provided by Brian
+@c D. Ripley.  Note that this repository is a default repository for recent
+@c versions of R for Windows.
 
-@node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
-@subsection Add-on packages from Omegahat
+@c @node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
+@c @subsection Add-on packages from Omegahat
 
-The @url{http://www.omegahat.net/, Omega Project for Statistical
-Computing} provides a variety of open-source software for statistical
-applications, with special emphasis on web-based software, Java, the
-Java virtual machine, and distributed computing.  A @acronym{CRAN} style
-R package repository is available via @url{http://www.omegahat.net/R/}.
-See @url{http://www.omegahat.net/} for information on most R packages
-available from the Omega project.
+@c The @url{http://www.omegahat.net/, Omega Project for Statistical
+@c Computing} provides a variety of open-source software for statistical
+@c applications, with special emphasis on web-based software, Java, the
+@c Java virtual machine, and distributed computing.  A @acronym{CRAN} style
+@c R package repository is available via @url{http://www.omegahat.net/R/}.
+@c See @url{http://www.omegahat.net/} for information on most R packages
+@c available from the Omega project.
 
-@node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?
+@node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from CRAN, Which add-on packages exist for R?
 @subsection Add-on packages from Bioconductor
 
 @url{https://www.bioconductor.org/, Bioconductor} is an open source and

@@ -189,6 +189,7 @@ stopifnot(identical(
     sort(dependsOnPkgs("lattice", lib.loc = .Library)),
     c("Matrix", "mgcv", "nlme", "survival")))
 
-## This may not be installed
+## Vignettes may not yet be installed
 gridEx <- system.file("doc", "grid.Rnw", package = "grid")
-stopifnot(identical(vignetteInfo(gridEx)$depends, "lattice"))
+if(nzchar(gridEx)) # was installed
+    stopifnot(identical(vignetteInfo(gridEx)$depends, "lattice"))

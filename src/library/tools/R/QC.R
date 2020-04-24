@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -4525,7 +4525,7 @@ function(x, ...)
 .check_package_datasets <-
 function(pkgDir)
 {
-    on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
+    oLC_ct <- Sys.getlocale("LC_CTYPE"); on.exit(Sys.setlocale("LC_CTYPE", oLC_ct))
     Sys.setlocale("LC_CTYPE", "C")
     oop <- options(warn = -1)
     on.exit(options(oop), add = TRUE)
@@ -4959,7 +4959,7 @@ function(dir)
     ## so as from R 2.5.0 we try to set a locale.
     ## Any package with no declared encoding should have only ASCII R
     ## code.
-    on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
+    oLC_ct <- Sys.getlocale("LC_CTYPE"); on.exit(Sys.setlocale("LC_CTYPE", oLC_ct))
     if(!is.na(enc)) {  ## try to use the declared encoding
         if(.Platform$OS.type == "windows") {
             ## "C" is in fact "en", and there are no UTF-8 locales
@@ -6963,7 +6963,10 @@ function(dir, localOnly = FALSE)
     if(grepl("(^|[.-])0[0-9]+", ver))
         out$version_with_leading_zeroes <- ver
     unlisted_version <- unlist(package_version(ver))
-    if(any(unlisted_version >= 1234 & unlisted_version != as.integer(format(Sys.Date(), "%Y"))))
+    if(any(unlisted_version >= 1234 &
+           unlisted_version != as.integer(format(Sys.Date(), "%Y"))) &&
+       !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_LARGE_VERSION_",
+                                         "FALSE")))
         out$version_with_large_components <- ver
 
     .aspell_package_description_for_CRAN <- function(dir, meta = NULL) {

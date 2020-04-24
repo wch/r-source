@@ -71,7 +71,10 @@ mauchley.test(object, Sigma = diag(nrow = p),
 clearNames(object)
 
 # Defunct in 4.1.0
-clearNames(object)
+plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
+        square = TRUE, labels = NULL, plot. = TRUE,
+        axes = TRUE, frame.plot = FALSE, ann = TRUE,
+        main = "", sub = NULL, xlab = NULL, ylab = "Height")
 }
 \details{
   The \code{*chisq()} functions now take an optional non-centrality

@@ -41,7 +41,7 @@
 # TOOL_PATH =
 # for other toolchains leave these empty and set the more detailed options below
 
-# With the recommended gcc 4.9.3 toolchain or another toolchain, set 
+# With the recommended gcc 8.3.0 toolchain or another toolchain, set
 # BINPREF and BINPREF64 (below) to the respective bin directories.  
 # Include the trailing /, and use / not \.
 # Do this in the more detailed options below
@@ -53,9 +53,9 @@
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
 # including a trailing / .  
-# BINPREF = c:/Rtools/mingw_32/bin/
+# BINPREF = c:/rtools40/mingw32/bin/
 # prefix for 64-bit:
-# BINPREF64 = c:/Rtools/mingw_64/bin/
+# BINPREF64 = c:/rtools40/mingw64/bin/
 # Set this to indicate a non-gcc compiler and version
 # COMPILED_BY = <determined automatically>
 

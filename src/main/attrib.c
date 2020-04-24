@@ -689,11 +689,11 @@ static SEXP cache_class(const char *class, SEXP klass)
 	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
 	R_PreserveObject(R_S4_extends_table);
     }
-    if(isNull(klass)) { /* retrieve cached value */
-	SEXP val = findVarInFrame(R_S4_extends_table, install(class));
-	return (val == R_UnboundValue) ? klass : val;
+    if(isNull(klass)) {
+	R_removeVarFromFrame(install(class), R_S4_extends_table);
+    } else {
+	defineVar(install(class), klass, R_S4_extends_table);
     }
-    defineVar(install(class), klass, R_S4_extends_table);
     return klass;
 }
 

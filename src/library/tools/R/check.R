@@ -3381,11 +3381,13 @@ add_dummies <- function(dir, Log)
                 machs <- setdiff(machs,
                                  c(except, c("-m", # not a flag
                                              "-msse2", "-mfpmath=sse", # SAFE_FFLAGS
+                                             "-mstackrealign", # SAFE_* / Windows EOPTS
                                              "-m32", # BRugs
                                              "-m64", # RcppParallel
                                              "-multiply_defined" # macOS
                                              )))
                 machs <- machs[!startsWith(machs, "-mtune=")]
+                machs <- machs[!startsWith(machs, "-mmacosx-")]  # macOS target flags
                 warns <- c(warns, diags, opts, machs)
                 if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)

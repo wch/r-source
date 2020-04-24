@@ -394,8 +394,6 @@ function(file, out = stdout(), codify = FALSE)
     ## can use the DESCRIPTION metadata to obtain the package name and
     ## encoding.
 
-    format <- "default"
-
     file <- file_path_as_absolute(file)
 
     if(file_test("-d", file)) {
@@ -438,38 +436,9 @@ function(file, out = stdout(), codify = FALSE)
         on.exit(close(out))
     }
 
-    if(format == "R") {
-        news <- readNEWS(chop = "keepAll")
-        if(!length(news))
-            stop("No news found in given file using old-style R-like format.")
-        wto(c("\\newcommand{\\PR}{\\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}",
-              "\\name{NEWS}",
-              "\\title{R News}",
-              "\\encoding{UTF-8}"))
-        for(y in news) {
-            for(i in seq_along(y)) {
-                wto(sprintf("\\section{CHANGES IN R VERSION %s}{",
-                            names(y)[i]))
-                z <- y[[i]]
-                for(j in seq_along(z)) {
-                    wto(c(sprintf("  \\subsection{%s}{", names(z)[j]),
-                          "    \\itemize{"))
-                    for(chunk in z[[j]]) {
-                        chunk <- toRd(paste(chunk, collapse = "\n      "))
-                        if(codify) {
-                            chunk <- gsub(cre, "\\1\\\\code{\\2}\\3",
-                                          chunk)
-                        }
-                        chunk <- gsub("PR#([[:digit:]]+)", "\\\\PR{\\1}",
-                                      chunk)
-                        wto(paste("      \\item", enc2utf8(chunk)))
-                    }
-                    wto(c("    }", "  }"))
-                }
-                wto("}")
-            }
-        }
-    } else {
+    ## had   if(format == "R") {
+    ## and this was   } else { format == "default" :
+    {
         news <- .news_reader_default(file)
         bad <- attr(news, "bad")
         if(!length(bad))

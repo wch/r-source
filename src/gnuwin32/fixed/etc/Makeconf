@@ -14,8 +14,13 @@ endif
 DLLFLAGS+= -static-libgcc
 LINKFLAGS+= -static-libgcc
 
+## The rtools40 installer sets RTOOLS40_HOME, default to standard install path
+RTOOLS40_HOME ?= c:/rtools40
+RTOOLS40_ROOT ?= $(subst \,/,$(RTOOLS40_HOME))
+
 ## Things which are substituted by fixed/Makefile (and also -O3 -> -O2)
 WIN = 32
+MINGW_PREFIX = /mingw$(WIN)
 BINPREF =
 COMPILED_BY =
 # SYMPAT = 's/^.* [BCDRT] _/ /p' for 32-bit

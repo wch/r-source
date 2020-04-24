@@ -2026,6 +2026,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
             newpkg <- def@package
         else
             newpkg <- ""
+        .cache_class(name, NULL)
         if(is(prev, "classRepresentation") && identical(prev@package, newpkg) )
             return(remove(list = name, envir = .classTable))
         i <- match(newpkg, names(prev))

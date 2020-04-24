@@ -16,6 +16,26 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Function \code{plclust()} from the package \pkg{stats}, and
+      \code{package.dependencies()}, \code{pkgDepends()},
+      \code{getDepList()}, \code{installFoundDepends()}, and
+      \code{vignetteDepends()} from \pkg{tools} are defunct.
+
+      \item Defunct functions \code{checkNEWS()} and \code{readNEWS()} from
+      package \pkg{tools} and \code{CRAN.packages()} from \pkg{utils} have
+      been removed.
+    }
+  }
+
+    \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{aov(frml, ...)} now also works in case the \code{formula}
+      deparses to more than 500 characters, thanks to a report and patch
+      proposal by Jan Hauffa.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN 4.0.0}{
@@ -445,6 +465,17 @@
 
       \item Either PCRE2 or PCRE1 >= 8.32 (Nov 2012) is required: the
       deprecated provision for 8.20--8.31 has been removed.
+
+      \item Defunct functions \code{mem.limits()}, \code{.readRDS()},
+      \code{.saveRDS()},.\code{.find.package()}, and \code{.path.package()}
+      from package \pkg{base}
+      and \code{allGenerics()}, \code{getAccess()}, \code{getAllMethods()},
+      \code{getClassName()}, \code{getClassPackage()}, \code{getExtends()},
+      \code{getProperties()}, \code{getPrototype()},
+      \code{getSubclasses()}, \code{getVirtual()}, \code{mlistMetaName()},
+      \code{removeMethodsObject()}, \code{seemsS4Object()},
+      \code{traceOff()}, and \code{traceOn()} from \pkg{methods} have been
+      removed.
     }
   }
 
@@ -724,10 +755,6 @@
       undefined behavior, thanks to a report by Kirill Müller in
       \PR{17756}.  Further, \code{x[[-Inf]]} and \code{x[[-n]]} now give
       more helpful error messages.
-
-      \item \code{aov(frml, ...)} now also works in case the \code{formula}
-      deparses to more than 500 characters, thanks to a report and patch
-      proposal by Jan Hauffa.
 
       \item \code{Gamma()} family sometimes had trouble storing
       link name \PR{15891}
