@@ -100,7 +100,7 @@ script:
     git log --format=%B -n 10 | grep "^git-svn-id" | head -n 1 | sed -E 's/^git-svn-id: https:\/\/svn.r-project.org\/R\/[^@]*@([0-9]+).*$/\1/' >> SVN-REVISION
     echo -n 'Last Changed Date: ' >> SVN-REVISION
     git log -1 --pretty=format:"%ad" --date=iso | cut -d ' ' -f1 >> SVN-REVISION
-  - ./configure --enable-R-shlib --enable-memory-profiling --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
+  - ./configure --enable-R-shlib --enable-memory-profiling --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib --with-pcre1
   - (cd doc/manual && make front-matter html-non-svn)
   - export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
   - make
