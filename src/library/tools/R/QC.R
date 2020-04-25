@@ -6963,7 +6963,10 @@ function(dir, localOnly = FALSE)
     if(grepl("(^|[.-])0[0-9]+", ver))
         out$version_with_leading_zeroes <- ver
     unlisted_version <- unlist(package_version(ver))
-    if(any(unlisted_version >= 1234 & unlisted_version != as.integer(format(Sys.Date(), "%Y"))))
+    if(any(unlisted_version >= 1234 &
+           unlisted_version != as.integer(format(Sys.Date(), "%Y"))) &&
+       !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_LARGE_VERSION_",
+                                         "FALSE")))
         out$version_with_large_components <- ver
 
     .aspell_package_description_for_CRAN <- function(dir, meta = NULL) {
