@@ -217,7 +217,7 @@ allowInterrupts(expr)
    \code{findRestart}. Because a condition of a given class might be
    signalled with arbitrary protocols (error, warning, etc), it is
    recommended to use this permissive variant whenever you are handling
-   conditions signalled from a foreign context. For instance, invokation
+   conditions signalled from a foreign context. For instance, invocation
    of a \code{"muffleWarnings"} restart should be optional because the
    warning might have been signalled by the user or from a different
    package with the \code{stop} or \code{message} protocols. Only use
