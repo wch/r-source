@@ -25,7 +25,8 @@ massageExamples <-
              addTiming = FALSE, ..., commentDonttest = TRUE)
 {
     if(dir.exists(files[1L])) {
-        old <- Sys.setlocale("LC_COLLATE", "C")
+        old <- Sys.getlocale("LC_COLLATE")
+        Sys.setlocale("LC_COLLATE", "C")
         files <- sort(Sys.glob(file.path(files, "*.R")))
         Sys.setlocale("LC_COLLATE", old)
     }

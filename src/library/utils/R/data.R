@@ -31,8 +31,9 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
     my_read_table <- function(...) {
         ## Try canonicalizing the sort order for possible string to
         ## factor conversions.
-        lcc <- Sys.setlocale("LC_COLLATE", "C")
+        lcc <- Sys.getlocale("LC_COLLATE")
         on.exit(Sys.setlocale("LC_COLLATE", lcc))
+        Sys.setlocale("LC_COLLATE", "C")
         read.table(...)
     }
 
