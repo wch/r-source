@@ -3689,6 +3689,7 @@ add_dummies <- function(dir, Log)
                               stdout = exout, stderr = exout,
                               stdin = exfile, arch = arch, timeout = tlim)
             t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (status) {
                 errorLog(Log, "Running examples in ",
                          sQuote(basename(exfile)),
@@ -3719,7 +3720,6 @@ add_dummies <- function(dir, Log)
                 return(FALSE)
             }
 
-            print_time(t1, t2, Log)
             ## Look at the output from running the examples.  For
             ## the time being, report warnings about use of
             ## deprecated , as the next release will make
@@ -4014,8 +4014,8 @@ add_dummies <- function(dir, Log)
                               stdout = "", stderr = "", arch = arch,
                               timeout = tlim)
             t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (status) {
-                print_time(t1, t2, Log)
                 errorLog(Log)
                 if (Log$con > 0L && file.exists(logf)) {
                     ## write individual results only to 00check.log
@@ -4065,7 +4065,6 @@ add_dummies <- function(dir, Log)
                 }
                 return(FALSE)
             } else {
-                print_time(t1, t2, Log)
                 resultLog(Log, "OK")
                 if (Log$con > 0L && file.exists(logf)) {
                     ## write results only to 00check.log
@@ -4411,14 +4410,13 @@ add_dummies <- function(dir, Log)
                     }
                 }
                 t2 <- proc.time()
+                print_time(t1, t2, Log)
                 if(!ran) {
-                    print_time(t1, t2, Log)
                     resultLog(Log, "NONE")
                     ## printLog0(Log, out0)
                     if (!is.null(Log) && Log$con > 0L)
                         cat(out0, sep ="", file = Log$con)
                 } else {
-                    print_time(t1, t2, Log)
                     if(R_check_suppress_RandR_message)
                         res <- filtergrep('^Xlib: *extension "RANDR" missing on display',
                                           res, useBytes = TRUE)
