@@ -12,6 +12,9 @@
       \item \code{aov(frml, ...)} now also works in case the \code{formula}
       deparses to more than 500 characters, thanks to a report and patch
       proposal by Jan Hauffa.
+
+      \item Fix a dozen places (code, examples) as \code{Sys.setlocale()}
+      does not return the previous setting.
     }
   }
 }
