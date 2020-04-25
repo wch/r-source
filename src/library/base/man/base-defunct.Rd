@@ -263,7 +263,7 @@ is.real(x)
 
   \code{.readRDS} and \code{.saveRDS}, were internal-only versions (and
   the only versions available prior to \R 2.13.0) of
-  \code{\link{.readRDS}} and \code{\link{.saveRDS}}.
+  \code{\link{readRDS}} and \code{\link{saveRDS}}.
 
   \code{Sys.putenv} was a synonym for \code{\link{Sys.setenv}},
   deprecated since \R 2.5.0.
