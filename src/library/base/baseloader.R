@@ -17,7 +17,8 @@
 #  https://www.R-project.org/Licenses/
 
 
-## this should be kept in step with code in R/lazyload.R
+## should be kept in step with code in  >> R/lazyload.R <<
+## (but not everywhere ?!)
 .Internal(eval(quote({
 ..lazyLoad <- function(filebase, envir = parent.frame())
 {
@@ -39,39 +40,31 @@
     `parent.env<-` <-
         function (env, value) .Internal(`parent.env<-`(env, value))
     existsInFrame <- function (x, env) .Internal(exists(x, env, "any", FALSE))
-    getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
-    set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
+    list2env <- function (x, envir) .Internal(list2env(x, envir))
     environment <- function () .Internal(environment(NULL))
     mkenv <- function() .Internal(new.env(TRUE, baseenv(), 29L))
 
     ##
     ## main body
     ##
-    mapfile <- glue(filebase, "rdx", sep = ".")
+    mapfile  <- glue(filebase, "rdx", sep = ".")
     datafile <- glue(filebase, "rdb", sep = ".")
     env <- mkenv()
     map <- readRDS(mapfile)
     vars <- names(map$variables)
-    rvars <- names(map$references)
     compressed <- map$compressed
-    for (i in seq_along(rvars))
-        set(rvars[i], map$references[[i]], env)
+    list2env(map$references, env)
     envenv <- mkenv()
     envhook <- function(n) {
         if (existsInFrame(n, envenv))
-            getFromFrame(n, envenv)
+            envenv[[n]]
         else {
             e <- mkenv()
-            set(n, e, envenv)           # MUST do this immediately
-            key <- getFromFrame(n, env)
+            envenv[[n]] <- e           # MUST do this immediately
+            key <- env[[n]]
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
-            if (is.null(data$enclos))
-                parent.env(e) <- emptyenv()
-            else
-                parent.env(e) <- data$enclos
-            vars <- names(data$bindings)
-            for (i in seq_along(vars))
-                set(vars[i], data$bindings[[i]], e)
+            parent.env(e) <- if(!is.null(data$enclos)) data$enclos else emptyenv()
+            list2env(data$bindings, e)
             if (! is.null(data$attributes))
                 attributes(e) <- data$attributes
             ## there are no S4 objects in base
@@ -87,6 +80,7 @@
     ## reduce memory use
     map <- NULL
     vars <- NULL
+    vals <- NULL
     rvars <- NULL
     mapfile <- NULL
     readRDS <- NULL
@@ -138,7 +132,7 @@ local({
         method <- method                # force evaluation
         home <- home                    # force evaluation
         delayedAssign(x, get(method, envir = home), assign.env = envir)
-    }          
+    }
     methods <- paste0(.S3_methods_table[, 1L], ".",
                       .S3_methods_table[, 2L])
     env <- .BaseNamespaceEnv

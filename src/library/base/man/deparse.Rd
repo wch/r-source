@@ -28,7 +28,7 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
     See \code{\link{.deparseOpts}}.}
   \item{nlines}{integer: the maximum number of lines to produce.
     Negative values indicate no limit.}
-  \item{collapse}{a string, passed to \code{\link{parse}()}.}
+  \item{collapse}{a string, passed to \code{\link{paste}()}.}
   \item{\dots}{further arguments passed to \code{deparse()}.}
 }
 \details{

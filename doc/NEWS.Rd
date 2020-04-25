@@ -5,6 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN 4.0.0 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{aov(frml, ...)} now also works in case the \code{formula}
+      deparses to more than 500 characters, thanks to a report and patch
+      proposal by Jan Hauffa.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN 4.0.0}{
 
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
