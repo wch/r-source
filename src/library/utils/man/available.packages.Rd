@@ -164,7 +164,7 @@ options(available_packages_filters =
 options(available_packages_filters = list(add = TRUE, "license/FOSS"))
 
 ## Give priority to released versions on CRAN, rather than development
-## versions on Omegahat, R-Forge etc.
+## versions on R-Forge etc.
 options(available_packages_filters =
      c("R_version", "OS_type", "subarch", "CRAN", "duplicates"))
 }}
