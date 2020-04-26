@@ -7,8 +7,8 @@
 \title{Concatenate Strings}
 \concept{combine strings}
 \usage{
-paste (\dots, sep = " ", collapse = NULL, recycle0=FALSE)
-paste0(\dots,            collapse = NULL, recycle0=FALSE)
+paste (\dots, sep = " ", collapse = NULL, recycle0 = FALSE)
+paste0(\dots,            collapse = NULL, recycle0 = FALSE)
 }
 \alias{paste}
 \alias{paste0}
@@ -19,8 +19,9 @@ paste0(\dots,            collapse = NULL, recycle0=FALSE)
   \item{collapse}{an optional character string to separate the results.  Not
     \code{\link{NA_character_}}.}
   \item{recycle0}{\code{\link{logical}} indicating if zero-length
-    character arguments (and all zero-length or no arguments when \code{collapse} is not
-    \code{NULL}) should lead to the zero-length \code{\link{character}(0)}.}
+    character arguments (and all zero-length or no arguments when
+    \code{collapse} is not \code{NULL}) should lead to the zero-length
+    \code{\link{character}(0)}.}cd 
 }
 \description{
   Concatenate vectors after converting to character.
@@ -124,9 +125,9 @@ valid <- FALSE
 val <- pi
 paste("The value is", val[valid], "-- not so good!")
 paste("The value is", val[valid], "-- good!", recycle0=TRUE) # -> character(0)
-paste(	  collapse="|")                #|-->  ""
-paste(	  collapse="|", recycle0=TRUE) #|-->  character(0)
-paste({}, collapse="|")                #|-->  ""
-paste({}, collapse="|", recycle0=TRUE) #|-->  character(0)
+paste(	  collapse="|")                  #|-->  ""
+paste(	  collapse="|", recycle0 = TRUE) #|-->  character(0)
+paste({}, collapse="|")                  #|-->  ""
+paste({}, collapse="|", recycle0 = TRUE) #|-->  character(0)
 }
 \keyword{character}

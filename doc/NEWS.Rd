@@ -7,14 +7,10 @@
 
 \section{\Rlogo CHANGES IN R-devel}{
 
-  \subsection{NEW FEATURES}{
-    \itemize{
-      \item \code{paste()} and \code{paste0()} get new optional argument
-      \code{recycle0 = FALSE}.  When set to true, zero length arguments
-      (and all zero-length or no arguments when \code{collapse} is not
-      \code{NULL}) lead to the zero-length \code{character(0)}.
-    }
-  }
+  %% \subsection{NEW FEATURES}{
+  %%   \itemize{
+  %%   }
+  %% }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
@@ -34,6 +30,30 @@
       \item \code{aov(frml, ...)} now also works in case the \code{formula}
       deparses to more than 500 characters, thanks to a report and patch
       proposal by Jan Hauffa.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.0.0 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{paste()} and \code{paste0()} gain a new optional
+      argument \code{recycle0}.  When set to true, zero-length
+      arguments (and all zero-length or no arguments when \code{collapse}
+      is not \code{NULL}) lead to the zero-length value
+      \code{character(0)}.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{aov(frml, ...)} now also works in case the \code{formula}
+      deparses to more than 500 characters, thanks to a report and patch
+      proposal by Jan Hauffa.
+
+      \item Fix a dozen places (code, examples) as \code{Sys.setlocale()}
+      does not return the previous setting.
     }
   }
 }
