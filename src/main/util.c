@@ -1129,7 +1129,7 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
        of print dispatch with WinUTF8out being already set to TRUE). */
     if (WinUTF8out) {
 	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-	             R_NilValue, R_NilValue);
+		     R_NilValue, R_NilValue);
 	cntxt.cend = &encode_cleanup;
 	havecontext = TRUE;
 	WinUTF8out = FALSE;
@@ -1250,7 +1250,7 @@ int attribute_hidden utf8clen(char c)
 }
 
 static R_wchar_t
-utf16toucs(wchar_t high, wchar_t low) 
+utf16toucs(wchar_t high, wchar_t low)
 {
     return 0x10000 + ((int) (high & 0x3FF) << 10 ) + (int) (low & 0x3FF);
 }
@@ -1268,7 +1268,7 @@ utf8toucs32(wchar_t high, const char *s)
     return utf16toucs(high, utf8toutf16low(s));
 }
 
-/* These return the result in wchar_t.  If wchar_t is 16 bit (e.g. UTF-16LE on Windows
+/* These return the result in wchar_t.  If wchar_t is 16 bit (e.g. UTF-16LE on Windows)
    only the high surrogate is returned; call utf8toutf16low next. */
 size_t attribute_hidden
 utf8toucs(wchar_t *wc, const char *s)
@@ -1302,7 +1302,7 @@ utf8toucs(wchar_t *wc, const char *s)
 	    if(byte == 0xFFFE || byte == 0xFFFF) return (size_t)-1;
 	    return 3;
 	} else return (size_t)-1;
-    
+
     } else if (byte < 0xf8) {
 	if(strlen(s) < 4) return (size_t)-2;
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80) && ((s[3] & 0xC0) == 0x80)) {
@@ -1355,9 +1355,9 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 	    res ++;
 	    if (res >= n) break;
 	    if (IS_HIGH_SURROGATE(*p)) {
-	    	*(++p) = utf8toutf16low(t);
-	    	res ++;
-	    	if (res >= n) break;
+		*(++p) = utf8toutf16low(t);
+		res ++;
+		if (res >= n) break;
 	    }
 	}
     else
@@ -1389,18 +1389,18 @@ static size_t Rwcrtomb32(char *s, R_wchar_t cvalue, size_t n)
 	if (cvalue <= utf8_table1[i]) break;
     if (i >= n - 1) return 0;  /* need space for terminal null */
     if (s) {
-    	s += i;
-    	for (j = i; j > 0; j--) {
+	s += i;
+	for (j = i; j > 0; j--) {
 	    *s-- = (char) (0x80 | (cvalue & 0x3f));
 	    cvalue >>= 6;
-        }
-    	*s = (char) (utf8_table2[i] | cvalue);
+	}
+	*s = (char) (utf8_table2[i] | cvalue);
     }
     return i + 1;
 }
 
 /* on input, wc is a string encoded in UTF-16 or UCS-2 or UCS-4.
-   s can be a buffer of size n>=0 chars, or NULL.  If n=0 or s=NULL, nothing is written. 
+   s can be a buffer of size n>=0 chars, or NULL.  If n=0 or s=NULL, nothing is written.
    The return value is the number of chars including the terminating null.  If the
    buffer is not big enough, the result is truncated but still null-terminated */
 attribute_hidden // but used in windlgs
@@ -1411,13 +1411,13 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
     const wchar_t *p;
     if (!n) return 0;
     for(p = wc, t = s; ; p++) {
-    	if (IS_SURROGATE_PAIR(*p, *(p+1))) {
-    	    R_wchar_t cvalue =  ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
+	if (IS_SURROGATE_PAIR(*p, *(p+1))) {
+	    R_wchar_t cvalue =  ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
 	    m = Rwcrtomb32(t, cvalue, n - res);
 	    p++;
-    	} else 
-    	    m = Rwcrtomb32(t, (R_wchar_t)(*p), n - res);
-    	if (!m) break;
+	} else
+	    m = Rwcrtomb32(t, (R_wchar_t)(*p), n - res);
+	if (!m) break;
 	res += m;
 	if (t)
 	    t += m;
@@ -1485,8 +1485,8 @@ char* mbcsTruncateToValid(char *s)
 	goodlen += res;
     }
     return s;
-} 
-    
+}
+
 attribute_hidden
 Rboolean mbcsValid(const char *str)
 {
@@ -1680,7 +1680,7 @@ char *acopy_string(const char *in)
 http://unicode.org/Public/MAPPINGS/VENDORS/ADOBE/symbol.txt
 */
 
-/* Conversion table that DOES use Private Usage Area 
+/* Conversion table that DOES use Private Usage Area
  * (should work better with specialised "symbol" fonts)
  */
 static int s2u[224] = {
@@ -1716,13 +1716,13 @@ static int s2u[224] = {
 
 /* Conversion table that does NOT use Private Usage Area (0xF8*)
  * (should work better with fonts that have good Unicode coverage)
- * 
+ *
  * NOTE that ...
  *   23D0 VERTICAL LINE EXTENTION is used for VERTICAL ARROW EXTENDER
  *   23AF HORIZONTAL LINE EXTENSION is used for HORIZONTAL ARROW EXTENDER
  * ... neither of which may be very good AND ...
  *   23AF HORIZONTAL LINE EXTENSION is also used for RADICAL EXTENDER
- * ... and that is unlikely to be right for BOTH this use AND 
+ * ... and that is unlikely to be right for BOTH this use AND
  * HORIZONTAL ARROW EXTENDER (if either)
  */
 static int s2unicode[224] = {
@@ -1757,7 +1757,7 @@ static int s2unicode[224] = {
 };
 
 void *Rf_AdobeSymbol2utf8(char *work, const char *c0, size_t nwork,
-                          Rboolean usePUA)
+			  Rboolean usePUA)
 {
     const unsigned char *c = (unsigned char *) c0;
     unsigned char *t = (unsigned char *) work;
@@ -1765,11 +1765,11 @@ void *Rf_AdobeSymbol2utf8(char *work, const char *c0, size_t nwork,
 	if (*c < 32) *t++ = ' ';
 	else {
 	    unsigned int u;
-            if (usePUA) {
-                u = (unsigned int) s2u[*c - 32];
-            } else {
-                u = (unsigned int) s2unicode[*c - 32];
-            }
+	    if (usePUA) {
+		u = (unsigned int) s2u[*c - 32];
+	    } else {
+		u = (unsigned int) s2unicode[*c - 32];
+	    }
 	    if (u < 128) *t++ = (unsigned char) u;
 	    else if (u < 0x800) {
 		*t++ = (unsigned char) (0xc0 | (u >> 6));
@@ -1787,7 +1787,7 @@ void *Rf_AdobeSymbol2utf8(char *work, const char *c0, size_t nwork,
     return (char*) work;
 }
 
-/* Convert UTF8 symbol back to single-byte symbol 
+/* Convert UTF8 symbol back to single-byte symbol
  * ASSUME fontface == 5 and 'str' is UTF8, i.e., we are dealing with
  * a UTF8 string that has been through Rf_AdobeSymbol2utf8(usePUA=TRUE)
  * (or through Rf_AdobeSymbol2ucs2() then Rf_ucstoutf8())
@@ -1801,22 +1801,22 @@ int Rf_utf8toAdobeSymbol(char *out, const char *in) {
     for ( ; *p; p += utf8clen(*p)) nc++;
     symbolint = (int *) R_alloc(nc, sizeof(int));
     for (i = 0, j = 0; i < nc; i++, j++) {
-        /* Convert UTF8 to int */
+	/* Convert UTF8 to int */
 	used = mbrtoint(&tmp, s);
-        if (used < 0) 
-            error(_("invalid UTF-8 string"));
+	if (used < 0)
+	    error(_("invalid UTF-8 string"));
 	symbolint[j] = tmp;
-        found = 0;
-        /* Convert int to CE_SYMBOL char */
-        for (k = 0; k < 224; k++) {
-            if (symbolint[j] == s2u[k]) {
-                out[j] = k + 32;
-                found = 1;
-            }
-            if (found) break;
-        }
-        if (!found) 
-            error(_("Conversion failed"));
+	found = 0;
+	/* Convert int to CE_SYMBOL char */
+	for (k = 0; k < 224; k++) {
+	    if (symbolint[j] == s2u[k]) {
+		out[j] = (char)(k + 32);
+		found = 1;
+	    }
+	    if (found) break;
+	}
+	if (!found)
+	    error(_("Conversion failed"));
 	s += used;
     }
     out[nc] = '\0';
@@ -1827,47 +1827,47 @@ const char* Rf_utf8Toutf8NoPUA(const char *in)
 {
     int i, j, used, tmp;
     /* At least enough because assumes each incoming char only one byte */
-    int nChar = 3*strlen(in) + 1;
+    int nChar = 3*(int)strlen(in) + 1;
     char *result = R_alloc(nChar, sizeof(char));
     const char *s = in;
     char *p = result;
     for (i = 0; i < nChar; i++) {
-        /* Convert UTF8 char to int */
+	/* Convert UTF8 char to int */
 	used = mbrtoint(&tmp, s);
-        /* Only re-encode if necessary 
-         * This is more efficient AND protects against input that is 
-         * NOT from Rf_AdobeSymbol2utf8(), e.g., plotmath on Windows
-         * (which is from reEnc(CE_LATIN1, CE_UTF8))
-         */
-        if (tmp > 0xF600) {
-            char inChar[4], symbolChar[2], utf8Char[4];
-            char *q;
-            for (j = 0; j < used; j++) {
-                inChar[j] = *s++;
-            }
-            inChar[used] = '\0';
-            Rf_utf8toAdobeSymbol(symbolChar, inChar);
-            Rf_AdobeSymbol2utf8(utf8Char, symbolChar, 4, FALSE);
-            q = utf8Char;
-            while (*q) {
-                *p++ = *q++;
-            }
-        } else {
-            for (j = 0; j < used; j++) {
-                *p++ = *s++;
-            }
-        }
+	/* Only re-encode if necessary
+	 * This is more efficient AND protects against input that is
+	 * NOT from Rf_AdobeSymbol2utf8(), e.g., plotmath on Windows
+	 * (which is from reEnc(CE_LATIN1, CE_UTF8))
+	 */
+	if (tmp > 0xF600) {
+	    char inChar[4], symbolChar[2], utf8Char[4];
+	    char *q;
+	    for (j = 0; j < used; j++) {
+		inChar[j] = *s++;
+	    }
+	    inChar[used] = '\0';
+	    Rf_utf8toAdobeSymbol(symbolChar, inChar);
+	    Rf_AdobeSymbol2utf8(utf8Char, symbolChar, 4, FALSE);
+	    q = utf8Char;
+	    while (*q) {
+		*p++ = *q++;
+	    }
+	} else {
+	    for (j = 0; j < used; j++) {
+		*p++ = *s++;
+	    }
+	}
     }
     *p = '\0';
     return result;
-}                         
+}
 
 const char* Rf_utf8ToLatin1AdobeSymbol2utf8(const char *in, Rboolean usePUA)
 {
   const char *latinStr;
   char *utf8str;
   latinStr = reEnc(in, CE_UTF8, CE_LATIN1, 2);
-  int nc = 3*strlen(latinStr) + 1;
+  int nc = 3*(int)strlen(latinStr) + 1;
   utf8str = R_alloc(nc, sizeof(char));
   Rf_AdobeSymbol2utf8(utf8str, latinStr, nc, usePUA);
   return utf8str;
@@ -1955,9 +1955,9 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    if (ans != 0.0) { /* PR#15976:  allow big exponents on 0 */
 		expn += expsign * n;
 		if(exph > 0) {
-		    if (expn - exph < -122) {	/* PR#17199:  fac may overflow below if expn - exph is too small.  
-		                                   2^-122 is a bit bigger than 1E-37, so should be fine on all systems */
-		    	for (n = exph, fac = 1.0; n; n >>= 1, p2 *= p2)
+		    if (expn - exph < -122) {	/* PR#17199:  fac may overflow below if expn - exph is too small.
+						   2^-122 is a bit bigger than 1E-37, so should be fine on all systems */
+			for (n = exph, fac = 1.0; n; n >>= 1, p2 *= p2)
 			    if (n & 1) fac *= p2;
 			ans /= fac;
 			p2 = 2.0;
@@ -2346,7 +2346,7 @@ int Scollate(SEXP a, SEXP b)
 	if (!envl || !envl[0])
 	    envl = getenv("LC_COLLATE");
 	int useC = envl && !strcmp(envl, "C");
-	    
+
 #ifndef Win32
 	if (!useC && strcmp("C", getLocale()) ) {
 #else
@@ -2707,13 +2707,13 @@ SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
  *		e.g., "0" pads leading zeros; "-" does left adjustment
  *		the other possible flags are  "+", " ", and "#".
  *	  New (Feb.98): if flag has more than one character, all are passed..
- *   
- *  Gabe Becker (2019-05-21): Added str_signif_sexp which wraps 
- *  original DATAPTR based str_signif to support ALTREPs. 
- *     
- *     Any future calls to str_signif on SEXP data should be via 
+ *
+ *  Gabe Becker (2019-05-21): Added str_signif_sexp which wraps
+ *  original DATAPTR based str_signif to support ALTREPs.
+ *
+ *     Any future calls to str_signif on SEXP data should be via
  *     str_signif_sexp to ensure ALTREP support.
- *     
+ *
  */
 
 /* <UTF8> char here is either ASCII or handled as a whole */
@@ -2846,7 +2846,7 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 }
 
 
-/* wrap original DATAPTR based str_signif in ITERATE_BY_REGION calls to 
+/* wrap original DATAPTR based str_signif in ITERATE_BY_REGION calls to
    support ALTREPs
 
    We still accept type because it is part of the defined API and only defaults
