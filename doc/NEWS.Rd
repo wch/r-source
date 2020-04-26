@@ -24,7 +24,7 @@
       proposal by Jan Hauffa.
 
       \item Fix a dozen places (code, examples) as \code{Sys.setlocale()}
-      does not return the previous setting.
+      returns the new rather than the previous setting.
     }
   }
 }
