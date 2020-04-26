@@ -16,10 +16,23 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-paste <- function (..., sep = " ", collapse = NULL)
-    .Internal(paste(list(...), sep, collapse))
-paste0 <- function(..., collapse = NULL)
-    .Internal(paste0(list(...), collapse))
+## change in R 4.0.1: do it this way to allow for calls without new arg
+## to work from earlier versions of R.
+paste <- function (..., sep = " ", collapse = NULL, recycle0 = FALSE)
+{
+    if(isTRUE(recycle0))
+        .Internal(paste(list(...), sep, collapse, recycle0))
+    else
+        .Internal(paste(list(...), sep, collapse))
+}
+
+paste0 <- function(..., collapse = NULL, recycle0 = FALSE)
+{
+    if(isTRUE(recycle0))
+        .Internal(paste0(list(...), collapse, recycle0))
+    else
+        .Internal(paste0(list(...), collapse))
+}
 
 ##=== Could we extend  paste(.) to (optionally) accept a
 ##    2-vector for collapse ?	 With the following functionality

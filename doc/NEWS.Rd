@@ -7,6 +7,16 @@
 
 \section{\Rlogo CHANGES IN 4.0.0 patched}{
 
+   \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{paste()} and \code{paste0()} gain a new optional
+      argument \code{recycle0}.  When set to true, zero-length
+      arguments (and all zero-length or no arguments when \code{collapse}
+      is not \code{NULL}) lead to the zero-length value
+      \code{character(0)}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{aov(frml, ...)} now also works in case the \code{formula}
