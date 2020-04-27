@@ -5496,14 +5496,12 @@ For Windows, check what other DLLs your package's DLL depends on
 tool to do so is `Dependency Walker'
 (@uref{http://www.dependencywalker.com/}) for both 32-bit and 64-bit
 DLLs -- note that this will report as missing links to @R{}'s own DLLs
-such as @file{R.dll} and @file{Rblas.dll}.  For 32-bit DLLs only, the
-command-line tool @command{pedump.exe -i} (in @file{Rtools*.exe}) can be
-used, and for the brave, the @command{objdump} tool in the appropriate
-toolchain will also reveal what DLLs are imported from.  If you use a
-toolchain other than one provided by the @R{} developers or use your own
-makefiles, watch out in particular for dependencies on the toolchain's
-runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
-@file{libgcc_s}.
+such as @file{R.dll} and @file{Rblas.dll}.  The command-line tool
+@command{objdump} in the appropriate toolchain will also reveal what
+DLLs are imported from.  If you use a toolchain other than one provided
+by the @R{} developers or use your own makefiles, watch out in
+particular for dependencies on the toolchain's runtime DLLs such as
+@file{libgfortran}, @file{libstdc++} and @file{libgcc_s}.
 
 For macOS, using @code{R CMD otool -L} on the package's shared object(s)
 in the @file{libs} directory will show what they depend on: watch for
