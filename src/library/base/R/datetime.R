@@ -253,6 +253,7 @@ as.POSIXlt.character <-
 
 as.POSIXlt.numeric <- function(x, tz = "", origin, ...)
 {
+    if(!length(x)) return(as.POSIXlt.character(character(), tz))
     if(missing(origin)) stop("'origin' must be supplied")
     as.POSIXlt(as.POSIXct(origin, tz = "UTC", ...) + x, tz = tz)
 }
@@ -260,6 +261,7 @@ as.POSIXlt.numeric <- function(x, tz = "", origin, ...)
 as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
 {
     if(inherits(x, "POSIXlt")) return(x)
+    if(is.null(x)) return(as.POSIXlt.character(character(), tz))
     if(is.logical(x) && all(is.na(x)))
         return(as.POSIXlt(as.POSIXct.default(x), tz = tz))
     if(optional)
@@ -312,6 +314,7 @@ as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 
 as.POSIXct.numeric <- function(x, tz = "", origin, ...)
 {
+    if(!length(x)) return(.POSIXct(numeric(), tz))
     if(missing(origin)) stop("'origin' must be supplied")
     .POSIXct(as.POSIXct(origin, tz = "GMT", ...) + x, tz)
 }
@@ -319,6 +322,7 @@ as.POSIXct.numeric <- function(x, tz = "", origin, ...)
 as.POSIXct.default <- function(x, tz = "", ...)
 {
     if(inherits(x, "POSIXct")) return(x)
+    if(is.null(x)) return(.POSIXct(numeric(), tz))
     if(is.character(x) || is.factor(x))
 	return(as.POSIXct(as.POSIXlt(x, tz, ...), tz, ...))
     if(is.logical(x) && all(is.na(x)))
@@ -562,7 +566,8 @@ anyNA.POSIXlt <- function(x, recursive = FALSE)
 ## <FIXME> check the argument validity
 ## This is documented to remove the timezone
 c.POSIXct <- function(..., recursive = FALSE)
-    .POSIXct(c(unlist(lapply(list(...), unclass))))
+    .POSIXct(c(unlist(lapply(list(...),
+                             function(e) unclass(as.POSIXct(e))))))
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
 c.POSIXlt <- function(..., recursive = FALSE)

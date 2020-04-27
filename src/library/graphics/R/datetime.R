@@ -190,7 +190,9 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
 	    if(axes) {
 		axis(2, ...)
 		if(xaxt != "n") {
-		    if(num.br) breaks <- c.POSIXct(res$breaks)
+		    if(num.br)
+                        breaks <- as.POSIXct(res$breaks,
+                                             origin = "1970-01-01")
 		    axis.POSIXct(1, at = breaks,  format = format, ...)
 					# '...' : e.g. cex.axis
 		}
