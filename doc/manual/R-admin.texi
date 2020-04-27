@@ -68,6 +68,7 @@ This is a guide to installation and administration for R.
 * Essential and useful other programs under a Unix-alike::
 * Configuration on a Unix-alike::
 * Platform notes::
+* The Windows toolset::
 * Function and variable index::
 * Concept index::
 * Environment variable index::
@@ -1296,50 +1297,502 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 @node Building from source, Testing a Windows Installation, Installing R under Windows, Installing R under Windows
 @section Building from source
 
-It is possible to use other toolchains (including that used for @R{}
-3.6.3, `MSYS2' and `MXE' (M cross environment)) to build @R{}, but this
-manual only documents that used for binary distributions of @R{} 4.0.x.
+@center @strong{This was written for R 3.6.x: it has not been fully updated for 4.0.0.}
+
+@R{} can be built as either a 32-bit or 64-bit application on Windows:
+to build the 64-bit application you need a 64-bit edition of Windows:
+such an OS can also be used to build 32-bit @R{}.
+
+The standard installer combines 32-bit and 64-bit builds into a single
+executable which can then be installed into the same location and share
+all the files except the @file{.exe} and @file{.dll} files and some
+configuration files in the @file{etc} directory.
+
+Building is only tested in a 8-bit locale: using a multi-byte locale (as
+used for CJK languages) is unsupported and may not work (the scripts do
+try to select a @samp{C} locale; Windows may not honour this).
+
+@strong{NB:} The build process is currently being changed to require
+external binary distributions of third-party software.  Their location
+is set using macro @code{EXT_LIBS} with default setting
+@file{$(LOCAL_SOFT)}; the $(LOCAL_SOFT) macro defaults to
+@file{$(R_HOME)/extsoft}.  This directory can be populated using
+@command{make rsync-extsoft}. The location can be overridden by
+setting @code{EXT_LIBS} to a different path in
+@file{src/gnuwin32/MkRules.local}. A suitable collection of files can
+also be obtained from 
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/extsoft}.
 
 @menu
-* The Windows toolset::
-* LaTeX on Windows::
+* Getting the tools::
+* Getting the source files::
+* Building the core files::
+* Building the cairo devices files::
+* Using ICU for collation::
+* Support for libcurl::
+* Checking the build::
+* Building the manuals::
+* Building the Inno Setup installer::
+* Building the MSI installer::
+* 64-bit Windows builds::
 @end menu
 
-@node The Windows toolset, LaTeX on Windows, Building from source, Building from source
-@subsection The Windows toolset
+@node Getting the tools, Getting the source files, Building from source, Building from source
+@subsection Getting the tools
 
-The binary distribution of @R{} is currently built with tools
-distributed in @file{rtools40-x86_64.exe}: see
-@uref{https://cran.r-project.org/bin/windows/Rtools/}, which describes
-how to install the command-line tools, compilers and libraries and links
-to the scripts used to build and package @R{}.  Both building @R{} and
-checking packages also need a distribution of @LaTeX{} installed.
+If you want to build @R{} from the sources, you will first need to
+collect, install and test an extensive set of tools.  See @ref{The
+Windows toolset} (and perhaps updates in
+@uref{https://CRAN.R-project.org/bin/@/windows/@/Rtools/}) for details.
 
-This toolset was modified by Jeroen Ooms from the `MSYS2' project
-(@uref{https://www.msys2.org/}), which uses compilers and runtime
-libraries from the `Mingw-w64' project (@uref{http://mingw-w64.org/}).
+The @file{Rtools*.exe} executable installer described in @ref{The
+Windows toolset} also includes some source files in addition to the @R{}
+source as noted below.  You should run it first, to obtain a working
+@code{tar} and other necessities.  Choose a ``Full installation'', and
+install the extra files into your intended @R{} source directory, e.g.@:
+@file{C:/R}. The directory name @emph{should not contain spaces}. We
+will call this directory @file{@var{R_HOME}} below.
 
-@node LaTeX on Windows,  , The Windows toolset, Building from source
-@subsection @LaTeX{}
+@node Getting the source files, Building the core files, Getting the tools, Building from source
+@subsection Getting the source files
 
-The @samp{MiKTeX} (@uref{http://www.miktex.org/}) distribution of
-@LaTeX{} includes a suitable port of @code{pdftex}.  This can be set up
-to install extra packages `on the fly', which is the simplest way to use
-it (and the default).  The `basic' version of @samp{MiKTeX} almost
-suffices: when last checked packages
+You need to collect the following sets of files:
+@itemize
+
+@item
+Get the @R{} source code tarball @file{R-@value{VERSIONno}.tar.gz} from
+@acronym{CRAN}.  Open a command window (or another shell) at directory
+@var{R_HOME}, and run
 
 @example
-epsf inconsolata mptopdf url
+tar -xf R-@value{VERSIONno}.tar.gz
 @end example
 
 @noindent
-needed to be added (on the fly or @emph{via} the @samp{MiKTeX} Package
-Manager) to build @R{}.  In any case ensure that the @pkg{inconsolata}
-package is installed---you can check with the @samp{MiKTeX} Package
-Manager.
+to create the source tree in @var{R_HOME}.  @strong{Beware}: do use
+@command{tar} to extract the sources rather than tools such as WinZip.
+If you are using an account with administrative privileges you may get a
+lot of messages which can be suppressed by
 
-It is also possible to use the TeX Live distribution from
-@uref{https://www.tug.org/texlive/}.
+@example
+tar --no-same-owner -xf R-@value{VERSIONno}.tar.gz
+@end example
+
+@noindent
+@enindex TAR_OPTIONS
+or perhaps better, set the environment variable @env{TAR_OPTIONS} to the
+value @samp{--no-same-owner --no-same-permissions}.
+
+It is also possible to obtain the source code using Subversion; see 
+@ref{Obtaining R} for details.
+
+
+@item
+If you are not using a tarball you need to obtain copies of the
+recommended packages from @acronym{CRAN}.  Put the @file{.tar.gz} files
+in @file{@var{R_HOME}/src/library/Recommended} and run @code{make
+link-recommended}.  If you have an Internet connection, you can do this
+automatically by running in @file{@var{R_HOME}/src/gnuwin32}
+
+@example
+make rsync-recommended
+@end example
+
+@item
+The binary distributions of external software by
+@example
+make rsync-extsoft
+@end example
+@noindent
+or see above.
+
+@item
+Make a local copy of the configuration rules by
+
+@example
+cd @var{R_HOME}/src/gnuwin32
+cp MkRules.dist MkRules.local
+@end example
+
+@noindent
+and edit @file{MkRules.local}, uncommenting @code{EXT_LIBS} and setting
+it to the appropriate path (in our example @file{c:/R/extsoft}).
+
+Look through the file @file{MkRules.local} and make any other changes
+needed: in particular, this is where a 64-bit build is selected and the
+locations are set for external software for ICU collation and the
+cairo-based devices.
+
+@end itemize
+
+The following additional item is normally installed by
+@file{Rtools*.exe}.  If instead you choose to do a completely manual
+build you will also need
+
+@itemize
+
+@item
+The Tcl/Tk support files are contained in @file{Rtools*.exe}.  Please
+make sure you install the right version: there is a 32-bit version and a
+64-bit version.  They should be installed to @file{@var{R_HOME}},
+creating directory @file{Tcl} there.
+
+@end itemize
+
+@node Building the core files, Building the cairo devices files, Getting the source files, Building from source
+@subsection Building the core files
+
+@enindex TMPDIR
+Set the environment variable @env{TMPDIR} to the absolute path to a
+writable directory, with a path specified with forward slashes and no
+spaces.  (The default is @file{/tmp}, which may not be useful on
+Windows.)
+
+You may need to compile under a case-honouring file system: we found
+that a @command{samba}-mounted file system (which maps all file names to
+lower case) did not work.
+
+Open a command window at @file{@var{R_HOME}/src/gnuwin32}, then run
+
+@example
+make all recommended vignettes
+@end example
+
+@noindent
+and sit back and wait while the basic compile takes place.
+
+Notes:
+@itemize
+
+@item
+We have had reports that earlier versions of anti-virus software locking
+up the machine, but not for several years.  However, aggressive
+anti-virus checking such as the on-access scanning of Sophos can slow
+the build down several-fold.
+
+@item
+You can run a parallel make by e.g.
+
+@example
+make -j4 all
+make -j4 recommended
+make vignettes
+@end example
+
+@noindent
+but this is only likely to be worthwhile on a multi-core machine with
+ample memory, and is not 100% reliable.
+
+@item 
+It is possible (mainly for those working on @R{} itself) to set the
+(make or environment) variable @env{R_NO_BASE_COMPILE} to a non-empty
+value, which inhibits the byte-compilation of the base and recommended
+packages.
+
+@end itemize
+
+@node Building the cairo devices files, Using ICU for collation, Building the core files, Building from source
+@subsection Building the cairo devices
+@cindex winCairo.dll
+
+The devices based on cairographics (@code{svg}, @code{cairo_pdf},
+@code{cairo_ps} and the @code{type = "cairo"} versions of @code{png},
+@code{jpeg}, @code{tiff} and @code{bmp}) are implemented in a separate
+DLL @file{winCairo.dll} which is loaded when one of these devices is
+first used.  It is not built by default, and needs to be built (after
+@command{make all}) by @command{make cairodevices}.
+
+To enable the building of these devices you need to install the static
+cairographics libraries built by Simon Urbanek at
+@uref{https://www.rforge.net/@/Cairo/@/files/@/cairo-current-win.tar.gz}.  Set
+the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
+tarball unpacks with a top-level directory @file{src/}:
+@samp{CAIRO_HOME} needs to include that directory in its path.)
+
+@node Using ICU for collation, Support for libcurl, Building the cairo devices files, Building from source
+@subsection Using ICU for collation
+
+It is recommended to build @R{} to support ICU (International Components
+for Unicode, @uref{http://site.icu-project.org/}) for collation, as is
+commonly done on Unix-alikes.
+
+Two settings are needed in @file{MkRules.local}, 
+@example
+# set to use ICU
+# USE_ICU = YES
+# path to parent of ICU headers
+ICU_PATH = /path/to/ICU
+@end example
+
+@noindent
+The first should be uncommented and the second set to the top-level
+directory of a suitably packaged binary build of ICU, for example that
+at @url{https://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
+Depending on the build, it may be necessary to edit the macro
+@code{ICU_LIBS}.
+
+Unlike on a Unix-alike, it is normally necessary to call
+@code{icuSetCollate} to set a locale before ICU is actually used for
+collation, or set the environment variable @env{R_ICU_LOCALE}.
+
+@node Support for libcurl, Checking the build, Using ICU for collation, Building from source
+@subsection Support for libcurl
+
+@code{libcurl} version 7.28.0 or later is used to support
+@code{curlGetHeaders} and the @code{"libcurl"} methods of
+@code{download.file} and @code{url}.
+
+A suitable distribution can be found @emph{via}
+@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html} and its unpacked
+location should be specified in file @file{MkRules.local}.
+
+For secure use of e.g.@: @samp{https://} URLs Windows users may need to
+specify the path to up-to-date @emph{CA root certificates}: see
+@code{?download.file}.
+
+@node Checking the build, Building the manuals, Support for libcurl, Building from source
+@subsection Checking the build
+
+You can test a build by running
+
+@example
+make check
+@end example
+
+@noindent
+The recommended packages can be checked by
+
+@example
+make check-recommended
+@end example
+
+@noindent
+Other levels of checking are
+
+@example
+make check-devel
+@end example
+
+@noindent
+for a more thorough check of the @R{} functionality, and
+
+@example
+make check-all
+@end example
+
+@noindent
+for both @code{check-devel} and @code{check-recommended}.
+
+If a test fails, there will almost always be a @file{.Rout.fail} file in
+the directory being checked (often @file{tests/Examples} or
+@file{tests}): examine the file to help pinpoint the problem.
+
+Parallel checking of package sources (part of @command{make check-devel}
+and @command{make check-recommended}) is possible: see the environment
+variable @env{TEST_MC_CORES} to the maximum number of processes to be
+run in parallel.
+
+
+@node Building the manuals, Building the Inno Setup installer, Checking the build, Building from source
+@subsection Building the manuals
+
+The PDF manuals require @pkg{texinfo} 5.1 or later, and can be made by
+
+@example
+make manuals
+@end example
+
+@noindent
+If you want to make the info versions (not including the Reference
+Manual), use
+
+@example
+cd ../../doc/manual
+make -f Makefile.win info
+@end example
+
+@noindent
+(all assuming you have @command{pdftex}/@command{pdflatex} installed and
+in your path).
+
+See the @ref{Making the manuals} section in the Unix-alike section for setting
+options such as the paper size and the fonts used.
+
+By default it is assumed that @pkg{texinfo} is not installed, and the
+manuals will not be built.  The comments in file @file{MkRules.dist}
+describe settings to build them.  (Copy that file to
+@file{MkRules.local} and edit it.)  The @pkg{texinfo} 5.x package for
+use on Windows is available at
+@uref{https://www.stats.ox.ac.uk/pub/Rtools/}: you will also need to
+install @command{Perl}@footnote{Suitable distributions include
+Strawberry Perl, @uref{http://strawberryperl.com/} and ActivePerl,
+@uref{https://www.activestate.com/activeperl}.}
+
+@node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
+@subsection Building the Inno Setup installer
+
+You need to have the files for a complete @R{} build, including bitmap and
+Tcl/Tk support and the manuals (which requires @pkg{texinfo} installed),
+as well as the recommended packages and Inno Setup (@pxref{The Inno
+Setup installer}).
+
+Once everything is set up
+
+@example
+make distribution
+make check-all
+@end example
+
+@noindent
+will make all the pieces and the installer and put them in the
+@file{gnuwin32/cran} subdirectory, then check the build.  This works by
+building all the parts in the sequence:
+
+@example
+rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
+rpackages @r{(the base packages)}
+htmldocs @r{(the HTML documentation)}
+cairodevices @r{(the cairo-based graphics devices)}
+recommended @r{(the recommended packages)}
+vignettes @r{(the vignettes in base packages:}
+	  @r{ only needed if building from an @command{svn} checkout)}
+manuals @r{(the PDF manuals)}
+rinstaller @r{(the install program)}
+crandir @r{(the @acronym{CRAN} distribution directory, only for 64-bit builds)}
+@end example
+
+The parts can be made individually if a full build is not needed, but
+earlier parts must be built before later ones.  (The @file{Makefile}
+doesn't enforce this dependency---some build targets force a lot of
+computation even if all files are up to date.)  The first four targets
+are the default build if just @command{make} (or @command{make all}) is
+run.
+
+Parallel make is not supported and likely to fail.
+
+If you want to customize the installation by adding extra packages,
+replace @code{make rinstaller} by something like
+
+@example
+make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
+@end example
+
+
+An alternative way to customize the installer starting with a binary
+distribution is to first make an installation of @R{} from the standard
+installer, then add packages and make other customizations to that
+installation.  Then (after having customized file @file{MkRules},
+possibly @emph{via} @file{MkRules.local}, and having made @R{} in the
+source tree) in @file{src/gnuwin32/installer} run
+
+@example
+make myR IMAGEDIR=rootdir
+@end example
+
+@noindent
+where @file{rootdir} is the path to the root of the customized
+installation (in double quotes if it contains spaces or backslashes).
+
+Both methods create an executable with a standard name such as
+@file{@value{RWVERSION}-win.exe}, so please rename it to indicate that
+it is customized.  If you intend to @emph{distribute} a customized
+installer please do check that license requirements are met -- note that
+the installer will state that the contents are distributed under GPL
+and this has a requirement for @emph{you} to supply the complete sources
+(including the @R{} sources even if you started with a binary distribution
+of R, and also the sources of any extra packages (including their
+external software) which are included).
+
+
+The defaults for the startup parameters may also be customized.  For example
+
+@example
+make myR IMAGEDIR=rootdir MDISDI=1
+@end example
+
+@noindent
+will create an installer that defaults to installing @R{} to run in SDI
+mode.  See @file{src/@/gnuwin32/installer/Makefile} for the names and
+values that can be set.
+
+The standard @acronym{CRAN} distribution of a 32/64-bit installer is
+made by first building 32-bit @R{} (just
+
+@example
+make 32-bit
+@end example
+
+@noindent
+is needed), and then (in a separate directory) building 64-bit @R{} with
+the macro @code{HOME32} set in file @file{MkRules.local} to the
+top-level directory of the 32-bit build.  Then the @command{make
+rinstaller} step copies the files that differ between architectures from
+the 32-bit build as it builds the installer image.
+
+@node Building the MSI installer, 64-bit Windows builds, Building the Inno Setup installer, Building from source
+@subsection Building the MSI installer
+
+@center @strong{This has not be tested recently}
+
+It is also possible to build an installer for use with Microsoft
+Installer.  This is intended for use by sysadmins doing automated
+installs, and is not recommended for casual use.
+
+It makes use of the Windows Installer XML (WiX) toolkit @emph{version
+3.5} (or perhaps later, untested) available from
+@uref{http://wixtoolset.org/}.  Once WiX is installed, set the path to
+its home directory in @file{MkRules.local}.
+
+You need to have the files for a complete @R{} build, including bitmap and
+Tcl/Tk support and the manuals, as well as the recommended packages.
+There is no option in the installer to customize startup options, so
+edit @file{etc/Rconsole} and @file{etc/Rprofile.site} to set these as
+required.  Then
+
+@example
+cd installer
+make msi
+@end example
+
+@noindent
+which will result in a file with a name like
+@file{@value{RWVERSION}-win32.msi}.  This can be double-clicked to be
+installed, but those who need it will know what to do with it (usually
+by running @command{msiexec /i} with additional options).  Properties
+that users might want to set from the @command{msiexec} command line
+include @samp{ALLUSERS}, @samp{INSTALLDIR} (something like
+@file{c:\Program Files\R\@value{RWVERSION}}) and @samp{RMENU} (the path
+to the @samp{R} folder on the start menu) and @samp{STARTDIR} (the
+starting directory for @R{} shortcuts, defaulting to something like
+@file{c:\Users\name\Documents\R}).
+
+The MSI installer can be built both from a 32-bit build of @R{}
+(@file{@value{RWVERSION}-win32.msi}) and from a 64-bit build of @R{}
+(@file{@value{RWVERSION}-win64.msi}, optionally including 32-bit files
+by setting the macro @code{HOME32}, when the name is
+@file{@value{RWVERSION}-win.msi}).  Unlike the main installer, a 64-bit
+MSI installer can only be run on 64-bit Windows.
+
+Thanks to David del Campo (Dept of Statistics, University of Oxford)
+for suggesting WiX and building a prototype installer.
+
+@node 64-bit Windows builds,  , Building the MSI installer, Building from source
+@subsection 64-bit Windows builds
+
+To build a 64-bit version of @R{} you need a 64-bit toolchain: the only one
+discussed here is based on the work of the MinGW-w64 project
+(@uref{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
+compilers such as those from Intel and PGI could be used (and have been
+by @R{} redistributors).
+
+Support for MinGW-w64 was developed in the @R{} sources over the period
+2008--10 and was first released as part of @R{} 2.11.0.  The assistance
+of Yu Gong at a crucial step in porting @R{} to MinGW-w64 is gratefully
+acknowledged, as well as help from Kai Tietz, the lead developer of the
+MinGW-w64 project.
+
+Windows 64-bit is now completely integrated into the @R{} and package
+build systems: a 64-bit build is selected in file @file{MkRules.local}.
 
 @node Testing a Windows Installation,  , Building from source, Installing R under Windows
 @section Testing an Installation
@@ -1846,24 +2299,26 @@ argument @code{repos} to @code{NULL}.  @code{Rgui.exe} has a menu
 Windows binary packages for @R{} are distributed as a single binary
 containing either or both architectures (32- and 64-bit).
 
-@c A few of the binary packages need other software to be installed on your
-@c system.
-@c Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
-@c @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
-@c directory of a bundled distribution of Gtk2 from
-@c @uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win32/@/gtk+} or
-@c @uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win64/@/gtk+} in
-@c the path: it should work to have both 32- and 64-bit Gtk+ @file{bin}
-@c directories in the path on a 64-bit version of @R{}.
+A few of the binary packages need other software to be installed on your
+system.
+Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
+@CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
+directory of a bundled distribution of Gtk2 from
+@uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win32/@/gtk+} or
+@uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win64/@/gtk+} in
+the path: it should work to have both 32- and 64-bit Gtk+ @file{bin}
+directories in the path on a 64-bit version of @R{}.
 
-@command{R CMD INSTALL} works in Windows to install source packages.  No
-additional tools are needed if the package does not contain compiled
-code, and @code{install.packages(type="source")} will work for such
-packages, and for those with compiled code if the tools (see
-@ref{The Windows toolset}) are on the path.  We have seen occasional
-permission problems after unpacking source packages on some systems:
-these have been circumvented by setting the environment variable
-@env{R_INSTALL_TAR} to @samp{tar.exe}.
+@command{R CMD INSTALL} works in Windows to install source packages.
+No additional tools are needed if the package does not contain
+compiled code, and @code{install.packages(type="source")} will work
+for such packages (and for those with compiled code if the tools (see
+@ref{The Windows toolset}) are on the path, and the variables
+@code{BINPREF} and @code{BINPREF64} are set properly; see the
+discussion below).  We have seen occasional permission problems after
+unpacking source packages on some systems: these have been
+circumvented by setting the environment variable @env{R_INSTALL_TAR}
+to @samp{tar.exe}.
 @enindex R_INSTALL_TAR
 
 If you have only a source package that is known to work with current
@@ -1892,6 +2347,27 @@ If you have a package without compiled code and no Windows-specific
 help, you can zip up an installation on another OS and install from that
 zip file on Windows.  However, such a package can be installed from the
 sources on Windows without any additional tools.
+
+
+@enindex LOCAL_SOFT
+@enindex BINPREF
+@enindex BINPREF64
+Packages with compiled code may need to have paths to the compilers
+set explicitly, and there is provision to make use of a system-wide
+library of installed external software. The compiler paths are set
+using the @command{make} variables @code{BINPREF} and (usually)
+@code{BINPREF64}.  The library location is set using @command{make}
+variable @code{LOCAL_SOFT}, to give an equivalent of @file{/usr/local}
+on a Unix-alike.  All of these can be set in
+@file{src/gnuwin32/MkRules.local} when @R{} is built from sources (see
+the comments in @file{src/gnuwin32/MkRules.dist}), or in
+file@footnote{or by adding it in a file such as
+@file{etc/i386/Makevars.site}, which does not exist by default.}
+@file{etc/i386/Makeconf} or @file{etc/x64/Makeconf} for an installed
+version of @R{}.  In the latter case only @code{BINPREF} is used, with
+the 64 bit path used in @file{etc/x64/Makeconf}. The version used by
+@acronym{CRAN} can be installed as described in @ref{Building from
+source}.
 
 
 @node macOS packages, Customizing package compilation, Windows packages, Installing packages
@@ -4256,7 +4732,7 @@ sources are only re-created even in maintainer mode if
 @c (usually called @pkg{autoconf-archive}) in most packaged distributions,
 @c for example Debian, Fedora, OpenCSW, Homebrew and MacPorts.
 
-@node Platform notes, Function and variable index, Configuration on a Unix-alike, Top
+@node Platform notes, The Windows toolset, Configuration on a Unix-alike, Top
 @appendix Platform notes
 
 This section provides some notes on building @R{} on different Unix-alike
@@ -5530,7 +6006,252 @@ feel free to use the @samp{R-devel} mailing list to ask questions.  We
 have had a fair amount of practice at porting @R{} to new platforms
 @enddots{}
 
-@node Function and variable index, Concept index, Platform notes, Top
+
+@node The Windows toolset, Function and variable index, Platform notes, Top
+@appendix The Windows toolset
+
+@center @strong{This was written for R 3.6.x: it has not been fully updated for 4.0.0.}
+
+If you want to build @R{} or add-on packages from source in Windows, you
+will need to collect, install and test an extensive set of tools.  See
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/Rtools/} for the current
+locations and other updates to these instructions.  (Most Windows users
+will not need to build add-on packages from source; see @ref{Add-on
+packages} for details.)
+
+We have found that the build process for @R{} is quite sensitive to
+the choice of tools: please follow our instructions @strong{exactly},
+even to the choice of particular versions of the tools.@footnote{For
+example, the Cygwin version of @code{make 3.81} fails to work
+correctly.}  The build process for add-on packages is somewhat more
+forgiving, but we recommend using the exact toolset at first, and only
+substituting other tools once you are familiar with the process.
+
+@emph{This appendix contains a lot of prescriptive comments.  They are
+here as a result of bitter experience.  Please do not report problems to
+the @R{} mailing lists unless you have followed all the prescriptions.}
+
+We have collected most of the necessary tools (unfortunately not all,
+due to license or size limitations) into an executable installer named
+@file{Rtools*.exe}, available from
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You should
+download and run it, choosing the default ``Package authoring
+installation'' to build add-on packages, or the ``full installation'' if
+you intend to build @R{}.
+
+You will need the following items to build @R{} and packages.
+See the subsections below for detailed descriptions.
+@itemize
+@item
+The command line tools (in @file{Rtools*.exe})
+@item
+The MinGW-w64 32/64-bit toolchain to compile C, Fortran and C++.
+@end itemize
+For installing simple source packages containing data or @R{} source but
+no compiled code, none of these are needed.
+
+A complete build of @R{} including PDF manuals, and producing the
+installer will also need the following:
+@itemize
+@item
+@LaTeX{}
+@item
+The Inno Setup installer
+@item
+(optional) @code{qpdf}
+@end itemize
+
+@enindex PATH
+It is important to set your @env{PATH} properly.  The installer
+@file{Rtools*.exe} optionally sets the path to components that it
+installs.
+
+Your @env{PATH} may include @file{.} first, then the @file{bin}
+directories of the tools and @LaTeX{}.  Do not
+use filepaths containing spaces: you can always use the short forms
+(found by @code{dir /x} at the Windows command line).  Network shares
+(with paths starting @code{\\}) are not supported.
+
+For example for a 32-bit build, all on one line,
+
+@example
+PATH=c:\Rtools\bin;c:\MiKTeX\miktex\bin;
+     c:\R\R-4.0\bin\i386;c:\windows;c:\windows\system32
+@end example
+
+@noindent
+It is essential that the directory containing the command line tools
+comes first or second in the path: there are typically like-named
+tools@footnote{such as @command{sort}, @command{find} and perhaps
+@command{make}.} in other directories, and they will @strong{not}
+work. The ordering of the other directories is less important, but if in
+doubt, use the order above.
+
+Our toolset contains copies of Cygwin DLLs that may conflict with other
+ones on your system if both are in the path at once.  The normal
+recommendation is to delete the older ones; however, at one time we
+found our tools did not work with a newer version of the Cygwin DLLs, so
+it may be safest not to have any other version of the Cygwin DLLs in your
+path.
+
+@menu
+* LaTeX::
+* The Inno Setup installer::
+* The command line tools::
+* The MinGW-w64 toolchain::
+* Useful additional programs::
+@end menu
+
+@node LaTeX, The Inno Setup installer, The Windows toolset, The Windows toolset
+@section @LaTeX{}
+
+The @samp{MiKTeX} (@uref{http://www.miktex.org/}) distribution of
+@LaTeX{} includes a suitable port of @code{pdftex}.  This can be set up
+to install extra packages `on the fly', which is the simplest way to use
+it (and the default).  The `basic' version of @samp{MiKTeX} almost
+suffices: when last checked packages
+
+@example
+epsf inconsolata mptopdf url
+@end example
+
+@noindent
+needed to be added (on the fly or @emph{via} the @samp{MiKTeX} Package
+Manager) to install @R{}.  In any case ensure that the @pkg{inconsolata}
+package is installed---you can check with the @samp{MiKTeX} Package
+Manager.
+
+The @file{Rtools*.exe} installer does @emph{not} include any version of
+@LaTeX{}.
+
+It is also possible to use the TeX Live distribution from
+@uref{https://www.tug.org/texlive/}.
+
+@enindex R_RD4PDF
+Please read @ref{Making the manuals} about how to make @file{fullrefman.pdf}
+and set the environment variable @env{R_RD4PDF} suitably; ensure you
+have the required fonts installed or that @samp{MiKTeX} is set up to
+install @LaTeX{} packages on first use.
+
+@node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
+@section The Inno Setup installer
+
+To make the installer package (@file{@value{RWVERSION}-win.exe}) we
+currently require the Unicode version of Inno Setup 5.3.7 or later from
+@uref{http://jrsoftware.org/} (starting from 6.0, Inno Setup provides only
+one version, which supports Unicode). This is @emph{not} included in
+@file{Rtools*.exe}.
+
+Copy file @file{src/gnuwin32/MkRules.dist} to
+@file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
+location where Inno Setup was installed.
+
+@node The command line tools, The MinGW-w64 toolchain, The Inno Setup installer, The Windows toolset
+@section The command line tools
+
+This item is installed by the @file{Rtools*.exe} installer.
+
+@c INSTALL may use sh make zip (and tar if R_INSTALL_TAR is used)
+@c build may use make and sh.
+@c Rdiff.sh USED to use diff echo grep sed tr: grep and tr are no longer used.
+
+@c basename is used in src/library/Recommended/Makefile.win
+@c comm, sort, uniq are used in producing .def files
+@c cmp is used in src/include/Makefile.win, tools/{copy,move}-if-change
+@c cp is used as $(CP) in numerous Makefiles
+@c cut is used to make RVER
+@c date is used when building base and tools
+@c diff is used by tools::Rdiff and tests/Makefile.common
+@c du is used by R CMD check
+@c expr is used in tools/GETVERSION
+@c find is used in installer/Makefile
+@c expr is used in tools/GETCONFIG
+@c gzip is used in src/library/Makefile.win, R CMD build
+@c ls is used in src/library/*/Makefile.win
+@c mkdir is used in numerous Makefiles
+@c rsync is only needed if building from svn
+@c sed is used in tools/GETVERSION, many Makefiles
+@c touch is used in Makefiles
+@c unzip is used in making R, e.g. for zoneinfo.zip
+@c AFAICS [g]awk, egrep, grep, head, rmdir, tail, tr, wc are no longer used
+If you choose to install these yourself, you will need suitable versions
+of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
+@code{cp}, @code{cut}, @code{date}, @code{diff}, @code{du}, @code{echo},
+@code{expr}, @code{gzip}, @code{ls}, @code{make}, @code{makeinfo},
+@code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh},
+@code{sort}, @code{tar}, @code{texindex}, @code{touch} and @code{uniq};
+we use those from the Cygwin distribution
+(@uref{https://www.cygwin.com/}) or compiled from the sources.  You will
+also need @code{zip} and @code{unzip} from the Info-ZIP project
+(@uref{http://www.info-zip.org/}).  All of these tools are in
+@file{Rtools*.exe}.
+
+@c So needed for end users:
+@c comm cp diff echo gzip make mkdir rm sh sort tar uniq zip
+
+@strong{Beware}: `Native' ports of make are @strong{not} suitable
+(including those called `MinGW make' at the MinGW SourceForge site and
+@command{mingw32-make} in some MinGW-w64 distributions).  There were
+also problems with other versions of the Cygwin tools and DLLs.  To
+avoid frustration, please use our tool set, and make sure it is at the
+front of your path (including before the Windows system directories).
+If you are using a Windows shell, type @code{PATH} at the prompt to find
+out.
+
+@enindex CYGWIN
+You may need to set the environment variable @env{CYGWIN} to a value
+including @samp{nodosfilewarning} to suppress messages about
+Windows-style paths.
+
+@node The MinGW-w64 toolchain, Useful additional programs, The command line tools, The Windows toolset
+@section The MinGW-w64 toolchain
+
+Technically you need more than just a compiler so the set of tools is
+referred to as a `toolchain'.
+
+The preferred toolchain is part of @code{Rtools*.exe}: this uses a
+version of @command{gcc 8.3} and the MinGW-w64 project's runtime.
+
+This toolchain does not use @emph{multilib}: separate front-ends are
+used for 32-bit and 64-bit compilation.  These compilers need to be
+specified in @code{BINPREF} and @code{BINPREF64} make variables as 
+described previously at the end of @ref{Windows packages}.
+
+To select a 32-bit or 64-bit build of @R{}, set the options in
+@file{MkRules.local} appropriately (following the comments in the file).
+
+Some external software libraries will need to be re-compiled under the
+new toolchain: especially those providing a C++ interface.
+@c Many of those used by @acronym{CRAN} packages are available from
+@c @uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
+@c developing packages with @CRANpkg{Rcpp} need to ensure that they use a
+@c version built with exactly the same toolchain as their package: the
+@c recommendation is to build @CRANpkg{Rcpp} from its sources yourself.
+
+There is support for OpenMP and pthreads in this toolchain.  As the
+performance of OpenMP on Windows is poor for small tasks, it is not used
+for @R{} itself.
+
+@node Useful additional programs,  , The MinGW-w64 toolchain, The Windows toolset
+@section Useful additional programs
+
+The process of making the installer will make use of @code{qpdf} to
+compact some of the package vignettes, if it is available.  Windows
+binaries of @code{qpdf} are available from
+@uref{http://sourceforge.net/@/projects/@/qpdf/@/files/}.  Set the path
+to the @code{qpdf} installation in file @file{MkRules.local}.
+
+@c Developers of packages will find some of the `goodies' at
+@c @uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies} useful.  
+
+@c There is a version of the @command{file} command that identifies the
+@c type of files, and is used by @command{Rcmd check} if available.  The
+@c binary distribution is included in @file{Rtools*.exe}.
+
+@c The file @file{xzutils.zip} contains the program @command{xz} which can
+@c be used to (de)compress files with that form of compression.
+
+@node Function and variable index, Concept index, The Windows toolset, Top
 @unnumbered Function and variable index
 
 @printindex vr
