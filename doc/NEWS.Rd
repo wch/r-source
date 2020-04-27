@@ -28,13 +28,10 @@
     }
   }
 
-    \subsection{BUG FIXES}{
-    \itemize{
-      \item \code{aov(frml, ...)} now also works in case the \code{formula}
-      deparses to more than 500 characters, thanks to a report and patch
-      proposal by Jan Hauffa.
-    }
-  }
+  %% \subsection{BUG FIXES}{
+  %%   \itemize{
+  %%   }
+  %% }
 }
 
 \section{\Rlogo CHANGES IN R 4.0.0 patched}{
@@ -46,6 +43,9 @@
       arguments (and all zero-length or no arguments when \code{collapse}
       is not \code{NULL}) lead to the zero-length value
       \code{character(0)}.
+
+      This should not be used in package code until \R 4.0.1 is
+      released, when the package should depend on \samp{R (>= 4.0.1)}.
     }
   }
 
@@ -798,7 +798,7 @@
       \item \code{scan()} issues with UTF-8 data when running in a DBCS
       locale have been resolved (\PR{16520}, \PR{16584}).
 
-      \item \command{RTerm} now accepts enhanced/arrow keys also with
+      \item \command{Rterm} now accepts enhanced/arrow keys also with
       ConPTY.
 
       \item \R can can now be started \emph{via} the launcher icon in a
