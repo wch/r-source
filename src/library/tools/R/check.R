@@ -5018,6 +5018,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wunused-command-line-argument\\]",
                              ": warning: .* \\[-Wxor-used-as-pow\\]", # clang 10
                              ": warning: .* \\[-Winconsistent-missing-override\\]",
+                             ## also on gcc, but fewer warnings
+                             ": warning: .* \\[-Wlogical-not-parentheses\\]",
                              ## For non-portable flags (seen in sub-Makefiles)
                              "warning: .* \\[-Wunknown-warning-option\\]"
                              )
