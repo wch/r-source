@@ -3377,7 +3377,9 @@ add_dummies <- function(dir, Log)
                              tokens, useBytes = TRUE, value = TRUE)
                 machs <- grep("^[-]m", tokens,
                               value = TRUE, perl = TRUE, useBytes = TRUE)
-                ## The only -m flag which is reasonably portable is -mtune
+                ## The only -m flag which is reasonably portable is
+                ## -mtune and even that is debatable as it currently
+                ## does nothing and may be removed on clang.
                 machs <- setdiff(machs,
                                  c(except, c("-m", # not a flag
                                              "-msse2", "-mfpmath=sse", # SAFE_FFLAGS
@@ -3387,7 +3389,9 @@ add_dummies <- function(dir, Log)
                                              "-multiply_defined" # macOS
                                              )))
                 machs <- machs[!startsWith(machs, "-mtune=")]
-                machs <- machs[!startsWith(machs, "-mmacosx-")]  # macOS target flags
+                ## This should only appear on macOS!
+                if(grepl('darwin', R.version$platform))
+                    machs <- machs[!startsWith(machs, "-mmacosx-")]  # macOS target flags
                 warns <- c(warns, diags, opts, machs)
                 if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)
