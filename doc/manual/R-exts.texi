@@ -1504,11 +1504,14 @@ this should be declared in the @samp{SystemRequirements} field of its
 is a version requirement on Java code in the package.)
 
 Windows and Mac users should be aware that the Tcl extensions
-@samp{BWidget} and @samp{Tktable} which are currently included with the
-@R{} for Windows (and formerly in the macOS installer) @emph{are}
-extensions and do need to be declared for users of other platforms (and
-that @samp{Tktable} is less widely available than it used to be,
-including not in the main repositories for major Linux distributions).
+@samp{BWidget} and @samp{Tktable} (which were formerly included in the
+Windows@footnote{@samp{BWidget} still is on Windows:
+@c https://github.com/r-windows/r-base/blob/master/create-tcltk-bundle.sh
+@samp{Tktable} is available as a package from MSYS2 at
+@uref{https://packages.msys2.org/base}.} and macOS @R{} installers)
+@emph{are} extensions and do need to be declared (and that
+@samp{Tktable} is less widely available than it used to be, including
+not in the main repositories for major Linux distributions).
 @c Not in Fedora since 17, only in launchpad for Ubuntu.
 
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
@@ -1580,6 +1583,7 @@ expansion is a known issue: see
 @uref{https://www.gnu.org/@/software/@/autoconf/@/manual/autoconf.html#Portable-Shell}
 for this and others.  Some checks can be done by the
 @code{checkbashisms} Perl script at
+@c 'checkbaskisms' really is the correct path
 @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}, also
 available in most Linux distributions in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}.}) shell script @file{configure} in
 your package which (if present) is executed by @code{R CMD INSTALL}
