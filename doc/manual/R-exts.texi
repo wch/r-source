@@ -7650,7 +7650,7 @@ particular these allow call graphs to be studied.
 Measuring memory use in @R{} code is useful either when the code takes
 more memory than is conveniently available or when memory allocation and
 copying of objects is responsible for slow code. There are three ways to
-profile memory use over time in @R{} code. The seond and third require
+profile memory use over time in @R{} code. The second and third require
 @R{} to have been compiled with @option{--enable-memory-profiling},
 which is not the default, but is currently used for the macOS and
 Windows binary distributions. All can be misleading, for different
@@ -9023,7 +9023,7 @@ using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with other debuggers such as @command{lldb}
 (@uref{http://lldb.llvm.org/}, used on macOS: however `notarized'
 executable such as distributed @acronym{CRAN} builds are not allowed to be
-debuggeed) and Sun's @command{dbx}: some debuggers have graphical
+debugged) and Sun's @command{dbx}: some debuggers have graphical
 front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
