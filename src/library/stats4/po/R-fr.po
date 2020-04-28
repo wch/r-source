@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2010-10-01 21:01+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,22 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Language: French\n"
 
-msgid ""
-"some named arguments in 'fixed' are not arguments to the supplied log-"
-"likelihood"
+msgid "named list expected"
+msgstr ""
+
+#, fuzzy
+msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 "quelques arguments nommés dans 'fixed' ne sont pas des arguments "
 "correspondant au maximum de vraissemblance fourni"
 
-msgid "'start' must be a named list"
-msgstr "'start' doit être une liste nommée"
-
-msgid ""
-"some named arguments in 'start' are not arguments to the supplied log-"
-"likelihood"
+msgid "Mismatch in length of start values"
 msgstr ""
-"quelques arguments nommés dans 'start' ne sont pas les arguments "
-"correspondants au maximum de vraissemblance fourni"
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
+msgstr ""
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
@@ -46,3 +47,13 @@ msgstr "les seuils sont nivelés à des valeurs positives uniquement"
 
 msgid "extra arguments discarded"
 msgstr "arguments supplémentaires éliminés"
+
+#~ msgid "'start' must be a named list"
+#~ msgstr "'start' doit être une liste nommée"
+
+#~ msgid ""
+#~ "some named arguments in 'start' are not arguments to the supplied log-"
+#~ "likelihood"
+#~ msgstr ""
+#~ "quelques arguments nommés dans 'start' ne sont pas les arguments "
+#~ "correspondants au maximum de vraissemblance fourni"

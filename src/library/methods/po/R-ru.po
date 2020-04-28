@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:33\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-07 02:19-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -496,11 +496,13 @@ msgstr ""
 "%s, также как и иное использование объектов метаданных \"MethodsList\", не "
 "рекомендуется."
 
-msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr ""
 "в %s: использование обектов метаданных \"MethodsList\" не рекомендуется."
 
-msgid "use %s instead."
+#, fuzzy
+msgid "Use %s instead."
 msgstr "вместо этого используйте %s."
 
 msgid ""
@@ -509,7 +511,8 @@ msgstr ""
 "%s, также как и иное использование объектов метаданных \"MethodsList\", "
 "больше не работает."
 
-msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+#, fuzzy
+msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr ""
 "в %s: использование обектов метаданных \"MethodsList\" больше не работает."
 
@@ -665,15 +668,20 @@ msgstr ""
 "прототип был предоставлен классом %s, но определение класса требует объект, "
 "являющийся классом %s"
 
+#, fuzzy
 msgid ""
-"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
-"with an inherited definition in class %s"
+"Definition of slot %s, in class %s, as %s conflicts with definition, "
+"inherited from class %s, as %s"
 msgstr ""
 "слот %s в классе %s в данный момент определен (или наследован) как \"%s\", "
 "конфликтуя с наследованным определением в классе %s"
 
 msgid "class %s extends an undefined class (%s)"
 msgstr "класс %s расширяет неопределенный класс (%s)"
+
+#, fuzzy
+msgid "The prototype for class %s has undefined slot(s): %s"
+msgstr "список '%s' для класса %s, включает неопределенный класс %s"
 
 msgid ""
 "%s is not eligible to be the data part of another class (must be a basic "
@@ -770,18 +778,19 @@ msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "неопределенный подкласс %s класса \"%s\"; определение не обновлено"
 
 msgid ""
-"subclass %s of class %s is not local and cannot be updated for new "
-"inheritance information; consider setClassUnion()"
-msgstr ""
-"подкласс %s класса %s не является локальным и не может быть обновлен; "
-"рассмотрите setClassUnion()"
-
-msgid ""
 "no definition of inheritance from %s to %s, though the relation was implied "
 "by the setIs() from %s"
 msgstr ""
 "нет определения наследования от %s к %s, однако подразумевалась зависимость "
 "через setIs() от %s"
+
+msgid ""
+"Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, "
+"force=TRUE);"
+msgstr ""
+
+msgid "E := environment(): %s; parent.env(E): %s"
+msgstr ""
 
 msgid ""
 "argument 'includeSubclasses' must be a logical, either one value or a vector "
@@ -1244,9 +1253,10 @@ msgstr ""
 "класс %s запечатан; новые суперклассы нельзя определить, за исключением "
 "'setClassUnion'"
 
+#, fuzzy
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
-"revise %s information---not exported?  Making a copy in package %s"
+"revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
 "класс %s определен (со слотом пакета %s), но не найден объект метаданных для "
 "проверки %s информации -- не экспортирован? Делаю копию в пакете %s"
@@ -1949,6 +1959,13 @@ msgid_plural ""
 msgstr[0] "нет определения класса %s в указанной позиции, %s, определение: %s"
 msgstr[1] "нет определения класса %s в указанной позиции, %s, определения: %s"
 msgstr[2] "нет определения класса %s в указанной позиции, %s, определения: %s"
+
+#~ msgid ""
+#~ "subclass %s of class %s is not local and cannot be updated for new "
+#~ "inheritance information; consider setClassUnion()"
+#~ msgstr ""
+#~ "подкласс %s класса %s не является локальным и не может быть обновлен; "
+#~ "рассмотрите setClassUnion()"
 
 #~ msgid ""
 #~ "Note: the specification for S3 class %s in package %s seems equivalent to "

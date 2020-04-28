@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"POT-Creation-Date: 2020-03-24 10:54-0700\n"
 "PO-Revision-Date: 2018-04-01 14:31+0200\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -21,8 +21,8 @@ msgstr ""
 #: io.c:1103 io.c:1104 io.c:1105 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:78
-#: windows/widgets.c:81 windows/widgets.c:86
+#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:79
+#: windows/widgets.c:82 windows/widgets.c:87
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
@@ -98,8 +98,8 @@ msgid "'dec' must be a single character"
 msgstr "argument 'dec' musi być pojedynczym znakiem"
 
 #: io.c:1137
-#, c-format
-msgid "corrupt data frame -- length of column %d does not not match nrows"
+#, fuzzy, c-format
+msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
 "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
@@ -110,7 +110,8 @@ msgstr ""
 "kolumna %s twierdzi, że jest czynnikiem, ale nie posiada kodów liczbowych"
 
 #: io.c:1186
-msgid "corrupt matrix -- dims not not match length"
+#, fuzzy
+msgid "corrupt matrix -- dims do not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
 #: stubs.c:56
@@ -137,6 +138,11 @@ msgstr "X11 nie jest dostępne"
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "niepoprawne określenie '%s'"
+
+#: stubs.c:254
+#, c-format
+msgid "'%s' contains missing values"
+msgstr ""
 
 #: utils.c:85
 msgid "'hostname' must be a character vector of length 1"
@@ -207,61 +213,61 @@ msgstr "niewspierana wersja systemu Windows"
 msgid "argument must be a character vector or a raw vector"
 msgstr "argument 'text' musi być wektorem tekstowym lub pustym wektorem"
 
-#: windows/util.c:318
+#: windows/util.c:320
 msgid "unable to open the clipboard"
 msgstr "nie można otworzyć schowka"
 
-#: windows/util.c:323
+#: windows/util.c:325
 msgid "unable to write to the clipboard"
 msgstr "nie można zapisać do schowka"
 
-#: windows/util.c:402
+#: windows/util.c:404
 msgid "'title' must be a character string"
 msgstr "argument 'title' musi być łańcuchem tekstowym"
 
-#: windows/util.c:411
+#: windows/util.c:413
 msgid "'text' must be a character string"
 msgstr "argument 'text' musi być łańcuchem tekstowym"
 
-#: windows/util.c:450
+#: windows/util.c:452
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "argument '%s' musi mieć długość równą 1"
 
-#: windows/util.c:563
+#: windows/util.c:565
 #, c-format
 msgid "'%s' must be a list"
 msgstr "argument '%s' musi być listą"
 
-#: windows/util.c:567
+#: windows/util.c:569
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "element %2$d '%1$s' nie jest uchwytem okna"
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one or more"
 msgstr "Wybierz jeden lub więcej"
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one"
 msgstr "Wybierz jeden"
 
-#: windows/widgets.c:182 windows/widgets.c:250
+#: windows/widgets.c:183 windows/widgets.c:251
 msgid "'default' must be a character string"
 msgstr "argument 'default' musi być łańcuchem tekstowym"
 
-#: windows/widgets.c:184 windows/widgets.c:252
+#: windows/widgets.c:185 windows/widgets.c:253
 msgid "'default' is overlong"
 msgstr "argument 'default' jest zbyt długi"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:189 windows/widgets.c:257
 msgid "'caption' must be a character string"
 msgstr "argument 'caption' musi być łańcuchem tekstowym"
 
-#: windows/widgets.c:190
+#: windows/widgets.c:191
 msgid "'multi' must be a logical value"
 msgstr "argument 'multi' musi być wartością logiczną"
 
-#: windows/widgets.c:192
+#: windows/widgets.c:193
 msgid "'filterindex' must be an integer value"
 msgstr "argument 'filterindex' musi być wartością całkowitą"

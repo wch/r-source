@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:33\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-05 10:53+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -57,6 +57,15 @@ msgstr "RGB Werte müssen in [0, maxColorValue] liegen"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "'start' und 'end' müssen unterschiedlich und in [0, 1] sein"
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' muss ein Skalar oder 'sRGB' sein"
@@ -142,6 +151,9 @@ msgstr "kein passender unbenutzter Dateiname für postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): nutze postscript(file=\"%s\")"
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt)"
 
@@ -166,6 +178,9 @@ msgstr "unbekannte Familie '%s'"
 
 msgid "invalid 'family' argument"
 msgstr "ungültiges 'family' Argument"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 msgid "invalid 'file' argument '%s'"
 msgstr "ungültiges 'file' Argument '%s'"
@@ -257,6 +272,9 @@ msgstr "kein aktuelles Device, von dem aufgenommen werden kann"
 
 msgid "argument is not of class %s"
 msgstr "Argument ist nicht von Klasse %s"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "Snapshot wurde in einer anderen R Version aufgenommen (pre 3.3.0)"
@@ -359,6 +377,9 @@ msgstr "kann nur aus 'X11(type=\"*cairo\")' Devices kopieren"
 
 msgid "invalid value for 'rescale'"
 msgstr "unzulässiger Wert für 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "kann nur Windows-Devices nach vorne bringen"

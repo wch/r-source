@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2014-03-17 10:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -86,11 +86,22 @@ msgstr "erreur d'axe logarithmique : 'ylim' <= 0"
 msgid "incorrect number of names"
 msgstr "nombre de noms incorrect"
 
-msgid "invalid first argument"
-msgstr "premier argument incorrect"
-
 msgid "'formula' missing or incorrect"
 msgstr "'formula' manquante ou incorrecte"
+
+#, fuzzy
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr "'formula' doit spécifier exactement deux variables"
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr ""
+
+#, fuzzy
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr "'formula' doit spécifier exactement deux variables"
+
+msgid "invalid first argument"
+msgstr "premier argument incorrect"
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' doit avoir la même longueur que 'z$n', c'est-à-dire %d"
@@ -482,6 +493,12 @@ msgstr "l'échelle des y est logarithmique : yinch() n'a pas de sens"
 msgid "log scale:  xyinch() is nonsense"
 msgstr "échelle logarithmique : xyinch() n'a pas de sens"
 
+#, fuzzy
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] "l'argument supplémentaire %s sera ignoré"
+msgstr[1] "les arguments supplémentaires %s seront ignorés"
+
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] ""
@@ -494,11 +511,6 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "l'argument %s n'est pas utilisé par"
 msgstr[1] "les arguments %s ne sont pas utilisés par"
-
-#~ msgid "extra argument %s will be disregarded"
-#~ msgid_plural "extra arguments %s will be disregarded"
-#~ msgstr[0] "l'argument supplémentaire %s sera ignoré"
-#~ msgstr[1] "les arguments supplémentaires %s seront ignorés"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "'counts' négatif. Erreur interne dans le code C pour \"bincount\""

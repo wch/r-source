@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -251,6 +251,9 @@ msgstr "重新拟合模型以提供射影"
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "'contrast.obj'列必需设定对比(总和为零)"
+
+msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
+msgstr ""
 
 msgid "collapsing to unique 'x' values"
 msgstr "折拢'x'成相互不同的值"
@@ -813,7 +816,8 @@ msgstr "参数'lambda'不对"
 msgid "%s link not recognised"
 msgstr "没有这样%s的鏈結"
 
-msgid "link \"%s\" not available for poisson family; available links are %s"
+#, fuzzy
+msgid "link \"%s\" not available for %s family; available links are %s"
 msgstr "Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "negative values not allowed for the 'Poisson' family"
@@ -822,33 +826,26 @@ msgstr "'Poisson'分布族不能用负数"
 msgid "ignoring prior weights"
 msgstr "先验重量略过不用"
 
-msgid ""
-"link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr "quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
-
 msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "'quasiPoisson'分布族不能用负数"
-
-msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr "gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr "找不到有效的初始值: 请设定"
 
-msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr "二项分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
-
 msgid "y values must be 0 <= y <= 1"
 msgstr "y值必需满足0 <= y <= 1"
 
-msgid "non-integer #successes in a binomial glm!"
+#, fuzzy
+msgid "non-integer #successes in a %s glm!"
 msgstr "二项通用线性模型里出现了非整数的#成功!"
 
-msgid "non-integer counts in a binomial glm!"
+#, fuzzy
+msgid "non-integer counts in a %s glm!"
 msgstr "二项通用线性模型里出现了非整数的计数!"
 
+#, fuzzy
 msgid ""
-"for the 'binomial' family, y must be a vector of 0 and 1's\n"
+"for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 "'binomial'分布族，y必需是只含0或1的向量\n"
@@ -857,29 +854,12 @@ msgstr ""
 msgid "cannot simulate from non-integer prior.weights"
 msgstr "无法用非整数的prior.weights进行模拟"
 
-msgid ""
-"link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
-
-msgid ""
-"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
-"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
-msgstr ""
-"'quasibinomial'分布族，y必需是只含0或1的向量\n"
-"或是带两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
-
-msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
-
-msgid "non-positive values not allowed for the 'gamma' family"
+#, fuzzy
+msgid "non-positive values not allowed for the 'Gamma' family"
 msgstr "'gamma'分布族不允许有负值"
 
 msgid "using weights as shape parameters"
 msgstr "用重量作为形状参数"
-
-msgid ""
-"link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr "inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結%s"
 
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "'inverse.gaussian'分布族只允许正值"
@@ -955,11 +935,11 @@ msgstr "'hybrid'对2x2的表无用"
 msgid "all groups must contain data"
 msgstr "所有的组都必需包含数据"
 
-msgid "all group levels must be finite"
-msgstr "所有组的层次都必需是有限的"
-
 msgid "not enough observations"
 msgstr "观察量不够"
+
+msgid "data are essentially constant"
+msgstr "数据是恆量"
 
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr "'groups'或'blocks'里不能有NA"
@@ -1358,7 +1338,8 @@ msgstr "模型QR矩阵不对"
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "非NA残差的长度与拟合时所用的案例不相符"
 
-msgid "too few cases, n < k"
+#, fuzzy
+msgid "too few cases i with h_ii > 0), n < k"
 msgstr "案例不够, n小于k"
 
 msgid "predictors must all be numeric"
@@ -1407,11 +1388,8 @@ msgstr "参数'cell'不对"
 msgid "invalid argument 'degree'"
 msgstr "参数'degree'不对"
 
-msgid "iterTrace ="
-msgstr ""
-
 #, fuzzy
-msgid "not obeyed as iterations ="
+msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "没有有限观察量"
 
 msgid "first argument must be a \"loess\" object"
@@ -1544,11 +1522,40 @@ msgstr "eff.aovlist: 用非正交对比来算的结果会出错"
 msgid "cannot create a formula from a zero-column data frame"
 msgstr "无法用空数据框来建立公式"
 
+#, fuzzy
+msgid "invalid formula: %s"
+msgstr "公式不对"
+
+#, fuzzy
+msgid "invalid formula %s: not a call"
+msgstr "deriv里的公式不对"
+
+#, fuzzy
+msgid "invalid formula %s: assignment is deprecated"
+msgstr "deriv里的公式不对"
+
+msgid "invalid formula %s: extraneous call to `%s` is deprecated"
+msgstr ""
+
+#, fuzzy
+msgid "invalid formula %s"
+msgstr "公式不对"
+
 msgid "no terms component nor attribute"
 msgstr "没有项组件也没有属性"
 
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels'必需是长度至少为一的字节矢量"
+
+msgid ""
+"Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
+msgstr ""
+
+msgid "reformulate"
+msgstr ""
+
+msgid "deprecatedWarning"
+msgstr ""
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj'必需是类别为%s的对象"
@@ -1571,8 +1578,13 @@ msgstr "'offset'必需为数值"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()里的模型框和公式不相配"
 
-msgid "invalid 'contrasts.arg' argument"
+#, fuzzy
+msgid "non-list contrasts argument ignored"
 msgstr "'contrasts.arg'参数不对"
+
+#, fuzzy
+msgid "'contrasts.arg' argument must be named"
+msgstr "'control'参数必需是串列"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "没有变量'%s'，因此它的对比略过不用"
@@ -1796,10 +1808,10 @@ msgstr "'sig.level'必需是在[0, 1] 里的数值"
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "'n', 'p1', 'p2', 'power',和'sig.level'之中只能有一个取NULL值"
 
-msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgid "No p1 in [0, p2] can be found to achieve the desired power"
 msgstr ""
 
-msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr ""
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
@@ -2198,9 +2210,6 @@ msgstr "'mu'必需是单一数字"
 msgid "'y' is missing for paired test"
 msgstr "配对检验时没有设定'y'"
 
-msgid "data are essentially constant"
-msgstr "数据是恆量"
-
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main'必需是TRUE, FALSE, NULL或字符(矢量) 。"
 
@@ -2216,10 +2225,18 @@ msgstr "'ts'对象至少必需有一个或多个观察量"
 msgid "'start' cannot be after 'end'"
 msgstr "'start'不能大于'end'"
 
+#, fuzzy
+msgid "'end' must be a whole number of cycles after 'start'"
+msgstr "'centers'必需是个数字或矩阵"
+
 msgid "no time series supplied"
 msgstr "没有设定时间序列"
 
 msgid "not all series have the same frequency"
+msgstr "不是所有的序列都有相同的頻率"
+
+#, fuzzy
+msgid "not all series have the same phase"
 msgstr "不是所有的序列都有相同的頻率"
 
 msgid "non-intersecting series"
@@ -2246,7 +2263,8 @@ msgstr "散佈圖只适用于单变量时间序列"
 msgid "'xy.labels' must be logical or character"
 msgstr "'xy.labels'必需是逻辑值或是字符"
 
-msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
+#, fuzzy
+msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
 msgstr "'frequency'和'deltat'都被设定，但它们的值相互矛盾"
 
 msgid "'frequency' not changed"
@@ -2320,7 +2338,8 @@ msgstr "'ratio'必需是单一的正数"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x'和'w'的长度必需相同"
 
-msgid "not enough (finite) 'x' observations"
+#, fuzzy
+msgid "not enough (non-missing) 'x' observations"
 msgstr "(有限)'x'观察量数目不够"
 
 msgid "requested conf.level not achievable"
@@ -2510,6 +2529,41 @@ msgstr[0] "删除了含NA, NaN或Inf的%d个观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d个点"
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasipoisson family; available links are %s"
+#~ msgstr "quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for gaussian family; available links are %s"
+#~ msgstr "gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family; available links are %s"
+#~ msgstr "二项分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for quasibinomial family; available links are %s"
+#~ msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+
+#~ msgid ""
+#~ "for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
+#~ "or a 2 column matrix where col 1 is no. successes and col 2 is no. "
+#~ "failures"
+#~ msgstr ""
+#~ "'quasibinomial'分布族，y必需是只含0或1的向量\n"
+#~ "或是带两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
+
+#~ msgid "link \"%s\" not available for gamma family; available links are %s"
+#~ msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse.gaussian family; available links "
+#~ "are %s"
+#~ msgstr "inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結%s"
+
+#~ msgid "all group levels must be finite"
+#~ msgstr "所有组的层次都必需是有限的"
 
 #~ msgid "invalid value of length(x)"
 #~ msgstr "length(x)的值不对"

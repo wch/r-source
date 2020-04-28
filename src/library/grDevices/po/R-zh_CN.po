@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -58,6 +58,15 @@ msgstr "rgb的值必需是在[0, maxColorValue] 之间"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "'start'和'end'不能相等，而且必需在[0, 1] 之间。"
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma'的值要么是数量，要么是'sRGB'"
@@ -143,6 +152,9 @@ msgstr "没有合适的文件名字给postscript()来用"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new():用postscript(file=\"%s\")"
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'里的参数不对(需要有带名参数)"
 
@@ -166,6 +178,9 @@ msgstr "没有'%s'这样的系列"
 
 msgid "invalid 'family' argument"
 msgstr "'family'参数不对"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 #, fuzzy
 msgid "invalid 'file' argument '%s'"
@@ -258,6 +273,9 @@ msgstr "没有可用来记载的装置"
 
 msgid "argument is not of class %s"
 msgstr "参数的类别必需为%s"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 #, fuzzy
 msgid "snapshot recorded in different R version (pre 3.3.0)"
@@ -359,6 +377,9 @@ msgstr "只能从'X11(type=\"*cairo\")'装置拷贝"
 
 msgid "invalid value for 'rescale'"
 msgstr "'rescale'不对"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "只能把窗户装置带到前方去"

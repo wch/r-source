@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2014-03-17 10:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -133,8 +133,10 @@ msgstr "Sseuls les noms valides de 'gpar' sont autorisés"
 msgid "invalid display list element"
 msgstr "élément de liste d'affichage (display list) incorrect"
 
+#, fuzzy
 msgid ""
-"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
+"TRUE')"
 msgstr ""
 "un ou plusieurs grobs sont superposés (grab ne sera PAS fidèle ; essayez "
 "'wrap=TRUE')"
@@ -383,6 +385,11 @@ msgstr "'x' et 'y' doivent être des unités ou NULL"
 msgid "corrupt 'arrows' object"
 msgstr "objet 'arrows' corrompu"
 
+#, fuzzy
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr ""
+"'x', 'y' et 'id.lengths' doivent spécifier les mêmes longueurs globales"
+
 msgid "x and y must be units"
 msgstr "'x' et 'y' doivent être des unités"
 
@@ -427,27 +434,21 @@ msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' et 'units' doivent avoir une longueur positive"
 
-msgid "'x' argument must be a unit object"
-msgstr "l'argument 'x' doit être un objet unité"
-
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' ou 'type' incorrect"
 
-msgid "no string supplied for 'strwidth/height' unit"
-msgstr "pas de chaîne de caractères fournie pour l'unité 'strwidth/height'"
+#, fuzzy
+msgid "Not a unit object"
+msgstr "objet 'unit' incorrect"
 
-msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr "pas de 'grob' fourni pour l'unité 'grobwidth/height'"
-
-msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
-"'gPath' doit avoir une profondeur de 1 dans les unités 'grobwidth/height'"
-
-msgid "non-NULL value supplied for plain unit"
-msgstr "valeur non nulle (NULL) fournie pour les unités"
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "la function 'Summary' '%s' n'est pas applicable pour des unités"
 
 msgid "operator '%s' not meaningful for units"
 msgstr "l'opérateur '%s' est inapplicable aux unités"
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr ""
 
 msgid "only one operand may be a unit"
 msgstr "seul un opérant peut être une unité"
@@ -455,39 +456,26 @@ msgstr "seul un opérant peut être une unité"
 msgid "non-unit operand must be numeric"
 msgstr "les opérants qui ne sont pas des unités doivent être numériques"
 
+msgid "can't divide with a unit"
+msgstr ""
+
 msgid "both operands must be units"
 msgstr "les deux opérands doivent être des unités"
 
-msgid "'Summary' function '%s' not meaningful for units"
-msgstr "la function 'Summary' '%s' n'est pas applicable pour des unités"
-
-msgid "no arguments where at least one expected"
-msgstr "aucun argument là où au moins un était attendu"
-
-msgid "Zero arguments where at least one expected"
-msgstr "Aucun argument là où au moins un était attendu"
-
-msgid "cannot mix signs of indices"
-msgstr "impossible de mélanger les signes des indices"
-
-msgid "index out of bounds ('unit' subsetting)"
+#, fuzzy
+msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "indice hors plage (indiçage d'unités)"
 
-msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr "indice hors plage (indiçage arithmétique d'unités)"
-
-msgid "index out of bounds (unit list subsetting)"
-msgstr "indice hors plage (indiçage de liste d'unités)"
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
+msgstr ""
 
 #, fuzzy
-msgid "Value being assigned must be a unit"
-msgstr "'x' et 'y' doivent être des unités"
+msgid "index must be of length 1"
+msgstr "'x' et 'y' doivent tous les deux être de longueur unitaire"
 
-msgid "it is invalid to combine 'unit' objects with other types"
-msgstr "il n'est pas permis de combiner des objets unités avec d'autres types"
-
-msgid "invalid 'unit' object"
-msgstr "objet 'unit' incorrect"
+#, fuzzy
+msgid "replacement must be of length 1"
+msgstr "l'élément '%s' de 'gpar' doit être de longueur unitaire"
 
 msgid "invalid 'theta'"
 msgstr "'theta' incorrect"
@@ -553,6 +541,45 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "nom de vue incorrect"
 msgstr[1] "noms de vues incorrects"
+
+#~ msgid "'x' argument must be a unit object"
+#~ msgstr "l'argument 'x' doit être un objet unité"
+
+#~ msgid "no string supplied for 'strwidth/height' unit"
+#~ msgstr "pas de chaîne de caractères fournie pour l'unité 'strwidth/height'"
+
+#~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
+#~ msgstr "pas de 'grob' fourni pour l'unité 'grobwidth/height'"
+
+#~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+#~ msgstr ""
+#~ "'gPath' doit avoir une profondeur de 1 dans les unités 'grobwidth/height'"
+
+#~ msgid "non-NULL value supplied for plain unit"
+#~ msgstr "valeur non nulle (NULL) fournie pour les unités"
+
+#~ msgid "no arguments where at least one expected"
+#~ msgstr "aucun argument là où au moins un était attendu"
+
+#~ msgid "Zero arguments where at least one expected"
+#~ msgstr "Aucun argument là où au moins un était attendu"
+
+#~ msgid "cannot mix signs of indices"
+#~ msgstr "impossible de mélanger les signes des indices"
+
+#~ msgid "index out of bounds (unit arithmetic subsetting)"
+#~ msgstr "indice hors plage (indiçage arithmétique d'unités)"
+
+#~ msgid "index out of bounds (unit list subsetting)"
+#~ msgstr "indice hors plage (indiçage de liste d'unités)"
+
+#, fuzzy
+#~ msgid "Value being assigned must be a unit"
+#~ msgstr "'x' et 'y' doivent être des unités"
+
+#~ msgid "it is invalid to combine 'unit' objects with other types"
+#~ msgstr ""
+#~ "il n'est pas permis de combiner des objets unités avec d'autres types"
 
 #~ msgid "invalid element in the display list"
 #~ msgstr "élément incorrect dans la liste d'affichage (display list)"

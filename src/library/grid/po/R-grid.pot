@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: grid 3.6.0\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"Project-Id-Version: grid 4.0.0\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgstr ""
 msgid "invalid display list element"
 msgstr ""
 
-msgid "one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
 msgstr ""
 
 msgid "viewport overwritten (grab MAY not be faithful)"
@@ -340,6 +340,9 @@ msgstr ""
 msgid "corrupt 'arrows' object"
 msgstr ""
 
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr ""
+
 msgid "x and y must be units"
 msgstr ""
 
@@ -382,25 +385,19 @@ msgstr ""
 msgid "'x' and 'units' must have length > 0"
 msgstr ""
 
-msgid "'x' argument must be a unit object"
-msgstr ""
-
 msgid "invalid 'axis' or 'type'"
 msgstr ""
 
-msgid "no string supplied for 'strwidth/height' unit"
+msgid "Not a unit object"
 msgstr ""
 
-msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr ""
-
-msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
-
-msgid "non-NULL value supplied for plain unit"
+msgid "'Summary' function '%s' not meaningful for units"
 msgstr ""
 
 msgid "operator '%s' not meaningful for units"
+msgstr ""
+
+msgid "'*' or '/' cannot be used as a unary operator"
 msgstr ""
 
 msgid "only one operand may be a unit"
@@ -409,37 +406,22 @@ msgstr ""
 msgid "non-unit operand must be numeric"
 msgstr ""
 
+msgid "can't divide with a unit"
+msgstr ""
+
 msgid "both operands must be units"
 msgstr ""
 
-msgid "'Summary' function '%s' not meaningful for units"
+msgid "index out of bounds (\"unit\" subsetting)"
 msgstr ""
 
-msgid "no arguments where at least one expected"
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
 msgstr ""
 
-msgid "Zero arguments where at least one expected"
+msgid "index must be of length 1"
 msgstr ""
 
-msgid "cannot mix signs of indices"
-msgstr ""
-
-msgid "index out of bounds ('unit' subsetting)"
-msgstr ""
-
-msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr ""
-
-msgid "index out of bounds (unit list subsetting)"
-msgstr ""
-
-msgid "Value being assigned must be a unit"
-msgstr ""
-
-msgid "it is invalid to combine 'unit' objects with other types"
-msgstr ""
-
-msgid "invalid 'unit' object"
+msgid "replacement must be of length 1"
 msgstr ""
 
 msgid "invalid 'theta'"

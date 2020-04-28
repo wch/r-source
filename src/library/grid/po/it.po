@@ -1,132 +1,118 @@
-# Italian translations for R package.
-# Copyright (C) 2005 The R Foundation
+# R Italian translation
+# Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# stefano iacus <>, 2005.
+# Daniele Medri <dmedri@gmail.com>, 2005-2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: grid 3.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
-"PO-Revision-Date: 2005-04-17 17:30+0200\n"
-"Last-Translator: stefano iacus <>\n"
-"Language-Team: Italian <it@li.org>\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: grid.c:212
-#, fuzzy
 msgid "cannot clip to rotated viewport"
-msgstr "Impossibile tagliare su una viewport ruotata"
+msgstr "non è possibile tagliare su una viewport ruotata"
 
 #: grid.c:697 grid.c:702 grid.c:792 grid.c:797
-#, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
-"Non posso mostrare la view-port di livello massimo (grid e graphics output "
-"mischiato?)"
+"non è possibile mostrare la view-port di livello più alto (output di 'grid' "
+"e 'graphics' mischiato?)"
 
 #: grid.c:977
 msgid "attempt to plot on null device"
 msgstr "tentativo di scrivere sul dispositivo null"
 
 #: grid.c:1309
-#, fuzzy
 msgid "there is no layout defined"
-msgstr "Il layout non è definito"
+msgstr "non c'è alcun layout definito"
 
 #: grid.c:1529
 msgid "polygon edge not found (zero-width or zero-height?)"
-msgstr ""
+msgstr "bordo poligonale non trovato (larghezza o altezza zero?)"
 
 #: grid.c:1538
 msgid "polygon edge not found"
-msgstr ""
+msgstr "bordo poligonale non trovato"
 
 #: grid.c:1692
 msgid "require at least two points to draw arrow"
-msgstr ""
+msgstr "richiedono almeno due punti per disegnare la freccia"
 
 #: grid.c:2008
 msgid "non-finite control point in Xspline"
-msgstr ""
+msgstr "punto di controllo non finito in Xspline"
 
 #: grid.c:2873
 msgid "non-finite x or y in graphics path"
-msgstr ""
+msgstr "x o y non finiti nel percorso grafico"
 
 #: grid.c:2914
 msgid "Empty raster"
-msgstr ""
+msgstr "Raster vuoto"
 
 #: grid.c:3368
-#, fuzzy
 msgid "invalid plotting symbol"
-msgstr "layout.pos.col non valido"
+msgstr "simbolo di plotting non valido"
 
 #: grid.c:3454
-#, fuzzy
 msgid "unable to clip to rotated rectangle"
-msgstr "Impossibile tagliare su una viewport ruotata"
+msgstr "non è possibile tagliare su un rettangolo ruotato"
 
 #: layout.c:589
-#, fuzzy
 msgid "invalid 'layout.pos.row'"
-msgstr "layout.pos.row non valido"
+msgstr "'layout.pos.row' non valido"
 
 #: layout.c:593
-#, fuzzy
 msgid "invalid 'layout.pos.col'"
-msgstr "layout.pos.col non valido"
+msgstr "'layout.pos.col' non valido"
 
 #: matrix.c:50
 msgid "singular transformation matrix"
-msgstr ""
+msgstr "matrice di trasformazione singolare"
 
 #: state.c:170
-#, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr "Impossibile memorizzare lo stato di grid. Troppi dispositivi aperti?"
+msgstr ""
+"non è possibile memorizzare lo stato di 'grid'. Troppi dispositivi aperti?"
 
 #: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
-#, fuzzy
 msgid "unimplemented unit function"
-msgstr "Funzione unit non implementata"
+msgstr "funzione unit non implementata"
 
 #: unit.c:893 unit.c:1645
-#, fuzzy
 msgid "invalid unit or unit not yet implemented"
-msgstr "unit illegale o unit non ancora implementata"
+msgstr "unità non valida o non ancora implementata"
 
 #: unit.c:1702 unit.c:1733
 msgid "Viewport has zero dimension(s)"
-msgstr ""
+msgstr "La viewport ha zero dimensioni"
 
 #: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
 msgid "Unsupported unit conversion"
-msgstr ""
+msgstr "Conversione unit non supportata"
 
 #: unit.c:1898
 msgid "Invalid unit"
 msgstr "unit non valida"
 
 #: unit.c:1914
-#, fuzzy
 msgid "'units' must be character"
-msgstr "unit devono essere di tipo character"
+msgstr "'units' dev'essere di tipo character"
 
 #: unit.c:1917
-#, fuzzy
 msgid "'units' must be of length > 0"
-msgstr "unit devono avere lunghezza > 0"
+msgstr "'units' dev'essere di lunghezza > 0"
 
 #: viewport.c:315
-#, fuzzy
 msgid "non-finite location and/or size for viewport"
-msgstr "Posizione e/o ampiezza della viewport non finita"
-
-#~ msgid "Invalid circle radius (must be non-negative)"
-#~ msgstr "Raggio del cerchio non valido (deve essere non negativo)"
+msgstr "posizione e/o dimensione della viewport non finita"

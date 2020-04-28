@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2012-01-08 00:28+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,10 +78,19 @@ msgstr ""
 msgid "incorrect number of names"
 msgstr ""
 
-msgid "invalid first argument"
+msgid "'formula' missing or incorrect"
 msgstr ""
 
-msgid "'formula' missing or incorrect"
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr ""
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr ""
+
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr ""
+
+msgid "invalid first argument"
 msgstr ""
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
@@ -453,6 +462,11 @@ msgstr ""
 
 msgid "log scale:  xyinch() is nonsense"
 msgstr ""
+
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"

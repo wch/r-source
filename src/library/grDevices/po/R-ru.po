@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:33\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-07 01:14-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -62,6 +62,15 @@ msgstr "rgb-значения должны быть в пределах [0, maxColorValue]"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "'start' и 'end' должны быть различными и в пределах [0, 1]."
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' должна быть скаляром или 'sRGB'"
@@ -147,6 +156,9 @@ msgstr "для postscript() не нашлось подходящего неиспользованного имени файла"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): использую postscript(file=\"%s\")"
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "неправильные аргументы в '%s' (нужны именованные аргументы)"
 
@@ -171,6 +183,9 @@ msgstr "неизвестное семейство '%s'"
 
 msgid "invalid 'family' argument"
 msgstr "неправильный аргумент 'family'"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 msgid "invalid 'file' argument '%s'"
 msgstr "неправильный аргумент 'file' '%s'"
@@ -263,6 +278,9 @@ msgstr "нет устройства, которое надо записывать"
 
 msgid "argument is not of class %s"
 msgstr "аргумент не принадлежит к классу %s"
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "снимок из другой версии R (до 3.3.0)"
@@ -365,6 +383,9 @@ msgstr "могу копировать лишь с 'X11(type=\"*cairo\")'-устройств"
 
 msgid "invalid value for 'rescale'"
 msgstr "неправильное значение 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "могу лишь переместить устройства windows на первый план"

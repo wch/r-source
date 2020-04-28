@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stats4 3.6.0\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"Project-Id-Version: stats4 4.0.0\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,13 +10,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "some named arguments in 'fixed' are not arguments to the supplied log-likelihood"
+msgid "named list expected"
 msgstr ""
 
-msgid "'start' must be a named list"
+msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 
-msgid "some named arguments in 'start' are not arguments to the supplied log-likelihood"
+msgid "Mismatch in length of start values"
+msgstr ""
+
+msgid "fixed values violate constraints"
+msgstr ""
+
+msgid "start values do not satisfy constraints"
 msgstr ""
 
 msgid "profiling has found a better solution, so original fit had not converged"

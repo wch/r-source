@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: utils 3.6.0\n"
+"Project-Id-Version: utils 4.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"POT-Creation-Date: 2020-03-24 10:54-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,8 +22,8 @@ msgstr ""
 #: io.c:1103 io.c:1104 io.c:1105 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:78
-#: windows/widgets.c:81 windows/widgets.c:86
+#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:79
+#: windows/widgets.c:82 windows/widgets.c:87
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""
@@ -99,7 +99,7 @@ msgstr ""
 
 #: io.c:1137
 #, c-format
-msgid "corrupt data frame -- length of column %d does not not match nrows"
+msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
 
 #: io.c:1168
@@ -108,7 +108,7 @@ msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
 #: io.c:1186
-msgid "corrupt matrix -- dims not not match length"
+msgid "corrupt matrix -- dims do not match length"
 msgstr ""
 
 #: stubs.c:56
@@ -134,6 +134,11 @@ msgstr ""
 #: stubs.c:248 stubs.c:251
 #, c-format
 msgid "invalid '%s' specification"
+msgstr ""
+
+#: stubs.c:254
+#, c-format
+msgid "'%s' contains missing values"
 msgstr ""
 
 #: utils.c:85
@@ -205,61 +210,61 @@ msgstr ""
 msgid "argument must be a character vector or a raw vector"
 msgstr ""
 
-#: windows/util.c:318
+#: windows/util.c:320
 msgid "unable to open the clipboard"
 msgstr ""
 
-#: windows/util.c:323
+#: windows/util.c:325
 msgid "unable to write to the clipboard"
 msgstr ""
 
-#: windows/util.c:402
+#: windows/util.c:404
 msgid "'title' must be a character string"
 msgstr ""
 
-#: windows/util.c:411
+#: windows/util.c:413
 msgid "'text' must be a character string"
 msgstr ""
 
-#: windows/util.c:450
+#: windows/util.c:452
 #, c-format
 msgid "'%s' must be length 1"
 msgstr ""
 
-#: windows/util.c:563
+#: windows/util.c:565
 #, c-format
 msgid "'%s' must be a list"
 msgstr ""
 
-#: windows/util.c:567
+#: windows/util.c:569
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr ""
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one or more"
 msgstr ""
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one"
 msgstr ""
 
-#: windows/widgets.c:182 windows/widgets.c:250
+#: windows/widgets.c:183 windows/widgets.c:251
 msgid "'default' must be a character string"
 msgstr ""
 
-#: windows/widgets.c:184 windows/widgets.c:252
+#: windows/widgets.c:185 windows/widgets.c:253
 msgid "'default' is overlong"
 msgstr ""
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:189 windows/widgets.c:257
 msgid "'caption' must be a character string"
 msgstr ""
 
-#: windows/widgets.c:190
+#: windows/widgets.c:191
 msgid "'multi' must be a logical value"
 msgstr ""
 
-#: windows/widgets.c:192
+#: windows/widgets.c:193
 msgid "'filterindex' must be an integer value"
 msgstr ""

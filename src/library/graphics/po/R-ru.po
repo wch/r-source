@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:33\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-07 02:23-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -91,11 +91,22 @@ msgstr "Ошибка логарифмической шкалы: 'ylim' <= 0"
 msgid "incorrect number of names"
 msgstr "неправильное количество имен"
 
-msgid "invalid first argument"
-msgstr "неправильный первый аргумент"
-
 msgid "'formula' missing or incorrect"
 msgstr "'formula' пропущена или неправильная"
+
+#, fuzzy
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr "'formula' должна определять в точности две переменные"
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr ""
+
+#, fuzzy
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr "'formula' должна определять в точности две переменные"
+
+msgid "invalid first argument"
+msgstr "неправильный первый аргумент"
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' должен иметь ту же длину, что и 'z$n', т.е. %d"
@@ -477,6 +488,13 @@ msgstr "логарифмическая шкала y:  yinch() бессмысленно"
 msgid "log scale:  xyinch() is nonsense"
 msgstr "логарифмическая шкала:  xyinch() бессмысленно"
 
+#, fuzzy
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] "дополнительный аргумент %s будет отброшен"
+msgstr[1] "дополнительные аргументы %s будут отброшены"
+msgstr[2] "дополнительные аргументы %s будут отброшены"
+
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Выброс (%s) в ящике-с-усами %d не изображен"
@@ -488,12 +506,6 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "аргумент %s не для использования"
 msgstr[1] "аргументы %s не для использования"
 msgstr[2] "аргументы %s не для использования"
-
-#~ msgid "extra argument %s will be disregarded"
-#~ msgid_plural "extra arguments %s will be disregarded"
-#~ msgstr[0] "дополнительный аргумент %s будет отброшен"
-#~ msgstr[1] "дополнительные аргументы %s будут отброшены"
-#~ msgstr[2] "дополнительные аргументы %s будут отброшены"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""

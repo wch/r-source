@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2015-03-27 14:17+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -56,6 +56,15 @@ msgstr " rgb 値の範囲は [0, maxColorValue] でなければなりません "
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr ""
 " 'start' と 'end' の値は異なり、どちらも範囲 [0, 1] 内になければなりません。 "
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr " 'gamma' はスカラーまたは 'sRGB' でなければなりません "
@@ -146,6 +155,9 @@ msgstr " postscript() に適した未使用のファイル名がありません 
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr " dev.new(): postscript(file=\"%s\") を使用します "
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr " '%s' 中に不正な引数があります (名前付き引数が必要です) "
 
@@ -169,6 +181,9 @@ msgstr " フォントファミリー '%s' は未知です "
 
 msgid "invalid 'family' argument"
 msgstr " 不正な 'family' 引数です "
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 msgid "invalid 'file' argument '%s'"
 msgstr " 不正な 'file' 引数 '%s' です "
@@ -259,6 +274,9 @@ msgstr " 現在、以下のものから記録することが出来るデバイ�
 
 msgid "argument is not of class %s"
 msgstr " 引数はクラス %s ではありません "
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 #, fuzzy
 msgid "snapshot recorded in different R version (pre 3.3.0)"
@@ -363,6 +381,9 @@ msgstr " 'X11(type=\"*cairo\")' デバイスからしかコピーできません
 
 msgid "invalid value for 'rescale'"
 msgstr " 'rescale' の値が不正です "
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr " windows デバイスしか正面にもってくることが出来ません "

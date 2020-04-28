@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"POT-Creation-Date: 2020-03-24 10:53-0700\n"
 "PO-Revision-Date: 2015-03-20 16:09+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+#: gpar.c:473
+msgid "updateGContext must only be called after initGContext"
+msgstr ""
 
 #: grid.c:212
 msgid "cannot clip to rotated viewport"
@@ -27,51 +31,51 @@ msgstr ""
 "kann den obersten viewport nicht vom Stack werfen ('grid' und 'graphics' "
 "Ausgaben gemischt?)"
 
-#: grid.c:977
+#: grid.c:979
 msgid "attempt to plot on null device"
 msgstr "Versuch in das Null-Device zu zeichnen"
 
-#: grid.c:1309
+#: grid.c:1400
 msgid "there is no layout defined"
 msgstr "kein Layout definiert"
 
-#: grid.c:1529
+#: grid.c:1620
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkante nicht gefunden (Breite oder Länge 0?)"
 
-#: grid.c:1538
+#: grid.c:1629
 msgid "polygon edge not found"
 msgstr "Polygonkante nicht gefunden"
 
-#: grid.c:1692
+#: grid.c:1783
 msgid "require at least two points to draw arrow"
 msgstr "mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
 
-#: grid.c:2008
+#: grid.c:2102
 msgid "non-finite control point in Xspline"
 msgstr "nicht-endlicher Kontrollpunkt in Xspline"
 
-#: grid.c:2873
+#: grid.c:2982
 msgid "non-finite x or y in graphics path"
 msgstr "unendliches x oder y im Grafikpfad"
 
-#: grid.c:2914
+#: grid.c:3026
 msgid "Empty raster"
 msgstr "Leeres Raster"
 
-#: grid.c:3368
+#: grid.c:3509
 msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
-#: grid.c:3454
+#: grid.c:3597
 msgid "unable to clip to rotated rectangle"
 msgstr "kann nicht auf das rotierte Rechteck zurechtschneiden"
 
-#: layout.c:589
+#: layout.c:600
 msgid "invalid 'layout.pos.row'"
 msgstr "unzulässige 'layout.pos.row'"
 
-#: layout.c:593
+#: layout.c:604
 msgid "invalid 'layout.pos.col'"
 msgstr "unzulässige 'layout.pos.col'"
 
@@ -83,34 +87,75 @@ msgstr "singuläre Transformationsmatrix"
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "kann den Status von 'grid' nicht speichern. Zu viele geöffnete Geräte?"
 
-#: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
-msgid "unimplemented unit function"
-msgstr "nicht implementierte Einheitenfunktion"
+#: unit.c:65
+msgid "Cannot create unit scalar from 0-length unit vector"
+msgstr ""
 
-#: unit.c:893 unit.c:1645
+#: unit.c:789 unit.c:1288
 msgid "invalid unit or unit not yet implemented"
 msgstr "unzulässige Einheit oder Einheit noch nicht implementiert"
 
-#: unit.c:1702 unit.c:1733
+#: unit.c:1345 unit.c:1376
 msgid "Viewport has zero dimension(s)"
 msgstr "Viewport hat keine Dimension(en)"
 
-#: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
+#: unit.c:1408 unit.c:1423 unit.c:1438 unit.c:1453
 msgid "Unsupported unit conversion"
 msgstr "Nichtunterstützte Einheitenumwandlung"
 
-#: unit.c:1898
+#: unit.c:1545
 msgid "Invalid unit"
 msgstr "Ungültige Einheit"
 
-#: unit.c:1914
+#: unit.c:1560
 msgid "'units' must be character"
 msgstr "'units' müssen Zeichenketten sein"
 
-#: unit.c:1917
+#: unit.c:1563
 msgid "'units' must be of length > 0"
 msgstr "'units' müssen positive Länge haben"
+
+#: unit.c:1574
+msgid ""
+"data must be either NULL, have length 1, or match the length of the final "
+"unit vector"
+msgstr ""
+
+#: unit.c:1586
+msgid "no string supplied for 'strwidth/height' unit"
+msgstr ""
+
+#: unit.c:1590
+msgid "no 'grob' supplied for 'grobwidth/height' unit"
+msgstr ""
+
+#: unit.c:1608
+msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+msgstr ""
+
+#: unit.c:1613
+msgid "non-NULL value supplied for plain unit"
+msgstr ""
+
+#: unit.c:1666 unit.c:1700 unit.c:1749
+msgid "old version of unit class is no longer allowed"
+msgstr ""
+
+#: unit.c:1672
+msgid "object is not coercible to a unit"
+msgstr ""
+
+#: unit.c:1698
+msgid "object is not a unit"
+msgstr ""
+
+#: unit.c:1830
+msgid "units can only be multiplied with numerics and integers"
+msgstr ""
 
 #: viewport.c:315
 msgid "non-finite location and/or size for viewport"
 msgstr "nicht-endlicher Ort oder/und Größe des Viewports"
+
+#~ msgid "unimplemented unit function"
+#~ msgstr "nicht implementierte Einheitenfunktion"

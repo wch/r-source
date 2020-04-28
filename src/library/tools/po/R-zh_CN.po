@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 14:56\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -66,6 +66,10 @@ msgid ""
 msgstr "函数或文件的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Data with usage in documentation object '%s' but not in code:"
+msgstr "数据的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
+
+#, fuzzy
+msgid "Variables with usage in documentation object '%s' but not in code:"
 msgstr "数据的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
@@ -287,6 +291,10 @@ msgid ""
 "and non-empty name."
 msgstr "Authors@R域没有提供有维修作用的人和他的email"
 
+#, fuzzy
+msgid "Authors@R field gives persons with invalid ORCID identifiers:"
+msgstr "Authors@R领域里没有有效作用的人"
+
 msgid "Encoding '%s' is not portable"
 msgstr "编码'%s'不可便携"
 
@@ -319,7 +327,14 @@ msgstr "不允许有限制的组件"
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
 
+#, fuzzy
+msgid "Non-portable flags in file '%s':"
+msgstr "变量'%s'里有不可便携的标志:"
+
 msgid "Variables overriding user/site settings:"
+msgstr ""
+
+msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
 msgid ""
@@ -333,6 +348,18 @@ msgstr "使用手冊对象'%s'缺少联结:"
 #, fuzzy
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr "请参考'如何写R附加软件'说明书中'交叉引用'这一段。"
+
+msgid "Call sequence:"
+msgstr "调用序列:"
+
+msgid "..."
+msgstr "…"
+
+msgid "No dataset created in 'envir'"
+msgstr ""
+
+msgid "Search path was changed"
+msgstr ""
 
 msgid "File %s:"
 msgstr "文件%s:"
@@ -591,13 +618,18 @@ msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "没有一个已知的文件扩展名"
 
 msgid ""
-"Failed to locate the %s output file (by engine %s) for vignette with name "
-"%s. The following files exist in directory %s: %s"
+"Failed to locate %s output file %s or %s for vignette with name %s and "
+"engine %s. The following files exist in working directory %s: %s"
 msgstr ""
 
 msgid ""
 "Located more than one %s output file (by engine %s) for vignette with name "
 "%s: %s"
+msgstr ""
+
+msgid ""
+"Failed to locate %s output file %s for vignette with name %s and engine %s. "
+"The following files exist in working directory %s: %s"
 msgstr ""
 
 msgid "unable to create temp directory %s"
@@ -616,22 +648,36 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
-"risking overwriting each others output files"
+"risking overwriting each other's output files"
 msgstr "）因此可以冒险各个输出文件"
 
+msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
+msgid "--- re-building %s using %s"
+msgstr ""
+
+#, fuzzy
 msgid ""
-"processing vignette '%s' failed with diagnostics:\n"
+"Error: processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 "处理标头'%s'失败，诊断信息为:\n"
 "%s"
 
+#, fuzzy
 msgid ""
-"tangling vignette '%s' failed with diagnostics:\n"
+"Error: tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 "简介'%s'失败了，诊断信息为:\n"
 "%s"
+
+msgid "--- finished re-building %s"
+msgstr ""
+
+msgid "--- failed re-building %s"
+msgstr ""
 
 msgid "running 'make' failed"
 msgstr "调用'make'失败"
@@ -642,11 +688,11 @@ msgstr "找不到'%s'这个文件"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
+msgid "+-+"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%s'简介里'%s'和'%s'的名字是一样的"
-
-msgid "argument 'vignette' must be of length 1"
-msgstr "参数'vignette'的长度必需为一"
 
 #, fuzzy
 msgid "Vignette engine package not specified"
@@ -782,13 +828,6 @@ msgstr "不能对缺省JSS式样进行修改"
 msgid "inst/doc"
 msgstr ""
 
-msgid "file"
-msgstr "文件"
-
-#, fuzzy
-msgid "files"
-msgstr "文件"
-
 msgid ","
 msgstr ","
 
@@ -920,6 +959,10 @@ msgstr "无法从文件'%s'中读取索引信息"
 msgid ".install_packages() exit status"
 msgstr "程辑包无效."
 
+#, fuzzy
+msgid "restoration failed"
+msgstr "载入失败"
+
 msgid "error reading file '%s'"
 msgstr "读取文件'%s'时出了错"
 
@@ -938,8 +981,31 @@ msgstr "产生调试符号(%s)"
 msgid "no DLL was created"
 msgstr "无法产生文件'%s'"
 
+msgid "NOTE: fixed path"
+msgstr ""
+
+msgid "NOTE: fixed library identification name"
+msgstr ""
+
+msgid "NOTE: fixed library path"
+msgstr ""
+
+msgid "NOTE: fixed rpath"
+msgstr ""
+
+msgid ""
+"WARNING: shared objects/dynamic libraries with hard-coded temporary "
+"installation paths"
+msgstr ""
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "成功将%s程序包解包并MD5和检查"
+
+msgid "not using staged install with --libs-only"
+msgstr ""
+
+msgid "staged installation is only possible with locking"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -954,6 +1020,9 @@ msgstr "找不到源程序文件"
 
 msgid "empty 'data' directory"
 msgstr "空的'data'目录"
+
+msgid "WARNING: moving package to final location failed, copying instead"
+msgstr ""
 
 #, fuzzy
 msgid "cannot create unique directory for build"
@@ -980,26 +1049,11 @@ msgstr "错误：没有在这个目录里安装的许可"
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
 
-msgid "C++17 standard requested but CXX17 is not defined"
-msgstr ""
-
-msgid "C++14 standard requested but CXX14 is not defined"
-msgstr ""
-
-msgid "C++11 standard requested but CXX11 is not defined"
-msgstr ""
-
-msgid "C++98 standard requested but CXX98 is not defined"
-msgstr ""
-
 msgid ""
 "See\n"
 "  %s\n"
 "for details."
 msgstr ""
-
-msgid "there is no package called '%s'"
-msgstr "没有叫'%s'的程辑包"
 
 msgid "namespace must not be already loaded"
 msgstr "还没有载入名字空间"
@@ -1082,6 +1136,18 @@ msgstr ""
 "  %s\n"
 "包含多个\\itemize.因此用第一个。"
 
+#, fuzzy
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\item."
+msgstr ""
+"NEWS.Rd文件格式不对:\n"
+"开始块\n"
+"  %s\n"
+"没有\\itemize."
+
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
 
@@ -1092,81 +1158,6 @@ msgid ""
 msgstr ""
 "编译TeX文件%s失败，消息为:\n"
 "%s"
-
-msgid "%s must be a character string or a file/raw connection"
-msgstr "%s必需是字符串或原联结"
-
-msgid "PDF header not found"
-msgstr "找不到PDF字头"
-
-msgid "EOF marker not found"
-msgstr "找不到EOF标记"
-
-msgid "cannot find 'startxref' keyword"
-msgstr "找不到'startxref'这关键词"
-
-msgid "cannot find xref table"
-msgstr "找不到xref表"
-
-msgid "cannot read xref table"
-msgstr "读不到xref表"
-
-msgid "attempting to select less than one element"
-msgstr "至少得选择一个元素"
-
-msgid "attempting to select more than one element"
-msgstr "最多只能选一个元素"
-
-msgid "looking at %s"
-msgstr "看%s"
-
-msgid "cannot read literal string object"
-msgstr "无法读取常值字串对象"
-
-msgid "cannot read hexadecimal string object"
-msgstr "无法读取十六进制字符串对象"
-
-msgid "cannot read name object"
-msgstr "无法读取名字对象"
-
-msgid "cannot read array object"
-msgstr "无法读取数组对象"
-
-msgid "cannot read dictionary object"
-msgstr "无法读取字典对象"
-
-msgid "cannot read stream object"
-msgstr "无法读取流对象"
-
-msgid "cannot read indirect reference object"
-msgstr "无法读取间接引用的对象"
-
-msgid "cannot find object header at xrefed position %d"
-msgstr "找不到xrefed位置%d的对象标头"
-
-msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr "对象数字不匹配(给的是%d，找到的是%d)"
-
-msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr "生成数字不匹配(给的是%d，找到的是%d)"
-
-msgid "cannot read stream data"
-msgstr "无法读取流数据"
-
-msgid "invalid index in object stream lookup"
-msgstr "对象流查找索引无效"
-
-msgid "expanding %s"
-msgstr "展开%s"
-
-msgid "unsupported filter %s"
-msgstr "不支持%s过滤器"
-
-msgid "unsupported %s predictor %d"
-msgstr "不支持%s预测器%d "
-
-msgid "unsupported PNG filter %d"
-msgstr "不支持PNG过滤器%d"
 
 msgid "argument '%s' must be a character string or connection"
 msgstr "参数'%s'必需是字符串或联结"
@@ -1242,9 +1233,6 @@ msgstr "非标准执照规格"
 msgid "argument 'pkg' must be of length 1"
 msgstr "参数'pkg'的长度必需是一"
 
-msgid "package '%s' was not found"
-msgstr "找不到程辑包'%s'"
-
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 msgstr ""
 
@@ -1254,8 +1242,75 @@ msgstr "操作数不对"
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr "程辑包'%s'的从属被减低成最小集."
 
+msgid "argument 'vignette' must be of length 1"
+msgstr "参数'vignette'的长度必需为一"
+
 msgid "R CMD build failed"
 msgstr "R CMD build失败"
+
+msgid "PACKAGES files do not include MD5 sums in the win.binary case"
+msgstr ""
+
+msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
+msgstr ""
+
+msgid "directly."
+msgstr ""
+
+msgid "No existing PACKAGES file found at"
+msgstr ""
+
+msgid "Existing PACKAGES file contained no rows and/or no columns"
+msgstr ""
+
+msgid "Specified fields no present in existing PACKAGES file:"
+msgstr ""
+
+msgid ""
+"Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
+msgstr ""
+
+msgid "Updating existing repository [strict mode:"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid ""
+"]\n"
+"Detected PACKAGES file with"
+msgstr ""
+
+msgid "entries at"
+msgstr ""
+
+msgid "unable to find any package tarballs in"
+msgstr ""
+
+msgid "All existing entry MD5sums match tarballs."
+msgstr ""
+
+#, fuzzy
+msgid "Found"
+msgstr "找到了%s"
+
+msgid "package versions to process."
+msgstr ""
+
+msgid "No new packages or updated package versions detected"
+msgstr ""
+
+msgid "[dryrun mode] Dryrun complete."
+msgstr ""
+
+msgid "Writing final updated PACKAGES files."
+msgstr ""
+
+msgid "update_PACKAGES complete."
+msgstr ""
 
 msgid "'x' must be a single character string"
 msgstr "'x'必需是单字符串"
@@ -1278,15 +1333,11 @@ msgstr "给'%s'调用'texi2dvi'失败了"
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "给'%s'调用'texi2dvi'失败了"
 
-msgid "unable to run '%s' on '%s'"
-msgstr "无法在'%2$s'上调用'%1$s'"
-
 msgid "unable to run %s on '%s'"
 msgstr "无法在'%2$s'上调用%1$s"
 
-#, fuzzy
-msgid "cannot coerce %s to logical"
-msgstr "无法强迫改变"
+msgid "unable to run '%s' on '%s'"
+msgstr "无法在'%2$s'上调用'%1$s'"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "缺少'DESCRIPTION'这个文件"
@@ -1310,19 +1361,12 @@ msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "
 msgid "cannot source package code:"
 msgstr "无法读取程辑包源编码"
 
-msgid "Call sequence:"
-msgstr "调用序列:"
-
 #, fuzzy
 msgid "'text' must be a character vector"
 msgstr "参数'x'必需是字符矢量"
 
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
-
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] "Rd xrefs里程序包%s过时了"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1421,13 +1465,22 @@ msgstr[0] ""
 "Rd文件里缺少或有空白的\\name域\n"
 "%s"
 
+msgid "duplicated vignette title:"
+msgid_plural "duplicated vignette titles:"
+msgstr[0] ""
+
+#, fuzzy
+msgid "SUMMARY: processing the following file failed:"
+msgid_plural "SUMMARY: processing the following files failed:"
+msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
+
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "无法重新编码%s行%s"
 
 #, fuzzy
-msgid " file\n"
-msgid_plural " files\n"
+msgid "%s file\n"
+msgid_plural "%s files\n"
 msgstr[0] "文件"
 
 #, fuzzy
@@ -1450,6 +1503,102 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "file"
+#~ msgstr "文件"
+
+#, fuzzy
+#~ msgid "files"
+#~ msgstr "文件"
+
+#~ msgid "there is no package called '%s'"
+#~ msgstr "没有叫'%s'的程辑包"
+
+#~ msgid "%s must be a character string or a file/raw connection"
+#~ msgstr "%s必需是字符串或原联结"
+
+#~ msgid "PDF header not found"
+#~ msgstr "找不到PDF字头"
+
+#~ msgid "EOF marker not found"
+#~ msgstr "找不到EOF标记"
+
+#~ msgid "cannot find 'startxref' keyword"
+#~ msgstr "找不到'startxref'这关键词"
+
+#~ msgid "cannot find xref table"
+#~ msgstr "找不到xref表"
+
+#~ msgid "cannot read xref table"
+#~ msgstr "读不到xref表"
+
+#~ msgid "attempting to select less than one element"
+#~ msgstr "至少得选择一个元素"
+
+#~ msgid "attempting to select more than one element"
+#~ msgstr "最多只能选一个元素"
+
+#~ msgid "looking at %s"
+#~ msgstr "看%s"
+
+#~ msgid "cannot read literal string object"
+#~ msgstr "无法读取常值字串对象"
+
+#~ msgid "cannot read hexadecimal string object"
+#~ msgstr "无法读取十六进制字符串对象"
+
+#~ msgid "cannot read name object"
+#~ msgstr "无法读取名字对象"
+
+#~ msgid "cannot read array object"
+#~ msgstr "无法读取数组对象"
+
+#~ msgid "cannot read dictionary object"
+#~ msgstr "无法读取字典对象"
+
+#~ msgid "cannot read stream object"
+#~ msgstr "无法读取流对象"
+
+#~ msgid "cannot read indirect reference object"
+#~ msgstr "无法读取间接引用的对象"
+
+#~ msgid "cannot find object header at xrefed position %d"
+#~ msgstr "找不到xrefed位置%d的对象标头"
+
+#~ msgid "mismatch in object numbers (given: %d, found: %d)"
+#~ msgstr "对象数字不匹配(给的是%d，找到的是%d)"
+
+#~ msgid "mismatch in generation numbers (given: %d, found: %d)"
+#~ msgstr "生成数字不匹配(给的是%d，找到的是%d)"
+
+#~ msgid "cannot read stream data"
+#~ msgstr "无法读取流数据"
+
+#~ msgid "invalid index in object stream lookup"
+#~ msgstr "对象流查找索引无效"
+
+#~ msgid "expanding %s"
+#~ msgstr "展开%s"
+
+#~ msgid "unsupported filter %s"
+#~ msgstr "不支持%s过滤器"
+
+#~ msgid "unsupported %s predictor %d"
+#~ msgstr "不支持%s预测器%d "
+
+#~ msgid "unsupported PNG filter %d"
+#~ msgstr "不支持PNG过滤器%d"
+
+#~ msgid "package '%s' was not found"
+#~ msgstr "找不到程辑包'%s'"
+
+#, fuzzy
+#~ msgid "cannot coerce %s to logical"
+#~ msgstr "无法强迫改变"
+
+#~ msgid "Obsolete package %s in Rd xrefs"
+#~ msgid_plural "Obsolete packages %s in Rd xrefs"
+#~ msgstr[0] "Rd xrefs里程序包%s过时了"
 
 #~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 #~ msgstr "'compress'的值不对：只能是FALSE, TRUE, 2或3其中的一个"
@@ -1562,9 +1711,6 @@ msgstr[0] ""
 #~ msgid "engine"
 #~ msgstr "引擎"
 
-#~ msgid "found %s"
-#~ msgstr "找到了%s"
-
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"
 #~ msgid_plural "Foreign function calls without 'PACKAGE' argument:"
@@ -1592,11 +1738,6 @@ msgstr[0] ""
 #~ msgid "Warning: found non-ASCII string"
 #~ msgid_plural "Warning: found non-ASCII strings"
 #~ msgstr[0] "警告：没有这种选项"
-
-#, fuzzy
-#~ msgid "Found the following executable file:"
-#~ msgid_plural "Found the following executable files:"
-#~ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 
 #~ msgid "name"
 #~ msgstr "名字"
@@ -1737,9 +1878,6 @@ msgstr[0] ""
 
 #~ msgid "to"
 #~ msgstr "向"
-
-#~ msgid "..."
-#~ msgstr "…"
 
 #~ msgid "Comparing"
 #~ msgstr "比较"

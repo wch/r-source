@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: grDevices 3.6.0\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"Project-Id-Version: grDevices 4.0.0\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,6 +50,15 @@ msgid "rgb values must be in [0, maxColorValue]"
 msgstr ""
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr ""
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
 msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
@@ -136,6 +145,9 @@ msgstr ""
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr ""
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr ""
 
@@ -158,6 +170,9 @@ msgid "unknown family '%s'"
 msgstr ""
 
 msgid "invalid 'family' argument"
+msgstr ""
+
+msgid "'title' argument \"%s\" contains invalid characters"
 msgstr ""
 
 msgid "invalid 'file' argument '%s'"
@@ -248,6 +263,9 @@ msgid "no current device to record from"
 msgstr ""
 
 msgid "argument is not of class %s"
+msgstr ""
+
+msgid "invalid \"recordedplot\":"
 msgstr ""
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
@@ -344,6 +362,9 @@ msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr ""
 
 msgid "invalid value for 'rescale'"
+msgstr ""
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
 msgstr ""
 
 msgid "can only bring windows devices to the front"

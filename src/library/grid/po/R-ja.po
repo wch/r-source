@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2014-03-26 10:01+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -127,8 +127,10 @@ msgstr " 有効な 'gpar' の名前のみを指定しなければいけません
 msgid "invalid display list element"
 msgstr " 不正な display list 要素です "
 
+#, fuzzy
 msgid ""
-"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
+"TRUE')"
 msgstr ""
 " いずれかの grob(s) が上書きされました (おそらく grab は信用できるものではあ"
 "りません; 'wrap = TRUE' を試してください) "
@@ -364,6 +366,10 @@ msgstr " 'x' と 'y' は単位 (units) または NULL でなければなりま�
 msgid "corrupt 'arrows' object"
 msgstr " 壊れた 'arrows' オブジェクトです "
 
+#, fuzzy
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr " 'x', 'y', 'id.lengths' は全て同じ長さを指定しなければなりません "
+
 msgid "x and y must be units"
 msgstr " x と y は単位 (units) でなければなりません "
 
@@ -408,29 +414,21 @@ msgstr " 'x', 'y', 'width', 'height' は全て長さ 1 でなければなりま�
 msgid "'x' and 'units' must have length > 0"
 msgstr " 'x' と 'units' は 0 より大きい長さでなければなりません "
 
-msgid "'x' argument must be a unit object"
-msgstr " 引数 'x' は単位 (units) オブジェクトでなければなりません "
-
 msgid "invalid 'axis' or 'type'"
 msgstr " 不正な 'axis' または 'type' です "
 
-msgid "no string supplied for 'strwidth/height' unit"
-msgstr " 'strwidth/height' 単位 (unit) に対する文字列があたえられていません "
+#, fuzzy
+msgid "Not a unit object"
+msgstr " 不正な 'unit' オブジェクトです "
 
-msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr ""
-" 'grobwidth/height' 単位 (unit) に対して 'grob' があたえられていません "
-
-msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
-" 'gPath' は 'grobwidth/height' 単位 (units) 中では深さ 1 でなければなりませ"
-"ん "
-
-msgid "non-NULL value supplied for plain unit"
-msgstr " plain unit に対して NULL でない値が与えられました "
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr " 'Summary' 関数 '%s' は単位 (units) として意味をなしません "
 
 msgid "operator '%s' not meaningful for units"
 msgstr " 演算子 '%s' は単位 (units) として意味をなしません "
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr ""
 
 msgid "only one operand may be a unit"
 msgstr " 1 つのオペランド (operand) のみが単位 (units) となれます "
@@ -438,41 +436,26 @@ msgstr " 1 つのオペランド (operand) のみが単位 (units) となれま�
 msgid "non-unit operand must be numeric"
 msgstr " 単位ではないオペランド (operand) は数値でなければなりません "
 
+msgid "can't divide with a unit"
+msgstr ""
+
 msgid "both operands must be units"
 msgstr " オペランド (operand) は両方とも単位 (units) でなければなりません "
 
-msgid "'Summary' function '%s' not meaningful for units"
-msgstr " 'Summary' 関数 '%s' は単位 (units) として意味をなしません "
-
-msgid "no arguments where at least one expected"
-msgstr " 引数がありませんが，少なくとも 1 つの引数が必要です "
-
-msgid "Zero arguments where at least one expected"
-msgstr " 引数が 0 個ですが，少なくとも 1 つの引数が必要です "
-
-msgid "cannot mix signs of indices"
-msgstr " 添え字の符号は混在できません "
-
-msgid "index out of bounds ('unit' subsetting)"
+#, fuzzy
+msgid "index out of bounds (\"unit\" subsetting)"
 msgstr " 添え字が範囲を超えています ('unit' subsetting) "
 
-msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr " 添え字が範囲を超えています (unit arithmetic subsetting) "
-
-msgid "index out of bounds (unit list subsetting)"
-msgstr " 添え字が範囲を超えています (unit list subsetting) "
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
+msgstr ""
 
 #, fuzzy
-msgid "Value being assigned must be a unit"
-msgstr " x と y は単位 (units) でなければなりません "
+msgid "index must be of length 1"
+msgstr " 'x' と 'y' は長さ 1 でなければなりません "
 
-msgid "it is invalid to combine 'unit' objects with other types"
-msgstr ""
-" 単位 ('unit') オブジェクトとそれ以外の型のオブジェクトを結合することは出来ま"
-"せん "
-
-msgid "invalid 'unit' object"
-msgstr " 不正な 'unit' オブジェクトです "
+#, fuzzy
+msgid "replacement must be of length 1"
+msgstr " 'gpar' 要素 '%s' は長さ 0 にしてはいけません "
 
 msgid "invalid 'theta'"
 msgstr " 不正な 'theta' です "
@@ -536,6 +519,49 @@ msgstr[0] " 不正な grob 名です "
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] " 不正な viewport 名です "
+
+#~ msgid "'x' argument must be a unit object"
+#~ msgstr " 引数 'x' は単位 (units) オブジェクトでなければなりません "
+
+#~ msgid "no string supplied for 'strwidth/height' unit"
+#~ msgstr ""
+#~ " 'strwidth/height' 単位 (unit) に対する文字列があたえられていません "
+
+#~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
+#~ msgstr ""
+#~ " 'grobwidth/height' 単位 (unit) に対して 'grob' があたえられていません "
+
+#~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
+#~ msgstr ""
+#~ " 'gPath' は 'grobwidth/height' 単位 (units) 中では深さ 1 でなければなりま"
+#~ "せん "
+
+#~ msgid "non-NULL value supplied for plain unit"
+#~ msgstr " plain unit に対して NULL でない値が与えられました "
+
+#~ msgid "no arguments where at least one expected"
+#~ msgstr " 引数がありませんが，少なくとも 1 つの引数が必要です "
+
+#~ msgid "Zero arguments where at least one expected"
+#~ msgstr " 引数が 0 個ですが，少なくとも 1 つの引数が必要です "
+
+#~ msgid "cannot mix signs of indices"
+#~ msgstr " 添え字の符号は混在できません "
+
+#~ msgid "index out of bounds (unit arithmetic subsetting)"
+#~ msgstr " 添え字が範囲を超えています (unit arithmetic subsetting) "
+
+#~ msgid "index out of bounds (unit list subsetting)"
+#~ msgstr " 添え字が範囲を超えています (unit list subsetting) "
+
+#, fuzzy
+#~ msgid "Value being assigned must be a unit"
+#~ msgstr " x と y は単位 (units) でなければなりません "
+
+#~ msgid "it is invalid to combine 'unit' objects with other types"
+#~ msgstr ""
+#~ " 単位 ('unit') オブジェクトとそれ以外の型のオブジェクトを結合することは出"
+#~ "来ません "
 
 #~ msgid "invalid element in the display list"
 #~ msgstr " ディスプレイリストの中に不正な要素があります "

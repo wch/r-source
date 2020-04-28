@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -54,6 +54,15 @@ msgstr "valores rgb devem estar em [0,maxColorValue]"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "'stard' e 'end' devem ser distintos e em [0,1]"
+
+msgid "'palette' does not match any given palette"
+msgstr ""
+
+msgid "'palette' is ambiguous"
+msgstr ""
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr ""
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' deve ser um escalar ou 'sRGB'"
@@ -147,6 +156,9 @@ msgstr "nenhum nome de arquivo apropriado e não utilizado para postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): usando postscript(arquivo=\"%s\")"
 
+msgid "wrong 'type'; should never happen, please report!"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argumentos inválidos em '%s' (precisa-se de argumentos nomeados)"
 
@@ -173,6 +185,9 @@ msgstr "família desconhecida '%s'"
 
 msgid "invalid 'family' argument"
 msgstr "argumento 'family' inválido"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr ""
 
 #, fuzzy
 msgid "invalid 'file' argument '%s'"
@@ -271,6 +286,9 @@ msgstr "nenhum dispositivo atual disponível do qual gravar"
 #, fuzzy
 msgid "argument is not of class %s"
 msgstr "argumento não é da classe \"recordedplot\""
+
+msgid "invalid \"recordedplot\":"
+msgstr ""
 
 #, fuzzy
 msgid "snapshot recorded in different R version (pre 3.3.0)"
@@ -376,6 +394,9 @@ msgstr "somente possível copiar dos dispositivos 'X11(type=\"*cairo\")'"
 
 msgid "invalid value for 'rescale'"
 msgstr "valor inválido para 'rescale'"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr ""
 
 msgid "can only bring windows devices to the front"
 msgstr "somente possível trazer dispositivos windows para frente"

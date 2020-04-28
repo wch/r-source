@@ -1,0 +1,88 @@
+# Traditional Chinese translations for R package.
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <feic@normipaiva.com>, 2005, 07.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.5.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-30 07:34\n"
+"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "must have at least 'ord' knots"
+msgstr "至少需要有 'ord' 個結"
+
+msgid "length of 'derivs' is larger than length of 'x'"
+msgstr "'derivs' 的長度必須大於 'x' 的長度"
+
+msgid "empty 'derivs'"
+msgstr "空的 'derivs'"
+
+msgid "'ord' must be positive integer, at most the number of knots"
+msgstr "'ord' 必須為正整數，最多不能超過結的數目"
+
+msgid "need at least %s (=%d) knots"
+msgstr "至少需要 %s (=%d) 個結"
+
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
+msgstr "除非您設定 '%3$s'，'x' 資料值必須在 %1$g 到 %2$g 範圍之間"
+
+msgid "%s needs package 'Matrix' correctly installed"
+msgstr "程式套件 'Matrix' 必須安裝了以後才能用 %s"
+
+msgid "values of 'x' must be distinct"
+msgstr "'x' 的值不能有重複"
+
+msgid "must have at least 'ord'=%d points"
+msgstr "至少需要有 'ord'=%d 個點"
+
+msgid "'formula' must be of the form \"y ~ x\""
+msgstr "'formula' 的格式必須為\"y ~ x\""
+
+msgid "lengths of 'x' and 'y' must match"
+msgstr "'x' 和 'y' 的長度必須相匹配"
+
+msgid "values of 'x' must be strictly increasing"
+msgstr "'x' 的值必須嚴格遞增"
+
+msgid "'ord' must be >= 2"
+msgstr "'ord' 的值必須大於等於二"
+
+msgid "the range of 'x' values exceeds one period"
+msgstr "'x' 值的範圍超過了一個周期"
+
+msgid "knot positions must be non-decreasing"
+msgstr "結的位置值必須為非遞減"
+
+msgid "lengths of 'x' and 'y' must be the same"
+msgstr "'x' 和 'y' 的長度必須一樣"
+
+msgid "'deriv' must be between 0 and %d"
+msgstr "'deriv' 的值必須在零和 %d 之間"
+
+msgid "knot positions must be strictly increasing"
+msgstr "結的位置值必須嚴格遞增"
+
+msgid "currently implemented only for cubic splines"
+msgstr "目前只有對於三次曲線的實作"
+
+msgid "spline must be monotone"
+msgstr "樣條必須是單凋的"
+
+msgid "'degree' must be integer >= 1"
+msgstr "'degree' 必須大於等於一的整數"
+
+msgid "'df' was too small; have used %d"
+msgstr "'df' 太小了；用過的值為 %d "
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr "一些在結值界外的 'x' 資料有可能會引起病態底數"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -65,8 +65,8 @@ msgstr "유효하지 않은 'grob'입니다"
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
 msgstr ""
-"유효하지 않은 'row' 그리고/또는 'col'입니다 (프레임 레이아웃에 그런 셀은 없"
-"습니다)"
+"유효하지 않은 'row' 그리고/또는 'col'입니다 (프레임 레이아웃에 그런 셀은 없습"
+"니다)"
 
 msgid "'col' can only be a range of existing columns"
 msgstr "'col'은 존재하는 열의 범위내에서만 얻을 수 있습니다"
@@ -91,8 +91,8 @@ msgid ""
 "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
 "before', or 'row.after'"
 msgstr ""
-"'side=[\"top\", \"bottom\"]', 'row', 'row.before', 또는 'row.after' 중 하나"
-"만을 지정해야 합니다"
+"'side=[\"top\", \"bottom\"]', 'row', 'row.before', 또는 'row.after' 중 하나만"
+"을 지정해야 합니다"
 
 msgid "invalid 'n'"
 msgstr "유효하지 않은 'n'입니다"
@@ -130,11 +130,13 @@ msgstr "반드시 유효한 'gpar' 이름을 지정해야 합니다"
 msgid "invalid display list element"
 msgstr "유효하지 않은 디스플레이 리스트의 구성요소입니다"
 
+#, fuzzy
 msgid ""
-"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
+"TRUE')"
 msgstr ""
-"여러번 덮어 씌여진 grobs중 하나입니다 (grab은 정확한 것이 아닐 수도 있으므"
-"로 'wrap = TRUE'을 시도해보세요)"
+"여러번 덮어 씌여진 grobs중 하나입니다 (grab은 정확한 것이 아닐 수도 있으므로 "
+"'wrap = TRUE'을 시도해보세요)"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "덮어 씌어진 뷰포트입니다 (grab은 아마도 정확하지 못할 수도 있습니다)"
@@ -250,8 +252,8 @@ msgstr "\"gTree\"의 child를 수정하는 것만이 유효합니다"
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
 msgstr ""
-"'children' 또는 'childrenOrder' 슬롯을 직접적으로 수정하는 것은 유효하지 않"
-"습니다"
+"'children' 또는 'childrenOrder' 슬롯을 직접적으로 수정하는 것은 유효하지 않습"
+"니다"
 
 msgid "invalid 'result'"
 msgstr "유효하지 않은 'result'입니다"
@@ -365,6 +367,10 @@ msgstr "'x'와'y'는 반드시 유닛이거나 NULL이어야 합니다"
 msgid "corrupt 'arrows' object"
 msgstr "'arrows' 객체가 손상되었습니다"
 
+#, fuzzy
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr "'x'와 'y' 그리고 'id.lengths'는 반드시 같은 길이를 지정해야 합니다"
+
 msgid "x and y must be units"
 msgstr "x 그리고 y는 반드시 유닛이어야 합니다"
 
@@ -394,8 +400,7 @@ msgstr "'x'와 'y'는 반드시 'unit' 객체이어야 하며 같은 길이를 �
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr ""
-"'x', 'y', 'width', 그리고 'height' 모두가 반드시 길이가 1인 유닛이어야 합니"
-"다"
+"'x', 'y', 'width', 그리고 'height' 모두가 반드시 길이가 1인 유닛이어야 합니다"
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x'와 'y' 모두가 반드시 길이가 1인 유닛이어야 합니다"
@@ -409,26 +414,21 @@ msgstr "'x', 'y', 'width', 그리고 'height'는 반드시 길이가 1 이어야
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'와 'units'은 반드시 길이가 0보다 커야 합니다"
 
-msgid "'x' argument must be a unit object"
-msgstr "'x' 인수가 반드시 유닛객체이어야 합니다"
-
 msgid "invalid 'axis' or 'type'"
 msgstr "유효하지 않은 'axis' 또는 'type'입니다"
 
-msgid "no string supplied for 'strwidth/height' unit"
-msgstr "'strwidth/height' 유닛에 제공된 문자열이 없습니다"
+#, fuzzy
+msgid "Not a unit object"
+msgstr "유효하지 않은 'unit' 객체입니다"
 
-msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr "'grobwidth/height'에 제공된 'grob'가 없습니다"
-
-msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
-
-msgid "non-NULL value supplied for plain unit"
+msgid "'Summary' function '%s' not meaningful for units"
 msgstr ""
 
 msgid "operator '%s' not meaningful for units"
 msgstr "유닛에 아무런 의미가 없는 연산자 '%s'입니다"
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr ""
 
 msgid "only one operand may be a unit"
 msgstr ""
@@ -436,38 +436,25 @@ msgstr ""
 msgid "non-unit operand must be numeric"
 msgstr ""
 
+msgid "can't divide with a unit"
+msgstr ""
+
 msgid "both operands must be units"
 msgstr ""
 
-msgid "'Summary' function '%s' not meaningful for units"
+msgid "index out of bounds (\"unit\" subsetting)"
 msgstr ""
 
-msgid "no arguments where at least one expected"
-msgstr "적어도 한개의 인수가 필요한 곳에 아무것도 없습니다"
-
-msgid "Zero arguments where at least one expected"
-msgstr "적어도 한개의 인수가 필요한 곳에 아무것도 없습니다"
-
-msgid "cannot mix signs of indices"
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
 msgstr ""
 
-msgid "index out of bounds ('unit' subsetting)"
-msgstr ""
+#, fuzzy
+msgid "index must be of length 1"
+msgstr "'x'와 'y' 모두가 반드시 길이가 1인 유닛이어야 합니다"
 
-msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr ""
-
-msgid "index out of bounds (unit list subsetting)"
-msgstr ""
-
-msgid "Value being assigned must be a unit"
-msgstr ""
-
-msgid "it is invalid to combine 'unit' objects with other types"
-msgstr "'unit'객체들과 다른 타입들의 결합은 유효하지 않습니다"
-
-msgid "invalid 'unit' object"
-msgstr "유효하지 않은 'unit' 객체입니다"
+#, fuzzy
+msgid "replacement must be of length 1"
+msgstr "'gpar' 요소 '%s'는 반드시 길이가 0이 아닙니다"
 
 msgid "invalid 'theta'"
 msgstr "유효하지 않은 'theta'입니다"
@@ -529,3 +516,21 @@ msgstr[0] ""
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] ""
+
+#~ msgid "'x' argument must be a unit object"
+#~ msgstr "'x' 인수가 반드시 유닛객체이어야 합니다"
+
+#~ msgid "no string supplied for 'strwidth/height' unit"
+#~ msgstr "'strwidth/height' 유닛에 제공된 문자열이 없습니다"
+
+#~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
+#~ msgstr "'grobwidth/height'에 제공된 'grob'가 없습니다"
+
+#~ msgid "no arguments where at least one expected"
+#~ msgstr "적어도 한개의 인수가 필요한 곳에 아무것도 없습니다"
+
+#~ msgid "Zero arguments where at least one expected"
+#~ msgstr "적어도 한개의 인수가 필요한 곳에 아무것도 없습니다"
+
+#~ msgid "it is invalid to combine 'unit' objects with other types"
+#~ msgstr "'unit'객체들과 다른 타입들의 결합은 유효하지 않습니다"

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-24 10:54-0700\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -23,8 +23,8 @@ msgstr ""
 #: io.c:1103 io.c:1104 io.c:1105 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:78
-#: windows/widgets.c:81 windows/widgets.c:86
+#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:79
+#: windows/widgets.c:82 windows/widgets.c:87
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "인자 '%s'의 값이 올바르지 않습니다."
@@ -100,11 +100,11 @@ msgid "'dec' must be a single character"
 msgstr "'dec'는 반드시 한개의 문자이어야 합니다"
 
 #: io.c:1137
-#, c-format
-msgid "corrupt data frame -- length of column %d does not not match nrows"
+#, fuzzy, c-format
+msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
-"데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습"
-"니다"
+"데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니"
+"다"
 
 #: io.c:1168
 #, c-format
@@ -112,7 +112,8 @@ msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
 #: io.c:1186
-msgid "corrupt matrix -- dims not not match length"
+#, fuzzy
+msgid "corrupt matrix -- dims do not match length"
 msgstr "올바른 행렬이 아닙니다 -- dims 가 길이가 일치하지 않습니다"
 
 #: stubs.c:56
@@ -139,6 +140,11 @@ msgstr "X11이 사용가능하지 않습니다."
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "유효하지 않은 '%s' 지정입니다"
+
+#: stubs.c:254
+#, c-format
+msgid "'%s' contains missing values"
+msgstr ""
 
 #: utils.c:85
 msgid "'hostname' must be a character vector of length 1"
@@ -209,61 +215,61 @@ msgstr "지원되지 않는 버전의 윈도우즈입니다"
 msgid "argument must be a character vector or a raw vector"
 msgstr "인자는 반드시 문자형 벡터 또는  raw 벡터이어야 합니다"
 
-#: windows/util.c:318
+#: windows/util.c:320
 msgid "unable to open the clipboard"
 msgstr "클립보드를 열 수 없습니다."
 
-#: windows/util.c:323
+#: windows/util.c:325
 msgid "unable to write to the clipboard"
 msgstr "클립보드에 쓸 수 없습니다."
 
-#: windows/util.c:402
+#: windows/util.c:404
 msgid "'title' must be a character string"
 msgstr "'title'은 반드시 문자열이어야 합니다"
 
-#: windows/util.c:411
+#: windows/util.c:413
 msgid "'text' must be a character string"
 msgstr "'text'는 반드시 문자열이어야 합니다"
 
-#: windows/util.c:450
+#: windows/util.c:452
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s'는 반드시 길이가 1이어야 합니다"
 
-#: windows/util.c:563
+#: windows/util.c:565
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s'은 반드시 리스트 형이어야 합니다"
 
-#: windows/util.c:567
+#: windows/util.c:569
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s'의 구성요소 %d는 윈도우 핸들이 아닙니다"
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one or more"
 msgstr "하나 이상을 선택해 주세요"
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one"
 msgstr "하나를 선택해주세요"
 
-#: windows/widgets.c:182 windows/widgets.c:250
+#: windows/widgets.c:183 windows/widgets.c:251
 msgid "'default' must be a character string"
 msgstr "'default'는 반드시 문자열이어야 합니다"
 
-#: windows/widgets.c:184 windows/widgets.c:252
+#: windows/widgets.c:185 windows/widgets.c:253
 msgid "'default' is overlong"
 msgstr "'default'가 너무 깁니다"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:189 windows/widgets.c:257
 msgid "'caption' must be a character string"
 msgstr "'caption'은 반드시 문자열이어야 합니다"
 
-#: windows/widgets.c:190
+#: windows/widgets.c:191
 msgid "'multi' must be a logical value"
 msgstr "'multi'는 반드시 논리값이어야 합니다"
 
-#: windows/widgets.c:192
+#: windows/widgets.c:193
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'의 값은 반드시 정수이어야 합니다."

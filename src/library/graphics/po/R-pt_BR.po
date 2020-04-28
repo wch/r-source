@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -80,11 +80,22 @@ msgstr "erro na escala logarítmica: 'ylim' <= 0"
 msgid "incorrect number of names"
 msgstr "número incorreto de nomes"
 
-msgid "invalid first argument"
-msgstr "argumento inicial inválido"
-
 msgid "'formula' missing or incorrect"
 msgstr "'formula' faltando ou incorreta"
+
+#, fuzzy
+msgid "formula must specify 1 or 2 categorical variables"
+msgstr "'formula' deve especificar exatamente duas variáveis"
+
+msgid "duplicated categorical values - try another formula or subset"
+msgstr ""
+
+#, fuzzy
+msgid "formula with cbind() must specify 1 categorical variable"
+msgstr "'formula' deve especificar exatamente duas variáveis"
+
+msgid "invalid first argument"
+msgstr "argumento inicial inválido"
 
 #, fuzzy
 msgid "'at' must have same length as 'z$n', i.e. %d"
@@ -486,6 +497,12 @@ msgstr "escala logarítmica de y: yinch() não faz sentido"
 msgid "log scale:  xyinch() is nonsense"
 msgstr "escala logarítimica:  xyinch() não faz sentido"
 
+#, fuzzy
+msgid "Duplicated argument %s is disregarded"
+msgid_plural "Duplicated arguments %s are disregarded"
+msgstr[0] "os argumento(s) extras %s serão desconsiderados"
+msgstr[1] "os argumento(s) extras %s serão desconsiderados"
+
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Outlier (%s) no boxplot %d não desenhado"
@@ -495,12 +512,6 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "argumento %s não está sendo utilizado"
 msgstr[1] "argumentos %s não estão sendo utilizados"
-
-#, fuzzy
-#~ msgid "extra argument %s will be disregarded"
-#~ msgid_plural "extra arguments %s will be disregarded"
-#~ msgstr[0] "os argumento(s) extras %s serão desconsiderados"
-#~ msgstr[1] "os argumento(s) extras %s serão desconsiderados"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "'counts' negativo. Erro interno no código C para \"bincount\""

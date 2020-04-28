@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stats 3.6.0\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"Project-Id-Version: stats 4.0.0\n"
+"POT-Creation-Date: 2020-03-24 10:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -239,6 +239,9 @@ msgid "Refitting model to allow projection"
 msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
+msgstr ""
+
+msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
 msgstr ""
 
 msgid "collapsing to unique 'x' values"
@@ -790,7 +793,7 @@ msgstr ""
 msgid "%s link not recognised"
 msgstr ""
 
-msgid "link \"%s\" not available for poisson family; available links are %s"
+msgid "link \"%s\" not available for %s family; available links are %s"
 msgstr ""
 
 msgid "negative values not allowed for the 'Poisson' family"
@@ -799,52 +802,31 @@ msgstr ""
 msgid "ignoring prior weights"
 msgstr ""
 
-msgid "link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-
 msgid "negative values not allowed for the 'quasiPoisson' family"
-msgstr ""
-
-msgid "link \"%s\" not available for gaussian family; available links are %s"
 msgstr ""
 
 msgid "cannot find valid starting values: please specify some"
 msgstr ""
 
-msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr ""
-
 msgid "y values must be 0 <= y <= 1"
 msgstr ""
 
-msgid "non-integer #successes in a binomial glm!"
+msgid "non-integer #successes in a %s glm!"
 msgstr ""
 
-msgid "non-integer counts in a binomial glm!"
+msgid "non-integer counts in a %s glm!"
 msgstr ""
 
-msgid "for the 'binomial' family, y must be a vector of 0 and 1's\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgid "for the '%s' family, y must be a vector of 0 and 1's\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 
 msgid "cannot simulate from non-integer prior.weights"
 msgstr ""
 
-msgid "link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-
-msgid "for the 'quasibinomial' family, y must be a vector of 0 and 1's\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
-msgstr ""
-
-msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr ""
-
-msgid "non-positive values not allowed for the 'gamma' family"
+msgid "non-positive values not allowed for the 'Gamma' family"
 msgstr ""
 
 msgid "using weights as shape parameters"
-msgstr ""
-
-msgid "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
 
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
@@ -913,10 +895,10 @@ msgstr ""
 msgid "all groups must contain data"
 msgstr ""
 
-msgid "all group levels must be finite"
+msgid "not enough observations"
 msgstr ""
 
-msgid "not enough observations"
+msgid "data are essentially constant"
 msgstr ""
 
 msgid "NA's are not allowed in 'groups' or 'blocks'"
@@ -1300,7 +1282,7 @@ msgstr ""
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 
-msgid "too few cases, n < k"
+msgid "too few cases i with h_ii > 0), n < k"
 msgstr ""
 
 msgid "predictors must all be numeric"
@@ -1345,10 +1327,7 @@ msgstr ""
 msgid "invalid argument 'degree'"
 msgstr ""
 
-msgid "iterTrace ="
-msgstr ""
-
-msgid "not obeyed as iterations ="
+msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr ""
 
 msgid "first argument must be a \"loess\" object"
@@ -1477,10 +1456,34 @@ msgstr ""
 msgid "cannot create a formula from a zero-column data frame"
 msgstr ""
 
+msgid "invalid formula: %s"
+msgstr ""
+
+msgid "invalid formula %s: not a call"
+msgstr ""
+
+msgid "invalid formula %s: assignment is deprecated"
+msgstr ""
+
+msgid "invalid formula %s: extraneous call to `%s` is deprecated"
+msgstr ""
+
+msgid "invalid formula %s"
+msgstr ""
+
 msgid "no terms component nor attribute"
 msgstr ""
 
 msgid "'termlabels' must be a character vector of length at least one"
+msgstr ""
+
+msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
+msgstr ""
+
+msgid "reformulate"
+msgstr ""
+
+msgid "deprecatedWarning"
 msgstr ""
 
 msgid "'termobj' must be a object of class %s"
@@ -1504,7 +1507,10 @@ msgstr ""
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr ""
 
-msgid "invalid 'contrasts.arg' argument"
+msgid "non-list contrasts argument ignored"
+msgstr ""
+
+msgid "'contrasts.arg' argument must be named"
 msgstr ""
 
 msgid "variable '%s' is absent, its contrast will be ignored"
@@ -1711,10 +1717,10 @@ msgstr ""
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
-msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgid "No p1 in [0, p2] can be found to achieve the desired power"
 msgstr ""
 
-msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr ""
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
@@ -2098,9 +2104,6 @@ msgstr ""
 msgid "'y' is missing for paired test"
 msgstr ""
 
-msgid "data are essentially constant"
-msgstr ""
-
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr ""
 
@@ -2116,10 +2119,16 @@ msgstr ""
 msgid "'start' cannot be after 'end'"
 msgstr ""
 
+msgid "'end' must be a whole number of cycles after 'start'"
+msgstr ""
+
 msgid "no time series supplied"
 msgstr ""
 
 msgid "not all series have the same frequency"
+msgstr ""
+
+msgid "not all series have the same phase"
 msgstr ""
 
 msgid "non-intersecting series"
@@ -2146,7 +2155,7 @@ msgstr ""
 msgid "'xy.labels' must be logical or character"
 msgstr ""
 
-msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
+msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
 msgstr ""
 
 msgid "'frequency' not changed"
@@ -2218,7 +2227,7 @@ msgstr ""
 msgid "'x' and 'w' must have the same length"
 msgstr ""
 
-msgid "not enough (finite) 'x' observations"
+msgid "not enough (non-missing) 'x' observations"
 msgstr ""
 
 msgid "requested conf.level not achievable"

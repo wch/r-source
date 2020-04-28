@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 07:34-0700\n"
+"POT-Creation-Date: 2020-03-24 10:54-0700\n"
 "PO-Revision-Date: 2018-04-16 10:36+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -22,8 +22,8 @@ msgstr ""
 #: io.c:1103 io.c:1104 io.c:1105 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:78
-#: windows/widgets.c:81 windows/widgets.c:86
+#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:79
+#: windows/widgets.c:82 windows/widgets.c:87
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
@@ -98,8 +98,8 @@ msgid "'dec' must be a single character"
 msgstr "'dec' muss ein einzelnes Zeichen sein"
 
 #: io.c:1137
-#, c-format
-msgid "corrupt data frame -- length of column %d does not not match nrows"
+#, fuzzy, c-format
+msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "beschädigter Dataframe -- Länge der Spalte %d entspricht nicht nrows"
 
 #: io.c:1168
@@ -108,7 +108,8 @@ msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "Spalte %s behauptet Faktor zu sein, hat aber keine numerischen Kodes"
 
 #: io.c:1186
-msgid "corrupt matrix -- dims not not match length"
+#, fuzzy
+msgid "corrupt matrix -- dims do not match length"
 msgstr "beschädigte Matrix -- Dimensionen entsprechen nicht der Länge"
 
 #: stubs.c:56
@@ -135,6 +136,11 @@ msgstr "X11 nicht verfügbar"
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "ungültige '%s' Spezifikation"
+
+#: stubs.c:254
+#, c-format
+msgid "'%s' contains missing values"
+msgstr ""
 
 #: utils.c:85
 msgid "'hostname' must be a character vector of length 1"
@@ -205,62 +211,62 @@ msgstr "nicht unterstützte Version von Windows"
 msgid "argument must be a character vector or a raw vector"
 msgstr "Argument muss Zeichenkettenvektor oder Rawvektor sein"
 
-#: windows/util.c:318
+#: windows/util.c:320
 msgid "unable to open the clipboard"
 msgstr "kann Zwischenablage nicht öffnen"
 
-#: windows/util.c:323
+#: windows/util.c:325
 msgid "unable to write to the clipboard"
 msgstr "kann nicht in die Zwischenablage schreiben"
 
-#: windows/util.c:402
+#: windows/util.c:404
 msgid "'title' must be a character string"
 msgstr "'title' muss eine Zeichenkette sein"
 
-#: windows/util.c:411
+#: windows/util.c:413
 msgid "'text' must be a character string"
 msgstr "'text' muss eine Zeichenkette sein"
 
-#: windows/util.c:450
+#: windows/util.c:452
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' muss Länge 1 haben"
 
-#: windows/util.c:563
+#: windows/util.c:565
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' muss eine Liste sein"
 
 # +
-#: windows/util.c:567
+#: windows/util.c:569
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' Element %d ist keine Fenster-Handle"
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one or more"
 msgstr "Wähle ein oder mehrere"
 
-#: windows/widgets.c:108
+#: windows/widgets.c:109
 msgid "Select one"
 msgstr "Wähle eins"
 
-#: windows/widgets.c:182 windows/widgets.c:250
+#: windows/widgets.c:183 windows/widgets.c:251
 msgid "'default' must be a character string"
 msgstr "'default' muss eine Zeichenkette sein"
 
-#: windows/widgets.c:184 windows/widgets.c:252
+#: windows/widgets.c:185 windows/widgets.c:253
 msgid "'default' is overlong"
 msgstr "'default' ist überlang"
 
-#: windows/widgets.c:188 windows/widgets.c:256
+#: windows/widgets.c:189 windows/widgets.c:257
 msgid "'caption' must be a character string"
 msgstr "'caption' muss eine Zeichenkette sein"
 
-#: windows/widgets.c:190
+#: windows/widgets.c:191
 msgid "'multi' must be a logical value"
 msgstr "'multi' muss ein boolescher Wert sein"
 
-#: windows/widgets.c:192
+#: windows/widgets.c:193
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' muss ganzzahlig sein"
