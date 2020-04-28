@@ -38,8 +38,9 @@
 <div class="download">
   <p><a href="@RWVER@-win.exe">Download R-Devel build for Windows</a> <span>(@SIZEMB@ megabytes, 32/64 bit)</span></p>
   <ul>
-    <li>This build of R-Devel uses the gcc gcc 8.3.0 toolchain from rtools40. 
-      For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.</li>
+    <!-- Links to github do not work from frames as used on CRAN  -->
+    <!-- <li>This build of R-Devel uses the gcc gcc 8.3.0 toolchain from rtools40.  -->
+    <!--   For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.</li> -->
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li><a href="NEWS.@RWVER@.html">New features in this version</a></li>
   </ul>
