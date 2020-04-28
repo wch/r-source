@@ -1,5 +1,5 @@
 
-R version 4.0.0 RC (2020-04-16 r78240) -- "Arbor Day"
+R version 4.0.0 Patched (2020-04-28 r78320) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.280   0.053   0.313 
+  0.296   0.044   0.318 

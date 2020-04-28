@@ -1,5 +1,5 @@
 
-R version 4.0.0 RC (2020-04-16 r78240) -- "Arbor Day"
+R version 4.0.0 Patched (2020-04-28 r78320) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1000,5 +1000,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.351 0.011 0.366 0 0 
+Time elapsed:  0.355 0.01 0.37 0 0 
 > 
