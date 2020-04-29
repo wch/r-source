@@ -57,6 +57,10 @@
 
       \item Fix a dozen places (code, examples) as \code{Sys.setlocale()}
       returns the new rather than the previous setting.
+
+      \item Fix for adding two complex \pkg{grid} units via \code{sum()}.
+      Thanks to Gu Zuguang for the report and Thomas Lin Pedersen for
+      the patch.
     }
   }
 }
