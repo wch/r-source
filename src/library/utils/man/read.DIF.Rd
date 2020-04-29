@@ -16,7 +16,7 @@ read.DIF(file, header = FALSE,
          row.names, col.names, as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA, nrows = -1,
          skip = 0, check.names = TRUE, blank.lines.skip = TRUE,
-         stringsAsFactors = default.stringsAsFactors(),
+         stringsAsFactors = FALSE,
          transpose = FALSE, fileEncoding = "")
 }
 \arguments{

@@ -211,7 +211,7 @@ as.data.frame.data.frame <- function(x, row.names = NULL, ...)
 as.data.frame.list <-
     function(x, row.names = NULL, optional = FALSE, ...,
 	     cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
-             stringsAsFactors = default.stringsAsFactors())
+             stringsAsFactors = FALSE)
 {
     ## need to protect names in x.
     ## truncate any of more than 256 (or cut.names) bytes:
@@ -293,7 +293,7 @@ default.stringsAsFactors <- function()
 
 ## in case someone passes 'nm'
 as.data.frame.character <-
-    function(x, ..., stringsAsFactors = default.stringsAsFactors())
+    function(x, ..., stringsAsFactors = FALSE)
 {
     nm <- deparse1(substitute(x))
     if(stringsAsFactors) x <- factor(x)
@@ -303,7 +303,7 @@ as.data.frame.character <-
 }
 
 as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, make.names = TRUE, ...,
-                                 stringsAsFactors = default.stringsAsFactors())
+                                 stringsAsFactors = FALSE)
 {
     d <- dim(x)
     nrows <- d[[1L]]
@@ -434,7 +434,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 data.frame <-
     function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE,
 	     fix.empty.names = TRUE,
-             stringsAsFactors = default.stringsAsFactors())
+             stringsAsFactors = FALSE)
 {
     data.row.names <-
 	if(check.rows && is.null(row.names))
@@ -1259,7 +1259,7 @@ cbind.data.frame <- function(..., deparse.level = 1)
     data.frame(..., check.names = FALSE)
 
 rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
-                             stringsAsFactors = default.stringsAsFactors(),
+                             stringsAsFactors = FALSE,
                              factor.exclude = TRUE)
 {
     match.names <- function(clabs, nmi)

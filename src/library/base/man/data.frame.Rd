@@ -16,7 +16,7 @@
 \usage{
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
            check.names = TRUE, fix.empty.names = TRUE,
-           stringsAsFactors = default.stringsAsFactors())
+           stringsAsFactors = FALSE)
 
 default.stringsAsFactors() # << this is deprecated !
 }
