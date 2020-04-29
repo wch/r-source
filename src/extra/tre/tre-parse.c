@@ -589,22 +589,30 @@ tre_parse_bracket(tre_parse_ctx_t *ctx, tre_ast_node_t **result)
 }
 
 
+// patch from https://github.com/laurikari/tre/issues/55
 /* Parses a positive decimal integer.  Returns -1 if the string does not
    contain a valid number. */
 static int
 tre_parse_int(const tre_char_t **regex, const tre_char_t *regex_end)
 {
   int num = -1;
+  int overflow = 0;
   const tre_char_t *r = *regex;
   while (r < regex_end && *r >= L'0' && *r <= L'9')
     {
       if (num < 0)
 	num = 0;
-      num = num * 10 + *r - L'0';
+      if (num <= (INT_MAX - 9) / 10) {
+         num = num * 10 + *r - L'0';
+      } else {
+          /* This digit could cause an integer overflow. We do not return
+           * directly; instead, consume all remaining digits. */
+          overflow = 1;
+      }
       r++;
     }
   *regex = r;
-  return num;
+  return overflow ? -1 : num;
 }
 
 

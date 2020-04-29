@@ -1061,9 +1061,6 @@ inferred values can be overridden in file @file{config.site} or on the
 @command{configure} command line: user-supplied values will be tested by
 compiling some C++11/14/17/20 code.
 
-@c @R{} versions 3.1.0 to 3.3.3 used @code{CXX1X} rather than @code{CXX11}:
-@c these forms were deprecated in 3.4.4 and removed in 3.6.0.
-
 It may be that there is no suitable flag for C++14/17/20 support with
 the default compiler, in which case a different compiler could be
 selected for @code{CXX14} or @code{CXX17} or @code{CXX20} with its
@@ -1275,8 +1272,8 @@ are tested; XP is known to fail some tests) on @cputype{ix86} and
 @cputype{x86_64} @acronym{CPU}s.
 
 Your file system must allow long file names (as is likely except
-perhaps for some network-mounted systems).  If it doesn't also support
-conversion to short name equivalents (a.k.a. DOS 8.3 names), then R
+perhaps for some network-mounted systems).  If it does not also support
+conversion to short name equivalents (a.k.a. DOS 8.3 names), then @R{}
 @emph{must} be installed in a path that does not contain spaces.
 
 Installation is @emph{via} the installer
@@ -1285,9 +1282,9 @@ follow the instructions.  When installing on a 64-bit version of Windows
 the options will include 32- or 64-bit versions of @R{} (and the default is
 to install both).  You can uninstall @R{} from the Control Panel.
 
-Note that you will be asked to choose a language for installation, and
-that choice applies to both installation and un-installation but not to
-running @R{} itself.
+You will be asked to choose a language for installation: that choice
+applies to both installation and un-installation but not to running @R{}
+itself.
 
 See the @uref{https://CRAN.R-project.org/@/bin/@/windows/@/base/@/rw-FAQ.html, R
 Windows @acronym{FAQ}} for more details on the binary installer.
@@ -1806,9 +1803,9 @@ build systems: a 64-bit build is selected in file @file{MkRules.local}.
 The Windows installer contains a set of test files used when building
 @R{}.
 
-The @code{Rtools} are not needed to run these tests, but more
-comprehensive analysis of errors will be given if @command{diff} is in
-the path (and @code{errorsAreFatal = FALSE} is then not needed below).
+The toolset is not needed to run these tests, but more comprehensive
+analysis of errors will be given if @command{diff} is in the path (and
+@code{errorsAreFatal = FALSE} is then not needed below).
 
 Launch either @code{Rgui} or @code{Rterm}, preferably with
 @option{--vanilla}.  Then run

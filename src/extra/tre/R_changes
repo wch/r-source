@@ -51,3 +51,6 @@ Oct 2014: fixed R bug PR#16009 by copying the class member of a LITERAL
 in tre_copy_ast.
 
 Nov 2014: changed tre_version() to report this is a modified version.
+
+Apr 2020: incorporated a patch to tre-parse.c from
+https://github.com/laurikari/tre/issues/55
