@@ -253,8 +253,15 @@ as.POSIXlt.character <-
 
 as.POSIXlt.numeric <- function(x, tz = "", origin, ...)
 {
-    if(!length(x)) return(as.POSIXlt.character(character(), tz))
-    if(missing(origin)) stop("'origin' must be supplied")
+    if(missing(origin)) {
+        if(!length(x))
+            return(as.POSIXlt.character(character(), tz))        
+        if(!any(is.finite(x)))
+            return(as.POSIXlt.character(rep_len(NA_character_,
+                                                length(x)),
+                                        tz))
+        stop("'origin' must be supplied")
+    }
     as.POSIXlt(as.POSIXct(origin, tz = "UTC", ...) + x, tz = tz)
 }
 
@@ -314,8 +321,13 @@ as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 
 as.POSIXct.numeric <- function(x, tz = "", origin, ...)
 {
-    if(!length(x)) return(.POSIXct(numeric(), tz))
-    if(missing(origin)) stop("'origin' must be supplied")
+    if(missing(origin)) {
+        if(!length(x))
+            return(.POSIXct(numeric(), tz))
+        if(!any(is.finite(x)))
+            return(.POSIXct(x, tz))
+        stop("'origin' must be supplied")
+    }
     .POSIXct(as.POSIXct(origin, tz = "GMT", ...) + x, tz)
 }
 
