@@ -10,9 +10,9 @@
    Find (recursively) dependencies or reverse dependencies of packages.
 }
 \usage{
-package_dependencies(packages = NULL, db = NULL,
-        which = c("Depends", "Imports", "LinkingTo"),
-	recursive = FALSE, reverse = FALSE, verbose = getOption("verbose"))
+package_dependencies(packages = NULL, db = NULL, which = "strong",
+	             recursive = FALSE, reverse = FALSE,
+                     verbose = getOption("verbose"))
 }
 \arguments{
   \item{packages}{a character vector of package names.}
@@ -27,7 +27,9 @@ package_dependencies(packages = NULL, db = NULL,
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
     Character string \code{"all"} is shorthand for that vector,
     character string \code{"most"} for the same vector without
-    \code{"Enhances"}.
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
   }
   \item{recursive}{logical: should (reverse) dependencies of (reverse)
     dependencies (and so on) be included?}

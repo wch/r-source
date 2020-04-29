@@ -319,9 +319,9 @@ function(ap)
 }
 
 package_dependencies <-
-function(packages = NULL, db = NULL,
-         which = c("Depends", "Imports", "LinkingTo"),
-         recursive = FALSE, reverse = FALSE, verbose = getOption("verbose"))
+function(packages = NULL, db = NULL, which = "strong",
+         recursive = FALSE, reverse = FALSE,
+         verbose = getOption("verbose"))
 {
     ## <FIXME>
     ## What about duplicated entries?
@@ -345,12 +345,15 @@ function(packages = NULL, db = NULL,
         }
     }
 
-    if(identical(which, "all"))
+    if(identical(which, "strong"))
         which <-
-            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+            c("Depends", "Imports", "LinkingTo")
     else if(identical(which, "most"))
         which <-
             c("Depends", "Imports", "LinkingTo", "Suggests")
+    else if(identical(which, "all"))
+        which <-
+            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
 
     depends <-
         do.call(Map,
