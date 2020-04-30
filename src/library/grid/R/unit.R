@@ -311,6 +311,7 @@ Summary.unit <- function(..., na.rm=FALSE) {
     if (nMatches != 0) {
         data <- lapply(x, .subset2, 2L)
         amount <- vapply(x, .subset2, numeric(1), 1L)[matchUnits]
+        amount <- rep(amount, lengths(data[matchUnits]))
         matchData <- unclass(unlist(data[matchUnits], recursive = FALSE))
         for (i in seq_along(amount)) {
             if (amount[i] != 1) 
