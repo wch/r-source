@@ -344,7 +344,9 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
                  labels = labels, ...)
             if(axes && xaxt != "n") {
                 axis(2, ...)
-                if(num.br) breaks <- c.Date(res$breaks)
+                if(num.br)
+                    breaks <- as.Date(res$breaks,
+                                      origin = "1970-01-01")
                 axis.Date(1, at = breaks,  format = format, ...)
             }
         }
