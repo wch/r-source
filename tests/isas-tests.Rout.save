@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-04-28 r78320) -- "Arbor Day"
+R version 4.0.0 Patched (2020-05-03 r78344) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -237,10 +237,13 @@ IS: [1] TRUE
 +    } else   !isall.equal(x, res)})
 > f <- try(as.Date( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
+[1] TRUE
 > f <- try(as.POSIXlt( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXlt( f )))
+[1] TRUE
 > f <- try(as.array( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.array( f )))
 [1] TRUE
@@ -551,10 +554,13 @@ Calls: report -> stopifnot
 +    } else   !isall.equal(x, res)})
 > f <- try(as.Date( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
+[1] TRUE
 > f <- try(as.POSIXlt( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXlt( f )))
+[1] TRUE
 > f <- try(as.array( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.array( f )))
 > f <- try(as.call( x ), silent = TRUE)
@@ -2591,6 +2597,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.166 0.021 0.189 0 0 
+Time elapsed:  0.119 0.008 0.128 0 0 
 > 
 > 
