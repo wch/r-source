@@ -264,16 +264,11 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
 }
 
 dependsOnPkgs <-
-function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
+function(pkgs, dependencies = "strong",
          recursive = TRUE, lib.loc = NULL,
          installed = utils::installed.packages(lib.loc, fields = "Enhances"))
 {
-    if(identical(dependencies, "all"))
-        dependencies <-
-            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
-    else if(identical(dependencies, "most"))
-        dependencies <-
-            c("Depends", "Imports", "LinkingTo", "Suggests")
+    dependencies <- .expand_dependency_type_spec(dependencies)
 
     av <- installed[, dependencies, drop = FALSE]
     rn <- as.character(installed[, "Package"])
