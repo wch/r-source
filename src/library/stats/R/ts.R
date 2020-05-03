@@ -49,11 +49,17 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
     if(frequency > 1 && 0 < (d <- abs(frequency - round(frequency))) && d < ts.eps)
 	frequency <- round(frequency)
 
+    ## FIXME: as.numeric
+    if(!missing(start))
+        start <- as.numeric(start)
     if(length(start) > 1L) {
 ## strange: this never checked for < 1!  commented for 1.7.0
 ##	if(start[2L] > frequency) stop("invalid start")
 	start <- start[1L] + (start[2L] - 1)/frequency
     }
+    ## FIXME: as.numeric
+    if(!missing(end))
+        end <- as.numeric(end)
     if(length(end) > 1L) {
 ##	if(end[2L] > frequency) stop("invalid end")
 	end <- end[1L] + (end[2L] - 1)/frequency
@@ -65,6 +71,7 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
 
     if(start > end) stop("'start' cannot be after 'end'")
 
+    ## FIXME: as.numeric
     cycles <- as.numeric((end - start)*frequency) # as.n*(): get rid of date/time
     if(abs(round(cycles) - cycles) > ts.eps * max(cycles, 1))
     	stop("'end' must be a whole number of cycles after 'start'")
