@@ -61,6 +61,9 @@
       \item Fix for adding two complex \pkg{grid} units via \code{sum()}.
       Thanks to Gu Zuguang for the report and Thomas Lin Pedersen for
       the patch.
+
+      \item Fix \code{parallel::mclapply(..., mc.preschedule=FALSE)}
+      to handle raw vector results correctly. \PR{17779}
     }
   }
 }
