@@ -1,7 +1,7 @@
 #  File src/library/tools/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -329,6 +329,38 @@ function(packages = NULL, db = NULL, which = "strong",
 
     if(is.null(db)) db <- utils::available.packages()
 
+    fields <- which <- .expand_dependency_type_spec(which)
+    if(is.character(recursive)) {
+        recursive <- .expand_dependency_type_spec(recursive)
+        if(identical(which, recursive))
+            recursive <- TRUE
+        else
+            fields <- unique(c(fields, recursive))
+    }
+
+    db <- as.data.frame(db[, c("Package", fields), drop = FALSE])
+    ## Avoid recomputing package dependency names in recursive
+    ## invocations.
+    for(f in fields) {
+        if(!is.list(d <- db[[f]]))
+            db[[f]] <- lapply(d, .extract_dependency_package_names)
+    }
+
+    if(is.character(recursive)) {
+        ## Direct dependencies:
+        d_d <- Recall(packages, db, which, FALSE,
+                      reverse, verbose)
+        ## Recursive dependencies of all these:
+        d_r <- Recall(unique(unlist(d_d)), db, recursive, TRUE,
+                      reverse, verbose)
+        ## Now glue together:
+        return(lapply(d_d,
+                      function(p) {
+                          sort(unique(c(p, unlist(d_r[p],
+                                                  use.names = FALSE))))
+                      }))
+    }
+
     ## For given packages which are not found in the db, return "list
     ## NAs" (i.e., NULL entries), as opposed to character() entries
     ## which indicate no dependencies.
@@ -339,40 +371,23 @@ function(packages = NULL, db = NULL, which = "strong",
     out_of_db_packages <- character()
     if(!recursive && !reverse) {
         if(!is.null(packages)) {
-            ind <- match(packages, db[, "Package"], nomatch = 0L)
+            ind <- match(packages, db$Package, nomatch = 0L)
             db <- db[ind, , drop = FALSE]
             out_of_db_packages <- packages[ind == 0L]
         }
     }
 
-    if(identical(which, "strong"))
-        which <-
-            c("Depends", "Imports", "LinkingTo")
-    else if(identical(which, "most"))
-        which <-
-            c("Depends", "Imports", "LinkingTo", "Suggests")
-    else if(identical(which, "all"))
-        which <-
-            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
-
     depends <-
         do.call(Map,
                 c(list("c"),
-                  ## Try to make this work for dbs which are character
-                  ## matrices as from available.packages(), or data
-                  ## frame variants thereof.
-                  lapply(which,
-                         function(f) {
-                             if(is.list(d <- db[, f])) d
-                             else lapply(d,
-                                         .extract_dependency_package_names)
-                         }),
+                  db[which],
                   list(USE.NAMES = FALSE)))
 
+    ## FIXME: better to already do this in the above?
     depends <- lapply(depends, unique)
 
     if(!recursive && !reverse) {
-        names(depends) <- db[, "Package"]
+        names(depends) <- db$Package
         if(length(out_of_db_packages)) {
             depends <-
                 c(depends,
@@ -382,12 +397,12 @@ function(packages = NULL, db = NULL, which = "strong",
         return(depends)
     }
 
-    all_packages <- sort(unique(c(db[, "Package"], unlist(depends))))
+    all_packages <- sort(unique(c(db$Package, unlist(depends))))
 
     if(!recursive) {
         ## Need to invert.
         depends <-
-            split(rep.int(db[, "Package"], lengths(depends)),
+            split(rep.int(db$Package, lengths(depends)),
                   factor(unlist(depends), levels = all_packages))
         if(!is.null(packages)) {
             depends <- depends[match(packages, names(depends))]
@@ -409,7 +424,7 @@ function(packages = NULL, db = NULL, which = "strong",
     ## with i R j and j R k, respectively, and combine these.
     ## This works reasonably well, but of course more efficient
     ## implementations should be possible.
-    matchP <- match(rep.int(db[, "Package"], lengths(depends)),
+    matchP <- match(rep.int(db$Package, lengths(depends)),
 		    all_packages)
     matchD <- match(unlist(depends), all_packages)
     tab <- if(reverse)
@@ -423,7 +438,7 @@ function(packages = NULL, db = NULL, which = "strong",
             packages <- all_packages
             p_L <- seq_along(all_packages)
         } else {
-            packages <- db[, "Package"]
+            packages <- db$Package
             p_L <- match(packages, all_packages)
         }
     } else {
@@ -464,12 +479,29 @@ function(packages = NULL, db = NULL, which = "strong",
     depends
 }
 
+.expand_dependency_type_spec <-
+function(x)
+{
+    if(identical(x, "strong"))
+        c("Depends", "Imports", "LinkingTo")
+    else if(identical(x, "most"))
+        c("Depends", "Imports", "LinkingTo", "Suggests")
+    else if(identical(x, "all"))
+        c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+    else
+        x
+    ## (Could also intersect x with the possible types.)
+}
 
 .extract_dependency_package_names <-
-function(x) {
+function(x)
+{
     ## Assume a character *string*.
     if(is.na(x)) return(character())
-    x <- unlist(strsplit(x, ",[[:space:]]*"))
+    x <- strsplit(x, ",", fixed = TRUE)[[1L]]
+    ## FIXME: The following is much faster on Linux but apparently not
+    ## on Windows:
+    ## x <- sub("(?s)[[:space:]]*([[:alnum:].]+).*", "\\1", x, perl = TRUE)
     x <- sub("[[:space:]]*([[:alnum:].]+).*", "\\1", x)
     x[nzchar(x) & (x != "R")]
 }
