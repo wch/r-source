@@ -109,7 +109,11 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
                             cl1 <- cl[[1L]]
 			    ans <- if (!is.null(cl1) &&
                                        all(vapply(cl, identical, NA,
-                                                  y = cl1)))
+                                                  y = cl1)) &&
+                                       ## FIXME: unlist() currently
+                                       ## turns a list of factors into a
+                                       ## factor but c() does not ...
+                                       !inherits(ans[[1L]], "factor"))
                                        do.call(c, ans)
                                    else
                                        unlist(ans, recursive = FALSE,
