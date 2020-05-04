@@ -1512,7 +1512,8 @@ Windows@footnote{@samp{BWidget} still is on Windows:
 @emph{are} extensions and do need to be declared (and that
 @samp{Tktable} is less widely available than it used to be, including
 not in the main repositories for major Linux distributions).
-@c Not in Fedora since 17, only in launchpad for Ubuntu.
+@c Not in Fedora since 17
+@c 2008 sources at https://sourceforge.net/projects/tktable/files/tktable/2.10/
 @c In May 2020 declared by DALY PhViD RSiena RSurvey dgmb fit4NM
 @c forensim rriskDistributions tcltk2
 
