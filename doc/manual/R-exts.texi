@@ -832,7 +832,7 @@ e.g.@: @samp{MASS (>= 3.1-20)}.
 
 The @samp{Depends} field can also specify a dependence on a certain
 version of @R{} --- e.g., if the package works only with @R{} version
-3.6.0 or later, include @samp{R (>= 3.6)} in the @samp{Depends}
+4.0.0 or later, include @samp{R (>= 4.0)} in the @samp{Depends}
 field. (As here, trailing zeroes can be dropped and it is recommended
 that they are.)  You can also require a certain SVN revision for R-devel
 or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)} requires a
@@ -924,13 +924,12 @@ C which package B suggests or enhances, then package C needs to be in
 the @samp{Suggests} list for package A.  Nor will undeclared uses in
 included files be reported, nor unconditional uses of packages listed
 under @samp{Enhances}.  @command{R CMD check --as-cran} will detect more
-of the subtler uses, especially for re-building of vignettes as from
-@R{} 3.5.0.}  to successfully run @code{R CMD check} on the package must
-be listed in one of @samp{Depends} or @samp{Suggests} or @samp{Imports}.
-Packages used to run examples or tests conditionally (e.g.@: @emph{via}
-@code{if(require(@var{pkgname}))}) should be listed in @samp{Suggests}
-or @samp{Enhances}.  (This allows checkers to ensure that all the
-packages needed for a complete check are installed.)
+of the subtler uses.} to successfully run @code{R CMD check} on the
+package must be listed in one of @samp{Depends} or @samp{Suggests} or
+@samp{Imports}.  Packages used to run examples or tests conditionally
+(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed
+in @samp{Suggests} or @samp{Enhances}.  (This allows checkers to ensure
+that all the packages needed for a complete check are installed.)
 
 @item
 Packages needed to use datasets from the package should be in
