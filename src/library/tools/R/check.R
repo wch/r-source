@@ -4969,7 +4969,8 @@ add_dummies <- function(dir, Log)
                              ## new in gcc 8
                              ": warning: .* \\[-Wcatch-value=\\]",
                              ": warning: .* \\[-Wlto-type-mismatch\\]",
-                             ": warning: .* \\[-Wunused-value\\]",
+                             ## removed 2020-05, nowadays clang only
+                             ## ": warning: .* \\[-Wunused-value\\]",
                              ## warning in g++, fatal in clang++.
                              ": warning: .* \\[-Wnarrowing\\]",
                              ## -pedantic warning in gcc, fatal in clang and ODS
@@ -5037,8 +5038,8 @@ add_dummies <- function(dir, Log)
                 lines <- grep("exceeds maximum object size.*-W(alloc-size-larger-than|stringop-overflow)", lines,
                               value = TRUE, useBytes = TRUE, invert = TRUE)
 
-                ## Filter out boost header warning
-                ex_re <- "BH/include/boost/.*\\[-Wtautological-overlap-compare\\]"
+                ## Filter out boost/armadillo header warnings
+                ex_re <- "(BH/include/boost|RcppArmadillo/include/armadillo_bits)/.*\\[-Wtautological-overlap-compare\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
