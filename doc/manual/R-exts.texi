@@ -1513,7 +1513,11 @@ Windows@footnote{@samp{BWidget} still is on Windows:
 @samp{Tktable} is less widely available than it used to be, including
 not in the main repositories for major Linux distributions).
 @c Not in Fedora since 17, only in launchpad for Ubuntu.
+@c In May 2020 declared by DALY PhViD RSiena RSurvey dgmb fit4NM
+@c forensim rriskDistributions tcltk2
 
+@c In May 2020 declared by FFD GGEBiplotGUI OligoSpecificitySystem
+@c PBSmodelling asbio biplotbootGUI cncaGUI dgmb dpa multibiplotGUI rpanel
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
 fairly easy to do: first find the Tcl/Tk search path:
 
