@@ -26,8 +26,8 @@
       package \pkg{tools} and \code{CRAN.packages()} from \pkg{utils} have
       been removed.
 
-      \item \command{R CMD CXXCPP} is defunct (it was deprecated in @R{}
-      3.6.2).
+      \item \command{R CMD config CXXCPP} is defunct (it was deprecated
+      in @R{} 3.6.2).
     }
   }
 
