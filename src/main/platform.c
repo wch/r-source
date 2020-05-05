@@ -43,6 +43,7 @@
 #include <Rinterface.h>
 #include <Fileio.h>
 #include <ctype.h>			/* toupper */
+#include <float.h> // -> FLT_RADIX
 #include <limits.h>
 #include <string.h>
 #include <stdlib.h>			/* for realpath */

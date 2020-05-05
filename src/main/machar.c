@@ -98,21 +98,22 @@ MACH_NAME(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 {
 	volatile DTYPE a, b, beta, betain, betah, one,
 		t, temp, tempa, temp1, two, y, z, zero;
-	int i, itemp, iz, j, k, mx, nxres;
+	int i, iz, j, k, mx, nxres;
 
 	one = 1;
 	two = one+one;
 	zero = one-one;
 
 		/* determine ibeta, beta ala malcolm. */
-
-	a = one;
+	a = one; // a = <large> = 9.0072e+15 for 'double' is used later
 	do {
 		a = a + a;
 		temp = a + one;
 		temp1 = temp - a;
 	}
 	while(temp1 - one == zero);
+#ifdef _no_longer___did_overflow_ // on IBM PowerPPC ('Power 8')
+	int itemp;
 	b = one;
 	do {
 		b = b + b;
@@ -121,6 +122,9 @@ MACH_NAME(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 	}
 	while (itemp == 0);
 	*ibeta = itemp;
+#else
+	*ibeta = (int) FLT_RADIX;
+#endif
 	beta = *ibeta;
 
 		/* determine it, irnd */

@@ -37,7 +37,7 @@
   %% }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.0 patched}{
+\section{\Rlogo CHANGES IN 4.0.0 patched}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -67,6 +67,10 @@
 
       \item Fix \code{parallel::mclapply(..., mc.preschedule=FALSE)}
       to handle raw vector results correctly. \PR{17779}
+
+      \item Computing the \code{base} value, i.e., 2, \dQuote{everywhere},
+      now uses \code{FLT_RADIX}, as the original \file{machar} code looped
+      indefinitely on the ppc64 architecture for the \code{longdouble} case.
     }
   }
 }
