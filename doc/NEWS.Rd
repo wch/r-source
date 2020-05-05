@@ -11,7 +11,7 @@
     \itemize{
       \item \samp{www.omegahat.net} is no longer one of the repositories
       known to \code{setRepositories()}.   (Nowadays it only provides
-      source packages and is not infrequently unavailable.)
+      source packages and is often unavailable.)
     }
   }
 
@@ -25,6 +25,9 @@
       \item Defunct functions \code{checkNEWS()} and \code{readNEWS()} from
       package \pkg{tools} and \code{CRAN.packages()} from \pkg{utils} have
       been removed.
+
+      \item \command{R CMD CXXCPP} is defunct (it was deprecated in @R{}
+      3.6.2).
     }
   }
 
