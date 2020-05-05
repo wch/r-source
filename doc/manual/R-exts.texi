@@ -4353,6 +4353,19 @@ Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 
 @item
+If your package uses a @file{src/Makefile} file to compile code to be
+linked into @R{}, ensure that it uses exactly the same compiler and flag
+settings that @R{} uses when compiling such code: people often forget
+@samp{PIC} flags.  If @code{R CMD config} is used, this needs something
+like (for C++)
+
+@example
+RBIN = `"$@{R_HOME@}/bin/R"`
+CXX = `$@{RBIN@} CMD config CXX`
+CXXFLAGS = `$@{RBIN@} CMD config CXXFLAGS` `$@{RBIN@} CMD config CXXPICFLAGS`
+@end example
+
+@item
 Bash extensions also need to be avoided in shell scripts, including
 expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
@@ -4363,19 +4376,13 @@ Bourne shells: the @R{} toolset on Windows and some Unix-alike OSes use
 @command{ash} (@uref{https://en.wikipedia.org/@/wiki/@/Almquist_shell}),
 a rather minimal shell with few builtins.  Beware of assuming that all
 the POSIX command-line utilities are available, especially on Windows
-where only a minimal set is provided for use with @R{}.
-@ifset UseExternalXrefs
-(@xref{The command line tools, , The command line tools,
-R-admin, R Installation and Administration}.)
-@end ifset
-One particular issue is the use of @command{echo}, for which two
-behaviours are allowed
+where only a minimal set is provided for use with @R{}.  One particular
+issue is the use of @command{echo}, for which two behaviours are allowed
 (@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
 and both occur as defaults on @R{} platforms: portable applications
-should not use @option{-n} (as the first argument) nor escape
-sequences.  The recommended replacement for @command{echo -n} is the
-command @command{printf}.
-Another common issue is the construction
+should not use @option{-n} (as the first argument) nor escape sequences.
+The recommended replacement for @command{echo -n} is the command
+@command{printf}.  Another common issue is the construction
 @example
 export FOO=value
 @end example
@@ -4781,8 +4788,12 @@ and conditional.
 Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
 example macOS 10.16 has been announced not to have them.  Python 2 has
-passed end-of-life and been removed from some major distributions.  This
-applies also to a Java interpreter (which macOS does not have by default).
+passed end-of-life and been removed from some major distributions.
+
+Command @command{cmake} is not commonly installed, and where it is, it
+might not be on the path.  In particular, the most common location on
+macOS is @file{/Applications/CMake.app/Contents/bin/cmake} and that
+should be looked for if it is not on the path.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
