@@ -12,6 +12,10 @@
       \item \samp{www.omegahat.net} is no longer one of the repositories
       known to \code{setRepositories()}.   (Nowadays it only provides
       source packages and is often unavailable.)
+
+      \item \code{package_dependencies()} (in package \pkg{tools}) can
+      now use different dependency types for direct and recursive
+      dependencies.
     }
   }
 
