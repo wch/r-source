@@ -5354,12 +5354,12 @@ add_dummies <- function(dir, Log)
         desc
     }
 
-    check_CRAN_incoming <- function(localOnly)
+    check_CRAN_incoming <- function(localOnly, pkgSize)
     {
         checkingLog(Log, "CRAN incoming feasibility")
-        res <- .check_package_CRAN_incoming(pkgdir, localOnly)
-        bad <- FALSE
+        res <- .check_package_CRAN_incoming(pkgdir, localOnly, pkgSize)
         if(length(res)) {
+            bad <- FALSE
             out <- format(res)
             if(length(out) == 1L && startsWith(out, "Maintainer: ")) {
                 ## Special-case when there is only the maintainer
@@ -6245,12 +6245,12 @@ add_dummies <- function(dir, Log)
                 summaryLog(Log)
                 do_exit(1L)
             }
-            size <- file.info(pkg)$size
-            Sys.setenv("_R_CHECK_SIZE_OF_TARBALL_" = size)
+            pkg_size <- file.info(pkg)$size
             ## this assumes foo_x.y.tar.gz unpacks to foo, but we are about
             ## to test that.
             pkg <- file.path(dir, pkgname0)
-        }
+        } else
+            pkg_size <- NA
         if (!dir.exists(pkg)) {
             checkingLog(Log, "package directory")
             errorLog(Log,
@@ -6298,11 +6298,9 @@ add_dummies <- function(dir, Log)
         else if (length(opts) == 1L)
             messageLog(Log, "using option ", sQuote(opts))
 
-        if(identical(config_val_to_logical(Sys.getenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_",
-                                                      "FALSE")),
-                     TRUE)) {
+        if(isTRUE(config_val_to_logical(Sys.getenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_",
+                                                   "FALSE"))))
             stop_on_test_error <- FALSE
-        }
 
         if (!nzchar(libdir)) { # otherwise have set R_LIBS above
             libdir <- pkgoutdir
@@ -6364,7 +6362,7 @@ add_dummies <- function(dir, Log)
             check_incoming_remote <- if(check_incoming_remote == "NA") as_cran else {
                 config_val_to_logical(check_incoming_remote)
             }
-            if (check_incoming) check_CRAN_incoming(!check_incoming_remote)
+            if (check_incoming) check_CRAN_incoming(!check_incoming_remote, pkg_size)
 
             ## <NOTE>
             ## We want to check for dependencies early, since missing

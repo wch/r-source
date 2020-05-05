@@ -6878,7 +6878,7 @@ function(x, ...)
 ## These are all done first.
 
 .check_package_CRAN_incoming <-
-function(dir, localOnly = FALSE)
+function(dir, localOnly = FALSE, pkgSize = NA)
 {
     out <- list()
     class(out) <- "check_package_CRAN_incoming"
@@ -7243,9 +7243,9 @@ function(dir, localOnly = FALSE)
         if(inherits(cfmt, "condition"))
             out$citation_problem_when_formatting <-
                 conditionMessage(cfmt)
-
         out
     }
+
     if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
         cinfo <- .check_citation_for_CRAN(cfile, meta)
         if(length(cinfo))
@@ -7433,9 +7433,8 @@ function(dir, localOnly = FALSE)
             out$R_files_set_random_seed <- basename(fp)
     }
 
-    size <- Sys.getenv("_R_CHECK_SIZE_OF_TARBALL_",
-                       unset = NA_character_)
-    if(!is.na(size) && (as.integer(size) > 5000000))
+    if(!is.na(size <- as.numeric(pkgSize)) &&
+       size > Sys.getenv("_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_", unset = 5e6))
         out$size_of_tarball <- size
 
     ## Check URLs.

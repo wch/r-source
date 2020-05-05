@@ -16,6 +16,10 @@
       \item \code{package_dependencies()} (in package \pkg{tools}) can
       now use different dependency types for direct and recursive
       dependencies.
+
+      \item Size of tarball checking in \command{R CMD check --as-cran <pkg>}
+      may be tweaked via new \env{_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_},
+      as suggested in \PR{17777} by Jan Gorecki.
     }
   }
 
