@@ -333,6 +333,21 @@ function(packages = NULL, db = NULL, which = "strong",
             fields <- unique(c(fields, recursive))
     }
 
+    ## For given packages which are not found in the db, return "list
+    ## NAs" (i.e., NULL entries), as opposed to character() entries
+    ## which indicate no dependencies.
+    out_of_db_packages <- character()
+
+    ## For forward non-recursive depends, we can simplify matters by
+    ## subscripting the db right away---modulo boundary cases.
+    if(!is.character(recursive) && !recursive && !reverse) {
+        if(!is.null(packages)) {
+            ind <- match(packages, db[, "Package"], nomatch = 0L)
+            db <- db[ind, , drop = FALSE]
+            out_of_db_packages <- packages[ind == 0L]
+        }
+    }
+
     db <- as.data.frame(db[, c("Package", fields), drop = FALSE])
     ## Avoid recomputing package dependency names in recursive
     ## invocations.
@@ -356,29 +371,12 @@ function(packages = NULL, db = NULL, which = "strong",
                       }))
     }
 
-    ## For given packages which are not found in the db, return "list
-    ## NAs" (i.e., NULL entries), as opposed to character() entries
-    ## which indicate no dependencies.
-
-    ## For forward non-recursive depends, we can simplify matters by
-    ## subscripting the db right away---modulo boundary cases.
-
-    out_of_db_packages <- character()
-    if(!recursive && !reverse) {
-        if(!is.null(packages)) {
-            ind <- match(packages, db$Package, nomatch = 0L)
-            db <- db[ind, , drop = FALSE]
-            out_of_db_packages <- packages[ind == 0L]
-        }
-    }
-
     depends <-
         do.call(Map,
                 c(list("c"),
                   db[which],
                   list(USE.NAMES = FALSE)))
 
-    ## FIXME: better to already do this in the above?
     depends <- lapply(depends, unique)
 
     if(!recursive && !reverse) {
