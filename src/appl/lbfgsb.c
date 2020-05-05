@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2019 The R Core Team
+ *  Copyright (C) 2000-2020 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3556,9 +3556,9 @@ static void prn3lb(int n, double *x, double *f, char *task, int iprint,
 	case -2: Rprintf("Matrix in 2st Cholesky factorization in formk is not Pos. Def."); break;
 	case -3: Rprintf("Matrix in the Cholesky factorization in formt is not Pos. Def."); break;
 	case -4: Rprintf("Derivative >= 0, backtracking line search impossible."); break;
-	case -5: Rprintf("l(%d) > u(%d).  No feasible solution", k, k); break;
+	case -5: Rprintf("Warning:  more than 10 function and gradient evaluations\n   in the last line search\n"); break;
 	case -6: Rprintf("Input nbd(%d) is invalid", k); break;
-	case -7: Rprintf("Warning:  more than 10 function and gradient evaluations\n   in the last line search\n"); break;
+	case -7: Rprintf("l(%d) > u(%d).  No feasible solution", k, k); break;
 	case -8: Rprintf("The triangular system is singular."); break;
 	case -9: Rprintf("%s\n%s\n", "Line search cannot locate an adequate point after 20 function", "and gradient evaluations"); break;
 	default: break;
