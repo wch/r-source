@@ -1008,7 +1008,7 @@ compareVersion <- function(a, b)
     ## returns a character vector of all the package dependencies mentioned
     x <- x[!is.na(x)]
     if(!length(x)) return(x)
-    x <- unlist(strsplit(x, ","))
+    x <- unlist(strsplit(x, ",", fixed = TRUE), use.names = FALSE)
     unique(sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , x))
 }
 
