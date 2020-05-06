@@ -4361,8 +4361,8 @@ like (for C++)
 
 @example
 RBIN = `"$@{R_HOME@}/bin/R"`
-CXX = `$@{RBIN@} CMD config CXX`
-CXXFLAGS = `$@{RBIN@} CMD config CXXFLAGS` `$@{RBIN@} CMD config CXXPICFLAGS`
+CXX = `"$@{RBIN@}" CMD config CXX`
+CXXFLAGS = `"$@{RBIN@}" CMD config CXXFLAGS` `"$@{RBIN@}" CMD config CXXPICFLAGS`
 @end example
 
 @item
@@ -4372,27 +4372,32 @@ Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
 in the AT&T Bourne shell used on Solaris 10/11, even though they are in
 the POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.}
-Bourne shells: the @R{} toolset on Windows and some Unix-alike OSes use
+Bourne shells: the previous @R{} toolset on Windows@footnote{as from
+@R{} 4.0.0 the default is @command{bash}.} and some Unix-alike OSes use
 @command{ash} (@uref{https://en.wikipedia.org/@/wiki/@/Almquist_shell}),
-a rather minimal shell with few builtins.  Beware of assuming that all
-the POSIX command-line utilities are available, especially on Windows
-where only a minimal set is provided for use with @R{}.  One particular
-issue is the use of @command{echo}, for which two behaviours are allowed
+a `slim' shell with few builtins or variants such as @command{dash}.
+Beware of assuming that all the POSIX command-line utilities are
+available, especially on Windows where only a subset (which has changed
+by version of @file{Rtools}) is provided for use with @R{}.  One
+particular issue is the use of @command{echo}, for which two behaviours
+are allowed
 (@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
-and both occur as defaults on @R{} platforms: portable applications
-should not use @option{-n} (as the first argument) nor escape sequences.
-The recommended replacement for @command{echo -n} is the command
-@command{printf}.  Another common issue is the construction
+and both have occurred as defaults on @R{} platforms: portable
+applications should use neither @option{-n} (as the first argument) nor
+escape sequences.  The recommended replacement for @command{echo -n} is
+the command @command{printf}.  Another common issue is the construction
 @example
 export FOO=value
 @end example
 @noindent
-which is bash-specific (first set the variable then export it by name).
+which is @command{bash}-specific (first set the variable then export it
+by name).
 
-Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not
-portable: @code{-f} is normally what is intended.  Flags @option{-a} and
-@option{-o} are nowadays declared obsolescent by POSIX and should not be
-used.
+Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not fully
+portable@footnote{it was not in the Bourne shell, and is not supported
+by Solaris 10.}: @code{-f} is normally what is intended.  Flags
+@option{-a} and @option{-o} are nowadays declared obsolescent by POSIX
+and should not be used.
 
 Use of `brace expansion', e.g.,
 @example
@@ -4407,7 +4412,8 @@ POSIX and not supported on all the platforms @R{} is used on.
 On macOS Catalina which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
-for accounts ported from an earlier version it is usually @command{bash}).
+for accounts ported from an earlier version it is usually
+@command{bash}).
 
 @item
 Make use of the abilities of your compilers to check the
@@ -5212,6 +5218,11 @@ out-of-order declarations: in standard-conformant Fortran variables must
 be declared (explicitly or implicitly) before use in other declarations
 such as dimensions.
 
+GNU Fortran 10 gives a compilation error for the previously widespread
+practice of passing a Fortran array element where an array is expected,
+or a scalar instead of a length-one array.  See
+@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.
+
 @item
 Including C-style headers in C++ code is not portable.  Including the
 legacy header@footnote{which often is the same as the header included by
@@ -5468,10 +5479,11 @@ of `tentative definitions' where global C variables are defined without
 an initializer.  Traditionally the linker resolves all tentative
 definitions of the same variable in different object files to the same
 object, or to a non-tentative definition.  However,
-@command{gcc}@tie{}10 has changed its default so that tentative
-definitions cannot be merged and the linker will give an error if the
-same variable is defined in more than one object file.  To avoid this,
-all but one of the C source files should declare the variable
+@command{gcc}@tie{}10 has changed its default@footnote{see
+@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.} so that
+tentative definitions cannot be merged and the linker will give an error
+if the same variable is defined in more than one object file.  To avoid
+this, all but one of the C source files should declare the variable
 @code{extern} --- which means that any such variables included in header
 files need to be declared @code{extern}.  A commonly used idiom
 (including by @R{} itself) is to define all global variables as

@@ -4168,15 +4168,10 @@ Some of the Fortran code makes use of @code{DOUBLE COMPLEX} and
 well as its equivalence to the @code{Rcomplex} C structure defined in
 @file{R_ext/Complex.h}.
 
-Pre-release versions of @command{gfortran}@tie{}10 give a compilation
-error for the previously allowed (without even a warning) widespread
-practice of passing a Fortran array element where an array is expected,
-or a scalar instead of a length-one array.  To continue to allow this
-(with a warning), add @option{-fallow-argument-mismatch}@footnote{At the
-time of writing using this with @option{-pedantic} still gave an error.
-@uref{https://gcc.gnu.org/@/onlinedocs/@/gfortran/@/Fortran-Dialect-Options.html}
-says this argument is `strongly discouraged' but it is needed for legacy
-code.} to @code{FFLAGS}.
+@command{gfortran}@tie{}10 by default gives a compilation error for the
+previously widespread practice of passing a Fortran array element where
+an array is expected, or a scalar instead of a length-one array.  See
+@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.
 
 @node Compile and load flags, Maintainer mode, Using Fortran, Configuration on a Unix-alike
 @section Compile and load flags
