@@ -1,7 +1,7 @@
 % File src/library/base/man/mapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
-% Copyright 2002-2010 The R Foundation
+% Copyright 1995-2020 R Core Team
+% Copyright 2002-2020 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{mapply}
@@ -25,9 +25,8 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
   \item{SIMPLIFY}{logical or character string; attempt to reduce the
     result to a vector, matrix or higher dimensional array; see
     the \code{simplify} argument of \code{\link{sapply}}.}
-  \item{USE.NAMES}{logical; use names if the first \dots argument has
-    names, or if it is a character vector, use that character vector as
-    the names.}
+  \item{USE.NAMES}{logical; use the names of the first \dots argument, or
+    if that is an unnamed character vector, use that vector as the names.}
 }
 \details{
   \code{mapply} calls \code{FUN} for the values of \code{\dots}
