@@ -517,8 +517,7 @@ function(package, dir, lib.loc = NULL,
         ## redefinitions obtained by methods::rematchDefinition().
         ## </NOTE>
         check_S4_methods <-
-            !identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
-                       FALSE)
+            !isFALSE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
         if(check_S4_methods) {
             unRematchDef <- methods::unRematchDefinition
             get_formals_from_method_definition <- function(m)
@@ -7434,7 +7433,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     }
 
     if(!is.na(size <- as.numeric(pkgSize)) &&
-       size > Sys.getenv("_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_", unset = 5e6))
+       size > as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_",
+                                    unset = "5e6")))
         out$size_of_tarball <- size
 
     ## Check URLs.
