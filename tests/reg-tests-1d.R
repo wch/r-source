@@ -538,17 +538,18 @@ stopifnot(is.null(attributes(body(g)[[3L]][[4L]])))
 
 ## pmin/pmax of ordered factors -- broken in R 3.3.2  [PR #17195]
 of <- ordered(c(1,5,6))
+asI <- as.integer # < shorter code
 set.seed(6); rof <- sample(of, 12, replace=TRUE)
 stopifnot(exprs = {
-    identical(pmax(rof, of), ordered(pmax(c(rof), c(of)), labels=levels(rof)) -> pmar)
+    identical(pmax(rof, of), ordered(pmax(asI(rof), asI(of)), labels=levels(rof)) -> pmar)
     identical(pmax(of, rof), pmar)
-    identical(pmin(rof, of), ordered(pmin(c(rof), c(of)), labels=levels(rof)) -> pmir)
+    identical(pmin(rof, of), ordered(pmin(asI(rof), asI(of)), labels=levels(rof)) -> pmir)
     identical(pmin(of, rof), pmir)
-    identical(pmin(rof, 5), ordered(pmin(c(rof), 2), levels=1:3, labels=levels(rof)))
-    identical(pmax(rof, 6), ordered(pmax(c(rof), 3), levels=1:3, labels=levels(rof)))
+    identical(pmin(rof, 5), ordered(pmin(asI(rof), 2), levels=1:3, labels=levels(rof)))
+    identical(pmax(rof, 6), ordered(pmax(asI(rof), 3), levels=1:3, labels=levels(rof)))
     identical(pmax(rof, 1), rof)
     identical(pmin(rof, 6), rof)
-    identical(pmax(of, 5, rof), ordered(pmax(c(of),2L,c(rof)), levels=1:3,
+    identical(pmax(of, 5, rof), ordered(pmax(asI(of),2L,asI(rof)), levels=1:3,
                                         labels=levels(of)))
 })
 ## these were "always" true .. but may change (FIXME ?)
@@ -3965,8 +3966,10 @@ cfL <- coef(fmL <- mkAov(nLng)); colnames(cfL[[1]]) <- vnms
 stopifnot(all.equal(cf1, cfL))
 ## mkAov(nLng)  failed in R <= 4.0.0
 
+
 ## UTF8 validity checking internal in R (from PCRE, PR#17755)
 stopifnot(identical(validUTF8('\ud800'), FALSE))
+
 
 
 ## keep at end
