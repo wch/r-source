@@ -20,7 +20,8 @@ write_PACKAGES <-
 function(dir = ".", fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-         latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz")
+         latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz",
+         validate = FALSE)
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
@@ -48,7 +49,7 @@ function(dir = ".", fields = NULL,
     for(path in paths) {
         this <- if(nzchar(path)) file.path(dir, path) else dir
         desc <- .build_repository_package_db(this, fields, type, verbose,
-                                             unpacked)
+                                             unpacked, validate)
         desc <- .process_repository_package_db_to_matrix(desc,
                                                          path,
                                                          addFiles,
@@ -134,27 +135,29 @@ function(desc, path, addFiles, addPaths, latestOnly)
 function(dir, fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = getOption("verbose"),
-         unpacked = FALSE)
+         unpacked = FALSE, validate = FALSE)
 {
     if(unpacked)
         return(.build_repository_package_db_from_source_dirs(dir,
                                                              fields,
-                                                             verbose))
+                                                             verbose,
+                                                             validate))
 
        package_pattern <- .get_pkg_file_pattern(type)
     files <- list.files(dir, pattern = package_pattern, full.names = TRUE)
 
     if(!length(files))
         return(list())
-    db = .process_package_files_for_repository_db(files,
-                                                  type, 
-                                                  fields,
-                                                  verbose)
+    db <- .process_package_files_for_repository_db(files,
+                                                   type, 
+                                                   fields,
+                                                   verbose,
+                                                   validate)
     db
 }
 
 .process_package_files_for_repository_db <-
-    function(files, type, fields, verbose)
+function(files, type, fields, verbose, validate = FALSE)
 {
 
     files <- normalizePath(files, mustWork=TRUE) # files comes from list.files, mustWork ok
@@ -202,6 +205,22 @@ function(dir, fields = NULL,
                 temp <- tryCatch(read.dcf(p, fields = fields)[1L, ],
                                  error = identity)
                 if(!inherits(temp, "error")) {
+                    if(validate) {
+                        ## .check_package_description() by default goes via
+                        ## .read_description() which re-encodes and insists on a
+                        ## single entry unlike the above read.dcf() call.
+                        ok <- .check_package_description(db = temp[!is.na(temp)])
+                        ## FIXME: no format.check_package_description yet.
+                        if(any(as.integer(lengths(ok)) > 0L)) {
+                            message(paste(gettextf("Invalid DESCRIPTION file for package %s",
+                                                   sQuote(basename(dirname(p)))),
+                                          paste(.eval_with_capture(print(ok))$output,
+                                                collapse = "\n"),
+                                          sep = "\n\n"),
+                                    domain = NA)
+                            next
+                        }
+                    }
                     if("NeedsCompilation" %in% fields &&
                        is.na(temp["NeedsCompilation"])) {
                         l <- utils::untar(files[i], list = TRUE)
@@ -226,10 +245,9 @@ function(dir, fields = NULL,
     db
 }
 
-    
-
 .build_repository_package_db_from_source_dirs <-
-function(dir, fields = NULL, verbose = getOption("verbose"))
+function(dir, fields = NULL, verbose = getOption("verbose"),
+         validate = FALSE)
 {
     dir <- file_path_as_absolute(dir)
     fields <- unique(c(.get_standard_repository_db_fields(), fields))
@@ -244,6 +262,23 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
                                   fields = fields)[1L, ],
                          error = identity)
         if(!inherits(temp, "error")) {
+            if(validate) {
+                ## .check_package_description() by default goes via
+                ## .read_description() which re-encodes and insists on a
+                ## single entry unlike the above read.dcf() call.
+                ok <- .check_package_description(db = temp[!is.na(temp)])
+                ## FIXME: no format.check_package_description yet.
+                if(any(as.integer(lengths(ok)) > 0L)) {
+                    warning(paste(gettextf("Invalid DESCRIPTION file for package %s",
+                                           sQuote(basename(paths[i]))),
+                                  paste(.eval_with_capture(print(ok))$output,
+                                        collapse = "\n"),
+                                  sep = "\n\n"),
+                            domain = NA,
+                            call. = FALSE)
+                    next
+                }
+            }
             if(is.na(temp["NeedsCompilation"])) {
                 temp["NeedsCompilation"] <-
                     if(dir.exists(file.path(paths[i], "src"))) "yes" else "no"

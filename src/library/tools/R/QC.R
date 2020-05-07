@@ -3281,10 +3281,12 @@ function(x, ...)
 ### * .check_package_description
 
 .check_package_description <-
-function(dfile, strict = FALSE)
+function(dfile, strict = FALSE, db = NULL)
 {
-    dfile <- file_path_as_absolute(dfile)
-    db <- .read_description(dfile)
+    if(is.null(db)) {
+        dfile <- file_path_as_absolute(dfile)
+        db <- .read_description(dfile)
+    }
 
     standard_package_names <- .get_standard_package_names()
 

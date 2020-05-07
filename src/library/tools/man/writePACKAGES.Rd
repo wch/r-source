@@ -14,7 +14,8 @@
 write_PACKAGES(dir = ".", fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
                verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-               latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz")
+               latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz",
+               validate = FALSE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -58,6 +59,9 @@ write_PACKAGES(dir = ".", fields = NULL,
   \item{rds_compress}{The type of compression to be used for
     \file{PACKAGES.rds}: see \code{\link{saveRDS}}.  The default is the
     one found to give maximal compression, and is as used on \acronym{CRAN}.}
+  \item{validate}{a logical indicating whether \file{DESCRIPTION} files
+    should be validated, and the corresponding packages skipped in case
+    this finds problems.}
 }
 \details{
   \code{write_PACKAGES} scans the named directory for R packages,
