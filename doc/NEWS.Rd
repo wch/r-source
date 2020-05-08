@@ -35,7 +35,7 @@
       been removed.
 
       \item \command{R CMD config CXXCPP} is defunct (it was deprecated
-      in @R{} 3.6.2).
+      in \R{} 3.6.2).
     }
   }
 
