@@ -18,7 +18,8 @@ HersheyLabel <- function(x, y=unit(.5, "npc")) {
 ## Simple linear gradient on grob
 grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient()))
-HersheyLabel("default linear gradient")
+HersheyLabel("default linear gradient
+black bottom-left to white top-right")
 
 ## Test linearGradient() arguments
 grid.newpage()
@@ -27,7 +28,7 @@ grid.rect(gp=gpar(fill=linearGradient(c("red", "yellow", "red"),
                                       x1=.5, y1=unit(1, "in"), 
                                       x2=.5, y2=1,
                                       extend="none")))
-HersheyLabel("linear gradient
+HersheyLabel("vertical linear gradient
 1 inch from bottom
 red-yellow-red")
 
@@ -36,14 +37,14 @@ grid.newpage()
 grid.rect(width=.5, height=.5,
           gp=gpar(fill=linearGradient()))
 HersheyLabel("gradient on rect
-rect half height/width")
+black bottom-left to white top-right OF RECT")
 
 ## Gradient on viewport
 grid.newpage()
 pushViewport(viewport(gp=gpar(fill=linearGradient())))
 grid.rect()
-HersheyLabel("default linear gradient
-on viewport")
+HersheyLabel("default linear gradient on viewport
+black bottom-left to white top-right")
 
 ## Gradient relative to viewport
 grid.newpage()
@@ -51,14 +52,17 @@ pushViewport(viewport(gp=gpar(fill=linearGradient())))
 grid.rect(width=.5, height=.5)
 HersheyLabel("linear gradient on viewport
 viewport whole page
-rect half height/width")
+rect half height/width
+darker grey (not black) bottom-left OF RECT
+lighter grey (not white) top-right OF RECT")
 
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient())))
 grid.rect()
 HersheyLabel("linear gradient on viewport
 viewport half height/width
-rect whole viewport")
+rect whole viewport
+black bottom-left to white top-right OF RECT")
 
 ## Inherited gradient on viewport
 ## (should be relative to first, larger viewport)
@@ -69,7 +73,9 @@ grid.rect()
 HersheyLabel("gradient on viewport
 viewport whole page
 nested viewport half height/width
-rect whole viewport")
+rect whole viewport
+darker grey (not black) bottom-left OF RECT
+lighter grey (not white) top-right OF RECT")
 
 ## Restore of gradient (just like any other gpar)
 grid.newpage()
@@ -81,25 +87,26 @@ popViewport()
 grid.rect(x=.8, width=.2, height=.5)
 HersheyLabel("gradient on viewport
 viewport whole page
-rect left third (gradient)
+rect left third (gradient from whole page)
 nested viewport whole page
 nested viewport green fill
 rect centre (green)
 pop to first viewport
-rect right third (gradient)")
+rect right third (gradient from whole page)")
 
 ## Translucent gradient
 grid.newpage()
 grid.text("Reveal", gp=gpar(fontface="bold", cex=3))
 grid.rect(gp=gpar(fill=linearGradient(c("white", "transparent"),
-                                      y1=.5, y2=.5)))
+                                      x1=.4, x2=.6, y1=.5, y2=.5)))
 HersheyLabel("gradient from white to transparent
 over text", y=.1)
 
 ## Radial gradient
 grid.newpage()
 grid.rect(gp=gpar(fill=radialGradient()))
-HersheyLabel("default radial gradient")
+HersheyLabel("default radial gradient
+black centre to white radius", y=.1)
 
 ## Test radialGradient() arguments
 grid.newpage()
@@ -113,19 +120,22 @@ start centre top-right")
 grid.newpage()
 grid.draw(gTree(children=gList(rectGrob(gp=gpar(fill=linearGradient())))))
 HersheyLabel("gTree with rect child
-gradient on rect")
+gradient on rect
+black bottom-left to white top-right")
 
 grid.newpage()
 grid.draw(gTree(children=gList(rectGrob()), gp=gpar(fill=linearGradient())))
 HersheyLabel("gTree with rect child
-gradient on gTree")
+gradient on gTree
+black bottom-left to white top-right")
 
 ## Rotated gradient
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, angle=45,
                       gp=gpar(fill=linearGradient())))
 grid.rect()
-HersheyLabel("rotated gradient")
+HersheyLabel("rotated gradient
+black bottom-left to white top-right OF RECT")
 
 ######################################
 ## Tests of replaying graphics engine display list
@@ -134,23 +144,27 @@ HersheyLabel("rotated gradient")
 grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient()))
 HersheyLabel("default gradient
-(for resizing)")
+(for resizing)
+black bottom-left to white top-right")
 
 grid.newpage()
 pushViewport(viewport(gp=gpar(fill=linearGradient())))
 grid.rect()
 HersheyLabel("gradient on viewport
-(for resizing)")
+(for resizing)
+black bottom-left to white top-right")
 
 ## Copy to new graphics device
 grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient()))
 x <- recordPlot()
 HersheyLabel("default gradient
-for recordPlot()")
+for recordPlot()
+black bottom-left to white top-right")
 replayPlot(x)
 HersheyLabel("default gradient
-from replayPlot()")
+from replayPlot()
+black bottom-left to white top-right")
 ## (Resize that as well if you like)
 
 grid.newpage()
@@ -158,10 +172,12 @@ pushViewport(viewport(gp=gpar(fill=linearGradient())))
 grid.rect()
 x <- recordPlot()
 HersheyLabel("gradient on viewport
-for recordPlot()")
+for recordPlot()
+black bottom-left to white top-right")
 replayPlot(x)
 HersheyLabel("gradient on viewport
-from replayPlot()")
+from replayPlot()
+black bottom-left to white top-right")
 
 ## Replay on new device with gradient already defined
 ## (watch out for recorded grob using existing gradient)
@@ -169,9 +185,11 @@ grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient()))
 x <- recordPlot()
 HersheyLabel("default gradient
-for recordPlot()")
+for recordPlot()
+black bottom-left to white top-right")
 grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient(c("white", "red"))))
+HersheyLabel("new rect with new gradient")
 replayPlot(x)
 HersheyLabel("default gradient
 from replayPlot()
@@ -188,6 +206,7 @@ for recordPlot()")
 grid.newpage()
 pushViewport(viewport(gp=gpar(fill=linearGradient(c("white", "red")))))
 grid.rect()
+HersheyLabel("new viewport with new gradient")
 replayPlot(x)
 HersheyLabel("gradient on viewport
 from replayPlot()
@@ -206,9 +225,9 @@ to add gradient", y=.1)
 
 grid.newpage()
 grid.rect(gp=gpar(fill=linearGradient()))
+HersheyLabel("rect with gradient
+(for grab)")
 x <- grid.grab()
-HersheyLabel("default gradient
-for grid.grab()")
 grid.newpage()
 grid.draw(x)
 HersheyLabel("default gradient
@@ -217,10 +236,10 @@ from grid.grab()")
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient())))
 grid.rect()
-x <- grid.grab()
 HersheyLabel("gradient on viewport
 viewport half height/width
 for grid.grab")
+x <- grid.grab()
 grid.newpage()
 grid.draw(x)
 HersheyLabel("gradient on viewport
@@ -238,49 +257,58 @@ trace(grid:::resolveFill.GridGrobPattern, print=FALSE,
       function(...) cat("*** RESOLVE:  Grob pattern resolved\n"))
 
 ## ONCE for rect grob
-cat("*** RESOLVE:  ONE resolve for rect grob with gradient\n")
+traceHead <- "ONE resolve for rect grob with gradient"
 grid.newpage()
-grid.rect(gp=gpar(fill=linearGradient()))
+traceOutput <- capture.output(grid.rect(gp=gpar(fill=linearGradient())))
 HersheyLabel("default gradient
-for tracing")
+for tracing", y=.9)
+HersheyLabel(paste(traceHead, paste(traceOutput, collapse="\n"), sep="\n"))
+             
 
 ## ONCE for multiple rects from single grob
-cat("*** RESOLVE:  ONE resolve for multiple rects from rect grob with gradient\n")
+traceHead <- "ONE resolve for multiple rects from rect grob with gradient"
 grid.newpage()
-grid.rect(x=1:5/6, y=1:5/6, width=1/8, height=1/8,
-          gp=gpar(fill=linearGradient()))
+traceOutput <- capture.output(grid.rect(x=1:5/6, y=1:5/6, width=1/8, height=1/8,
+                                        gp=gpar(fill=linearGradient())))
 HersheyLabel("gradient on five rects
-for tracing")
+for tracing", y=.9)
+HersheyLabel(paste(traceHead, paste(traceOutput, collapse="\n"), sep="\n"))
 
 ## ONCE for viewport with rect
-cat("*** RESOLVE:  ONE resolve for rect grob in viewport with gradient\n")
+traceHead <- "ONE resolve for rect grob in viewport with gradient"
 grid.newpage()
-pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient())))
-grid.rect()
+traceOutput <- capture.output({
+    pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient())))
+    grid.rect()
+})
 HersheyLabel("gradient on viewport
 viewport half height/width
-for tracing")
+for tracing", y=.8)
+HersheyLabel(paste(traceHead, paste(traceOutput, collapse="\n"), sep="\n"))
 
 ## ONCE for viewport with rect, revisiting multiple times
-cat("*** RESOLVE:  ONE resolve for rect grob in viewport with gradient, plus nested viewport, plus viewport revisited\n")
+traceHead <- "ONE resolve for rect grob in viewport with gradient\nplus nested viewport\nplus viewport revisited"
 grid.newpage()
-pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient()),
-                      name="vp"))
-grid.rect(gp=gpar(lwd=8))
-pushViewport(viewport(width=.5, height=.5))
-grid.rect()
-upViewport()
-grid.rect(gp=gpar(col="red", lwd=4))
-upViewport()
-downViewport("vp")
-grid.rect(gp=gpar(col="blue", lwd=2))
+traceOutput <- capture.output({
+    pushViewport(viewport(width=.5, height=.5, gp=gpar(fill=linearGradient()),
+                          name="vp"))
+    grid.rect(gp=gpar(lwd=8))
+    pushViewport(viewport(width=.5, height=.5))
+    grid.rect()
+    upViewport()
+    grid.rect(gp=gpar(col="red", lwd=4))
+    upViewport()
+    downViewport("vp")
+    grid.rect(gp=gpar(col="blue", lwd=2))
+})
 HersheyLabel("gradient on viewport
 viewport half width/height
 rect (thick black border)
 nested viewport (inherits gradient)
 rect (medium red border)
 navigate to original viewport
-rect (thin blue border)")
+rect (thin blue border)", y=.9)
+HersheyLabel(paste(traceHead, paste(traceOutput, collapse="\n"), sep="\n"))
 
 untrace(grid:::resolveFill.GridPattern)
 untrace(grid:::resolveFill.GridGrobPattern)

@@ -5,7 +5,7 @@ library(grid)
 grid.newpage()
 pushViewport(viewport(clip=circleGrob()))
 grid.rect(gp=gpar(fill="grey"))
-grid.text("push clipping path
+grid.text("push circle clipping path
 rect
 grey circle")
 
@@ -22,7 +22,7 @@ grid.newpage()
 pushViewport(viewport(clip=circleGrob(1:2/3, r=unit(.5, "in"))))
 grid.rect(gp=gpar(fill="grey"))
 popViewport()
-grid.text("push clipping path
+grid.text("push two circles clipping path
 rect
 two circles")
     
@@ -43,7 +43,7 @@ grid.circle(r=.6, gp=gpar(fill="grey"))
 grid.text("push rotated viewport
 with clipping path
 circle
-squared circle")
+square-sided circle")
 
 ## Clipping gradient output
 ## (gradient on viewport)
@@ -53,7 +53,7 @@ pushViewport(viewport(clip=circleGrob(1:2/3, r=unit(.5, "in")),
 grid.rect()
 popViewport()
 grid.text("push clipping path
-and gradient on viewport
+gradient on viewport
 two circles (one gradient)")
 
 ## Clipping gradient output
@@ -96,11 +96,11 @@ grid.newpage()
 pushViewport(viewport(clip=circleGrob()))
 grid.rect(gp=gpar(fill="grey"))
 upViewport()
-grid.rect(gp=gpar(fill=rgb(0,0,0,.2)))
+grid.rect(gp=gpar(fill=rgb(0,0,1,.2)))
 grid.text("push clipping path
 grey circle
 upViewport
-page all grey")
+page all (translucent) blue")
 
 ## downViewport()
 grid.newpage()
@@ -108,12 +108,12 @@ pushViewport(viewport(clip=circleGrob(), name="vp"))
 grid.rect(height=.5, gp=gpar(fill="grey"))
 upViewport()
 downViewport("vp")
-grid.rect(gp=gpar(fill=rgb(0,0,0,.2)))
+grid.rect(gp=gpar(fill=rgb(0,0,1,.2)))
 grid.text("push clipping path
 rounded rect
 upViewport
 downViewport
-grey circle")
+blue (translucent) circle")
 
 ## clip rect to clip path back to clip rect
 grid.newpage()
@@ -121,12 +121,12 @@ pushViewport(viewport(width=.5, height=.5, clip=TRUE))
 pushViewport(viewport(clip=circleGrob()))
 grid.rect(gp=gpar(fill="grey"))
 upViewport()
-grid.circle(r=.6, gp=gpar(fill=rgb(0,0,0,.2)))
+grid.circle(r=.6, gp=gpar(fill=rgb(0,0,1,.2)))
 grid.text("push clipping rect
 push clipping path
 grey circle
 upViewport
-squared circle")
+squared (translucent) blue circle")
 
 ## clip path to clip rect back to clip path
 grid.newpage()
@@ -134,12 +134,12 @@ pushViewport(viewport(clip=circleGrob()))
 pushViewport(viewport(width=.5, height=.5, clip=TRUE))
 grid.circle(r=.6, gp=gpar(fill="grey"))
 upViewport()
-grid.rect(gp=gpar(fill=rgb(0,0,0,.2)))
+grid.rect(gp=gpar(fill=rgb(0,0,1,.2)))
 grid.text("push clipping path
 push clipping rect
 squared circle
 upViewport
-grey circle")
+grey (translucent) blue circle")
 
 ## A clipping path that itself makes use of a clipping path !?
 grid.newpage()
@@ -168,23 +168,27 @@ squared circle")
 ## Clipping path makes the clipping region BIGGER
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, clip=TRUE))
+grid.rect()
 pushViewport(viewport(clip=circleGrob(r=.6)))
-grid.rect(width=1.2, height=1.2, gp=gpar(fill="grey"))
+grid.rect(width=1.2, height=1.2, gp=gpar(fill=rgb(0,0,1,.2)))
 grid.text("push clip rect (small)
+rect
 push clip path (bigger)
 rect (big)
-grey circle")
+blue (translucent) circle")
 
 ## Clipping path makes the clipping region BIGGER
 ## (even when clipping path contains viewport)
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, clip=TRUE))
+grid.rect()
 pushViewport(viewport(clip=circleGrob(r=.6, vp=viewport())))
-grid.rect(width=1.2, height=1.2, gp=gpar(fill="grey"))
+grid.rect(width=1.2, height=1.2, gp=gpar(fill=rgb(0,0,1,.2)))
 grid.text("push clip rect (small)
+rect
 push clip path with viewport (bigger)
 rect (big)
-grey circle")
+blue (translucent) circle")
 
 
 ######################################
@@ -224,18 +228,19 @@ grey circle")
 grid.newpage()
 pushViewport(viewport(clip=circleGrob()))
 grid.rect(gp=gpar(fill="grey"))
-x <- grid.grab()
 grid.text("push clip path
 rect
 grey circle
 (for grid.grab)")
+x <- grid.grab()
 grid.newpage()
 grid.draw(x)
 grid.text("push clip path
 rect
 grey circle
 grid.grab
-grid.draw")
+grid.draw
+grey circle")
 
 
 
