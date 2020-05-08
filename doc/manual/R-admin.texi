@@ -3341,7 +3341,7 @@ java-latest-openjdk-devel
 @end example
 @noindent
 where the @code{-devel} RPMs are needed to complete the JDK.  (At the
-time of writing @code{java-openjdk} was Java 12.)  Debian/Ubuntu use
+time of writing @code{java-openjdk} was Java 14.)  Debian/Ubuntu use
 @samp{-jre} and @samp{-jdk}, e.g.
 @example
 sudo apt install default-jdk
@@ -5057,14 +5057,14 @@ upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0}, @code{11} or higher you need
-to update your Java.} this should prompt you to install it.  You can
-also install directly a recent Java from Oracle (currently from
+not start with @code{1.8.0}, @code{11} or higher you need to update your
+Java.} this should prompt you to install it.  You can also install
+directly a recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 Builds of OpenJDK may also be available, e.g.@: from
-@uref{http://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 (but not 9, 10, 12--16 which have/had a
-6-month lifetime).
+@uref{https://adoptopenjdk.net} or @uref{http://jdk.java.net/}.  We
+recommend you install a version with long-term support, e.g.@: 8 or 11
+(but not 9, 10, 12--16 which have/had a 6-month lifetime).
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 11.0.6) of Java so @command{sudo R CMD javareconf} will likely be
@@ -5102,11 +5102,12 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm"
 @noindent
 in @file{config.site}.
 
-To use the builds of OpenJDK from @uref{http://jdk.java.net/} (tarball) or
-@uref{https://adoptopenjdk.net} set @env{JAVA_HOME} to e.g.@: one of
+To use the builds of OpenJDK from @uref{https://adoptopenjdk.net} (Apple
+package) or @uref{http://jdk.java.net/} (tarball) set @env{JAVA_HOME} to
+e.g.@: one of
 @example
-JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home
 JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
+JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home
 @end example
 @noindent
 where @file{@var{/path/to/JDK}} is wherever the tarball was
