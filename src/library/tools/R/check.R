@@ -2711,7 +2711,12 @@ add_dummies <- function(dir, Log)
                       "Package has no Sweave vignette sources and no VignetteBuilder field.\n")
         }
 
+        libpaths <- .libPaths()
+        if(do_install)
+            .libPaths(c(libdir, libpaths))
         vigns <- pkgVignettes(dir = pkgdir, check = TRUE)
+        if(do_install)
+            .libPaths(libpaths)
         if(length(msg <- vigns[["msg"]])) {
             if(!any) noteLog(Log)
             any <- TRUE
