@@ -57,6 +57,9 @@
 
       This should not be used in package code until \R 4.0.1 is
       released, when the package should depend on \samp{R (>= 4.0.1)}.
+
+      \item The \code{summary(<warnings>)} method now maps the counts
+      correctly to the warning messages.
     }
   }
 
