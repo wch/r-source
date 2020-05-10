@@ -1110,7 +1110,7 @@ the same mechanism (so mixing compiler families may not work and a
 non-system linker such as @command{gold}@footnote{Nowadays part of GNU
 @code{binutils} and used by LLVM to support LTO.  It is sometimes
 installed as @command{ld.gold}.} may be needed).  It has been tested
-recently on Linux with @command{gcc}/@command{gfortran} 8.x and 9.x:
+recently on Linux with @command{gcc}/@command{gfortran} 8.x and later:
 that needed setting
 @example
 AR=gcc-ar
@@ -1163,8 +1163,8 @@ FPICFLAGS=-fPIC
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019.
 
-With @command{gcc}/@command{gfortran} 9.x@footnote{probably also 8.4 and
-later.} this will flag inconsistencies in calls to Fortran
+With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
+also 8.4 and later.} this will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
 Fortran and C/C++.  @command{gfortran} 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
@@ -3478,10 +3478,10 @@ results or segfaults.
 @c Seen for OpenBLAS 0.3.2 in 2018.
 
 @strong{NOTE:} BLAS libraries built with @command{gfortran}@tie{}9 (and
-versions 8.4, 7.5 and later in those series) require calls from C/C++ to
-handle `hidden' character lengths --- @R{} itself does so but many
-packages do not and some segfault. (This applies also to external LAPACK
-libraries.)
+later and versions 8.4, 7.5 and later in those series) require calls
+from C/C++ to handle `hidden' character lengths --- @R{} itself does so
+but many packages do not and some segfault. (This applies also to
+external LAPACK libraries.)
 
 @menu
 * ATLAS::
@@ -3618,7 +3618,7 @@ for @R{} on those platforms.
 
 The MKL interface has changed several times but has been stable in
 recent years: the following examples have been used with versions 10.3
-to 2019.4, for GCC compilers on @cputype{x86_64}.
+to 2020.1, for GCC compilers on @cputype{x86_64}.
 
 To use a sequential version of MKL we used
 

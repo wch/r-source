@@ -1518,7 +1518,7 @@ not in the main repositories for major Linux distributions).
 @c In May 2020 declared by FFD GGEBiplotGUI OligoSpecificitySystem
 @c PBSmodelling asbio biplotbootGUI cncaGUI dgmb dpa multibiplotGUI rpanel
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
-fairly easy to do: first find the Tcl/Tk search path:
+fairly easy to do: first find the Tcl search path:
 
 @example
 library(tcltk)
@@ -1527,8 +1527,8 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 
 @noindent
 then download the sources from
-@uref{https://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/} and
-at the command line run something like
+@uref{https://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/}
+and in a terminal run something like
 
 @example
 tar xf bwidget-1.9.14.tar.gz
@@ -1536,8 +1536,9 @@ sudo mv bwidget-1.9.14 /usr/local/lib
 @end example
 
 @noindent
-substituting a location on the Tcl/Tk search path for @file{/usr/local/lib} if
-needed.
+substituting a location on the Tcl search path for @file{/usr/local/lib} if
+needed.  (If no location on that search path is writeable, you will need
+to add one each time BWidget is to be used with @code{tcltk::addTclPath()}.)
 
 @node Specifying URLs,  , Non-R scripts in packages, Package structure
 @subsection Specifying URLs
@@ -2200,7 +2201,7 @@ Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
 including @command{gfortran}, although it is often possible to use the
 @command{clang} runtime with GCC but not @emph{vice versa}: however
-@command{gfortran} 9.x may generate calls not in the @command{clang}
+@command{gfortran} >= 9 may generate calls not in the @command{clang}
 runtime).  For a package with Fortran code using OpenMP the appropriate
 lines are
 
