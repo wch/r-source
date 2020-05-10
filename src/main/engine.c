@@ -23,6 +23,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <float.h>  /* for DBL_MAX */
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Applic.h>	/* pretty() */
 #include <Rmath.h>
@@ -574,6 +575,8 @@ static void getClipRect(double *x1, double *y1, double *x2, double *y2,
 static void getClipRectToDevice(double *x1, double *y1, double *x2, double *y2,
 				pGEDevDesc dd)
 {
+    double factor = 4;
+    double dx, dy, d;
     /* Devices can have flipped coord systems */
     if (dd->dev->left < dd->dev->right) {
 	*x1 = dd->dev->left;
@@ -589,6 +592,17 @@ static void getClipRectToDevice(double *x1, double *y1, double *x2, double *y2,
 	*y2 = dd->dev->bottom;
 	*y1 = dd->dev->top;
     }
+    /* 
+     * Do NOT clip to the actual device edge (that produces artifacts).
+     * Instead, clip to a much larger region.
+     */
+    dx = factor*(*x2 - *x1);
+    dy = factor*(*y2 - *y1);
+    d = (dx > dy)? dx : dy;
+    *x1 = *x1 - d;
+    *x2 = *x2 + d;
+    *y1 = *y1 - d;
+    *y2 = *y2 + d;
 }
 
 /****************************************************************
@@ -1048,37 +1062,147 @@ static int clipPoly(double *x, double *y, int n, int store, int toDevice,
     return (cnt);
 }
 
+static Rboolean mustClip(double xmin, double xmax, double ymin, double ymax,
+                         int toDevice, pGEDevDesc dd)
+{
+    GClipRect clip;
+    if (toDevice)
+	getClipRectToDevice(&clip.xmin, &clip.ymin, &clip.xmax, &clip.ymax,
+			    dd);
+    else
+	getClipRect(&clip.xmin, &clip.ymin, &clip.xmax, &clip.ymax, dd);
+    return (clip.xmin > xmin || clip.xmax < xmax ||
+            clip.ymin > ymin || clip.ymax < ymax);
+}
+
+/* 
+ * Reorder the vertices of a polygon that is becoming a polyline
+ * so that the first vertex is OUTSIDE the clipping area.
+ * NOTE that x & y are length n+1, but x[0] == x[n]
+ */
+static void reorderVertices(int n, double *x, double *y, pGEDevDesc dd)
+{
+    double xmin, xmax, ymin, ymax;
+    getClipRect(&xmin, &ymin, &xmax, &ymax, dd);
+    if (n < 2 ||
+        x[0] < xmin || x[0] > xmax ||
+        y[0] < ymin || y[0] > ymax) {
+        return;
+    } else {
+        double *xtemp = (double*) R_alloc(n, sizeof(double));
+        double *ytemp = (double*) R_alloc(n, sizeof(double));
+        int i, start = 1;
+        for (i=0; i<n; i++) {
+            xtemp[i] = x[i];
+            ytemp[i] = y[i];
+        }
+        while (start < n &&
+               x[start] >= xmin && x[start] <= xmax &&
+               y[start] >= ymin && y[start] <= ymax) {
+            start++;
+        }
+        if (start == n) 
+            error(_("Clipping polygon that does not need clipping"));
+        for (i=0; i<n; i++) {
+            x[i] = xtemp[start];
+            y[i] = ytemp[start];
+            start++;
+            if (start == n) 
+                start = 0;
+        }
+        x[n] = xtemp[start];
+        y[n] = ytemp[start];
+    }
+}
+
 static void clipPolygon(int n, double *x, double *y,
 			const pGEcontext gc, int toDevice, pGEDevDesc dd)
 {
     double *xc = NULL, *yc = NULL;
     const void *vmax = vmaxget();
 
-    /* if bg not specified then draw as polyline rather than polygon
+    /* if bg not specified AND need to clip AND device cannot clip
+     * then draw as polyline rather than polygon
      * to avoid drawing line along border of clipping region
      * If bg was NA then it has been converted to fully transparent */
-    if (R_TRANSPARENT(gc->fill)) {
+    if (R_TRANSPARENT(gc->fill) && !toDevice) {
 	int i;
+        double xmin = DBL_MAX, xmax = DBL_MIN, ymin = DBL_MAX, ymax = DBL_MIN;
 	xc = (double*) R_alloc(n + 1, sizeof(double));
 	yc = (double*) R_alloc(n + 1, sizeof(double));
 	for (i=0; i<n; i++) {
 	    xc[i] = x[i];
+            if (x[i] < xmin) xmin = x[i];
+            if (x[i] > xmax) xmax = x[i];
 	    yc[i] = y[i];
+            if (y[i] < ymin) ymin = y[i];
+            if (y[i] > ymax) ymax = y[i];
 	}
 	xc[n] = x[0];
 	yc[n] = y[0];
-	GEPolyline(n+1, xc, yc, gc, dd);
-    }
-    else {
-	int npts;
-	xc = yc = 0;		/* -Wall */
-	npts = clipPoly(x, y, n, 0, toDevice, xc, yc, dd);
-	if (npts > 1) {
-	    xc = (double*) R_alloc(npts, sizeof(double));
-	    yc = (double*) R_alloc(npts, sizeof(double));
-	    npts = clipPoly(x, y, n, 1, toDevice, xc, yc, dd);
-	    dd->dev->polygon(npts, xc, yc, gc, dd->dev);
-	}
+        if (mustClip(xmin, xmax, ymin, ymax, toDevice, dd)) {
+            reorderVertices(n, xc, yc, dd);
+            GEPolyline(n+1, xc, yc, gc, dd);
+        } else {
+	    dd->dev->polygon(n, xc, yc, gc, dd->dev);
+        }
+    } else {
+        if (toDevice) {
+            /* Device can clip; just clip to (extended) device */
+            int npts;
+            xc = yc = 0;		/* -Wall */
+            npts = clipPoly(x, y, n, 0, toDevice, xc, yc, dd);
+            if (npts > 1) {
+                xc = (double*) R_alloc(npts, sizeof(double));
+                yc = (double*) R_alloc(npts, sizeof(double));
+                npts = clipPoly(x, y, n, 1, toDevice, xc, yc, dd);
+                dd->dev->polygon(npts, xc, yc, gc, dd->dev);
+            }
+        } else {
+            /* If must clip, draw separate fill and border */
+            int i;
+            double xmin = DBL_MAX, xmax = DBL_MIN, 
+                ymin = DBL_MAX, ymax = DBL_MIN;
+            xc = (double*) R_alloc(n + 1, sizeof(double));
+            yc = (double*) R_alloc(n + 1, sizeof(double));
+            for (i=0; i<n; i++) {
+                xc[i] = x[i];
+                if (x[i] < xmin) xmin = x[i];
+                if (x[i] > xmax) xmax = x[i];
+                yc[i] = y[i];
+                if (y[i] < ymin) ymin = y[i];
+                if (y[i] > ymax) ymax = y[i];
+            }
+            xc[n] = x[0];
+            yc[n] = y[0];
+            if (mustClip(xmin, xmax, ymin, ymax, toDevice, dd)) {
+                /* Draw fill */
+                int npts;
+                double *xc2 = NULL, *yc2 = NULL;
+                int origCol = gc->col;
+                gc->col = R_TRANWHITE;
+                npts = clipPoly(x, y, n, 0, toDevice, xc2, yc2, dd);
+                if (npts > 1) {
+                    xc2 = (double*) R_alloc(npts, sizeof(double));
+                    yc2 = (double*) R_alloc(npts, sizeof(double));
+                    npts = clipPoly(x, y, n, 1, toDevice, xc2, yc2, dd);
+                    dd->dev->polygon(npts, xc2, yc2, gc, dd->dev);
+                }
+                /* Draw border */
+                gc->col = origCol;
+                gc->fill = R_TRANWHITE;
+                for (i=0; i<n; i++) {
+                    xc[i] = x[i];
+                    yc[i] = y[i];
+                }
+                xc[n] = x[0];
+                yc[n] = y[0];
+                reorderVertices(n, xc, yc, dd);
+                GEPolyline(n+1, xc, yc, gc, dd);
+            } else {
+                dd->dev->polygon(n, xc, yc, gc, dd->dev);
+            }
+        }
     }
     vmaxset(vmax);
 }
