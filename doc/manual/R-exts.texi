@@ -8516,6 +8516,7 @@ memory leaks) but others will segfault.
 * Using Address Sanitizer::
 * Using Undefined Behaviour Sanitizer::
 * Other analyses with `clang'::
+* Other analyses with `gcc'::
 * Using `Dr. Memory'::
 * Fortran array bounds checking::
 @end menu
@@ -8986,7 +8987,7 @@ It may or may not be possible to build @R{} itself with
 code with @command{gcc} but there has been success with @command{clang}.
 
 
-@node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
+@node Other analyses with `clang', Other analyses with `gcc', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
 
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
@@ -8997,10 +8998,26 @@ a `data race detector for C/C++ programs', and `MemorySanitizer'
 for the detection of uninitialized memory.  Both are based on and
 provide similar functionality to tools in @command{valgrind}.
 
-@command{clang} has a `Static Analyser' which can be run on the source
+@command{clang} has a `Static Analyzer' which can be run on the source
 files during compilation: see @uref{https://clang-analyzer.llvm.org/}.
 
-@node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
+@node Other analyses with `gcc', Using `Dr. Memory', Other analyses with `clang', Checking memory access
+@subsection Other analyses with `gcc'
+
+GCC 10 introduced a new flag @option{-fanalyzer} which does static
+analysis during compilation, currently for C code.  It is regarded as
+@emph{expericmental} and it may slow down computation considerably when
+problems are found.  There is some overlap with problems detected by the
+Undefined Behaviour sanitizer, but some issues such as double-free are
+only reported by this tool and as it is a static analysis, it does not
+rely on code paths being exercised.
+
+See
+@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc-10.1.0/@/gcc/@/Static-Analyzer-Options.html}
+(or the doumentation for your version of @command{gcc} if later) and
+@uref{https://developers.redhat.com/@/blog/2020/03/26/@/static-analysis-in-gcc-10/}
+
+@node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
 
 `Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
