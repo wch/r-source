@@ -3666,7 +3666,8 @@ static int con_close1(Rconnection con)
     free(con->description);
     con->description = NULL;
     /* clear the pushBack */
-    if(con->nPushBack > 0) {
+    if(con->nPushBack > 0) { // already cleared on closed connection,
+	                     // so no double-free pace -fanalyzer
 	int j;
 
 	for(j = 0; j < con->nPushBack; j++)
@@ -5099,7 +5100,7 @@ SEXP attribute_hidden do_clearpushback(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     con = getConnection(asInteger(CAR(args)));
 
-    if(con->nPushBack > 0) {
+    if(con->nPushBack > 0) { // so con_close1 has not been called
 	for(j = 0; j < con->nPushBack; j++) free(con->PushBack[j]);
 	free(con->PushBack);
 	con->nPushBack = 0;

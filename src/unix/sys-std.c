@@ -48,6 +48,7 @@
 #include "Startup.h"
 #include <R_ext/Riconv.h>
 #include <R_ext/Print.h> // for REprintf
+#include <R_ext/RS.h> // for Calloc
 
 #define __SYSTEM__
 /* includes <sys/select.h> and <sys/time.h> */
@@ -225,7 +226,8 @@ addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler,
 		int activity)
 {
     InputHandler *input, *tmp;
-    input = (InputHandler*) calloc(1, sizeof(InputHandler));
+//    input = (InputHandler*) calloc(1, sizeof(InputHandler));
+    input = Calloc(1, InputHandler);
 
     input->activity = activity;
     input->fileDescriptor = fd;

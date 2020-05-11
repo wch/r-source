@@ -4992,7 +4992,14 @@ add_dummies <- function(dir, Log)
                              ": warning: C[+][+] designated initializers",
                              ": warning: designated initializers are a C99 feature",
                              ## Fatal, not warning, for clang and Solaris ODS
-                             ": warning: .* with a value, in function returning void"
+                             ": warning: .* with a value, in function returning void",
+                             ## gcc 10 some -fanalyzer warnings
+                             ": warning: .*\\[-Wanalyzer-null-dereference\\]",
+                             ": warning: .*\\[-Wanalyzer-double-free\\]",
+                             ": warning: .*\\[-Wanalyzer-malloc-leak\\]",
+                             ": warning: .*\\[-Wanalyzer-file-leak\\]",
+                             ": warning: .*\\[-Wanalyzer-use-after-free\\]",
+                             ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
