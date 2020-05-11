@@ -61,7 +61,7 @@ extern void R_SaveGlobalEnv(void);
 extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
-extern void R_Suicide(const char *);
+extern void NORET R_Suicide(const char *);
 extern char *R_HomeDir(void);
 extern int R_DirtyImage;	/* Current image dirty */
 extern char *R_GUIType;
