@@ -19,6 +19,7 @@
 \alias{Summary.ordered}
 \alias{addNA}
 \alias{.valid.factor}
+\alias{c.factor}
 \concept{categorical variable}
 \concept{enumerated type}
 \concept{category}
