@@ -85,6 +85,11 @@
       \item Computing the \code{base} value, i.e., 2, \dQuote{everywhere},
       now uses \code{FLT_RADIX}, as the original \file{machar} code looped
       indefinitely on the ppc64 architecture for the \code{longdouble} case.
+
+      \item In \R 4.0.0, \code{sort.list(x)} when \code{is.object(x)} was
+      true, e.g., for \code{x <- I(letters)}, was accidentally using
+      \code{method = "radix"}.  Consequently, e.g., \code{merge(<data.frame>)}
+      was much slower than previously; reported in \PR{17794}.
     }
   }
 }
@@ -281,7 +286,8 @@
 
       \item \code{sort.list(x)} now works for non-atomic objects
       \code{x} and \code{method = "auto"} (the default) or
-      \code{"radix"} in cases \code{order(x)} works.
+      \code{"radix"} in cases \code{order(x)} works, typically via a
+      \code{xtfrm()} method.
 
       \item Where they are available, \code{writeBin()} allows
       long vectors.% (those of length \eqn{\ge 2^{31}}{>= 2^31}).
