@@ -992,8 +992,8 @@ Warning messages:
 > 
 > summary(warnings())
 Summary of (a total of 10) warning messages:
-6x : In dput(x, control = control) : deparse may be incomplete
-4x : In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
+4x : In dput(x, control = control) : deparse may be incomplete
+6x : In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 > ## "dput    may be incomplete"
 > ## "deparse may be incomplete"
 > 
