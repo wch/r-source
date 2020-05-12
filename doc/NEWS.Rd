@@ -90,6 +90,9 @@
       true, e.g., for \code{x <- I(letters)}, was accidentally using
       \code{method = "radix"}.  Consequently, e.g., \code{merge(<data.frame>)}
       was much slower than previously; reported in \PR{17794}.
+
+      \item \code{plot(y ~ x, ylab = quote(y[i]))} now works, as e.g., for
+      \code{xlab}; related to \PR{10525}.
     }
   }
 }

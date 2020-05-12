@@ -3987,6 +3987,13 @@ stopifnot(identical(unlist(lapply(names(sw), substr, 1, 6)), c("Bigger", "A big 
 ## was wrong (mis-sorted counts) in R <= 4.0.0
 
 
+## plot.formula(..,  ylab = <call>)
+dd <- list(x = -4:4, w = 1/(1+(-4:4)^2))
+plot(w ~ x, data=dd, type = "h", xlab = quote(x[j]))                    # worked before
+plot(w ~ x, data=dd, type = "h", xlab = quote(x[j]), ylab = quote(y[j]))# *now* works
+## main, sub, xlab worked (PR#10525)  but ylab did not in R <= 4.0.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
