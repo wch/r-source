@@ -40,7 +40,9 @@
    We explicitly reserve the right to change the connection
    implementation without a compatibility layer.
  */
-#define R_CONNECTIONS_VERSION 1
+#define R_CONNECTIONS_VERSION 2
+
+struct RconnData;
 
 /* this allows the opaque pointer definition to be made available 
    in Rinternals.h */
@@ -48,12 +50,11 @@
 typedef struct Rconn  *Rconnection;
 #endif
 struct Rconn {
-    char* class;
-    char* description;
-    int enc; /* the encoding of 'description' */
+    struct RconnData *data;
+    void *private;
     char mode[5];
-    Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking, 
-	isGzcon;
+    Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking;
+    Rboolean UTF8out;    
     Rboolean (*open)(struct Rconn *);
     void (*close)(struct Rconn *); /* routine closing after auto open */
     void (*destroy)(struct Rconn *); /* when closing connection */
@@ -65,23 +66,6 @@ struct Rconn {
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);
     size_t (*write)(const void *, size_t, size_t, struct Rconn *);
-    int nPushBack, posPushBack; /* number of lines, position on top line */
-    char **PushBack;
-    int save, save2;
-    char encname[101];
-    /* will be iconv_t, which is a pointer. NULL if not in use */
-    void *inconv, *outconv;
-    /* The idea here is that no MBCS char will ever not fit */
-    char iconvbuff[25], oconvbuff[50], *next, init_out[25];
-    short navail, inavail;
-    Rboolean EOF_signalled;
-    Rboolean UTF8out;
-    void *id;
-    void *ex_ptr;
-    void *private;
-    int status; /* for pipes etc */
-    unsigned char *buff;
-    size_t buff_len, buff_stored_len, buff_pos;
 };
 
 #ifdef  __cplusplus
@@ -92,7 +76,9 @@ SEXP   R_new_custom_connection(const char *description, const char *mode, const 
 size_t R_ReadConnection(Rconnection con, void *buf, size_t n);
 size_t R_WriteConnection(Rconnection con, void *buf, size_t n);
 Rconnection R_GetConnection(SEXP sConn); // added in R 3.3.0
-
+char const *R_ConnectionClass(Rconnection con);
+char const *R_ConnectionDescription(Rconnection con);    
+			      
 #ifdef  __cplusplus
 }
 #endif

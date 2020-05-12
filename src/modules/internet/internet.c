@@ -100,7 +100,7 @@ static Rboolean IDquiet = TRUE;
 static Rboolean url_open(Rconnection con)
 {
     void *ctxt;
-    char *url = con->description;
+    char *url = con->data->description;
     UrlScheme type = ((Rurlconn)(con->private))->type;
     int mlen;
 
@@ -163,7 +163,7 @@ static Rboolean url_open(Rconnection con)
     mlen = (int) strlen(con->mode);
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
-    con->save = -1000;
+    con->data->save = -1000;
     set_iconv(con);
     return TRUE;
 }
@@ -351,18 +351,24 @@ static size_t url_read2(void *ptr, size_t size, size_t nitems,
 static Rconnection
 in_R_newurl(const char *description, const char * const mode, SEXP headers, int type)
 {
+    //FIXME: USE CONSTRUCTOR!!!!
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of url connection failed"));
-    new->class = (char *) malloc(strlen("url-wininet") + 1);
-    if(!new->class) {
+    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of url connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("url-wininet") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of url connection failed"));
         /* for Solaris 12.5 */ new = NULL;
     }
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of url connection failed"));
         /* for Solaris 12.5 */ new = NULL;
     }
@@ -374,7 +380,7 @@ in_R_newurl(const char *description, const char * const mode, SEXP headers, int 
 	new->read = &url_read2;
 	new->close = &url_close2;
 	new->fgetc_internal = &url_fgetc_internal2;
-	strcpy(new->class, "url-wininet");
+	strcpy(new->data->class, "url-wininet");
    } else
 #endif
     {
@@ -382,12 +388,13 @@ in_R_newurl(const char *description, const char * const mode, SEXP headers, int 
 	new->read = &url_read;
 	new->close = &url_close;
 	new->fgetc_internal = &url_fgetc_internal;
-	strcpy(new->class, "url");
+	strcpy(new->data->class, "url");
     }
     new->fgetc = &dummy_fgetc;
     struct urlconn *uc = new->private = (void *) malloc(sizeof(struct urlconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of url connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -395,7 +402,9 @@ in_R_newurl(const char *description, const char * const mode, SEXP headers, int 
     if(!isNull(headers)) {
 	uc->headers = strdup(CHAR(STRING_ELT(headers, 0)));
 	if(!uc->headers) {
-	    free(new->description); free(new->class); free(new->private); free(new);
+	    //FIXME: ALLOCATE PRIVATE FIRST
+	    free(new->data->description); free(new->data->class);
+	    free(new->data); free(new->private); free(new);
 	    error(_("allocation of url connection failed"));
 	    /* for Solaris 12.5 */ new = NULL;
 	}

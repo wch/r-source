@@ -197,16 +197,16 @@ static void conFinalizer(SEXP ptr)
     if(!cptr) return;
 
     for(i = 3; i < NCONNECTIONS; i++)
-	if(Connections[i] && Connections[i]->id == cptr) {
+	if(Connections[i] && Connections[i]->data->id == cptr) {
 	    ncon = i;
 	    break;
 	}
     if(i >= NCONNECTIONS) return;
     {
 	Rconnection this = getConnection(ncon);
-	if(strcmp(this->class, "textConnection"))
+	if(strcmp(this->data->class, "textConnection"))
 	    warning(_("closing unused connection %d (%s)\n"),
-		    ncon, this->description);
+		    ncon, this->data->description);
     }
 
     con_destroy(ncon);
@@ -242,59 +242,59 @@ static void NORET set_iconv_error(Rconnection con, char* from, char* to)
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
 # define MIN(a, b) ((a) > (b) ? (b) : (a))
 
-static size_t buff_set_len(Rconnection con, size_t len) {
+static size_t buff_set_len(RconnectionData cond, size_t len) {
     size_t unread_len = 0;
     unsigned char *buff;
 
-    if (con->buff_len == len)
+    if (cond->buff_len == len)
 	return len;
 
-    if (con->buff) {
-	unread_len = con->buff_stored_len - con->buff_pos;
+    if (cond->buff) {
+	unread_len = cond->buff_stored_len - cond->buff_pos;
 	len = MAX(len, unread_len);
     }
 
     buff = (unsigned char *)malloc(sizeof(unsigned char) * len);
 
-    if (con->buff) {
-	memcpy(buff, con->buff + con->buff_pos, unread_len);
-	free(con->buff);
+    if (cond->buff) {
+	memcpy(buff, cond->buff + cond->buff_pos, unread_len);
+	free(cond->buff);
     }
 
-    con->buff = buff;
-    con->buff_len = len;
-    con->buff_pos = 0;
-    con->buff_stored_len = unread_len;
+    cond->buff = buff;
+    cond->buff_len = len;
+    cond->buff_pos = 0;
+    cond->buff_stored_len = unread_len;
 
     return len;
 }
 
-static void buff_init(Rconnection con)
+static void buff_init(RconnectionData cond)
 {
-    con->buff_pos = con->buff_stored_len = 0;
-    buff_set_len(con, RBUFFCON_LEN_DEFAULT);
+    cond->buff_pos = cond->buff_stored_len = 0;
+    buff_set_len(cond, RBUFFCON_LEN_DEFAULT);
 }
 
-static void buff_reset(Rconnection con) {
-    size_t unread_len = con->buff_stored_len - con->buff_pos;
+static void buff_reset(RconnectionData cond) {
+    size_t unread_len = cond->buff_stored_len - cond->buff_pos;
 
     if (unread_len > 0)
-	memmove(con->buff, con->buff + con->buff_pos, unread_len);
+	memmove(cond->buff, cond->buff + cond->buff_pos, unread_len);
 
-    con->buff_pos = 0;
-    con->buff_stored_len = unread_len;
+    cond->buff_pos = 0;
+    cond->buff_stored_len = unread_len;
 }
 
 static size_t buff_fill(Rconnection con) {
     size_t free_len, read_len;
 
-    buff_reset(con);
+    buff_reset(con->data);
 
-    free_len = con->buff_len - con->buff_stored_len;
-    read_len = con->read(con->buff, sizeof(unsigned char), free_len, con);
+    free_len = con->data->buff_len - con->data->buff_stored_len;
+    read_len = con->read(con->data->buff, sizeof(unsigned char), free_len, con);
     if ((int)read_len < 0)
 	error("error reading from the connection");
-    con->buff_stored_len += read_len;
+    con->data->buff_stored_len += read_len;
 
     return read_len;
 }
@@ -303,19 +303,19 @@ static int buff_fgetc(Rconnection con)
 {
     size_t unread_len;
 
-    unread_len = con->buff_stored_len - con->buff_pos;
+    unread_len = con->data->buff_stored_len - con->data->buff_pos;
     if (unread_len == 0) {
 	size_t filled_len = buff_fill(con);
 	if (filled_len == 0)
 	    return R_EOF;
     }
 
-    return con->buff[con->buff_pos++];
+    return con->data->buff[con->data->buff_pos++];
 }
 
 static double buff_seek(Rconnection con, double where, int origin, int rw)
 {
-    size_t unread_len = con->buff_stored_len - con->buff_pos;
+    size_t unread_len = con->data->buff_stored_len - con->data->buff_pos;
 
     if (rw == 2) /* write */
 	return con->seek(con, where, origin, rw);
@@ -325,63 +325,64 @@ static double buff_seek(Rconnection con, double where, int origin, int rw)
 
     if (origin == 2) { /* current */
 	if (where < unread_len) {
-	    con->buff_pos += (size_t) where;
+	    con->data->buff_pos += (size_t) where;
 	    return con->seek(con, NA_REAL, origin, rw);
 	} else {
 	    where -= unread_len;
 	}
     }
-    con->buff_pos = con->buff_stored_len = 0;
+    con->data->buff_pos = con->data->buff_stored_len = 0;
 
     return con->seek(con, where, origin, rw);
 }
 
 void set_buffer(Rconnection con) {
     if (con->canread && con->text) {
-	buff_init(con);
+	buff_init(con->data);
     }
 }
 
 void set_iconv(Rconnection con)
 {
+    RconnectionData cond = con->data;
     void *tmp;
 
     /* need to test if this is text, open for reading to writing or both,
        and set inconv and/or outconv */
-    if(!con->text || !strlen(con->encname) ||
-       strcmp(con->encname, "native.enc") == 0) {
+    if(!con->text || !strlen(cond->encname) ||
+       strcmp(cond->encname, "native.enc") == 0) {
 	con->UTF8out = FALSE;
 	return;
     }
     if(con->canread) {
 	size_t onb = 50;
-	char *ob = con->oconvbuff;
+	char *ob = cond->oconvbuff;
 	/* UTF8out is set in readLines() and scan()
 	   Was Windows-only until 2.12.0, but we now require iconv.
 	 */
 	Rboolean useUTF8 = !utf8locale && con->UTF8out;
 	const char *enc =
-	    streql(con->encname, "UTF-8-BOM") ? "UTF-8" : con->encname;
+	    streql(cond->encname, "UTF-8-BOM") ? "UTF-8" : cond->encname;
 	tmp = Riconv_open(useUTF8 ? "UTF-8" : "", enc);
-	if(tmp != (void *)-1) con->inconv = tmp;
-	else set_iconv_error(con, con->encname, useUTF8 ? "UTF-8" : "");
-	con->EOF_signalled = FALSE;
+	if(tmp != (void *)-1) cond->inconv = tmp;
+	else set_iconv_error(con, cond->encname, useUTF8 ? "UTF-8" : "");
+	cond->EOF_signalled = FALSE;
 	/* initialize state, and prepare any initial bytes */
 	Riconv(tmp, NULL, NULL, &ob, &onb);
-	con->navail = (short)(50-onb); con->inavail = 0;
+	cond->navail = (short)(50-onb); cond->inavail = 0;
 	/* libiconv can handle BOM marks on Windows Unicode files, but
 	   glibc's iconv cannot. Aargh ... */
-	if(streql(con->encname, "UCS-2LE") ||
-	   streql(con->encname, "UTF-16LE")) con->inavail = -2;
+	if(streql(cond->encname, "UCS-2LE") ||
+	   streql(cond->encname, "UTF-16LE")) cond->inavail = -2;
 	/* Discaard BOM */
-	if(streql(con->encname, "UTF-8-BOM")) con->inavail = -3;
+	if(streql(cond->encname, "UTF-8-BOM")) cond->inavail = -3;
     }
     if(con->canwrite) {
 	size_t onb = 25;
-	char *ob = con->init_out;
-	tmp = Riconv_open(con->encname, "");
-	if(tmp != (void *)-1) con->outconv = tmp;
-	else set_iconv_error(con, con->encname, "");
+	char *ob = cond->init_out;
+	tmp = Riconv_open(cond->encname, "");
+	if(tmp != (void *)-1) cond->outconv = tmp;
+	else set_iconv_error(con, cond->encname, "");
 	/* initialize state, and prepare any initial bytes */
 	Riconv(tmp, NULL, NULL, &ob, &onb);
 	ob[25-onb] = '\0';
@@ -403,7 +404,7 @@ static void null_close(Rconnection con)
 
 static void null_destroy(Rconnection con)
 {
-    if(con->private) free(con->private);
+    if (con->private) free(con->private);
 }
 
 static int NORET null_vfprintf(Rconnection con, const char *format, va_list ap)
@@ -460,21 +461,21 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	}
     }
 #endif /* HAVE_VASPRINTF */
-    if(con->outconv) { /* translate the buffer */
+    if(con->data->outconv) { /* translate the buffer */
 	char outbuf[BUFSIZE+1], *ob;
 	const char *ib = b;
 	size_t inb = res, onb, ires;
 	Rboolean again = FALSE;
-	size_t ninit = strlen(con->init_out);
+	size_t ninit = strlen(con->data->init_out);
 	do {
 	    onb = BUFSIZE; /* leave space for nul */
 	    ob = outbuf;
 	    if(ninit) {
-		strcpy(ob, con->init_out);
+		strcpy(ob, con->data->init_out);
 		ob += ninit; onb -= ninit; ninit = 0;
 	    }
 	    errno = 0;
-	    ires = Riconv(con->outconv, &ib, &inb, &ob, &onb);
+	    ires = Riconv(con->data->outconv, &ib, &inb, &ob, &onb);
 	    again = (ires == (size_t)(-1) && errno == E2BIG);
 	    if(ires == (size_t)(-1) && errno != E2BIG)
 		/* is this safe? */
@@ -494,9 +495,10 @@ int dummy_fgetc(Rconnection con)
 {
     int c;
     Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
-
-    if(con->inconv) {
-	while(con->navail <= 0) {
+    RconnectionData cond = con->data;
+    
+    if(cond->inconv) {
+	while(cond->navail <= 0) {
 	    /* Probably in all cases there will be at most one iteration
 	       of the loop. It could iterate multiple times only if the input
 	       encoding could have \r or \n as a part of a multi-byte coded
@@ -507,26 +509,26 @@ int dummy_fgetc(Rconnection con)
 	    const char *ib;
 	    size_t inb, onb, res;
 
-	    if(con->EOF_signalled) return R_EOF;
-	    if(con->inavail == -2) {
-		con->inavail = 0;
+	    if(cond->EOF_signalled) return R_EOF;
+	    if(cond->inavail == -2) {
+		cond->inavail = 0;
 		checkBOM = TRUE;
 	    }
-	    if(con->inavail == -3) {
-		con->inavail = 0;
+	    if(cond->inavail == -3) {
+		cond->inavail = 0;
 		checkBOM8 = TRUE;
 	    }
-	    p = con->iconvbuff + con->inavail;
-	    for(i = con->inavail; i < 25; i++) {
-		if (con->buff)
+	    p = cond->iconvbuff + cond->inavail;
+	    for(i = cond->inavail; i < 25; i++) {
+		if (cond->buff)
 		    c = buff_fgetc(con);
 		else
 		    c = con->fgetc_internal(con);
-		if(c == R_EOF){ con->EOF_signalled = TRUE; break; }
+		if(c == R_EOF){ cond->EOF_signalled = TRUE; break; }
 		*p++ = (char) c;
-		con->inavail++;
+		cond->inavail++;
 		inew++;
-		if(!con->buff && (c == '\n' || c == '\r'))
+		if(!cond->buff && (c == '\n' || c == '\r'))
 		    /* Possibly a line separator: better stop filling in the
 		       encoding conversion buffer if not buffering the input
 		       anyway, as not to confuse interactive applications
@@ -535,42 +537,42 @@ int dummy_fgetc(Rconnection con)
 		    break;
 	    }
 	    if(inew == 0) return R_EOF;
-	    if(checkBOM && con->inavail >= 2 &&
-	       ((int)con->iconvbuff[0] & 0xff) == 255 &&
-	       ((int)con->iconvbuff[1] & 0xff) == 254) {
-		con->inavail -= (short) 2;
-		memmove(con->iconvbuff, con->iconvbuff+2, con->inavail);
+	    if(checkBOM && cond->inavail >= 2 &&
+	       ((int)cond->iconvbuff[0] & 0xff) == 255 &&
+	       ((int)cond->iconvbuff[1] & 0xff) == 254) {
+		cond->inavail -= (short) 2;
+		memmove(cond->iconvbuff, cond->iconvbuff+2, cond->inavail);
 	    }
 	    if(inew == 0) return R_EOF;
-	    if(checkBOM8 && con->inavail >= 3 &&
-	       !memcmp(con->iconvbuff, "\xef\xbb\xbf", 3)) {
-		con->inavail -= (short) 3;
-		memmove(con->iconvbuff, con->iconvbuff+3, con->inavail);
+	    if(checkBOM8 && cond->inavail >= 3 &&
+	       !memcmp(cond->iconvbuff, "\xef\xbb\xbf", 3)) {
+		cond->inavail -= (short) 3;
+		memmove(cond->iconvbuff, cond->iconvbuff+3, cond->inavail);
 	    }
-	    ib = con->iconvbuff; inb = con->inavail;
-	    ob = con->oconvbuff; onb = 50;
+	    ib = cond->iconvbuff; inb = cond->inavail;
+	    ob = cond->oconvbuff; onb = 50;
 	    errno = 0;
-	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
-	    con->inavail = (short) inb;
-	    con->next = con->oconvbuff;
-	    con->navail = (short)(50 - onb);
+	    res = Riconv(cond->inconv, &ib, &inb, &ob, &onb);
+	    cond->inavail = (short) inb;
+	    cond->next = cond->oconvbuff;
+	    cond->navail = (short)(50 - onb);
 	    if(res == (size_t)-1) { /* an error condition */
 		if(errno == EINVAL || errno == E2BIG) {
 		    /* incomplete input char or no space in output buffer */
-		    memmove(con->iconvbuff, ib, inb);
+		    memmove(cond->iconvbuff, ib, inb);
 		} else {/*  EILSEQ invalid input */
 		    warning(_("invalid input found on input connection '%s'"),
-			    con->description);
-		    con->inavail = 0;
-		    if (con->navail == 0) return R_EOF;
-		    con->EOF_signalled = TRUE;
+			    cond->description);
+		    cond->inavail = 0;
+		    if (cond->navail == 0) return R_EOF;
+		    cond->EOF_signalled = TRUE;
 		}
 	    }
 	}
-	con->navail--;
+	cond->navail--;
 	/* the cast prevents sign extension of 0xFF to -1 (R_EOF) */
-	return (unsigned char)*con->next++;
-    } else if (con->buff)
+	return (unsigned char)*cond->next++;
+    } else if (cond->buff)
 	return buff_fgetc(con);
     else
 	return con->fgetc_internal(con);
@@ -611,10 +613,12 @@ static size_t NORET null_write(const void *ptr, size_t size, size_t nitems,
 void init_con(Rconnection new, const char *description, int enc,
 	      const char * const mode)
 {
-    strcpy(new->description, description);
-    new->enc = enc;
+    RconnectionData newd = new->data;
+    
+    strcpy(newd->description, description);
+    newd->enc = enc;
     strncpy(new->mode, mode, 4); new->mode[4] = '\0';
-    new->isopen = new->incomplete = new->blocking = new->isGzcon = FALSE;
+    new->isopen = new->incomplete = new->blocking = newd->isGzcon = FALSE;
     new->canread = new->canwrite = TRUE; /* in principle */
     new->canseek = FALSE;
     new->text = TRUE;
@@ -628,19 +632,19 @@ void init_con(Rconnection new, const char *description, int enc,
     new->fflush = &null_fflush;
     new->read = &null_read;
     new->write = &null_write;
-    new->nPushBack = 0;
-    new->save = new->save2 = -1000;
+    newd->nPushBack = 0;
+    newd->save = newd->save2 = -1000;
     new->private = NULL;
-    new->inconv = new->outconv = NULL;
+    newd->inconv = newd->outconv = NULL;
     new->UTF8out = FALSE;
-    new->buff = NULL;
-    new->buff_pos = new->buff_stored_len = new->buff_len = 0;
+    newd->buff = NULL;
+    newd->buff_pos = newd->buff_stored_len = newd->buff_len = 0;
     /* increment id, avoid NULL */
     current_id = (void *)((size_t) current_id+1);
     if(!current_id) current_id = (void *) 1;
-    new->id = current_id;
-    new->ex_ptr = NULL;
-    new->status = NA_INTEGER;
+    newd->id = current_id;
+    newd->ex_ptr = NULL;
+    newd->status = NA_INTEGER;
 }
 
 /* ------------------- file connections --------------------- */
@@ -727,29 +731,29 @@ static Rboolean file_open(Rconnection con)
 #endif
     int mlen = (int) strlen(con->mode); // short
 
-    if(strlen(con->description) == 0) {
+    if(strlen(con->data->description) == 0) {
 	temp = TRUE;
 	name = R_tmpnam("Rf", R_TempDir);
-    } else name = R_ExpandFileName(con->description);
+    } else name = R_ExpandFileName(con->data->description);
     errno = 0; /* some systems require this */
     if(strcmp(name, "stdin")) {
 #ifdef Win32
 	char mode[20]; /* 4 byte mode plus "t,ccs=UTF-16LE" plus one for luck. */
-	strncpy(mode, con->mode, 4);
+	strncpy(mode, con->data->mode, 4);
 	mode[4] = '\0';
 	if (!strpbrk(mode, "bt"))
 	    strcat(mode, "t");
 	// See PR#16737, https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/fopen-wfopen?view=vs-2019
 	// ccs= is also supported by glibc but not macOS
 	if (strchr(mode, 't')
-	    && (!strcmp(con->encname, "UTF-16LE") || !strcmp(con->encname, "UCS-2LE"))) {
+	    && (!strcmp(con->data->encname, "UTF-16LE") || !strcmp(con->data->encname, "UCS-2LE"))) {
 	    strcat(mode, ",ccs=UTF-16LE");
-	    if (con->canread) {
+	    if (con->data->canread) {
 	    	this->use_fgetwc = TRUE;
 	    	this->have_wcbuffered = FALSE;
 	    }
 	}
-	if(con->enc == CE_UTF8) {
+	if(con->data->enc == CE_UTF8) {
 	    int n = strlen(name);
 	    wchar_t wname[2 * (n+1)], wmode[20];
 	    mbstowcs(wmode, mode, 19);
@@ -775,7 +779,7 @@ static Rboolean file_open(Rconnection con)
 #ifdef HAVE_FDOPEN
 	int dstdin = dup(0);
 # ifdef Win32
-	if (strchr(con->mode, 'b'))
+	if (strchr(con->data->mode, 'b'))
 	    /* fdopen won't set dstdin to binary mode */
 	    setmode(dstdin, _O_BINARY);
 # endif
@@ -825,7 +829,7 @@ static Rboolean file_open(Rconnection con)
     if(con->canwrite) this->wpos = f_tell(fp);
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
-    con->save = -1000;
+    con->data->save = -1000;
     if (shouldBuffer(fileno(fp)))
 	set_buffer(con);
     set_iconv(con);
@@ -844,8 +848,8 @@ static Rboolean file_open(Rconnection con)
 static void file_close(Rconnection con)
 {
     Rfileconn this = con->private;
-    if(con->isopen) // && strcmp(con->description, "stdin"))
-	con->status = fclose(this->fp);
+    if (con->isopen) // && strcmp(con->description, "stdin"))
+	con->data->status = fclose(this->fp);
     con->isopen = FALSE;
 #ifdef Win32
     if(this->anon_file) unlink(this->name);
@@ -861,7 +865,7 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 	this->last_was_write = TRUE;
 	f_seek(this->fp, this->wpos, SEEK_SET);
     }
-    if(con->outconv) return dummy_vfprintf(con, format, ap);
+    if(con->data->outconv) return dummy_vfprintf(con, format, ap);
     else return vfprintf(this->fp, format, ap);
 }
 
@@ -1002,16 +1006,20 @@ static Rconnection newfile(const char *description, int enc, const char *mode,
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of file connection failed"));
-    new->class = (char *) malloc(strlen("file") + 1);
-    if(!new->class) {
-	free(new);
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
+	error(_("allocation of file connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("file") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of file connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "file");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "file");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of file connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1029,7 +1037,8 @@ static Rconnection newfile(const char *description, int enc, const char *mode,
     new->canseek = (raw == 0);
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of file connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1067,10 +1076,10 @@ static Rboolean fifo_open(Rconnection con)
     struct stat sb;
     Rboolean temp = FALSE;
 
-    if(strlen(con->description) == 0) {
+    if(strlen(con->data->description) == 0) {
 	temp = TRUE;
 	name = R_tmpnam("Rf", R_TempDir);
-    } else name = R_ExpandFileName(con->description);
+    } else name = R_ExpandFileName(con->data->description);
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     if(mlen >= 2 && con->mode[1] == '+') con->canread = TRUE;
@@ -1117,13 +1126,13 @@ static Rboolean fifo_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     set_iconv(con);
-    con->save = -1000;
+    con->data->save = -1000;
     return TRUE;
 }
 
 static void fifo_close(Rconnection con)
 {
-    con->status = close(((Rfifoconn)(con->private))->fd);
+    con->data->status = close(((Rfifoconn)(con->private))->fd);
     con->isopen = FALSE;
 }
 
@@ -1296,7 +1305,7 @@ static Rboolean	fifo_open(Rconnection con)
 	con->isopen = TRUE;
 	con->text = uin_mode_len >= 2 && con->mode[uin_mode_len - 1] == 'b';
 	set_iconv(con);
-	con->save = -1000;
+	con->data->save = -1000;
     }
 
     /* Done */
@@ -1307,7 +1316,7 @@ static void fifo_close(Rconnection con)
 {
     Rfifoconn this = con->private;
     con->isopen = FALSE;
-    con->status = CloseHandle(this->hdl_namedpipe) ? 0 : -1;
+    con->data->status = CloseHandle(this->hdl_namedpipe) ? 0 : -1;
     if (this->overlapped_write) CloseHandle(this->overlapped_write);
 }
 
@@ -1390,16 +1399,21 @@ static Rconnection newfifo(const char *description, const char *mode)
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of fifo connection failed"));
-    new->class = (char *) malloc(strlen("fifo") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of fifo connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("fifo") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of fifo connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "fifo");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "fifo");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of fifo connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1416,7 +1430,8 @@ static Rconnection newfifo(const char *description, const char *mode)
     new->write = &fifo_write;
     new->private = (void *) malloc(sizeof(struct fifoconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of fifo connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1460,9 +1475,9 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     ncon = NextConnection();
     con = Connections[ncon] = newfifo(file, strlen(open) ? open : "r");
     con->blocking = block;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
-    con->encname[100 - 1] = '\0';
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    strncpy(con->data->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
+    con->data->encname[100 - 1] = '\0';
+    con->data->ex_ptr = PROTECT(R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {
@@ -1478,8 +1493,8 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("fifo"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
 
     return ans;
@@ -1511,7 +1526,7 @@ static Rboolean pipe_open(Rconnection con)
 	int n = strlen(con->description);
 	wchar_t wname[2 * (n+1)], wmode[10];
 	R_CheckStack();
-	Rf_utf8towcs(wname, con->description, n+1);
+	Rf_utf8towcs(wname, con->data->description, n+1);
 	mbstowcs(wmode, con->mode, 10);
 	fp = _wpopen(wname, wmode);
 	if(!fp) {
@@ -1520,9 +1535,9 @@ static Rboolean pipe_open(Rconnection con)
 	}
     } else
 #endif
-	fp = R_popen(con->description, mode);
+	fp = R_popen(con->data->description, mode);
     if(!fp) {
-	warning(_("cannot open pipe() cmd '%s': %s"), con->description,
+	warning(_("cannot open pipe() cmd '%s': %s"), con->data->description,
 		strerror(errno));
 	return FALSE;
     }
@@ -1536,13 +1551,13 @@ static Rboolean pipe_open(Rconnection con)
     this->last_was_write = !con->canread;
     this->rpos = this->wpos = 0;
     set_iconv(con);
-    con->save = -1000;
+    con->data->save = -1000;
     return TRUE;
 }
 
 static void pipe_close(Rconnection con)
 {
-    con->status = pclose(((Rfileconn)(con->private))->fp);
+    con->data->status = pclose(((Rfileconn)(con->private))->fp);
     con->isopen = FALSE;
 }
 
@@ -1552,16 +1567,21 @@ newpipe(const char *description, int ienc, const char *mode)
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of pipe connection failed"));
-    new->class = (char *) malloc(strlen("pipe") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of pipe connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("pipe") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of pipe connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "pipe");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "pipe");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of pipe connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1576,7 +1596,8 @@ newpipe(const char *description, int ienc, const char *mode)
     new->write = &file_write;
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of pipe connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1631,9 +1652,9 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	con = newpipe(file, ienc, strlen(open) ? open : "r");
     Connections[ncon] = con;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
-    con->encname[100 - 1] = '\0';
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    strncpy(con->data->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
+    con->data->encname[100 - 1] = '\0';
+    con->data->ex_ptr = PROTECT(R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {
@@ -1653,8 +1674,8 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
 
     return ans;
@@ -1696,7 +1717,7 @@ static Rboolean gzfile_open(Rconnection con)
     else if (con->mode[0] == 'a') snprintf(mode, 6, "ab%1d", gzcon->compress);
     else strcpy(mode, "rb");
     errno = 0; /* precaution */
-    name = R_ExpandFileName(con->description);
+    name = R_ExpandFileName(con->data->description);
     /* We cannot use isDir, because we cannot get the fd from gzFile
        (it would be possible with gzdopen, if supported) */
     if (isDirPath(name)) {
@@ -1716,7 +1737,7 @@ static Rboolean gzfile_open(Rconnection con)
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
     set_buffer(con);
     set_iconv(con);
-    con->save = -1000;
+    con->data->save = -1000;
     return TRUE;
 }
 
@@ -1786,16 +1807,21 @@ static Rconnection newgzfile(const char *description, const char *mode,
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of gzfile connection failed"));
-    new->class = (char *) malloc(strlen("gzfile") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of gzfile connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("gzfile") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of gzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "gzfile");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "gzfile");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of gzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1813,7 +1839,8 @@ static Rconnection newgzfile(const char *description, const char *mode,
     new->write = &gzfile_write;
     new->private = (void *) malloc(sizeof(struct gzfileconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of gzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -1843,7 +1870,7 @@ static Rboolean bzfile_open(Rconnection con)
        binary mode where it matters */
     mode[0] = con->mode[0];
     errno = 0; /* precaution */
-    name = R_ExpandFileName(con->description);
+    name = R_ExpandFileName(con->data->description);
     fp = R_fopen(name, mode);
     if(!fp) {
 	warning(_("cannot open bzip2-ed file '%s', probable reason '%s'"),
@@ -1861,7 +1888,7 @@ static Rboolean bzfile_open(Rconnection con)
 	    BZ2_bzReadClose(&bzerror, bfp);
 	    fclose(fp);
 	    warning(_("file '%s' appears not to be compressed by bzip2"),
-		    R_ExpandFileName(con->description));
+		    R_ExpandFileName(con->data->description));
 	    return FALSE;
 	}
     } else {
@@ -1870,7 +1897,7 @@ static Rboolean bzfile_open(Rconnection con)
 	    BZ2_bzWriteClose(&bzerror, bfp, 0, NULL, NULL);
 	    fclose(fp);
 	    warning(_("initializing bzip2 compression for file '%s' failed"),
-		    R_ExpandFileName(con->description));
+		    R_ExpandFileName(con->data->description));
 	    return FALSE;
 	}
     }
@@ -1880,7 +1907,7 @@ static Rboolean bzfile_open(Rconnection con)
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
     set_buffer(con);
     set_iconv(con);
-    con->save = -1000;
+    con->data->save = -1000;
     return TRUE;
 }
 
@@ -1932,7 +1959,7 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 		    bz->bfp = BZ2_bzReadOpen(&bzerror, bz->fp, 0, 0, next_unused, nUnused);
 		    if(bzerror != BZ_OK)
 			warning(_("file '%s' has trailing content that appears not to be compressed by bzip2"),
-				R_ExpandFileName(con->description));
+				R_ExpandFileName(con->data->description));
 		}
 		if (next_unused) free(next_unused);
 	    }
@@ -1978,16 +2005,21 @@ static Rconnection newbzfile(const char *description, const char *mode,
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of bzfile connection failed"));
-    new->class = (char *) malloc(strlen("bzfile") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of bzfile connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("bzfile") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of bzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "bzfile");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "bzfile");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of bzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2005,7 +2037,8 @@ static Rconnection newbzfile(const char *description, const char *mode,
     new->write = &bzfile_write;
     new->private = (void *) malloc(sizeof(struct bzfileconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of bzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2039,7 +2072,7 @@ static Rboolean xzfile_open(Rconnection con)
        binary mode where it matters */
     mode[0] = con->mode[0];
     errno = 0; /* precaution */
-    name = R_ExpandFileName(con->description);
+    name = R_ExpandFileName(con->data->description);
     xz->fp = R_fopen(name, mode);
     if(!xz->fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),
@@ -2084,7 +2117,7 @@ static Rboolean xzfile_open(Rconnection con)
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
     set_buffer(con);
     set_iconv(con);
-    con->save = -1000;
+    con->data->save = -1000;
     return TRUE;
 }
 
@@ -2206,16 +2239,21 @@ newxzfile(const char *description, const char *mode, int type, int compress)
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of xzfile connection failed"));
-    new->class = (char *) malloc(strlen("xzfile") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of xzfile connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("xzfile") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of xzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "xzfile");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "xzfile");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of xzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2234,7 +2272,8 @@ newxzfile(const char *description, const char *mode, int type, int compress)
     new->private = (void *) malloc(sizeof(struct xzfileconn));
     memset(new->private, 0, sizeof(struct xzfileconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of xzfile connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2314,13 +2353,13 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     ncon = NextConnection();
     Connections[ncon] = con;
     con->blocking = TRUE;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
-    con->encname[100 - 1] = '\0';
+    strncpy(con->data->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
+    con->data->encname[100 - 1] = '\0';
 
     /* see the comment in do_url */
-    if (con->encname[0] && !streql(con->encname, "native.enc"))
+    if (con->data->encname[0] && !streql(con->data->encname, "native.enc"))
 	con->canseek = 0;
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    con->data->ex_ptr = PROTECT(R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {
@@ -2346,8 +2385,8 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
 
     return ans;
@@ -2402,7 +2441,7 @@ static Rboolean clp_open(Rconnection con)
 	    return FALSE;
 	}
 #else
-	Rboolean res = R_ReadClipboard(this, con->description);
+	Rboolean res = R_ReadClipboard(this, con->data->description);
 	if(!res) return FALSE;
 #endif
     } else {
@@ -2418,7 +2457,7 @@ static Rboolean clp_open(Rconnection con)
     con->text = TRUE;
     /* Not calling set_buffer(con) as the data is already buffered */
     set_iconv(con);
-    con->save = -1000;
+    con->data->save = -1000;
     this->warned = FALSE;
 
     return TRUE;
@@ -2575,16 +2614,21 @@ static Rconnection newclp(const char *url, const char *inmode)
     if(!new) error(_("allocation of clipboard connection failed"));
     if(strncmp(url, "clipboard", 9) == 0) description = "clipboard";
     else description = url;
-    new->class = (char *) malloc(strlen(description) + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of clipboard connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen(description) + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of clipboard connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, description);
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, description);
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of clipboard connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2602,7 +2646,8 @@ static Rconnection newclp(const char *url, const char *inmode)
     new->canseek = TRUE;
     new->private = (void *) malloc(sizeof(struct clpconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of clipboard connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2674,16 +2719,21 @@ static Rconnection newterminal(const char *description, const char *mode)
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of terminal connection failed"));
-    new->class = (char *) malloc(strlen("terminal") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of terminal connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("terminal") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of terminal connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "terminal");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "terminal");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of terminal connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2705,7 +2755,7 @@ SEXP attribute_hidden do_stdin(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(ans = ScalarInteger(0));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
+    SET_STRING_ELT(class, 0, mkChar(con->data->class));//FIXME: NEED EXTRACTOR
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     UNPROTECT(2);
@@ -2720,7 +2770,8 @@ SEXP attribute_hidden do_stdout(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(ans = ScalarInteger(R_OutputCon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
+    //FIXME NEED EXTRACTOR FUNCTION FOR CONNECTION CLASS
+    SET_STRING_ELT(class, 0, mkChar(con->data->class));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     UNPROTECT(2);
@@ -2736,7 +2787,8 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(ans = ScalarInteger(2));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
+    //FIXME: NEED EXTRACTOR FUNCTION FOR CONNECTION CLASS
+    SET_STRING_ELT(class, 0, mkChar(con->data->class));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     UNPROTECT(2);
@@ -2879,16 +2931,21 @@ static Rconnection newraw(const char *description, SEXP raw, const char *mode)
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of raw connection failed"));
-    new->class = (char *) malloc(strlen("rawConnection") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of raw connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("rawConnection") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of raw connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "rawConnection");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "rawConnection");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of raw connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2915,7 +2972,8 @@ static Rconnection newraw(const char *description, SEXP raw, const char *mode)
     new->seek = &raw_seek;
     new->private = (void*) malloc(sizeof(struct rawconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of raw connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -2957,9 +3015,9 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("rawConnection"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"), R_NilValue);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    con->data->ex_ptr = R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
     return ans;
 }
@@ -2971,7 +3029,7 @@ static Rconnection getConnectionCheck(SEXP rcon, const char *cls,
 	error(_("'%s' is not a %s"), var, cls);
     Rconnection con = getConnection(asInteger(rcon));
     /* check that the R class and internal class match */
-    if (strcmp(con->class, cls))
+    if (strcmp(con->data->class, cls))
 	error(_("internal connection is not a %s"), cls);
     return con;
 }
@@ -3029,7 +3087,8 @@ static void text_init(Rconnection con, SEXP text, int type)
     else nchars = (size_t) dnc;
     this->data = (char *) malloc(nchars+1);
     if(!this->data) {
-	free(this); free(con->description); free(con->class); free(con);
+	free(this); free(con->data->description); free(con->data->class);
+	free(con->data); free(con); //FIXME NEED free_connection function
 	error(_("cannot allocate memory for text connection"));
     }
     char *t = this->data;
@@ -3048,7 +3107,7 @@ static void text_init(Rconnection con, SEXP text, int type)
 
 static Rboolean text_open(Rconnection con)
 {
-    con->save = -1000;
+    con->data->save = -1000;
     return TRUE;
 }
 
@@ -3090,16 +3149,21 @@ static Rconnection newtext(const char *description, SEXP text, int type)
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of text connection failed"));
-    new->class = (char *) malloc(strlen("textConnection") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of text connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("textConnection") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of text connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "textConnection");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "textConnection");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of text connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -3113,7 +3177,8 @@ static Rconnection newtext(const char *description, SEXP text, int type)
     new->seek = &text_seek;
     new->private = (void*) malloc(sizeof(struct textconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of text connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -3265,7 +3330,7 @@ static void outtext_init(Rconnection con, SEXP stext, const char *mode, int idx)
 	val = allocVector(STRSXP, 0);
 	R_PreserveObject(val);
     } else {
-	this->namesymbol = install(con->description);
+	this->namesymbol = install(con->data->description);
 	if(strcmp(mode, "w") == 0) {
 	    /* create variable pointed to by con->description */
 	    PROTECT(val = allocVector(STRSXP, 0));
@@ -3302,18 +3367,24 @@ static Rconnection newouttext(const char *description, SEXP stext,
     Rconnection new;
     void *tmp;
 
+    //FIXME: NEED COMMON FUNCTION FOR ALLOCATING MEMORY HERE
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of text connection failed"));
-    new->class = (char *) malloc(strlen("textConnection") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of text connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("textConnection") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of text connection failed"));
  	/* for Solaris 12.5 */ new = NULL;
    }
-    strcpy(new->class, "textConnection");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "textConnection");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new);
 	error(_("allocation of text connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -3327,14 +3398,16 @@ static Rconnection newouttext(const char *description, SEXP stext,
     new->seek = &text_seek;
     new->private = (void*) malloc(sizeof(struct outtextconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of text connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
     ((Routtextconn)new->private)->lastline = tmp = malloc(LAST_LINE_LEN);
     if(!tmp) {
 	free(new->private);
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of text connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -3398,9 +3471,9 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("textConnection"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"), R_NilValue);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    con->data->ex_ptr = R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
     return ans;
 }
@@ -3476,9 +3549,9 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     con = R_newsock(host, port, server, serverfd, open, timeout);
     Connections[ncon] = con;
     con->blocking = blocking;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
-    con->encname[100 - 1] = '\0';
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    strncpy(con->data->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
+    con->data->encname[100 - 1] = '\0';
+    con->data->ex_ptr = PROTECT(R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {
@@ -3494,8 +3567,8 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("sockconn"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
     return ans;
 }
@@ -3530,9 +3603,9 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     ncon = NextConnection();
     con = Connections[ncon] = R_newunz(file, strlen(open) ? open : "r"); // see dounzip.c for the details
 
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
-    con->encname[100 - 1] = '\0';
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    strncpy(con->data->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
+    con->data->encname[100 - 1] = '\0';
+    con->data->ex_ptr = PROTECT(R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {
@@ -3548,8 +3621,8 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("unz"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
 
     return ans;
@@ -3637,7 +3710,7 @@ static void checkClose(Rconnection con)
     if (con->isopen) {
         errno = 0;
     	con->close(con);
-    	if (con->status != NA_INTEGER && con->status < 0) {
+    	if (con->data->status != NA_INTEGER && con->data->status < 0) {
     	    int serrno = errno;
             if (serrno)
 		warning(_("Problem closing connection:  %s"), strerror(serrno));
@@ -3651,35 +3724,35 @@ static int con_close1(Rconnection con)
 {
     int status;
     checkClose(con);
-    status = con->status;
-    if(con->isGzcon) {
+    status = con->data->status;
+    if(con->data->isGzcon) {
 	Rgzconn priv = con->private;
 	con_close1(priv->con);
-	R_ReleaseObject(priv->con->ex_ptr);
+	R_ReleaseObject(priv->con->data->ex_ptr);
     }
     /* close inconv and outconv if open */
-    if(con->inconv) Riconv_close(con->inconv);
-    if(con->outconv) Riconv_close(con->outconv);
+    if(con->data->inconv) Riconv_close(con->data->inconv);
+    if(con->data->outconv) Riconv_close(con->data->outconv);
     con->destroy(con);
-    free(con->class);
-    con->class = NULL;
-    free(con->description);
-    con->description = NULL;
+    free(con->data->class);
+    con->data->class = NULL;
+    free(con->data->description);
+    con->data->description = NULL;
     /* clear the pushBack */
-    if(con->nPushBack > 0) { // already cleared on closed connection,
-	                     // so no double-free pace -fanalyzer
+    if(con->data->nPushBack > 0) { // already cleared on closed connection,
+	                           // so no double-free pace -fanalyzer
 	int j;
 
-	for(j = 0; j < con->nPushBack; j++)
-	    free(con->PushBack[j]);
-	free(con->PushBack);
+	for(j = 0; j < con->data->nPushBack; j++)
+	    free(con->data->PushBack[j]);
+	free(con->data->PushBack);
     }
-    con->nPushBack = 0;
-    if (con->buff) {
-	free(con->buff);
-	con->buff = NULL;
+    con->data->nPushBack = 0;
+    if (con->data->buff) {
+	free(con->data->buff);
+	con->data->buff = NULL;
     }
-    con->buff_len = con->buff_pos = con->buff_stored_len = 0;
+    con->data->buff_len = con->data->buff_pos = con->data->buff_stored_len = 0;
     con->open = &null_open;
     con->close = &null_close;
     con->destroy = &null_destroy;
@@ -3700,6 +3773,7 @@ static void con_destroy(int i)
 
     con = getConnection(i);
     con_close1(con);
+    free(Connections[i]->data);
     free(Connections[i]);
     Connections[i] = NULL;
 }
@@ -3727,7 +3801,7 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 static double Rconn_seek(Rconnection con, double where, int origin, int rw) {
-    if (con->buff)
+    if (con->data->buff)
 	return buff_seek(con, where, origin, rw);
     return con->seek(con, where, origin, rw);
 }
@@ -3747,12 +3821,12 @@ SEXP attribute_hidden do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
     where = asReal(CADR(args));
     origin = asInteger(CADDR(args));
     rw = asInteger(CADDDR(args));
-    if(!ISNAN(where) && con->nPushBack > 0) {
+    if(!ISNAN(where) && con->data->nPushBack > 0) {
 	/* clear pushback */
 	int j;
-	for(j = 0; j < con->nPushBack; j++) free(con->PushBack[j]);
-	free(con->PushBack);
-	con->nPushBack = 0;
+	for(j = 0; j < con->data->nPushBack; j++) free(con->data->PushBack[j]);
+	free(con->data->PushBack);
+	con->data->nPushBack = 0;
     }
     return ScalarReal(Rconn_seek(con, where, origin, rw));
 }
@@ -3789,36 +3863,36 @@ int Rconn_fgetc(Rconnection con)
     char *curLine;
     int c;
 
-    if (con->save2 != -1000) {
-	c = con->save2;
-	con->save2 = -1000;
+    if (con->data->save2 != -1000) {
+	c = con->data->save2;
+	con->data->save2 = -1000;
 	return c;
     }
-    if(con->nPushBack <= 0) {
+    if(con->data->nPushBack <= 0) {
 	/* map CR or CRLF to LF */
-	if (con->save != -1000) {
-	    c = con->save;
-	    con->save = -1000;
+	if (con->data->save != -1000) {
+	    c = con->data->save;
+	    con->data->save = -1000;
 	    return c;
 	}
 	c = con->fgetc(con);
 	if (c == '\r') {
 	    c = con->fgetc(con);
 	    if (c != '\n') {
-		con->save = (c != '\r') ? c : '\n';
+		con->data->save = (c != '\r') ? c : '\n';
 		return('\n');
 	    }
 	}
 	return c;
     }
-    curLine = con->PushBack[con->nPushBack-1];
-    c = (unsigned char) curLine[con->posPushBack++];
-    if(con->posPushBack >= strlen(curLine)) {
+    curLine = con->data->PushBack[con->data->nPushBack-1];
+    c = (unsigned char) curLine[con->data->posPushBack++];
+    if(con->data->posPushBack >= strlen(curLine)) {
 	/* last character on a line, so pop the line */
 	free(curLine);
-	con->nPushBack--;
-	con->posPushBack = 0;
-	if(con->nPushBack == 0) free(con->PushBack);
+	con->data->nPushBack--;
+	con->data->posPushBack = 0;
+	if(con->data->nPushBack == 0) free(con->data->PushBack);
     }
     return c;
 }
@@ -3826,7 +3900,7 @@ int Rconn_fgetc(Rconnection con)
 #ifdef UNUSED
 int Rconn_ungetc(int c, Rconnection con)
 {
-    con->save2 = c;
+    con->data->save2 = c;
     return c;
 }
 #endif
@@ -3998,7 +4072,7 @@ no_more_lines:
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
     if(nbuf > 0) { /* incomplete last line */
 	if(con->text && !con->blocking &&
-	   (strcmp(con->class, "gzfile") != 0)) {
+	   (strcmp(con->data->class, "gzfile") != 0)) { //FIMXE: MACRO
 	    /* push back the rest */
 	    con_pushback(con, 0, buf);
 	    con->incomplete = TRUE;
@@ -4006,7 +4080,7 @@ no_more_lines:
 	    nread++;
 	    if(warn)
 		warning(_("incomplete final line found on '%s'"),
-			con->description);
+			con->data->description);
 	}
     }
     free(buf);
@@ -4808,7 +4882,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("can only read in bytes in a non-UTF-8 MBCS locale" ));
     PROTECT(ans = allocVector(STRSXP, n));
     if(!isRaw && con->text &&
-       (con->buff || con->nPushBack >= 0 || con->inconv))
+       (con->data->buff || con->data->nPushBack >= 0 || con->data->inconv))
 
 	/* could be turned into runtime error */
 	warning(_("text connection used with %s(), results may be incorrect"),
@@ -4930,7 +5004,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!con->canwrite) error(_("cannot write to this connection"));
     }
 
-    if(!isRaw && con->text && con->outconv)
+    if(!isRaw && con->text && con->data->outconv)
 	/* could be turned into runtime error */
 	warning(_("text connection used with %s(), results may be incorrect"),
 	          "writeChar");
@@ -5018,26 +5092,26 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 /* used in readLines and scan */
 void con_pushback(Rconnection con, Rboolean newLine, char *line)
 {
-    int nexists = con->nPushBack;
+    int nexists = con->data->nPushBack;
     char **q;
 
     if (nexists == INT_MAX)
 	error(_("maximum number of pushback lines exceeded"));
     if(nexists > 0) {
-	q = (char **) realloc(con->PushBack, (nexists+1)*sizeof(char *));
+	q = (char **) realloc(con->data->PushBack, (nexists+1)*sizeof(char *));
     } else {
 	q = (char **) malloc(sizeof(char *));
     }
     if(!q) error(_("could not allocate space for pushback"));
-    else con->PushBack = q;
+    else con->data->PushBack = q;
     q += nexists;
     *q = (char *) malloc(strlen(line) + 1 + newLine);
     if(!(*q)) error(_("could not allocate space for pushback"));
     strcpy(*q, line);
     if(newLine) strcat(*q, "\n");
     q++;
-    con->posPushBack = 0;
-    con->nPushBack++;
+    con->data->posPushBack = 0;
+    con->data->nPushBack++;
 }
 
 
@@ -5063,14 +5137,14 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("can only push back on open readable connections"));
     if(!con->text)
 	error(_("can only push back on text-mode connections"));
-    nexists = con->nPushBack;
+    nexists = con->data->nPushBack;
     if((n = LENGTH(stext)) > 0) {
 	if(nexists > 0)
-	    q = (char **) realloc(con->PushBack, (n+nexists)*sizeof(char *));
+	    q = (char **) realloc(con->data->PushBack, (n+nexists)*sizeof(char *));
 	else
 	    q = (char **) malloc(n*sizeof(char *));
 	if(!q) error(_("could not allocate space for pushback"));
-	con->PushBack = q;
+	con->data->PushBack = q;
 	q += nexists;
 	for(i = 0; i < n; i++) {
 	    p = type == 1 ? translateChar(STRING_ELT(stext, n - i - 1))
@@ -5082,8 +5156,8 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(newLine) strcat(*q, "\n");
 	    q++;
 	}
-	con->posPushBack = 0;
-	con->nPushBack += n;
+	con->data->posPushBack = 0;
+	con->data->nPushBack += n;
     }
     return R_NilValue;
 }
@@ -5094,21 +5168,23 @@ SEXP attribute_hidden do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     con = getConnection(asInteger(CAR(args)));
-    return ScalarInteger(con->nPushBack);
+    return ScalarInteger(con->data->nPushBack);
 }
 
 SEXP attribute_hidden do_clearpushback(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int j;
     Rconnection con = NULL;
-
+    RconnectionData cond = NULL;
+    
     checkArity(op, args);
     con = getConnection(asInteger(CAR(args)));
-
-    if(con->nPushBack > 0) { // so con_close1 has not been called
-	for(j = 0; j < con->nPushBack; j++) free(con->PushBack[j]);
-	free(con->PushBack);
-	con->nPushBack = 0;
+    cond = con->data;
+    
+    if(cond->nPushBack > 0) { // so con_close1 has not been called
+	for(j = 0; j < cond->nPushBack; j++) free(cond->PushBack[j]);
+	free(cond->PushBack);
+	cond->nPushBack = 0;
     }
     return R_NilValue;
 }
@@ -5153,7 +5229,7 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 	R_OutputCon = SinkCons[++R_SinkNumber] = icon;
 	SinkConsClose[R_SinkNumber] = toclose;
 	R_SinkSplit[R_SinkNumber] = tee;
-	R_PreserveObject(con->ex_ptr);
+	R_PreserveObject(con->data->ex_ptr);
    } else { /* removing a sink */
 	if (R_SinkNumber <= 0) {
 	    warning(_("no sink to remove"));
@@ -5162,7 +5238,7 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 	    R_OutputCon = SinkCons[--R_SinkNumber];
 	    if((icon = SinkCons[R_SinkNumber + 1]) >= 3) {
 		Rconnection con = getConnection(icon);
-		R_ReleaseObject(con->ex_ptr);
+		R_ReleaseObject(con->data->ex_ptr);
 		if(SinkConsClose[R_SinkNumber + 1] == 1) { /* close it */
 		    checkClose(con);
 		} else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
@@ -5200,12 +5276,12 @@ SEXP attribute_hidden do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch_or_tee_stdout(icon, closeOnExit, tee);
     } else {
 	if(icon < 0) {
-	    R_ReleaseObject(getConnection(R_ErrorCon)->ex_ptr);
+	    R_ReleaseObject(getConnection(R_ErrorCon)->data->ex_ptr);
 	    R_ErrorCon = 2;
 	} else {
 	    getConnection(icon); /* check validity */
 	    R_ErrorCon = icon;
-	    R_PreserveObject(getConnection(icon)->ex_ptr);
+	    R_PreserveObject(getConnection(icon)->data->ex_ptr);
 	}
     }
 
@@ -5286,11 +5362,11 @@ do_getconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     con = Connections[what];
     PROTECT(ans = ScalarInteger(what));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
+    SET_STRING_ELT(class, 0, mkChar(con->data->class));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     if (what > 2)
-	setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
+	setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
     UNPROTECT(2);
     return ans;
 }
@@ -5306,13 +5382,13 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(names = allocVector(STRSXP, 7));
     SET_STRING_ELT(names, 0, mkChar("description"));
     PROTECT(tmp = allocVector(STRSXP, 1));
-    if(Rcon->enc == CE_UTF8)
-	SET_STRING_ELT(tmp, 0, mkCharCE(Rcon->description, CE_UTF8));
+    if(Rcon->data->enc == CE_UTF8)
+	SET_STRING_ELT(tmp, 0, mkCharCE(Rcon->data->description, CE_UTF8));
     else
-	SET_STRING_ELT(tmp, 0, mkChar(Rcon->description));
+	SET_STRING_ELT(tmp, 0, mkChar(Rcon->data->description));
     SET_VECTOR_ELT(ans, 0, tmp);
     SET_STRING_ELT(names, 1, mkChar("class"));
-    SET_VECTOR_ELT(ans, 1, mkString(Rcon->class));
+    SET_VECTOR_ELT(ans, 1, mkString(Rcon->data->class));
     SET_STRING_ELT(names, 2, mkChar("mode"));
     SET_VECTOR_ELT(ans, 2, mkString(Rcon->mode));
     SET_STRING_ELT(names, 3, mkChar("text"));
@@ -5571,17 +5647,17 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     Connections[ncon] = con;
     con->blocking = block;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
-    con->encname[100 - 1] = '\0';
+    strncpy(con->data->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
+    con->data->encname[100 - 1] = '\0';
 
     /* only text-mode connections are affected, but we can't tell that
        until the connection is opened, and why set an encoding on a
        connection intended to be used in binary mode? */
-    if (con->encname[0] && !streql(con->encname, "native.enc"))
+    if (con->data->encname[0] && !streql(con->data->encname, "native.enc"))
 	con->canseek = 0;
     /* This is referenced in do_getconnection, so set up before
        any warning */
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"),
+    con->data->ex_ptr = PROTECT(R_MakeExternalPtr(con->data->id, install("connection"),
 					    R_NilValue));
 
     /* open it if desired */
@@ -5598,8 +5674,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar(class2));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
 
     return ans;
@@ -5641,7 +5717,7 @@ static Rboolean gzcon_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = icon->canwrite;
     con->canread = !con->canwrite;
-    con->save = -1000;
+    con->data->save = -1000;
 
     priv->s.zalloc = (alloc_func)0;
     priv->s.zfree = (free_func)0;
@@ -5910,7 +5986,7 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(text == NA_INTEGER)
         error(_("'text' must be TRUE or FALSE"));
 
-    if(incon->isGzcon) {
+    if(incon->data->isGzcon) {
 	warning(_("this is already a 'gzcon' connection"));
 	return CAR(args);
     }
@@ -5918,32 +5994,37 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strcmp(m, "r") == 0 || strncmp(m, "rb", 2) == 0) mode = "rb";
     else if (strcmp(m, "w") == 0 || strncmp(m, "wb", 2) == 0) mode = "wb";
     else error(_("can only use read- or write- binary connections"));
-    if(strcmp(incon->class, "file") == 0 &&
+    if(strcmp(incon->data->class, "file") == 0 &&
        (strcmp(m, "r") == 0 || strcmp(m, "w") == 0))
 	warning(_("using a text-mode 'file' connection may not work correctly"));
 
-    else if(strcmp(incon->class, "textConnection") == 0 && strcmp(m, "w") == 0)
+    else if(strcmp(incon->data->class, "textConnection") == 0 && strcmp(m, "w") == 0)
 	error(_("cannot create a 'gzcon' connection from a writable textConnection; maybe use rawConnection"));
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of 'gzcon' connection failed"));
-    new->class = (char *) malloc(strlen("gzcon") + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
 	error(_("allocation of 'gzcon' connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("gzcon") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
+	error(_("allocation of 'gzcon' connection failed"));
  	/* for Solaris 12.5 */ new = NULL;
-   }
-    strcpy(new->class, "gzcon");
-    snprintf(description, 1000, "gzcon(%s)", incon->description);
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    }
+    strcpy(new->data->class, "gzcon");
+    snprintf(description, 1000, "gzcon(%s)", incon->data->description);
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of 'gzcon' connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
     init_con(new, description, CE_NATIVE, mode);
     new->text = text;
-    new->isGzcon = TRUE;
+    new->data->isGzcon = TRUE;
     new->open = &gzcon_open;
     new->close = &gzcon_close;
     new->vfprintf = &dummy_vfprintf;
@@ -5952,7 +6033,9 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     new->write = &gzcon_write;
     new->private = (void *) malloc(sizeof(struct gzconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	//FIXME: NEED A FREE CONNECTION FUNCTION
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of 'gzcon' connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -5962,14 +6045,15 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     ((Rgzconn)(new->private))->allow = allow;
 
     /* as there might not be an R-level reference to the wrapped connection */
-    R_PreserveObject(incon->ex_ptr);
+    R_PreserveObject(incon->data->ex_ptr);
 
     Connections[icon] = new;
     // gcc 8 with sanitizers selected objects to truncation here with 99 or 100.
-    strncpy(new->encname, incon->encname, 100);
-    new->encname[100 - 1] = '\0';
-    new->ex_ptr = PROTECT(R_MakeExternalPtr((void *)new->id, install("connection"),
-					    R_NilValue));
+    strncpy(new->data->encname, incon->data->encname, 100);
+    new->data->encname[100 - 1] = '\0';
+    new->data->ex_ptr = PROTECT(R_MakeExternalPtr((void *)new->data->id,
+						  install("connection"),
+						  R_NilValue));
     if(incon->isopen) new->open(new);
 
     PROTECT(ans = ScalarInteger(icon));
@@ -5977,7 +6061,7 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(class, 0, mkChar("gzcon"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, new->ex_ptr);
+    setAttrib(ans, R_ConnIdSymbol, new->data->ex_ptr);
     /* Disable, as e.g. load() leaves no reference to the new connection */
     //R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
@@ -6156,7 +6240,7 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (i = 0; i < nsock; i++) {
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
-	if (!strcmp(conn->class, "sockconn")) {
+	if (!strcmp(conn->data->class, "sockconn")) {
 	    Rsockconn scp = conn->private;
 	    INTEGER(insockfd)[i] = scp->fd;
 	    if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
@@ -6164,7 +6248,7 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 		immediate = TRUE;
 	    }
 	    else LOGICAL(val)[i] = FALSE;
-	} else if (!strcmp(conn->class, "servsockconn")) {
+	} else if (!strcmp(conn->data->class, "servsockconn")) {
 	    Rservsockconn sop = conn->private;
 	    INTEGER(insockfd)[i] = sop->fd;
 	    LOGICAL(val)[i] = FALSE;
@@ -6197,15 +6281,15 @@ SEXP attribute_hidden do_serversocket(SEXP call, SEXP op, SEXP args, SEXP rho)
     ncon = NextConnection();
     con = R_newservsock(port);
     Connections[ncon] = con;
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    con->data->ex_ptr = PROTECT(R_MakeExternalPtr(con->data->id, install("connection"), R_NilValue));
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("servsockconn"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, con->data->ex_ptr);
+    R_RegisterCFinalizerEx(con->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
     return ans;
 }
@@ -6630,16 +6714,21 @@ SEXP R_new_custom_connection(const char *description, const char *mode, const ch
     /* built-in connections do this in a separate new<class>() function */
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of %s connection failed"), class_name);
-    new->class = (char *) malloc(strlen(class_name) + 1);
-    if(!new->class) {
+    new->data = (RconnectionData) malloc(sizeof(struct RconnData));
+    if (!new->data) {
 	free(new);
+	error(_("allocation of %s connection failed"), class_name);
+    }
+    new->data->class = (char *) malloc(strlen(class_name) + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of %s connection failed"), class_name);
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, class_name);
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, class_name);
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of %s connection failed"), class_name);
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -6652,19 +6741,28 @@ SEXP R_new_custom_connection(const char *description, const char *mode, const ch
     /* here we use the new connection to create a SEXP */
     Connections[ncon] = new;
     /* new->blocking = block; */
-    new->encname[0] = 0; /* "" (should have the same effect as "native.enc") */
-    new->ex_ptr = PROTECT(R_MakeExternalPtr(new->id, install("connection"), R_NilValue));
+    new->data->encname[0] = 0; /* "" (should have the same effect as "native.enc") */
+    new->data->ex_ptr = PROTECT(R_MakeExternalPtr(new->data->id, install("connection"), R_NilValue));
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar(class_name));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
-    setAttrib(ans, R_ConnIdSymbol, new->ex_ptr);
-    R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);
+    setAttrib(ans, R_ConnIdSymbol, new->data->ex_ptr);
+    R_RegisterCFinalizerEx(new->data->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
 
     if (ptr) ptr[0] = new;
 
     return ans;
 }
+
+char const * R_ConnectionClass(Rconnection con) {
+    return con->data->class;
+}
+
+char const * R_ConnectionDescription(Rconnection con) {
+    return con->data->description;
+}
+

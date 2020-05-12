@@ -40,6 +40,8 @@
 #include <errno.h>
 #include <Print.h>
 
+//FIXME: PRIVATE HEADER
+
 #include <rlocale.h> /* for btowc */
 
 #undef _
@@ -138,15 +140,17 @@ static int ConsoleGetcharWithPushBack(Rconnection con)
     char *curLine;
     int c;
 
-    if(con->nPushBack > 0) {
-	curLine = con->PushBack[con->nPushBack-1];
-	c = curLine[con->posPushBack++];
-	if(con->posPushBack >= strlen(curLine)) {
+    //FIXME: We're in trouble here. Packages should only be able to
+    //use the API, but here we're using private data. 
+    if(con->data->nPushBack > 0) {
+	curLine = con->data->PushBack[con->data->nPushBack-1];
+	c = curLine[con->data->posPushBack++];
+	if(con->data->posPushBack >= strlen(curLine)) {
 	    /* last character on a line, so pop the line */
 	    free(curLine);
-	    con->nPushBack--;
-	    con->posPushBack = 0;
-	    if(con->nPushBack == 0) free(con->PushBack);
+	    con->data->nPushBack--;
+	    con->data->posPushBack = 0;
+	    if(con->data->nPushBack == 0) free(con->data->PushBack);
 	}
 	return c;
     } else
@@ -951,12 +955,12 @@ no_more_lines:
     if(nbuf > 0) { /* incomplete last line */
 	if(data.con->text && data.con->blocking) {
 	    warning(_("incomplete final line found by readTableHeader on '%s'"),
-		    data.con->description);
+		    data.con->data->description);
 	} else {
 	    free(buf);
 	    if (data.quoteset[0]) free(data.quoteset);
 	    error(_("incomplete final line found by readTableHeader on '%s'"),
-		  data.con->description);
+		  data.con->data->description);
 	}
     }
     free(buf);
@@ -1047,7 +1051,7 @@ static void wt_cleanup(void *data)
     if(!ld->wasopen) {
     	errno = 0;
     	ld->con->close(ld->con);
-    	if (ld->con->status != NA_INTEGER && ld->con->status < 0) {
+    	if (ld->con->data->status != NA_INTEGER && ld->con->data->status < 0) {
 	    int serrno = errno;
     	    if (serrno)
 		warning(_("Problem closing connection:  %s"), strerror(serrno));

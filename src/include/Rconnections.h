@@ -65,6 +65,30 @@ typedef struct clpconn {
 #define init_con	Rf_init_con
 #define con_pushback	Rf_con_pushback
 
+typedef struct RconnData  *RconnectionData;
+
+struct RconnData {
+    char* class;
+    char* description;
+    int enc; /* the encoding of 'description' */
+    Rboolean isGzcon;
+    int nPushBack, posPushBack; /* number of lines, position on top line */
+    char **PushBack;
+    int save, save2;
+    char encname[101];
+    /* will be iconv_t, which is a pointer. NULL if not in use */
+    void *inconv, *outconv;
+    /* The idea here is that no MBCS char will ever not fit */
+    char iconvbuff[25], oconvbuff[50], *next, init_out[25];
+    short navail, inavail;
+    Rboolean EOF_signalled;
+    void *id;
+    void *ex_ptr;
+    int status; /* for pipes etc */
+    unsigned char *buff;
+    size_t buff_len, buff_stored_len, buff_pos;
+};
+    
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 size_t Rconn_getline(Rconnection con, char *buf, size_t bufsize);

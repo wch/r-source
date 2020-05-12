@@ -91,17 +91,17 @@ static Rboolean sock_open(Rconnection con)
 		return FALSE;
 	    }
 	}
-	free(con->description);
-	con->description = (char *) malloc(strlen(buf) + 10);
-	sprintf(con->description, "<-%s:%d", buf, this->port);
+	free(con->data->description);
+	con->data->description = (char *) malloc(strlen(buf) + 10);
+	sprintf(con->data->description, "<-%s:%d", buf, this->port);
     } else {
-	sock = R_SockConnect(this->port, con->description, timeout);
+	sock = R_SockConnect(this->port, con->data->description, timeout);
 	if(sock < 0) {
-	    warning("%s:%d cannot be opened", con->description, this->port);
+	    warning("%s:%d cannot be opened", con->data->description, this->port);
 	    return FALSE;
 	}
-	sprintf(buf, "->%s:%d", con->description, this->port);
-	strcpy(con->description, buf);
+	sprintf(buf, "->%s:%d", con->data->description, this->port);
+	strcpy(con->data->description, buf);
     }
     this->fd = sock;
 
@@ -110,7 +110,7 @@ static Rboolean sock_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     set_iconv(con); /* OK for output, at least */
-    con->save = -1000;
+    con->data->save = -1000; //FIXME: SHOULD THIS BE PUBLIC?
     return TRUE;
 }
 
@@ -203,18 +203,25 @@ Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
 {
     Rconnection new;
 
+    //FIXME: USE CONSTRUCTOR
+    
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of socket connection failed"));
-    new->class = (char *) malloc(strlen("sockconn") + 1);
-    if(!new->class) {
+    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of socket connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("sockconn") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of socket connection failed"));
         /* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "sockconn");
-    new->description = (char *) malloc(strlen(host) + 10);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "sockconn");
+    new->data->description = (char *) malloc(strlen(host) + 10);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of socket connection failed"));
         /* for Solaris 12.5 */ new = NULL;
     }
@@ -228,7 +235,8 @@ Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
     new->write = &sock_write;
     new->private = (void *) malloc(sizeof(struct sockconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of socket connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -243,18 +251,25 @@ Rconnection in_R_newservsock(int port)
 {
     Rconnection new;
 
+    //FIXME: USE CONSTRUCTOR
+    
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of server socket connection failed"));
-    new->class = (char *) malloc(strlen("servsockconn") + 1);
-    if(!new->class) {
+    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of server socket connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("servsockconn") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of server socket connection failed"));
         /* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "servsockconn");
-    new->description = (char *) malloc(strlen("localhost") + 10);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "servsockconn");
+    new->data->description = (char *) malloc(strlen("localhost") + 10);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of server socket connection failed"));
         /* for Solaris 12.5 */ new = NULL;
     }
@@ -262,7 +277,8 @@ Rconnection in_R_newservsock(int port)
     new->close = &servsock_close;
     new->private = (void *) malloc(sizeof(struct servsockconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of server socket connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -271,7 +287,9 @@ Rconnection in_R_newservsock(int port)
     /* socket(), bind(), listen() */
     int sock = R_SockOpen(port); 
     if(sock < 0) {
-	free(new->private); free(new->description); free(new->class); free(new);
+	free(new->private);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("creation of server socket failed: port %d cannot be opened"),
 	      port);
 	/* for Solaris 12.5 */ new = NULL;

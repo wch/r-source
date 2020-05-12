@@ -852,7 +852,7 @@ static size_t Curl_read(void *ptr, size_t size, size_t nitems,
 
 static Rboolean Curl_open(Rconnection con)
 {
-    char *url = con->description;
+    char *url = con->data->description;
     RCurlconn ctxt = (RCurlconn)(con->private);
     int mlen;
 
@@ -896,7 +896,7 @@ static Rboolean Curl_open(Rconnection con)
     mlen = (int) strlen(con->mode);
     if (mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
-    con->save = -1000;
+    con->data->save = -1000; //FIXME: IS THIS REALLY PRIVATE?
     set_iconv(con);
     return TRUE;
 }
@@ -916,18 +916,24 @@ in_newCurlUrl(const char *description, const char * const mode,
 	      SEXP headers, int type)
 {
 #ifdef HAVE_LIBCURL
+    //FIXME: USE CONSTRUCTOR
     Rconnection new = (Rconnection) malloc(sizeof(struct Rconn));
     if (!new) error(_("allocation of url connection failed"));
-    new->class = (char *) malloc(strlen("url-libcurl") + 1);
-    if (!new->class) {
+    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
+    if (!new->data) {
 	free(new);
+	error(_("allocation of url connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("url-libcurl") + 1);
+    if (!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of url connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "url-libcurl");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if (!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "url-libcurl");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if (!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of url connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -941,7 +947,8 @@ in_newCurlUrl(const char *description, const char * const mode,
     new->read = &Curl_read;
     new->private = (void *) malloc(sizeof(struct Curlconn));
     if (!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of url connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -949,8 +956,9 @@ in_newCurlUrl(const char *description, const char * const mode,
     ctxt->bufsize = 16 * CURL_MAX_WRITE_SIZE;
     ctxt->buf = malloc(ctxt->bufsize);
     if (!ctxt->buf) {
-	free(new->description); free(new->class); free(new->private);
-	free(new);
+	//FIXME: ALLOCATE PRIVATE FIRST
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new->private); free(new);
 	error(_("allocation of url connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -959,7 +967,9 @@ in_newCurlUrl(const char *description, const char * const mode,
 	struct curl_slist *tmp =
 	    curl_slist_append(ctxt->headers, CHAR(STRING_ELT(headers, i)));
 	if (!tmp) {
-	    free(new->description); free(new->class); free(new->private);
+	    //FIXME ALLOCATE PRIVATE FIRST
+	    free(new->data->description); free(new->data->class);
+	    free(new->data); free(new->private);
 	    free(new); curl_slist_free_all(ctxt->headers);
 	    error(_("allocation of url connection failed"));
 	    /* for Solaris 12.5 */ new = NULL;

@@ -408,7 +408,7 @@ static Rboolean unz_open(Rconnection con)
 	warning(_("unz connections can only be opened for reading"));
 	return FALSE;
     }
-    tmp = R_ExpandFileName(con->description);
+    tmp = R_ExpandFileName(con->data->description);
     if (strlen(tmp) > PATH_MAX - 1) {
 	warning(_("zip path is too long"));
 	return FALSE;
@@ -439,7 +439,7 @@ static Rboolean unz_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     /* set_iconv(); not yet */
-    con->save = -1000;
+    con->data->save = -1000;
     return TRUE;
 }
 
@@ -493,19 +493,26 @@ static int null_fflush(Rconnection con)
 Rconnection attribute_hidden
 R_newunz(const char *description, const char *const mode)
 {
+    //FIXME: REPLACE WITH CONSTRUCTOR
+    
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of 'unz' connection failed"));
-    new->class = (char *) malloc(strlen("unz") + 1);
-    if(!new->class) {
+    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
+    if(!new->data) {
 	free(new);
+	error(_("allocation of 'unz' connection failed"));
+    }
+    new->data->class = (char *) malloc(strlen("unz") + 1);
+    if(!new->data->class) {
+	free(new->data); free(new);
 	error(_("allocation of 'unz' connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->class, "unz");
-    new->description = (char *) malloc(strlen(description) + 1);
-    if(!new->description) {
-	free(new->class); free(new);
+    strcpy(new->data->class, "unz");
+    new->data->description = (char *) malloc(strlen(description) + 1);
+    if(!new->data->description) {
+	free(new->data->class); free(new->data); free(new);
 	error(_("allocation of 'unz' connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
@@ -523,7 +530,8 @@ R_newunz(const char *description, const char *const mode)
     new->write = &null_write;
     new->private = (void *) malloc(sizeof(struct unzconn));
     if(!new->private) {
-	free(new->description); free(new->class); free(new);
+	free(new->data->description); free(new->data->class); free(new->data);
+	free(new);
 	error(_("allocation of 'unz' connection failed"));
 	/* for Solaris 12.5 */ new = NULL;
     }
