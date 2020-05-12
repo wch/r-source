@@ -137,7 +137,8 @@ anyNA.data.frame <- function(x, recursive = FALSE)
 
 is.data.frame <- function(x) inherits(x, "data.frame")
 
-I <- function(x) { structure(x, class = unique(c("AsIs", oldClass(x)))) }
+## as fast as possible; used also for subsetting:
+I <- function(x) `class<-`(x, unique.default(c("AsIs", oldClass(x))))
 
 print.AsIs <- function (x, ...)
 {
