@@ -214,8 +214,7 @@ function(files, type, fields, verbose, validate = FALSE)
                         if(any(as.integer(lengths(ok)) > 0L)) {
                             message(paste(gettextf("Invalid DESCRIPTION file for package %s",
                                                    sQuote(basename(dirname(p)))),
-                                          paste(.eval_with_capture(print(ok))$output,
-                                                collapse = "\n"),
+                                          paste(format(ok), collapse = "\n\n"),
                                           sep = "\n\n"),
                                     domain = NA)
                             next
@@ -271,8 +270,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"),
                 if(any(as.integer(lengths(ok)) > 0L)) {
                     warning(paste(gettextf("Invalid DESCRIPTION file for package %s",
                                            sQuote(basename(paths[i]))),
-                                  paste(.eval_with_capture(print(ok))$output,
-                                        collapse = "\n"),
+                                  paste(format(ok), collapse = "\n\n"),
                                   sep = "\n\n"),
                             domain = NA,
                             call. = FALSE)
