@@ -20,6 +20,9 @@
       \item Size of tarball checking in \command{R CMD check --as-cran <pkg>}
       may be tweaked via new \env{_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_},
       as suggested in \PR{17777} by Jan Gorecki.
+
+      \item Using \code{c()} to combine a factor with other factors
+      now gives a factor.
     }
   }
 
