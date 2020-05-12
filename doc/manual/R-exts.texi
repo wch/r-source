@@ -9006,7 +9006,7 @@ files during compilation: see @uref{https://clang-analyzer.llvm.org/}.
 
 GCC 10 introduced a new flag @option{-fanalyzer} which does static
 analysis during compilation, currently for C code.  It is regarded as
-@emph{expericmental} and it may slow down computation considerably when
+@emph{experimental} and it may slow down computation considerably when
 problems are found (and use many GB of resident memory).  There is some
 overlap with problems detected by the Undefined Behaviour sanitizer, but
 some issues are only reported by this tool and as it is a static
@@ -9014,7 +9014,7 @@ analysis, it does not rely on code paths being exercised.
 
 See
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc-10.1.0/@/gcc/@/Static-Analyzer-Options.html}
-(or the doumentation for your version of @command{gcc} if later) and
+(or the documentation for your version of @command{gcc} if later) and
 @uref{https://developers.redhat.com/@/blog/2020/03/26/@/static-analysis-in-gcc-10/}
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
