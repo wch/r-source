@@ -23,6 +23,15 @@
 
       \item Using \code{c()} to combine a factor with other factors
       now gives a factor.
+
+      \item Graphics devices can now specify \code{canClip =
+        NA_LOGICAL}, in which case the graphics engine will never
+        perform any clipping of output itself.
+
+      The clipping that the graphics engine does perform (for both
+      \code{canClip = TRUE} and \code{canClip = FALSE}) has also
+      been improved to avoid producing unnecessary artifacts in clipped
+      output. 
     }
   }
 
