@@ -12,7 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SOURCES_C = text.c init.c Rmd5.c md5.c signals.c install.c getfmts.c http.c \
-  gramLatex.c gramRd.c
+  gramLatex.c gramRd.c pdscan.c
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
 

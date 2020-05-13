@@ -519,15 +519,19 @@ function(x)
     ## (Could also intersect x with the possible types.)
 }
 
+## .extract_dependency_package_names <-
+## function(x)
+## {
+##     ## Assume a character *string*.
+##     if(is.na(x)) return(character())
+##     x <- strsplit(x, ",", fixed = TRUE)[[1L]]
+##     ## FIXME: The following is much faster on Linux but apparently not
+##     ## on Windows:
+##     ## x <- sub("(?s)[[:space:]]*([[:alnum:].]+).*", "\\1", x, perl = TRUE)
+##     x <- sub("[[:space:]]*([[:alnum:].]+).*", "\\1", x)
+##     x[nzchar(x) & (x != "R")]
+## }
+
 .extract_dependency_package_names <-
 function(x)
-{
-    ## Assume a character *string*.
-    if(is.na(x)) return(character())
-    x <- strsplit(x, ",", fixed = TRUE)[[1L]]
-    ## FIXME: The following is much faster on Linux but apparently not
-    ## on Windows:
-    ## x <- sub("(?s)[[:space:]]*([[:alnum:].]+).*", "\\1", x, perl = TRUE)
-    x <- sub("[[:space:]]*([[:alnum:].]+).*", "\\1", x)
-    x[nzchar(x) & (x != "R")]
-}
+    .Call(C_package_dependencies_scan, x)

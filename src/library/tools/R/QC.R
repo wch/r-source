@@ -2902,13 +2902,14 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             ## not of a version on the repository.
 ##            pkg <- db[["Package"]]
             this <- db[dependencies]; names(this) <- dependencies
-            known <- setdiff(utils:::.clean_up_dependencies(this), "R")
+            ## FIXME: .extract_dependency_package_names
+            known <- utils:::.clean_up_dependencies(this)
             info <- available[, dependencies, drop = FALSE]
             rn <- rownames(info)
             deps <- function(p) {
                 if(p %notin% rn) return(character())
-                this <- utils:::.clean_up_dependencies(info[p, ])
-                setdiff(this, "R")
+                ## FIXME: .extract_dependency_package_names
+                utils:::.clean_up_dependencies(info[p, ])
             }
             extra <- known
             repeat {

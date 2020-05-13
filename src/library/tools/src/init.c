@@ -52,6 +52,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(stopHTTPD, 0),
     CALLDEF(deparseRd, 2),
     CALLDEF(splitString, 2),
+    CALLDEF(package_dependencies_scan, 1),
 
     {NULL, NULL, 0}
 };
