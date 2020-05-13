@@ -3447,6 +3447,13 @@ function(x, ...)
         if(length(x)) paste(x, collapse = "\n") else character()
     }
 
+    ## <FIXME>
+    ## Currently, check_meta() will give an error unless all output
+    ## matches "^Malformed (Title|Description)", so for now need to
+    ## avoid the pointer to R-exts in these cases.
+    xx <- x; xx$bad_Title <- xx$bad_Description <- NULL
+    ## </FIXME>
+
     c(character(),
       if(length(x$missing_encoding))
           gettext("Unknown encoding"),
@@ -3500,7 +3507,7 @@ function(x, ...)
           gettext("Malformed Title field: should not end in a period."),
       if(isTRUE(x$bad_Description))
           gettext("Malformed Description field: should contain one or more complete sentences."),
-      if(any(as.integer(lengths(x)) > 0L))
+      if(any(as.integer(lengths(xx)) > 0L))
           paste(c(strwrap(gettext("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."))),
                 collapse = "\n"))
 }
