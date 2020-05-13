@@ -21,7 +21,7 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
   \item{recycle0}{\code{\link{logical}} indicating if zero-length
     character arguments (and all zero-length or no arguments when
     \code{collapse} is not \code{NULL}) should lead to the zero-length
-    \code{\link{character}(0)}.}cd 
+    \code{\link{character}(0)}.}
 }
 \description{
   Concatenate vectors after converting to character.
