@@ -999,7 +999,7 @@ static void *in_R_HTTPOpen2(const char *url, const char *agent, const char *head
 		      HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
 		      &len, &d1, &d2))
 	wictxt->length = len;
-    wictxt->type = strdup(buf);
+    wictxt->type = strdup(buf); // FIXME: could be NULL
     if(!IDquiet) {
 	REprintf("Content type '%s'", buf);
 	if(len > 1024*1024)
