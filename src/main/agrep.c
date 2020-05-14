@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2015  The R Core Team
+ *  Copyright (C) 2002--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -626,6 +626,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(opt_counts) {
 		nmatch = reg.re_nsub + 1;
 		pmatch = (regmatch_t *) malloc(nmatch * sizeof(regmatch_t));
+		if (pmatch == NULL) error("allocation failure in adist");
 	    }
 
 	    for(j = 0; j < ny; j++) {
@@ -837,7 +838,8 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     nmatch = reg.re_nsub + 1;
 
     pmatch = (regmatch_t *) malloc(nmatch * sizeof(regmatch_t));
-
+    if(pmatch == NULL) error("allocation failure in aregexec");
+    
     tre_regaparams_default(&params);
     amatch_regaparams(&params, patlen,
 		      REAL(opt_bounds), INTEGER(opt_costs));
