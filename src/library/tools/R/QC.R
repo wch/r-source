@@ -3504,10 +3504,10 @@ function(x, ...)
           paste(c(gettext("Invalid Priority field."),
                   strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."))),
                 collapse = "\n"),
-      if(isTRUE(x$bad_Title))
-          gettext("Malformed Title field: should not end in a period."),
-      if(isTRUE(x$bad_Description))
-          gettext("Malformed Description field: should contain one or more complete sentences."),
+      fmt(c(if(isTRUE(x$bad_Title))
+                gettext("Malformed Title field: should not end in a period."),
+            if(isTRUE(x$bad_Description))
+                gettext("Malformed Description field: should contain one or more complete sentences."))),
       if(any(as.integer(lengths(xx)) > 0L))
           paste(c(strwrap(gettext("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."))),
                 collapse = "\n"))
