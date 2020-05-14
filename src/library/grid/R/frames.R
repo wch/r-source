@@ -141,10 +141,6 @@ placeGrob <- function(frame, grob,
     row <- c(1, dim[1L])
   if (is.null(col))
     col <- c(1, dim[2L])
-  if (length(row) == 1)
-    row <- rep(row, 2)
-  if (length(col) == 1)
-    col <- rep(col, 2)
   if (min(row) < 1 || max(row) > dim[1L] ||
       min(col) < 1 || max(col) > dim[2L])
     stop("invalid 'row' and/or 'col' (no such cell in frame layout)")
