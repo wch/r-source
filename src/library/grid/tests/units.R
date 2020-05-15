@@ -169,3 +169,12 @@ unitCheck(c, unit.c(unit(1, "mm"),
                     unit(5, "pt"),
                     unit(10, "mm")))
 
+## Bug fix for sum() of complex units
+u1 = 0.4*sum(unit(1, "inch"), unit(1, "mm"))
+u2 = 0.1*sum(unit(1, "inch"), unit(1, "mm"))
+unitCheck(u1 + u2,
+          0.5*sum(unit(1, "inch"), unit(1, "mm")))
+unitCheck(sum(u1, u2),
+          sum(unit(c(0.4, .4, .1, .1), c("in", "mm", "in", "mm"))))
+unitCheck(sum(unit.c(u1, u2)),
+          sum(unit(c(0.4, .4, .1, .1), c("in", "mm", "in", "mm"))))

@@ -56,9 +56,9 @@
         ## \Rd@AsIs@dospecials in Rd.sty handles the first seven, so
         ## braces and backslashes need explicit handling.
         text <- gsub('"([^"]*)"', "\\`\\`\\1''", text, useBytes = TRUE)
-        text <- gsub("\\", "\\textbackslash{}", text, fixed = TRUE, useBytes = TRUE)
+        text <- fsub("\\", "\\textbackslash{}", text)
         text <- gsub("([{}$#_])", "\\\\\\1", text, useBytes = TRUE)
-        text <- gsub("@VERSION@", version, text, fixed = TRUE, useBytes = TRUE)
+        text <- fsub("@VERSION@", version, text)
         ## text can have paras, and digest/DESCRIPTION does.
         ## \AsIs is per-para.
         text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]

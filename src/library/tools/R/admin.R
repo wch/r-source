@@ -35,8 +35,7 @@ function(dir, outDir, builtStamp=character())
     ok <- .check_package_description(file.path(dir, "DESCRIPTION"))
     if(any(as.integer(lengths(ok)) > 0L)) {
         stop(paste(gettext("Invalid DESCRIPTION file") ,
-                   paste(.eval_with_capture(print(ok))$output,
-                         collapse = "\n"),
+                   paste(format(ok), collapse = "\n\n"),
                    sep = "\n\n"),
              domain = NA,
              call. = FALSE)
@@ -148,7 +147,8 @@ function(db, verbose = FALSE)
         ## several packages have 'Depends: R', which is a noop.
         if(verbose && length(Rdeps) == 1L)
              message("WARNING: omitting pointless dependence on 'R' without a version requirement")
-        if(length(Rdeps) <= 1L) Rdeps <- NULL
+        if(length(Rdeps) <= 1L)
+            Rdeps2 <- Rdeps <- NULL
     } else Rdeps2 <- Rdeps <- NULL
     Rdeps <- as.vector(Rdeps)
     Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])

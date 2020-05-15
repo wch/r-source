@@ -589,22 +589,30 @@ tre_parse_bracket(tre_parse_ctx_t *ctx, tre_ast_node_t **result)
 }
 
 
+// patch from https://github.com/laurikari/tre/issues/55
 /* Parses a positive decimal integer.  Returns -1 if the string does not
    contain a valid number. */
 static int
 tre_parse_int(const tre_char_t **regex, const tre_char_t *regex_end)
 {
   int num = -1;
+  int overflow = 0;
   const tre_char_t *r = *regex;
   while (r < regex_end && *r >= L'0' && *r <= L'9')
     {
       if (num < 0)
 	num = 0;
-      num = num * 10 + *r - L'0';
+      if (num <= (INT_MAX - 9) / 10) {
+         num = num * 10 + *r - L'0';
+      } else {
+          /* This digit could cause an integer overflow. We do not return
+           * directly; instead, consume all remaining digits. */
+          overflow = 1;
+      }
       r++;
     }
   *regex = r;
-  return num;
+  return overflow ? -1 : num;
 }
 
 
@@ -1723,20 +1731,22 @@ tre_parse(tre_parse_ctx_t *ctx)
 	  {
 	    int submatch_id = tre_stack_pop_int(stack);
 
-	    if (result->submatch_id >= 0)
-	      {
-		tre_ast_node_t *n, *tmp_node;
-		n = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
-		if (n == NULL)
-		  return REG_ESPACE;
-		tmp_node = tre_ast_new_catenation(ctx->mem, n, result);
-		if (tmp_node == NULL)
-		  return REG_ESPACE;
-		tmp_node->num_submatches = result->num_submatches;
-		result = tmp_node;
-	      }
-	    result->submatch_id = submatch_id;
-	    result->num_submatches++;
+            if(result) {
+	      if (result->submatch_id >= 0)
+	        {
+		  tre_ast_node_t *n, *tmp_node;
+		  n = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
+		  if (n == NULL)
+		    return REG_ESPACE;
+		  tmp_node = tre_ast_new_catenation(ctx->mem, n, result);
+		  if (tmp_node == NULL)
+		    return REG_ESPACE;
+		  tmp_node->num_submatches = result->num_submatches;
+		  result = tmp_node;
+	        }
+	      result->submatch_id = submatch_id;
+	      result->num_submatches++;
+	    }
 	    break;
 	  }
 

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@ write_PACKAGES <-
 function(dir = ".", fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-         latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz")
+         latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz",
+         validate = FALSE)
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
@@ -48,7 +49,7 @@ function(dir = ".", fields = NULL,
     for(path in paths) {
         this <- if(nzchar(path)) file.path(dir, path) else dir
         desc <- .build_repository_package_db(this, fields, type, verbose,
-                                             unpacked)
+                                             unpacked, validate)
         desc <- .process_repository_package_db_to_matrix(desc,
                                                          path,
                                                          addFiles,
@@ -134,27 +135,29 @@ function(desc, path, addFiles, addPaths, latestOnly)
 function(dir, fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = getOption("verbose"),
-         unpacked = FALSE)
+         unpacked = FALSE, validate = FALSE)
 {
     if(unpacked)
         return(.build_repository_package_db_from_source_dirs(dir,
                                                              fields,
-                                                             verbose))
+                                                             verbose,
+                                                             validate))
 
        package_pattern <- .get_pkg_file_pattern(type)
     files <- list.files(dir, pattern = package_pattern, full.names = TRUE)
 
     if(!length(files))
         return(list())
-    db = .process_package_files_for_repository_db(files,
-                                                  type, 
-                                                  fields,
-                                                  verbose)
+    db <- .process_package_files_for_repository_db(files,
+                                                   type, 
+                                                   fields,
+                                                   verbose,
+                                                   validate)
     db
 }
 
 .process_package_files_for_repository_db <-
-    function(files, type, fields, verbose)
+function(files, type, fields, verbose, validate = FALSE)
 {
 
     files <- normalizePath(files, mustWork=TRUE) # files comes from list.files, mustWork ok
@@ -202,6 +205,21 @@ function(dir, fields = NULL,
                 temp <- tryCatch(read.dcf(p, fields = fields)[1L, ],
                                  error = identity)
                 if(!inherits(temp, "error")) {
+                    if(validate) {
+                        ## .check_package_description() by default goes via
+                        ## .read_description() which re-encodes and insists on a
+                        ## single entry unlike the above read.dcf() call.
+                        ok <- .check_package_description(db = temp[!is.na(temp)])
+                        ## FIXME: no format.check_package_description yet.
+                        if(any(as.integer(lengths(ok)) > 0L)) {
+                            message(paste(gettextf("Invalid DESCRIPTION file for package %s",
+                                                   sQuote(basename(dirname(p)))),
+                                          paste(format(ok), collapse = "\n\n"),
+                                          sep = "\n\n"),
+                                    domain = NA)
+                            next
+                        }
+                    }
                     if("NeedsCompilation" %in% fields &&
                        is.na(temp["NeedsCompilation"])) {
                         l <- utils::untar(files[i], list = TRUE)
@@ -226,10 +244,9 @@ function(dir, fields = NULL,
     db
 }
 
-    
-
 .build_repository_package_db_from_source_dirs <-
-function(dir, fields = NULL, verbose = getOption("verbose"))
+function(dir, fields = NULL, verbose = getOption("verbose"),
+         validate = FALSE)
 {
     dir <- file_path_as_absolute(dir)
     fields <- unique(c(.get_standard_repository_db_fields(), fields))
@@ -244,6 +261,22 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
                                   fields = fields)[1L, ],
                          error = identity)
         if(!inherits(temp, "error")) {
+            if(validate) {
+                ## .check_package_description() by default goes via
+                ## .read_description() which re-encodes and insists on a
+                ## single entry unlike the above read.dcf() call.
+                ok <- .check_package_description(db = temp[!is.na(temp)])
+                ## FIXME: no format.check_package_description yet.
+                if(any(as.integer(lengths(ok)) > 0L)) {
+                    warning(paste(gettextf("Invalid DESCRIPTION file for package %s",
+                                           sQuote(basename(paths[i]))),
+                                  paste(format(ok), collapse = "\n\n"),
+                                  sep = "\n\n"),
+                            domain = NA,
+                            call. = FALSE)
+                    next
+                }
+            }
             if(is.na(temp["NeedsCompilation"])) {
                 temp["NeedsCompilation"] <-
                     if(dir.exists(file.path(paths[i], "src"))) "yes" else "no"
@@ -264,16 +297,11 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
 }
 
 dependsOnPkgs <-
-function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
+function(pkgs, dependencies = "strong",
          recursive = TRUE, lib.loc = NULL,
          installed = utils::installed.packages(lib.loc, fields = "Enhances"))
 {
-    if(identical(dependencies, "all"))
-        dependencies <-
-            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
-    else if(identical(dependencies, "most"))
-        dependencies <-
-            c("Depends", "Imports", "LinkingTo", "Suggests")
+    dependencies <- .expand_dependency_type_spec(dependencies)
 
     av <- installed[, dependencies, drop = FALSE]
     rn <- as.character(installed[, "Package"])
@@ -319,9 +347,9 @@ function(ap)
 }
 
 package_dependencies <-
-function(packages = NULL, db = NULL,
-         which = c("Depends", "Imports", "LinkingTo"),
-         recursive = FALSE, reverse = FALSE, verbose = getOption("verbose"))
+function(packages = NULL, db = NULL, which = "strong",
+         recursive = FALSE, reverse = FALSE,
+         verbose = getOption("verbose"))
 {
     ## <FIXME>
     ## What about duplicated entries?
@@ -329,15 +357,23 @@ function(packages = NULL, db = NULL,
 
     if(is.null(db)) db <- utils::available.packages()
 
+    fields <- which <- .expand_dependency_type_spec(which)
+    if(is.character(recursive)) {
+        recursive <- .expand_dependency_type_spec(recursive)
+        if(identical(which, recursive))
+            recursive <- TRUE
+        else
+            fields <- unique(c(fields, recursive))
+    }
+
     ## For given packages which are not found in the db, return "list
     ## NAs" (i.e., NULL entries), as opposed to character() entries
     ## which indicate no dependencies.
+    out_of_db_packages <- character()
 
     ## For forward non-recursive depends, we can simplify matters by
     ## subscripting the db right away---modulo boundary cases.
-
-    out_of_db_packages <- character()
-    if(!recursive && !reverse) {
+    if(!is.character(recursive) && !recursive && !reverse) {
         if(!is.null(packages)) {
             ind <- match(packages, db[, "Package"], nomatch = 0L)
             db <- db[ind, , drop = FALSE]
@@ -345,31 +381,39 @@ function(packages = NULL, db = NULL,
         }
     }
 
-    if(identical(which, "all"))
-        which <-
-            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
-    else if(identical(which, "most"))
-        which <-
-            c("Depends", "Imports", "LinkingTo", "Suggests")
+    db <- as.data.frame(db[, c("Package", fields), drop = FALSE])
+    ## Avoid recomputing package dependency names in recursive
+    ## invocations.
+    for(f in fields) {
+        if(!is.list(d <- db[[f]]))
+            db[[f]] <- lapply(d, .extract_dependency_package_names)
+    }
+
+    if(is.character(recursive)) {
+        ## Direct dependencies:
+        d_d <- Recall(packages, db, which, FALSE,
+                      reverse, verbose)
+        ## Recursive dependencies of all these:
+        d_r <- Recall(unique(unlist(d_d)), db, recursive, TRUE,
+                      reverse, verbose)
+        ## Now glue together:
+        return(lapply(d_d,
+                      function(p) {
+                          sort(unique(c(p, unlist(d_r[p],
+                                                  use.names = FALSE))))
+                      }))
+    }
 
     depends <-
         do.call(Map,
                 c(list("c"),
-                  ## Try to make this work for dbs which are character
-                  ## matrices as from available.packages(), or data
-                  ## frame variants thereof.
-                  lapply(which,
-                         function(f) {
-                             if(is.list(d <- db[, f])) d
-                             else lapply(d,
-                                         .extract_dependency_package_names)
-                         }),
+                  db[which],
                   list(USE.NAMES = FALSE)))
 
     depends <- lapply(depends, unique)
 
     if(!recursive && !reverse) {
-        names(depends) <- db[, "Package"]
+        names(depends) <- db$Package
         if(length(out_of_db_packages)) {
             depends <-
                 c(depends,
@@ -379,12 +423,12 @@ function(packages = NULL, db = NULL,
         return(depends)
     }
 
-    all_packages <- sort(unique(c(db[, "Package"], unlist(depends))))
+    all_packages <- sort(unique(c(db$Package, unlist(depends))))
 
     if(!recursive) {
         ## Need to invert.
         depends <-
-            split(rep.int(db[, "Package"], lengths(depends)),
+            split(rep.int(db$Package, lengths(depends)),
                   factor(unlist(depends), levels = all_packages))
         if(!is.null(packages)) {
             depends <- depends[match(packages, names(depends))]
@@ -406,7 +450,7 @@ function(packages = NULL, db = NULL,
     ## with i R j and j R k, respectively, and combine these.
     ## This works reasonably well, but of course more efficient
     ## implementations should be possible.
-    matchP <- match(rep.int(db[, "Package"], lengths(depends)),
+    matchP <- match(rep.int(db$Package, lengths(depends)),
 		    all_packages)
     matchD <- match(unlist(depends), all_packages)
     tab <- if(reverse)
@@ -420,7 +464,7 @@ function(packages = NULL, db = NULL,
             packages <- all_packages
             p_L <- seq_along(all_packages)
         } else {
-            packages <- db[, "Package"]
+            packages <- db$Package
             p_L <- match(packages, all_packages)
         }
     } else {
@@ -461,12 +505,33 @@ function(packages = NULL, db = NULL,
     depends
 }
 
+.expand_dependency_type_spec <-
+function(x)
+{
+    if(identical(x, "strong"))
+        c("Depends", "Imports", "LinkingTo")
+    else if(identical(x, "most"))
+        c("Depends", "Imports", "LinkingTo", "Suggests")
+    else if(identical(x, "all"))
+        c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+    else
+        x
+    ## (Could also intersect x with the possible types.)
+}
+
+## .extract_dependency_package_names <-
+## function(x)
+## {
+##     ## Assume a character *string*.
+##     if(is.na(x)) return(character())
+##     x <- strsplit(x, ",", fixed = TRUE)[[1L]]
+##     ## FIXME: The following is much faster on Linux but apparently not
+##     ## on Windows:
+##     ## x <- sub("(?s)[[:space:]]*([[:alnum:].]+).*", "\\1", x, perl = TRUE)
+##     x <- sub("[[:space:]]*([[:alnum:].]+).*", "\\1", x)
+##     x[nzchar(x) & (x != "R")]
+## }
 
 .extract_dependency_package_names <-
-function(x) {
-    ## Assume a character *string*.
-    if(is.na(x)) return(character())
-    x <- unlist(strsplit(x, ",[[:space:]]*"))
-    x <- sub("[[:space:]]*([[:alnum:].]+).*", "\\1", x)
-    x[nzchar(x) & (x != "R")]
-}
+function(x)
+    .Call(C_package_dependencies_scan, x)

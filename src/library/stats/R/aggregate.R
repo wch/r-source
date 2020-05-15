@@ -102,14 +102,16 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
 		    ans <- lapply(X = unname(split(e, grp)), FUN = FUN, ...)
                     if(simplify &&
                        length(len <- unique(lengths(ans))) == 1L) {
-                        ## this used to lose classes
                         if(len == 1L) {
                             cl <- lapply(ans, oldClass)
                             cl1 <- cl[[1L]]
-			    ans <- unlist(ans, recursive = FALSE, use.names = FALSE)
-                            if (!is.null(cl1) &&
-                                all(vapply(cl, identical, NA, y = cl1)))
-                                class(ans) <- cl1
+			    ans <- if(!is.null(cl1) &&
+                                      all(vapply(cl, identical, NA,
+                                                 y = cl1)))
+                                       do.call(c, ans)
+                                   else
+                                       unlist(ans, recursive = FALSE,
+                                              use.names = FALSE)
                         } else if(len > 1L)
 			    ans <- matrix(unlist(ans, recursive = FALSE, use.names = FALSE),
                                           ncol = len,

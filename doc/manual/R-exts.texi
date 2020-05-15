@@ -1504,15 +1504,21 @@ this should be declared in the @samp{SystemRequirements} field of its
 is a version requirement on Java code in the package.)
 
 Windows and Mac users should be aware that the Tcl extensions
-@samp{BWidget} and @samp{Tktable} which are currently included with the
-@R{} for Windows (and formerly in the macOS installer) @emph{are}
-extensions and do need to be declared for users of other platforms (and
-that @samp{Tktable} is less widely available than it used to be,
-including not in the main repositories for major Linux distributions).
-@c Not in Fedora since 17, only in launchpad for Ubuntu.
+@samp{BWidget} and @samp{Tktable} (which have sometimes been included in
+the Windows@footnote{@samp{BWidget} still is on Windows but
+@samp{Tktable} was not in @R{} 4.0.0.} and macOS @R{} installers)
+@emph{are} extensions and do need to be declared (and that
+@samp{Tktable} is less widely available than it used to be, including
+not in the main repositories for major Linux distributions).
+@c Not in Fedora since 17
+@c 2008 sources at https://sourceforge.net/projects/tktable/files/tktable/2.10/
+@c In May 2020 declared by DALY PhViD RSiena RSurvey dgmb fit4NM
+@c forensim rriskDistributions tcltk2
 
+@c In May 2020 declared by FFD GGEBiplotGUI OligoSpecificitySystem
+@c PBSmodelling asbio biplotbootGUI cncaGUI dgmb dpa multibiplotGUI rpanel
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
-fairly easy to do: first find the Tcl/Tk search path:
+fairly easy to do: first find the Tcl search path:
 
 @example
 library(tcltk)
@@ -1521,8 +1527,8 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 
 @noindent
 then download the sources from
-@uref{https://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/} and
-at the command line run something like
+@uref{https://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/}
+and in a terminal run something like
 
 @example
 tar xf bwidget-1.9.14.tar.gz
@@ -1530,8 +1536,9 @@ sudo mv bwidget-1.9.14 /usr/local/lib
 @end example
 
 @noindent
-substituting a location on the Tcl/Tk search path for @file{/usr/local/lib} if
-needed.
+substituting a location on the Tcl search path for @file{/usr/local/lib} if
+needed.  (If no location on that search path is writeable, you will need
+to add one each time BWidget is to be used with @code{tcltk::addTclPath()}.)
 
 @node Specifying URLs,  , Non-R scripts in packages, Package structure
 @subsection Specifying URLs
@@ -1580,6 +1587,7 @@ expansion is a known issue: see
 @uref{https://www.gnu.org/@/software/@/autoconf/@/manual/autoconf.html#Portable-Shell}
 for this and others.  Some checks can be done by the
 @code{checkbashisms} Perl script at
+@c 'checkbaskisms' really is the correct path
 @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}, also
 available in most Linux distributions in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}.}) shell script @file{configure} in
 your package which (if present) is executed by @code{R CMD INSTALL}
@@ -2193,7 +2201,7 @@ Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
 including @command{gfortran}, although it is often possible to use the
 @command{clang} runtime with GCC but not @emph{vice versa}: however
-@command{gfortran} 9.x may generate calls not in the @command{clang}
+@command{gfortran} >= 9 may generate calls not in the @command{clang}
 runtime).  For a package with Fortran code using OpenMP the appropriate
 lines are
 
@@ -4346,39 +4354,51 @@ Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 
 @item
+If your package uses a @file{src/Makefile} file to compile code to be
+linked into @R{}, ensure that it uses exactly the same compiler and flag
+settings that @R{} uses when compiling such code: people often forget
+@samp{PIC} flags.  If @code{R CMD config} is used, this needs something
+like (for C++)
+
+@example
+RBIN = `"$@{R_HOME@}/bin/R"`
+CXX = `"$@{RBIN@}" CMD config CXX`
+CXXFLAGS = `"$@{RBIN@}" CMD config CXXFLAGS` `"$@{RBIN@}" CMD config CXXPICFLAGS`
+@end example
+
+@item
 Bash extensions also need to be avoided in shell scripts, including
 expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
 in the AT&T Bourne shell used on Solaris 10/11, even though they are in
 the POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.}
-Bourne shells: the @R{} toolset on Windows and some Unix-alike OSes use
+Bourne shells: the previous @R{} toolset on Windows@footnote{as from
+@R{} 4.0.0 the default is @command{bash}.} and some Unix-alike OSes use
 @command{ash} (@uref{https://en.wikipedia.org/@/wiki/@/Almquist_shell}),
-a rather minimal shell with few builtins.  Beware of assuming that all
-the POSIX command-line utilities are available, especially on Windows
-where only a minimal set is provided for use with @R{}.
-@ifset UseExternalXrefs
-(@xref{The command line tools, , The command line tools,
-R-admin, R Installation and Administration}.)
-@end ifset
-One particular issue is the use of @command{echo}, for which two
-behaviours are allowed
+a `slim' shell with few builtins or variants such as @command{dash}.
+Beware of assuming that all the POSIX command-line utilities are
+available, especially on Windows where only a subset (which has changed
+by version of @file{Rtools}) is provided for use with @R{}.  One
+particular issue is the use of @command{echo}, for which two behaviours
+are allowed
 (@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
-and both occur as defaults on @R{} platforms: portable applications
-should not use @option{-n} (as the first argument) nor escape
-sequences.  The recommended replacement for @command{echo -n} is the
-command @command{printf}.
-Another common issue is the construction
+and both have occurred as defaults on @R{} platforms: portable
+applications should use neither @option{-n} (as the first argument) nor
+escape sequences.  The recommended replacement for @command{echo -n} is
+the command @command{printf}.  Another common issue is the construction
 @example
 export FOO=value
 @end example
 @noindent
-which is bash-specific (first set the variable then export it by name).
+which is @command{bash}-specific (first set the variable then export it
+by name).
 
-Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not
-portable: @code{-f} is normally what is intended.  Flags @option{-a} and
-@option{-o} are nowadays declared obsolescent by POSIX and should not be
-used.
+Using @code{test -e} (or @code{[ -e ]}) in shell scripts is not fully
+portable@footnote{it was not in the Bourne shell, and is not supported
+by Solaris 10.}: @code{-f} is normally what is intended.  Flags
+@option{-a} and @option{-o} are nowadays declared obsolescent by POSIX
+and should not be used.
 
 Use of `brace expansion', e.g.,
 @example
@@ -4393,7 +4413,8 @@ POSIX and not supported on all the platforms @R{} is used on.
 On macOS Catalina which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
-for accounts ported from an earlier version it is usually @command{bash}).
+for accounts ported from an earlier version it is usually
+@command{bash}).
 
 @item
 Make use of the abilities of your compilers to check the
@@ -4690,12 +4711,13 @@ installed might not be the same as when the package is run and will not
 be for binary packages).  Java 8 is available for fewer platforms than
 Java 7, and Java 11 for fewer still (at the time of writing, only
 @cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
-Oracle).
+Oracle and Linux on several CPUs, macOS, 32- and 64-bit Windows and AIX
+from from @uref{https://adoptopenjdk.net}).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 (announced 15 16 17)
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in use.
@@ -4774,8 +4796,12 @@ and conditional.
 Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
 example macOS 10.16 has been announced not to have them.  Python 2 has
-passed end-of-life and been removed from some major distributions.  This
-applies also to a Java interpreter (which macOS does not have by default).
+passed end-of-life and been removed from some major distributions.
+
+Command @command{cmake} is not commonly installed, and where it is, it
+might not be on the path.  In particular, the most common location on
+macOS is @file{/Applications/CMake.app/Contents/bin/cmake} and that
+should be looked for if it is not on the path.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
@@ -5194,6 +5220,11 @@ out-of-order declarations: in standard-conformant Fortran variables must
 be declared (explicitly or implicitly) before use in other declarations
 such as dimensions.
 
+GNU Fortran 10 gives a compilation error for the previously widespread
+practice of passing a Fortran array element where an array is expected,
+or a scalar instead of a length-one array.  See
+@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.
+
 @item
 Including C-style headers in C++ code is not portable.  Including the
 legacy header@footnote{which often is the same as the header included by
@@ -5450,10 +5481,11 @@ of `tentative definitions' where global C variables are defined without
 an initializer.  Traditionally the linker resolves all tentative
 definitions of the same variable in different object files to the same
 object, or to a non-tentative definition.  However,
-@command{gcc}@tie{}10 has changed its default so that tentative
-definitions cannot be merged and the linker will give an error if the
-same variable is defined in more than one object file.  To avoid this,
-all but one of the C source files should declare the variable
+@command{gcc}@tie{}10 has changed its default@footnote{see
+@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.} so that
+tentative definitions cannot be merged and the linker will give an error
+if the same variable is defined in more than one object file.  To avoid
+this, all but one of the C source files should declare the variable
 @code{extern} --- which means that any such variables included in header
 files need to be declared @code{extern}.  A commonly used idiom
 (including by @R{} itself) is to define all global variables as
@@ -5496,14 +5528,12 @@ For Windows, check what other DLLs your package's DLL depends on
 tool to do so is `Dependency Walker'
 (@uref{http://www.dependencywalker.com/}) for both 32-bit and 64-bit
 DLLs -- note that this will report as missing links to @R{}'s own DLLs
-such as @file{R.dll} and @file{Rblas.dll}.  For 32-bit DLLs only, the
-command-line tool @command{pedump.exe -i} (in @file{Rtools*.exe}) can be
-used, and for the brave, the @command{objdump} tool in the appropriate
-toolchain will also reveal what DLLs are imported from.  If you use a
-toolchain other than one provided by the @R{} developers or use your own
-makefiles, watch out in particular for dependencies on the toolchain's
-runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
-@file{libgcc_s}.
+such as @file{R.dll} and @file{Rblas.dll}.  The command-line tool
+@command{objdump} in the appropriate toolchain will also reveal what
+DLLs are imported from.  If you use a toolchain other than one provided
+by the @R{} developers or use your own makefiles, watch out in
+particular for dependencies on the toolchain's runtime DLLs such as
+@file{libgfortran}, @file{libstdc++} and @file{libgcc_s}.
 
 For macOS, using @code{R CMD otool -L} on the package's shared object(s)
 in the @file{libs} directory will show what they depend on: watch for
@@ -7648,7 +7678,7 @@ particular these allow call graphs to be studied.
 Measuring memory use in @R{} code is useful either when the code takes
 more memory than is conveniently available or when memory allocation and
 copying of objects is responsible for slow code. There are three ways to
-profile memory use over time in @R{} code. The seond and third require
+profile memory use over time in @R{} code. The second and third require
 @R{} to have been compiled with @option{--enable-memory-profiling},
 which is not the default, but is currently used for the macOS and
 Windows binary distributions. All can be misleading, for different
@@ -8486,6 +8516,7 @@ memory leaks) but others will segfault.
 * Using Address Sanitizer::
 * Using Undefined Behaviour Sanitizer::
 * Other analyses with `clang'::
+* Other analyses with `gcc'::
 * Using `Dr. Memory'::
 * Fortran array bounds checking::
 @end menu
@@ -8956,7 +8987,7 @@ It may or may not be possible to build @R{} itself with
 code with @command{gcc} but there has been success with @command{clang}.
 
 
-@node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
+@node Other analyses with `clang', Other analyses with `gcc', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
 
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
@@ -8967,10 +8998,26 @@ a `data race detector for C/C++ programs', and `MemorySanitizer'
 for the detection of uninitialized memory.  Both are based on and
 provide similar functionality to tools in @command{valgrind}.
 
-@command{clang} has a `Static Analyser' which can be run on the source
+@command{clang} has a `Static Analyzer' which can be run on the source
 files during compilation: see @uref{https://clang-analyzer.llvm.org/}.
 
-@node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
+@node Other analyses with `gcc', Using `Dr. Memory', Other analyses with `clang', Checking memory access
+@subsection Other analyses with `gcc'
+
+GCC 10 introduced a new flag @option{-fanalyzer} which does static
+analysis during compilation, currently for C code.  It is regarded as
+@emph{experimental} and it may slow down computation considerably when
+problems are found (and use many GB of resident memory).  There is some
+overlap with problems detected by the Undefined Behaviour sanitizer, but
+some issues are only reported by this tool and as it is a static
+analysis, it does not rely on code paths being exercised.
+
+See
+@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc-10.1.0/@/gcc/@/Static-Analyzer-Options.html}
+(or the documentation for your version of @command{gcc} if later) and
+@uref{https://developers.redhat.com/@/blog/2020/03/26/@/static-analysis-in-gcc-10/}
+
+@node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
 
 `Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
@@ -9021,7 +9068,7 @@ using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with other debuggers such as @command{lldb}
 (@uref{http://lldb.llvm.org/}, used on macOS: however `notarized'
 executable such as distributed @acronym{CRAN} builds are not allowed to be
-debuggeed) and Sun's @command{dbx}: some debuggers have graphical
+debugged) and Sun's @command{dbx}: some debuggers have graphical
 front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
@@ -12917,6 +12964,9 @@ compilers/loaders when using @R{} as a shared library) not exported.
 There are two types of memory allocation available to the C programmer,
 one in which @R{} manages the clean-up and the other in which user
 has full control (and responsibility).
+
+These functions are declared in header @file{R_exts/RS.h} which is
+included by @file{R.h}.
 
 @node Transient storage allocation, User-controlled memory, Memory allocation, Memory allocation
 @subsection Transient storage allocation

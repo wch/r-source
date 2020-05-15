@@ -1,7 +1,7 @@
 #  File src/library/base/R/conditions.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -142,7 +142,7 @@ as.character.condition <- function(x, ...) {
     call <- conditionCall(x)
     cl <- class(x)[1L]
     if (! is.null(call))
-        paste0(cl, " in ", deparse(call)[1L], ": ", msg, "\n")
+        paste0(cl, " in ", deparse(call, nlines=1L), ": ", msg, "\n")
     else
         paste0(cl, ": ", msg, "\n")
 }
@@ -151,7 +151,7 @@ as.character.error <- function(x, ...) {
     msg <- conditionMessage(x)
     call <- conditionCall(x)
     if (! is.null(call))
-        paste0("Error in ", deparse(call)[1L], ": ", msg, "\n")
+        paste0("Error in ", deparse(call, nlines=1L), ": ", msg, "\n")
     else
         paste0("Error: ", msg, "\n")
 }

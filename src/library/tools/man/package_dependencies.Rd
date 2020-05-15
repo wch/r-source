@@ -1,6 +1,6 @@
 % File src/library/tools/man/package_dependencies.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2015 R Core Team
+% Copyright 2012-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{package_dependencies}
@@ -10,9 +10,9 @@
    Find (recursively) dependencies or reverse dependencies of packages.
 }
 \usage{
-package_dependencies(packages = NULL, db = NULL,
-        which = c("Depends", "Imports", "LinkingTo"),
-	recursive = FALSE, reverse = FALSE, verbose = getOption("verbose"))
+package_dependencies(packages = NULL, db = NULL, which = "strong",
+	             recursive = FALSE, reverse = FALSE,
+                     verbose = getOption("verbose"))
 }
 \arguments{
   \item{packages}{a character vector of package names.}
@@ -27,10 +27,14 @@ package_dependencies(packages = NULL, db = NULL,
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
     Character string \code{"all"} is shorthand for that vector,
     character string \code{"most"} for the same vector without
-    \code{"Enhances"}.
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
   }
-  \item{recursive}{logical: should (reverse) dependencies of (reverse)
-    dependencies (and so on) be included?}
+  \item{recursive}{a logical indicating whether (reverse) dependencies
+    of (reverse) dependencies (and so on) should be included, or a
+    character vector like \code{which} indicating the type of (reverse)
+    dependencies to be added recursively.}
   \item{reverse}{logical: if \code{FALSE} (default), regular
     dependencies are calculated, otherwise reverse dependencies.}
   \item{verbose}{logical indicating if output should monitor the package
@@ -45,8 +49,7 @@ package_dependencies(packages = NULL, db = NULL,
   as opposed to \code{character(0)} entries which indicate no dependencies.
 }
 \seealso{
-  \code{\link{dependsOnPkgs}}, and \code{\link{package.dependencies}} for checking
-  dependencies.
+  \code{\link{dependsOnPkgs}}.
 }
 \examples{
 \donttest{
@@ -58,12 +61,19 @@ dep1 <- package_dependencies(myPkgs, db = pdb) # all arguments at default
 utils::str(dep1, vec.len=10)
 
 system.time( ## reverse dependencies, recursively --- takes much longer:
-deps <- package_dependencies(myPkgs, db = pdb,
-                    which = c("Depends", "Imports", "LinkingTo", "Suggests"),
-                    recursive = TRUE, reverse = TRUE)
+deps <- package_dependencies(myPkgs, db = pdb, which = "most",
+                             recursive = TRUE, reverse = TRUE)
 ) # seen ~ 10 seconds
 
-lengths(deps) # 2015-01-14: all are 7040, but codetools with 7046
+lengths(deps) # 2020-05-03: all are 16053, but codetools with 16057
+
+## install.packages(dependencies = TRUE) installs 'most' dependencies
+## and the strong recursive dependencies of these: these dependencies
+## can be obtained using 'which = "most"' and 'recursive = "strong"'.
+## To illustrate on the the first packages with non-missing Suggests:
+packages <- pdb[head(which(!is.na(pdb[, "Suggests"]))), "Package"]
+package_dependencies(packages, db = pdb,
+                     which = "most", recursive = "strong")
 }% dont test
 }
 \keyword{utilities}

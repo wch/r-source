@@ -21,7 +21,7 @@
 cbind(\dots, deparse.level = 1)
 rbind(\dots, deparse.level = 1)
 \method{rbind}{data.frame}(\dots, deparse.level = 1, make.row.names = TRUE,
-      stringsAsFactors = default.stringsAsFactors(), factor.exclude = TRUE)
+      stringsAsFactors = FALSE, factor.exclude = TRUE)
 }
 \arguments{
   \item{\dots}{(generalized) vectors or matrices.  These can be given as named

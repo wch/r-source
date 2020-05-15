@@ -1,7 +1,7 @@
 #  File src/library/base/R/warnings.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,15 +66,16 @@ print.warnings <- function(x, tags,
 
 summary.warnings <- function(object, ...) {
     msgs <- names(object)
-    calls <- as.character(object) ## TODO? or rather -- aligned with print() method above --
-    ## lapply(object, deparse, width.cutoff = 50L * 2L, back.tick=FALSE, control=NULL))
-    ss <- ": "
+    calls <- as.character(object) ## alternatively (in line with print() method above):
+    ## lapply(object, deparse, width.cutoff = 50L * 2L, backtick=FALSE, control=NULL)
+    ss <- " |<:>| " # << should not ever appear in 'calls'
     c.m. <- paste(calls, msgs, sep = ss)
     if(length(i.no.call <- which(calls == "NULL")))
         c.m.[i.no.call] <- substr(c.m.[i.no.call],
 				  nchar(paste0("NULL", ss))+1L, 100000L)
-    tm <- table(c.m., deparse.level=0L)
-    structure(unique(object), counts = as.vector(tm), class = "summary.warnings")
+    i.uniq <- which(!duplicated(object, incomparables=FALSE))
+    tm <- table(factor(c.m., levels=c.m.[i.uniq]), deparse.level=0L)
+    structure(object[i.uniq], counts = as.vector(tm), class = "summary.warnings")
 }
 
 print.summary.warnings <- function(x, ...) {

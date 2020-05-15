@@ -16,7 +16,7 @@
 \usage{
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
            check.names = TRUE, fix.empty.names = TRUE,
-           stringsAsFactors = default.stringsAsFactors())
+           stringsAsFactors = FALSE)
 
 default.stringsAsFactors() # << this is deprecated !
 }
@@ -41,10 +41,7 @@ default.stringsAsFactors() # << this is deprecated !
     \code{check.names} is false if \code{""} names should be kept.}
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?  The \sQuote{factory-fresh} default has been \code{TRUE}
-    previously but has been changed to \code{FALSE} for \R 4.0.0.
-    Only as short time workaround, you can revert by setting
-    \code{\link{options}(stringsAsFactors = TRUE)} which now warns about
-    its deprecation.}
+    previously but has been changed to \code{FALSE} for \R 4.0.0.}
 }
 \value{
   A data frame, a matrix-like structure whose columns may be of

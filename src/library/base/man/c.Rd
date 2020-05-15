@@ -34,11 +34,9 @@ c(\dots)
   components (such names and calls) are treated as one-element lists
   which cannot be unlisted even if \code{recursive = TRUE}.
 
-  %% Should we say "(currently)" ?
-  Note that \code{\link{factor}}s are treated only via their
-  internal \code{\link{integer}} codes; one proposal has been to use
-\preformatted{   c.factor <- function(..., recursive=TRUE) unlist(list(...), recursive=recursive)}
-  if factor concatenation by \code{c()} should give a \code{\link{factor}}.
+  Note that in \R < 4.1.0, \code{\link{factor}}s were treated only via
+  their internal \code{\link{integer}} codes: now there is
+  \code{\link{c.factor}} method which combines factors into a factor.
 
   \code{c} is sometimes used for its side effect of removing attributes
   except names, for example to turn an array into a vector.

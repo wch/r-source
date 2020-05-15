@@ -23,7 +23,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
          nrows = -1, skip = 0,
          check.names = TRUE,
          blank.lines.skip = TRUE,
-         stringsAsFactors = default.stringsAsFactors(),
+         stringsAsFactors = FALSE,
 	 transpose = FALSE, fileEncoding = "")
 {
     if (.Platform$OS.type == "windows" && identical(file, "clipboard")) {

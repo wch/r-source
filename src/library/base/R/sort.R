@@ -1,7 +1,7 @@
 #  File src/library/base/R/sort.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -234,8 +234,8 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 
     method <- match.arg(method)
     if (method == "auto" &&
-        (is.numeric(x) || is.factor(x) || is.logical(x) || is.object(x)) &&
-        is.integer(length(x)))
+        (is.numeric(x) || is.factor(x) || is.logical(x) ||
+         (is.object(x) && !is.atomic(x))) && is.integer(length(x)))
         method <- "radix"
     if(!is.null(partial))
         .NotYetUsed("partial != NULL")

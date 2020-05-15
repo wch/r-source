@@ -398,3 +398,6 @@ addNA <- function(x, ifany=FALSE)
     else if (!ifany && !anyNA(x)) return(x)
     factor(x, levels=ll, exclude=NULL)
 }
+
+c.factor <- function(..., recursive=TRUE)
+    unlist(list(...), recursive=recursive)

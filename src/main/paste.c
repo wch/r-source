@@ -49,29 +49,30 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
  * Note that NA_STRING is not handled separately here.  This is
  *  deliberate -- see ?paste -- and implicitly coerces it to "NA"
-*/
+ */
 
-    SEXP ans, collapse, sep, x;
-    int sepw, u_sepw, ienc;
-    R_xlen_t i, j, k, nx, pwidth;
-    const char *s, *cbuf, *csep=NULL, *u_csep=NULL;
-    char *buf;
-    Rboolean allKnown, anyKnown, use_UTF8, use_Bytes,
-	sepASCII = TRUE, sepUTF8 = FALSE, sepBytes = FALSE, sepKnown = FALSE,
-	use_sep = (PRIMVAL(op) == 0), recycle_0;
-    const void *vmax;
+    SEXP collapse, sep;
+    Rboolean recycle_0;
+
+/* We need to be careful here.  For example currently Windows 4.1
+ * packages are links to 4.0, 4.0.0 uses only 3 args for paste and
+ * 4.0.x (x >= 1) use 3 unless recycle0 is true.  So 4.1 needs to
+ * accept 3-arg form, silently.
+ */
 
 #ifdef future_R_4_1_or_newer
     checkArity(op, args);
 #else
     int nargs = length(args);
     Rboolean correct_nargs = (PRIMARITY(op) == nargs);
-    if(!correct_nargs) { // not perfect -- we allow one less
-	if(PRIMARITY(op) == nargs + 1) { // a "NOTE":
+    if(!correct_nargs) { // we allow one less for capture from earlier versions
+	if(PRIMARITY(op) == nargs + 1) {
+	    recycle_0 = FALSE;
+#if 0
 	    REprintf("%d arguments passed to .Internal(%s) which requires %d;\n an S4 method"
 		     " may need to be redefined, typically by re-installing a package\n",
 		     nargs, PRIMNAME(op), PRIMARITY(op));
-	    recycle_0 = FALSE;
+#endif 
 	}
 	else // not even "ok":
 	    error(ngettext("%d argument passed to .Internal(%s) which requires %d",
@@ -87,11 +88,15 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Check the arguments */
 
-    x = CAR(args);
+    SEXP x = CAR(args);
     if (!isVectorList(x))
 	error(_("invalid first argument"));
-    nx = xlength(x);
+    R_xlen_t nx = xlength(x);
 
+    const char *csep = NULL;
+    int sepw, u_sepw;
+    Rboolean sepASCII = TRUE, sepUTF8 = FALSE, sepBytes = FALSE,
+	sepKnown = FALSE, use_sep = (PRIMVAL(op) == 0);
     if(use_sep) { /* paste(..., sep, .) */
 	sep = CADR(args);
 	if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
@@ -105,12 +110,12 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	sepBytes = IS_BYTES(sep);
 	collapse = CADDR(args);
 	if(correct_nargs)
-	recycle_0 = asLogical(CADDDR(args));
+	    recycle_0 = asLogical(CADDDR(args));
     } else { /* paste0(..., .) */
 	u_sepw = sepw = 0; sep = R_NilValue;/* -Wall */
 	collapse = CADR(args);
 	if(correct_nargs)
-	recycle_0 = asLogical(CADDR(args));
+	    recycle_0 = asLogical(CADDR(args));
     }
     if (!isNull(collapse))
 	if(!isString(collapse) || LENGTH(collapse) <= 0 ||
@@ -127,7 +132,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_xlen_t maxlen = 0;
     Rboolean has_0_len = FALSE;
-    for (j = 0; j < nx; j++) {
+    for (R_xlen_t j = 0; j < nx; j++) {
 	if (!isString(VECTOR_ELT(x, j))) {
 	    /* formerly in R code: moved to C for speed */
 	    SEXP call, xj = VECTOR_ELT(x, j);
@@ -154,10 +159,12 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	return allocVector(STRSXP, 0);
     if(maxlen == 0) // all of the arguments where (equivalent to)  character(0)
 	zero_return;
+    
+    SEXP ans = PROTECT( allocVector(STRSXP, maxlen));
 
-    PROTECT(ans = allocVector(STRSXP, maxlen));
+    Rboolean allKnown, anyKnown, use_UTF8, use_Bytes;
 
-    for (i = 0; i < maxlen; i++) {
+    for (R_xlen_t i = 0; i < maxlen; i++) {
 	/* Strategy for marking the encoding: if all inputs (including
 	 * the separator) are ASCII, so is the output and we don't
 	 * need to mark.  Otherwise if all non-ASCII inputs are of
@@ -172,8 +179,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    use_Bytes = sepBytes;
 	}
 
-	for (j = 0; j < nx; j++) {
-	    k = XLENGTH(VECTOR_ELT(x, j));
+	for (R_xlen_t j = 0; j < nx; j++) {
+	    R_xlen_t k = XLENGTH(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		if(IS_UTF8(cs)) use_UTF8 = TRUE;
@@ -181,10 +188,10 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	if (use_Bytes) use_UTF8 = FALSE;
-	pwidth = 0;
-	vmax = vmaxget();
-	for (j = 0; j < nx; j++) {
-	    k = XLENGTH(VECTOR_ELT(x, j));
+	R_xlen_t pwidth = 0;
+	const void *vmax = vmaxget();
+	for (R_xlen_t j = 0; j < nx; j++) {
+	    R_xlen_t k = XLENGTH(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		if(use_Bytes)
 		    pwidth += strlen(CHAR             (STRING_ELT(VECTOR_ELT(x, j), i % k)));
@@ -195,6 +202,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		vmaxset(vmax);
 	    }
 	}
+	const char *u_csep = NULL;
 	if(use_sep) {
 	    if (use_UTF8 && !u_csep) {
 		u_csep = translateCharUTF8(sep);
@@ -204,18 +212,19 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (pwidth > INT_MAX)
 	    error(_("result would exceed 2^31-1 bytes"));
-	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
+	char *buf = R_AllocStringBuffer(pwidth, &cbuff);
+	const char *cbuf = buf;
 	vmax = vmaxget();
-	for (j = 0; j < nx; j++) {
-	    k = XLENGTH(VECTOR_ELT(x, j));
+	for (R_xlen_t j = 0; j < nx; j++) {
+	    R_xlen_t k = XLENGTH(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		if (use_UTF8) {
-		    s = translateCharUTF8(cs);
+		    const char *s = translateCharUTF8(cs);
 		    strcpy(buf, s);
 		    buf += strlen(s);
 		} else {
-		    s = use_Bytes ? CHAR(cs) : translateChar(cs);
+		    const char *s = use_Bytes ? CHAR(cs) : translateChar(cs);
 		    strcpy(buf, s);
 		    buf += strlen(s);
 		    allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
@@ -233,7 +242,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    vmax = vmaxget();
 	}
-	ienc = 0;
+	int ienc = 0;
 	if(use_UTF8) ienc = CE_UTF8;
 	else if(use_Bytes) ienc = CE_BYTES;
 	else if(anyKnown && allKnown) {
@@ -249,7 +258,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	sep = STRING_ELT(collapse, 0);
 	use_UTF8 = IS_UTF8(sep);
 	use_Bytes = IS_BYTES(sep);
-	for (i = 0; i < nx; i++) {
+	for (R_xlen_t i = 0; i < nx; i++) {
 	    if(IS_UTF8(STRING_ELT(ans, i))) use_UTF8 = TRUE;
 	    if(IS_BYTES(STRING_ELT(ans, i))) use_Bytes = TRUE;
 	}
@@ -263,9 +272,9 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	sepw = (int) strlen(csep);
 	anyKnown = ENC_KNOWN(sep) > 0;
 	allKnown = anyKnown || strIsASCII(csep);
-	pwidth = 0;
-	vmax = vmaxget();
-	for (i = 0; i < nx; i++)
+	R_xlen_t pwidth = 0;
+	const void *vmax = vmaxget();
+	for (R_xlen_t i = 0; i < nx; i++)
 	    if(use_UTF8) {
 		pwidth += strlen(translateCharUTF8(STRING_ELT(ans, i)));
 		vmaxset(vmax);
@@ -274,13 +283,15 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	pwidth += (nx - 1) * sepw;
 	if (pwidth > INT_MAX)
 	    error(_("result would exceed 2^31-1 bytes"));
-	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
+	char *buf = R_AllocStringBuffer(pwidth, &cbuff);
+	const char *cbuf = buf;
 	vmax = vmaxget();
-	for (i = 0; i < nx; i++) {
+	for (R_xlen_t i = 0; i < nx; i++) {
 	    if(i > 0) {
 		strcpy(buf, csep);
 		buf += sepw;
 	    }
+	    const char *s;
 	    if(use_UTF8)
 		s = translateCharUTF8(STRING_ELT(ans, i));
 	    else /* already translated */
@@ -294,7 +305,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(use_UTF8) vmaxset(vmax);
 	}
 	UNPROTECT(1);
-	ienc = CE_NATIVE;
+	int ienc = CE_NATIVE;
 	if(use_UTF8) ienc = CE_UTF8;
 	else if(use_Bytes) ienc = CE_BYTES;
 	else if(anyKnown && allKnown) {

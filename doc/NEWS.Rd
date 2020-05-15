@@ -9,10 +9,29 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{paste()} and \code{paste0()} get new optional argument
-      \code{recycle0 = FALSE}.  When set to true, zero length arguments
-      (and all zero-length or no arguments when \code{collapse} is not
-      \code{NULL}) lead to the zero-length \code{character(0)}.
+      \item \samp{www.omegahat.net} is no longer one of the repositories
+      known to \code{setRepositories()}.   (Nowadays it only provides
+      source packages and is often unavailable.)
+
+      \item \code{package_dependencies()} (in package \pkg{tools}) can
+      now use different dependency types for direct and recursive
+      dependencies.
+
+      \item Size of tarball checking in \command{R CMD check --as-cran <pkg>}
+      may be tweaked via new \env{_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_},
+      as suggested in \PR{17777} by Jan Gorecki.
+
+      \item Using \code{c()} to combine a factor with other factors
+      now gives a factor.
+
+      \item Graphics devices can now specify \code{canClip =
+        NA_LOGICAL}, in which case the graphics engine will never
+        perform any clipping of output itself.
+
+      The clipping that the graphics engine does perform (for both
+      \code{canClip = TRUE} and \code{canClip = FALSE}) has also
+      been improved to avoid producing unnecessary artifacts in clipped
+      output. 
     }
   }
 
@@ -26,14 +45,63 @@
       \item Defunct functions \code{checkNEWS()} and \code{readNEWS()} from
       package \pkg{tools} and \code{CRAN.packages()} from \pkg{utils} have
       been removed.
+
+      \item \command{R CMD config CXXCPP} is defunct (it was deprecated
+      in \R{} 3.6.2).
     }
   }
 
-    \subsection{BUG FIXES}{
+  %% \subsection{BUG FIXES}{
+  %%   \itemize{
+  %%   }
+  %% }
+}
+
+\section{\Rlogo CHANGES IN 4.0.0 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{paste()} and \code{paste0()} gain a new optional
+      argument \code{recycle0}.  When set to true, zero-length
+      arguments (and all zero-length or no arguments when \code{collapse}
+      is not \code{NULL}) lead to the zero-length value
+      \code{character(0)}.
+
+      This should not be used in package code until \R 4.0.1 is
+      released, when the package should depend on \samp{R (>= 4.0.1)}.
+
+      \item The \code{summary(<warnings>)} method now maps the counts
+      correctly to the warning messages.
+    }
+  }
+
+  \subsection{BUG FIXES}{
     \itemize{
       \item \code{aov(frml, ...)} now also works in case the \code{formula}
       deparses to more than 500 characters, thanks to a report and patch
       proposal by Jan Hauffa.
+
+      \item Fix a dozen places (code, examples) as \code{Sys.setlocale()}
+      returns the new rather than the previous setting.
+
+      \item Fix for adding two complex \pkg{grid} units via \code{sum()}.
+      Thanks to Gu Zuguang for the report and Thomas Lin Pedersen for
+      the patch.
+
+      \item Fix \code{parallel::mclapply(..., mc.preschedule=FALSE)}
+      to handle raw vector results correctly. \PR{17779}
+
+      \item Computing the \code{base} value, i.e., 2, \dQuote{everywhere},
+      now uses \code{FLT_RADIX}, as the original \file{machar} code looped
+      indefinitely on the ppc64 architecture for the \code{longdouble} case.
+
+      \item In \R 4.0.0, \code{sort.list(x)} when \code{is.object(x)} was
+      true, e.g., for \code{x <- I(letters)}, was accidentally using
+      \code{method = "radix"}.  Consequently, e.g., \code{merge(<data.frame>)}
+      was much slower than previously; reported in \PR{17794}.
+
+      \item \code{plot(y ~ x, ylab = quote(y[i]))} now works, as e.g., for
+      \code{xlab}; related to \PR{10525}.
     }
   }
 }
@@ -230,7 +298,8 @@
 
       \item \code{sort.list(x)} now works for non-atomic objects
       \code{x} and \code{method = "auto"} (the default) or
-      \code{"radix"} in cases \code{order(x)} works.
+      \code{"radix"} in cases \code{order(x)} works, typically via a
+      \code{xtfrm()} method.
 
       \item Where they are available, \code{writeBin()} allows
       long vectors.% (those of length \eqn{\ge 2^{31}}{>= 2^31}).
@@ -775,7 +844,7 @@
       \item \code{scan()} issues with UTF-8 data when running in a DBCS
       locale have been resolved (\PR{16520}, \PR{16584}).
 
-      \item \command{RTerm} now accepts enhanced/arrow keys also with
+      \item \command{Rterm} now accepts enhanced/arrow keys also with
       ConPTY.
 
       \item \R can can now be started \emph{via} the launcher icon in a

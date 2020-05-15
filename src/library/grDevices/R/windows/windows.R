@@ -111,8 +111,9 @@ win.graph <- function(width, height, pointsize)
 
 x11 <-
 X11 <- function(display = "", width, height, pointsize, gamma,
-                       bg, canvas, fonts, family,
-                       xpos, ypos, title, type, antialias)
+                bg, canvas, fonts, family,
+                xpos, ypos, title, type, antialias,
+                symbolfamily)
 {
     ## Arguments now identical on Windows / other.
     ## Some back compatibility for R <= 3.5.x for Windows which had

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-04-16 r78240) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-04-28 r78322) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -412,4 +412,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.315   0.063   0.357 
+  0.324   0.041   0.345 

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/plot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 ### xy.coords() is now in the imported 'grDevices' package
 
+## Now in 'base' pkg:
 ## plot <- function (x, y, ...)  UseMethod("plot")
 
 
@@ -153,9 +154,9 @@ function(formula, data = parent.frame(), ..., subset,
     ## need to avoid evaluation of expressions in do.call later.
     ## see PR#10525
     nmdots <- names(dots)
-    if ("main" %in% nmdots) dots[["main"]] <- enquote(dots[["main"]])
-    if ("sub"  %in% nmdots) dots[["sub" ]] <- enquote(dots[["sub"]])
-    if ("xlab" %in% nmdots) dots[["xlab"]] <- enquote(dots[["xlab"]])
+    for(nm in nmdots[match(c("main", "sub", "xlab"), nmdots, 0L)])
+        dots[[nm]] <- enquote(dots[[nm]])
+    if(!missing(ylab)) ylab <- enquote(ylab)
 
     m$ylab <- m$... <- m$ask <- NULL
     subset.expr <- m$subset

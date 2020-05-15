@@ -37,7 +37,7 @@ mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affini
 	    eval(expr, env)
 	    mcexit(0L)
 	}
-	sendMaster(try(eval(expr, env), silent = TRUE))
+	sendMaster(try(eval(expr, env), silent = TRUE), FALSE)
         mcexit(0L)
     }
     if (!missing(name) && !is.null(name)) f$name <- as.character(name)[1L]

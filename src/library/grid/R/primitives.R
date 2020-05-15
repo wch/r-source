@@ -53,7 +53,8 @@ rep.arrow <- function(x, ...) {
 
 # Method for subsetting "arrow" objects
 `[.arrow` <- function(x, index, ...) {
-    if (length(index) == 0)
+    if (length(index) == 0 ||
+        (is.logical(index) && sum(index) == 0))
         return(NULL)
     maxn <- length(x)
     newa <- list(angle=rep(x$angle, length.out=maxn),

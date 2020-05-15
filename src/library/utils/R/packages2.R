@@ -829,7 +829,12 @@ install.packages <-
             setwd(cwd); on.exit()
             unlink(tmpd2, recursive = TRUE)
         } else {
-            outfiles <- paste0(update[, 1L], ".out")
+            tmpd2 <- tempfile()
+            if(!dir.create(tmpd2))
+                stop(gettextf("unable to create temporary directory %s",
+                              sQuote(tmpd2)),
+                     domain = NA)
+            outfiles <- file.path(tmpd2, paste0(update[, 1L], ".out"))
             for(i in seq_len(nrow(update))) {
                 outfile <- if(keep_outputs) outfiles[i] else output
                 fil <- update[i, 3L]
@@ -855,10 +860,9 @@ install.packages <-
                             domain = NA)
                 }
             }
-            if(keep_outputs && (outdir != getwd())) {
+            if(keep_outputs)
                 file.copy(outfiles, outdir)
-                file.remove(outfiles)
-            }
+            unlink(tmpd2, recursive = TRUE)
         }
         ## Using stderr is the wish of PR#16420
         if(!quiet && nonlocalrepos && !is.null(tmpd) && is.null(destdir))

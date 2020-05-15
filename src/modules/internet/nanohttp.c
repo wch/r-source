@@ -1343,13 +1343,13 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	redirURL = NULL;
     }
 
-    if ((ctxt->protocol == NULL) || (strcmp(ctxt->protocol, "http"))) {
+    if ((ctxt == NULL) || (ctxt->protocol == NULL) || (strcmp(ctxt->protocol, "http"))) {
 	RxmlMessage(0, "Not a valid HTTP URI");
         RxmlNanoHTTPFreeCtxt(ctxt);
 	if (redirURL != NULL) xmlFree(redirURL);
         return(NULL);
     }
-    if (ctxt->hostname == NULL) {
+    if ((ctxt == NULL) || (ctxt->hostname == NULL)) {
 	RxmlMessage(0, "Failed to identify host in URI");
         RxmlNanoHTTPFreeCtxt(ctxt);
         return(NULL);

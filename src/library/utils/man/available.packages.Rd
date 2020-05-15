@@ -157,6 +157,18 @@ available.packages(contriburl = contrib.url(repos, type), method,
   set up a repository.
 }
 \examples{\dontrun{
+## Count package licenses
+db <- available.packages(filters = "duplicates")
+table(db[,"License"])
+
+## Use custom filter function to only keep recommended packages
+## which do not require compilation
+available.packages(filters = list(
+  add = TRUE,
+  function (db) db[db[,"Priority"] \%in\% "recommended" &
+                   db[,"NeedsCompilation"] == "no", ]
+))
+
 ## Restrict install.packages() (etc) to known-to-be-FOSS packages
 options(available_packages_filters =
   c("R_version", "OS_type", "subarch", "duplicates", "license/FOSS"))
@@ -164,7 +176,7 @@ options(available_packages_filters =
 options(available_packages_filters = list(add = TRUE, "license/FOSS"))
 
 ## Give priority to released versions on CRAN, rather than development
-## versions on Omegahat, R-Forge etc.
+## versions on R-Forge etc.
 options(available_packages_filters =
      c("R_version", "OS_type", "subarch", "CRAN", "duplicates"))
 }}

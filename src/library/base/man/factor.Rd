@@ -19,6 +19,7 @@
 \alias{Summary.ordered}
 \alias{addNA}
 \alias{.valid.factor}
+\alias{c.factor}
 \concept{categorical variable}
 \concept{enumerated type}
 \concept{category}
@@ -154,6 +155,14 @@ addNA(x, ifany = FALSE)
   Since factors typically have quite a small number of levels, for large
   vectors \code{x} it is helpful to supply \code{nmax} as an upper bound
   on the number of unique values.
+
+  Since \R 4.1.0, when using \code{\link{c}} to combine a (possibly
+  ordered) factor with other objects, if all objects are (possibly
+  ordered) factors, the result will be a factor with levels the union of
+  the level sets of the elements, in the order the levels occur in the
+  level sets of the elements (which means that if all the elements have
+  the same level set, that is the level set of the result), equivalent
+  to how \code{\link{unlist}} operates on a list of factor objects.
 }
 \section{Warning}{
   The interpretation of a factor depends on both the codes and the

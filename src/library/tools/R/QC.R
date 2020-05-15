@@ -517,8 +517,7 @@ function(package, dir, lib.loc = NULL,
         ## redefinitions obtained by methods::rematchDefinition().
         ## </NOTE>
         check_S4_methods <-
-            !identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
-                       FALSE)
+            !isFALSE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
         if(check_S4_methods) {
             unRematchDef <- methods::unRematchDefinition
             get_formals_from_method_definition <- function(m)
@@ -2903,13 +2902,14 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             ## not of a version on the repository.
 ##            pkg <- db[["Package"]]
             this <- db[dependencies]; names(this) <- dependencies
-            known <- setdiff(utils:::.clean_up_dependencies(this), "R")
+            ## FIXME: .extract_dependency_package_names
+            known <- utils:::.clean_up_dependencies(this)
             info <- available[, dependencies, drop = FALSE]
             rn <- rownames(info)
             deps <- function(p) {
                 if(p %notin% rn) return(character())
-                this <- utils:::.clean_up_dependencies(info[p, ])
-                setdiff(this, "R")
+                ## FIXME: .extract_dependency_package_names
+                utils:::.clean_up_dependencies(info[p, ])
             }
             extra <- known
             repeat {
@@ -3282,10 +3282,12 @@ function(x, ...)
 ### * .check_package_description
 
 .check_package_description <-
-function(dfile, strict = FALSE)
+function(dfile, strict = FALSE, db = NULL)
 {
-    dfile <- file_path_as_absolute(dfile)
-    db <- .read_description(dfile)
+    if(is.null(db)) {
+        dfile <- file_path_as_absolute(dfile)
+        db <- .read_description(dfile)
+    }
 
     standard_package_names <- .get_standard_package_names()
 
@@ -3439,92 +3441,86 @@ function(dfile, strict = FALSE)
     out
 }
 
+format.check_package_description <-
+function(x, ...)
+{
+    fmt <- function(x) {
+        if(length(x)) paste(x, collapse = "\n") else character()
+    }
+
+    ## <FIXME>
+    ## Currently, check_meta() will give an error unless all output
+    ## matches "^Malformed (Title|Description)", so for now need to
+    ## avoid the pointer to R-exts in these cases.
+    xx <- x; xx$bad_Title <- xx$bad_Description <- NULL
+    ## </FIXME>
+
+    c(character(),
+      if(length(x$missing_encoding))
+          gettext("Unknown encoding"),
+      if(length(y <- x$fields_with_non_ASCII_tags))
+          paste(c(gettext("Fields with non-ASCII tags:"),
+                  .strwrap22(y),
+                  gettext("All field tags must be ASCII.")),
+                collapse = "\n"),
+      if(length(y <- x$fields_with_non_ASCII_values))
+          paste(c(gettext("Fields with non-ASCII values:"),
+                  .strwrap22(y),
+                  gettext("These fields must have ASCII values.")),
+                collapse = "\n"),
+      fmt(.format_check_package_description_authors_at_R_field_results(x)),
+      ## if(length(y <- x$missing_required_fields))
+      ##     paste(c(gettext("Required fields missing or empty:"),
+      ##             .strwrap22(y)),
+      ##           collapse = "\n"),
+      if(length(x$bad_package))
+          paste(x$bad_package, collapse = "\n"),
+      if(length(x$bad_version))
+          gettext("Malformed package version."),
+      if(length(x$bad_maintainer))
+          gettext("Malformed maintainer field."),
+      if(any(as.integer(lengths(x$bad_depends_or_suggests_or_imports)) > 0L )) {
+          bad <- x$bad_depends_or_suggests_or_imports
+          paste(c(gettext("Malformed Depends or Suggests or Imports or Enhances field."),
+                  if(length(y <- bad$bad_dep_entry))
+                      c(gettext("Offending entries:"),
+                        paste0("  ", y),
+                        strwrap(gettextf("Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."))),
+                  if(length(y <- bad$bad_dep_op))
+                      c(gettext("Entries with infeasible comparison operator:"),
+                        paste0("  ", y),
+                        strwrap(gettextf("Only operators '<=' and '>=' are possible."))),
+                  if(length(y <- bad$bad_dep_version))
+                      c(gettext("Entries with infeasible version number:"),
+                        paste0("  ", y),
+                        strwrap(gettextf("Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'.")))),
+                collapse = "\n")
+      },
+      if(isTRUE(x$bad_vignettebuilder))
+          paste(c(gettext("Invalid VignetteBuilder field."),
+                  strwrap(gettextf("This field must contain one or more packages (and no version requirement)."))),
+                collapse = "\n"),
+      if(length(x$bad_priority))
+          paste(c(gettext("Invalid Priority field."),
+                  strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."))),
+                collapse = "\n"),
+      fmt(c(if(isTRUE(x$bad_Title))
+                gettext("Malformed Title field: should not end in a period."),
+            if(isTRUE(x$bad_Description))
+                gettext("Malformed Description field: should contain one or more complete sentences."))),
+      if(any(as.integer(lengths(xx)) > 0L))
+          paste(c(strwrap(gettext("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."))),
+                collapse = "\n"))
+}
+
 print.check_package_description <-
 function(x, ...)
 {
-    if(length(x$missing_encoding))
-        writeLines(c(gettext("Unknown encoding"), ""))
-
-    if(length(x$fields_with_non_ASCII_tags)) {
-        writeLines(gettext("Fields with non-ASCII tags:"))
-        .pretty_print(x$fields_with_non_ASCII_tags)
-        writeLines(c(gettext("All field tags must be ASCII."), ""))
-    }
-
-    if(length(x$fields_with_non_ASCII_values)) {
-        writeLines(gettext("Fields with non-ASCII values:"))
-        .pretty_print(x$fields_with_non_ASCII_values)
-        writeLines(c(gettext("These fields must have ASCII values."), ""))
-    }
-
-    s <- .format_check_package_description_authors_at_R_field_results(x)
-    if(length(s))
-        writeLines(c(s, ""))
-
-##     if(length(x$missing_required_fields)) {
-##         writeLines(gettext("Required fields missing or empty:"))
-##         .pretty_print(x$missing_required_fields)
-##         writeLines("")
-##     }
-
-    if(length(x$bad_package))
-        writeLines(c(strwrap(x$bad_package), ""))
-
-    if(length(x$bad_version))
-        writeLines(c(gettext("Malformed package version."), ""))
-
-    if(length(x$bad_maintainer))
-        writeLines(c(gettext("Malformed maintainer field."), ""))
-
-    if(any(as.integer(lengths(x$bad_depends_or_suggests_or_imports)) > 0L )) {
-        bad <- x$bad_depends_or_suggests_or_imports
-        writeLines(gettext("Malformed Depends or Suggests or Imports or Enhances field."))
-        if(length(bad$bad_dep_entry)) {
-            tmp <- c(gettext("Offending entries:"),
-                     paste0("  ", bad$bad_dep_entry),
-                     strwrap(gettextf("Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses.")))
-            writeLines(tmp)
-        }
-        if(length(bad$bad_dep_op)) {
-            tmp <- c(gettext("Entries with infeasible comparison operator:"),
-                     paste0("  ", bad$bad_dep_entry),
-                     strwrap(gettextf("Only operators '<=' and '>=' are possible.")))
-
-            writeLines(tmp)
-        }
-        if(length(bad$bad_dep_version)) {
-            tmp <- c(gettext("Entries with infeasible version number:"),
-                     paste0("  ", bad$bad_dep_version),
-                     strwrap(gettextf("Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'.")))
-            writeLines(tmp)
-        }
-        writeLines("")
-    }
-    if(isTRUE(x$bad_vignettebuilder)) {
-        writeLines(c(gettext("Invalid VignetteBuilder field."),
-                     strwrap(gettextf("This field must contain one or more packages (and no version requirement).")),
-                     ""))
-    }
-
-    if(length(x$bad_priority))
-        writeLines(c(gettext("Invalid Priority field."),
-                     strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
-                     ""))
-
-    if(isTRUE(x$bad_Title))
-        writeLines(gettext("Malformed Title field: should not end in a period."))
-
-    if(isTRUE(x$bad_Description))
-        writeLines(gettext("Malformed Description field: should contain one or more complete sentences."))
-
-    xx<- x; xx$bad_Title <- xx$bad_Description <- NULL
-
-    if(any(as.integer(lengths(xx)) > 0L))
-        writeLines(c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
-                     ""))
-
+    writeLines(paste(format(x, ...),
+                     collapse = "\n\n", recycle0 = TRUE))
     invisible(x)
 }
+   
 
 ### * .check_package_description2
 
@@ -6878,7 +6874,7 @@ function(x, ...)
 ## These are all done first.
 
 .check_package_CRAN_incoming <-
-function(dir, localOnly = FALSE)
+function(dir, localOnly = FALSE, pkgSize = NA)
 {
     out <- list()
     class(out) <- "check_package_CRAN_incoming"
@@ -7243,9 +7239,9 @@ function(dir, localOnly = FALSE)
         if(inherits(cfmt, "condition"))
             out$citation_problem_when_formatting <-
                 conditionMessage(cfmt)
-
         out
     }
+
     if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
         cinfo <- .check_citation_for_CRAN(cfile, meta)
         if(length(cinfo))
@@ -7433,9 +7429,9 @@ function(dir, localOnly = FALSE)
             out$R_files_set_random_seed <- basename(fp)
     }
 
-    size <- Sys.getenv("_R_CHECK_SIZE_OF_TARBALL_",
-                       unset = NA_character_)
-    if(!is.na(size) && (as.integer(size) > 5000000))
+    if(!is.na(size <- as.numeric(pkgSize)) &&
+       size > as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_",
+                                    unset = "5e6")))
         out$size_of_tarball <- size
 
     ## Check URLs.
@@ -8362,7 +8358,8 @@ function(x, ...)
 print.check_package_CRAN_incoming <-
 function(x, ...)
 {
-    writeLines(paste(format(x, ...), collapse = "\n\n"))
+    writeLines(paste(format(x, ...),
+                     collapse = "\n\n", recycle0 = TRUE))
     invisible(x)
 }
 

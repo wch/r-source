@@ -22,6 +22,9 @@
 ### handle pairlists first
 bquote <- function (expr, where = parent.frame(), splice = FALSE)
 {
+    if (! is.environment(where))
+        ## 'where' should be an environment, but as some don't read docs ...
+        where <- as.environment(where)
     unquote <- function(e) {
         if (is.pairlist(e))
             as.pairlist(lapply(e, unquote))

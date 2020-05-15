@@ -23,7 +23,7 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            strip.white = FALSE, blank.lines.skip = TRUE,
            comment.char = "#",
            allowEscapes = FALSE, flush = FALSE,
-           stringsAsFactors = default.stringsAsFactors(),
+           stringsAsFactors = FALSE,
            fileEncoding = "", encoding = "unknown", text, skipNul = FALSE)
 
 read.csv(file, header = TRUE, sep = ",", quote = "\"",
