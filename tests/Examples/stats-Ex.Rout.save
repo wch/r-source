@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-04-28 r78322) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-05-13 r78448) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -14549,7 +14549,7 @@ Carriers                      19   29           24
 > unlink(file)
 > 
 > ft22 <- ftable(Titanic, row.vars = 2:1, col.vars = 4:3)
-> write.ftable(ft22, quote = FALSE)
+> write.ftable(ft22, quote = FALSE) # is the same as
              Survived    No         Yes      
              Age      Child Adult Child Adult
 Sex    Class                                 
@@ -14561,7 +14561,19 @@ Female 1st                0     4     1   140
        2nd                0    13    13    80
        3rd               17    89    14    76
        Crew               0     3     0    20
-> write.ftable(ft22, quote = FALSE, method="row.compact")
+> print(ft22)#method="non.compact" is default
+             Survived    No         Yes      
+             Age      Child Adult Child Adult
+Sex    Class                                 
+Male   1st                0   118     5    57
+       2nd                0   154    11    14
+       3rd               35   387    13    75
+       Crew               0   670     0   192
+Female 1st                0     4     1   140
+       2nd                0    13    13    80
+       3rd               17    89    14    76
+       Crew               0     3     0    20
+> print(ft22, method="row.compact")
              Survived    No         Yes      
 Sex    Class Age      Child Adult Child Adult
 Male   1st                0   118     5    57
@@ -14572,7 +14584,7 @@ Female 1st                0     4     1   140
        2nd                0    13    13    80
        3rd               17    89    14    76
        Crew               0     3     0    20
-> write.ftable(ft22, quote = FALSE, method="col.compact")
+> print(ft22, method="col.compact")
        Survived    No         Yes      
        Age      Child Adult Child Adult
 Sex    Class                           
@@ -14584,7 +14596,7 @@ Female 1st          0     4     1   140
        2nd          0    13    13    80
        3rd         17    89    14    76
        Crew         0     3     0    20
-> write.ftable(ft22, quote = FALSE, method="compact")
+> print(ft22, method="compact")
        Survived       No         Yes      
 Sex    Class | Age Child Adult Child Adult
 Male   1st             0   118     5    57
@@ -14595,6 +14607,45 @@ Female 1st             0     4     1   140
        2nd             0    13    13    80
        3rd            17    89    14    76
        Crew            0     3     0    20
+> 
+> ## using 'justify' and 'quote' :
+> format(ftable(wool + tension ~ breaks, warpbreaks),
++        justify = "none", quote = FALSE)
+      [,1]     [,2]      [,3] [,4] [,5] [,6] [,7] [,8]
+ [1,] ""       "wool"    "A"  ""   ""   "B"  ""   ""  
+ [2,] ""       "tension" "L"  "M"  "H"  "L"  "M"  "H" 
+ [3,] "breaks" ""        ""   ""   ""   ""   ""   ""  
+ [4,] "10"     ""        "0"  "0"  "1"  "0"  "0"  "0" 
+ [5,] "12"     ""        "0"  "1"  "0"  "0"  "0"  "0" 
+ [6,] "13"     ""        "0"  "0"  "0"  "0"  "0"  "1" 
+ [7,] "14"     ""        "0"  "0"  "0"  "1"  "0"  "0" 
+ [8,] "15"     ""        "0"  "0"  "1"  "0"  "0"  "2" 
+ [9,] "16"     ""        "0"  "0"  "0"  "0"  "1"  "1" 
+[10,] "17"     ""        "0"  "1"  "0"  "0"  "0"  "1" 
+[11,] "18"     ""        "0"  "2"  "1"  "0"  "0"  "0" 
+[12,] "19"     ""        "0"  "0"  "0"  "1"  "1"  "0" 
+[13,] "20"     ""        "0"  "0"  "0"  "1"  "0"  "1" 
+[14,] "21"     ""        "0"  "1"  "1"  "0"  "1"  "1" 
+[15,] "24"     ""        "0"  "0"  "1"  "0"  "0"  "1" 
+[16,] "25"     ""        "1"  "0"  "0"  "0"  "0"  "0" 
+[17,] "26"     ""        "2"  "0"  "1"  "0"  "1"  "0" 
+[18,] "27"     ""        "0"  "0"  "0"  "1"  "0"  "0" 
+[19,] "28"     ""        "0"  "0"  "1"  "0"  "1"  "1" 
+[20,] "29"     ""        "0"  "1"  "0"  "2"  "1"  "0" 
+[21,] "30"     ""        "1"  "1"  "0"  "0"  "0"  "0" 
+[22,] "31"     ""        "0"  "0"  "0"  "1"  "0"  "0" 
+[23,] "35"     ""        "0"  "1"  "0"  "0"  "0"  "0" 
+[24,] "36"     ""        "0"  "1"  "1"  "0"  "0"  "0" 
+[25,] "39"     ""        "0"  "0"  "0"  "0"  "2"  "0" 
+[26,] "41"     ""        "0"  "0"  "0"  "1"  "0"  "0" 
+[27,] "42"     ""        "0"  "0"  "0"  "0"  "1"  "0" 
+[28,] "43"     ""        "0"  "0"  "1"  "0"  "0"  "0" 
+[29,] "44"     ""        "0"  "0"  "0"  "1"  "0"  "0" 
+[30,] "51"     ""        "1"  "0"  "0"  "0"  "0"  "0" 
+[31,] "52"     ""        "1"  "0"  "0"  "0"  "0"  "0" 
+[32,] "54"     ""        "1"  "0"  "0"  "0"  "0"  "0" 
+[33,] "67"     ""        "1"  "0"  "0"  "0"  "0"  "0" 
+[34,] "70"     ""        "1"  "0"  "0"  "0"  "0"  "0" 
 > ## Don't show: 
 >  op <- options(warn = 2) # no warnings allowed
 >  stopifnot(dim(format(ft)) == 4:5,

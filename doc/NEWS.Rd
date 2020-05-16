@@ -35,6 +35,9 @@
 
       \item \code{apply()} gains a \code{simplify} argument to possibly
       disable simplifying results.
+
+      \item The \code{format()} method for \code{"ftable"}s gets an option
+      \code{justify}; suggested by Thomas Soeiro.
     }
   }
 
