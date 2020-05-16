@@ -3462,21 +3462,27 @@ void R_PreserveObject(SEXP object)
     R_PreciousList = CONS(object, R_PreciousList);
 }
 
-static SEXP RecursiveRelease(SEXP object, SEXP list)
+static SEXP DeleteFromList(SEXP object, SEXP list)
 {
-    if (!isNull(list)) {
-	if (object == CAR(list))
-	    return CDR(list);
-	else
-	    CDR(list) = RecursiveRelease(object, CDR(list));
+    if (CAR(list) == object)
+	return CDR(list);
+    else {
+	SEXP last = list;
+	for (SEXP head = CDR(list); head != R_NilValue; head = CDR(head)) {
+	    if (CAR(head) == object) {
+		SETCDR(last, CDR(head));
+		return list;
+	    }
+	    else last = head;
+	}
+	return list;
     }
-    return list;
 }
 
 void R_ReleaseObject(SEXP object)
 {
     R_CHECK_THREAD;
-    R_PreciousList =  RecursiveRelease(object, R_PreciousList);
+    R_PreciousList =  DeleteFromList(object, R_PreciousList);
 }
 
 /* This code is similar to R_PreserveObject/R_ReleasObject, but objects are
