@@ -3456,12 +3456,6 @@ void R_chk_free(void *ptr)
    objects are registered with R_PreserveObject and deregistered with
    R_ReleaseObject. */
 
-void R_PreserveObject(SEXP object)
-{
-    R_CHECK_THREAD;
-    R_PreciousList = CONS(object, R_PreciousList);
-}
-
 static SEXP DeleteFromList(SEXP object, SEXP list)
 {
     if (CAR(list) == object)
@@ -3479,11 +3473,71 @@ static SEXP DeleteFromList(SEXP object, SEXP list)
     }
 }
 
+#define ALLOW_PRECIOUS_HASH
+#ifdef ALLOW_PRECIOUS_HASH
+/* This allows using a fixed size hash table. This makes deleting mush
+   more efficient for applications that don't follow the "sparing use"
+   advice in R-exts.texi. Using the hash table is enabled by starting
+   R with the environment variable R_HASH_PRECIOUS set.
+
+   Pointer hashing as used here isn't entirely portable (we do it in
+   at least one othe rplace, in serialize.c) but it could be made so
+   by computing a unique value based on the allocation page and
+   position in the page. */
+
+#define PHASH_SIZE 1069
+#define PTRHASH(obj) (((R_size_t) (obj)) >> 3)
+
+static int use_precious_hash = FALSE;
+static int precious_inited = FALSE;
+
+void R_PreserveObject(SEXP object)
+{
+    R_CHECK_THREAD;
+    if (! precious_inited) {
+	precious_inited = TRUE;
+	if (getenv("R_HASH_PRECIOUS"))
+	    use_precious_hash = TRUE;
+    }
+    if (use_precious_hash) {
+	if (R_PreciousList == R_NilValue)
+	    R_PreciousList = allocVector(VECSXP, PHASH_SIZE);
+	int bin = PTRHASH(object) % PHASH_SIZE;
+	SET_VECTOR_ELT(R_PreciousList, bin,
+		       CONS(object, VECTOR_ELT(R_PreciousList, bin)));
+    }
+    else
+	R_PreciousList = CONS(object, R_PreciousList);
+}
+
+void R_ReleaseObject(SEXP object)
+{
+    R_CHECK_THREAD;
+    if (! precious_inited)
+	return; /* can't be anything to delete yet */
+    if (use_precious_hash) {
+	int bin = PTRHASH(object) % PHASH_SIZE;
+	SET_VECTOR_ELT(R_PreciousList, bin,
+		       DeleteFromList(object,
+				      VECTOR_ELT(R_PreciousList, bin)));    
+    }
+    else
+	R_PreciousList =  DeleteFromList(object, R_PreciousList);
+}
+#else
+void R_PreserveObject(SEXP object)
+{
+    R_CHECK_THREAD;
+    R_PreciousList = CONS(object, R_PreciousList);
+}
+
 void R_ReleaseObject(SEXP object)
 {
     R_CHECK_THREAD;
     R_PreciousList =  DeleteFromList(object, R_PreciousList);
 }
+#endif
+
 
 /* This code is similar to R_PreserveObject/R_ReleasObject, but objects are
    kept in a provided multi-set (which needs to be itself protected).
