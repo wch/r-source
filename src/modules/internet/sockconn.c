@@ -110,7 +110,7 @@ static Rboolean sock_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     set_iconv(con); /* OK for output, at least */
-    con->data->save = -1000; //FIXME: SHOULD THIS BE PUBLIC?
+    con->data->save = -1000;
     return TRUE;
 }
 
@@ -203,8 +203,6 @@ Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
 {
     Rconnection new;
 
-    //FIXME: USE CONSTRUCTOR
-    
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of socket connection failed"));
     new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
@@ -251,8 +249,6 @@ Rconnection in_R_newservsock(int port)
 {
     Rconnection new;
 
-    //FIXME: USE CONSTRUCTOR
-    
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of server socket connection failed"));
     new->data = (struct RconnData *) malloc(sizeof(struct RconnData));

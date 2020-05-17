@@ -896,7 +896,7 @@ static Rboolean Curl_open(Rconnection con)
     mlen = (int) strlen(con->mode);
     if (mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
-    con->data->save = -1000; //FIXME: IS THIS REALLY PRIVATE?
+    con->data->save = -1000;
     set_iconv(con);
     return TRUE;
 }
@@ -916,66 +916,48 @@ in_newCurlUrl(const char *description, const char * const mode,
 	      SEXP headers, int type)
 {
 #ifdef HAVE_LIBCURL
-    //FIXME: USE CONSTRUCTOR
-    Rconnection new = (Rconnection) malloc(sizeof(struct Rconn));
-    if (!new) error(_("allocation of url connection failed"));
-    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
-    if (!new->data) {
-	free(new);
+
+    RCurlconn ctxt = (RCurlconn)  malloc(sizeof(struct Curlconn));
+    ctxt->bufsize = 16 * CURL_MAX_WRITE_SIZE;
+    ctxt->buf = (char *) malloc(ctxt->bufsize);
+    if (!ctxt->buf) {
+	free(ctxt);
 	error(_("allocation of url connection failed"));
     }
-    new->data->class = (char *) malloc(strlen("url-libcurl") + 1);
-    if (!new->data->class) {
-	free(new->data); free(new);
-	error(_("allocation of url connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
+    ctxt->headers = NULL;
+    for (int i = 0; i < LENGTH(headers); i++) {
+	struct curl_slist *tmp =
+	    curl_slist_append(ctxt->headers, CHAR(STRING_ELT(headers, i)));
+	if (tmp) {
+	    ctxt->headers = tmp;
+	}
+	else {
+	    curl_slist_free_all(ctxt->headers);
+	    free(ctxt->buf); free(ctxt);
+	    error(_("allocation of url connection failed"));
+	}
+
     }
-    strcpy(new->data->class, "url-libcurl");
-    new->data->description = (char *) malloc(strlen(description) + 1);
-    if (!new->data->description) {
-	free(new->data->class); free(new->data); free(new);
+
+    Rconnection new = new_connection(description, CE_NATIVE, mode,
+				     "url-libcurl");
+    if (!new) {
+	curl_slist_free_all(ctxt->headers);
+	free(ctxt->buf); free(ctxt);
 	error(_("allocation of url connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
     }
-    init_con(new, description, CE_NATIVE, mode);
+    
     new->canwrite = FALSE;
+
     new->open = &Curl_open;
     new->close = &Curl_close;
     new->destroy = &Curl_destroy;
     new->fgetc_internal = &Curl_fgetc_internal;
     new->fgetc = &dummy_fgetc;
     new->read = &Curl_read;
-    new->private = (void *) malloc(sizeof(struct Curlconn));
-    if (!new->private) {
-	free(new->data->description); free(new->data->class); free(new->data);
-	free(new);
-	error(_("allocation of url connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
-    }
-    RCurlconn ctxt = (RCurlconn) new->private;
-    ctxt->bufsize = 16 * CURL_MAX_WRITE_SIZE;
-    ctxt->buf = malloc(ctxt->bufsize);
-    if (!ctxt->buf) {
-	//FIXME: ALLOCATE PRIVATE FIRST
-	free(new->data->description); free(new->data->class); free(new->data);
-	free(new->private); free(new);
-	error(_("allocation of url connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
-    }
-    ctxt->headers = NULL;
-    for (int i = 0; i < LENGTH(headers); i++) {
-	struct curl_slist *tmp =
-	    curl_slist_append(ctxt->headers, CHAR(STRING_ELT(headers, i)));
-	if (!tmp) {
-	    //FIXME ALLOCATE PRIVATE FIRST
-	    free(new->data->description); free(new->data->class);
-	    free(new->data); free(new->private);
-	    free(new); curl_slist_free_all(ctxt->headers);
-	    error(_("allocation of url connection failed"));
-	    /* for Solaris 12.5 */ new = NULL;
-	}
-	ctxt->headers = tmp;
-    }
+
+    new->private = (void *) ctxt;
+
     return new;
 #else
     error(_("url(method = \"libcurl\") is not supported on this platform"));

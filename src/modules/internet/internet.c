@@ -351,28 +351,29 @@ static size_t url_read2(void *ptr, size_t size, size_t nitems,
 static Rconnection
 in_R_newurl(const char *description, const char * const mode, SEXP headers, int type)
 {
-    //FIXME: USE CONSTRUCTOR!!!!
+    Rurlconn private;
     Rconnection new;
-    new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error(_("allocation of url connection failed"));
-    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
-    if(!new->data) {
-	free(new);
+
+    private = (Rurlconn) malloc(sizeof(struct urlconn));
+    if(!private) {
 	error(_("allocation of url connection failed"));
     }
-    new->data->class = (char *) malloc(strlen("url-wininet") + 1);
-    if(!new->data->class) {
-	free(new->data); free(new);
-	error(_("allocation of url connection failed"));
-        /* for Solaris 12.5 */ new = NULL;
+    private->headers = NULL;
+    if(!isNull(headers)) {
+	private->headers = strdup(CHAR(STRING_ELT(headers, 0)));
+	if(!private->headers) {
+	    free(private);
+	    error(_("allocation of url connection failed"));
+	}
     }
-    new->data->description = (char *) malloc(strlen(description) + 1);
-    if(!new->data->description) {
-	free(new->data->class); free(new->data); free(new);
+
+    new = new_connection(description, CE_NATIVE, mode, "url-wininet");
+    if(!new) {
+	free(private->headers); free(private); private = NULL;
 	error(_("allocation of url connection failed"));
-        /* for Solaris 12.5 */ new = NULL;
     }
-    init_con(new, description, CE_NATIVE, mode);
+    new->private = (void *) private;
+
     new->canwrite = FALSE;
 #ifdef Win32
     if (type) {
@@ -391,24 +392,6 @@ in_R_newurl(const char *description, const char * const mode, SEXP headers, int 
 	strcpy(new->data->class, "url");
     }
     new->fgetc = &dummy_fgetc;
-    struct urlconn *uc = new->private = (void *) malloc(sizeof(struct urlconn));
-    if(!new->private) {
-	free(new->data->description); free(new->data->class); free(new->data);
-	free(new);
-	error(_("allocation of url connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
-    }
-    uc->headers = NULL;
-    if(!isNull(headers)) {
-	uc->headers = strdup(CHAR(STRING_ELT(headers, 0)));
-	if(!uc->headers) {
-	    //FIXME: ALLOCATE PRIVATE FIRST
-	    free(new->data->description); free(new->data->class);
-	    free(new->data); free(new->private); free(new);
-	    error(_("allocation of url connection failed"));
-	    /* for Solaris 12.5 */ new = NULL;
-	}
-    }
 
     IDquiet = TRUE;
     return new;

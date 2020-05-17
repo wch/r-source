@@ -493,32 +493,22 @@ static int null_fflush(Rconnection con)
 Rconnection attribute_hidden
 R_newunz(const char *description, const char *const mode)
 {
-    //FIXME: REPLACE WITH CONSTRUCTOR
-    
+    Runzconn private;
     Rconnection new;
-    new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error(_("allocation of 'unz' connection failed"));
-    new->data = (struct RconnData *) malloc(sizeof(struct RconnData));
-    if(!new->data) {
-	free(new);
+
+    private = (Runzconn) malloc(sizeof(struct unzconn));
+    if(!private) {
 	error(_("allocation of 'unz' connection failed"));
     }
-    new->data->class = (char *) malloc(strlen("unz") + 1);
-    if(!new->data->class) {
-	free(new->data); free(new);
+
+    new = new_connection(description, CE_NATIVE, mode, "unz");
+    if(!new) {
+	free(private);
 	error(_("allocation of 'unz' connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
     }
-    strcpy(new->data->class, "unz");
-    new->data->description = (char *) malloc(strlen(description) + 1);
-    if(!new->data->description) {
-	free(new->data->class); free(new->data); free(new);
-	error(_("allocation of 'unz' connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
-    }
-    init_con(new, description, CE_NATIVE, mode);
 
     new->canseek = TRUE;
+
     new->open = &unz_open;
     new->close = &unz_close;
     new->vfprintf = &null_vfprintf;
@@ -528,13 +518,9 @@ R_newunz(const char *description, const char *const mode)
     new->fflush = &null_fflush;
     new->read = &unz_read;
     new->write = &null_write;
-    new->private = (void *) malloc(sizeof(struct unzconn));
-    if(!new->private) {
-	free(new->data->description); free(new->data->class); free(new->data);
-	free(new);
-	error(_("allocation of 'unz' connection failed"));
-	/* for Solaris 12.5 */ new = NULL;
-    }
+
+    new->private = (void *) private;
+
     return new;
 }
 

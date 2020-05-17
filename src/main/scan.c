@@ -127,19 +127,20 @@ static int ConsoleGetchar(void)
 /* used by scan() */
 static int ConsoleGetcharWithPushBack(Rconnection con)
 {
-    //FIXME SHOULD TAKE RCONDATA ARGUMENT
     char *curLine;
     int c;
+    RconnectionData cond;
 
-    if(con->data->nPushBack > 0) {
-	curLine = con->data->PushBack[con->data->nPushBack-1];
-	c = curLine[con->data->posPushBack++];
-	if(con->data->posPushBack >= strlen(curLine)) {
+    cond = con->data;
+    if(cond->nPushBack > 0) {
+	curLine = cond->PushBack[cond->nPushBack-1];
+	c = curLine[cond->posPushBack++];
+	if(cond->posPushBack >= strlen(curLine)) {
 	    /* last character on a line, so pop the line */
 	    free(curLine);
-	    con->data->nPushBack--;
-	    con->data->posPushBack = 0;
-	    if(con->data->nPushBack == 0) free(con->data->PushBack);
+	    cond->nPushBack--;
+	    cond->posPushBack = 0;
+	    if(cond->nPushBack == 0) free(cond->PushBack);
 	}
 	return c;
     } else

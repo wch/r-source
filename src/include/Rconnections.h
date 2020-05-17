@@ -65,9 +65,7 @@ typedef struct clpconn {
 #define init_con	Rf_init_con
 #define con_pushback	Rf_con_pushback
 
-typedef struct RconnData  *RconnectionData;
-
-struct RconnData {
+typedef struct RconnData {
     char* class;
     char* description;
     int enc; /* the encoding of 'description' */
@@ -87,7 +85,7 @@ struct RconnData {
     int status; /* for pipes etc */
     unsigned char *buff;
     size_t buff_len, buff_stored_len, buff_pos;
-};
+} *RconnectionData;
     
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
@@ -113,6 +111,9 @@ void con_pushback(Rconnection con, Rboolean newLine, char *line);
 
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write, double timeout);
 
+Rconnection new_connection(const char *description, int enc, const char *mode,
+			   const char *class);
+    
 #define set_iconv Rf_set_iconv
 void set_iconv(Rconnection con);
 #endif

@@ -40,8 +40,6 @@
 #include <errno.h>
 #include <Print.h>
 
-//FIXME: PRIVATE HEADER
-
 #include <rlocale.h> /* for btowc */
 
 #undef _
@@ -140,8 +138,6 @@ static int ConsoleGetcharWithPushBack(Rconnection con)
     char *curLine;
     int c;
 
-    //FIXME: We're in trouble here. Packages should only be able to
-    //use the API, but here we're using private data. 
     if(con->data->nPushBack > 0) {
 	curLine = con->data->PushBack[con->data->nPushBack-1];
 	c = curLine[con->data->posPushBack++];
