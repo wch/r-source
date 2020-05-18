@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-04-28 r78320) -- "Arbor Day"
+R version 4.0.0 Patched (2020-05-18 r78485) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -328,7 +328,7 @@ Coefficients:
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.039 0.011 1.056 0 0 
+Time elapsed:  0.989 0.008 1.004 0 0 
 > grDevices::dev.off()
 null device 
           1 
