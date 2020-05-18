@@ -1,7 +1,7 @@
 #  File src/library/base/R/library.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -626,8 +626,9 @@ function(chname, package, lib.loc, verbose = getOption("verbose"),
     }
     if(verbose)
         message(gettextf("now dyn.load(\"%s\") ...", file), domain = NA)
-    dll <- if("DLLpath" %in% names(list(...))) dyn.load(file, ...)
-    else dyn.load(file, DLLpath = DLLpath, ...)
+    dll <- if("DLLpath" %in% ...names())
+                dyn.load(file, ...)
+           else dyn.load(file, DLLpath = DLLpath, ...)
     .dynLibs(c(dll_list, list(dll)))
     invisible(dll)
 }

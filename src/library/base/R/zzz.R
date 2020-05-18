@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ is.name <- is.symbol
     utilsGenerics <- c("edit", "str")
 
     graphicsGenerics <- c("contour", "hist", "identify", "image",
-        ## "plot", 
+        ## "plot",
         "lines", "pairs", "points", "text")
 
     statsGenerics <- c("add1", "AIC", "anova", "biplot", "coef",
@@ -58,6 +58,7 @@ is.name <- is.symbol
 
 assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
 assign("...length", function() NULL, envir = .ArgsEnv)
+assign("...names",  function() NULL, envir = .ArgsEnv)
 assign("...elt", function(n) NULL, envir = .ArgsEnv)
 assign(".C", function(.NAME, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
                       ENCODING) NULL,

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-04-28 r78322) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-05-18 r78480) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -122,8 +122,8 @@ List of 2
 +     "\n\t starting with 'is.' :\t  ",
 +     sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 
-Number of all base objects:	1357
-Number of functions from these:	1314
+Number of all base objects:	1359
+Number of functions from these:	1316
 	 starting with 'is.' :	  50
 
 > ## R ver.| #{is*()}

@@ -38,6 +38,9 @@
 
       \item The \code{format()} method for \code{"ftable"}s gets an option
       \code{justify}; suggested by Thomas Soeiro.
+
+      \item New \code{...names()} utility, complementing others, proposed
+      by Neal Fultz in \PR{17705}.
     }
   }
 
