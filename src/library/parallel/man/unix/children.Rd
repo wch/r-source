@@ -23,7 +23,7 @@ readChild(child)
 readChildren(timeout = 0)
 selectChildren(children = NULL, timeout = 0)
 sendChildStdin(child, what)
-sendMaster(what)
+sendMaster(what, raw.asis = TRUE)
 
 mckill(process, signal = 2L)
 }
@@ -47,6 +47,11 @@ mckill(process, signal = 2L)
     Data to send to the master process.  If \code{what} is not
     a raw vector, it will be serialized into a raw vector.  Do NOT
     send an empty raw vector -- that is reserved for internal use.}
+  \item{raw.asis}{logical, if \code{TRUE} and \code{what} is a raw
+    vector then it is sent directly as-is to the master (default,
+    suitable for arbitrary payload passing), otherwise raw vectors
+    are serialized before sending just as any other objects
+    (suitable for passing evaluation results).}
   \item{process}{process (object of the class \code{process}) or a
     process ID (pid)}
   \item{signal}{integer: signal to send.  Values of 2 (SIGINT), 9
