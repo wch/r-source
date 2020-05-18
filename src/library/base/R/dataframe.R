@@ -212,6 +212,7 @@ as.data.frame.data.frame <- function(x, row.names = NULL, ...)
 as.data.frame.list <-
     function(x, row.names = NULL, optional = FALSE, ...,
 	     cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
+             check.names = !optional,
              stringsAsFactors = FALSE)
 {
     ## need to protect names in x.
@@ -228,9 +229,8 @@ as.data.frame.list <-
 	       col.names, 0L)
     if(any.m <- any(m)) col.names[m] <- paste0("..adfl.", col.names[m])
     if(new.nms || any.m || cut.names) names(x) <- col.names
-    if(is.null(check.n <- list(...)$check.names)) check.n <- !optional
     ## data.frame() is picky with its 'row.names':
-    alis <- c(list(check.names = check.n, fix.empty.names = fix.empty.names,
+    alis <- c(list(check.names = check.names, fix.empty.names = fix.empty.names,
 		   stringsAsFactors = stringsAsFactors),
 	      if(!is.null(row.names)) list(row.names = row.names))
     x <- do.call(data.frame, c(x, alis))
@@ -298,7 +298,7 @@ as.data.frame.character <-
 {
     nm <- deparse1(substitute(x))
     if(stringsAsFactors) x <- factor(x)
-    if(!"nm" %in% names(list(...)))
+    if(!"nm" %in% ...names())
         as.data.frame.vector(x, ..., nm = nm)
     else as.data.frame.vector(x, ...)
 }
