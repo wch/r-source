@@ -76,17 +76,6 @@ HersheyLabel("rect is half width and filled grey
 mask is full rect with circle mask
 result is half width rect with rounded top and bottom", y=.1)
 
-## Clipping path with a mask
-clip <- gTree(children=gList(rectGrob(gp=gpar(fill="black"))),
-              vp=viewport(mask=circleGrob(r=.4, gp=gpar(fill="black"))))
-grid.newpage()
-pushViewport(viewport(clip=clip))
-grid.rect(width=.5, gp=gpar(fill="grey"))
-popViewport()
-HersheyLabel("rect is half width and filled grey
-clipping path is full rect with circle mask
-result is half width rect with rounded top and bottom", y=.1)
-
 ## A mask from two grobs, with ONE grob making use of a clipping path 
 grid.newpage()
 mask <- gTree(children=gList(rectGrob(x=.25, width=.3, height=.8,
@@ -97,17 +86,41 @@ mask <- gTree(children=gList(rectGrob(x=.25, width=.3, height=.8,
 pushViewport(viewport(mask=mask))
 grid.rect(gp=gpar(fill="grey"))
 popViewport()
-HersheyLabel("mask is two grobs, ONE with its own clip path
-(second clip path is circle)
-push clipping path
+HersheyLabel("mask is two grobs, ONE with its own (circle) clip path
+push mask
 rect
 result is one slice of circle and one rectangle")
+
+## A mask that is equivalent to ...
+## A clipping path that itself makes use of a clipping path !?
+grid.newpage()
+mask <- rectGrob(gp=gpar(fill="black"),
+                 vp=viewport(width=.5, height=.5, clip=circleGrob()))
+pushViewport(viewport(mask=mask))
+grid.rect(gp=gpar(fill="grey"))
+HersheyLabel("mask includes clip path
+(clip path is circle)
+push mask
+rect
+small grey circle")
+
+## A mask that is equivalent to ...
+## A clipping path that itself makes use of a rectangular clipping !?
+grid.newpage()
+mask <- circleGrob(r=.6,
+                   gp=gpar(fill="black"),
+                   vp=viewport(width=.5, height=.5, clip=TRUE))
+pushViewport(viewport(mask=mask))
+grid.rect(gp=gpar(fill="grey"))
+HersheyLabel("mask includes clip rect
+(mask is squared circle)
+push mask
+rect
+grey squared circle")
 
 
 ################################################################################
 ## Need to test ...
-
-##   clip with mask
 
 ##   inheriting mask
 ##   pushing and popping masks

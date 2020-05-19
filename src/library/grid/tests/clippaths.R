@@ -153,30 +153,6 @@ squared circle
 upViewport
 grey (translucent) blue circle")
 
-## A clipping path that itself makes use of a clipping path !?
-grid.newpage()
-clipPath <- rectGrob(vp=viewport(width=.5, height=.5, clip=circleGrob()))
-pushViewport(viewport(clip=clipPath))
-grid.rect(gp=gpar(fill="grey"))
-HersheyLabel("clip path includes clip path
-(clip path is circle)
-push clipping path
-rect
-small grey circle")
-
-## A clipping path that itself makes use of a rectangular clipping !?
-grid.newpage()
-clipPath <- circleGrob(r=.6,
-                       gp=gpar(fill="grey"),
-                       vp=viewport(width=.5, height=.5, clip=TRUE))
-pushViewport(viewport(clip=clipPath))
-grid.rect(gp=gpar(fill="grey"))
-HersheyLabel("clip path includes clip rect
-(clip path is squared circle)
-push clipping path
-rect
-squared circle")
-
 ## Clipping path makes the clipping region BIGGER
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5, clip=TRUE))
@@ -269,25 +245,11 @@ runs out after 20"))
     }
 }
 
-
-## A clipping path from two grobs, with ONE grob making use of a clipping path 
-grid.newpage()
-clipPath <- gTree(children=gList(rectGrob(x=.25, width=.3, height=.8,
-                                          vp=viewport(clip=circleGrob(r=.4))),
-                                 rectGrob(x=.75, width=.3, height=.8)))
-pushViewport(viewport(clip=clipPath))
-grid.rect(gp=gpar(fill="grey"))
-HersheyLabel("clip path is two grobs, ONE with its own clip path
-(second clip path is circle)
-push clipping path
-rect
-two slices of circle
-(SVG says right slice should be rect)")
-
-
 ######################
 ## NOT YET WORKING
 
+## Checks for (ILLEGAL) nested clipping
+## Warn on ILLEGAL mask within clip path
 
 ## Clipping path from text (Pango)
 
