@@ -15,16 +15,6 @@ isClipPath <- function(x) {
 
 ## "resolve" clipping paths
 resolveClipPath <- function(path) {
-    UseMethod("resolveClipPath")
-}
-
-## A "placeholder" clipping path that is used during
-## resolution of a clipping path to handle nested clipping paths
-resolveClipPath.GridResolvingClipPath <- function(path) {
-    ## Do nothing
-}
-
-resolveClipPath.GridClipPath <- function(path) {
     ref <- grDevices::setClipPath(path$f, path$ref)
     resolvedClipPath(path, ref)
 }
