@@ -1763,9 +1763,8 @@ static void src2buff1(SEXP srcref, LocalParseData *d)
     PROTECT(srcref = eval(srcref, R_BaseEnv));
     n = length(srcref);
     for(i = 0 ; i < n ; i++) {
-	/* use EncodeChar also to produce embedded UTF-8 for character
-	   literals (with Rgui) */
-	print2buff(EncodeChar(STRING_ELT(srcref, i)), d);
+	/* FIXME: does not embed UTF-8 for RGui */
+	print2buff(translateChar(STRING_ELT(srcref, i)), d);
 	if(i < n-1) writeline(d);
     }
     UNPROTECT(3);
