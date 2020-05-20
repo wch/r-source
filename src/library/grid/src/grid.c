@@ -350,6 +350,7 @@ SEXP doSetViewport(SEXP vp,
         REAL(currentClip)[2] = xx2;
         REAL(currentClip)[3] = yy2;
         SET_VECTOR_ELT(vp, PVP_CLIPRECT, currentClip);
+        UNPROTECT(1);
     }
     /*
      * Establish the mask for this viewport
@@ -389,7 +390,7 @@ SEXP doSetViewport(SEXP vp,
     PROTECT(heightCM = allocVector(REALSXP, 1));
     REAL(heightCM)[0] = devHeightCM;
     SET_VECTOR_ELT(vp, PVP_DEVHEIGHTCM, heightCM);
-    UNPROTECT(3);
+    UNPROTECT(2);
     return vp;
 }
 
