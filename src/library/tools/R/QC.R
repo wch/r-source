@@ -3123,8 +3123,11 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 
         ## (4.1.0) This needs to be recursive, since a package
         ## strictly depends on everything required to load it.
-        ## All of those should be installed, so we only look at those which are
-        dependencies <- tools:::.expand_dependency_type_spec("strong")
+        ## All of those should be installed, so we only look at those which are.
+        ## We include LinkingTo as if a dependency links to an
+        ## orphaned package, it becomes uninstallable if the linked-to
+        ## package is, or if it is removed.
+        dependencies <- .expand_dependency_type_spec("strong")
         av <- utils::installed.packages()[, dependencies, drop = FALSE]
         rn <- row.names(av)
         new <- strict

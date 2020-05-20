@@ -4346,7 +4346,10 @@ and from @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}.)
 Default: false (but true for CRAN submission checks except on Windows).
 
 @item _R_CHECK_ORPHANED_
-Check if dependencies are orphaned packages.
+Check if dependencies are orphaned packages.  As from @R{} 4.1.0 this
+checks strict dependencies recursively, so will report any orphaned
+packages which are needed to attach the package by @code{library()} as
+well as any orphaned packages which are suggested.
 Default: false (but true for CRAN submission checks)
 
 @item _R_CHECK_EXCESSIVE_IMPORTS_
