@@ -3115,12 +3115,29 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 
     ## (added in 4.0.0) Check for orphaned packages.
     if (config_val_to_logical(Sys.getenv("_R_CHECK_ORPHANED_", "FALSE"))) {
-        exceptions <- c()
         ## empty fields are list().
         strict <- setdiff(unique(c(as.character(depends),
                                    as.character(imports),
                                    as.character(links))),
-                          c(exceptions, bad_depends$required_but_not_installed))
+                           bad_depends$required_but_not_installed)
+
+        ## (4.1.0) This needs to be recursive, since a package
+        ## strictly depends on everything required to load it.
+        ## All of those should be installed, so we only look at those which are
+        dependencies <- tools:::.expand_dependency_type_spec("strong")
+        av <- utils::installed.packages()[, dependencies, drop = FALSE]
+        rn <- row.names(av)
+        new <- strict
+        ex <- "bit" # since an update is promised.
+        repeat {
+            new <- intersect(new, rn) # avoid NAs in the next line
+            need <- unname(unlist(apply(av[new, , drop = FALSE], 1L,
+                                        utils:::.clean_up_dependencies)))
+            new <- setdiff(need, c(strict, ex))
+            if(!length(new)) break
+            strict <- union(strict, new)
+        }
+
         ## First use dependencies which are installed: strict dependencies
         ## need to be for a full check.
         ## Suggests might not even exist, so we suppress warnings.
@@ -3128,7 +3145,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         strict2 <- sapply(strict, function(x) suppressWarnings(mt(x)))
         miss1 <- is.na(strict2)
         weak <- setdiff(as.character(suggests),
-                        c(exceptions, bad_depends$suggested_but_not_installed))
+                        bad_depends$suggested_but_not_installed)
         weak2 <- sapply(weak, function(x) suppressWarnings(mt(x)))
         miss2 <- is.na(weak2)
         if (any(miss1) || any(miss2)) {
@@ -3520,7 +3537,7 @@ function(x, ...)
                      collapse = "\n\n", recycle0 = TRUE))
     invisible(x)
 }
-   
+
 
 ### * .check_package_description2
 
