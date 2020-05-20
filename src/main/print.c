@@ -408,7 +408,30 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	PROTECT(t = allocArray(STRSXP, dims));
 	/* FIXME: check (ns <= data->max +1) ? ns : data->max; */
 	for (i = 0; i < ns; i++) {
-	    switch(TYPEOF(PROTECT(tmp = VECTOR_ELT(s, i)))) {
+	    PROTECT(tmp = VECTOR_ELT(s, i));
+	    if(isObject(tmp)) {
+		const char *str;
+		Rboolean use_fmt = FALSE;
+		SEXP fun = PROTECT(findFun(install("format"),
+					   R_BaseNamespace));
+		SEXP call = PROTECT(lang2(fun, tmp));
+		SEXP ans = PROTECT(eval(call, data->env));
+		if(TYPEOF(ans) == STRSXP && LENGTH(ans) == 1) {
+		    str = translateChar(STRING_ELT(ans, 0));
+		    if(strlen(str) < 100)
+			use_fmt = TRUE;
+		}
+		if(use_fmt)
+		    snprintf(pbuf, 115, "%s", str);
+		else {
+		    SEXP cls = PROTECT(R_data_class2(tmp));
+		    snprintf(pbuf, 115, "%s,%d",
+			     translateChar(STRING_ELT(cls, 0)),
+			     length(tmp));
+		    UNPROTECT(1);
+		}
+		UNPROTECT(3);
+	    } else switch(TYPEOF(tmp)) {
 	    case NILSXP:
 		snprintf(pbuf, 115, "NULL");
 		break;
