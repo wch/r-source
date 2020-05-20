@@ -1,0 +1,38 @@
+Modified files
+
+src/include/R_ext/Connections.h
+src/include/Rconnections.h
+src/library/utils/src/io.c
+src/main/connections.c
+src/main/dounzip.c
+src/main/scan.c
+src/modules/internet/internet.c
+src/modules/internet/libcurl.c
+src/modules/internet/sockconn.c
+
+Changes
+
+* Created a new struct RConnData which is defined in
+src/include/Rconnections.h. Shifted most of the data fields in the
+Rconn struct to this.
+
+* Added extractor functions R_connectionDescription and
+R_connectionClass to give read-only access description and class
+strings.
+
+* Created a constructor new_connection for private use to simplify
+memory allocation and release. This is now used by all of the internal
+constructors with the exception of socket connections in
+src/modules/internet/sockconn.c.  These connections modify their
+description string and allocate a longer character array to hold the
+modified name.
+
+Testing
+
+Tested on Linux with the following packages
+
+archive  https://github.com/jimhester/archive
+curl     https://cran.r-project.org/package=curl
+
+Needs testing on Windows and Solaris.
+
