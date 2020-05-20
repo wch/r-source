@@ -34,5 +34,11 @@ Tested on Linux with the following packages
 archive  https://github.com/jimhester/archive
 curl     https://cran.r-project.org/package=curl
 
+Both have checks on the connections API number which need to be modified
+as I have bumped R_CONNECTIONS_VERSION to 2. The test suite for archive
+also need updating for stringsAsFactors=FALSE.
+
+The iotools makes no assumptions about the RConn struct as far as I can see.
+
 Needs testing on Windows and Solaris.
 
