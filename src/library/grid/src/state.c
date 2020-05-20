@@ -99,13 +99,10 @@ void initOtherState(pGEDevDesc dd)
     /* Clear all device patterns */
     dd->dev->releasePattern(-1, dd->dev);
     /* Clear all clip paths */
-    {
-        setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
-        SEXP ref = PROTECT(allocVector(INTSXP, 1));
-        INTEGER(ref)[0] = -1;
-        dd->dev->releaseClipPath(ref, dd->dev);
-        UNPROTECT(1);
-    }
+    setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    dd->dev->releaseClipPath(R_NilValue, dd->dev);
+    /* Clear all masks */
+    dd->dev->releaseMask(R_NilValue, dd->dev);
 }
 
 void fillGridSystemState(SEXP state, pGEDevDesc dd) 

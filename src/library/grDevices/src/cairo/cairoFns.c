@@ -1627,15 +1627,13 @@ static SEXP Cairo_SetClipPath(SEXP path, SEXP ref, pDevDesc dd)
 static void Cairo_ReleaseClipPath(SEXP ref, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    /* Negative index means release all patterns */
-    if (LENGTH(ref)) {
-        if (INTEGER(ref)[0] < 0) {
-            CairoCleanClipPaths(xd);
-        } else {
-            int i;
-            for (i = 0; i < LENGTH(ref); i++) {
-                CairoReleaseClipPath(INTEGER(ref)[i], xd);
-            }
+    /* NULL means release all patterns */
+    if (isNull(ref)) {
+        CairoCleanClipPaths(xd);
+    } else {
+        int i;
+        for (i = 0; i < LENGTH(ref); i++) {
+            CairoReleaseClipPath(INTEGER(ref)[i], xd);
         }
     }
 }
@@ -1649,15 +1647,13 @@ static SEXP Cairo_SetMask(SEXP mask, SEXP ref, pDevDesc dd)
 static void Cairo_ReleaseMask(SEXP ref, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    /* Negative index means release all patterns */
-    if (LENGTH(ref)) {
-        if (INTEGER(ref)[0] < 0) {
-            CairoCleanMasks(xd);
-        } else {
-            int i;
-            for (i = 0; i < LENGTH(ref); i++) {
-                CairoReleaseMask(INTEGER(ref)[i], xd);
-            }
+    /* NULL means release all patterns */
+    if (isNull(ref)) {
+        CairoCleanMasks(xd);
+    } else {
+        int i;
+        for (i = 0; i < LENGTH(ref); i++) {
+            CairoReleaseMask(INTEGER(ref)[i], xd);
         }
     }
 }
