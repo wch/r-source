@@ -96,9 +96,16 @@ void initOtherState(pGEDevDesc dd)
     recording = VECTOR_ELT(state, GSS_ENGINERECORDING);
     LOGICAL(recording)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
-    resolving = VECTOR_ELT(state, GSS_RESOLVINGCLIP);
-    LOGICAL(resolving)[0] = FALSE;
-    SET_VECTOR_ELT(state, GSS_RESOLVINGCLIP, resolving);
+    /* Clear all device patterns */
+    dd->dev->releasePattern(-1, dd->dev);
+    /* Clear all clip paths */
+    {
+        setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+        SEXP ref = PROTECT(allocVector(INTSXP, 1));
+        INTEGER(ref)[0] = -1;
+        dd->dev->releaseClipPath(ref, dd->dev);
+        UNPROTECT(1);
+    }
 }
 
 void fillGridSystemState(SEXP state, pGEDevDesc dd) 
