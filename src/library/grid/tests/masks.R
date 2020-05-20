@@ -118,15 +118,121 @@ push mask
 rect
 grey squared circle")
 
+## Inheriting masks (between viewports)
+grid.newpage()
+pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
+pushViewport(viewport())
+grid.rect(gp=gpar(fill="grey"))
+HersheyLabel("push mask
+push again (inherit mask)
+rect
+grey circle")
+
+## Restoring masks (between viewports)
+grid.newpage()
+pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
+pushViewport(viewport())
+pushViewport(viewport())
+upViewport()
+grid.rect(gp=gpar(fill="grey"))
+HersheyLabel("push mask
+push again (inherit mask)
+push again (inherit mask)
+up (restore inherited mask)
+rect
+grey circle")
+
+## Revisiting mask on a viewport
+## upViewport()
+grid.newpage()
+pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
+grid.rect(gp=gpar(fill="grey"))
+upViewport()
+grid.rect(gp=gpar(fill=rgb(0,0,1,.2)))
+HersheyLabel("push mask
+grey circle
+upViewport
+page all (translucent) blue")
+
+## downViewport()
+grid.newpage()
+pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black")), name="vp"))
+grid.rect(height=.5, gp=gpar(fill="grey"))
+upViewport()
+downViewport("vp")
+grid.rect(gp=gpar(fill=rgb(0,0,1,.2)))
+HersheyLabel("push clipping path
+rounded rect
+upViewport
+downViewport
+blue (translucent) circle")
+
+######################################
+## Replaying the graphics display list
+
+## Resizing device
+grid.newpage()
+pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
+grid.rect(gp=gpar(fill="grey"))
+HersheyLabel("push mask
+rect
+grey circle
+(for resizing)")
+
+## Record and replay
+grid.newpage()
+pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
+grid.rect(gp=gpar(fill="grey"))
+x <- recordPlot()
+HersheyLabel("push mask
+rect
+grey circle
+(for recording)")
+print(x)
+HersheyLabel("push mask
+rect
+record plot
+replay plot
+grey circle")
+
+######################################
+## Test of 'grid' display list
+
+## Grabbing a grob with mask
+## (replaying the 'grid' display list)
+grid.newpage()
+pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black"))))
+grid.rect(gp=gpar(fill="grey"))
+x <- grid.grab()
+HersheyLabel("push mask
+rect
+grey circle
+(for grid.grab)")
+grid.newpage()
+grid.draw(x)
+HersheyLabel("push mask
+rect
+grey circle
+grid.grab
+grid.draw
+grey circle")
+
+######################
+## Check resource exhaustion
+options(warn=2)
+grid.newpage()
+for (i in 1:21) {
+    result <-
+        try(pushViewport(viewport(mask=circleGrob(gp=gpar(fill="black")))))
+    if (!inherits(result, "try-error")) {
+        grid.rect(gp=gpar(fill="grey"))
+        HersheyLabel(paste0("viewport ", i, " with clip path
+runs out after 20"))
+    }
+}
+options(warn=0)
+
 
 ################################################################################
 ## Need to test ...
 
-##   inheriting mask
-##   pushing and popping masks
-##   pushing and popping no masks
-
-##   display list replays
-##   display resizes
-##   grid.grab()
-##   recordPlot()/replayPlot()
