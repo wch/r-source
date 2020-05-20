@@ -244,6 +244,68 @@ for (i in 1:21) {
 runs out after 20"))
     }
 }
+options(warn=0)
+
+######################
+## Check for outlawed behaviour
+## (clipping and masks are turned off during clipping path resolution)
+
+grid.newpage()
+path <- circleGrob(r=.6,
+                   vp=viewport(width=.5, height=.5, clip=TRUE))
+pushViewport(viewport(clip=path))
+grid.rect(gp=gpar(fill="grey"))
+popViewport()
+HersheyLabel("clipping path is circle with viewport with clip=TRUE
+AND circle is larger than viewport
+BUT viewport clipping is ignored within clipping path
+SO clipping path is just circle
+draw rect
+result is grey circle")
+HersheyLabel(paste(capture.output(warnings()), collapse="\n"), .3)
+
+grid.newpage()
+path <- circleGrob(vp=viewport(clip=rectGrob(width=.8, height=.8)))
+pushViewport(viewport(clip=path))
+grid.rect(gp=gpar(fill="grey"))
+popViewport()
+HersheyLabel("clip path is circle with viewport with clip path
+viewport clip path is rect that squares off the circle
+BUT clip paths are ignored within clipping path (with warning)
+SO clipping path is just circle
+draw rect
+result is grey circle")
+HersheyLabel(paste(capture.output(warnings()), collapse="\n"), .3)
+
+grid.newpage()
+path <- circleGrob(vp=viewport(mask=rectGrob(width=.8, height=.8,
+                                             gp=gpar(fill="black"))))
+pushViewport(viewport(clip=path))
+grid.rect(gp=gpar(fill="grey"))
+popViewport()
+HersheyLabel("clip path is circle with viewport with mask
+viewport mask is rect that squares off the circle
+BUT masks are ignored within clipping path (with warning)
+SO clipping path is just circle
+draw rect
+result is grey circle")
+HersheyLabel(paste(capture.output(warnings()), collapse="\n"), .3)
+
+grid.newpage()
+path <- circleGrob(vp=viewport(mask=rectGrob(width=.8, height=.8,
+                                             gp=gpar(fill="black"))))
+pushViewport(viewport(clip=path, name="test"))
+upViewport()
+downViewport("test")
+grid.rect(gp=gpar(fill="grey"))
+popViewport()
+HersheyLabel("same as previous test
+EXCEPT that push viewport then pop then down
+(and only push should warn)
+draw rect
+result is grey circle")
+if (length(warnings()))
+    HersheyLabel(paste0("Number of warnings: ", length(warnings())), .3)
 
 ######################
 ## NOT YET WORKING

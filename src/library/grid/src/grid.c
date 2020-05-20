@@ -189,7 +189,16 @@ SEXP doSetViewport(SEXP vp,
     /*
      * Establish the clipping region for this viewport
      */
-    if (isClipPath(viewportClipSXP(vp))) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+        /*
+         * Clipping settings are (silently) ignored during resolution of 
+         * a clipping path
+         */
+        if (!isClipPath(viewportClipSXP(vp)) &&
+            (viewportClip(vp) == NA_LOGICAL || viewportClip(vp))) {
+            warning(_("Turning clipping on or off within a clipping path is no honoured"));
+        }
+    } else if (isClipPath(viewportClipSXP(vp))) {
         SEXP currentClip, parentClip;
         /*
          * Set clipping path AFTER doSetViewport() so that this
@@ -345,7 +354,11 @@ SEXP doSetViewport(SEXP vp,
     /*
      * Establish the mask for this viewport
      */
-    if (isMask(viewportMaskSXP(vp))) {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+        /* Masks are (silently) ignored during resolution of a 
+         * clipping path
+         */
+    } else if (isMask(viewportMaskSXP(vp))) {
         /* Resolve AFTER doSetViewport() so that the current viewport
          * is the context for resolving the mask
          */
@@ -428,10 +441,15 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
         SEXP clip, resolvedclip;
         PROTECT(clip = viewportClipSXP(pushedvp));
         if (isClipPath(clip)) {
-            /* Record the resolved clipping path for subsequent up/down/pop */
-            PROTECT(resolvedclip = resolveClipPath(clip, dd));
-            SET_VECTOR_ELT(pushedvp, PVP_CLIPPATH, resolvedclip);
-            UNPROTECT(1);
+            if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+                warning(_("Clipping paths within a clipping path are not honoured"));
+                SET_VECTOR_ELT(pushedvp, PVP_CLIPPATH, R_NilValue);
+            } else {
+                /* Record the resolved clip path for subsequent up/down/pop */
+                PROTECT(resolvedclip = resolveClipPath(clip, dd));
+                SET_VECTOR_ELT(pushedvp, PVP_CLIPPATH, resolvedclip);
+                UNPROTECT(1);
+            }
         }
         UNPROTECT(1);
     }
@@ -442,10 +460,15 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
         SEXP mask, resolvedmask;
         PROTECT(mask = viewportMaskSXP(pushedvp));
         if (isMask(mask)) {
-            /* Record resolved mask for subsequent up/down/pop */
-            PROTECT(resolvedmask = resolveMask(mask, dd));
-            SET_VECTOR_ELT(pushedvp, PVP_MASK, resolvedmask);
-            UNPROTECT(1);
+            if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+                warning(_("Masks within a clipping path are not honoured"));
+                SET_VECTOR_ELT(pushedvp, PVP_MASK, R_NilValue);
+            } else {
+                /* Record resolved mask for subsequent up/down/pop */
+                PROTECT(resolvedmask = resolveMask(mask, dd));
+                SET_VECTOR_ELT(pushedvp, PVP_MASK, resolvedmask);
+                UNPROTECT(1);
+            }
         }
         UNPROTECT(1);
     }
@@ -627,7 +650,7 @@ SEXP L_downviewport(SEXP name, SEXP strict)
             SEXP clip, resolvedclip;
             PROTECT(clip = VECTOR_ELT(vp, PVP_CLIPPATH));
             if (isClipPath(clip)) {
-                /* Record the resolved clipping path for subsequent up/down/pop */
+                /* Record resolved clip path for subsequent up/down/pop */
                 PROTECT(resolvedclip = resolveClipPath(clip, dd));
                 SET_VECTOR_ELT(vp, PVP_CLIPPATH, resolvedclip);
                 UNPROTECT(1);
@@ -803,7 +826,7 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
             SEXP clip, resolvedclip;
             PROTECT(clip = VECTOR_ELT(vp, PVP_CLIPPATH));
             if (isClipPath(clip)) {
-                /* Record the resolved clipping path for subsequent up/down/pop */
+                /* Record resolved clip path for subsequent up/down/pop */
                 PROTECT(resolvedclip = resolveClipPath(clip, dd));
                 SET_VECTOR_ELT(vp, PVP_CLIPPATH, resolvedclip);
                 UNPROTECT(1);
@@ -922,7 +945,11 @@ SEXP L_unsetviewport(SEXP n)
     setGridStateElement(dd, GSS_VP, newvp);
     /* Set the clipping region to the parent's cur.clip
      */
-    {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+        /* Clipping is (silently) ignored during resolution of 
+         * a clipping path
+         */
+    } else {
         PROTECT(parentClip = viewportClipRect(newvp));
         PROTECT(parentClipPath = VECTOR_ELT(newvp, PVP_CLIPPATH));            
         /*
@@ -939,8 +966,14 @@ SEXP L_unsetviewport(SEXP n)
         }
         UNPROTECT(2);
     }
-    /* Set the mask to the parent's mask */
-    resolveMask(VECTOR_ELT(newvp, PVP_MASK), dd);
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+        /* Masks are (silently) ignored during resolution of 
+         * a clipping path
+         */
+    } else {
+        /* Set the mask to the parent's mask */
+        resolveMask(VECTOR_ELT(newvp, PVP_MASK), dd);
+    }
     /* 
      * Remove the parent from the child
      * This is not strictly necessary, but it is conceptually
@@ -1001,7 +1034,11 @@ SEXP L_upviewport(SEXP n)
     setGridStateElement(dd, GSS_VP, newvp);
     /* Set the clipping region to the parent's cur.clip
      */
-    {
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+        /* Clipping is (silently) ignored during resolution of 
+         * a clipping path
+         */
+    } else {
         PROTECT(parentClip = viewportClipRect(newvp));
         PROTECT(parentClipPath = VECTOR_ELT(newvp, PVP_CLIPPATH));            
         /*
@@ -1018,8 +1055,14 @@ SEXP L_upviewport(SEXP n)
         }
         UNPROTECT(2);
     }
-    /* Set the mask to the parent's mask */
-    resolveMask(VECTOR_ELT(newvp, PVP_MASK), dd);
+    if (LOGICAL(gridStateElement(dd, GSS_RESOLVINGCLIP))[0]) {
+        /* Masks are (silently) ignored during resolution of 
+         * a clipping path
+         */
+    } else {
+        /* Set the mask to the parent's mask */
+        resolveMask(VECTOR_ELT(newvp, PVP_MASK), dd);
+    }
     return R_NilValue;
 }
 
@@ -1211,6 +1254,7 @@ SEXP L_newpage()
     dd->dev->releasePattern(-1, dd->dev);
     /* Clear all clip paths */
     {
+        setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
         SEXP ref = PROTECT(allocVector(INTSXP, 1));
         INTEGER(ref)[0] = -1;
         dd->dev->releaseClipPath(ref, dd->dev);
