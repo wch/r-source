@@ -632,32 +632,32 @@ static void printList(SEXP s, R_PrintData *data)
 		break;
 
 	    case LGLSXP:
-		snprintf(pbuf, 100, "Logical,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "logical,%d", LENGTH(CAR(s)));
 		break;
 
 	    case INTSXP:
 	    case REALSXP:
-		snprintf(pbuf, 100, "Numeric,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "numeric,%d", LENGTH(CAR(s)));
 		break;
 
 	    case CPLXSXP:
-		snprintf(pbuf, 100, "Complex,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "complex,%d", LENGTH(CAR(s)));
 		break;
 
 	    case STRSXP:
-		snprintf(pbuf, 100, "Character,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "character,%d", LENGTH(CAR(s)));
 		break;
 
 	    case RAWSXP:
-		snprintf(pbuf, 100, "Raw,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "raw,%d", LENGTH(CAR(s)));
 		break;
 
 	    case LISTSXP:
-		snprintf(pbuf, 100, "List,%d", length(CAR(s)));
+		snprintf(pbuf, 100, "list,%d", length(CAR(s)));
 		break;
 
 	    case LANGSXP:
-		snprintf(pbuf, 100, "Expression");
+		snprintf(pbuf, 100, "expression");
 		break;
 
 	    default:
