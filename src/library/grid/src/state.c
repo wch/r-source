@@ -84,7 +84,7 @@ void initDL(pGEDevDesc dd)
  */
 void initOtherState(pGEDevDesc dd)
 {
-    SEXP currloc, prevloc, recording;
+    SEXP currloc, prevloc, recording, resolving;
     SEXP state = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
     currloc = VECTOR_ELT(state, GSS_CURRLOC);
     REAL(currloc)[0] = NA_REAL;
@@ -96,6 +96,9 @@ void initOtherState(pGEDevDesc dd)
     recording = VECTOR_ELT(state, GSS_ENGINERECORDING);
     LOGICAL(recording)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
+    resolving = VECTOR_ELT(state, GSS_RESOLVINGCLIP);
+    LOGICAL(resolving)[0] = FALSE;
+    SET_VECTOR_ELT(state, GSS_RESOLVINGCLIP, resolving);
 }
 
 void fillGridSystemState(SEXP state, pGEDevDesc dd) 
