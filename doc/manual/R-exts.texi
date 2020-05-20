@@ -4962,7 +4962,7 @@ and suitable options might be
 @end example
 
 @noindent
-See @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
+See @uref{https://www.ghostscript.com/@/doc/@/current/@/VectorDevices.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
