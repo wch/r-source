@@ -44,9 +44,8 @@ unresolveClipPath.GridClipPath <- function(path) {
 }
 
 unresolveClipPath.GridResolvedClipPath <- function(path) {
-    path$ref <- NULL
-    class(path) <-
-        class(path)[!(class(path) %in% "GridResolvedClipPath")]
+    path <- list(f=path$f, ref=NULL)
+    class(path) <- "GridClipPath"
     path
 }
 

@@ -53,9 +53,8 @@ unresolveMask.GridMask <- function(mask) {
 }
 
 unresolveMask.GridResolvedMask <- function(mask) {
-    mask$ref <- NULL
-    class(mask) <-
-        class(mask)[!(class(mask) %in% "GridResolvedMask")]
-    mask
+    result <- list(f=mask$f, ref=NULL)
+    class(result) <- "GridMask"
+    result
 }
 
