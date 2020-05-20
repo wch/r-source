@@ -199,6 +199,7 @@ FUNTAB R_FunTab[] =
 
 {"...elt",      do_dotsElt,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"...length",   do_dotsLength,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"...names",    do_dotsNames,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"length",	do_length,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"length<-",	do_lengthgets,	0,	1,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
 {"c",/* bind.c: */ do_c,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},

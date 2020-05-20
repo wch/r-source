@@ -32,6 +32,7 @@ quantile.default <-
 	} else
             stop("factors are not allowed")
         lx <- levels(x)
+        x <- as.integer(x)
     } else lx <- NULL
     if (na.rm)
 	x <- x[!is.na(x)]

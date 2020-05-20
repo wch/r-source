@@ -652,7 +652,10 @@ static void finish_mbcs_in_parse_context()
     if (!R_ParseContext[i])
 	first = (i + 1) % PARSE_CONTEXT_SIZE;
     else
-	first = i;
+	/* The beginning of the context has been overwritten and for a general
+	   encoding there is not way to recover it. It is possible for UTF-8,
+	   though. */
+	return;
 
     /* decode multi-byte characters */
     for(i = 0; i < nbytes; i++) {
@@ -2126,7 +2129,12 @@ static void yyerror(const char *s)
     static char const yyexpecting[] = ", expecting ";
     char *expecting;
     
-    finish_mbcs_in_parse_context();
+    if (!EndOfFile)
+	/* On EndOfFile, there are no more bytes to add, but trying to do
+	   so may have non-trivial performance overhead and this can be
+	   reached also in non-error situations, e.g. from repl.
+	*/
+	finish_mbcs_in_parse_context();
 
     R_ParseError     = yylloc.first_line;
     R_ParseErrorCol  = yylloc.first_column;

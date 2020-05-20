@@ -1,6 +1,6 @@
 % File src/library/stats/man/read.ftable.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Copyright 2002-2013 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -10,7 +10,10 @@
 \alias{write.ftable}
 \alias{format.ftable}
 \alias{print.ftable}
-\description{Read, write and coerce \sQuote{flat} contingency tables.}
+\description{
+  Read, write and coerce \sQuote{flat} (contingency) tables, aka
+  \code{ftable}s.
+}
 \usage{
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
@@ -19,13 +22,15 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
              digits = getOption("digits"), \dots)
 
 \method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"),
-                        method = c("non.compact", "row.compact",
-                                  "col.compact", "compact"),
-                        lsep = " | ", \dots)
+       method = c("non.compact", "row.compact", "col.compact", "compact"),
+       lsep = " | ",
+       justify = c("left", "right"),
+       \dots)
+
 \method{print}{ftable}(x, digits = getOption("digits"), \dots)
 }
 \arguments{
-  \item{file}{either a character string naming a file or a connection
+  \item{file}{either a character string naming a file or a \code{\link{connection}}
     which the data are to be read from or written to.  \code{""}
     indicates input from the console for reading and output to the
     console for writing.}
@@ -65,6 +70,9 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
   }
   \item{lsep}{only for \code{method = "compact"}, the separation string
     for row and column labels.}
+  \item{justify}{\code{\link{character}} vector of length (one or) two,
+    specifying how string justification should happen in \code{format(..)},
+    first for the labels, then the table entries.}
   \item{\dots}{further arguments to be passed to or
     from methods; for \code{write()} and \code{print()}, notably
     arguments such as \code{method}, passed to \code{format()}.}
@@ -134,10 +142,15 @@ ft
 unlink(file)
 
 ft22 <- ftable(Titanic, row.vars = 2:1, col.vars = 4:3)
-write.ftable(ft22, quote = FALSE)
-write.ftable(ft22, quote = FALSE, method="row.compact")
-write.ftable(ft22, quote = FALSE, method="col.compact")
-write.ftable(ft22, quote = FALSE, method="compact")
+write.ftable(ft22, quote = FALSE) # is the same as
+print(ft22)#method="non.compact" is default
+print(ft22, method="row.compact")
+print(ft22, method="col.compact")
+print(ft22, method="compact")
+
+## using 'justify' and 'quote' :
+format(ftable(wool + tension ~ breaks, warpbreaks),
+       justify = "none", quote = FALSE)
 \dontshow{
  op <- options(warn = 2) # no warnings allowed
  stopifnot(dim(format(ft)) == 4:5,

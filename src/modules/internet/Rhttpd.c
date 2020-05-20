@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009-2015 The R Core Team.
+ *  Copyright (C) 2009-2020 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -171,11 +171,21 @@ struct buffer {
     char data[1];
 };
 
-/* we have to protect re-entrance and not continue processing if there is
-   a worker inside R already. If we did not then another client connection
+/* 
+   All processing inside R is executed on the main R thread via
+   R_ProcessEvents (on Unix via event handlers, on Windows via a message
+   window).
+
+   We still have to protect re-entrance and not continue processing if there
+   is a worker inside R already. If we did not then another client connection
    would trigger handler and pile up eval on top of the stack, leading to
-   exhaustion very quickly and a big mess */
+   exhaustion very quickly and a big mess.
+*/
+#ifdef _WIN32
+static HANDLE process_request_mutex;
+#else
 static int in_process;
+#endif
 
 /* --- connection/worker structure holding all data for an active connection --- */
 typedef struct httpd_conn {
@@ -229,6 +239,10 @@ static void first_init()
     RegisterClass(&wndclass);
     message_window = CreateWindow(class, "Rhttpd", 0, 1, 1, 1, 1,
 				  HWND_MESSAGE, NULL, instance, NULL);
+
+    process_request_mutex = CreateMutex(NULL, FALSE, NULL);
+    if (!process_request_mutex) 
+        DBG(printf("Mutex creation failed\n"));
 #endif
     needs_init = 0;
 }
@@ -502,11 +516,19 @@ static void process_request_main_thread(httpd_conn_t *c);
 
 static void process_request(httpd_conn_t *c)
 {
+    if (WaitForSingleObject(process_request_mutex, INFINITE) != 0) {
+	DBG(printf("Acquiring mutex failed\n"));
+        /* (very) unexpected error, maybe we're shutting down? */
+        return;
+    }
+
     /* SendMessage is synchronous, so it will wait until the message
      * is processed */
     DBG(Rprintf("enqueuing process_request_main_thread\n"));
     SendMessage(message_window, WM_RHTTP_CALLBACK, 0, (LPARAM) c);
     DBG(Rprintf("process_request_main_thread returned\n"));
+
+    ReleaseMutex(process_request_mutex);
 }
 #define process_request process_request_main_thread
 #endif
@@ -746,12 +768,20 @@ static void process_request_(void *ptr)
 
 /* wrap the actual call with ToplevelExec since we need to have a guaranteed
    return so we can track the presence of a worker code inside R to prevent
-   re-entrance from other clients */
+   re-entrance from other clients
+
+   on Windows, this function is named process_request_main_thread via
+   C preprocessor; on all platforms it is executed on the main R thread
+*/
 static void process_request(httpd_conn_t *c)
 {
+#ifndef _WIN32
     in_process = 1;
+#endif
     R_ToplevelExec(process_request_, c);
+#ifndef _WIN32
     in_process = 0;
+#endif
 }
 
 #ifdef _WIN32
@@ -766,7 +796,9 @@ static void worker_input_handler(void *data) {
     DBG(printf("worker_input_handler, data=%p\n", data));
     if (!c) return;
 
+#ifndef _WIN32
     if (in_process) return; /* we don't allow recursive entrance */
+#endif
 
     DBG(printf("input handler for worker %p (sock=%d, part=%d, method=%d, line_pos=%d)\n", (void*) c, (int)c->sock, (int)c->part, (int)c->method, (int)c->line_pos));
 
@@ -1142,6 +1174,7 @@ static void srv_input_handler(void *data)
     if (cl_sock == INVALID_SOCKET) /* accept failed, don't bother */
 	return;
     c = (httpd_conn_t*) calloc(1, sizeof(httpd_conn_t));
+    if (c == NULL) error("allocation error in srv_input_handler");
     c->sock = cl_sock;
     c->peer = peer_sa.sin_addr;
 #ifndef _WIN32

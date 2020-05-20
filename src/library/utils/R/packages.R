@@ -1002,15 +1002,19 @@ compareVersion <- function(a, b)
 }
 
 ## ------------- private functions --------------------
-.clean_up_dependencies <- function(x, available = NULL)
-{
-    ## x is a character vector of Depends / Suggests / Imports entries
-    ## returns a character vector of all the package dependencies mentioned
-    x <- x[!is.na(x)]
-    if(!length(x)) return(x)
-    x <- unlist(strsplit(x, ",", fixed = TRUE), use.names = FALSE)
-    unique(sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , x))
-}
+
+## .clean_up_dependencies <- function(x, available = NULL)
+## {
+##     ## x is a character vector of Depends / Suggests / Imports entries
+##     ## returns a character vector of all the package dependencies mentioned
+##     x <- x[!is.na(x)]
+##     if(!length(x)) return(x)
+##     x <- unlist(strsplit(x, ",", fixed = TRUE), use.names = FALSE)
+##     unique(sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , x))
+## }
+
+.clean_up_dependencies <- function(x)
+    unique.default(tools:::.extract_dependency_package_names(x))
 
 .clean_up_dependencies2 <- function(x, installed, available)
 {

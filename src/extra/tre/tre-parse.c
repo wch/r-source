@@ -1731,20 +1731,22 @@ tre_parse(tre_parse_ctx_t *ctx)
 	  {
 	    int submatch_id = tre_stack_pop_int(stack);
 
-	    if (result->submatch_id >= 0)
-	      {
-		tre_ast_node_t *n, *tmp_node;
-		n = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
-		if (n == NULL)
-		  return REG_ESPACE;
-		tmp_node = tre_ast_new_catenation(ctx->mem, n, result);
-		if (tmp_node == NULL)
-		  return REG_ESPACE;
-		tmp_node->num_submatches = result->num_submatches;
-		result = tmp_node;
-	      }
-	    result->submatch_id = submatch_id;
-	    result->num_submatches++;
+            if(result) {
+	      if (result->submatch_id >= 0)
+	        {
+		  tre_ast_node_t *n, *tmp_node;
+		  n = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
+		  if (n == NULL)
+		    return REG_ESPACE;
+		  tmp_node = tre_ast_new_catenation(ctx->mem, n, result);
+		  if (tmp_node == NULL)
+		    return REG_ESPACE;
+		  tmp_node->num_submatches = result->num_submatches;
+		  result = tmp_node;
+	        }
+	      result->submatch_id = submatch_id;
+	      result->num_submatches++;
+	    }
 	    break;
 	  }
 

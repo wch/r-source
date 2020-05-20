@@ -774,14 +774,18 @@ void GELine(double x1, double y1, double x2, double y2,
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK) return;
-    if (dd->dev->canClip) {
-	clip_ok = clipLine(&x1, &y1, &x2, &y2, 1, dd);
+    if (dd->dev->canClip == NA_LOGICAL) {
+        dd->dev->line(x1, y1, x2, y2, gc, dd->dev);
+    } else {
+        if (dd->dev->canClip) {
+            clip_ok = clipLine(&x1, &y1, &x2, &y2, 1, dd);
+        }
+        else {
+            clip_ok = clipLine(&x1, &y1, &x2, &y2, 0, dd);
+        }
+        if (clip_ok)
+            dd->dev->line(x1, y1, x2, y2, gc, dd->dev);
     }
-    else {
-	clip_ok = clipLine(&x1, &y1, &x2, &y2, 0, dd);
-    }
-    if (clip_ok)
-	dd->dev->line(x1, y1, x2, y2, gc, dd->dev);
 }
 
 /****************************************************************
@@ -878,7 +882,9 @@ void GEPolyline(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK) return;
-    if (dd->dev->canClip) {
+    if (dd->dev->canClip == NA_LOGICAL) {
+        dd->dev->polyline(n, x, y, gc, dd->dev);
+    } else if (dd->dev->canClip) {
 	clipPolyline(n, x, y, gc, 1, dd);  /* clips to device extent
 						  then draws */
     }
@@ -1223,7 +1229,9 @@ void GEPolygon(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
-    if (dd->dev->canClip) {
+    if (dd->dev->canClip == NA_LOGICAL) {
+        dd->dev->polygon(n, x, y, gc, dd->dev);
+    } else if (dd->dev->canClip) {
 	/*
 	 * If the device can clip, then we just clip to the device
 	 * boundary and let the device do clipping within that.
@@ -1330,77 +1338,65 @@ void GECircle(double x, double y, double radius, const pGEcontext gc, pGEDevDesc
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
-    /*
-     * If the device can clip, then we just clip to the device
-     * boundary and let the device do clipping within that.
-     * We do this to avoid problems where writing WAY off the
-     * device can cause problems for, e.g., ghostview
-     *
-     * If the device can't clip, we have to do all the clipping
-     * ourselves.
-     */
-    result = clipCircleCode(x, y, radius, dd->dev->canClip, dd);
 
-    switch (result) {
-    case -2: /* No clipping;  draw all of circle */
-	/*
-	 * If we did the clipping, then the circle is entirely
-	 * within the current clipping rect.
-	 *
-	 * If the device can clip then we just clipped to the device
-	 * boundary so the circle is entirely within the device; the
-	 * device will perform the clipping to the current clipping rect.
-	 */
-	dd->dev->circle(x, y, radius, gc, dd->dev);
-	break;
-    case -1: /* Total clipping; draw nothing */
-	/*
-	 * If we did the clipping, then the circle is entirely outside
-	 * the current clipping rect, so there is nothing to draw.
-	 *
-	 * If the device can clip then we just determined that the
-	 * circle is entirely outside the device, so again there is
-	 * nothing to draw
-	 */
-	break;
-    default: /* Partial clipping; draw poly[line|gon] */
-	/*
-	 * If we did the clipping this means that the circle
-	 * intersects the current clipping rect and we need to
-	 * convert to a poly[line|gon] and draw that.
-	 *
-	 * If the device can clip then we just determined that the
-	 * circle intersects the device boundary.  We assume that the
-	 * circle is not so big that other parts may be WAY off the
-	 * device and just draw a circle.
-	 */
-	if (dd->dev->canClip) {
-	    dd->dev->circle(x, y, radius, gc, dd->dev);
-	}
-	else {
-	    vmax = vmaxget();
-	    xc = (double*)R_alloc(result+1, sizeof(double));
-	    yc = (double*)R_alloc(result+1, sizeof(double));
-	    convertCircle(x, y, radius, result, xc, yc);
-	    if (R_TRANSPARENT(gc->fill)) {
-		GEPolyline(result+1, xc, yc, gc, dd);
-	    }
-	    else {
-		int npts;
-		double *xcc, *ycc;
-		xcc = ycc = 0;	/* -Wall */
-		npts = clipPoly(xc, yc, result, 0, !dd->dev->canClip,
-				    xcc, ycc, dd);
-		if (npts > 1) {
-		    xcc = (double*)R_alloc(npts, sizeof(double));
-		    ycc = (double*)R_alloc(npts, sizeof(double));
-		    npts = clipPoly(xc, yc, result, 1, !dd->dev->canClip,
-					xcc, ycc, dd);
-		    dd->dev->polygon(npts, xcc, ycc, gc, dd->dev);
-		}
-	    }
-	    vmaxset(vmax);
-	}
+    if (dd->dev->canClip == NA_LOGICAL) {
+        dd->dev->circle(x, y, radius, gc, dd->dev);
+    } else {
+        /*
+         * If the device can clip, then we just clip to the device
+         * boundary and let the device do clipping within that.
+         * We do this to avoid problems where writing WAY off the
+         * device can cause problems for, e.g., ghostview
+         *
+         * If the device can't clip, we have to do all the clipping
+         * ourselves.
+         */
+        result = clipCircleCode(x, y, radius, dd->dev->canClip, dd);
+
+        switch (result) {
+        case -2: /* No clipping;  draw all of circle */
+            /*
+             * If we did the clipping, then the circle is entirely
+             * within the current clipping rect.
+             *
+             * If the device can clip then we just clipped to the device
+             * boundary so the circle is entirely within the device; the
+             * device will perform the clipping to the current clipping rect.
+             */
+            dd->dev->circle(x, y, radius, gc, dd->dev);
+            break;
+        case -1: /* Total clipping; draw nothing */
+            /*
+             * If we did the clipping, then the circle is entirely outside
+             * the current clipping rect, so there is nothing to draw.
+             *
+             * If the device can clip then we just determined that the
+             * circle is entirely outside the device, so again there is
+             * nothing to draw
+             */
+            break;
+        default: /* Partial clipping; draw poly[line|gon] */
+            /*
+             * If we did the clipping this means that the circle
+             * intersects the current clipping rect and we need to
+             * convert to a poly[line|gon] and draw that.
+             *
+             * If the device can clip then we just determined that the
+             * circle intersects the device boundary.  We assume that the
+             * circle is not so big that other parts may be WAY off the
+             * device and just draw a circle.
+             */
+            if (dd->dev->canClip) {
+                dd->dev->circle(x, y, radius, gc, dd->dev);
+            } else {
+                vmax = vmaxget();
+                xc = (double*)R_alloc(result+1, sizeof(double));
+                yc = (double*)R_alloc(result+1, sizeof(double));
+                convertCircle(x, y, radius, result, xc, yc);
+                GEPolygon(result, xc, yc, gc, dd);
+                vmaxset(vmax);
+            }
+        }
     }
 }
 
@@ -1456,42 +1452,31 @@ void GERect(double x0, double y0, double x1, double y1,
     /*
      * For clipping logic, see comments in GECircle
      */
-    result = clipRectCode(x0, y0, x1, y1, dd->dev->canClip, dd);
-    switch (result) {
-    case 0:  /* rectangle totally clipped; draw nothing */
-	break;
-    case 1:  /* rectangle totally inside;  draw all */
-	dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
-	break;
-    case 2:  /* rectangle intersects clip region;  use polygon clipping */
-	if (dd->dev->canClip)
-	    dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
-	else {
-	    vmax = vmaxget();
-	    xc = (double*)R_alloc(5, sizeof(double));
-	    yc = (double*)R_alloc(5, sizeof(double));
-	    xc[0] = x0; yc[0] = y0;
-	    xc[1] = x0; yc[1] = y1;
-	    xc[2] = x1; yc[2] = y1;
-	    xc[3] = x1; yc[3] = y0;
-	    xc[4] = x0; yc[4] = y0;
-	    if (R_TRANSPARENT(gc->fill)) {
-		GEPolyline(5, xc, yc, gc, dd);
-	    }
-	    else { /* filled rectangle */
-		int npts;
-		double *xcc, *ycc;
-		xcc = ycc = 0;		/* -Wall */
-		npts = clipPoly(xc, yc, 4, 0, !dd->dev->canClip, xcc, ycc, dd);
-		if (npts > 1) {
-		    xcc = (double*)R_alloc(npts, sizeof(double));
-		    ycc = (double*)R_alloc(npts, sizeof(double));
-		    npts = clipPoly(xc, yc, 4, 1, !dd->dev->canClip, xcc, ycc, dd);
-		    dd->dev->polygon(npts, xcc, ycc, gc, dd->dev);
-		}
-	    }
-	    vmaxset(vmax);
-	}
+    if (dd->dev->canClip == NA_LOGICAL) {
+        dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
+    } else {
+        result = clipRectCode(x0, y0, x1, y1, dd->dev->canClip, dd);
+        switch (result) {
+        case 0:  /* rectangle totally clipped; draw nothing */
+            break;
+        case 1:  /* rectangle totally inside;  draw all */
+            dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
+            break;
+        case 2:  /* rectangle intersects clip region;  use polygon clipping */
+            if (dd->dev->canClip)
+                dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
+            else {
+                vmax = vmaxget();
+                xc = (double*)R_alloc(4, sizeof(double));
+                yc = (double*)R_alloc(4, sizeof(double));
+                xc[0] = x0; yc[0] = y0;
+                xc[1] = x0; yc[1] = y1;
+                xc[2] = x1; yc[2] = y1;
+                xc[3] = x1; yc[3] = y0;
+                GEPolygon(4, xc, yc, gc, dd);
+                vmaxset(vmax);
+            }
+        }
     }
 }
 
@@ -1639,8 +1624,7 @@ static void clipText(double x, double y, const char *str, cetype_t enc,
 		     double width, double height, double rot, double hadj,
 		     const pGEcontext gc, int toDevice, pGEDevDesc dd)
 {
-    int result = clipTextCode(x, y, str, enc, width, height, rot, hadj,
-			      gc, toDevice, dd);
+    int result;
     void (*textfn)(double x, double y, const char *str, double rot,
 		   double hadj, const pGEcontext gc, pDevDesc dd);
     /* This guards against uninitialized values, e.g. devices installed
@@ -1648,18 +1632,24 @@ static void clipText(double x, double y, const char *str, cetype_t enc,
     textfn = (dd->dev->hasTextUTF8 ==TRUE) && enc == CE_UTF8 ?
 	dd->dev->textUTF8 : dd->dev->text;
 
-    switch (result) {
-    case 0:  /* text totally clipped; draw nothing */
-	break;
-    case 1:  /* text totally inside;  draw all */
-	textfn(x, y, str, rot, hadj, gc, dd->dev);
-	break;
-    case 2:  /* text intersects clip region
-		act according to value of clipToDevice */
-	if (toDevice) /* Device will do clipping */
-	    textfn(x, y, str, rot, hadj, gc, dd->dev);
-	else /* don't draw anything; this could be made less crude :) */
-	    ;
+    if (dd->dev->canClip == NA_LOGICAL) {
+        textfn(x, y, str, rot, hadj, gc, dd->dev);
+    } else {
+        result = clipTextCode(x, y, str, enc, width, height, rot, hadj,
+                              gc, toDevice, dd);
+        switch (result) {
+        case 0:  /* text totally clipped; draw nothing */
+            break;
+        case 1:  /* text totally inside;  draw all */
+            textfn(x, y, str, rot, hadj, gc, dd->dev);
+            break;
+        case 2:  /* text intersects clip region
+                    act according to value of clipToDevice */
+            if (toDevice) /* Device will do clipping */
+                textfn(x, y, str, rot, hadj, gc, dd->dev);
+            else /* don't draw anything; this could be made less crude :) */
+                ;
+        }
     }
 }
 

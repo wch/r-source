@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2007  The R Foundation
+ *  Copyright (C) 2007--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -895,8 +896,8 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
 	return NULL;
     }
 
-    /* FIXME: check allocations [better now, but strdups below are not covered; also check dev->pars] */
     dev = malloc(sizeof(QuartzCocoaDevice));
+    if (dev == NULL) error("allocation failure in QuartzCocoa_DeviceCreate");
     memset(dev, 0, sizeof(QuartzCocoaDevice));
 
     QuartzBackend_t qdef = {
@@ -923,6 +924,7 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
     /* copy parameters for later */
     memcpy(&dev->pars, par, (par->size < sizeof(QuartzParameters_t))? par->size : sizeof(QuartzParameters_t));
     if (par->size > sizeof(QuartzParameters_t)) dev->pars.size = sizeof(QuartzParameters_t);
+    /* FIXME: strdup can return NULL */
     if (par->family) dev->pars.family = strdup(par->family);
     if (par->title) dev->pars.title = strdup(par->title);
     if (par->file) dev->pars.file = strdup(par->file);

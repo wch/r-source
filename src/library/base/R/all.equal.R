@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -163,7 +163,7 @@ all.equal.envRefClass <- function (target, current, ...) {
     getCl <- function(x) { cl <- tryCatch(x$getClass(), error=function(e) NULL)
 			   if(is.null(cl)) class(x) else cl }
     if(!identical(cld <- getCl(target), c2 <- getCl(current))) {
-	hasCA <- any("check.attributes" == names(list(...)))
+	hasCA <- "check.attributes" %in% ...names()
 	ae <-
 	    if(hasCA) all.equal(cld, c2, ...)
 	    else all.equal(cld, c2, check.attributes=FALSE, ...)

@@ -23,6 +23,24 @@
 
       \item Using \code{c()} to combine a factor with other factors
       now gives a factor.
+
+      \item Graphics devices can now specify \code{canClip =
+        NA_LOGICAL}, in which case the graphics engine will never
+        perform any clipping of output itself.
+
+      The clipping that the graphics engine does perform (for both
+      \code{canClip = TRUE} and \code{canClip = FALSE}) has also
+      been improved to avoid producing unnecessary artifacts in clipped
+      output.
+
+      \item \code{apply()} gains a \code{simplify} argument to possibly
+      disable simplifying results.
+
+      \item The \code{format()} method for \code{"ftable"}s gets an option
+      \code{justify}; suggested by Thomas Soeiro.
+
+      \item New \code{...names()} utility, complementing others, proposed
+      by Neal Fultz in \PR{17705}.
     }
   }
 
@@ -85,6 +103,14 @@
       \item Computing the \code{base} value, i.e., 2, \dQuote{everywhere},
       now uses \code{FLT_RADIX}, as the original \file{machar} code looped
       indefinitely on the ppc64 architecture for the \code{longdouble} case.
+
+      \item In \R 4.0.0, \code{sort.list(x)} when \code{is.object(x)} was
+      true, e.g., for \code{x <- I(letters)}, was accidentally using
+      \code{method = "radix"}.  Consequently, e.g., \code{merge(<data.frame>)}
+      was much slower than previously; reported in \PR{17794}.
+
+      \item \code{plot(y ~ x, ylab = quote(y[i]))} now works, as e.g., for
+      \code{xlab}; related to \PR{10525}.
     }
   }
 }
@@ -281,7 +307,8 @@
 
       \item \code{sort.list(x)} now works for non-atomic objects
       \code{x} and \code{method = "auto"} (the default) or
-      \code{"radix"} in cases \code{order(x)} works.
+      \code{"radix"} in cases \code{order(x)} works, typically via a
+      \code{xtfrm()} method.
 
       \item Where they are available, \code{writeBin()} allows
       long vectors.% (those of length \eqn{\ge 2^{31}}{>= 2^31}).

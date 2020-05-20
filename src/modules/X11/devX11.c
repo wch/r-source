@@ -295,6 +295,7 @@ static int timingInstalled = 0;
 static void addBuffering(pX11Desc xd)
 {
     Xdl xdln = (Xdl) malloc(sizeof(struct xd_list));
+    if(!xdln) error("allocation failed in addBuffering");
     xdln->this = xd;
     xdln->next = xdl->next;
     xdl->next = xdln;

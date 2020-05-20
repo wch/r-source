@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ftable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -173,7 +173,8 @@ as.table.ftable <- function(x, ...)
 format.ftable <-
     function(x, quote=TRUE, digits=getOption("digits"),
 	     method=c("non.compact", "row.compact", "col.compact", "compact"),
-	     lsep=" | ", ...)
+	     lsep = " | ",
+             justify = c("left", "right"), ...)
 {
     if(!inherits(x, "ftable"))
 	stop("'x' must be an \"ftable\" object")
@@ -254,8 +255,8 @@ format.ftable <-
 		  if(method %in% c("non.compact", "col.compact"))
 			rep("", times = ncol(x)),
 		  format(unclass(x), digits = digits, ...))
-    cbind(apply(LABS, 2L, format, justify = "left"),
-	  apply(DATA, 2L, format, justify = "right"))
+    cbind(apply(LABS, 2L, format, justify = justify[[1]]),
+	  apply(DATA, 2L, format, justify = justify[[min(2, length(justify))]]))
 }
 
 write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,

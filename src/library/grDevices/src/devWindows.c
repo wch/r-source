@@ -579,7 +579,7 @@ static void RFontInit()
 	if (notdone == 1)
 	    snprintf(oops, 256, "[%s] Error at line %d.", optfile(), optline());
 	else if (notdone == 2) {
-	    fontname[fontnum] = strdup(opt[0]);
+	    fontname[fontnum] = strdup(opt[0]);  // FIXME: strdup can give NULL
 	    if (!fontname[fontnum])
 		strcpy(oops, "Insufficient memory. ");
 	    else {

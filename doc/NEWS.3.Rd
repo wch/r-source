@@ -7,9 +7,11 @@
 
 \section{LATER NEWS}{
   \itemize{
-    \item News for \R 4.0.0 and later can be found in file
-    \file{NEWS.Rd} in the \R sources and files \file{NEWS} and
-    \file{doc/html/NEWS.html} in an \R build.
+    \item News for \R 4.x.y can be found in HTML format at
+    \ifelse{html}{\url{NEWS.html}}{\file{doc/html/NEWS.html}},
+    and in text format in file
+    \ifelse{html}{\href{../NEWS}{NEWS}}{\file{NEWS}}
+    in the \file{doc} directory.
   }
 }
 

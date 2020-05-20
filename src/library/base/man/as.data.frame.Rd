@@ -1,6 +1,6 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
@@ -38,6 +38,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
 
 \method{as.data.frame}{list}(x, row.names = NULL, optional = FALSE, \dots,
               cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
+              check.names = !optional,
               stringsAsFactors = FALSE)
 
 \method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE,
@@ -67,6 +68,7 @@ is.data.frame(x)
   \item{col.names}{(optional) character vector of column names.}
   \item{fix.empty.names}{logical indicating if empty column names, i.e.,
     \code{""} should be fixed up (in \code{\link{data.frame}}) or not.}
+  \item{check.names}{logical; passed to the \code{\link{data.frame}()} call.}
   %% matrix method:
   \item{make.names}{a \code{\link{logical}}, i.e., one of \code{FALSE, NA, TRUE},
     indicating what should happen if the row names (of the matrix

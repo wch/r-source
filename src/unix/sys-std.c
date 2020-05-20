@@ -909,6 +909,7 @@ static char *R_completion_generator(const char *text, int state)
 		UNPROTECT(4);
 		return (char *)NULL;
 	    }
+	    // FIXME: strdup can return NULL
 	    for (i = 0; i < ncomp; i++)
 		compstrings[i] = strdup(translateChar(STRING_ELT(completions, i)));
 	}

@@ -17,34 +17,36 @@
 #  https://www.R-project.org/Licenses/
 
 
-.known_interactive.devices <-
-    c("X11", "X11cairo", "quartz", "windows", "JavaGD", "CairoWin", "CairoX11")
-
 dev.interactive <- function(orNone = FALSE)
 {
     if(!interactive()) return(FALSE)
-    if(.Device %in% .known_interactive.devices) return(TRUE)
+    .known_interactive_devices <- deviceIsInteractive()
+    if(.Device %in% .known_interactive_devices) return(TRUE)
     if(!(orNone && .Device == "null device")) return(FALSE)
     ## at this point we have mo active device.
     newdev <- getOption("device")
-    if(is.character(newdev)) newdev %in% .known_interactive.devices
+    if(is.character(newdev)) newdev %in% .known_interactive_devices
     else { # a function
         if(.Platform$OS.type == "windows") identical(newdev, windows)
         else identical(newdev, X11) || identical(newdev, quartz)
     }
 }
 
-deviceIsInteractive <- function(name = NULL)
-{
-    if(length(name)) {
-        if(!is.character(name)) stop("'name' must be a character vector")
-        unlockBinding(".known_interactive.devices", asNamespace("grDevices"))
-        .known_interactive.devices <<- c(.known_interactive.devices, name)
-        lockBinding(".known_interactive.devices", asNamespace("grDevices"))
-        invisible(.known_interactive.devices)
-    } else .known_interactive.devices
-}
-
+deviceIsInteractive <- local({
+    .known_interactive_devices <- 
+        c("X11", "X11cairo", "quartz", "windows", "JavaGD", "CairoWin",
+          "CairoX11")
+    function(name = NULL) {
+        if(length(name)) {
+            if(!is.character(name))
+                stop("'name' must be a character vector")
+            .known_interactive_devices <<-
+                unique(c(.known_interactive_devices, name))
+            invisible(.known_interactive_devices)
+        } else
+            .known_interactive_devices
+    }
+})
 
 dev.list <- function()
 {
