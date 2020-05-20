@@ -3130,7 +3130,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         dependencies <- .expand_dependency_type_spec("strong")
         av <- utils::installed.packages()[, dependencies, drop = FALSE]
         rn <- row.names(av)
-        new <- strict
+        new <- strict0 <- strict
         ex <- "bit" # since an update is promised.
         repeat {
             new <- intersect(new, rn) # avoid NAs in the next line
@@ -3159,7 +3159,12 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             w2 <- weak[ (weak %in% orphaned)[miss2] ]
         } else s2 <- w2 <- character()
         strict <- c(strict[!miss1 & strict2 == "ORPHANED"], s2)
-        if(length(strict)) bad_depends$orphaned <- sort(strict)
+        if(length(strict)) {
+            strict0 <- sort(intersect(strict, strict0))
+            strict1 <- sort(setdiff(strict, strict0))
+            if(length(strict0)) bad_depends$orphaned <- strict0
+            if(length(strict1)) bad_depends$orphaned1 <- strict1
+        }
         weak <- c(weak[!miss2 & weak2 == "ORPHANED"], w2)
         if(length(weak)) bad_depends$orphaned2 <- sort(weak)
     }
@@ -3287,6 +3292,13 @@ function(x, ...)
             c("Requires orphaned packages:", .pretty_format(bad))
           else
             sprintf("Requires orphaned package: %s", sQuote(bad)),
+          "")
+      },
+      if(length(bad <- x[["orphaned1"]])) {
+          c(if(length(bad) > 1L)
+            c("Requires (indirectly) orphaned packages:", .pretty_format(bad))
+          else
+            sprintf("Requires (indirectly) orphaned package: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x[["orphaned2"]])) {
