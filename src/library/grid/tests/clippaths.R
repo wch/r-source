@@ -335,28 +335,7 @@ makeContent() adds circle
 draw rect
 result is grey circle")
 
-## save()/load() a recordedPlot containing a clipping path
-## Pre-existing bug  ???
-notrun <- function() {
-    grid.newpage()
-    pushViewport(viewport(clip=circleGrob()))
-    grid.rect(gp=gpar(fill="grey"))
-    x <- recordPlot()
-    HersheyLabel("push circle clipping path
-rect
-grey circle
-(for save(recordPlot()))")
-    f <- tempfile()
-    saveRDS(x, file=f)
-    grid.newpage()
-    y <- readRDS(f)
-    replayPlot(y)
-    HersheyLabel("push circle clipping path
-rect
-grey circle
-saveRDS(recordPlot())
-replayPlot(readRDS())")
-}
+
 
 ######################
 ## NOT YET WORKING
