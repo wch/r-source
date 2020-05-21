@@ -3133,6 +3133,11 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
     for (i = 0; i < MAX_GRAPHICS_SYSTEMS; i++)
 	if (dd->gesd[i] != NULL)
 	    (dd->gesd[i]->callback)(GE_RestoreSnapshotState, dd, snapshot);
+    /* Turn graphics engine recording on.
+     * This is in case of failure during replay, which generates a new
+     * call;  the failure can leave recording off
+     */
+    dd->recordGraphics = TRUE;
     /* Replay the display list
      */
     dd->displayList = duplicate(VECTOR_ELT(snapshot, 0));
