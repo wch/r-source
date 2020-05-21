@@ -340,6 +340,7 @@ result is grey circle")
 ######################
 ## NOT YET WORKING
 
+## save()/load() a recordedPlot containing a clipping path
 
 ## Clipping path from text (Pango)
 
