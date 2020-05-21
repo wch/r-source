@@ -234,11 +234,11 @@ grey circle")
 
 ######################
 ## Check resource exhaustion
-options(warn=2)
+options(warn=1)
 grid.newpage()
-for (i in 1:21) {
-    result <- try(pushViewport(viewport(clip=circleGrob())))
-    if (!inherits(result, "try-error")) {
+for (i in 1:20) {
+    pushViewport(viewport(clip=circleGrob()))
+    if (length(warnings()) == 0) {
         grid.rect(gp=gpar(fill="grey"))
         HersheyLabel(paste0("viewport ", i, " with clip path
 runs out after 20"))
@@ -335,6 +335,26 @@ makeContent() adds circle
 draw rect
 result is grey circle")
 
+
+## save()/load() a recordedPlot containing a clipping path
+grid.newpage()
+pushViewport(viewport(clip=circleGrob()))
+grid.rect(gp=gpar(fill="grey"))
+x <- recordPlot()
+HersheyLabel("push circle clipping path
+rect
+grey circle
+(for save(recordPlot()))")
+f <- tempfile()
+saveRDS(x, file=f)
+grid.newpage()
+y <- readRDS(f)
+replayPlot(y)
+HersheyLabel("push circle clipping path
+rect
+grey circle
+saveRDS(recordPlot())
+replayPlot(readRDS())")
 
 
 ######################
