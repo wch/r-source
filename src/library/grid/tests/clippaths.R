@@ -307,26 +307,67 @@ result is grey circle")
 if (length(warnings()))
     HersheyLabel(paste0("Number of warnings: ", length(warnings())), .3)
 
+## A clipping path within a makeContent() method
+grid.newpage()
+g <- gTree(cl="test")
+makeContent.test <- function(x) {
+    setChildren(x, gList(rectGrob(gp=gpar(fill="grey"),
+                                  vp=viewport(clip=circleGrob()))))
+}
+grid.draw(g)
+HersheyLabel("custom grob class with makeContent() method
+makeContent() adds rectangle with viewport
+viewport has circle clip path
+result is grey circle")
+
+## A clipping path that makes use of makeContent() method
+grid.newpage()
+path <- gTree(cl="test")
+makeContent.test <- function(x) {
+    setChildren(x, gList(circleGrob()))
+}
+pushViewport(viewport(clip=path))
+grid.rect(gp=gpar(fill="grey"))
+popViewport()
+HersheyLabel("push viewport with clip path
+clip path is grob with makeContent() method
+makeContent() adds circle
+draw rect
+result is grey circle")
+
+## save()/load() a recordedPlot containing a clipping path
+## Pre-existing bug  ???
+notrun <- function() {
+    grid.newpage()
+    pushViewport(viewport(clip=circleGrob()))
+    grid.rect(gp=gpar(fill="grey"))
+    x <- recordPlot()
+    HersheyLabel("push circle clipping path
+rect
+grey circle
+(for save(recordPlot()))")
+    f <- tempfile()
+    saveRDS(x, file=f)
+    grid.newpage()
+    y <- readRDS(f)
+    replayPlot(y)
+    HersheyLabel("push circle clipping path
+rect
+grey circle
+saveRDS(recordPlot())
+replayPlot(readRDS())")
+}
+
 ######################
 ## NOT YET WORKING
 
-## Checks for (ILLEGAL) nested clipping
-## Warn on ILLEGAL mask within clip path
 
 ## Clipping path from text (Pango)
 
 ## Clipping path from text ("Toy text")
 
-## A clipping path on a grob
-## (defined relative to viewport that grob is in)
-
-## A clipping path on a gTree
-## (defined relative to viewport that gTree is in)
-
 ## Clipping path on viewport in vp of grob
 
 ## Clipping path on viewport in vp of gTree
-
-## A clipping path that makes use of makeContent() method
 
 

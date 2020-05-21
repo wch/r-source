@@ -232,6 +232,49 @@ runs out after 20"))
 }
 options(warn=0)
 
+## A mask from two grobs, with ONE grob making use of a mask
+grid.newpage()
+mask <- gTree(children=gList(rectGrob(x=.25, width=.3, height=.8,
+                                      gp=gpar(fill="black"),
+                                      vp=viewport(mask=circleGrob(r=.4,
+                                                                  gp=gpar(fill="black")))),
+                             rectGrob(x=.75, width=.3, height=.8,
+                                      gp=gpar(fill="black"))))
+pushViewport(viewport(mask=mask))
+grid.rect(gp=gpar(fill="grey"))
+popViewport()
+HersheyLabel("mask is two grobs, ONE with its own (circle) mask
+push mask
+rect
+result is one slice of circle and one rectangle")
+
+## A mask within a makeContent() method
+grid.newpage()
+g <- gTree(cl="test")
+makeContent.test <- function(x) {
+    setChildren(x, gList(rectGrob(gp=gpar(fill="grey"),
+                                  vp=viewport(mask=circleGrob(gp=gpar(fill="black"))))))
+}
+grid.draw(g)
+HersheyLabel("custom grob class with makeContent() method
+makeContent() adds rectangle with viewport
+viewport has circle mask
+result is grey circle")
+
+## A mask that makes use of makeContent() method
+grid.newpage()
+mask <- gTree(cl="test")
+makeContent.test <- function(x) {
+    setChildren(x, gList(circleGrob(gp=gpar(fill="black"))))
+}
+pushViewport(viewport(mask=mask))
+grid.rect(gp=gpar(fill="grey"))
+popViewport()
+HersheyLabel("push viewport with mask
+mask is grob with makeContent() method
+makeContent() adds circle
+draw rect
+result is grey circle")
 
 ################################################################################
 ## Need to test ...
