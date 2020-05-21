@@ -425,6 +425,9 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
         SEXP vpgp = PROTECT(VECTOR_ELT(pushedvp, VP_GP));
         SEXP fill = getListElement(vpgp, "fill");
         if (fill != R_NilValue) {
+            /* Do not keep resolved fill because cannot release it
+               * (until grid.newpage()) 
+               */
             resolveGPar(vpgp);
             /* Record the resolved fill for subsequent up/down/pop */
             SET_VECTOR_ELT(VECTOR_ELT(pushedvp, PVP_GPAR),
@@ -2289,6 +2292,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     double xmax = -DOUBLE_XMAX;
     double ymin = DOUBLE_XMAX;
     double ymax = -DOUBLE_XMAX;
+    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -2299,7 +2303,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
     if (!LOGICAL(o)[0] && draw) {
-        resolveGPar(currentgp);
+        PROTECT(resolvedFill = resolveGPar(currentgp));
     }
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     /* 
@@ -2451,6 +2455,15 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 	if (draw)
 	    GEMode(0, dd);
 	vmaxset(vmax);
+    }
+    if (!LOGICAL(o)[0] && draw) {
+        if (resolvedFill != R_NilValue &&
+            Rf_inherits(resolvedFill, "GridGrobPattern")) {
+            int patternIndex = INTEGER(getListElement(resolvedFill, 
+                                                      "index"))[0];
+            dd->dev->releasePattern(patternIndex, dd->dev);
+        }
+        UNPROTECT(1); /* resolvedFill */
     }
 
     if (!draw && !trace && nloc > 0) {
@@ -2801,6 +2814,7 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
                                                   "index"))[0];
         dd->dev->releasePattern(patternIndex, dd->dev);
     }
+    UNPROTECT(1); /* resolvedFill */
 
     return R_NilValue;
 }
@@ -2823,6 +2837,7 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
     double ymin = DOUBLE_XMAX;
     double ymax = -DOUBLE_XMAX;
     double edgex, edgey;
+    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -2833,7 +2848,7 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
     if (draw) {
-        resolveGPar(currentgp);
+        PROTECT(resolvedFill = resolveGPar(currentgp));
     }
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     nx = unitLength(x); 
@@ -2912,6 +2927,13 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
     }
     if (draw) {
 	GEMode(0, dd);
+        if (resolvedFill != R_NilValue &&
+            Rf_inherits(resolvedFill, "GridGrobPattern")) {
+            int patternIndex = INTEGER(getListElement(resolvedFill, 
+                                                      "index"))[0];
+            dd->dev->releasePattern(patternIndex, dd->dev);
+        }
+        UNPROTECT(1); /* resolvedFill */
 
     } else if (ncirc > 0) {
 	result = allocVector(REALSXP, 4);
@@ -3159,6 +3181,7 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
                                                       "index"))[0];
             dd->dev->releasePattern(patternIndex, dd->dev);
         }
+        UNPROTECT(1); /* resolvedFill */
     }
     if (nrect > 0) {
 	result = allocVector(REALSXP, 4);
@@ -3212,6 +3235,7 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
+    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -3221,7 +3245,7 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    resolveGPar(currentgp);
+    PROTECT(resolvedFill = resolveGPar(currentgp));
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     GEMode(1, dd);
     /*
@@ -3271,6 +3295,13 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
     	vmaxset(vmax);
     }
     GEMode(0, dd);
+    if (resolvedFill != R_NilValue &&
+        Rf_inherits(resolvedFill, "GridGrobPattern")) {
+        int patternIndex = INTEGER(getListElement(resolvedFill, 
+                                                  "index"))[0];
+        dd->dev->releasePattern(patternIndex, dd->dev);
+    }
+    UNPROTECT(1); /* resolvedFill */
     return R_NilValue;
 }
 
@@ -3712,6 +3743,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
+    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -3721,7 +3753,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    resolveGPar(currentgp);
+    PROTECT(resolvedFill = resolveGPar(currentgp));
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     nx = unitLength(x); 
     npch = LENGTH(pch);
@@ -3808,6 +3840,13 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	    }
 	}
     GEMode(0, dd);
+    if (resolvedFill != R_NilValue &&
+        Rf_inherits(resolvedFill, "GridGrobPattern")) {
+        int patternIndex = INTEGER(getListElement(resolvedFill, 
+                                                  "index"))[0];
+        dd->dev->releasePattern(patternIndex, dd->dev);
+    }
+    UNPROTECT(1); /* resolvedFill */
     vmaxset(vmax);
     return R_NilValue;
 }
