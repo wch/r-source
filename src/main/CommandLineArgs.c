@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2019   The R Core Team
+ *  Copyright (C) 1997-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,15 +54,17 @@ static char **CommandLineArgs = NULL; // this does not get freed
 void
 R_set_command_line_arguments(int argc, char **argv)
 {
-    int i;
-
+    // nothing here is ever freed.
     NumCommandLineArgs = argc;
     CommandLineArgs = (char**) calloc((size_t) argc, sizeof(char*));
     if(CommandLineArgs == NULL)
 	R_Suicide("allocation failure in R_set_command_line_arguments");
 
-    for(i = 0; i < argc; i++)
-	CommandLineArgs[i] = strdup(argv[i]); // This leaks
+    for(int i = 0; i < argc; i++) {
+	CommandLineArgs[i] = strdup(argv[i]);
+	if(CommandLineArgs[i] == NULL)
+	    R_Suicide("allocation failure in R_set_command_line_arguments");
+    }
 }
 
 
