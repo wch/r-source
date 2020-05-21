@@ -1,6 +1,6 @@
 % File src/library/stats/man/Binomial.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Binomial}
@@ -41,11 +41,11 @@ rbinom(n, size, prob)
   generates random deviates.
 
   If \code{size} is not an integer, \code{NaN} is returned.
-  
+
   The length of the result is determined by \code{n} for
   \code{rbinom}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -76,8 +76,8 @@ rbinom(n, size, prob)
   For \code{dbinom} a saddle-point expansion is used: see
 
   Catherine Loader (2000). \emph{Fast and Accurate Computation of
-    Binomial Probabilities}; available from
-  \url{http://www.herine.net/stat/software/dbinom.html}.
+    Binomial Probabilities}; available as
+  \url{https://www.r-project.org/doc/reports/CLoader-dbinom-2002.pdf}
 
   \code{pbinom} uses \code{\link{pbeta}}.
 
