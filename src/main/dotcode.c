@@ -1346,8 +1346,18 @@ SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP retval;
     pGEDevDesc dd = GEcurrentDevice();
     Rboolean record = dd->recordGraphics;
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("do_Externalgr: record = FALSE\n");
+    }
+#endif
     dd->recordGraphics = FALSE;
     PROTECT(retval = do_External(call, op, args, env));
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("do_Externalgr: record = %d\n", record);
+    }
+#endif
     dd->recordGraphics = record;
     if (GErecording(call, dd)) { // which is record && call != R_NilValue
 	if (!GEcheckState(dd))
@@ -1367,8 +1377,18 @@ SEXP attribute_hidden do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP retval;
     pGEDevDesc dd = GEcurrentDevice();
     Rboolean record = dd->recordGraphics;
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("do_dotcallgr: record = FALSE\n");
+    }
+#endif
     dd->recordGraphics = FALSE;
     PROTECT(retval = do_dotcall(call, op, args, env));
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("do_dotcallgr: record = %d\n", record);
+    }
+#endif
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))

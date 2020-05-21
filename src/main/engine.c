@@ -2870,11 +2870,21 @@ Rboolean GEdeviceDirty(pGEDevDesc dd)
 
 void GEdirtyDevice(pGEDevDesc dd)
 {
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_dirty")) {
+        printf("GEdirtyDevice: dirty = TRUE\n");
+    }
+#endif
     dd->dirty = TRUE;
 }
 
 void GEcleanDevice(pGEDevDesc dd)
 {
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_dirty")) {
+        printf("GEcleanDevice: dirty = FALSE\n");
+    }
+#endif
     dd->dirty = FALSE;
 }
 
@@ -3137,6 +3147,11 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
      * This is in case of failure during replay, which generates a new
      * call;  the failure can leave recording off
      */
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("GEplaySnapshot: record = TRUE\n");
+    } 
+#endif
     dd->recordGraphics = TRUE;
     /* Replay the display list
      */
@@ -3222,6 +3237,11 @@ SEXP attribute_hidden do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
      * the parent of the new evaluation environment.
      */
     PROTECT(evalenv = NewEnvironment(R_NilValue, x, parentenv));
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("do_recordGraphics: record = FALSE\n");
+    }
+#endif
     dd->recordGraphics = FALSE;
     PROTECT(retval = eval(code, evalenv));
     /*
@@ -3229,6 +3249,11 @@ SEXP attribute_hidden do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
      * evaluation, dd->recordGraphics is set to TRUE
      * on all graphics devices (see GEonExit(); called in errors.c)
      */
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("do_recordGraphics: record = %d\n", record);
+    }
+#endif
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
@@ -3263,6 +3288,11 @@ void GEonExit()
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
 	    gd = GEgetDevice(devNum);
+#ifdef R_GE_DEBUG
+            if (getenv("R_GE_DEBUG_record")) {
+                printf("GEonExit: record = TRUE\n");
+            }
+#endif
 	    gd->recordGraphics = TRUE;
 	    dd = gd->dev;
 	    if (dd->onExit) dd->onExit(dd);

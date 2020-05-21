@@ -353,6 +353,11 @@ double evaluateGrobUnit(double value, SEXP grob,
      * function call rather than directly playing with dd->recordGraphics
      */
     Rboolean record = dd->recordGraphics;
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("evaluateGrobUnit: record = FALSE\n");
+    }
+#endif
     dd->recordGraphics = FALSE;
     /*
      * Save the current viewport transform 
@@ -575,6 +580,11 @@ double evaluateGrobUnit(double value, SEXP grob,
      * evaluation, dd->recordGraphics is set to TRUE
      * on all graphics devices (see GEonExit(); called in errors.c)
      */
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_record")) {
+        printf("evaluateGrobUnit: record = %d\n", record);
+    }
+#endif
     dd->recordGraphics = record;
     return result;
 }
