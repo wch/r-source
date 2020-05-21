@@ -40,13 +40,14 @@ replayPlot <- function(x, reloadPkgs=FALSE)
         # This is a "recordedplot" loaded from another session
         x <- restoreRecordedPlot(x, reloadPkgs)
     }
-    r <- tryCatch(.External2(C_playSnapshot, x), error = function(e) {
+    restore <- function(e) {
         if(doRestore)
             stop("invalid \"recordedplot\": ", conditionMessage(e))
         ## else: typically deserialized recordedplot from this session:
         .External2(C_playSnapshot,
                    restoreRecordedPlot(x, reloadPkgs))
-    })
+    }
+    r <- tryCatch(.External2(C_playSnapshot, x), error = restore)
     invisible(r)
 }
 
