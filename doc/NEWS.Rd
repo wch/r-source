@@ -26,7 +26,7 @@
 
       \item Graphics devices can now specify \code{canClip =
         NA_LOGICAL}, in which case the graphics engine will never
-        perform any clipping of output itself.
+      perform any clipping of output itself.
 
       The clipping that the graphics engine does perform (for both
       \code{canClip = TRUE} and \code{canClip = FALSE}) has also
@@ -66,10 +66,13 @@
     }
   }
 
-  %% \subsection{BUG FIXES}{
-  %%   \itemize{
-  %%   }
-  %% }
+   \subsection{BUG FIXES}{
+     \itemize{
+       \item Many more C-level allocations (mainly by \code{malloc} and
+       \code{strdup}) are checked for success with suitable alternative
+       actions.
+     }
+   }
 }
 
 \section{\Rlogo CHANGES IN 4.0.0 patched}{
