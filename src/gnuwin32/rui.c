@@ -1363,7 +1363,7 @@ int winaddmenu(const char *name, char *errmsg)
     }
     if (m) {
 	usermenus[nmenus] = m;
-	usermenunames[nmenus] = strdup(name);
+	usermenunames[nmenus] = strdup(name); // FIXME: allocation could fail.
 	nmenus++;
 	show(RConsole);
 	return 0;
