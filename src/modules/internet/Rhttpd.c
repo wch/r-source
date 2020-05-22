@@ -946,7 +946,7 @@ static void worker_input_handler(void *data) {
 			    return;
 			}
 			bol[strlen(bol) - 9] = 0;
-			c->url = strdup(url);
+			c->url = Rstrdup(url);
 			c->part = PART_HEADER;
 			DBG(printf("parsed request, method=%d, URL='%s'\n", (int)c->method, c->url));
 		    } else if (c->part == PART_HEADER) {
@@ -995,7 +995,7 @@ static void worker_input_handler(void *data) {
 				while (*l && *l != ';') { if (*l >= 'A' && *l <= 'Z') *l |= 0x20; l++; }
 				c->attr |= CONTENT_TYPE;
 				if (c->content_type) free(c->content_type);
-				c->content_type = strdup(k);
+				c->content_type = Rstrdup(k);
 				if (!strncmp(k, "application/x-www-form-urlencoded", 33))
 				    c->attr |= CONTENT_FORM_UENC;
 			    }

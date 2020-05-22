@@ -145,7 +145,7 @@ void attribute_hidden
 InitDynload()
 {
     initLoadedDLL();
-    int which = addDLL(strdup("base"), "base", NULL);
+    int which = addDLL(Rstrdup("base"), "base", NULL);
     DllInfo *dll = &LoadedDLL[which];
     R_init_base(dll);
     InitFunctionHashing();
@@ -239,7 +239,7 @@ DllInfo *R_getEmbeddingDllInfo()
 {
     DllInfo *dll = R_getDllInfo("(embedding)");
     if (dll == NULL) {
-	int which = addDLL(strdup("(embedding)"), "(embedding)", NULL);
+	int which = addDLL(Rstrdup("(embedding)"), "(embedding)", NULL);
 	dll = &LoadedDLL[which];
 	/* make sure we don't attempt dynamic lookup */
 	R_useDynamicSymbols(dll, FALSE);
@@ -390,7 +390,7 @@ R_addFortranRoutine(DllInfo *info,
 		    const R_FortranMethodDef * const croutine,
 		    Rf_DotFortranSymbol *sym)
 {
-    sym->name = strdup(croutine->name);
+    sym->name = Rstrdup(croutine->name);
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
@@ -402,7 +402,7 @@ R_addExternalRoutine(DllInfo *info,
 		     const R_ExternalMethodDef * const croutine,
 		     Rf_DotExternalSymbol *sym)
 {
-    sym->name = strdup(croutine->name);
+    sym->name = Rstrdup(croutine->name);
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
@@ -411,7 +411,7 @@ static void
 R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
 	      Rf_DotCSymbol *sym)
 {
-    sym->name = strdup(croutine->name);
+    sym->name = Rstrdup(croutine->name);
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
@@ -422,7 +422,7 @@ static void
 R_addCallRoutine(DllInfo *info, const R_CallMethodDef * const croutine,
 		 Rf_DotCallSymbol *sym)
 {
-    sym->name = strdup(croutine->name);
+    sym->name = Rstrdup(croutine->name);
     sym->fun = croutine->fun;
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
