@@ -371,6 +371,12 @@ static void     RQuartz_Path(double*, double*, int, int*, Rboolean, const pGEcon
 static Rboolean RQuartz_Locator(double*, double*, pDevDesc);
 static void     RQuartz_Mode(int mode, pDevDesc);
 static void     RQuartz_MetricInfo(int, const pGEcontext , double*, double*, double*, pDevDesc);
+static int      RQuartz_setPattern(SEXP pattern, pDevDesc dd);
+static void     RQuartz_releasePattern(int index, pDevDesc dd);
+static SEXP     RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
+static void     RQuartz_releaseClipPath(SEXP ref, pDevDesc dd);
+static SEXP     RQuartz_setMask(SEXP path, SEXP ref, pDevDesc dd);
+static void     RQuartz_releaseMask(SEXP ref, pDevDesc dd);
 
 #pragma mark Quartz device implementation
 
@@ -429,6 +435,13 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->haveRaster = 2;
     dev->haveCapture = (def->cap) ? 2 : 1;
     dev->haveLocator = (def->locatePoint) ? 2 : 1;
+
+    dev->setPattern      = RQuartz_setPattern;
+    dev->releasePattern  = RQuartz_releasePattern;
+    dev->setClipPath     = RQuartz_setClipPath;
+    dev->releaseClipPath = RQuartz_releaseClipPath;
+    dev->setMask         = RQuartz_setMask;
+    dev->releaseMask     = RQuartz_releaseMask;
 
     QuartzDesc *qd = calloc(1, sizeof(QuartzDesc));
     qd->width      = def->width;
@@ -1281,6 +1294,24 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
     *y/=xd->scaley;
     return res;
 }
+
+static int RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
+    return -1;
+}
+
+static void RQuartz_releasePattern(int index, pDevDesc dd) {} 
+
+static SEXP RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void RQuartz_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP RQuartz_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void RQuartz_releaseMask(SEXP ref, pDevDesc dd) {}
 
 #pragma mark -
 #pragma mark R Interface
