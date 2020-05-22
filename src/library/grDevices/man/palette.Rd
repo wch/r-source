@@ -148,7 +148,7 @@ palette.swatch <- function(palette = palette.pals(), n = 8, nrow = 8,
  	rect(rep(0:(n-1), n), y, rep(1:n, n), y - 0.5,
  	     col = cols[, subset], border = border)
  	palette <- palette[-subset]
- 	cols    <- cols [, -subset]
+ 	cols    <- cols [, -subset, drop = FALSE]
      }
 }
 

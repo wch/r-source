@@ -3115,12 +3115,32 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 
     ## (added in 4.0.0) Check for orphaned packages.
     if (config_val_to_logical(Sys.getenv("_R_CHECK_ORPHANED_", "FALSE"))) {
-        exceptions <- c()
         ## empty fields are list().
         strict <- setdiff(unique(c(as.character(depends),
                                    as.character(imports),
                                    as.character(links))),
-                          c(exceptions, bad_depends$required_but_not_installed))
+                           bad_depends$required_but_not_installed)
+
+        ## (4.1.0) This needs to be recursive, since a package
+        ## strictly depends on everything required to load it.
+        ## All of those should be installed, so we only look at those which are.
+        ## We include LinkingTo as if a dependency links to an
+        ## orphaned package, it becomes uninstallable if the linked-to
+        ## package is, or if it is removed.
+        dependencies <- .expand_dependency_type_spec("strong")
+        av <- utils::installed.packages()[, dependencies, drop = FALSE]
+        rn <- row.names(av)
+        new <- strict0 <- strict
+        ex <- "bit" # since an update is promised.
+        repeat {
+            new <- intersect(new, rn) # avoid NAs in the next line
+            need <- unname(unlist(apply(av[new, , drop = FALSE], 1L,
+                                        utils:::.clean_up_dependencies)))
+            new <- setdiff(need, c(strict, ex))
+            if(!length(new)) break
+            strict <- union(strict, new)
+        }
+
         ## First use dependencies which are installed: strict dependencies
         ## need to be for a full check.
         ## Suggests might not even exist, so we suppress warnings.
@@ -3128,7 +3148,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         strict2 <- sapply(strict, function(x) suppressWarnings(mt(x)))
         miss1 <- is.na(strict2)
         weak <- setdiff(as.character(suggests),
-                        c(exceptions, bad_depends$suggested_but_not_installed))
+                        bad_depends$suggested_but_not_installed)
         weak2 <- sapply(weak, function(x) suppressWarnings(mt(x)))
         miss2 <- is.na(weak2)
         if (any(miss1) || any(miss2)) {
@@ -3139,7 +3159,12 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             w2 <- weak[ (weak %in% orphaned)[miss2] ]
         } else s2 <- w2 <- character()
         strict <- c(strict[!miss1 & strict2 == "ORPHANED"], s2)
-        if(length(strict)) bad_depends$orphaned <- sort(strict)
+        if(length(strict)) {
+            strict0 <- sort(intersect(strict, strict0))
+            strict1 <- sort(setdiff(strict, strict0))
+            if(length(strict0)) bad_depends$orphaned <- strict0
+            if(length(strict1)) bad_depends$orphaned1 <- strict1
+        }
         weak <- c(weak[!miss2 & weak2 == "ORPHANED"], w2)
         if(length(weak)) bad_depends$orphaned2 <- sort(weak)
     }
@@ -3267,6 +3292,13 @@ function(x, ...)
             c("Requires orphaned packages:", .pretty_format(bad))
           else
             sprintf("Requires orphaned package: %s", sQuote(bad)),
+          "")
+      },
+      if(length(bad <- x[["orphaned1"]])) {
+          c(if(length(bad) > 1L)
+            c("Requires (indirectly) orphaned packages:", .pretty_format(bad))
+          else
+            sprintf("Requires (indirectly) orphaned package: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x[["orphaned2"]])) {
@@ -3520,7 +3552,7 @@ function(x, ...)
                      collapse = "\n\n", recycle0 = TRUE))
     invisible(x)
 }
-   
+
 
 ### * .check_package_description2
 

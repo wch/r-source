@@ -2105,7 +2105,7 @@ function(file, envir, enc = NA)
     ## successively evaluate the top-level assignments in @code{envir}.
     ## Apart from only dealing with assignments, basically does the same
     ## as @code{sys.source(file, envir, keep.source = FALSE)}.
-    oop <- options(keep.source = FALSE)
+    oop <- options(topLevelEnvironment = envir, keep.source = FALSE)
     on.exit(options(oop))
 
 ### <FIXME> for S4, setClass() .. are assignments, but must be called
@@ -2153,6 +2153,8 @@ function(dir, envir, meta = character())
         list_files_with_type(dir, "code")
     if(!all(.file_append_ensuring_LFs(con, files)))
         stop("unable to write code files")
+    if(!is.na(package <- meta["Package"]))
+        envir$.packageName <- package
     tryCatch(.source_assignments(con, envir, enc = meta["Encoding"]),
              error = function(e)
                  stop("cannot source package code:\n", conditionMessage(e),

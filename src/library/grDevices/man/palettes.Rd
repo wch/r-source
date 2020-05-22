@@ -212,7 +212,7 @@ hcl.swatch <- function(type = NULL, n = 5, nrow = 11,
         rect(rep(0:(n-1), n), rev(y), rep(1:n, n), rev(y) - 0.5,
              col = cols[, subset], border = border)
         palette <- palette[-subset]
-        cols <- cols[, -subset]
+        cols <- cols[, -subset, drop = FALSE]
     }
 
     par(mfrow = c(1, 1), mar = c(5.1, 4.1, 4.1, 2.1), cex = 1)

@@ -31,7 +31,16 @@
       The clipping that the graphics engine does perform (for both
       \code{canClip = TRUE} and \code{canClip = FALSE}) has also
       been improved to avoid producing unnecessary artifacts in clipped
-      output. 
+      output.
+
+      \item \code{apply()} gains a \code{simplify} argument to possibly
+      disable simplifying results.
+
+      \item The \code{format()} method for \code{"ftable"}s gets an option
+      \code{justify}; suggested by Thomas Soeiro.
+
+      \item New \code{...names()} utility, complementing others, proposed
+      by Neal Fultz in \PR{17705}.
     }
   }
 

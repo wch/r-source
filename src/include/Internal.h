@@ -134,6 +134,7 @@ SEXP do_docall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotcall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotsElt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotsLength(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dotsNames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotcallgr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotCode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dput(SEXP, SEXP, SEXP, SEXP);

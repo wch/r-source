@@ -408,7 +408,30 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	PROTECT(t = allocArray(STRSXP, dims));
 	/* FIXME: check (ns <= data->max +1) ? ns : data->max; */
 	for (i = 0; i < ns; i++) {
-	    switch(TYPEOF(PROTECT(tmp = VECTOR_ELT(s, i)))) {
+	    PROTECT(tmp = VECTOR_ELT(s, i));
+	    if(isObject(tmp)) {
+		const char *str;
+		Rboolean use_fmt = FALSE;
+		SEXP fun = PROTECT(findFun(install("format"),
+					   R_BaseNamespace));
+		SEXP call = PROTECT(lang2(fun, tmp));
+		SEXP ans = PROTECT(eval(call, data->env));
+		if(TYPEOF(ans) == STRSXP && LENGTH(ans) == 1) {
+		    str = translateChar(STRING_ELT(ans, 0));
+		    if(strlen(str) < 100)
+			use_fmt = TRUE;
+		}
+		if(use_fmt)
+		    snprintf(pbuf, 115, "%s", str);
+		else {
+		    SEXP cls = PROTECT(R_data_class2(tmp));
+		    snprintf(pbuf, 115, "%s,%d",
+			     translateChar(STRING_ELT(cls, 0)),
+			     length(tmp));
+		    UNPROTECT(1);
+		}
+		UNPROTECT(3);
+	    } else switch(TYPEOF(tmp)) {
 	    case NILSXP:
 		snprintf(pbuf, 115, "NULL");
 		break;
@@ -419,7 +442,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 		    snprintf(pbuf, 115, "%s",
 			     EncodeLogical(x[0], w));
 		} else
-		    snprintf(pbuf, 115, "Logical,%d", LENGTH(tmp));
+		    snprintf(pbuf, 115, "logical,%d", LENGTH(tmp));
 		break;
 	    case INTSXP:
 		/* factors are stored as integers */
@@ -432,7 +455,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 			snprintf(pbuf, 115, "%s",
 				 EncodeInteger(x[0], w));
 		    } else
-			snprintf(pbuf, 115, "Integer,%d", LENGTH(tmp));
+			snprintf(pbuf, 115, "integer,%d", LENGTH(tmp));
 		}
 		break;
 	    case REALSXP:
@@ -442,7 +465,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 		    snprintf(pbuf, 115, "%s",
 			     EncodeReal0(x[0], w, d, e, OutDec));
 		} else
-		    snprintf(pbuf, 115, "Numeric,%d", LENGTH(tmp));
+		    snprintf(pbuf, 115, "numeric,%d", LENGTH(tmp));
 		break;
 	    case CPLXSXP:
 		if (LENGTH(tmp) == 1) {
@@ -458,7 +481,7 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 					       wr, dr, er, wi, di, ei, OutDec));
 		    }
 		} else
-		snprintf(pbuf, 115, "Complex,%d", LENGTH(tmp));
+		snprintf(pbuf, 115, "complex,%d", LENGTH(tmp));
 		break;
 	    case STRSXP:
 		if (LENGTH(tmp) == 1) {
@@ -475,17 +498,17 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 		    }
 		    vmaxset(vmax);
 		} else
-		snprintf(pbuf, 115, "Character,%d", LENGTH(tmp));
+		snprintf(pbuf, 115, "character,%d", LENGTH(tmp));
 		break;
 	    case RAWSXP:
-		snprintf(pbuf, 115, "Raw,%d", LENGTH(tmp));
+		snprintf(pbuf, 115, "raw,%d", LENGTH(tmp));
 		break;
 	    case LISTSXP:
 	    case VECSXP:
-		snprintf(pbuf, 115, "List,%d", length(tmp));
+		snprintf(pbuf, 115, "list,%d", length(tmp));
 		break;
 	    case LANGSXP:
-		snprintf(pbuf, 115, "Expression");
+		snprintf(pbuf, 115, "expression");
 		break;
 	    default:
 		snprintf(pbuf, 115, "?");
@@ -632,32 +655,32 @@ static void printList(SEXP s, R_PrintData *data)
 		break;
 
 	    case LGLSXP:
-		snprintf(pbuf, 100, "Logical,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "logical,%d", LENGTH(CAR(s)));
 		break;
 
 	    case INTSXP:
 	    case REALSXP:
-		snprintf(pbuf, 100, "Numeric,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "numeric,%d", LENGTH(CAR(s)));
 		break;
 
 	    case CPLXSXP:
-		snprintf(pbuf, 100, "Complex,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "complex,%d", LENGTH(CAR(s)));
 		break;
 
 	    case STRSXP:
-		snprintf(pbuf, 100, "Character,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "character,%d", LENGTH(CAR(s)));
 		break;
 
 	    case RAWSXP:
-		snprintf(pbuf, 100, "Raw,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "raw,%d", LENGTH(CAR(s)));
 		break;
 
 	    case LISTSXP:
-		snprintf(pbuf, 100, "List,%d", length(CAR(s)));
+		snprintf(pbuf, 100, "list,%d", length(CAR(s)));
 		break;
 
 	    case LANGSXP:
-		snprintf(pbuf, 100, "Expression");
+		snprintf(pbuf, 100, "expression");
 		break;
 
 	    default:

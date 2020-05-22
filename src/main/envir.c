@@ -1461,6 +1461,24 @@ SEXP attribute_hidden do_dotsLength(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarInteger(length_DOTS(vl));
 }
 
+SEXP attribute_hidden do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP vl = findVar(R_DotsSymbol, env);
+    if (vl == R_UnboundValue)
+	error(_("incorrect context: the current call has no '...' to look in"));
+    // else
+    SEXP out = PROTECT(allocVector(STRSXP, length_DOTS(vl)));
+    for(int i = 0; i < length_DOTS(vl); i++) {
+        SEXP tag = TAG(vl);
+        SET_STRING_ELT(out, i, tag == R_NilValue ? NA_STRING : PRINTNAME(tag));
+        vl = CDR(vl);
+    }
+
+    UNPROTECT(1);
+    return out;
+}
+
 #undef length_DOTS
 
 /*----------------------------------------------------------------------

@@ -254,6 +254,10 @@ extern char *strdup(const char *s1);
 extern int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
+/* safer alternative */
+extern char *Rstrdup(const char *s);
+
+
 /* Glibc manages to not define this in -pedantic -ansi */
 #if defined(HAVE_PUTENV) && !defined(putenv) && defined(HAVE_DECL_PUTENV) && !HAVE_DECL_PUTENV
 extern int putenv(char *string);

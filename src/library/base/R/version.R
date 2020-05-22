@@ -1,7 +1,7 @@
 #  File src/library/base/R/version.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015, 2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -222,7 +222,7 @@ function(x, i, j, value)
 `[[.numeric_version` <-
 function(x, ..., exact = NA)
 {
-   if(length(list(...)) < 2L)
+   if(...length() < 2L)
       structure(list(unclass(x)[[..., exact=exact]]), class = oldClass(x))
    else
       unclass(x)[[..1, exact=exact]][..2]
@@ -369,15 +369,12 @@ function(x, recursive = FALSE)
 }
 
 print.numeric_version <-
-function(x, ...)
+function(x, quote = FALSE, ...)
 {
     y <- as.character(x)
     if(!length(y))
         writeLines(gettext("<0 elements>"))
-    else if(any("quote" == names(list(...))))
-	print(ifelse(is.na(y), NA_character_, sQuote(y)), ...)
-    else
-	print(ifelse(is.na(y), NA_character_, sQuote(y)), quote = FALSE, ...)
+    print(ifelse(is.na(y), NA_character_, sQuote(y)), quote=quote, ...)
     invisible(x)
 }
 

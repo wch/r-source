@@ -5508,7 +5508,7 @@ add_dummies <- function(dir, Log)
                          "many_depends", "many_imports",
                          "skipped",
                          "hdOnly",
-                         "orphaned2", "orphaned",
+                         "orphaned2", "orphaned", "orphaned1",
                          if(!check_incoming) "bad_engine")
             if(!all(names(res) %in% allowed)) {
                 errorLog(Log)
