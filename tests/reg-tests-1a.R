@@ -87,7 +87,7 @@ stopifnot(range(z) == z,
 
 
 ## autoload
-stopifnot(ls("Autoloads") == ls(envir = .AutoloadEnv))
+stopifnot(ls("Autoloads") == ls(envir = .AutoloadEnv), allow.logical0=TRUE)
 ## end of moved from autoload.Rd
 
 
@@ -1235,9 +1235,9 @@ glm(y ~ 0, family = binomial)
 
 
 ## Integer overflow in type.convert
-res <- type.convert("12345689")
+res <- type.convert("12345689", as.is=FALSE)
 stopifnot(typeof(res) == "integer")
-res <- type.convert("12345689012")
+res <- type.convert("12345689012", as.is=FALSE)
 stopifnot(typeof(res) == "double")
 ##  Comments: was integer in 1.4.0
 
@@ -1878,11 +1878,11 @@ stopifnot(identical(dimnames(z), dimnames(a)))
 ## internal conversion to factor in type.convert was not right
 ## if a character string NA was involved.
 x <- c(NA, "NA", "foo")
-(z <- type.convert(x))
+(z <- type.convert(x, as.is=FALSE))
 stopifnot(identical(levels(z), "foo"))
-(z <- type.convert(x, na.strings=character(0)))
+(z <- type.convert(x, na.strings=character(0), as.is=FALSE))
 stopifnot(identical(levels(z), sort(c("foo", "NA"))))
-(z <- type.convert(x, na.strings="foo"))
+(z <- type.convert(x, na.strings="foo", as.is=FALSE))
 stopifnot(identical(levels(z), "NA"))
 ## extra level in 1.6.1
 

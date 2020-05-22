@@ -147,7 +147,7 @@ Error in read.table("foo6", header = TRUE, fill = TRUE) :
 > unlink("foo7")
 > 
 > # should be logical
-> type.convert(character(0))
+> type.convert(character(0), as.is=FALSE)
 logical(0)
 > 
 > # test of comments in data files

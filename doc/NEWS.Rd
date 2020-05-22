@@ -41,6 +41,12 @@
 
       \item New \code{...names()} utility, complementing others, proposed
       by Neal Fultz in \PR{17705}.
+
+      \item \code{type.convert()} now warns when its \code{as.is} argument
+      is not specified, as the help file always said it \emph{should}.  In
+      that case, the default is changed to \code{TRUE} in line with its
+      change in \code{read.table()} (related to \code{stringsAsFactor}) in
+      \R 4.0.0.
     }
   }
 
