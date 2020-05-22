@@ -4622,16 +4622,3 @@ R_len_t NORET R_BadLongVector(SEXP x, const char *file, int line)
     error(_("long vectors not supported yet: %s:%d"), file, line);
 }
 #endif
-
-/* added in R 4.1.0.
-   This checks if it succeeds.
-   FIXME: is this worth inlining?
- */
-char *Rstrdup(const char *s)
-{
-    size_t nb = strlen(s) + 1;
-    void *cpy = malloc(nb);
-    if (cpy == NULL) error("allocation error in Rstrdup");
-    memcpy (cpy, s, nb);
-    return (char *) cpy;
-}
