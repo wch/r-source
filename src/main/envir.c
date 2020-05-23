@@ -1211,7 +1211,7 @@ static R_INLINE SEXP findGlobalVar(SEXP symbol)
     case NILSXP: return R_UnboundValue;
     case SYMSXP: return SYMBOL_BINDING_VALUE(symbol);
     default: return BINDING_VALUE(loc);
-    }	
+    }
 }
 #endif
 
@@ -1469,7 +1469,7 @@ SEXP attribute_hidden do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("incorrect context: the current call has no '...' to look in"));
     // else
     SEXP out = PROTECT(allocVector(STRSXP, length_DOTS(vl)));
-    for(int i = 0; i < length_DOTS(vl); i++) {
+    for(int i = 0; i < LENGTH(out); i++) {
         SEXP tag = TAG(vl);
         SET_STRING_ELT(out, i, tag == R_NilValue ? NA_STRING : PRINTNAME(tag));
         vl = CDR(vl);

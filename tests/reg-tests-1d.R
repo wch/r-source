@@ -3994,6 +3994,19 @@ plot(w ~ x, data=dd, type = "h", xlab = quote(x[j]), ylab = quote(y[j]))# *now* 
 ## main, sub, xlab worked (PR#10525)  but ylab did not in R <= 4.0.0
 
 
+## ...names()
+F <- function(x, ...) ...names()
+F(a, b="bla"/0, c=c, D=d, ..) # << does *not* evaluate arguments
+# |->  c("b", "c", "D", NA)
+stopifnot(exprs = {
+    identical(F(pi), character(0))
+    F(foo = "bar") == "foo"
+    identical(F(., .., .not.ok. = "a"-b, 2, 3, last = LAST),
+              c(  NA, ".not.ok.",      NA, NA,"last"))
+})
+# .. was wrong for a few days
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
