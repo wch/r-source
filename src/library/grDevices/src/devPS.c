@@ -494,7 +494,7 @@ LoadEncoding(const char *encpath, char *encname,
 	     char *encconvname, CNAME *encnames,
 	     char *enccode, Rboolean isPDF)
 {
-    char buf[BUFSIZE];
+    char buf[BUFSIZE]; // BUFSIZE is 512
     int i;
     FILE *fp;
     EncodingInputState state;
@@ -513,14 +513,14 @@ LoadEncoding(const char *encpath, char *encname,
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
     }
     if (GetNextItem(fp, buf, -1, &state)) { fclose(fp); return 0;} /* encoding name */
-    strncpy(encname, buf+1, 99); 
+    memcpy(encname, buf+1, 99); // was strncpy, deliberate truncation
     encname[99] = '\0';
     if (!isPDF) snprintf(enccode, 5000, "/%s [\n", encname);
     else enccode[0] = '\0';
     if (GetNextItem(fp, buf, 0, &state)) { fclose(fp); return 0;} /* [ */
     for(i = 0; i < 256; i++) {
 	if (GetNextItem(fp, buf, i, &state)) { fclose(fp); return 0; }
-	strncpy(encnames[i].cname, buf+1, 39);
+	memcpy(encnames[i].cname, buf+1, 39); // was strncpy, gcc10 warned
 	encnames[i].cname[39] = '\0';
 	strcat(enccode, " /"); strcat(enccode, encnames[i].cname);
 	if(i%8 == 7) strcat(enccode, "\n");
