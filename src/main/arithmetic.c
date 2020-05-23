@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2020 The R Core Team.
- *  Copyright (C) 2003--2019 The R Foundation
+ *  Copyright (C) 2003--2020 The R Foundation
  *  Copyright (C) 1995--1997 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -178,22 +178,23 @@ void attribute_hidden InitArithmetic()
 
 
 #if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
+/*
 # ifdef __powerpc__
  // PowerPC 64 (when gcc has -mlong-double-128) fails constant folding with LDOUBLE
  // Debian Bug#946836 shows it is needed also for 32-bit ppc, not just __PPC64__
-#  define q_1_eps (1 / LDBL_EPSILON)
-# else
-static LDOUBLE q_1_eps = 1 / LDBL_EPSILON;
-# endif
+ // NB: 1 / LDBL_EPSILON has been seen to overflow on 'ppc64el ...
+ ==> use  eps instead of  1 / eps  (and one multiplication more)
+*/
+# define c_eps LDBL_EPSILON
 #else
-static double  q_1_eps = 1 / DBL_EPSILON;
+# define c_eps DBL_EPSILON
 #endif
 
 /* Keep myfmod() and myfloor() in step */
 static double myfmod(double x1, double x2)
 {
     if (x2 == 0.0) return R_NaN;
-    if(fabs(x2) > q_1_eps && R_FINITE(x1) && fabs(x1) <= fabs(x2)) {
+    if(fabs(x2) * c_eps > 1 && R_FINITE(x1) && fabs(x1) <= fabs(x2)) {
 	return
 	    (fabs(x1) == fabs(x2)) ? 0 :
 	    ((x1 < 0 && x2 > 0) ||
@@ -202,7 +203,7 @@ static double myfmod(double x1, double x2)
 	     : x1   ; // "same" signs (incl. 0)
     }
     double q = x1 / x2;
-    if(R_FINITE(q) && (fabs(q) > q_1_eps))
+    if(R_FINITE(q) && (fabs(q) * c_eps > 1))
 	warning(_("probable complete loss of accuracy in modulus"));
     LDOUBLE tmp = (LDOUBLE)x1 - floor(q) * (LDOUBLE)x2;
     return (double) (tmp - floorl(tmp/x2) * x2);
@@ -211,7 +212,7 @@ static double myfmod(double x1, double x2)
 static double myfloor(double x1, double x2)
 {
     double q = x1 / x2;
-    if (x2 == 0.0 || fabs(q) > q_1_eps || !R_FINITE(q))
+    if (x2 == 0.0 || fabs(q) * c_eps > 1 || !R_FINITE(q))
 	return q;
     if(fabs(q) < 1)
 	return (q < 0) ? -1
