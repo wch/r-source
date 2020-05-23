@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-05-18 r78485) -- "Arbor Day"
+R version 4.0.0 Patched (2020-05-22 r78545) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2680,7 +2680,7 @@ Sturges   Scott      FD
 +  	rect(rep(0:(n-1), n), y, rep(1:n, n), y - 0.5,
 +  	     col = cols[, subset], border = border)
 +  	palette <- palette[-subset]
-+  	cols    <- cols [, -subset]
++  	cols    <- cols [, -subset, drop = FALSE]
 +      }
 + }
 > 
@@ -2754,7 +2754,7 @@ Sturges   Scott      FD
 +         rect(rep(0:(n-1), n), rev(y), rep(1:n, n), rev(y) - 0.5,
 +              col = cols[, subset], border = border)
 +         palette <- palette[-subset]
-+         cols <- cols[, -subset]
++         cols <- cols[, -subset, drop = FALSE]
 +     }
 + 
 +     par(mfrow = c(1, 1), mar = c(5.1, 4.1, 4.1, 2.1), cex = 1)
