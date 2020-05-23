@@ -98,7 +98,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{aov(frml, ...)} now also works in case the \code{formula}
+      \item \code{aov(frml, ...)} now also works where the \code{formula}
       deparses to more than 500 characters, thanks to a report and patch
       proposal by Jan Hauffa.
 
@@ -123,6 +123,10 @@
 
       \item \code{plot(y ~ x, ylab = quote(y[i]))} now works, as e.g., for
       \code{xlab}; related to \PR{10525}.
+
+      \item \code{parallel::detect.cores(all.tests = TRUE)} tries a
+      matching OS name before the other tests (which were intended only
+      for unknown OSes).
     }
   }
 }
