@@ -115,14 +115,14 @@ static void deleteCachedSymbols(DllInfo *dll)
 
  /*
     Computes the flag to be passed as the second argument to dlopen(),
-    controlling whether the local or global symbol integration
-    and lazy or eager resolution of the undefined symbols.
-    The arguments determine which of each of these possibilities
-    to use and the results are or'ed together. We need a separate
-    routine to keep things clean(er) because some symbolic constants
-    may not  be defined, such as RTLD_LOCAL on certain Solaris 2.5.1
-    and Irix 6.4    boxes. In such cases, we emit a warning message and
-    use the default by not modifying the value of the flag.
+    controlling whether the local or global symbol integration and
+    lazy or eager resolution of the undefined symbols.  The arguments
+    determine which of each of these possibilities to use and the
+    results are or'ed together. We need a separate routine to keep
+    things clean(er) because some symbolic constants may not be
+    defined, such as RTLD_LOCAL long ago. In such cases, we emit a
+    warning message and use the default by not modifying the value of
+    the flag.
 
     Called only by AddDLL().
   */
