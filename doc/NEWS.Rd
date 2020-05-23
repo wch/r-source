@@ -25,7 +25,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{aov(frml, ...)} now also works in case the \code{formula}
+      \item \code{aov(frml, ...)} now also works where the \code{formula}
       deparses to more than 500 characters, thanks to a report and patch
       proposal by Jan Hauffa.
 
@@ -47,6 +47,10 @@
       true, e.g., for \code{x <- I(letters)}, was accidentally using
       \code{method = "radix"}.  Consequently, e.g., \code{merge(<data.frame>)}
       was much slower than previously; reported in \PR{17794}.
+
+      \item \code{parallel::detect.cores(all.tests = TRUE)} tries a
+      matching OS name before the other tests (which were intended only
+      for unknown OSes).
     }
   }
 }
