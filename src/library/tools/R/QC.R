@@ -3155,8 +3155,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             ## This may not be local and needs a complete CRAN mirror
             db <- CRAN_package_db()[, c("Package", "Maintainer")]
             orphaned <- db[db$Maintainer == "ORPHANED" , 1L]
-            s2 <- strict[ (strict %in% orphaned)[miss1] ]
-            w2 <- weak[ (weak %in% orphaned)[miss2] ]
+            s2 <- intersect(strict[miss1], orphaned)
+            w2 <- intersect(weak[miss2], orphaned)
         } else s2 <- w2 <- character()
         strict <- c(strict[!miss1 & strict2 == "ORPHANED"], s2)
         if(length(strict)) {
