@@ -2224,12 +2224,14 @@ add_dummies <- function(dir, Log)
             ## Grr, get() in undoc can change the search path
             ## Current example is TeachingDemos
             out <- out[!startsWith(out, "Loading required package:")]
-            err <- startsWith(out, "Error")
-            if (any(err)) {
-                errorLog(Log)
-                printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                maybe_exit(1L)
-            } else if (length(out)) {
+            ## We do not need to report errors here as check ERRORs.
+            ## err <- startsWith(out, "Error")
+            ## if (any(err)) {
+            ##     errorLog(Log)
+            ##     printLog0(Log, paste(c(out, ""), collapse = "\n"))
+            ##     maybe_exit(1L)
+            ## } else
+            if (length(out)) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("All user-level objects",
