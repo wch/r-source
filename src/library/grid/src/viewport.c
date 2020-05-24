@@ -389,6 +389,12 @@ void initVP(pGEDevDesc dd)
     SET_VECTOR_ELT(vp, VP_YSCALE, yscale);
     SET_VECTOR_ELT(vp, PVP_GPAR, currentgp);
     vp = doSetViewport(vp, TRUE, TRUE, dd);
+#ifdef R_GE_DEBUG
+    if (getenv("R_GE_DEBUG_viewports")) {
+        printf("initVP: ");
+        Rf_PrintValue(vp);
+    }
+#endif
     SET_VECTOR_ELT(gsd, GSS_VP, vp);
     UNPROTECT(5);
 }

@@ -1831,14 +1831,19 @@ drawGrob <- function(x) {
     on.exit(grid.Call(C_setGPar, tempgpar), add=TRUE)
     # Setting up the drawing context may involve modifying the grob
     # (typically only x$vp) but the modified grob is needed for postDraw()
+    ## R_GE_DEBUG print(x)
+    ## R_GE_DEBUG print(paste0("pre  preDraw: ", current.viewport()))
     x <- preDraw(x)
+    ## R_GE_DEBUG print(paste0("post preDraw: ", current.viewport()))
     # Allow customisation of x
     # (should only return a basic grob that has a drawDetails()
     #  method, otherwise nothing will be drawn)
     x <- makeContent(x)
     # Do any class-specific drawing
     drawDetails(x, recording=FALSE)
+    ## R_GE_DEBUG print(paste0("pre  postDraw: ", current.viewport()))
     postDraw(x)
+    ## R_GE_DEBUG print(paste0("post postDraw: ", current.viewport()))
 }
 
 grid.draw.grob <- function(x, recording=TRUE) {
@@ -1896,7 +1901,10 @@ drawGTree <- function(x) {
             }, add=TRUE)
     # Setting up the drawing context may involve modifying the grob
     # (typically only x$vp) but the modified grob is needed for postDraw()
+    ## R_GE_DEBUG print(x)
+    ## R_GE_DEBUG print(paste0("pre  preDraw: ", current.viewport()))
     x <- preDraw(x)
+    ## R_GE_DEBUG print(paste0("post preDraw: ", current.viewport()))
     # Allow customisation of x (should be confined to x$children)
     x <- makeContent(x)
     # Do any class-specific drawing
@@ -1904,7 +1912,9 @@ drawGTree <- function(x) {
     # Draw all children IN THE RIGHT ORDER
     for (i in x$childrenOrder)
       grid.draw(x$children[[i]], recording=FALSE)
+    ## R_GE_DEBUG print(paste0("pre  postDraw: ", current.viewport()))
     postDraw(x)
+    ## R_GE_DEBUG print(paste0("post postDraw: ", current.viewport()))
 }
 
 grid.draw.gTree <- function(x, recording=TRUE) {
