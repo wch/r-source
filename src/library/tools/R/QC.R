@@ -3548,8 +3548,8 @@ function(x, ...)
 print.check_package_description <-
 function(x, ...)
 {
-    writeLines(paste(format(x, ...),
-                     collapse = "\n\n", recycle0 = TRUE))
+    if(length(y <- format(x, ...)))
+        writeLines(paste(y, collapse = "\n\n"))
     invisible(x)
 }
 
@@ -8390,8 +8390,8 @@ function(x, ...)
 print.check_package_CRAN_incoming <-
 function(x, ...)
 {
-    writeLines(paste(format(x, ...),
-                     collapse = "\n\n", recycle0 = TRUE))
+    if(length(y <- format(x, ...)))
+        writeLines(paste(y, collapse = "\n\n"))
     invisible(x)
 }
 
