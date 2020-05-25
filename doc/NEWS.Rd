@@ -74,6 +74,13 @@
        \item Many more C-level allocations (mainly by \code{malloc} and
        \code{strdup}) are checked for success with suitable alternative
        actions.
+
+       \item Bug fix for \code{replayPlot()};  this was turning off
+       graphics engine display list recording if a recorded plot was
+       replayed in the same session.  The impact of the bug became
+       visible if resize the device after replay OR if attempted another
+       \code{savePlot()} after replay (empty display list means empty
+       screen on resize or empty saved plot).
      }
    }
 }

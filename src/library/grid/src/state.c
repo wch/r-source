@@ -395,11 +395,11 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
                         LOGICAL(griddev)[0] = TRUE;
                         SET_VECTOR_ELT(gsd, GSS_GRIDDEVICE, griddev);
                         UNPROTECT(1);
-                        /* If the device is 'grid' dirty, make sure it is
-                         * also dirty overall
-                         */
-                        GEdirtyDevice(dd);
                     }
+                    /* If the device is 'grid' dirty, make sure it is
+                     * also dirty overall
+                     */
+                    GEdirtyDevice(dd);
                     /*
                      * Restore the saved 'grid' DL.
                      * (the 'grid' vpTree will be recreated by replay of 
