@@ -677,13 +677,13 @@ struct _DevDesc {
     int haveCapture, haveLocator;  /* 1 = no, 2 = yes */
 
 #if R_USE_PROTOTYPES
-    int (*setPattern)(SEXP pattern, pDevDesc dd);
+    SEXP (*setPattern)(SEXP pattern, pDevDesc dd);
 #else
-    int (*setPattern)();
+    SEXP (*setPattern)();
 #endif
 
 #if R_USE_PROTOTYPES
-    void (*releasePattern)(int index, pDevDesc dd);
+    void (*releasePattern)(SEXP ref, pDevDesc dd);
 #else
     void (*releasePattern)();
 #endif

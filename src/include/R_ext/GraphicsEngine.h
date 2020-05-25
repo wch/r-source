@@ -206,7 +206,7 @@ typedef struct {
     /*
      * Definitions
      */
-    int patternFill;  /* Reference to a pattern fill */
+    SEXP patternFill;  /* Reference to a pattern fill */
 } R_GE_gcontext;
 
 typedef R_GE_gcontext* pGEcontext;

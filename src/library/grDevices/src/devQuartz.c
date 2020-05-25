@@ -371,8 +371,8 @@ static void     RQuartz_Path(double*, double*, int, int*, Rboolean, const pGEcon
 static Rboolean RQuartz_Locator(double*, double*, pDevDesc);
 static void     RQuartz_Mode(int mode, pDevDesc);
 static void     RQuartz_MetricInfo(int, const pGEcontext , double*, double*, double*, pDevDesc);
-static int      RQuartz_setPattern(SEXP pattern, pDevDesc dd);
-static void     RQuartz_releasePattern(int index, pDevDesc dd);
+static SEXP     RQuartz_setPattern(SEXP pattern, pDevDesc dd);
+static void     RQuartz_releasePattern(SEXP ref, pDevDesc dd);
 static SEXP     RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
 static void     RQuartz_releaseClipPath(SEXP ref, pDevDesc dd);
 static SEXP     RQuartz_setMask(SEXP path, SEXP ref, pDevDesc dd);
@@ -1295,11 +1295,11 @@ static Rboolean RQuartz_Locator(double *x, double *y, DEVDESC)
     return res;
 }
 
-static int RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
-    return -1;
+static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
 }
 
-static void RQuartz_releasePattern(int index, pDevDesc dd) {} 
+static void RQuartz_releasePattern(SEXP ref, pDevDesc dd) {} 
 
 static SEXP RQuartz_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     return R_NilValue;

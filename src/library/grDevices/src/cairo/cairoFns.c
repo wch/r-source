@@ -309,8 +309,9 @@ static void CairoReusePattern(SEXP pattern, int index, pX11Desc xd)
     }
 }
 
-static void CairoPatternFill(int index, pX11Desc xd)
+static void CairoPatternFill(SEXP ref, pX11Desc xd)
 {
+    int index = INTEGER(ref)[0];
     cairo_set_source(xd->cc, xd->patterns[index]);
     cairo_fill_preserve(xd->cc);
 }
@@ -640,7 +641,7 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
     if (!xd->appending) {
 
         /* patternFill overrides fill */
-        if (gc->patternFill >= 0) { 
+        if (gc->patternFill != R_NilValue) { 
             CairoPatternFill(gc->patternFill, xd);
         } else if (R_ALPHA(gc->fill) > 0) {
             cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
@@ -681,7 +682,7 @@ static void Cairo_Circle(double x, double y, double r,
 
     if (!xd->appending) {
         /* patternFill overrides fill */
-        if (gc->patternFill >= 0) { 
+        if (gc->patternFill != R_NilValue) { 
             CairoPatternFill(gc->patternFill, xd);
         } else if (R_ALPHA(gc->fill) > 0) {
             cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
@@ -789,7 +790,7 @@ static void Cairo_Polygon(int n, double *x, double *y,
 
     if (!xd->appending) {
         /* patternFill overrides fill */
-        if (gc->patternFill >= 0) { 
+        if (gc->patternFill != R_NilValue) { 
             CairoPatternFill(gc->patternFill, xd);
         } else if (R_ALPHA(gc->fill) > 0) {
             cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
@@ -840,7 +841,7 @@ static void Cairo_Path(double *x, double *y,
     }
 
     if (!xd->appending) {
-        if (gc->patternFill >= 0) { 
+        if (gc->patternFill != R_NilValue) { 
             cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
             if (winding) 
                 cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_WINDING);
@@ -1601,20 +1602,24 @@ static void Cairo_Text(double x, double y,
 
 #endif
 
-static int Cairo_SetPattern(SEXP pattern, pDevDesc dd) 
+static SEXP Cairo_SetPattern(SEXP pattern, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    return CairoSetPattern(pattern, xd);
+    SEXP ref;
+    PROTECT(ref = allocVector(INTSXP, 1));
+    INTEGER(ref)[0] = CairoSetPattern(pattern, xd);
+    UNPROTECT(1);
+    return ref;
 }
 
-static void Cairo_ReleasePattern(int index, pDevDesc dd) 
+static void Cairo_ReleasePattern(SEXP ref, pDevDesc dd) 
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    /* Negative index means release all patterns */
-    if (index < 0) {
+    /* NULL means release all patterns */
+    if (ref == R_NilValue) {
         CairoCleanPatterns(xd);
     } else {
-        CairoReleasePattern(index, xd);
+        CairoReleasePattern(INTEGER(ref)[0], xd);
     }
 }
 

@@ -1264,7 +1264,7 @@ SEXP L_newpage()
     }
     
     /* Clear all device patterns */
-    dd->dev->releasePattern(-1, dd->dev);
+    dd->dev->releasePattern(R_NilValue, dd->dev);
     /* Clear all clip paths */
     setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
@@ -2468,9 +2468,8 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     if (!LOGICAL(o)[0] && draw) {
         if (resolvedFill != R_NilValue &&
             Rf_inherits(resolvedFill, "GridGrobPattern")) {
-            int patternIndex = INTEGER(getListElement(resolvedFill, 
-                                                      "index"))[0];
-            dd->dev->releasePattern(patternIndex, dd->dev);
+            SEXP patternRef = getListElement(resolvedFill, "index");
+            dd->dev->releasePattern(patternRef, dd->dev);
         }
         UNPROTECT(1); /* resolvedFill */
     }
@@ -2819,9 +2818,8 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
     GEMode(0, dd);
     if (resolvedFill != R_NilValue &&
         Rf_inherits(resolvedFill, "GridGrobPattern")) {
-        int patternIndex = INTEGER(getListElement(resolvedFill, 
-                                                  "index"))[0];
-        dd->dev->releasePattern(patternIndex, dd->dev);
+        SEXP patternRef = getListElement(resolvedFill, "index");
+        dd->dev->releasePattern(patternRef, dd->dev);
     }
     UNPROTECT(1); /* resolvedFill */
 
@@ -2938,9 +2936,8 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
 	GEMode(0, dd);
         if (resolvedFill != R_NilValue &&
             Rf_inherits(resolvedFill, "GridGrobPattern")) {
-            int patternIndex = INTEGER(getListElement(resolvedFill, 
-                                                      "index"))[0];
-            dd->dev->releasePattern(patternIndex, dd->dev);
+            SEXP patternRef = getListElement(resolvedFill, "index");
+            dd->dev->releasePattern(patternRef, dd->dev);
         }
         UNPROTECT(1); /* resolvedFill */
 
@@ -3186,9 +3183,8 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 	GEMode(0, dd);
         if (resolvedFill != R_NilValue &&
             Rf_inherits(resolvedFill, "GridGrobPattern")) {
-            int patternIndex = INTEGER(getListElement(resolvedFill, 
-                                                      "index"))[0];
-            dd->dev->releasePattern(patternIndex, dd->dev);
+            SEXP patternRef = getListElement(resolvedFill, "index");
+            dd->dev->releasePattern(patternRef, dd->dev);
         }
         UNPROTECT(1); /* resolvedFill */
     }
@@ -3306,9 +3302,8 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
     GEMode(0, dd);
     if (resolvedFill != R_NilValue &&
         Rf_inherits(resolvedFill, "GridGrobPattern")) {
-        int patternIndex = INTEGER(getListElement(resolvedFill, 
-                                                  "index"))[0];
-        dd->dev->releasePattern(patternIndex, dd->dev);
+        SEXP patternRef = getListElement(resolvedFill, "index");
+        dd->dev->releasePattern(patternRef, dd->dev);
     }
     UNPROTECT(1); /* resolvedFill */
     return R_NilValue;
@@ -3851,9 +3846,8 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
     GEMode(0, dd);
     if (resolvedFill != R_NilValue &&
         Rf_inherits(resolvedFill, "GridGrobPattern")) {
-        int patternIndex = INTEGER(getListElement(resolvedFill, 
-                                                  "index"))[0];
-        dd->dev->releasePattern(patternIndex, dd->dev);
+        SEXP patternRef = getListElement(resolvedFill, "index");
+        dd->dev->releasePattern(patternRef, dd->dev);
     }
     UNPROTECT(1); /* resolvedFill */
     vmaxset(vmax);

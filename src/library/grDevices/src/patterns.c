@@ -33,10 +33,6 @@ SEXP setPattern(SEXP args)
 {
     pGEDevDesc dd = GEcurrentDevice();
     SEXP pattern = CADR(args);
-    int index = dd->dev->setPattern(pattern, dd->dev);
-    SEXP result;
-    result = PROTECT(allocVector(INTSXP, 1));
-    INTEGER(result)[0] = index;
-    UNPROTECT(1);
-    return result;
+    SEXP ref = dd->dev->setPattern(pattern, dd->dev);
+    return ref;
 }

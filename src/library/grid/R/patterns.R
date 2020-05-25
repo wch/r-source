@@ -92,9 +92,8 @@ pattern <- function(x, gp=gpar(fill="transparent")) {
     pat
 }
 
-resolvedPattern <- function(pattern, index) {
-    index <- as.integer(index)
-    pattern$index <- index
+resolvedPattern <- function(pattern, ref) {
+    pattern$ref <- ref
     class(pattern) <- c("GridResolvedPattern", class(pattern))
     pattern
 }
@@ -212,7 +211,7 @@ unresolvePattern.GridPattern <- function(pattern) {
 }
 
 unresolvePattern.GridResolvedPattern <- function(pattern) {
-    pattern$index <- NULL
+    pattern$ref <- NULL
     class(pattern) <-
         class(pattern)[!(class(pattern) %in% "GridResolvedPattern")]
     pattern

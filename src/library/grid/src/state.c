@@ -97,7 +97,7 @@ void initOtherState(pGEDevDesc dd)
     LOGICAL(recording)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
     /* Clear all device patterns */
-    dd->dev->releasePattern(-1, dd->dev);
+    dd->dev->releasePattern(R_NilValue, dd->dev);
     /* Clear all clip paths */
     setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
