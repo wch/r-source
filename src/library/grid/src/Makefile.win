@@ -11,8 +11,8 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = gpar.c grid.c just.c layout.c matrix.c register.c state.c \
-  unit.c util.c viewport.c
+SOURCES_C = clippath.c gpar.c grid.c just.c layout.c mask.c matrix.c \
+  register.c state.c unit.c util.c viewport.c
 SOURCES_F =
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o

@@ -24,7 +24,7 @@ CSOURCES = \
 	main.c mapply.c match.c memory.c mkdtemp.c \
 	names.c \
 	objects.c options.c \
-	paste.c platform.c plot.c plot3d.c plotmath.c \
+	paste.c patterns.c platform.c plot.c plot3d.c plotmath.c \
 	print.c printarray.c printvector.c printutils.c qsort.c \
 	radixsort.c random.c raw.c registration.c relop.c rlocale.c \
 	saveload.c scan.c seq.c serialize.c sort.c source.c split.c \

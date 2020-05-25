@@ -74,9 +74,12 @@ extern "C" {
  *             Added graphical definitions
  *             - linear gradients
  *             - radial gradients
+ *             - patterns
+ *             - clipping paths
+ *             - masks
  */
 
-#define R_GE_version 12
+#define R_GE_version 13
 
 int R_GE_getVersion(void);
 
