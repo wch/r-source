@@ -178,6 +178,12 @@ static void X11_Text(double x, double y, const char *str,
 		     double rot, double hadj,
 		     const pGEcontext gc, pDevDesc dd);
 static void X11_eventHelper(pDevDesc dd, int code);
+static SEXP     X11_setPattern(SEXP pattern, pDevDesc dd);
+static void     X11_releasePattern(SEXP ref, pDevDesc dd);
+static SEXP     X11_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
+static void     X11_releaseClipPath(SEXP ref, pDevDesc dd);
+static SEXP     X11_setMask(SEXP path, SEXP ref, pDevDesc dd);
+static void     X11_releaseMask(SEXP ref, pDevDesc dd);
 
 	/*************************************************/
 	/* End of list of required device driver actions */
@@ -2728,6 +2734,24 @@ static void X11_Mode(int mode, pDevDesc dd)
     }
 }
 
+static SEXP X11_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void X11_releasePattern(SEXP ref, pDevDesc dd) {} 
+
+static SEXP X11_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void X11_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP X11_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void X11_releaseMask(SEXP ref, pDevDesc dd) {}
+
 
 	/*  X11 Device Driver Arguments	:	*/
 	/*	1) display name			*/
@@ -2912,6 +2936,13 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->haveRaster = 3;
 	dd->haveCapture = (xd->type > WINDOW) ? 1 : 2;
 	dd->haveLocator = (xd->type > WINDOW) ? 1 : 2;
+
+        dd->setPattern      = X11_setPattern;
+        dd->releasePattern  = X11_releasePattern;
+        dd->setClipPath     = X11_setClipPath;
+        dd->releaseClipPath = X11_releaseClipPath;
+        dd->setMask         = X11_setMask;
+        dd->releaseMask     = X11_releaseMask;
     }
 
     dd->eventHelper = X11_eventHelper;

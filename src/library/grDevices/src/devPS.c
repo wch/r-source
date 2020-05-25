@@ -3020,6 +3020,12 @@ static void PS_TextUTF8(double x, double y, const char *str,
 			double rot, double hadj,
 			const pGEcontext gc,
 			pDevDesc dd);
+static SEXP     PS_setPattern(SEXP pattern, pDevDesc dd);
+static void     PS_releasePattern(SEXP ref, pDevDesc dd);
+static SEXP     PS_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
+static void     PS_releaseClipPath(SEXP ref, pDevDesc dd);
+static SEXP     PS_setMask(SEXP path, SEXP ref, pDevDesc dd);
+static void     PS_releaseMask(SEXP ref, pDevDesc dd);
 
 /* PostScript Support (formerly in PostScript.c) */
 
@@ -3476,6 +3482,12 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->haveTransparency = 1;
     dd->haveTransparentBg = 2;
     dd->haveRaster = 3; /* non-missing colours */
+    dd->setPattern      = PS_setPattern;
+    dd->releasePattern  = PS_releasePattern;
+    dd->setClipPath     = PS_setClipPath;
+    dd->releaseClipPath = PS_releaseClipPath;
+    dd->setMask         = PS_setMask;
+    dd->releaseMask     = PS_releaseMask;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -4496,6 +4508,24 @@ static void PS_TextUTF8(double x, double y, const char *str,
     PS_Text0(x, y, str, CE_UTF8, rot, hadj, gc, dd);
 }
 
+static SEXP PS_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PS_releasePattern(SEXP ref, pDevDesc dd) {} 
+
+static SEXP PS_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PS_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP PS_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PS_releaseMask(SEXP ref, pDevDesc dd) {}
+
 
 
 /***********************************************************************
@@ -4690,6 +4720,12 @@ static void XFig_Text(double x, double y, const char *str,
 		      double rot, double hadj,
 		      const pGEcontext gc,
 		      pDevDesc dd);
+static SEXP     XFig_setPattern(SEXP pattern, pDevDesc dd);
+static void     XFig_releasePattern(SEXP ref, pDevDesc dd);
+static SEXP     XFig_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
+static void     XFig_releaseClipPath(SEXP ref, pDevDesc dd);
+static SEXP     XFig_setMask(SEXP path, SEXP ref, pDevDesc dd);
+static void     XFig_releaseMask(SEXP ref, pDevDesc dd);
 static Rboolean XFig_Open(pDevDesc, XFigDesc*);
 
 /*
@@ -4981,6 +5017,12 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->haveRaster = 1;
     dd->haveCapture = 1;
     dd->haveLocator = 1;
+    dd->setPattern      = XFig_setPattern;
+    dd->releasePattern  = XFig_releasePattern;
+    dd->setClipPath     = XFig_setClipPath;
+    dd->releaseClipPath = XFig_releaseClipPath;
+    dd->setMask         = XFig_setMask;
+    dd->releaseMask     = XFig_releaseMask;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -5382,6 +5424,24 @@ static void XFig_MetricInfo(int c,
     *width = floor(gc->cex * gc->ps + 0.5) * *width;
 }
 
+static SEXP XFig_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void XFig_releasePattern(SEXP ref, pDevDesc dd) {} 
+
+static SEXP XFig_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void XFig_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP XFig_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void XFig_releaseMask(SEXP ref, pDevDesc dd) {}
+
 
 
 /***********************************************************************
@@ -5557,6 +5617,12 @@ static void PDF_TextUTF8(double x, double y, const char *str,
 			 double rot, double hadj,
 			 const pGEcontext gc,
 			 pDevDesc dd);
+static SEXP     PDF_setPattern(SEXP pattern, pDevDesc dd);
+static void     PDF_releasePattern(SEXP ref, pDevDesc dd);
+static SEXP     PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
+static void     PDF_releaseClipPath(SEXP ref, pDevDesc dd);
+static SEXP     PDF_setMask(SEXP path, SEXP ref, pDevDesc dd);
+static void     PDF_releaseMask(SEXP ref, pDevDesc dd);
 
 /***********************************************************************
  * Some stuff for recording raster images
@@ -6270,6 +6336,12 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->haveTransparency = 2;
     dd->haveTransparentBg = 3;
     dd->haveRaster = 2;
+    dd->setPattern      = PDF_setPattern;
+    dd->releasePattern  = PDF_releasePattern;
+    dd->setClipPath     = PDF_setClipPath;
+    dd->releaseClipPath = PDF_releaseClipPath;
+    dd->setMask         = PDF_setMask;
+    dd->releaseMask     = PDF_releaseMask;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -8224,6 +8296,24 @@ void PDF_MetricInfo(int c,
     *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
     *width = floor(gc->cex * gc->ps + 0.5) * *width;
 }
+
+static SEXP PDF_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PDF_releasePattern(SEXP ref, pDevDesc dd) {} 
+
+static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PDF_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP PDF_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PDF_releaseMask(SEXP ref, pDevDesc dd) {}
 
 
 /*  PostScript Device Driver Parameters:

@@ -186,6 +186,12 @@ static void PicTeX_Text(double x, double y, const char *str,
 			double rot, double hadj, 
 			const pGEcontext gc,
 			pDevDesc dd);
+static SEXP     PicTeX_setPattern(SEXP pattern, pDevDesc dd);
+static void     PicTeX_releasePattern(SEXP ref, pDevDesc dd);
+static SEXP     PicTeX_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
+static void     PicTeX_releaseClipPath(SEXP ref, pDevDesc dd);
+static SEXP     PicTeX_setMask(SEXP path, SEXP ref, pDevDesc dd);
+static void     PicTeX_releaseMask(SEXP ref, pDevDesc dd);
 
 	/* Support routines */
 
@@ -599,6 +605,25 @@ static void PicTeX_Text(double x, double y, const char *str,
     fprintf(ptd->texfp," at %.2f %.2f\n", x, y);
 }
 
+static SEXP PicTeX_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PicTeX_releasePattern(SEXP ref, pDevDesc dd) {} 
+
+static SEXP PicTeX_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PicTeX_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP PicTeX_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PicTeX_releaseMask(SEXP ref, pDevDesc dd) {}
+
+
 static
 Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename, 
 			    const char *bg, const char *fg,
@@ -638,6 +663,12 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     dd->metricInfo = PicTeX_MetricInfo;
     dd->hasTextUTF8 = FALSE;
     dd->useRotatedTextInContour = FALSE;
+    dd->setPattern      = PicTeX_setPattern;
+    dd->releasePattern  = PicTeX_releasePattern;
+    dd->setClipPath     = PicTeX_setClipPath;
+    dd->releaseClipPath = PicTeX_releaseClipPath;
+    dd->setMask         = PicTeX_setMask;
+    dd->releaseMask     = PicTeX_releaseMask;
 
     /* Screen Dimensions in Pixels */
 
