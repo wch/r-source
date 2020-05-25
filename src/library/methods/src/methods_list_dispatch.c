@@ -73,6 +73,68 @@ static const char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty,
                                           const char *what);
 static const char *class_string(SEXP obj);
 
+typedef struct {
+    SEXP e;
+    SEXP env;
+} R_evalWrapper_t;
+
+static SEXP evalWrapper(void *data_)
+{
+    R_evalWrapper_t *data = (R_evalWrapper_t *) data_;
+    return eval(data->e, data->env);
+}
+
+/* Like R_withCallingErrorHandler but evaluates an R expression
+   instead of a C callback */
+static SEXP R_evalHandleError(SEXP e, SEXP env,
+			      SEXP (*handler)(SEXP, void *), void *hdata)
+{
+    R_evalWrapper_t data = { .e = e, .env = env };
+    return R_withCallingErrorHandler(&evalWrapper, &data, handler, hdata);
+}
+
+typedef struct {
+    SEXP e;
+    SEXP env;
+    void (*finally)(void *);
+    void *fdata;
+} R_evalWrapperCleanup_t;
+
+static SEXP evalWrapperCleanup(void *data_)
+{
+    R_evalWrapperCleanup_t *data = (R_evalWrapperCleanup_t *) data_;
+    return R_ExecWithCleanup(&evalWrapper, data, data->finally, data->fdata);
+}
+
+static SEXP R_evalHandleErrorProtect(SEXP e, SEXP env,
+				     SEXP (*handler)(SEXP, void *), void *hdata,
+				     void (*finally)(void *), void *fdata)
+{
+    R_evalWrapperCleanup_t data = { .e = e, .env = env,
+				    .finally = finally, .fdata = fdata};
+
+    return R_withCallingErrorHandler(&evalWrapperCleanup, &data,
+				     handler, hdata);
+}
+
+/* The result might need to be protected as the message might be
+   generated in a method */
+static SEXP R_conditionMessage(SEXP cond)
+{
+    SEXP call = PROTECT(lang2(install("conditionMessage"), cond));
+    SEXP out = eval(call, R_BaseEnv);
+
+    /* Type check return value so callers can safely extract a C string */
+    if (TYPEOF(out) != STRSXP)
+	error(_("unexpected type '%s' for condition message"),
+	      type2char(TYPEOF(out)));
+    if (length(out) != 1)
+	error(_("condition message must be length 1"));
+
+    UNPROTECT(1);
+    return out;
+}
+
 static void init_loadMethod()
 {
     R_target = install("target");
@@ -334,9 +396,18 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
 
 /* call some S language functions */
 
+static SEXP R_S_MethodsListSelectCleanup(SEXP err, void *data)
+{
+    SEXP fname = (SEXP) data;
+    error(_("S language method selection did not return normally when called from internal dispatch for function '%s'"),
+	  check_symbol_or_string(fname, TRUE,
+				 _("Function name for method selection called internally")));
+    return R_NilValue;
+}
+
 static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist, SEXP f_env)
 {
-    SEXP e, val; int n, check_err;
+    SEXP e, val; int n;
     n = isNull(f_env) ? 4 : 5;
     PROTECT(e = allocVector(LANGSXP, n));
     SETCAR(e, s_MethodsListSelect);
@@ -350,11 +421,8 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist, SEXP f_env)
 	    val = CDR(val);
 	    SETCAR(val, f_env);
     }
-    val = R_tryEvalSilent(e, Methods_Namespace, &check_err);
-    if(check_err)
-	error("S language method selection got an error when called from internal dispatch for function '%s'",
-	      check_symbol_or_string(fname, TRUE,
-				     "Function name for method selection called internally"));
+    val = R_evalHandleError(e, Methods_Namespace, &R_S_MethodsListSelectCleanup,
+			    fname);
     UNPROTECT(1);
     return val;
 }
@@ -561,6 +629,20 @@ SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist, SEXP evalArgs)
     return do_dispatch(fname, ev, mlist, TRUE, asLogical(evalArgs));
 }
 
+typedef struct {
+    SEXP fname;
+    SEXP arg_sym;
+} argEvalCleanup_t;
+
+static SEXP argEvalCleanup(SEXP err, void *data_)
+{
+    argEvalCleanup_t *data = (argEvalCleanup_t *) data_;
+    error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
+	  CHAR(PRINTNAME(data->arg_sym)),CHAR(asChar(data->fname)),
+	  CHAR(STRING_ELT(R_conditionMessage(err), 0)));
+    return R_NilValue;
+}
+
 static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs)
 {
@@ -592,29 +674,26 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     }
     /* find the symbol in the frame, but don't use eval, yet, because
        missing arguments are ok & don't require defaults */
+    argEvalCleanup_t cleandata = { .fname = fname, .arg_sym = arg_sym };
     if(evalArgs) {
 	if(is_missing_arg(arg_sym, ev))
 	    class = "missing";
 	else {
 	    /*  get its class */
-	    SEXP arg, class_obj; int check_err;
-	    PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); nprotect++;
-	    if(check_err)
-		error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
-		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
-		      R_curErrorBuf());
+	    SEXP arg, class_obj;
+	    PROTECT(arg = R_evalHandleError(arg_sym, ev,
+					    &argEvalCleanup, &cleandata));
+	    nprotect++;
 	    PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
 	    class = CHAR(STRING_ELT(class_obj, 0));
 	}
     }
     else {
 	/* the arg contains the class as a string */
-	SEXP arg; int check_err;
-	PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); nprotect++;
-	if(check_err)
-	    error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
-		  CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
-		  R_curErrorBuf());
+	SEXP arg;
+	PROTECT(arg = R_evalHandleError(arg_sym, ev, &argEvalCleanup,
+				        &cleandata));
+	nprotect++;
 	class = CHAR(asChar(arg));
     }
     method = R_find_method(mlist, class, fname);
@@ -650,10 +729,25 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
     // -> ../../../main/objects.c
 }
 
+static SEXP R_nextMethodCallCleanup(SEXP err, void *data)
+{
+    Rf_error(_("error in evaluating a 'primitive' next method: %s"),
+	     CHAR(STRING_ELT(R_conditionMessage(err), 0)));
+    return R_NilValue;
+}
+
+static void R_nextMethodCallFinally(void *data)
+{
+    /* reset the methods:  R_NilValue for the mlist argument
+       leaves the previous function, methods list unchanged */
+    SEXP op = (SEXP) data;
+    do_set_prim_method(op, "set", R_NilValue, R_NilValue);
+}
+
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 {
     SEXP e, val, args, this_sym, op;
-    int i, nargs = length(matched_call)-1, error_flag;
+    int i, nargs = length(matched_call)-1;
     Rboolean prim_case;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
      * going into an infinite loop of method calls
@@ -692,15 +786,10 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	    SETCAR(args, this_sym);
 	args = CDR(args);
     }
-    if(prim_case) {
-	val = R_tryEvalSilent(e, ev, &error_flag);
-	/* reset the methods:  R_NilValue for the mlist argument
-	   leaves the previous function, methods list unchanged */
-	do_set_prim_method(op, "set", R_NilValue, R_NilValue);
-	if(error_flag)
-	    Rf_error(_("error in evaluating a 'primitive' next method: %s"),
-		     R_curErrorBuf());
-    }
+    if(prim_case)
+	val = R_evalHandleErrorProtect(e, ev,
+				       &R_nextMethodCallCleanup, NULL,
+				       &R_nextMethodCallFinally, op);
     else
 	val = eval(e, ev);
     UNPROTECT(2);
@@ -907,7 +996,7 @@ static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
     return ee;
 }
 
-static SEXP dots_class(SEXP ev, int *checkerrP)
+static SEXP dots_class(SEXP ev, void *cleandata)
 {
     static SEXP call = NULL; SEXP  ee;
     if(call == NULL) {
@@ -921,7 +1010,7 @@ static SEXP dots_class(SEXP ev, int *checkerrP)
 	SETCAR(ee, R_dots);
 	UNPROTECT(1);
     }
-    return R_tryEvalSilent(call, ev, checkerrP);
+    return R_evalHandleError(call, ev, &argEvalCleanup, cleandata);
 }
 
 static SEXP do_mtable(SEXP fdef, SEXP ev)
@@ -993,21 +1082,16 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	    thisClass = s_missing;
 	else {
 	    /*  get its class */
-	    SEXP arg; int check_err = 0;
-	    if(arg_sym == R_dots) {
-		thisClass = dots_class(ev, &check_err);
-	    }
+	    argEvalCleanup_t cleandata = { .fname = fname, .arg_sym = arg_sym };
+	    if(arg_sym == R_dots)
+		thisClass = dots_class(ev, &cleandata);
 	    else {
-		PROTECT(arg = eval(arg_sym, ev));
-		/* PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); // <- related to bug PR#16111 */
-		/* if(!check_err) */
+		SEXP arg = PROTECT(R_evalHandleError(arg_sym, ev,
+						     &argEvalCleanup,
+						     &cleandata));
 		thisClass = R_data_class(arg, TRUE);
 		UNPROTECT(1); /* arg */
 	    }
-	    if(check_err)
-		error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
-		      CHAR(PRINTNAME(arg_sym)), CHAR(asChar(fname)),
-		      R_curErrorBuf());
 	}
 	SET_VECTOR_ELT(classes, i, thisClass);
 	lwidth += (int) strlen(STRING_VALUE(thisClass)) + 1;
