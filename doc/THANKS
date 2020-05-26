@@ -2,21 +2,22 @@ R would not be what it is today without the invaluable help of these
 people outside of the (former and current) R Core team, who
 contributed by donating code, bug fixes and documentation:
 
-Valerio Aimale, Suharto Anggono, Thomas Baier, Henrik Bengtsson, Roger
-Bivand, Ben Bolker, David Brahm, G"oran Brostr"om, Patrick Burns,
-Vince Carey, Saikat DebRoy, Matt Dowle, Brian D'Urso, Lyndon Drake,
-Dirk Eddelbuettel, Claus Ekstrom, Sebastian Fischmeister, John Fox,
-Gabe Becker, Paul Gilbert, Yu Gong, Gabor Grothendieck, Frank E
-Harrell Jr, Peter M. Haverty, Torsten Hothorn, Robert King, Kjetil
-Kjernsmo, Roger Koenker, Philippe Lambert, Jan de Leeuw, Jim Lindsey,
-Patrick Lindsey, Catherine Loader, Gordon Maclean, Arni Magnusson,
-John Maindonald, David Meyer, Ei-ji Nakama, Jens Oehlschl"agel, Steve
-Oncley, Richard O'Keefe, Hubert Palme, Roger D. Peng, Jose'
-C. Pinheiro, Tony Plate, Anthony Rossini, Jonathan Rougier, Petr
-Savicky, Guenther Sawitzki, Marc Schwartz, Arun Srinivasan, Detlef
-Steuer, Bill Simpson, Gordon Smyth, Adrian Trapletti, Terry Therneau,
-Rolf Turner, Bill Venables, Gregory R. Warnes, Andreas Weingessel,
-Morten Welinder, James Wettenhall, Simon Wood, and Achim Zeileis.
+Valerio Aimale, Suharto Anggono, Thomas Baier, Gabe Becker, Henrik
+Bengtsson, Roger Bivand, Ben Bolker, David Brahm, G"oran Brostr"om,
+Patrick Burns, Vince Carey, Saikat DebRoy, Matt Dowle, Brian D'Urso,
+Lyndon Drake, Dirk Eddelbuettel, Claus Ekstrom, Sebastian
+Fischmeister, John Fox, Paul Gilbert, Yu Gong, Gabor Grothendieck,
+Frank E Harrell Jr, Peter M. Haverty, Torsten Hothorn, Robert King,
+Kjetil Kjernsmo, Roger Koenker, Philippe Lambert, Jan de Leeuw, Jim
+Lindsey, Patrick Lindsey, Catherine Loader, Gordon Maclean, Arni
+Magnusson, John Maindonald, David Meyer, Ei-ji Nakama, Jens
+Oehlschl"agel, Steve Oncley, Richard O'Keefe, Hubert Palme, Roger
+D. Peng, Jose' C. Pinheiro, Tony Plate, Anthony Rossini, Jonathan
+Rougier, Petr Savicky, Guenther Sawitzki, Marc Schwartz, Arun
+Srinivasan, Detlef Steuer, Bill Simpson, Gordon Smyth, Adrian
+Trapletti, Terry Therneau, Rolf Turner, Bill Venables, Gregory
+R. Warnes, Andreas Weingessel, Morten Welinder, James Wettenhall,
+Simon Wood, and Achim Zeileis.
 
 Others have written code that has been adopted by R and is
 acknowledged in the code files, including
