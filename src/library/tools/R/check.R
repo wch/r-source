@@ -5056,6 +5056,10 @@ add_dummies <- function(dir, Log)
                 ex_re <- "(BH/include/boost|RcppArmadillo/include/armadillo_bits)/.*\\[-Wtautological-overlap-compare\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## Filter out Eigen header warnings
+                ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+              
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
