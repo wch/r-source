@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -632,8 +632,13 @@ loadNamespace <- function (package, lib.loc = NULL,
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pattern = p, all.names = TRUE), exports)
         ##
-        if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(ns) &&
-           !identical(package, "methods") ) {
+        if(.isMethodsDispatchOn() && !(hasS4m <- methods:::.hasS4MetaData(ns)) &&
+           any(lengths(nsInfo[c("exportClasses", "exportMethods", "exportClassPatterns")]))) {
+            warning(gettextf(
+                "S4 exports specified in 'NAMESPACE' but not defined in package %s",
+                sQuote(package)), call. = FALSE, domain = NA)
+        }
+        if(.isMethodsDispatchOn() && hasS4m && !identical(package, "methods") ) {
             ## cache generics, classes in this namespace (but not methods itself,
             ## which pre-cached at install time
             methods::cacheMetaData(ns, TRUE, ns)

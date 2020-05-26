@@ -134,6 +134,11 @@
       \item \code{parallel::detect.cores(all.tests = TRUE)} tries a
       matching OS name before the other tests (which were intended only
       for unknown OSes).
+
+      \item \command{R CMD check} etc now warn when a package exports
+      non-existing S4 classes or methods, also in case of no "methods"
+      presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
+      Meyer in \PR{16662}.
     }
   }
 }
