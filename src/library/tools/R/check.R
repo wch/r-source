@@ -5526,7 +5526,9 @@ add_dummies <- function(dir, Log)
                 summaryLog(Log)
                 do_exit(1L)
             } else {
-                if(length(res[["orphaned"]])) warningLog(Log) else noteLog(Log)
+                if( length(res[["orphaned"]]) || length(res[["orphaned1"]]) )
+                    warningLog(Log)
+                else noteLog(Log)
                 printLog0(Log, paste(out, collapse = "\n"))
                 ## if(length(res$orphaned2))
                 ##     wrapLog("\nSuggested packages need to be used conditionally:",
