@@ -157,7 +157,8 @@ static int CairoNewPatternIndex(pX11Desc xd)
             return i;
         }
     }    
-    error(_("Cairo patterns exhausted (try opening device with more patterns)"));
+    warning(_("Cairo patterns exhausted (try opening device with more patterns)"));
+    return -1;
 }
 
 static cairo_pattern_t* CairoLinearGradient(SEXP gradient, pX11Desc xd)
@@ -268,9 +269,11 @@ static cairo_pattern_t *CairoCreatePattern(SEXP pattern, pX11Desc xd)
 static int CairoSetPattern(SEXP pattern, pX11Desc xd)
 {
     int index = CairoNewPatternIndex(xd);
-    cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
+    if (index >= 0) {
+        cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
 
-    xd->patterns[index] = cairo_pattern;
+        xd->patterns[index] = cairo_pattern;
+    }
     return index;
 }
 
@@ -312,7 +315,12 @@ static void CairoReusePattern(SEXP pattern, int index, pX11Desc xd)
 static void CairoPatternFill(SEXP ref, pX11Desc xd)
 {
     int index = INTEGER(ref)[0];
-    cairo_set_source(xd->cc, xd->patterns[index]);
+    if (index >= 0) {
+        cairo_set_source(xd->cc, xd->patterns[index]);
+    } else {
+        /* Patterns may have been exhausted */
+	cairo_set_source_rgba(xd->cc, 0.0, 0.0, 0.0, 0.0);
+    }
     cairo_fill_preserve(xd->cc);
 }
 
@@ -493,6 +501,7 @@ static void CairoDestroyMasks(pX11Desc xd)
     for (i = 0; i < xd->numMasks; i++) {
         if (xd->masks[i] != NULL) {
             cairo_pattern_destroy(xd->masks[i]);
+            xd->masks[i] = NULL;
         }
     }    
     free(xd->masks);
@@ -506,7 +515,8 @@ static int CairoNewMaskIndex(pX11Desc xd)
             return i;
         }
     }    
-    error(_("Cairo masks exhausted (try opening device with more masks)"));
+    warning(_("Cairo masks exhausted (try opening device with more masks)"));
+    return -1;
 }
 
 static cairo_pattern_t *CairoCreateMask(SEXP mask, pX11Desc xd)
@@ -536,16 +546,20 @@ static SEXP CairoSetMask(SEXP mask, SEXP ref, pX11Desc xd)
         if (isNull(ref)) {
             /* Create a new mask */
             index = CairoNewMaskIndex(xd);
-            cairo_mask = CairoCreateMask(mask, xd);
-            xd->masks[index] = cairo_mask;
+            if (index >= 0) {
+                cairo_mask = CairoCreateMask(mask, xd);
+                xd->masks[index] = cairo_mask;
+            }
         } else {
             /* Reuse existing mask */
             index = INTEGER(ref)[0];
-            if (!xd->masks[index]) {
+            if (index >= 0 && !xd->masks[index]) {
                 /* But if it does not exist, make a new one */
                 index = CairoNewMaskIndex(xd);
-                cairo_mask = CairoCreateMask(mask, xd);
-                xd->masks[index] = cairo_mask;
+                if (index >= 0) {
+                    cairo_mask = CairoCreateMask(mask, xd);
+                    xd->masks[index] = cairo_mask;
+                }
             }
         }
         newref = PROTECT(allocVector(INTSXP, 1));
