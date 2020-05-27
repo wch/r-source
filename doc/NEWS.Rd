@@ -51,6 +51,9 @@
       \item \code{parallel::detect.cores(all.tests = TRUE)} tries a
       matching OS name before the other tests (which were intended only
       for unknown OSes).
+
+      \item Parse data for raw strings is now recorded correctly. Reported
+      by Gabor Csardi.
     }
   }
 }
