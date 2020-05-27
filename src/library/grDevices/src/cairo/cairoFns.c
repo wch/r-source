@@ -674,6 +674,8 @@ static void Cairo_Rect(double x0, double y0, double x1, double y1,
             cairo_pattern_t *mask = xd->masks[xd->currentMask];
             cairo_set_source(xd->cc, source);
             cairo_mask(xd->cc, mask);
+            /* Release temporary pattern */
+            cairo_pattern_destroy(source);
         }
     }
 }
@@ -715,6 +717,8 @@ static void Cairo_Circle(double x, double y, double r,
             cairo_pattern_t *mask = xd->masks[xd->currentMask];
             cairo_set_source(xd->cc, source);
             cairo_mask(xd->cc, mask);
+            /* Release temporary pattern */
+            cairo_pattern_destroy(source);
         }
     }
 }
@@ -746,6 +750,8 @@ static void Cairo_Line(double x1, double y1, double x2, double y2,
                 cairo_pattern_t *mask = xd->masks[xd->currentMask];
                 cairo_set_source(xd->cc, source);
                 cairo_mask(xd->cc, mask);
+                /* Release temporary pattern */
+                cairo_pattern_destroy(source);
             }
         }
     }
@@ -779,6 +785,8 @@ static void Cairo_Polyline(int n, double *x, double *y,
                 cairo_pattern_t *mask = xd->masks[xd->currentMask];
                 cairo_set_source(xd->cc, source);
                 cairo_mask(xd->cc, mask);
+                /* Release temporary pattern */
+                cairo_pattern_destroy(source);
             }
         }
     }
@@ -823,6 +831,8 @@ static void Cairo_Polygon(int n, double *x, double *y,
             cairo_pattern_t *mask = xd->masks[xd->currentMask];
             cairo_set_source(xd->cc, source);
             cairo_mask(xd->cc, mask);
+            /* Release temporary pattern */
+            cairo_pattern_destroy(source);
         }
     }
 }
@@ -884,6 +894,8 @@ static void Cairo_Path(double *x, double *y,
             cairo_pattern_t *mask = xd->masks[xd->currentMask];
             cairo_set_source(xd->cc, source);
             cairo_mask(xd->cc, mask);
+            /* Release temporary pattern */
+            cairo_pattern_destroy(source);
         }
     }
 }
@@ -1002,6 +1014,8 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
         cairo_pattern_t *mask = xd->masks[xd->currentMask];
         cairo_set_source(xd->cc, source);
         cairo_mask(xd->cc, mask);
+        /* Release temporary pattern */
+        cairo_pattern_destroy(source);
     }
 
     cairo_restore(xd->cc);
@@ -1257,6 +1271,8 @@ PangoCairo_Text(double x, double y,
             cairo_pattern_t *mask = xd->masks[xd->currentMask];
             cairo_set_source(xd->cc, source);
             cairo_mask(xd->cc, mask);
+            /* Release temporary pattern */
+            cairo_pattern_destroy(source);
         }
 
 	cairo_restore(xd->cc);
@@ -1608,6 +1624,8 @@ static void Cairo_Text(double x, double y,
             cairo_pattern_t *mask = xd->masks[xd->currentMask];
             cairo_set_source(xd->cc, source);
             cairo_mask(xd->cc, mask);
+            /* Release temporary pattern */
+            cairo_pattern_destroy(source);
         }
 
 	cairo_restore(xd->cc);
