@@ -139,6 +139,9 @@
       non-existing S4 classes or methods, also in case of no "methods"
       presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
       Meyer in \PR{16662}.
+
+      \item Parse data for raw strings is now recorded correctly. Reported
+      by Gabor Csardi.
     }
   }
 }

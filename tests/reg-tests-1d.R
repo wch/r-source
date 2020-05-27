@@ -4007,6 +4007,13 @@ stopifnot(exprs = {
 # .. was wrong for a few days
 
 
+## check raw string parse data
+p <- parse(text = 'r"-(hello)-"', keep.source = TRUE)
+stopifnot(identical(getParseData(p)$text, c("r\"-(hello)-\"", "")))
+rm(p)
+# (wrong in R 4.0.0; reorted by Gabor Csardi)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
