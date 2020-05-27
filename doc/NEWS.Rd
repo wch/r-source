@@ -85,7 +85,7 @@
    }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.0 patched}{
+\section{\Rlogo CHANGES IN R 4.0.1}{
 
   \subsection{NEW FEATURES}{
     \itemize{
