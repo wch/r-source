@@ -4233,6 +4233,8 @@ SEXP (SETCAD4R)(SEXP x, SEXP y)
     return y;
 }
 
+void *(EXTPTR_PTR)(SEXP x) { return EXTPTR_PTR(CHK(x)); }
+
 void (SET_MISSING)(SEXP x, int v) { SET_MISSING(CHKCONS(x), v); }
 
 /* Closure Accessors */
