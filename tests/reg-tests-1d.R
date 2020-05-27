@@ -4014,6 +4014,14 @@ rm(p)
 # (wrong in R 4.0.0; reorted by Gabor Csardi)
 
 
+## make sure there is n aliasing in assignments with partial matching
+v <- list(misc = c(1))
+v$mi[[1]] <- 2
+stopifnot(v$misc == 1)
+rm(v)
+# defensive reference counts needed; missing in R 4.0.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

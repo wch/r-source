@@ -1265,6 +1265,10 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    case PARTIAL_MATCH:
 		havematch++;
 		xmatch = y;
+#ifdef SWITCH_TO_REFCNT
+		if (IS_GETTER_CALL(call))
+		    MARK_NOT_MUTABLE(y);
+#endif
 		break;
 	    case NO_MATCH:
 		break;
@@ -1314,7 +1318,12 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		       This is overkill, but alternative ways to prevent
 		       the aliasing appear to be even worse */
 		    y = VECTOR_ELT(x,i);
+#ifdef SWITCH_TO_REFCNT
+		    if (IS_GETTER_CALL(call))
+			MARK_NOT_MUTABLE(y);
+#else
 		    ENSURE_NAMEDMAX(y);
+#endif
 		    SET_VECTOR_ELT(x,i,y);
 		}
 		imatch = i;
