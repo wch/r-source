@@ -2154,7 +2154,7 @@ add_dummies <- function(dir, Log)
             checkingLog(Log, "Rd line widths")
             Rcmd <- paste(opWarn_string, "\n",
                           if(do_install)
-                          sprintf("tools:::.check_Rd_line_widths(\"%s\", installed = TRUE)\n",
+                          sprintf("suppressPackageStartupMessages(tools:::.check_Rd_line_widths(\"%s\", installed = TRUE))\n",
                                   file.path(if(is_base_pkg) .Library else libdir,
                                             pkgname))
                           else
@@ -2361,7 +2361,7 @@ add_dummies <- function(dir, Log)
         if (dir.exists("man") && do_install && !extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in examples")
             Rcmd <- paste(opW_shE_F_str,
-                          sprintf("tools:::.check_packages_used_in_examples(package = \"%s\")\n", pkgname))
+                          sprintf("suppressPackageStartupMessages(tools:::.check_packages_used_in_examples(package = \"%s\"))\n", pkgname))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
@@ -5059,7 +5059,7 @@ add_dummies <- function(dir, Log)
                 ## Filter out Eigen header warnings
                 ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
-              
+
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
