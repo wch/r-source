@@ -3928,26 +3928,28 @@ stopifnot(exprs = {
     identical(paste0(), ch0)
     identical(paste (collapse= "A"  ), "")
     identical(paste0(collapse="foof"), "")
-    identical(paste (collapse= "A"  , recycle0 = TRUE), ch0)
-    identical(paste0(collapse="foof", recycle0 = TRUE), ch0)
+    identical(paste (collapse= "A"  , recycle0 = TRUE), "") # new!
+    identical(paste0(collapse="foof", recycle0 = TRUE), "") # new!
     ##
     ## b) when all '...'  arguments have length 0 :
     ## ---- collapse = NULL -------------
-    identical(paste({}),                     ch0)
+    identical(paste({}),                  ch0)
     identical(paste({}, recycle0 = TRUE), ch0)
-    identical(paste({}, NULL, ch0),                     ch0)
+    identical(paste({}, NULL, ch0),                  ch0)
     identical(paste({}, NULL, ch0, recycle0 = TRUE), ch0)
     ## ---- collapse not NULL ---------
-    identical(paste({}, collapse=""),                      "")
-    identical(paste({}, collapse="", recycle0 = TRUE), ch0)
-    identical(paste({}, NULL, ch0, collapse=""),                      "")
-    identical(paste({}, NULL, ch0, collapse="", recycle0 = TRUE), ch0)
+    identical(paste({}, collapse=""),                              "")
+    identical(paste({}, collapse="", recycle0 = TRUE),             "") # new!
+    identical(paste({}, NULL, ch0, collapse=""),                   "")
+    identical(paste({}, NULL, ch0, collapse="", recycle0 = TRUE),  "") # new!
     ##
     ## c) when *one* of the ...-args has length 0 :
     identical(paste ("foo", character(0), "bar", recycle0 = FALSE), "foo  bar")
     identical(paste0("foo", character(0), "bar", recycle0 = FALSE), "foobar")
     identical(paste ("foo", character(0), "bar", recycle0 = TRUE), ch0)
     identical(paste0("foo", character(0), "bar", recycle0 = TRUE), ch0)
+    identical(paste ("foo", character(0), "bar", recycle0 = TRUE, collapse="A"), "")
+    identical(paste0("foo", character(0), "bar", recycle0 = TRUE, collapse="A"), "")
 })
 ## 0-length recycling with default recycle0 = FALSE has always been "unusual"
 ## -----------------  with     recycle0 = TRUE      returns 0-length i.e. character(0)

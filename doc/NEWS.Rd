@@ -91,9 +91,10 @@
     \itemize{
       \item \code{paste()} and \code{paste0()} gain a new optional
       argument \code{recycle0}.  When set to true, zero-length
-      arguments (and all zero-length or no arguments when \code{collapse}
-      is not \code{NULL}) lead to the zero-length value
-      \code{character(0)}.
+      arguments are recycled leading to \code{character(0)} after the
+      \code{sep}-concatenation, i.e., to the empty string \code{""} if
+      \code{collapse} is a string and to the zero-length value
+      \code{character(0)} when \code{collapse=NULL}.
 
       This should not be used in package code until \R 4.0.1 is
       released, when the package should depend on \samp{R (>= 4.0.1)}.

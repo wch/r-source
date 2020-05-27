@@ -72,7 +72,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    REprintf("%d arguments passed to .Internal(%s) which requires %d;\n an S4 method"
 		     " may need to be redefined, typically by re-installing a package\n",
 		     nargs, PRIMNAME(op), PRIMARITY(op));
-#endif 
+#endif
 	}
 	else // not even "ok":
 	    error(ngettext("%d argument passed to .Internal(%s) which requires %d",
@@ -117,13 +117,14 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(correct_nargs)
 	    recycle_0 = asLogical(CADDR(args));
     }
-    if (!isNull(collapse))
+    Rboolean do_collapse = (collapse != R_NilValue); // == !isNull(collapse)
+    if (do_collapse)
 	if(!isString(collapse) || LENGTH(collapse) <= 0 ||
 	   STRING_ELT(collapse, 0) == NA_STRING)
 	    error(_("invalid '%s' argument"), "collapse");
 
 #define zero_return  \
-    return (recycle_0 || isNull(collapse)) ? allocVector(STRSXP, 0) : mkString("")
+    return (do_collapse ? mkString("") : allocVector(STRSXP, 0))
 
     if(nx == 0)
 	zero_return;
@@ -156,10 +157,10 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	        maxlen = XLENGTH(VECTOR_ELT(x, j));
     }
     if(recycle_0 && has_0_len) // one of the args was character(0)
-	return allocVector(STRSXP, 0);
+	zero_return;
     if(maxlen == 0) // all of the arguments where (equivalent to)  character(0)
 	zero_return;
-    
+
     SEXP ans = PROTECT( allocVector(STRSXP, maxlen));
 
     Rboolean allKnown, anyKnown, use_UTF8, use_Bytes;
@@ -254,13 +255,13 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Now collapse, if required. */
 
-    if(collapse != R_NilValue && (nx = XLENGTH(ans)) > 0) {
+    if(do_collapse && (nx = XLENGTH(ans)) > 0) {
 	sep = STRING_ELT(collapse, 0);
 	use_UTF8 = IS_UTF8(sep);
 	use_Bytes = IS_BYTES(sep);
 	for (R_xlen_t i = 0; i < nx; i++) {
-	    if(IS_UTF8(STRING_ELT(ans, i))) use_UTF8 = TRUE;
-	    if(IS_BYTES(STRING_ELT(ans, i))) use_Bytes = TRUE;
+	    if(!use_UTF8  && IS_UTF8 (STRING_ELT(ans, i))) use_UTF8  = TRUE;
+	    if(!use_Bytes && IS_BYTES(STRING_ELT(ans, i))) use_Bytes = TRUE;
 	}
 	if(use_Bytes) {
 	    csep = CHAR(sep);
@@ -300,7 +301,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while (*buf)
 		buf++;
 	    allKnown = allKnown &&
-		(strIsASCII(s) || (ENC_KNOWN(STRING_ELT(ans, i)) > 0));
+		(strIsASCII(s)  || (ENC_KNOWN(STRING_ELT(ans, i)) > 0));
 	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i)) > 0);
 	    if(use_UTF8) vmaxset(vmax);
 	}
@@ -310,7 +311,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if(use_Bytes) ienc = CE_BYTES;
 	else if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
-	    if(known_to_be_utf8) ienc = CE_UTF8;
+	    if(known_to_be_utf8)   ienc = CE_UTF8;
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));
 	SET_STRING_ELT(ans, 0, mkCharCE(cbuf, ienc));
