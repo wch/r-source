@@ -1,8 +1,5 @@
 
 ## Create R objects defining patterns
-## These OVERRIDE functions like grDevices::linearGradient()
-## When a 'grid' GridLinearGradient needs resolving, we
-## create a 'grDevices' LinearGradient
 
 is.pattern <- function(x) {
     inherits(x, "GridPattern")
@@ -154,10 +151,10 @@ resolvePattern <- function(pattern) {
 resolvePattern.GridLinearGradient <- function(pattern) {
     p1 <- deviceLoc(pattern$x1, pattern$y1, valueOnly=TRUE, device=TRUE)
     p2 <- deviceLoc(pattern$x2, pattern$y2, valueOnly=TRUE, device=TRUE)
-    index <- setPattern(grDevices::linearGradient(pattern$colours,
-                                                  pattern$stops,
-                                                  p1$x, p1$y, p2$x, p2$y,
-                                                  extend=pattern$extend))
+    index <- setPattern(linearGradientPattern(pattern$colours,
+                                              pattern$stops,
+                                              p1$x, p1$y, p2$x, p2$y,
+                                              extend=pattern$extend))
     resolvedPattern(pattern, index)
 }
 
@@ -172,16 +169,16 @@ resolvePattern.GridRadialGradient <- function(pattern) {
                                         valueOnly=TRUE, device=TRUE))^2)),
               sqrt(sum(unlist(deviceDim(pattern$r2, unit(0, "in"), 
                                         valueOnly=TRUE, device=TRUE))^2)))
-    index <- setPattern(grDevices::radialGradient(pattern$colours,
-                                                  pattern$stops,
-                                                  c1$x, c1$y, r1,
-                                                  c2$x, c2$y, r2,
-                                                  extend=pattern$extend))
+    index <- setPattern(radialGradientPattern(pattern$colours,
+                                              pattern$stops,
+                                              c1$x, c1$y, r1,
+                                              c2$x, c2$y, r2,
+                                              extend=pattern$extend))
     resolvedPattern(pattern, index)
 }
 
 resolvePattern.GridFunctionPattern <- function(pattern) {
-    index <- setPattern(grDevices::functionPattern(pattern$f))
+    index <- setPattern(functionPattern(pattern$f))
     resolvedPattern(pattern, index)
 }
 
