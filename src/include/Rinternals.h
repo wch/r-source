@@ -516,6 +516,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define LISTVAL(x)	((x)->u.listsxp)
 #define TAG(e)		((e)->u.listsxp.tagval)
 #define CAR0(e)		((e)->u.listsxp.carval)
+#define EXTPTR_PTR(e)	((e)->u.listsxp.carval)
 #define CDR(e)		((e)->u.listsxp.cdrval)
 #define CAAR(e)		CAR(CAR(e))
 #define CDAR(e)		CDR(CAR(e))
@@ -910,6 +911,7 @@ SEXP SETCADR(SEXP x, SEXP y);
 SEXP SETCADDR(SEXP x, SEXP y);
 SEXP SETCADDDR(SEXP x, SEXP y);
 SEXP SETCAD4R(SEXP e, SEXP y);
+void *(EXTPTR_PTR)(SEXP);
 
 SEXP CONS_NR(SEXP a, SEXP b);
 
@@ -968,9 +970,9 @@ void (SET_HASHVALUE)(SEXP x, int v);
 
 
 /* External pointer access macros */
-#define EXTPTR_PTR(x)	CAR0(x)
 #define EXTPTR_PROT(x)	CDR(x)
 #define EXTPTR_TAG(x)	TAG(x)
+/* EXTPTR_PTR is defined above within USE_RINTERNALS */
 
 /* Bytecode access macros */
 #define BCODE_CODE(x)	CAR(x)
