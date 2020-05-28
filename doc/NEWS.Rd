@@ -50,6 +50,13 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} skips vignette re-building (with a
+      warning) if the \samp{VignetteBuilder} package(s) are not available.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Function \code{plclust()} from the package \pkg{stats}, and
