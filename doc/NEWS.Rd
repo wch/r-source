@@ -93,6 +93,10 @@
       non-existing S4 classes or methods, also in case of no "methods"
       presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
       Meyer in \PR{16662}.
+
+      \item \code{round()} and \code{signif()} now longer tolerate wrong
+      argument names, notably in 1-argument calls; reported by Shane
+      Mueller on R-devel (mailing list).
     }
   }
 }

@@ -1649,13 +1649,20 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     n = length(args);
     if (n != 1 && n != 2)
 	error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments",
-		       "%d arguments passed to '%s'which requires 1 or 2 arguments", n),
+		       "%d arguments passed to '%s' which requires 1 or 2 arguments", n),
 	      n, PRIMNAME(op));
 
+    static SEXP R_x_Symbol = NULL;
     if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	if(n == 1) {
-	    double digits = 0.0;
-	    if(PRIMVAL(op) == 10004) digits = 6.0;
+	    if(R_x_Symbol == NULL) R_x_Symbol = install("x");
+	    // Ensure  we do not call it with a mis-named argument:
+	    if(CAR(args) == R_MissingArg ||
+	       (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
+		error(_("argument \"%s\" is missing, with no default"), "x");
+	    double digits = 0.0; // round()
+	    if(PRIMVAL(op) == 10004) // signif()
+		digits = 6.0;
 	    SETCDR(args, CONS(ScalarReal(digits), R_NilValue));
 	} else {
 	    /* If named, do argument matching by name */
