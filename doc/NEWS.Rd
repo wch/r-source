@@ -15,8 +15,7 @@
       is not \code{NULL}) lead to the zero-length value
       \code{character(0)}.
 
-      This should not be used in package code until \R 4.0.1 is
-      released, when the package should depend on \samp{R (>= 4.0.1)}.
+      A package whose code uses this should depend on \samp{R (>= 4.0.1)}.
 
       \item The \code{summary(<warnings>)} method now maps the counts
       correctly to the warning messages.
