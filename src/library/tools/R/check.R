@@ -3543,7 +3543,10 @@ add_dummies <- function(dir, Log)
             Rcmd <-
                 sprintf("%s\ntools:::.load_namespace_rather_quietly(\"%s\")",
                         opWarn_string, pkgname)
-            out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
+            env2 <- Sys.getenv("_R_LOAD_CHECK_S4_EXPORTS_", "NA")
+            env2 <- paste0("_R_LOAD_CHECK_S4_EXPORTS_=",
+                           if(env2 == "all") env else pkgname)
+            out <- R_runR0(Rcmd, opts, c(env, env1, env2), arch = arch)
             any <- FALSE
             if (any(startsWith(out, "Error")) || length(attr(out, "status"))) {
                 warningLog(Log)

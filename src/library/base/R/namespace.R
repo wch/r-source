@@ -632,8 +632,11 @@ loadNamespace <- function (package, lib.loc = NULL,
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pattern = p, all.names = TRUE), exports)
         ##
-        if(.isMethodsDispatchOn() && !(hasS4m <- methods:::.hasS4MetaData(ns)) &&
-           any(lengths(nsInfo[c("exportClasses", "exportMethods", "exportClassPatterns")]))) {
+        if(.isMethodsDispatchOn() &&
+           !(hasS4m <- methods:::.hasS4MetaData(ns)) &&
+           any(lengths(nsInfo[c("exportClasses", "exportMethods",
+                                "exportClassPatterns")])) &&
+           Sys.getenv("_R_LOAD_CHECK_S4_EXPORTS_") %in% c(package, "all")) {
             warning(gettextf(
                 "S4 exports specified in 'NAMESPACE' but not defined in package %s",
                 sQuote(package)), call. = FALSE, domain = NA)
