@@ -3563,12 +3563,17 @@ add_dummies <- function(dir, Log)
                 if(config_val_to_logical(check_imports_flag))
                     out <- filtergrep("Warning: replacing previous import", out,
                                       fixed = TRUE)
-                if(any(startsWith(out, "Warning"))) {
+                if(any(startsWith(out, "Warning: S4 exports"))) {
+                    warningLog(Log)
+                    any <- if(length(out) == 1L) NA else TRUE
+                } else if(any(startsWith(out, "Warning"))) {
                     noteLog(Log)
                     any <- TRUE
                 }
             }
-            if(any) {
+            if (is.na(any)) {
+                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+            } else if(any) {
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("\nA namespace must be able to be loaded",
                         "with just the base namespace loaded:",
