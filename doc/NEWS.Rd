@@ -94,10 +94,9 @@
       arguments are recycled leading to \code{character(0)} after the
       \code{sep}-concatenation, i.e., to the empty string \code{""} if
       \code{collapse} is a string and to the zero-length value
-      \code{character(0)} when \code{collapse=NULL}.
+      \code{character(0)} when \code{collapse = NULL}.
 
-      This should not be used in package code until \R 4.0.1 is
-      released, when the package should depend on \samp{R (>= 4.0.1)}.
+      A package whose code uses this should depend on \samp{R (>= 4.0.1)}.
 
       \item The \code{summary(<warnings>)} method now maps the counts
       correctly to the warning messages.
