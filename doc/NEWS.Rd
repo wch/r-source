@@ -47,6 +47,9 @@
       \code{method = "radix"}.  Consequently, e.g., \code{merge(<data.frame>)}
       was much slower than previously; reported in \PR{17794}.
 
+      \item \code{plot(y ~ x, ylab = quote(y[i]))} now works, as e.g., for
+      \code{xlab}; related to \PR{10525}.
+
       \item \code{parallel::detect.cores(all.tests = TRUE)} tries a
       matching OS name before the other tests (which were intended only
       for unknown OSes).
