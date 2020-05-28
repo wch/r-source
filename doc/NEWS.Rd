@@ -76,20 +76,25 @@
     }
   }
 
-   \subsection{BUG FIXES}{
-     \itemize{
-       \item Many more C-level allocations (mainly by \code{malloc} and
-       \code{strdup}) are checked for success with suitable alternative
-       actions.
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Many more C-level allocations (mainly by \code{malloc} and
+      \code{strdup}) are checked for success with suitable alternative
+      actions.
 
-       \item Bug fix for \code{replayPlot()};  this was turning off
-       graphics engine display list recording if a recorded plot was
-       replayed in the same session.  The impact of the bug became
-       visible if resize the device after replay OR if attempted another
-       \code{savePlot()} after replay (empty display list means empty
-       screen on resize or empty saved plot).
-     }
-   }
+      \item Bug fix for \code{replayPlot()};  this was turning off
+      graphics engine display list recording if a recorded plot was
+      replayed in the same session.  The impact of the bug became
+      visible if resize the device after replay OR if attempted another
+      \code{savePlot()} after replay (empty display list means empty
+      screen on resize or empty saved plot).
+
+      \item \command{R CMD check} etc now warn when a package exports
+      non-existing S4 classes or methods, also in case of no "methods"
+      presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
+      Meyer in \PR{16662}.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 4.0.1}{
@@ -141,11 +146,6 @@
       \item \code{parallel::detect.cores(all.tests = TRUE)} tries a
       matching OS name before the other tests (which were intended only
       for unknown OSes).
-
-      \item \command{R CMD check} etc now warn when a package exports
-      non-existing S4 classes or methods, also in case of no "methods"
-      presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
-      Meyer in \PR{16662}.
 
       \item Parse data for raw strings is now recorded correctly. Reported
       by Gabor Csardi.
