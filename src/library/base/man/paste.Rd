@@ -19,9 +19,10 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
   \item{collapse}{an optional character string to separate the results.  Not
     \code{\link{NA_character_}}.}
   \item{recycle0}{\code{\link{logical}} indicating if zero-length
-    character arguments (and all zero-length or no arguments when
-    \code{collapse} is not \code{NULL}) should lead to the zero-length
-    \code{\link{character}(0)}.}
+    character arguments should lead to the zero-length
+    \code{\link{character}(0)} after the \code{sep}-phase (which turns into
+    \code{""} in the \code{collapse}-phase, i.e., when \code{collapse} is
+    not \code{NULL}).}
 }
 \description{
   Concatenate vectors after converting to character.
@@ -33,7 +34,7 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
   arguments are vectors, they are concatenated term-by-term to give a
   character vector result.  Vector arguments are recycled as needed,
   with zero-length arguments being recycled to \code{""} only if
-  \code{recycle0} is not true \emph{and} \code{collapse} is not
+  \code{recycle0} is not true \emph{or} \code{collapse} is not
   \code{NULL}.
 
   Note that \code{paste()} coerces \code{\link{NA_character_}}, the
@@ -50,9 +51,8 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
 }
 \value{
   A character vector of the concatenated values.  This will be of length
-  zero if all the objects are, unless both \code{collapse} is non-NULL and
-  \code{recycle0} is not true, in which case it is \code{""} (a single
-  empty string).
+  zero if all the objects are, unless \code{collapse} is non-NULL, in which
+  case it is \code{""} (a single empty string).
 
   If any input into an element of the result is in UTF-8 (and none are
   declared with encoding \code{"bytes"}, see \code{\link{Encoding}}),
@@ -124,10 +124,14 @@ plot(dist ~ speed, cars, main = title)
 valid <- FALSE
 val <- pi
 paste("The value is", val[valid], "-- not so good!")
-paste("The value is", val[valid], "-- good!", recycle0=TRUE) # -> character(0)
-paste(	  collapse="|")                  #|-->  ""
-paste(	  collapse="|", recycle0 = TRUE) #|-->  character(0)
-paste({}, collapse="|")                  #|-->  ""
-paste({}, collapse="|", recycle0 = TRUE) #|-->  character(0)
+paste("The value is", val[valid], "-- good: empty!", recycle0=TRUE) # -> character(0)
+## When  'collapse = <string>',  the result is a length-1 string :
+paste("foo", {}, "bar", collapse="|")                  # |-->  "foo  bar"
+paste("foo", {}, "bar", collapse="|", recycle0 = TRUE) # |-->  ""
+## all empty args
+paste(	  collapse="|")                  # |-->  ""  as do all these:
+paste(	  collapse="|", recycle0 = TRUE)
+paste({}, collapse="|")
+paste({}, collapse="|", recycle0 = TRUE)
 }
 \keyword{character}
