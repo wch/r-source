@@ -22,7 +22,8 @@
       as suggested in \PR{17777} by Jan Gorecki.
 
       \item Using \code{c()} to combine a factor with other factors
-      now gives a factor.
+      now gives a factor, and specifically an ordered factor when
+      combining ordered factors with identical levels.
 
       \item Graphics devices can now specify \code{canClip =
         NA_LOGICAL}, in which case the graphics engine will never
@@ -47,6 +48,11 @@
       that case, the default is changed to \code{TRUE} in line with its
       change in \code{read.table()} (related to \code{stringsAsFactor}) in
       \R 4.0.0.
+
+      \item When printing list arrays, classed objects are now shown via
+      their \code{format()} value if this is a short enough character
+      string, or by giving the first elements of their class vector and
+      their length. 
     }
   }
 
