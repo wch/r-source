@@ -1389,8 +1389,8 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 	    else stop("invalid list argument: all variables should have the same length")
 	    rows[[i]] <- ri <-
                 as.integer(seq.int(from = nrow + 1L, length.out = ni))
-	    nrow <- nrow + ni
 	    if(make.row.names) rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
+	    nrow <- nrow + ni
 	    if(length(nmi <- names(xi)) > 0L) {
 		if(is.null(clabs))
 		    clabs <- nmi
