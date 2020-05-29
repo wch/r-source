@@ -15,7 +15,7 @@
 }
 \usage{
 type.convert(x, \dots)
-\method{type.convert}{default}(x, na.strings = "NA", as.is = FALSE, dec = ".",
+\method{type.convert}{default}(x, na.strings = "NA", as.is, dec = ".",
              numerals = c("allow.loss", "warn.loss", "no.loss"), \dots)
 \method{type.convert}{data.frame}(x, \dots)
 \method{type.convert}{list}(x, \dots)
@@ -25,9 +25,9 @@ type.convert(x, \dots)
   \item{na.strings}{a vector of strings which are to be interpreted as
     \code{\link{NA}} values.  Blank fields are also considered to be
     missing values in logical, integer, numeric or complex vectors.}
-  \item{as.is}{whether convert to \code{\link{factor}}s.  When false (as by
-    default currently, but planned \bold{to be changed!}), convert
-    character vectors to factors.  See \sQuote{Details}.}
+  \item{as.is}{whether convert to \code{\link{factor}}s.  When false (was
+    default before \R 4.0.0), convert character vectors to factors.  See
+    \sQuote{Details}.}
   \item{dec}{the character to be assumed for decimal points.}
   \item{numerals}{string indicating how to convert numbers whose
     conversion to double precision would lose accuracy, typically when
@@ -54,9 +54,10 @@ type.convert(x, \dots)
   recursively for each column or list element.
 
   Given a vector, the function attempts to convert it to logical,
-  integer, numeric or complex, and failing that converts a character
-  vector to \code{\link{factor}} unless \code{as.is = TRUE}.  The first
-  type that can accept all the non-missing values is chosen.
+  integer, numeric or complex, and when additionally \code{as.is = FALSE}
+  (no longer the default!), converts a character vector to
+  \code{\link{factor}}.  The first type that can accept all the non-missing
+  values is chosen.
 
   Vectors which are entirely missing values are converted to logical,
   since \code{NA} is primarily logical.
@@ -70,8 +71,8 @@ type.convert(x, \dots)
   \link{NumericConstants}), or \code{NaN}, \code{Inf} or \code{infinity}
   (ignoring case) or values from \code{na.strings} are converted to
   numeric.  Where converting inputs to numeric or complex would result
-  in loss of accuracy they can optionally be returned as strings (for
-  \code{as.is = TRUE}) or factors.
+  in loss of accuracy they can optionally be returned as strings or (for
+  \code{as.is = FALSE}) factors.
 
   Since this is a helper function, the caller should always pass an
   appropriate value of \code{as.is}.

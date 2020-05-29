@@ -3928,26 +3928,28 @@ stopifnot(exprs = {
     identical(paste0(), ch0)
     identical(paste (collapse= "A"  ), "")
     identical(paste0(collapse="foof"), "")
-    identical(paste (collapse= "A"  , recycle0 = TRUE), ch0)
-    identical(paste0(collapse="foof", recycle0 = TRUE), ch0)
+    identical(paste (collapse= "A"  , recycle0 = TRUE), "") # new!
+    identical(paste0(collapse="foof", recycle0 = TRUE), "") # new!
     ##
     ## b) when all '...'  arguments have length 0 :
     ## ---- collapse = NULL -------------
-    identical(paste({}),                     ch0)
+    identical(paste({}),                  ch0)
     identical(paste({}, recycle0 = TRUE), ch0)
-    identical(paste({}, NULL, ch0),                     ch0)
+    identical(paste({}, NULL, ch0),                  ch0)
     identical(paste({}, NULL, ch0, recycle0 = TRUE), ch0)
     ## ---- collapse not NULL ---------
-    identical(paste({}, collapse=""),                      "")
-    identical(paste({}, collapse="", recycle0 = TRUE), ch0)
-    identical(paste({}, NULL, ch0, collapse=""),                      "")
-    identical(paste({}, NULL, ch0, collapse="", recycle0 = TRUE), ch0)
+    identical(paste({}, collapse=""),                              "")
+    identical(paste({}, collapse="", recycle0 = TRUE),             "") # new!
+    identical(paste({}, NULL, ch0, collapse=""),                   "")
+    identical(paste({}, NULL, ch0, collapse="", recycle0 = TRUE),  "") # new!
     ##
     ## c) when *one* of the ...-args has length 0 :
     identical(paste ("foo", character(0), "bar", recycle0 = FALSE), "foo  bar")
     identical(paste0("foo", character(0), "bar", recycle0 = FALSE), "foobar")
     identical(paste ("foo", character(0), "bar", recycle0 = TRUE), ch0)
     identical(paste0("foo", character(0), "bar", recycle0 = TRUE), ch0)
+    identical(paste ("foo", character(0), "bar", recycle0 = TRUE, collapse="A"), "")
+    identical(paste0("foo", character(0), "bar", recycle0 = TRUE, collapse="A"), "")
 })
 ## 0-length recycling with default recycle0 = FALSE has always been "unusual"
 ## -----------------  with     recycle0 = TRUE      returns 0-length i.e. character(0)
@@ -3992,6 +3994,54 @@ dd <- list(x = -4:4, w = 1/(1+(-4:4)^2))
 plot(w ~ x, data=dd, type = "h", xlab = quote(x[j]))                    # worked before
 plot(w ~ x, data=dd, type = "h", xlab = quote(x[j]), ylab = quote(y[j]))# *now* works
 ## main, sub, xlab worked (PR#10525)  but ylab did not in R <= 4.0.0
+
+
+## ...names()
+F <- function(x, ...) ...names()
+F(a, b="bla"/0, c=c, D=d, ..) # << does *not* evaluate arguments
+# |->  c("b", "c", "D", NA)
+stopifnot(exprs = {
+    identical(F(pi), character(0))
+    F(foo = "bar") == "foo"
+    identical(F(., .., .not.ok. = "a"-b, 2, 3, last = LAST),
+              c(  NA, ".not.ok.",      NA, NA,"last"))
+})
+# .. was wrong for a few days
+
+
+## check raw string parse data
+p <- parse(text = 'r"-(hello)-"', keep.source = TRUE)
+stopifnot(identical(getParseData(p)$text, c("r\"-(hello)-\"", "")))
+rm(p)
+# (wrong in R 4.0.0; reorted by Gabor Csardi)
+
+
+## make sure there is n aliasing in assignments with partial matching
+v <- list(misc = c(1))
+v$mi[[1]] <- 2
+stopifnot(v$misc == 1)
+rm(v)
+# defensive reference counts needed; missing in R 4.0.0
+
+
+## round() & signif() with one / wrong (named) argument(s):
+cat("Case 1 : round(1.12345):            ", round(  1.12345),"\n")
+cat("Case 2 : round(x=1.12345,2):        ", round(x=1.12345, 2),"\n")
+cat("Case 3 : round(x=1.12345,digits=2): ", round(x=1.12345, digits=2),"\n")
+cat("Case 4 : round(digits=2,x=1.12345): ", round(digits=2, x=1.12345),"\n")
+cat("Case 4b: round(digits=2,1.12345):   ", round(digits=2,1.12345),"\n")
+assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
+## R <= 4.0.0 does not produce error in cases 5,6 but should :
+cat("Case 5:    round(digits=x): \n")
+assertErrV(cat("round(digits=99.23456): ", round(digits=99.23456)))
+cat("Case 6:    round(banana=x): \n")
+assertErrV(cat("round(banana=99.23456): ", round(banana=99.23456)))
+## Cases 7,8 have been given an error already:
+cat("Case 7: round(x=1.12345, digits=2, banana=3):\n")
+assertErrV(  round(x=1.12345, digits=2, banana=3))
+cat("Case 8 : round(x=1.12345, banana=3):\n")
+assertErrV(  round(x=1.12345, banana=3))
+## (by Shane Mueller, to the R-devel m.list)
 
 
 

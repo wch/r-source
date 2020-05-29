@@ -4287,6 +4287,8 @@ SEXP (SETCAD4R)(SEXP x, SEXP y)
     return y;
 }
 
+void *(EXTPTR_PTR)(SEXP x) { return EXTPTR_PTR(CHK(x)); }
+
 void (SET_MISSING)(SEXP x, int v) { SET_MISSING(CHKCONS(x), v); }
 
 /* Closure Accessors */
@@ -4622,16 +4624,3 @@ R_len_t NORET R_BadLongVector(SEXP x, const char *file, int line)
     error(_("long vectors not supported yet: %s:%d"), file, line);
 }
 #endif
-
-/* added in R 4.1.0.
-   This checks if it succeeds.
-   FIXME: is this worth inlining?
- */
-char *Rstrdup(const char *s)
-{
-    size_t nb = strlen(s) + 1;
-    void *cpy = malloc(nb);
-    if (cpy == NULL) error("allocation error in Rstrdup");
-    memcpy (cpy, s, nb);
-    return (char *) cpy;
-}

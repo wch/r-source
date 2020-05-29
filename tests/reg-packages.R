@@ -132,7 +132,7 @@ dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
 	   showWarnings = FALSE)
 p.lis <- c(if("Matrix" %in% row.names(installed.packages(.Library)))
                c("pkgA", "pkgB", "pkgC"),
-           "exNSS4", "exSexpr")
+           "exNSS4", "exNSS4nil", "exSexpr")
 InstOpts <- list("exSexpr" = "--html")
 pkgApath <- file.path(pkgPath, "pkgA")
 if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
@@ -157,7 +157,8 @@ for(p in p.lis) {
         stop("R CMD build failed (no tarball) for package ", p)
     ## otherwise install the tar file:
     cat("installing package", p., "using built file", r, "...\n")
-    ## "FIXME": want to catch warnings in the "console output" of this:
+    ## "FIXME": want to catch warnings in the "console output" of this,
+    ## e.g. exNSS4nil, "S4 exports specified in 'NAMESPACE' but not defined .."
     install.packages(r, lib = "myLib", repos=NULL, type = "source",
                      INSTALL_opts = InstOpts[[p.]])
     stopifnot(require(p., lib = "myLib", character.only=TRUE))

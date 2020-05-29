@@ -595,7 +595,7 @@ static void RQuartz_CacheAddFont(const char *family, int face, ATSFontRef font) 
     {
         int i = font_cache_tail->fonts;
         font_cache_tail->e[i].font = font;
-        font_cache_tail->e[i].family = strdup(family);
+        font_cache_tail->e[i].family = Rstrdup(family);
         font_cache_tail->e[i].face = face;
         font_cache_tail->fonts++;
     }

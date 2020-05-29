@@ -1329,7 +1329,7 @@ static void Rc_addFont(const char *family, int face, cairo_font_face_t* font)
 {
     Rc_font_cache_t *fc = (Rc_font_cache_t*) malloc(sizeof(Rc_font_cache_t));
     if (!fc) return;
-    fc->family = strdup(family);
+    fc->family = Rstrdup(family);
     fc->face = face;
     fc->font = font;
     fc->next = NULL;

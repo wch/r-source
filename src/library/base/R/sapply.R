@@ -28,8 +28,11 @@ simplify2array <- function(x, higher = TRUE)
 {
     if(length(common.len <- unique(lengths(x))) > 1L)
         return(x)
-    if(common.len == 1L)
-        unlist(x, recursive = FALSE)
+    if(common.len == 1L) {
+        n <- length(x)
+        r <- unlist(x, recursive = FALSE)
+        if(length(r) == n) r else x
+    }
     else if(common.len > 1L) {
         n <- length(x)
         ## make sure that array(*) will not call rep() {e.g. for 'call's}:

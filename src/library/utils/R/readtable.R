@@ -1,7 +1,7 @@
 #  File src/library/utils/R/readtable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,13 +35,19 @@ function(x, ...)
     UseMethod("type.convert")
 
 type.convert.default <-
-function(x, na.strings = "NA", as.is = FALSE, dec = ".",
+function(x, na.strings = "NA", as.is, dec = ".",
          numerals = c("allow.loss", "warn.loss", "no.loss"), ...)
 {
     if(is.array(x))
         storage.mode(x) <- "character"
     else
         x <- as.character(x)
+    ## as.is = FALSE  was default in R <= 4.0.0, but the default for 'stringsAsFactors',
+    ## hence 'as.is' was changed for/in read.table() with R 4.0.0
+    if(missing(as.is)) {
+        warning("'as.is' should be specified by the caller; using TRUE")
+        as.is <- TRUE
+    }
     .External2(C_typeconvert, x, na.strings, as.is, dec, match.arg(numerals))
 }
 

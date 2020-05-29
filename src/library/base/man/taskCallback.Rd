@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallback.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{taskCallback}
@@ -18,7 +18,7 @@
   These provide low-level access to the internal/native
   mechanism for managing task-completion actions.
   One can use \code{\link{taskCallbackManager}}
-  at the S-language level to manage S functions
+  at the \R-language level to manage \R functions
   that are called at the completion of each task.
   This is easier and more direct.
 }

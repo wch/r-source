@@ -399,5 +399,13 @@ addNA <- function(x, ifany=FALSE)
     factor(x, levels=ll, exclude=NULL)
 }
 
-c.factor <- function(..., recursive=TRUE)
-    unlist(list(...), recursive=recursive)
+c.factor <- function(..., recursive=TRUE) {
+    x <- list(...)
+    x <- x[!vapply(x, is.null, NA)]
+    y <- unlist(x, recursive = recursive)
+    if(inherits(y, "factor") &&
+       all(vapply(x, inherits, NA, "ordered")) &&
+       (length(unique(lapply(x, levels))) == 1L))
+        class(y) <- c("ordered", "factor")
+    y
+}

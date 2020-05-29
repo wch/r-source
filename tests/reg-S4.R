@@ -976,6 +976,14 @@ body(cd@contains[["A"]]@coerce)[[2]] ## >>   value <- new("A")
 ## for a few days in R-devel (Nov.2017)
 
 
+## Error messages occurring during method selection are forwarded
+f <- function(x) x
+setGeneric("f")
+setMethod("f", signature("NULL"), function(x) NULL)
+err <- tryCatch(f(stop("this is mentioned")), error = identity)
+stopifnot(identical(err$message, "error in evaluating the argument 'x' in selecting a method for function 'f': this is mentioned"))
+
+
 ## canCoerce(obj, .)  when length(class(obj)) > 1 :
 setOldClass("foo")
 setAs("foo", "A", function(from) new("A", foo=from))

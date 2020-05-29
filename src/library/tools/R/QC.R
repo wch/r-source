@@ -3155,8 +3155,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             ## This may not be local and needs a complete CRAN mirror
             db <- CRAN_package_db()[, c("Package", "Maintainer")]
             orphaned <- db[db$Maintainer == "ORPHANED" , 1L]
-            s2 <- strict[ (strict %in% orphaned)[miss1] ]
-            w2 <- weak[ (weak %in% orphaned)[miss2] ]
+            s2 <- intersect(strict[miss1], orphaned)
+            w2 <- intersect(weak[miss2], orphaned)
         } else s2 <- w2 <- character()
         strict <- c(strict[!miss1 & strict2 == "ORPHANED"], s2)
         if(length(strict)) {
@@ -3548,8 +3548,8 @@ function(x, ...)
 print.check_package_description <-
 function(x, ...)
 {
-    writeLines(paste(format(x, ...),
-                     collapse = "\n\n", recycle0 = TRUE))
+    if(length(y <- format(x, ...)))
+        writeLines(paste(y, collapse = "\n\n"))
     invisible(x)
 }
 
@@ -8390,8 +8390,8 @@ function(x, ...)
 print.check_package_CRAN_incoming <-
 function(x, ...)
 {
-    writeLines(paste(format(x, ...),
-                     collapse = "\n\n", recycle0 = TRUE))
+    if(length(y <- format(x, ...)))
+        writeLines(paste(y, collapse = "\n\n"))
     invisible(x)
 }
 

@@ -2820,7 +2820,7 @@ static int StringValue(int c, Rboolean forSymbol)
     }
 }
 
-static int RawStringValue(int c)
+static int RawStringValue(int c0, int c)
 {
     int quote = c;
     int delim = ')';
@@ -2833,24 +2833,26 @@ static int RawStringValue(int c)
     ucs_t wcs[10001];
     Rboolean oct_or_hex = FALSE, use_wcs = FALSE, currtext_truncated = FALSE;
 
+    CTEXT_PUSH(c0); /* 'r' or 'R' */
+    CTEXT_PUSH(c);  /* opening quote */
+
     /* count dashes between the opening quote and opening delimiter */
     int ndash = 0;
-    while (nextchar('-')) ndash++;
+    while (nextchar('-')) { CTEXT_PUSH('-'); ndash++; }
 
-    if (! nextchar('(')) {
-	if (nextchar('['))
-	    delim = ']';
-	else if (nextchar('{'))
-	    delim = '}';
-	else if (nextchar('|'))
-	    delim = '|';
-	else		
-	    error(_("malformed raw string literal at line %d"),
-		  ParseState.xxlineno);
+    c = xxgetc();
+    CTEXT_PUSH(c);
+    switch(c) {
+    case '(': delim = ')'; break;
+    case '[': delim = ']'; break;
+    case '{': delim = '}'; break;
+    case '|': delim = '|'; break;
+    default:
+	error(_("malformed raw string literal at line %d"),
+	      ParseState.xxlineno);
     }
 
     PROTECT_WITH_INDEX(R_NilValue, &sti);
-    CTEXT_PUSH(c);
     while ((c = xxgetc()) != R_EOF) {
 	if (c == delim) {
 	    /* count the dashes after the closing delimiter */
@@ -2916,7 +2918,11 @@ static int RawStringValue(int c)
 	UNPROTECT(1); /* release stext */
     	return INCOMPLETE_STRING;
     } else {
-    	CTEXT_PUSH(c);
+	/* record delim, dashes, and quote, and terminate string */
+	CTEXT_PUSH(delim);
+	for (int i = 0; i < ndash; i++)
+	    CTEXT_PUSH('-');
+	CTEXT_PUSH(quote);
     	CTEXT_PUSH('\0');
     }
     if (!currtext_truncated)
@@ -3141,9 +3147,9 @@ static int token(void)
 
     if (c == 'r' || c == 'R') {
 	if (nextchar('"'))
-	    return RawStringValue('"');
+	    return RawStringValue(c, '"');
 	else if (nextchar('\''))
-	    return RawStringValue('\'');
+	    return RawStringValue(c, '\'');
     }
 
     /* literal strings */

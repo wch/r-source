@@ -912,7 +912,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isString(quotes)) {
 	const char *sc = translateChar(STRING_ELT(quotes, 0));
-	if (strlen(sc)) data.quoteset = strdup(sc);
+	if (strlen(sc)) data.quoteset = Rstrdup(sc);
 	else data.quoteset = "";
     } else if (isNull(quotes))
 	data.quoteset = "";
