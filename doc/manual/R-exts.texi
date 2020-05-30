@@ -10227,6 +10227,13 @@ and @code{.Fortran} are all pointers, specifying them as @code{void *}
 suffices. (For most platforms one can omit all the arguments, although
 link-time optimization will warn.)
 
+Using @option{-fc-prototypes-external} will give a prototype using
+@code{int_least32_t *lgl} for Fortran @code{LOGICAL LGL}, but this is
+not portable and traditionally it has been assumed that the C/C++
+equivalent was @code{int *lgl}.  If adding a declaration just to
+register a @code{.Fortran} call, the most portable version is @code{void
+*lgl}.
+
 @item
 (Optional but highly recommended.)  Restrict @code{.Call} etc to use the
 symbols you chose to register by editing @file{src/init.c} to contain
