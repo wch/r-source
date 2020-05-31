@@ -5459,7 +5459,7 @@ typedef struct {
     int nmaskobj; /* The mask object number */
 } rasterImage;
 
-#define DEFBUFSIZE 10000
+#define DEFBUFSIZE 8192
 
 #define PDFlinearGradient 0
 #define PDFstitchedFunction 1
@@ -5468,6 +5468,7 @@ typedef struct {
 
 typedef struct {
     int type;
+    int nchar;
     char* str;
 } PDFdefn;
 
@@ -5643,21 +5644,38 @@ static void     PDF_releaseMask(SEXP ref, pDevDesc dd);
 /***********************************************************************
  * Stuff for recording definitions
  */
+
 static void initDefn(int i, int type, PDFDesc *pd) 
 {
     pd->definitions[i].type = type;
+    pd->definitions[i].nchar = DEFBUFSIZE;
     pd->definitions[i].str = malloc(DEFBUFSIZE*sizeof(char));
+}
+
+static void catDefn(char* buf, int i, PDFDesc *pd) 
+{
+    int len = strlen(pd->definitions[i].str);
+    int buflen = strlen(buf); 
+    /* Grow definition string if necessary) */
+    if (len + buflen + 1 >= pd->definitions[i].nchar) {
+	void *tmp;
+        pd->definitions[i].nchar = pd->definitions[i].nchar + DEFBUFSIZE;
+	tmp = realloc(pd->definitions[i].str, 
+                      (pd->definitions[i].nchar)*sizeof(char));
+	if (!tmp) error(_("failed to increase definition string (shut down PDF device)"));
+	pd->definitions[i].str = tmp;
+    }
+    strncat(pd->definitions[i].str, buf, buflen);
+}
+
+static void copyDefn(int fromDefn, int toDefn, PDFDesc *pd)
+{
+    catDefn(pd->definitions[fromDefn].str, toDefn, pd);
 }
 
 static void trimDefn(int i, PDFDesc *pd) 
 {
-    int len;
-    /* Ensure string is null-terminated */
-    pd->definitions[i].str[DEFBUFSIZE - 1] = '\0';
-    len = strlen(pd->definitions[i].str);
-    if (len == (DEFBUFSIZE - 1)) {
-        warning("Definition may not have recorded fully");
-    }
+    int len = strlen(pd->definitions[i].str);
     pd->definitions[i].str = realloc(pd->definitions[i].str, 
                                      (len + 1)*sizeof(char));
     pd->definitions[i].str[len] = '\0';
@@ -5679,7 +5697,7 @@ static void initDefinitions(PDFDesc *pd)
     }
 }
 
-static void growDefinitions(PDFDesc *pd)
+static int growDefinitions(PDFDesc *pd)
 {
     if (pd->numDefns == pd->maxDefns) {
 	int newMax = 2*pd->maxDefns;
@@ -5693,6 +5711,12 @@ static void growDefinitions(PDFDesc *pd)
 	}
 	pd->maxDefns = newMax;
     }
+    return pd->numDefns++;
+}
+
+static void shrinkDefinitions(PDFDesc *pd)
+{
+    pd->numDefns--;
 }
 
 static void killDefinitions(PDFDesc *pd)
@@ -5705,19 +5729,17 @@ static void killDefinitions(PDFDesc *pd)
 
 #define PDFdefnOffset 10000
 
-static int addExpLinearGradientFunction(SEXP gradient, int i, 
-                                        double start, double end,
-                                        PDFDesc *pd)
+static void addExpLinearGradientFunction(SEXP gradient, int i, 
+                                     double start, double end,
+                                     int toDefn,
+                                     PDFDesc *pd)
 {
-    int defNum = pd->numDefns++;
-    growDefinitions(pd);
-    initDefn(defNum, PDFexpFunction, pd);
+    char buf[300]; 
     rcolor col1 = R_GE_linearGradientColour(gradient, i);
     rcolor col2 = R_GE_linearGradientColour(gradient, i + 1);
-    snprintf(pd->definitions[defNum].str,
+    snprintf(buf,
              DEFBUFSIZE,
-             "%d 0 obj\n  << /FunctionType 2\n     /Domain [%f %f]\n     /C0 [%0.4f %0.4f %0.4f]\n     /C1 [%0.4f %0.4f %0.4f]\n     /N 1\n  >>\nendobj\n",
-             defNum + PDFdefnOffset,
+             "<<\n/FunctionType 2\n/Domain [%.4f %.4f]\n/C0 [%0.4f %0.4f %0.4f]\n/C1 [%0.4f %0.4f %0.4f]\n/N 1\n>>\n",
              start,
              end,
              R_RED(col1)/255.0,
@@ -5726,65 +5748,62 @@ static int addExpLinearGradientFunction(SEXP gradient, int i,
              R_RED(col2)/255.0,
              R_GREEN(col2)/255.0,
              R_BLUE(col2)/255.0);
-    return defNum;
+    catDefn(buf, toDefn, pd);
 }
 
-static int addStitchedLinearGradientFunction(SEXP gradient, PDFDesc *pd)
+static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn, 
+                                              PDFDesc *pd)
 {
-    int defNum = pd->numDefns++;
-    growDefinitions(pd);
+    int defNum = growDefinitions(pd);
     int i, nStops = R_GE_linearGradientNumStops(gradient);
-    char buf[100];  /* Temporary workspace */
+    char buf[100];  
     initDefn(defNum, PDFstitchedFunction, pd);
-    snprintf(pd->definitions[defNum].str,
-             DEFBUFSIZE,
-             "%d 0 obj\n  << /FunctionType 3\n     /Domain [%0.4f %0.4f]\n     /Functions [",
-             defNum + PDFdefnOffset,
+    snprintf(buf,
+             100,
+             "<<\n/FunctionType 3\n/Domain [%0.4f %0.4f]\n/Functions [",
              R_GE_linearGradientStop(gradient, 0),
              R_GE_linearGradientStop(gradient, nStops - 1));
+    catDefn(buf, defNum, pd);
     for (i = 1; i < (nStops - 1); i++) {
-        sprintf(buf,
-                "%d 0 R",
-                addExpLinearGradientFunction(gradient, i, 0.0, 1.0, pd) + PDFdefnOffset);
-        strcat(pd->definitions[defNum].str, buf);
+        addExpLinearGradientFunction(gradient, i, 0.0, 1.0, defNum, pd);
     }
-    strcat(pd->definitions[defNum].str, "]\n     /Bounds [");
+    catDefn("]\n/Bounds [", defNum, pd);
     for (i = 1; i < (nStops - 1); i++) {
         sprintf(buf,
                 "%0.4f ",
                 R_GE_linearGradientStop(gradient, i));
-        strcat(pd->definitions[defNum].str, buf);
+        catDefn(buf, defNum, pd);
     }
-    strcat(pd->definitions[defNum].str, "]\n     /Encode [");
+    catDefn("]\n/Encode [", defNum, pd);
     for (i = 1; i < (nStops - 1); i++) {
-        strcat(pd->definitions[defNum].str, "0 1 ");
+        catDefn("0 1 ", defNum, pd);
     }
-    strcat(pd->definitions[defNum].str, "]\n  >>endobj\n\n");
-    trimDefn(defNum, pd);
-    return defNum;
+    catDefn("]\n>>\n", defNum, pd);
+    /* Copy toDefn */
+    copyDefn(defNum, toDefn, pd);
+    /* Discard temporary definition */
+    killDefn(defNum, pd);
+    shrinkDefinitions(pd);
 }
 
-static int addLinearGradientFunction(SEXP gradient, PDFDesc *pd)
+static void addLinearGradientFunction(SEXP gradient, int toDefn, PDFDesc *pd)
 {
-    int defNum;
     int nStops = R_GE_linearGradientNumStops(gradient);
     if (nStops > 2) {
-        defNum = addStitchedLinearGradientFunction(gradient, pd);
+        addStitchedLinearGradientFunction(gradient, toDefn, pd);
     } else {
-        defNum = addExpLinearGradientFunction(gradient, 0, 
-                                              R_GE_linearGradientStop(gradient, 
-                                                                      0),
-                                              R_GE_linearGradientStop(gradient, 
-                                                                      1),
-                                              pd);
+        addExpLinearGradientFunction(gradient, 0, 
+                                     R_GE_linearGradientStop(gradient, 0),
+                                     R_GE_linearGradientStop(gradient, 1),
+                                     toDefn,
+                                     pd);
     }
-    return defNum;
 }
 
-static int addLinearGradient(SEXP gradient, PDFDesc *pd)
+static void addLinearGradient(SEXP gradient, int toDefn, PDFDesc *pd)
 {
-    int defNum = pd->numDefns++;
-    growDefinitions(pd);
+    int defNum = growDefinitions(pd);
+    char buf[200];
     char colorspace[12];
     if (streql(pd->colormodel, "gray"))
         strcpy(colorspace, "/DeviceGray");
@@ -5793,45 +5812,45 @@ static int addLinearGradient(SEXP gradient, PDFDesc *pd)
     else
         strcpy(colorspace, "/DeviceRGB");
     initDefn(defNum, PDFlinearGradient, pd);
-    snprintf(pd->definitions[defNum].str,
-             DEFBUFSIZE,
-             "%d 0 obj\n  << /ShadingType 2\n     /ColorSpace %s\n     /Coords [%f %f %f %f]\n     /Function %d 0 R\n     /Extend [true true]\n  >>\nendobj\n",
-             /* Definition objects are numbered starting from 
-              * ridiculously high offset
-              */
-             defNum + PDFdefnOffset,
+    snprintf(buf,
+             200,
+             "<<\n/ShadingType 2\n/ColorSpace %s\n/Coords [%.4f %.4f %.4f %.4f]\n/Function\n",
              colorspace,
              R_GE_linearGradientX1(gradient),
              R_GE_linearGradientY1(gradient),
              R_GE_linearGradientX2(gradient),
-             R_GE_linearGradientY2(gradient),
-             addLinearGradientFunction(gradient, pd) + PDFdefnOffset);
-    trimDefn(defNum, pd);
-    return defNum;
+             R_GE_linearGradientY2(gradient));
+    catDefn(buf, defNum, pd);
+    
+    addLinearGradientFunction(gradient, defNum, pd);
+    
+    catDefn("/Extend [true true]\n>>\n", defNum, pd);
+    /* Copy toDefn */
+    copyDefn(defNum, toDefn, pd);
+    /* Discard temporary definition */
+    killDefn(defNum, pd);
+    shrinkDefinitions(pd);
 }
 
 static int addShading(SEXP pattern, PDFDesc *pd)
 {
-    int defNum = pd->numDefns++;
-    growDefinitions(pd);
-    int shadingNum = -1;
+    int defNum = growDefinitions(pd);
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    initDefn(defNum, PDFpattern, pd);
+    catDefn(" 0 obj\n<<\n/Type Pattern\n/PatternType 2\n/Shading\n", 
+            defNum, pd);
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
-        shadingNum = addLinearGradient(pattern, pd);
+        addLinearGradient(pattern, defNum, pd);
         break;
     default:
         warning("Shading type not yet supported");
+        return -1;
     }
-    if (shadingNum >= 0) {
-        initDefn(defNum, PDFpattern, pd);
-        snprintf(pd->definitions[defNum].str,
-                 DEFBUFSIZE,
-                 "%d 0 obj\n  << /Type Pattern\n     /PatternType 2\n     /Shading %d 0 R\n >>\nendobj\n",
-                 defNum + PDFdefnOffset,
-                 shadingNum + PDFdefnOffset);
-    } else {
-        defNum = -1;
-    }
+    catDefn(">>\nendobj\n", defNum, pd);
+    trimDefn(defNum, pd);
     return defNum;
 }
 
@@ -5848,16 +5867,27 @@ static int addPattern(SEXP pattern, PDFDesc *pd)
     return defNum;
 }
 
+static int countPatterns(PDFDesc *pd) 
+{
+    int i, count = 0;
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFpattern) {
+            count++;
+        }
+    }
+    return count;
+}
 
-static void PDFwritePatternDef(int i, PDFDesc *pd)
+static void PDFwritePatternDef(int i, int objnum, PDFDesc *pd)
 {
     if (pd->definitions[i].type == PDFpattern) {
         fprintf(pd->pdffp, 
                 "/Pattern << /Def%d %d 0 R >>\n",
                 i, 
-                i + PDFdefnOffset);
+                objnum);
     }
 }
+
 
 /***********************************************************************
  * Some stuff for recording raster images
@@ -7052,7 +7082,7 @@ static int isSans(const char *name)
 static void PDF_endfile(PDFDesc *pd)
 {
     int i, startxref, tempnobj, nenc, nfonts, cidnfonts, firstencobj;
-    int nraster, nmask;
+    int nraster, nmask, npattern;
 
     /* object 3 lists all the pages */
 
@@ -7068,12 +7098,13 @@ static void PDF_endfile(PDFDesc *pd)
 
     /* Object 4 is the standard resources dict for each page */
 
-    /* Count how many images and masks */
+    /* Count how many images and masks and patterns */
     nraster = pd->numRasters;
     nmask = pd->numMasks;
+    npattern = countPatterns(pd);
 
-    if(pd->nobjs + nraster + nmask + 500 >= pd->max_nobjs) {
-	int new =  pd->nobjs + nraster + nmask + 500;
+    if(pd->nobjs + nraster + nmask + npattern + 500 >= pd->max_nobjs) {
+	int new =  pd->nobjs + nraster + nmask + npattern + 500;
 	void *tmp = realloc(pd->pos, new * sizeof(int));
 	if(!tmp)
 	    error("unable to increase object limit: please shutdown the pdf device");
@@ -7171,12 +7202,12 @@ static void PDF_endfile(PDFDesc *pd)
     /* patterns */
     if (pd->numDefns > 0) {
         for (i = 0; i < pd->numDefns; i++) {
-            PDFwritePatternDef(i, pd);
+            PDFwritePatternDef(i, ++tempnobj, pd);
         }
     }
 
     if (streql(pd->colormodel, "srgb")) {
-	/* Objects 5 and 6 are the sRGB color space, if required */
+	/* Ojects 5 and 6 are the sRGB color space, if required */
 	fprintf(pd->pdffp, "/ColorSpace << /sRGB 5 0 R >>\n");
 	fprintf(pd->pdffp, ">>\nendobj\n");
 	pd->pos[5] = (int) ftell(pd->pdffp);
@@ -7386,14 +7417,23 @@ static void PDF_endfile(PDFDesc *pd)
 		pd->nobjs);
     }
 
+    /* Write out definitions */
+    for (int i = 0; i < pd->numDefns; i++) {
+        pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+        /* Definition object number */
+        fprintf(pd->pdffp, "%d", pd->nobjs);
+        fputs(pd->definitions[i].str, pd->pdffp);
+    }
+
     /* write out xref table */
 
     startxref = (int) ftell(pd->pdffp);
     /* items here must be exactly 20 bytes including terminator */
     fprintf(pd->pdffp, "xref\n0 %d\n", pd->nobjs+1);
     fprintf(pd->pdffp, "0000000000 65535 f \n");
-    for(i = 1; i <= pd->nobjs; i++)
+    for(i = 1; i <= pd->nobjs; i++) {
 	fprintf(pd->pdffp, "%010d 00000 n \n", pd->pos[i]);
+    }
     fprintf(pd->pdffp,
 	    "trailer\n<< /Size %d /Info 1 0 R /Root 2 0 R >>\nstartxref\n%d\n",
 	    pd->nobjs+1, startxref);
@@ -7550,12 +7590,6 @@ static void PDF_endpage(PDFDesc *pd)
 	free(pd->rasters[i].raster);
 	pd->rasters[i].raster = NULL;
 	pd->writtenRasters = pd->numRasters;
-    }
-    
-    /* Write out definitions */
-    for (int i = 0; i < pd->numDefns; i++) {
-	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-        fputs(pd->definitions[i].str, pd->pdffp);
     }
 }
 
