@@ -5808,7 +5808,7 @@ static void addLinearGradient(SEXP gradient, int toDefn, PDFDesc *pd)
     if (streql(pd->colormodel, "gray"))
         strcpy(colorspace, "/DeviceGray");
     else if (streql(pd->colormodel, "srgb"))
-        strcpy(colorspace, "/sRGB");
+        strcpy(colorspace, "5 0 R");
     else
         strcpy(colorspace, "/DeviceRGB");
     initDefn(defNum, PDFlinearGradient, pd);
