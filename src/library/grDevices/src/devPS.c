@@ -5760,11 +5760,11 @@ static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn,
     initDefn(defNum, PDFstitchedFunction, pd);
     snprintf(buf,
              100,
-             "<<\n/FunctionType 3\n/Domain [%0.4f %0.4f]\n/Functions [",
+             "<<\n/FunctionType 3\n/Domain [%0.4f %0.4f]\n/Functions [\n",
              R_GE_linearGradientStop(gradient, 0),
              R_GE_linearGradientStop(gradient, nStops - 1));
     catDefn(buf, defNum, pd);
-    for (i = 1; i < (nStops - 1); i++) {
+    for (i = 0; i < (nStops - 1); i++) {
         addExpLinearGradientFunction(gradient, i, 0.0, 1.0, defNum, pd);
     }
     catDefn("]\n/Bounds [", defNum, pd);
@@ -5775,7 +5775,7 @@ static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn,
         catDefn(buf, defNum, pd);
     }
     catDefn("]\n/Encode [", defNum, pd);
-    for (i = 1; i < (nStops - 1); i++) {
+    for (i = 0; i < (nStops - 1); i++) {
         catDefn("0 1 ", defNum, pd);
     }
     catDefn("]\n>>\n", defNum, pd);
@@ -5821,10 +5821,24 @@ static void addLinearGradient(SEXP gradient, int toDefn, PDFDesc *pd)
              R_GE_linearGradientX2(gradient),
              R_GE_linearGradientY2(gradient));
     catDefn(buf, defNum, pd);
-    
     addLinearGradientFunction(gradient, defNum, pd);
-    
-    catDefn("/Extend [true true]\n>>\n", defNum, pd);
+    char extend[6];
+    switch(R_GE_linearGradientExtend(gradient)) {
+    case R_GE_patternExtendPad:
+        strcpy(extend, "true");
+        break;
+    case R_GE_patternExtendRepeat:
+    case R_GE_patternExtendReflect:
+        warning("Repeat or reflect pattern not supported on PDF device");
+    case R_GE_patternExtendNone:
+        strcpy(extend, "false");
+    }
+    snprintf(buf,
+             6,
+             "/Extend [%s %s]\n>>\n",
+             extend,
+             extend);
+    catDefn(buf, defNum, pd);
     /* Copy toDefn */
     copyDefn(defNum, toDefn, pd);
     /* Discard temporary definition */
@@ -5878,14 +5892,21 @@ static int countPatterns(PDFDesc *pd)
     return count;
 }
 
-static void PDFwritePatternDef(int i, int objnum, PDFDesc *pd)
+static void PDFwritePatternDefs(int objoffset, PDFDesc *pd)
 {
-    if (pd->definitions[i].type == PDFpattern) {
-        fprintf(pd->pdffp, 
-                "/Pattern << /Def%d %d 0 R >>\n",
+    int i;
+    fprintf(pd->pdffp, 
+            "/Pattern\n<<\n");
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFpattern) {
+            fprintf(pd->pdffp, 
+                "/Def%d %d 0 R\n",
                 i, 
-                objnum);
+                i + objoffset);
+        }
     }
+    fprintf(pd->pdffp, 
+            ">>\n");
 }
 
 
@@ -7201,9 +7222,7 @@ static void PDF_endfile(PDFDesc *pd)
 
     /* patterns */
     if (pd->numDefns > 0) {
-        for (i = 0; i < pd->numDefns; i++) {
-            PDFwritePatternDef(i, ++tempnobj, pd);
-        }
+        PDFwritePatternDefs(++tempnobj, pd);
     }
 
     if (streql(pd->colormodel, "srgb")) {
