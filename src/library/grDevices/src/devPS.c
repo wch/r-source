@@ -5650,6 +5650,7 @@ static void initDefn(int i, int type, PDFDesc *pd)
     pd->definitions[i].type = type;
     pd->definitions[i].nchar = DEFBUFSIZE;
     pd->definitions[i].str = malloc(DEFBUFSIZE*sizeof(char));
+    pd->definitions[i].str[0] = '\0';
 }
 
 static void catDefn(char* buf, int i, PDFDesc *pd) 
@@ -5834,7 +5835,7 @@ static void addLinearGradient(SEXP gradient, int toDefn, PDFDesc *pd)
         strcpy(extend, "false");
     }
     snprintf(buf,
-             6,
+             200,
              "/Extend [%s %s]\n>>\n",
              extend,
              extend);
