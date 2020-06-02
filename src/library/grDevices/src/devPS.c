@@ -5465,6 +5465,7 @@ typedef struct {
 #define PDFstitchedFunction 1
 #define PDFexpFunction 2
 #define PDFpattern 3
+#define PDFsoftMask 4
 
 typedef struct {
     int type;
@@ -5730,10 +5731,10 @@ static void killDefinitions(PDFDesc *pd)
 
 #define PDFdefnOffset 10000
 
-static void addExpLinearGradientFunction(SEXP gradient, int i, 
-                                     double start, double end,
-                                     int toDefn,
-                                     PDFDesc *pd)
+static void addRGBExpLinearGradientFunction(SEXP gradient, int i, 
+                                            double start, double end,
+                                            int toDefn,
+                                            PDFDesc *pd)
 {
     char buf[300]; 
     rcolor col1 = R_GE_linearGradientColour(gradient, i);
@@ -5752,8 +5753,26 @@ static void addExpLinearGradientFunction(SEXP gradient, int i,
     catDefn(buf, toDefn, pd);
 }
 
-static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn, 
+static void addAlphaExpLinearGradientFunction(SEXP gradient, int i, 
+                                              double start, double end,
+                                              int toDefn,
                                               PDFDesc *pd)
+{
+    char buf[300]; 
+    rcolor col1 = R_GE_linearGradientColour(gradient, i);
+    rcolor col2 = R_GE_linearGradientColour(gradient, i + 1);
+    snprintf(buf,
+             DEFBUFSIZE,
+             "<<\n/FunctionType 2\n/Domain [%.4f %.4f]\n/C0 [%0.4f]\n/C1 [%0.4f]\n/N 1\n>>\n",
+             start,
+             end,
+             R_ALPHA(col1)/255.0,
+             R_ALPHA(col2)/255.0);
+    catDefn(buf, toDefn, pd);
+}
+
+static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn, 
+                                              Rboolean alpha, PDFDesc *pd)
 {
     int defNum = growDefinitions(pd);
     int i, nStops = R_GE_linearGradientNumStops(gradient);
@@ -5766,7 +5785,12 @@ static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn,
              R_GE_linearGradientStop(gradient, nStops - 1));
     catDefn(buf, defNum, pd);
     for (i = 0; i < (nStops - 1); i++) {
-        addExpLinearGradientFunction(gradient, i, 0.0, 1.0, defNum, pd);
+        if (alpha) {
+            addAlphaExpLinearGradientFunction(gradient, i, 0.0, 1.0,
+                                              defNum, pd);
+        } else {
+            addRGBExpLinearGradientFunction(gradient, i, 0.0, 1.0, defNum, pd);
+        }
     }
     catDefn("]\n/Bounds [", defNum, pd);
     for (i = 1; i < (nStops - 1); i++) {
@@ -5787,28 +5811,42 @@ static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn,
     shrinkDefinitions(pd);
 }
 
-static void addLinearGradientFunction(SEXP gradient, int toDefn, PDFDesc *pd)
+static void addLinearGradientFunction(SEXP gradient, int toDefn, 
+                                      Rboolean alpha, PDFDesc *pd)
 {
     int nStops = R_GE_linearGradientNumStops(gradient);
     if (nStops > 2) {
-        addStitchedLinearGradientFunction(gradient, toDefn, pd);
+        addStitchedLinearGradientFunction(gradient, toDefn, alpha, pd);
     } else {
-        addExpLinearGradientFunction(gradient, 0, 
-                                     R_GE_linearGradientStop(gradient, 0),
-                                     R_GE_linearGradientStop(gradient, 1),
-                                     toDefn,
-                                     pd);
+        if (alpha) {
+            addAlphaExpLinearGradientFunction(gradient, 0, 
+                                              R_GE_linearGradientStop(gradient, 
+                                                                      0),
+                                              R_GE_linearGradientStop(gradient, 
+                                                                      1),
+                                              toDefn,
+                                         pd);
+        } else {
+            addRGBExpLinearGradientFunction(gradient, 0, 
+                                            R_GE_linearGradientStop(gradient, 
+                                                                    0),
+                                            R_GE_linearGradientStop(gradient, 
+                                                                    1),
+                                            toDefn,
+                                            pd);
+        }
     }
 }
 
-static void addLinearGradient(SEXP gradient, int toDefn, PDFDesc *pd)
+static void addLinearGradient(SEXP gradient, char* colormodel,
+                              int toDefn, PDFDesc *pd)
 {
     int defNum = growDefinitions(pd);
     char buf[200];
     char colorspace[12];
-    if (streql(pd->colormodel, "gray"))
+    if (streql(colormodel, "gray"))
         strcpy(colorspace, "/DeviceGray");
-    else if (streql(pd->colormodel, "srgb"))
+    else if (streql(colormodel, "srgb"))
         strcpy(colorspace, "5 0 R");
     else
         strcpy(colorspace, "/DeviceRGB");
@@ -5822,7 +5860,11 @@ static void addLinearGradient(SEXP gradient, int toDefn, PDFDesc *pd)
              R_GE_linearGradientX2(gradient),
              R_GE_linearGradientY2(gradient));
     catDefn(buf, defNum, pd);
-    addLinearGradientFunction(gradient, defNum, pd);
+    if (streql(colormodel, "gray")) {
+        addLinearGradientFunction(gradient, defNum, TRUE, pd);
+    } else {
+        addLinearGradientFunction(gradient, defNum, FALSE, pd);
+    }    
     char extend[6];
     switch(R_GE_linearGradientExtend(gradient)) {
     case R_GE_patternExtendPad:
@@ -5847,8 +5889,72 @@ static void addLinearGradient(SEXP gradient, int toDefn, PDFDesc *pd)
     shrinkDefinitions(pd);
 }
 
-static int addShading(SEXP pattern, PDFDesc *pd)
+static int addShadingSoftMask(SEXP pattern, PDFDesc *pd)
 {
+    int defNum = growDefinitions(pd);
+    initDefn(defNum, PDFsoftMask, pd);
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    catDefn(" 0 obj\n<<\n/Type /ExtGState\n/AIS false\n/SMask\n<<\n",
+            defNum, pd);
+    catDefn("/Type /Mask\n/S /Luminosity\n/G\n<<\n",
+            defNum, pd);
+    catDefn("/Type /XObject\n/Subtype /Form\n/FormType 1\n/Group\n<<\n",
+            defNum, pd);
+    catDefn("/Type /Group\n/CS /DeviceGray\n/I true\n/S /Transparency\n",
+            defNum, pd);
+    catDefn(">>\n/Resources\n<<\n",
+            defNum, pd);
+    catDefn("/Shading\n<<\n/S0\n",
+            defNum, pd);
+    addLinearGradient(pattern, "gray", defNum, pd);
+    catDefn(">>\n/ExtGState << /G0 << /CA 1 /ca 1 >> >>\n",
+            defNum, pd);
+    char buf[30];
+    snprintf(buf, 
+             30,
+             ">>\n/BBox [0 0 %d %d]\n",
+             (int) (0.5 + pd->paperwidth), (int) (0.5 + pd->paperheight));
+    catDefn(buf, defNum, pd);
+    /* Note the spaces before the >> just after the endstream;
+     * ghostscript seems to need those to avoid error (!?) */
+    catDefn("/Length 14\n>>\nstream\n/G0 gs /S0 sh\nendstream\n  >>\n",
+            defNum, pd);
+    catDefn(">>\nendobj\n", defNum, pd);
+    trimDefn(defNum, pd);
+    return defNum;
+}
+
+/*
+ * Do we need to bother with semi-transparency?
+ */
+static int semiTransparent(int col)
+{
+    return !(R_OPAQUE(col) || R_TRANSPARENT(col));
+}
+
+static Rboolean semiTransparentShading(SEXP pattern)
+{
+    int i, nStops = R_GE_linearGradientNumStops(pattern);
+    rcolor col;
+    Rboolean anyOpaque = FALSE;
+    Rboolean anyTransparent = FALSE;
+    for (i = 0; i < nStops; i++) {
+        col = R_GE_linearGradientColour(pattern, i);
+        if (semiTransparent(col)) 
+            return TRUE;
+        if (R_OPAQUE(col)) anyOpaque = TRUE;
+        if (R_TRANSPARENT(col)) anyTransparent = TRUE;
+        if (anyOpaque && anyTransparent)
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static SEXP addShading(SEXP pattern, PDFDesc *pd)
+{
+    SEXP ref = R_NilValue;
     int defNum = growDefinitions(pd);
     /* Object number will be determined when definition written
      * to file (PDF_endfile)
@@ -5858,28 +5964,43 @@ static int addShading(SEXP pattern, PDFDesc *pd)
             defNum, pd);
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
-        addLinearGradient(pattern, defNum, pd);
+        addLinearGradient(pattern, pd->colormodel, defNum, pd);
         break;
     default:
         warning("Shading type not yet supported");
-        return -1;
+        return R_NilValue;
     }
     catDefn(">>\nendobj\n", defNum, pd);
     trimDefn(defNum, pd);
-    return defNum;
+    if (defNum >= 0) {
+        if (semiTransparentShading(pattern)) {
+            int maskNum = addShadingSoftMask(pattern, pd);
+            if (maskNum >= 0) {
+                PROTECT(ref = allocVector(INTSXP, 2));
+                INTEGER(ref)[0] = defNum;
+                INTEGER(ref)[1] = maskNum;
+                UNPROTECT(1);
+            }
+        } else {
+            PROTECT(ref = allocVector(INTSXP, 1));
+            INTEGER(ref)[0] = defNum;
+            UNPROTECT(1);
+        }
+    }
+    return ref;
 }
 
-static int addPattern(SEXP pattern, PDFDesc *pd)
+static SEXP addPattern(SEXP pattern, PDFDesc *pd)
 {
-    int defNum = -1;
+    SEXP ref = R_NilValue;
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
-        defNum = addShading(pattern, pd);
+        ref = addShading(pattern, pd);
         break;
     default:
         warning("Pattern type not yet supported");
     }
-    return defNum;
+    return ref;
 }
 
 static int countPatterns(PDFDesc *pd) 
@@ -5908,6 +6029,19 @@ static void PDFwritePatternDefs(int objoffset, PDFDesc *pd)
     }
     fprintf(pd->pdffp, 
             ">>\n");
+}
+
+static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
+{
+    int i;
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFsoftMask) {
+            fprintf(pd->pdffp, 
+                "/Def%d %d 0 R\n",
+                i, 
+                i + objoffset);
+        }
+    }
 }
 
 
@@ -6711,14 +6845,6 @@ static void alphaVersion(PDFDesc *pd) {
     pd->usedAlpha = TRUE;
 }
 
-/*
- * Do we need to bother with semi-transparency?
- */
-static int semiTransparent(int col)
-{
-    return !(R_OPAQUE(col) || R_TRANSPARENT(col));
-}
-
 static void PDF_SetLineColor(int color, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
@@ -6822,11 +6948,20 @@ static void PDF_SetFill(int color, pDevDesc dd)
 static void PDF_SetPatternFill(SEXP ref, pDevDesc dd) 
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    int index = INTEGER(ref)[0];
+    int patternIndex = INTEGER(ref)[0];
 
-    fprintf(pd->pdffp, 
-            "/Pattern cs\n/Def%d scn\n", 
-            index);
+    if (length(ref) > 1) {
+        /* Define soft mask as well as pattern */
+        int maskIndex = INTEGER(ref)[1];
+        fprintf(pd->pdffp, 
+                "/Def%d gs /Pattern cs /Def%d scn\n", 
+                maskIndex,
+                patternIndex);
+    } else {
+        fprintf(pd->pdffp, 
+                "/Pattern cs /Def%d scn\n", 
+                patternIndex);
+    }
 
     pd->current.fill = INVALID_COL;    
 }
@@ -7219,11 +7354,16 @@ static void PDF_endfile(PDFDesc *pd)
     /* Special state to set AIS if we have soft masks */
     if (nmask > 0)
 	fprintf(pd->pdffp, "/GSais %d 0 R ", ++tempnobj);
+    /* Soft mask definitions */
+    int defnOffset = ++tempnobj;
+    if (pd->numDefns > 0) {
+        PDFwriteSoftMaskDefs(defnOffset, pd);
+    }    
     fprintf(pd->pdffp, ">>\n");
 
     /* patterns */
     if (pd->numDefns > 0) {
-        PDFwritePatternDefs(++tempnobj, pd);
+        PDFwritePatternDefs(defnOffset, pd);
     }
 
     if (streql(pd->colormodel, "srgb")) {
@@ -8640,15 +8780,9 @@ void PDF_MetricInfo(int c,
 
 static SEXP PDF_setPattern(SEXP pattern, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    SEXP result = R_NilValue;
-    int defNum;
-    defNum = addPattern(pattern, pd);
-    if (defNum >= 0) {
-        PROTECT(result = allocVector(INTSXP, 1));
-        INTEGER(result)[0] = defNum;
-        UNPROTECT(1);
-    }
-    return result;
+    SEXP ref = R_NilValue;
+    ref = addPattern(pattern, pd);
+    return ref;
 }
 
 static void PDF_releasePattern(SEXP ref, pDevDesc dd) {} 
