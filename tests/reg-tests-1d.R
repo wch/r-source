@@ -4051,6 +4051,13 @@ stopifnot(identical(r, list(value = 5, visible = TRUE)))
 ## failed in R <= 4.0.1
 
 
+## boxplot() with call (instead of expression) in labels; Marius Hofert on R-devel
+rm(x,y,X,f)
+boxplot(cbind(x = 1:10, y = c(16,9:1)), xlab = quote(x^{y[2]}), ylab = quote(X[t]),
+        sub = quote(f^2 == f %*% f), main = quote(e^{-x^2/2}))
+## failed in R <= 4.0.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

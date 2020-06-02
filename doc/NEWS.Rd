@@ -106,6 +106,9 @@
 
       \item \code{source(*, echo=TRUE)} no longer fails in some cases with
       empty lines; reported by Bill Dunlap in \PR{17769}.
+
+      \item \code{boxplot()} now also accepts \code{call}s for labels such
+      as \code{ylab}, the same as \code{plot()}.  Reported by Marius Hofert.
     }
   }
 }
