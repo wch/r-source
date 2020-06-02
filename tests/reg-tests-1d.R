@@ -4013,7 +4013,7 @@ stopifnot(exprs = {
 p <- parse(text = 'r"-(hello)-"', keep.source = TRUE)
 stopifnot(identical(getParseData(p)$text, c("r\"-(hello)-\"", "")))
 rm(p)
-# (wrong in R 4.0.0; reorted by Gabor Csardi)
+# (wrong in R 4.0.0; reported by Gabor Csardi)
 
 
 ## make sure there is n aliasing in assignments with partial matching
@@ -4042,6 +4042,13 @@ assertErrV(  round(x=1.12345, digits=2, banana=3))
 cat("Case 8 : round(x=1.12345, banana=3):\n")
 assertErrV(  round(x=1.12345, banana=3))
 ## (by Shane Mueller, to the R-devel m.list)
+
+
+## source(*, echo=TRUE) with srcref's and empty lines; PR#
+exP <- parse(text=c("1;2+", "", "3"), keep.source=TRUE)
+r <- source(exprs=exP, echo=TRUE)
+stopifnot(identical(r, list(value = 5, visible = TRUE)))
+## failed in R <= 4.0.1
 
 
 

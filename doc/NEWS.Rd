@@ -52,7 +52,7 @@
       \item When printing list arrays, classed objects are now shown via
       their \code{format()} value if this is a short enough character
       string, or by giving the first elements of their class vector and
-      their length. 
+      their length.
     }
   }
 
@@ -103,6 +103,9 @@
       \item \code{round()} and \code{signif()} now longer tolerate wrong
       argument names, notably in 1-argument calls; reported by Shane
       Mueller on R-devel (mailing list).
+
+      \item \code{source(*, echo=TRUE)} no longer fails in some cases with
+      empty lines; reported by Bill Dunlap in \PR{17769}.
     }
   }
 }
