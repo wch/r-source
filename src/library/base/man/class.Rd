@@ -12,6 +12,7 @@
 \alias{oldClass<-}
 \alias{unclass}
 \alias{inherits}
+\alias{isa}
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method dispatch takes place
@@ -22,6 +23,7 @@ class(x)
 class(x) <- value
 unclass(x)
 inherits(x, what, which = FALSE)
+isa(x, what)
 
 oldClass(x)
 oldClass(x) <- value
@@ -97,6 +99,11 @@ oldClass(x) <- value
   no match. If \code{which} is \code{FALSE} then \code{TRUE} is
   returned by \code{inherits} if any of the names in \code{what} match
   with any \code{class}.
+
+  \code{isa} tests whether \code{x} is an object of class(es) as given
+  in \code{what} by using \code{\link[methods]{is}} if \code{x} is an S4
+  object, and otherwise giving \code{TRUE} iff \emph{all} elements of
+  \code{class(x)} are contained in \code{what}.
 
   All but \code{inherits} are \link{primitive} functions.
 }
