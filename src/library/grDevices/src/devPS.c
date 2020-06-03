@@ -5731,14 +5731,23 @@ static void killDefinitions(PDFDesc *pd)
 
 #define PDFdefnOffset 10000
 
-static void addRGBExpLinearGradientFunction(SEXP gradient, int i, 
-                                            double start, double end,
-                                            int toDefn,
-                                            PDFDesc *pd)
+static void addRGBExpGradientFunction(SEXP gradient, int i, 
+                                      double start, double end,
+                                      int toDefn,
+                                      PDFDesc *pd)
 {
     char buf[300]; 
-    rcolor col1 = R_GE_linearGradientColour(gradient, i);
-    rcolor col2 = R_GE_linearGradientColour(gradient, i + 1);
+    rcolor col1, col2;
+    switch(R_GE_patternType(gradient)) {
+    case R_GE_linearGradientPattern:
+        col1 = R_GE_linearGradientColour(gradient, i);
+        col2 = R_GE_linearGradientColour(gradient, i + 1);
+        break;
+    case R_GE_radialGradientPattern:
+        col1 = R_GE_radialGradientColour(gradient, i);
+        col2 = R_GE_radialGradientColour(gradient, i + 1);
+        break;
+    }
     snprintf(buf,
              DEFBUFSIZE,
              "<<\n/FunctionType 2\n/Domain [%.4f %.4f]\n/C0 [%0.4f %0.4f %0.4f]\n/C1 [%0.4f %0.4f %0.4f]\n/N 1\n>>\n",
@@ -5753,14 +5762,23 @@ static void addRGBExpLinearGradientFunction(SEXP gradient, int i,
     catDefn(buf, toDefn, pd);
 }
 
-static void addAlphaExpLinearGradientFunction(SEXP gradient, int i, 
-                                              double start, double end,
-                                              int toDefn,
-                                              PDFDesc *pd)
+static void addAlphaExpGradientFunction(SEXP gradient, int i, 
+                                        double start, double end,
+                                        int toDefn,
+                                        PDFDesc *pd)
 {
     char buf[300]; 
-    rcolor col1 = R_GE_linearGradientColour(gradient, i);
-    rcolor col2 = R_GE_linearGradientColour(gradient, i + 1);
+    rcolor col1, col2;
+    switch(R_GE_patternType(gradient)) {
+    case R_GE_linearGradientPattern:
+        col1 = R_GE_linearGradientColour(gradient, i);
+        col2 = R_GE_linearGradientColour(gradient, i + 1);
+        break;
+    case R_GE_radialGradientPattern:
+        col1 = R_GE_radialGradientColour(gradient, i);
+        col2 = R_GE_radialGradientColour(gradient, i + 1);
+        break;
+    }
     snprintf(buf,
              DEFBUFSIZE,
              "<<\n/FunctionType 2\n/Domain [%.4f %.4f]\n/C0 [%0.4f]\n/C1 [%0.4f]\n/N 1\n>>\n",
@@ -5771,32 +5789,50 @@ static void addAlphaExpLinearGradientFunction(SEXP gradient, int i,
     catDefn(buf, toDefn, pd);
 }
 
-static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn, 
-                                              Rboolean alpha, PDFDesc *pd)
+static void addStitchedGradientFunction(SEXP gradient, int nStops, int toDefn, 
+                                        Rboolean alpha, PDFDesc *pd)
 {
     int defNum = growDefinitions(pd);
-    int i, nStops = R_GE_linearGradientNumStops(gradient);
+    int i;
+    double firstStop, lastStop, stop;
     char buf[100];  
     initDefn(defNum, PDFstitchedFunction, pd);
+    switch(R_GE_patternType(gradient)) {
+    case R_GE_linearGradientPattern:
+        firstStop = R_GE_linearGradientStop(gradient, 0);
+        lastStop = R_GE_linearGradientStop(gradient, nStops - 1);
+        break;
+    case R_GE_radialGradientPattern:
+        firstStop = R_GE_radialGradientStop(gradient, 0);
+        lastStop = R_GE_radialGradientStop(gradient, nStops - 1);
+        break;
+    }
     snprintf(buf,
              100,
              "<<\n/FunctionType 3\n/Domain [%0.4f %0.4f]\n/Functions [\n",
-             R_GE_linearGradientStop(gradient, 0),
-             R_GE_linearGradientStop(gradient, nStops - 1));
+             firstStop,
+             lastStop);
     catDefn(buf, defNum, pd);
     for (i = 0; i < (nStops - 1); i++) {
         if (alpha) {
-            addAlphaExpLinearGradientFunction(gradient, i, 0.0, 1.0,
-                                              defNum, pd);
+            addAlphaExpGradientFunction(gradient, i, 0.0, 1.0, defNum, pd);
         } else {
-            addRGBExpLinearGradientFunction(gradient, i, 0.0, 1.0, defNum, pd);
+            addRGBExpGradientFunction(gradient, i, 0.0, 1.0, defNum, pd);
         }
     }
     catDefn("]\n/Bounds [", defNum, pd);
     for (i = 1; i < (nStops - 1); i++) {
+        switch(R_GE_patternType(gradient)) {
+        case R_GE_linearGradientPattern:
+            stop = R_GE_linearGradientStop(gradient, i);
+            break;
+        case R_GE_radialGradientPattern:
+            stop = R_GE_radialGradientStop(gradient, i);
+            break;
+        }
         sprintf(buf,
                 "%0.4f ",
-                R_GE_linearGradientStop(gradient, i));
+                stop);
         catDefn(buf, defNum, pd);
     }
     catDefn("]\n/Encode [", defNum, pd);
@@ -5811,29 +5847,36 @@ static void addStitchedLinearGradientFunction(SEXP gradient, int toDefn,
     shrinkDefinitions(pd);
 }
 
-static void addLinearGradientFunction(SEXP gradient, int toDefn, 
-                                      Rboolean alpha, PDFDesc *pd)
+static void addGradientFunction(SEXP gradient, int toDefn, 
+                                Rboolean alpha, PDFDesc *pd)
 {
-    int nStops = R_GE_linearGradientNumStops(gradient);
+    int nStops;
+    switch(R_GE_patternType(gradient)) {
+    case R_GE_linearGradientPattern:
+        nStops = R_GE_linearGradientNumStops(gradient);
+        break;
+    case R_GE_radialGradientPattern:
+        nStops = R_GE_radialGradientNumStops(gradient);
+        break;
+    }
     if (nStops > 2) {
-        addStitchedLinearGradientFunction(gradient, toDefn, alpha, pd);
+        addStitchedGradientFunction(gradient, nStops, toDefn, alpha, pd);
     } else {
+        double start, end;
+        switch(R_GE_patternType(gradient)) {
+        case R_GE_linearGradientPattern:
+            start = R_GE_linearGradientStop(gradient, 0);
+            end = R_GE_linearGradientStop(gradient, 1);
+            break;
+        case R_GE_radialGradientPattern:
+            start = R_GE_radialGradientStop(gradient, 0);
+            end = R_GE_radialGradientStop(gradient, 1);
+            break;
+        }
         if (alpha) {
-            addAlphaExpLinearGradientFunction(gradient, 0, 
-                                              R_GE_linearGradientStop(gradient, 
-                                                                      0),
-                                              R_GE_linearGradientStop(gradient, 
-                                                                      1),
-                                              toDefn,
-                                         pd);
+            addAlphaExpGradientFunction(gradient, 0, start, end, toDefn, pd);
         } else {
-            addRGBExpLinearGradientFunction(gradient, 0, 
-                                            R_GE_linearGradientStop(gradient, 
-                                                                    0),
-                                            R_GE_linearGradientStop(gradient, 
-                                                                    1),
-                                            toDefn,
-                                            pd);
+            addRGBExpGradientFunction(gradient, 0, start, end, toDefn, pd);
         }
     }
 }
@@ -5861,12 +5904,65 @@ static void addLinearGradient(SEXP gradient, char* colormodel,
              R_GE_linearGradientY2(gradient));
     catDefn(buf, defNum, pd);
     if (streql(colormodel, "gray")) {
-        addLinearGradientFunction(gradient, defNum, TRUE, pd);
+        addGradientFunction(gradient, defNum, TRUE, pd);
     } else {
-        addLinearGradientFunction(gradient, defNum, FALSE, pd);
+        addGradientFunction(gradient, defNum, FALSE, pd);
     }    
     char extend[6];
     switch(R_GE_linearGradientExtend(gradient)) {
+    case R_GE_patternExtendPad:
+        strcpy(extend, "true");
+        break;
+    case R_GE_patternExtendRepeat:
+    case R_GE_patternExtendReflect:
+        warning("Repeat or reflect pattern not supported on PDF device");
+    case R_GE_patternExtendNone:
+        strcpy(extend, "false");
+    }
+    snprintf(buf,
+             200,
+             "/Extend [%s %s]\n>>\n",
+             extend,
+             extend);
+    catDefn(buf, defNum, pd);
+    /* Copy toDefn */
+    copyDefn(defNum, toDefn, pd);
+    /* Discard temporary definition */
+    killDefn(defNum, pd);
+    shrinkDefinitions(pd);
+}
+
+static void addRadialGradient(SEXP gradient, char* colormodel,
+                              int toDefn, PDFDesc *pd)
+{
+    int defNum = growDefinitions(pd);
+    char buf[200];
+    char colorspace[12];
+    if (streql(colormodel, "gray"))
+        strcpy(colorspace, "/DeviceGray");
+    else if (streql(colormodel, "srgb"))
+        strcpy(colorspace, "5 0 R");
+    else
+        strcpy(colorspace, "/DeviceRGB");
+    initDefn(defNum, PDFlinearGradient, pd);
+    snprintf(buf,
+             200,
+             "<<\n/ShadingType 3\n/ColorSpace %s\n/Coords [%.4f %.4f %.4f %.4f %.4f %.4f]\n/Function\n",
+             colorspace,
+             R_GE_radialGradientCX1(gradient),
+             R_GE_radialGradientCY1(gradient),
+             R_GE_radialGradientR1(gradient),
+             R_GE_radialGradientCX2(gradient),
+             R_GE_radialGradientCY2(gradient),
+             R_GE_radialGradientR2(gradient));
+    catDefn(buf, defNum, pd);
+    if (streql(colormodel, "gray")) {
+        addGradientFunction(gradient, defNum, TRUE, pd);
+    } else {
+        addGradientFunction(gradient, defNum, FALSE, pd);
+    }    
+    char extend[6];
+    switch(R_GE_radialGradientExtend(gradient)) {
     case R_GE_patternExtendPad:
         strcpy(extend, "true");
         break;
@@ -5908,7 +6004,17 @@ static int addShadingSoftMask(SEXP pattern, PDFDesc *pd)
             defNum, pd);
     catDefn("/Shading\n<<\n/S0\n",
             defNum, pd);
-    addLinearGradient(pattern, "gray", defNum, pd);
+    switch(R_GE_patternType(pattern)) {
+    case R_GE_linearGradientPattern: 
+        addLinearGradient(pattern, "gray", defNum, pd);
+        break;
+    case R_GE_radialGradientPattern: 
+        addRadialGradient(pattern, "gray", defNum, pd);
+        break;
+    default:
+        warning("Shading type not yet supported");
+        return -1;
+    }
     catDefn(">>\n/ExtGState << /G0 << /CA 1 /ca 1 >> >>\n",
             defNum, pd);
     char buf[30];
@@ -5936,12 +6042,27 @@ static int semiTransparent(int col)
 
 static Rboolean semiTransparentShading(SEXP pattern)
 {
-    int i, nStops = R_GE_linearGradientNumStops(pattern);
+    int i, nStops;
+    switch(R_GE_patternType(pattern)) {
+    case R_GE_linearGradientPattern:
+        nStops = R_GE_linearGradientNumStops(pattern);
+        break;
+    case R_GE_radialGradientPattern:
+        nStops = R_GE_radialGradientNumStops(pattern);
+        break;
+    }
     rcolor col;
     Rboolean anyOpaque = FALSE;
     Rboolean anyTransparent = FALSE;
     for (i = 0; i < nStops; i++) {
-        col = R_GE_linearGradientColour(pattern, i);
+        switch(R_GE_patternType(pattern)) {
+        case R_GE_linearGradientPattern: 
+            col = R_GE_linearGradientColour(pattern, i);
+            break;
+        case R_GE_radialGradientPattern: 
+            col = R_GE_radialGradientColour(pattern, i);
+            break;
+        }
         if (semiTransparent(col)) 
             return TRUE;
         if (R_OPAQUE(col)) anyOpaque = TRUE;
@@ -5965,6 +6086,9 @@ static SEXP addShading(SEXP pattern, PDFDesc *pd)
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
         addLinearGradient(pattern, pd->colormodel, defNum, pd);
+        break;
+    case R_GE_radialGradientPattern:
+        addRadialGradient(pattern, pd->colormodel, defNum, pd);
         break;
     default:
         warning("Shading type not yet supported");
@@ -5995,6 +6119,7 @@ static SEXP addPattern(SEXP pattern, PDFDesc *pd)
     SEXP ref = R_NilValue;
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
+    case R_GE_radialGradientPattern: 
         ref = addShading(pattern, pd);
         break;
     default:
@@ -7872,7 +7997,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
         }
         fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
         if (R_VIS(gc->col)) {
-            fprintf(pd->pdffp, " B\n"); 
+            fprintf(pd->pdffp, " B\n");
         } else {
             fprintf(pd->pdffp, " f\n");
         }
@@ -8016,62 +8141,89 @@ static void PDF_Circle(double x, double y, double r,
     if (r <= 0.0) return;  /* since PR#14797 use 0-sized pch=1, but now
 			      GECircle omits such circles */
 
-    code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
-    if (code) {
-	if(code & 2)
-	    PDF_SetFill(gc->fill, dd);
-	if(code & 1) {
-	    PDF_SetLineColor(gc->col, dd);
-	    PDF_SetLineStyle(gc, dd);
-	}
-    }
-    if (code) {
-	if (semiTransparent(gc->col) || semiTransparent(gc->fill)
-	    || r > 10  || !pd->dingbats) {
-	    /*
-	     * Due to possible bug in Acrobat Reader for rendering
-	     * semi-transparent text, only ever draw Bezier curves
-	     * regardless of circle size.  Otherwise use font up to 20pt
-	     */
-	    {
-		/* Use four Bezier curves, hand-fitted to quadrants */
-		double s = 0.55 * r;
-		if(pd->inText) textoff(pd);
-		fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
-		fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-			x - r, y + s, x - s, y + r, x, y + r);
-		fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-			x + s, y + r, x + r, y + s, x + r, y);
-		fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-			x + r, y - s, x + s, y - r, x, y - r);
-		fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-			x - s, y - r, x - r, y - s, x - r, y);
-		switch(code) {
-		case 1: fprintf(pd->pdffp, "S\n"); break;
-		case 2: fprintf(pd->pdffp, "f\n"); break;
-		case 3: fprintf(pd->pdffp, "B\n"); break;
-		}
-	    }
-	} else {
-	    pd->fontUsed[1] = TRUE;
-	    /* Use char 108 in Dingbats, which is a solid disc
-	       afm is C 108 ; WX 791 ; N a71 ; B 35 -14 757 708 ;
-	       so diameter = 0.722 * size
-	       centre = (0.396, 0.347) * size
-	    */
-	    a = 2./0.722 * r;
-	    if (a < 0.01) return; // avoid 0 dims below.
-	    xx = x - 0.396*a;
-	    yy = y - 0.347*a;
-	    tr = (R_OPAQUE(gc->fill)) +
-		2 * (R_OPAQUE(gc->col)) - 1;
-	    if(!pd->inText) texton(pd);
-	    fprintf(pd->pdffp,
-		    "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
-		    tr, a, a, xx, yy);
-	    fprintf(pd->pdffp, " (l) Tj 0 Tr\n");
-	    textoff(pd); /* added in 2.8.0 */
-	}
+    /* patternFill overrides fill */
+    if (gc->patternFill != R_NilValue) { 
+        if(pd->inText) textoff(pd);
+        PDF_SetPatternFill(gc->patternFill, dd);
+        if (R_VIS(gc->col)) {
+            PDF_SetLineColor(gc->col, dd);
+            PDF_SetLineStyle(gc, dd);
+        }
+        /* Use four Bezier curves, hand-fitted to quadrants */
+        double s = 0.55 * r;
+        if(pd->inText) textoff(pd);
+        fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
+        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x - r, y + s, x - s, y + r, x, y + r);
+        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x + s, y + r, x + r, y + s, x + r, y);
+        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x + r, y - s, x + s, y - r, x, y - r);
+        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x - s, y - r, x - r, y - s, x - r, y);
+        if (R_VIS(gc->col)) {
+            fprintf(pd->pdffp, "B\n");
+        } else {
+            fprintf(pd->pdffp, "f\n");
+        } 
+    } else {
+        code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
+        if (code) {
+            if(code & 2)
+                PDF_SetFill(gc->fill, dd);
+            if(code & 1) {
+                PDF_SetLineColor(gc->col, dd);
+                PDF_SetLineStyle(gc, dd);
+            }
+        }
+        if (code) {
+            if (semiTransparent(gc->col) || semiTransparent(gc->fill)
+                || r > 10  || !pd->dingbats) {
+                /*
+                 * Due to possible bug in Acrobat Reader for rendering
+                 * semi-transparent text, only ever draw Bezier curves
+                 * regardless of circle size.  Otherwise use font up to 20pt
+                 */
+                {
+                    /* Use four Bezier curves, hand-fitted to quadrants */
+                    double s = 0.55 * r;
+                    if(pd->inText) textoff(pd);
+                    fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
+                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                            x - r, y + s, x - s, y + r, x, y + r);
+                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                            x + s, y + r, x + r, y + s, x + r, y);
+                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                            x + r, y - s, x + s, y - r, x, y - r);
+                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                            x - s, y - r, x - r, y - s, x - r, y);
+                    switch(code) {
+                    case 1: fprintf(pd->pdffp, "S\n"); break;
+                    case 2: fprintf(pd->pdffp, "f\n"); break;
+                    case 3: fprintf(pd->pdffp, "B\n"); break;
+                    }
+                }
+            } else {
+                pd->fontUsed[1] = TRUE;
+                /* Use char 108 in Dingbats, which is a solid disc
+                   afm is C 108 ; WX 791 ; N a71 ; B 35 -14 757 708 ;
+                   so diameter = 0.722 * size
+                   centre = (0.396, 0.347) * size
+                */
+                a = 2./0.722 * r;
+                if (a < 0.01) return; // avoid 0 dims below.
+                xx = x - 0.396*a;
+                yy = y - 0.347*a;
+                tr = (R_OPAQUE(gc->fill)) +
+                    2 * (R_OPAQUE(gc->col)) - 1;
+                if(!pd->inText) texton(pd);
+                fprintf(pd->pdffp,
+                        "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
+                        tr, a, a, xx, yy);
+                fprintf(pd->pdffp, " (l) Tj 0 Tr\n");
+                textoff(pd); /* added in 2.8.0 */
+            }
+        }
     }
 }
 
@@ -8101,36 +8253,67 @@ static void PDF_Polygon(int n, double *x, double *y,
 
     PDF_checkOffline();
 
-    code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
-    if (code) {
-	if(pd->inText) textoff(pd);
-	if(code & 2)
-	    PDF_SetFill(gc->fill, dd);
-	if(code & 1) {
-	    PDF_SetLineColor(gc->col, dd);
-	    PDF_SetLineStyle(gc, dd);
-	}
-	xx = x[0];
-	yy = y[0];
-	fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
-	for(i = 1 ; i < n ; i++) {
-	    xx = x[i];
-	    yy = y[i];
-	    fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
-	}
-	if (pd->fillOddEven) {
-	    switch(code) {
-	    case 1: fprintf(pd->pdffp, "s\n"); break;
-	    case 2: fprintf(pd->pdffp, "h f*\n"); break;
-	    case 3: fprintf(pd->pdffp, "b*\n"); break;
-	    }
-	} else {
-	    switch(code) {
-	    case 1: fprintf(pd->pdffp, "s\n"); break;
-	    case 2: fprintf(pd->pdffp, "h f\n"); break;
-	    case 3: fprintf(pd->pdffp, "b\n"); break;
-	    }
-	}
+    /* patternFill overrides fill */
+    if (gc->patternFill != R_NilValue) { 
+        if(pd->inText) textoff(pd);
+        PDF_SetPatternFill(gc->patternFill, dd);
+        if (R_VIS(gc->col)) {
+            PDF_SetLineColor(gc->col, dd);
+            PDF_SetLineStyle(gc, dd);
+        }
+        xx = x[0];
+        yy = y[0];
+        fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
+        for(i = 1 ; i < n ; i++) {
+            xx = x[i];
+            yy = y[i];
+            fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
+        }
+        if (pd->fillOddEven) {
+            if (R_VIS(gc->col)) {
+                fprintf(pd->pdffp, "h b*\n");
+            } else {
+                fprintf(pd->pdffp, "h f*\n");
+            }
+        } else {
+            if (R_VIS(gc->col)) {
+                fprintf(pd->pdffp, "h b\n");
+            } else {
+                fprintf(pd->pdffp, "h f\n");
+            }
+        }
+    } else {
+        code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
+        if (code) {
+            if(pd->inText) textoff(pd);
+            if(code & 2)
+                PDF_SetFill(gc->fill, dd);
+            if(code & 1) {
+                PDF_SetLineColor(gc->col, dd);
+                PDF_SetLineStyle(gc, dd);
+            }
+            xx = x[0];
+            yy = y[0];
+            fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
+            for(i = 1 ; i < n ; i++) {
+                xx = x[i];
+                yy = y[i];
+                fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
+            }
+            if (pd->fillOddEven) {
+                switch(code) {
+                case 1: fprintf(pd->pdffp, "s\n"); break;
+                case 2: fprintf(pd->pdffp, "h f*\n"); break;
+                case 3: fprintf(pd->pdffp, "b*\n"); break;
+                }
+            } else {
+                switch(code) {
+                case 1: fprintf(pd->pdffp, "s\n"); break;
+                case 2: fprintf(pd->pdffp, "h f\n"); break;
+                case 3: fprintf(pd->pdffp, "b\n"); break;
+                }
+            }
+        }
     }
 }
 
@@ -8146,15 +8329,14 @@ static void PDF_Path(double *x, double *y,
 
     PDF_checkOffline();
 
-    code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
-    if (code) {
-	if(pd->inText) textoff(pd);
-	if(code & 2)
-	    PDF_SetFill(gc->fill, dd);
-	if(code & 1) {
-	    PDF_SetLineColor(gc->col, dd);
-	    PDF_SetLineStyle(gc, dd);
-	}
+    /* patternFill overrides fill */
+    if (gc->patternFill != R_NilValue) { 
+        if(pd->inText) textoff(pd);
+        PDF_SetPatternFill(gc->patternFill, dd);
+        if (R_VIS(gc->col)) {
+            PDF_SetLineColor(gc->col, dd);
+            PDF_SetLineStyle(gc, dd);
+        }
         index = 0;
         for (i=0; i < npoly; i++) {
             xx = x[index];
@@ -8169,20 +8351,59 @@ static void PDF_Path(double *x, double *y,
             }
             if (i < npoly - 1)
                 fprintf(pd->pdffp, "h\n");
-	}
-	if (winding) {
-	    switch(code) {
-	    case 1: fprintf(pd->pdffp, "s\n"); break;
-	    case 2: fprintf(pd->pdffp, "h f\n"); break;
-	    case 3: fprintf(pd->pdffp, "b\n"); break;
-	    }
-	} else {
-	    switch(code) {
-	    case 1: fprintf(pd->pdffp, "s\n"); break;
-	    case 2: fprintf(pd->pdffp, "h f*\n"); break;
-	    case 3: fprintf(pd->pdffp, "b*\n"); break;
-	    }
-	}
+        }
+        if (winding) {
+            if (R_VIS(gc->col)) {
+                fprintf(pd->pdffp, "b\n");
+            } else {
+                fprintf(pd->pdffp, "f\n");
+            }
+        } else {
+            if (R_VIS(gc->col)) {
+                fprintf(pd->pdffp, "b*\n"); 
+            } else {
+                fprintf(pd->pdffp, "f*\n"); 
+            }
+        }
+    } else {
+        code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
+        if (code) {
+            if(pd->inText) textoff(pd);
+            if(code & 2)
+                PDF_SetFill(gc->fill, dd);
+            if(code & 1) {
+                PDF_SetLineColor(gc->col, dd);
+                PDF_SetLineStyle(gc, dd);
+            }
+            index = 0;
+            for (i=0; i < npoly; i++) {
+                xx = x[index];
+                yy = y[index];
+                index++;
+                fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
+                for(j=1; j < nper[i]; j++) {
+                    xx = x[index];
+                    yy = y[index];
+                    index++;
+                    fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
+                }
+                if (i < npoly - 1)
+                    fprintf(pd->pdffp, "h\n");
+            }
+            if (winding) {
+                switch(code) {
+                case 1: fprintf(pd->pdffp, "s\n"); break;
+                case 2: fprintf(pd->pdffp, "h f\n"); break;
+                case 3: fprintf(pd->pdffp, "b\n"); break;
+                }
+            } else {
+                switch(code) {
+                case 1: fprintf(pd->pdffp, "s\n"); break;
+                case 2: fprintf(pd->pdffp, "h f*\n"); break;
+                case 3: fprintf(pd->pdffp, "b*\n"); break;
+                }
+            }
+        }
     }
 }
 
