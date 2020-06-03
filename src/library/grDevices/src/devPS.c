@@ -5731,6 +5731,16 @@ static void killDefinitions(PDFDesc *pd)
     free(pd->definitions);
 }
 
+/* For when end file and start a new one on new page */
+static void resetDefinitions(PDFDesc *pd)
+{
+    int i;
+    for (i = 0; i < pd->numDefns; i++)
+        killDefn(i, pd);
+    pd->numDefns = 0;
+    /* Leave pd->maxDefns as is */
+}
+
 static void PDFwriteDefinitions(PDFDesc *pd)
 {
     for (int i = 0; i < pd->numDefns; i++) {
@@ -6805,6 +6815,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
         free(dd);
 	error(_("failed to allocate definitions"));
     }
+    pd->appending = FALSE;
 
     setbg = R_GE_str2col(bg);
     setfg = R_GE_str2col(fg);
@@ -7987,6 +7998,7 @@ static void PDF_NewPage(const pGEcontext gc,
 	    if (!pd->mainfp)
 		error(_("cannot open 'pdf' file argument '%s'\n  please shut down the PDF device"), buf);
 	    pd->pdffp = pd->mainfp;
+            resetDefinitions(pd);
 	    PDF_startfile(pd);
 	}
     }
@@ -8029,6 +8041,7 @@ static void PDF_NewPage(const pGEcontext gc,
      */
     fprintf(pd->pdffp, "1 J 1 j q\n");
     PDF_Invalidate(dd);
+    pd->appending = FALSE;
     if(R_VIS(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
 	fprintf(pd->pdffp, "0 0 %.2f %.2f re f\n",
