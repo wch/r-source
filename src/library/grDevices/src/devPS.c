@@ -5744,12 +5744,17 @@ static void resetDefinitions(PDFDesc *pd)
 static void PDFwriteDefinitions(PDFDesc *pd)
 {
     for (int i = 0; i < pd->numDefns; i++) {
-        /* Not all definitions are written out at the end of the file */
-        if (pd->definitions[i].type == PDFpattern ||
-            pd->definitions[i].type == PDFsoftMask) {
-            pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-            /* Definition object number */
-            fprintf(pd->pdffp, "%d", pd->nobjs);
+        /* All definitions written out, to keep the math somewhere near sane,
+         * but some definitions are just empty here
+         * (e.g., clipping paths are written inline every time 
+         *  they are used rather than here)
+         */
+        pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+        /* Definition object number */
+        fprintf(pd->pdffp, "%d", pd->nobjs);
+        if (pd->definitions[i].type == PDFclipPath) {
+            fprintf(pd->pdffp, " 0 obj << >>\n");
+        } else {
             fputs(pd->definitions[i].str, pd->pdffp);
         }    
     }
@@ -6230,9 +6235,15 @@ static int newClipPath(SEXP path, PDFDesc *pd)
 
 static void PDFwriteClipPath(int i, PDFDesc *pd)
 {
-    fprintf(pd->pdffp, 
-            "%s W n\n",
-            pd->definitions[i].str);
+    if (pd->fillOddEven) {
+        fprintf(pd->pdffp, 
+                "%s W* n\n",
+                pd->definitions[i].str);
+    } else {
+        fprintf(pd->pdffp, 
+                "%s W n\n",
+                pd->definitions[i].str);
+    }
 }
 
 static SEXP addClipPath(SEXP path, SEXP ref, PDFDesc *pd) 
@@ -8072,6 +8083,13 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 
     PDF_checkOffline();
 
+    if (pd->appending) {
+        char buf[50];
+        sprintf(buf, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
+        addToClipPath(buf, pd);
+        return;
+    }
+
     /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
         if(pd->inText) textoff(pd);
@@ -8359,6 +8377,22 @@ static void PDF_Polygon(int n, double *x, double *y,
 
     PDF_checkOffline();
 
+    if (pd->appending) {
+        char buf[50];
+        xx = x[0];
+        yy = y[0];
+        sprintf(buf, "%.2f %.2f m\n", xx, yy);
+        addToClipPath(buf, pd);
+        for(i = 1 ; i < n ; i++) {
+            xx = x[i];
+            yy = y[i];
+            sprintf(buf, "%.2f %.2f l\n", xx, yy);
+            addToClipPath(buf, pd);
+        }
+        addToClipPath("h\n", pd);
+        return;
+    }
+
     /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
         if(pd->inText) textoff(pd);
@@ -8434,6 +8468,28 @@ static void PDF_Path(double *x, double *y,
     int i, j, index, code;
 
     PDF_checkOffline();
+
+    if (pd->appending) {
+        char buf[50];
+        index = 0;
+        for (i=0; i < npoly; i++) {
+            xx = x[index];
+            yy = y[index];
+            index++;
+            sprintf(buf, "%.2f %.2f m\n", xx, yy);
+            addToClipPath(buf, pd);
+            for(j=1; j < nper[i]; j++) {
+                xx = x[index];
+                yy = y[index];
+                index++;
+                sprintf(buf, "%.2f %.2f l\n", xx, yy);
+                addToClipPath(buf, pd);
+            }
+            if (i < npoly - 1)
+                addToClipPath("h\n", pd);
+        }
+        return;
+    }
 
     /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
