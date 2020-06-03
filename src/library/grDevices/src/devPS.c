@@ -6217,6 +6217,7 @@ static int newClipPath(SEXP path, PDFDesc *pd)
     SEXP R_fcall;
     int defNum = growDefinitions(pd);
     initDefn(defNum, PDFclipPath, pd);
+    catDefn("Q q\n", defNum, pd);
 
     /* Put device in "append mode" */
     pd->appending = TRUE;
@@ -9173,6 +9174,7 @@ static void PDF_releasePattern(SEXP ref, pDevDesc dd) {}
 static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     ref = addClipPath(path, ref, pd);
+    PDF_Invalidate(dd);
     return ref;
 }
 
