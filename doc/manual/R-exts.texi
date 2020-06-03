@@ -981,9 +981,10 @@ nowadays it is better to access such functionality @emph{via} @code{::}
 calls.
 
 @c DESCRIPTION field LinkingTo
-A package that wishes to make use of header files in other packages needs
-to declare them as a comma-separated list in the field @samp{LinkingTo}
-in the @file{DESCRIPTION} file.  For example
+A package that wishes to make use of header files in other packages to
+compile its C/C++ code needs to declare them as a comma-separated list
+in the field @samp{LinkingTo} in the @file{DESCRIPTION} file.  For
+example
 
 @example
 LinkingTo: link1, link2
@@ -993,12 +994,15 @@ LinkingTo: link1, link2
 The @samp{LinkingTo} field can have a version requirement which is
 checked at installation.
 
-Specifying a package in @samp{LinkingTo} suffices if these are C++
+Specifying a package in @samp{LinkingTo} suffices if these are C/C++
 headers containing source code or static linking is done at
 installation: the packages do not need to be (and usually should not be)
 listed in the @samp{Depends} or @samp{Imports} fields.  This includes
 @acronym{CRAN} package @CRANpkg{BH} and almost all users of
-@CRANpkg{RcppArmadillo} and @CRANpkg{RcppEigen}.
+@CRANpkg{RcppArmadillo} and @CRANpkg{RcppEigen}.  Note that
+@samp{LinkingTo} applies only to installation: if a packages wishes to
+use headers to compile code in tests or vignettes the package providing
+them needs to be listed in @samp{Suggests} or perhaps @samp{Depends}.
 
 For another use of @samp{LinkingTo} see @ref{Linking to native routines
 in other packages}.
