@@ -5466,6 +5466,7 @@ typedef struct {
 #define PDFexpFunction 2
 #define PDFpattern 3
 #define PDFsoftMask 4
+#define PDFclipPath 5
 
 typedef struct {
     int type;
@@ -5573,6 +5574,7 @@ typedef struct {
     PDFdefn *definitions;
     int numDefns;
     int maxDefns;
+    Rboolean appending; /* Are we gathering a clipping path ? */
 
     /* Is the device "offline" (does not write out to a file) */
     Rboolean offline;
@@ -6169,6 +6171,65 @@ static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
     }
 }
 
+/***********************************************************************
+ * Stuff for clipping paths
+ */
+
+static void addToClipPath(char* str, PDFDesc *pd)
+{
+    /* Just append to the "current" definition */
+    catDefn(str, pd->numDefns - 1, pd);
+}
+
+static int newClipPath(SEXP path, PDFDesc *pd)
+{
+    SEXP R_fcall;
+    int defNum = growDefinitions(pd);
+    initDefn(defNum, PDFclipPath, pd);
+
+    /* Put device in "append mode" */
+    pd->appending = TRUE;
+
+    /* Evaluate the path function to generate the clipping path */
+    R_fcall = PROTECT(lang1(path));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+
+    trimDefn(defNum, pd);
+    /* Exit "append mode" */
+    pd->appending = FALSE;
+
+    return defNum;
+}
+
+static void PDFwriteClipPath(int i, PDFDesc *pd)
+{
+    fprintf(pd->pdffp, 
+            "%s W n\n",
+            pd->definitions[i].str);
+}
+
+static SEXP addClipPath(SEXP path, SEXP ref, PDFDesc *pd) 
+{
+    SEXP newref = R_NilValue;
+
+    if (isNull(ref)) {
+        /* Generate new clipping path */
+        int index = newClipPath(path, pd);
+        if (index >= 0) {
+            PDFwriteClipPath(index, pd);
+            PROTECT(newref = allocVector(INTSXP, 1));
+            INTEGER(newref)[0] = index;
+            UNPROTECT(1);
+        }
+    } else {
+        /* Reuse existing clipping path */
+        int index = INTEGER(ref)[0];
+        PDFwriteClipPath(index, pd);
+        newref = ref;
+    }
+    return newref;
+}
 
 /***********************************************************************
  * Some stuff for recording raster images
@@ -8141,6 +8202,27 @@ static void PDF_Circle(double x, double y, double r,
     if (r <= 0.0) return;  /* since PR#14797 use 0-sized pch=1, but now
 			      GECircle omits such circles */
 
+    if (pd->appending) {
+        char buf[50];
+        /* Use four Bezier curves, hand-fitted to quadrants */
+        double s = 0.55 * r;
+        sprintf(buf, "%.2f %.2f m\n", x - r, y);
+        addToClipPath(buf, pd);
+        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x - r, y + s, x - s, y + r, x, y + r);
+        addToClipPath(buf, pd);
+        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x + s, y + r, x + r, y + s, x + r, y);
+        addToClipPath(buf, pd);
+        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x + r, y - s, x + s, y - r, x, y - r);
+        addToClipPath(buf, pd);
+        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                x - s, y - r, x - r, y - s, x - r, y);
+        addToClipPath(buf, pd);
+        return;
+    }
+
     /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
         if(pd->inText) textoff(pd);
@@ -9009,7 +9091,9 @@ static SEXP PDF_setPattern(SEXP pattern, pDevDesc dd) {
 static void PDF_releasePattern(SEXP ref, pDevDesc dd) {} 
 
 static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
-    return R_NilValue;
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    ref = addClipPath(path, ref, pd);
+    return ref;
 }
 
 static void PDF_releaseClipPath(SEXP ref, pDevDesc dd) {}
