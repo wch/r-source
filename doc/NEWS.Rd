@@ -109,6 +109,9 @@
 
       \item \code{boxplot()} now also accepts \code{call}s for labels such
       as \code{ylab}, the same as \code{plot()}.  Reported by Marius Hofert.
+
+      \item \code{on.exit()} now correctly matches named arguments, thanks
+      to \PR{17815} including patch by Brodie Gaslam.
     }
   }
 }

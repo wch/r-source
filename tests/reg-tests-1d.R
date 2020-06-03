@@ -4,6 +4,7 @@ pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
 tryCid <- function(expr) tryCatch(expr, error = identity)
 identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
+assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
 onWindows <- .Platform$OS.type == "windows"
 
 ## body() / formals() notably the replacement versions
@@ -611,7 +612,7 @@ stopifnot(exprs = {
     identical(c(1L, 3L), seq.int(1L, 3L, length.out=2))
 })
 ## the first was missing(.), the others "double" in R < 3.4.0
-tools::assertError(seq(1,7, by = 1:2))# gave warnings in R < 3.4.0
+assertErrV(seq(1,7, by = 1:2))# gave warnings in R < 3.4.0
 ## seq() for <complex> / <integer>
 stopifnot(exprs = {
     all.equal(seq(1+1i, 9+2i, length.out = 9) -> sCplx,
@@ -837,8 +838,8 @@ if(englishMsgs)
     stopifnot(grepl("indexing '...' with .* index 0", mt0),
 	      identical("the ... list contains fewer than 2 elements", mt2.0),
 	      identical(mt2.0, mt2.1))
-tools::assertError(t0(1))
-tools::assertError(t0(1, 2))
+assertErrV(t0(1))
+assertErrV(t0(1, 2))
 ## the first gave a different error msg, the next gave no error in R < 3.5.0
 
 
@@ -1078,9 +1079,9 @@ stopifnot(exprs = {
 ## invalid user device function  options(device = *) -- PR#15883
 graphics.off() # just in case
 op <- options(device=function(...){}) # non-sense device
-tools::assertError(plot.new(), verbose = TRUE)
+assertErrV(plot.new())
 if(no.grid <- !("grid" %in% loadedNamespaces())) requireNamespace("grid")
-tools::assertError(grid::grid.newpage(), verbose = TRUE)
+assertErrV(grid::grid.newpage())
 if(no.grid) unloadNamespace("grid") ; options(op)
 ## both errors gave segfaults in R <= 3.4.1
 
@@ -1280,7 +1281,7 @@ stopifnot(exprs = {
 if(no.splines <- !("splines" %in% loadedNamespaces())) requireNamespace("splines")
 x <- (0:8)/8
 aKnots <- c(rep(0, 4), c(0.3, 0.5, 0.6), rep(1, 4))
-tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
+assertErrV(splines::splineDesign(aKnots, x, derivs = 4))
 ## gave seg.fault in R <= 3.4.1
 
 
@@ -2661,7 +2662,7 @@ stopifnot(exprs = {
 
 
 ## Failed to work after r76382--8:
-tools::assertError(formula("3"), verbose=TRUE)
+assertErrV(formula("3"))
 stopifnot(exprs = {
     ## New formula(<character>) specs:
     ## These give deprecation warnings:
@@ -3368,7 +3369,7 @@ stopifnot(exprs = {
     NextMethod("[")
 }
 noC <- structure(datasets::trees, class = c("noCol", "data.frame"))
-tools::assertError( noC[1,2], verbose=TRUE) # fails indeed
+assertErrV( noC[1,2]) # fails indeed
 stopifnot(exprs = {
     identical(head(noC), noC[1:6,])
     identical(head(noC, 1), noC[1, ])
@@ -3380,8 +3381,8 @@ stopifnot(exprs = {
 str(Alis <- lapply(1:4, function(n) {d <- 1+(1:n); array(seq_len(prod(d)), d) }))
 h2 <- lapply(Alis, head, 2)
 t2 <- lapply(Alis, head, 2)
-tools::assertError( head(Alis[[1]], c(1, NA)), verbose=TRUE)
-tools::assertError( tail(1:5, c(1, NA)), verbose=TRUE)
+assertErrV( head(Alis[[1]], c(1, NA)))
+assertErrV( tail(1:5, c(1, NA)))
 h1 <- lapply(Alis, head, 1)
 t1 <- lapply(Alis, tail, 1)
 dh1 <- lapply(h1, dim)
@@ -3390,7 +3391,7 @@ Alis2p <- Alis[-1]
 h1N <- lapply(Alis2p, head, c(1, NA))
 t1N <- lapply(Alis2p, tail, c(1, NA))
 Foolis <- lapply(Alis, `class<-`, "foo")
-tools::assertError( head(Foolis[[1]], c(1, NA)), verbose=TRUE)
+assertErrV( head(Foolis[[1]], c(1, NA)))
 h1F  <- lapply(Foolis, head, 1)
 h2F  <- lapply(Foolis, head, 2)
 t1F  <- lapply(Foolis, tail, 1)
@@ -3531,8 +3532,8 @@ stopifnot(exprs = {
     all.equal(attributes(x),         list(tsp = c(2.5, 107.5, 0.2), class = "ts"))
     all.equal(wx, structure(c(0.5, 0.6), .Tsp = c(22.5, 27.5, 0.2), class = "ts"))
 })
-tools::assertError(cbind(ts(1:2, start = 0.5, end = 1.5),
-			 ts(1:2, start = 0  , end = 1)), verbose=TRUE)
+assertErrV(cbind(ts(1:2, start = 0.5, end = 1.5),
+                 ts(1:2, start = 0  , end = 1)))
 ## Wrong results in R < 4.0.0
 ## New checks needed tweaks :
 ## -- 1 --
@@ -3809,10 +3810,9 @@ stopifnot(is.integer(y1), is.integer(y2), y1[-3] == y2[-3],
 
 
 ## stopifnot() custom message now via <named> args:
-e <- tools::assertError(stopifnot("ehmm, you must be kidding!" = 1 == 0), verbose=TRUE)
+e <- assertErrV(stopifnot("ehmm, you must be kidding!" = 1 == 0))
 stopifnot(grepl("must be kidding!", e[[1]]$message))
-e2 <- tools::assertError(
- stopifnot("2 is not approximately 2.1" = all.equal(2, 2.1)), verbose=TRUE)
+e2 <- assertErrV(stopifnot("2 is not approximately 2.1" = all.equal(2, 2.1)))
 stopifnot(grepl("not approximately", e2[[1]]$message))
 ## did not work in original stopifnot(<named>) patch
 CHK <- function(...) stopifnot(...)
@@ -4030,7 +4030,6 @@ cat("Case 2 : round(x=1.12345,2):        ", round(x=1.12345, 2),"\n")
 cat("Case 3 : round(x=1.12345,digits=2): ", round(x=1.12345, digits=2),"\n")
 cat("Case 4 : round(digits=2,x=1.12345): ", round(digits=2, x=1.12345),"\n")
 cat("Case 4b: round(digits=2,1.12345):   ", round(digits=2,1.12345),"\n")
-assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
 ## R <= 4.0.0 does not produce error in cases 5,6 but should :
 cat("Case 5:    round(digits=x): \n")
 assertErrV(cat("round(digits=99.23456): ", round(digits=99.23456)))
@@ -4056,6 +4055,14 @@ rm(x,y,X,f)
 boxplot(cbind(x = 1:10, y = c(16,9:1)), xlab = quote(x^{y[2]}), ylab = quote(X[t]),
         sub = quote(f^2 == f %*% f), main = quote(e^{-x^2/2}))
 ## failed in R <= 4.0.1
+
+
+## on.exit() argument matching -- PR#17815
+f <- function() { on.exit(add=FALSE, expr=cat('bar\n')) ; 'foo' }
+stopifnot(identical(f(), 'foo')) # and write 'bar' line
+g <- function() { on.exit(add=stop('boom'), expr={cat('bar\n'); FALSE}) ; "foo" }
+assertErrV(g())
+## f() :> "Error in on.exit(....): invalid 'add' argument"  and no error for g() in R <= 4.0.1
 
 
 

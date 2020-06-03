@@ -1,6 +1,6 @@
 % File src/library/base/man/on.exit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{on.exit}
@@ -42,7 +42,7 @@ on.exit(expr = NULL, add = FALSE, after = TRUE)
   then all expressions will be run even if one signals an error.
 
   This is a \sQuote{special} \link{primitive} function: it only
-  evaluates the argument \code{add}.
+  evaluates the arguments \code{add} and \code{after}.
 }
 \value{
   Invisible \code{NULL}.
