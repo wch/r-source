@@ -5731,7 +5731,23 @@ static void killDefinitions(PDFDesc *pd)
     free(pd->definitions);
 }
 
-#define PDFdefnOffset 10000
+static void PDFwriteDefinitions(PDFDesc *pd)
+{
+    for (int i = 0; i < pd->numDefns; i++) {
+        /* Not all definitions are written out at the end of the file */
+        if (pd->definitions[i].type == PDFpattern ||
+            pd->definitions[i].type == PDFsoftMask) {
+            pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+            /* Definition object number */
+            fprintf(pd->pdffp, "%d", pd->nobjs);
+            fputs(pd->definitions[i].str, pd->pdffp);
+        }    
+    }
+}
+
+/***********************************************************************
+ * Stuff for patterns
+ */
 
 static void addRGBExpGradientFunction(SEXP gradient, int i, 
                                       double start, double end,
@@ -7764,12 +7780,7 @@ static void PDF_endfile(PDFDesc *pd)
     }
 
     /* Write out definitions */
-    for (int i = 0; i < pd->numDefns; i++) {
-        pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-        /* Definition object number */
-        fprintf(pd->pdffp, "%d", pd->nobjs);
-        fputs(pd->definitions[i].str, pd->pdffp);
-    }
+    PDFwriteDefinitions(pd);
 
     /* write out xref table */
 
