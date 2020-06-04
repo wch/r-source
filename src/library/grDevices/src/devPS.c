@@ -5576,7 +5576,7 @@ typedef struct {
     int numDefns;
     int maxDefns;
     Rboolean appendingClipPath; /* Are we defining a clipping path ? */
-    Rboolean appendingMask; /* Are we defining a mask ? */
+    int appendingMask; /* Are we defining a mask ? */
     int currentMask;
 
     /* Is the device "offline" (does not write out to a file) */
@@ -5646,7 +5646,6 @@ static SEXP     PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
 static void     PDF_releaseClipPath(SEXP ref, pDevDesc dd);
 static SEXP     PDF_setMask(SEXP path, SEXP ref, pDevDesc dd);
 static void     PDF_releaseMask(SEXP ref, pDevDesc dd);
-
 
 /***********************************************************************
  * Stuff for recording definitions
@@ -5743,27 +5742,6 @@ static void resetDefinitions(PDFDesc *pd)
         killDefn(i, pd);
     pd->numDefns = 0;
     /* Leave pd->maxDefns as is */
-}
-
-static void PDFwriteDefinitions(PDFDesc *pd)
-{
-    for (int i = 0; i < pd->numDefns; i++) {
-        /* All definitions written out, to keep the math somewhere near sane,
-         * but some definitions are just empty here
-         * (e.g., clipping paths are written inline every time 
-         *  they are used rather than here AND temporary mask content
-         *  is still hanging around)
-         */
-        pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-        /* Definition object number */
-        fprintf(pd->pdffp, "%d", pd->nobjs);
-        if (pd->definitions[i].type == PDFclipPath ||
-            pd->definitions[i].type == PDFcontent) {
-            fprintf(pd->pdffp, " 0 obj << >>\n");
-        } else {
-            fputs(pd->definitions[i].str, pd->pdffp);
-        }    
-    }
 }
 
 /***********************************************************************
@@ -6178,36 +6156,6 @@ static int countPatterns(PDFDesc *pd)
     return count;
 }
 
-static void PDFwritePatternDefs(int objoffset, PDFDesc *pd)
-{
-    int i;
-    fprintf(pd->pdffp, 
-            "/Pattern\n<<\n");
-    for (i = 0; i < pd->numDefns; i++) {
-        if (pd->definitions[i].type == PDFpattern) {
-            fprintf(pd->pdffp, 
-                "/Def%d %d 0 R\n",
-                i, 
-                i + objoffset);
-        }
-    }
-    fprintf(pd->pdffp, 
-            ">>\n");
-}
-
-static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
-{
-    int i;
-    for (i = 0; i < pd->numDefns; i++) {
-        if (pd->definitions[i].type == PDFsoftMask) {
-            fprintf(pd->pdffp, 
-                "/Def%d %d 0 R\n",
-                i, 
-                i + objoffset);
-        }
-    }
-}
-
 /***********************************************************************
  * Stuff for clipping paths
  */
@@ -6240,54 +6188,20 @@ static int newClipPath(SEXP path, PDFDesc *pd)
     return defNum;
 }
 
-static void PDFwriteClipPath(int i, PDFDesc *pd)
-{
-    if (pd->fillOddEven) {
-        fprintf(pd->pdffp, 
-                "%s W* n\n",
-                pd->definitions[i].str);
-    } else {
-        fprintf(pd->pdffp, 
-                "%s W n\n",
-                pd->definitions[i].str);
-    }
-}
-
-static SEXP addClipPath(SEXP path, SEXP ref, PDFDesc *pd) 
-{
-    SEXP newref = R_NilValue;
-
-    if (isNull(ref)) {
-        /* Generate new clipping path */
-        int index = newClipPath(path, pd);
-        if (index >= 0) {
-            PDFwriteClipPath(index, pd);
-            PROTECT(newref = allocVector(INTSXP, 1));
-            INTEGER(newref)[0] = index;
-            UNPROTECT(1);
-        }
-    } else {
-        /* Reuse existing clipping path */
-        int index = INTEGER(ref)[0];
-        PDFwriteClipPath(index, pd);
-        newref = ref;
-    }
-    return newref;
-}
-
 /***********************************************************************
  * Stuff for masks
  */
 
 static void addToMask(char* str, PDFDesc *pd)
 {
-    /* Just append to the "current" definition */
-    catDefn(str, pd->numDefns - 1, pd);
+    /* append to the a mask content definition */
+    catDefn(str, pd->appendingMask, pd);
 }
 
 static int newMask(SEXP path, PDFDesc *pd)
 {
     SEXP R_fcall;
+    int prevMask;
     char buf[100];
     int defNum = growDefinitions(pd);
     initDefn(defNum, PDFsoftMask, pd);
@@ -6297,21 +6211,30 @@ static int newMask(SEXP path, PDFDesc *pd)
      */
     int tempDefn = growDefinitions(pd);
     initDefn(tempDefn, PDFcontent, pd);
+    /* Some initialisation that newpage does
+     * (expected by other captured output)
+     */
+    catDefn("1 J 1 j q\n", tempDefn, pd);
 
-    pd->appendingMask = TRUE;
+    prevMask = pd->appendingMask;
+    pd->appendingMask = tempDefn;
 
     /* Evaluate the path function to generate the mask */
     R_fcall = PROTECT(lang1(path));
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
 
+    /* Some finalisation that endpage does
+     * (to match the newpage initilisation)
+     */
+    catDefn("Q\n", tempDefn, pd);
     /* Cannot discard temporary definition because there may have been
      * other definitions created during its creation (so it may no
      * longer be the topmost definition)
      */
     trimDefn(tempDefn, pd);
 
-    pd->appendingMask = FALSE;
+    pd->appendingMask = prevMask;
 
     /* Object number will be determined when definition written
      * to file (PDF_endfile)
@@ -6357,13 +6280,6 @@ static int newMask(SEXP path, PDFDesc *pd)
     return defNum;
 }
 
-static void PDFwriteMask(int i, PDFDesc *pd)
-{
-    fprintf(pd->pdffp, 
-            "/Def%d gs\n",
-            i);
-}
-
 static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd) 
 {
     SEXP newref = R_NilValue;
@@ -6392,12 +6308,16 @@ static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd)
     return newref;
 }
 
+/***********************************************************************
+ * Stuff for writing out PDF code
+ */
 
 /* Write output to a variety of destinations 
  * (buf must be preallocated)
  *
  * Check for clip path first 
- * (because clippaths cannot be nested and masks cannot be used in clippaths)
+ * (because clippaths cannot be nested and 
+ *  because patterns and masks cannot be used in clippaths)
  *
  * Check for mask next 
  * (and capture all output to mask in that case)
@@ -6415,13 +6335,87 @@ static int PDFwrite(char *buf, size_t size, const char *fmt, PDFDesc *pd, ...)
 
     if (pd->appendingClipPath) {
         addToClipPath(buf, pd);
-    } else if (pd->appendingMask) {
+    } else if (pd->appendingMask >= 0) {
         addToMask(buf, pd);
     } else {
         fputs(buf, pd->pdffp);
     }
     
     return val;
+}
+
+static void PDFwritePatternDefs(int objoffset, PDFDesc *pd)
+{
+    int i;
+    fprintf(pd->pdffp, 
+            "/Pattern\n<<\n");
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFpattern) {
+            fprintf(pd->pdffp, 
+                "/Def%d %d 0 R\n",
+                i, 
+                i + objoffset);
+        }
+    }
+    fprintf(pd->pdffp, 
+            ">>\n");
+}
+
+static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
+{
+    int i;
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFsoftMask) {
+            fprintf(pd->pdffp, 
+                "/Def%d %d 0 R\n",
+                i, 
+                i + objoffset);
+        }
+    }
+}
+
+static void PDFwriteClipPath(int i, PDFDesc *pd)
+{
+    char* buf1;
+    char buf2[10];
+    int len = strlen(pd->definitions[i].str);
+    buf1 = malloc((len + 1)*sizeof(char));
+
+    PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
+    if (pd->fillOddEven) {
+        PDFwrite(buf2, 10, " W* n\n", pd);
+    } else {
+        PDFwrite(buf2, 10, " W n\n", pd);
+    }
+
+    free(buf1);
+}
+
+static void PDFwriteMask(int i, PDFDesc *pd)
+{
+    char buf[20];
+    PDFwrite(buf, 20, "/Def%d gs\n", pd, i);
+}
+
+static void PDFwriteDefinitions(PDFDesc *pd)
+{
+    for (int i = 0; i < pd->numDefns; i++) {
+        /* All definitions written out, to keep the math somewhere near sane,
+         * but some definitions are just empty here
+         * (e.g., clipping paths are written inline every time 
+         *  they are used rather than here AND temporary mask content
+         *  is still hanging around)
+         */
+        pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+        /* Definition object number */
+        fprintf(pd->pdffp, "%d", pd->nobjs);
+        if (pd->definitions[i].type == PDFclipPath ||
+            pd->definitions[i].type == PDFcontent) {
+            fprintf(pd->pdffp, " 0 obj << >>\n");
+        } else {
+            fputs(pd->definitions[i].str, pd->pdffp);
+        }    
+    }
 }
 
 
@@ -6984,7 +6978,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	error(_("failed to allocate definitions"));
     }
     pd->appendingClipPath = FALSE;
-    pd->appendingMask = FALSE;
+    pd->appendingMask = -1;
     pd->currentMask = -1;
 
     setbg = R_GE_str2col(bg);
@@ -8218,7 +8212,7 @@ static void PDF_NewPage(const pGEcontext gc,
     fprintf(pd->pdffp, "1 J 1 j q\n");
     PDF_Invalidate(dd);
     pd->appendingClipPath = FALSE;
-    pd->appendingMask = FALSE;
+    pd->appendingMask = -1;
     pd->currentMask = -1;
     if(R_VIS(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
@@ -9417,9 +9411,27 @@ static void PDF_releasePattern(SEXP ref, pDevDesc dd) {}
 
 static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    ref = addClipPath(path, ref, pd);
+    SEXP newref = R_NilValue;
+
+    if (isNull(ref)) {
+        /* Generate new clipping path */
+        int index = newClipPath(path, pd);
+        if (index >= 0) {
+            PDFwriteClipPath(index, pd);
+            PROTECT(newref = allocVector(INTSXP, 1));
+            INTEGER(newref)[0] = index;
+            UNPROTECT(1);
+        }
+    } else {
+        /* Reuse existing clipping path */
+        int index = INTEGER(ref)[0];
+        PDFwriteClipPath(index, pd);
+        newref = ref;
+    }
+
     PDF_Invalidate(dd);
-    return ref;
+    return newref;
+
 }
 
 static void PDF_releaseClipPath(SEXP ref, pDevDesc dd) {}
