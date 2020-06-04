@@ -5647,6 +5647,7 @@ static void     PDF_releaseClipPath(SEXP ref, pDevDesc dd);
 static SEXP     PDF_setMask(SEXP path, SEXP ref, pDevDesc dd);
 static void     PDF_releaseMask(SEXP ref, pDevDesc dd);
 
+
 /***********************************************************************
  * Stuff for recording definitions
  */
@@ -6390,6 +6391,39 @@ static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd)
 
     return newref;
 }
+
+
+/* Write output to a variety of destinations 
+ * (buf must be preallocated)
+ *
+ * Check for clip path first 
+ * (because clippaths cannot be nested and masks cannot be used in clippaths)
+ *
+ * Check for mask next 
+ * (and capture all output to mask in that case)
+ *
+ * Otherwise, write directly to the PDF file
+ */
+static int PDFwrite(char *buf, size_t size, const char *fmt, PDFDesc *pd, ...)
+{
+    int val;
+    va_list ap;
+    
+    va_start(ap, pd);
+    val = vsnprintf(buf, size, fmt, ap);
+    va_end(ap);
+
+    if (pd->appendingClipPath) {
+        addToClipPath(buf, pd);
+    } else if (pd->appendingMask) {
+        addToMask(buf, pd);
+    } else {
+        fputs(buf, pd->pdffp);
+    }
+    
+    return val;
+}
+
 
 /***********************************************************************
  * Some stuff for recording raster images
@@ -7197,6 +7231,7 @@ static void alphaVersion(PDFDesc *pd) {
 static void PDF_SetLineColor(int color, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    char buf[100];
 
     if(color != pd->current.col) {
 	unsigned int alpha = R_ALPHA(color);
@@ -7206,7 +7241,7 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	     * Apply graphics state parameter dictionary
 	     * to set alpha
 	     */
-	    fprintf(pd->pdffp, "/GS%i gs\n", colAlphaIndex(alpha, pd));
+	    PDFwrite(buf, 100, "/GS%i gs\n", pd, colAlphaIndex(alpha, pd));
 	}
 	if(streql(pd->colormodel, "gray")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
@@ -7215,7 +7250,7 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	       http://www.faqs.org/faqs/graphics/colorspace-faq/ 
 	       Those from C-11 might be more appropriate.
 	    */
-	    fprintf(pd->pdffp, "%.3f G\n", (0.213*r+0.715*g+0.072*b));
+	    PDFwrite(buf, 100, "%.3f G\n", pd, (0.213*r+0.715*g+0.072*b));
 	} else if(streql(pd->colormodel, "cmyk")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
 		b = R_BLUE(color)/255.0;
@@ -7224,9 +7259,9 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	    k = fmin2(k, y);
 	    if(k == 1.0) c = m = y = 0.0;
 	    else { c = (c-k)/(1-k); m = (m-k)/(1-k); y = (y-k)/(1-k); }
-	    fprintf(pd->pdffp, "%.3f %.3f %.3f %.3f K\n", c, m, y, k);
+	    PDFwrite(buf, 100, "%.3f %.3f %.3f %.3f K\n", pd, c, m, y, k);
 	} else if(streql(pd->colormodel, "rgb")) {
-	    fprintf(pd->pdffp, "%.3f %.3f %.3f RG\n",
+	    PDFwrite(buf, 100, "%.3f %.3f %.3f RG\n", pd,
 		    R_RED(color)/255.0,
 		    R_GREEN(color)/255.0,
 		    R_BLUE(color)/255.0);
@@ -7234,10 +7269,10 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	    if (!streql(pd->colormodel, "srgb"))
 		warning(_("unknown 'colormodel', using 'srgb'"));
 	    if (!pd->current.srgb_bg) {
-		fprintf(pd->pdffp, "/sRGB CS\n");
+		PDFwrite(buf, 100, "/sRGB CS\n", pd);
 		pd->current.srgb_bg = 1;
 	    }
-	    fprintf(pd->pdffp, "%.3f %.3f %.3f SCN\n",
+	    PDFwrite(buf, 100, "%.3f %.3f %.3f SCN\n", pd,
 		    R_RED(color)/255.0,
 		    R_GREEN(color)/255.0,
 		    R_BLUE(color)/255.0);
@@ -7249,6 +7284,7 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 static void PDF_SetFill(int color, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    char buf[100];
     if(color != pd->current.fill) {
 	unsigned int alpha = R_ALPHA(color);
 	if (0 < alpha && alpha < 255) alphaVersion(pd);
@@ -7257,12 +7293,12 @@ static void PDF_SetFill(int color, pDevDesc dd)
 	     * Apply graphics state parameter dictionary
 	     * to set alpha
 	     */
-	    fprintf(pd->pdffp, "/GS%i gs\n", fillAlphaIndex(alpha, pd));
+	    PDFwrite(buf, 100, "/GS%i gs\n", pd, fillAlphaIndex(alpha, pd));
 	}
 	if(streql(pd->colormodel, "gray")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
 		b = R_BLUE(color)/255.0;
-	    fprintf(pd->pdffp, "%.3f g\n", (0.213*r+0.715*g+0.072*b));
+	    PDFwrite(buf, 100, "%.3f g\n", pd, (0.213*r+0.715*g+0.072*b));
 	} else if(streql(pd->colormodel, "cmyk")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
 		b = R_BLUE(color)/255.0;
@@ -7271,9 +7307,9 @@ static void PDF_SetFill(int color, pDevDesc dd)
 	    k = fmin2(k, y);
 	    if(k == 1.0) c = m = y = 0.0;
 	    else { c = (c-k)/(1-k); m = (m-k)/(1-k); y = (y-k)/(1-k); }
-	    fprintf(pd->pdffp, "%.3f %.3f %.3f %.3f k\n", c, m, y, k);
+	    PDFwrite(buf, 100, "%.3f %.3f %.3f %.3f k\n", pd, c, m, y, k);
 	} else if(streql(pd->colormodel, "rgb")) {
-	    fprintf(pd->pdffp, "%.3f %.3f %.3f rg\n",
+	    PDFwrite(buf, 100, "%.3f %.3f %.3f rg\n", pd,
 		    R_RED(color)/255.0,
 		    R_GREEN(color)/255.0,
 		    R_BLUE(color)/255.0);
@@ -7281,10 +7317,10 @@ static void PDF_SetFill(int color, pDevDesc dd)
 	    if (!streql(pd->colormodel, "srgb"))
 		warning(_("unknown 'colormodel', using 'srgb'"));
 	    if (!pd->current.srgb_fg) {
-		fprintf(pd->pdffp, "/sRGB cs\n");
+		PDFwrite(buf, 100, "/sRGB cs\n", pd);
 		pd->current.srgb_fg = 1;
 	    }
-	    fprintf(pd->pdffp, "%.3f %.3f %.3f scn\n",
+	    PDFwrite(buf, 100, "%.3f %.3f %.3f scn\n", pd,
 		    R_RED(color)/255.0,
 		    R_GREEN(color)/255.0,
 		    R_BLUE(color)/255.0);
@@ -7298,18 +7334,20 @@ static void PDF_SetPatternFill(SEXP ref, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int patternIndex = INTEGER(ref)[0];
-
+    char buf[100];
     if (length(ref) > 1) {
         /* Define soft mask as well as pattern */
         int maskIndex = INTEGER(ref)[1];
-        fprintf(pd->pdffp, 
+        PDFwrite(buf, 100, 
                 "/Def%d gs /Pattern cs /Def%d scn\n", 
-                maskIndex,
-                patternIndex);
+                 pd,
+                 maskIndex,
+                 patternIndex);
     } else {
-        fprintf(pd->pdffp, 
+        PDFwrite(buf, 100, 
                 "/Pattern cs /Def%d scn\n", 
-                patternIndex);
+                 pd,
+                 patternIndex);
     }
 
     pd->current.fill = INVALID_COL;    
@@ -7371,6 +7409,7 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
     R_GE_lineend newlend = gc->lend;
     R_GE_linejoin newljoin = gc->ljoin;
     double newlmitre = gc->lmitre;
+    char buf[100];
 
     if (pd->current.lty != newlty || pd->current.lwd != newlwd ||
 	pd->current.lend != newlend) {
@@ -7380,7 +7419,7 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
         /* Must not allow line width to be zero */
         if (linewidth < .01)
             linewidth = .01;
-	fprintf(pd->pdffp, "%.2f w\n", linewidth);
+	PDFwrite(buf, 100, "%.2f w\n", pd, linewidth);
 	/* process lty : */
 	for(i = 0; i < 8 && newlty & 15 ; i++) {
 	    dashlist[i] = newlty & 15;
@@ -7398,7 +7437,7 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
     }
     if (pd->current.lmitre != newlmitre) {
 	pd->current.lmitre = newlmitre;
-	fprintf(pd->pdffp, "%.2f M\n", newlmitre);
+	PDFwrite(buf, 100, "%.2f M\n", pd, newlmitre);
     }
 }
 
@@ -7416,7 +7455,8 @@ static void texton(PDFDesc *pd)
 
 static void textoff(PDFDesc *pd)
 {
-    fprintf(pd->pdffp, "ET\n");
+    char buf[100];
+    PDFwrite(buf, 100, "ET\n", pd);
     pd->inText = FALSE;
 }
 
@@ -8207,49 +8247,56 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code;
+    char buf[100];
 
     PDF_checkOffline();
 
-    if (pd->appendingClipPath) {
-        char buf[50];
-        sprintf(buf, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
-        addToClipPath(buf, pd);
-        return;
-    }
 
-    if (pd->currentMask >= 0) {
-        PDFwriteMask(pd->currentMask, pd);
-    }
-
-    /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
-        if(pd->inText) textoff(pd);
-        PDF_SetPatternFill(gc->patternFill, dd);
         if (R_VIS(gc->col)) {
-            PDF_SetLineColor(gc->col, dd);
-            PDF_SetLineStyle(gc, dd);
-        }
-        fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
-        if (R_VIS(gc->col)) {
-            fprintf(pd->pdffp, " B\n");
+            code = 3;
         } else {
-            fprintf(pd->pdffp, " f\n");
+            code = 2;
         }
-    } else {
+    } else {            
         code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
-        if (code) {
-            if(pd->inText) textoff(pd);
-            if(code & 2)
+    }
+    if (code) {
+        if(pd->inText) textoff(pd);
+        /*
+         * IF appending a clip path:
+         *    Do NOT set graphical parameters
+         *    Do NOT stroke or fill
+         *
+         * IF there is a pattern fill, use that instead of fill
+         * 
+         * IF there is a mask apply that
+         *
+         * PDFwrite writes to ...
+         *    clip path (if appending a clip path)
+         *    mask (if appending a mask)
+         *    file (otherwise)
+         */
+        if (!pd->appendingClipPath) {
+            if (gc->patternFill != R_NilValue) { 
+                PDF_SetPatternFill(gc->patternFill, dd);
+            } else if(code & 2) {
                 PDF_SetFill(gc->fill, dd);
+            }
             if(code & 1) {
                 PDF_SetLineColor(gc->col, dd);
                 PDF_SetLineStyle(gc, dd);
             }
-            fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
+        }
+        if (pd->currentMask >= 0) {
+            PDFwriteMask(pd->currentMask, pd);
+        }
+        PDFwrite(buf, 100, "%.2f %.2f %.2f %.2f re", pd, x0, y0, x1-x0, y1-y0);
+        if (!pd->appendingClipPath) {
             switch(code) {
-            case 1: fprintf(pd->pdffp, " S\n"); break;
-            case 2: fprintf(pd->pdffp, " f\n"); break;
-            case 3: fprintf(pd->pdffp, " B\n"); break;
+            case 1: PDFwrite(buf, 100, " S\n", pd); break;
+            case 2: PDFwrite(buf, 100, " f\n", pd); break;
+            case 3: PDFwrite(buf, 100, " B\n", pd); break;
             }
         }
     }
