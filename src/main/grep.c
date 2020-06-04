@@ -2049,11 +2049,11 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if (use_WC) ;
 	else if (use_UTF8) {
 	    s = translateCharUTF8(STRING_ELT(text, i));
-	    if (!utf8Valid(s)) error(("input string %d is invalid UTF-8"), i+1);
+	    if (!utf8Valid(s)) error(_("input string %d is invalid UTF-8"), i+1);
 	} else {
 	    s = translateChar(STRING_ELT(text, i));
 	    if (mbcslocale && !mbcsValid(s))
-		error(("input string %d is invalid in this locale"), i+1);
+		error(_("input string %d is invalid in this locale"), i+1);
 	}
 
 	if (fixed_opt) {

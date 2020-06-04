@@ -595,7 +595,7 @@ static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
 	error(_("argument %d of Lapack routine %s had invalid value"),
 	      -info, "zgesv");
     if (info > 0)
-	error(("Lapack routine zgesv: system is exactly singular"));
+	error(_("Lapack routine zgesv: system is exactly singular"));
     UNPROTECT(3);  /* B, Bin, A */
     return B;
 #else
@@ -1114,7 +1114,7 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 	      "dgesv", info, info);
     if(tol > 0) {
 	char one[2] = "1";
-	anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n, 
+	anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n,
 				 (double*) NULL FCONE);
 	work = (double *) R_alloc(4*(size_t)n, sizeof(double));
 	F77_CALL(dgecon)(one, &n, avals, &n, &anorm, &rcond, work, ipiv,
