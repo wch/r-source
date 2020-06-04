@@ -63,6 +63,14 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The \emph{standalone} \file{libRmath} math library and \R's C
+      API now provide \code{log1pexp()} again as documented, and get new
+      \code{log1mexp()}.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Function \code{plclust()} from the package \pkg{stats}, and
