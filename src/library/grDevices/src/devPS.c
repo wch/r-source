@@ -5467,6 +5467,7 @@ typedef struct {
 #define PDFpattern 3
 #define PDFsoftMask 4
 #define PDFclipPath 5
+#define PDFcontent 6
 
 typedef struct {
     int type;
@@ -5574,7 +5575,9 @@ typedef struct {
     PDFdefn *definitions;
     int numDefns;
     int maxDefns;
-    Rboolean appending; /* Are we gathering a clipping path ? */
+    Rboolean appendingClipPath; /* Are we defining a clipping path ? */
+    Rboolean appendingMask; /* Are we defining a mask ? */
+    int currentMask;
 
     /* Is the device "offline" (does not write out to a file) */
     Rboolean offline;
@@ -5747,12 +5750,14 @@ static void PDFwriteDefinitions(PDFDesc *pd)
         /* All definitions written out, to keep the math somewhere near sane,
          * but some definitions are just empty here
          * (e.g., clipping paths are written inline every time 
-         *  they are used rather than here)
+         *  they are used rather than here AND temporary mask content
+         *  is still hanging around)
          */
         pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
         /* Definition object number */
         fprintf(pd->pdffp, "%d", pd->nobjs);
-        if (pd->definitions[i].type == PDFclipPath) {
+        if (pd->definitions[i].type == PDFclipPath ||
+            pd->definitions[i].type == PDFcontent) {
             fprintf(pd->pdffp, " 0 obj << >>\n");
         } else {
             fputs(pd->definitions[i].str, pd->pdffp);
@@ -6220,7 +6225,7 @@ static int newClipPath(SEXP path, PDFDesc *pd)
     catDefn("Q q\n", defNum, pd);
 
     /* Put device in "append mode" */
-    pd->appending = TRUE;
+    pd->appendingClipPath = TRUE;
 
     /* Evaluate the path function to generate the clipping path */
     R_fcall = PROTECT(lang1(path));
@@ -6229,7 +6234,7 @@ static int newClipPath(SEXP path, PDFDesc *pd)
 
     trimDefn(defNum, pd);
     /* Exit "append mode" */
-    pd->appending = FALSE;
+    pd->appendingClipPath = FALSE;
 
     return defNum;
 }
@@ -6266,6 +6271,123 @@ static SEXP addClipPath(SEXP path, SEXP ref, PDFDesc *pd)
         PDFwriteClipPath(index, pd);
         newref = ref;
     }
+    return newref;
+}
+
+/***********************************************************************
+ * Stuff for masks
+ */
+
+static void addToMask(char* str, PDFDesc *pd)
+{
+    /* Just append to the "current" definition */
+    catDefn(str, pd->numDefns - 1, pd);
+}
+
+static int newMask(SEXP path, PDFDesc *pd)
+{
+    SEXP R_fcall;
+    char buf[100];
+    int defNum = growDefinitions(pd);
+    initDefn(defNum, PDFsoftMask, pd);
+    
+    /* Use temporary definition to store the mask content
+     * so we can determine length of the content
+     */
+    int tempDefn = growDefinitions(pd);
+    initDefn(tempDefn, PDFcontent, pd);
+
+    pd->appendingMask = TRUE;
+
+    /* Evaluate the path function to generate the mask */
+    R_fcall = PROTECT(lang1(path));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+
+    /* Cannot discard temporary definition because there may have been
+     * other definitions created during its creation (so it may no
+     * longer be the topmost definition)
+     */
+    trimDefn(tempDefn, pd);
+
+    pd->appendingMask = FALSE;
+
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    catDefn(" 0 obj\n<<\n/Type /ExtGState\n/AIS false\n/SMask\n<<\n",
+            defNum, pd);
+    catDefn("/Type /Mask\n/S /Alpha\n/G\n<<\n",
+            defNum, pd);
+    catDefn("/Type /XObject\n/Subtype /Form\n/FormType 1\n/Group\n<<\n",
+            defNum, pd);
+    char colorspace[12];
+    if (streql(pd->colormodel, "gray"))
+        strcpy(colorspace, "/DeviceGray");
+    else if (streql(pd->colormodel, "srgb"))
+        strcpy(colorspace, "5 0 R");
+    else
+        strcpy(colorspace, "/DeviceRGB");
+    snprintf(buf,
+             100,
+             "/Type /Group\n/CS %s\n/I true\n/S /Transparency\n",
+             colorspace);
+    catDefn(buf, defNum, pd);
+    snprintf(buf, 
+             100,
+             ">>\n/BBox [0 0 %d %d]\n",
+             (int) (0.5 + pd->paperwidth), (int) (0.5 + pd->paperheight));
+    catDefn(buf, defNum, pd);
+
+    /* Note the spaces before the >> just after the endstream;
+     * ghostscript seems to need those to avoid error (!?) */
+    snprintf(buf,
+             100,
+             "/Length %d\n",
+             (int) strlen(pd->definitions[tempDefn].str));
+    catDefn(buf, defNum, pd);
+    catDefn(">>\nstream\n", defNum, pd);
+    /* Copy mask content */
+    copyDefn(tempDefn, defNum, pd);
+    catDefn("endstream\n  >>\n", defNum, pd);
+    catDefn(">>\nendobj\n", defNum, pd);
+
+    trimDefn(defNum, pd);
+    return defNum;
+}
+
+static void PDFwriteMask(int i, PDFDesc *pd)
+{
+    fprintf(pd->pdffp, 
+            "/Def%d gs\n",
+            i);
+}
+
+static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd) 
+{
+    SEXP newref = R_NilValue;
+    int index;
+
+    if (isNull(mask)) {
+        /* Set NO mask */
+        index = -1;
+    } else {
+        if (isNull(ref)) {
+            /* Generate new mask */
+            index = newMask(mask, pd);
+            if (index >= 0) {
+                PROTECT(newref = allocVector(INTSXP, 1));
+                INTEGER(newref)[0] = index;
+                UNPROTECT(1);
+            }
+        } else {
+            /* Reuse existing clipping path */
+            index = INTEGER(ref)[0];
+            newref = ref;
+        }
+    }
+    pd->currentMask = index;
+
     return newref;
 }
 
@@ -6827,7 +6949,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
         free(dd);
 	error(_("failed to allocate definitions"));
     }
-    pd->appending = FALSE;
+    pd->appendingClipPath = FALSE;
+    pd->appendingMask = FALSE;
+    pd->currentMask = -1;
 
     setbg = R_GE_str2col(bg);
     setfg = R_GE_str2col(fg);
@@ -8053,7 +8177,9 @@ static void PDF_NewPage(const pGEcontext gc,
      */
     fprintf(pd->pdffp, "1 J 1 j q\n");
     PDF_Invalidate(dd);
-    pd->appending = FALSE;
+    pd->appendingClipPath = FALSE;
+    pd->appendingMask = FALSE;
+    pd->currentMask = -1;
     if(R_VIS(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
 	fprintf(pd->pdffp, "0 0 %.2f %.2f re f\n",
@@ -8084,11 +8210,15 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 
     PDF_checkOffline();
 
-    if (pd->appending) {
+    if (pd->appendingClipPath) {
         char buf[50];
         sprintf(buf, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
         addToClipPath(buf, pd);
         return;
+    }
+
+    if (pd->currentMask >= 0) {
+        PDFwriteMask(pd->currentMask, pd);
     }
 
     /* patternFill overrides fill */
@@ -8245,7 +8375,7 @@ static void PDF_Circle(double x, double y, double r,
     if (r <= 0.0) return;  /* since PR#14797 use 0-sized pch=1, but now
 			      GECircle omits such circles */
 
-    if (pd->appending) {
+    if (pd->appendingClipPath) {
         char buf[50];
         /* Use four Bezier curves, hand-fitted to quadrants */
         double s = 0.55 * r;
@@ -8277,20 +8407,45 @@ static void PDF_Circle(double x, double y, double r,
         /* Use four Bezier curves, hand-fitted to quadrants */
         double s = 0.55 * r;
         if(pd->inText) textoff(pd);
-        fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
-        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x - r, y + s, x - s, y + r, x, y + r);
-        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x + s, y + r, x + r, y + s, x + r, y);
-        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x + r, y - s, x + s, y - r, x, y - r);
-        fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x - s, y - r, x - r, y - s, x - r, y);
-        if (R_VIS(gc->col)) {
-            fprintf(pd->pdffp, "B\n");
+        if (pd->appendingMask) { 
+            char buf[100];
+            sprintf(buf, "  %.2f %.2f m\n", x - r, y);
+            addToMask(buf, pd);
+            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x - r, y + s, x - s, y + r, x, y + r);
+            addToMask(buf, pd);
+            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x + s, y + r, x + r, y + s, x + r, y);
+            addToMask(buf, pd);
+            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x + r, y - s, x + s, y - r, x, y - r);
+            addToMask(buf, pd);
+            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x - s, y - r, x - r, y - s, x - r, y);
+            addToMask(buf, pd);
+            if (R_VIS(gc->col)) {
+                sprintf(buf, "B\n");
+                addToMask(buf, pd);
+            } else {
+                sprintf(buf, "f\n");
+                addToMask(buf, pd);
+            } 
         } else {
-            fprintf(pd->pdffp, "f\n");
-        } 
+            fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
+            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x - r, y + s, x - s, y + r, x, y + r);
+            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x + s, y + r, x + r, y + s, x + r, y);
+            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x + r, y - s, x + s, y - r, x, y - r);
+            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                    x - s, y - r, x - r, y - s, x - r, y);
+            if (R_VIS(gc->col)) {
+                fprintf(pd->pdffp, "B\n");
+            } else {
+                fprintf(pd->pdffp, "f\n");
+            } 
+        }
     } else {
         code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
         if (code) {
@@ -8313,19 +8468,51 @@ static void PDF_Circle(double x, double y, double r,
                     /* Use four Bezier curves, hand-fitted to quadrants */
                     double s = 0.55 * r;
                     if(pd->inText) textoff(pd);
-                    fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
-                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                            x - r, y + s, x - s, y + r, x, y + r);
-                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                            x + s, y + r, x + r, y + s, x + r, y);
-                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                            x + r, y - s, x + s, y - r, x, y - r);
-                    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                            x - s, y - r, x - r, y - s, x - r, y);
-                    switch(code) {
-                    case 1: fprintf(pd->pdffp, "S\n"); break;
-                    case 2: fprintf(pd->pdffp, "f\n"); break;
-                    case 3: fprintf(pd->pdffp, "B\n"); break;
+                    if (pd->appendingMask) { 
+                        char buf[100];
+                        sprintf(buf, "  %.2f %.2f m\n", x - r, y);
+                        addToMask(buf, pd);
+                        sprintf(buf, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x - r, y + s, x - s, y + r, x, y + r);
+                        addToMask(buf, pd);
+                        sprintf(buf, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x + s, y + r, x + r, y + s, x + r, y);
+                        addToMask(buf, pd);
+                        sprintf(buf, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x + r, y - s, x + s, y - r, x, y - r);
+                        addToMask(buf, pd);
+                        sprintf(buf, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x - s, y - r, x - r, y - s, x - r, y);
+                        addToMask(buf, pd);
+                        switch(code) {
+                        case 1: sprintf(buf, "S\n"); break;
+                        case 2: sprintf(buf, "f\n"); break;
+                        case 3: sprintf(buf, "B\n"); break;
+                        }
+                        addToMask(buf, pd);
+                    } else {
+                        fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
+                        fprintf(pd->pdffp, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x - r, y + s, x - s, y + r, x, y + r);
+                        fprintf(pd->pdffp, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x + s, y + r, x + r, y + s, x + r, y);
+                        fprintf(pd->pdffp, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x + r, y - s, x + s, y - r, x, y - r);
+                        fprintf(pd->pdffp, 
+                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
+                                x - s, y - r, x - r, y - s, x - r, y);
+                        switch(code) {
+                        case 1: fprintf(pd->pdffp, "S\n"); break;
+                        case 2: fprintf(pd->pdffp, "f\n"); break;
+                        case 3: fprintf(pd->pdffp, "B\n"); break;
+                        }
                     }
                 }
             } else {
@@ -8342,10 +8529,20 @@ static void PDF_Circle(double x, double y, double r,
                 tr = (R_OPAQUE(gc->fill)) +
                     2 * (R_OPAQUE(gc->col)) - 1;
                 if(!pd->inText) texton(pd);
-                fprintf(pd->pdffp,
-                        "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
-                        tr, a, a, xx, yy);
-                fprintf(pd->pdffp, " (l) Tj 0 Tr\n");
+                if (pd->appendingMask) { 
+                    char buf[100];
+                    sprintf(buf,
+                            "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
+                            tr, a, a, xx, yy);
+                    addToMask(buf, pd);
+                    sprintf(buf, " (l) Tj 0 Tr\n");
+                    addToMask(buf, pd);
+                } else {
+                    fprintf(pd->pdffp,
+                            "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
+                            tr, a, a, xx, yy);
+                    fprintf(pd->pdffp, " (l) Tj 0 Tr\n");
+                }
                 textoff(pd); /* added in 2.8.0 */
             }
         }
@@ -8378,7 +8575,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 
     PDF_checkOffline();
 
-    if (pd->appending) {
+    if (pd->appendingClipPath) {
         char buf[50];
         xx = x[0];
         yy = y[0];
@@ -8470,7 +8667,7 @@ static void PDF_Path(double *x, double *y,
 
     PDF_checkOffline();
 
-    if (pd->appending) {
+    if (pd->appendingClipPath) {
         char buf[50];
         index = 0;
         for (i=0; i < npoly; i++) {
@@ -9181,7 +9378,9 @@ static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
 static void PDF_releaseClipPath(SEXP ref, pDevDesc dd) {}
 
 static SEXP PDF_setMask(SEXP path, SEXP ref, pDevDesc dd) {
-    return R_NilValue;
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    ref = addMask(path, ref, pd);
+    return ref;
 }
 
 static void PDF_releaseMask(SEXP ref, pDevDesc dd) {}
