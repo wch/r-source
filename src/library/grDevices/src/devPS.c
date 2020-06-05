@@ -2704,32 +2704,28 @@ static void
 PostScriptSetLineTexture(FILE *fp, const char *dashlist, int nlty,
 			 double lwd, int lend)
 {
-/* use same macro for Postscript and PDF */
 /* Historically the adjustment was 1 to allow for round end caps.
    As from 2.11.0, no adjustment is done for butt endcaps.
    The + 1 adjustment on the 'off' segments seems wrong, but it
    has been left in for back-compatibility
 */
-#define PP_SetLineTexture(_CMD_, adj)				\
-    double dash[8], a = adj;					\
-    int i;							\
-    Rboolean allzero = TRUE;                                    \
-    for (i = 0; i < nlty; i++) {				\
-	dash[i] = lwd *				                \
-	    ((i % 2) ? (dashlist[i] + a)			\
-	     : ((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - a) ); \
-	if (dash[i] < 0) dash[i] = 0;					\
-        if (dash[i] > .01) allzero = FALSE;                     \
-    }								\
-    fprintf(fp,"[");						\
-    if (!allzero) {                                             \
-        for (i = 0; i < nlty; i++) {				\
-            fprintf(fp," %.2f", dash[i]);                       \
-        }                                                       \
-    }                                                           \
-    fprintf(fp,"] 0 %s\n", _CMD_)
-
-    PP_SetLineTexture("setdash", (lend == GE_BUTT_CAP) ? 0. : 1.);
+    double dash[8], a = (lend == GE_BUTT_CAP) ? 0. : 1.;
+    int i;
+    Rboolean allzero = TRUE;
+    for (i = 0; i < nlty; i++) {
+	dash[i] = lwd *				
+	    ((i % 2) ? (dashlist[i] + a)
+	     : ((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - a) );
+	if (dash[i] < 0) dash[i] = 0;
+        if (dash[i] > .01) allzero = FALSE;
+    }
+    fprintf(fp,"[");
+    if (!allzero) {
+        for (i = 0; i < nlty; i++) {
+            fprintf(fp," %.2f", dash[i]);
+        }
+    }
+    fprintf(fp,"] 0 setdash\n");
 }
 
 
@@ -5512,6 +5508,8 @@ typedef struct {
 	rcolor fill;	         /* fill color */
 	rcolor bg;		 /* color */
 	int srgb_fg, srgb_bg;    /* Are stroke and fill colorspaces set? */
+        int patternfill;
+        int mask;
     } current;
 
     /*
@@ -5584,6 +5582,24 @@ typedef struct {
 }
 PDFDesc;
 
+/* Called at the start of a page and when clipping is reset */
+static void PDF_Invalidate(PDFDesc *pd)
+{
+    pd->current.fontsize = -1;
+    pd->current.lwd = -1;
+    pd->current.lty = -1;
+    pd->current.lend = 0;
+    pd->current.ljoin = 0;
+    pd->current.lmitre = 0;
+    /* page starts with black as the default fill and stroke colours */
+    pd->current.col = INVALID_COL;
+    pd->current.fill = INVALID_COL;
+    pd->current.bg = INVALID_COL;
+    pd->current.srgb_fg = pd->current.srgb_bg = 0;
+    pd->current.patternfill = -1;
+    pd->current.mask = -1;
+}
+
 /* Macro for driver actions to check for "offline" device and bail out */
 
 #define PDF_checkOffline() if (pd->offline) return
@@ -5646,6 +5662,7 @@ static SEXP     PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
 static void     PDF_releaseClipPath(SEXP ref, pDevDesc dd);
 static SEXP     PDF_setMask(SEXP path, SEXP ref, pDevDesc dd);
 static void     PDF_releaseMask(SEXP ref, pDevDesc dd);
+
 
 /***********************************************************************
  * Stuff for recording definitions
@@ -6219,10 +6236,16 @@ static int newMask(SEXP path, PDFDesc *pd)
     prevMask = pd->appendingMask;
     pd->appendingMask = tempDefn;
 
+    /* Invalidate current settings so mask enforces its settings */
+    PDF_Invalidate(pd);
+
     /* Evaluate the path function to generate the mask */
     R_fcall = PROTECT(lang1(path));
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
+
+    /* Invalidate current settings so normal drawing enforces its settings */
+    PDF_Invalidate(pd);
 
     /* Some finalisation that endpage does
      * (to match the newpage initilisation)
@@ -6394,7 +6417,10 @@ static void PDFwriteClipPath(int i, PDFDesc *pd)
 static void PDFwriteMask(int i, PDFDesc *pd)
 {
     char buf[20];
-    PDFwrite(buf, 20, "/Def%d gs\n", pd, i);
+    if (pd->current.mask != i) {
+        PDFwrite(buf, 20, "/Def%d gs\n", pd, i);
+        pd->current.mask = i;
+    }
 }
 
 static void PDFwriteDefinitions(PDFDesc *pd)
@@ -7157,24 +7183,6 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     return TRUE;
 }
 
-/* Called at the start of a page and when clipping is reset */
-static void PDF_Invalidate(pDevDesc dd)
-{
-    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-
-    pd->current.fontsize = -1;
-    pd->current.lwd = -1;
-    pd->current.lty = -1;
-    pd->current.lend = 0;
-    pd->current.ljoin = 0;
-    pd->current.lmitre = 0;
-    /* page starts with black as the default fill and stroke colours */
-    pd->current.col = INVALID_COL;
-    pd->current.fill = INVALID_COL;
-    pd->current.bg = INVALID_COL;
-    pd->current.srgb_fg = pd->current.srgb_bg = 0;
-}
-
 
 /*
  * Search through the alphas used so far and return
@@ -7322,33 +7330,40 @@ static void PDF_SetFill(int color, pDevDesc dd)
 
 	pd->current.fill = color;
     }
+    /* Fill set means pattern fill not set */
+    pd->current.patternfill = -1;
 }
 
 static void PDF_SetPatternFill(SEXP ref, pDevDesc dd) 
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int patternIndex = INTEGER(ref)[0];
-    char buf[100];
-    if (length(ref) > 1) {
-        /* Define soft mask as well as pattern */
-        int maskIndex = INTEGER(ref)[1];
-        PDFwrite(buf, 100, 
-                "/Def%d gs /Pattern cs /Def%d scn\n", 
-                 pd,
-                 maskIndex,
-                 patternIndex);
-    } else {
-        PDFwrite(buf, 100, 
-                "/Pattern cs /Def%d scn\n", 
-                 pd,
-                 patternIndex);
-    }
 
+    if (pd->current.patternfill != patternIndex) {
+        char buf[100];
+        if (length(ref) > 1) {
+            /* Define soft mask as well as pattern */
+            int maskIndex = INTEGER(ref)[1];
+            PDFwrite(buf, 100, 
+                     "/Def%d gs /Pattern cs /Def%d scn\n", 
+                     pd,
+                     maskIndex,
+                     patternIndex);
+        } else {
+            PDFwrite(buf, 100, 
+                     "/Pattern cs /Def%d scn\n", 
+                     pd,
+                     patternIndex);
+        }
+        pd->current.patternfill = patternIndex;
+    }
+    /* Pattern fill set means fill not set */
     pd->current.fill = INVALID_COL;    
 }
 
-static void PDFSetLineEnd(FILE *fp, R_GE_lineend lend)
+static void PDFSetLineEnd(PDFDesc *pd, R_GE_lineend lend)
 {
+    char buf[10];
     int lineend = 1; /* -Wall */
     switch (lend) {
     case GE_ROUND_CAP:
@@ -7363,11 +7378,12 @@ static void PDFSetLineEnd(FILE *fp, R_GE_lineend lend)
     default:
 	error(_("invalid line end"));
     }
-    fprintf(fp, "%1d J\n", lineend);
+    PDFwrite(buf, 10, "%1d J\n", pd, lineend);
 }
 
-static void PDFSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
+static void PDFSetLineJoin(PDFDesc *pd, R_GE_linejoin ljoin)
 {
+    char buf[10];
     int linejoin = 1; /* -Wall */
     switch (ljoin) {
     case GE_ROUND_JOIN:
@@ -7382,14 +7398,31 @@ static void PDFSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
     default:
 	error(_("invalid line join"));
     }
-    fprintf(fp, "%1d j\n", linejoin);
+    PDFwrite(buf, 10, "%1d j\n", pd, linejoin);
 }
 
 /* Note that the line texture is scaled by the line width.*/
-static void PDFSetLineTexture(FILE *fp, const char *dashlist, int nlty,
+static void PDFSetLineTexture(PDFDesc *pd, const char *dashlist, int nlty,
 			      double lwd, int lend)
 {
-    PP_SetLineTexture("d", (lend == GE_BUTT_CAP) ? 0. : 1.);
+    double dash[8], a = (lend == GE_BUTT_CAP) ? 0. : 1.;
+    int i;
+    Rboolean allzero = TRUE;
+    char buf[10];
+    for (i = 0; i < nlty; i++) {
+	dash[i] = lwd *				
+	    ((i % 2) ? (dashlist[i] + a)
+	     : ((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - a) );
+	if (dash[i] < 0) dash[i] = 0;
+        if (dash[i] > .01) allzero = FALSE;
+    }
+    PDFwrite(buf, 10, "[", pd);
+    if (!allzero) {
+        for (i = 0; i < nlty; i++) {
+            PDFwrite(buf, 10," %.2f", pd, dash[i]);
+        }
+    }
+    PDFwrite(buf, 10, "] 0 d\n", pd);
 }
 
 static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
@@ -7419,15 +7452,15 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
 	    dashlist[i] = newlty & 15;
 	    newlty = newlty >> 4;
 	}
-	PDFSetLineTexture(pd->pdffp, dashlist, i, newlwd * 0.75, newlend);
+	PDFSetLineTexture(pd, dashlist, i, newlwd * 0.75, newlend);
     }
     if (pd->current.lend != newlend) {
 	pd->current.lend = newlend;
-	PDFSetLineEnd(pd->pdffp, newlend);
+	PDFSetLineEnd(pd, newlend);
     }
     if (pd->current.ljoin != newljoin) {
 	pd->current.ljoin = newljoin;
-	PDFSetLineJoin(pd->pdffp, newljoin);
+	PDFSetLineJoin(pd, newljoin);
     }
     if (pd->current.lmitre != newlmitre) {
 	pd->current.lmitre = newlmitre;
@@ -7443,14 +7476,15 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
 */
 static void texton(PDFDesc *pd)
 {
-    fprintf(pd->pdffp, "BT\n");
+    char buf[10];
+    PDFwrite(buf, 10, "BT\n", pd);
     pd->inText = TRUE;
 }
 
 static void textoff(PDFDesc *pd)
 {
-    char buf[100];
-    PDFwrite(buf, 100, "ET\n", pd);
+    char buf[10];
+    PDFwrite(buf, 10, "ET\n", pd);
     pd->inText = FALSE;
 }
 
@@ -8043,10 +8077,11 @@ static Rboolean PDF_Open(pDevDesc dd, PDFDesc *pd)
 
 static void pdfClip(double x0, double x1, double y0, double y1, PDFDesc *pd)
 {
+    char buf[100];
     if(x0 != 0.0 || y0 != 0.0 || x1 != 72*pd->width || y1 != 72*pd->height)
-	fprintf(pd->pdffp, "Q q %.2f %.2f %.2f %.2f re W n\n",
-		x0, y0, x1 - x0, y1 - y0);
-    else fprintf(pd->pdffp, "Q q\n");
+	PDFwrite(buf, 100, "Q q %.2f %.2f %.2f %.2f re W n\n", pd,
+                 x0, y0, x1 - x0, y1 - y0);
+    else PDFwrite(buf, 100, "Q q\n", pd);
 }
 
 static void PDF_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
@@ -8057,7 +8092,7 @@ static void PDF_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
 
     if(pd->inText) textoff(pd);
     pdfClip(x0, x1, y0, y1, pd);
-    PDF_Invalidate(dd);
+    PDF_Invalidate(pd);
 }
 
 static void PDF_Size(double *left, double *right,
@@ -8210,7 +8245,7 @@ static void PDF_NewPage(const pGEcontext gc,
      * fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
      */
     fprintf(pd->pdffp, "1 J 1 j q\n");
-    PDF_Invalidate(dd);
+    PDF_Invalidate(pd);
     pd->appendingClipPath = FALSE;
     pd->appendingMask = -1;
     pd->currentMask = -1;
@@ -8371,6 +8406,16 @@ static void PDF_Raster(unsigned int *raster,
 
     PDF_checkOffline();
 
+    /* A raster image adds nothing to a clipping path */
+    if (pd->appendingClipPath) 
+        return;
+
+    /* A raster image cannot be used in a mask either (for now) */
+    if (pd->appendingMask >= 0) {
+        warning("Raster image within mask ignored");
+        return;
+    }
+
     /* Record the raster so can write it out when page is finished */
     alpha = addRaster(raster, w, h, interpolate, pd);
 
@@ -8410,182 +8455,92 @@ static void PDF_Circle(double x, double y, double r,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code, tr;
     double xx, yy, a;
+    char buf[100];
 
     PDF_checkOffline();
 
     if (r <= 0.0) return;  /* since PR#14797 use 0-sized pch=1, but now
 			      GECircle omits such circles */
 
-    if (pd->appendingClipPath) {
-        char buf[50];
-        /* Use four Bezier curves, hand-fitted to quadrants */
-        double s = 0.55 * r;
-        sprintf(buf, "%.2f %.2f m\n", x - r, y);
-        addToClipPath(buf, pd);
-        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x - r, y + s, x - s, y + r, x, y + r);
-        addToClipPath(buf, pd);
-        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x + s, y + r, x + r, y + s, x + r, y);
-        addToClipPath(buf, pd);
-        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x + r, y - s, x + s, y - r, x, y - r);
-        addToClipPath(buf, pd);
-        sprintf(buf, "%.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                x - s, y - r, x - r, y - s, x - r, y);
-        addToClipPath(buf, pd);
-        return;
-    }
-
-    /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
-        if(pd->inText) textoff(pd);
-        PDF_SetPatternFill(gc->patternFill, dd);
         if (R_VIS(gc->col)) {
+            code = 3;
+        } else {
+            code = 2;
+        }
+    } else {            
+        code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
+    }
+    if (!pd->appendingClipPath) {
+        if (gc->patternFill != R_NilValue) { 
+            PDF_SetPatternFill(gc->patternFill, dd);
+        } else if(code & 2) {
+            PDF_SetFill(gc->fill, dd);
+        }
+        if(code & 1) {
             PDF_SetLineColor(gc->col, dd);
             PDF_SetLineStyle(gc, dd);
         }
-        /* Use four Bezier curves, hand-fitted to quadrants */
-        double s = 0.55 * r;
-        if(pd->inText) textoff(pd);
-        if (pd->appendingMask) { 
-            char buf[100];
-            sprintf(buf, "  %.2f %.2f m\n", x - r, y);
-            addToMask(buf, pd);
-            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x - r, y + s, x - s, y + r, x, y + r);
-            addToMask(buf, pd);
-            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x + s, y + r, x + r, y + s, x + r, y);
-            addToMask(buf, pd);
-            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x + r, y - s, x + s, y - r, x, y - r);
-            addToMask(buf, pd);
-            sprintf(buf, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x - s, y - r, x - r, y - s, x - r, y);
-            addToMask(buf, pd);
-            if (R_VIS(gc->col)) {
-                sprintf(buf, "B\n");
-                addToMask(buf, pd);
-            } else {
-                sprintf(buf, "f\n");
-                addToMask(buf, pd);
-            } 
-        } else {
-            fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
-            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x - r, y + s, x - s, y + r, x, y + r);
-            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x + s, y + r, x + r, y + s, x + r, y);
-            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x + r, y - s, x + s, y - r, x, y - r);
-            fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                    x - s, y - r, x - r, y - s, x - r, y);
-            if (R_VIS(gc->col)) {
-                fprintf(pd->pdffp, "B\n");
-            } else {
-                fprintf(pd->pdffp, "f\n");
-            } 
-        }
-    } else {
-        code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
-        if (code) {
-            if(code & 2)
-                PDF_SetFill(gc->fill, dd);
-            if(code & 1) {
-                PDF_SetLineColor(gc->col, dd);
-                PDF_SetLineStyle(gc, dd);
-            }
-        }
-        if (code) {
-            if (semiTransparent(gc->col) || semiTransparent(gc->fill)
-                || r > 10  || !pd->dingbats) {
-                /*
-                 * Due to possible bug in Acrobat Reader for rendering
-                 * semi-transparent text, only ever draw Bezier curves
-                 * regardless of circle size.  Otherwise use font up to 20pt
-                 */
-                {
-                    /* Use four Bezier curves, hand-fitted to quadrants */
-                    double s = 0.55 * r;
-                    if(pd->inText) textoff(pd);
-                    if (pd->appendingMask) { 
-                        char buf[100];
-                        sprintf(buf, "  %.2f %.2f m\n", x - r, y);
-                        addToMask(buf, pd);
-                        sprintf(buf, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x - r, y + s, x - s, y + r, x, y + r);
-                        addToMask(buf, pd);
-                        sprintf(buf, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x + s, y + r, x + r, y + s, x + r, y);
-                        addToMask(buf, pd);
-                        sprintf(buf, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x + r, y - s, x + s, y - r, x, y - r);
-                        addToMask(buf, pd);
-                        sprintf(buf, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x - s, y - r, x - r, y - s, x - r, y);
-                        addToMask(buf, pd);
-                        switch(code) {
-                        case 1: sprintf(buf, "S\n"); break;
-                        case 2: sprintf(buf, "f\n"); break;
-                        case 3: sprintf(buf, "B\n"); break;
-                        }
-                        addToMask(buf, pd);
-                    } else {
-                        fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
-                        fprintf(pd->pdffp, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x - r, y + s, x - s, y + r, x, y + r);
-                        fprintf(pd->pdffp, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x + s, y + r, x + r, y + s, x + r, y);
-                        fprintf(pd->pdffp, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x + r, y - s, x + s, y - r, x, y - r);
-                        fprintf(pd->pdffp, 
-                                "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
-                                x - s, y - r, x - r, y - s, x - r, y);
-                        switch(code) {
-                        case 1: fprintf(pd->pdffp, "S\n"); break;
-                        case 2: fprintf(pd->pdffp, "f\n"); break;
-                        case 3: fprintf(pd->pdffp, "B\n"); break;
-                        }
+    }
+    if (pd->currentMask >= 0) {
+        PDFwriteMask(pd->currentMask, pd);
+    }
+    if (code) {
+        if (semiTransparent(gc->col) || semiTransparent(gc->fill)
+            || r > 10  || !pd->dingbats) {
+            /*
+             * Due to possible bug in Acrobat Reader for rendering
+             * semi-transparent text, only ever draw Bezier curves
+             * regardless of circle size.  Otherwise use font up to 20pt
+             */
+            {
+                /* Use four Bezier curves, hand-fitted to quadrants */
+                double s = 0.55 * r;
+                if(pd->inText) textoff(pd);
+                PDFwrite(buf, 100, "  %.2f %.2f m\n", pd, x - r, y);
+                PDFwrite(buf, 100, 
+                         "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", pd,
+                         x - r, y + s, x - s, y + r, x, y + r);
+                PDFwrite(buf, 100, 
+                         "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", pd,
+                         x + s, y + r, x + r, y + s, x + r, y);
+                PDFwrite(buf, 100, 
+                         "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", pd,
+                         x + r, y - s, x + s, y - r, x, y - r);
+                PDFwrite(buf, 100, 
+                         "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", pd,
+                         x - s, y - r, x - r, y - s, x - r, y);
+                if (!pd->appendingClipPath) {
+                    switch(code) {
+                    case 1: PDFwrite(buf, 100, "S\n", pd); break;
+                    case 2: PDFwrite(buf, 100, "f\n", pd); break;
+                    case 3: PDFwrite(buf, 100, "B\n", pd); break;
                     }
                 }
+            }
+        } else {
+            pd->fontUsed[1] = TRUE;
+            /* Use char 108 in Dingbats, which is a solid disc
+               afm is C 108 ; WX 791 ; N a71 ; B 35 -14 757 708 ;
+               so diameter = 0.722 * size
+               centre = (0.396, 0.347) * size
+            */
+            a = 2./0.722 * r;
+            if (a < 0.01) return; // avoid 0 dims below.
+            xx = x - 0.396*a;
+            yy = y - 0.347*a;
+            if (pd->appendingClipPath) {
+                tr = 7;
             } else {
-                pd->fontUsed[1] = TRUE;
-                /* Use char 108 in Dingbats, which is a solid disc
-                   afm is C 108 ; WX 791 ; N a71 ; B 35 -14 757 708 ;
-                   so diameter = 0.722 * size
-                   centre = (0.396, 0.347) * size
-                */
-                a = 2./0.722 * r;
-                if (a < 0.01) return; // avoid 0 dims below.
-                xx = x - 0.396*a;
-                yy = y - 0.347*a;
                 tr = (R_OPAQUE(gc->fill)) +
                     2 * (R_OPAQUE(gc->col)) - 1;
-                if(!pd->inText) texton(pd);
-                if (pd->appendingMask) { 
-                    char buf[100];
-                    sprintf(buf,
-                            "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
-                            tr, a, a, xx, yy);
-                    addToMask(buf, pd);
-                    sprintf(buf, " (l) Tj 0 Tr\n");
-                    addToMask(buf, pd);
-                } else {
-                    fprintf(pd->pdffp,
-                            "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
-                            tr, a, a, xx, yy);
-                    fprintf(pd->pdffp, " (l) Tj 0 Tr\n");
-                }
-                textoff(pd); /* added in 2.8.0 */
             }
+            if(!pd->inText) texton(pd);
+            PDFwrite(buf, 100,
+                     "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm", pd,
+                     tr, a, a, xx, yy);
+            PDFwrite(buf, 100, " (l) Tj 0 Tr\n", pd);
+            textoff(pd); /* added in 2.8.0 */
         }
     }
 }
@@ -8595,15 +8550,22 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
 		     pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    char buf[100];
 
     PDF_checkOffline();
 
     if(!R_VIS(gc->col)) return;
 
-    PDF_SetLineColor(gc->col, dd);
-    PDF_SetLineStyle(gc, dd);
+    if (!pd->appendingClipPath) {
+        PDF_SetLineColor(gc->col, dd);
+        PDF_SetLineStyle(gc, dd);
+    }
+    if (pd->currentMask >= 0) {
+        PDFwriteMask(pd->currentMask, pd);
+    }
+
     if(pd->inText) textoff(pd);
-    fprintf(pd->pdffp, "%.2f %.2f m %.2f %.2f l S\n", x1, y1, x2, y2);
+    PDFwrite(buf, 100, "%.2f %.2f m %.2f %.2f l S\n", pd, x1, y1, x2, y2);
 }
 
 static void PDF_Polygon(int n, double *x, double *y,
@@ -8613,83 +8575,56 @@ static void PDF_Polygon(int n, double *x, double *y,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double xx, yy;
     int i, code;
+    char buf[100];
 
     PDF_checkOffline();
 
-    if (pd->appendingClipPath) {
-        char buf[50];
-        xx = x[0];
-        yy = y[0];
-        sprintf(buf, "%.2f %.2f m\n", xx, yy);
-        addToClipPath(buf, pd);
-        for(i = 1 ; i < n ; i++) {
-            xx = x[i];
-            yy = y[i];
-            sprintf(buf, "%.2f %.2f l\n", xx, yy);
-            addToClipPath(buf, pd);
-        }
-        addToClipPath("h\n", pd);
-        return;
-    }
-
-    /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
-        if(pd->inText) textoff(pd);
-        PDF_SetPatternFill(gc->patternFill, dd);
         if (R_VIS(gc->col)) {
-            PDF_SetLineColor(gc->col, dd);
-            PDF_SetLineStyle(gc, dd);
-        }
-        xx = x[0];
-        yy = y[0];
-        fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
-        for(i = 1 ; i < n ; i++) {
-            xx = x[i];
-            yy = y[i];
-            fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
-        }
-        if (pd->fillOddEven) {
-            if (R_VIS(gc->col)) {
-                fprintf(pd->pdffp, "h b*\n");
-            } else {
-                fprintf(pd->pdffp, "h f*\n");
-            }
+            code = 3;
         } else {
-            if (R_VIS(gc->col)) {
-                fprintf(pd->pdffp, "h b\n");
-            } else {
-                fprintf(pd->pdffp, "h f\n");
-            }
+            code = 2;
         }
-    } else {
+    } else {            
         code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
-        if (code) {
-            if(pd->inText) textoff(pd);
-            if(code & 2)
+    }
+    if (code) {
+        if(pd->inText) textoff(pd);
+        if (!pd->appendingClipPath) {
+            if (gc->patternFill != R_NilValue) { 
+                PDF_SetPatternFill(gc->patternFill, dd);
+            } else if(code & 2) {
                 PDF_SetFill(gc->fill, dd);
+            }
             if(code & 1) {
                 PDF_SetLineColor(gc->col, dd);
                 PDF_SetLineStyle(gc, dd);
             }
-            xx = x[0];
-            yy = y[0];
-            fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
-            for(i = 1 ; i < n ; i++) {
-                xx = x[i];
-                yy = y[i];
-                fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
-            }
+        }
+        if (pd->currentMask >= 0) {
+            PDFwriteMask(pd->currentMask, pd);
+        }
+        xx = x[0];
+        yy = y[0];
+        PDFwrite(buf, 100, "%.2f %.2f m\n", pd, xx, yy);
+        for(i = 1 ; i < n ; i++) {
+            xx = x[i];
+            yy = y[i];
+            PDFwrite(buf, 100, "%.2f %.2f l\n", pd, xx, yy);
+        }
+        PDFwrite(buf, 100, "h ", pd, xx, yy);
+        if (!pd->appendingClipPath) {
             if (pd->fillOddEven) {
                 switch(code) {
-                case 1: fprintf(pd->pdffp, "s\n"); break;
-                case 2: fprintf(pd->pdffp, "h f*\n"); break;
-                case 3: fprintf(pd->pdffp, "b*\n"); break;
+                case 1: PDFwrite(buf, 100, "S\n", pd); break;
+                case 2: PDFwrite(buf, 100, "f*\n", pd); break;
+                case 3: PDFwrite(buf, 100, "B*\n", pd); break;
                 }
             } else {
                 switch(code) {
-                case 1: fprintf(pd->pdffp, "s\n"); break;
-                case 2: fprintf(pd->pdffp, "h f\n"); break;
-                case 3: fprintf(pd->pdffp, "b\n"); break;
+                case 1: PDFwrite(buf, 100, "S\n", pd); break;
+                case 2: PDFwrite(buf, 100, "f\n", pd); break;
+                case 3: PDFwrite(buf, 100, "B\n", pd); break;
                 }
             }
         }
@@ -8705,103 +8640,60 @@ static void PDF_Path(double *x, double *y,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double xx, yy;
     int i, j, index, code;
+    char buf[100];
 
     PDF_checkOffline();
 
-    if (pd->appendingClipPath) {
-        char buf[50];
-        index = 0;
-        for (i=0; i < npoly; i++) {
-            xx = x[index];
-            yy = y[index];
-            index++;
-            sprintf(buf, "%.2f %.2f m\n", xx, yy);
-            addToClipPath(buf, pd);
-            for(j=1; j < nper[i]; j++) {
-                xx = x[index];
-                yy = y[index];
-                index++;
-                sprintf(buf, "%.2f %.2f l\n", xx, yy);
-                addToClipPath(buf, pd);
-            }
-            if (i < npoly - 1)
-                addToClipPath("h\n", pd);
-        }
-        return;
-    }
-
-    /* patternFill overrides fill */
     if (gc->patternFill != R_NilValue) { 
-        if(pd->inText) textoff(pd);
-        PDF_SetPatternFill(gc->patternFill, dd);
         if (R_VIS(gc->col)) {
-            PDF_SetLineColor(gc->col, dd);
-            PDF_SetLineStyle(gc, dd);
-        }
-        index = 0;
-        for (i=0; i < npoly; i++) {
-            xx = x[index];
-            yy = y[index];
-            index++;
-            fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
-            for(j=1; j < nper[i]; j++) {
-                xx = x[index];
-                yy = y[index];
-                index++;
-                fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
-            }
-            if (i < npoly - 1)
-                fprintf(pd->pdffp, "h\n");
-        }
-        if (winding) {
-            if (R_VIS(gc->col)) {
-                fprintf(pd->pdffp, "b\n");
-            } else {
-                fprintf(pd->pdffp, "f\n");
-            }
+            code = 3;
         } else {
-            if (R_VIS(gc->col)) {
-                fprintf(pd->pdffp, "b*\n"); 
-            } else {
-                fprintf(pd->pdffp, "f*\n"); 
-            }
+            code = 2;
         }
-    } else {
+    } else {            
         code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
-        if (code) {
-            if(pd->inText) textoff(pd);
+    }
+    if (code) {
+        if(pd->inText) textoff(pd);
+        if (!pd->appendingClipPath) {
             if(code & 2)
                 PDF_SetFill(gc->fill, dd);
             if(code & 1) {
                 PDF_SetLineColor(gc->col, dd);
                 PDF_SetLineStyle(gc, dd);
             }
-            index = 0;
-            for (i=0; i < npoly; i++) {
+        }
+        if (pd->currentMask >= 0) {
+            PDFwriteMask(pd->currentMask, pd);
+        }
+        index = 0;
+        for (i=0; i < npoly; i++) {
+            xx = x[index];
+            yy = y[index];
+            index++;
+            PDFwrite(buf, 100, "%.2f %.2f m\n", pd, xx, yy);
+            for(j=1; j < nper[i]; j++) {
                 xx = x[index];
                 yy = y[index];
                 index++;
-                fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
-                for(j=1; j < nper[i]; j++) {
-                    xx = x[index];
-                    yy = y[index];
-                    index++;
-                    fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
-                }
-                if (i < npoly - 1)
-                    fprintf(pd->pdffp, "h\n");
+                PDFwrite(buf, 100, "%.2f %.2f l\n", pd, xx, yy);
             }
+            if (i < npoly - 1)
+                PDFwrite(buf, 100, "h\n", pd);
+        }
+        PDFwrite(buf, 100, "h\n", pd);
+        if (!pd->appendingClipPath) {
             if (winding) {
-                switch(code) {
-                case 1: fprintf(pd->pdffp, "s\n"); break;
-                case 2: fprintf(pd->pdffp, "h f\n"); break;
-                case 3: fprintf(pd->pdffp, "b\n"); break;
+            switch(code) {
+                case 1: PDFwrite(buf, 100, "S\n", pd); break;
+                case 2: PDFwrite(buf, 100, "f\n", pd); break;
+                case 3: PDFwrite(buf, 100, "B\n", pd); break;
                 }
             } else {
                 switch(code) {
-                case 1: fprintf(pd->pdffp, "s\n"); break;
-                case 2: fprintf(pd->pdffp, "h f*\n"); break;
-                case 3: fprintf(pd->pdffp, "b*\n"); break;
+                case 1: PDFwrite(buf, 100, "S\n", pd); break;
+                case 2: PDFwrite(buf, 100, "f*\n", pd); break;
+                case 3: PDFwrite(buf, 100, "B*\n", pd); break;
                 }
             }
         }
@@ -8815,22 +8707,28 @@ static void PDF_Polyline(int n, double *x, double *y,
     PDFDesc *pd = (PDFDesc*) dd->deviceSpecific;
     double xx, yy;
     int i;
+    char buf[100];
 
     PDF_checkOffline();
 
     if(pd->inText) textoff(pd);
     if(R_VIS(gc->col)) {
-	PDF_SetLineColor(gc->col, dd);
-	PDF_SetLineStyle(gc, dd);
+        if (!pd->appendingClipPath) {        
+            PDF_SetLineColor(gc->col, dd);
+            PDF_SetLineStyle(gc, dd);
+        }
+        if (pd->currentMask >= 0) {
+            PDFwriteMask(pd->currentMask, pd);
+        }
 	xx = x[0];
 	yy = y[0];
-	fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
+	PDFwrite(buf, 100, "%.2f %.2f m\n", pd, xx, yy);
 	for(i = 1 ; i < n ; i++) {
 	    xx = x[i];
 	    yy = y[i];
-	    fprintf(pd->pdffp, "%.2f %.2f l\n", xx, yy);
+	    PDFwrite(buf, 100, "%.2f %.2f l\n", pd, xx, yy);
 	}
-	fprintf(pd->pdffp, "S\n");
+	PDFwrite(buf, 100, "S\n", pd);
     }
 }
 
@@ -9429,7 +9327,7 @@ static SEXP PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
         newref = ref;
     }
 
-    PDF_Invalidate(dd);
+    PDF_Invalidate(pd);
     return newref;
 
 }
