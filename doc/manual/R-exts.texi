@@ -13866,7 +13866,7 @@ accurately, notably for large @var{x}, e.g., @eqn{x > 720, x > 720}.
 @deftypefun double log1mexp (double @var{x})
 Computes @code{log(1 - exp(@var{-x}))} (@emph{log 1 @b{m}inus @b{exp}}),
 accurately, carefully for two regions of @var{x}, optimally cutting
-off at @eqn{log 2} (= 0.693147..), using
+off at @eqn{\log 2, log 2} (= 0.693147..), using
 @code{((-x) > -M_LN2 ? log(-expm1(-x)) : log1p(-exp(-x)))}.
 @end deftypefun
 
