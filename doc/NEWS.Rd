@@ -56,13 +56,6 @@
     }
   }
 
-  \subsection{UTILITIES}{
-    \itemize{
-      \item \command{R CMD check} skips vignette re-building (with a
-      warning) if the \samp{VignetteBuilder} package(s) are not available.
-    }
-  }
-
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The \emph{standalone} \file{libRmath} math library and \R's C
@@ -122,6 +115,17 @@
       to \PR{17815} including patch by Brodie Gaslam.
     }
   }
+}
+
+\section{\Rlogo CHANGES IN R 4.0.1 patched}{
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} skips vignette re-building (with a
+      warning) if the \samp{VignetteBuilder} package(s) are not available.
+    }
+  }
+
 }
 
 \section{\Rlogo CHANGES IN R 4.0.1}{
