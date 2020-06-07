@@ -268,7 +268,7 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
 
     if(*handlers == it) {
 	*handlers = (*handlers)->next;
-	free(it);
+	Free(it); // use Free to match allocation with Calloc
 	return(1);
     }
 
@@ -277,7 +277,7 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
     while(tmp) {
 	if(tmp->next == it) {
 	    tmp->next = it->next;
-	    free(it);
+	    Free(it); // use Free to match allocation with Calloc
 	    return(1);
 	}
 	tmp = tmp->next;
