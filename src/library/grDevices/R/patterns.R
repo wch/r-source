@@ -24,7 +24,7 @@
 ## ../../../include/R_ext/GraphicsEngine.h
 #######################################################
 
-patternTypes <- c("LinearGradient", "RadialGradient", "Function")
+patternTypes <- c("LinearGradient", "RadialGradient", "TilingPattern")
 
 extendOptions <- c("pad", "repeat", "reflect", "none")
 
@@ -93,9 +93,17 @@ radialGradientPattern <- function(colours = c("black", "white"),
             extend = as.integer(extend))
 }
 
-functionPattern <- function(fun) {
-    pattern("Function",
-            f = fun)
+## (x, y) is (left, bottom)
+tilingPattern <- function(fun, x, y, width, height, extend) {
+    extend <- match(extend, extendOptions)
+    if (is.na(extend))
+        stop("Invalid 'extend' value")
+    
+    pattern("TilingPattern",
+            f = fun,
+            x = as.numeric(x), y = as.numeric(y),
+            width = as.numeric(width), height = as.numeric(height),
+            extend = as.integer(extend))
 }
 
 setPattern <- function(pattern) {

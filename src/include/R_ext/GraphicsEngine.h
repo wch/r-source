@@ -538,7 +538,7 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
 Rboolean R_GE_isPattern(SEXP x);
 #define R_GE_linearGradientPattern 1
 #define R_GE_radialGradientPattern 2
-#define R_GE_functionPattern       3
+#define R_GE_tilingPattern         3
 int R_GE_patternType(SEXP pattern);
 
 double R_GE_linearGradientX1(SEXP pattern);
@@ -566,7 +566,12 @@ double R_GE_radialGradientStop(SEXP pattern, int i);
 rcolor R_GE_radialGradientColour(SEXP pattern, int i);
 int R_GE_radialGradientExtend(SEXP pattern);
 
-SEXP R_GE_functionPatternFunction(SEXP pattern);
+SEXP R_GE_tilingPatternFunction(SEXP pattern);
+double R_GE_tilingPatternX(SEXP pattern);
+double R_GE_tilingPatternY(SEXP pattern);
+double R_GE_tilingPatternWidth(SEXP pattern);
+double R_GE_tilingPatternHeight(SEXP pattern);
+int R_GE_tilingPatternExtend(SEXP pattern);
 
 #ifdef __cplusplus
 }

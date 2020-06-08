@@ -235,14 +235,14 @@ static cairo_pattern_t* CairoRadialGradient(SEXP gradient, pX11Desc xd)
     return cairo_gradient;
 }
 
-static cairo_pattern_t *CairoFunctionPattern(SEXP pattern, pX11Desc xd)
+static cairo_pattern_t *CairoTilingPattern(SEXP pattern, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
     SEXP R_fcall;
     /* Start new group - drawing is redirected to this group */
     cairo_push_group(cc);
     /* Play the pattern function to build the pattern */
-    R_fcall = PROTECT(lang1(R_GE_functionPatternFunction(pattern)));
+    R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
     /* Close group and return resulting pattern */
@@ -259,8 +259,8 @@ static cairo_pattern_t *CairoCreatePattern(SEXP pattern, pX11Desc xd)
     case R_GE_radialGradientPattern:
         cairo_pattern = CairoRadialGradient(pattern, xd);            
         break;
-    case R_GE_functionPattern:
-        cairo_pattern = CairoFunctionPattern(pattern, xd);
+    case R_GE_tilingPattern:
+        cairo_pattern = CairoTilingPattern(pattern, xd);
         break;
     }
     return cairo_pattern;

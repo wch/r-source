@@ -5577,6 +5577,7 @@ typedef struct {
     Rboolean appendingClipPath; /* Are we defining a clipping path ? */
     int appendingMask; /* Are we defining a mask ? */
     int currentMask;
+    int appendingPattern; /* Are we defining a (tiling) pattern ? */
 
     /* Is the device "offline" (does not write out to a file) */
     Rboolean offline;
@@ -5763,7 +5764,7 @@ static void resetDefinitions(PDFDesc *pd)
 }
 
 /***********************************************************************
- * Stuff for patterns
+ * Stuff for gradients
  */
 
 static void addRGBExpGradientFunction(SEXP gradient, int i, 
@@ -6149,6 +6150,122 @@ static SEXP addShading(SEXP pattern, PDFDesc *pd)
     return ref;
 }
 
+/***********************************************************************
+ * Stuff for tiling patterns
+ */
+
+static int newTiling(SEXP pattern, PDFDesc *pd)
+{
+    SEXP R_fcall;
+    int mainPattern;
+    char buf[100];
+    int defNum = growDefinitions(pd);
+    initDefn(defNum, PDFpattern, pd);
+
+    /* Use temporary definition to store the pattern content
+     * so we can determine length of the content
+     */
+    int tempDefn = growDefinitions(pd);
+    initDefn(tempDefn, PDFcontent, pd);
+    /* Some initialisation that newpage does
+     * (expected by other captured output)
+     */
+    catDefn("1 J 1 j q\n", tempDefn, pd);
+
+    mainPattern = pd->appendingPattern;
+    pd->appendingPattern = tempDefn;
+
+    /* Invalidate current settings so pattern enforces its settings */
+    PDF_Invalidate(pd);
+
+    /* Evaluate the pattern function to generate the pattern */
+    R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+
+    /* Invalidate current settings so normal drawing enforces its settings */
+    PDF_Invalidate(pd);
+
+    /* Some finalisation that endpage does
+     * (to match the newpage initilisation)
+     */
+    catDefn("Q\n", tempDefn, pd);
+    /* Cannot discard temporary definition because there may have been
+     * other definitions created during its creation (so it may no
+     * longer be the topmost definition)
+     */
+    trimDefn(tempDefn, pd);
+
+    pd->appendingPattern = mainPattern;
+
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    catDefn(" 0 obj\n<<\n/Type /Pattern\n/PatternType 1\n/PaintType 1\n",
+            defNum, pd);
+    catDefn("/TilingType 1\n",
+            defNum, pd);
+    snprintf(buf, 
+             100,
+             "/BBox [%d %d %d %d]\n",
+             (int) (0.5 + R_GE_tilingPatternX(pattern)), 
+             (int) (0.5 + R_GE_tilingPatternY(pattern)), 
+             (int) (0.5 + R_GE_tilingPatternX(pattern) + 
+                    R_GE_tilingPatternWidth(pattern)), 
+             (int) (0.5 + R_GE_tilingPatternY(pattern) + 
+                    R_GE_tilingPatternHeight(pattern)));
+    catDefn(buf, defNum, pd);
+    snprintf(buf,
+             100,
+             "/XStep %d /YStep %d\n",
+             (int) (0.5 + R_GE_tilingPatternWidth(pattern)),
+             (int) (0.5 + R_GE_tilingPatternHeight(pattern)));
+    catDefn(buf, defNum, pd);
+
+    /* The pattern uses the document's Resources ! */
+    catDefn("/Resources 4 0 R\n",
+            defNum, pd);
+
+    /* Note the spaces before the >> just after the endstream;
+     * ghostscript seems to need those to avoid error (!?) */
+    snprintf(buf,
+             100,
+             "/Length %d\n",
+             (int) strlen(pd->definitions[tempDefn].str));
+    catDefn(buf, defNum, pd);
+    catDefn(">>\nstream\n", defNum, pd);
+    /* Copy pattern content */
+    copyDefn(tempDefn, defNum, pd);
+    catDefn("endstream\nendobj\n", defNum, pd);
+
+    trimDefn(defNum, pd);
+    return defNum;
+}
+
+static SEXP addTiling(SEXP pattern, PDFDesc *pd)
+{
+    SEXP ref = R_NilValue;
+    int defNum = newTiling(pattern, pd);
+    
+    if (defNum >= 0) {
+        PROTECT(ref = allocVector(INTSXP, 1));
+        INTEGER(ref)[0] = defNum;
+        UNPROTECT(1);
+    }
+
+    return ref;
+}
+
+static void addToPattern(char* str, PDFDesc *pd)
+{
+    /* append to a tiling pattern content definition */
+    catDefn(str, pd->appendingPattern, pd);
+}
+
+/***********************************************************************
+ * Stuff for patterns
+ */
+
 static SEXP addPattern(SEXP pattern, PDFDesc *pd)
 {
     SEXP ref = R_NilValue;
@@ -6157,8 +6274,9 @@ static SEXP addPattern(SEXP pattern, PDFDesc *pd)
     case R_GE_radialGradientPattern: 
         ref = addShading(pattern, pd);
         break;
-    default:
-        warning("Pattern type not yet supported");
+    case R_GE_tilingPattern:
+        ref = addTiling(pattern, pd);
+        break;
     }
     return ref;
 }
@@ -6219,7 +6337,7 @@ static void addToMask(char* str, PDFDesc *pd)
 static int newMask(SEXP path, PDFDesc *pd)
 {
     SEXP R_fcall;
-    int prevMask;
+    int mainMask;
     char buf[100];
     int defNum = growDefinitions(pd);
     initDefn(defNum, PDFsoftMask, pd);
@@ -6234,7 +6352,7 @@ static int newMask(SEXP path, PDFDesc *pd)
      */
     catDefn("1 J 1 j q\n", tempDefn, pd);
 
-    prevMask = pd->appendingMask;
+    mainMask = pd->appendingMask;
     pd->appendingMask = tempDefn;
 
     /* Invalidate current settings so mask enforces its settings */
@@ -6258,7 +6376,7 @@ static int newMask(SEXP path, PDFDesc *pd)
      */
     trimDefn(tempDefn, pd);
 
-    pd->appendingMask = prevMask;
+    pd->appendingMask = mainMask;
 
     /* Object number will be determined when definition written
      * to file (PDF_endfile)
@@ -6359,6 +6477,9 @@ static int PDFwrite(char *buf, size_t size, const char *fmt, PDFDesc *pd, ...)
 
     if (pd->appendingClipPath) {
         addToClipPath(buf, pd);
+    } else if (pd->appendingPattern && 
+               (pd->appendingPattern > pd->appendingMask)) {
+        addToPattern(buf, pd);
     } else if (pd->appendingMask >= 0) {
         addToMask(buf, pd);
     } else {
@@ -7007,6 +7128,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->appendingClipPath = FALSE;
     pd->appendingMask = -1;
     pd->currentMask = -1;
+    pd->appendingPattern = -1;
 
     setbg = R_GE_str2col(bg);
     setfg = R_GE_str2col(fg);
@@ -8251,6 +8373,7 @@ static void PDF_NewPage(const pGEcontext gc,
     pd->appendingClipPath = FALSE;
     pd->appendingMask = -1;
     pd->currentMask = -1;
+    pd->appendingPattern = -1;
     if(R_VIS(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
 	fprintf(pd->pdffp, "0 0 %.2f %.2f re f\n",
@@ -8412,8 +8535,8 @@ static void PDF_Raster(unsigned int *raster,
     if (pd->appendingClipPath) 
         return;
 
-    /* A raster image cannot be used in a mask either (for now) */
-    if (pd->appendingMask >= 0) {
+    /* A raster image cannot be used in a pattern or mask either (for now) */
+    if (pd->appendingMask >= 0 || pd->appendingPattern >= 0) {
         warning("Raster image within mask ignored");
         return;
     }

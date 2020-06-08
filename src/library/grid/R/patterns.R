@@ -72,8 +72,25 @@ radialGradient <- function(colours = c("black", "white"),
 ## (we are particularly concerned about the grob inheriting the
 ##  fill from its parent, which would mean infinite recursion)
 ## AND wrap that gTree in a function that draws it.
-pattern <- function(x, gp=gpar(fill="transparent")) {
-    force(x)
+pattern <- function(grob,
+                    x = 0.5, y = 0.5, width = 1, height = 1,
+                    default.units = "npc",
+                    just="centre", hjust=NULL, vjust=NULL,
+                    extend = c("pad", "repeat", "reflect", "none"),
+                    gp = gpar(fill="transparent")) {
+
+    if (! is.unit(x))
+        x <- unit(x, default.units)
+    if (! is.unit(y))
+        y <- unit(y, default.units)
+    if (! is.unit(width))
+        width <- unit(width, default.units)
+    if (! is.unit(height))
+        height <- unit(height, default.units)
+    hjust = resolveHJust(just, hjust)
+    vjust = resolveVJust(just, vjust)
+    
+    force(grob)
     ## Do NOT want x$gp$fill to be NULL because that would mean
     ## that 'x' inherits its fill from the grob that it is
     ## filling, which means infinite recursion
@@ -82,10 +99,13 @@ pattern <- function(x, gp=gpar(fill="transparent")) {
         warning("Missing pattern fill has been set to transparent")
     }
     patternFun <- function() {
-        grid.draw(gTree(children=gList(x), gp=gp), recording=FALSE)
+        grid.draw(gTree(children=gList(grob), gp=gp), recording=FALSE)
     }
-    pat <- list(f=patternFun)
-    class(pat) <- c("GridFunctionPattern", "GridPattern")
+    pat <- list(f=patternFun,
+                x=x, y=y, width=width, height=height,
+                hjust=hjust, vjust=vjust,
+                extend=match.arg(extend))
+    class(pat) <- c("GridTilingPattern", "GridPattern")
     pat
 }
 
@@ -177,8 +197,14 @@ resolvePattern.GridRadialGradient <- function(pattern) {
     resolvedPattern(pattern, index)
 }
 
-resolvePattern.GridFunctionPattern <- function(pattern) {
-    index <- setPattern(functionPattern(pattern$f))
+resolvePattern.GridTilingPattern <- function(pattern) {
+    xy <- deviceLoc(pattern$x, pattern$y, valueOnly=TRUE, device=TRUE)
+    wh <- deviceDim(pattern$width, pattern$height, valueOnly=TRUE, device=TRUE)
+    left <- xy$x - pattern$hjust*wh$w
+    bottom <- xy$y - pattern$vjust*wh$h
+    index <- setPattern(tilingPattern(pattern$f,
+                                      left, bottom, wh$w, wh$h,
+                                      extend=pattern$extend))
     resolvedPattern(pattern, index)
 }
 
