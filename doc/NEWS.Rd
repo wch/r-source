@@ -14,6 +14,13 @@
     }
   }
 
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{round()} and \code{signif()} now longer tolerate wrong
+      argument names, notably in 1-argument calls; reported by Shane
+      Mueller on R-devel (mailing list).
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 4.0.1}{
