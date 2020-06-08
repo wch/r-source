@@ -5509,6 +5509,7 @@ add_dummies <- function(dir, Log)
                          "skipped",
                          "hdOnly",
                          "orphaned2", "orphaned",
+                         "required_for_checking_but_not_installed",
                          if(!check_incoming) "bad_engine")
             if(!all(names(res) %in% allowed)) {
                 errorLog(Log)
@@ -5523,6 +5524,10 @@ add_dummies <- function(dir, Log)
                 wrapLog(msg_DESCRIPTION)
                 summaryLog(Log)
                 do_exit(1L)
+            } else if (length(res$required_for_checking_but_not_installed)) {
+                warningLog(Log, "Skipping vignette re-building")
+                do_build_vignettes  <<- FALSE
+                printLog0(Log, paste(out, collapse = "\n"))
             } else {
                 if(length(res[["orphaned"]])) warningLog(Log) else noteLog(Log)
                 printLog0(Log, paste(out, collapse = "\n"))

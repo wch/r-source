@@ -5,6 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.0.1 patched}{
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} skips vignette re-building (with a
+      warning) if the \samp{VignetteBuilder} package(s) are not available.
+    }
+  }
+
+}
+
 \section{\Rlogo CHANGES IN R 4.0.1}{
 
   \subsection{NEW FEATURES}{
