@@ -22,6 +22,9 @@
 
       \item \code{source(*, echo=TRUE)} no longer fails in some cases with
       empty lines; reported by Bill Dunlap in \PR{17769}.
+
+      \item \code{on.exit()} now correctly matches named arguments, thanks
+      to \PR{17815} (including patch) by Brodie Gaslam.
     }
   }
 }
