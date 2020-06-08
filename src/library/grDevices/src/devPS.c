@@ -5564,7 +5564,8 @@ typedef struct {
     /* Raster images used on the device */
     rasterImage *rasters;
     int numRasters; /* number in use */
-    int writtenRasters; /* number written out */
+    int writtenRasters; /* number written out on this page */
+    int fileRasters; /* number written out in this file */
     int maxRasters; /* size of array allocated */
     /* Soft masks for raster images */
     int *masks;
@@ -6979,7 +6980,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
      * END Load fonts
      *****************************/
 
-    pd->numRasters = pd->writtenRasters = 0;
+    pd->numRasters = pd->writtenRasters = pd->fileRasters = 0;
     pd->maxRasters = 64; /* dynamic */
     pd->rasters = initRasterArray(pd->maxRasters);
     if (!pd->rasters) {
@@ -7753,13 +7754,14 @@ static void PDF_endfile(PDFDesc *pd)
     if (nraster > 0) {
 	/* image XObjects */
 	fprintf(pd->pdffp, "/XObject <<\n");
-	for (i = 0; i < nraster; i++) {
+	for (i = pd->fileRasters; i < nraster; i++) {
 	    fprintf(pd->pdffp, "  /Im%d %d 0 R\n", i, pd->rasters[i].nobj);
 		if (pd->masks[i] >= 0)
 		    fprintf(pd->pdffp, "  /Mask%d %d 0 R\n",
 			    pd->masks[i], pd->rasters[i].nmaskobj);
 	}
 	fprintf(pd->pdffp, ">>\n");
+        pd->fileRasters = nraster;
     }
 
     /* graphics state parameter dictionaries */
@@ -8139,9 +8141,9 @@ static void PDF_endpage(PDFDesc *pd)
 		here - pd->startstream);
     }
 
-    if(pd->nobjs + 2*(pd->numRasters-pd->writtenRasters) + 500 
+    if(pd->nobjs + 2*(pd->numRasters - pd->writtenRasters) + 500 
        >= pd->max_nobjs) {
-	int new =  pd->nobjs + 2*(pd->numRasters-pd->writtenRasters) + 2000;
+	int new =  pd->nobjs + 2*(pd->numRasters - pd->writtenRasters) + 2000;
 	void *tmp = realloc(pd->pos, new * sizeof(int));
 	if(!tmp)
 	    error("unable to increase object limit: please shutdown the pdf device");
