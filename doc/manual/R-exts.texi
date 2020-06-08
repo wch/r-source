@@ -6906,6 +6906,10 @@ the search path.  Because they have been frequently misused, the @HTML{}
 help system looks for topic @code{@var{foo}} in package @pkg{@var{pkg}}
 if it does not find file @file{@var{foo}.html}.
 
+Packages referred to by these `other forms' should be declared in the
+@file{DESCRIPTION} file, in the @samp{Depends}, @samp{Imports},
+@samp{Suggests} or @samp{Enhances} fields.
+
 @node Mathematics, Figures, Cross-references, Writing R documentation files
 @section Mathematics
 @cindex Mathematics in documentation
