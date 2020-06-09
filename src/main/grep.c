@@ -2352,14 +2352,11 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static int getNc(const char *s, int st)
 {
-    R_CheckStack2(st+1);
-    char *buf = alloca(st+1);
-    memcpy(buf, s, st);
-    buf[st] = '\0';
-    return (int) utf8towcs(NULL, buf, 0);
+    int i, nc = 0;
+    for(i = 0; i < st; i += utf8clen(s[i]))
+	nc++;
+    return nc;
 }
-
-
 
 static SEXP
 gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC,
