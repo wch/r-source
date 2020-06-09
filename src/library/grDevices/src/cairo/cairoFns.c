@@ -239,14 +239,43 @@ static cairo_pattern_t *CairoTilingPattern(SEXP pattern, pX11Desc xd)
 {
     cairo_t *cc = xd->cc;
     SEXP R_fcall;
+    cairo_pattern_t *cairo_tiling;
+    cairo_extend_t extend;
     /* Start new group - drawing is redirected to this group */
     cairo_push_group(cc);
+    /* Scale the drawing to fill the temporary group surface */
+    cairo_matrix_t tm;
+    cairo_matrix_init_identity(&tm);
+    cairo_matrix_scale(&tm, 
+                       xd->windowWidth/R_GE_tilingPatternWidth(pattern),
+                       xd->windowHeight/R_GE_tilingPatternHeight(pattern));
+    cairo_matrix_translate(&tm, 
+                           -R_GE_tilingPatternX(pattern),
+                           -R_GE_tilingPatternY(pattern));
+    cairo_transform(cc, &tm);
     /* Play the pattern function to build the pattern */
     R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
     /* Close group and return resulting pattern */
-    return cairo_pop_group(cc);
+    cairo_tiling = cairo_pop_group(cc);
+    /* Scale the pattern to its proper size */
+    cairo_matrix_init_identity(&tm);
+    cairo_matrix_scale(&tm, 
+                       xd->windowWidth/R_GE_tilingPatternWidth(pattern),
+                       xd->windowHeight/R_GE_tilingPatternHeight(pattern));
+    cairo_matrix_translate(&tm, 
+                           -R_GE_tilingPatternX(pattern), 
+                           -R_GE_tilingPatternY(pattern));
+    cairo_pattern_set_matrix(cairo_tiling, &tm);
+    switch(R_GE_tilingPatternExtend(pattern)) {
+    case R_GE_patternExtendNone: extend = CAIRO_EXTEND_NONE; break;
+    case R_GE_patternExtendPad: extend = CAIRO_EXTEND_PAD; break;
+    case R_GE_patternExtendReflect: extend = CAIRO_EXTEND_REFLECT; break;
+    case R_GE_patternExtendRepeat: extend = CAIRO_EXTEND_REPEAT; break;
+    }
+    cairo_pattern_set_extend(cairo_tiling, extend);
+    return cairo_tiling;
 }
 
 static cairo_pattern_t *CairoCreatePattern(SEXP pattern, pX11Desc xd)
