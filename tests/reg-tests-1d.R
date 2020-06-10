@@ -4064,6 +4064,12 @@ g <- function() { on.exit(add=stop('boom'), expr={cat('bar\n'); FALSE}) ; "foo" 
 assertErrV(g())
 ## f() :> "Error in on.exit(....): invalid 'add' argument"  and no error for g() in R <= 4.0.1
 
+## multi-encodings in vector-case for duplicated/match -- PR#17809
+c_latin1 <- "\xe4"
+Encoding(c_latin1) <- "latin1"
+c_utf8 <- enc2utf8(c_latin1)
+x <- list(c_latin1, c_utf8, letters)
+stopifnot(identical(duplicated(x)[2], TRUE))
 
 
 ## keep at end
