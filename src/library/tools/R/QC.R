@@ -4407,7 +4407,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Flatten the xref db into one big matrix.
     db <- cbind(do.call("rbind", db),
-                rep.int(names(db), vapply(db, NROW, 0L)))
+                File = rep.int(names(db), vapply(db, NROW, 0L)))
     if(nrow(db) == 0L)
         return(structure(list(), class = "check_Rd_xrefs"))
 
@@ -4467,6 +4467,13 @@ function(package, dir, lib.loc = NULL)
                             domain = NA))
     }
 
+    mind_suspects <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_",
+                                         "FALSE"))
+    if(mind_suspects) {
+        db <- cbind(db, suspect = FALSE)
+    }
+    
     for (pkg in anchors) {
         ## we can't do this on the current uninstalled package!
         if (missing(package) && pkg == basename(dir)) next
@@ -4482,6 +4489,9 @@ function(package, dir, lib.loc = NULL)
                 !good & (thisfile[this] %in% aliases1)
             } else FALSE
             db[this, "bad"] <- !good & !suspect
+            if(mind_suspects)
+                db[this, "suspect"] <- suspect
+            
         } else if(use_aliases_from_CRAN) {
             if(is.null(aliases_db)) {
                 ## Not yet read in.
@@ -4502,6 +4512,8 @@ function(package, dir, lib.loc = NULL)
                 !good & (thisfile[this] %in% aliases1)
             } else FALSE
             db[this, "bad"] <- !good & !suspect
+            if(mind_suspects)
+                db[this, "suspect"] <- suspect
         }
         else
             unknown <- c(unknown, pkg)
@@ -4536,25 +4548,37 @@ function(package, dir, lib.loc = NULL)
     }
     ## The bad ones:
     bad <- db[, "bad"] == "TRUE"
-    res1 <- split(db[bad, "report"], db[bad, 3L])
-    structure(list(bad = res1), class = "check_Rd_xrefs")
+    out <- list(bad = split(db[bad, "report"], db[bad, "File"]))
+    if(mind_suspects && any(ind <- db[, "suspect"] == "TRUE")) {
+        out <- c(out, list(suspect = split(db[ind, "report"],
+                                           db[ind, "File"])))
+    }
+    structure(out, class = "check_Rd_xrefs")
 }
 
 format.check_Rd_xrefs <-
 function(x, ...)
 {
-    xx <- x$bad
-    if(length(xx)) {
-        .fmt <- function(i) {
+    xb <- x$bad
+    xs <- x$suspect
+    if(length(xb) || length(xs)) {
+        .fmtb <- function(i) {
             c(gettextf("Missing link or links in documentation object '%s':",
-                       names(xx)[i]),
+                       names(xb)[i]),
               ## NB, link might be empty, and was in mvbutils
-              .pretty_format(unique(xx[[i]])),
+              .pretty_format(unique(xb[[i]])),
               "")
         }
-        c(unlist(lapply(seq_along(xx), .fmt)),
-          strwrap(gettextf("See section 'Cross-references' in the 'Writing R Extensions' manual.")),
-          "")
+        .fmts <- function(i) {
+            c(gettextf("Non-file package-anchored link(s) in documentation object '%s':",
+                       names(xs)[i]),
+              .pretty_format(unique(xs[[i]])),
+              "")
+        }
+        c(unlist(lapply(seq_along(xb), .fmtb)),
+          unlist(lapply(seq_along(xs), .fmts)),
+          strwrap(gettextf("See section 'Cross-references' in the 'Writing R Extensions' manual."))
+          )
     } else {
         character()
     }
