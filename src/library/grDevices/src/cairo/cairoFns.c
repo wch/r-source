@@ -252,7 +252,7 @@ static cairo_pattern_t *CairoTilingPattern(SEXP pattern, pX11Desc xd)
     cairo_matrix_translate(&tm, 
                            -R_GE_tilingPatternX(pattern),
                            -R_GE_tilingPatternY(pattern));
-    cairo_transform(cc, &tm);
+    cairo_set_matrix(cc, &tm);
     /* Play the pattern function to build the pattern */
     R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
     eval(R_fcall, R_GlobalEnv);
