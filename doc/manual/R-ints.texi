@@ -4367,6 +4367,13 @@ to any @file{.Rout.save} file and timings analysed.  Overridden by
 @option{--run-donttest}.
 Default: false unless @option{-as-cran} is specified (which can be
 overridden by setting @samp{_R_CHECK_DONTTEST_EXAMPLES_=false}).
+
+@item _R_CHECK_XREFS_PKGS_ARE_DECLARED_
+Check if packages used in `anchored' cross-references in @file{.Rd}
+files (those of the form @code{\link[@var{pkg}]@{@var{foo}@}} and
+@code{\link[@var{pkg:bar}]@{@var{foo}@}}) are declared in the
+@file{DESCRIPTION} file and so these links can be checked.
+Default: false.
 @end vtable
 
 CRAN's submission checks use something like

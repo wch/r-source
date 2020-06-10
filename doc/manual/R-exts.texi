@@ -4414,6 +4414,11 @@ is not portable.
 The @option{-o} flag for @command{set} in shell scripts is optional in
 POSIX and not supported on all the platforms @R{} is used on.
 
+The variable @samp{OSTYPE} is shell-specific and its values are
+rather unpredictable and may include a version such as
+@samp{darwin19.0}: @comand{`uname`} is often what is intended (with
+common values @samp{Darwin}, @samp{Linux} and @samp{SunOS}).
+
 On macOS Catalina which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
