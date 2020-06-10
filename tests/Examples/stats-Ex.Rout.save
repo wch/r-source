@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-05-18 r78485) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-06-10 r78667) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3926,7 +3926,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x577d568>
+<environment: 0x2d54108>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4963,7 +4963,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x66fd350>
+<bytecode: 0x5ac2fb0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7587,7 +7587,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x6528f00>
+<environment: 0x5d6f408>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12281,14 +12281,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x43494c8>
-<environment: 0x433c098>
+<bytecode: 0x5b19970>
+<environment: 0x5b32230>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4349618>
-<environment: 0x433c098>
+<bytecode: 0x5b19820>
+<environment: 0x5b32230>
 
 > 
 > 
@@ -16549,8 +16549,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x72e00b8>
-<environment: 0x513c8b0>
+<bytecode: 0x6b0aa78>
+<environment: 0x4b93818>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18959,7 +18959,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.241 0.224 7.502 0 0 
+Time elapsed:  7.295 0.205 7.576 0 0 
 > grDevices::dev.off()
 null device 
           1 

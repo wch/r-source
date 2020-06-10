@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-05-18 r78485) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-06-10 r78667) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1035,7 +1035,7 @@ Variances:
 > boxplot(weight ~ group, data = PlantGrowth, main = "PlantGrowth data",
 +         ylab = "Dried weight of plants", col = "lightgray",
 +         notch = TRUE, varwidth = TRUE)
-Warning in bxp(list(stats = c(4.17, 4.53, 5.155, 5.33, 6.11, 3.59, 4.17,  :
+Warning in (function (z, notch = FALSE, width = NULL, varwidth = FALSE,  :
   some notches went outside hinges ('box'): maybe set notch=FALSE
 > anova(lm(weight ~ group, data = PlantGrowth))
 Analysis of Variance Table
@@ -1965,7 +1965,7 @@ Model 4: dist ~ poly(speed, degree)
 > boxplot(weight ~ feed, data = chickwts, col = "lightgray",
 +     varwidth = TRUE, notch = TRUE, main = "chickwt data",
 +     ylab = "Weight at six weeks (gm)")
-Warning in bxp(list(stats = c(216, 271.5, 342, 373.5, 404, 108, 136, 151.5,  :
+Warning in (function (z, notch = FALSE, width = NULL, varwidth = FALSE,  :
   some notches went outside hinges ('box'): maybe set notch=FALSE
 > anova(fm1 <- lm(weight ~ feed, data = chickwts))
 Analysis of Variance Table
@@ -3510,7 +3510,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.872 0.06 2.947 0 0 
+Time elapsed:  2.882 0.064 2.959 0 0 
 > grDevices::dev.off()
 null device 
           1 
