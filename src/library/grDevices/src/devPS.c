@@ -5460,10 +5460,11 @@ typedef struct {
 #define PDFlinearGradient 0
 #define PDFstitchedFunction 1
 #define PDFexpFunction 2
-#define PDFpattern 3
+#define PDFshadingPattern 3
 #define PDFsoftMask 4
 #define PDFclipPath 5
 #define PDFcontent 6
+#define PDFtilingPattern 7
 
 typedef struct {
     int type;
@@ -6116,7 +6117,7 @@ static SEXP addShading(SEXP pattern, PDFDesc *pd)
     /* Object number will be determined when definition written
      * to file (PDF_endfile)
      */
-    initDefn(defNum, PDFpattern, pd);
+    initDefn(defNum, PDFshadingPattern, pd);
     catDefn(" 0 obj\n<<\n/Type Pattern\n/PatternType 2\n/Shading\n", 
             defNum, pd);
     switch(R_GE_patternType(pattern)) {
@@ -6160,20 +6161,20 @@ static int newTiling(SEXP pattern, PDFDesc *pd)
     int mainPattern;
     char buf[100];
     int defNum = growDefinitions(pd);
-    initDefn(defNum, PDFpattern, pd);
+    initDefn(defNum, PDFtilingPattern, pd);
 
-    /* Use temporary definition to store the pattern content
+    /* Use separate definition to store the pattern content
      * so we can determine length of the content
      */
-    int tempDefn = growDefinitions(pd);
-    initDefn(tempDefn, PDFcontent, pd);
+    int contentDefn = growDefinitions(pd);
+    initDefn(contentDefn, PDFcontent, pd);
     /* Some initialisation that newpage does
      * (expected by other captured output)
      */
-    catDefn("1 J 1 j q\n", tempDefn, pd);
+    catDefn("1 J 1 j q\n", contentDefn, pd);
 
     mainPattern = pd->appendingPattern;
-    pd->appendingPattern = tempDefn;
+    pd->appendingPattern = contentDefn;
 
     /* Invalidate current settings so pattern enforces its settings */
     PDF_Invalidate(pd);
@@ -6189,12 +6190,12 @@ static int newTiling(SEXP pattern, PDFDesc *pd)
     /* Some finalisation that endpage does
      * (to match the newpage initilisation)
      */
-    catDefn("Q\n", tempDefn, pd);
+    catDefn("Q\n", contentDefn, pd);
     /* Cannot discard temporary definition because there may have been
      * other definitions created during its creation (so it may no
      * longer be the topmost definition)
      */
-    trimDefn(tempDefn, pd);
+    trimDefn(contentDefn, pd);
 
     pd->appendingPattern = mainPattern;
 
@@ -6222,24 +6223,50 @@ static int newTiling(SEXP pattern, PDFDesc *pd)
              (int) (0.5 + R_GE_tilingPatternHeight(pattern)));
     catDefn(buf, defNum, pd);
 
-    /* The pattern uses the document's Resources ! */
-    catDefn("/Resources 4 0 R\n",
+    /* Tiling pattern will be completed at end of file with
+     * call to completeTiling()
+     */
+
+    return defNum;
+}
+
+static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage, 
+                                      int excludeDef, PDFDesc *pd);
+
+static void completeTiling(int defNum, int resourceDictOffset, PDFDesc *pd)
+{
+    char buf[100];
+    /* (strong) assumption here that tiling pattern content is 
+     * very next definition
+     */
+    int contentDefn = defNum + 1;
+
+    catDefn("/Resources\n",
             defNum, pd);
+
+    /* Write the resource dictionary for the tiling pattern.
+     * This is just a copy of the Resource Dictionary for the page,
+     * WITHOUT the tiling pattern itself.
+     * This will be AT LEAST as much as the tiling pattern needs,
+     * but it MUST exclude itself to avoid infinite loop in PDF viewer.
+     */
+    /* Redirect PDFwriteResourceDictionary() output to pattern */
+    pd->appendingPattern = defNum;
+    PDFwriteResourceDictionary(resourceDictOffset, FALSE, defNum, pd);
 
     /* Note the spaces before the >> just after the endstream;
      * ghostscript seems to need those to avoid error (!?) */
     snprintf(buf,
              100,
              "/Length %d\n",
-             (int) strlen(pd->definitions[tempDefn].str));
+             (int) strlen(pd->definitions[contentDefn].str));
     catDefn(buf, defNum, pd);
     catDefn(">>\nstream\n", defNum, pd);
     /* Copy pattern content */
-    copyDefn(tempDefn, defNum, pd);
+    copyDefn(contentDefn, defNum, pd);
     catDefn("endstream\nendobj\n", defNum, pd);
 
     trimDefn(defNum, pd);
-    return defNum;
 }
 
 static SEXP addTiling(SEXP pattern, PDFDesc *pd)
@@ -6285,7 +6312,8 @@ static int countPatterns(PDFDesc *pd)
 {
     int i, count = 0;
     for (i = 0; i < pd->numDefns; i++) {
-        if (pd->definitions[i].type == PDFpattern) {
+        if (pd->definitions[i].type == PDFshadingPattern ||
+            pd->definitions[i].type == PDFtilingPattern) {
             count++;
         }
     }
@@ -6477,7 +6505,7 @@ static int PDFwrite(char *buf, size_t size, const char *fmt, PDFDesc *pd, ...)
 
     if (pd->appendingClipPath) {
         addToClipPath(buf, pd);
-    } else if (pd->appendingPattern && 
+    } else if (pd->appendingPattern >= 0 && 
                (pd->appendingPattern > pd->appendingMask)) {
         addToPattern(buf, pd);
     } else if (pd->appendingMask >= 0) {
@@ -6489,32 +6517,30 @@ static int PDFwrite(char *buf, size_t size, const char *fmt, PDFDesc *pd, ...)
     return val;
 }
 
-static void PDFwritePatternDefs(int objoffset, PDFDesc *pd)
+static void PDFwritePatternDefs(int objoffset, int excludeDef, PDFDesc *pd)
 {
     int i;
-    fprintf(pd->pdffp, 
-            "/Pattern\n<<\n");
+    char buf[100];
+    PDFwrite(buf, 100, "/Pattern\n<<\n", pd);
     for (i = 0; i < pd->numDefns; i++) {
-        if (pd->definitions[i].type == PDFpattern) {
-            fprintf(pd->pdffp, 
-                "/Def%d %d 0 R\n",
-                i, 
-                i + objoffset);
+        if ((pd->definitions[i].type == PDFshadingPattern ||
+             pd->definitions[i].type == PDFtilingPattern) &&
+            i != excludeDef) {
+            PDFwrite(buf, 100, "/Def%d %d 0 R\n", pd,
+                     i, i + objoffset);
         }
     }
-    fprintf(pd->pdffp, 
-            ">>\n");
+    PDFwrite(buf, 100, ">>\n", pd);
 }
 
 static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
 {
     int i;
+    char buf[100];
     for (i = 0; i < pd->numDefns; i++) {
         if (pd->definitions[i].type == PDFsoftMask) {
-            fprintf(pd->pdffp, 
-                "/Def%d %d 0 R\n",
-                i, 
-                i + objoffset);
+            PDFwrite(buf, 100, "/Def%d %d 0 R\n", pd,
+                     i, i + objoffset);
         }
     }
 }
@@ -6545,7 +6571,7 @@ static void PDFwriteMask(int i, PDFDesc *pd)
     }
 }
 
-static void PDFwriteDefinitions(PDFDesc *pd)
+static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
 {
     for (int i = 0; i < pd->numDefns; i++) {
         /* All definitions written out, to keep the math somewhere near sane,
@@ -6560,6 +6586,12 @@ static void PDFwriteDefinitions(PDFDesc *pd)
         if (pd->definitions[i].type == PDFclipPath ||
             pd->definitions[i].type == PDFcontent) {
             fprintf(pd->pdffp, " 0 obj << >>\n");
+        } else if (pd->definitions[i].type == PDFtilingPattern) {
+            /* Need to complete tiling pattern at end of file
+             * to get its Resource Dictionary right
+             */         
+            completeTiling(i, resourceDictOffset, pd);
+            fputs(pd->definitions[i].str, pd->pdffp);
         } else {
             fputs(pd->definitions[i].str, pd->pdffp);
         }    
@@ -7776,9 +7808,136 @@ static int isSans(const char *name)
 # define APPENDBUFSIZE 512
 #endif
 
+/* Write out the resources for a page OR for a tiling pattern.
+ * Return the number of objects in the dictionary
+ */
+static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage, 
+                                      int excludeDef, PDFDesc *pd)
+{
+    char buf[100];
+    int i, objCount, nenc, nfonts, cidnfonts, nraster, nmask;
+
+
+    nraster = pd->numRasters;
+    nmask = pd->numMasks;
+
+    /* ProcSet is regarded as obsolete as from PDF 1.4 */
+    if (nraster > 0) {
+	if (nmask > 0) {
+	    PDFwrite(buf, 
+                     100,
+                     "<<\n/ProcSet [/PDF /Text /ImageC /ImageB]\n/Font <<",
+                     pd);
+
+	} else {
+	    PDFwrite(buf, 
+                     100,
+		    "<<\n/ProcSet [/PDF /Text /ImageC]\n/Font <<",
+                     pd);
+	}
+    } else {
+	/* fonts */
+        PDFwrite(buf, 
+                 100,
+                 "<<\n/ProcSet [/PDF /Text]\n/Font <<",
+                 pd);
+    }
+
+    /* Count how many encodings will be included:
+     * fonts come after encodings */
+    nenc = 0;
+    if (pd->encodings) {
+	encodinglist enclist = pd->encodings;
+	while (enclist) {
+	    nenc++;
+	    enclist = enclist->next;
+	}
+    }
+    /* Should be a default text font at least, plus possibly others */
+    objCount = objOffset + nenc;
+
+    /* Dingbats always F1 */
+    if (pd->fontUsed[1]) 
+        PDFwrite(buf, 100, " /F1 %d 0 R ", pd, ++objCount);
+
+    nfonts = 2;
+    if (pd->fonts) {
+	type1fontlist fontlist = pd->fonts;
+	while (fontlist) {
+	    for (i = 0; i < 5; i++) {
+		if(nfonts >= 100 || pd->fontUsed[nfonts]) {
+                    PDFwrite(buf, 100, "/F%d %d 0 R ", pd, nfonts, ++objCount);
+		    /* Allow for the font descriptor object, if present */
+		    if(!isBase14(fontlist->family->fonts[i]->name)) objCount++;
+		}
+		nfonts++;
+	    }
+	    fontlist = fontlist->next;
+	}
+    }
+    cidnfonts = 0;
+    if (pd->cidfonts) {
+	cidfontlist fontlist = pd->cidfonts;
+	while (fontlist) {
+	    for (i = 0; i < 5; i++) {
+		PDFwrite(buf, 100, "/F%d %d 0 R ", pd,
+			1000 + cidnfonts + 1, ++objCount);
+		cidnfonts++;
+	    }
+	    fontlist = fontlist->next;
+	}
+    }
+    PDFwrite(buf, 100, ">>\n", pd);
+
+    if (nraster > 0) {
+	/* image XObjects */
+	PDFwrite(buf, 100, "/XObject <<\n", pd);
+	for (i = pd->fileRasters; i < nraster; i++) {
+	    PDFwrite(buf, 100, "  /Im%d %d 0 R\n", pd,
+                     i, pd->rasters[i].nobj);
+		if (pd->masks[i] >= 0)
+		    PDFwrite(buf, 100, "  /Mask%d %d 0 R\n", pd,
+                             pd->masks[i], pd->rasters[i].nmaskobj);
+	}
+	PDFwrite(buf, 100, ">>\n", pd);
+        if (endpage) {
+            pd->fileRasters = nraster;
+        }
+    }
+
+    /* graphics state parameter dictionaries */
+    PDFwrite(buf, 100, "/ExtGState << ", pd);
+    for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++)
+	PDFwrite(buf, 100, "/GS%i %d 0 R ", pd, i + 1, ++objCount);
+    for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++)
+	PDFwrite(buf, 100, "/GS%i %d 0 R ", pd, i + 257, ++objCount);
+    /* Special state to set AIS if we have soft masks */
+    if (nmask > 0)
+	PDFwrite(buf, 100, "/GSais %d 0 R ", pd, ++objCount);
+    /* Soft mask definitions */
+    int defnOffset = ++objCount;
+    if (pd->numDefns > 0) {
+        PDFwriteSoftMaskDefs(defnOffset, pd);
+    }    
+    PDFwrite(buf, 100, ">>\n", pd);
+
+    /* patterns */
+    if (pd->numDefns > 0) {
+        PDFwritePatternDefs(defnOffset, excludeDef, pd);
+    }
+
+    if (streql(pd->colormodel, "srgb")) {
+	/* Ojects 5 and 6 are the sRGB color space, if required */
+	PDFwrite(buf, 100, "/ColorSpace << /sRGB 5 0 R >>\n", pd);
+    }
+    PDFwrite(buf, 100, ">>\n", pd);
+
+    return objCount;
+}
+
 static void PDF_endfile(PDFDesc *pd)
 {
-    int i, startxref, tempnobj, nenc, nfonts, cidnfonts, firstencobj;
+    int i, startxref, tempnobj, nfonts, cidnfonts, firstencobj;
     int nraster, nmask, npattern;
 
     /* object 3 lists all the pages */
@@ -7809,116 +7968,20 @@ static void PDF_endfile(PDFDesc *pd)
 	pd->max_nobjs = new;
     }
 
+    int resourceDictOffset = pd->nobjs;
     pd->pos[4] = (int) ftell(pd->pdffp);
-
-    /* The resource dictionary for each page */
-    /* ProcSet is regarded as obsolete as from PDF 1.4 */
-    if (nraster > 0) {
-	if (nmask > 0) {
-	    fprintf(pd->pdffp,
-		    "4 0 obj\n<<\n/ProcSet [/PDF /Text /ImageC /ImageB]\n/Font <<");
-
-	} else {
-	    fprintf(pd->pdffp,
-		    "4 0 obj\n<<\n/ProcSet [/PDF /Text /ImageC]\n/Font <<");
-	}
-    } else {
-	/* fonts */
-	fprintf(pd->pdffp,
-		"4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font <<");
-    }
-
-    /* Count how many encodings will be included:
-     * fonts come after encodings */
-    nenc = 0;
-    if (pd->encodings) {
-	encodinglist enclist = pd->encodings;
-	while (enclist) {
-	    nenc++;
-	    enclist = enclist->next;
-	}
-    }
-    /* Should be a default text font at least, plus possibly others */
-    tempnobj = pd->nobjs + nenc;
-
-    /* Dingbats always F1 */
-    if(pd->fontUsed[1]) fprintf(pd->pdffp, " /F1 %d 0 R ", ++tempnobj);
-
-    nfonts = 2;
-    if (pd->fonts) {
-	type1fontlist fontlist = pd->fonts;
-	while (fontlist) {
-	    for (i = 0; i < 5; i++) {
-		if(nfonts >= 100 || pd->fontUsed[nfonts]) {
-		    fprintf(pd->pdffp, "/F%d %d 0 R ", nfonts, ++tempnobj);
-		    /* Allow for the font descriptor object, if present */
-		    if(!isBase14(fontlist->family->fonts[i]->name)) tempnobj++;
-		}
-		nfonts++;
-	    }
-	    fontlist = fontlist->next;
-	}
-    }
-    cidnfonts = 0;
-    if (pd->cidfonts) {
-	cidfontlist fontlist = pd->cidfonts;
-	while (fontlist) {
-	    for (i = 0; i < 5; i++) {
-		fprintf(pd->pdffp, "/F%d %d 0 R ",
-			1000 + cidnfonts + 1, ++tempnobj);
-		cidnfonts++;
-	    }
-	    fontlist = fontlist->next;
-	}
-    }
-    fprintf(pd->pdffp, ">>\n");
-
-    if (nraster > 0) {
-	/* image XObjects */
-	fprintf(pd->pdffp, "/XObject <<\n");
-	for (i = pd->fileRasters; i < nraster; i++) {
-	    fprintf(pd->pdffp, "  /Im%d %d 0 R\n", i, pd->rasters[i].nobj);
-		if (pd->masks[i] >= 0)
-		    fprintf(pd->pdffp, "  /Mask%d %d 0 R\n",
-			    pd->masks[i], pd->rasters[i].nmaskobj);
-	}
-	fprintf(pd->pdffp, ">>\n");
-        pd->fileRasters = nraster;
-    }
-
-    /* graphics state parameter dictionaries */
-    fprintf(pd->pdffp, "/ExtGState << ");
-    for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++)
-	fprintf(pd->pdffp, "/GS%i %d 0 R ", i + 1, ++tempnobj);
-    for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++)
-	fprintf(pd->pdffp, "/GS%i %d 0 R ", i + 257, ++tempnobj);
-    /* Special state to set AIS if we have soft masks */
-    if (nmask > 0)
-	fprintf(pd->pdffp, "/GSais %d 0 R ", ++tempnobj);
-    /* Soft mask definitions */
-    int defnOffset = ++tempnobj;
-    if (pd->numDefns > 0) {
-        PDFwriteSoftMaskDefs(defnOffset, pd);
-    }    
-    fprintf(pd->pdffp, ">>\n");
-
-    /* patterns */
-    if (pd->numDefns > 0) {
-        PDFwritePatternDefs(defnOffset, pd);
-    }
+    fprintf(pd->pdffp, "4 0 obj\n");
+    /* The resource dictionary for the page */
+    tempnobj = PDFwriteResourceDictionary(resourceDictOffset, TRUE, -1, pd);
+    fprintf(pd->pdffp, "endobj\n");
 
     if (streql(pd->colormodel, "srgb")) {
-	/* Ojects 5 and 6 are the sRGB color space, if required */
-	fprintf(pd->pdffp, "/ColorSpace << /sRGB 5 0 R >>\n");
-	fprintf(pd->pdffp, ">>\nendobj\n");
 	pd->pos[5] = (int) ftell(pd->pdffp);
 	fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\nendobj\n");
 	pd->pos[6] = (int) ftell(pd->pdffp);
 	fprintf(pd->pdffp, "6 0 obj\n");
 	PDFwritesRGBcolorspace(pd);    
 	fprintf(pd->pdffp, "endobj\n");
-    } else {
-    	fprintf(pd->pdffp, ">>\nendobj\n");
     }
 
     if(tempnobj >= pd->max_nobjs) {
@@ -8119,7 +8182,7 @@ static void PDF_endfile(PDFDesc *pd)
     }
 
     /* Write out definitions */
-    PDFwriteDefinitions(pd);
+    PDFwriteDefinitions(resourceDictOffset, pd);
 
     /* write out xref table */
 
