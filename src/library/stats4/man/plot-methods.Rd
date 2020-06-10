@@ -33,7 +33,7 @@
 \section{Methods}{
   \describe{
     \item{\code{signature(x = "ANY", y = "ANY")}}{Generic function: see
-      \code{\link[graphics]{plot}}.}
+      \code{\link[graphics:plot.default]{plot}}.}
     \item{\code{signature(x = "profile.mle", y = "missing")}}{Plot
       likelihood profiles for \code{x}.}
   }

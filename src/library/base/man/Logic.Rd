@@ -107,7 +107,7 @@ isFALSE(x)
 \note{
   The elementwise operators are sometimes called as functions as
   e.g.\sspace{}\code{`&`(x, y)}: see the description of how
-  argument-matching is done in \code{\link[base]{Ops}}.
+  argument-matching is done in \code{\link[base:groupGeneric]{Ops}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
