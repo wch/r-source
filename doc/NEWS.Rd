@@ -53,6 +53,9 @@
       their \code{format()} value if this is a short enough character
       string, or by giving the first elements of their class vector and
       their length.
+
+      \item Unicode character width tables have been updated to Unicode 12.1
+      by Brodie Gaslam (\PR{17781}).
     }
   }
 
