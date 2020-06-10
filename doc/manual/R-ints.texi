@@ -4350,7 +4350,7 @@ Check if dependencies are orphaned packages.  As from @R{} 4.1.0 this
 checks strict dependencies recursively, so will report any orphaned
 packages which are needed to attach the package by @code{library()} as
 well as any orphaned packages which are suggested.
-Default: false (but true for CRAN submission checks)
+Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_EXCESSIVE_IMPORTS_
 A positive integer.  If set, give a NOTE if the number of imports from
@@ -4374,6 +4374,11 @@ files (those of the form @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}}) are declared in the
 @file{DESCRIPTION} file and so these links can be checked.
 Default: false.
+
+@item _R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_
+Check if package-anchored Rd cross-references are to @emph{files} (and
+not aliases).
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
@@ -4417,6 +4422,7 @@ _R_CHECK_THINGS_IN_TEMP_DIR_=true
 _R_CHECK_BASHISMS_=true
 _R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
+_R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_=true
 @end example
 
 @noindent
