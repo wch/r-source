@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-05-18 r78485) -- "Arbor Day"
+R version 4.0.1 Patched (2020-06-08 r78667) -- "See Things Now"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -199,4 +199,4 @@ Number of Fisher Scoring iterations: 3
 > 
 > proc.time()
    user  system elapsed 
-  0.272   0.049   0.299 
+  0.280   0.036   0.302 

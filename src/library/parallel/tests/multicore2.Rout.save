@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-05-18 r78485) -- "Arbor Day"
+R version 4.0.1 Patched (2020-06-08 r78667) -- "See Things Now"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -45,4 +45,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.409   0.112   0.358 
+  0.408   0.118   0.404 

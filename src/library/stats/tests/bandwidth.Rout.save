@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-05-18 r78485) -- "Arbor Day"
+R version 4.0.1 Patched (2020-06-08 r78667) -- "See Things Now"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.199   0.041   0.219 
+  0.208   0.040   0.236 

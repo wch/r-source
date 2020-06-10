@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-05-18 r78485) -- "Arbor Day"
+R version 4.0.1 Patched (2020-06-08 r78667) -- "See Things Now"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -744,4 +744,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.499   0.076   1.560 
+  1.508   0.072   1.574 

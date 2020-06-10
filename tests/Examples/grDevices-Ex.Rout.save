@@ -1,5 +1,5 @@
 
-R version 4.0.0 Patched (2020-05-22 r78545) -- "Arbor Day"
+R version 4.0.1 Patched (2020-06-08 r78667) -- "See Things Now"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -4268,7 +4268,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  50.742 0.705 51.615 0 0 
+Time elapsed:  49.797 0.697 50.658 0 0 
 > grDevices::dev.off()
 null device 
           1 
