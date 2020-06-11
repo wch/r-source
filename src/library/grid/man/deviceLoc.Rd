@@ -9,17 +9,20 @@
 \title{ Convert Viewport Location to Device Location }
 \description{
   These functions take a pair of unit objects and convert
-  them to a pair of device locations (or dimensions) in inches.
+  them to a pair of device locations (or dimensions) in inches
+  (or native device coordinates).
 }
 \usage{
-deviceLoc(x, y, valueOnly = FALSE)
-deviceDim(w, h, valueOnly = FALSE)
+deviceLoc(x, y, valueOnly = FALSE, device = FALSE)
+deviceDim(w, h, valueOnly = FALSE, device = FALSE)
 }
 \arguments{
   \item{x, y, w, h}{ A unit object. }
   \item{valueOnly}{ A logical indicating.  If \code{TRUE} then
     the function does not return a unit object, but rather only the
     converted numeric values. }
+  \item{device}{ A logical indicating whether the returned values should
+    be in inches or native device units. }
 }
 \details{
   These functions differ from the functions like \code{convertX()}

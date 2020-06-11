@@ -19,12 +19,12 @@ resolveMask <- function(path) {
 }
 
 resolveMask.NULL <- function(mask) {
-    grDevices::setMask(NULL, -1)
+    .setMask(NULL, -1)
     NULL
 }
 
 resolveMask.GridMask <- function(mask) {
-    ref <- grDevices::setMask(mask$f, mask$ref)
+    ref <- .setMask(mask$f, mask$ref)
     resolvedMask(mask, ref)
 }
 

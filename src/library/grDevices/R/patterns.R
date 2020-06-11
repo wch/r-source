@@ -38,11 +38,11 @@ pattern <- function(type, ...) {
     pattern
 }
 
-linearGradientPattern <- function(colours = c("black", "white"),
-                                  stops = seq(0, 1,
-                                              length.out = length(colours)),
-                                  x1 = 0, y1 = 0, x2 = 1, y2 = 1,
-                                  extend = "pad") {
+.linearGradientPattern <- function(colours = c("black", "white"),
+                                   stops = seq(0, 1,
+                                               length.out = length(colours)),
+                                   x1 = 0, y1 = 0, x2 = 1, y2 = 1,
+                                   extend = "pad") {
     ## Vectorising colours & stops
     nstops <- max(length(colours), length(stops))
     colours <- rep(colours, length.out = nstops)
@@ -64,12 +64,12 @@ linearGradientPattern <- function(colours = c("black", "white"),
             extend = as.integer(extend))
 }
 
-radialGradientPattern <- function(colours = c("black", "white"),
-                                  stops = seq(0, 1,
-                                              length.out = length(colours)),
-                                  cx1 = 0, cy1 = 0, r1 = 0,
-                                  cx2 = 1, cy2 = 1, r2 = .5,
-                                  extend = "pad") {
+.radialGradientPattern <- function(colours = c("black", "white"),
+                                   stops = seq(0, 1,
+                                               length.out = length(colours)),
+                                   cx1 = 0, cy1 = 0, r1 = 0,
+                                   cx2 = 1, cy2 = 1, r2 = .5,
+                                   extend = "pad") {
     ## Vectorising colours & stops
     nstops <- max(length(colours), length(stops))
     colours <- rep(colours, length.out = nstops)
@@ -94,7 +94,7 @@ radialGradientPattern <- function(colours = c("black", "white"),
 }
 
 ## (x, y) is (left, bottom)
-tilingPattern <- function(fun, x, y, width, height, extend) {
+.tilingPattern <- function(fun, x, y, width, height, extend) {
     extend <- match(extend, extendOptions)
     if (is.na(extend))
         stop("Invalid 'extend' value")
@@ -106,7 +106,7 @@ tilingPattern <- function(fun, x, y, width, height, extend) {
             extend = as.integer(extend))
 }
 
-setPattern <- function(pattern) {
+.setPattern <- function(pattern) {
     .External(C_setPattern, pattern)
 }
 

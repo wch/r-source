@@ -17,6 +17,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-setClipPath <- function(path, index) {
+.setClipPath <- function(path, index) {
     .External(C_setClipPath, path, index)
 }

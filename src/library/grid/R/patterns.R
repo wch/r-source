@@ -171,10 +171,10 @@ resolvePattern <- function(pattern) {
 resolvePattern.GridLinearGradient <- function(pattern) {
     p1 <- deviceLoc(pattern$x1, pattern$y1, valueOnly=TRUE, device=TRUE)
     p2 <- deviceLoc(pattern$x2, pattern$y2, valueOnly=TRUE, device=TRUE)
-    index <- setPattern(linearGradientPattern(pattern$colours,
-                                              pattern$stops,
-                                              p1$x, p1$y, p2$x, p2$y,
-                                              extend=pattern$extend))
+    index <- .setPattern(.linearGradientPattern(pattern$colours,
+                                                pattern$stops,
+                                                p1$x, p1$y, p2$x, p2$y,
+                                                extend=pattern$extend))
     resolvedPattern(pattern, index)
 }
 
@@ -189,11 +189,11 @@ resolvePattern.GridRadialGradient <- function(pattern) {
                                         valueOnly=TRUE, device=TRUE))^2)),
               sqrt(sum(unlist(deviceDim(pattern$r2, unit(0, "in"), 
                                         valueOnly=TRUE, device=TRUE))^2)))
-    index <- setPattern(radialGradientPattern(pattern$colours,
-                                              pattern$stops,
-                                              c1$x, c1$y, r1,
-                                              c2$x, c2$y, r2,
-                                              extend=pattern$extend))
+    index <- .setPattern(.radialGradientPattern(pattern$colours,
+                                                pattern$stops,
+                                                c1$x, c1$y, r1,
+                                                c2$x, c2$y, r2,
+                                                extend=pattern$extend))
     resolvedPattern(pattern, index)
 }
 
@@ -202,9 +202,9 @@ resolvePattern.GridTilingPattern <- function(pattern) {
     wh <- deviceDim(pattern$width, pattern$height, valueOnly=TRUE, device=TRUE)
     left <- xy$x - pattern$hjust*wh$w
     bottom <- xy$y - pattern$vjust*wh$h
-    index <- setPattern(tilingPattern(pattern$f,
-                                      left, bottom, wh$w, wh$h,
-                                      extend=pattern$extend))
+    index <- .setPattern(.tilingPattern(pattern$f,
+                                        left, bottom, wh$w, wh$h,
+                                        extend=pattern$extend))
     resolvedPattern(pattern, index)
 }
 

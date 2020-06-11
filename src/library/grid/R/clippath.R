@@ -15,7 +15,7 @@ isClipPath <- function(x) {
 
 ## "resolve" clipping paths
 resolveClipPath <- function(path) {
-    ref <- grDevices::setClipPath(path$f, path$ref)
+    ref <- .setClipPath(path$f, path$ref)
     resolvedClipPath(path, ref)
 }
 

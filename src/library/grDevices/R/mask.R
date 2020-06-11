@@ -1,4 +1,4 @@
 
-setMask <- function(mask, ref) {
+.setMask <- function(mask, ref) {
     .External(C_setMask, mask, ref)
 }
