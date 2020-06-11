@@ -832,6 +832,7 @@ function(..., recursive = FALSE)
                days = 60*60*24*x, weeks = 60*60*24*7*x)
     }
     args <- list(...)
+    args <- args[!vapply(args, is.null, NA)]
     if(!length(args)) return(.difftime(double(), "secs"))
     ind <- sapply(args, inherits, "difftime")
     pos <- which(!ind)

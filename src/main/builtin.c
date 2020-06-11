@@ -148,13 +148,13 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else code = CAR(argList);
 
     if (CADR(argList) != R_MissingArg) {
-	addit = asLogical(PROTECT(eval(CADR(args), rho)));
+	addit = asLogical(PROTECT(eval(CADR(argList), rho)));
 	UNPROTECT(1);
 	if (addit == NA_INTEGER)
 	    errorcall(call, _("invalid '%s' argument"), "add");
     }
     if (CADDR(argList) != R_MissingArg) {
-	after = asLogical(PROTECT(eval(CADDR(args), rho)));
+	after = asLogical(PROTECT(eval(CADDR(argList), rho)));
 	UNPROTECT(1);
         if (after == NA_INTEGER)
             errorcall(call, _("invalid '%s' argument"), "lifo");

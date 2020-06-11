@@ -70,7 +70,7 @@ debuggingState(on = NULL)
   specified in combination with a non-null \code{signature}. For methods
   which implement the \code{.local} rematching mechanism, the
   \code{.local} closure itself is the one that will be ultimately
-  debugged (see \code{\link[methods]{isRematched}}).
+  debugged (see \code{\link[methods:RMethodUtils]{isRematched}}).
   
   \code{isdebugged} returns \code{TRUE} if a) \code{signature} is \code{NULL}
   and the closure \code{fun} has been debugged, or b) \code{signature} is not

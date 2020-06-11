@@ -22,7 +22,8 @@
       as suggested in \PR{17777} by Jan Gorecki.
 
       \item Using \code{c()} to combine a factor with other factors
-      now gives a factor.
+      now gives a factor, and specifically an ordered factor when
+      combining ordered factors with identical levels.
 
       \item Graphics devices can now specify \code{canClip =
         NA_LOGICAL}, in which case the graphics engine will never
@@ -47,13 +48,22 @@
       that case, the default is changed to \code{TRUE} in line with its
       change in \code{read.table()} (related to \code{stringsAsFactor}) in
       \R 4.0.0.
+
+      \item When printing list arrays, classed objects are now shown via
+      their \code{format()} value if this is a short enough character
+      string, or by giving the first elements of their class vector and
+      their length.
+
+      \item Unicode character width tables have been updated to Unicode 12.1
+      by Brodie Gaslam (\PR{17781}).
     }
   }
 
-  \subsection{UTILITIES}{
+  \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item \command{R CMD check} skips vignette re-building (with a
-      warning) if the \samp{VignetteBuilder} package(s) are not available.
+      \item The \emph{standalone} \file{libRmath} math library and \R's C
+      API now provide \code{log1pexp()} again as documented, and get new
+      \code{log1mexp()}.
     }
   }
 
@@ -94,9 +104,32 @@
       presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
       Meyer in \PR{16662}.
 
+      \item \code{boxplot()} now also accepts \code{call}s for labels such
+      as \code{ylab}, the same as \code{plot()}.  Reported by Marius Hofert.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.0.1 patched}{
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} skips vignette re-building (with a
+      warning) if the \samp{VignetteBuilder} package(s) are not available.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
       \item \code{round()} and \code{signif()} now longer tolerate wrong
       argument names, notably in 1-argument calls; reported by Shane
       Mueller on R-devel (mailing list).
+
+      \item \code{source(*, echo=TRUE)} no longer fails in some cases with
+      empty lines; reported by Bill Dunlap in \PR{17769}.
+
+      \item \code{on.exit()} now correctly matches named arguments, thanks
+      to \PR{17815} (including patch) by Brodie Gaslam.
     }
   }
 }

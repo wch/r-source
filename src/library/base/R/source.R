@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -46,7 +46,6 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     }
 
     if(use_file <- missing(exprs)) {
-
         ofile <- file # for use with chdir = TRUE
         from_file <- FALSE # true, if not stdin() nor from srcref
         srcfile <- NULL
@@ -188,7 +187,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 			    leading <- leading - 1L
 			}
 			dep <- paste0(rep.int(c(prompt.echo, continue.echo),
-					      c(leading, length(dep)-leading)),
+					      pmax(0L, c(leading, length(dep)-leading))),
 				      dep, collapse="\n")
 			nd <- nchar(dep, "c")
 		    } else

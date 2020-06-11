@@ -112,7 +112,7 @@
   works, and even if it works at all, depends on the C and Fortran
   compilers and the platform.)
 
-  Lists, functions are other \R objects can (for historical reasons) be
+  Lists, functions or other \R objects can (for historical reasons) be
   passed to \code{.C}, but the \code{\link{.Call}} interface is much
   preferred.  All inputs apart from atomic vectors should be regarded as
   read-only, and all apart from vectors (including lists), functions and

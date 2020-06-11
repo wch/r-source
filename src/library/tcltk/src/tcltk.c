@@ -240,7 +240,7 @@ SEXP dotTclObjv(SEXP args)
 	    *tmp = '-';
 	    strcpy(tmp+1, s);
 	    objv[objc++] = Tcl_NewStringObj(tmp, -1);
-	    free(tmp);
+	    Free(tmp);
 	}
 	if (!isNull(t = VECTOR_ELT(avec, i)))
 	    objv[objc++] = (Tcl_Obj *) R_ExternalPtrAddr(t);

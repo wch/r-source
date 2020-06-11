@@ -138,7 +138,7 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   the week) just convert it to class \code{"POSIXlt"} and extract the
   relevant component(s) of the list, or if you want a character
   representation (such as a named day of the week) use the
-  \code{\link[base:format.POSIXlt]{format}} method.
+  \code{\link[base:strptime]{format}} method.
 
   If a time zone is needed and that specified is invalid on your system,
   what happens is system-specific but attempts to set it will probably

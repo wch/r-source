@@ -649,6 +649,9 @@ function(u, verbose = FALSE)
                         followlocation = 1,
                         http_version = 2L,
                         ssl_enable_alpn = 0)
+    if(startsWith(u, "https://github.com") &&
+       nzchar(a <- Sys.getenv("GITHUB_PAT", "")))
+        curl::handle_setheaders(h, "Authorization" = paste("token", a))
     g <- tryCatch(curl::curl_fetch_memory(u, handle = h),
                   error = identity)
     if(inherits(g, "error"))

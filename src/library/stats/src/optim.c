@@ -121,7 +121,7 @@ static void fmingr(int n, double *p, double *df, void *ex)
     } else { /* numerical derivatives */
         /* As discussed in PR#15958, the callback might save a copy of
            x, so we need to duplicate it before changes.  Currently this
-           always duplicates; with true reference counting, it would 
+           always duplicates; with true reference counting, it would
            only do so when necessary. */
 	PROTECT_WITH_INDEX(x = allocVector(REALSXP, n), &ipx_x);
 	setAttrib(x, R_NamesSymbol, OS->names);
@@ -149,7 +149,7 @@ static void fmingr(int n, double *p, double *df, void *ex)
 		val2 = REAL(s)[0]/(OS->fnscale);
 		df[i] = (val1 - val2)/(2 * eps);
 		if(!R_FINITE(df[i]))
-		    error(("non-finite finite-difference value [%d]"), i+1);
+		    error(_("non-finite finite-difference value [%d]"), i+1);
                 if (MAYBE_REFERENCED(x)) {
                     REPROTECT(x = duplicate(x), ipx_x);
                     SETCADR(OS->R_fcall, x);
@@ -188,7 +188,7 @@ static void fmingr(int n, double *p, double *df, void *ex)
 		val2 = REAL(s)[0]/(OS->fnscale);
 		df[i] = (val1 - val2)/(epsused + eps);
 		if(!R_FINITE(df[i]))
-		    error(("non-finite finite-difference value [%d]"), i+1);
+		    error(_("non-finite finite-difference value [%d]"), i+1);
                 if (MAYBE_REFERENCED(x)) {
                     REPROTECT(x = duplicate(x), ipx_x);
                     SETCADR(OS->R_fcall, x);
@@ -469,7 +469,7 @@ SEXP optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
 	dpar[i] = dpar[i] + eps;
     }
     // now symmetrize
-    for (i = 0; i < npar; i++) 
+    for (i = 0; i < npar; i++)
 	for (j = 0; j < i; j++) {
 	    double tmp =
 		0.5 * (REAL(ans)[i * npar + j] + REAL(ans)[j * npar + i]);
