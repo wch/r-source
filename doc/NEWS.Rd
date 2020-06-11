@@ -110,7 +110,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.1 patched}{
+\section{\Rlogo CHANGES IN R 4.0.2}{
 
   \subsection{UTILITIES}{
     \itemize{
