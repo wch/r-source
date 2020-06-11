@@ -534,7 +534,7 @@ SEXP CreateAtVector(double*, double*, int, Rboolean);
 #define GAxisPars 		Rf_GAxisPars
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
 
-/* Patterns - from ../../library/grDevices/src/patterns.c */
+/* Patterns - from ../../main/patterns.c */
 Rboolean R_GE_isPattern(SEXP x);
 #define R_GE_linearGradientPattern 1
 #define R_GE_radialGradientPattern 2
