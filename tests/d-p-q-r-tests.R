@@ -5,9 +5,14 @@
 ####
 ####	Functions for  ``d/p/q/r''
 
-.ptime <- proc.time()
 F <- FALSE
 T <- TRUE
+showSys.time <- function(expr, ...) {
+    ## prepend 'Time' for R CMD Rdiff
+    st <- system.time(expr, ...)
+    writeLines(paste("Time", capture.output(print(st))))
+    invisible(st)
+}
 
 options(warn = 2)
 ##      ======== No warnings, unless explicitly asserted via
@@ -32,6 +37,8 @@ All.eq <- function(x,y) {
 }
 if(!interactive())
     set.seed(123)
+
+.ptime <- proc.time()
 
 ## The prefixes of ALL the PDQ & R functions
 PDQRinteg <- c("binom", "geom", "hyper", "nbinom", "pois","signrank","wilcox")
@@ -69,10 +76,18 @@ for(pr in seq(1e-10,1,len=15)) # p=0 is not a distribution
 
 ##__ 3. Hypergeometric __
 
-m <- 10; n <- 7
-for(k in 2:m) {
-    x <- 0:(k+1)
+.suppHyper <- function(m,n,k) max(0, k-n) : min(k, m)
+hyp.mn <- rbind(m = c(10, 15, 999),
+                n = c( 7,  0,   0))
+for(j in 1:ncol(hyp.mn)) {
+  mn <- hyp.mn[,j]; m <- mn[["m"]] ; n <- mn[["n"]]
+  cat("m=",m,"; n=",n,":\n")
+  showSys.time(for(k in 2:m) {
+    x <- .suppHyper(m,n,k); x <- c(x[1]-1L, x)
     stopifnot(All.eq(phyper(x, m, n, k), cumsum(dhyper(x, m, n, k))))
+    stopifnot(All.eq(phyper(x, m, n, k, log.p=TRUE),
+          log(cumsum(dhyper(x, m, n, k)))))
+  })
 }
 
 ##__ 4. Negative Binomial __
