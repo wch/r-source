@@ -168,7 +168,7 @@ static cairo_pattern_t* CairoLinearGradient(SEXP gradient, pX11Desc xd)
     double red, blue, green;
     int i, nStops = R_GE_linearGradientNumStops(gradient);
     double stop;
-    cairo_extend_t extend;
+    cairo_extend_t extend = CAIRO_EXTEND_NONE;
     cairo_pattern_t *cairo_gradient;  
     cairo_gradient = 
         cairo_pattern_create_linear(R_GE_linearGradientX1(gradient),
@@ -204,7 +204,7 @@ static cairo_pattern_t* CairoRadialGradient(SEXP gradient, pX11Desc xd)
     double red, blue, green;
     int i, nStops = R_GE_radialGradientNumStops(gradient);
     double stop;
-    cairo_extend_t extend;
+    cairo_extend_t extend = CAIRO_EXTEND_NONE;
     cairo_pattern_t *cairo_gradient;  
     cairo_gradient = 
         cairo_pattern_create_radial(R_GE_radialGradientCX1(gradient),
@@ -240,7 +240,7 @@ static cairo_pattern_t *CairoTilingPattern(SEXP pattern, pX11Desc xd)
     cairo_t *cc = xd->cc;
     SEXP R_fcall;
     cairo_pattern_t *cairo_tiling;
-    cairo_extend_t extend;
+    cairo_extend_t extend = CAIRO_EXTEND_NONE;
     /* Start new group - drawing is redirected to this group */
     cairo_push_group(cc);
     /* Scale the drawing to fill the temporary group surface */
