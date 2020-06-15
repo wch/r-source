@@ -5786,7 +5786,7 @@ static void addRGBExpGradientFunction(SEXP gradient, int i,
         break;
     }
     snprintf(buf,
-             DEFBUFSIZE,
+             300,
              "<<\n/FunctionType 2\n/Domain [%.4f %.4f]\n/C0 [%0.4f %0.4f %0.4f]\n/C1 [%0.4f %0.4f %0.4f]\n/N 1\n>>\n",
              start,
              end,
@@ -5817,7 +5817,7 @@ static void addAlphaExpGradientFunction(SEXP gradient, int i,
         break;
     }
     snprintf(buf,
-             DEFBUFSIZE,
+             300,
              "<<\n/FunctionType 2\n/Domain [%.4f %.4f]\n/C0 [%0.4f]\n/C1 [%0.4f]\n/N 1\n>>\n",
              start,
              end,
