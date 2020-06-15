@@ -124,6 +124,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item Using some of the \pkg{tcltk} widgets no longer crashes R on
+      Windows.
+
       \item \code{round()} and \code{signif()} now longer tolerate wrong
       argument names, notably in 1-argument calls; reported by Shane
       Mueller on R-devel (mailing list).
