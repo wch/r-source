@@ -140,6 +140,10 @@
 
       \item \code{on.exit()} now correctly matches named arguments, thanks
       to \PR{17815} (including patch) by Brodie Gaslam.
+
+      \item \code{regexpr(*, perl=TRUE)} no longer returns incorrect
+      positions into text containing characters outside of the Unicode
+      Basic Multilingual Plane on Windows.
     }
   }
 }
