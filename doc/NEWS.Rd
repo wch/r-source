@@ -19,10 +19,6 @@
       \item Using some of the \pkg{tcltk} widgets no longer crashes R on
       Windows.
 
-      \item \code{round()} and \code{signif()} now longer tolerate wrong
-      argument names, notably in 1-argument calls; reported by Shane
-      Mueller on R-devel (mailing list).
-
       \item \code{source(*, echo=TRUE)} no longer fails in some cases with
       empty lines; reported by Bill Dunlap in \PR{17769}.
 
