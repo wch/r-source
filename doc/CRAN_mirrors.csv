@@ -27,6 +27,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Hong Kong) [https]",China,"Hong Kong",https://mirror-hk.koddos.net/CRAN/,"KoDDoS in Hong Kong","mirror # koddos.net",1,cn,"secure_mirror_from_master"
 "China (Guangzhou) [https]",China,Guangzhou,https://mirrors.e-ducation.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",1,cn,"secure_mirror_from_master"
 "China (Lanzhou) [https]",China,Lanzhou,https://mirror.lzu.edu.cn/CRAN/,"Lanzhou University Open Source Society","oss.lzu.edu.cn # gmail.com",1,cn,"secure_mirror_from_master"
+"China (Nanjing) [https]",China,Nanjing,https://mirrors.nju.edu.cn/CRAN/,"eScience Center, Nanjing University","my # yaoge123.com",1,cn
 "China (Shanghai) [https]",China,Shanghai,https://mirrors.tongji.edu.cn/CRAN/,"Tongji University","mirrors # opentj.org",1,cn,"secure_mirror_from_master"
 "Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,"secure_mirror_from_master"
 "Costa Rica [https]","Costa Rica","San José",https://mirror.uned.ac.cr/cran/,"Distance State University (UNED)","rherrerav # uned.ac.cr",1,cr,"secure_mirror_from_master"
