@@ -19,7 +19,7 @@ resolveMask <- function(path) {
 }
 
 resolveMask.NULL <- function(mask) {
-    .setMask(NULL, -1)
+    .setMask(NULL, NULL)
     NULL
 }
 
