@@ -316,31 +316,6 @@ static void CairoReleasePattern(int index, pX11Desc xd)
     }
 }
 
-static void CairoResetPattern(SEXP pattern, int index, pX11Desc xd)
-{
-    cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
-
-    /* Kill old pattern */
-    if (xd->patterns[index]) {
-        cairo_pattern_destroy(xd->patterns[index]);
-    } else {
-        warning(_("Attempt to reset non-existent pattern"));
-    }
-   
-    xd->patterns[index] = cairo_pattern;
-}
-
-static void CairoReusePattern(SEXP pattern, int index, pX11Desc xd)
-{
-    /* If pattern does not exist, recreate */
-    if (xd->patterns[index] == NULL) {
-        cairo_pattern_t *cairo_pattern = CairoCreatePattern(pattern, xd);
-        xd->patterns[index] = cairo_pattern;
-    } else {
-        warning(_("Attempt to reuse non-existent pattern"));
-    }
-}
-
 static void CairoPatternFill(SEXP ref, pX11Desc xd)
 {
     int index = INTEGER(ref)[0];
