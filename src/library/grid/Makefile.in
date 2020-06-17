@@ -18,7 +18,7 @@ pkg = grid
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 INSTDIRS = doc
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+R_EXE = $(top_builddir)/bin/R --vanilla --no-echo
 DEFPKGS = NULL
 
 all: Makefile DESCRIPTION
