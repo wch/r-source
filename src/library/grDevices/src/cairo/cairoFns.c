@@ -444,6 +444,9 @@ static SEXP CairoSetClipPath(SEXP path, SEXP ref, pX11Desc xd)
             /* Create this clipping path */
             cairo_clippath = CairoCreateClipPath(path, index, xd);
             xd->clippaths[index] = cairo_clippath;
+            PROTECT(newref = allocVector(INTSXP, 1));
+            INTEGER(newref)[0] = index;
+            UNPROTECT(1);
         }
     } else {
         /* Reuse indexed clip path */
