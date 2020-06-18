@@ -3441,6 +3441,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 	}
     }
     dd->displayListOn = (xd->kind == SCREEN);
+    dd->deviceVersion = R_GE_definitions;
     if (RConsole && restoreConsole) show(RConsole);
     return TRUE;
 }

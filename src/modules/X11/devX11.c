@@ -3040,6 +3040,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->deviceSpecific = (void *) xd;
 
     dd->displayListOn = TRUE;
+    dd->deviceVersion = R_GE_definitions;
 
     return TRUE;
 }

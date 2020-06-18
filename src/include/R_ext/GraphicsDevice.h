@@ -712,6 +712,14 @@ struct _DevDesc {
     void (*releaseMask)();
 #endif
 
+    /* This should match R_GE_version,
+     * BUT it does not have to.
+     * It give the graphics engine a chance to work with 
+     * graphics device packages BEFORE they update to 
+     * changes in R_GE_version.
+     */
+    int deviceVersion;
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

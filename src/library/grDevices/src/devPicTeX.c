@@ -727,6 +727,8 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
 
     dd->deviceSpecific = (void *) ptd;
     dd->displayListOn = FALSE;
+    dd->deviceVersion = R_GE_definitions;
+
     return TRUE;
 }
 

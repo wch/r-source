@@ -3487,6 +3487,8 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
+
+    dd->deviceVersion = R_GE_definitions;
     return TRUE;
 }
 
@@ -5022,6 +5024,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
+    dd->deviceVersion = R_GE_definitions;
     return 1;
 }
 
@@ -7335,6 +7338,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
+    dd->deviceVersion = R_GE_definitions;
     return TRUE;
 }
 

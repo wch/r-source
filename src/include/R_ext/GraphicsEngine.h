@@ -78,8 +78,9 @@ extern "C" {
  *             - clipping paths
  *             - masks
  */
+#define R_GE_definitions 13
 
-#define R_GE_version 13
+#define R_GE_version R_GE_definitions
 
 int R_GE_getVersion(void);
 
