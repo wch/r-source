@@ -73,7 +73,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Portugal (Porto)",Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",0,pt
 "Russia [https]",Russia,Moscow,https://cran.cmm.msu.ru/,"Department of Biokinetics, Belozersky Institute of Physico-Chemical Biology, Lomonosov Moscow State University","viktor drobot <linux776 # gmail.com>",1,ru,"secure_mirror_from_master"
 "South Africa (Johannesburg) [https]","South Africa",Johannesburg,https://cran.mirror.ac.za/,"TENET, Johannesburg","Patrick Holahan <patrickh # tenet.ac.za>",1,za,"secure_mirror_from_master"
-"Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
+"Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",0,es,"secure_mirror_from_master"
 "Spain (Madrid) [https]",Spain,Madrid,https://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,
 "Sweden [https]",Sweden,Umeå,https://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
 "Switzerland [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
