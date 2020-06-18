@@ -1,7 +1,7 @@
 #  File src/library/stats/R/prcomp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,8 +50,8 @@ prcomp.default <-
     }
     dimnames(s$v) <- list(colnames(x), paste0("PC", j))
     r <- list(sdev = s$d, rotation = s$v,
-              center = if(is.null(cen)) FALSE else cen,
-              scale = if(is.null(sc)) FALSE else sc)
+              center = cen %||% FALSE,
+              scale  = sc  %||% FALSE)
     if (retx) r$x <- x %*% s$v
     class(r) <- "prcomp"
     r

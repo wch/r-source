@@ -1,7 +1,7 @@
 #  File src/library/stats/R/xtabs.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,8 +58,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	if(addNA) u <- addNA(u, ifany=TRUE)
 	u[ , drop = drop.unused.levels]
     })
-    naAct <- if(!is.null(m$na.action)) m$na.action
-	     else getOption("na.action", default = quote(na.omit))
+    naAct <- m$na.action %||% getOption("na.action", default = quote(na.omit))
     na.rm <- ## true iff na.action is na.omit
 	identical(naAct, quote(na.omit)) || identical(naAct, na.omit) ||
         identical(naAct, "na.omit")
@@ -70,7 +69,8 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	    else if(NCOL(y) == 1L)
 		tapply(y, by, sum, na.rm=na.rm, default = 0L)
 	    else {
-		z <- lapply(as.data.frame(y), tapply, by, sum, na.rm=na.rm, default = 0L)
+		z <- lapply(as.data.frame(y), tapply,
+			    by, sum, na.rm=na.rm, default = 0L)
 		array(unlist(z),
 		      dim = c(dim(z[[1L]]), length(z)),
 		      dimnames = c(dimnames(z[[1L]]), list(names(z))))

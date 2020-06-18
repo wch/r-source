@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.influence.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -366,8 +366,7 @@ summary.infl <-
 	    is.inf <- is.inf       [is.star, ]
 	    imat <- object $ infmat[is.star, , drop = FALSE]
 	}
-	if(is.null(rownam <- dimnames(object $ infmat)[[1L]]))
-	    rownam <- format(seq(is.star))
+	rownam <- dimnames(object $ infmat)[[1L]] %||% format(seq(is.star))
 	dimnames(imat)[[1L]] <- rownam[is.star]
 	chmat <- format(round(imat, digits = digits))
 	cat("\n")

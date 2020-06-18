@@ -105,8 +105,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         }
         qty <- as.matrix(qr.qty(qr.e, resp))
         if((nc <- ncol(qty)) > 1L) {
-            dny <- colnames(resp)
-            if(is.null(dny)) dny <- paste0("Y", 1L:nc)
+            dny <- colnames(resp) %||% paste0("Y", 1L:nc)
             dimnames(qty) <- list(seq(nrow(qty)), dny)
         } else dimnames(qty) <- list(seq(nrow(qty)), NULL)
         qtx <- qr.qty(qr.e, qtx)

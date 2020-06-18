@@ -1,7 +1,7 @@
 #  File src/library/stats/R/AIC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2001-2015 The R Core Team
+#  Copyright (C) 2001-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,10 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+## A pearl from ggplot2 et al.  NB: often needs '(..)' around RHS :   <lhs> %||% ( <rhs> )
+`%||%` <- function(L,R) if(is.null(L)) R else L
+
 
 #### Return the value of Akaike's Information Criterion
 ### originally from package nlne.
@@ -32,9 +36,8 @@ AIC.default <- function(object, ..., k = 2)
     if(!missing(...)) {# several objects: produce data.frame
 	lls <- lapply(list(object, ...), ll)
         vals <- sapply(lls, function(el) {
-            no <- attr(el, "nobs")
             c(as.numeric(el), attr(el, "df"),
-              if(is.null(no)) NA_integer_ else no)
+              attr(el, "nobs") %||% NA_integer_)
         })
         val <- data.frame(df = vals[2L,], ll = vals[1L,])
         nos <- na.omit(vals[3L,])
@@ -64,9 +67,8 @@ BIC.default <- function(object, ...)
     if(!missing(...)) {# several objects: produce data.frame
         lls <- lapply(list(object, ...), ll)
         vals <- sapply(lls, function(el) {
-            no <- attr(el, "nobs")
             c(as.numeric(el), attr(el, "df"),
-              if(is.null(no)) NA_integer_ else no)
+              attr(el, "nobs") %||% NA_integer_)
         })
         val <- data.frame(df = vals[2L,], ll = vals[1L,], nobs = vals[3L,])
         nos <- na.omit(val$nobs)
@@ -83,9 +85,9 @@ BIC.default <- function(object, ...)
         val
     } else {
         lls <- ll(object)
-        nos <- attr(lls, "nobs")
-	if (is.null(nos)) ## helps if has nobs() method, but logLik() gives no "nobs":
-            nos <- tryCatch(Nobs(object), error = function(e) NA_real_)
+        nos <- attr(lls, "nobs") %||%
+            ## helps if has nobs() method, but logLik() gives no "nobs":
+            tryCatch(Nobs(object), error = function(e) NA_real_)
         -2 * as.numeric(lls) + log(nos) * attr(lls, "df")
     }
 }

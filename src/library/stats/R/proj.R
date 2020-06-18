@@ -1,8 +1,8 @@
 #  File src/library/stats/R/proj.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 1998-2020 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 1998-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -142,13 +142,13 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	tnames <- apply(tfactor, 2L, function(x, nms)
 			nms[as.logical(x)], rownames(tfactor))
 	if(!missing(efactor)) {
-	    enames <- NULL
-	    if(!is.na(err <- match(strata, colnames(efactor))))
-		enames <- (rownames(efactor))[as.logical(efactor[, err])]
-	    else if(strata == "Within")
-		enames <- c(rownames(efactor)
-			    [as.logical(efactor %*% rep.int(1, ncol(efactor)))],
-			    "Within")
+	    enames <-
+                if(!is.na(err <- match(strata, colnames(efactor))))
+                    rownames(efactor)[as.logical(efactor[, err])]
+                else if(strata == "Within")
+                    c(rownames(efactor)[as.logical(efactor %*% rep.int(1, ncol(efactor)))],
+                      "Within")
+                ## else NULL
 	    if(!is.null(enames))
 		tnames <- append(tnames, list(Residuals = enames))
 	}
@@ -177,8 +177,8 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	prj <- proj.lm(object[[i]], onedf = onedf)
 	if(unweighted.scale) prj <- prj/sqrt(wt)
 	result.i <- matrix(0, n, ncol(prj), dimnames = list(D1, colnames(prj)))
-	select <- rownames(object[[i]]$qr$qr)
-	if(is.null(select)) select <- rownames(object[[i]]$residuals)
+	select <- rownames(object[[i]]$qr$qr) %||%
+		  rownames(object[[i]]$residuals)
 	result.i[select,  ] <- prj
 	result[[i]] <- as.matrix(qr.qy(err.qr, result.i))
 	attr.assign(result[[i]]) <- attr.xdim(prj)

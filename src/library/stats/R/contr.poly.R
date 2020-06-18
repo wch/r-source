@@ -139,7 +139,7 @@ makepredictcall.poly  <- function(var, call)
 polym <- function (..., degree = 1, coefs = NULL, raw = FALSE)
 {
     dots <- list(...)
-    nd <- length(if(is.null(coefs)) dots else coefs)  # number of variables
+    nd <- length(coefs %||% dots)  # number of variables
     if (nd == 0)
         stop("must supply one or more vectors")
     ## z:= combinations of (0:degree) of all variables

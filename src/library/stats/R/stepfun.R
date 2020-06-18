@@ -1,7 +1,7 @@
 #  File src/library/stats/R/stepfun.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -113,10 +113,7 @@ plot.stepfun <-
 	} else stop("'plot.stepfun' called with wrong type of argument 'x'")
     }
     if(missing(main))
-	main <- {
-	    cl <- attr(x,"call")
-	    deparse(if(!is.null(cl))cl else sys.call())
-	}
+	main <- deparse(attr(x,"call") %||% sys.call())
 
     knF <- knots(x)
     xval <- if (missing(xval)) knF else sort(xval)

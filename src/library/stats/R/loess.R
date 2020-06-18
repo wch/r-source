@@ -1,7 +1,7 @@
 #  File src/library/stats/R/loess.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2015 The R Core Team
+#  Copyright (C) 1998-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,8 +36,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     if (match.arg(method) == "model.frame") return(mf)
     mt <- attr(mf, "terms")
     y <- model.response(mf, "numeric")
-    w <- model.weights(mf)
-    if(is.null(w)) w <- rep_len(1, length(y))
+    w <- model.weights(mf) %||% rep_len(1, length(y))
     nmx <- as.character(attr(mt, "variables"))[-(1L:2)]
     x <- mf[, nmx, drop=FALSE]
     if(any(sapply(x, is.factor))) stop("predictors must all be numeric")
@@ -173,7 +172,8 @@ simpleLoess <- function(y, x, weights, span = 0.75, degree = 2L,
 		delta1 = double(1L),
 		delta2 = double(1L),
 		as.integer(surf.stat == "interpolate/exact"))
-	fitted.residuals <- y - z$fitted.values
+        fitted <- z$fitted.values
+	fitted.residuals <- y - fitted
 	if(j < iterations) { ## update robustness weights,
 	    ## not for *last* iteration, so they remain consistent with 'fitted.values'
 	    if(iterTrace) old.rob <- robust
@@ -217,7 +217,7 @@ simpleLoess <- function(y, x, weights, span = 0.75, degree = 2L,
         pseudovalues <- .Fortran(C_lowesp, # lowesp() in  ../src/loessf.f
                                  N,
                                  as.double(y),
-                                 as.double(z$fitted.values),
+                                 fitted,
                                  as.double(weights), # 'pwgts'
                                  as.double(robust),  # 'rwgts'
                                  integer(N),
@@ -253,7 +253,7 @@ simpleLoess <- function(y, x, weights, span = 0.75, degree = 2L,
     ## return
     structure(
         class = "loess",
-        list(n = N, fitted = z$fitted.values, residuals = fitted.residuals,
+        list(n = N, fitted = fitted, residuals = fitted.residuals,
              enp = enp, s = s, one.delta = one.delta, two.delta = two.delta,
              trace.hat = trace.hat.out, divisor = divisor, robust = robust,
              pars = list(span = span, degree = degree,

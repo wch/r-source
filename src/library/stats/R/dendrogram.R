@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dendrogram.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -224,16 +224,10 @@ as.hclust.dendrogram <- function(x, ...)
 ## ==> start using "x.member" and the following function :
 
 .memberDend <- function(x) {
-    r <- attr(x,"x.member")
-    if(is.null(r)) {
-	r <- attr(x,"members")
-	if(is.null(r)) r <- 1L
-    }
-    r
+    attr(x,"x.member") %||% ( attr(x,"members") %||% 1L )
 }
 
-.midDend <- function(x)
-    if(is.null(mp <- attr(x, "midpoint"))) 0 else mp
+.midDend <- function(x) attr(x, "midpoint") %||% 0
 
 midcache.dendrogram <- function (x, type = "hclust", quiet=FALSE)
 {
@@ -919,14 +913,8 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     ## reorder x
     x <- x[rowInd, colInd]
 
-    labRow <-
-	if(is.null(labRow))
-	    if(is.null(rownames(x))) (1L:nr)[rowInd] else rownames(x)
-	else labRow[rowInd]
-    labCol <-
-	if(is.null(labCol))
-	    if(is.null(colnames(x))) (1L:nc)[colInd] else colnames(x)
-	else labCol[colInd]
+    labRow <- labRow[rowInd] %||% rownames(x) %||% (1L:nr)[rowInd]
+    labCol <- labCol[rowInd] %||% colnames(x) %||% (1L:nc)[colInd]
 
     if(scale == "row") {
 	x <- sweep(x, 1L, rowMeans(x, na.rm = na.rm), check.margin=FALSE)

@@ -103,7 +103,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
     cf <- fixed/vx
-    if(is.null(init)) init <- rep(1, np+1L) else init <- init/vx
+    init <- if(is.null(init)) rep(1, np+1L) else init/vx
 
     y <- x
     res <- optim(init[mask], getLike, method = "L-BFGS-B",
