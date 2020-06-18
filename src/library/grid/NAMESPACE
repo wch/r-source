@@ -50,7 +50,7 @@ export(
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
        "pop.viewport", "push.viewport",
        "popViewport", "pushViewport",
-       "dataViewport", "plotViewport",
+       "editViewport", "dataViewport", "plotViewport",
        "downViewport", "upViewport", "seekViewport",
        "showViewport",
 

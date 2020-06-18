@@ -460,3 +460,12 @@ dataViewport <- function(xData = NULL, yData = NULL,
     }
     viewport(xscale = xscale, yscale = yscale, ...)
 }
+
+editViewport <- function(vp=current.viewport(), ...) {
+    edits <- list(...)
+    vp <- vpFromPushedvp(vp)
+    vp[names(edits)] <- edits
+    valid.viewport(vp$x, vp$y, vp$width, vp$height, vp$just,
+                   vp$gp, vp$clip, vp$mask, vp$xscale, vp$yscale, vp$angle,
+                   vp$layout, vp$layout.pos.row, vp$layout.pos.col, vp$name)
+}
