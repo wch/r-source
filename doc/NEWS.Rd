@@ -121,6 +121,19 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 4.0.2 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The code mitigating stack overflow with PCRE regexps on very
+      long strings is enabled for PCRE2 < 10.30 also when JIT is enabled,
+      since stack overflows have been seen in that case.
+      %% Ubuntu 16.04LTS has PCRE2 10.21
+    }
+  }
+}
+
+
 \section{\Rlogo CHANGES IN R 4.0.2}{
 
   \subsection{UTILITIES}{

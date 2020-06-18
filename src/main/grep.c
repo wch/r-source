@@ -186,6 +186,8 @@ static void R_pcre_exec_error(int rc, R_xlen_t i)
     // too much effort to handle long-vector indices, including on Windows
     char buf[256];
     pcre2_get_error_message(rc, (PCRE2_UCHAR *)buf, sizeof(buf));
+    if(streql(buf, "recursion limit exceeded"))
+	strcat(buf, ": consider increasing the C stack size for the R process");
     warning(_("PCRE error\n\t'%s'\n\tfor element %d"), buf, (int) i + 1);
 }
 #else
@@ -350,7 +352,7 @@ R_pcre2_prepare(const char *pattern, SEXP subject, Rboolean use_UTF8,
 	    setup_jit(*mcontext);
     }
 # ifdef R_PCRE_LIMIT_RECURSION
-    else if (use_recursion_limit(subject))
+    if (use_recursion_limit(subject))
 	pcre2_set_recursion_limit(*mcontext, (uint32_t) R_pcre_max_recursions());
 
     /* we could use set_depth_limit() in newer versions, but the memory limit
