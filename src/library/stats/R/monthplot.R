@@ -1,7 +1,7 @@
 #  File src/library/stats/R/monthplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,18 +30,19 @@ monthplot.ts <-
     function (x, labels = NULL, times = time(x), phase = cycle(x),
               ylab = deparse1(substitute(x)), ...)
 {
-    if (is.null(labels) & !missing(phase))
-        return(monthplot.default(x, times = times, phase = phase,
-                                 ylab = ylab, ...))
     if (is.null(labels)) {
         if (missing(phase)) {
             f <- frequency(x)
-            if (f == 4) labels <- paste0("Q", 1L:4L)
-            else if (f == 12)
-                labels <- c("J", "F", "M", "A", "M", "J", "J",
-                  "A", "S", "O", "N", "D")
-            else labels <- 1L:f
+            labels <-
+                if(f == 4) paste0("Q", 1L:4L)
+                else if(f == 12)
+                    c("J", "F", "M", "A", "M", "J",
+                      "J", "A", "S", "O", "N", "D")
+                else 1L:f
         }
+        else # !missing(phase)
+            return(monthplot.default(x, times = times, phase = phase,
+                                     ylab = ylab, ...))
     }
     monthplot.default(x, labels = labels, times = times, phase = phase,
                       ylab = ylab, ...)

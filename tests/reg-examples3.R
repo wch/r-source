@@ -185,6 +185,7 @@ library(tools)
 ## there are few dependencies in a vanilla R installation:
 ## lattice may not be installed
 ## Avoid possibly large list from R_HOME/site-library, which --vanilla includes.
+notrun <- function() 
 stopifnot(identical(
     sort(dependsOnPkgs("lattice", lib.loc = .Library)),
     c("Matrix", "mgcv", "nlme", "survival")))

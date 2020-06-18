@@ -1,7 +1,7 @@
 #  File src/library/stats/R/HoltWinters.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2002-2018 The R Core Team
+#  Copyright (C) 2002-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -408,10 +408,9 @@ function (x, type = c("additive", "multiplicative"), filter = NULL)
 
 plot.decomposed.ts <- function(x, ...)
 {
-    xx <- x$x # added in 2.14.0
-    if(is.null(xx))
-        xx <- with(x,  if (type == "additive") random + trend + seasonal
-                       else random * trend * seasonal)
+    xx <- x$x %||% # added in 2.14.0
+        with(x, if (type == "additive") random + trend + seasonal
+                else random * trend * seasonal)
     plot(cbind(observed = xx,
                trend    = x$trend,
                seasonal = x$seasonal,

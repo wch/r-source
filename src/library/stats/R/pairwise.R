@@ -1,7 +1,7 @@
 #  File src/library/stats/R/pairwise.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -113,8 +113,7 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
     compare.levels <- function(i, j) {
         prop.test(x[c(i,j)], n[c(i,j)], ...)$p.value
     }
-    level.names <- names(x)
-    if (is.null(level.names)) level.names <- seq_along(x)
+    level.names <- names(x) %||% seq_along(x)
     PVAL <- pairwise.table(compare.levels, level.names, p.adjust.method)
     ans <- list(method = METHOD, data.name = DNAME,
                 p.value = PVAL, p.adjust.method=p.adjust.method)

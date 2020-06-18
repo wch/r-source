@@ -1,8 +1,8 @@
 #  File src/library/stats/R/dummy.coef.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 1998-2020 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 1998-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,8 +29,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     int <- attr(Terms, "intercept")
     facs <- attr(Terms, "factors")[-1, , drop=FALSE]
     Terms <- delete.response(Terms)
-    mf <- object$model
-    if (is.null(mf)) mf <- model.frame(object)
+    mf <- object$model %||% model.frame(object)
     vars <- dimnames(facs)[[1]] # names
     xtlv <- lapply(mf[,vars, drop=FALSE], levels) ## levels
     nxl <- pmax(lengths(xtlv), 1L)  ## (named) number of levels
@@ -128,8 +127,7 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
     int <- attr(Terms, "intercept")
     facs <- attr(Terms, "factors")[-c(1,1+err), -err, drop=FALSE]
     stopifnot(length(names(object)) == (N <- length(object)))
-    mf <- object$model
-    if (is.null(mf)) mf <- model.frame(object)
+    mf <- object$model %||% model.frame(object)
     vars <- dimnames(facs)[[1]] # names
     xtlv <- lapply(mf[,vars, drop=FALSE], levels) ## levels
     nxl <- pmax(lengths(xtlv), 1L)  ## (named) number of levels
@@ -250,8 +248,8 @@ print.dummy_coef <- function(x, ..., title)
 	    nc1 <- ncol(this)
 	    dn <- dimnames(this)
 	    dimnames(this) <-
-		list(if(is.null(dn[[1]])) character(nr1) else dn[[1]],
-		     if(is.null(dn[[2]])) character(nc1) else dn[[2]])
+		list(dn[[1]] %||% character(nr1),
+		     dn[[2]] %||% character(nc1))
 	    if(nc1 > 1L) {
 		lin0 <- line + 2L
 		line <- line + nr1 + 1L

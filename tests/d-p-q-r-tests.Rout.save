@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-06-10 r78667) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-06-11 r78686) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -22,9 +22,14 @@ Type 'q()' to quit R.
 > ####
 > ####	Functions for  ``d/p/q/r''
 > 
-> .ptime <- proc.time()
 > F <- FALSE
 > T <- TRUE
+> showSys.time <- function(expr, ...) {
++     ## prepend 'Time' for R CMD Rdiff
++     st <- system.time(expr, ...)
++     writeLines(paste("Time", capture.output(print(st))))
++     invisible(st)
++ }
 > 
 > options(warn = 2)
 > ##      ======== No warnings, unless explicitly asserted via
@@ -49,6 +54,8 @@ Type 'q()' to quit R.
 + }
 > if(!interactive())
 +     set.seed(123)
+> 
+> .ptime <- proc.time()
 > 
 > ## The prefixes of ALL the PDQ & R functions
 > PDQRinteg <- c("binom", "geom", "hyper", "nbinom", "pois","signrank","wilcox")
@@ -86,11 +93,28 @@ Type 'q()' to quit R.
 > 
 > ##__ 3. Hypergeometric __
 > 
-> m <- 10; n <- 7
-> for(k in 2:m) {
-+     x <- 0:(k+1)
+> .suppHyper <- function(m,n,k) max(0, k-n) : min(k, m)
+> hyp.mn <- rbind(m = c(10, 15, 999),
++                 n = c( 7,  0,   0))
+> for(j in 1:ncol(hyp.mn)) {
++   mn <- hyp.mn[,j]; m <- mn[["m"]] ; n <- mn[["n"]]
++   cat("m=",m,"; n=",n,":\n")
++   showSys.time(for(k in 2:m) {
++     x <- .suppHyper(m,n,k); x <- c(x[1]-1L, x)
 +     stopifnot(All.eq(phyper(x, m, n, k), cumsum(dhyper(x, m, n, k))))
++     stopifnot(All.eq(phyper(x, m, n, k, log.p=TRUE),
++           log(cumsum(dhyper(x, m, n, k)))))
++   })
 + }
+m= 10 ; n= 7 :
+Time    user  system elapsed 
+Time   0.003   0.000   0.002 
+m= 15 ; n= 0 :
+Time    user  system elapsed 
+Time   0.001   0.000   0.001 
+m= 999 ; n= 0 :
+Time    user  system elapsed 
+Time   0.047   0.000   0.047 
 > 
 > ##__ 4. Negative Binomial __
 > 
@@ -1498,5 +1522,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.627 0.029 1.663 0 0 
+Time elapsed:  0.923 0.032 0.961 0 0 
 > 

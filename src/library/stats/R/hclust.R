@@ -1,7 +1,7 @@
 #  File src/library/stats/R/hclust.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -148,14 +148,12 @@ plot.hclust <-
     n <- n1+1L
     height <- as.double(x$height)
     labels <-
-	if(missing(labels) || is.null(labels)) {
-	    as.character(if(is.null(x$labels)) seq_len(n) else x$labels)
-	} else {
-	    if(is.logical(labels) && !labels)# FALSE
-		character(n)
-	    else
-		as.character(labels)
-	}
+	if(missing(labels) || is.null(labels))
+	    as.character(x$labels %||% seq_len(n))
+	else if(is.logical(labels) && !labels)# FALSE
+            character(n)
+        else
+            as.character(labels)
 
     dev.hold(); on.exit(dev.flush())
     plot.new()
@@ -196,8 +194,8 @@ as.hclust.twins <- function(x, ...)
 	      order = x$order,
 	      labels = if(!is.null(lb <- x$order.lab)) {
                   lb[sort.list(x$order)] } else rownames(x$data),# may be NULL
-	      call = if(!is.null(cl <- x$call)) cl else match.call(),
-	      method = if(!is.null(mt <- x$method)) mt else NA,
+	      call   = x$call   %||% match.call(),
+	      method = x$method %||% NA,
 	      dist.method = attr(x$diss, "Metric"))
     class(r) <- "hclust"
     r

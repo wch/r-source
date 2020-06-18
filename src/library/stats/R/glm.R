@@ -1,7 +1,7 @@
 #  File src/library/stats/R/glm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -172,9 +172,8 @@ glm.fit <-
     dev.resids <- family$dev.resids
     aic <- family$aic
     mu.eta <- family$mu.eta
-    unless.null <- function(x, if.null) if(is.null(x)) if.null else x
-    valideta <- unless.null(family$valideta, function(eta) TRUE)
-    validmu  <- unless.null(family$validmu,  function(mu) TRUE)
+    valideta <- family$valideta %||% function(eta) TRUE
+    validmu  <- family$validmu  %||% function(mu)  TRUE
     if(is.null(mustart)) {
         ## calculates mustart and may change y and weights and set n (!)
         eval(family$initialize)
@@ -200,17 +199,19 @@ glm.fit <-
         iter <- 0L
     } else {
         coefold <- NULL
-        eta <-
-            if(!is.null(etastart)) etastart
-            else if(!is.null(start))
+        eta <- etastart %||% {
+            if(!is.null(start))
                 if (length(start) != nvars)
-                    stop(gettextf("length of 'start' should equal %d and correspond to initial coefs for %s", nvars, paste(deparse(xnames), collapse=", ")),
+                    stop(gettextf(
+                      "length of 'start' should equal %d and correspond to initial coefs for %s",
+                                  nvars, paste(deparse(xnames), collapse=", ")),
                          domain = NA)
                 else {
                     coefold <- start
                     offset + as.vector(if (NCOL(x) == 1L) x * start else x %*% start)
                 }
             else family$linkfun(mustart)
+        }
         mu <- linkinv(eta)
         if (!(validmu(mu) && valideta(eta)))
             stop("cannot find valid starting values: please specify some", call. = FALSE)
@@ -862,8 +863,7 @@ model.frame.glm <- function (formula, ...)
         ## need stats:: for non-standard evaluation
 	fcall[[1L]] <- quote(stats::glm)
         fcall[names(nargs)] <- nargs
-        env <- environment(formula$terms)
-	if (is.null(env)) env <- parent.frame()
+	env <- environment(formula$terms) %||% parent.frame()
 	eval(fcall, env)
     }
     else formula$model

@@ -33,8 +33,8 @@ reshape <-
     ix2names <- function(ix)
         if (is.character(ix)) ix else names(data)[ix]
 
-    guess <- function(nms,re = split$regexp,drop = !split$include,
-                      fixed=if(is.null(split$fixed)) FALSE else split$fixed)
+    guess <- function(nms, re = split$regexp, drop = !split$include,
+                      fixed = split$fixed %||% FALSE)
     {
         if (drop)
             nn <- do.call("rbind",strsplit(nms, re, fixed = fixed))

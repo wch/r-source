@@ -2054,18 +2054,23 @@ SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
 	SEXP tmp = STRING_ELT(fn, i);
-#ifndef Win32
-	const char *p = translateCharFP2(tmp);
-	if (p && tmp != NA_STRING)
-	    tmp = markKnown(R_ExpandFileName(p), tmp);
-#else
+	if (tmp != NA_STRING) {
+	    const char *p = translateCharFP2(tmp);
+	    if (p)
+		tmp = markKnown(R_ExpandFileName(p), tmp);
+#ifdef Win32
+	    else
 /* Windows can have files and home directories that aren't representable
-   in the native encoding (e.g. latin1), so we need to translate
-   everything to UTF8.
+   in the native encoding (e.g. latin1). Translate to UTF-8 when translating
+   to the native encoding fails.
+
+   R_ExpandFileNameUTF8 does not yet support home directories not representable
+   in native encoding. This code will have to be updated when that support is
+   added, but for now better not translate to UTF-8 when not needed.
 */
-	if (tmp != NA_STRING)
-	    tmp = mkCharCE(R_ExpandFileNameUTF8(trCharUTF8(tmp)), CE_UTF8);
+		tmp = mkCharCE(R_ExpandFileNameUTF8(trCharUTF8(tmp)), CE_UTF8);
 #endif
+	}
 	SET_STRING_ELT(ans, i, tmp);
     }
     UNPROTECT(1);

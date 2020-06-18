@@ -1,7 +1,7 @@
 #  File src/library/stats/R/nls.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2000-2017 The R Core Team
+#  Copyright (C) 2000-2020 The R Core Team
 #  Copyright (C) 1999-1999 Saikat DebRoy, Douglas M. Bates, Jose C. Pinheiro
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -481,8 +481,7 @@ nls <-
 	} else
 	    names(start)
 
-    env <- environment(formula)
-    if (is.null(env)) env <- parent.frame()
+    env <- environment(formula) %||% parent.frame()
 
     ## Heuristics for determining which names in formula represent actual
     ## variables :
@@ -824,7 +823,7 @@ logLik.nls <- function(object, REML = FALSE, ...)
         stop("cannot calculate REML log-likelihood for \"nls\" objects")
     res <- object$m$resid()
     N <- length(res)
-    if(is.null(w <- object$weights)) w <- rep_len(1, N)
+    w <- object$weights %||% rep_len(1, N)
     ## Note the trick for zero weights
     zw <- w == 0
     val <-  -N * (log(2 * pi) + 1 - log(N) - sum(log(w + zw)) + log(sum(w*res^2)))/2

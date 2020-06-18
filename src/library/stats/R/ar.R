@@ -213,8 +213,7 @@ predict.ar <- function(object, newdata, n.ahead = 1L, se.fit = TRUE, ...)
         stop("number of series in 'object' and 'newdata' do not match")
     n <- NROW(newdata)
     if(nser > 1L) {
-        if(is.null(object$x.intercept)) xint <- rep.int(0, nser)
-        else xint <- object$x.intercept
+        xint <- object$x.intercept %||% rep.int(0, nser)
         x <- rbind(sweep(newdata, 2L, object$x.mean, check.margin = FALSE),
                    matrix(rep.int(0, nser), n.ahead, nser, byrow = TRUE))
         pred <- if(p) {
@@ -232,8 +231,7 @@ predict.ar <- function(object, newdata, n.ahead = 1L, se.fit = TRUE, ...)
             se <- matrix(NA, n.ahead, nser)
         }
     } else {
-        if(is.null(object$x.intercept)) xint <- 0
-        else xint <- object$x.intercept
+        xint <- object$x.intercept %||% 0
         x <- c(newdata - object$x.mean, rep.int(0, n.ahead))
         if(p) {
             for(i in seq_len(n.ahead))
@@ -493,7 +491,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         x <- sweep(x, 2L, x.mean, check.margin=FALSE)
     }
     else x.mean <- rep(0, nser)
-    order.max <- floor(if(is.null(order.max)) 10 * log10(n.obs) else order.max)
+    order.max <- floor(order.max %||% (10 * log10(n.obs)))
     if (order.max < 1L)
         stop("'order.max' must be >= 1")
     xacf <- acf(x, type = "cov", plot = FALSE,

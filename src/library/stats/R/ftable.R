@@ -192,10 +192,7 @@ format.ftable <-
 	}
 	y
     }
-    makeNames <- function(x) {
-	nmx <- names(x)
-	if(is.null(nmx)) rep_len("", length(x)) else nmx
-    }
+    makeNames <- function(x) names(x) %||% rep_len("", length(x))
 
     l.xrv <- length(xrv <- attr(x, "row.vars"))
     l.xcv <- length(xcv <- attr(x, "col.vars"))

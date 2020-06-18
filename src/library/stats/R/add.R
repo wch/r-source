@@ -1,8 +1,8 @@
 #  File src/library/stats/R/add.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 1998-2020 The R Core Team
 #  Copyright (C) 1994-8 W. N. Venables and B. D. Ripley
-#  Copyright (C) 1998-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -263,8 +263,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
         if(NCOL(y) == 2) {
             n <- y[, 1] + y[, 2]
             y <- ifelse(n == 0, 0, y[, 1]/n)
-            if(is.null(wt)) wt <- rep.int(1, length(y))
-            wt <- wt * n
+            wt <- (wt %||% rep.int(1, length(y))) * n
         }
         newn <- length(y)
         if(newn < oldn)
@@ -517,8 +516,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT", "Ch
         if(!is.factor(y)) storage.mode(y) <- "double"
     }
 #    na.coef <- seq_along(object$coefficients)[!is.na(object$coefficients)]
-    wt <- object$prior.weights
-    if(is.null(wt)) wt <- rep.int(1, n)
+    wt <- object$prior.weights %||% rep.int(1, n)
     for(i in seq_len(ns)) {
 	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	jj <- setdiff(seq(ncol(x)), ii)
@@ -685,11 +683,7 @@ step <- function(object, scope, scale = 0,
 		 direction = c("both", "backward", "forward"),
 		 trace = 1, keep = NULL, steps = 1000, k = 2, ...)
 {
-    mydeviance <- function(x, ...)
-    {
-        dev <- deviance(x)
-        if(!is.null(dev)) dev else extractAIC(x, k=0)[2L]
-    }
+    mydeviance <- function(x, ...) deviance(x) %||% extractAIC(x, k=0)[2L]
 
     cut.string <- function(string)
     {

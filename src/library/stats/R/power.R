@@ -1,7 +1,7 @@
 #  File src/library/stats/R/power.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ power.t.test <-
 	     alternative=c("two.sided", "one.sided"), strict=FALSE,
 	     tol = .Machine$double.eps^0.25)
 {
-    if ( sum(sapply(list(n, delta, sd, power, sig.level), is.null)) != 1 )
+    if ( sum(vapply(list(n, delta, sd, power, sig.level), is.null, NA)) != 1 )
 	stop("exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL")
     if(!is.null(sig.level) && !is.numeric(sig.level) ||
        any(0 > sig.level | sig.level > 1))
@@ -86,7 +86,7 @@ power.prop.test <-
 	     alternative=c("two.sided", "one.sided"), strict=FALSE,
 	     tol = .Machine$double.eps^0.25)
 {
-    if ( sum(sapply(list(n, p1, p2, power, sig.level), is.null)) != 1 )
+    if ( sum(vapply(list(n, p1, p2, power, sig.level), is.null, NA)) != 1 )
 	stop("exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL")
     if(!is.null(sig.level) && !is.numeric(sig.level) ||
        any(0 > sig.level | sig.level > 1))

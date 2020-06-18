@@ -129,8 +129,8 @@ arima <- function(x, order = c(0L, 0L, 0L),
             else ("'seasonal' is of the wrong length")
         } else stop("'seasonal' must be a list with component 'order'")
 
-    if (is.null(seasonal$period) || is.na(seasonal$period)
-        ||seasonal$period == 0) seasonal$period <- frequency(x)
+    if (is.null(seasonal$period) || is.na(seasonal$period) || seasonal$period == 0)
+        seasonal$period <- frequency(x)
     arma <- as.integer(c(order[-2L], seasonal$order[-2L], seasonal$period,
                          order[2L], seasonal$order[2L]))
     narma <- sum(arma[1L:4L])

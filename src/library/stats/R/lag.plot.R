@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lag.plot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2012 The R Core Team
+#  Copyright (C) 1999-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,8 +60,7 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1L:lags,
     mlayout <- any(layout > 1)
     if(mlayout) {
         dots <- list(...)
-        cex.main <- dots$cex.main
-        if(is.null(cex.main)) cex.main <- par("cex.main")
+        cex.main <- dots$cex.main %||% par("cex.main")
         if(is.null(oma)) {
             oma <- rep(2, 4)
             if (!is.null(main)) oma[3L] <- oma[3L] + 3*cex.main
@@ -121,8 +120,7 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1L:lags,
             if(diag) abline(c(0,1), lty = 2, col = diag.col)
 
             if (mlayout && !is.null(main)) {
-                font.main <- dots$font.main
-                if(is.null(font.main)) font.main <- par("font.main")
+                font.main <- dots$font.main %||% par("font.main")
                 if ((jj == nC && ii == nR)  || ll == set.lags[lags])
                     mtext(main, 3, 3, outer = TRUE, at = 0.5,
                           cex = cex.main, font = font.main)

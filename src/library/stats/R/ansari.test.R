@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ansari.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -79,21 +79,21 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             cci <- function(alpha) {
               u <- absigma - qansari(alpha/2,  m, n)
               l <- absigma - qansari(1 - alpha/2, m, n)
-              ## Check if the statistic exceeds both quantiles first.
-              uci <- NULL
-              lci <- NULL
               if(length(u[u >= 0]) == 0L || length(l[l > 0]) == 0L) {
                   warning("samples differ in location: cannot compute confidence set, returning NA")
                   return(c(NA, NA))
               }
-              if (is.null(uci)) {
+              ## Check if the statistic exceeds both quantiles first.
+              ## uci <- NULL
+              ## lci <- NULL
+              ## if (is.null(uci)) {
                   u[u < 0] <- NA
                   uci <- min(sigma[which(u == min(u, na.rm = TRUE))])
-              }
-              if (is.null(lci)) {
+              ## }
+              ## if (is.null(lci)) {
                   l[l <= 0] <- NA
                   lci <- max(sigma[which(l == min(l, na.rm = TRUE))])
-              }
+              ## }
               ## The process of the statistics does not need to be
               ## monotone in sigma: check this and interchange quantiles.
               if (uci > lci) {
@@ -119,16 +119,12 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                                      sigma[length(sigma)]*1.01), ab)
                 switch(alternative, two.sided = cci(alpha),
                        greater = c(cci(alpha*2)[1L], Inf),
-                       less = c(0, cci(alpha*2)[2L]))
+                       less    = c(0, cci(alpha*2)[2L]))
             }
             attr(cint, "conf.level") <- conf.level
             u <- absigma - qansari(0.5, m, n)
-            sgr <- sigma[u <= 0]
-            if (length(sgr) == 0L) sgr <- NA
-            else sgr <- max(sgr)
-            sle <- sigma[u > 0]
-            if (length(sle) == 0L) sle <- NA
-            else sle <- min(sle)
+            sgr <- if(length(sgr <- sigma[u <= 0]) == 0L) NA else max(sgr)
+            sle <- if(length(sle <- sigma[u  > 0]) == 0L) NA else min(sle)
             ESTIMATE <- mean(c(sle, sgr))
         }
     }

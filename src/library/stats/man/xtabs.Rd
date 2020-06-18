@@ -39,15 +39,15 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     Only works for two factors (since there
     are no higher-order sparse array classes yet).
   }
-  \item{na.action}{a function which indicates what should happen when
+  \item{na.action}{a \code{\link{function}} which indicates what should happen when
     the data contain \code{\link{NA}}s.  If unspecified, and
     \code{addNA} is true, this is set to \code{\link{na.pass}}.  When it
-    is \code{na.pass} and \code{formula} has a left hand side (with
+    is \code{\link{na.omit}} and \code{formula} has a left hand side (with
     counts), \code{\link{sum}(*, na.rm = TRUE)} is used instead of
     \code{sum(*)} for the counts.}
   \item{addNA}{logical indicating if \code{NA}s should get a separate
     level and be counted, using \code{\link{addNA}(*, ifany=TRUE)} and
-    setting the default for \code{na.action}.}
+    setting the default for \code{na.action} to \code{na.pass}.}
   \item{exclude}{a vector of values to be excluded when forming the
     set of levels of the classifying factors.}
   \item{drop.unused.levels}{a logical indicating whether to drop unused
@@ -79,6 +79,10 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 
   In \R versions before 3.4.0, e.g., when \code{na.action = na.pass},
   sometimes zeroes (\code{0}) were returned instead of \code{NA}s.
+
+  Note that when \code{addNA} is false as by default, and \code{na.action}
+  is not specified (or set to \code{NULL}), in effect \code{na.action =
+    getOption("na.action", default=na.omit)} is used; see also the examples.
 }
 \value{
   By default, when \code{sparse = FALSE},
@@ -118,13 +122,25 @@ xtabs(Freq ~ Gender + Admit, DF)
 summary(xtabs(Freq ~ ., DF))
 
 ## with NA's
-DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
+DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA
+DN # 'Freq' is missing only for (Rejected, Female, B)
 tools::assertError(# 'na.fail' should fail :
-     xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail))
-xtabs(Freq ~ Gender + Admit, DN)
+     xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail), verbose=TRUE)
+op <- options(na.action = "na.omit") # the "factory" default
+(xtabs(Freq ~ Gender + Admit, DN) -> xtD)
+noC <- function(O) `attr<-`(O, "call", NULL)
+ident_noC <- function(x,y) identical(noC(x), noC(y))
+stopifnot(exprs = {
+  ident_noC(xtD, xtabs(Freq ~ Gender + Admit, DN, na.action = na.omit))
+  ident_noC(xtD, xtabs(Freq ~ Gender + Admit, DN, na.action = NULL))
+})
+
 xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
 ## The Female:Rejected combination has NA 'Freq' (and NA prints 'invisibly' as "")
-xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE) # ==> count NAs
+(xtNA <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)) # ==> count NAs
+## show NA's better via  na.print = ".." :
+print(xtNA, na.print= "NA")
+
 
 ## Create a nice display for the warp break data.
 warpbreaks$replicate <- rep_len(1:9, 54)
