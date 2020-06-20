@@ -4354,6 +4354,9 @@ needed (for example to create bibliography files under
 @file{vignettes}), use a file called @file{GNUmakefile} rather than
 @file{Makefile} as GNU make (only) will use the former.
 
+macOS has used GNU make for many years (it previously used BSD make),
+but the version has been frozen at 3.81 (from 2006).
+
 Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 

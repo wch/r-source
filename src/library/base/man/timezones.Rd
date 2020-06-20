@@ -168,7 +168,9 @@ OlsonNames(tzdir = NULL)
   services on some OSes, e.g.\sspace{}Linux using \code{glibc} except in
   secure modes.
   %% But not Linux with musl
-  
+  The system database on macOS is at @file{/var/db/timezone/zoneinfo}:
+  this might be more recent than that shipped in a released version of \R.
+
   Time zones given by name (\emph{via} environment variable \env{TZ}, in
   \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and
   perhaps the system time zone) are loaded from the currently selected
