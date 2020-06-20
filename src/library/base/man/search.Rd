@@ -1,6 +1,6 @@
 % File src/library/base/man/search.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{search}
@@ -33,7 +33,7 @@ searchpaths()
 
   Chambers, J. M. (1998)
   \emph{Programming with Data.  A Guide to the S Language}.
-  Springer.  (\code{searchPaths}.)
+  Springer.  (\code{searchpaths}.)
 }
 \seealso{
   \code{\link{.packages}} to list just the packages on search path.
