@@ -4358,7 +4358,7 @@ Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 
 @item
-If you use @file{src/Makevars} to compile code in a subdirectory, do
+If you use @file{src/Makevars} to compile code in a subdirectory,
 ensure that you have followed all the advice above.  In particular
 @itemize
 @item
@@ -4366,10 +4366,10 @@ Anticipate a parallel @command{make}.  @xref{Using Makevars}.
 
 @item
 Pass macros down to the makefile in the subdirectory, including
-@strong{all} the needed flags (including PIC and visibility flags).  If
-used in the subdirectory's Makefile, this includes @samp{AR} and
-@samp{RANLIB}.  @ref{Compiling in sub-directories}, which has a C
-example.  A C++ example:
+@strong{all} the needed compiler flags (including PIC and visibility
+flags).  If they are used in the subdirectory's Makefile, this includes
+macros @samp{AR} and @samp{RANLIB}.  @xref{Compiling in
+sub-directories}, which has a C example.  A C++ example:
 
 @example
 pkg/libpkg.a:
