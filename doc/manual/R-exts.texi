@@ -2432,7 +2432,7 @@ Note the quotes: the macros can contain spaces, e.g.@: @code{CC = "gcc
 -m64 -std=gnu99"}.  Several authors have forgotten about parallel makes:
 the static library in the subdirectory must be made before the shared
 object (@code{$(SHLIB)}) and so the latter must depend on the former.
-Others forget the need@footnote{A few OSes (AIX, IRIX, Windows) do not
+Others forget the need@footnote{A few OSes (AIX, Windows) do not
 need special flags for such code, but most do---although compilers will
 often generate PIC code when not asked to do so.} for
 position-independent code.
@@ -4356,6 +4356,32 @@ needed (for example to create bibliography files under
 
 Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
+
+@item
+If you use @file{src/Makevars} to compile code in a subdirectory, do
+ensure that you have followed all the advice above.  In particular
+@itemize
+@item
+Anticipate a parallel @command{make}.  @xref{Using Makevars}.
+
+@item
+Pass macros down to the makefile in the subdirectory, including
+@strong{all} the needed flags (including PIC and visibility flags).  If
+used in the subdirectory's Makefile, this includes @samp{AR} and
+@samp{RANLIB}.  @ref{Compiling in sub-directories}, which has a C
+example.  A C++ example:
+
+@example
+pkg/libpkg.a:
+        (cd pkg && $(MAKE) -f make_pkg libpkg.a \
+         CXX="$(CXX)" CXXFLAGS="$(CXXFLAGS) $(CXXPICFLAGS) $(C_VISIBILITY)" \
+         AR="$(AR)" RANLIB="$(RANLIB)")
+@end example
+
+@item
+Ensure that cleanup will be performed by @command{R CMD build}, for
+example in a @code{cleanup} script or a @samp{clean} target.
+@end itemize
 
 @item
 If your package uses a @file{src/Makefile} file to compile code to be
