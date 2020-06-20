@@ -145,7 +145,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Using some of the \pkg{tcltk} widgets no longer crashes R on
+      \item Paths with non-ASCII characters caused problems for 
+      package loading on Windows \PR{17833}.
+
+      \item Using \pkg{tcltk} widgets no longer crashes R on
       Windows.
 
       \item \code{source(*, echo=TRUE)} no longer fails in some cases with
