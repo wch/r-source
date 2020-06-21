@@ -62,14 +62,18 @@ OlsonNames(tzdir = NULL)
   If it is unset or empty the \emph{system} time zone is used (the one
   returned by \code{Sys.timezone}).
 
-  Time zones did not come into use until the second half of the
-  nineteenth century and were not widely adopted until the twentieth,
-  and \emph{daylight saving time} (DST, also known as \emph{summer
-  time}) was first introduced in the early twentieth century, most
-  widely in 1916.  Over the last 100 years places have changed their
-  affiliation between major time zones, have opted out of (or in to) DST
-  in various years or adopted DST rule changes late or not at all.  (The
-  UK experimented with DST throughout 1971, only.)
+  %% arguably, 'railway time' in the UK in 1840 was earliest.
+  Time zones did not come into use until the middle of the nineteenth
+  century and were not widely adopted until the twentieth, and
+  \emph{daylight saving time} (DST, also known as \emph{summer time})
+  was first introduced in the early twentieth century, most widely in
+  1916.  Over the last 100 years places have changed their affiliation
+  between major time zones, have opted out of (or in to) DST in various
+  years or adopted DST rule changes late or not at all.  (The UK
+  experimented with DST throughout 1971, only.)  In a few countries (one
+  is the Irish Republic) it is the summer time which is the
+  \sQuote{standard} time and a different name is used in winter.  And
+  there can be multiple changes during a year, for example for Ramadan.
 
   A quite common system implementation of \code{POSIXct} is as signed
   32-bit integers and so only goes back to the end of 1901: on such
@@ -78,9 +82,8 @@ OlsonNames(tzdir = NULL)
   1902 (so used local \sQuote{mean time} based on longitude) but for a
   few places there had been time-zone changes before then.  64-bit
   representations are becoming common; unfortunately on some 64-bit OSes
-  (notably macOS) the database information is 32-bit and so only
-  available for the range 1901--2038, and incompletely for the end
-  years.
+  the database information is 32-bit and so only available for the range
+  1901--2038, and incompletely for the end years.
 
   As from \R 3.5.0, when a time zone location is first found in a
   session, its value is cached in object \code{.sys.timezone} in the
@@ -103,7 +106,7 @@ OlsonNames(tzdir = NULL)
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.  It may have an attribute \code{"Version"}, something
-  like \samp{"2017c"}.
+  like \samp{"2020a"}.
 }
 
 \section{Time zone names}{
@@ -160,16 +163,18 @@ OlsonNames(tzdir = NULL)
   \url{https://en.wikipedia.org/wiki/Zone.tab}.
 
   Where \R was configured with option \option{--with-internal-tzcode}
-  (the default on macOS and Windows: recommended on Solaris), the database at
+  (the default on Windows: recommended on Solaris), the database at
   \code{file.path(R.home("share"), "zoneinfo")} is used by default: file
-  \file{VERSION} in that directory states the version.  Environment
+  \file{VERSION} in that directory states the version.  That option is
+  also the default on macOS but there the system database at
+  @file{/var/db/timezone/zoneinfo} is used by default.  Environment
   variable \env{TZDIR} can be used to point to a different
-  \file{zoneinfo} database: this is also supported by the native
-  services on some OSes, e.g.\sspace{}Linux using \code{glibc} except in
-  secure modes.
+  \file{zoneinfo} database: value \code{"internal"} indicates that the
+  database from the \R sources should be used.
+
+  Setting \env{TZDIR} is also supported by the native services on some
+  OSes, e.g.\sspace{}Linux using \code{glibc} except in secure modes.
   %% But not Linux with musl
-  The system database on macOS is at @file{/var/db/timezone/zoneinfo}:
-  this might be more recent than that shipped in a released version of \R.
 
   Time zones given by name (\emph{via} environment variable \env{TZ}, in
   \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and

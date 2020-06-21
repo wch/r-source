@@ -17,9 +17,11 @@
       now use different dependency types for direct and recursive
       dependencies.
 
-      \item Size of tarball checking in \command{R CMD check --as-cran <pkg>}
-      may be tweaked via new \env{_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_},
-      as suggested in \PR{17777} by Jan Gorecki.
+      \item The checking of the size of tarball in
+      \command{R CMD check --as-cran <pkg>} may be tweaked via the new
+      environment variable
+      \env{_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_}, as suggested in
+      \PR{17777} by Jan Gorecki.
 
       \item Using \code{c()} to combine a factor with other factors
       now gives a factor, and specifically an ordered factor when
@@ -30,15 +32,15 @@
       perform any clipping of output itself.
 
       The clipping that the graphics engine does perform (for both
-      \code{canClip = TRUE} and \code{canClip = FALSE}) has also
-      been improved to avoid producing unnecessary artifacts in clipped
+      \code{canClip = TRUE} and \code{canClip = FALSE}) has been
+      improved to avoid producing unnecessary artifacts in clipped
       output.
 
       \item \code{apply()} gains a \code{simplify} argument to possibly
       disable simplifying results.
 
-      \item The \code{format()} method for class \code{"ftable"} gets an
-      option \code{justify}; suggested by Thomas Soeiro.
+      \item The \code{format()} method for class \code{"ftable"} gets a
+      new option \code{justify}; suggested by Thomas Soeiro.
 
       \item New \code{...names()} utility, complementing others, proposed
       by Neal Fultz in \PR{17705}.
@@ -49,13 +51,22 @@
       change in \code{read.table()} (related to \code{stringsAsFactor}) in
       \R 4.0.0.
 
-      \item When printing list arrays, classed objects are now shown via
-      their \code{format()} value if this is a short enough character
-      string, or by giving the first elements of their class vector and
-      their length.
+      \item When printing list arrays, classed objects are now shown
+      \emph{via} their \code{format()} value if this is a short enough
+      character string, or by giving the first elements of their class
+      vector and their length.
 
-      \item Unicode character width tables have been updated to Unicode 12.1
-      by Brodie Gaslam (\PR{17781}).
+      \item Unicode character width tables (as used by \code{nchar(,
+      type="w")}) have been updated to Unicode 12.1 by Brodie Gaslam
+      (\PR{17781}).
+
+      \item On platforms using \command{configure} option
+      \option{---with-internal-tzcode}, additional values
+      \code{"internal"} and (on macOS only) \code{"macOS"} are accepted
+      for the environment variable \env{TZDIR}.
+
+      On macOS, \code{"macOS"} is used by default if the system timezone
+      database is a newer version than that in the \R installation.
     }
   }
 
