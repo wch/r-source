@@ -50,23 +50,32 @@
                    ver <- ver[ind + 1L]
                    ver <- sub(".*<string>", "", ver)
                    ver <- sub("</string>$", "", ver)
-                   ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
-                   sprintf("%s %s %s",
-                           ifelse(as.numeric(ver1) < 12, "OS X", "macOS"),
-                           switch(ver1,
-                                  ## 10.6 is earliest that can be installed
-                                  "6" = "Snow Leopard",
-                                  "7" = "Lion",
-                                  "8" = "Mountain Lion",
-                                  "9" = "Mavericks",
-                                  "10" = "Yosemite",
-                                  "11" = "El Capitan",
-                                  "12" = "Sierra",
-                                  "13" = "High Sierra",
-                                  "14" = "Mojave",
-                                  "15" = "Catalina",
-                                  "16" = "Big Sur",
-                                  ""), ver)
+                   ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]]
+                   ver2 <- ver1[2L]
+                   if(ver1[1L] == "10")
+                       sprintf("%s %s %s",
+                               ifelse(as.numeric(ver2) < 12, "OS X", "macOS"),
+                               switch(ver2,
+                                      ## 10.6 is earliest that can be installed
+                                      "6" = "Snow Leopard",
+                                      "7" = "Lion",
+                                      "8" = "Mountain Lion",
+                                      "9" = "Mavericks",
+                                      "10" = "Yosemite",
+                                      "11" = "El Capitan",
+                                      "12" = "Sierra",
+                                      "13" = "High Sierra",
+                                      "14" = "Mojave",
+                                      "15" = "Catalina",
+                                      "16" = "Big Sur", # probably not 10.16
+                                      ""),
+                               ver)
+                   else
+                       sprintf("macOS %s %s",
+                               switch(ver2,
+                                      "0" = "Big Sur",
+                                      ""),
+                               ver)
                },
                "SunOS" = {
                    ver <- system('uname -r', intern = TRUE)

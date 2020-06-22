@@ -1437,7 +1437,8 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X'. Click on that, then download the file
 @file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
-and later (High Sierra, Mojave, Catalina, @dots{}).
+and later@footnote{macOS 11 remains to be seen even on Intel CPUs.}
+(High Sierra, Mojave, Catalina, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -4710,9 +4711,11 @@ SAFE_FFLAGS=-axsse2
 (`macOS' was known as `OS X' from 2012--2016.)
 
 The instructions here are for 64-bit (@cputype{x86_64}) builds on 10.13
-(High Sierra) or later.  @R{} can in principle be built for 10.6 and
-later, although this is little tested and it may be necessary to install
-later versions of software such as @code{libcurl}.
+(High Sierra) or later@footnote{macOS 11 remains to be seen even on
+Intel CPUs: no Fortran compiler is available for `Apple Silicon' at the
+time of writing.}.  @R{} can in principle be built for 10.6 and later,
+although this is little tested and it may be necessary to install later
+versions of software such as @code{libcurl}.
 
 @menu
 * Prerequisites::
@@ -4824,8 +4827,8 @@ A TeX installation. @xref{Other libraries}.
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
 @command{perl} (currently part of macOS but it has been announced that
-it will not be from macOS 10.16).  An old version of @command{texi2any}
-has been included in the binary distribution of @R{} and there is a
+it will not be from macOS 11).  A version of @command{texi2any} has been
+included in the binary distribution of @R{} and there is a
 @code{texinfo} component at @uref{https://mac.R-project.org/libs-4}.
 @end itemize
 For C/C++ compilers supporting OpenMP, see the subsection below.
