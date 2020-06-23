@@ -7,6 +7,18 @@
 
 \section{\Rlogo CHANGES IN R 4.0.2 patched}{
 
+  \subsection{NEW FEATURES}{
+    \itemize{
+       \item On platforms using \command{configure} option
+      \option{---with-internal-tzcode}, additional values
+      \code{"internal"} and (on macOS only) \code{"macOS"} are accepted
+      for the environment variable \env{TZDIR}.
+
+      On macOS, \code{"macOS"} is used by default if the system timezone
+      database is a newer version than that in the \R installation.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item The code mitigating stack overflow with PCRE regexps on very
@@ -27,7 +39,7 @@
     }
   }
 
-   \subsection{BUG FIXES}{
+  \subsection{BUG FIXES}{
     \itemize{
       \item Paths with non-ASCII characters caused problems for 
       package loading on Windows \PR{17833}.
