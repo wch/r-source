@@ -120,7 +120,7 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE, ...)
 
   Installation and checking is performed in parallel if \code{Ncpus} is
   greater than one: this will use \code{\link[parallel]{mclapply}} on
-  Unix and \code{\link[parallel]{parLapply}} on Windows.
+  Unix and \code{\link[parallel:clusterApply]{parLapply}} on Windows.
 
   \code{check_packages_in_dir} returns an object inheriting from class
   \code{"check_packages_in_dir"} which has \code{\link{print}} and

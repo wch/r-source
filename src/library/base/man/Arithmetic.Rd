@@ -160,7 +160,7 @@ x \%/\% y
 
   The binary operators are sometimes called as functions as
   e.g.\sspace{}\code{`&`(x, y)}: see the description of how
-  argument-matching is done in \code{\link[base]{Ops}}.
+  argument-matching is done in \code{\link[base:groupGeneric]{Ops}}.
 
   \code{**} is translated in the parser to \code{^}, but this was
   undocumented for many years.  It appears as an index entry in Becker

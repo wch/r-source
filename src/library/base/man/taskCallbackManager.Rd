@@ -1,16 +1,16 @@
 % File src/library/base/man/taskCallbackManager.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{taskCallbackManager}
 \alias{taskCallbackManager}
 \title{Create an R-level Task Callback Manager}
 \description{
-  This provides an entirely S-language mechanism
+  This provides an entirely \R-language mechanism
   for managing callbacks or actions  that are invoked at
   the conclusion of each top-level task.  Essentially,
-  we register a single R function from this manager
+  we register a single \R function from this manager
   with the underlying, native
   task-callback mechanism and this function handles invoking the other
   R callbacks under the control of the manager.

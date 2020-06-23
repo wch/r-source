@@ -54,7 +54,7 @@ using namespace std;
 
 #define R_VERSION_STRING "@PACKAGE_VERSION@"
 
-// Legacy defines -- C99 functions which R >= 3.5.0 reauires
+// Legacy defines -- C99 functions which R >= 3.5.0 requires
 #ifndef HAVE_EXPM1
 # define HAVE_EXPM1 1
 #endif

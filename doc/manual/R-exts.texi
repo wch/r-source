@@ -1514,7 +1514,7 @@ the Windows@footnote{@samp{BWidget} still is on Windows but
 @emph{are} extensions and do need to be declared (and that
 @samp{Tktable} is less widely available than it used to be, including
 not in the main repositories for major Linux distributions).
-@c Not in Fedora since 17, only in launchpad for Ubuntu.
+@c Not in Fedora since 17
 
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
 fairly easy to do: first find the Tcl search path:
@@ -4442,6 +4442,11 @@ is not portable.
 The @option{-o} flag for @command{set} in shell scripts is optional in
 POSIX and not supported on all the platforms @R{} is used on.
 
+The variable @samp{OSTYPE} is shell-specific and its values are
+rather unpredictable and may include a version such as
+@samp{darwin19.0}: @command{`uname`} is often what is intended (with
+common values @samp{Darwin}, @samp{Linux} and @samp{SunOS}).
+
 On macOS Catalina which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
@@ -4994,7 +4999,7 @@ and suitable options might be
 @end example
 
 @noindent
-See @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
+See @uref{https://www.ghostscript.com/@/doc/@/current/@/VectorDevices.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
@@ -9038,7 +9043,7 @@ files during compilation: see @uref{https://clang-analyzer.llvm.org/}.
 
 GCC 10 introduced a new flag @option{-fanalyzer} which does static
 analysis during compilation, currently for C code.  It is regarded as
-@emph{expericmental} and it may slow down computation considerably when
+@emph{experimental} and it may slow down computation considerably when
 problems are found (and use many GB of resident memory).  There is some
 overlap with problems detected by the Undefined Behaviour sanitizer, but
 some issues are only reported by this tool and as it is a static
@@ -9046,7 +9051,7 @@ analysis, it does not rely on code paths being exercised.
 
 See
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc-10.1.0/@/gcc/@/Static-Analyzer-Options.html}
-(or the doumentation for your version of @command{gcc} if later) and
+(or the documentation for your version of @command{gcc} if later) and
 @uref{https://developers.redhat.com/@/blog/2020/03/26/@/static-analysis-in-gcc-10/}
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access

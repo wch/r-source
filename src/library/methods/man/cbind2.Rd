@@ -76,7 +76,7 @@ rbind2(x, y, ...)
     deparse.level = d)} for \eqn{d \ge 1}{d >= 1}).
 }
 \seealso{\code{\link{cbind}}, \code{\link{rbind}};
-  further, \code{\link[Matrix]{cBind}}, \code{\link[Matrix]{rBind}} in
+  further, \code{\link[Matrix]{cBind}}, \code{\link[Matrix:cBind]{rBind}} in
   the \CRANpkg{Matrix} package.
 }
 \examples{
