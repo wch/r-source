@@ -848,8 +848,15 @@ jump to a specific context via @code{R_JumpToContext}.
 @code{R_ToplevelContext} is the `idle' state (normally the command
 prompt), and @code{R_GlobalContext} is the top of the stack.
 
-Note that whilst calls to closures and builtins set a context, those to special
-internal functions never do.
+Note that whilst calls to closures set a context, internal functions never
+do and primitive builtins only set it when profiling or when they are
+interfaces to foreign functions.
+
+The byte-code compiler generates a map of instructions to source references
+and expressions at compile time, which allows to produce information on
+error conditions.  As an optimization, the byte-code interpreter then does
+not set a context in some cases, such as in simple loops or when inlining
+simple builtins or wrappers for internal functions.
 
 @findex UseMethod
 @cindex method dispatch
