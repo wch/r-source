@@ -668,7 +668,7 @@ add_dummies <- function(dir, Log)
         ## see e.g.
         ## http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
         ## http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#naming_conventions
-        ## and http://en.wikipedia.org/wiki/Filename (which as of
+        ## and https://en.wikipedia.org/wiki/Filename (which as of
         ## 2007-04-22 is wrong about claiming that COM0 and LPT0 are
         ## disallowed):
         ##
@@ -2154,7 +2154,7 @@ add_dummies <- function(dir, Log)
             checkingLog(Log, "Rd line widths")
             Rcmd <- paste(opWarn_string, "\n",
                           if(do_install)
-                          sprintf("tools:::.check_Rd_line_widths(\"%s\", installed = TRUE)\n",
+                          sprintf("suppressPackageStartupMessages(tools:::.check_Rd_line_widths(\"%s\", installed = TRUE))\n",
                                   file.path(if(is_base_pkg) .Library else libdir,
                                             pkgname))
                           else
@@ -2361,7 +2361,7 @@ add_dummies <- function(dir, Log)
         if (dir.exists("man") && do_install && !extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in examples")
             Rcmd <- paste(opW_shE_F_str,
-                          sprintf("tools:::.check_packages_used_in_examples(package = \"%s\")\n", pkgname))
+                          sprintf("suppressPackageStartupMessages(tools:::.check_packages_used_in_examples(package = \"%s\"))\n", pkgname))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
@@ -5052,6 +5052,10 @@ add_dummies <- function(dir, Log)
 
                 ## Filter out boost/armadillo header warnings
                 ex_re <- "(BH/include/boost|RcppArmadillo/include/armadillo_bits)/.*\\[-Wtautological-overlap-compare\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out Eigen header warnings
+                ex_re <- "(RcppEigen/include/Eigen)/.*\\[-Wtautological-compare\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
