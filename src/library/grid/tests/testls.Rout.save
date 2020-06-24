@@ -1,5 +1,5 @@
 
-R version 4.0.1 Patched (2020-06-08 r78667) -- "See Things Now"
+R version 4.0.2 Patched (2020-06-23 r78743) -- "Taking Off Again"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.287   0.034   0.311 
+  0.290   0.041   0.313 
