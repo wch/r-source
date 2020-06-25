@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/smooth2d.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,9 +38,11 @@ blues9 <- c("#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6",
 	if(!is.numeric(bandwidth)) stop("'bandwidth' must be numeric")
 	if(any(bandwidth <= 0)) stop("'bandwidth' must be positive")
     }
+    if(requireNamespace("KernSmooth", quietly=TRUE))
     ## create density map
     rv <- KernSmooth::bkde2D(x, bandwidth=bandwidth, gridsize=nbin,
 			     range.x=range.x)
+    else stop("Must have the ('Recommended') package \"KernSmooth\" installed")
     rv$bandwidth <- bandwidth
     rv
 }

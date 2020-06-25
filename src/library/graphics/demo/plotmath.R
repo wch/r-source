@@ -176,7 +176,8 @@ draw.plotmath.cell(expression(min(g(x), x >= 0)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(inf(S)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(sup(S)), i, nr); i <- i + 1
 
-nr <- 11
+nr <- 12
+nc <- 1
 make.table(nr, nc)
 i <- 0
 draw.title.cell("Grouping", i, nr); i <- i + 1
@@ -190,6 +191,7 @@ draw.plotmath.cell(expression(group("(", list(a, b), "]")), i, nr); i <- i + 1
 draw.plotmath.cell(expression(bgroup("(", atop(x, y), ")")), i, nr); i <- i + 1
 draw.plotmath.cell(expression(group(lceil, x, rceil)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(group(lfloor, x, rfloor)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(group(langle, list(x, y), rangle)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(group("|", x, "|")), i, nr); i <- i + 1
 
 par(oldpar)

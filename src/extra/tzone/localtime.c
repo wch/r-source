@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Modifications copyright (C) 2007-2017  The R Core Team
+ *  Modifications copyright (C) 2007-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -413,7 +413,11 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	if (!doaccess) {
 	    char buf[1000];
 	    p = getenv("TZDIR");
-	    if (p == NULL) {
+#ifdef __APPLE__
+	    if (p && !strcmp(p, "macOS"))
+		p = "/var/db/timezone/zoneinfo";
+#endif
+	    if (p == NULL || !strcmp(p, "internal")) {
 		p = getenv("R_SHARE_DIR");
 		if(p)
 		    snprintf(buf, 1000, "%s/zoneinfo", p);

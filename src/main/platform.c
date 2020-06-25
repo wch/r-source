@@ -2055,21 +2055,24 @@ SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	SEXP tmp = STRING_ELT(fn, i);
 	if (tmp != NA_STRING) {
-	    const char *p = translateCharFP2(tmp);
-	    if (p)
-		tmp = markKnown(R_ExpandFileName(p), tmp);
 #ifdef Win32
-	    else
-/* Windows can have files and home directories that aren't representable
-   in the native encoding (e.g. latin1). Translate to UTF-8 when translating
-   to the native encoding fails.
+	    /* Windows can have files and home directories that aren't
+	       representable in the native encoding (e.g. latin1). Translate
+	       to UTF-8 when the input is in UTF-8 already or is in latin1,
+	       but the native encoding is not latin1.
 
-   R_ExpandFileNameUTF8 does not yet support home directories not representable
-   in native encoding. This code will have to be updated when that support is
-   added, but for now better not translate to UTF-8 when not needed.
-*/
+	       R (including R_ExpandFileNameUTF8) for now only supports R home
+	       directories representable in native encoding.
+	    */
+	    if (IS_UTF8(tmp) || (IS_LATIN1(tmp) && !latin1locale))
 		tmp = mkCharCE(R_ExpandFileNameUTF8(trCharUTF8(tmp)), CE_UTF8);
+	    else
 #endif
+	    {
+		const char *p = translateCharFP2(tmp);
+		if (p)
+		    tmp = markKnown(R_ExpandFileName(p), tmp);
+	    }
 	}
 	SET_STRING_ELT(ans, i, tmp);
     }

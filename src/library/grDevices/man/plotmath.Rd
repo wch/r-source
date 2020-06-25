@@ -160,13 +160,16 @@
     \code{bgroup("(",atop(x,y),")")} \tab use scalable delimiters \cr
     \code{group(lceil, x, rceil)} \tab special delimiters \cr
     \code{group(lfloor, x, rfloor)} \tab special delimiters \cr
+    \code{group(langle, list(x, y), rangle)} \tab special delimiters \cr
   }
 
-  The supported \sQuote{scalable delimiters} are \code{| ( [ \{},
-  \code{lceil}, \code{lfloor} and their right-hand versions.
+  The supported \sQuote{scalable delimiters} are \code{| ( [ \{}
+  and their right-hand versions.
   \code{"."} is equivalent to \code{""}: the corresponding delimiter
   will be omitted. Delimiter \code{||} is supported but has the same
   effect as \code{|}.
+  The special delimiters \code{lceil}, \code{lfloor}, \code{langle}
+  (and their right-hand versions) are not scalable.
 
   The symbol font uses Adobe Symbol encoding so, for example, a lower
   case mu can be obtained either by the special symbol \code{mu} or by
