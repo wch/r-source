@@ -175,7 +175,7 @@ vpFromPushedvp <- function(pvp) {
         pvp$mask <- unresolveMask(pvp$mask)
     }
     ## Only keep non-pushedvp content
-    with(pvp,
+    with(unclass(pvp),
          vpObject(x, y, width, height, justification,
                   gp, clip, mask, xscale, yscale,
                   angle, layout, layout.pos.row, layout.pos.col,
