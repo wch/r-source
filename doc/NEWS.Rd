@@ -57,8 +57,13 @@
       vector and their length.
 
       \item Unicode character width tables (as used by \code{nchar(,
-      type="w")}) have been updated to Unicode 12.1 by Brodie Gaslam
+	type="w")}) have been updated to Unicode 12.1 by Brodie Gaslam
       (\PR{17781}).
+
+      \item \code{capabilities()} gets new entry \code{"Rprof"} which is
+      \code{TRUE} when \R has been configured with the equivalent of
+      \command{--enable-R-profiling}, as it is by default; related to
+      Michael Orlitzky's report \PR{17836}.
     }
   }
 
@@ -160,7 +165,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Paths with non-ASCII characters caused problems for 
+      \item Paths with non-ASCII characters caused problems for
       package loading on Windows \PR{17833}.
 
       \item Using \pkg{tcltk} widgets no longer crashes R on
