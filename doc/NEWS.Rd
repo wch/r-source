@@ -59,6 +59,20 @@
       \item Unicode character width tables (as used by \code{nchar(,
       type="w")}) have been updated to Unicode 12.1 by Brodie Gaslam
       (\PR{17781}).
+
+      \item The \pkg{grid} package now allows \code{gpar(fill)} to be
+      a \code{linearGradient()}, a \code{radialGradient()}, or a
+      \code{pattern()}.  The \code{viewport(clip)} can now also be
+      a grob, which defines a clipping path, and there is a new
+      \code{viewport(mask)} that can also be a grob, which defines
+      a mask.
+
+      These new features are only supported (so far) on Cairo graphics
+      devices and the \code{pdf()} device.
+      
+      The graphics engine version, \code{R_GE_version}, has been bumped
+      to 13 and so packages that provide graphics devices
+      should be reinstalled.
     }
   }
 
