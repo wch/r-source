@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -171,19 +171,20 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   conversion of end-of-line markers and of 8-bit characters.  The lines
   are delimited by LF on all platforms.
 
-  Although the default version has not changed since \R 1.4.0, this
-  does not mean that saved files are necessarily backwards compatible.
-  You will be able to load a saved image into an earlier version of \R
-  unless use is made of later additions (for example, raw vectors,
-  external pointers and some S4 objects).
+  Although the default version was not changed between \R 1.4.0 and \R
+  3.4.4 nor since \R 3.5.0, this does not mean that saved files are
+  necessarily backwards compatible.  You will be able to load a saved
+  image into an earlier version of \R which supports its version unless
+  use is made of later additions (for example for version 2, raw
+  vectors, external pointers and some S4 objects).
 
   One such \sQuote{later addition} was long vectors, introduced in \R
   3.0.0 and loadable only on 64-bit platforms.
 
   Loading files saved with \code{ASCII = NA} requires a C99-compliant C
   function \code{sscanf}: this is a problem on Windows, first worked
-  around in \R 3.1.2: they should be readable in earlier versions of \R
-  on all other platforms.
+  around in \R 3.1.2: version-2 files in that format should be readable
+  in earlier versions of \R on all other platforms.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},

@@ -20,8 +20,8 @@ get_IANA_URI_scheme_db <-
 function()
 {
     ## See
-    ## <http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml>.
-    baseurl <- "http://www.iana.org/assignments/uri-schemes/"
+    ## <https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml>.
+    baseurl <- "https://www.iana.org/assignments/uri-schemes/"
     db <- utils::read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
                           stringsAsFactors = FALSE, encoding = "UTF-8")
     names(db) <- chartr(".", "_", names(db))
@@ -333,8 +333,8 @@ get_IANA_HTTP_status_code_db <-
 function()
 {
     ## See
-    ## <http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>
-    baseurl <- "http://www.iana.org/assignments/http-status-codes/"
+    ## <https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>
+    baseurl <- "https://www.iana.org/assignments/http-status-codes/"
     db <- utils::read.csv(url(paste0(baseurl, "http-status-codes-1.csv")),
                           stringsAsFactors = FALSE)
     ## Drop "Unassigned".
@@ -649,6 +649,9 @@ function(u, verbose = FALSE)
                         followlocation = 1,
                         http_version = 2L,
                         ssl_enable_alpn = 0)
+    if(startsWith(u, "https://github.com") &&
+       nzchar(a <- Sys.getenv("GITHUB_PAT", "")))
+        curl::handle_setheaders(h, "Authorization" = paste("token", a))
     g <- tryCatch(curl::curl_fetch_memory(u, handle = h),
                   error = identity)
     if(inherits(g, "error"))

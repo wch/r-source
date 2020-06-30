@@ -95,6 +95,8 @@ get_system_ABI <- if(.Platform$OS.type == "windows") {
 
 system_ABI <- get_system_ABI()
 
+## entry points for std::terminate are commented out as almost all
+## come from system headers.
 so_symbol_names_table <-
     ## 'linux' == glibc, principally
     c("linux, C, gcc, abort, abort",
@@ -115,6 +117,7 @@ so_symbol_names_table <-
       "linux, C, gcc, vprintf, __vprintf_chk",
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
+      #"linux, C++, gxx, std::terminate, _ZSt9terminatev",
       "linux, C, gcc, rand, rand",
       "linux, C, gcc, random, random",
       "linux, C, gcc, rand_r, rand_r",
@@ -160,6 +163,7 @@ so_symbol_names_table <-
       "osx, C, gcc, vprintf, _vprintf",
       "osx, C++, gxx, std::cout, __ZSt4cout",
       "osx, C++, gxx, std::cerr, __ZSt4cerr",
+      #"osx, C++, gxx, std::terminate, __ZSt9terminatev",
       "osx, C, gcc, rand, _rand",
       "osx, C, gcc, random, _random",
       "osx, C, gcc, rand_r, _rand_r",
@@ -220,6 +224,7 @@ so_symbol_names_table <-
       "solaris, C, solcc, vprintf, vprintf",
       "solaris, C++, solCC, std::cout, __1cDstdEcout_",
       "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
+      #"solaris, C++, solCC, std::terminate, _ZSt9terminatev",
       "solaris, C, solcc, random, random",
       "solaris, C, solcc, rand, rand",
       "solaris, C, solcc, rand_r, rand_r",
@@ -260,6 +265,8 @@ so_symbol_names_table <-
       "solaris, C, gcc, srand48, srand48",
       "solaris, C++, gxx, std::cout, _ZSt4cout",
       "solaris, C++, gxx, std::cerr, _ZSt4cerr",
+      "solaris, C++, gxx, std::cerr, _ZSt4cerr",
+      #"solaris, C++, gxx, std::terminate, _ZSt9terminatev",
       "solaris, Fortran, gfortran, open, _gfortran_st_open",
       "solaris, Fortran, gfortran, close, _gfortran_st_close",
       "solaris, Fortran, gfortran, rewind, _gfortran_st_rewind",
@@ -274,6 +281,7 @@ so_symbol_names_table <-
       ## only in .o, positions hard-coded in check_so_symbols
       "windows, C++, g++, std::cout, _ZSt4cout",
       "windows, C++, g++, std::cerr, _ZSt4cerr",
+      #"windows, C++, gxx, std::terminate, _ZSt9terminatev",
       "windows, Fortran, gfortran, open, _gfortran_st_open",
       "windows, Fortran, gfortran, close, _gfortran_st_close",
       "windows, Fortran, gfortran, rewind, _gfortran_st_rewind",
