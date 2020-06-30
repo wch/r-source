@@ -1463,14 +1463,23 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 attribute_hidden
 char* mbcsTruncateToValid(char *s)
 {
-    if (!mbcslocale)
+    if (!mbcslocale || *s == '\0')
 	return s;
 
     mbstate_t mb_st;
-    size_t slen = strlen(s);
+    size_t slen = strlen(s); /* at least 1 */
     size_t goodlen = 0;
 
     mbs_init(&mb_st);
+
+    if (utf8locale) {
+	/* UTF-8 is self-synchronizing so we can look back from the end
+	   for the first non-continuation byte */
+	goodlen = slen - 1; /* at least 0 */
+	/* for char == signed char we assume 2's complement representation */
+	while (goodlen && ((s[goodlen] & '\xC0') == '\x80')) 
+	    --goodlen;
+    }
     while(goodlen < slen) {
 	size_t res;
 	res = mbrtowc(NULL, s + goodlen, slen - goodlen, &mb_st);
