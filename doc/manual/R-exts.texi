@@ -12869,7 +12869,7 @@ represent untranslatable parts of the input.
 
 @findex getCharCE
 @findex mkCharCE
-There is a public interface to the encoding marked on @code{CHARXSXPs}
+There is a public interface to the encoding marked on @code{CHARSXPs}
 @emph{via}
 
 @example

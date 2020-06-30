@@ -516,7 +516,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         do_exit(1L)
     }
     args <- list(file=file, tangle=FALSE, latex=toPDF, engine=engine, clean=clean)
-    if(nzchar(driver)) args <- c(args, driver)
+    if(nzchar(driver)) args <- c(args, driver = driver)
     args <- c(args, encoding = encoding)
     if(nzchar(options)) {
         opts <- eval(str2expression(paste0("list(", options, ")")))

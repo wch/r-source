@@ -81,6 +81,9 @@ capabilities(what = NULL,
   \item{iconv}{is internationalization conversion via
     \code{\link{iconv}} supported?  Always true in current \R.}
   \item{NLS}{is there Natural Language Support (for message translations)?}
+  \item{Rprof}{is there support for \code{\link{Rprof}()} profiling?  This
+    is true if \R was configured (before compilation) with default settings
+    which include \command{--enable-R-profiling}.}
   \item{profmem}{is there support for memory profiling?  See
     \code{\link{tracemem}}.}
   \item{cairo}{is there support for the \code{\link{svg}},

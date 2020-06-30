@@ -10,8 +10,8 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \samp{www.omegahat.net} is no longer one of the repositories
-      known to \code{setRepositories()}.   (Nowadays it only provides
-      source packages and is often unavailable.)
+      known by default to \code{setRepositories()}.  (Nowadays it only
+      provides source packages and is often unavailable.)
 
       \item \code{package_dependencies()} (in package \pkg{tools}) can
       now use different dependency types for direct and recursive
@@ -57,8 +57,13 @@
       vector and their length.
 
       \item Unicode character width tables (as used by \code{nchar(,
-      type="w")}) have been updated to Unicode 12.1 by Brodie Gaslam
+	type="w")}) have been updated to Unicode 12.1 by Brodie Gaslam
       (\PR{17781}).
+
+      \item \code{capabilities()} gets new entry \code{"Rprof"} which is
+      \code{TRUE} when \R has been configured with the equivalent of
+      \command{--enable-R-profiling}, as it is by default; related to
+      Michael Orlitzky's report \PR{17836}.
 
       \item The \pkg{grid} package now allows \code{gpar(fill)} to be
       a \code{linearGradient()}, a \code{radialGradient()}, or a
@@ -174,7 +179,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Paths with non-ASCII characters caused problems for 
+      \item Paths with non-ASCII characters caused problems for
       package loading on Windows \PR{17833}.
 
       \item Using \pkg{tcltk} widgets no longer crashes R on

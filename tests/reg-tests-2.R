@@ -3147,7 +3147,8 @@ str(treeA)
 ## now shows the *length* of "someA"
 
 
-## summaryRprof() bug PR#15886 :
+## summaryRprof() bug PR#15886  + "Rprof() not enabled" PR#17836
+if(capabilities("Rprof")) {
 Rprof(tf <- tempfile("Rprof.out", tmpdir = getwd()), memory.profiling=TRUE, line.profiling=FALSE)
 out <- lapply(1:10000, rnorm, n= 512)
 Rprof(NULL)
@@ -3156,3 +3157,4 @@ if(interactive())
 op <- options(warn = 2) # no warnings, even !
 for (cs in 1:21) s <- summaryRprof(tf, memory="tseries", chunksize=cs)
 options(op) ## "always" triggered an error (or a warning) in R <= 3.6.3
+}
