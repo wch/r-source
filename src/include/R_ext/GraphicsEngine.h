@@ -70,7 +70,7 @@ extern "C" {
  *             - added pkgName to graphics system state info (as attribute)
  * Version 12: For R 3.4.0
  *             Added canGenIdle, doIdle() and doesIdle() to devices.
- * Version 13: For R 4.0.0
+ * Version 13: For R 4.1.0
  *             Added graphical definitions
  *             - linear gradients
  *             - radial gradients
