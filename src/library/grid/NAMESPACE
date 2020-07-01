@@ -45,10 +45,12 @@ export(
        "valid.just", "resolveHJust", "resolveVJust",
        "resolveRasterSize",
 
+       "linearGradient", "radialGradient", "pattern",
+    
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
        "pop.viewport", "push.viewport",
        "popViewport", "pushViewport",
-       "dataViewport", "plotViewport",
+       "editViewport", "dataViewport", "plotViewport",
        "downViewport", "upViewport", "seekViewport",
        "showViewport",
 
@@ -434,6 +436,20 @@ S3method("grid.revert", "default")
 S3method("grid.revert", "grob")
 S3method("grid.revert", "character")
 S3method("grid.revert", "gPath")
+
+S3method("resolveFill", "default")
+S3method("resolveFill", "GridPattern")
+S3method("resolveFill", "GridGrobPattern")
+S3method("resolveFill", "GridResolvedPattern")
+
+S3method("resolvePattern", "GridLinearGradient")
+S3method("resolvePattern", "GridRadialGradient")
+
+S3method("unresolveFill", "default")
+S3method("unresolveFill", "GridPattern")
+
+S3method("unresolvePattern", "GridPattern")
+S3method("unresolvePattern", "GridResolvedPattern")
 
 S3method("upgradeUnit", "unit")
 S3method("upgradeUnit", "unit.arithmetic")

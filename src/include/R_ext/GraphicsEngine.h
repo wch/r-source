@@ -70,9 +70,17 @@ extern "C" {
  *             - added pkgName to graphics system state info (as attribute)
  * Version 12: For R 3.4.0
  *             Added canGenIdle, doIdle() and doesIdle() to devices.
+ * Version 13: For R 4.0.0
+ *             Added graphical definitions
+ *             - linear gradients
+ *             - radial gradients
+ *             - patterns
+ *             - clipping paths
+ *             - masks
  */
+#define R_GE_definitions 13
 
-#define R_GE_version 12
+#define R_GE_version R_GE_definitions
 
 int R_GE_getVersion(void);
 
@@ -199,6 +207,10 @@ typedef struct {
     double lineheight;   /* Line height (multiply by font size) */
     int fontface;        /* Font face (plain, italic, bold, ...) */
     char fontfamily[201]; /* Font family */
+    /*
+     * Definitions
+     */
+    SEXP patternFill;  /* Reference to a pattern fill */
 } R_GE_gcontext;
 
 typedef R_GE_gcontext* pGEcontext;
@@ -522,6 +534,45 @@ SEXP CreateAtVector(double*, double*, int, Rboolean);
 /* From ../../main/graphics.c, used by ../../library/grDevices/src/axis_scales.c : */
 #define GAxisPars 		Rf_GAxisPars
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
+
+/* Patterns - from ../../main/patterns.c */
+Rboolean R_GE_isPattern(SEXP x);
+#define R_GE_linearGradientPattern 1
+#define R_GE_radialGradientPattern 2
+#define R_GE_tilingPattern         3
+int R_GE_patternType(SEXP pattern);
+
+double R_GE_linearGradientX1(SEXP pattern);
+double R_GE_linearGradientY1(SEXP pattern);
+double R_GE_linearGradientX2(SEXP pattern);
+double R_GE_linearGradientY2(SEXP pattern);
+int R_GE_linearGradientNumStops(SEXP pattern);
+double R_GE_linearGradientStop(SEXP pattern, int i);
+rcolor R_GE_linearGradientColour(SEXP pattern, int i);
+/* Must match order in ../library/grDevices/R/patterns.R */
+#define R_GE_patternExtendPad 1
+#define R_GE_patternExtendRepeat 2
+#define R_GE_patternExtendReflect 3
+#define R_GE_patternExtendNone 4
+int R_GE_linearGradientExtend(SEXP pattern);
+
+double R_GE_radialGradientCX1(SEXP pattern);
+double R_GE_radialGradientCY1(SEXP pattern);
+double R_GE_radialGradientR1(SEXP pattern);
+double R_GE_radialGradientCX2(SEXP pattern);
+double R_GE_radialGradientCY2(SEXP pattern);
+double R_GE_radialGradientR2(SEXP pattern);
+int R_GE_radialGradientNumStops(SEXP pattern);
+double R_GE_radialGradientStop(SEXP pattern, int i);
+rcolor R_GE_radialGradientColour(SEXP pattern, int i);
+int R_GE_radialGradientExtend(SEXP pattern);
+
+SEXP R_GE_tilingPatternFunction(SEXP pattern);
+double R_GE_tilingPatternX(SEXP pattern);
+double R_GE_tilingPatternY(SEXP pattern);
+double R_GE_tilingPatternWidth(SEXP pattern);
+double R_GE_tilingPatternHeight(SEXP pattern);
+int R_GE_tilingPatternExtend(SEXP pattern);
 
 #ifdef __cplusplus
 }

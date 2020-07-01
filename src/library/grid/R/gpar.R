@@ -91,10 +91,14 @@ validGP <- function(gpars) {
           check.length("col")
   }
   if (!is.na(match("fill", names(gpars)))) {
-      if (is.null(gpars$fill))
+      if (is.null(gpars$fill)) {
           gpars$fill <- NULL
-      else
-          check.length("fill")
+      } else {
+          ## fill can be a simple colour (NA, integer, string)
+          ## OR a "GridPattern"
+          if (!is.pattern(gpars$fill))
+              check.length("fill")
+      }
   }
   # lty converted in C code
   # BUT still want to check for NULL and check length > 0
@@ -193,12 +197,12 @@ validGP <- function(gpars) {
 .grid.gpar.names <- c("fill", "col", "gamma", "lty", "lwd", "cex",
                       "fontsize", "lineheight", "font", "fontfamily",
                       "alpha", "lineend", "linejoin", "linemitre",
-                      "lex",
+                      "lex", "gradientFill",
                       # Keep fontface at the end because it is never
                       # used in C code (it gets mapped to font)
                       "fontface")
 
-set.gpar <- function(gp, engineDL=TRUE) {
+set.gpar <- function(gp, grob=NULL) {
   if (!is.gpar(gp))
     stop("argument must be a 'gpar' object")
   temp <- grid.Call(C_getGPar)
@@ -222,12 +226,25 @@ set.gpar <- function(gp, engineDL=TRUE) {
     templex <- temp$lex * gp$lex
   else
     templex <- temp$lex
+  ## resolve fill - could be a simple colour OR a "GridPattern"
+  if (is.pattern(gp$fill)) {
+      if (is.null(grob)) {
+          class(gp$fill) <- c("GridViewportPattern", class(gp$fill))
+      } else {
+          if (inherits(grob, "gTree")) {
+              ## Just pass the fill through to child grobs
+          } else {
+              class(gp$fill) <- c("GridGrobPattern", class(gp$fill))
+              attr(gp$fill, "grob") <- grob
+          }
+      }
+  }
   # All other gpars
   temp[names(gp)] <- gp
   temp$cex <- tempcex
   temp$alpha <- tempalpha
   temp$lex <- templex
-  if (engineDL) {
+  if (is.null(grob)) {
       ## Do this as a .Call.graphics to get it onto the base display list
       grid.Call.graphics(C_setGPar, temp)
   } else {

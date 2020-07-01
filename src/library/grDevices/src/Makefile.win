@@ -12,6 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SOURCES_C = axis_scales.c chull.c devices.c init.c stubs.c colors.c \
+   clippath.c patterns.c mask.c \
    devPicTeX.c devPS.c devWindows.c winbitmap.c
 SOURCES_F =
 DEPENDS = $(SOURCES_C:.c=.d)

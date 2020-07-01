@@ -112,6 +112,14 @@ typedef struct {
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
+    int numPatterns;
+    cairo_pattern_t **patterns;
+    int numClipPaths;
+    cairo_path_t **clippaths;
+    int appending;
+    int numMasks;
+    cairo_pattern_t **masks;
+    int currentMask;
 
     double fontscale;
 } X11Desc;

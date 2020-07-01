@@ -19,7 +19,7 @@
 
 # Define a convenience function that is easy to call from C code
 grid.top.level.vp <- function() {
-    vp <- viewport(clip=TRUE, name="ROOT")
+    vp <- viewport(clip=TRUE, mask=FALSE, name="ROOT")
     # Must mimic order of events in push.vp.viewport()
     # In particular, add 'gpar' and 'parentgpar' IN THE RIGHT ORDER
     # before calling pushedvp()

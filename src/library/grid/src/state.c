@@ -46,6 +46,8 @@ int gridRegisterIndex;
  *  Replaced by per-device setting as from R 2.7.0.]
  * GSS_SCALE 15 = a scale or "zoom" factor for all output 
  *   (to support "fit to window" resizing on windows device)
+ * GSS_RESOLVINGCLIP 16 = are we currently resolving a clipping path
+ *   (used to turn off/disallow things like clipping while resolving)
  * 
  * NOTE: if you add to this list you MUST change the size of the vector
  * allocated in createGridSystemState() below.
@@ -53,7 +55,7 @@ int gridRegisterIndex;
 
 SEXP createGridSystemState()
 {
-    return allocVector(VECSXP, 16);
+    return allocVector(VECSXP, 17);
 }
 
 void initDL(pGEDevDesc dd)
@@ -94,6 +96,13 @@ void initOtherState(pGEDevDesc dd)
     recording = VECTOR_ELT(state, GSS_ENGINERECORDING);
     LOGICAL(recording)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
+    /* Clear all device patterns */
+    dd->dev->releasePattern(R_NilValue, dd->dev);
+    /* Clear all clip paths */
+    setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    dd->dev->releaseClipPath(R_NilValue, dd->dev);
+    /* Clear all masks */
+    dd->dev->releaseMask(R_NilValue, dd->dev);
 }
 
 void fillGridSystemState(SEXP state, pGEDevDesc dd) 
@@ -134,6 +143,7 @@ void fillGridSystemState(SEXP state, pGEDevDesc dd)
     SET_VECTOR_ELT(state, GSS_ASK, ScalarLogical(dd->ask));
 #endif
     SET_VECTOR_ELT(state, GSS_SCALE, ScalarReal(1.0));
+    SET_VECTOR_ELT(state, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
     UNPROTECT(1);
 }
 

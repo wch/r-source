@@ -8,6 +8,16 @@ Changes from grid_4.0.* to grid_4.1.0:
 2.  Bug fix for grid.pack(side="[left|top]").
     Thanks to Deepayan Sarkar for the report.
 
+3.  New editViewport() function.
+
+4.  gpar(fill) can now be a linearGradient() or radialGradient() or 
+    pattern().
+
+5.  viewport(clip) can now be a grob (that defines a clipping path).
+
+6.  New viewport(mask) argument that can be "none", "inherit", or
+    a grob (that defines a mask).
+
 
 Changes from grid_3.6.* to grid_4.0.0:
 -------------------------------------

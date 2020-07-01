@@ -295,6 +295,12 @@ static void GA_Text(double x, double y, const char *str,
 static Rboolean GA_Open(pDevDesc, gadesc*, const char*, double, double,
 			Rboolean, int, int, double, int, int, int);
 static Rboolean GA_NewFrameConfirm(pDevDesc);
+static SEXP     GA_setPattern(SEXP pattern, pDevDesc dd);
+static void     GA_releasePattern(SEXP ref, pDevDesc dd);
+static SEXP     GA_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
+static void     GA_releaseClipPath(SEXP ref, pDevDesc dd);
+static SEXP     GA_setMask(SEXP path, SEXP ref, pDevDesc dd);
+static void     GA_releaseMask(SEXP ref, pDevDesc dd);
 
 
 	/********************************************************/
@@ -3192,6 +3198,24 @@ static void GA_Mode(int mode, pDevDesc dd)
 {
 }
 
+static SEXP GA_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void GA_releasePattern(SEXP ref, pDevDesc dd) {} 
+
+static SEXP GA_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void GA_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP GA_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void GA_releaseMask(SEXP ref, pDevDesc dd) {}
+
 
 	/********************************************************/
 	/* the device-driver entry point is given a device	*/
@@ -3314,6 +3338,13 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     dd->holdflush = GA_holdflush;
     xd->holdlevel = 0;
 
+    dd->setPattern      = GA_setPattern;
+    dd->releasePattern  = GA_releasePattern;
+    dd->setClipPath     = GA_setClipPath;
+    dd->releaseClipPath = GA_releaseClipPath;
+    dd->setMask         = GA_setMask;
+    dd->releaseMask     = GA_releaseMask;
+
     dd->haveRaster = 2;  /* full support */
     dd->haveCapture = dd->haveLocator = (xd->kind == SCREEN) ? 2 : 1;
     dd->haveTransparency = 2;
@@ -3410,6 +3441,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 	}
     }
     dd->displayListOn = (xd->kind == SCREEN);
+    dd->deviceVersion = R_GE_definitions;
     if (RConsole && restoreConsole) show(RConsole);
     return TRUE;
 }

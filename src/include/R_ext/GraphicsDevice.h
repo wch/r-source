@@ -360,8 +360,9 @@ struct _DevDesc {
      * A new page might mean just clearing the
      * device (e.g., X11) or moving to a new page
      * (e.g., postscript)
+     * The background of the new page should be filled with gc->fill
+     * (if that is opaque).
      * An example is ...
-     *
      *
      * static void X11_NewPage(const pGEcontext gc,
      *                         pDevDesc dd);
@@ -675,6 +676,49 @@ struct _DevDesc {
     int haveRaster; /* 1 = no, 2 = yes, 3 = except for missing values */
     int haveCapture, haveLocator;  /* 1 = no, 2 = yes */
 
+#if R_USE_PROTOTYPES
+    SEXP (*setPattern)(SEXP pattern, pDevDesc dd);
+#else
+    SEXP (*setPattern)();
+#endif
+
+#if R_USE_PROTOTYPES
+    void (*releasePattern)(SEXP ref, pDevDesc dd);
+#else
+    void (*releasePattern)();
+#endif
+
+#if R_USE_PROTOTYPES
+    SEXP (*setClipPath)(SEXP path, SEXP ref, pDevDesc dd);
+#else
+    SEXP (*setClipPath)();
+#endif
+
+#if R_USE_PROTOTYPES
+    void (*releaseClipPath)(SEXP ref, pDevDesc dd);
+#else
+    void (*releaseClipPath)();
+#endif
+
+#if R_USE_PROTOTYPES
+    SEXP (*setMask)(SEXP path, SEXP ref, pDevDesc dd);
+#else
+    SEXP (*setMask)();
+#endif
+
+#if R_USE_PROTOTYPES
+    void (*releaseMask)(SEXP ref, pDevDesc dd);
+#else
+    void (*releaseMask)();
+#endif
+
+    /* This should match R_GE_version,
+     * BUT it does not have to.
+     * It give the graphics engine a chance to work with 
+     * graphics device packages BEFORE they update to 
+     * changes in R_GE_version.
+     */
+    int deviceVersion;
 
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded

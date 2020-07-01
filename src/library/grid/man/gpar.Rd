@@ -71,6 +71,9 @@ get.gpar(names = NULL)
   individual colours by multiplying (with both alpha settings
   normalised to the range 0 to 1).
 
+  The \code{fill} setting can also be a linear gradient or a radial
+  gradient or a pattern (see \link[=pattern]{patterns}).
+  
   The size of text is \code{fontsize}*\code{cex}.  The size of a line
   is \code{fontsize}*\code{cex}*\code{lineheight}.
 

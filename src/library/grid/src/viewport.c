@@ -38,8 +38,23 @@ SEXP viewportHeight(SEXP vp) {
     return VECTOR_ELT(vp, VP_HEIGHT);
 }
 
+SEXP viewportClipSXP(SEXP vp) {
+    return VECTOR_ELT(vp, VP_CLIP);
+}
+
 Rboolean viewportClip(SEXP vp) {
     return LOGICAL(VECTOR_ELT(vp, VP_CLIP))[0];
+}
+
+SEXP viewportMaskSXP(SEXP vp) {
+    return(VECTOR_ELT(vp, VP_MASK));
+}
+
+Rboolean viewportMask(SEXP vp) {
+    SEXP mask = viewportMaskSXP(vp);
+    if (!isLogical(mask))
+        error(_("Mask is not logical value ('none' or 'inherit')"));
+    return LOGICAL(VECTOR_ELT(vp, VP_MASK))[0];
 }
 
 double viewportXScaleMin(SEXP vp) {
