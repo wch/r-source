@@ -5684,8 +5684,8 @@ static void initDefn(int i, int type, PDFDesc *pd)
 
 static void catDefn(char* buf, int i, PDFDesc *pd) 
 {
-    int len = strlen(pd->definitions[i].str);
-    int buflen = strlen(buf); 
+    size_t len = strlen(pd->definitions[i].str);
+    size_t buflen = strlen(buf); 
     /* Grow definition string if necessary) */
     if (len + buflen + 1 >= pd->definitions[i].nchar) {
 	void *tmp;
@@ -5705,7 +5705,7 @@ static void copyDefn(int fromDefn, int toDefn, PDFDesc *pd)
 
 static void trimDefn(int i, PDFDesc *pd) 
 {
-    int len = strlen(pd->definitions[i].str);
+    size_t len = strlen(pd->definitions[i].str);
     pd->definitions[i].str = realloc(pd->definitions[i].str, 
                                      (len + 1)*sizeof(char));
     pd->definitions[i].str[len] = '\0';
@@ -6552,7 +6552,7 @@ static void PDFwriteClipPath(int i, PDFDesc *pd)
 {
     char* buf1;
     char buf2[10];
-    int len = strlen(pd->definitions[i].str);
+    size_t len = strlen(pd->definitions[i].str);
     buf1 = malloc((len + 1)*sizeof(char));
 
     PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
