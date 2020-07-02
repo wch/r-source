@@ -28,11 +28,11 @@ If a check fails there will almost always be a .Rout.fail file with
 the problematic output, so looking at the tail of that file should
 help pinpoint the problem.
 
-The \dontest sections of the examples can be run by
+The \donttest sections of the examples can be run by
 
      make check TEST_DONTTEST=TRUE
 
-(but expect some differences from the reference ouput).  This requires
+(but expect some differences from the reference output).  This requires
 functional Tcl/Tk, e.g. for X11-based versions DISPLAY must be set to
 a usable X server.
 
