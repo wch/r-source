@@ -74,7 +74,7 @@
 
       These new features are only supported (so far) on Cairo graphics
       devices and the \code{pdf()} device.
-      
+
       The graphics engine version, \code{R_GE_version}, has been bumped
       to 13 and so packages that provide graphics devices
       should be reinstalled.
@@ -163,6 +163,9 @@
       long strings is enabled for PCRE2 < 10.30 also when JIT is enabled,
       since stack overflows have been seen in that case.
       %% Ubuntu 16.04LTS has PCRE2 10.21
+
+      \item Fix to correctly show the group labels in \code{dotchart()}
+      (which where lost in the \code{ylab} improvement for \R 4.0.0).
     }
   }
 }

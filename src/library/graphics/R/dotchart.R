@@ -90,8 +90,8 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, offset = 1/8,
 	color  <- rep_len(color,  length(groups))[o]
 	lcolor <- rep_len(lcolor, length(groups))[o]
 	pch    <- rep_len(pch,    length(groups))[o]
-	offset <- cumsum(c(0, diff(as.numeric(groups)) != 0))
-	y <- seq_len(n) + 2 * offset
+	of.1 <- cumsum(c(0, diff(as.numeric(groups)) != 0))
+	y <- seq_len(n) + 2 * of.1
 	ylim <- range(0, y + 2)
     }
 

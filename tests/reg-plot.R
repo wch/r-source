@@ -236,7 +236,10 @@ plotNchk(y74[1:2]) #    (ditto)
 
 
 ## dotchart(*, pch=., groups=*) -- PR#16953
-x <- setNames(0:5, c('a','aa', 'aaa', 'b', 'bb', 'bbb'))
-y <- nchar(names(x)) # (minimal plot:)
-dotchart(x, color=y, pch=y, groups=y, xaxt="n", frame.plot=FALSE)
-## now pch and colors match groups
+## dotchart(*, ylab=.) for groups;
+g <- rep(1:3, each=2)
+dotchart(VADeaths[1:2, 1:3], color=g, pch=g,
+         ylab = "Grouping:  {Urbanity . Gender} x Age",
+         xaxt="n", frame.plot=FALSE)
+## now pch and colors match groups;
+## ylab placement; group (row) labels show again
