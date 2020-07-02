@@ -4983,7 +4983,6 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Waligned-new",
                              ## new in gcc 8
                              ": warning: .* \\[-Wcatch-value=\\]",
-                             ": warning: .* \\[-Wlto-type-mismatch\\]",
                              ## removed 2020-05, nowadays clang only
                              ## ": warning: .* \\[-Wunused-value\\]",
                              ## warning in g++, fatal in clang++.
@@ -5003,6 +5002,8 @@ add_dummies <- function(dir, Log)
                              ": warning: designated initializers are a C99 feature",
                              ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void",
+                             ": warning: .*\\[-Wlto",
+                             ": warning: .*\\[-Wodr\\]",
                              ## gcc 10 some -fanalyzer warnings
                              ": warning: .*\\[-Wanalyzer-null-dereference\\]",
                              ": warning: .*\\[-Wanalyzer-double-free\\]",
