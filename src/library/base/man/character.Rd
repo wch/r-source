@@ -1,6 +1,6 @@
 % File src/library/base/man/character.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{character}
@@ -73,6 +73,9 @@ is.character(x)
 
   \code{\link{deparse}}, which is normally preferable to
   \code{as.character} for \link{language objects}.
+
+  \code{\link{Quotes}} on how to specify \code{character} / string
+  constants, including \emph{raw} ones.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
