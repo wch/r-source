@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/TkWidgets.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TkWidgets}
@@ -122,9 +122,11 @@ tkdestroy(tt)
 if(as.character(tcl("info", "tclversion")) >= "8.5") {
   # make use of themed widgets
   # list themes
-  as.character(tcl("ttk::style", "theme", "names"))
-  # select a theme -- here pre-XP windows
-  tcl("ttk::style", "theme", "use", "winnative")
+  themes <- as.character(tcl("ttk::style", "theme", "names"))
+  themes
+  # select a theme -- for pre-XP windows
+  #   tcl("ttk::style", "theme", "use", "winnative")
+  tcl("ttk::style", "theme", "use", themes[1])
 } else {
   # use Tk 8.0 widgets
 }

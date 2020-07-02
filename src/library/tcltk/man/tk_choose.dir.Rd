@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/choose.dir.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2007-9 R Core Team
+% Copyright 2007-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tk_choose.dir}
@@ -23,7 +23,7 @@ tk_choose.dir(default = "", caption = "Select directory")
 \seealso{
   \code{\link{tk_choose.files}}
 }
-\examples{\dontrun{
-tk_choose.dir(getwd(), "Choose a suitable folder")
-}}
+\examples{
+if (interactive()) tk_choose.dir(getwd(), "Choose a suitable folder")
+}
 \keyword{file}

@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/TclInterface.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TclInterface}
@@ -273,11 +273,8 @@ tclVersion()
 \examples{
 tclVersion()
 
-\dontrun{
-## These cannot be run by example() but should be OK when pasted
-## into an interactive R session with the tcltk package loaded
 .Tcl("format \"\%s\\n\" \"Hello, World!\"")
-f <- function()cat("HI!\n")
+f <- function() cat("HI!\n")
 .Tcl.callback(f)
 .Tcl.args(text = "Push!", command = f) # NB: Different address
 
@@ -287,10 +284,14 @@ tclvalue(xyzzy) <- "foo"
 as.character(xyzzy)
 tcl("set", as.character(xyzzy))
 
+\dontrun{
+## These cannot be run by example() but should be OK when pasted
+## into an interactive R session with the tcltk package loaded
 top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir = top$env, all = TRUE)
-ls(envir = .TkRoot$env, all = TRUE) # .Tcl.args put a callback ref in here
 }
+
+ls(envir = .TkRoot$env, all = TRUE) # .Tcl.args put a callback ref in here
 }
 \keyword{ misc }
 
