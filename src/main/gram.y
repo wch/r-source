@@ -350,6 +350,8 @@ static SEXP	xxrepeat(SEXP, SEXP);
 static SEXP	xxnxtbrk(SEXP);
 static SEXP	xxfuncall(SEXP, SEXP);
 static SEXP	xxdefun(SEXP, SEXP, SEXP, YYLTYPE *);
+static SEXP	xxpipe(SEXP, SEXP);
+static SEXP	xxshortfun(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
@@ -366,7 +368,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		END_OF_INPUT ERROR
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
 %token		INCOMPLETE_STRING
-%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
+%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB SHORT_FUNCTION
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR AND2 OR2
 %token		NS_GET NS_GET_INT
@@ -378,16 +380,19 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		SYMBOL_PACKAGE
 /* no longer used: %token COLON_ASSIGN */
 %token		SLOT
+%token		PIPE
 
 /* This is the precedence table, low to high */
 %left		'?'
 %left		LOW WHILE FOR REPEAT
+%right		SHORT_FUNCTION
 %right		IF
 %left		ELSE
 %right		LEFT_ASSIGN
 %right		EQ_ASSIGN
 %left		RIGHT_ASSIGN
 %left		'~' TILDE
+%left		PIPE
 %left		OR OR2
 %left		AND AND2
 %left		UNOT NOT
@@ -452,6 +457,13 @@ expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	expr OR expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr AND2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
+	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
+	|	SYMBOL SHORT_FUNCTION expr	{ $$ = xxshortfun($1,$3,&@$);  setId(@$); }
+/* this doesn't work: */
+//	|	'(' SYMBOL ')' SHORT_FUNCTION expr %prec LOW	{ $$ = xxshortfun($2,$5,&@$);  setId(@$); }
+/* this seems to, if xxshortfun cleans the LHS expr */
+	|	expr SHORT_FUNCTION expr	{ $$ = xxshortfun($1,$3,&@$);  setId(@$); }
+	|	'(' formlist ')' SHORT_FUNCTION expr	{ $$ = xxshortfun($2,$5,&@$);  setId(@$); }
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1);	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
@@ -1161,6 +1173,69 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
     return ans;
 }
 
+int replace_placeholder_list (SEXP lang, SEXP lhs);
+
+static SEXP xxpipe(SEXP lhs, SEXP rhs)
+{
+    SEXP ans;
+    if (GenerateCode) {
+        if (TYPEOF(rhs) != LANGSXP)
+            error(_("The pipe operator requires a function call as RHS"));
+
+        SEXP fun = CAR(rhs);
+        SEXP args = CDR(rhs);
+
+        int is_replaced = replace_placeholder_list(args, lhs);
+        if (is_replaced)
+            PRESERVE_SV(ans = lcons(fun, args));
+        else
+            PRESERVE_SV(ans = lcons(fun, lcons(lhs, args)));
+    }
+    else {
+	PRESERVE_SV(ans = R_NilValue);
+    }
+    RELEASE_SV(lhs);
+    RELEASE_SV(rhs);
+    return ans;
+}
+
+static SEXP xxshortfun(SEXP lhs, SEXP rhs, YYLTYPE *lloc)
+{
+    SEXP R_FunctionSymbol = install("function");
+    SEXP ans;
+    if (GenerateCode) {
+	/* hack for dealing with 'expr' on LHS */
+	if (TYPEOF(lhs) == LANGSXP &&
+	    length(lhs) == 2 &&
+	    CAR(lhs) == install("(") &&
+	    TYPEOF(CADR(lhs)) == SYMSXP &&
+	    TAG(CADR(lhs)) == R_NilValue)
+	    lhs = CADR(lhs);
+
+	SEXP formals;
+	if (TYPEOF(lhs) == SYMSXP) {
+	    PRESERVE_SV(formals = CONS(R_MissingArg, R_NilValue));
+	    SET_TAG(formals, lhs);
+	}
+	else
+	    formals = CDR(lhs);
+	SEXP srcref;
+    	if (FALSE && /* disable srcrefs for now */
+	    ParseState.keepSrcRefs) {
+	    srcref = makeSrcref(lloc, PS_SRCFILE);
+    	    ParseState.didAttach = TRUE;
+    	} else
+    	    srcref = R_NilValue;
+	PRESERVE_SV(ans = lang4(R_FunctionSymbol, formals, rhs, srcref));
+    }
+    else {
+	PRESERVE_SV(ans = R_NilValue);
+    }
+    RELEASE_SV(lhs);
+    RELEASE_SV(rhs);
+    return ans;
+}
+    
 static SEXP xxparen(SEXP n1, SEXP n2)
 {
     SEXP ans;
@@ -2123,6 +2198,7 @@ static void yyerror(const char *s)
 	"OR2",		"'||'",
 	"NS_GET",	"'::'",
 	"NS_GET_INT",	"':::'",
+	"PIPE",         "'|>'",
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -3168,7 +3244,7 @@ static int token(void)
 	return StringValue(c, TRUE);
  symbol:
 
-    if (c == '.') return SymbolValue(c);
+    if (c == '.' || c == '_') return SymbolValue(c);
     if(mbcslocale) {
 	mbcs_get_next(c, &wc);
 	if (iswalpha(wc)) return SymbolValue(c);
@@ -3229,6 +3305,10 @@ static int token(void)
 	    yylval = install_and_save("==");
 	    return EQ;
 	}
+	else if (nextchar('>')) {
+	    yylval = install_and_save("=>");
+	    return SHORT_FUNCTION;
+	}		 
 	yylval = install_and_save("=");
 	return EQ_ASSIGN;
     case ':':
@@ -3259,6 +3339,10 @@ static int token(void)
 	if (nextchar('|')) {
 	    yylval = install_and_save("||");
 	    return OR2;
+	}
+	else if (nextchar('>')) {
+	    yylval = install_and_save("|>");
+	    return PIPE;
 	}
 	yylval = install_and_save("|");
 	return OR;
@@ -3299,6 +3383,9 @@ static int token(void)
 	} else
 	    yylval = install_and_save("*");
 	return c;
+    case '_':
+        yylval = install_and_save("_");
+        return c;
     case '+':
     case '/':
     case '^':
@@ -3309,6 +3396,9 @@ static int token(void)
 	yytext[1] = '\0';
 	yylval = install(yytext);
 	return c;
+    case '\\':
+	yylval = install_and_save("function");
+	return FUNCTION;
     default:
         yytext[0] = (char) c;
         yytext[1] = '\0';
@@ -3486,6 +3576,7 @@ static int yylex(void)
     case AND:
     case OR2:
     case AND2:
+    case PIPE:
     case SPECIAL:
     case FUNCTION:
     case WHILE:
@@ -3502,6 +3593,7 @@ static int yylex(void)
     case LEFT_ASSIGN:
     case RIGHT_ASSIGN:
     case EQ_ASSIGN:
+    case SHORT_FUNCTION:
 	EatLines = 1;
 	break;
 
@@ -3961,4 +4053,39 @@ static void growID( int target ){
     
     int new_size = (1 + new_count)*2;
     PS_SET_IDS(lengthgets2(PS_IDS, new_size));
+}
+
+static int is_pipe(SEXP lang) {
+    return TYPEOF(lang) == LANGSXP &&
+        strcmp(CHAR(PRINTNAME(CAR(lang))), "|>") == 0;
+}
+
+int replace_placeholder_list (SEXP lang, SEXP lhs)
+{
+    int replaced = 0;
+    SEXP cur = CAR(lang), next = CDR(lang), prev = lang;
+
+    for (; cur != R_NilValue; cur = CAR(next), next = CDR(next)) {
+        switch (TYPEOF(cur)) {
+        case LANGSXP:
+            if (is_pipe(cur)) break;
+            replace_placeholder_list(CDR(cur), lhs);
+            break;
+        case SYMSXP:
+            if (strcmp(CHAR(PRINTNAME(cur)), "_") == 0) {
+                SETCAR(prev, lhs);
+                replaced = 1;
+            }
+            break;
+        default:
+            break;
+        }
+
+        // Only necessary with primitive impl. |>, not with parser impl. >>
+        if (is_pipe(cur)) break;
+
+        prev = CDR(prev);
+    }
+
+    return replaced;
 }
