@@ -1181,6 +1181,15 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
+	/* allow for symbols or lambda expressions */
+	if (TYPEOF(rhs) == SYMSXP ||
+	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	    return lang2(rhs, lhs);
+		    
+	if (TYPEOF(rhs) != LANGSXP)
+	    error(_("The pipe operator requires a function call, a symbol, "
+		    "or an anonymous function expression as RHS"));
+
 	static int inited = FALSE;
 	static int require_placeholder = FALSE;
 	if (! inited) {
@@ -1190,9 +1199,6 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 	}
 	if (require_placeholder)
 	    return wrap_pipe(lhs, rhs);
-
-        if (TYPEOF(rhs) != LANGSXP)
-            error(_("The pipe operator requires a function call as RHS"));
 
         SEXP fun = CAR(rhs);
         SEXP args = CDR(rhs);
@@ -4117,14 +4123,6 @@ static SEXP wrap_pipe(SEXP lhs, SEXP rhs)
 {
     if (R_PlaceholderSymbol == NULL)
 	R_PlaceholderSymbol = install("_");
-
-    /* allow for symbols or lambda expressions */
-    if (TYPEOF(rhs) == SYMSXP ||
-	TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
-	return lang2(rhs, lhs);
-		    
-    if (TYPEOF(rhs) != LANGSXP)
-	error(_("The pipe operator requires a function call as RHS"));
 
     checkForPlaceholder(CAR(rhs));
     int found = FALSE;
