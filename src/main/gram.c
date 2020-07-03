@@ -3410,12 +3410,23 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
     return ans;
 }
 
-int replace_placeholder_list (SEXP lang, SEXP lhs);
+static int replace_placeholder_list (SEXP lang, SEXP lhs);
+static SEXP wrap_pipe(SEXP, SEXP);
 
 static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
+	static int inited = FALSE;
+	static int require_placeholder = FALSE;
+	if (! inited) {
+	    char *var = getenv("R_REQUIRE_PIPE_PLACEHOLDER");
+	    require_placeholder = var != NULL;
+	    inited = TRUE;
+	}
+	if (require_placeholder)
+	    return wrap_pipe(lhs, rhs);
+
         if (TYPEOF(rhs) != LANGSXP)
             error(_("The pipe operator requires a function call as RHS"));
 
@@ -6297,7 +6308,7 @@ static int is_pipe(SEXP lang) {
         strcmp(CHAR(PRINTNAME(CAR(lang))), "|>") == 0;
 }
 
-int replace_placeholder_list (SEXP lang, SEXP lhs)
+static int replace_placeholder_list (SEXP lang, SEXP lhs)
 {
     int replaced = 0;
     SEXP cur = CAR(lang), next = CDR(lang), prev = lang;
@@ -6325,4 +6336,48 @@ int replace_placeholder_list (SEXP lang, SEXP lhs)
     }
 
     return replaced;
+}
+
+static SEXP R_PlaceholderSymbol = NULL;
+
+static void checkForPlaceholder(SEXP arg)
+{
+    if (arg == R_PlaceholderSymbol)
+	error("placeholder must only appear at call toplevel");
+    else if (TYPEOF(arg) == LANGSXP)
+	for (SEXP cur = arg; cur != R_NilValue; cur = CDR(cur))
+	    checkForPlaceholder(CAR(cur));
+}
+    
+static SEXP wrap_pipe(SEXP lhs, SEXP rhs)
+{
+    if (R_PlaceholderSymbol == NULL)
+	R_PlaceholderSymbol = install("_");
+
+    /* allow for symbols or lambda expressions */
+    if (TYPEOF(rhs) == SYMSXP ||
+	TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	return lang2(rhs, lhs);
+		    
+    if (TYPEOF(rhs) != LANGSXP)
+	error(_("The pipe operator requires a function call as RHS"));
+
+    checkForPlaceholder(CAR(rhs));
+    int found = FALSE;
+    for (SEXP cur = CDR(rhs); cur != R_NilValue; cur = CDR(cur)) {
+	SEXP arg = CAR(cur);
+	if (arg ==  R_PlaceholderSymbol)
+	    if (! found) {
+		SETCAR(cur, lhs);
+		found = TRUE;
+	    }
+	    else
+		error("pipe placeholder may only appear once");
+	else if (TYPEOF(arg) == LANGSXP)
+	    checkForPlaceholder(arg);
+    }
+    if (! found)
+	error("place holder must appear as a top-level argument");
+
+    return rhs;
 }
