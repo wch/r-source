@@ -6347,12 +6347,12 @@ static int replace_placeholder_list (SEXP lang, SEXP lhs)
         switch (TYPEOF(cur)) {
         case LANGSXP:
             if (is_pipe(cur)) break;
-            replace_placeholder_list(CDR(cur), lhs);
+            replaced += replace_placeholder_list(CDR(cur), lhs);
             break;
         case SYMSXP:
             if (strcmp(CHAR(PRINTNAME(cur)), "_") == 0) {
                 SETCAR(prev, lhs);
-                replaced = 1;
+                replaced++;
             }
             break;
         default:
