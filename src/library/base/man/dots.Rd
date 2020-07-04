@@ -16,7 +16,7 @@
   \code{\dots} and \code{..1}, \code{..2} etc are used to refer to
   arguments passed down from a calling function.  These (and the
   following) can only be used \emph{inside} a function which has
-  \code{...} among it formal arguments.
+  \code{...} among its formal arguments.
 
   \code{...elt(n)} is a functional way to get \code{..<n>} and
   basically the same as \code{eval(paste0("..", n))}, just more elegant
