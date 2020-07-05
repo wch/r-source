@@ -351,6 +351,7 @@ static SEXP	xxnxtbrk(SEXP);
 static SEXP	xxfuncall(SEXP, SEXP);
 static SEXP	xxdefun(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxpipe(SEXP, SEXP);
+static SEXP	xxpipe2(SEXP, SEXP);
 static SEXP	xxshortfun(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
@@ -381,6 +382,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 /* no longer used: %token COLON_ASSIGN */
 %token		SLOT
 %token		PIPE
+%token		PIPE2
 
 /* This is the precedence table, low to high */
 %left		'?'
@@ -392,7 +394,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %right		EQ_ASSIGN
 %left		RIGHT_ASSIGN
 %left		'~' TILDE
-%left		PIPE
+%left		PIPE PIPE2
 %left		OR OR2
 %left		AND AND2
 %left		UNOT NOT
@@ -458,6 +460,7 @@ expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	expr AND2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
+	|	expr PIPE2 expr			{ $$ = xxpipe2($1,$3);  setId(@$); }
 	|	SYMBOL SHORT_FUNCTION expr	{ $$ = xxshortfun($1,$3,&@$);  setId(@$); }
 /* this doesn't work: */
 //	|	'(' SYMBOL ')' SHORT_FUNCTION expr %prec LOW	{ $$ = xxshortfun($2,$5,&@$);  setId(@$); }
@@ -1190,19 +1193,16 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 	    error(_("The pipe operator requires a function call, a symbol, "
 		    "or an anonymous function expression as RHS"));
 
-	static int inited = FALSE;
-	static int require_placeholder = FALSE;
-	if (! inited) {
-	    char *var = getenv("R_REQUIRE_PIPE_PLACEHOLDER");
-	    require_placeholder = var != NULL;
-	    inited = TRUE;
-	}
-	if (require_placeholder)
-	    return wrap_pipe(lhs, rhs);
-
         SEXP fun = CAR(rhs);
         SEXP args = CDR(rhs);
 
+	/***** rule out some more syntactically special functions,
+	       like loops, ::, :::, and maybe a few more, and give a
+	       better error message */
+	if (fun == install("(") || fun == install("if"))
+	    error("function '%s' not supported in RHS call of a pipe",
+		  CHAR(PRINTNAME(fun)));
+	
         int is_replaced = replace_placeholder_list(args, lhs);
         if (is_replaced)
             PRESERVE_SV(ans = lcons(fun, args));
@@ -1211,6 +1211,26 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
     }
     else {
 	PRESERVE_SV(ans = R_NilValue);
+    }
+    RELEASE_SV(lhs);
+    RELEASE_SV(rhs);
+    return ans;
+}
+
+static SEXP xxpipe2(SEXP lhs, SEXP rhs)
+{
+    SEXP ans;
+    if (GenerateCode) {
+	/* allow for symbols or lambda expressions */
+	if (TYPEOF(rhs) == SYMSXP ||
+	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	    return lang2(rhs, lhs);
+		    
+	if (TYPEOF(rhs) != LANGSXP)
+	    error(_("The pipe operator requires a function call, a symbol, "
+		    "or an anonymous function expression as RHS"));
+
+	return wrap_pipe(lhs, rhs);
     }
     RELEASE_SV(lhs);
     RELEASE_SV(rhs);
@@ -2217,6 +2237,7 @@ static void yyerror(const char *s)
 	"NS_GET",	"'::'",
 	"NS_GET_INT",	"':::'",
 	"PIPE",         "'|>'",
+	"PIPE2",        "'>>'",
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -3309,6 +3330,10 @@ static int token(void)
 	    yylval = install_and_save(">=");
 	    return GE;
 	}
+	else if (nextchar('>')) {
+	    yylval = install_and_save(">>");
+	    return PIPE2;
+	}
 	yylval = install_and_save(">");
 	return GT;
     case '!':
@@ -3595,6 +3620,7 @@ static int yylex(void)
     case OR2:
     case AND2:
     case PIPE:
+    case PIPE2:
     case SPECIAL:
     case FUNCTION:
     case WHILE:
@@ -4113,12 +4139,13 @@ static SEXP R_PlaceholderSymbol = NULL;
 static void checkForPlaceholder(SEXP arg)
 {
     if (arg == R_PlaceholderSymbol)
-	error("placeholder must only appear at call toplevel");
+	error(_("pipe placeholder must only appear as a top-level "
+		"in the RHS call"));
     else if (TYPEOF(arg) == LANGSXP)
 	for (SEXP cur = arg; cur != R_NilValue; cur = CDR(cur))
 	    checkForPlaceholder(CAR(cur));
 }
-    
+
 static SEXP wrap_pipe(SEXP lhs, SEXP rhs)
 {
     if (R_PlaceholderSymbol == NULL)
