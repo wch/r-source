@@ -18,7 +18,7 @@
 
 makeForkCluster <- function(nnodes = getOption("mc.cores", 2L), ...)
 {
-    options <- addClusterOptions(defaultClusterOptions, list(...)) 
+    options <- addClusterOptions(defaultClusterOptions, list(...))
     port <- getClusterOption("port", options)
 
     nnodes <- as.integer(nnodes)
@@ -55,7 +55,7 @@ newForkNode <- function(..., options = defaultClusterOptions, rank, socket,
     setup_timeout <- 10
 
     f <- mcfork(TRUE)
-    if (inherits(f, "masterProcess")) { # the slave
+    if (inherits(f, "masterProcess")) { # the worker
         on.exit(mcexit(1L, structure("fatal error in wrapper code",
                                   class = "try-error")))
         # closeStdout()
@@ -76,7 +76,7 @@ newForkNode <- function(..., options = defaultClusterOptions, rank, socket,
         cat(msg)
         if(!is.na(renice) && renice) ## ignore 0
             tools::psnice(Sys.getpid(), renice)
-        slaveLoop(makeSOCKmaster(master, port, timeout))
+        workLoop(makeSOCKmaster(master, port, timeout))
         mcexit(0L)
     }
 

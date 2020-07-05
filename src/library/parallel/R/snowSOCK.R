@@ -19,6 +19,7 @@
 ## Derived from snow 0.3-6 by Luke Tierney
 ## Uses solely Rscript, and a function in the package rather than scripts.
 
+## NB: there is also workCommand in worker.R
 workerCommand <- function(machine, options, setup_strategy = "sequential")
 {
     outfile <- getClusterOption("outfile", options)
@@ -39,7 +40,7 @@ workerCommand <- function(machine, options, setup_strategy = "sequential")
                  " TIMEOUT=", timeout,
                  " XDR=", useXDR,
                  " SETUPSTRATEGY=", setup_strategy)
-    arg <- "parallel:::.slaveRSOCK()"
+    arg <- "parallel:::.workRSOCK()"
     rscript <- if (getClusterOption("homogeneous", options)) {
         shQuote(getClusterOption("rscript", options))
     } else "Rscript"
@@ -256,7 +257,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
     invisible(x)
 }
 
-.slaveRSOCK <- function()
+.workRSOCK <- function()
 {
     makeSOCKmaster <- function(master, port, setup_timeout, timeout, useXDR,
                                setup_strategy)
@@ -269,7 +270,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
         ## Retry scheme parameters (do these need to be customizable?)
         retryDelay <- 0.1     # 0.1 second initial delay before retrying
         retryScale <- 1.5     # 50% increase of delay at each retry
-         
+
         ## Retry multiple times in case the master is not yet ready
         t0 <- Sys.time()
 
@@ -283,7 +284,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
                 scon_timeout <- scon_timeout + 0.2
             else
                 ## Using "timeout" makes socketConnection() essentially
-                ## blocking, which has been the practice for many years. 
+                ## blocking, which has been the practice for many years.
                 ## Perhaps we could now use values similar to those for
                 ## parallel setup.
                 scon_timeout <- timeout
@@ -302,7 +303,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
 
                 ## Serve the first command as a handshake during connection
                 ## setup.  This is to get rid of half-opened connections.
-                hres <- tryCatch({ slaveCommand(scon) }, error = identity)
+                hres <- tryCatch({ workCommand(scon) }, error = identity)
                 if (identical(hres, TRUE)) {
                     if (setup_strategy == "parallel")
                         socketTimeout(socket = con, timeout = timeout)
@@ -318,7 +319,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
 
             if (difftime(Sys.time(), t0, units="secs") > setup_timeout) {
                 if (inherits(hres, "error"))
-                    stop(hres) 
+                    stop(hres)
                 if (inherits(con, "error"))
                     stop(con)
                 stop("Connection setup failed or timed out.")
@@ -363,6 +364,6 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
                    Sys.getpid(), paste(master, port, sep = ":"),
                    format(Sys.time(), "%H:%M:%OS3"))
     cat(msg)
-    slaveLoop(makeSOCKmaster(master, port, setup_timeout, timeout, useXDR,
-                             setup_strategy))
+    workLoop(makeSOCKmaster(master, port, setup_timeout, timeout, useXDR,
+                            setup_strategy))
 }
