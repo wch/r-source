@@ -5902,7 +5902,7 @@ static void addGradientFunction(SEXP gradient, int toDefn,
     if (nStops > 2) {
         addStitchedGradientFunction(gradient, nStops, toDefn, alpha, pd);
     } else {
-        double start, end;
+        double start = 0.0, end = 0.0; // -Wall
         switch(R_GE_patternType(gradient)) {
         case R_GE_linearGradientPattern:
             start = R_GE_linearGradientStop(gradient, 0);
