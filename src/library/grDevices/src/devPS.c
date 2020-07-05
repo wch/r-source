@@ -5777,7 +5777,7 @@ static void addRGBExpGradientFunction(SEXP gradient, int i,
                                       PDFDesc *pd)
 {
     char buf[300]; 
-    rcolor col1, col2;
+    rcolor col1 = 0, col2 = 0; // -Wall
     switch(R_GE_patternType(gradient)) {
     case R_GE_linearGradientPattern:
         col1 = R_GE_linearGradientColour(gradient, i);
@@ -5808,7 +5808,7 @@ static void addAlphaExpGradientFunction(SEXP gradient, int i,
                                         PDFDesc *pd)
 {
     char buf[300]; 
-    rcolor col1, col2;
+    rcolor col1 = 0, col2 = 0; // -Wall
     switch(R_GE_patternType(gradient)) {
     case R_GE_linearGradientPattern:
         col1 = R_GE_linearGradientColour(gradient, i);
@@ -5890,7 +5890,7 @@ static void addStitchedGradientFunction(SEXP gradient, int nStops, int toDefn,
 static void addGradientFunction(SEXP gradient, int toDefn, 
                                 Rboolean alpha, PDFDesc *pd)
 {
-    int nStops;
+    int nStops = 0; // -Wall
     switch(R_GE_patternType(gradient)) {
     case R_GE_linearGradientPattern:
         nStops = R_GE_linearGradientNumStops(gradient);
@@ -6082,7 +6082,7 @@ static int semiTransparent(int col)
 
 static Rboolean semiTransparentShading(SEXP pattern)
 {
-    int i, nStops;
+    int i, nStops = 0; // -Wall
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern:
         nStops = R_GE_linearGradientNumStops(pattern);
@@ -6091,7 +6091,7 @@ static Rboolean semiTransparentShading(SEXP pattern)
         nStops = R_GE_radialGradientNumStops(pattern);
         break;
     }
-    rcolor col;
+    rcolor col = 0; // -Wall
     Rboolean anyOpaque = FALSE;
     Rboolean anyTransparent = FALSE;
     for (i = 0; i < nStops; i++) {
