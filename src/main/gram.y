@@ -4165,8 +4165,11 @@ static SEXP wrap_pipe(SEXP lhs, SEXP rhs)
 	else if (TYPEOF(arg) == LANGSXP)
 	    checkForPlaceholder(arg);
     }
-    if (! found)
-	error("place holder must appear as a top-level argument");
-
+    if (! found) {
+	SEXP R_Pipe2Symbol = install(">>");
+	SEXP call = lang3(R_Pipe2Symbol, lhs, rhs);
+	PRESERVE_SV(call);
+	errorcall(call, "place holder must appear as a top-level argument");
+    }
     return rhs;
 }
