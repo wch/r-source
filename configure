@@ -3946,20 +3946,25 @@ else
 fi
 
 ltoall=no
+if test -n "${LTO}"; then
+  uLTO="${LTO}"
+else
+  uLTO=-flto
+fi
+echo "--- want_lto is $want_lto"
+echo "--- LTO is $uLTO"
 ## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
 if test "x${want_lto}" = xyes; then
   ltoall=yes
-  ## used in Makeconf
-  LTO=-flto
-  ## used in etc/Makeconf
-  LTOALL=-flto
+  LTO=${uLTO}
+  LTOALL=${uLTO}
 elif  test "x${want_lto}" = xR; then
-  LTO=-flto
+  LTO=${uLTO}
 elif  test "x${want_lto}" = xcheck; then
   ltoall=yes
-  ## use for maintainer checking.
-  LTO=-flto
-  LTOALL=-flto
+  ## used for maintainer checking.
+  LTO=${uLTO}
+  LTOALL=${uLTO}
   LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
   LIBR1="${LIBR1} -lLinpack"
 elif  test "x${want_lto}" != xno; then
@@ -25402,7 +25407,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25405: \"$ac_link\") >&5
+(eval echo $as_me:25410: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25477,7 +25482,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25480: \"$ac_link\") >&5
+(eval echo $as_me:25485: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

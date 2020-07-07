@@ -1160,8 +1160,14 @@ CXX17PICFLAGS=-fPIC
 FPICFLAGS=-fPIC
 @end example
 
+@c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
+At least with GCC it is possible to parallelize parts of the LTO linking
+process: set macro @samp{LTO} to something like @samp{LTO=-flto=8}, for
+example in file @file{config.site}.
+
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
-little used before 2019.
+little used before 2019: the compiler support has steadily improved over
+those years.
 
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
 also 8.4 and later.} this will flag inconsistencies in calls to Fortran

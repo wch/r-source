@@ -329,20 +329,23 @@ AC_ARG_ENABLE([lto],
 [AS_HELP_STRING([--enable-lto],[enable link-time optimization @<:@no@:>@])],
 [want_lto="${enableval}"], [want_lto=no])
 ltoall=no
+if test -n "${LTO}"; then
+  uLTO="${LTO}"
+else
+  uLTO=-flto
+fi
 ## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
 if test "x${want_lto}" = xyes; then
   ltoall=yes
-  ## used in Makeconf
-  LTO=-flto
-  ## used in etc/Makeconf
-  LTOALL=-flto
+  LTO=${uLTO}
+  LTOALL=${uLTO}
 elif  test "x${want_lto}" = xR; then
-  LTO=-flto
+  LTO=${uLTO}
 elif  test "x${want_lto}" = xcheck; then
   ltoall=yes
-  ## use for maintainer checking.
-  LTO=-flto
-  LTOALL=-flto
+  ## used for maintainer checking.
+  LTO=${uLTO}
+  LTOALL=${uLTO}
   LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
   LIBR1="${LIBR1} -lLinpack"
 elif  test "x${want_lto}" != xno; then
