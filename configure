@@ -949,6 +949,8 @@ WANT_JAVA_FALSE
 WANT_JAVA_TRUE
 BUILD_LTO_CHECK_FALSE
 BUILD_LTO_CHECK_TRUE
+BUILD_LTO_ALL_FALSE
+BUILD_LTO_ALL_TRUE
 BUILD_LTO_FALSE
 BUILD_LTO_TRUE
 LTOALL
@@ -3943,8 +3945,10 @@ else
   want_lto=no
 fi
 
+ltoall=no
 ## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
 if test "x${want_lto}" = xyes; then
+  ltoall=yes
   ## used in Makeconf
   LTO=-flto
   ## used in etc/Makeconf
@@ -3952,6 +3956,7 @@ if test "x${want_lto}" = xyes; then
 elif  test "x${want_lto}" = xR; then
   LTO=-flto
 elif  test "x${want_lto}" = xcheck; then
+  ltoall=yes
   ## use for maintainer checking.
   LTO=-flto
   LTOALL=-flto
@@ -3970,6 +3975,14 @@ fi
 else
   BUILD_LTO_TRUE='#'
   BUILD_LTO_FALSE=
+fi
+
+ if test "x${ltoall}" = xyes; then
+  BUILD_LTO_ALL_TRUE=
+  BUILD_LTO_ALL_FALSE='#'
+else
+  BUILD_LTO_ALL_TRUE='#'
+  BUILD_LTO_ALL_FALSE=
 fi
 
  if test "x${want_lto}" = xcheck; then
@@ -25389,7 +25402,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25392: \"$ac_link\") >&5
+(eval echo $as_me:25405: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25464,7 +25477,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25467: \"$ac_link\") >&5
+(eval echo $as_me:25480: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -52581,6 +52594,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_LTO_TRUE}" && test -z "${BUILD_LTO_FALSE}"; then
   as_fn_error $? "conditional \"BUILD_LTO\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${BUILD_LTO_ALL_TRUE}" && test -z "${BUILD_LTO_ALL_FALSE}"; then
+  as_fn_error $? "conditional \"BUILD_LTO_ALL\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_LTO_CHECK_TRUE}" && test -z "${BUILD_LTO_CHECK_FALSE}"; then
