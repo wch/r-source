@@ -345,7 +345,7 @@
 ## The configure code is conservative about enabling OpenMP 
 ## so use can be forced here (or non-use if set but empty).
 ## For packages (note that SHLIB_OPENMP_CXXFLAGS is for CXX, not
-## necessarily for CXX11/14/17).
+## necessarily for CXX/14/17/20).
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
 ## SHLIB_OPENMP_FFLAGS=
@@ -378,6 +378,9 @@
 ## R_C_STACK_DIRECTION=
 
 ## Commands which might need to be set for LTO builds
-## AR =
-## NM =
-## RANLIB =
+## Typical values for LTO are gcc-ar, gcc-nm and gcc-ranlib
+## AR=
+## NM=
+## RANLIB=
+## The LTO macro, defaulting to -flto, but could be e.g. -flto=8 for GCC.
+## LTO= 

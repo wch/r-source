@@ -89,6 +89,13 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item There is now support for parallelized Link Time Optimization
+      \emph{via} setting the \samp{LTO} macro.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Function \code{plclust()} from the package \pkg{stats}, and
