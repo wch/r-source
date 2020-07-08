@@ -4385,7 +4385,7 @@ Default: false.
 @item _R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_
 Check if package-anchored Rd cross-references are to @emph{files} (and
 not aliases).
-Default: false (but true for CRAN submission checks).
+Default: false.
 @end vtable
 
 CRAN's submission checks use something like
@@ -4429,7 +4429,6 @@ _R_CHECK_THINGS_IN_TEMP_DIR_=true
 _R_CHECK_BASHISMS_=true
 _R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
-_R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_=true
 @end example
 
 @noindent
