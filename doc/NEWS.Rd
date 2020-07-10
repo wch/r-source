@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.0.2 patched}{
+\section{\Rlogo CHANGES IN R 4.0.2 patched}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -25,6 +26,9 @@
       long strings is enabled for PCRE2 < 10.30 also when JIT is enabled,
       since stack overflows have been seen in that case.
       %% Ubuntu 16.04LTS has PCRE2 10.21
+
+      \item Fix to correctly show the group labels in \code{dotchart()}
+      (which where lost in the \code{ylab} improvement for \R 4.0.0).
     }
   }
 }
