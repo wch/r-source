@@ -109,6 +109,14 @@ getDefaultCluster()
       use XDR: where large amounts of data are to be transferred and
       all the nodes are little-endian, communication may be
       substantially faster if this is set to false.}
+    \item{\code{setup_strategy}}{Character.  If \code{"parallel"} (default)
+      workers will be started in parallel during cluster setup when this is
+      possible, which is now for homogeneous \code{"PSOCK"} clusters with
+      all workers started automatically (\code{manual = FALSE}) on the local
+      machine.  Workers will be started sequentially on other clusters, on
+      all clusters with \code{setup_strategy = "sequential"} and on \R 3.6
+      and older.  This option is for expert use only (e.g.  debugging) and
+      may be removed in future versions of R.}
   }
 
   Function \code{makeForkCluster} creates a socket cluster by forking
