@@ -6,7 +6,6 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.0.2 patched}{
-\section{\Rlogo CHANGES IN R 4.0.2 patched}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -45,7 +44,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Paths with non-ASCII characters caused problems for 
+      \item Paths with non-ASCII characters caused problems for
       package loading on Windows \PR{17833}.
 
       \item Using \pkg{tcltk} widgets no longer crashes R on
