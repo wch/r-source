@@ -173,6 +173,10 @@
 
       \item Fix to correctly show the group labels in \code{dotchart()}
       (which where lost in the \code{ylab} improvement for \R 4.0.0).
+
+      \item \code{addmargins(*, ..)} now also works when \code{fn()} is a
+      local function, thanks to bug report and patch \PR{17124} from Alex
+      Bertram.
     }
   }
 }
