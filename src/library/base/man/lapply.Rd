@@ -1,6 +1,6 @@
 % File src/library/base/man/lapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lapply}
@@ -112,8 +112,6 @@ simplify2array(x, higher = TRUE)
   the base namespace and not one defined by a user (e.g., by setting S4
   methods on the base function).
   %% rather should really use  as(x, "list")  iff  isS4(x)
-
-  \code{lapply} and \code{vapply} are \link{primitive} functions.
 }
 \value{
   For \code{lapply}, \code{sapply(simplify = FALSE)} and
