@@ -84,15 +84,13 @@ getDefaultCluster()
       possibility is a file path on the worker's host.
       Files will be opened in append mode, as all workers log to the
       same file.}
-    \item{\code{homogeneous}}{Logical, default true.  Are all the hosts
-      running identical setups?  Then \command{Rscript} can be launched
-      using the same path on each worker and they can be assumed to be
-      running the same version of \R as the master.  If false,
-      \command{Rscript} on the workers is found on their default shell's
-      path.}
+    \item{\code{homogeneous}}{Logical.  Are all the hosts running
+      identical setups, so \command{Rscript} can be launched using
+      the same path on each?  Otherwise \command{Rscript} has to be in
+      the default path on the workers.}
     \item{\code{rscript}}{The path to \command{Rscript} on the workers,
-      only used if \code{homogeneous} is true.  Defaults to the full
-      path on the master.}
+      used if \code{homogeneous} is true. Defaults to the full path on
+      the master.}
     \item{\code{rscript_args}}{Character vector of additional
       arguments for \command{Rscript} such as \option{--no-environ}.}
     \item{\code{renice}}{A numerical \sQuote{niceness} to set for the
