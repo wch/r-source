@@ -31,6 +31,7 @@ workerCommand <- function(machine, options, setup_strategy = "sequential")
     timeout <- getClusterOption("timeout", options)
     methods <- getClusterOption("methods", options)
     useXDR <- getClusterOption("useXDR", options)
+    homogeneous <- getClusterOption("homogeneous", options)
 
     ## build the local command for starting the worker
     env <- paste0("MASTER=", master,
@@ -40,12 +41,18 @@ workerCommand <- function(machine, options, setup_strategy = "sequential")
                  " TIMEOUT=", timeout,
                  " XDR=", useXDR,
                  " SETUPSTRATEGY=", setup_strategy)
-    arg <- "parallel:::.workRSOCK()"
-    rscript <- if (getClusterOption("homogeneous", options)) {
-        shQuote(getClusterOption("rscript", options))
-    } else "Rscript"
+    if (homogeneous) {
+        rscript <- shQuote(getClusterOption("rscript", options))
+        arg <- "parallel:::.workRSOCK()"
+    } else {
+        rscript <- "Rscript"
+        ## Should cmd be run from R >= 4.1.0 on a worker with R <= 4.0.2,
+        ## .workRSOCK will not exist, so fallback to .slaveRSOCK
+        arg <- "tryCatch(parallel:::.workRSOCK,error=function(e)parallel:::.slaveRSOCK)()"
+    }
     rscript_args <- getClusterOption("rscript_args", options)
-    if(methods) rscript_args <-c("--default-packages=datasets,utils,grDevices,graphics,stats,methods",  rscript_args)
+    if(methods)
+        rscript_args <-c("--default-packages=datasets,utils,grDevices,graphics,stats,methods",  rscript_args)
 
     ## in principle we should quote these,
     ## but the current possible values do not need quoting
@@ -105,7 +112,12 @@ newPSOCKnode <- function(machine = "localhost", ...,
             ## (Not clear if that is the current behaviour: works for me)
             system(cmd, wait = FALSE, input = "")
         }
-        else system(cmd, wait = FALSE)
+        else {
+            ## If not homogeneous and different R version, avoid a WARNING
+            if(!getClusterOption("homogeneous", options))
+                cmd <- paste("R_HOME=", cmd)
+            system(cmd, wait = FALSE)
+        }
     }
 
     con <- socketConnection("localhost", port = port, server = TRUE,
