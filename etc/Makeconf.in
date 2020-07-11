@@ -80,6 +80,7 @@ LIBS = @LIBS@
 ## needed by R CMD config
 LIBnn = @LIBnn@
 LIBTOOL = $(SHELL) "$(R_HOME)/bin/libtool"
+## set for --enable-lto, --enable-lto=check
 LTO = @LTOALL@
 ## needed to build applications linking to static libR
 MAIN_LD = @MAIN_LD@
@@ -113,7 +114,10 @@ SHLIB_FCLD = @SHLIB_FCLD@
 SHLIB_FCLDFLAGS = @SHLIB_FCLDFLAGS@@BUILD_LTO_TRUE@ $(FCFLAGS) $(FPICFLAGS)
 SHLIB_FFLAGS = @SHLIB_FFLAGS@
 SHLIB_LD = @SHLIB_LD@
+## used for add-on packages linked by C
 SHLIB_LDFLAGS = @SHLIB_LDFLAGS@@BUILD_LTO_TRUE@ $(CFLAGS) $(CPICFLAGS)
+## used for standard packages
+SHLIB_LDFLAGS_R = @SHLIB_LDFLAGS@@BUILD_LTO_TRUE@ $(CFLAGS) $(CPICFLAGS)
 SHLIB_LIBADD = @SHLIB_LIBADD@
 ## We want to ensure libR is picked up from $(R_HOME)/lib
 ## before e.g. /usr/local/lib if a version is already installed.

@@ -1,6 +1,6 @@
 % File src/library/parallel/man/makePSOCKcluster.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2003-2018 R Core Team
+% Copyright 2003-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{makeCluster}
@@ -68,14 +68,14 @@ getDefaultCluster()
     \item{\code{port}}{The port number for the socket connection,
       default taken from the environment variable \env{R_PARALLEL_PORT},
       then a randomly chosen port in the range \code{11000:11999}.}
+    \item{\code{timeout}}{The timeout in seconds for that port.  This is
+      the maximum time of zero communication between master and worker
+      before failing.  Default is 30 days (and the POSIX standard only
+      requires values up to 31 days to be supported).}
     \item{\code{setup_timeout}}{The maximum number of seconds a worker
       attempts to connect to master before failing.  Default is 2
       minutes.  The waiting time before the next attempt starts at
       0.1 seconds and is incremented 50\% after each retry.}
-    \item{\code{timeout}}{The timeout in seconds for that port.  This is
-      the maximum time of zero communication between master and worker
-      before failing. Default is 30 days (and the POSIX standard only
-      requires values up to 31 days to be supported).}
     \item{\code{outfile}}{Where to direct the \code{\link{stdout}} and
       \code{\link{stderr}} connection output from the workers.
       \code{""} indicates no redirection (which may only be useful for
@@ -84,12 +84,12 @@ getDefaultCluster()
       possibility is a file path on the worker's host.
       Files will be opened in append mode, as all workers log to the
       same file.}
-    \item{\code{homogeneous}}{Logical, default true.  Are all the hosts running
-      identical setups, so \command{Rscript} can be launched using
-      the same path on each?  Otherwise \command{Rscript} has to be in
-      the default path on the workers.}
+    \item{\code{homogeneous}}{Logical, default true.  Are all the
+      workers running similar enough setups that \command{Rscript} can be
+      launched using the same path on each?  Otherwise \command{Rscript} has
+      to be in the default path on the workers.}
     \item{\code{rscript}}{The path to \command{Rscript} on the workers,
-      used if \code{homogeneous} is true. Defaults to the full path on
+      used if \code{homogeneous} is true.  Defaults to the full path on
       the master.}
     \item{\code{rscript_args}}{Character vector of additional
       arguments for \command{Rscript} such as \option{--no-environ}.}
