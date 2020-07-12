@@ -369,7 +369,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		END_OF_INPUT ERROR
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
 %token		INCOMPLETE_STRING
-%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB SHORT_FUNCTION
+%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR AND2 OR2
 %token		NS_GET NS_GET_INT
@@ -387,7 +387,6 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 /* This is the precedence table, low to high */
 %left		'?'
 %left		LOW WHILE FOR REPEAT
-%right		SHORT_FUNCTION
 %right		IF
 %left		ELSE
 %right		LEFT_ASSIGN
@@ -461,12 +460,6 @@ expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
 	|	expr PIPE2 expr			{ $$ = xxpipe2($1,$3);  setId(@$); }
-	|	SYMBOL SHORT_FUNCTION expr	{ $$ = xxshortfun($1,$3,&@$);  setId(@$); }
-/* this doesn't work: */
-//	|	'(' SYMBOL ')' SHORT_FUNCTION expr %prec LOW	{ $$ = xxshortfun($2,$5,&@$);  setId(@$); }
-/* this seems to, if xxshortfun cleans the LHS expr */
-	|	expr SHORT_FUNCTION expr	{ $$ = xxshortfun($1,$3,&@$);  setId(@$); }
-	|	'(' formlist ')' SHORT_FUNCTION expr	{ $$ = xxshortfun($2,$5,&@$);  setId(@$); }
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1);	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
@@ -3348,10 +3341,6 @@ static int token(void)
 	    yylval = install_and_save("==");
 	    return EQ;
 	}
-	else if (nextchar('>')) {
-	    yylval = install_and_save("=>");
-	    return SHORT_FUNCTION;
-	}		 
 	yylval = install_and_save("=");
 	return EQ_ASSIGN;
     case ':':
@@ -3637,7 +3626,6 @@ static int yylex(void)
     case LEFT_ASSIGN:
     case RIGHT_ASSIGN:
     case EQ_ASSIGN:
-    case SHORT_FUNCTION:
 	EatLines = 1;
 	break;
 
