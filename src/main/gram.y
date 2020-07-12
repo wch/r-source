@@ -1169,7 +1169,6 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
     return ans;
 }
 
-static int replace_placeholder_list (SEXP lang, SEXP lhs);
 static SEXP wrap_pipe(SEXP, SEXP);
 
 static SEXP R_OpenParenSymbol = NULL;
@@ -1210,11 +1209,7 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 	    error("function '%s' not supported in RHS call of a pipe",
 		  CHAR(PRINTNAME(fun)));
 	
-        int is_replaced = replace_placeholder_list(args, lhs);
-        if (is_replaced)
-            PRESERVE_SV(ans = lcons(fun, args));
-        else
-            PRESERVE_SV(ans = lcons(fun, lcons(lhs, args)));
+	PRESERVE_SV(ans = lcons(fun, lcons(lhs, args)));
     }
     else {
 	PRESERVE_SV(ans = R_NilValue);
@@ -4062,41 +4057,6 @@ static void growID( int target ){
     
     int new_size = (1 + new_count)*2;
     PS_SET_IDS(lengthgets2(PS_IDS, new_size));
-}
-
-static int is_pipe(SEXP lang) {
-    return TYPEOF(lang) == LANGSXP &&
-        strcmp(CHAR(PRINTNAME(CAR(lang))), "|>") == 0;
-}
-
-static int replace_placeholder_list (SEXP lang, SEXP lhs)
-{
-    int replaced = 0;
-    SEXP cur = CAR(lang), next = CDR(lang), prev = lang;
-
-    for (; cur != R_NilValue; cur = CAR(next), next = CDR(next)) {
-        switch (TYPEOF(cur)) {
-        case LANGSXP:
-            if (is_pipe(cur)) break;
-            replaced += replace_placeholder_list(CDR(cur), lhs);
-            break;
-        case SYMSXP:
-            if (strcmp(CHAR(PRINTNAME(cur)), "_") == 0) {
-                SETCAR(prev, lhs);
-                replaced++;
-            }
-            break;
-        default:
-            break;
-        }
-
-        // Only necessary with primitive impl. |>, not with parser impl. >>
-        if (is_pipe(cur)) break;
-
-        prev = CDR(prev);
-    }
-
-    return replaced;
 }
 
 static SEXP R_PlaceholderSymbol = NULL;
