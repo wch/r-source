@@ -3394,6 +3394,12 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
 static int replace_placeholder_list (SEXP lang, SEXP lhs);
 static SEXP wrap_pipe(SEXP, SEXP);
 
+static SEXP R_OpenParenSymbol = NULL;
+static SEXP R_ifSymbol = NULL;
+static SEXP R_forSymbol = NULL;
+static SEXP R_whileSymbol = NULL;
+static SEXP R_repeatSymbol = NULL;
+
 static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
@@ -3410,10 +3416,19 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
         SEXP fun = CAR(rhs);
         SEXP args = CDR(rhs);
 
-	/***** rule out some more syntactically special functions,
-	       like loops, ::, :::, and maybe a few more, and give a
-	       better error message */
-	if (fun == install("(") || fun == install("if"))
+
+	/***** rule out some more syntactically special functions? */
+	if (R_OpenParenSymbol == NULL) {
+	    R_OpenParenSymbol = install("(");
+	    R_ifSymbol = install("if");
+	    R_forSymbol = install("for");
+	    R_whileSymbol = install("while");
+	    R_repeatSymbol = install("repeat");
+	}
+	if (fun == R_OpenParenSymbol || fun == R_ifSymbol ||
+	    fun == R_forSymbol || fun == R_whileSymbol ||
+	    fun == R_repeatSymbol||
+	    fun == R_TripleColonSymbol || fun == R_DoubleColonSymbol)
 	    error("function '%s' not supported in RHS call of a pipe",
 		  CHAR(PRINTNAME(fun)));
 	
