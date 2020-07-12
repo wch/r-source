@@ -3391,7 +3391,7 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
     return ans;
 }
 
-static SEXP wrap_pipe(SEXP, SEXP);
+static SEXP fixup_pipe_rhs(SEXP, SEXP);
 
 static SEXP R_OpenParenSymbol = NULL;
 static SEXP R_ifSymbol = NULL;
@@ -3454,7 +3454,7 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
 	    error(_("The pipe operator requires a function call, a symbol, "
 		    "or an anonymous function expression as RHS"));
 
-	return wrap_pipe(lhs, rhs);
+	return fixup_pipe_rhs(lhs, rhs);
     }
     RELEASE_SV(lhs);
     RELEASE_SV(rhs);
@@ -6283,40 +6283,45 @@ static void growID( int target ){
 
 static SEXP R_PlaceholderSymbol = NULL;
 
-static void checkForPlaceholder(SEXP arg)
+static void NORET signal_ph_error(SEXP rhs) {
+    errorcall(rhs, _("pipe placeholder must only appear as a top-level "
+		     "argument in the RHS call"));
+}
+    
+static int checkForPlaceholder(SEXP arg)
 {
     if (arg == R_PlaceholderSymbol)
-	error(_("pipe placeholder must only appear as a top-level "
-		"in the RHS call"));
+	return TRUE;
     else if (TYPEOF(arg) == LANGSXP)
 	for (SEXP cur = arg; cur != R_NilValue; cur = CDR(cur))
-	    checkForPlaceholder(CAR(cur));
+	    if (checkForPlaceholder(CAR(cur)))
+		return TRUE;
+    return FALSE;
 }
 
-static SEXP wrap_pipe(SEXP lhs, SEXP rhs)
+static SEXP fixup_pipe_rhs(SEXP lhs, SEXP rhs)
 {
     if (R_PlaceholderSymbol == NULL)
 	R_PlaceholderSymbol = install("_");
 
-    checkForPlaceholder(CAR(rhs));
-    int found = FALSE;
+    if (checkForPlaceholder(CAR(rhs)))
+	signal_ph_error(rhs);
+    
+    SEXP placeholder_cell = NULL;
     for (SEXP cur = CDR(rhs); cur != R_NilValue; cur = CDR(cur)) {
 	SEXP arg = CAR(cur);
-	if (arg ==  R_PlaceholderSymbol)
-	    if (! found) {
-		SETCAR(cur, lhs);
-		found = TRUE;
-	    }
+	if (arg ==  R_PlaceholderSymbol) {
+	    if (placeholder_cell == NULL)
+		placeholder_cell = cur;
 	    else
-		error("pipe placeholder may only appear once");
-	else if (TYPEOF(arg) == LANGSXP)
-	    checkForPlaceholder(arg);
+		errorcall(rhs, "pipe placeholder may only appear once");
+	}
+	else if (TYPEOF(arg) == LANGSXP && checkForPlaceholder(arg))
+	    signal_ph_error(rhs);
     }
-    if (! found) {
-	SEXP R_Pipe2Symbol = install(">>");
-	SEXP call = lang3(R_Pipe2Symbol, lhs, rhs);
-	PRESERVE_SV(call);
-	errorcall(call, "place holder must appear as a top-level argument");
-    }
+    if (placeholder_cell == NULL)
+	errorcall(rhs, "no pipe placeholder in RHS call");
+
+    SETCAR(placeholder_cell, lhs);
     return rhs;
 }
