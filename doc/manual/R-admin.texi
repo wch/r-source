@@ -1105,12 +1105,12 @@ There is support for using link-time optimization (LTO) if the toolchain
 supports it: configure with flag @option{--enable-lto}.
 
 Whether toolchains support LTO is often unclear: all of the C compiler,
-the Fortran compiler and linker have to support it, and support it by
-the same mechanism (so mixing compiler families may not work and a
-non-default linker such as @command{gold}@footnote{Nowadays part of GNU
-@code{binutils}: it is sometimes installed as @command{ld.gold}.} or
-@command{lld} may be needed).  It has been tested recently on Linux with
-@command{gcc}/@command{gfortran} 8.x and later: that needed setting
+the Fortran compiler@footnote{although as from @R{} 4.1.0 there is the
+possibility to exclude Fortran.} and linker have to support it, and
+support it by the same mechanism (so mixing compiler families may not
+work and a non-default linker may be needed).  It has been tested
+recently on Linux with @command{gcc}/@command{gfortran} 8.x and later:
+that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
@@ -1126,8 +1126,7 @@ RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 amd it may be needed to set @code{NM} similarly.
 
 Unfortunately @option{--enable-lto} may be accepted but silently do
-nothing if some of the toolchain does not support LTO: that has happened on
-macOS.
+nothing useful if some of the toolchain does not support LTO.
 
 When LTO is enabled it is used for compiled code in add-on packages
 unless the flag @option{--enable-lto=R} is used@footnote{When as from
@@ -1164,13 +1163,41 @@ FPICFLAGS=-fPIC
 @end example
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
-With GCC >= 5 it is possible to parallelize parts of the LTO linking
-process: set the make macro @samp{LTO} to something like
+With GCC 5 and later it is possible to parallelize parts of the LTO
+linking process: set the make macro @samp{LTO} to something like
 @samp{LTO=-flto=8} (to use 8 threads), for example in file
 @file{config.site}.
 
-LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
-little used before 2019: the compiler support has steadily improved over
+If the Fortran compiler is not of the same family as the C/C++
+compilers, set macro @samp{LTO_FC} (probably to empty).
+
+Macro @samp{LTO_LD} can be used to select an alternative linker should
+that be needed, such as such as @command{gold}@footnote{Nowadays part of
+GNU @code{binutils}: it is sometimes installed as @command{ld.gold}.} or
+@command{lld} (from LLVM): recent versions of both @command{gcc} and
+@command{clang} provide the flag @option{-fuse-ld=}.
+
+LLVM supports another type of LTO called `Thin LTO' as well as a similar
+implementation to GCC, sometimes called `Full LTO'.  (See
+@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the only
+LLVM compiler relevant to @R{} is @command{clang} for which this can be
+selected by setting macro @samp{LTO=-flto=thin}.  LLVM has
+@example
+AR=llvm-ar
+RANLIB=llvm-ranlib
+@end example
+@noindent
+Where the linker supports a parallel backup for Thin LTO this can be
+specified by, for example,
+@example
+LTO_LD=-Wl,-mllvm,-threads=8
+@end example
+@noindent
+to use 8 threads on macOS.  (See the URL above for values for other OSes
+and further linking optimizations.)
+
+LTO support was added in 2011 for @command{gcc} 4.5 on Linux but was
+little used before 2019: compiler support has steadily improved over
 those years.
 
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
@@ -1180,7 +1207,17 @@ Fortran and C/C++.  @command{gfortran} 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
 with its @option{-fc-prototypes-external} option, e.g.@: that (at the
 time of writing) Fortran @code{LOGICAL} corresponds to
-@code{int_least32_t *}.
+@code{int_least32_t *} in C.
+
+The main benefit seen to date from LTO has been detecting long-standing
+bugs in the ways packages pass arguments to compiled code and between
+compilation units.  Benchmarking in 2020 with
+@command{gcc}/@command{gfortran}@tie{}10 showed gains of a few percent
+in increased performance and reduction in installed size for builds
+without debug symbols, but large size reductions for some
+packages@footnote{A complete @acronym{CRAN} installation reduced from 50
+to 35GB.} with debug symbols.
+
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation

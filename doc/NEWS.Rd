@@ -92,7 +92,12 @@
   \subsection{LINK-TIME OPTIMIZATION on a UNIX-ALIKE}{
     \itemize{
       \item There is now support for parallelized Link-Time Optimization
-      with GCC \emph{via} setting the \samp{LTO} macro.
+      (LTO) with GCC and for \sQuote{thin} LTO with
+      \command{clong} \emph{via} setting the \samp{LTO} macro.
+
+      \item There is support of setting a different LTO flag for the
+      Fortran compiler, including to empty when mixing \command{clang}
+      and \command{gfortran}.  See file \file{config.site}.
 
       \item Configuring with flag \option{--enable-lto=R} now also uses
       LTO when installing the recommended packages.

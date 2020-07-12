@@ -953,6 +953,9 @@ BUILD_LTO_ALL_FALSE
 BUILD_LTO_ALL_TRUE
 BUILD_LTO_FALSE
 BUILD_LTO_TRUE
+LTO_LD
+LTOALL_FC
+LTO_FC
 LTOALL
 LTO
 BUILD_HTML_FALSE
@@ -3946,29 +3949,40 @@ else
 fi
 
 ltoall=no
-if test -n "${LTO}"; then
+if test "${LTO+set}" = set; then
   uLTO="${LTO}"
 else
   uLTO=-flto
 fi
-## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
+if test "${LTO_FC+set}" = set; then
+  uLTO_FC="${LTO_FC}"
+else
+  uLTO_FC="${uLTO}"
+fi
 if test "x${want_lto}" = xyes; then
   ltoall=yes
-  LTO=${uLTO}
-  LTOALL=${uLTO}
+  LTO="${uLTO}"
+  LTOALL="${uLTO}"
+  LTO_FC="${uLTO_FC}"
+  LTOALL_FC="${uLTO_FC}"
 elif  test "x${want_lto}" = xR; then
-  LTO=${uLTO}
+  LTO="${uLTO}"
+  LTO_FC="${uLTO_FC}"
 elif  test "x${want_lto}" = xcheck; then
   ltoall=yes
-  ## used for maintainer checking.
-  LTO=${uLTO}
-  LTOALL=${uLTO}
+  LTO="${uLTO}"
+  LTOALL="${uLTO}"
+  LTO_FC="${uLTO_FC}"
+  LTOALL_FC="${uLTO_FC}"
   LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
   LIBR1="${LIBR1} -lLinpack"
 elif  test "x${want_lto}" != xno; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Unknown value --enable-lto=${enableval}" >&5
 $as_echo "$as_me: WARNING: Unknown value --enable-lto=${enableval}" >&2;}
 fi
+
+
+
 
 
 ## used in src/main/Makefile
@@ -25405,7 +25419,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25408: \"$ac_link\") >&5
+(eval echo $as_me:25422: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25480,7 +25494,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25483: \"$ac_link\") >&5
+(eval echo $as_me:25497: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

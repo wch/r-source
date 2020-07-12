@@ -84,8 +84,8 @@ getDefaultCluster()
       possibility is a file path on the worker's host.
       Files will be opened in append mode, as all workers log to the
       same file.}
-    \item{\code{homogeneous}}{Logical, default true.  See sQuote{Note}.}
-    \item{\code{rscript}}{See sQuote{Note}.}
+    \item{\code{homogeneous}}{Logical, default true.  See \sQuote{Note}.}
+    \item{\code{rscript}}{See \sQuote{Note}.}
     \item{\code{rscript_args}}{Character vector of additional
       arguments for \command{Rscript} such as \option{--no-environ}.}
     \item{\code{renice}}{A numerical \sQuote{niceness} to set for the
