@@ -84,13 +84,8 @@ getDefaultCluster()
       possibility is a file path on the worker's host.
       Files will be opened in append mode, as all workers log to the
       same file.}
-    \item{\code{homogeneous}}{Logical, default true.  Are all the
-      workers running similar enough setups that \command{Rscript} can be
-      launched using the same path on each?  Otherwise \command{Rscript} has
-      to be in the default path on the workers.}
-    \item{\code{rscript}}{The path to \command{Rscript} on the workers,
-      used if \code{homogeneous} is true.  Defaults to the full path on
-      the master.}
+    \item{\code{homogeneous}}{Logical, default true.  See sQuote{Note}.}
+    \item{\code{rscript}}{See sQuote{Note}.}
     \item{\code{rscript_args}}{Character vector of additional
       arguments for \command{Rscript} such as \option{--no-environ}.}
     \item{\code{renice}}{A numerical \sQuote{niceness} to set for the
@@ -137,6 +132,26 @@ getDefaultCluster()
 
   For the default cluster setter and getter, the registered default
   cluster or \code{NULL} if there is no such cluster.
+}
+
+\note{
+  Option \code{homogeneous = TRUE} was for years documented as
+  \sQuote{Are all the hosts running identical setups?}, but this was
+  apparently more restrictive than its author intended and not reauired
+  by the code.
+  
+  The current interpretation of \code{homogeneous = TRUE} is that
+  \command{Rscript} can be launched using the same path on each worker.
+  That path is given by the option \code{rscript} and defaults to the
+  full path to \command{Rscript} on the master.  (The workers are not
+  required to be running the same version of \R as the master, or even
+  as each other.)
+
+  For \code{homogeneous = FALSE}, \command{Rscript} on the workers is
+  found on their default shell's path.
+  
+  For the very common usage of running both master and worker on a
+  single multi-core host, the default settings are the appropriate ones.
 }
 
 \author{
