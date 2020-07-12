@@ -41,7 +41,7 @@ workerCommand <- function(machine, options, setup_strategy = "sequential")
                  " TIMEOUT=", timeout,
                  " XDR=", useXDR,
                  " SETUPSTRATEGY=", setup_strategy)
-    ## Should cmd be run from R >= 4.1.0 on a worker with R <= 4.0.2,
+    ## Should cmd be run on a worker with R <= 4.0.2,
     ## .workRSOCK will not exist, so fallback to .slaveRSOCK
     arg <- "tryCatch(parallel:::.workRSOCK,error=function(e)parallel:::.slaveRSOCK)()"
     ## option rscript got set by initDefaultClusterOptions to the full path
