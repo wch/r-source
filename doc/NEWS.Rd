@@ -84,27 +84,23 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The \emph{standalone} \file{libRmath} math library and \R's C
-      API now provide \code{log1pexp()} again as documented, and get new
+      API now provide \code{log1pexp()} again as documented, and gains
       \code{log1mexp()}.
     }
   }
 
-  \subsection{INSTALLATION on a UNIX-ALIKE}{
+  \subsection{LINK-TIME OPTIMIZATION on a UNIX-ALIKE}{
     \itemize{
       \item There is now support for parallelized Link-Time Optimization
-      \emph{via} setting the \samp{LTO} macro.
+      with GCC \emph{via} setting the \samp{LTO} macro.
 
       \item Configuring with flag \option{--enable-lto=R} now also uses
       LTO when installing the recommended packages.
-    }
-  }
 
-  \subsection{PACKAGE INSTALLATION}{
-    \itemize{
-      \item (Not Windows.)  \command{R CMD INSTALL} and \command{R CMD
-	SHLIB} have a new flag \option{--use-LTO} to use Link-Time
-      Optimization when compiling code, for use with \R
-      configured with \option{--enable-lto=R}.  For \R configured with
+      \item \command{R CMD INSTALL} and \command{R CMD SHLIB} have a new
+      flag \option{--use-LTO} to use Link-Time Optimization when
+      compiling code, for use with \R configured with
+      \option{--enable-lto=R}.  For \R configured with
       \option{--enable-lto}, they have the new flag \option{--no-use-LTO}.
 
       Packages can opt in or out of LTO compilation \emph{via} a
