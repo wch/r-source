@@ -255,6 +255,8 @@ if(FALSE) {
             "			set variables for the configure scripts (if any)",
             "      --strip           strip shared object(s)",
             "      --strip-lib       strip static/dynamic libraries under lib/",
+            "      --use-LTO         use Link-Time Optimization",
+            "      --no-use-LTO      do not use Link-Time Optimization",
             "      --dsym            (macOS only) generate dSYM directory",
             "      --built-timestamp=STAMP",
             "                   set timestamp for Built: entry in DESCRIPTION",
@@ -572,9 +574,13 @@ if(FALSE) {
         ## does create a shlib: not so reliably reported on Windows
         ## Note though that it may not create pkg_name.dll, and
         ## graph does not.
-        run_shlib <- function(pkg_name, srcs, instdir, arch)
+        run_shlib <- function(pkg_name, srcs, instdir, arch, use_LTO = NA)
         {
-            args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
+            args <- c(shargs,
+                      if(isTRUE(use_LTO)) "--use-LTO",
+                      if(isFALSE(use_LTO)) "--no-use-LTO",
+                      "-o", paste0(pkg_name, SHLIB_EXT),
+                      srcs)
             if (WINDOWS && debug) args <- c(args, "--debug")
             if (debug) message("about to run ",
                                "R CMD SHLIB ", paste(args, collapse = " "),
@@ -1222,6 +1228,10 @@ if(FALSE) {
                     archs <- Sys.glob("*")
                     setwd(wd2)
                     if (length(allfiles)) {
+                        use_LTO <-
+                            if (!is.na(use_LTO)) use_LTO
+                            else
+                                parse_description_field(desc, "UseLTO", default = NA)
                         ## if there is an executable configure script we install only the main
                         ## sub-architecture
                         if (!multiarch || length(archs) <= 1 ||
@@ -1229,14 +1239,14 @@ if(FALSE) {
                             if (nzchar(rarch))
                                 starsmsg("***", "arch - ",
                                          substr(rarch, 2, 1000))
-                            has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
+                            has_error <- run_shlib(pkg_name, srcs, instdir, rarch, use_LTO)
                         } else {
                             setwd(owd)
                             test_archs <- archs
                             for(arch in archs) {
                                 if (arch == "R") {
                                     ## top-level, so one arch without subdirs
-                                    has_error <- run_shlib(pkg_name, srcs, instdir, "")
+                                    has_error <- run_shlib(pkg_name, srcs, instdir, "", use_LTO)
                                 } else {
                                     starsmsg("***", "arch - ", arch)
                                     ss <- paste0("src-", arch)
@@ -1246,7 +1256,7 @@ if(FALSE) {
                                     ra <- paste0("/", arch)
                                     ## FIXME: do this lower down
                                     Sys.setenv(R_ARCH = ra)
-                                    has_error <- run_shlib(pkg_name, srcs, instdir, ra)
+                                    has_error <- run_shlib(pkg_name, srcs, instdir, ra, use_LTO)
                                     Sys.setenv(R_ARCH = rarch)
                                     setwd(owd)
                                     if (has_error) break
@@ -1805,6 +1815,7 @@ if(FALSE) {
     compact_docs <- FALSE
     keep.source <- getOption("keep.source.pkgs")
     keep.parse.data <- getOption("keep.parse.data.pkgs")
+    use_LTO <- NA # means take from DESCRIPTION file.
     built_stamp <- character()
 
     install_libs <- TRUE
@@ -1936,6 +1947,10 @@ if(FALSE) {
             byte_compile <- TRUE
         } else if (a == "--no-byte-compile") {
             byte_compile <- FALSE
+        } else if (a == "--use-LTO") {
+            use_LTO <- TRUE
+        } else if (a == "--no-use-LTO") {
+            use_LTO <- FALSE
         } else if (a == "--staged-install") {
             staged_install <- TRUE
         } else if (a == "--no-staged-install") {
@@ -2253,6 +2268,10 @@ if(FALSE) {
             "  --preclean		remove files created during a previous run",
             "  -n, --dry-run		dry run, showing commands that would be used",
             "",
+            "Unix only:",
+            "  --use-LTO		use Link-Time Optimization",
+            "  --no-use-LTO		do not use Link-Time Optimization",
+            "",
             "Windows only:",
             "  -d, --debug		build a debug DLL",
             "",
@@ -2315,6 +2334,7 @@ if(FALSE) {
     with_objc <- FALSE
     use_cxxstd <- NULL
     use_fc_link <- FALSE
+    use_lto <- NA
     pkg_libs <- character()
     clean <- FALSE
     preclean <- FALSE
@@ -2345,6 +2365,10 @@ if(FALSE) {
             clean <- TRUE
         } else if (a == "--preclean") {
             preclean <- TRUE
+        } else if (a == "--use-LTO") {
+            use_lto <- TRUE
+        } else if (a == "--no-use-LTO") {
+            use_lto <- FALSE
         } else if (a == "-o") {
             if (length(args) >= 2L) {shlib <- args[2L]; args <- args[-1L]}
             else stop("-o option without value", call. = FALSE)
@@ -2520,6 +2544,11 @@ if(FALSE) {
     build_objects_symbol_tables <-
         config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
                                          "FALSE"))
+
+    ## might need to add LTO_OPT or even C/CXX/FCFLAGS to SHLIB_LDFLAGS
+    makeargs <- c(makeargs,
+                  if(isTRUE(use_lto)) paste0("LTO=", shQuote("$(LTO_OPT)"))
+                  else if(isFALSE(use_lto)) "LTO=" )
 
     cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
                  p1(makeobjs))

@@ -1107,11 +1107,10 @@ supports it: configure with flag @option{--enable-lto}.
 Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler and linker have to support it, and support it by
 the same mechanism (so mixing compiler families may not work and a
-non-system linker such as @command{gold}@footnote{Nowadays part of GNU
-@code{binutils} and used by LLVM to support LTO.  It is sometimes
-installed as @command{ld.gold}.} may be needed).  It has been tested
-recently on Linux with @command{gcc}/@command{gfortran} 8.x and later:
-that needed setting
+non-default linker such as @command{gold}@footnote{Nowadays part of GNU
+@code{binutils}: it is sometimes installed as @command{ld.gold}.} or
+@command{lld} may be needed).  It has been tested recently on Linux with
+@command{gcc}/@command{gfortran} 8.x and later: that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
@@ -1130,10 +1129,12 @@ Unfortunately @option{--enable-lto} may be accepted but silently do
 nothing if some of the toolchain does not support LTO: that has happened on
 macOS.
 
-When LTO is enabled it is used for compiled code in packages (including
-the recommended packages) unless the flag @option{--enable-lto=R} is
-used.  With sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC)
-this can flag inconsistencies between source files in a package.
+When LTO is enabled it is used for compiled code in add-on packages
+unless the flag @option{--enable-lto=R} is used@footnote{When as from
+@R{} 4.1.0 recommended packages installed as part of the @R{}
+installation do use LTO, but not packages installed later.}.  With
+sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC) this can
+detect inconsistencies between source files in a package.
 
 Option @option{--enable-lto=check} in addition builds the BLAS and
 LAPACK support as static libraries containing intermediate-level code
@@ -1143,27 +1144,30 @@ and in any packages installed using the build.  (This is unlikely to
 work in conjunction with non-default options for BLAS and LAPACK, and
 `linking' against these libraries may be very slow.  Note that the
 static libraries may need to be re-compiled for even a minor update to
-the compiler.)  It also checks consistency of LINPACK calls from
+the compiler.)  It also checks consistency of LINPACK calls from the
 package to @R{}.  @strong{NB:} as its name suggests, this option is
 intended only for checking installation of @R{} and packages: it
 includes these library routines (those called directly and all they
 depend on) in each package.
 
 Under some circumstances and for a few packages, the PIC flags have
-needed overriding on Linux with GCC 9: e.g@: in @file{config.site}:
+needed overriding on Linux with GCC 9 and later: e.g@: use in
+@file{config.site}:
 @example
 CPICFLAGS=-fPIC
 CXXPICFLAGS=-fPIC
 CXX11PICFLAGS=-fPIC
 CXX14PICFLAGS=-fPIC
 CXX17PICFLAGS=-fPIC
+CXX20PICFLAGS=-fPIC
 FPICFLAGS=-fPIC
 @end example
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
-At least with GCC it is possible to parallelize parts of the LTO linking
-process: set macro @samp{LTO} to something like @samp{LTO=-flto=8}, for
-example in file @file{config.site}.
+With GCC >= 5 it is possible to parallelize parts of the LTO linking
+process: set the make macro @samp{LTO} to something like
+@samp{LTO=-flto=8} (to use 8 threads), for example in file
+@file{config.site}.
 
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019: the compiler support has steadily improved over

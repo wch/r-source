@@ -91,8 +91,25 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item There is now support for parallelized Link Time Optimization
+      \item There is now support for parallelized Link-Time Optimization
       \emph{via} setting the \samp{LTO} macro.
+
+      \item Configuring with flag \option{--enable-lto=R} now also uses
+      LTO when installing the recommended packages.
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item (Not Windows.)  \command{R CMD INSTALL} and \command{R CMD
+	SHLIB} have a new flag \option{--use-LTO} to use Link-Time
+      Optimization when compiling code, for use with \R
+      configured with \option{--enable-lto=R}.  For \R configured with
+      \option{--enable-lto}, they have the new flag \option{--no-use-LTO}.
+
+      Packages can opt in or out of LTO compilation \emph{via} a
+      \samp{UseLTO} field in the \file{DESCRIPTION} file.  (As usual this
+      can be overridden by the command-line flags.)
     }
   }
 
@@ -154,7 +171,7 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-       \item On platforms using \command{configure} option
+      \item On platforms using \command{configure} option
       \option{---with-internal-tzcode}, additional values
       \code{"internal"} and (on macOS only) \code{"macOS"} are accepted
       for the environment variable \env{TZDIR}.

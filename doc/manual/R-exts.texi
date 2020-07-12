@@ -554,6 +554,14 @@ The @samp{ByteCompile} logical field controls if the package code is to
 be byte-compiled on installation: the default is to byte-compile.  This
 can be overridden by installing with flag @option{--no-byte-compile}.
 
+@c DESCRIPTION field UseLTO
+The @samp{UseLTO} logical field is used on a Unix-alike to indicate if
+source code in the package is to be compiled with Link-Time Optimization
+(@pxref{Using Link-time Optimization}) if @R{} was installed with
+@option{--enable-lto} (default true) or @option{--enable-lto=R} (default
+false). This can be overridden by by the flags @option{--use-LTO} and
+@option{--no-use-LTO}.
+
 @c DESCRIPTION field StagedInstall
 The @samp{StagedInstall} logical field controls if package installation
 is `staged', that is done to a temporary location and moved to the final
