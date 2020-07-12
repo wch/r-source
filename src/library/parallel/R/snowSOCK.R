@@ -19,7 +19,7 @@
 ## Derived from snow 0.3-6 by Luke Tierney
 ## Uses solely Rscript, and a function in the package rather than scripts.
 
-## NB: there is also workCommand in worker.R
+## NB: there is also workCommand in worker.R: this one is run on the master
 workerCommand <- function(machine, options, setup_strategy = "sequential")
 {
     outfile <- getClusterOption("outfile", options)
@@ -31,6 +31,7 @@ workerCommand <- function(machine, options, setup_strategy = "sequential")
     timeout <- getClusterOption("timeout", options)
     methods <- getClusterOption("methods", options)
     useXDR <- getClusterOption("useXDR", options)
+    homogeneous <- getClusterOption("homogeneous", options)
 
     ## build the local command for starting the worker
     env <- paste0("MASTER=", master,
@@ -40,12 +41,16 @@ workerCommand <- function(machine, options, setup_strategy = "sequential")
                  " TIMEOUT=", timeout,
                  " XDR=", useXDR,
                  " SETUPSTRATEGY=", setup_strategy)
-    arg <- "parallel:::.workRSOCK()"
-    rscript <- if (getClusterOption("homogeneous", options)) {
-        shQuote(getClusterOption("rscript", options))
-    } else "Rscript"
+    ## Should cmd be run from R >= 4.1.0 on a worker with R <= 4.0.2,
+    ## .workRSOCK will not exist, so fallback to .slaveRSOCK
+    arg <- "tryCatch(parallel:::.workRSOCK,error=function(e)parallel:::.slaveRSOCK)()"
+    ## option rscript got set by initDefaultClusterOptions to the full path
+    ## on the master, but can be overridden in the makePSOCKcluster call.
+    rscript <-
+        if (homogeneous) shQuote(getClusterOption("rscript", options)) else "Rscript"
     rscript_args <- getClusterOption("rscript_args", options)
-    if(methods) rscript_args <-c("--default-packages=datasets,utils,grDevices,graphics,stats,methods",  rscript_args)
+    if(methods)
+        rscript_args <-c("--default-packages=datasets,utils,grDevices,graphics,stats,methods",  rscript_args)
 
     ## in principle we should quote these,
     ## but the current possible values do not need quoting
@@ -105,7 +110,11 @@ newPSOCKnode <- function(machine = "localhost", ...,
             ## (Not clear if that is the current behaviour: works for me)
             system(cmd, wait = FALSE, input = "")
         }
-        else system(cmd, wait = FALSE)
+        else {
+            ## If workers are running a different R version, avoid a WARNING
+            cmd <- paste("R_HOME=", cmd)
+            system(cmd, wait = FALSE)
+        }
     }
 
     con <- socketConnection("localhost", port = port, server = TRUE,
