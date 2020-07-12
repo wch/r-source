@@ -352,7 +352,6 @@ static SEXP	xxfuncall(SEXP, SEXP);
 static SEXP	xxdefun(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxpipe(SEXP, SEXP);
 static SEXP	xxpipe2(SEXP, SEXP);
-static SEXP	xxshortfun(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
@@ -1230,43 +1229,6 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
     return ans;
 }
 
-static SEXP xxshortfun(SEXP lhs, SEXP rhs, YYLTYPE *lloc)
-{
-    SEXP R_FunctionSymbol = install("function");
-    SEXP ans;
-    if (GenerateCode) {
-	/* hack for dealing with 'expr' on LHS */
-	if (TYPEOF(lhs) == LANGSXP &&
-	    length(lhs) == 2 &&
-	    CAR(lhs) == install("(") &&
-	    TYPEOF(CADR(lhs)) == SYMSXP &&
-	    TAG(CADR(lhs)) == R_NilValue)
-	    lhs = CADR(lhs);
-
-	SEXP formals;
-	if (TYPEOF(lhs) == SYMSXP) {
-	    PRESERVE_SV(formals = CONS(R_MissingArg, R_NilValue));
-	    SET_TAG(formals, lhs);
-	}
-	else
-	    formals = CDR(lhs);
-	SEXP srcref;
-    	if (FALSE && /* disable srcrefs for now */
-	    ParseState.keepSrcRefs) {
-	    srcref = makeSrcref(lloc, PS_SRCFILE);
-    	    ParseState.didAttach = TRUE;
-    	} else
-    	    srcref = R_NilValue;
-	PRESERVE_SV(ans = lang4(R_FunctionSymbol, formals, rhs, srcref));
-    }
-    else {
-	PRESERVE_SV(ans = R_NilValue);
-    }
-    RELEASE_SV(lhs);
-    RELEASE_SV(rhs);
-    return ans;
-}
-    
 static SEXP xxparen(SEXP n1, SEXP n2)
 {
     SEXP ans;
