@@ -145,14 +145,14 @@ getDefaultCluster()
 \note{
   Option \code{homogeneous = TRUE} was for years documented as
   \sQuote{Are all the hosts running identical setups?}, but this was
-  apparently more restrictive than its author intended and not reauired
+  apparently more restrictive than its author intended and not required
   by the code.
   
   The current interpretation of \code{homogeneous = TRUE} is that
   \command{Rscript} can be launched using the same path on each worker.
   That path is given by the option \code{rscript} and defaults to the
   full path to \command{Rscript} on the master.  (The workers are not
-  required to be running the same version of \R as the master, or even
+  required to be running the same version of \R as the master, nor even
   as each other.)
 
   For \code{homogeneous = FALSE}, \command{Rscript} on the workers is
