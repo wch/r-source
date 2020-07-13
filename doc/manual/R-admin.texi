@@ -1107,10 +1107,8 @@ supports it: configure with flag @option{--enable-lto}.
 Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler and linker have to support it, and support it by
 the same mechanism (so mixing compiler families may not work and a
-non-default linker such as @command{gold}@footnote{Nowadays part of GNU
-@code{binutils}: it is sometimes installed as @command{ld.gold}.} or
-@command{lld} may be needed).  It has been tested recently on Linux with
-@command{gcc}/@command{gfortran} 8.x and later: that needed setting
+non-default linker may be needed).  It has been tested recently on Linux
+with @command{gcc}/@command{gfortran} 8.x and later: that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
@@ -1126,8 +1124,7 @@ RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 amd it may be needed to set @code{NM} similarly.
 
 Unfortunately @option{--enable-lto} may be accepted but silently do
-nothing if some of the toolchain does not support LTO: that has happened on
-macOS.
+nothing useful if some of the toolchain does not support LTO.
 
 When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
@@ -1162,7 +1159,7 @@ FPICFLAGS=-fPIC
 @end example
 
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
-little used before 2019: the compiler support has steadily improved over
+little used before 2019: compiler support has steadily improved over
 those years.
 
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
@@ -1172,7 +1169,17 @@ Fortran and C/C++.  @command{gfortran} 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
 with its @option{-fc-prototypes-external} option, e.g.@: that (at the
 time of writing) Fortran @code{LOGICAL} corresponds to
-@code{int_least32_t *}.
+@code{int_least32_t *} in C.
+
+The main benefit seen to date from LTO has been detecting long-standing
+bugs in the ways packages pass arguments to compiled code and between
+compilation units.  Benchmarking in 2020 with
+@command{gcc}/@command{gfortran}@tie{}10 showed gains of a few percent
+in increased performance and reduction in installed size for builds
+without debug symbols, but large size reductions for some
+packages@footnote{A complete @acronym{CRAN} installation reduced from 50
+to 35GB.} with debug symbols.
+
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
