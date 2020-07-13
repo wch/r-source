@@ -1104,9 +1104,9 @@ standards.
 There is support for using link-time optimization (LTO) if the toolchain
 supports it: configure with flag @option{--enable-lto}.  When LTO is
 enabled it is used for compiled code in add-on packages unless the flag
-@option{--enable-lto=R} is used@footnote{When as from @R{} 4.1.0
-recommended packages installed as part of the @R{} installation do use
-LTO, but not packages installed later.}.
+@option{--enable-lto=R} is used@footnote{Then recommended packages
+installed as part of the @R{} installation do use LTO, but not packages
+installed later.}.
 
 The main benefit seen to date from LTO has been detecting long-standing
 bugs in the ways packages pass arguments to compiled code and between
@@ -1118,11 +1118,12 @@ packages@footnote{A complete @acronym{CRAN} installation reduced from 50
 to 35GB.} with debug symbols.
 
 Whether toolchains support LTO is often unclear: all of the C compiler,
-the Fortran compiler@footnote{although as from @R{} 4.1.0 there is the
-possibility to exclude Fortran.} and linker have to support it, and
-support it by the same mechanism (so mixing compiler families may not
-work and a non-default linker may be needed).  It has been supported by
-the GCC and LLVM projects for some years with diverging implementations.
+the Fortran compiler@footnote{although there is now the possibility to
+exclude Fortran but this misses a lot of the benefits.} and linker have
+to support it, and support it by the same mechanism (so mixing compiler
+families may not work and a non-default linker may be needed).  It has
+been supported by the GCC and LLVM projects for some years with
+diverging implementations.
 
 LTO support was added in 2011 for GCC@tie{}4.5 on Linux but was little
 used before 2019: compiler support has steadily improved over those
@@ -1131,7 +1132,7 @@ years and @option{--enable-lto=R} is nowadays used for some routine
 
 Unfortunately @option{--enable-lto} may be accepted but silently do
 nothing useful if some of the toolchain does not support LTO: this is
-less common that it once was.
+less common than it once was.
 
 Various macros can be set in file @file{config.site} to customize how
 LTO is used.  If the Fortran compiler is not of the same family as the
@@ -1164,7 +1165,7 @@ AR="ar --plugin=/path/to/liblto_plugin.so"
 RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 @end example
 @noindent
-amd @code{NM} may be needed to be set similarly.
+amd @code{NM} may be needed to be set analogously.
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
 With GCC 5 and later it is possible to parallelize parts of the LTO
@@ -1172,9 +1173,9 @@ linking process: set the make macro @samp{LTO} to something like
 @samp{LTO=-flto=8} (to use 8 threads), for example in file
 @file{config.site}.
 
-Under some circumstances with @option{--enable-lto=check} (see below)
-and for a few packages, the PIC flags have needed overriding on Linux
-with GCC 9 and later: e.g@: use in @file{config.site}:
+Under some circumstances and for a few packages, the PIC flags have
+needed overriding on Linux with GCC 9 and later: e.g@: use in
+@file{config.site}:
 @example
 CPICFLAGS=-fPIC
 CXXPICFLAGS=-fPIC

@@ -94,14 +94,6 @@
 
   \subsection{LINK-TIME OPTIMIZATION on a UNIX-ALIKE}{
     \itemize{
-      \item There is now support for parallelized Link-Time Optimization
-      (LTO) with GCC and for \sQuote{thin} LTO with
-      \command{clong} \emph{via} setting the \samp{LTO} macro.
-
-      \item There is support of setting a different LTO flag for the
-      Fortran compiler, including to empty when mixing \command{clang}
-      and \command{gfortran}.  See file \file{config.site}.
-
       \item Configuring with flag \option{--enable-lto=R} now also uses
       LTO when installing the recommended packages.
 
@@ -182,6 +174,22 @@
 
       On macOS, \code{"macOS"} is used by default if the system timezone
       database is a newer version than that in the \R installation.
+    }
+  }
+
+  \subsection{LINK-TIME OPTIMIZATION on a UNIX-ALIKE}{
+    \itemize{
+      \item There is now support for parallelized Link-Time Optimization
+      (LTO) with GCC and for \sQuote{thin} LTO with
+      \command{clong} \emph{via} setting the \samp{LTO} macro.
+
+      \item There is support for setting a different LTO flag for the
+      Fortran compiler, including to empty when mixing \command{clang}
+      and \command{gfortran} (as on macOS).  See file \file{config.site}.
+
+      \item The is a new \samp{LTO_LD} macro to set linker options for
+      LTO compilation, for example to select an alternative linker or
+      to parallelize thin LTO.
     }
   }
 
