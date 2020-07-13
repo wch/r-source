@@ -78,6 +78,9 @@
       The graphics engine version, \code{R_GE_version}, has been bumped
       to 13 and so packages that provide graphics devices
       should be reinstalled.
+
+      \code{str(xS4)} now also shows extraneous attributes of an S4 object
+      \code{xS4}.
     }
   }
 

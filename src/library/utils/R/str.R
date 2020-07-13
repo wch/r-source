@@ -314,9 +314,13 @@ str.default <-
 	    cat("Formal class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
 		n.of(length(sNms), "slot"), "\n", sep = "")
-	    a <- trygetSlots(object, sNms)
-	    strSub(a, comp.str = "@ ", no.list=TRUE, give.length=give.length,
+	    s <- trygetSlots(object, sNms)
+	    strSub(s, comp.str = "@ ", no.list=TRUE, give.length=give.length,
 		   indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
+	    ## if there are non-slot nor "class" attributes, show them:
+	    if(give.attr && length(nmsa <- setdiff(names(a), c("class", sNms))))
+		strSub(a[nmsa], no.list=TRUE, give.length=give.length,
+		       indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	}
 	return(invisible())
     }
