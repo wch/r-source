@@ -98,10 +98,10 @@
       LTO when installing the recommended packages.
 
       \item \command{R CMD INSTALL} and \command{R CMD SHLIB} have a new
-      flag \option{--use-LTO} to use Link-Time Optimization when
-      compiling code, for use with \R configured with
-      \option{--enable-lto=R}.  For \R configured with
-      \option{--enable-lto}, they have the new flag \option{--no-use-LTO}.
+      flag \option{--use-LTO} to use LTO when compiling code, for use
+      with \R configured with \option{--enable-lto=R}.  For \R
+      configured with \option{--enable-lto}, they have the new flag
+      \option{--no-use-LTO}.
 
       Packages can opt in or out of LTO compilation \emph{via} a
       \samp{UseLTO} field in the \file{DESCRIPTION} file.  (As usual this
@@ -148,7 +148,7 @@
 
       \item \code{round()} and \code{signif()} no longer tolerate wrong
       argument names, notably in 1-argument calls; reported by Shane
-      Mueller on R-devel (mailing list).
+      Mueller on the  R-devel mailing list.
 
       \item \code{boxplot()} now also accepts \code{call}s for labels such
       as \code{ylab}, the same as \code{plot()}.  Reported by Marius Hofert.
@@ -168,7 +168,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item On platforms using \command{configure} option
-      \option{---with-internal-tzcode}, additional values
+      \option{--with-internal-tzcode}, additional values
       \code{"internal"} and (on macOS only) \code{"macOS"} are accepted
       for the environment variable \env{TZDIR}.
 
@@ -181,13 +181,13 @@
     \itemize{
       \item There is now support for parallelized Link-Time Optimization
       (LTO) with GCC and for \sQuote{thin} LTO with
-      \command{clong} \emph{via} setting the \samp{LTO} macro.
+      \command{clang} \emph{via} setting the \samp{LTO} macro.
 
       \item There is support for setting a different LTO flag for the
       Fortran compiler, including to empty when mixing \command{clang}
       and \command{gfortran} (as on macOS).  See file \file{config.site}.
 
-      \item The is a new \samp{LTO_LD} macro to set linker options for
+      \item There is a new \samp{LTO_LD} macro to set linker options for
       LTO compilation, for example to select an alternative linker or
       to parallelize thin LTO.
     }
