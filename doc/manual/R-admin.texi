@@ -1102,56 +1102,79 @@ standards.
 @subsection Link-Time Optimization
 
 There is support for using link-time optimization (LTO) if the toolchain
-supports it: configure with flag @option{--enable-lto}.
+supports it: configure with flag @option{--enable-lto}.  When LTO is
+enabled it is used for compiled code in add-on packages unless the flag
+@option{--enable-lto=R} is used@footnote{When as from @R{} 4.1.0
+recommended packages installed as part of the @R{} installation do use
+LTO, but not packages installed later.}.
+
+The main benefit seen to date from LTO has been detecting long-standing
+bugs in the ways packages pass arguments to compiled code and between
+compilation units.  Benchmarking in 2020 with
+@command{gcc}/@command{gfortran}@tie{}10 showed gains of a few percent
+in increased performance and reduction in installed size for builds
+without debug symbols, but large size reductions for some
+packages@footnote{A complete @acronym{CRAN} installation reduced from 50
+to 35GB.} with debug symbols.
 
 Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler@footnote{although as from @R{} 4.1.0 there is the
 possibility to exclude Fortran.} and linker have to support it, and
 support it by the same mechanism (so mixing compiler families may not
-work and a non-default linker may be needed).  It has been tested
-recently on Linux with @command{gcc}/@command{gfortran} 8.x and later:
-that needed setting
+work and a non-default linker may be needed).  It has been supported by
+the GCC and LLVM projects for some years with diverging implementations.
+
+LTO support was added in 2011 for GCC@tie{}4.5 on Linux but was little
+used before 2019: compiler support has steadily improved over those
+years and @option{--enable-lto=R} is nowadays used for some routine
+@acronym{CRAN} checking.
+
+Unfortunately @option{--enable-lto} may be accepted but silently do
+nothing useful if some of the toolchain does not support LTO: this is
+less common that it once was.
+
+Various macros can be set in file @file{config.site} to customize how
+LTO is used.  If the Fortran compiler is not of the same family as the
+C/C++ compilers, set macro @samp{LTO_FC} (probably to empty).  Macro
+@samp{LTO_LD} can be used to select an alternative linker should that be
+needed.
+
+
+@menu
+* LTO with GCC::
+* LTO with LLVM::
+* LTO for package checking::
+@end menu
+
+@node LTO with GCC, LTO with LLVM, Link-Time Optimization, Link-Time Optimization
+@subsubsection LTO with GCC
+
+This has been tested on Linux with
+@command{gcc}/@command{gfortran}@tie{}8 and later: that needed setting
+(e.g.@: in @file{config.site})
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
 @end example
 @noindent
-(e.g.@: in @file{config.site}).  For non-system compilers or if those
-wrappers have not been installed one may need something like
+For non-system compilers or if those wrappers have not been installed
+one may need something like
 @example
 AR="ar --plugin=/path/to/liblto_plugin.so"
 RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 @end example
 @noindent
-amd it may be needed to set @code{NM} similarly.
+amd @code{NM} may be needed to be set similarly.
 
-Unfortunately @option{--enable-lto} may be accepted but silently do
-nothing useful if some of the toolchain does not support LTO.
+@c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
+With GCC 5 and later it is possible to parallelize parts of the LTO
+linking process: set the make macro @samp{LTO} to something like
+@samp{LTO=-flto=8} (to use 8 threads), for example in file
+@file{config.site}.
 
-When LTO is enabled it is used for compiled code in add-on packages
-unless the flag @option{--enable-lto=R} is used@footnote{When as from
-@R{} 4.1.0 recommended packages installed as part of the @R{}
-installation do use LTO, but not packages installed later.}.  With
-sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC) this can
-detect inconsistencies between source files in a package.
-
-Option @option{--enable-lto=check} in addition builds the BLAS and
-LAPACK support as static libraries containing intermediate-level code
-that LTO will compile for all objects linked against these libraries.
-This checks the consistency of calls to BLAS/LAPACK both in @R{} itself
-and in any packages installed using the build.  (This is unlikely to
-work in conjunction with non-default options for BLAS and LAPACK, and
-`linking' against these libraries may be very slow.  Note that the
-static libraries may need to be re-compiled for even a minor update to
-the compiler.)  It also checks consistency of LINPACK calls from the
-package to @R{}.  @strong{NB:} as its name suggests, this option is
-intended only for checking installation of @R{} and packages: it
-includes these library routines (those called directly and all they
-depend on) in each package.
-
-Under some circumstances and for a few packages, the PIC flags have
-needed overriding on Linux with GCC 9 and later: e.g@: use in
-@file{config.site}:
+Under some circumstances with @option{--enable-lto=check} (see below)
+and for a few packages, the PIC flags have needed overriding on Linux
+with GCC 9 and later: e.g@: use in @file{config.site}:
 @example
 CPICFLAGS=-fPIC
 CXXPICFLAGS=-fPIC
@@ -1162,20 +1185,8 @@ CXX20PICFLAGS=-fPIC
 FPICFLAGS=-fPIC
 @end example
 
-@c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
-With GCC 5 and later it is possible to parallelize parts of the LTO
-linking process: set the make macro @samp{LTO} to something like
-@samp{LTO=-flto=8} (to use 8 threads), for example in file
-@file{config.site}.
-
-If the Fortran compiler is not of the same family as the C/C++
-compilers, set macro @samp{LTO_FC} (probably to empty).
-
-Macro @samp{LTO_LD} can be used to select an alternative linker should
-that be needed, such as such as @command{gold}@footnote{Nowadays part of
-GNU @code{binutils}: it is sometimes installed as @command{ld.gold}.} or
-@command{lld} (from LLVM): recent versions of both @command{gcc} and
-@command{clang} provide the flag @option{-fuse-ld=}.
+@node LTO with LLVM, LTO for package checking, LTO with GCC, Link-Time Optimization
+@subsubsection LTO with LLVM
 
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
@@ -1187,21 +1198,30 @@ AR=llvm-ar
 RANLIB=llvm-ranlib
 @end example
 @noindent
-Where the linker supports a parallel backup for Thin LTO this can be
-specified by, for example,
-@example
-LTO_LD=-Wl,-mllvm,-threads=8
-@end example
-@noindent
-to use 8 threads on macOS.  (See the URL above for values for other OSes
-and further linking optimizations.)
+(but macOS does not, and these are not needed there).  Where the linker
+supports a parallel backup for Thin LTO this can be specified @emph{via}
+the macro @samp{LTO_LD}: see the URL above for per-linker settings and
+further linking optimizations.)
 
-LTO support was added in 2011 for @command{gcc} 4.5 on Linux but was
-little used before 2019: compiler support has steadily improved over
-those years.
+For example, on macOS one might use
+@example
+LTO=-flto=thin
+LTO_FC=
+LTO_LD=-Wl,-mllvm,-threads=4
+@end example
+to use Thin LTO with 4 threads for C/C++ code, but skip LTO for Fortran
+code compiled with @command{gfortran}.
+
+@node LTO for package checking,  , LTO with LLVM, Link-Time Optimization
+@subsubsection LTO for package checking
+
+LTO effectively compiles all the source code in a package as a single
+compilation unit and so allows the compiler (with sufficient diagnostic
+flags such as @option{-Wall}) to check consistency between what are
+normally separate compilation units.
 
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
-also 8.4 and later.} this will flag inconsistencies in calls to Fortran
+also 8.4 and later.} LTO will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
 Fortran and C/C++.  @command{gfortran} 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
@@ -1209,15 +1229,20 @@ with its @option{-fc-prototypes-external} option, e.g.@: that (at the
 time of writing) Fortran @code{LOGICAL} corresponds to
 @code{int_least32_t *} in C.
 
-The main benefit seen to date from LTO has been detecting long-standing
-bugs in the ways packages pass arguments to compiled code and between
-compilation units.  Benchmarking in 2020 with
-@command{gcc}/@command{gfortran}@tie{}10 showed gains of a few percent
-in increased performance and reduction in installed size for builds
-without debug symbols, but large size reductions for some
-packages@footnote{A complete @acronym{CRAN} installation reduced from 50
-to 35GB.} with debug symbols.
+Configuring @R{} with @option{--enable-lto=check} in addition builds the
+BLAS, LINPACK and LAPACK support as static libraries containing
+intermediate-level code that LTO will compile for all objects linked
+against these libraries.  This checks the consistency of calls to
+BLAS/LINPACK/LAPACK in any packages installed using the
+build. @strong{NB:} as its name suggests, this option is intended only
+for checking installation of @R{} and packages: it includes these
+library routines (those called directly and all they depend on) in each
+package.
 
+This is unlikely to work in conjunction with non-default options for
+BLAS and LAPACK, and `linking' against these libraries may be very slow.
+Note too that the @R{} may need to be re-compiled after even a minor
+update to the compiler.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation

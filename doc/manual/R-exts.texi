@@ -9116,10 +9116,8 @@ Sooner or later programmers will be faced with the need to debug
 compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with other debuggers such as @command{lldb}
-(@uref{http://lldb.llvm.org/}, used on macOS: however `notarized'
-executable such as distributed @acronym{CRAN} builds are not allowed to be
-debugged) and Sun's @command{dbx}: some debuggers have graphical
-front-ends available.
+(@uref{http://lldb.llvm.org/}, used on macOS) and Sun's @command{dbx}:
+some debuggers have graphical front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
 an illegal memory access (a `segfault' or `bus error'), illegal
@@ -9174,8 +9172,8 @@ Error: segfault from C stack overflow
 @noindent
 However, C stack overflows are fatal under Windows and normally defeat
 attempts at debugging on that platform.  Further, the size of the stack
-is set when @R{} is compiled, whereas on POSIX OSes it can be set in the
-shell from which @R{} is launched.
+is set when @R{} is compiled on Windows, whereas on POSIX OSes it can be
+set in the shell from which @R{} is launched.
 
 If you have a crash which gives a core dump you can use something like
 
@@ -9229,15 +9227,18 @@ gdb -p @var{pid}
 @end example
 
 @noindent
-where @code{@var{pid}} is the id of the @R{} executable or front-end.
-This stops the process so its state can be examined: use @code{continue}
-to resume execution.
+where @code{@var{pid}} is the id of the @R{} executable or front-end
+process and can be found from within a running @R{} process by calling
+@code{Sys.getpid()} or from a process monitor.  This stops the process
+so its state can be examined: use @code{continue} to resume execution.
+
 
 Some ``tricks'' worth knowing follow:
 
 @menu
 * Finding entry points::
 * Inspecting R objects::
+* Debugging on macOS::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging compiled code, Debugging compiled code
@@ -9269,7 +9270,7 @@ Under Windows signals may not be able to be used, and if so the procedure is
 more complicated.  See the rw-FAQ.
 
 
-@node Inspecting R objects,  , Finding entry points, Debugging compiled code
+@node Inspecting R objects, Debugging on macOS, Finding entry points, Debugging compiled code
 @subsection Inspecting R objects when debugging
 @cindex Inspecting R objects when debugging
 
@@ -9405,6 +9406,42 @@ and the output of vectors @code{R_inspect3} takes additional two character()
 parameters: maximum depth and the maximal number of elements that will
 be printed for scalar vectors. The defaults in @code{R_inspect} are
 currently -1 (no limit) and 5 respectively.
+
+@node Debugging on macOS,  , Inspecting R objects, Debugging compiled code
+@subsection Debugging on macOS
+
+Security measures may prevent running a @acronym{CRAN} binary
+distribution of @R{} under @command{lldb} or attaching this as a
+debugger
+(@uref{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#I-cannot-attach-debugger-to-R}),
+although both were possible on High Sierra in mid-2020.
+
+Debugging a local build of @R{} on macOS can raise additional hurdles as
+environment variables such as @env{DYLD_FALLBACK_LIBRARY_PATH} are not
+usually passed through@footnote{By default as a security measure: see
+@command{man dyld}.} the @command{lldb} process, resulting in messages
+like
+@example
+R -d lldb
+...
+(lldb) run
+Process 16828 launched: '/path/to/bin/exec/R' (x86_64)
+dyld: Library not loaded: libR.dylib
+  Referenced from: /path/to/bin/exec/R
+@end example
+@indent
+It may be simplest to attach the debugger to a running process (see
+above).  A quick workaround is to symlink the dylibs under
+@file{R_HOME/lib} to somewhere where they will be found such as the
+current working directory.  It would be possible to do as the
+distribution does@footnote{See
+@uref{https://svn.r-project.org/R-dev-web/trunk/CRAN/QA/Simon/R-build/fixpathR}:
+@samp{@@executable_path} could be used rather than absolute paths.}  and
+use @command{install_name_tools}, but that would have to be done for all
+the dylibs including those in packages.
+
+For non-interactve use, one may need @command{lldb --batch}.
+
 
 @node Using Link-time Optimization,  , Debugging compiled code, Debugging
 @section Using Link-time Optimization
