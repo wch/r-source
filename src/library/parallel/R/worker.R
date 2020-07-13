@@ -18,7 +18,8 @@
 
 ## Derived from snow 0.3-6 by Luke Tierney
 
-slaveCommand <- function(master)
+## NB: there is also workerCommand in snowSOCK.R
+workCommand <- function(master)
 {
     tryCatch({
         msg <- recvData(master)
@@ -54,10 +55,10 @@ slaveCommand <- function(master)
     }, interrupt = function(e) TRUE)
 }
 
-slaveLoop <- function(master)
+workLoop <- function(master)
 {
     if (!is.null(master))
-        while(slaveCommand(master)) {}
+        while(workCommand(master)) {}
 }
 
 ## NB: this only sinks the connections, not C-level stdout/err.

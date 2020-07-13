@@ -1,5 +1,9 @@
 ## ${R_HOME}/share/make/shlib.mk
 
+## This is included after $(R_HOME)/etc${R_ARCH}/Makeconf
+
+SHLIB_LDFLAGS = $(SHLIB_LDFLAGS_R)
+
 all: $(SHLIB)
 
 $(SHLIB): $(OBJECTS)

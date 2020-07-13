@@ -275,8 +275,10 @@ tclVersion()
 
 .Tcl("format \"\%s\\n\" \"Hello, World!\"")
 f <- function() cat("HI!\n")
+## IGNORE_RDIFF_BEGIN
 .Tcl.callback(f)
 .Tcl.args(text = "Push!", command = f) # NB: Different address
+## IGNORE_RDIFF_END
 
 xyzzy <- tclVar(7913)
 tclvalue(xyzzy)
@@ -291,7 +293,9 @@ top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir = top$env, all = TRUE)
 }
 
+## IGNORE_RDIFF_BEGIN
 ls(envir = .TkRoot$env, all = TRUE) # .Tcl.args put a callback ref in here
+## IGNORE_RDIFF_END
 }
 \keyword{ misc }
 

@@ -374,10 +374,10 @@ Rd2HTML <-
                     ## so how about as a topic?
                     file <- utils:::index.search(parts$targetfile, pkgpath)
                     if (length(file)) {
-                        warnRd(block, Rdfile,
-                               "file link ", sQuote(parts$targetfile),
-                               " in package ", sQuote(parts$pkg),
-                               " does not exist and so has been treated as a topic")
+                        ## warnRd(block, Rdfile,
+                        ##        "file link ", sQuote(parts$targetfile),
+                        ##        " in package ", sQuote(parts$pkg),
+                        ##        " does not exist and so has been treated as a topic")
                         parts$targetfile <- basename(file)
                     } else {
                         warnRd(block, Rdfile, "missing file link ",

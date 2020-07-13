@@ -1,6 +1,6 @@
 % File src/library/base/man/eapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{eapply}
@@ -27,8 +27,6 @@ eapply(env, FUN, \dots, all.names = FALSE, USE.NAMES = TRUE)
   can request that all named objects are used (normally names that begin
   with a dot are not).  The output is not sorted and no enclosing
   environments are searched.
-
-  This is a \link{primitive} function.
 }
 \value{
   A named (unless \code{USE.NAMES = FALSE}) list.  Note that the order of
