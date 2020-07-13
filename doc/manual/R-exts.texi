@@ -9437,7 +9437,7 @@ current working directory.  It would be possible to do as the
 distribution does@footnote{See
 @uref{https://svn.r-project.org/R-dev-web/trunk/CRAN/QA/Simon/R-build/fixpathR}:
 @samp{@@executable_path} could be used rather than absolute paths.}  and
-use @command{install_name_tools}, but that would have to be done for all
+use @command{install_name_tool}, but that would have to be done for all
 the dylibs including those in packages.
 
 For non-interactve use, one may need @command{lldb --batch}.
