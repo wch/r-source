@@ -118,7 +118,7 @@ SHLIB_LD = @SHLIB_LD@
 ## used for add-on packages linked by C
 SHLIB_LDFLAGS = @SHLIB_LDFLAGS@@BUILD_LTO_ALL_TRUE@ $(CFLAGS) $(CPICFLAGS) $(LTO_LD)
 ## used for standard packages
-SHLIB_LDFLAGS_R = @SHLIB_LDFLAGS@@BUILD_LTO_TRUE@ $(CFLAGS) $(CPICFLAGS)
+SHLIB_LDFLAGS_R = @SHLIB_LDFLAGS@@BUILD_LTO_TRUE@ $(CFLAGS) $(CPICFLAGS) $(LTO_LD)
 SHLIB_LIBADD = @SHLIB_LIBADD@
 ## We want to ensure libR is picked up from $(R_HOME)/lib
 ## before e.g. /usr/local/lib if a version is already installed.
