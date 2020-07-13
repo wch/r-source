@@ -10,9 +10,9 @@
   \subsection{NEW FEATURES}{
     \itemize{
        \item On platforms using \command{configure} option
-      \option{---with-internal-tzcode}, additional values
+      \option{--with-internal-tzcode}, additional values
       \code{"internal"} and (on macOS only) \code{"macOS"} are accepted
-      for the environment variable \env{TZDIR}.
+      for the environment variable \env{TZDIR}.  (See \code{?TZDIR}.)
 
       On macOS, \code{"macOS"} is used by default if the system timezone
       database is a newer version than that in the \R installation.
