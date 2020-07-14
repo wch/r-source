@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.segments.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.segments}
@@ -32,7 +32,9 @@ segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   \item{arrow}{A list describing arrow heads to place at either end
     of the line segments, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }
-  \item{gp}{ An object of class \code{gpar}. }
+  \item{gp}{An object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
+    a list of graphical parameter settings.}
   \item{draw}{ A logical value indicating whether graphics output
     should be produced.}
   \item{vp}{A Grid viewport object (or NULL).}

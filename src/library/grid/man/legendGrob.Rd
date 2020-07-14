@@ -1,6 +1,6 @@
 % File src/library/grid/man/legendGrob.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013 R Core Team
+% Copyright 2013-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{legendGrob}
@@ -33,8 +33,8 @@ grid.legend(\dots, draw=TRUE)
   \item{pch}{legend symbol, numeric or character, passed to
     \code{\link{pointsGrob}()}; see also \code{\link[graphics]{points}} for
     interpretation of the numeric codes.}
-  \item{gp}{an \R object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}, is basically a list of
+  \item{gp}{an \R object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}, is basically a list of
     graphical parameter settings.}
   \item{vp}{a Grid \code{\link{viewport}} object (or \code{NULL}).}
   \item{\dots}{for \code{grid.legend()}: all the arguments above are

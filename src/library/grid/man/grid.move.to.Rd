@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.move.to.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.move.to}
@@ -37,8 +37,8 @@ lineToGrob(x = 1, y = 1, default.units = "npc", arrow = NULL,
   \item{name}{ A character identifier. }
   \item{draw}{A logical value indicating whether graphics output
     should be produced.}
-  \item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
+  \item{gp}{An object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings.}
   \item{vp}{A Grid viewport object (or NULL).}
 }

@@ -1,6 +1,6 @@
 % File src/library/grid/man/viewport.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Grid Viewports}
@@ -45,8 +45,8 @@ vpTree(parent, children)
     and \code{"top"}.  For numeric values, 0 means left alignment
     and 1 means right alignment.
   }
-  \item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
+  \item{gp}{An object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings.}
   \item{clip}{One of \code{"on"}, \code{"inherit"}, or
     \code{"off"}, indicating whether to

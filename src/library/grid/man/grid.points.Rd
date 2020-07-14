@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.points.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.points}
@@ -32,8 +32,8 @@ pointsGrob(x = stats::runif(10),
   \item{default.units}{string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric vectors.}
   \item{name}{character identifier. }
-  \item{gp}{an \R object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
+  \item{gp}{an \R object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings; note that \code{fill} (and
     not \code{bg} as in package \pkg{graphics} \code{\link{points}}) is
     used to \dQuote{fill}, i.e., color the background of symbols with

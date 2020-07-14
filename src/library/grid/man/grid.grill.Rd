@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.grill.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.grill}
@@ -23,8 +23,8 @@ grid.grill(h = unit(seq(0.25, 0.75, 0.25), "npc"),
     horizontal grill lines.}
   \item{default.units}{A string indicating the default units to use
     if \code{h} or \code{v} are only given as numeric vectors.}
-  \item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
+  \item{gp}{An object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings.}
   \item{vp}{A Grid viewport object.}
 }

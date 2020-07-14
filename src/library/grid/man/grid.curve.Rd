@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.curve.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.curve}
@@ -65,8 +65,8 @@ arcCurvature(theta)
   \item{debug}{A logical value indicating whether debugging
     information should be drawn.}
   \item{name}{ A character identifier. }
-  \item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
+  \item{gp}{An object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings.}
   \item{vp}{A Grid viewport object (or NULL).}
   \item{\dots}{Arguments to be passed to \code{curveGrob}.}

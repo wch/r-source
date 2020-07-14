@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.frame}
@@ -24,8 +24,8 @@ frameGrob(layout=NULL, name=NULL, gp=gpar(), vp=NULL)
     and heights, etc. }
   \item{name}{ A character identifier. }
   \item{vp}{ An object of class \code{viewport}, or NULL. }
-  \item{gp}{ An object of class \code{gpar};  typically the output from
-    a call to the function \code{gpar}.}
+  \item{gp}{ An object of class \code{"gpar"};  typically the output from
+    a call to the function \code{\link{gpar}}.}
 \item{draw}{ Should the frame be drawn.  }
 }
 \details{
