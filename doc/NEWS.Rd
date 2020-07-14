@@ -159,6 +159,11 @@
       \item The help page for \code{xtabs()} now correctly states that
       \code{addNA} is setting \code{na.action = na.pass} among others;
       reported as \PR{17770} by Thomas Soeiro.
+
+      \item Low-level socket read/write operations have been fixed to
+      correctly signal communication errors. Previously, such errors could
+      lead to a segfault due to invalid memory access. Reported
+      and debugged by Dmitriy Selivanov in \PR{17850}.
     }
   }
 }
