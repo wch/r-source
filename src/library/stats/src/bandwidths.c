@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  bandwidth.c by W. N. Venables and B. D. Ripley  Copyright (C) 1994-2001
- *  Copyright (C) 2012-2017  The R Core Team
+ *  Copyright (C) 2012-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -159,7 +159,7 @@ SEXP bw_den_binned(SEXP sx)
     for (int ib = 0; ib < nb; ib++) cnt[ib] = 0.0;
 
     for (int ii = 0; ii < nb; ii++) {
-	int w = x[ii];
+	double w = x[ii]; // avoid int overflows below
 	cnt[0] += w*(w-1.); // don't count distances to self
 	for (int jj = 0; jj < ii; jj++)
 	    cnt[ii - jj] += w * x[jj];
