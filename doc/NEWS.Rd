@@ -9,13 +9,29 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-       \item On platforms using \command{configure} option
+      \item On platforms using \command{configure} option
       \option{--with-internal-tzcode}, additional values
       \code{"internal"} and (on macOS only) \code{"macOS"} are accepted
       for the environment variable \env{TZDIR}.  (See \code{?TZDIR}.)
 
       On macOS, \code{"macOS"} is used by default if the system timezone
       database is a newer version than that in the \R installation.
+    }
+  }
+
+  \subsection{LINK-TIME OPTIMIZATION on a UNIX-ALIKE}{
+    \itemize{
+      \item There is now support for parallelized Link-Time Optimization
+      (LTO) with GCC and for \sQuote{thin} LTO with
+      \command{clang} \emph{via} setting the \samp{LTO} macro.
+
+      \item There is support for setting a different LTO flag for the
+      Fortran compiler, including to empty when mixing \command{clang}
+      and \command{gfortran} (as on macOS).  See file \file{config.site}.
+
+      \item There is a new \samp{LTO_LD} macro to set linker options for
+      LTO compilation, for example to select an alternative linker or
+      to parallelize thin LTO.
     }
   }
 

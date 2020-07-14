@@ -328,18 +328,34 @@ AM_CONDITIONAL(BUILD_HTML, [test "x${want_prebuilt_html}" = xyes])
 AC_ARG_ENABLE([lto],
 [AS_HELP_STRING([--enable-lto],[enable link-time optimization @<:@no@:>@])],
 [want_lto="${enableval}"], [want_lto=no])
-## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
+ltoall=no
+dnl Allow to be set to empty, although what would be the point?
+if test "${LTO+set}" = set; then
+  uLTO="${LTO}"
+else
+  uLTO=-flto
+fi
+dnl Might well want to set to empty
+if test "${LTO_FC+set}" = set; then
+  uLTO_FC="${LTO_FC}"
+else
+  uLTO_FC="${uLTO}"
+fi
 if test "x${want_lto}" = xyes; then
-  ## used in Makeconf
-  LTO=-flto
-  ## used in etc/Makeconf
-  LTOALL=-flto
+  ltoall=yes
+  LTO="${uLTO}"
+  LTOALL="${uLTO}"
+  LTO_FC="${uLTO_FC}"
+  LTOALL_FC="${uLTO_FC}"
 elif  test "x${want_lto}" = xR; then
-  LTO=-flto
+  LTO="${uLTO}"
+  LTO_FC="${uLTO_FC}"
 elif  test "x${want_lto}" = xcheck; then
-  ## use for maintainer checking.
-  LTO=-flto
-  LTOALL=-flto
+  ltoall=yes
+  LTO="${uLTO}"
+  LTOALL="${uLTO}"
+  LTO_FC="${uLTO_FC}"
+  LTOALL_FC="${uLTO_FC}"
   LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
   LIBR1="${LIBR1} -lLinpack"
 elif  test "x${want_lto}" != xno; then
@@ -347,8 +363,12 @@ elif  test "x${want_lto}" != xno; then
 fi
 AC_SUBST(LTO)
 AC_SUBST(LTOALL)
+AC_SUBST(LTO_FC)
+AC_SUBST(LTOALL_FC)
+AC_SUBST(LTO_LD)
 ## used in src/main/Makefile
 AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
+AM_CONDITIONAL(BUILD_LTO_ALL, [test "x${ltoall}" = xyes])
 AM_CONDITIONAL(BUILD_LTO_CHECK, [test "x${want_lto}" = xcheck])
 
 AC_ARG_ENABLE([java],

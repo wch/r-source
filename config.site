@@ -14,7 +14,7 @@
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, a copy is available at
-### http://www.r-project.org/Licenses/
+### https://www.r-project.org/Licenses/
 
 ## By means of this file you can (also) provide default values for the
 ## configuration process.  To set variables, uncomment the VAR=DEFAULT 
@@ -345,7 +345,7 @@
 ## The configure code is conservative about enabling OpenMP 
 ## so use can be forced here (or non-use if set but empty).
 ## For packages (note that SHLIB_OPENMP_CXXFLAGS is for CXX, not
-## necessarily for CXX11/14/17).
+## necessarily for CXX14/17/20).
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
 ## SHLIB_OPENMP_FFLAGS=
@@ -378,6 +378,18 @@
 ## R_C_STACK_DIRECTION=
 
 ## Commands which might need to be set for LTO builds
-## AR =
-## NM =
-## RANLIB =
+## Typical values for LTO are gcc-ar, gcc-nm and gcc-ranlib
+## AR=
+## NM=
+## RANLIB=
+##
+## The LTO macro, defaulting to -flto
+## Could be e.g. -flto=8 for GCC or -flto=thin for clang.
+## LTO= 
+## Ditto for the Fortran compiler, defaulting to the value of LTO.
+## LTO_FC= 
+##
+## Flags for linking with LTO in addition to $(LTO), e.g. to
+## parallelize ThinLTO or to change linker such as -fuse-ld=gold or
+## -fuse-ld=lld (with gcc or clang).
+## LTO_LD=

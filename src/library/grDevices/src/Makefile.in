@@ -50,6 +50,7 @@ cairodevice:
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/shlib.mk
+## override to use LTO for linking with --enable-lto=R
 LTO = @LTO@
 
 mostlyclean: clean
