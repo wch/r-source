@@ -48,11 +48,16 @@ detach(name, pos = 2L, unload = FALSE, character.only = FALSE,
   If a package has a namespace, detaching it does not by default unload
   the namespace (and may not even with \code{unload = TRUE}), and
   detaching will not in general unload any dynamically loaded compiled
-  code (DLLs).  Further, registered S3 methods from the namespace will
-  not be removed.  If you use \code{\link{library}} on a package whose
+  code (DLLs); see \code{\link{getLoadedDLLs}} and
+  \code{\link{library.dynam.unload}}.  Further, registered S3 methods
+  from the namespace will not be removed, and because S3 methods are
+  not tagged to their source on registration, it is in general not
+  possible to safely un-register the methods associated with a given
+  package. If you use \code{\link{library}} on a package whose
   namespace is loaded, it attaches the exports of the already loaded
   namespace.  So detaching and re-attaching a package may not refresh
-  some or all components of the package, and is inadvisable.
+  some or all components of the package, and is inadvisable. The most
+  reliable way to completely detach a package is to restart \R.
 }
 \section{Good practice}{
   \code{detach()} without an argument removes the first item on the
