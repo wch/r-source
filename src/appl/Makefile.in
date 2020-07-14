@@ -45,7 +45,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makedeps
 	@$(MAKE) libappl.a
-	@BUILD_LTO_TRUE@@$(MAKE) install-Linpack
+	@BUILD_LTO_CHECK_TRUE@@$(MAKE) install-Linpack
 
 libappl.a: $(OBJECTS)
 	@rm -f $@
