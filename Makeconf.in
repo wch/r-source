@@ -27,6 +27,7 @@ DISTDIR_TAR_EXCLUDE = --exclude=.svn --exclude=Makefile --exclude="*.o" --exclud
 DYLIB_EXT = @DYLIB_EXT@
 DYLIB_LD = @DYLIB_LD@
 DYLIB_LDFLAGS = @DYLIB_LDFLAGS@@BUILD_LTO_TRUE@ $(DYLIBS_LTO)
+## used for libR as a shared library
 DYLIB_LINK = $(DYLIB_LD) $(DYLIB_LDFLAGS) $(LDFLAGS)
 DYLIBS_LTO = $(CFLAGS) $(CPICFLAGS) @LTO_LD@
 ECHO = echo

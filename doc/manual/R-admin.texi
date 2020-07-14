@@ -1213,6 +1213,9 @@ LTO_LD=-Wl,-mllvm,-threads=4
 to use Thin LTO with 4 threads for C/C++ code, but skip LTO for Fortran
 code compiled with @command{gfortran}.
 
+It is said to be particularly beneficial to use @option{-O3} with
+@command{clang} in conjunction with LTO.
+
 @node LTO for package checking,  , LTO with LLVM, Link-Time Optimization
 @subsubsection LTO for package checking
 
