@@ -56,14 +56,22 @@ if(.Platform$OS.type == "windows") {
 
 read_symbols_from_object_file <- function(f)
 {
-    ## reasonable to assume this on the path
-    if(!nzchar(nm <- Sys.which("nm"))) {
+    ## For GCC & LTO, we need a different command, possible with args
+    ## On macOS, the system nm works with LTO objects.
+    ## Do not use NM as make sets it.
+    nm <- Sys.getenv("UserNM")
+    if(!nzchar(nm)) {
+        ## reasonable to assume nm is on the path
+        nm <- Sys.which("nm")
+        if(!nzchar(nm)) nm <- shQuote(nm)
+    }
+    if(!nzchar(nm)) {
         warning("this requires 'nm' to be on the PATH")
         return()
     }
     f <- file_path_as_absolute(f)
     if(!(file.size(f))) return()
-    s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
+    s <- strsplit(system(sprintf("%s -Pg %s", nm, shQuote(f)),
                          intern = TRUE),
                   " +")
     ## Cannot simply rbind() this because elements may have 2-4

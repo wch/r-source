@@ -1165,7 +1165,10 @@ AR="ar --plugin=/path/to/liblto_plugin.so"
 RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 @end example
 @noindent
-amd @code{NM} may be needed to be set analogously.
+amd @code{NM} may be needed to be set analogously. (If using an
+LTO-enabled build to check packages, set environment variable
+@env{UserNM}@footnote{not @env{NM} as we found @command{make}
+overridding that.} to @samp{gcc-NM}.)
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
 With GCC 5 and later it is possible to parallelize parts of the LTO
