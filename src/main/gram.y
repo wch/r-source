@@ -352,6 +352,7 @@ static SEXP	xxfuncall(SEXP, SEXP);
 static SEXP	xxdefun(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxpipe(SEXP, SEXP);
 static SEXP	xxpipe2(SEXP, SEXP);
+static SEXP	xxshortfun(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
@@ -368,7 +369,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		END_OF_INPUT ERROR
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
 %token		INCOMPLETE_STRING
-%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
+%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB SHORTFUN
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR AND2 OR2
 %token		NS_GET NS_GET_INT
@@ -386,6 +387,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 /* This is the precedence table, low to high */
 %left		'?'
 %left		LOW WHILE FOR REPEAT
+%nonassoc	SHORTFUN
 %right		IF
 %left		ELSE
 %right		LEFT_ASSIGN
@@ -425,13 +427,26 @@ expr_or_help  :    expr				    { $$ = $1; }
 	      |    expr_or_help '?' expr_or_help    { $$ = xxbinary($2,$1,$3); setId(@$); }
               ;
 
-expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
+expr_not_sym_or_assign	:	expr_not_sym	{ $$ = $1; }
+			|	equal_assign	{ $$ = $1; }
+			;
+
+equal_assign    :    expr_or_assign_or_help EQ_ASSIGN expr_or_assign_or_help    { $$ = xxbinary($2,$1,$3); setId(@$); }
+                ;
+
+expr	:	expr_not_sym			{ $$ = $1; }
+	|	SYMBOL				{ $$ = $1; }
+	;
+
+expr_not_sym	: 	NUM_CONST		{ $$ = $1;	setId(@$); }
 	|	STR_CONST			{ $$ = $1;	setId(@$); }
-	|	NULL_CONST			{ $$ = $1;	setId(@$); } 
-	|	SYMBOL				{ $$ = $1;	setId(@$); }
+	|	NULL_CONST			{ $$ = $1;	setId(@$); }
 
 	|	'{' exprlist '}'		{ $$ = xxexprlist($1,&@1,$2); setId(@$); }
-	|	'(' expr_or_assign_or_help ')'	{ $$ = xxparen($1,$2);	setId(@$); }
+	|	'(' SYMBOL ')'			{ $$ = xxparen($1,$2);	setId(@$); }
+	|	'(' SYMBOL EQ_ASSIGN expr  ')'	{ $$ = xxbinary($3,$2,$4);
+						  $$ = xxparen($1,$$);	setId(@$); }
+	|	'(' expr_not_sym_or_assign ')'	{ $$ = xxparen($1,$2);	setId(@$); }
 
 	|	'-' expr %prec UMINUS		{ $$ = xxunary($1,$2);	setId(@$); }
 	|	'+' expr %prec UMINUS		{ $$ = xxunary($1,$2);	setId(@$); }
@@ -459,6 +474,14 @@ expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
 	|	expr PIPE2 expr			{ $$ = xxpipe2($1,$3);  setId(@$); }
+	|	'(' SYMBOL ')' SHORTFUN expr_or_assign_or_help
+						{ $$ = xxfirstformal0($2); 	modif_token( &@2, SYMBOL_FORMALS ) ;
+						  $$ = xxshortfun($$,$5,&@$); 	setId(@$); }
+	|	'(' SYMBOL EQ_ASSIGN expr ')' SHORTFUN expr_or_assign_or_help
+						{ $$ = xxfirstformal1($2,$4); 	modif_token( &@2, SYMBOL_FORMALS ) ; modif_token( &@3, EQ_FORMALS ) ;
+						$$ = xxshortfun($$,$7,&@$); 	setId(@$); }
+	|	'(' formlist ')' SHORTFUN expr_or_assign_or_help
+						{ $$ = xxshortfun($2,$5,&@$); 	setId(@$); }
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1);	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
@@ -1242,6 +1265,12 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
     return ans;
 }
 
+static SEXP xxshortfun(SEXP formals, SEXP body, YYLTYPE *lloc)
+{
+    SEXP R_FunctionSymbol = install("function");
+    return xxdefun(R_FunctionSymbol, formals, body, lloc);
+}
+    
 static SEXP xxparen(SEXP n1, SEXP n2)
 {
     SEXP ans;
@@ -2183,6 +2212,7 @@ static void yyerror(const char *s)
 	"FUNCTION",	"'function'",
 	"EQ_ASSIGN",	"'='",
 	"RIGHT_ASSIGN",	"'->'",
+	"SHORTFUN",	"'=>'",
 	"LBB",		"'[['",
 	"FOR",		"'for'",
 	"IN",		"'in'",
@@ -3316,6 +3346,10 @@ static int token(void)
 	    yylval = install_and_save("==");
 	    return EQ;
 	}
+	else if (nextchar('>')) {
+	    yylval = install_and_save("=>");
+	    return SHORTFUN;
+	}		 
 	yylval = install_and_save("=");
 	return EQ_ASSIGN;
     case ':':
@@ -3601,6 +3635,7 @@ static int yylex(void)
     case LEFT_ASSIGN:
     case RIGHT_ASSIGN:
     case EQ_ASSIGN:
+    case SHORTFUN:
 	EatLines = 1;
 	break;
 

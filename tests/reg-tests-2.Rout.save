@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-07-13 r78854) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-07-15 r78855) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6363,7 +6363,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x563d72acadd0>
+<bytecode: 0x558f0ed8dbb8>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6374,7 +6374,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x563d72acadd0>
+<bytecode: 0x558f0ed8dbb8>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6386,7 +6386,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x563d72acadd0>
+<bytecode: 0x558f0ed8dbb8>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -7504,27 +7504,25 @@ $foo
 > p <- parse(text = raw)
 > getParseData(p)
    line1 col1 line2 col2 id parent          token terminal          text
-33     2    1     4   15 33      0           expr    FALSE              
-3      2    1     2    8  3     33       FUNCTION     TRUE      function
-4      2    9     2    9  4     33            '('     TRUE             (
-5      2   11     2   11  5     33 SYMBOL_FORMALS     TRUE             a
-6      2   15     2   27  6     33        COMMENT     TRUE # parameter 1
-8      3   10     3   10  8     33            ','     TRUE             ,
-10     3   12     3   12 10     33 SYMBOL_FORMALS     TRUE             b
-11     3   13     3   13 11     33     EQ_FORMALS     TRUE             =
+36     2    1     4   15 36      0   expr_not_sym    FALSE              
+3      2    1     2    8  3     36       FUNCTION     TRUE      function
+4      2    9     2    9  4     36            '('     TRUE             (
+5      2   11     2   11  5     36 SYMBOL_FORMALS     TRUE             a
+6      2   15     2   27  6     36        COMMENT     TRUE # parameter 1
+8      3   10     3   10  8     36            ','     TRUE             ,
+10     3   12     3   12 10     36 SYMBOL_FORMALS     TRUE             b
+11     3   13     3   13 11     36     EQ_FORMALS     TRUE             =
 12     3   14     3   14 12     13      NUM_CONST     TRUE             2
-13     3   14     3   14 13     33           expr    FALSE              
-14     3   16     3   28 14     33        COMMENT     TRUE # parameter 2
-16     4   10     4   10 16     33            ')'     TRUE             )
-30     4   11     4   15 30     33           expr    FALSE              
-20     4   11     4   11 20     30            '{'     TRUE             {
-27     4   12     4   14 27     30           expr    FALSE              
-21     4   12     4   12 21     23         SYMBOL     TRUE             a
-23     4   12     4   12 23     27           expr    FALSE              
-22     4   13     4   13 22     27            '+'     TRUE             +
-24     4   14     4   14 24     26         SYMBOL     TRUE             b
-26     4   14     4   14 26     27           expr    FALSE              
-25     4   15     4   15 25     30            '}'     TRUE             }
+13     3   14     3   14 13     36   expr_not_sym    FALSE              
+15     3   16     3   28 15     36        COMMENT     TRUE # parameter 2
+17     4   10     4   10 17     36            ')'     TRUE             )
+32     4   11     4   15 32     36   expr_not_sym    FALSE              
+21     4   11     4   11 21     32            '{'     TRUE             {
+28     4   12     4   14 28     32   expr_not_sym    FALSE              
+22     4   12     4   12 22     28         SYMBOL     TRUE             a
+23     4   13     4   13 23     28            '+'     TRUE             +
+25     4   14     4   14 25     28         SYMBOL     TRUE             b
+26     4   15     4   15 26     32            '}'     TRUE             }
 > ## Got some parents wrong
 > 
 > 
