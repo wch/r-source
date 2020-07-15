@@ -522,10 +522,13 @@ sub	:					{ $$ = xxsub0();	 }
 	;
 
 formlist:					{ $$ = xxnullformal(); }
-	|	SYMBOL				{ $$ = xxfirstformal0($1); 	modif_token( &@1, SYMBOL_FORMALS ) ; }
+	|	not_null_formlist		{ $$ = $1; }
+	;
+
+not_null_formlist:	SYMBOL			{ $$ = xxfirstformal0($1); 	modif_token( &@1, SYMBOL_FORMALS ) ; }
 	|	SYMBOL EQ_ASSIGN expr_or_help	{ $$ = xxfirstformal1($1,$3); 	modif_token( &@1, SYMBOL_FORMALS ) ; modif_token( &@2, EQ_FORMALS ) ; }
-	|	formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3, &@3);   modif_token( &@3, SYMBOL_FORMALS ) ; }
-	|	formlist ',' SYMBOL EQ_ASSIGN expr_or_help
+	|	not_null_formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3, &@3);   modif_token( &@3, SYMBOL_FORMALS ) ; }
+	|	not_null_formlist ',' SYMBOL EQ_ASSIGN expr_or_help
 						{ $$ = xxaddformal1($1,$3,$5,&@3); modif_token( &@3, SYMBOL_FORMALS ) ; modif_token( &@4, EQ_FORMALS ) ;}
 	;
 
