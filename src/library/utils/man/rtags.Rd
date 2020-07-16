@@ -18,7 +18,8 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
                        recursive = recursive),
       keep.re = NULL,
       ofile = "", append = FALSE,
-      verbose = getOption("verbose"))
+      verbose = getOption("verbose"),
+      type = c("etags", "ctags"))
 }
 
 \arguments{
@@ -36,10 +37,11 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
     \code{keep.re = "/R/[^/]*\\\\.R$"} will only retain files with
     extension \code{.R} inside a directory named \code{R}.
   }
+
   \item{ofile}{ Passed on to \code{\link{cat}} as the \code{file}
     argument; typically the output file where the tags will be written
-    (\code{"TAGS"} by convention).  By default, the output is written to
-    the R console (unless redirected).
+    (\code{"TAGS"} or \code{"tags"} by convention).  By default, the
+    output is written to the R console (unless redirected).
   }
   \item{append}{ Logical, indicating whether the output should overwrite
     an existing file, or append to it.
@@ -47,10 +49,13 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
   \item{verbose}{ Logical.  If \code{TRUE}, file names are echoed to the
     R console as they are processed.
   }
+  \item{type}{ Character string specifying whether emacs style
+    (\code{"etags"}) or vi style (\code{"ctags"}) tags are to be
+    generated.
+  }
 }
 
 \details{
-
   Many text editors allow definitions of functions and other language
   objects to be quickly and easily located in source files through a
   tagging utility.  This functionality requires the relevant source
@@ -65,8 +70,12 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
 
   The \code{rtags} function is intended to be a tagging utility for R
   code.  It parses R code files (using R's parser) and produces tags in
-  Emacs' etags format.  Support for vi-style tags is currently absent,
-  but should not be difficult to add.
+  both etags and ctags formats.  The support for vi-style ctags is
+  rudimentary, and was adapted from a patch by Neal Fultz; see
+  \PR{17214}.
+
+  It may be more convenient to use the command-line wrapper script
+  \code{R CMD rtags}.
 }
 
 \references{

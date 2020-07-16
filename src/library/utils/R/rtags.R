@@ -23,7 +23,7 @@
 ### parser.  Support for vi-style tags could be useful, but it needs
 ### the tags file needs to be sorted, making file-by-file processing
 ### difficult. It may be easier to write a script to convert an etags
-### format file (see http://https://en.wikipedia.org/wiki/Ctags).
+### format file (see https://en.wikipedia.org/wiki/Ctags).
 
 
 
@@ -84,6 +84,22 @@ write.etags <-
     ## simpler format: tag.lines <- paste(sprintf("%s\x7f%d,%d", lines, startlines, as.integer(offsets)), collapse = "\n")
     tagsize <- nchar(tag.lines, type = "bytes") + 1L
     cat("\x0c\n", src, ",", tagsize, "\n", tag.lines, "\n", sep = "", ...)
+}
+
+
+### * write.ctags
+
+
+write.ctags <-
+    function(src,
+             tokens, startlines, lines, nchars,
+             ...,
+             shorten.lines = NULL)
+{
+    tag.lines <-
+        sprintf("%s\t%s\t%d\n",
+                tokens, src, startlines)
+    cat(tag.lines, sep = "", ...)
 }
 
 
@@ -178,25 +194,37 @@ rtags <-
                               recursive = recursive),
              keep.re = NULL,
              ofile = "", append = FALSE,
-             verbose = getOption("verbose"))
+             verbose = getOption("verbose"),
+             type = c("etags", "ctags"))
 {
+    type <- match.arg(type)
     if (nzchar(ofile) && !append) {
         if (!file.create(ofile, showWarnings = FALSE))
             stop(gettextf("Could not create file %s, aborting", ofile),
                  domain = NA)
     }
+    ## NOTE: ctags output file needs to be further sorted (see below)
+    write.fun <- if (type == "ctags") write.ctags else write.etags
     if (!missing(keep.re))
         src <- grep(keep.re, src, value = TRUE)
     for (s in src)
     {
         if (verbose) message(gettextf("Processing file %s", s), domain = NA)
         tryCatch(
-                 rtags.file(s, ofile = ofile, append = TRUE),
+                 rtags.file(s, ofile = ofile, append = TRUE, write.fun = write.fun),
                  error = function(e) NULL)
+    }
+    ## ctags want the tags file to be "sorted", but it is not clear
+    ## precisely what that means. The following uses R sort(), and
+    ## subsequent appending when tagging non-R files will sort them
+    ## differently. Neither seem to work with vi.
+    if (type == "ctags" && nzchar(ofile))
+    {
+        tagLines <- readLines(ofile)
+        writeLines(sort(tagLines), con = ofile)
     }
     invisible()
 }
-
 
 
 
