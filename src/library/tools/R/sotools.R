@@ -56,7 +56,7 @@ if(.Platform$OS.type == "windows") {
 
 read_symbols_from_object_file <- function(f)
 {
-    ## For GCC & LTO, we need a different command, possible with args
+    ## For GCC & LTO, we need a different command, possibly with args
     ## On macOS, the system nm works with LTO objects.
     ## Do not use NM as make sets it.
     nm <- Sys.getenv("UserNM")
@@ -74,8 +74,7 @@ read_symbols_from_object_file <- function(f)
     s <- strsplit(system(sprintf("%s -Pg %s", nm, shQuote(f)),
                          intern = TRUE),
                   " +")
-    ## Cannot simply rbind() this because elements may have 2-4
-    ## entries.
+    ## Cannot simply rbind() this because elements may have 2-4 entries.
     n <- length(s)
     tab <- matrix("", nrow = n, ncol = 4L)
     colnames(tab) <- c("name", "type", "value", "size")
@@ -157,39 +156,40 @@ so_symbol_names_table <-
       "linux, Fortran, flang, stop, f90_stop08",
       "linux, Fortran, flang, rand, rand",
 
-      "osx, C, gcc, abort, _abort",
-      "osx, C, gcc, assert, ___assert_rtn",
-      "osx, C, gcc, exit, _exit",
-      "osx, C, gcc, _exit, __exit",
-      "osx, C, gcc, _Exit, __Exit",
-      "osx, C, gcc, printf, _printf",
-      "osx, C, gcc, printf, _puts",
-      "osx, C, gcc, puts, _puts",
-      "osx, C, gcc, putchar, _putchar",
-      "osx, C, gcc, stderr, ___stderrp",
-      "osx, C, gcc, stdout, ___stdoutp",
-      "osx, C, gcc, vprintf, _vprintf",
-      "osx, C++, gxx, std::cout, __ZSt4cout",
-      "osx, C++, gxx, std::cerr, __ZSt4cerr",
-      #"osx, C++, gxx, std::terminate, __ZSt9terminatev",
-      "osx, C, gcc, rand, _rand",
-      "osx, C, gcc, random, _random",
-      "osx, C, gcc, rand_r, _rand_r",
-      "osx, C, gcc, srand, _srand",
-      "osx, C, gcc, srandom, _srandom",
-      "osx, C, gcc, srand48, _srand48",
+      ## clang identifies itself as gcc, so configure has used that
+      "macos, C, gcc, abort, _abort",
+      "macos, C, gcc, assert, ___assert_rtn",
+      "macos, C, gcc, exit, _exit",
+      "macos, C, gcc, _exit, __exit",
+      "macos, C, gcc, _Exit, __Exit",
+      "macos, C, gcc, printf, _printf",
+      "macos, C, gcc, printf, _puts",
+      "macos, C, gcc, puts, _puts",
+      "macos, C, gcc, putchar, _putchar",
+      "macos, C, gcc, stderr, ___stderrp",
+      "macos, C, gcc, stdout, ___stdoutp",
+      "macos, C, gcc, vprintf, _vprintf",
+      "macos, C++, gxx, std::cout, __ZSt4cout",
+      "macos, C++, gxx, std::cerr, __ZSt4cerr",
+      #"macos, C++, gxx, std::terminate, __ZSt9terminatev",
+      "macos, C, gcc, rand, _rand",
+      "macos, C, gcc, random, _random",
+      "macos, C, gcc, rand_r, _rand_r",
+      "macos, C, gcc, srand, _srand",
+      "macos, C, gcc, srandom, _srandom",
+      "macos, C, gcc, srand48, _srand48",
       ## libc++ variants
-      "osx, C++, gxx, std::cout, __ZNSt3__14coutE",
-      "osx, C++, gxx, std::cerr, __ZNSt3__14cerrE",
-      "osx, Fortran, gfortran, open, __gfortran_st_open",
-      "osx, Fortran, gfortran, close, __gfortran_st_close",
-      "osx, Fortran, gfortran, rewind, _gfortran_st_rewind",
-      "osx, Fortran, gfortran, read, __gfortran_st_read",
-      "osx, Fortran, gfortran, write, __gfortran_st_write",
-      "osx, Fortran, gfortran, print, __gfortran_st_write",
-      "osx, Fortran, gfortran, stop, __gfortran_stop_numeric",
-      "osx, Fortran, gfortran, stop, __gfortran_stop_string",
-      "osx, Fortran, gfortran, rand, __gfortran_rand",
+      "macos, C++, gxx, std::cout, __ZNSt3__14coutE",
+      "macos, C++, gxx, std::cerr, __ZNSt3__14cerrE",
+      "macos, Fortran, gfortran, open, __gfortran_st_open",
+      "macos, Fortran, gfortran, close, __gfortran_st_close",
+      "macos, Fortran, gfortran, rewind, _gfortran_st_rewind",
+      "macos, Fortran, gfortran, read, __gfortran_st_read",
+      "macos, Fortran, gfortran, write, __gfortran_st_write",
+      "macos, Fortran, gfortran, print, __gfortran_st_write",
+      "macos, Fortran, gfortran, stop, __gfortran_stop_numeric",
+      "macos, Fortran, gfortran, stop, __gfortran_stop_string",
+      "macos, Fortran, gfortran, rand, __gfortran_rand",
 
       "freebsd, C, gcc, abort, abort",
       "freebsd, C, gcc, assert, __assert",

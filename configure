@@ -27464,7 +27464,7 @@ case "${host_os}" in
     R_SYSTEM_ABI="solaris"
     ;;
   darwin*)
-    R_SYSTEM_ABI="osx"
+    R_SYSTEM_ABI="macos"
     ;;
   freebsd*)
     R_SYSTEM_ABI="freebsd"
