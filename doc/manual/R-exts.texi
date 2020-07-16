@@ -9440,7 +9440,7 @@ distribution does@footnote{See
 use @command{install_name_tool}, but that would have to be done for all
 the dylibs including those in packages.
 
-For non-interactve use, one may need @command{lldb --batch}.
+For non-interactive use, one may need @command{lldb --batch}.
 
 
 @node Using Link-time Optimization,  , Debugging compiled code, Debugging
