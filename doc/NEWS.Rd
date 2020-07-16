@@ -81,6 +81,10 @@
 
       \code{str(xS4)} now also shows extraneous attributes of an S4 object
       \code{xS4}.
+
+      \item Rudimentary support for vi-style tags in \code{rtags()} and
+      \code{R CMD rtags}, based on patch from Neal Fultz in \PR{17214}.
+
     }
   }
 
