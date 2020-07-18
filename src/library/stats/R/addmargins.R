@@ -65,7 +65,7 @@ addmargins <-
 	## this only makes sense if we were given an expression for FUN
 	## which we can deparse.
 	if(mode(substitute(FUN)) == "call")
-	    FUN <- eval(add.names(substitute(FUN)))
+	    FUN <- eval.parent(add.names(substitute(FUN)))
 	if (is.null(names(FUN))) names(FUN) <- rep("", length(FUN))
     }
 

@@ -1,17 +1,14 @@
 % File src/library/stats/man/addmargins.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{addmargins}
+\title{Puts Arbitrary Margins on Multidimensional Tables or Arrays}
 
 \alias{addmargins}
 \concept{totals}
 \concept{margins}
-
-\title{
-  Puts Arbitrary Margins on Multidimensional Tables or Arrays
-}
 
 \description{
   For a given table one can specify which of the classifying factors to
@@ -34,8 +31,10 @@ addmargins(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
   \item{margin}{vector of dimensions over which to form margins.  Margins
     are formed in the order in which dimensions are specified in
     \code{margin}.}
-  \item{FUN}{list of the same length as \code{margin}, each element of
-    the list being either a function or a list of functions.  Names of
+  \item{FUN}{\code{\link{list}} of the same length as \code{margin}, each
+    element of the list being either a \code{\link{function}} or a list of
+    functions.  In the length-1 case, can be a function instead of a list
+    of one.  Names of
     the list elements will appear as levels in dimnames of the result.
     Unnamed list elements will have names constructed:  the name
     of a function or a constructed name based on the position in the table.}
@@ -50,7 +49,8 @@ addmargins(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
 }
 
 \value{
-  A table or array with the same number of dimensions as \code{A}, but
+  A \code{\link{table}} or \code{\link{array}} with the same number of
+  dimensions as \code{A}, but
   with extra levels of the dimensions mentioned in \code{margin}.  The
   number of levels added to each dimension is the length of the entries
   in \code{FUN}.  A message with the order of computation of margins is
@@ -72,20 +72,20 @@ Aye <- sample(c("Yes", "Si", "Oui"), 177, replace = TRUE)
 Bee <- sample(c("Hum", "Buzz"), 177, replace = TRUE)
 Sea <- sample(c("White", "Black", "Red", "Dead"), 177, replace = TRUE)
 (A <- table(Aye, Bee, Sea))
-addmargins(A)
+(aA <- addmargins(A))
 \dontshow{
-stopifnot(is.table(addmargins(A)))
+stopifnot(is.table(aA))
 }
 ftable(A)
-ftable(addmargins(A))
+ftable(aA)
 
 # Non-commutative functions - note differences between resulting tables:
-ftable( addmargins( A, c(3, 1),
-                   FUN = list( list(Min = min, Max = max), 
-                               Sum = sum ) ) )
-ftable( addmargins( A, c(1, 3),
-                   FUN = list( Sum = sum,
-                               list(Min = min, Max = max) ) ) )
+ftable( addmargins(A, c(3, 1),
+                   FUN = list(list(Min = min, Max = max),
+                              Sum = sum)))
+ftable( addmargins(A, c(1, 3),
+                   FUN = list(Sum = sum,
+                              list(Min = min, Max = max))))
 
 # Weird function needed to return the N when computing percentages
 sqsm <- function(x) sum(x)^2/100
