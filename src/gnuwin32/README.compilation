@@ -1,0 +1,51 @@
+The R for Windows Build Process
+===============================
+
+from the point of view of a Unix installer of R.
+
+Compilation of C/Fortran code is done in two pathways.
+
+1) standard and add-on packages, the most similar to Unix.
+
+The primary Makefiles are
+$(R_HOME)/etc${R_ARCH}/Makeconf
+share/make/winshlib.mk
+
+in that order.  Some settings in Makeconf are substituted in etc/Makeconf
+by fixed/Makefile, taken from MkRules.
+
+
+2) Everything else, where the primary Makefile is MkRules which is
+where all the customization is done.  This is included by all
+Makefile.win files under directories above this one and
+
+./Makefile
+./cran/Makefile
+./fixed/Makefile
+./front-ends/Makefile
+./getline/Makefile
+./installer/Makefile
+
+and replaces Unix's top-level Makeconf.
+
+
+The largest difference from Unix (even a R-shlib build) is the use of
+DLLs, which require the exported symbols to be listed (via nm) in a
+.def file and fed to the compiler with the object files for linking.
+
+In recent years DLLs are linked to directly as libraries, but there
+remains provision for import libraries via lib%.dll.a: %.def rules.
+
+Making executables has a number of Windows-specific features, done in
+front-ends/Makefile:
+
+- A resource compiler is used to compile in a manifest, which in turn
+  includes an icon.
+
+- LINKFLAGS includes flags for the stack size and to allow addressing
+  over 2GB for 32-bit executables.
+
+The default is to compile without debug info: this can be enabled by
+using 'make DEBUG=T' from this directory, or install add-on packages
+with Rcmd INSTALL --debug.  Otherwise DLLs and executables are
+stripped.
