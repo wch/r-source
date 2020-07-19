@@ -19,6 +19,9 @@
 /* C type used for Fortran character lengths */
 /* will be size_t for gfortran >= 8, int before */
 /* #undef FC_LEN_T */
+#if defined __GNUC__ && __GNUC__ >= 8
+#define FC_LEN_T size_t
+#endif
 
 /* Define to dummy `main' function (if any) required to link to the Fortran
    libraries. */
