@@ -5,6 +5,7 @@ include ../../gnuwin32/MkRules
 trio-CPPFLAGS=-DTRIO_FEATURE_WIDECHAR=1
 
 CPPFLAGS = -I../../include -I../../main
+LTO =
 
 # trionan.c and triostr.c are included by trio.o
 OBJS = compat.o trio.o

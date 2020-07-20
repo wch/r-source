@@ -11,8 +11,8 @@ else
   DEBUGFLAG=
 endif
 
-DLLFLAGS+= -static-libgcc
-LINKFLAGS+= -static-libgcc
+DLLFLAGS += -static-libgcc
+LINKFLAGS += -static-libgcc
 
 ## The rtools40 installer sets RTOOLS40_HOME, default to standard install path
 RTOOLS40_HOME ?= c:/rtools40
@@ -114,11 +114,11 @@ FC = $(BINPREF)gfortran $(M_ARCH)
 FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
 ## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
 FCLIBS_XTRA =
-F77 = $(BINPREF)gfortran $(M_ARCH)
-F77_VISIBILITY = 
+#F77 = $(BINPREF)gfortran $(M_ARCH)
+#F77_VISIBILITY = 
 FFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
 FLIBS = -lgfortran -lm -lquadmath
-FCPICFLAGS =
+#FCPICFLAGS =
 FPICFLAGS = 
 FOUNDATION_CPPFLAGS =
 FOUNDATION_LIBS =
@@ -129,25 +129,27 @@ JAVAH =
 ## JAVA_HOME might be used in the next three.  
 ## They are for packages 'JavaGD' and 'rJava'
 # JAVA_HOME = 
-# JAVA_LD_LIBRARY_PATH = 
-JAVA_LIBS = -L"$(JAVA_HOME)/bin/client" -ljvm -ljvm-w32
 JAVA_CPPFLAGS = -I"$(JAVA_HOME)/../include" -I"$(JAVA_HOME)/../include/win32"
+JAVA_LIBS = -L"$(JAVA_HOME)/bin/client" -ljvm -ljvm-w32
+# JAVA_LD_LIBRARY_PATH = 
 LAPACK_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRlapack
+LDFLAGS =
 ## we only need this is if it is external, as otherwise link to R
-LIBINTL=
+LIBINTL =
 LIBM = -lm
 LIBR = -L"$(R_HOME)/$(IMPDIR)" -lR
 LIBS =  -lm
 ## needed by R CMD config
 LIBnn = lib
 LIBTOOL =
-LDFLAGS =
+LTO =
 ## needed to build applications linking to static libR
 # MAIN_LD =
 # MAIN_LDFLAGS =
 # MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 # don't have this: would 'mkdir -p' do?
 # MKINSTALLDIRS = $(R_HOME)/bin/mkinstalldirs
+NM = $(BINPREF)nm
 ## There is no ObjC support in the recommended toolchain,
 ## but if a toolchain had support, this it what it would be.
 OBJC = $(CC)
@@ -177,6 +179,9 @@ SHLIB_CXX17LDFLAGS = -shared
 SHLIB_CXX20LD = $(CXX20)
 SHLIB_CXX20LDFLAGS = -shared
 SHLIB_EXT = .dll
+SHLIB_FCLD = $(FC)
+## ideally -shared -static-libgfortran, but not for gcc 4.2.1
+SHLIB_FCLDFLAGS = -shared
 SHLIB_FFLAGS = 
 SHLIB_LD = $(CC)
 SHLIB_LDFLAGS = -shared
@@ -192,17 +197,25 @@ STRIP_STATIC_LIB = $(BINPREF)strip --strip-debug
 TCLTK_CPPFLAGS = -I "$(TCL_HOME)/include" -DWin32
 TCLTK_LIBS = -L"$(TCL_HOME)/bin" -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
 
-## Legacy settings: these might be used in a src/Makefile
-SHLIB_FCLD = $(FC)
-## ideally -shared -static-libgfortran, but not for gcc 4.2.1
-SHLIB_FCLDFLAGS = -shared
-
 STATIC_LIBR =
 
 R_XTRA_CFLAGS =
 R_XTRA_CPPFLAGS = -I"$(R_HOME)/include" -DNDEBUG
 R_XTRA_CXXFLAGS = 
 R_XTRA_FFLAGS =  @GF7OPTS@
+
+ifneq "$(LTO)" ""
+AR = $(BINPREF)gcc-ar
+NM = $(BINPREF)gcc-nm
+RANLIB = $(BINPREF)gcc-ranlib
+SHLIB_LDFLAGS += $(CFLAGS)
+SHLIB_FCLDFLAGS += $(FFLAGS)
+SHLIB_CXXLDFLAGS += $(CXXFLAGS)
+SHLIB_CXX11LDFLAGS += $(CXX11FLAGS)
+SHLIB_CXX14LDFLAGS += $(CXX14FLAGS)
+SHLIB_CXX17LDFLAGS += $(CXX17FLAGS)
+SHLIB_CXX20LDFLAGS += $(CXX20FLAGS)
+endif
 
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(PKG_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(PKG_CPPFLAGS) $(CLINK_CPPFLAGS) $(CPPFLAGS) $($*-CPPFLAGS) $(LOCAL_CPPFLAGS)
@@ -249,15 +262,18 @@ ALL_FCFLAGS = $(R_XTRA_FFLAGS) $(P_FCFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FCFLA
 .f90.o:
 	$(FC) $(ALL_FCFLAGS) -c  $< -o $@
 
+## Not used in R itself
 %.exe:
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LOCAL_LIBS) $(LIBS)
 
 %.dll:
 	@echo EXPORTS > $*.def
 	@$(NM) $^ | $(SED) -n $(SYMPAT) >> $*.def
-	$(SHLIB_LD) -shared $(DLLFLAGS) -o $@ $*.def $^ $(ALL_LIBS)
+	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(DLLFLAGS) -o $@ $*.def $^ $(ALL_LIBS)
 	@$(RM) $*.def
 
+## It does not make much sense to have $($*-DLLTOOLFLAGS) here
+## It is currently unused on CRAN
 lib%.dll.a: %.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --input-def $*.def --output-lib $@
 

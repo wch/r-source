@@ -15,13 +15,13 @@ ADDQU = 's/[^ ][^ ]*/"&"/g'
 $(SHLIB): $(OBJECTS)
 	@if test "z$(OBJECTS)" != "z"; then \
 	  if test -e "$(BASE)-win.def"; then \
-	    echo $(SHLIB_LD) -shared $(DLLFLAGS) -o $@ $(BASE)-win.def $(OBJECTS) $(ALL_LIBS); \
-	    $(SHLIB_LD) -shared $(DLLFLAGS) -o $@ $(BASE)-win.def $(OBJECTS) $(ALL_LIBS); \
+	    echo $(SHLIB_LD) $(SHLIB_LDFLAGS) $(DLLFLAGS) -o $@ $(BASE)-win.def $(OBJECTS) $(ALL_LIBS); \
+	    $(SHLIB_LD) $(SHLIB_LDFLAGS) $(DLLFLAGS) -o $@ $(BASE)-win.def $(OBJECTS) $(ALL_LIBS); \
 	  else \
 	    echo EXPORTS > tmp.def; \
 	    $(NM) $^ | $(SED) -n $(SYMPAT) $(NM_FILTER) | $(SED) $(ADDQU)  >> tmp.def; \
-	    echo $(SHLIB_LD) -shared $(DLLFLAGS) -o $@ tmp.def $(OBJECTS) $(ALL_LIBS); \
-	    $(SHLIB_LD) -shared $(DLLFLAGS) -o $@ tmp.def $(OBJECTS) $(ALL_LIBS); \
+	    echo $(SHLIB_LD) $(SHLIB_LDFLAGS) $(DLLFLAGS) -o $@ tmp.def $(OBJECTS) $(ALL_LIBS); \
+	    $(SHLIB_LD) $(SHLIB_LDFLAGS) $(DLLFLAGS) -o $@ tmp.def $(OBJECTS) $(ALL_LIBS); \
 	    $(RM) tmp.def; \
 	  fi \
 	fi
