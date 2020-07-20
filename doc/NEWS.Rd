@@ -113,6 +113,29 @@
     }
   }
 
+  \subsection{BUILDING R on Windows}{
+    \itemize{
+      \item for GCC \eqn{\ge}{>=} 8, \code{FC_LEN_T} is defined in
+      \file{config.h} and hence character lengths are passed from C to
+      Fortran in \emph{inter alia} BLAS and LAPACK calls.
+
+      \item There is a new text file
+      \file{src/gnuwin32/README.compilation}, which outlines how C/Fortran
+      code compilation is organized and documents two new features:
+      \itemize{
+	\item \R can be built with Link-Time Optimization with a
+	suitable compiler -- doing so with GCC 9.2 showed
+	inconsistencies which have been corrected.
+
+	\item There is support for cross-compiling the C and Fortran
+	code in \R and standard packages on suitable (Linux) platforms.
+	This is mainly intended to allow developers to test later
+	versions of compilers -- for example using GCC 9.2.1 has
+	detected issues that GCC 8.3 in Rtools40 does not.
+      }
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Function \code{plclust()} from the package \pkg{stats}, and
