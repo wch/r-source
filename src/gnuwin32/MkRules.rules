@@ -87,7 +87,7 @@ else
 IMPDIR=$(BINDIR)
 endif
 
-AR ?= $(BINPREF)ar
+AR = $(BINPREF)ar
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
 CP=cp
@@ -106,7 +106,7 @@ MAIN_LD=$(CC)
 ## MAKEINFO = $(TEXI2ANY)
 MKDIR=mkdir
 NM=$(BINPREF)nm
-RANLIB ?= $(BINPREF)ranlib
+RANLIB = $(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres $(RC_ARCH)
 SHLIB_LD=$(CC)
 SHLIB_LDFLAGS=-shared
