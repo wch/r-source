@@ -9453,6 +9453,7 @@ and Fortran.
 @xref{Link-Time Optimization, , Link-Time Optimization,
 R-admin, R Installation and Administration}.
 @end ifset
+(For Windows, see file @file{src/gnuwin32/README.compilation} in the sources.)
 
 For example:
 @example

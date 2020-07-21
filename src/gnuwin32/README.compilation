@@ -17,7 +17,7 @@ etc/Makeconf by fixed/Makefile, taken from MkRules.
 
 2) Everything else, where the primary Makefile is MkRules which is
 where all the customization is done.  This is included by all
-Makefile.win files under directories above this one and
+Makefile.win files in directories above this one and
 
 ./Makefile
 ./cran/Makefile
@@ -103,7 +103,7 @@ writing this used GCC 9.2.1.
 
 There are curl and ICU libraries for optional features.
 
-To build almost all the compiled code, set BINPREF in MkRules.local, e.g. to
+To build all the compiled code, set BINPREF in MkRules.local, e.g. to
 
 WIN = 64
 BINPREF64 = /usr/bin/x86_64-w64-mingw32-
@@ -134,4 +134,13 @@ make cairodevices
 
 
 This will link to the DLLs of bz2 lzma pcre2 zlib ... remove the
-libfoo.dll.a files for a fully static build.
+libfoo.dll.a files for a fully static build (it still uses DLLs for
+libgcc_s_seh and a few others).  For a more fully static build one
+would need other RPMs like
+
+mingw64-fontconfig-static
+mingw64-freetype-static
+mingw64-pixman-static
+mingw64-winpthreads-static
+
+Rather than remove the .dll.a files, one could experiment with -Wl,-Bstatic.
