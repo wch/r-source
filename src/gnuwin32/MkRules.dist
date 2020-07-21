@@ -88,6 +88,7 @@
 # USE_ICU = YES
 # path to parent of ICU headers
 # ICU_PATH =
+# needed libs varies by version and build.
 # ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 
 # set to use libcurl
@@ -104,7 +105,7 @@
 #   https://www.rforge.net/Cairo/files/cairo-current-win.tar.gz
 # and set CAIRO_HOME to the parent of the win32/win64 directories
 #
-# If CAIRO_HOME is not set the devices are not built.
+# If CAIRO_HOME is not set the devices are not built (default).
 # CAIRO_HOME =
 
 # set this to YES to build static HTML help
@@ -112,7 +113,8 @@
 
 # unset this if you are *not* using MiKTeX
 # MIKTEX = TRUE
-# Recent MiKTEX does not provide texi2dvi and needs something like
+# TEXI2DVI = texi2dvi
+# MiKTEX no longer provides texi2dvi and needs something like
 # TEXI2DVI = TEXINDEX=/Rtools/bin/texindex.exe texify
 
 # for texinfo >= 5.1. If the texinfo files are installed at /packages/texinfo,
@@ -121,13 +123,20 @@
 # TEXI2ANY = missing
 
 # additional optimization flags (e.g. -mtune=native for a private build)
-# EOPTS =
+# set in MkRules.rules but can be overriden here.
+# EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
+# set in MkRules.rules (assuming support) but can be overriden here.
 # OPENMP = -fopenmp
 
 # define to -pthread if the toolchain has pthreads support
+# set in MkRules.rules (assuming support) but can be overriden here.
 # PTHREAD = -pthread
+
+# define to use Link-Time Optimization.
+# standard value is -flto, oe e.g. -flto=8 to use 8 threads
+# LTO =
 
 ## ====== configuration macros for building installer ===========
 
