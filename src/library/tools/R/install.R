@@ -179,7 +179,7 @@ if(FALSE) {
 
     if(getOption("warn") < warnOption) {
         op <- options(warn = warnOption)
-        on.exit(options(op), add=TRUE)
+        on.exit(options(op), add = TRUE)
     }
     invisible(Sys.setlocale("LC_COLLATE", "C")) # discard output
 
@@ -1179,7 +1179,8 @@ if(FALSE) {
                     }
                     if(force_biarch) one_only <- FALSE
                     if(one_only || length(archs) < 2L)
-                        has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
+                        has_error <-
+                            run_shlib(pkg_name, srcs, instdir, rarch, use_LTO)
                     else {
                         setwd(owd)
                         test_archs <- archs
@@ -1195,7 +1196,8 @@ if(FALSE) {
 
                             ra <- paste0("/", arch)
                             Sys.setenv(R_ARCH = ra, R_ARCH_BIN = ra)
-                            has_error <- run_shlib(pkg_name, srcs, instdir, ra)
+                            has_error <-
+                                run_shlib(pkg_name, srcs, instdir, ra, use_LTO)
                             setwd(owd)
                             if (has_error) break
                         }
