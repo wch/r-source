@@ -67,7 +67,7 @@ Cross-compilation
 =================
 
 Linux distributions including Fedora, Debian and Ubuntu provide
-cross-compilers and many cross-compiled librarues for both 32- and
+cross-compilers and many cross-compiled libraries for both 32- and
 64-bit Windows.  For example, on Fedora 32 for a 64-bit build one
 might install the RPMs
 
@@ -113,9 +113,6 @@ Setting LTO is supported.
 Then in this directory
 
 make MkRules rbuild rpackages-cross
-
-(Currently it does not build grDevices which need additional
-libraries.)
 
 To make the cairo devices, set something like
 
@@ -164,3 +161,29 @@ USE_ICU = YES
 ICU_LIBS = -licuuc -licui18n -licudata
 
 There is a static version for curl but not ICU.
+
+
+Cross-building packages
+=======================
+
+There is experimental minimal support for cross-building packages.
+
+Copy {bin,etc}/{i386,x64} from this build to a standard Linux build.
+
+Edit etc/*/Makeconf to have
+
+R_WIN = /path/to/top/directory/of/this/build
+R_XTRA_CPPFLAGS = -I"$(R_WIN)/include" -DNDEBUG
+
+Set the environment variable R_CROSS_BUILD to i386 or x64.
+
+Use R CMD INSTALL as usual.  This does not do a staged install nor
+test loading.
+
+R CMD INSTALL --build will produce a zipped installation.
+
+Should a package require external libraries, these can be placed under
+LOCAL_SOFT as defined in etc/*/Makeconf.
+
+
+

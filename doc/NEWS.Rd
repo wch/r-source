@@ -121,18 +121,27 @@
 
       \item There is a new text file
       \file{src/gnuwin32/README.compilation}, which outlines how C/Fortran
-      code compilation is organized and documents two new features:
+      code compilation is organized and documents new features:
       \itemize{
 	\item \R can be built with Link-Time Optimization with a
-	suitable compiler -- doing so with GCC 9.2 showed
+	suitable compiler -- doing so with GCC 9.2 showed several
 	inconsistencies which have been corrected.
 
 	\item There is support for cross-compiling the C and Fortran
 	code in \R and standard packages on suitable (Linux) platforms.
 	This is mainly intended to allow developers to test later
-	versions of compilers -- for example using GCC 9.2.1 has
+	versions of compilers -- for example using GCC 9.2 has
 	detected issues that GCC 8.3 in Rtools40 does not.
+
+	\item There is experimental support for cross-building \R
+	packages with C, C++ and/or Fortran code.
       }
+
+      \item \command{R CMD INSTALL} and \command{R CMD SHLIB} make use
+      of the flag \option{--use-LTO} when the \samp{LTO_OPT} make macro
+      is set in file \file{etc/$\{R_ARCH\}/Makeconf} -- it is not by
+      default but a setting in \file{MkRules.local} will be imported
+      when \R is built.
     }
   }
 
