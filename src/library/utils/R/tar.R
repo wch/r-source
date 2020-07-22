@@ -137,9 +137,34 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     }
     getOct <- function(x, offset, len)
         as.integer(getOctD(x, offset, len))
-    mydir.create <- function(path, ...) {
+    checkPath <- function(path) {
+        if (.Platform$OS.type == "windows") {
+            if (grepl("^[a-zA-Z]:", path)) {
+                drv <- sub("^([a-zA-Z]:).*", "\\1", path)
+                warning(sprintf("removing drive '%s'", drv))
+                path <- sub("^([a-zA-Z]:).*", "", path)
+            }
+            path <- gsub("\\\\", "/", path)
+        }
+        if (grepl("^/", path)) {
+            warning("removing leading '/'")
+            path <- sub("^/+", "", path)
+        }
+        if (grepl("^~", path))
+            stop("path starts with '~'")
+        parts <- strsplit(path, "/")[[1]]
+        if (".." %in% parts)
+            stop("path contains '..'")
+        if (length(parts) == 0)
+            stop("path is empty")
+        do.call(file.path, as.list(parts))
+    }
+    mydir.create <- function(path, ..., .checkPath = TRUE) {
         ## for Windows' sake
         path <- sub("[\\/]$", "", path)
+        ## address path traversal vulnerability  (PR17853):
+        if (.checkPath)
+            path <- checkPath(path)
         if(dir.exists(path)) return()
         if(!dir.create(path, showWarnings = TRUE, recursive = TRUE, ...))
            stop(gettextf("failed to create directory %s", sQuote(path)),
@@ -163,7 +188,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     else stop("'tarfile' must be a character string or a connection")
     ## now 'con' is a connection
     if (exdir != ".") {
-        mydir.create(exdir)
+        mydir.create(exdir, .checkPath = FALSE)
         od <- setwd(exdir)
         on.exit(setwd(od), add = TRUE)
     }
