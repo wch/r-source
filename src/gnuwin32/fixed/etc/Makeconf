@@ -143,6 +143,8 @@ LIBS =  -lm
 LIBnn = lib
 LIBTOOL =
 LTO =
+## used in INSTALL
+LTO_OPT =
 ## needed to build applications linking to static libR
 # MAIN_LD =
 # MAIN_LDFLAGS =

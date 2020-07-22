@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 
 ## This is only used when building R itself but it does customize
-## etc/*/Makeconf using LOCAL_SOFT, BINPREF[64], IMPLIB and R_ARCH
+## etc/*/Makeconf: see fixed/Makefile
 
 ## Customize by copying to MkRules.local and uncommenting and editing 
 ## some of the definitions there.  
@@ -137,6 +137,8 @@
 # define to use Link-Time Optimization.
 # standard value is -flto, oe e.g. -flto=8 to use 8 threads
 # LTO =
+# for use with Rcmd INSTALL --use-LTO
+# LTO_OPT =
 
 ## ====== configuration macros for building installer ===========
 
