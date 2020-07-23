@@ -28,7 +28,7 @@ BUILD_HTML ?= NO
 MIKTEX ?= TRUE
 TEXI2ANY ?= missing
 TEXI2DVI ?= texi2dvi
-EOPTS ?= -mfpmath=sse -msse2 -mstackrealign $(LTO)
+EOPTS ?= -mfpmath=sse -msse2 -mstackrealign
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
 ISDIR ?= C:/packages/Inno

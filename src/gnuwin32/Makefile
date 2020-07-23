@@ -58,8 +58,8 @@ MkRules: MkRules.rules
 	@cat MkRules.rules > MkRules
 endif
 
-CFLAGS = -O3 -Wall -pedantic $(EOPTS)
-FFLAGS = -O3 $(EOPTS) $(GF7OPTS)
+CFLAGS = -O3 -Wall -pedantic $(EOPTS) $(LTO)
+FFLAGS = -O3 $(EOPTS) $(GF7OPTS) $(LTO)
 
 ifdef DEBUG
  CFLAGS += $(G_FLAG)
