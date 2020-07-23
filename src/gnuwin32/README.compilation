@@ -170,20 +170,20 @@ There is experimental minimal support for cross-building packages.
 
 Copy {bin,etc}/{i386,x64} from this build to a standard Linux build.
 
-Edit etc/*/Makeconf to have
+Edit the copy of etc/*/Makeconf to have
 
 R_WIN = /path/to/top/directory/of/this/build
 R_XTRA_CPPFLAGS = -I"$(R_WIN)/include" -DNDEBUG
 
 Set the environment variable R_CROSS_BUILD to i386 or x64.
 
-Use R CMD INSTALL as usual.  This does not do a staged install nor
-test loading.
+Use R CMD INSTALL as usual. (This does not do a staged install nor
+test loading.)  --use-LTO is supported if LTO_OPT was set.
 
 R CMD INSTALL --build will produce a zipped installation.
 
 Should a package require external libraries, these can be placed under
-LOCAL_SOFT as defined in etc/*/Makeconf.
+LOCAL_SOFT as defined in etc/*/Makeconf in the copy.
 
 
 

@@ -161,13 +161,30 @@ if(FALSE) {
 
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
+    cross <- Sys.getenv("R_CROSS_BUILD")
+    have_cross <- nzchar(cross)
+    if(have_cross && !cross %in% c("i386", "x64"))
+        stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
+    if (have_cross) {
+        WINDOWS <- TRUE
+	Sys.setenv(R_OSTYPE = "windows")
+    }
 
     if (WINDOWS) MAKE <- "make"
     else MAKE <- Sys.getenv("MAKE") # FIXME shQuote, default?
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
+    cross <- Sys.getenv("R_CROSS_BUILD")
+    if(have_cross && !cross %in% c("i386", "x64"))
+        stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
     test_archs <- rarch
+    if (have_cross) {
+        WINDOWS <- TRUE
+        r_arch <- paste0("/", cross)
+        test_archs <- c()
+    }
+
 
     SHLIB_EXT <- if (WINDOWS) ".dll" else {
         ## can we do better?
@@ -1005,6 +1022,7 @@ if(FALSE) {
         pkg_staged_install <- SI <-
             parse_description_field(desc, "StagedInstall", default = NA)
         if (is.na(pkg_staged_install)) pkg_staged_install <- staged_install
+        if (have_cross) pkg_staged_install <- FALSE
         if (pkg_staged_install && libs_only) {
             pkg_staged_install <- FALSE
             message("not using staged install with --libs-only")
@@ -1146,7 +1164,8 @@ if(FALSE) {
                 } else { ## no src/Makefile.win
                     srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
                                 all.files = TRUE)
-                    archs <- if (!force_both && !grepl(" x64 ", utils::win.version()))
+                    archs <- if(have_cross) cross
+                    else if (!force_both && !grepl(" x64 ", utils::win.version()))
                         "i386"
                     else {
                         ## see what is installed
@@ -1304,6 +1323,7 @@ if(FALSE) {
             if (!grepl(" x64 ", utils::win.version())) test_archs <- "i386"
         }
 
+        if (have_cross) Sys.unsetenv("R_ARCH")
 
         ## R files must start with a letter
 	if (install_R && dir.exists("R") && length(dir("R"))) {
@@ -1676,7 +1696,7 @@ if(FALSE) {
             }
         }
 
-        if (test_load) {
+        if (test_load && !have_cross) {
             if (pkg_staged_install)
 	        starsmsg(stars,
                     "testing if installed package can be loaded from temporary location")
@@ -2284,6 +2304,14 @@ if(FALSE) {
     p1 <- function(...) paste(..., collapse = " ")
 
     WINDOWS <- .Platform$OS.type == "windows"
+    cross <- Sys.getenv("R_CROSS_BUILD")
+    if(nzchar(cross)) {
+        if(!cross %in% c("i386", "x64"))
+            stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
+        WINDOWS <- TRUE
+        Sys.setenv(R_ARCH = paste0("/", cross))
+    }
+
     if (!WINDOWS) {
         mconf <- readLines(file.path(R.home(),
                                      paste0("etc", Sys.getenv("R_ARCH")),
