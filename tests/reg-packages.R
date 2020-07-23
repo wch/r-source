@@ -9,6 +9,15 @@ Sys.setenv(R_LIBS = .R_LIBS() # for build.pkg() & install.packages()
          , R_ENVIRON = "none"
          , R_PROFILE = "none"
            )
+showProc.time <- local({ ## function + 'pct' variable
+    pct <- proc.time()
+    function(final="\n") { ## CPU elapsed __since last called__
+	ot <- pct ; pct <<- proc.time()
+	cat('Time elapsed: ',
+	    format.default(round((pct - ot)[1:3], digits=3), digits=4),
+	    final)
+    }
+})
 
 ## PR 1271  detach("package:base") crashes R.
 tools::assertError(detach("package:base"))
@@ -17,6 +26,8 @@ tools::assertError(detach("package:base"))
 ## invalid 'lib.loc'
 stopifnot(length(installed.packages("mgcv")) == 0)
 ## gave a low-level error message
+showProc.time()
+
 
 
 ## package.skeleton() with metadata-only code
@@ -46,7 +57,7 @@ stopifnot(1 == grep("setClass",
 ## failed for several reasons in R < 2.7.0
 ##
 ## Part 2: -- build, install, load and "inspect" the package:
-build.pkg <- function(dir, destdir = NULL) {
+build.pkg <- function(dir, destdir = NULL, ignore.stderr = FALSE) {
     dir <- normalizePath(dir)
     if(length(dir) > 1)
         return(lapply(dir, build.pkg, destdir = destdir))
@@ -57,7 +68,7 @@ build.pkg <- function(dir, destdir = NULL) {
     unlink(dir('.', pattern = patt))
     Rcmd <- paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
     r <- system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
-                intern = TRUE)
+                ignore.stderr=ignore.stderr, intern = TRUE)
     ## return name of tar file built {plus the build log} :
     tball <- structure(dir('.', pattern = patt), log3 = r)
     if(is.null(destdir))
@@ -98,10 +109,11 @@ if(interactive() && Sys.getenv("USER") == "maechler")
 ## if this happens non-interactively, cleanup and quit gracefully
 if(!file_test("-d", pkgSrcPath) && !interactive()) {
     unlink("myTst", recursive=TRUE)
-    print(proc.time())
+    showProc.time()
     q("no")
 }
 ## else w/o clause:
+showProc.time()
 
 do.cleanup <- !nzchar(Sys.getenv("R_TESTS_NO_CLEAN"))
 isWIN <- .Platform$OS.type == "windows"
@@ -129,32 +141,84 @@ if(!dir.exists(pkgPath))  {
 
 ## pkgB tests an empty R directory
 dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
-	   showWarnings = FALSE)
+           showWarnings = FALSE)
+## (how can this happen reliably more easily?)
+##' Copy directory d1 to (new/cleaned directory location) d2
+##'     "cp -a d1/ d2/"
+dirCopy <- function(d1, d2) {
+    stopifnot(exprs = {
+        dir.exists(d1)
+        dir.exists(dirname(d2))
+        !dir.exists(d2) || unlink(d2, recursive=TRUE) == 0
+        dir.create(d2)
+        file.copy(list.files(d1, full.names = TRUE, recursive = TRUE),
+                  d2)
+    })
+}
+##
+## pkgB{2,3} := pkgB but with missing/incomplete 'Imports:' entry in DESCRIPTION
+              pBp <- file.path(pkgPath, "pkgB")
+dirCopy(pBp, pB2p <- file.path(pkgPath, "pkgB2"))
+dirCopy(pBp, pB3p <- file.path(pkgPath, "pkgB3"))
+if(okB2 <- file.exists(DN <- file.path(pB2p, "DESCRIPTION"))) {
+  Dlns <- readLines(DN); i <- grep("^Imports:", Dlns)
+  ## drop 'Imports: ' completely (and replace [Pp]kgB by [Pp]kgB2):
+  writeLines(gsub("kgB", "kgB2", Dlns[-i]), con = DN)
+}
+if(okB3 <- file.exists(DN <- file.path(pB3p, "DESCRIPTION"))) {
+  Dlns <- readLines(DN); i <- grep("^Imports:", Dlns)
+  ## Only keep the first 'Imports: '  (and replace [Pp]kgB by [Pp]kgB2):
+  Dlns[i] <- sub(",.*", "", Dlns[i])
+  writeLines(gsub("kgB", "kgB3", Dlns), con = DN)
+}
 p.lis <- c(if("Matrix" %in% row.names(installed.packages(.Library)))
-               c("pkgA", "pkgB", "pkgC"),
+               c("pkgA", "pkgB", if(okB2) "pkgB2", if(okB3) "pkgB3", "pkgC"),
            "exNSS4", "exNSS4nil", "exSexpr")
+p.lis; (pBlis <- grep("^pkgB", p.lis, value=TRUE))
 InstOpts <- list("exSexpr" = "--html")
 pkgApath <- file.path(pkgPath, "pkgA")
 if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
     cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
     file.copy(file.path(pkgPath, "xDir", "pkg"), to = d, recursive=TRUE)
     ## if even the copy failed (NB: pkgB, pkgC depend on pkgA)
-    if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", "pkgB", "pkgC"))]
+    if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", pB.lis, "pkgC"))]
 }
-dir2pkg <- function(dir) ifelse(dir == "pkgC", "PkgC", dir)
+dir2pkg <- function(dir) sub("^pkgC", "PkgC", dir)
 if(is.na(match("myLib", .lP <- .libPaths()))) {
     .libPaths(c("myLib", .lP)) # PkgC needs pkgA from there
     .lP <- .libPaths()
 }
 Sys.setenv(R_LIBS = .R_LIBS(.lP)) # for build.pkg() & install.packages()
+showProc.time()
 for(p in p.lis) {
     p. <- dir2pkg(p) # 'p' is sub directory name;  'p.' is package name
-    cat("building package", p., "...\n")
-    r <- build.pkg(file.path(pkgPath, p))
+    cat("===--===\nFrom pkgPath sub directory", p, " building package", p., "...\n")
+    pkgP <- file.path(pkgPath, p)
+    r <- build.pkg(pkgP, ignore.stderr = (p != "exSexpr"))
+    showProc.time()
     if(!length(r)) # so some sort of failure, show log
         cat(attr(r, "log3"), sep = "\n")
     if(!isTRUE(file.exists(r)))
-        stop("R CMD build failed (no tarball) for package ", p)
+        stop("R CMD build failed (no tarball) for package ", p.)
+    if(p %in% pBlis) { ## R CMD check "dependencies"
+        res <- tools:::.check_package_depends(dir=pkgP, force_suggest=FALSE)
+        cat("check_package_depends:\n") ; print(res)
+        if(length(res)) pres <- capture.output(res)
+        switch(p
+             , "pkgB" = stopifnot(length(res) == 0)
+             , "pkgB2" = stopifnot(exprs = {
+                 length(res) == 1
+                 identical(res$missing_namespace_depends, c("methods", "pkgA"))
+                 grepl("Namespace dependencies .* DESCRIPTION" , pres[1])
+                 })
+             , "pkgB3" =  stopifnot(exprs = {
+                 length(res) == 1
+                 identical(res[[1]], "pkgA")
+                 grepl("Namespace dependency .* DESCRIPTION" , pres[1])
+                 })
+               )
+        showProc.time()
+    }
     ## otherwise install the tar file:
     cat("installing package", p., "using built file", r, "...\n")
     ## "FIXME": want to catch warnings in the "console output" of this,
@@ -163,7 +227,9 @@ for(p in p.lis) {
                      INSTALL_opts = InstOpts[[p.]])
     stopifnot(require(p., lib = "myLib", character.only=TRUE))
     detach(pos = match(p., sub("^package:","", search())))
+    showProc.time()
 }
+cat("\n-------------------end { for(p in p.lis) }----------------------------\n")
 (res <- installed.packages(lib.loc = "myLib", priority = "NA"))
 (p.lis <- dir2pkg(p.lis)) # so from now, it contains package names
 stopifnot(exprs = {
@@ -185,6 +251,7 @@ if("pkgA" %in% p.lis && dir.exists(pkgApath)) {
 	"numericA" %in% ext.cA
     })
 } else message("'pkgA' not available")
+showProc.time()
 
 ## - Check conflict message.
 ## - Find objects which are NULL via "::" -- not to be expected often
@@ -203,6 +270,7 @@ if(dir.exists(file.path("myLib", "pkgA"))) {
   ## ::: does not apply to data sets:
   tools::assertError(is.null(pkgA:::nilData))
 } else message("'pkgA' not in 'myLib'")
+showProc.time()
 
 ## Check error from invalid logical field in DESCRIPTION:
 (okA <- dir.exists(pkgApath) &&
@@ -232,6 +300,7 @@ if(okA) {
       try( eval(instEXPR) ) # showing the error message in the *.Rout file
   }
 } else message("pkgA/DESCRIPTION  not available")
+showProc.time()
 
 ## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
 msg <- capture.output(
@@ -240,6 +309,7 @@ if(length(msg))
     stop(".check_package_parseRd() gave message\n",msg)
 ## in R <= 3.5.1, gave
 ##  "prepare_Rd: foo.Rd:14: Section \\Sexpr is unrecognized and will be dropped"
+showProc.time()
 
 
 if(dir.exists(file.path("myLib", "exNSS4"))) {
@@ -272,6 +342,7 @@ if(dir.exists(file.path("myLib", "exNSS4"))) {
     stopifnot(isVirtualClass(getClass("atomicVector")))
   }
 }
+showProc.time()
 
 
 ## Part 3: repository construction ---------------------------------------------
@@ -324,6 +395,7 @@ Pfiles <- mkPkgfiles(repodir)
 backupPfiles <- file.path(tempdir(), basename(Pfiles))
 if(all(file.exists(backupPfiles)))
     unlink(backupPfiles)
+showProc.time()
 
 ## test write_PACKAGES and update_PACKAGES
 ## on empty dir
@@ -338,6 +410,7 @@ newpfs <- list.files(newpkgdir, pattern = "\\.tar\\.gz$", recursive = TRUE, full
 file.copy(oldpfs, to = repodir)
 tools::write_PACKAGES(repodir, type = "source")
 file.copy(Pfiles, backupPfiles, overwrite = TRUE)
+showProc.time()
 
 
 ## test update_PACKAGES with no change
@@ -351,6 +424,7 @@ docompare(strict=FALSE)
 
 ## put old ones back
 file.copy(oldpfs, to = repodir)
+showProc.time()
 
 
 if(isWIN){
@@ -392,4 +466,6 @@ if(do.cleanup) {
     cat("Not cleaning, i.e., keeping ", paste(rmL, collapse=", "), "\n")
 }
 
-proc.time()
+showProc.time()
+## And the final:
+environment(showProc.time)[["pct"]]
