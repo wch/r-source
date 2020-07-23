@@ -372,12 +372,20 @@ static void PrintObjectS3(SEXP s, R_PrintData *data)
     UNPROTECT(4); /* mask, fun, args, call */
 }
 
+static void save_tagbuf(char *save, size_t n)
+{
+    if (strlen(tagbuf) < n)
+	strcpy(save, tagbuf);
+    else
+	error("tagbuf overflow");
+}
+    
 static void PrintObject(SEXP s, R_PrintData *data)
 {
     /* Save the tagbuffer to restore indexing tags after evaluation
        because calling into base::print() resets the buffer */
     char save[TAGBUFLEN0];
-    strcpy(save, tagbuf);
+    save_tagbuf(save, sizeof save);
 
     if (isMethodsDispatchOn() && IS_S4_OBJECT(s))
 	PrintObjectS4(s, data);
@@ -984,7 +992,7 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 	/* guard against cycles through attributes on environments */
 	if (strlen(tagbuf) > TAGBUFLEN0)
 	    error(_("print buffer overflow"));
-	strcpy(save, tagbuf);
+	save_tagbuf(save, sizeof save);
 	/* remove the tag if it looks like a list not an attribute */
 	if (strlen(tagbuf) > 0 &&
 	    *(tagbuf + strlen(tagbuf) - 1) != ')')
