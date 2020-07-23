@@ -4084,6 +4084,19 @@ deparse(S)# FIXME: is still wrong (no trace of "CA")
 ## "CA" was not shown in R <= 4.0.2
 
 
+## sort(), order(), rank() for "raw - object":
+int8 <- function(x) structure(x, class = c("int8", oldClass(x)))
+`[.int8` <- function(x, ...) structure(NextMethod("["), class=class(x))
+set.seed(2); si <- sample.int(37)
+rI <- int8(as.raw(si))
+stopifnot(exprs = {
+    identical(rank (rI), rank (si))
+    identical(order(rI), order(si))
+    identical(sort (rI), int8(as.raw(1:37)))
+})
+## failed in  R <= 4.0.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

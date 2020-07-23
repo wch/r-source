@@ -255,6 +255,10 @@
       \item \code{addmargins(*, ..)} now also works when \code{fn()} is a
       local function, thanks to bug report and patch \PR{17124} from Alex
       Bertram.
+
+      \item \code{rank(x)} and hence \code{sort(x)} now work when \code{x}
+      is an object (per \code{is.object(x)}) and of type \code{"raw"},
+      e.g., for \code{gmp::as.bigz(.)} numbers.
     }
   }
 }
