@@ -1,7 +1,7 @@
 #  File src/library/stats/R/update.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ update.default <-
 	stop("need an object with call component")
     extras <- match.call(expand.dots = FALSE)$...
     if (!missing(formula.))
-	call$formula <- update.formula(formula(object), formula.)
+	call$formula <- update(formula(object), formula.)
     if(length(extras)) {
 	existing <- !is.na(match(names(extras), names(call)))
 	## do these individually to allow NULL to remove entries.
@@ -45,8 +45,8 @@ update.default <-
 update.formula <- function (old, new, ...)
 {
     tmp <- .Call(C_updateform, as.formula(old), as.formula(new))
-    out <- formula(terms.formula(tmp, simplify = TRUE))
-    return(out)
+    ## FIXME?: terms.formula() with "large" unneeded attributes:
+    formula(terms.formula(tmp, simplify = TRUE))
 }
 
 ## Cannot register update.packageStatus() in utils: hence "copy" and

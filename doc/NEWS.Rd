@@ -91,7 +91,7 @@
       devices and the \code{pdf()} device.
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The \emph{standalone} \file{libRmath} math library and \R's C
@@ -208,6 +208,10 @@
       \item The \command{R CMD check <pkg>} gives a longer and more
       comprehensible message when \file{DESCRIPTION} misses dependencies,
       e.g., in \code{Imports:}; thanks to the contributors of \PR{17179}.
+
+      \item \code{update.default()} now calls the generic \code{update()}
+      on the formula to work correctly for models with extended formulas;
+      as reported and suggested by Neal Fultz in \PR{17865}.
     }
   }
 }
