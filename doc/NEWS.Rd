@@ -27,15 +27,6 @@
       now gives a factor, and specifically an ordered factor when
       combining ordered factors with identical levels.
 
-      \item Graphics devices can now specify \code{canClip =
-        NA_LOGICAL}, in which case the graphics engine will never
-      perform any clipping of output itself.
-
-      The clipping that the graphics engine does perform (for both
-      \code{canClip = TRUE} and \code{canClip = FALSE}) has been
-      improved to avoid producing unnecessary artifacts in clipped
-      output.
-
       \item \code{apply()} gains a \code{simplify} argument to possibly
       disable simplifying results.
 
@@ -62,22 +53,8 @@
 
       \item \code{capabilities()} gets new entry \code{"Rprof"} which is
       \code{TRUE} when \R has been configured with the equivalent of
-      \command{--enable-R-profiling}, as it is by default; related to
+      \command{--enable-R-profiling} (as it is by default): related to
       Michael Orlitzky's report \PR{17836}.
-
-      \item The \pkg{grid} package now allows \code{gpar(fill)} to be
-      a \code{linearGradient()}, a \code{radialGradient()}, or a
-      \code{pattern()}.  The \code{viewport(clip)} can now also be
-      a grob, which defines a clipping path, and there is a new
-      \code{viewport(mask)} that can also be a grob, which defines
-      a mask.
-
-      These new features are only supported (so far) on Cairo graphics
-      devices and the \code{pdf()} device.
-
-      The graphics engine version, \code{R_GE_version}, has been bumped
-      to 13 and so packages that provide graphics devices
-      should be reinstalled.
 
       \code{str(xS4)} now also shows extraneous attributes of an S4 object
       \code{xS4}.
@@ -88,10 +65,37 @@
     }
   }
 
+  \subsection{GRAPHICS}{
+    \itemize{
+      \item The graphics engine version, \code{R_GE_version}, has been
+      bumped to 13 and so packages that provide graphics devices should
+      be reinstalled.
+
+      \item Graphics devices can now specify \code{canClip =
+        NA_LOGICAL}, in which case the graphics engine will never
+      perform any clipping of output itself.
+
+      The clipping that the graphics engine does perform (for both
+      \code{canClip = TRUE} and \code{canClip = FALSE}) has been
+      improved to avoid producing unnecessary artifacts in clipped
+      output.
+
+      \item The \pkg{grid} package now allows \code{gpar(fill)} to be
+      a \code{linearGradient()}, a \code{radialGradient()}, or a
+      \code{pattern()}.  The \code{viewport(clip)} can now also be
+      a grob, which defines a clipping path, and there is a new
+      \code{viewport(mask)} that can also be a grob, which defines
+      a mask.
+
+      These new features are only supported (so far) on Cairo graphics
+      devices and the \code{pdf()} device.
+    }
+  }
+  
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The \emph{standalone} \file{libRmath} math library and \R's C
-      API now provide \code{log1pexp()} again as documented, and gains
+      API now provide \code{log1pexp()} again as documented, and gain
       \code{log1mexp()}.
     }
   }
@@ -147,10 +151,10 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item Function \code{plclust()} from the package \pkg{stats}, and
+      \item Function \code{plclust()} from the package \pkg{stats} and
       \code{package.dependencies()}, \code{pkgDepends()},
       \code{getDepList()}, \code{installFoundDepends()}, and
-      \code{vignetteDepends()} from \pkg{tools} are defunct.
+      \code{vignetteDepends()} from package \pkg{tools} are defunct.
 
       \item Defunct functions \code{checkNEWS()} and \code{readNEWS()} from
       package \pkg{tools} and \code{CRAN.packages()} from \pkg{utils} have
