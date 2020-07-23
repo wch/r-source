@@ -71,19 +71,19 @@ AR = $(BINPREF)ar
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
 CC = $(BINPREF)gcc $(M_ARCH)
-CFLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@
+CFLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ $(LTO)
 CPICFLAGS = 
 CPPFLAGS =
 CXX = $(BINPREF)g++ -std=gnu++11 $(M_ARCH)
 CXXCPP = $(CXX) -E
-CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
+CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXXPICFLAGS =
 #CXX98 = $(BINPREF)g++ $(M_ARCH)
 #CXX98FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
 #CXX98PICFLAGS = 
 #CXX98STD = -std=gnu++98
 CXX11 = $(BINPREF)g++ $(M_ARCH)
-CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
+CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ $(LTO)
 CXX11PICFLAGS =
 CXX11STD = -std=gnu++11
 ## these settings are for gcc >= 8
@@ -111,12 +111,12 @@ ECHO_T =
 F_VISIBILITY = 
 ## FC is the compiler used for all Fortran as from R 3.6.0
 FC = $(BINPREF)gfortran $(M_ARCH)
-FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
+FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@ $(LTO)
 ## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
 FCLIBS_XTRA =
 #F77 = $(BINPREF)gfortran $(M_ARCH)
 #F77_VISIBILITY = 
-FFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
+FFLAGS = -O3 $(DEBUGFLAG) @EOPTS@ $(LTO)
 FLIBS = -lgfortran -lm -lquadmath
 #FCPICFLAGS =
 FPICFLAGS = 
