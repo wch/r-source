@@ -9448,12 +9448,16 @@ For non-interactive use, one may need @command{lldb --batch}.
 
 Where supported, @emph{link time optimization} provides a comprehensive
 way to check the consistency of calls between Fortran files or between C
-and Fortran.
+and Fortran.  Use this @emph{via} @command{R CMD INSTALL --use-LTO}.
+
+To set up support on a Unix-alike,
 @ifset UseExternalXrefs
 @xref{Link-Time Optimization, , Link-Time Optimization,
 R-admin, R Installation and Administration}.
 @end ifset
-(For Windows, see file @file{src/gnuwin32/README.compilation} in the sources.)
+For Windows, first edit file @file{etc/$@{R_ARCH@}/Makeconf} to give
+@code{LTO_OPT} the value @code{-flto}: see also file
+@file{src/gnuwin32/README.compilation} in the sources.
 
 For example:
 @example
@@ -13509,10 +13513,7 @@ further examples.
 Where supported, @emph{link time optimization} provides a reliable way
 to check the consistency of calls to C from Fortran or @emph{vice
 versa}.
-@ifset UseExternalXrefs
-@xref{Link-Time Optimization, , Link-Time Optimization,
-R-admin, R Installation and Administration}.
-@end ifset
+@xref{Using Link-time Optimization}.
 One place where this occurs is the registration of @code{.Fortran} calls
 in C code (@pxref{Registering native routines}).  For example
 @example

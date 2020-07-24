@@ -144,17 +144,15 @@
   }
 
   \subsection{PACKAGE INSTALLATION on Windows}{
-      \itemize{
+    \itemize{
       \item \command{R CMD INSTALL} and \command{R CMD SHLIB} make use
-      of their flag \option{--use-LTO} when the \samp{LTO_OPT} make macro
-      is set in file \file{etc/$\{R_ARCH\}/Makeconf} -- it is not by
-      default but the file can be edited when using a binary
-      distribution of \R.  See file \file{src/gnuwin32/README.compilation}.
+      of their flag \option{--use-LTO} when the \samp{LTO_OPT} make
+      macro is set in file \file{etc/$\{R_ARCH\}/Makeconf}.  (For
+      details see \sQuote{Writing R Extensions} §4.5.)
 
-      This provides a valuable check on code consistency (see
-      \sQuote{Writing R Extensions} §4.5).  It does work with GCC 8.3 as
-      in Rtools40, but that does not detect everything the
-      \acronym{CRAN} checks with GCC 10 do.
+      This provides a valuable check on code consistency.  It does work
+      with GCC 8.3 as in Rtools40, but that does not detect everything
+      the \acronym{CRAN} checks with GCC 10 do.
     }
   }
 

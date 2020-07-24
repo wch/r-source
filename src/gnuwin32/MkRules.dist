@@ -135,9 +135,9 @@
 # PTHREAD = -pthread
 
 # define to use Link-Time Optimization.
-# standard value is -flto, oe e.g. -flto=8 to use 8 threads
+# standard value is -flto, or e.g. -flto=8 to use 8 threads
 # LTO =
-# for use with Rcmd INSTALL --use-LTO
+# flag for use with Rcmd INSTALL --use-LTO
 # LTO_OPT =
 
 ## ====== configuration macros for building installer ===========

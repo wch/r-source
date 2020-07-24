@@ -59,12 +59,14 @@ stripped.
 Link-Time Optimization
 ======================
 
-To enable LTO set the LTO macro in MkRules.local, to -flto or
-e.g. -flto=8 to use 8 threads.
+To enable LTO for building R set the LTO macro in MkRules.local, to
+-flto or e.g. -flto=8 to use 8 threads.
 
-Checking of packages with LTO can be enabled by setting the LTO_OPT
-macro to -flto (by editing the appropriate etc/*/Makeconf files in an
-installed version of R) and using Rcmd INSTALL --use-LTO.
+Checking of packages with LTO can be performed by setting the LTO_OPT
+macro to -flto in MkRules.local and using Rcmd INSTALL --use-LTO.
+
+For an installed version of R it should suffice to edit the value of
+LTO_OPT in the etc/*/Makeconf files.
 
 
 Cross-compilation
