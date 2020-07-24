@@ -181,7 +181,7 @@ if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
     cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
     file.copy(file.path(pkgPath, "xDir", "pkg"), to = d, recursive=TRUE)
     ## if even the copy failed (NB: pkgB, pkgC depend on pkgA)
-    if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", pB.lis, "pkgC"))]
+    if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", pBlis, "pkgC"))]
 }
 dir2pkg <- function(dir) sub("^pkgC", "PkgC", dir)
 if(is.na(match("myLib", .lP <- .libPaths()))) {
