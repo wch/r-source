@@ -599,7 +599,7 @@ getRefSuperClasses <- function(classes, classDefs) {
     }
     allMethods <- as.list(methodsEnv)
     ## get a list of processed methods, plus any
-    ## overriden superclass methods
+    ## overridden superclass methods
     newMethods <- insertClassMethods(allMethods, className, methodDefs, names(def@fieldClasses), FALSE)
     for(what in names(newMethods))
         assign(what, newMethods[[what]], envir = methodsEnv)

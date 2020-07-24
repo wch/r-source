@@ -123,15 +123,15 @@
 # TEXI2ANY = missing
 
 # additional optimization flags (e.g. -mtune=native for a private build)
-# set in MkRules.rules but can be overriden here.
+# set in MkRules.rules but can be overridden here.
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
-# set in MkRules.rules (assuming support) but can be overriden here.
+# set in MkRules.rules (assuming support) but can be overridden here.
 # OPENMP = -fopenmp
 
 # define to -pthread if the toolchain has pthreads support
-# set in MkRules.rules (assuming support) but can be overriden here.
+# set in MkRules.rules (assuming support) but can be overridden here.
 # PTHREAD = -pthread
 
 # define to use Link-Time Optimization.
