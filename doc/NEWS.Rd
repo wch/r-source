@@ -140,12 +140,21 @@
 	\item There is experimental support for cross-building \R
 	packages with C, C++ and/or Fortran code.
       }
+    }
+  }
 
+  \subsection{PACKAGE INSTALLATION on Windows}{
+      \itemize{
       \item \command{R CMD INSTALL} and \command{R CMD SHLIB} make use
-      of the flag \option{--use-LTO} when the \samp{LTO_OPT} make macro
+      of their flag \option{--use-LTO} when the \samp{LTO_OPT} make macro
       is set in file \file{etc/$\{R_ARCH\}/Makeconf} -- it is not by
-      default but a setting in \file{MkRules.local} will be imported
-      when \R is built.
+      default but the file can be edited when using a binary
+      distribution of \R.  See file \file{src/gnuwin32/README.compilation}.
+
+      This provides a valuable check on code consistency (see
+      \sQuote{Writing R Extensions} §4.5).  It does work with GCC 8.3 as
+      in Rtools40, but that does not detect everything the
+      \acronym{CRAN} checks with GCC 10 do.
     }
   }
 
