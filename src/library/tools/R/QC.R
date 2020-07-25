@@ -3256,7 +3256,7 @@ function(x, ...)
             "")
       },
       if(length(bad <- x$missing_namespace_depends)) {
-          error_str <- "missing from DESCRIPTION Imports/Suggests/Depends entries:"
+          error_str <- "missing from DESCRIPTION Imports/Depends entries:"
           c(if(length(bad) > 1L)
                 .pretty_format2(paste("Namespace dependencies", error_str), bad)
             else
