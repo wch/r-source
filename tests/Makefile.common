@@ -57,6 +57,7 @@ test-src-reg-1 = array-subset.R \
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
 ## overridden in Makefile if recommended packages are not installed.
+## *-src-reg3 are sloppy (*.Rout may differ from *.Rout.save):
 ## reg-S4 has to be a sloppy test, as output differs if Matrix is absent.
 test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R reg-S4.R
 

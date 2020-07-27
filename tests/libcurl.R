@@ -4,7 +4,7 @@
 ## As from R 3.4.0 method = "libcurl" is the default on a Unix-alike
 ## so this is in small part duplication -- but not on Windows.
 
-if(!capabilities()["libcurl"]) {
+if(!capabilities("libcurl")) {
     warning("no libcurl support")
     q()
 }
