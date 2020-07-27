@@ -436,7 +436,7 @@ static void printNamedRealVectorS(SEXP x, int n, SEXP names)
 static void printNamedComplexVectorS(SEXP x, int n, SEXP names)
     PRINT_N_VECTOR_SEXP(INI_F_CPLX_S,
 	{ /* PRINT_1 */
-	    tmp = COMPLEX_ELT(x, j);
+	    tmp = COMPLEX_ELT(x, k);
 	    if(j) Rprintf("%*s", R_print.gap, "");
 	    if (ISNA(tmp.r) || ISNA(tmp.i)) {
 		Rprintf("%s", EncodeReal0(NA_REAL, w, 0, 0, OutDec));
