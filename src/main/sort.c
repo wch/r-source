@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998-2020   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2018   The R Core Team
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1473,8 +1473,9 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     x = CAR(args);
-    if(TYPEOF(x) == RAWSXP)
+    if(TYPEOF(x) == RAWSXP && !isObject(x))
 	error(_("raw vectors cannot be sorted"));
+    // n := sn := length(x) :
 #ifdef LONG_VECTOR_SUPPORT
     SEXP sn = CADR(args);
     R_xlen_t n;
