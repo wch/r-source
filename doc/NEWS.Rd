@@ -50,8 +50,9 @@
       Bertram.
 
       \item \code{rank(x)} and hence \code{sort(x)} now work when \code{x}
-      is an object (per \code{is.object(x)}) and of type \code{"raw"},
-      e.g., for \code{gmp::as.bigz(.)} numbers.
+      is an object (as per \code{is.object(x)}) of type \code{"raw"}
+      \emph{and} provides a valid \code{`[`} method, e.g., for
+      \code{gmp::as.bigz(.)} numbers.
     }
   }
 }
