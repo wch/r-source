@@ -275,6 +275,11 @@
       \item \code{rank(x)} and hence \code{sort(x)} now work when \code{x}
       is an object (per \code{is.object(x)}) and of type \code{"raw"},
       e.g., for \code{gmp::as.bigz(.)} numbers.
+
+      \item \code{chisq.test(*, simulate.p.value=TRUE)} and
+      \code{r2dtable()} now work correctly for large table entries (in the
+      millions).  Reported by Sebastian Meyer and investigated by more
+      helpers in \PR{16168}.
     }
   }
 }

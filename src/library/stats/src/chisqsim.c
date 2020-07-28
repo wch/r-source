@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2016  The R Core Team.
+ *  Copyright (C) 2001-2020  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,28 +31,27 @@
 */
 
 static void
-chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
-	 int B, double *expected, int *observed, double *fact,
-	 int *jwork, double *results)
+chisqsim(int nrow, int ncol, const int nrowt[], const int ncolt[], int n,
+	 int B, const double expected[],
+	 // modified :
+	 int *observed, double *fact, int *jwork, double *results)
 {
-    int i, j, ii, iter;
-    double chisq, e, o;
-
     /* Calculate log-factorials.  fact[i] = lgamma(i+1) */
     fact[0] = fact[1] = 0.;
-    for(i = 2; i <= *n; i++)
+    for(int i = 2; i <= n; i++)
 	fact[i] = fact[i - 1] + log(i);
 
     GetRNGstate();
 
-    for(iter = 0; iter < B; ++iter) {
+    for(int iter = 0; iter < B; ++iter) {
 	rcont2(nrow, ncol, nrowt, ncolt, n, fact, jwork, observed);
 	/* Calculate chi-squared value from the random table. */
-	chisq = 0.;
-	for (j = 0; j < *ncol; ++j) {
-	    for (i = 0, ii = j * *nrow; i < *nrow;  i++, ii++) {
-		e = expected[ii];
-		o = observed[ii];
+	double chisq = 0.;
+	for (int j = 0; j < ncol; ++j) {
+	    for (int i = 0, ii = j * nrow; i < nrow;  i++, ii++) {
+		double
+		    e = expected[ii],
+		    o = observed[ii];
 		chisq += (o - e) * (o - e) / e;
 	    }
 	}
@@ -71,26 +70,25 @@ chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
 */
 
 static void
-fisher_sim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
-	   int B, int *observed, double *fact,
+fisher_sim(int nrow, int ncol, const int nrowt[], const int ncolt[], int n,
+	   int B,
+	   // modified :
+	   int *observed, double *fact,
 	   int *jwork, double *results)
 {
-    int i, j, ii, iter;
-    double ans;
-
     /* Calculate log-factorials.  fact[i] = lgamma(i+1) */
     fact[0] = fact[1] = 0.;
-    for(i = 2; i <= *n; i++)
+    for(int i = 2; i <= n; i++)
 	fact[i] = fact[i - 1] + log(i);
 
     GetRNGstate();
 
-    for(iter = 0; iter < B; ++iter) {
+    for(int iter = 0; iter < B; ++iter) {
 	rcont2(nrow, ncol, nrowt, ncolt, n, fact, jwork, observed);
 	/* Calculate log-prob value from the random table. */
-	ans = 0.;
-	for (j = 0; j < *ncol; ++j) {
-	    for (i = 0, ii = j * *nrow; i < *nrow;  i++, ii++)
+	double ans = 0.;
+	for (int j = 0; j < ncol; ++j) {
+	    for (int i = 0, ii = j * nrow; i < nrow;  i++, ii++)
 		ans -= fact[observed[ii]];
 	}
 	results[iter] = ans;
@@ -112,7 +110,8 @@ SEXP Fisher_sim(SEXP sr, SEXP sc, SEXP sB)
     double *fact = (double *) R_alloc(n+1, sizeof(double));
     int *jwork = (int *) R_alloc(nc, sizeof(int));
     SEXP ans = PROTECT(allocVector(REALSXP, B));
-    fisher_sim(&nr, &nc, isr, INTEGER(sc), &n, B, observed, fact, 
+    fisher_sim(nr, nc, isr, INTEGER(sc), n, B,
+	       observed, fact,
 	       jwork, REAL(ans));
     UNPROTECT(3);
     return ans;
@@ -130,7 +129,7 @@ SEXP chisq_sim(SEXP sr, SEXP sc, SEXP sB, SEXP E)
     double *fact = (double *) R_alloc(n+1, sizeof(double));
     int *jwork = (int *) R_alloc(nc, sizeof(int));
     SEXP ans = PROTECT(allocVector(REALSXP, B));
-    chisqsim(&nr, &nc, isr, INTEGER(sc), &n, B, REAL(E), observed, fact,
+    chisqsim(nr, nc, isr, INTEGER(sc), n, B, REAL(E), observed, fact,
 	     jwork, REAL(ans));
     UNPROTECT(4);
     return ans;

@@ -4097,6 +4097,26 @@ stopifnot(exprs = {
 ## failed in  R <= 4.0.2
 
 
+## PR#16814: r2dtable() and chisq.test(*, simulate.p.value=TRUE) for large numbers
+rc <- c(63194L, 4787074L)
+cc <- c(34677L, 4815591L)
+set.seed(28); system.time(R2 <- simplify2array(r2dtable(1000, rc, cc)))
+(c.t <- chisq.test(R2[,,1], simulate.p.value = TRUE))
+set.seed(2*3); R2x3 <- r2dtable(5000, c(3,13), c(4,4,8))
+stopifnot(exprs = {
+    sum(!(dupR2 <- duplicated.array(R2, MARGIN=3))) == 109
+    all.equal(c.t$p.value, 1929/2001)
+    ## From here, true also in previous R versions:
+    is.matrix(cR2 <- colSums(R2))
+    cR2[1,] == cc[1]
+    cR2[2,] == cc[2]
+    identical(c(table(vapply(R2x3, function(m) 10*m[2,1]+m[2,3], 1))),
+              c(`18` = 42L, `27` = 405L, `28` = 217L, `36` = 1021L, `37` = 1159L,
+                `38` = 192L, `45` = 491L, `46` = 967L, `47` = 464L, `48` = 42L))
+})
+## The large tables and p-values were completely wrong in R <= 4.0.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

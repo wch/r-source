@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2019  The R Core Team
+ *  Copyright (C) 2005-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,8 +55,8 @@ void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, int *q,
 		      double *qraux, double *resid, double *hat,
 		      double *sigma, double *tol);
 
-void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
-	    double *fact, int *jwork, int *matrix);
+void rcont2(int nrow, int ncol, const int nrowt[], const int ncolt[], int ntotal,
+	    const double fact[], int *jwork, int *matrix);
 
 double R_zeroin2(double ax, double bx, double fa, double fb, 
 		 double (*f)(double x, void *info), void *info, 
