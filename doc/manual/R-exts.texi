@@ -2591,12 +2591,13 @@ or @file{.f95}, but those are not used by @R{} itself so this is not
 required.
 
 @vindex PKG_FCFLAGS
-As from @R{} 3.6.0 the same compiler is used for both fixed-form and
-free-form Fortran code (with different file extensions and possibly
-different flags).  For both, macro @code{PKG_FFLAGS} can be used for
-package-specific flags: in the unusual case that both are included in a
-single package and that different flags are needed for the two forms,
-macro @code{PKG_FCFLAGS} is also available for free-form Fortran.
+The same compiler is used@footnote{for versions of @R{} since 3.6.0.}
+for both fixed-form and free-form Fortran code (with different file
+extensions and possibly different flags).  Macro @code{PKG_FFLAGS} can
+be used for package-specific flags: for the un-encountered case that both
+are included in a single package and that different flags are needed for
+the two forms, macro @code{PKG_FCFLAGS} is also available for free-form
+Fortran.
 
 The code used to build @R{} allows a `Fortran 90' compiler to be
 selected as @samp{FC}, so platforms might be encountered which only
@@ -2803,7 +2804,10 @@ can be used (and probably should be as support is still patchy,
 especially library support).
 
 C++17 and C++20 support are available with the default builds of @R{} on
-macOS and Windows as from @R{} 4.0.0.
+macOS and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support
+for C++17 needs version 7 or later: this is more recent than some
+still-current Linux distributions.
+@c e.g. Ubuntu 16.04LTS
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
