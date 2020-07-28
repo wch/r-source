@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2018 R Core Team
+% Copyright 2008-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
@@ -143,19 +143,19 @@ icuGetCollate(type = c("actual", "valid"))
 \examples{\donttest{
 ## These examples depend on having ICU available, and on the locale.
 ## As we don't know the current settings, we can only reset to the default.
-if(capabilities("ICU")) {
-    print(icuGetCollate())
-    print(icuGetCollate("valid"))
+if(capabilities("ICU")) withAutoprint({
+    icuGetCollate()
+    icuGetCollate("valid")
     x <- c("Aarhus", "aarhus", "safe", "test", "Zoo")
-    print(sort(x))
-    icuSetCollate(case_first = "upper"); print(sort(x))
-    icuSetCollate(case_first = "lower"); print(sort(x))
+    sort(x)
+    icuSetCollate(case_first = "upper"); sort(x)
+    icuSetCollate(case_first = "lower"); sort(x)
 
     ## Danish collates upper-case-first and with 'aa' as a single letter
-    icuSetCollate(locale = "da_DK", case_first = "default"); print(sort(x)) 
+    icuSetCollate(locale = "da_DK", case_first = "default"); sort(x) 
     ## Estonian collates Z between S and T
-    icuSetCollate(locale = "et_EE"); print(sort(x))
-    icuSetCollate(locale = "default"); print(icuGetCollate("valid"))
-}
+    icuSetCollate(locale = "et_EE"); sort(x)
+    icuSetCollate(locale = "default"); icuGetCollate("valid")
+})
 }}
 \keyword{ utilities }
