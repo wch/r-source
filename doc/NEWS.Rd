@@ -62,6 +62,11 @@
       \item Rudimentary support for vi-style tags in \code{rtags()} and
       \code{R CMD rtags}, based on patch from Neal Fultz in \PR{17214}.
 
+      \item \code{checkRdContents()} is now exported from \pkg{tools}; it
+      and also \code{checkDocFiles()} have a new option \code{chkInternal}
+      allowing to check Rd files marked with keyword \code{"internal"} as
+      well.  The latter can be activated for \command{R CMD check} via
+      experimental environment variable \env{_R_CHECK_RD_INTERNAL_TOO_}.
     }
   }
 
