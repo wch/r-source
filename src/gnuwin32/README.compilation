@@ -68,6 +68,8 @@ macro to -flto in MkRules.local and using Rcmd INSTALL --use-LTO.
 For an installed version of R it should suffice to edit the value of
 LTO_OPT in the etc/*/Makeconf files.
 
+[Unlike a Unix-alike, LTO is used for Fortran as well as C/C++.]
+
 
 Cross-compilation
 =================
