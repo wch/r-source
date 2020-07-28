@@ -372,6 +372,7 @@ static void PrintObjectS3(SEXP s, R_PrintData *data)
     UNPROTECT(4); /* mask, fun, args, call */
 }
 
+/* may not be needed anymore but keep for now to be safe */
 static void save_tagbuf(char *save, size_t n)
 {
     if (strlen(tagbuf) < n)
@@ -384,7 +385,7 @@ static void PrintObject(SEXP s, R_PrintData *data)
 {
     /* Save the tagbuffer to restore indexing tags after evaluation
        because calling into base::print() resets the buffer */
-    char save[TAGBUFLEN0];
+    char save[sizeof tagbuf];
     save_tagbuf(save, sizeof save);
 
     if (isMethodsDispatchOn() && IS_S4_OBJECT(s))
@@ -985,7 +986,7 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 {
     SEXP a;
     char *ptag;
-    char save[TAGBUFLEN0] = "\0";
+    char save[sizeof tagbuf] = "\0";
 
     a = ATTRIB(s);
     if (a != R_NilValue) {
@@ -1023,10 +1024,18 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SrcrefSymbol
 	       || TAG(a) == R_WholeSrcrefSymbol || TAG(a) == R_SrcfileSymbol)
 		goto nextattr;
-	    if(useSlots)
-		sprintf(ptag, "Slot \"%s\":", EncodeChar(PRINTNAME(TAG(a))));
-	    else
-		sprintf(ptag, "attr(,\"%s\")", EncodeChar(PRINTNAME(TAG(a))));
+	    if(useSlots) {
+		size_t space = TAGBUFLEN0 - strlen(tagbuf);
+		snprintf(ptag, space,
+			 "Slot \"%s\":", EncodeChar(PRINTNAME(TAG(a))));
+		tagbuf[TAGBUFLEN0] = 0; /* not sure this is needed */
+	    }
+	    else {
+		size_t space = TAGBUFLEN0 - strlen(tagbuf);
+		snprintf(ptag, space,
+			 "attr(,\"%s\")", EncodeChar(PRINTNAME(TAG(a))));
+		tagbuf[TAGBUFLEN0] = 0; /* not sure this is needed */
+	    }
 	    Rprintf("%s", tagbuf); Rprintf("\n");
 	    if (TAG(a) == R_RowNamesSymbol) {
 		/* need special handling AND protection */
