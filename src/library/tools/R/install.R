@@ -2575,10 +2575,12 @@ if(FALSE) {
         config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
                                          "FALSE"))
 
-    ## might need to add LTO_OPT or even C/CXX/FCFLAGS to SHLIB_LDFLAGS
     makeargs <- c(makeargs,
-                  if(isTRUE(use_lto)) paste0("LTO=", shQuote("$(LTO_OPT)"))
-                  else if(isFALSE(use_lto)) "LTO=" )
+                  if(isTRUE(use_lto))
+                      c(paste0("LTO=", shQuote("$(LTO_OPT)")),
+                        paste0("LTO_FC=", shQuote("$(LTO_FC_OPT)")))
+                  else if(isFALSE(use_lto)) c("LTO=", "LTO_FC=")
+                  )
 
     cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
                  p1(makeobjs))

@@ -84,6 +84,7 @@ LTO_FC = @LTOALL_FC@
 LTO_LD = @LTO_LD@
 ## set for --enable-lto=R, used in INSTALL
 LTO_OPT = @LTO@
+LTO_FC_OPT = @LTO_FC@
 ## needed to build applications linking to static libR
 MAIN_LD = @MAIN_LD@
 MAIN_LDFLAGS = @MAIN_LDFLAGS@
