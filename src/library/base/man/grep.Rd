@@ -300,10 +300,15 @@ txt <- c("The", "licenses", "for", "most", "software", "are",
 ( i <- grep("[gu]", txt) ) # indices
 stopifnot( txt[i] == grep("[gu]", txt, value = TRUE) )
 
-## Note that in locales such as en_US this includes B as the
-## collation order is aAbBcCdDe ...
+## Note that for some implementations character ranges are
+## locale-dependent (but not currently).  Then [b-e] in locales such as
+## en_US may include B as the collation order is aAbBcCdDe ...
 (ot <- sub("[b-e]",".", txt))
 txt[ot != gsub("[b-e]",".", txt)]#- gsub does "global" substitution
+## In caseless matching, ranges include both cases:
+a <- grep("[b-e]", txt, value = TRUE)
+b <- grep("[b-e]", txt, ignore.case = TRUE, value = TRUE)
+setdiff(b, a)
 
 txt[gsub("g","#", txt) !=
     gsub("g","#", txt, ignore.case = TRUE)] # the "G" words
