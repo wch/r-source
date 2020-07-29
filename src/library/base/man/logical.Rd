@@ -1,6 +1,6 @@
 % File src/library/base/man/logical.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{logical}
@@ -48,7 +48,9 @@ is.logical(x)
   Each element of the vector is equal to \code{FALSE}.
 
   \code{as.logical} attempts to coerce its argument to be of logical
-  type.  For \code{\link{factor}}s, this uses the \code{\link{levels}}
+  type.  In numeric and complex vectors, zeros are \code{FALSE} and
+  non-zero values are \code{TRUE}.
+  For \code{\link{factor}}s, this uses the \code{\link{levels}}
   (labels).  Like \code{\link{as.vector}} it strips attributes including
   names.  Character strings \code{c("T", "TRUE", "True", "true")} are
   regarded as true, \code{c("F", "FALSE", "False", "false")} as false,
@@ -59,11 +61,26 @@ is.logical(x)
 }
 \seealso{
   \code{\link{NA}}, the other logical constant.
+  Logical operators are documented in \code{\link{Logic}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
+}
+\examples{
+## non-zero values are TRUE
+as.logical(c(pi,0))
+if (length(letters)) cat("26 is TRUE\n")
+
+## logical interpretation of particular strings
+charvec <- c("FALSE", "F", "False", "false",    "fAlse", "0",
+             "TRUE",  "T", "True",  "true",     "tRue",  "1")
+as.logical(charvec)
+
+## factors are converted via their levels, so string conversion is used
+as.logical(factor(charvec))
+as.logical(factor(c(0,1)))  # "0" and "1" give NA
 }
 \keyword{classes}
 \keyword{logic}
