@@ -97,6 +97,7 @@ clean:
 	-@rm -f keepsource.tex test-system2 test-system.Rout
 	-@rm -f *.log *.tsin *.trin
 	-@rm -f df0.Rd l0.Rd m0.Rd 'integer(0)-package.Rd' .Rd .RData
+	-@rm -f p-r-random-tests_seed conditions.Rout timezone.Rout
 
 distclean: clean
 	-@for d in $(SUBDIRS); do \
