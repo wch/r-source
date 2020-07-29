@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2020-06-29 r78750) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-07-28 r78930) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin19.6.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6363,7 +6363,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x27b7a88>
+<bytecode: 0x7f7fefe2fa98>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6374,7 +6374,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x27b7a88>
+<bytecode: 0x7f7fefe2fa98>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6386,7 +6386,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x27b7a88>
+<bytecode: 0x7f7fefe2fa98>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -8048,13 +8048,15 @@ mean of x
 > 
 > ## summaryRprof() bug PR#15886  + "Rprof() not enabled" PR#17836
 > if(capabilities("Rprof")) {
-+ Rprof(tf <- tempfile("Rprof.out", tmpdir = getwd()), memory.profiling=TRUE, line.profiling=FALSE)
-+ out <- lapply(1:10000, rnorm, n= 512)
-+ Rprof(NULL)
-+ if(interactive())
-+     print(length(readLines(tf))) # ca. 10 .. 20 lines
-+ op <- options(warn = 2) # no warnings, even !
-+ for (cs in 1:21) s <- summaryRprof(tf, memory="tseries", chunksize=cs)
-+ options(op) ## "always" triggered an error (or a warning) in R <= 3.6.3
++     Rprof(tf <- tempfile("Rprof.out", tmpdir = getwd()), memory.profiling=TRUE, line.profiling=FALSE)
++     out <- lapply(1:10000, rnorm, n= 512)
++     Rprof(NULL)
++     if(interactive())
++         print(length(readLines(tf))) # ca. 10 .. 20 lines
++     op <- options(warn = 2) # no warnings, even !
++     for (cs in 1:21) s <- summaryRprof(tf, memory="tseries", chunksize=cs)
++     ## "always" triggered an error (or a warning) in R <= 3.6.3
++     options(op)
++     unlink(tf)
 + }
 > 
