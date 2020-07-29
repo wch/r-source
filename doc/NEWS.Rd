@@ -177,6 +177,11 @@
 
       \item \code{parallel::detectCores()} drops support for Irix
       (retired in 2013).
+
+      \item The \code{LINPACK} argument to \code{chol.default()},
+      \code{chol2inv()}, \code{solve.default()} and \code{svd()} has been
+      defunct since \R 3.1.0.  It was silently ignored but now gives an
+      error (and packages were still calling it with \code{LINPACK = TRUE}).
     }
   }
 

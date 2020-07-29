@@ -1,6 +1,6 @@
 % File src/library/base/man/chol.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol}
@@ -21,7 +21,7 @@ chol(x, \dots)
     applies to numeric (or logical) symmetric, positive-definite matrices.}
   \item{\dots}{arguments to be based to or from methods.}
   \item{pivot}{Should pivoting be used?}
-  \item{LINPACK}{logical.  Should LINPACK be used (now ignored)?}
+  \item{LINPACK}{logical.  Should LINPACK be used (now an error)?}
   \item{tol}{A numeric tolerance for use with \code{pivot = TRUE}.}
 }
 \value{

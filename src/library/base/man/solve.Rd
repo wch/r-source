@@ -1,6 +1,6 @@
 % File src/library/base/man/solve.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{solve}
@@ -25,7 +25,7 @@ solve(a, b, \dots)
   \item{tol}{the tolerance for detecting linear dependencies in the
     columns of \code{a}.  The default is \code{.Machine$double.eps}. Not
     currently used with complex matrices \code{a}.}
-  \item{LINPACK}{logical.  Defunct and ignored.}
+  \item{LINPACK}{logical.  Defunct and an error.}
   \item{\dots}{further arguments passed to or from other methods}
 }
 \details{
