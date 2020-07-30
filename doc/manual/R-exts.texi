@@ -9459,8 +9459,24 @@ To set up support on a Unix-alike,
 @xref{Link-Time Optimization, , Link-Time Optimization,
 R-admin, R Installation and Administration}.
 @end ifset
+On Linux using GCC without building @R{} with LTO support,
+@c This will not set LTO for linking, but GCC does not seem to need that.
+it should suffice to set
+@example
+LTO_OPT = -flto
+LTO_FC_OPT = -flto
+AR = gcc-ar
+NM = gcc-nm
+@end example
+in a personal (or site) @file{Makevars} file:
+@ifset UseExternalXrefs
+@xref{Customizing package compilation, , Customizing package compilation,
+R-admin, R Installation and Administration},
+@end ifset
+
 For Windows, first edit file @file{etc/$@{R_ARCH@}/Makeconf} to give
-@code{LTO_OPT} the value @code{-flto}: see also file
+@code{LTO_OPT} the value @code{-flto} or do so in a personal/site
+@file{Makevars} file; see also file
 @file{src/gnuwin32/README.compilation} in the sources.
 
 For example:
