@@ -1302,6 +1302,7 @@ Alternatively, the installed @R{} can be run, preferably with
 @enindex LC_COLLATE
 
 @example
+pdf("tests.pdf") ## optional, but prevents flashing graphics windows
 Sys.setenv(LC_COLLATE = "C", LC_TIME = "C", LANGUAGE = "en")
 tools::testInstalledBasic("both")
 tools::testInstalledPackages(scope = "base")
