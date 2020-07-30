@@ -96,7 +96,7 @@ rcont2(int nrow, int ncol,
 			REprintf("Incr.: j = %20.20g > INT_MAX !! (id,ia,nlm) = (%d,%d,%d)\n",
 				 j, id,ia,nlm);
 #endif
-		    lsp = ((int)j == 0);
+		    lsp = ((nlm == ia) || (nlm == id));
 		    if (!lsp) {
 			++nlm;
 			x *= j / ((double) nlm * (ii + nlm));
@@ -116,7 +116,7 @@ rcont2(int nrow, int ncol,
 			    REprintf("Decr.: j = %20.20g > INT_MAX !! (ii,nll) = (%d,%d)\n",
 				     j, ii,nll);
 #endif
-			lsm = ((int)j == 0);
+			lsm = (nll == 0);
 			if (!lsm) {
 			    --nll;
 			    y *= j / ((double) (id - nll) * (ia - nll));
