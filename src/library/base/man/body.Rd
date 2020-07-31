@@ -1,6 +1,6 @@
 % File src/library/base/man/body.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{body}
@@ -8,7 +8,9 @@
 \alias{body<-}
 \title{Access to and Manipulation of the Body of a Function}
 \description{
-  Get or set the body of a function.
+  Get or set the \emph{body} of a function which is basically all of
+  the function definition but its formal arguments (\code{\link{formals}}),
+  see the \sQuote{Details}.
 }
 \usage{
 body(fun = sys.function(sys.parent()))
@@ -33,16 +35,21 @@ body(fun, envir = environment(fun)) <- value
 \value{
   \code{body} returns the body of the function specified.  This is
   normally a \link{language object}, most often a call to \code{\{}, but
-  it can also be an object (e.g., \code{pi}) to be the return value of
-  the function.
+  it can also be a \code{\link{symbol}} such as \code{pi} or a constant
+  (e.g., \code{3} or \code{"R"}) to be the return value of the function.
 
   The replacement form sets the body of a function to the
   object on the right hand side, and (potentially) resets the
-  environment of the function.  If \code{value} is of class
+  \code{\link{environment}} of the function, and drops
+  \code{\link{attributes}}.  If \code{value} is of class
   \code{"\link{expression}"} the first element is used as the body:  any
   additional elements are ignored, with a warning.
 }
 \seealso{
+  The three parts of a (non-primitive) function are its
+  \code{\link{formals}}, \code{body}, and \code{\link{environment}}.
+
+  Further, see
   \code{\link{alist}},
   \code{\link{args}},
   \code{\link{function}}.
