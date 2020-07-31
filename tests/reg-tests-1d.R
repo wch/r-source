@@ -499,8 +499,9 @@ stopifnot(
 
 ## format()ing invalid hand-constructed  POSIXlt  objects
 if(hasTZ <- nzchar(.TZ <- Sys.getenv("TZ"))) cat(sprintf("env.var. TZ='%s'\n",.TZ))
-d <- as.POSIXlt("2016-12-06")
+d <- as.POSIXlt("2016-12-06", tz = "Europe/Vienna")
 op <- options(warn = 1)# ==> assert*() will match behavior
+if(is.null(d$zone)) cat("Skipping timezone-dependent POSIXlt formatting\n") else
 for(EX in expression({}, Sys.setenv(TZ = "UTC"), Sys.unsetenv("TZ"))) {
     cat(format(EX),":\n---------\n")
     eval(EX)
