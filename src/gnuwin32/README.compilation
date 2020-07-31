@@ -69,7 +69,7 @@ For an installed version of R it should suffice to edit the value of
 LTO_OPT in the etc/*/Makeconf files or to set it in a personal or site
 Makevars file.
 
-[Unlike a Unix-alike, LTO is used for Fortran as well as C/C++.]
+[Unlike a Unix-alike, LTO/LTO_OPT are used for Fortran as well as C/C++.]
 
 
 Cross-compilation

@@ -152,8 +152,9 @@
     \itemize{
       \item \command{R CMD INSTALL} and \command{R CMD SHLIB} make use
       of their flag \option{--use-LTO} when the \samp{LTO_OPT} make
-      macro is set in file \file{etc/$\{R_ARCH\}/Makeconf}.  (For
-      details see \sQuote{Writing R Extensions} §4.5.)
+      macro is set in file \file{etc/$\{R_ARCH\}/Makeconf} or in a
+      personal/site \file{Makevars} file.  (For details see
+      \sQuote{Writing R Extensions} §4.5.)
 
       This provides a valuable check on code consistency.  It does work
       with GCC 8.3 as in Rtools40, but that does not detect everything
