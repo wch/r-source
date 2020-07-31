@@ -46,7 +46,7 @@ formals(fun, envir = environment(fun)) <- value
   see the examples.
 
   The three parts of a (non-primitive) \code{\link{function}} are its
-  \code{\link{formals}}, \code{body}, and \code{\link{environment}}.
+  \code{formals}, \code{\link{body}}, and \code{\link{environment}}.
 }
 \examples{
 require(stats)
