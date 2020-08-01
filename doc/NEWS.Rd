@@ -286,7 +286,7 @@
       \item \code{chisq.test(*, simulate.p.value=TRUE)} and
       \code{r2dtable()} now work correctly for large table entries (in the
       millions).  Reported by Sebastian Meyer and investigated by more
-      helpers in \PR{16168}.
+      helpers in \PR{16184}.
     }
   }
 }
