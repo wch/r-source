@@ -562,6 +562,7 @@ function(db, remote = TRUE, verbose = FALSE)
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
         ind <- is.na(match(status, c(200L, 405L, NA))) |
+            nzchar(results[, 3L]) |
             nzchar(results[, 4L]) |
             nzchar(results[, 5L]) |
             nzchar(results[, 6L])
