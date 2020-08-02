@@ -384,12 +384,12 @@
 ## RANLIB=
 ##
 ## The LTO macro, defaulting to -flto
-## Could be e.g. -flto=8 for GCC or -flto=thin for clang.
+## Could be e.g. -flto=8 for 8 threads with GCC or -flto=thin for clang.
 ## LTO= 
 ## Ditto for the Fortran compiler, defaulting to the value of LTO.
 ## LTO_FC= 
 ##
-## Flags for linking with LTO in addition to $(LTO), e.g. to
-## parallelize ThinLTO or to change linker such as -fuse-ld=gold or
-## -fuse-ld=lld (with gcc or clang).
+## Flags for linking with LTO, e.g. to parallelize ThinLTO or to
+## change linker such as -fuse-ld=gold or -fuse-ld=lld (with gcc or
+## clang).  Defaults to the value of LTO.
 ## LTO_LD=

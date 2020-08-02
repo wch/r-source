@@ -361,6 +361,7 @@ elif  test "x${want_lto}" = xcheck; then
 elif  test "x${want_lto}" != xno; then
   AC_MSG_WARN([Unknown value --enable-lto=${enableval}])
 fi
+: LTO_LD=${LTO}
 AC_SUBST(LTO)
 AC_SUBST(LTOALL)
 AC_SUBST(LTO_FC)
