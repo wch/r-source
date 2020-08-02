@@ -1,0 +1,198 @@
+The R for Windows Build Process
+===============================
+
+from the point of view of a Unix installer of R.
+
+Compilation of C/Fortran code is done in two pathways.
+
+1) standard and add-on packages, the most similar to Unix.
+
+The primary Makefiles are
+$(R_HOME)/etc${R_ARCH}/Makeconf
+share/make/winshlib.mk
+
+included in that order.  Some settings in Makeconf are substituted in
+etc/Makeconf by fixed/Makefile, taken from MkRules.
+
+
+2) Everything else, where the primary Makefile is MkRules which is
+where all the customization is done.  This is included by all
+Makefile.win files in directories above this one and
+
+./Makefile
+./cran/Makefile
+./fixed/Makefile
+./front-ends/Makefile
+./getline/Makefile
+./installer/Makefile
+
+and replaces Unix's top-level Makeconf.
+
+
+The largest difference from Unix (even a R-shlib build) is the use of
+DLLs, which require the exported symbols to be listed (via nm) in a
+.def file and fed to the compiler with the object files for linking.
+
+In recent years DLLs are linked to directly as libraries, but there
+remains provision for import libraries via lib%.dll.a: %.def rules.
+
+Making executables has a number of Windows-specific features, done in
+front-ends/Makefile:
+
+- A resource compiler is used to compile in version information, an
+  icon and a manifest.  Also done for version information in all the
+  other DLLs under bin and modules (R.dll Rblas.dll Rgraphapp.dll
+  Riconv.dll Rlapack.dll internet.dll lapack.dll).
+
+- LINKFLAGS includes flags for the stack size and to allow addressing
+  over 2GB for 32-bit executables.
+
+A resource compiler is used to add version information to the DLLs
+under directories bin and modules.
+
+The default is to compile without debug info: this can be enabled by
+using 'make DEBUG=T' from this directory, or install add-on packages
+with Rcmd INSTALL --debug.  Otherwise DLLs and executables are
+stripped.
+
+
+Link-Time Optimization
+======================
+
+To enable LTO for building R set the LTO macro in MkRules.local, to
+-flto or e.g. -flto=8 to use 8 threads.
+
+Checking of packages with LTO can be performed by setting the LTO_OPT
+macro to -flto in MkRules.local and using Rcmd INSTALL --use-LTO.
+
+For an installed version of R it should suffice to edit the value of
+LTO_OPT in the etc/*/Makeconf files or to set it in a personal or site
+Makevars file.
+
+[Unlike a Unix-alike, LTO/LTO_OPT are used for Fortran as well as C/C++.]
+
+
+Cross-compilation
+=================
+
+Linux distributions including Fedora, Debian and Ubuntu provide
+cross-compilers and many cross-compiled libraries for both 32- and
+64-bit Windows.  For example, on Fedora 32 for a 64-bit build one
+might install the RPMs
+
+mingw64-binutils
+mingw64-bzip2
+mingw64-cairo
+mingw64-cpp
+mingw64-crt
+mingw64-filesystem
+mingw64-gcc
+mingw64-gcc-c++ (not needed for R, but needed for cairo, icu and libtiff)
+mingw64-gcc-gfortran
+mingw64-headers
+mingw64-libgomp
+mingw64-libpng
+mingw64-libjpeg-turbo
+mingw64-libtiff
+mingw64-pcre2
+mingw64-pkg-config
+mingw64-readline
+mingw64-tcl
+mingw64-termcap
+mingw64-tk
+mingw64-winpthreads
+mingw64-xz-libs
+mingw64-zlib
+
+or install the mingw32- variants for a 32-bit build.  At the time of
+writing this used GCC 9.2.1.
+
+To build all the compiled code, set BINPREF in MkRules.local, e.g. to
+
+WIN = 64
+BINPREF64 = /usr/bin/x86_64-w64-mingw32-
+
+or
+
+WIN = 32
+BINPREF = /usr/bin/i686-w64-mingw32-
+
+Setting LTO is supported.
+
+Then in this directory
+
+make MkRules rbuild rpackages-cross
+
+To make the cairo devices, set something like
+
+USE_CAIRO = TRUE
+CAIRO_CPPFLAGS = -I/usr/x86_64-w64-mingw32/sys-root/mingw/include/cairo
+CAIRO_LIBS = "-lcairo -lpixman-1 -lpng -lz -lgdi32 -lmsimg32"
+
+in MkRules.local and run
+
+make cairodevices
+
+
+This will link to the DLLs of external software and for libgomp and
+pthreads (for OpenMP).
+
+For a more static build, install
+
+mingw64-bzip2-static
+mingw64-libpng-static
+mingw64-libjpeg-turbo-static
+mingw64-libtiff-static
+mingw64-pcre2-static
+mingw64-winpthreads-static
+mingw64-xz-libs-static
+mingw64-zlib-static
+
+and remove the corresponding libfoo.dll.a files from
+/usr/x86_64-w64-mingw32/sys-root/mingw/lib, and libgomp.dll.a.  (The
+build still uses DLLs for libgcc_s_seh and Tcl/Tk).  For a static
+build of the Cairo devices one would need other RPMs like
+
+mingw64-cairo-static
+mingw64-fontconfig-static
+mingw64-freetype-static
+mingw64-pixman-static
+
+Rather than remove the .dll.a files, one could experiment with -Wl,-Bstatic.
+
+There are curl and ICU libraries for optional features.  Settings for
+Fedora's libs (DLL versions):
+
+USE_LIBCURL = YES
+CURL_LIBS = -lcurl
+
+USE_ICU = YES
+ICU_LIBS = -licuuc -licui18n -licudata
+
+There is a static version for curl but not ICU.
+
+
+Cross-building packages
+=======================
+
+There is experimental minimal support for cross-building packages.
+
+Copy {bin,etc}/{i386,x64} from this build to a standard Linux build.
+
+Edit the copy of etc/*/Makeconf to have
+
+R_WIN = /path/to/top/directory/of/this/build
+R_XTRA_CPPFLAGS = -I"$(R_WIN)/include" -DNDEBUG
+
+Set the environment variable R_CROSS_BUILD to i386 or x64.
+
+Use R CMD INSTALL as usual. (This does not do a staged install nor
+test loading.)  --use-LTO is supported if LTO_OPT was set.
+
+R CMD INSTALL --build will produce a zipped installation.
+
+Should a package require external libraries, these can be placed under
+LOCAL_SOFT as defined in etc/*/Makeconf in the copy.
+
+
+

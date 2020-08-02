@@ -28,7 +28,7 @@ download.file <-
         match.arg(method, c("auto", "internal", "wininet", "libcurl",
                             "wget", "curl", "lynx"))
 
-    if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|rd[as]|RData)$",
+    if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|jar|rd[as]|RData)$",
 				    URLdecode(url))))
         mode <- "wb"
     if(method == "auto") {

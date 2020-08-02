@@ -346,7 +346,7 @@ SEXP do_rmultinom(SEXP sn, SEXP ssize, SEXP prob)
 {
     SEXP ans, nms;
     int n, size, k, i, ik;
-    
+
     n	 = asInteger(sn);/* n= #{samples} */
     size = asInteger(ssize);/* X ~ Multi(size, prob) */
     if (n == NA_INTEGER || n < 0)
@@ -380,14 +380,9 @@ SEXP do_rmultinom(SEXP sn, SEXP ssize, SEXP prob)
 
 SEXP r2dtable(SEXP n, SEXP r, SEXP c)
 {
-    int nr, nc, *row_sums, *col_sums, i, *jwork;
-    int n_of_samples, n_of_cases;
-    double *fact;
-    SEXP ans, tmp;
     const void *vmax = vmaxget();
-
-    nr = length(r);
-    nc = length(c);
+    int nr = length(r),
+	nc = length(c);
 
     /* Note that the R code in r2dtable() also checks for missing and
        negative values.
@@ -398,37 +393,35 @@ SEXP r2dtable(SEXP n, SEXP r, SEXP c)
        !isInteger(c) || (nc <= 1))
 	error(_("invalid arguments"));
 
-    n_of_samples = INTEGER(n)[0];
-    row_sums = INTEGER(r);
-    col_sums = INTEGER(c);
+    int n_of_samples = INTEGER(n)[0];
+    int *row_sums = INTEGER(r), *jwork = row_sums,
+	*col_sums = INTEGER(c);
 
     /* Compute total number of cases as the sum of the row sums.
        Note that the R code in r2dtable() also checks whether this is
        the same as the sum of the col sums.
        Should maybe do the same here ...
     */
-    n_of_cases = 0;
-    jwork = row_sums;
-    for(i = 0; i < nr; i++)
+    int n_of_cases = 0;
+    for(int i = 0; i < nr; i++)
 	n_of_cases += *jwork++;
 
     /* Log-factorials from 0 to n_of_cases.
        (I.e., lgamma(1), ..., lgamma(n_of_cases + 1).)
     */
-    fact = (double *) R_alloc(n_of_cases + 1, sizeof(double));
+    double *fact = (double *) R_alloc(n_of_cases + 1, sizeof(double));
     fact[0] = 0.;
-    for(i = 1; i <= n_of_cases; i++)
+    for(int i = 1; i <= n_of_cases; i++)
 	fact[i] = lgammafn((double) (i + 1));
 
     jwork = (int *) R_alloc(nc, sizeof(int));
-
-    PROTECT(ans = allocVector(VECSXP, n_of_samples));
+    SEXP ans = PROTECT(allocVector(VECSXP, n_of_samples));
 
     GetRNGstate();
 
-    for(i = 0; i < n_of_samples; i++) {
-	PROTECT(tmp = allocMatrix(INTSXP, nr, nc));
-	rcont2(&nr, &nc, row_sums, col_sums, &n_of_cases, fact,
+    for(int i = 0; i < n_of_samples; i++) {
+	SEXP tmp = PROTECT(allocMatrix(INTSXP, nr, nc));
+	rcont2(nr, nc, row_sums, col_sums, n_of_cases, fact,
 	       jwork, INTEGER(tmp));
 	SET_VECTOR_ELT(ans, i, tmp);
 	UNPROTECT(1);

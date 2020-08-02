@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.grob.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.grob}
@@ -42,8 +42,8 @@ is.grob(x)
     grob on the display list and/or as a child of another grob. }
   \item{children}{a \code{"gList"} object. }
   \item{childrenvp}{a \code{\link{viewport}} object (or \code{NULL}).}
-  \item{gp}{A gpar object, typically the output
-    from a call to the function \code{gpar}.  This is basically
+  \item{gp}{A \code{"gpar"} object, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings.}
   \item{vp}{a \code{\link{viewport}} object (or \code{NULL}).}
   \item{cl}{string giving the class attribute for the new class.}

@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.rect.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.rect}
@@ -43,8 +43,8 @@ rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     if \code{x}, \code{y}, \code{width}, or \code{height}
     are only given as numeric vectors.}
   \item{name}{ A character identifier. }
-  \item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
+  \item{gp}{An object of class \code{"gpar"}, typically the output
+    from a call to the function \code{\link{gpar}}.  This is basically
     a list of graphical parameter settings.}
   \item{draw}{A logical value indicating whether graphics output
     should be produced.}

@@ -166,11 +166,12 @@ OlsonNames(tzdir = NULL)
   (the default on Windows: recommended on Solaris), the database at
   \code{file.path(R.home("share"), "zoneinfo")} is used by default: file
   \file{VERSION} in that directory states the version.  That option is
-  also the default on macOS but there the system database at
-  @file{/var/db/timezone/zoneinfo} is used by default.  Environment
-  variable \env{TZDIR} can be used to point to a different
-  \file{zoneinfo} database: value \code{"internal"} indicates that the
-  database from the \R sources should be used.
+  also the default on macOS but there whichever is more recent of the
+  system database at \file{/var/db/timezone/zoneinfo} and that
+  distributed with \R is used by default.  Environment variable
+  \env{TZDIR} can be used to point to a different \file{zoneinfo}
+  database: value \code{"internal"} indicates that the database from the
+  \R sources and \code{"macOS"} indicates the system database.
 
   Setting \env{TZDIR} is also supported by the native services on some
   OSes, e.g.\sspace{}Linux using \code{glibc} except in secure modes.

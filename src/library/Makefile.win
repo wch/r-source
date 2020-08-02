@@ -145,3 +145,11 @@ Rlazycomp:
 	  $(MAKE) -C $${pkg} -f Makefile.win Rlazycomp || exit 1; \
 	done
 
+## put those needing additional libs at the end.
+R_PKGS_SRC = graphics grid methods parallel splines stats tools utils tcltk grDevices
+cross:
+	@for pkg in $(R_PKGS_SRC); do \
+	  echo "$(MAKE) -C $${pkg}/src -f Makefile.win"; \
+	  $(MAKE) -C $${pkg}/src -f Makefile.win R_ARCH=$(R_ARCH) || exit 1; \
+	done
+

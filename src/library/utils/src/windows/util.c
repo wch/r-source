@@ -29,6 +29,10 @@
 
 #include "win-nls.h"
 
+/* FIXME:
+   This should include utils.h to force consistency.
+*/
+
 typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
 
 // keep in step with src/gnuwin32/extra.c

@@ -4,7 +4,8 @@ Priority: base
 Imports: utils, stats
 Title: Formal Methods and Classes
 Author: R Core Team
-Maintainer: R Core Team <R-core@r-project.org>
+Maintainer: R Core Team <do-use-Contact-address@r-project.org>
+Contact: R-help mailing list <r-help@r-project.org>
 Description: Formally defined methods and classes for R objects,
   plus other programming tools, as described in the reference.
 References: John M. Chambers (2008)

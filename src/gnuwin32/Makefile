@@ -40,6 +40,9 @@ rpackages:
 	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN) EXT_LIBS="$(EXT_LIBS)"
 	@$(MK) -C ../library -f Makefile.win docs
 
+rpackages-cross:
+	@$(MK) -C ../library -f Makefile.win cross WIN=$(WIN) EXT_LIBS="$(EXT_LIBS)"
+
 
 cairodevices:
 ifneq "$(USE_CAIRO)" ""
@@ -55,15 +58,14 @@ MkRules: MkRules.rules
 	@cat MkRules.rules > MkRules
 endif
 
-CFLAGS = -O3 -Wall -pedantic $(EOPTS)
-FFLAGS = -O3 $(EOPTS) $(GF7OPTS)
+CFLAGS = -O3 -Wall -pedantic $(EOPTS) $(LTO)
+FFLAGS = -O3 $(EOPTS) $(GF7OPTS) $(LTO)
 
 ifdef DEBUG
  CFLAGS += $(G_FLAG)
  FFLAGS += $(G_FLAG)
- DLLFLAGS =
 else
- DLLFLAGS = -s
+ DLLFLAGS += -s
 endif
 
 

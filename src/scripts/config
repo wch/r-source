@@ -104,6 +104,7 @@ Variables:
   LIBnn         location for libraries, e.g. 'lib' or 'lib64' on this platform
   LDFLAGS       linker flags, e.g. -L<dir> if you have libraries in a
 		nonstandard directory <dir>
+  LTO LTO_FC LTO_LD  flags for Link-Time Optimization
   MAKE          Make command
   NM            comand to display symbol tables
   OBJC          Objective C compiler command
@@ -284,7 +285,7 @@ ok_ftn_vars="FC FFLAGS FPICFLAGS FLIBS FCFLAGS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_CXX20LD SHLIB_CXX20LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
-ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn AR NM RANLIB"
+ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn AR NM RANLIB LTO LTO_FC LTO_LD"
 defunct_vars="CPP CXXCPP"
 if test "${R_OSTYPE}" = "windows"; then
   ok_win_vars="LOCAL_SOFT COMPILED_BY OBJDUMP"

@@ -6950,7 +6950,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 //#define REPORT_OVERRIDEN_BUILTINS
 #ifdef REPORT_OVERRIDEN_BUILTINS
 	if (value != findFun(symbol, rho)) {
-	    Rprintf("Possibly overriden builtin: %s\n", PRIMNAME(value));
+	    Rprintf("Possibly overridden builtin: %s\n", PRIMNAME(value));
 	}
 #endif
 	if (RTRACE(value)) {

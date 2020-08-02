@@ -10,6 +10,7 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
        "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
        "checkRd", "checkPoFile", "checkPoFiles",
        "checkRdaFiles", "checkReplaceFuns", "checkS3methods",
+       checkRdContents,
        "checkTnF", "checkVignettes", "codoc", "codocClasses",
        "codocData", "compactPDF", "delimMatch", "deparseLatex",
        "dependsOnPkgs", "encoded_text_to_latex", "file_ext",
@@ -62,7 +63,7 @@ S3method("as.character", "Rd")
 
 S3method("as.matrix", "check_url_db")
 
-S3method("format", "check_Rd_contents")
+S3method("format", "checkRdContents")
 S3method("format", "check_Rd_line_widths")
 S3method("format", "check_Rd_metadata")
 S3method("format", "check_Rd_xrefs")
@@ -129,7 +130,7 @@ S3method("print", "undoc", .print.via.format)
 S3method("print", "xgettext")
 S3method("print", "xngettext")
 
-S3method("print", "check_Rd_contents", .print.via.format)
+S3method("print", "checkRdContents", .print.via.format)
 S3method("print", "check_Rd_line_widths", .print.via.format)
 S3method("print", "check_Rd_metadata", .print.via.format)
 S3method("print", "check_Rd_xrefs", .print.via.format)

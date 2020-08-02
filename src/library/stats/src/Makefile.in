@@ -67,11 +67,12 @@ shlib: $(SHLIB)
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/shlib.mk
-LTO = @LTO@
+## override to use LTO for linking with --enable-lto=R
+LTO_FC = @LTO_FC@
 
 ## Meeded with i386 gcc 4.5.0 -- PR#14427
 ## (SHLIB_FFLAGS is apparently currently unused)
-portsrc_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@ $(LTO)
+portsrc_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@ $(LTO_FC)
 portsrc.o: portsrc.f
 	$(FC) $(portsrc_FFLAGS) -c $< -o $@
 

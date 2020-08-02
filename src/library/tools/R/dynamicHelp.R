@@ -394,7 +394,7 @@ httpd <- function(path, query, ...)
             return(error_page(msg))
         }
         ## if 'topic' is not a help doc, try it as an alias in the package
-        contents <- readRDS(sub("/help", "/Meta/Rd.rds", path, fixed = TRUE))
+        contents <- readRDS(sub("/help$", "/Meta/Rd.rds", path, fixed = FALSE))
         files <- sub("\\.[Rr]d$", "", contents$File)
         if(helpdoc %notin% files) {
             ## or call help()

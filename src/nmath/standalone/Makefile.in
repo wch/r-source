@@ -9,6 +9,9 @@ top_builddir = ../../..
 subdir = src/nmath/standalone
 
 include $(top_builddir)/Makeconf
+## avoid LTO and OpenMP
+CFLAGS = @CFLAGS@
+R_OPENMP_CFLAGS =
 
 SOURCES_NMATH = \
 	mlutils.c \

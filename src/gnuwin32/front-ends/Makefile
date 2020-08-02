@@ -91,7 +91,7 @@ Rterm.exe: graphappmain.o rterm.o rtico.o
 
 ifneq "$(WIN)" "64"
 rcico.o: Rcmd.exe.manifest
-rgico.o: Rgui32.manifest
+rgico.o: RGui32.manifest
 rsico.o: Rscript.exe.manifest
 rtico.o: Rterm32.manifest
 else
@@ -99,7 +99,7 @@ RESFLAGS = -DWN64
 rcico.o: Rcmd64.exe.manifest
 rtico.o: Rterm64.manifest
 rsico.o: Rscript64.exe.manifest
-rgico.o: Rgui64.manifest
+rgico.o: RGui64.manifest
 endif
 
 Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o

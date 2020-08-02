@@ -1165,7 +1165,10 @@ AR="ar --plugin=/path/to/liblto_plugin.so"
 RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 @end example
 @noindent
-amd @code{NM} may be needed to be set analogously.
+amd @code{NM} may be needed to be set analogously. (If using an
+LTO-enabled build to check packages, set environment variable
+@env{UserNM}@footnote{not @env{NM} as we found @command{make}
+overriding that.} to @samp{gcc-NM}.)
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
 With GCC 5 and later it is possible to parallelize parts of the LTO
@@ -1213,6 +1216,9 @@ LTO_LD=-Wl,-mllvm,-threads=4
 to use Thin LTO with 4 threads for C/C++ code, but skip LTO for Fortran
 code compiled with @command{gfortran}.
 
+It is said to be particularly beneficial to use @option{-O3} with
+@command{clang} in conjunction with LTO.
+
 @node LTO for package checking,  , LTO with LLVM, Link-Time Optimization
 @subsubsection LTO for package checking
 
@@ -1230,20 +1236,19 @@ with its @option{-fc-prototypes-external} option, e.g.@: that (at the
 time of writing) Fortran @code{LOGICAL} corresponds to
 @code{int_least32_t *} in C.
 
-Configuring @R{} with @option{--enable-lto=check} in addition builds the
-BLAS, LINPACK and LAPACK support as static libraries containing
-intermediate-level code that LTO will compile for all objects linked
-against these libraries.  This checks the consistency of calls to
-BLAS/LINPACK/LAPACK in any packages installed using the
-build. @strong{NB:} as its name suggests, this option is intended only
-for checking installation of @R{} and packages: it includes these
-library routines (those called directly and all they depend on) in each
-package.
-
-This is unlikely to work in conjunction with non-default options for
-BLAS and LAPACK, and `linking' against these libraries may be very slow.
-Note too that the @R{} may need to be re-compiled after even a minor
-update to the compiler.
+@c This worked in 2019 but with Fedora 32 does not export dpotrf from dlapack.o
+On some systems it is possible to build the BLAS, LINPACK and LAPACK
+support as static libraries containing intermediate-level code that LTO
+will compile for all objects linked against these libraries, by
+configuring @R{} with @option{--enable-lto=check}.  This checks the
+consistency of calls to BLAS/LINPACK/LAPACK in any packages installed
+using the build. @strong{NB:} as its name suggests, this option is
+intended only for checking installation of @R{} and packages: it
+includes these library routines (those called directly and all they
+depend on) in each package.  This is unlikely to work in conjunction
+with non-default options for BLAS and LAPACK, and `linking' against
+these libraries may be very slow.  Note too that the @R{} may need to be
+re-compiled after even a minor update to the compiler.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -1297,6 +1302,7 @@ Alternatively, the installed @R{} can be run, preferably with
 @enindex LC_COLLATE
 
 @example
+pdf("tests.pdf") ## optional, but prevents flashing graphics windows
 Sys.setenv(LC_COLLATE = "C", LC_TIME = "C", LANGUAGE = "en")
 tools::testInstalledBasic("both")
 tools::testInstalledPackages(scope = "base")
@@ -5005,6 +5011,10 @@ sudo installer -pkg \
 @noindent
 (This will need to be re-run if the OS decides to update the Command
 Line Tools.)
+
+When tested@footnote{with @command{gcc} 10.2 on High Sierra.} it was not
+possible to use @command{gcc} to build the Quartz device, so
+@command{configure --without-aqua} may be required.
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries

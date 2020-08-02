@@ -87,7 +87,7 @@ else
 IMPDIR=$(BINDIR)
 endif
 
-AR=$(BINPREF)ar
+AR = $(BINPREF)ar
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
 CP=cp
@@ -99,24 +99,33 @@ DLLTOOL=$(BINPREF)dlltool
 ## even for native builds
 DLLTOOLFLAGS=--as $(BINPREF)as $(DT_ARCH) -k
 ECHO=echo
-F77=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
+FC=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
 FLIBS=-lgfortran -lquadmath
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
 ## MAKEINFO = $(TEXI2ANY)
 MKDIR=mkdir
 NM=$(BINPREF)nm
-RANLIB=$(BINPREF)ranlib
+RANLIB = $(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres $(RC_ARCH)
+SHLIB_LD=$(CC)
+SHLIB_LDFLAGS=-shared
 
 ## If the Fortran compiler is gfortran >= 7, add
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
-GFVER = $(shell echo "__GNUC__" | $(F77) -E -P -)
+GFVER = $(shell echo "__GNUC__" | $(FC) -E -P -)
 GF7OPTS =
 ifneq ($(GFVER),"")
 GF7OPTS = $(shell [ $(GFVER) -ge 7 ] && echo "-fno-optimize-sibling-calls")
+endif
+
+ifneq "$(LTO)" ""
+AR = $(BINPREF)gcc-ar
+NM = $(BINPREF)gcc-nm
+RANLIB = $(BINPREF)gcc-ranlib
+DLLFLAGS += $(CFLAGS)
 endif
 
 # as set by make
@@ -135,17 +144,21 @@ SORT=sort
 	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(DEFINES) -c $< -o $@
 
 .f.o:
-	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+	$(FC) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
+## $($*-LINKFLAGS) is used for Rgui Rterm and Rscript
 %.exe:
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
+## It does little sense to have $($*-DLLFLAGS) here (and not in etc/Makeconf)
+## $($*-DLLLIBS) is used for R and lapack
 %.dll:
 	@$(ECHO) EXPORTS > $*.def
 	@$(NM) $^ | $(SED) -n $(SYMPAT) $(NM_FILTER) >> $*.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 
+## It does no sense to have $($*-DLLTOOLFLAGS) here, and it is unused.
 lib%.dll.a: %.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --input-def $*.def --output-lib $@
 

@@ -468,15 +468,15 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     oc <- attr(formula, "call")
     Terms <- attr(formula, "terms")
     rm(formula)
-    indError <- attr(Terms, "specials")$Error
-    errorterm <-  attr(Terms, "variables")[[1 + indError]]
-    form <- update.formula(Terms,
-                           paste(". ~ .-", deparse1(errorterm, backtick = TRUE),
-                                 "+", deparse1(errorterm[[2L]], backtick = TRUE)))
+    indError  <- attr(Terms, "specials")$Error
+    errorterm <- attr(Terms, "variables")[[1 + indError]]
+    form <- update(Terms,
+                   paste(". ~ .-", deparse1(errorterm,       backtick = TRUE),
+                         "+",      deparse1(errorterm[[2L]], backtick = TRUE)))
     nargs <- as.list(call)
     oargs <- as.list(oc)
-    nargs <- nargs[match(c("data", "na.action", "subset"), names(nargs), 0)]
-    args  <- oargs[match(c("data", "na.action", "subset"), names(oargs), 0)]
+    nargs <- nargs[match(c("data", "na.action", "subset"), names(nargs), 0L)]
+    args  <- oargs[match(c("data", "na.action", "subset"), names(oargs), 0L)]
     args[names(nargs)] <- nargs
     args$formula <- form
     env <- environment(Terms) %||% parent.frame()

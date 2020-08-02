@@ -42,6 +42,8 @@ ifeq "$(WIN)" "64"
 	  -e "s|@PTHREAD@|$(PTHREAD)|" \
 	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \
 	  -e "s|@GF7OPTS@|$(GF7OPTS)|" \
+	  -e "s|LTO =|LTO = $(LTO)|" \
+	  -e "s|LTO_OPT =|LTO_OPT = $(LTO_OPT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
@@ -59,6 +61,8 @@ else
 	  -e "s|@PTHREAD@|$(PTHREAD)|" \
 	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \
 	  -e "s|@GF7OPTS@|$(GF7OPTS)|" \
+	  -e "s|LTO =|LTO = $(LTO)|" \
+	  -e "s|LTO_OPT =|LTO_OPT = $(LTO_OPT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 endif
 	$(SED) -e "s+@BINDIR@+$(BINDIR)+" Makeconf > $(R_HOME)/Makeconf

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1996-2012	The R Core Team
+ *  Copyright (C) 1996-2020	The R Core Team
  *  Copyright (C) 2005		The R Foundation
 
  *  "HACKED" to allow weights by Adrian Baddeley
@@ -31,7 +31,7 @@
 #include <R_ext/Arith.h> // includes math.h
 #include <Rinternals.h>
 
-/* NB: this only works in the lower half of y, but pads with zeros. */
+/* NB: this only works on the lower half of y, but pads with zeros. */
 SEXP BinDist(SEXP sx, SEXP sw, SEXP slo, SEXP shi, SEXP sn)
 {
     PROTECT(sx = coerceVector(sx, REALSXP)); 
@@ -51,6 +51,8 @@ SEXP BinDist(SEXP sx, SEXP sw, SEXP slo, SEXP shi, SEXP sn)
     for(R_xlen_t i = 0; i < XLENGTH(sx) ; i++) {
 	if(R_FINITE(x[i])) {
 	    double xpos = (x[i] - xlo) / xdelta;
+	    // avoid integer overflows for ix.
+	    if (xpos > INT_MAX || xpos < INT_MIN) continue;
 	    int ix = (int) floor(xpos);
 	    double fx = xpos - ix;
 	    double wi = w[i];

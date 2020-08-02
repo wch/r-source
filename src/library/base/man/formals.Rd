@@ -1,6 +1,6 @@
 % File src/library/base/man/formals.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formals}
@@ -37,14 +37,16 @@ formals(fun, envir = environment(fun)) <- value
 
   The replacement form sets the formals of a function to the
   list/pairlist on the right hand side, and (potentially) resets the
-  environment of the function.
+  environment of the function, dropping \code{\link{attributes}}.
 }
 \seealso{
   \code{\link{formalArgs}} (from \pkg{methods}), a shortcut for \code{names(formals(.))}.
   \code{\link{args}} for a human-readable version,
-  \code{\link{alist}},
-  \code{\link{body}},
-  \code{\link{function}}.
+  \code{\link{alist}} to \emph{construct} a typical formals \code{value},
+  see the examples.
+
+  The three parts of a (non-primitive) \code{\link{function}} are its
+  \code{formals}, \code{\link{body}}, and \code{\link{environment}}.
 }
 \examples{
 require(stats)
