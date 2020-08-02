@@ -487,6 +487,7 @@ expr_not_sym	: 	NUM_CONST		{ $$ = $1;	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
 						{ $$ = xxdefun($1,$3,$6,&@$); 	setId(@$); }
 	|	'@' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(install("function"),$3,$6,&@$); 	setId(@$); }
+	|	'\\' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(install("function"),$3,$6,&@$); 	setId(@$); }
 	|	expr '(' sublist ')'		{ $$ = xxfuncall($1,$3);  setId(@$); modif_token( &@1, SYMBOL_FUNCTION_CALL ) ; }
 	|	IF ifcond expr_or_assign_or_help 	{ $$ = xxif($1,$2,$3);	setId(@$); }
 	|	IF ifcond expr_or_assign_or_help ELSE expr_or_assign_or_help	{ $$ = xxifelse($1,$2,$3,$5);	setId(@$); }
@@ -3433,13 +3434,11 @@ static int token(void)
     case '~':
     case '$':
     case '@':
+    case '\\':
 	yytext[0] = (char) c;
 	yytext[1] = '\0';
 	yylval = install(yytext);
 	return c;
-    case '\\':
-	yylval = install_and_save("function");
-	return FUNCTION;
     default:
         yytext[0] = (char) c;
         yytext[1] = '\0';
