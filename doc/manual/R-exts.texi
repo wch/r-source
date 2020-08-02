@@ -1816,10 +1816,12 @@ quoted in makefiles and configure scripts.
 
 One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
-Unix-alikes (but not by default@footnote{but it is available on the machines
-used to produce the @acronym{CRAN} binary packages.} on macOS) to do this is
-@command{pkg-config}.  The @file{configure} script will need to test for
-the presence of the command itself (see for example package
+Unix-alikes (but not by default@footnote{but it is available on the
+machines used to produce the @acronym{CRAN} binary packages: however as
+Apple does not ship @file{.pc} files for its system libraries such as
+@samp{zlib}, it may well not find information on these.} on macOS) to do
+this is @command{pkg-config}.  The @file{configure} script will need to
+test for the presence of the command itself (see for example package
 @CRANpkg{Cairo}), and if present it can be asked if the software is
 installed, of a suitable version and for compilation/linking flags by
 e.g.@:
@@ -1854,14 +1856,15 @@ pkg-config --list-all | sort
 @end example
 
 If using Autoconf it is good practice to include all the Autoconf
-sources in the the package (and required for an Open Source package).
-This will include the file @file{configure.ac}@footnote{a decade ago
-Autoconf used @file{configure.in}: this is still accepted but should be
-renamed and @command{autoreconf} as used by @command{R CMD check
---as-cran} will report as such.} in the top-level directory of the
-package.  If extensions written in @command{m4} are needed, these should
-be included under the directory @file{tools} and included in
-@file{configure.ac} @emph{via} e.g.,
+sources in the the package (and required for an Open Source package and
+tested by @command{R CMD check --as-cran}).  This will include the file
+@file{configure.ac}@footnote{a decade ago Autoconf used
+@file{configure.in}: this is still accepted but should be renamed and
+@command{autoreconf} as used by @command{R CMD check --as-cran} will
+report as such.} in the top-level directory of the package.  If
+extensions written in @command{m4} are needed, these should be included
+under the directory @file{tools} and included in @file{configure.ac}
+@emph{via} e.g.,
 @example
 m4_include([tools/ax_pthread.m4])
 @end example
@@ -14476,7 +14479,7 @@ encodings: @code{""} indicates the current locale.
 @deftypefun size_t Riconv (void *@var{cd}, const char **@var{inbuf}, size_t *@var{inbytesleft}, char  **@var{outbuf}, size_t *@var{outbytesleft})
 @end deftypefun
 Convert as much as possible of @code{inbuf} to @code{outbuf}.  Initially
-the @code{int} variables indicate the number of bytes available in the
+the @code{size_t} variables indicate the number of bytes available in the
 buffers, and they are updated (and the @code{char} pointers are updated
 to point to the next free byte in the buffer).  The return value is the
 number of characters converted, or @code{(size_t)-1} (beware:

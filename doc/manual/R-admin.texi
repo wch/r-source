@@ -5012,6 +5012,10 @@ sudo installer -pkg \
 (This will need to be re-run if the OS decides to update the Command
 Line Tools.)
 
+When tested@footnote{with @command{gcc} 10.2 on High Sierra.} it was not
+possible to use @command{gcc} to build the Quartz device, so
+@command{configure --without-aqua} may be required.
+
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
 
