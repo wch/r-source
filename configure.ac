@@ -360,6 +360,15 @@ elif  test "x${want_lto}" = xcheck; then
   LIBR1="${LIBR1} -lLinpack"
 elif  test "x${want_lto}" != xno; then
   AC_MSG_WARN([Unknown value --enable-lto=${enableval}])
+  want_lto=no
+fi
+if test "x${want_lto}" = xno; then
+  dnl unset as inadvertent settings will at best slow down R build.
+  LTO=
+  LTOALL=
+  LTO_FC=
+  LTOALL_FC=
+  LTO_LD=
 fi
 AC_SUBST(LTO)
 AC_SUBST(LTOALL)
