@@ -32,6 +32,7 @@
 
 #include "stats.h"
 
+// NB: Exported via S_rcont() --> ../../../include/R_ext/stats_stubs.h & stats_package.h
 void
 rcont2(int nrow, int ncol,
        /* vectors of row and column totals, and their sum ntotal: */

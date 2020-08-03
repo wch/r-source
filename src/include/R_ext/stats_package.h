@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007  The R Core Team.
+ *  Copyright (C) 2007--2020  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -61,8 +61,9 @@ S_nlminb_iterate(double b[], double d[], double fx, double g[],
 		 double v[], double x[]);
 
 void attribute_hidden
-S_rcont2(int nrow[], int ncol[], int nrowt[], int ncolt[], 
-         int ntotal[], double fact[], int jwork[], int matrix[]);
+S_rcont2(int nrow, int ncol, const int nrowt[], const int ncolt[],
+         int ntotal, const double fact[],
+	 int jwork[], int matrix[]);
 
 static R_INLINE int S_v_length(int alg, int n)
 {
