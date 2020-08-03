@@ -121,7 +121,7 @@ as.Date(x, \dots)
   \emph{ISO 8601. Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
   For links to versions available on-line see (at the time of writing)
-  \url{http://www.qsl.net/g1smd/isopdf.htm}.
+  \url{https://www.qsl.net/g1smd/isopdf.htm}.
 }
 \seealso{
   \link{Date} for details of the date class;

@@ -30,7 +30,7 @@
 
       The \R function is a wrapper for two devices, one based on Xlib
       (\url{https://en.wikipedia.org/wiki/Xlib}) and one using cairographics
-      (\url{http://www.cairographics.org}).}
+      (\url{https://www.cairographics.org}).}
   }
 }
 \usage{

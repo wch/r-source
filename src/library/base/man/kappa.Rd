@@ -87,8 +87,8 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   The LAPACK routines \code{DTRCON} and \code{ZTRCON} and the LINPACK
   routine \code{DTRCO}.
 
-  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
-  \url{http://www.netlib.org/linpack} and their guides are listed
+  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack/} and
+  \url{http://www.netlib.org/linpack/} and their guides are listed
   in the references.
 }
 \references{

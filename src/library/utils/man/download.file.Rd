@@ -68,7 +68,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \itemize{
     \item On a Unix-alike method \code{"libcurl"} is used except
     \code{"internal"} for \samp{file://} URLs, where \code{"libcurl"}
-    uses the library of that name (\url{http://curl.haxx.se/libcurl/}).
+    uses the library of that name (\url{https://curl.haxx.se/libcurl/}).
 
     \item On Windows the \code{"wininet"} method is used apart from for
     \samp{ftps://} URLs where \code{"libcurl"} is tried.  The
@@ -78,7 +78,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     Support for method \code{"libcurl"} is optional on Windows: use
     \code{\link{capabilities}("libcurl")} to see if it is supported on
     your build.  It uses an external library of that name
-    (\url{http://curl.haxx.se/libcurl/}) against which \R can be compiled.
+    (\url{https://curl.haxx.se/libcurl/}) against which \R can be compiled.
   }
 
   When method \code{"libcurl"} is used, it provides
@@ -184,7 +184,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   installed on Unix-alikes (but not macOS).  Windows binaries are
   available from Cygwin, gnuwin32 and elsewhere.
 
-  \command{curl} (\url{http://curl.haxx.se/}) is installed on macOS and
+  \command{curl} (\url{https://curl.haxx.se/}) is installed on macOS and
   commonly on Unix-alikes.  Windows binaries are available at that URL.
 }
 \section{Setting Proxies}{
@@ -227,14 +227,14 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \env{no_proxy}, \env{http_proxy} and \env{ftp_proxy}, and for the last
   two a contents of \code{[user:password@]machine[:port]} where the
   parts in brackets are optional.  See
-  \url{http://curl.haxx.se/libcurl/c/libcurl-tutorial.html} for details.
+  \url{https://curl.haxx.se/libcurl/c/libcurl-tutorial.html} for details.
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs should
   try to verify the site certificates.  This is usually done using the CA
   root certificates installed by the OS (although we have seen instances
   in which these got removed rather than updated). For further information
-  see \url{http://curl.haxx.se/docs/sslcerts.html}.
+  see \url{https://curl.haxx.se/docs/sslcerts.html}.
 
   This is an issue for \code{method = "libcurl"} on Windows, where the
   OS does not provide a suitable CA certificate bundle, so by default on
@@ -246,7 +246,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets
   \env{CURL_CA_BUNDLE} to point to it if that environment variable is not
   already set.)  For an updated certificate bundle, see
-  \url{http://curl.haxx.se/docs/sslcerts.html}.
+  \url{https://curl.haxx.se/docs/sslcerts.html}.
   Currently one can download a copy from
   \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
   and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.

@@ -410,7 +410,7 @@ src/extra/tre/*.[ch]
 Copyright (c) 2001-2009 Ville Laurikari <vl@iki.fi>
 All rights reserved.
 
-From tre-0.8.0 (http://laurikari.net/tre/).  See file
+From tre-0.8.0 (https://laurikari.net/tre/).  See file
 src/extra/tre/LICENSE.  For binary builds of R that requires us to
 include
 

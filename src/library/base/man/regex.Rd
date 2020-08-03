@@ -351,14 +351,14 @@
   \code{\link{ls}} and \code{\link{strsplit}}.
 
   The TRE documentation at
-  \url{http://laurikari.net/tre/documentation/regex-syntax/}.
+  \url{https://laurikari.net/tre/documentation/regex-syntax/}.
 
   The POSIX 1003.2 standard at
-  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
+  \url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
 
   The \code{pcre2pattern} or \code{pcrepattern} \command{man} page
   (found as part of \url{http://www.pcre.org/original/pcre.txt}), and
   details of Perl's own implementation at
-  \url{http://perldoc.perl.org/perlre.html}.
+  \url{https://perldoc.perl.org/perlre.html}.
 }
 \keyword{character}

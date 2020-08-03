@@ -121,7 +121,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   from C or C++ code.
 
   For C code one can use \command{cproto}
-  (\url{http://invisible-island.net/cproto/cproto.html}; Windows
+  (\url{https://invisible-island.net/cproto/cproto.html}; Windows
   executables are available), for
   example
   \preformatted{

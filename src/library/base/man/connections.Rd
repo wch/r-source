@@ -157,7 +157,7 @@ socketTimeout(socket, timeout = -1)
   connections were introduced, method \code{"wininet"} is only available
   on Windows (it uses the WinINet functions of that OS) and method
   \code{"libcurl"} (using the library of that name:
-  \url{http://curl.haxx.se/libcurl/}) is required on a Unix-alike but
+  \url{https://curl.haxx.se/libcurl/}) is required on a Unix-alike but
   optional on Windows.  Method \code{"default"} uses method
   \code{"internal"} for \samp{file:} URLs and \code{"libcurl"} for
   \code{ftps:} URLs.  On a Unix-alike it uses \code{"libcurl"} for
@@ -516,7 +516,7 @@ socketTimeout(socket, timeout = -1)
 #endif
 #ifdef unix
   in mode \code{"r"} only.  This reads the X11 primary selection (see
-  \url{http://standards.freedesktop.org/clipboards-spec/clipboards-latest.txt}),
+  \url{https://specifications.freedesktop.org/clipboards-spec/clipboards-latest.txt}),
   which can also be specified as \code{"X11_primary"} and the secondary
   selection as \code{"X11_secondary"}.  On most systems the clipboard
   selection (that used by \sQuote{Copy} from an \sQuote{Edit} menu) can
@@ -538,7 +538,7 @@ socketTimeout(socket, timeout = -1)
 #ifdef unix
   Unix users wishing to \emph{write} to one of the X11 selections may be
   able to do so via \command{xclip}
-  (\url{http://sourceforge.net/projects/xclip/}) or \command{xsel}
+  (\url{https://sourceforge.net/projects/xclip/}) or \command{xsel}
   (\url{http://www.vergenet.net/~conrad/software/xsel/}), for example by
   \code{pipe("xclip -i", "w")} for the primary selection.
 

@@ -78,7 +78,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \code{eigen} uses the LAPACK routines \code{DSYEVR}, \code{DGEEV},
   \code{ZHEEV} and \code{ZGEEV}.
 
-  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
+  LAPACK is from \url{http://www.netlib.org/lapack/} and its guide is listed
   in the references.
 }
 \references{

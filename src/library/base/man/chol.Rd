@@ -75,7 +75,7 @@ chol(x, \dots)
   This is an interface to the LAPACK routines \code{DPOTRF} and
   \code{DPSTRF},
 
-  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
+  LAPACK is from \url{http://www.netlib.org/lapack/} and its guide is listed
   in the references.
 }
 \references{

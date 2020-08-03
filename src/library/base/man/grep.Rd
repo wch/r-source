@@ -231,7 +231,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 \source{
   The C code for POSIX-style regular expression matching has changed
   over the years.  As from \R 2.10.0 (Oct 2009) the TRE library of Ville
-  Laurikari (\url{http://laurikari.net/tre/}) is used.  The POSIX
+  Laurikari (\url{https://laurikari.net/tre/}) is used.  The POSIX
   standard does give some room for interpretation, especially in the
   handling of invalid regular expressions and the collation of character
   ranges, so the results will have changed slightly over the years.

@@ -209,7 +209,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     }
     if (!useDiff && (length(left) == length(right))) {
         ## The idea is to emulate diff -b, as documented by POSIX:
-        ## http://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
+        ## https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
         bleft <- gsub("[[:space:]]*$", "", left)
         bright <- gsub("[[:space:]]*$", "", right)
         bleft <- gsub("[[:space:]]+", " ", bleft)

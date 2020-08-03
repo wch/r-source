@@ -79,7 +79,7 @@ memDecompress(from,
   \url{https://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{http://zlib.net/},
   \url{https://en.wikipedia.org/wiki/Gzip}, \url{http://www.bzip.org/},
-  \url{https://en.wikipedia.org/wiki/Bzip2}, \url{http://tukaani.org/xz/}
+  \url{https://en.wikipedia.org/wiki/Bzip2}, \url{https://tukaani.org/xz/}
   and \url{https://en.wikipedia.org/wiki/Xz} for references about the
   particular schemes used.
 }

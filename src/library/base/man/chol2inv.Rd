@@ -31,7 +31,7 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
 }
 \source{
   This is an interface to the LAPACK routine \code{DPOTRI}.
-  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
+  LAPACK is from \url{http://www.netlib.org/lapack/} and its guide is listed
   in the references.
 }
 \references{
