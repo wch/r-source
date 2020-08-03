@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2020
-@set FAQ_DATE @value{FAQ_YEAR}-02-20
+@set FAQ_DATE @value{FAQ_YEAR}-08-03
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -48,6 +48,10 @@ FORTRAN
 
 @macro CRANpkg {p}
 @url{https://CRAN.R-project.org/package=\p\, @strong{\p\}}
+@end macro
+
+@macro doi {d}
+doi:@tie{}@url{https://doi.org/\d\, \d\}
 @end macro
 
 @titlepage
@@ -656,10 +660,9 @@ S and S-Plus''. Springer, ISBN 0-387-98957-0.
 
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
-for Data Analysis and Graphics'',
-@url{https://www.tandfonline.com/doi/abs/10.1080/10618600.1996.10474713, , @emph{Journal of
-Computational and Graphical Statistics}}, @strong{5}, 299--314.
-@c FIXME DOI 10.1080/10618600.1996.10474713
+for Data Analysis and Graphics'', @emph{Journal of Computational and
+Graphical Statistics}, @strong{5}, 299--314
+(@doi{10.1080/10618600.1996.10474713}).
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
 @section Citing R
@@ -1211,9 +1214,9 @@ Further information is provided in the standard R reference ``R: A
 Language for Data Analysis and Graphics'' (@pxref{What documentation
 exists for R?}) and in Robert Gentleman and Ross Ihaka (2000), ``Lexical
 Scope and Statistical Computing'',
-@url{https://www.tandfonline.com/doi/abs/10.1080/10618600.2000.10474895, , @emph{Journal of
-Computational and Graphical Statistics}}, @strong{9}, 491--508.
-@c FIXME DOI: 10.1080/10618600.2000.10474895
+@emph{Journal of
+Computational and Graphical Statistics}, @strong{9}, 491--508
+(@doi{10.1080/10618600.2000.10474895}).
 
 Nested lexically scoped functions also imply a further major difference.
 Whereas S stores all objects as separate files in a directory somewhere
@@ -1497,10 +1500,9 @@ annotation in plot texts, via input expressions reminiscent of @TeX{}
 constructs.  See the help page for @code{plotmath}, which features an
 impressive on-line example.  More details can be found in Paul Murrell
 and Ross Ihaka (2000), ``An Approach to Providing Mathematical
-Annotation in Plots'', @url{https://www.tandfonline.com/doi/abs/10.1080/10618600.2000.10474900, ,
-@emph{Journal of Computational and Graphical Statistics}}, @strong{9},
-582--599.
-@c FIXME DOI: 10.1080/10618600.2000.10474900
+Annotation in Plots'', @emph{Journal of Computational and Graphical
+Statistics}, @strong{9}, 582--599
+(@doi{10.1080/10618600.2000.10474900}).
 
 @node What is R-plus?,  , Is there anything R can do that S-PLUS cannot?, R and S
 @section What is R-plus?
@@ -1539,17 +1541,14 @@ information on R web interface packages.
 Early references on R web interfaces include
 Jeff Banfield (1999),
 ``Rweb: Web-based Statistical Analysis''
-(@url{https://www.jstatsoft.org/v004/i01}),
-@c FIXME DOI 10.18637/jss.v004.i01
+(@doi{10.18637/jss.v004.i01}),
 David Firth (2003),
 ``CGIwithR: Facilities for processing web forms using R''
-(@url{https://www.jstatsoft.org/v008/i10}), 
-@c FIXME DOI 10.18637/jss.v008.i10
+(@doi{10.18637/jss.v008.i10}),
 and
 Angelo Mineo and Alfredo Pontillo (2006),
 ``Using R via PHP for Teaching Purposes: R-php''
-(@url{https://www.jstatsoft.org/v017/i04}).
-@c FIXME DOI 10.18637/jss.v017.i04
+(@doi{10.18637/jss.v017.i04}).
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
