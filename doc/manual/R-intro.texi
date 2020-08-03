@@ -6404,7 +6404,7 @@ facilities are available in the system GGobi by Swayne, Cook and Buja
 available from
 
 @quotation
-@uref{http://www.ggobi.org/}
+@uref{http://ggobi.org/}
 @end quotation
 
 @noindent

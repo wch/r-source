@@ -642,13 +642,13 @@ The @samp{Type} field specifies the type of the package:
 One can add subject classifications for the content of the package using
 the fields @samp{Classification/ACM} or @samp{Classification/ACM-2012}
 (using the Computing Classification System of the Association for
-Computing Machinery, @uref{http://www.acm.org/about/class/}; the former refers
+Computing Machinery, @uref{https://www.acm.org/publications/class-2012}; the former refers
 to the 1998 version), @samp{Classification/JEL} (the Journal of Economic
 Literature Classification System,
 @uref{https://www.aeaweb.org/@/econlit/@/jelCodes.php}, or
 @samp{Classification/MSC} or @samp{Classification/MSC-2010} (the
 Mathematics Subject Classification of the American Mathematical Society,
-@uref{http://www.ams.org/msc/}; the former refers to the 2000 version).
+@uref{https://mathscinet.ams.org/msc/msc2010.html}; the former refers to the 2000 version).
 The subject classifications should be comma-separated lists of the
 respective classification codes, e.g., @samp{Classification/ACM: G.4,
 H.2.8, I.5.1}.
@@ -1588,7 +1588,7 @@ comments later on about the Windows port of @R{}.
 If your package needs some system-dependent configuration before
 installation you can include an executable (Bourne@footnote{The script
 should only assume a POSIX-compliant @command{/bin/sh} -- see
-@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/V3_chap02.html}.
+@uref{https://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/V3_chap02.html}.
 In particular @command{bash} extensions must not be used, and not all
 @R{} platforms have a @command{bash} command, let alone one at
 @file{/bin/bash}.  All known shells used with @R{} support the use of
@@ -1870,7 +1870,7 @@ m4_include([tools/ax_pthread.m4])
 @end example
 @noindent
 One source of such extensions is the `Autoconf Archive'
-(@uref{https://www.gnu.org/@/software/@/autoconf-archive}.  It is not
+(@uref{https://www.gnu.org/@/software/@/autoconf-archive/}.  It is not
 safe to assume this is installed on users' machines, so the extension
 should be shipped with the package (taking care to comply with its
 licence).
@@ -2172,7 +2172,7 @@ DLL.
 @cindex OpenMP
 
 There is some support for packages which wish to use
-OpenMP@footnote{@uref{http://www.openmp.org/},
+OpenMP@footnote{@uref{https://www.openmp.org/},
 @uref{https://en.wikipedia.org/@/wiki/@/OpenMP},
 @uref{https://computing.llnl.gov/@/tutorials/@/openMP/}}.  The
 @command{make} macros
@@ -2278,7 +2278,7 @@ version of OpenMP is supported: version 3.1 (and much of 4.0, 4.5 or
 platforms, but portable packages cannot assume that end users have
 recent versions.  Apple builds of @command{clang} on macOS have no
 OpenMP support.
-@uref{http://www.openmp.org/@/resources/@/openmp-compilers-tools} gives
+@uref{https://www.openmp.org/@/resources/@/openmp-compilers-tools/} gives
 some idea of what compilers support what versions.
 
 The performance of OpenMP varies substantially between platforms.  The
@@ -2384,7 +2384,7 @@ typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
 Note that not all @code{pthreads} implementations are equivalent as parts
 are optional (see
-@uref{http://pubs.opengroup.org/@/onlinepubs/@/009695399/@/basedefs/@/pthread.h.html}):
+@uref{https://pubs.opengroup.org/@/onlinepubs/@/009695399/@/basedefs/@/pthread.h.html}):
 for example, macOS lacks the `Barriers' option.
 
 See also the comments on thread-safety and performance under OpenMP: on
@@ -2894,7 +2894,7 @@ The files are checked for binary executables, using a suitable version
 of @command{file} if available@footnote{A suitable @command{file.exe} is
 part of the Windows toolset: it checks for @command{gfile} if a suitable
 @command{file} is not found: the latter is available in the OpenCSW
-collection for Solaris at @uref{http://www.opencsw.org}.  The source
+collection for Solaris at @uref{https://www.opencsw.org/}.  The source
 repository is @uref{ftp://ftp.astron.com/pub/file/}.}.  (There may be
 rare false positives.)
 
@@ -3126,7 +3126,7 @@ environment of a function for later use.
 
 Complete checking of a package which contains a file @file{README.md}
 needs a reasonably current version of  @command{pandoc} installed: see
-@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.
+@uref{https://pandoc.org/installing.html}.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -4324,7 +4324,7 @@ CRLF-terminated Makefiles; Solaris warns about and some other
 @command{make}s ignore incomplete final lines.} (including the final
 line of the file) and not make use of GNU extensions.  (The POSIX
 specification is available at
-@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/make.html};
+@uref{https://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/make.html};
 anything not documented there should be regarded as an extension to be
 avoided.  Further advice can be found at
 @uref{https://www.gnu.org/@/software/@/autoconf/@/manual/@/autoconf.html#Portable-Make}.                                )
@@ -4430,7 +4430,7 @@ available, especially on Windows where only a subset (which has changed
 by version of @file{Rtools}) is provided for use with @R{}.  One
 particular issue is the use of @command{echo}, for which two behaviours
 are allowed
-(@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
+(@uref{https://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
 and both have occurred as defaults on @R{} platforms: portable
 applications should use neither @option{-n} (as the first argument) nor
 escape sequences.  The recommended replacement for @command{echo -n} is
@@ -7524,7 +7524,7 @@ separately).
 
 Another is the Eclipse IDE with the Stat-ET plugin
 (@uref{http://www.walware.de/goto/statet}), and (on Windows only)
-Tinn-R (@uref{http://sourceforge.net/@/projects/@/tinn-r/}).
+Tinn-R (@uref{https://sourceforge.net/@/projects/@/tinn-r/}).
 
 People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
@@ -7908,7 +7908,7 @@ be current.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{http://oprofile.sourceforge.net/}) and
+@command{oprofile} (see @uref{https://oprofile.sourceforge.net/}) and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/@/index.php/@/Tutorial}) for any
 executable or shared object.
@@ -9035,7 +9035,7 @@ and @option{-ftrapv}, said to be more reliable in @command{clang} than
 @command{gcc}.
 
 For more details on the topic see
-@uref{http://blog.regehr.org/archives/213} and
+@uref{https://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
 (which has 3 parts).
 
@@ -13666,7 +13666,7 @@ void cmsg(const char *msg)
 @end example
 
 Passing a variable-length string from C to Fortran is trickier, but
-@uref{https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-bind}
+@uref{https://software.intel.com/@/content/@/www/@/us/@/en/@/develop/@/documentation/@/fortran-compiler-developer-guide-and-reference/@/top/@/compiler-reference/@/mixed-language-programming/@/standard-tools-for-interoperability/@/bind.html}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
 single character, and for these we can write a wrapper in Fortran
 along the lines of
@@ -14683,7 +14683,7 @@ static R_INLINE int ind_2(int l, int j)
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably, see
-@uref{http://www.greenend.org.uk/@/rjk/@/2003/@/03/@/inline.html}, so this usage
+@uref{http://www.greenend.org.uk/@/rjk/@/tech/@/inline.html}, so this usage
 is for @code{static} functions as in the example.  All the @R{}
 configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
