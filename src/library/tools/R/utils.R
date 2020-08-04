@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -247,10 +247,14 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
     if(identical(texi2dvi, "emulation")) texi2dvi <- ""
     else {
-        if(is.null(texi2dvi) || !nzchar(texi2dvi) || texi2dvi == "texi2dvi")
+        if(is.null(texi2dvi) || !nzchar(texi2dvi) || texi2dvi == "texi2dvi") {
             texi2dvi <- Sys.which("texi2dvi")
-        if(.Platform$OS.type == "windows" && !nzchar(texi2dvi))
-            texi2dvi <- Sys.which("texify")
+            if(.Platform$OS.type == "windows" && !nzchar(texi2dvi))
+                texi2dvi <- Sys.which("texify")
+        } else if (!nzchar(Sys.which(texi2dvi))) { # check provided path
+            warning("texi2dvi script/program not available, using emulation")
+            texi2dvi <- ""
+        }
     }
 
     envSep <- .Platform$path.sep
