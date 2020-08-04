@@ -26,6 +26,7 @@
 #include <R_ext/Error.h>
 #include <R_ext/Utils.h>
 
+// NB: Exported via S_rcont() --> ../../../include/R_ext/stats_stubs.h & stats_package.h
 void
 rcont2(int *nrow, int *ncol,
        /* vectors of row and column totals, and their sum ntotal: */
@@ -88,8 +89,8 @@ rcont2(int *nrow, int *ncol,
 
 		do {
 		    /* Increment entry in row L, column M */
-		    j = (int)((id - nlm) * (double)(ia - nlm));
-		    lsp = (j == 0);
+		    double j = (id - nlm) * (double)(ia - nlm);
+		    lsp = ((nlm == ia) || (nlm == id));
 		    if (!lsp) {
 			++nlm;
 			x = x * j / ((double) nlm * (ii + nlm));
@@ -102,8 +103,8 @@ rcont2(int *nrow, int *ncol,
 			R_CheckUserInterrupt();
 
 			/* Decrement entry in row L, column M */
-			j = (int)(nll * (double)(ii + nll));
-			lsm = (j == 0);
+			j = (nll * (double)(ii + nll));
+			lsm = (nll == 0);
 			if (!lsm) {
 			    --nll;
 			    y = y * j / ((double) (id - nll) * (ia - nll));
@@ -122,15 +123,15 @@ rcont2(int *nrow, int *ncol,
 
 		dummy = sumprb * unif_rand();
 
-	    } while (1);
+	    } while (1); // 'Outer Loop'
 
 L160:
 	    matrix[l + m * *nrow] = nlm;
 	    ia -= nlm;
 	    jwork[m] -= nlm;
-	}
+	}// for (m = 0..nc_1-1)
 	matrix[l + nc_1 * *nrow] = ia;/* last column in row l */
-    }
+    } // for (l = ...)
 
     /* Compute entries in last row of MATRIX */
     for (m = 0; m < nc_1; ++m)
