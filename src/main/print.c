@@ -1028,13 +1028,11 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 		size_t space = TAGBUFLEN0 - strlen(tagbuf);
 		snprintf(ptag, space,
 			 "Slot \"%s\":", EncodeChar(PRINTNAME(TAG(a))));
-		tagbuf[TAGBUFLEN0] = 0; /* not sure this is needed */
 	    }
 	    else {
 		size_t space = TAGBUFLEN0 - strlen(tagbuf);
 		snprintf(ptag, space,
 			 "attr(,\"%s\")", EncodeChar(PRINTNAME(TAG(a))));
-		tagbuf[TAGBUFLEN0] = 0; /* not sure this is needed */
 	    }
 	    Rprintf("%s", tagbuf); Rprintf("\n");
 	    if (TAG(a) == R_RowNamesSymbol) {
