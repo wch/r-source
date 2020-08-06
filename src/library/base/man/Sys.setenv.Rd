@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.setenv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.setenv}
@@ -36,12 +36,15 @@ Sys.unsetenv(x)
   allow setting an environment variable to \code{""}, but Windows does
   not, and there \code{Sys.setenv(FOO = "")} unsets \env{FOO}.
 
-  There may be system-specific limits on the maximum length of the values
-  of individual environment variables or of all environment variables.
+  There may be system-specific limits on the maximum length of the
+  values of individual environment variables or of names+values of all
+  environment variables.
 #ifdef windows
-  Windows has a limit of 32,767 characters on the environment block, and
-  \code{cmd.exe} has a limit of 2047 (Windows 2000) or 8192 characters
-  (XP and later) for each value.
+  %  https://docs.microsoft.com/en-gb/windows/win32/procthread/environment-variables (says since Vista there is no limit on the block)
+  Recent versions of Windows have a maximum length of 32,767 characters for a
+  environment variable; however \code{cmd.exe} has a limit of 8192
+  characters for a command line, hence \command{set} can only set 8188.
+  % http://support.microsoft.com/kb/830473
 #endif
 }
 % http://support.microsoft.com/kb/830473
