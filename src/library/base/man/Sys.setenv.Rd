@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.setenv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.setenv}
@@ -38,21 +38,16 @@ Sys.unsetenv(x)
 
   There may be system-specific limits on the maximum length of the values
   of individual environment variables or of all environment variables.
-#ifdef windows
-  Windows has a limit of 32,767 characters on the environment block, and
-  \code{cmd.exe} has a limit of 2047 (Windows 2000) or 8192 characters
-  (XP and later) for each value.
-#endif
-}
-% http://support.microsoft.com/kb/830473
 
-#ifdef unix
+  Windows has a limit of 32,767 characters on the environment block, and
+  \code{cmd.exe} has a limit of 8192 characters (Windows XP and later) for
+  each value. % http://support.microsoft.com/kb/830473
+}
 \note{
-  If \code{Sys.unsetenv} is not supported, it will at least try to
+  On Unix-alikes, if \code{Sys.unsetenv} is not supported, it will at least try to
   set the value of the environment variable to \code{""}, with a
   warning.
 }
-#endif
 \seealso{
   \code{\link{Sys.getenv}}, \link{Startup} for ways to set environment
   variables for the \R session.
@@ -66,12 +61,7 @@ Sys.unsetenv(x)
 \examples{
 print(Sys.setenv(R_TEST = "testit", "A+C" = 123))  # `A+C` could also be used
 Sys.getenv("R_TEST")
-#ifdef windows
-Sys.unsetenv("R_TEST")
-#endif
-#ifdef unix
-Sys.unsetenv("R_TEST")  # may warn and not succeed
-#endif
+Sys.unsetenv("R_TEST") # on Unix-alike may warn and not succeed
 Sys.getenv("R_TEST", unset = NA)
 }
 \keyword{environment}
