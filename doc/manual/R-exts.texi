@@ -5185,8 +5185,8 @@ or
 #endif
 @end example
 @noindent
-before @emph{any} headers.  (@code{strdup} and @code{strncasecmp} are
-two such functions.)
+before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
+@code{strnlen} are such functions.)
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
