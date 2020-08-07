@@ -1137,7 +1137,7 @@ or (more recently) @file{.syd}.
 @findex read.octave
 
 Octave is a numerical linear algebra system
-(@uref{http://www.octave.org}), and function @code{read.octave} in
+(@uref{https://www.gnu.org/software/octave/}), and function @code{read.octave} in
 package @CRANpkg{foreign} can read in files in Octave text data format
 created using the Octave command @command{save -ascii}, with support for
 most of the common types of variables, including the standard atomic
@@ -1215,9 +1215,10 @@ applications, including Mail and Address Book, use SQLite.
 @section Overview of RDBMSs
 
 Traditionally there had been large (and expensive) commercial RDBMSs
-(@uref{http://www.informix.com, Informix}; @uref{https://www.oracle.com,
-Oracle}; @uref{http://www.sybase.com, Sybase};
-@uref{http://www.ibm.com/db2, IBM's DB2};
+(@uref{https://www.ibm.com/software/data/informix/, Informix};
+@uref{https://www.oracle.com, Oracle}; 
+Sybase;
+@uref{https://www.ibm.com/db2, IBM's DB2};
 @uref{https://www.microsoft.com/sql-server/, Microsoft @acronym{SQL}
 Server} on Windows) and academic and small-system databases (such as
 MySQL@footnote{and forks, notably MariaDB.}, PostgreSQL, Microsoft
@@ -1372,7 +1373,7 @@ data frame or in pieces (usually as groups of rows).
 
 All except @CRANpkg{RODBC} are tied to one DBMS, but there has been a
 proposal for a unified `front-end' package @CRANpkg{DBI}
-(@uref{https://developer.r-project.org/db}) in conjunction with a
+(@uref{https://developer.r-project.org/db/}) in conjunction with a
 `back-end', the most developed of which is @CRANpkg{RMySQL}.  Also on
 @acronym{CRAN} are the back-ends @CRANpkg{ROracle},
 @CRANpkg{RPostgreSQL} and @CRANpkg{RSQLite} (which works with the
@@ -1383,7 +1384,7 @@ JDBC driver).
 @c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @c @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
 
-@pkg{PL/R} (@uref{http://joeconway.com/plr,
+@pkg{PL/R} (@uref{http://joeconway.com/plr/,
 @code{http://@/joeconway.com/@/plr}}) is a project to embed R into
 PostgreSQL.
 
@@ -1792,7 +1793,7 @@ Packages @CRANpkg{h5}, Bioconductor's @pkg{rhdf5}, @CRANpkg{RNetCDF} and
 HDF5 (Hierarchical Data Format, see
 @uref{https://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
 (network Common Data Form, see
-@uref{http://www.unidata.ucar.edu/software/netcdf/}).
+@uref{https://www.unidata.ucar.edu/software/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented
 ways, including descriptions, labels, formats, units, @dots{}.  HDF5 also
@@ -1824,9 +1825,9 @@ a header and then a series of fields and so is most similar to an @R{}
 data frame.  The data itself is stored in text format, and can include
 character, logical and numeric fields, and other types in later versions
 (see for example
-@uref{http://www.digitalpreservation.gov/formats/fdd/fdd000325.shtml}
+@uref{https://www.loc.gov/preservation/digital/formats/fdd/fdd000325.shtml}
 and
-@uref{http://www.clicketyclick.dk/databases/xbase/format/index.html}).
+@uref{https://www.clicketyclick.dk/databases/xbase/format/index.html}).
 
 @findex read.dbf
 @findex write.dbf
@@ -2394,7 +2395,7 @@ K.@: Kline and D.@: Kline (2001) @emph{SQL in a Nutshell.} O'Reilly.
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
 Addison-Wesley.
-Also available at @uref{http://momjian.us/main/writings/pgsql/aw_pgsql_book/}.
+Also available at @uref{https://momjian.us/main/writings/pgsql/aw_pgsql_book/}.
 
 @noindent
 B.@: D.@: Ripley (2001) Connections. @emph{R News}, @strong{1/1}, 16--7.

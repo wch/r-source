@@ -334,7 +334,7 @@ CVS).
 
 Tarballs with daily snapshots of the r-devel and r-patched development
 versions of R can be found at
-@url{https://stat.ethz.ch/R/daily}.
+@url{https://stat.ethz.ch/R/daily/}.
 
 @c Sources are also available via anonymous rsync.  Use
 
@@ -629,7 +629,7 @@ Springer, ISBN 978-0-387-79053-4,
 
 Robert Gentleman (2008), ``R Programming for Bioinformatics''.  Chapman
 & Hall/CRC, Boca Raton, FL, ISBN 978-1-420-06367-7,
-@url{https://www.bioconductor.org/pub/RBioinf/}.
+@url{https://master.bioconductor.org/help/publications/books/r-programming-for-bioinformatics/}.
 
 Stefano M. Iacus (2008), ``Simulation and Inference for Stochastic
 Differential Equations: With R Examples''. Springer, New York, ISBN
@@ -657,8 +657,9 @@ S and S-Plus''. Springer, ISBN 0-387-98957-0.
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
 for Data Analysis and Graphics'',
-@url{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
+@url{https://www.tandfonline.com/doi/abs/10.1080/10618600.1996.10474713, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{5}, 299--314.
+@c FIXME DOI 10.1080/10618600.1996.10474713
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
 @section Citing R
@@ -967,7 +968,7 @@ for further information on the ``Evolution of the S Language''.
 @section What is @sc{S-Plus}?
 
 @SPLUS{} is a value-added version of S currently sold by
-@url{http://www.tibco.com/, TIBCO Software Inc} as `TIBCO Spotfire S+'.
+@url{https://www.tibco.com/, TIBCO Software Inc} as `TIBCO Spotfire S+'.
 See @url{https://en.wikipedia.org/wiki/S-PLUS} for more information.
 
 @node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
@@ -1210,8 +1211,9 @@ Further information is provided in the standard R reference ``R: A
 Language for Data Analysis and Graphics'' (@pxref{What documentation
 exists for R?}) and in Robert Gentleman and Ross Ihaka (2000), ``Lexical
 Scope and Statistical Computing'',
-@url{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
+@url{https://www.tandfonline.com/doi/abs/10.1080/10618600.2000.10474895, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{9}, 491--508.
+@c FIXME DOI: 10.1080/10618600.2000.10474895
 
 Nested lexically scoped functions also imply a further major difference.
 Whereas S stores all objects as separate files in a directory somewhere
@@ -1495,9 +1497,10 @@ annotation in plot texts, via input expressions reminiscent of @TeX{}
 constructs.  See the help page for @code{plotmath}, which features an
 impressive on-line example.  More details can be found in Paul Murrell
 and Ross Ihaka (2000), ``An Approach to Providing Mathematical
-Annotation in Plots'', @url{http://www.amstat.org/publications/jcgs/, ,
+Annotation in Plots'', @url{https://www.tandfonline.com/doi/abs/10.1080/10618600.2000.10474900, ,
 @emph{Journal of Computational and Graphical Statistics}}, @strong{9},
 582--599.
+@c FIXME DOI: 10.1080/10618600.2000.10474900
 
 @node What is R-plus?,  , Is there anything R can do that S-PLUS cannot?, R and S
 @section What is R-plus?
@@ -1509,9 +1512,9 @@ For a very long time, there was no such thing.
 @c currently beta testing a commercially supported version of R named R+
 @c (read R plus).
 
-@url{http://revolutionanalytics.com/, Revolution Analytics} has
-released REvolution R, now available as Microsoft R (see
-@url{http://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
+Revolution Analytics has released REvolution R, now available as
+Microsoft R (see
+@url{https://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
 for more information).
 
 @c Now archived at <http://archive.today/WrgxY>
@@ -1537,13 +1540,16 @@ Early references on R web interfaces include
 Jeff Banfield (1999),
 ``Rweb: Web-based Statistical Analysis''
 (@url{https://www.jstatsoft.org/v004/i01}),
+@c FIXME DOI 10.18637/jss.v004.i01
 David Firth (2003),
 ``CGIwithR: Facilities for processing web forms using R''
 (@url{https://www.jstatsoft.org/v008/i10}), 
+@c FIXME DOI 10.18637/jss.v008.i10
 and
 Angelo Mineo and Alfredo Pontillo (2006),
 ``Using R via PHP for Teaching Purposes: R-php''
 (@url{https://www.jstatsoft.org/v017/i04}).
+@c FIXME DOI 10.18637/jss.v017.i04
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -1714,7 +1720,7 @@ project has matured, the functional scope of the software packages
 broadened to include the analysis of all types of genomic data, such as
 SAGE, sequence, or SNP data.  In addition, there are metadata
 (annotation, CDF and probe) and experiment data packages.  See
-@url{https://www.bioconductor.org/download/} for available packages and a
+@url{https://master.bioconductor.org/install/} for available packages and a
 complete taxonomy via BioC Views.
 
 @node Other add-on packages,  , Add-on packages from Bioconductor, Which add-on packages exist for R?
@@ -2654,7 +2660,7 @@ Ghostscript you can use @code{bitmap()}, which produces a PostScript or
 PDF file then converts it to any bitmap format supported by Ghostscript.
 On some installations this produces ugly output, on others it is
 perfectly satisfactory.  Many systems now come with Xvfb from
-@url{http://www.x.org/, X.Org} (possibly as an optional
+@url{https://www.x.org/, X.Org} (possibly as an optional
 install), which is an X11 server that does not require a screen; and
 there is the @CRANpkg{GDD} package from @CRAN{}, which produces PNG,
 JPEG and GIF bitmaps without X11.
@@ -2920,7 +2926,7 @@ A discussion with many easily followed examples is in Appendix G
 753--771 of @emph{Statistical Analysis and Data Display: An Intermediate
 Course with Examples in R}, Richard M. Heiberger and Burt Holland
 (Springer 2015, second edition).  This appendix is a free download from
-@url{http://link.springer.com/content/pdf/bbm%3A978-1-4939-2122-5%2F1.pdf}.
+@url{https://link.springer.com/content/pdf/bbm%3A978-1-4939-2122-5%2F1.pdf}.
 
 For more information, see e.g.@: David Goldberg (1991), ``What Every
 Computer Scientist Should Know About Floating-Point Arithmetic'',
