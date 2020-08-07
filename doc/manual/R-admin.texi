@@ -1115,11 +1115,12 @@ compilation units.  Benchmarking in 2020 with
 in increased performance and reduction in installed size for builds
 without debug symbols, but large size reductions for some
 packages@footnote{A complete @acronym{CRAN} installation reduced from 50
-to 35GB.} with debug symbols.
+to 35GB.} with debug symbols.  (Performance and size gains are said to be
+most often seen in complex C++ builds.)
 
 Whether toolchains support LTO is often unclear: all of the C compiler,
-the Fortran compiler@footnote{although there is now the possibility to
-exclude Fortran but this misses a lot of the benefits.} and linker have
+the Fortran compiler@footnote{although there is the possibility to
+exclude Fortran but that misses some of the benefits.} and linker have
 to support it, and support it by the same mechanism (so mixing compiler
 families may not work and a non-default linker may be needed).  It has
 been supported by the GCC and LLVM projects for some years with
@@ -1168,7 +1169,7 @@ RANLIB="ranlib --plugin=/path/to/liblto_plugin.so"
 amd @code{NM} may be needed to be set analogously. (If using an
 LTO-enabled build to check packages, set environment variable
 @env{UserNM}@footnote{not @env{NM} as we found @command{make}
-overriding that.} to @samp{gcc-NM}.)
+overriding that.} to @samp{gcc-nm}.)
 
 @c http://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html
 With GCC 5 and later it is possible to parallelize parts of the LTO
@@ -1188,6 +1189,13 @@ CXX17PICFLAGS=-fPIC
 CXX20PICFLAGS=-fPIC
 FPICFLAGS=-fPIC
 @end example
+@noindent
+We suggest only using these if the problem is encountered (it was not
+seen on @acronym{CRAN} with GCC 10 at the time of writing).
+
+Note that @R{} may need to be re-compiled after even a minor update to
+the compiler (e.g.@: from 10.1 to 10.2) but this may not be clear from
+confused compiler messages.
 
 @node LTO with LLVM, LTO for package checking, LTO with GCC, Link-Time Optimization
 @subsubsection LTO with LLVM
@@ -1203,7 +1211,7 @@ RANLIB=llvm-ranlib
 @end example
 @noindent
 (but macOS does not, and these are not needed there).  Where the linker
-supports a parallel backup for Thin LTO this can be specified @emph{via}
+supports a parallel backend for Thin LTO this can be specified @emph{via}
 the macro @samp{LTO_LD}: see the URL above for per-linker settings and
 further linking optimizations.)
 
@@ -1216,7 +1224,7 @@ LTO_LD=-Wl,-mllvm,-threads=4
 to use Thin LTO with 4 threads for C/C++ code, but skip LTO for Fortran
 code compiled with @command{gfortran}.
 
-It is said to be particularly beneficial to use @option{-O3} with
+It is said to be particularly beneficial to use @option{-O3} for
 @command{clang} in conjunction with LTO.
 
 @node LTO for package checking,  , LTO with LLVM, Link-Time Optimization
@@ -1230,7 +1238,7 @@ normally separate compilation units.
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
 also 8.4 and later.} LTO will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
-Fortran and C/C++.  @command{gfortran} 9.2 and later can help
+Fortran and C/C++.  @command{gfortran} 8,4, 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
 with its @option{-fc-prototypes-external} option, e.g.@: that (at the
 time of writing) Fortran @code{LOGICAL} corresponds to
@@ -1247,8 +1255,7 @@ intended only for checking installation of @R{} and packages: it
 includes these library routines (those called directly and all they
 depend on) in each package.  This is unlikely to work in conjunction
 with non-default options for BLAS and LAPACK, and `linking' against
-these libraries may be very slow.  Note too that the @R{} may need to be
-re-compiled after even a minor update to the compiler.
+these libraries may be very slow.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation

@@ -560,7 +560,8 @@ source code in the package is to be compiled with Link-Time Optimization
 (@pxref{Using Link-time Optimization}) if @R{} was installed with
 @option{--enable-lto} (default true) or @option{--enable-lto=R} (default
 false). This can be overridden by by the flags @option{--use-LTO} and
-@option{--no-use-LTO}.
+@option{--no-use-LTO}.  LTO is said to give most size and performance
+improvements for large and complex (heavily templated) C++ projects.
 
 @c DESCRIPTION field StagedInstall
 The @samp{StagedInstall} logical field controls if package installation
@@ -10330,9 +10331,10 @@ void F77_NAME(supsmu)(int *n, double *x, double *y,
 @end example
 
 @noindent
-@command{gfortran} 9.2 and later can help generate such prototypes with its
-flag @option{-fc-prototypes-external} (although one will need to replace
-the hard-coded trailing underscore with the @code{F77_NAME} macro).
+@command{gfortran} 8.4, 9.2 and later can help generate such prototypes
+with its flag @option{-fc-prototypes-external} (although one will need
+to replace the hard-coded trailing underscore with the @code{F77_NAME}
+macro).
 
 One can get away with inaccurate argument lists in the declarations: it
 is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
