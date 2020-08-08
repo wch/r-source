@@ -264,6 +264,16 @@
     }
   }
 
+    \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+
+      \item The \code{LINPACK} argument to \code{chol.default()},
+      \code{chol2inv()}, \code{solve.default()} and \code{svd()} has been
+      defunct since \R 3.1.0.  Using it now gives a warning which will
+      become an error in \R 4.1.0.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item The code mitigating stack overflow with PCRE regexps on very
