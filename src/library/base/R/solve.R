@@ -1,7 +1,7 @@
 #  File src/library/base/R/solve.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ solve.qr <- function(a, b, ...)
 solve.default <-
     function(a, b, tol = .Machine$double.eps, LINPACK = FALSE, ...)
 {
+    if (!missing(LINPACK))
+        warning("the LINPACK argument has been defunct since R 3.1.0")
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
 	a <- as.matrix(a)
 	if(missing(b)) {

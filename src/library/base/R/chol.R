@@ -1,7 +1,7 @@
 #  File src/library/base/R/chol.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@ chol <- function(x, ...) UseMethod("chol")
 
 chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
 {
+    if (!missing(LINPACK))
+        warning("the LINPACK argument has been defunct since R 3.1.0")
     if (is.complex(x))
         stop("complex matrices not permitted at present")
 
@@ -27,5 +29,8 @@ chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
 }
 
 chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
+{
+    if (!missing(LINPACK))
+        warning("the LINPACK argument has been defunct since R 3.1.0")
     .Internal(La_chol2inv(x, size))
-
+}
