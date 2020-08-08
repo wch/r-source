@@ -14394,7 +14394,8 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > 
 > ### Compare different types
 > quantAll <- function(x, prob, ...)
-+   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...), quantile(x, prob, type=1)))
++   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
++            quantile(x, prob, type=1)))
 > p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 > signif(quantAll(x, p), 4)
         0.1%   0.5%     1%     2%     5%    10%      50%
@@ -14407,6 +14408,10 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
  [7,] -2.997 -2.592 -2.424 -2.245 -1.727 -1.339 -0.03473
  [8,] -3.004 -2.595 -2.430 -2.258 -1.731 -1.342 -0.03473
  [9,] -3.004 -2.595 -2.429 -2.257 -1.730 -1.341 -0.03473
+> 
+> ## 0% and 100% are equal to min(), max() for all types:
+> stopifnot(t(quantAll(x, prob=0:1)) == range(x))
+> 
 > ## for complex numbers:
 > z <- complex(re=x, im = -10*x)
 > signif(quantAll(z, p), 4)
@@ -18977,7 +18982,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.304 0.194 7.534 0 0 
+Time elapsed:  3.923 0.161 4.094 0 0 
 > grDevices::dev.off()
 null device 
           1 
