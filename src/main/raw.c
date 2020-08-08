@@ -123,23 +123,58 @@ SEXP attribute_hidden do_rawToBits(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, x;
-    R_xlen_t i, j = 0;
-    unsigned int tmp;
-
     checkArity(op, args);
-    PROTECT(x = coerceVector(CAR(args), INTSXP));
+    SEXP x = PROTECT(coerceVector(CAR(args), INTSXP));
     if (!isInteger(x))
 	error(_("argument 'x' must be an integer vector"));
-    PROTECT(ans = allocVector(RAWSXP, 32*XLENGTH(x)));
+    SEXP ans = PROTECT(allocVector(RAWSXP, 32*XLENGTH(x)));
+    R_xlen_t i, j = 0;
     for (i = 0; i < XLENGTH(x); i++) {
-	tmp = (unsigned int) INTEGER(x)[i];
+	unsigned int tmp = (unsigned int) INTEGER(x)[i];
 	for (int k = 0; k < 32; k++, tmp >>= 1)
 	    RAW(ans)[j++] = tmp & 0x1;
     }
     UNPROTECT(2);
     return ans;
 }
+
+// split "real" (double = 64-bit) into two 32-bit parts (which the user can split to bits):
+SEXP attribute_hidden do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
+    if (!isReal(x))
+	error(_("argument 'x' must be a numeric vector"));
+    SEXP ans = PROTECT(allocVector(INTSXP, 2*XLENGTH(x)));
+    R_xlen_t i, j = 0;
+    double *x_ = REAL(x);
+    for (i = 0; i < XLENGTH(x); i++) {
+	int *tmp = (int*) &(x_[i]);
+	INTEGER(ans)[j++] = tmp[0];
+	INTEGER(ans)[j++] = tmp[1];
+    }
+    UNPROTECT(2);
+    return ans;
+}
+// split "real", i.e. = double = 64-bitd, to bits (<==> do_intToBits( do_numToInts(..) .. ))
+SEXP attribute_hidden do_numToBits(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
+    if (!isReal(x))
+	error(_("argument 'x' must be a numeric vector"));
+    SEXP ans = PROTECT(allocVector(RAWSXP, 64*XLENGTH(x)));
+    R_xlen_t i, j = 0;
+    double *x_ = REAL(x);
+    for (i = 0; i < XLENGTH(x); i++) {
+	uint64_t *tmp = (uint64_t*) &(x_[i]);
+	for (int k = 0; k < 64; k++, (*tmp) >>= 1)
+	    RAW(ans)[j++] = (*tmp) & 0x1;
+    }
+    UNPROTECT(2);
+    return ans;
+}
+
 
 SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -315,8 +350,8 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocVector(STRSXP, nc));
 	for (i = 0; i < nc; i++) {
 	    int this = INTEGER(x)[i];
-	    if (this == NA_INTEGER 
-		|| (this >= 0xD800 && this <= 0xDFFF) 
+	    if (this == NA_INTEGER
+		|| (this >= 0xD800 && this <= 0xDFFF)
 		|| this > 0x10FFFF)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
@@ -332,7 +367,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Note that this gives zero length for input '0', so it is omitted */
 	for (i = 0, len = 0; i < nc; i++) {
 	    int this = INTEGER(x)[i];
-	    if (this == NA_INTEGER 
+	    if (this == NA_INTEGER
 		|| (this >= 0xDC00 && this <= 0xDFFF)
 		|| this > 0x10FFFF) {
 		haveNA = TRUE;
@@ -344,7 +379,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(next >= 0xDC00 && next <= 0xDFFF) i++;
 		else {haveNA = TRUE; break;}
 		len += 4; // all points not in the basic plane have length 4
-	    } 
+	    }
 	    else
 		len += inttomb(NULL, this);
 	}

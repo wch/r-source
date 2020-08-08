@@ -67,6 +67,10 @@
       allowing to check Rd files marked with keyword \code{"internal"} as
       well.  The latter can be activated for \command{R CMD check} via
       experimental environment variable \env{_R_CHECK_RD_INTERNAL_TOO_}.
+
+      \item New functions \code{numToBits()} and \code{numToInts()}
+      extend the \code{raw} conversion utilities to (double precision)
+      \code{numeric}.
     }
   }
 
