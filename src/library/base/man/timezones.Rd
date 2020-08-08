@@ -117,7 +117,7 @@ OlsonNames(tzdir = NULL)
   for the C function \code{tzset} can be helpful, but it can also be
   inaccurate.  There is a cumbersome POSIX specification (listed under
   environment variable \env{TZ} at
-  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08}),
+  \url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08}),
   which is often at least partially supported, but there are other more
   user-friendly ways to specify time zones.
 

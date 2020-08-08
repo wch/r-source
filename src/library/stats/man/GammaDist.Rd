@@ -113,7 +113,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 
   See also
   \url{https://en.wikipedia.org/wiki/Incomplete_gamma_function}, or
-  \url{http://dlmf.nist.gov/8.2#i}.
+  \url{https://dlmf.nist.gov/8.2#i}.
 }
 \source{
   \code{dgamma} is computed via the Poisson density, using code contributed
@@ -157,7 +157,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Chapter 6: Gamma and Related Functions.
 
   NIST Digital Library of Mathematical Functions.
-  \url{http://dlmf.nist.gov/}, section 8.2.
+  \url{https://dlmf.nist.gov/}, section 8.2.
 }
 \seealso{
   \code{\link{gamma}} for the gamma function.

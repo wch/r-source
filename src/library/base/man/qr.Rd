@@ -129,8 +129,8 @@ as.qr(x)
   routines \code{DGEQP3} and \code{ZGEQP3}.  Further LINPACK and LAPACK
   routines are used for \code{qr.coef}, \code{qr.qy} and \code{qr.aty}.
 
-  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
-  \url{http://www.netlib.org/linpack} and their guides are listed
+  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack/} and
+  \url{http://www.netlib.org/linpack/} and their guides are listed
   in the references.
 }
 \references{

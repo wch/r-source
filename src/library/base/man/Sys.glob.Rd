@@ -29,7 +29,7 @@ Sys.glob(paths, dirmark = FALSE)
   For precise details of wildcards expansion, see your
   system's documentation on the \code{glob} system call.  There is a
   POSIX 1003.2 standard (see
-  \url{http://pubs.opengroup.org/onlinepubs/9699919799/functions/glob.html})
+  \url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/glob.html})
   but some OSes will go beyond this.
 
   All systems should interpret \code{*} (match zero or more characters),
@@ -39,7 +39,7 @@ Sys.glob(paths, dirmark = FALSE)
   compliant OS they will match directories (only), but as they are not
   valid filepaths on Windows, they match nothing there.  (Earlier POSIX
   standards allowed them to match files.)
-  % section A.4.12, http://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap04.html
+  % section A.4.12, https://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap04.html
 
   The rest of these details are indicative (and based on the POSIX
   standard).

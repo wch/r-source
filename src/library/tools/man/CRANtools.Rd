@@ -61,7 +61,7 @@ summarize_CRAN_check_status(packages,
   check issues (including the memory-access check results made available
   from \url{https://www.stats.ox.ac.uk/pub/bdr/memtests/} and the
   without-long-double check results from
-  \url{https://www.stats.ox.ac.uk/pub/bdr/noLD}), as a character frame
+  \url{https://www.stats.ox.ac.uk/pub/bdr/noLD/}), as a character frame
   with variables \code{Package}, \code{Version}, \code{kind} (an
   identifier for the issue) and \code{href} (a URL with information on
   the issue).

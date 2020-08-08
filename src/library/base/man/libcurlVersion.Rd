@@ -46,8 +46,8 @@ libcurlVersion()
   \code{\link{curlGetHeaders}}, \code{\link{download.file}} and
   \code{\link{url}} for functions which (optionally) use \code{libcurl}.
 
-  \url{http://curl.haxx.se/docs/sslcerts.html} and
-  \url{http://curl.haxx.se/docs/ssl-compared.html} for more details on
+  \url{https://curl.haxx.se/docs/sslcerts.html} and
+  \url{https://curl.haxx.se/docs/ssl-compared.html} for more details on
   SSL versions (the current standard being known as TLS).  Normally
   \code{libcurl} used with \R uses SecureTransport on macOS, OpenSSL on
   Windows and GnuTLS, NSS or OpenSSL on Unix-alikes.  (At the time of

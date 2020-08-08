@@ -94,7 +94,7 @@ ttktreeview(parent, ...)
   respective \code{type} argument.
 
   The functions starting \code{ttk} are for the themed widget set for Tk
-  8.5 or later.  A tutorial can be found at \url{http://www.tkdocs.com}.
+  8.5 or later.  A tutorial can be found at \url{https://tkdocs.com/}.
 
   It is not possible to describe the widgets and their arguments in
   full.  Please refer to the Tcl/Tk documentation.

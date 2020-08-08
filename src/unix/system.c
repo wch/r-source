@@ -191,7 +191,7 @@ int Rf_initialize_R(int ac, char **av)
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
 {
     /* getrlimit is POSIX:
-       http://pubs.opengroup.org/onlinepubs/9699919799/functions/getrlimit.html
+       https://pubs.opengroup.org/onlinepubs/9699919799/functions/getrlimit.html
     */
     struct rlimit rlim;
 

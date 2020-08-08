@@ -260,7 +260,7 @@ o  MDI, multiple document interface.  Here the console, graphics and
    pagers are subwindows of one main `frame' window.
 
 You can set your preference (and details of the MDI) in the Rconsole
-file: this can also be overriden on the command line by --mdi or --sdi.
+file: this can also be overridden on the command line by --mdi or --sdi.
 
 If you use multiple files in a single SDI pager, the (row) positions
 are remembered and re-used when you switch views in the pager.

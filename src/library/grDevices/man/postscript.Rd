@@ -334,7 +334,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \code{"printcmd"} is empty and will give an error if
   \code{print.it = TRUE} is used.  Suitable commands to spool a PostScript
   file to a printer can be found in \file{RedMon} suite available from
-  \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
+  \url{http://pages.cs.wisc.edu/~ghost/index.html}.  The command will be
   run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
   which may be more convenient (it requires Ghostscript version 6.50
   or later).
