@@ -169,7 +169,7 @@ httpd <- function(path, query, ...)
                 "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?pattern=",
-                       vapply(reQuote(s), utils::URLencode, "", reserved = TRUE),
+                       utils::URLencode(reQuote(s), reserved = TRUE),
                        "&fields.concept=1&agrep=0\">",
                        shtmlify(substr(s, 1L, 80L)),
                        "</a>",
