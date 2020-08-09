@@ -6,7 +6,7 @@
 \name{URLencode}
 \alias{URLencode}
 \alias{URLdecode}
-\title{Encode or Decode a (partial) URL}
+\title{Encode or Decode (partial) URLs}
 \description{
   Functions to percent-encode or decode characters in URLs.
 }
@@ -15,7 +15,7 @@ URLencode(URL, reserved = FALSE, repeated = FALSE)
 URLdecode(URL)
 }
 \arguments{
-  \item{URL}{a character string.}
+  \item{URL}{a character vector.}
   \item{reserved}{logical: should \sQuote{reserved} characters be
     encoded? See \sQuote{Details}.}
   \item{repeated}{logical: should apparently already-encoded URLs be
@@ -38,7 +38,7 @@ URLdecode(URL)
   \code{\%xx} for two hexadecimal digits.
 }
 \value{
-  A character string.
+  A character vector.
 }
 \references{
   Internet STD 66 (formerly RFC 3986),
@@ -52,5 +52,8 @@ URLdecode(y)
 
 URLdecode(z <- "ab\%20cd")
 c(URLencode(z), URLencode(z, repeated = TRUE)) # first is usually wanted
+
+## both functions support character vectors of length > 1
+y <- URLdecode(URLencode(c("url with space", "another one")))
 }
 \keyword{utilities}
