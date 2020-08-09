@@ -1,8 +1,28 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{3.0}
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% jss.dtx  (with options: `class')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from jss.cls.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file jss.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+\def\fileversion{3.1}
 \def\filename{jss}
-\def\filedate{2015/09/01}
+\def\filedate{2020/08/03}
 %%
 %% Package `jss' to use with LaTeX2e for JSS publications (http://www.jstatsoft.org/)
 %% License: GPL-2 | GPL-3
@@ -54,6 +74,7 @@
 \RequirePackage{graphicx,color,ae,fancyvrb}
 \RequirePackage[T1]{fontenc}
 \IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
+\IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
 %% bibliography
 \if@shortnames
   \usepackage[authoryear,round]{natbib}
@@ -236,7 +257,7 @@
     {\@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue}
     \hfill
     \@Firstdate\\ \nopagebreak
-    {\href{http://dx.doi.org/\@DOI}{\tt doi:\@DOI}}
+    {\href{https://doi.org/\@DOI}{\tt doi:\@DOI}}
     \hfill
     \@Seconddate  \nopagebreak
     \vspace{.3\baselineskip}
@@ -260,7 +281,7 @@
    {\fontfamily{pzc} \fontsize{28}{32} \selectfont Journal of Statistical Software}
    \vfill
    {\it \small \@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue.%
-            \hfill \href{http://dx.doi.org/\@DOI}{doi:\,\@DOI}}}\\[0.1cm]
+            \hfill \href{https://doi.org/\@DOI}{doi:\,\@DOI}}}\\[0.1cm]
      \hrule height 3pt}}
 \if@review
   \renewcommand{\maketitle}{
@@ -473,13 +494,13 @@
 \def\@codex#1{{\normalfont\ttfamily\hyphenchar\font=-1 #1}\egroup}
 %%\let\code=\texttt
 \let\proglang=\textsf
-\newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
+\newcommand{\pkg}[1]{{\fontseries{m}\fontseries{b}\selectfont #1}}
 \newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
 \ifx\csname urlstyle\endcsname\relax
   \newcommand\@doi[1]{doi:\discretionary{}{}{}#1}\else
   \newcommand\@doi{doi:\discretionary{}{}{}\begingroup
 \urlstyle{tt}\Url}\fi
-\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\normalfont\texttt{\@doi{#1}}}}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{\normalfont\texttt{\@doi{#1}}}}
 \newcommand{\E}{\mathsf{E}}
 \newcommand{\VAR}{\mathsf{VAR}}
 \newcommand{\COV}{\mathsf{COV}}
