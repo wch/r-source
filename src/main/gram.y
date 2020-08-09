@@ -1221,18 +1221,9 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
         SEXP args = CDR(rhs);
 
 
-	/***** rule out some more syntactically special functions? */
-	if (R_OpenParenSymbol == NULL) {
-	    R_OpenParenSymbol = install("(");
-	    R_ifSymbol = install("if");
-	    R_forSymbol = install("for");
-	    R_whileSymbol = install("while");
-	    R_repeatSymbol = install("repeat");
-	}
-	if (fun == R_OpenParenSymbol || fun == R_ifSymbol ||
-	    fun == R_forSymbol || fun == R_whileSymbol ||
-	    fun == R_repeatSymbol||
-	    fun == R_TripleColonSymbol || fun == R_DoubleColonSymbol)
+	/* rule out syntactically special functions */
+	/* the IS_SPECIAL_SYMBOL bit is set in names.c */
+	if (TYPEOF(fun) == SYMSXP && IS_SPECIAL_SYMBOL(fun))
 	    error("function '%s' not supported in RHS call of a pipe",
 		  CHAR(PRINTNAME(fun)));
 	
