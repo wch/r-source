@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-06-24 r78743) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-08-09 r78993) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -25,7 +25,7 @@ Type 'q()' to quit R.
 > ap <- available.packages(contrib.url("http://cran.r-project.org"))
 > ## IGNORE_RDIFF_BEGIN
 > nrow(ap)
-[1] 15827
+[1] 16082
 > ## IGNORE_RDIFF_END
 > 
 > # test url connections on http
