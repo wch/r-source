@@ -185,7 +185,7 @@ static int sock_fgetc_internal(Rconnection con)
 static size_t sock_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
-    ssize_t n = sock_read_helper(con, ptr, size * nitems)/size;
+    ssize_t n = sock_read_helper(con, ptr, size * nitems)/((ssize_t)size);
     return n > 0 ? n : 0;
 }
 
@@ -194,7 +194,7 @@ static size_t sock_write(const void *ptr, size_t size, size_t nitems,
 {
     Rsockconn this = (Rsockconn)con->private;
     ssize_t n = R_SockWrite(this->fd, ptr, (int)(size * nitems),
-			    this->timeout)/size;
+			    this->timeout)/((ssize_t)size);
     return n > 0 ? n : 0;
 }
 
