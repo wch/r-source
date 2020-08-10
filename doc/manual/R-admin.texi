@@ -3707,7 +3707,7 @@ for @R{} on those platforms.
 
 The MKL interface has changed several times but has been stable in
 recent years: the following examples have been used with versions 10.3
-to 2020.1, for GCC compilers on @cputype{x86_64}.
+to 2020.2, for GCC compilers on @cputype{x86_64}.
 
 To use a sequential version of MKL we used
 
@@ -3756,7 +3756,7 @@ The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
 sensible value for sole use of the machine.  (Parallel MKL has not
-always passed @command{make check-all}, but did with MKL 2019.4.)
+always passed @command{make check-all}, but did with MKL 2019.4 and later.)
 
 MKL includes a partial implementation of FFTW3, which causes trouble for
 applications that require some of the FFTW3 functionality unsupported in
