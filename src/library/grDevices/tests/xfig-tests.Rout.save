@@ -1,5 +1,5 @@
 
-R version 4.0.2 Patched (2020-06-23 r78743) -- "Taking Off Again"
+R version 4.0.2 Patched (2020-08-08 r78993) -- "Taking Off Again"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.203   0.046   0.227 
+  0.204   0.040   0.225 

@@ -1,5 +1,5 @@
 
-R version 4.0.2 Patched (2020-06-23 r78743) -- "Taking Off Again"
+R version 4.0.2 Patched (2020-08-08 r78993) -- "Taking Off Again"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1498,5 +1498,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.599 0.023 1.628 0 0 
+Time elapsed:  1.632 0.021 1.66 0 0 
 > 

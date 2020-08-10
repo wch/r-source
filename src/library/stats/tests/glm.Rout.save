@@ -1,5 +1,5 @@
 
-R version 4.0.2 Patched (2020-06-23 r78743) -- "Taking Off Again"
+R version 4.0.2 Patched (2020-08-08 r78993) -- "Taking Off Again"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -199,4 +199,4 @@ Number of Fisher Scoring iterations: 3
 > 
 > proc.time()
    user  system elapsed 
-  0.275   0.046   0.303 
+  0.277   0.047   0.302 

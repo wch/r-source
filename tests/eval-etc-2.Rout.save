@@ -1,5 +1,5 @@
 
-R version 4.0.2 Patched (2020-06-23 r78743) -- "Taking Off Again"
+R version 4.0.2 Patched (2020-08-08 r78993) -- "Taking Off Again"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -619,5 +619,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.475 0.11 1.593 0.002 0.005 
+Time elapsed:  1.526 0.101 1.634 0.001 0.002 
 > 
