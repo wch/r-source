@@ -222,11 +222,6 @@
       \code{addNA} is setting \code{na.action = na.pass} among others;
       reported as \PR{17770} by Thomas Soeiro.
 
-      \item Low-level socket read/write operations have been fixed to
-      correctly signal communication errors. Previously, such errors could
-      lead to a segfault due to invalid memory access. Reported
-      and debugged by Dmitriy Selivanov in \PR{17850}.
-
       \item The \command{R CMD check <pkg>} gives a longer and more
       comprehensible message when \file{DESCRIPTION} misses dependencies,
       e.g., in \code{Imports:}; thanks to the contributors of \PR{17179}.
@@ -301,6 +296,11 @@
       \code{r2dtable()} now work correctly for large table entries (in the
       millions).  Reported by Sebastian Meyer and investigated by more
       helpers in \PR{16184}.
+
+      \item Low-level socket read/write operations have been fixed to
+      correctly signal communication errors. Previously, such errors could
+      lead to a segfault due to invalid memory access. Reported
+      and debugged by Dmitriy Selivanov in \PR{17850}.
     }
   }
 }
