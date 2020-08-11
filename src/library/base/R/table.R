@@ -1,7 +1,7 @@
 #  File src/library/base/R/table.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -48,14 +48,14 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     if(!miss.use && !miss.exc && doNA && match(NA, exclude, nomatch=0L))
 	warning("'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting")
     args <- list(...)
-    if (!length(args))
-	stop("nothing to tabulate")
     if (length(args) == 1L && is.list(args[[1L]])) { ## e.g. a data.frame
 	args <- args[[1L]]
 	if (length(dnn) != length(args))
 	    dnn <- if (!is.null(argn <- names(args))) argn
 		   else paste(dnn[1L], seq_along(args), sep = ".")
     }
+    if (!length(args))
+	stop("nothing to tabulate")
     # 0L, 1L, etc: keep 'bin' and 'pd' integer - as long as tabulate() requires it
     bin <- 0L
     lens <- NULL
