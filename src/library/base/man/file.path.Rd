@@ -33,9 +33,9 @@ file.path(\dots, fsep = .Platform$file.sep)
   separated by \code{fsep} if all arguments have positive length;
   otherwise, an empty character vector (unlike \code{\link{paste}}).
 
-  An element of the result will be marked (see \code{\link{Encoding}} as
+  An element of the result will be marked (see \code{\link{Encoding}}) as
   UTF-8 if run in a UTF-8 locale (when marked inputs are converted to
-  UTF-8) or if an component of the result is marked as UTF-8, or as
+  UTF-8) or if a component of the result is marked as UTF-8, or as
   Latin-1 in a non-Latin-1 locale.
 }
 \note{
