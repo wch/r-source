@@ -243,8 +243,13 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else
 	    warning(_("argument encoding=\"latin1\" is ignored in MBCS locales"));
     } else if(streql(encoding, "UTF-8"))  {
-	known_to_be_utf8 = TRUE;
-	allKnown = FALSE;
+	if (!mbcslocale || utf8locale) {
+	    known_to_be_utf8 = TRUE;
+	    allKnown = FALSE;
+	} else
+	    /* the input may be invalid or not parseable when interpreted as
+	       in different multi-byte encoding; related to PR#16819 */
+	    warning(_("argument encoding=\"UTF-8\" is ignored in MBCS locales"));
     } else if(!streql(encoding, "unknown") && !streql(encoding, "native.enc"))
 	warning(_("argument '%s = \"%s\"' will be ignored"), "encoding", encoding);
 
