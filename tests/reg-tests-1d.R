@@ -4118,6 +4118,16 @@ stopifnot(exprs = {
 ## The large tables and p-values were completely wrong in R <= 4.0.2
 
 
+## PR#16877: glm()-internal refitting for the null deviance
+y <- c(1, 1, 0, 0)
+x <- c(5, 3, 2, 4)
+fit <- glm(y ~ 1 + x + offset(log(x)), family = gaussian("log"), start = c(0,0))
+## failed in R < 4.1.0 due to missing starting values for glm-internal 'fit2'
+fit0 <- glm.fit(x = rep(1, length(y)), y = y, offset = log(x),
+                family = gaussian("log"), start = 0)
+stopifnot(all.equal(fit$null.deviance, fit0$deviance))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
