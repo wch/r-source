@@ -71,6 +71,10 @@
       \item New functions \code{numToBits()} and \code{numToInts()}
       extend the \code{raw} conversion utilities to (double precision)
       \code{numeric}.
+
+      \item Functions \code{URLencode()} and \code{URLdecode()} in
+      package \pkg{utils} now work on vectors of URLs.
+      Based on patch from Bob Rudis submitted with \PR{17873}.
     }
   }
 
