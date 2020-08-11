@@ -179,6 +179,7 @@ stopifnot(exprs = {
   identical( str2lang("abc"   ),      quote(abc) -> qa)
   is.symbol(qa) & !is.call(qa)           # a symbol/name, not a call
   identical( str2lang("1.375" ), 1.375)  # just a number, not a call
+  identical( str2expression(c("# a comment", "", "42")), expression(42) )
 })
 
 # A partial parse with a syntax error
