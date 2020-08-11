@@ -452,12 +452,26 @@ function(db, remote = TRUE, verbose = FALSE)
             msg <- table_of_HTTP_status_codes[s]
         }
         ## Look for redirected URLs
-        if (any(grepl("301 Moved Permanently", h, useBytes = TRUE)) &&
-            !startsWith(u, "https://doi.org/") &&
-            !startsWith(u, "http://dx.doi.org/")) {
-            ind <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
-            if (length(ind))
-                newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
+        ## According to
+        ## <https://tools.ietf.org/html/rfc7230#section-3.1.2> the first
+        ## line of a response is the status-line, with "a possibly empty
+        ## textual phrase describing the status code", so only look for
+        ## a 301 status code in the first line.
+        if(grepl(" 301 ", h[1L], useBytes = TRUE) &&
+           !startsWith(u, "https://doi.org/") &&
+           !startsWith(u, "http://dx.doi.org/")) {
+            ## Get the new location from the last consecutive 301
+            ## obtained.
+            h <- split(h, c(0L, cumsum(h == "\r\n")[-length(h)]))
+            i <- vapply(h,
+                        function(e)
+                            grepl(" 301 ", e[1L], useBytes = TRUE),
+                        NA)
+            h <- h[[which(!i)[1L] - 1L]]
+            pos <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
+            if(length(pos))
+                newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1",
+                              h[pos[1L]])
         }
         ##
         if((s != "200") && use_curl) {
