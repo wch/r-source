@@ -2229,31 +2229,14 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @noindent
 as the C compiler will be used to link the package code. There are
 platforms on which this does not work @emph{for some OpenMP-using code}
-and installation will fail, so portable packages wanting to use Fortran
-code with OpenMP need to test their usage for themselves.  An
-alternative for a package with only Fortran sources using OpenMP is to
-use a file @file{src/Makefile} (and @file{src/Makefile.win}) something
-like
-@example
-PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
-PKG_LIBS = $(SHLIB_OPENMP_FFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
-SHLIB_LD = $(SHLIB_FCLD)
-SHLIB_LDFLAGS = $(SHLIB_FCLDFLAGS)
-SHLIB = pkgname$(SHLIB_EXT)
-
-all: $(SHLIB)
-
-$(SHLIB): $(OBJECTS)
-        $(SHLIB_LINK) -o $@ $(OBJECTS) $(ALL_LIBS)
-@end example
-@noindent
-Since @R{} >= 3.6.2 a further alternative is to use
+and installation will fail.  Since @R{} >= 3.6.2 the best alternative
+for a package with only Fortran sources using OpenMP is to use
 @example
 USE_FC_TO_LINK =
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
 PKG_LIBS = $(SHLIB_OPENMP_FFLAGS)
 @end example
-in @file{src/Makevars} or @file{src/Makevsars.win}.
+in @file{src/Makevars} or @file{src/Makevsars.win}.  
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
@@ -2268,19 +2251,27 @@ when OpenMP mode is switched on (e.g.@: @emph{via} flag
 @c clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
 @c clang 3.9.x reports 201111 but has all but offloading support of 4.0.
 @c Debian Wheezy was on ELTS until 2019-05-31
-@c Centos 6 EOL 2020-11-30, defaults to gcc 4.7, but 4.8.4 is available
 There is nothing@footnote{In most implementations the @code{_OPENMP}
 macro has value a date which can be mapped to an OpenMP version: for
 example, value @code{201307} is the date of version 4.0 (July
 2013). However this may be used to denote the latest version which is
-partially supported, not that which is fully implemented.}  to say what
-version of OpenMP is supported: version 3.1 (and much of 4.0, 4.5 or
-5.0) is supported by recent versions of the Linux, Windows and Solaris
-platforms, but portable packages cannot assume that end users have
-recent versions.  Apple builds of @command{clang} on macOS have no
+partially supported, not that which is fully implemented.} to say what
+version of OpenMP is supported: version 4.0 (and much of 4.5 or 5.0) is
+supported by recent versions of the Linux (GCC >= 4.9.1), Windows and
+Solaris platforms, but portable packages cannot assume that end users
+have recent versions.  Apple builds of @command{clang} on macOS have no
 OpenMP support.
-@uref{https://www.openmp.org/@/resources/@/openmp-compilers-tools/} gives
-some idea of what compilers support what versions.
+@uref{https://www.openmp.org/@/resources/@/openmp-compilers-tools/}
+gives some idea of what compilers support what versions.
+
+Rarely, using OpenMP with @command{clang} on Linux generates calls in
+@code{libatomic}, resulting in loading messages like
+@example
+  undefined symbol: __atomic_compare_exchange
+  undefined symbol: __atomic_load
+@end example
+@noindent
+The workaround is to link with @code{-latomic} (having checked it exists).
 
 The performance of OpenMP varies substantially between platforms.  The
 Windows implementation has substantial overheads, so is only beneficial
