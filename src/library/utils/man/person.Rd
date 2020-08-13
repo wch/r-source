@@ -1,6 +1,6 @@
 % File src/library/utils/man/person.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{person}
@@ -130,7 +130,9 @@ person(given = NULL, family = NULL, middle = NULL,
     \item{\code{"com"}}{(Compiler) Use for persons who collected code
       (potentially in other languages) but did not make further
       substantial contributions to the package.}
-    \item{\code{"cph"}}{(Copyright holder) Use for all copyright holders.}
+    \item{\code{"cph"}}{(Copyright holder) Use for all copyright
+      holders.  This is a legal concept so should use the legal name of
+      an institution or corporate body.}
     \item{\code{"cre"}}{(Creator) Use for the package maintainer.}
     \item{\code{"ctb"}}{(Contributor) Use for authors who have made
       smaller contributions (such as code patches etc.) but should not
