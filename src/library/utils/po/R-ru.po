@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-07 01:35-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -657,6 +657,10 @@ msgstr ""
 "Общие функции и другие объекты S4 (например, '%s') не могут быть сброшены; "
 "используйте аргумент 'code_files'"
 
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "'unzip' должен быть одной текстовой строкой"
+
 msgid "unable to access index for repository %s"
 msgstr "недоступен индекс для хранилища %s"
 
@@ -703,6 +707,10 @@ msgstr "'destdir' не является папкой"
 msgid "no package %s at the repositories"
 msgstr "в хранилищах нет пакета %s"
 
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "неправильный запрос"
+
 msgid "package %s does not exist on the local repository"
 msgstr "в локальном хранилище нет пакета %s"
 
@@ -730,6 +738,10 @@ msgstr "использую зеркало неинтерактивно"
 
 msgid "cannot set repositories non-interactively"
 msgstr "не могу установить хранилища неинтерактивно"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "'package' должен быть текстовой строкой или NULL"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Пожалуйста, выберите хранилища для использования в этой сессии ---"
@@ -971,6 +983,9 @@ msgstr "%s должна быть единичным текстовым вектором или NULL"
 msgid "'file' must be a character string or connection"
 msgstr "'file' должен быть текстовой строкой строка или соединением"
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr "пустое начало файла"
 
@@ -1094,6 +1109,23 @@ msgstr "не могу создать каталог %s"
 
 msgid "invalid octal digit"
 msgstr "неправильное восьмеричное число"
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "путь у %s содержит пробелы,"
+
+#, fuzzy
+msgid "path is empty"
+msgstr "'dump' пуст"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' должен быть текстовой строкой или соединением"

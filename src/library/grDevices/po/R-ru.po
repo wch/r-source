@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-07 01:14-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -159,6 +159,14 @@ msgstr "dev.new(): использую postscript(file=\"%s\")"
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
 
+#, fuzzy
+msgid "Invalid pattern type"
+msgstr "Неправильный тип шрифта"
+
+#, fuzzy
+msgid "Invalid 'extend' value"
+msgstr "неправильное 'filename'"
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "неправильные аргументы в '%s' (нужны именованные аргументы)"
 
@@ -299,6 +307,9 @@ msgstr "'bandwidth' должна быть числовой"
 
 msgid "'bandwidth' must be positive"
 msgstr "'bandwidth' должна быть положительной"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr ""
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' должен быть \"range\", то есть длины 2"

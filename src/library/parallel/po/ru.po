@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-04-07 02:13-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "не могу завершить дочерний процесс: %s"
 msgid "unable to terminate child: %s"
 msgstr "не могу завершить дочерний процесс: %s"
 
-#: fork.c:321 fork.c:602
+#: fork.c:321 fork.c:602 ncpus.c:90 ncpus.c:126 ncpus.c:191
 msgid "memory allocation error"
 msgstr "ошибка распределения памяти"
 

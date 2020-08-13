@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -181,6 +181,13 @@ msgstr "le chargement automatique n'a pas trouvé '%s' dans '%s'"
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "seuls des objects vectoriels peuvent être écrits"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "les matrices complexes ne sont pas encore traitées"
 
@@ -190,8 +197,8 @@ msgstr "'x' doit être un tableau ayant au moins 2 dimensions"
 msgid "invalid 'dims'"
 msgstr "'dims' incorrect"
 
-msgid "bad handler specification"
-msgstr "mauvaise définition de manipulateur (handler)"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "aucun 'restart' '%s' trouvé"
@@ -201,6 +208,13 @@ msgstr "ceci n'est pas une session interactive"
 
 msgid "not a valid restart specification"
 msgstr "mauvaise spécification de redémarrage"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "le manipulateur de données (handler) doit être une fonction"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "argument 'where' de longueur nulle"
@@ -1176,6 +1190,12 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "le package %s n'a pas d'espace de noms"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr ""
+"le package %s a été compilé avant R 3.0.0 : veuillez le réinstaller, s'il-"
+"vous-plait"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "l'espace de noms %s %s est en train de charger, mais %s %s est requis"
 
@@ -1215,6 +1235,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "impossible de charger le code R depuis le package %s"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"'exportClassPattern' spécifié dans le fichier 'NAMESPACE', mais aucune "
+"classe ne correspond dans le package %s"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -2009,6 +2035,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "l'argument supplémentaire %s sera ignoré"
 msgstr[1] "l'argument supplémentaire %s sera ignoré"
+
+#~ msgid "bad handler specification"
+#~ msgstr "mauvaise définition de manipulateur (handler)"
 
 #, fuzzy
 #~ msgid "Partial match of '%s' to '%s' in data frame"

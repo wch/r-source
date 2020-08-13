@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.0.0\n"
+"Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -297,7 +297,7 @@ msgid "Save script"
 msgstr ""
 
 #: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
-#: src/library/grDevices/src/devWindows.c:1613
+#: src/library/grDevices/src/devWindows.c:1619
 msgid "Return focus to Console"
 msgstr ""
 
@@ -306,13 +306,13 @@ msgid "Print script"
 msgstr ""
 
 #: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
-#: src/library/grDevices/src/devWindows.c:1607
+#: src/library/grDevices/src/devWindows.c:1613
 msgid "Print"
 msgstr ""
 
 #: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1791
-#: src/library/grDevices/src/devWindows.c:1645
+#: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
 msgstr ""
 
@@ -333,8 +333,8 @@ msgid "Save as..."
 msgstr ""
 
 #: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
-#: src/library/grDevices/src/devWindows.c:1666
-#: src/library/grDevices/src/devWindows.c:1708
+#: src/library/grDevices/src/devWindows.c:1672
+#: src/library/grDevices/src/devWindows.c:1714
 msgid "Print..."
 msgstr ""
 
@@ -389,7 +389,7 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1063
+#: src/gnuwin32/extra.c:1194
 msgid "Select file"
 msgstr ""
 
@@ -416,7 +416,7 @@ msgstr ""
 
 #: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
-#: src/library/grDevices/src/devWindows.c:1705
+#: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
 msgstr ""
 
@@ -962,184 +962,184 @@ msgstr ""
 msgid "Data editor"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:949
+#: src/library/grDevices/src/devWindows.c:955
 msgid "Portable network graphics file"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:952
+#: src/library/grDevices/src/devWindows.c:958
 msgid "Windows bitmap file"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:955
+#: src/library/grDevices/src/devWindows.c:961
 msgid "TIFF file"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:958
+#: src/library/grDevices/src/devWindows.c:964
 msgid "Jpeg file"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:980
+#: src/library/grDevices/src/devWindows.c:986
 msgid "Postscript file"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:992
+#: src/library/grDevices/src/devWindows.c:998
 msgid "PDF file"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1004
+#: src/library/grDevices/src/devWindows.c:1010
 msgid "Enhanced metafiles"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3455
+#: src/library/grDevices/src/devWindows.c:1013
+#: src/library/grDevices/src/devWindows.c:3487
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1218
+#: src/library/grDevices/src/devWindows.c:1224
 msgid "No plot to replace!"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1268
+#: src/library/grDevices/src/devWindows.c:1274
 msgid "Variable name"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1277
+#: src/library/grDevices/src/devWindows.c:1283
 msgid "Variable doesn't contain any plots!"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1292
+#: src/library/grDevices/src/devWindows.c:1298
 msgid "Name of variable to save to"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1601
+#: src/library/grDevices/src/devWindows.c:1607
 msgid "Copy to the clipboard as a metafile"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1619
-#: src/library/grDevices/src/devWindows.c:1630
+#: src/library/grDevices/src/devWindows.c:1625
+#: src/library/grDevices/src/devWindows.c:1636
 msgid "Stop locator"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1629
-#: src/library/grDevices/src/devWindows.c:1633
+#: src/library/grDevices/src/devWindows.c:1635
+#: src/library/grDevices/src/devWindows.c:1639
 msgid "Stop"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1635
+#: src/library/grDevices/src/devWindows.c:1641
 msgid "Continue"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1639
+#: src/library/grDevices/src/devWindows.c:1645
 msgid "Next"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1640
+#: src/library/grDevices/src/devWindows.c:1646
 msgid "Next plot"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1646
+#: src/library/grDevices/src/devWindows.c:1652
 msgid "Save as"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1655
-#: src/library/grDevices/src/devWindows.c:1657
-#: src/library/grDevices/src/devWindows.c:1659
+#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1665
 #, c-format
 msgid "%s quality..."
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1667
 msgid "Copy to the clipboard"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1662
+#: src/library/grDevices/src/devWindows.c:1668
 msgid "as a Bitmap\tCTRL+C"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1669
 msgid "as a Metafile\tCTRL+W"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1668
+#: src/library/grDevices/src/devWindows.c:1674
 msgid "close Device"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1669
+#: src/library/grDevices/src/devWindows.c:1675
 msgid "History"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1670
+#: src/library/grDevices/src/devWindows.c:1676
 msgid "Recording"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1673
+#: src/library/grDevices/src/devWindows.c:1679
 msgid "Add\tINS"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1674
+#: src/library/grDevices/src/devWindows.c:1680
 msgid "Replace"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1676
+#: src/library/grDevices/src/devWindows.c:1682
 msgid "Previous\tPgUp"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1677
+#: src/library/grDevices/src/devWindows.c:1683
 msgid "Next\tPgDown"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1679
+#: src/library/grDevices/src/devWindows.c:1685
 msgid "Save to variable..."
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1680
+#: src/library/grDevices/src/devWindows.c:1686
 msgid "Get from variable..."
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1682
+#: src/library/grDevices/src/devWindows.c:1688
 msgid "Clear history"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1683
+#: src/library/grDevices/src/devWindows.c:1689
 msgid "Resize"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1684
+#: src/library/grDevices/src/devWindows.c:1690
 msgid "R mode"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1686
+#: src/library/grDevices/src/devWindows.c:1692
 msgid "Fit to window"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1688
+#: src/library/grDevices/src/devWindows.c:1694
 msgid "Fixed size"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1695
+#: src/library/grDevices/src/devWindows.c:1701
 msgid "Copy as metafile"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1697
+#: src/library/grDevices/src/devWindows.c:1703
 msgid "Copy as bitmap"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1700
+#: src/library/grDevices/src/devWindows.c:1706
 msgid "Save as metafile..."
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:1702
+#: src/library/grDevices/src/devWindows.c:1708
 msgid "Save as postscript..."
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:3147
+#: src/library/grDevices/src/devWindows.c:3153
 msgid "Locator is active"
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:3781
+#: src/library/grDevices/src/devWindows.c:3813
 msgid "Waiting to confirm page change..."
 msgstr ""
 
-#: src/library/grDevices/src/devWindows.c:3793
+#: src/library/grDevices/src/devWindows.c:3825
 msgid "Click or hit ENTER for next page"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -18,57 +18,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: gpar.c:473
+#: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
-#: grid.c:212
+#: grid.c:199
+msgid "Turning clipping on or off within a clipping path is no honoured"
+msgstr ""
+
+#: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "회전된 뷰포트에 고정 할 수 없습니다"
 
-#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
+#: grid.c:455
+msgid "Clipping paths within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:474
+msgid "Masks within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나"
 "요?)"
 
-#: grid.c:979
+#: grid.c:1246
 msgid "attempt to plot on null device"
 msgstr "null 장치위에 플랏을 시도합니다"
 
-#: grid.c:1400
+#: grid.c:1693
 msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다"
 
-#: grid.c:1620
+#: grid.c:1913
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (혹시 너비 또는 높이가 0인가요?)"
 
-#: grid.c:1629
+#: grid.c:1922
 msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다"
 
-#: grid.c:1783
+#: grid.c:2076
 msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 두개의 점이 필요합니다"
 
-#: grid.c:2102
+#: grid.c:2399
 msgid "non-finite control point in Xspline"
 msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 
-#: grid.c:2982
+#: grid.c:3324
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:3026
+#: grid.c:3374
 msgid "Empty raster"
 msgstr "비어있는 래스터입니다"
 
-#: grid.c:3509
+#: grid.c:3860
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:3597
+#: grid.c:3954
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 
@@ -84,7 +96,7 @@ msgstr "유효하지 않은 'layout.pos.col'입니다"
 msgid "singular transformation matrix"
 msgstr ""
 
-#: state.c:170
+#: state.c:180
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "'grid'상태를 저장할 수 없는데 혹시 너무 많은 장치가 열려있나요?"
 
@@ -92,69 +104,73 @@ msgstr "'grid'상태를 저장할 수 없는데 혹시 너무 많은 장치가 �
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr ""
 
-#: unit.c:789 unit.c:1288
+#: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
 msgstr "유효하지 않은 유닛이거나 아직 구현되지 않은 유닛입니다"
 
-#: unit.c:1345 unit.c:1376
+#: unit.c:1355 unit.c:1386
 msgid "Viewport has zero dimension(s)"
 msgstr "뷰어포트가 영인 차원(들)을 가지고 있습니다"
 
-#: unit.c:1408 unit.c:1423 unit.c:1438 unit.c:1453
+#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
 msgid "Unsupported unit conversion"
 msgstr "지원되지 않는 단위변환입니다"
 
-#: unit.c:1545
+#: unit.c:1555
 msgid "Invalid unit"
 msgstr "유효하지 않은 유닛입니다"
 
-#: unit.c:1560
+#: unit.c:1570
 msgid "'units' must be character"
 msgstr "'units'은 반드시 문자이어야 합니다"
 
-#: unit.c:1563
+#: unit.c:1573
 msgid "'units' must be of length > 0"
 msgstr "유닛은 반드시 길이가 0 보다 커야 합니다"
 
-#: unit.c:1574
+#: unit.c:1584
 msgid ""
 "data must be either NULL, have length 1, or match the length of the final "
 "unit vector"
 msgstr ""
 
-#: unit.c:1586
+#: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr ""
 
-#: unit.c:1590
+#: unit.c:1600
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr ""
 
-#: unit.c:1608
+#: unit.c:1618
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 
-#: unit.c:1613
+#: unit.c:1623
 msgid "non-NULL value supplied for plain unit"
 msgstr ""
 
-#: unit.c:1666 unit.c:1700 unit.c:1749
+#: unit.c:1676 unit.c:1710 unit.c:1759
 msgid "old version of unit class is no longer allowed"
 msgstr ""
 
-#: unit.c:1672
+#: unit.c:1682
 msgid "object is not coercible to a unit"
 msgstr ""
 
-#: unit.c:1698
+#: unit.c:1708
 msgid "object is not a unit"
 msgstr ""
 
-#: unit.c:1830
+#: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
 msgstr ""
 
-#: viewport.c:315
+#: viewport.c:56
+msgid "Mask is not logical value ('none' or 'inherit')"
+msgstr ""
+
+#: viewport.c:330
 msgid "non-finite location and/or size for viewport"
 msgstr "뷰포트의 위치 그리고/또는 크기가 유한하지 않습니다"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -275,7 +275,7 @@ msgstr "Ugyldig vmethod"
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
 msgstr ""
 
-#: fourier.c:295
+#: fourier.c:298
 #, c-format
 msgid ""
 "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
@@ -343,6 +343,10 @@ msgstr "'m' skal være en liste"
 msgid "'delta' must be finite and > 0"
 msgstr ""
 
+#: mAR.c:83
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr ""
+
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
 msgstr "Entalsmatrix i qr_solve"
@@ -390,126 +394,126 @@ msgstr "ugyldig type for eval_check_store"
 msgid "variable lengths differ (found for '%s')"
 msgstr ""
 
-#: model.c:215
+#: model.c:218
 msgid "invalid result from na.action"
 msgstr ""
 
-#: model.c:372 model.c:380 optim.c:227
+#: model.c:379 model.c:387 optim.c:227
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "ugyldig argumenttype"
 
-#: model.c:391
+#: model.c:398
 #, fuzzy
 msgid "invalid model frame"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:393
+#: model.c:400
 msgid "do not know how many cases"
 msgstr ""
 
-#: model.c:417
+#: model.c:424
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr ""
 
-#: model.c:421 model.c:428
+#: model.c:428 model.c:435
 #, fuzzy, c-format
 msgid "variable %d has no levels"
 msgstr "variabel '%s' er ikke numerisk"
 
-#: model.c:540
+#: model.c:547
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr ""
 
-#: model.c:560
+#: model.c:567
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr ""
 
-#: model.c:564
+#: model.c:571
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr ""
 
-#: model.c:575
+#: model.c:582
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 
-#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
+#: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
 msgstr ""
 
-#: model.c:638
+#: model.c:645
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 
-#: model.c:662
+#: model.c:669
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
 
-#: model.c:887
+#: model.c:894
 #, fuzzy
 msgid "invalid formula in 'update'"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:921
+#: model.c:928
 msgid "formula expected"
 msgstr ""
 
-#: model.c:1089
+#: model.c:1096
 #, fuzzy
 msgid "invalid term in model formula"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:1180
+#: model.c:1187
 #, fuzzy
 msgid "invalid model formula"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:1212 model.c:1518
+#: model.c:1219 model.c:1525
 #, fuzzy
 msgid "invalid power in formula"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:1261
+#: model.c:1268
 #, fuzzy
 msgid "invalid model formula in ExtractVars"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:1629
+#: model.c:1636
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr ""
 
-#: model.c:1696
+#: model.c:1703
 #, fuzzy
 msgid "invalid model formula in EncodeVars"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:1773
+#: model.c:1780
 msgid "argument is not a valid model"
 msgstr ""
 
-#: model.c:1783
+#: model.c:1790
 #, fuzzy
 msgid "'specials' must be NULL or a character vector"
 msgstr "'path' skal være en tegnvektor"
 
-#: model.c:1794
+#: model.c:1801
 msgid "'data' argument is of the wrong type"
 msgstr ""
 
-#: model.c:1866
+#: model.c:1873
 #, c-format
 msgid ""
 "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
 "no longer happen!"
 msgstr ""
 
-#: model.c:2150
+#: model.c:2157
 msgid "'.' in formula and no 'data' argument"
 msgstr ""
 
@@ -603,6 +607,11 @@ msgstr ""
 #: optim.c:116
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
+msgstr ""
+
+#: optim.c:152 optim.c:191
+#, c-format
+msgid "non-finite finite-difference value [%d]"
 msgstr ""
 
 #: optim.c:223 optim.c:429
@@ -913,7 +922,7 @@ msgid "NAs produced"
 msgstr ""
 
 #: random.c:60 random.c:66 random.c:72 random.c:87 random.c:167 random.c:256
-#: random.c:399
+#: random.c:394
 #, fuzzy
 msgid "invalid arguments"
 msgstr "ugyldig argumenttype"
@@ -940,7 +949,7 @@ msgstr "ugyldig argumenttype"
 msgid "invalid second argument 'size'"
 msgstr "ugyldig argumenttype"
 
-#: rcont.c:83
+#: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""

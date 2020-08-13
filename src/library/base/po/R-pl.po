@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -178,6 +178,13 @@ msgstr "automat ładujący nie znalazł '%s' w pakiecie '%s'"
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "można zapisać jedynie obiekty wektorowe"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "macierze zespolone na chwilę obecną nie są dozwolone"
 
@@ -187,8 +194,8 @@ msgstr "argument 'x' musi być tablicą o co najmniej dwóch wymiarach"
 msgid "invalid 'dims'"
 msgstr "niepoprawny argument 'dims'"
 
-msgid "bad handler specification"
-msgstr "niepoprawne określenie obsługi"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "nie znaleziono 'restart' '%s'"
@@ -198,6 +205,13 @@ msgstr "nieinteraktywna sesja"
 
 msgid "not a valid restart specification"
 msgstr "niepoprawne określenie restartu"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "przewodnik musi być funkcją"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "argument 'where' ma długość 0"
@@ -1176,6 +1190,10 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "pakiet %s nie zawiera przestrzeni nazw"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "pakiet %s został zbudowany przed R 3.0.0: proszę go przeinstalować"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "przestrzeń nazw %s %s jest ładowana, ale %s %s jest wymagana"
 
@@ -1213,6 +1231,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "nie można załadować kodu R w pakiecie %s"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"'exportClassPattern' określono w pliku 'NAMESPACE', ale brak pasujących klas "
+"w pakiecie %s"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -2054,6 +2078,9 @@ msgstr[1] ""
 msgstr[2] ""
 "W poleceniu '%s':\n"
 " dodatkowe argumenty %s zostaną odrzucone"
+
+#~ msgid "bad handler specification"
+#~ msgstr "niepoprawne określenie obsługi"
 
 #~ msgid "'object' must be a list"
 #~ msgstr "argument 'object' musi być listą"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -159,6 +159,14 @@ msgstr "dev.new(): usando postscript(arquivo=\"%s\")"
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
 
+#, fuzzy
+msgid "Invalid pattern type"
+msgstr "Tipo de fonte inválido"
+
+#, fuzzy
+msgid "Invalid 'extend' value"
+msgstr "'filename' inválido"
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argumentos inválidos em '%s' (precisa-se de argumentos nomeados)"
 
@@ -309,6 +317,9 @@ msgstr "'bandwidth' deve ser numérica"
 
 msgid "'bandwidth' must be positive"
 msgstr "'bandwidth' deve ser positivo"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr ""
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' deve ser uma \"range\", portanto de comprimento 2"

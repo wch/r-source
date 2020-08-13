@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2014-03-17 10:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -348,6 +348,12 @@ msgstr "'listing' incorrect"
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
 
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
 msgid "'length' must be a 'unit' object"
 msgstr "'length' doit être un objet 'unit'"
 
@@ -489,6 +495,10 @@ msgstr "valeur 'gp' incorrecte"
 msgid "invalid 'clip' value"
 msgstr "valeur 'clip' incorrecte"
 
+#, fuzzy
+msgid "invalid 'mask' value"
+msgstr "Valeur 'ask' incorrecte"
+
 msgid "invalid 'xscale' in viewport"
 msgstr "'xscale' incorrect dans la vue"
 
@@ -597,10 +607,6 @@ msgstr[1] "noms de vues incorrects"
 #~ msgstr ""
 #~ "l'argument 'grob' doit être un grob de type 'line.to', 'lines' ou "
 #~ "'segments'"
-
-#, fuzzy
-#~ msgid "invalid 'ask' value"
-#~ msgstr "Valeur 'ask' incorrecte"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Impossible de mélanger les signes des indices"

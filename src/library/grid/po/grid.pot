@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: grid 4.0.0\n"
+"Project-Id-Version: grid 4.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +17,67 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gpar.c:473
+#: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
-#: grid.c:212
+#: grid.c:199
+msgid "Turning clipping on or off within a clipping path is no honoured"
+msgstr ""
+
+#: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr ""
 
-#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
+#: grid.c:455
+msgid "Clipping paths within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:474
+msgid "Masks within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 
-#: grid.c:979
+#: grid.c:1246
 msgid "attempt to plot on null device"
 msgstr ""
 
-#: grid.c:1400
+#: grid.c:1693
 msgid "there is no layout defined"
 msgstr ""
 
-#: grid.c:1620
+#: grid.c:1913
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1629
+#: grid.c:1922
 msgid "polygon edge not found"
 msgstr ""
 
-#: grid.c:1783
+#: grid.c:2076
 msgid "require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:2102
+#: grid.c:2399
 msgid "non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2982
+#: grid.c:3324
 msgid "non-finite x or y in graphics path"
 msgstr ""
 
-#: grid.c:3026
+#: grid.c:3374
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3509
+#: grid.c:3860
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: grid.c:3597
+#: grid.c:3954
 msgid "unable to clip to rotated rectangle"
 msgstr ""
 
@@ -81,7 +93,7 @@ msgstr ""
 msgid "singular transformation matrix"
 msgstr ""
 
-#: state.c:170
+#: state.c:180
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 
@@ -89,68 +101,72 @@ msgstr ""
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr ""
 
-#: unit.c:789 unit.c:1288
+#: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
 msgstr ""
 
-#: unit.c:1345 unit.c:1376
+#: unit.c:1355 unit.c:1386
 msgid "Viewport has zero dimension(s)"
 msgstr ""
 
-#: unit.c:1408 unit.c:1423 unit.c:1438 unit.c:1453
+#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
 msgid "Unsupported unit conversion"
 msgstr ""
 
-#: unit.c:1545
+#: unit.c:1555
 msgid "Invalid unit"
 msgstr ""
 
-#: unit.c:1560
+#: unit.c:1570
 msgid "'units' must be character"
 msgstr ""
 
-#: unit.c:1563
+#: unit.c:1573
 msgid "'units' must be of length > 0"
 msgstr ""
 
-#: unit.c:1574
+#: unit.c:1584
 msgid ""
 "data must be either NULL, have length 1, or match the length of the final "
 "unit vector"
 msgstr ""
 
-#: unit.c:1586
+#: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr ""
 
-#: unit.c:1590
+#: unit.c:1600
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr ""
 
-#: unit.c:1608
+#: unit.c:1618
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 
-#: unit.c:1613
+#: unit.c:1623
 msgid "non-NULL value supplied for plain unit"
 msgstr ""
 
-#: unit.c:1666 unit.c:1700 unit.c:1749
+#: unit.c:1676 unit.c:1710 unit.c:1759
 msgid "old version of unit class is no longer allowed"
 msgstr ""
 
-#: unit.c:1672
+#: unit.c:1682
 msgid "object is not coercible to a unit"
 msgstr ""
 
-#: unit.c:1698
+#: unit.c:1708
 msgid "object is not a unit"
 msgstr ""
 
-#: unit.c:1830
+#: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
 msgstr ""
 
-#: viewport.c:315
+#: viewport.c:56
+msgid "Mask is not logical value ('none' or 'inherit')"
+msgstr ""
+
+#: viewport.c:330
 msgid "non-finite location and/or size for viewport"
 msgstr ""

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: grid 4.0.0\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"Project-Id-Version: grid 4.1.0\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,6 +304,12 @@ msgstr ""
 msgid "invalid 'origin'"
 msgstr ""
 
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
 msgid "'length' must be a 'unit' object"
 msgstr ""
 
@@ -434,6 +440,9 @@ msgid "invalid 'gp' value"
 msgstr ""
 
 msgid "invalid 'clip' value"
+msgstr ""
+
+msgid "invalid 'mask' value"
 msgstr ""
 
 msgid "invalid 'xscale' in viewport"

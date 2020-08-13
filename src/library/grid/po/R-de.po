@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-16 10:31+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -330,6 +330,12 @@ msgstr "ungültiges 'listing'"
 msgid "invalid 'origin'"
 msgstr "unzulässiger 'origin'"
 
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
 msgid "'length' must be a 'unit' object"
 msgstr "'length' muss ein 'unit'-Objekt sein"
 
@@ -467,6 +473,10 @@ msgstr "ungültiger 'gp' Wert"
 msgid "invalid 'clip' value"
 msgstr "unzulässiger Wert für 'clip'"
 
+#, fuzzy
+msgid "invalid 'mask' value"
+msgstr "ungültiger Wert für 'ask'"
+
 msgid "invalid 'xscale' in viewport"
 msgstr "unzulässiger Wert für 'xscale' in viewport"
 
@@ -570,10 +580,6 @@ msgstr[1] "Unzulässige Viewport-Namen"
 #~ msgstr ""
 #~ "Das 'grob' Argument muss entweder ein 'line.to', 'lines' oder 'segments' "
 #~ "Grob sein"
-
-#, fuzzy
-#~ msgid "invalid 'ask' value"
-#~ msgstr "ungültiger Wert für 'ask'"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Vorzeichen von Indices können nicht gemischt werden"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2014-03-17 10:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -274,7 +274,7 @@ msgstr "variables facteur incorrectes"
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
 msgstr ""
 
-#: fourier.c:295
+#: fourier.c:298
 #, c-format
 msgid ""
 "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
@@ -341,6 +341,10 @@ msgstr "'iter' doit être fini et >= 0"
 msgid "'delta' must be finite and > 0"
 msgstr "'delta' doit être fini et > 0"
 
+#: mAR.c:83
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr ""
+
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
 msgstr "Matrice singulière dans qr_solve"
@@ -388,122 +392,122 @@ msgstr "type (%s) incorrect pour la variable '%s'"
 msgid "variable lengths differ (found for '%s')"
 msgstr "les longueurs des variables diffèrent (trouvé pour '%s')"
 
-#: model.c:215
+#: model.c:218
 msgid "invalid result from na.action"
 msgstr "résultat incorrect de na.action"
 
-#: model.c:372 model.c:380 optim.c:227
+#: model.c:379 model.c:387 optim.c:227
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
 
-#: model.c:391
+#: model.c:398
 msgid "invalid model frame"
 msgstr "trame de modèle incorrect"
 
-#: model.c:393
+#: model.c:400
 msgid "do not know how many cases"
 msgstr "nombre de cas inconnu"
 
-#: model.c:417
+#: model.c:424
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "les longueurs des variables diffèrent (trouvé pour la variable %d)"
 
-#: model.c:421 model.c:428
+#: model.c:428 model.c:435
 #, c-format
 msgid "variable %d has no levels"
 msgstr "la variable %d n'a pas de niveaux"
 
-#: model.c:540
+#: model.c:547
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "la réponse est apparue dans le membre de droite et y a été éliminée"
 
-#: model.c:560
+#: model.c:567
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "le terme %d nécessite %.0g colonnes "
 
-#: model.c:564
+#: model.c:571
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "la matrice nécessite %.0g colonnes"
 
-#: model.c:575
+#: model.c:582
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "problème avec le terme %d dans model.matrix : aucune colonne n'est assignée"
 
-#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
+#: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
 msgstr "les noms des termes seront tronqués"
 
-#: model.c:638
+#: model.c:645
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 "des variables complexes ne sont pas encore acceptées dans les matrices de "
 "modèle"
 
-#: model.c:662
+#: model.c:669
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
 "les variables de type '%s' ne sont pas autorisées dans des matrices de modèle"
 
-#: model.c:887
+#: model.c:894
 msgid "invalid formula in 'update'"
 msgstr "formule de modèle incorrecte dans 'update'"
 
-#: model.c:921
+#: model.c:928
 msgid "formula expected"
 msgstr "formule de modèle attendue"
 
-#: model.c:1089
+#: model.c:1096
 msgid "invalid term in model formula"
 msgstr "terme incorrect dans une formule de modèle"
 
-#: model.c:1180
+#: model.c:1187
 msgid "invalid model formula"
 msgstr "formule de modèle incorrecte"
 
-#: model.c:1212 model.c:1518
+#: model.c:1219 model.c:1525
 msgid "invalid power in formula"
 msgstr "puissance incorrecte dans une formule de modèle"
 
-#: model.c:1261
+#: model.c:1268
 msgid "invalid model formula in ExtractVars"
 msgstr "formule de modèle incorrecte dans ExtractVars"
 
-#: model.c:1629
+#: model.c:1636
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nom dupliqué '%s' dans le data frame utilisant '.'"
 
-#: model.c:1696
+#: model.c:1703
 msgid "invalid model formula in EncodeVars"
 msgstr "formule de modèle incorrecte dans EncodeVars"
 
-#: model.c:1773
+#: model.c:1780
 msgid "argument is not a valid model"
 msgstr "l'argument n'est pas un modèle correct"
 
-#: model.c:1783
+#: model.c:1790
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' doit être NULL ou un vecteur de chaîne de caractères"
 
-#: model.c:1794
+#: model.c:1801
 msgid "'data' argument is of the wrong type"
 msgstr "l'argument 'data' est d'un mauvais type"
 
-#: model.c:1866
+#: model.c:1873
 #, c-format
 msgid ""
 "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
 "no longer happen!"
 msgstr ""
 
-#: model.c:2150
+#: model.c:2157
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' dans la formule et pas d'argument 'data'"
 
@@ -602,6 +606,11 @@ msgstr ""
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "le gradient dans optim est évalué à une longueur %d différente de %d"
+
+#: optim.c:152 optim.c:191
+#, c-format
+msgid "non-finite finite-difference value [%d]"
+msgstr ""
 
 #: optim.c:223 optim.c:429
 msgid "'fn' is not a function"
@@ -921,7 +930,7 @@ msgid "NAs produced"
 msgstr "production de NAs"
 
 #: random.c:60 random.c:66 random.c:72 random.c:87 random.c:167 random.c:256
-#: random.c:399
+#: random.c:394
 msgid "invalid arguments"
 msgstr "arguments incorrects"
 
@@ -945,7 +954,7 @@ msgstr "premier argument 'n' incorrect"
 msgid "invalid second argument 'size'"
 msgstr "second argument 'size' incorrect"
 
-#: rcont.c:83
+#: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""

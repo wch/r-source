@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -674,6 +674,10 @@ msgstr ""
 "les fonctions génériques et autres objets S4 (e.g., '%s') ne peuvent être "
 "retranscrits à l'aide de dump ; utilisez l'argument 'code_files'"
 
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "'unzip' doit être une seule chaîne de caractères"
+
 msgid "unable to access index for repository %s"
 msgstr "impossible d'accéder à l'index de l'entrepôt %s"
 
@@ -718,6 +722,10 @@ msgstr "'destdir' n'est pas un répertoire"
 msgid "no package %s at the repositories"
 msgstr "pas de package %s dans les entrepôts"
 
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "requête incorrecte"
+
 msgid "package %s does not exist on the local repository"
 msgstr "pas de package %s dans l'entrepôt local"
 
@@ -746,6 +754,10 @@ msgstr "impossible de choisir un miroir CRAN en mode non interactif"
 
 msgid "cannot set repositories non-interactively"
 msgstr "impossible de fixer les entrepôts en mode non interactif"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "'package' doit être une chaîne de caratcères ou NULL"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
@@ -1004,6 +1016,9 @@ msgstr ""
 msgid "'file' must be a character string or connection"
 msgstr "'file' doit être une chaîne de caractères ou une connexion"
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr "début de fichier vide"
 
@@ -1128,6 +1143,23 @@ msgstr "impossible de créer le répertoire %s"
 
 msgid "invalid octal digit"
 msgstr "nombre octal incorrect"
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "le chemin vers %s contient des espaces,"
+
+#, fuzzy
+msgid "path is empty"
+msgstr "'dump' est vide"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' doit être une chaîne de caractères ou une connexion"

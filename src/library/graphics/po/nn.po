@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -81,28 +81,28 @@ msgstr "plot.new er ikkje kalla enno"
 msgid "invalid graphics state"
 msgstr "ugyldig grafikktilstand"
 
-#: graphics.c:2548
+#: graphics.c:2552
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2598
+#: graphics.c:2602
 msgid "No graphics device is active"
 msgstr "Inga verksam grafikkeining"
 
-#: graphics.c:3056
+#: graphics.c:3060
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "pil av lengd null har ikkje-unik vinkel, og vert derfor ikkje teikna"
 
-#: graphics.c:3137
+#: graphics.c:3141
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ugyldig par(\"bty\") = '%c' (ingen box() teikna)"
 
-#: graphics.c:3154
+#: graphics.c:3158
 msgid "invalid argument to GBox"
 msgstr "ugyldig argument til GBox"
 
-#: graphics.c:3361
+#: graphics.c:3365
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "Metrikkinformasjon ikkje tilgjengeleg for eininga"

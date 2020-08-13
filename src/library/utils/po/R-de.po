@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-16 10:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -657,6 +657,10 @@ msgstr ""
 "generische Funktionen und andere S4-Objekte (z.B. '%s') können nicht "
 "gedumped werden: nutze 'code_files' Argument"
 
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "'unzip' muss eine einzelne Zeichenkette sein"
+
 msgid "unable to access index for repository %s"
 msgstr "kann nicht auf den Index für das Repository %s zugreifen"
 
@@ -703,6 +707,10 @@ msgstr "'destdir' ist kein Verzeichnis"
 msgid "no package %s at the repositories"
 msgstr "kein Paket %s in den Repositories"
 
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "unzulässige Anfrage"
+
 msgid "package %s does not exist on the local repository"
 msgstr "Paket %s existiert nicht in lokalem Repository"
 
@@ -730,6 +738,10 @@ msgstr "mirror nicht interaktiv"
 
 msgid "cannot set repositories non-interactively"
 msgstr "kann keine Repositories nicht-interaktiv setzen"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "'package' muss eine Zeichenkette oder NULL sein"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Bitte Repositories für diese Sitzung auswählen ---"
@@ -974,6 +986,9 @@ msgstr "%s Option muss Zeichenkettenvektor der Länge 1 oder NULL sein"
 msgid "'file' must be a character string or connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr "leerer Anfang der Datei"
 
@@ -1100,6 +1115,23 @@ msgstr "kann Verzeichnis '%s' nicht erzeugen"
 
 msgid "invalid octal digit"
 msgstr "unzulässige Oktalziffer"
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "Pfad für %s enthält Leerzeichen,"
+
+#, fuzzy
+msgid "path is empty"
+msgstr "'dump' ist leer"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' muss eine Zeichenkette oder eine Verbindung sein"

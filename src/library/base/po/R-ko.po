@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -182,6 +182,13 @@ msgstr "오토로더는 '%s'를 '%s'에서 찾지 못했습니다"
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "오로지 벡터 객체들을 기록할 수만 있습니다"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "복소수 행렬은 현재 허용되지 않습니다"
 
@@ -191,8 +198,8 @@ msgstr "'x'는 반드시 최소 2차원 배열이어야 합니다"
 msgid "invalid 'dims'"
 msgstr "유효하지 않은 'dims'가 아닙니다"
 
-msgid "bad handler specification"
-msgstr "잘못된 핸들러 지정입니다"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "'restart' '%s'를 찾을 수 없습니다"
@@ -202,6 +209,13 @@ msgstr "대화형 세션이 아닙니다"
 
 msgid "not a valid restart specification"
 msgstr "유효한 재시작 지정이 아닙니다"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "핸들러는 반드시 함수이어야 합니다"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "인자 'where'의 길이는 영(0)입니다."
@@ -1127,6 +1141,10 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "패키지 %s는 네임스페이스를 가지고 있지 않습니다"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "패키지 %s는 R 3.0.0 이전에 설치되었으므로 다시 설치해주세요"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "네임스페이스 %s %s는 로드되었으나 %s %s가 필요합니다"
 
@@ -1163,6 +1181,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "패키지 %s내에서 R 코드를 로드할 수 없습니다"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"'NAMESPACE'내에 지정되어 있는 'exportClassPattern'이지만,패키지 %s내에 일치하"
+"는 클래스들은 없습니다"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1867,6 +1891,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] ""
+
+#~ msgid "bad handler specification"
+#~ msgstr "잘못된 핸들러 지정입니다"
 
 #~ msgid "'object' must be a list"
 #~ msgstr "'object'는 반드시 리스트이어야 합니다"

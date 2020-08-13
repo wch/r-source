@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -178,6 +178,13 @@ msgstr "自动载入器在'%2$s'找不到'%1$s' "
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "只能写矢量对象"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "复数矩阵现在不能用"
 
@@ -187,8 +194,8 @@ msgstr "'x'必需是阵列，而且至少得有两个维度"
 msgid "invalid 'dims'"
 msgstr "'dims'不对"
 
-msgid "bad handler specification"
-msgstr "处置器柄规格不对"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "没有找到'restart' '%s'"
@@ -198,6 +205,13 @@ msgstr "非交互运行式"
 
 msgid "not a valid restart specification"
 msgstr "重新开始的规格不对"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "處置程式必需是函数"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "参数长度为零"
@@ -1112,6 +1126,10 @@ msgstr "不能为%1$s分配NativeSymbolInfo因为%2$s已经在%3$s名字空间�
 msgid "package %s does not have a namespace"
 msgstr "程辑包%s没有名字空间"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "程辑包%s是在R版本3.0.0之前建的：你得重新安装"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "载入了名字空间%1$s %2$s，但需要的是%3$s %4$s"
 
@@ -1149,6 +1167,11 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "程辑包%s里的R写碼载入失败"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1875,6 +1898,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "bad handler specification"
+#~ msgstr "处置器柄规格不对"
 
 #, fuzzy
 #~ msgid "Partial match of '%s' to '%s' in data frame"

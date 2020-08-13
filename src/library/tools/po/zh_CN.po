@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 14:56-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -58,86 +58,86 @@ msgstr "没有这样的格式设定'%s'"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "每一个转换设置最多只支持一个星'*'"
 
-#: gramLatex.c:2390 gramRd.c:3790
+#: gramLatex.c:2390 gramRd.c:3976
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "无法为%d行的长字串分配缓冲区"
 
-#: gramLatex.c:2626 gramRd.c:4335 gramRd.c:4341
+#: gramLatex.c:2627 gramRd.c:4522 gramRd.c:4528
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
 
-#: gramRd.c:2411 gramRd.c:2414
+#: gramRd.c:2547 gramRd.c:2550
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "坏标记（额外的空间？）在%s：%d：%d"
 
-#: gramRd.c:2939
+#: gramRd.c:3125
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "'%s'宏之前已经定义了"
 
-#: gramRd.c:2949
+#: gramRd.c:3135
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "用户定义的宏最多只允许四个参数"
 
-#: gramRd.c:2991
+#: gramRd.c:3177
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "'%s'宏的定义没有。"
 
-#: gramRd.c:3053
+#: gramRd.c:3239
 #, fuzzy, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "用户定义的宏最多只允许四个参数"
 
-#: gramRd.c:3193 gramRd.c:3197
+#: gramRd.c:3379 gramRd.c:3383
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "出现了换行内引号的字符串在%s:%d"
 
-#: gramRd.c:3216
+#: gramRd.c:3402
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "无法为在第%d行的长宏分配缓冲区"
 
-#: gramRd.c:3246
+#: gramRd.c:3432
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "宏嵌套过深：无限递归？"
 
-#: gramRd.c:3652
+#: gramRd.c:3838
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "找不到宏%s "
 
-#: gramRd.c:3850
+#: gramRd.c:4036
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "意外结束输入（在%c 引号的字符串于%s:%d:%d）"
 
-#: gramRd.c:4348
+#: gramRd.c:4535
 msgid "cannot open the connection"
 msgstr "打不开链接"
 
-#: gramRd.c:4355
+#: gramRd.c:4542
 msgid "cannot read from this connection"
 msgstr "无法从这个链接读取"
 
-#: gramRd.c:4363
+#: gramRd.c:4550
 msgid "invalid Rd file"
 msgstr "Rd文件不对"
 
-#: gramRd.c:4382
+#: gramRd.c:4569
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd'只支持反解析字符元素"
 
-#: gramRd.c:4385
+#: gramRd.c:4572
 msgid "bad state"
 msgstr "状态不好"
 
-#: gramRd.c:4398
+#: gramRd.c:4585
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "'deparseRd'里的文本模式%d不对"
@@ -155,6 +155,14 @@ msgstr "'%s'参数不对"
 msgid "write error during file append"
 msgstr "文件追加写入时出了错"
 
+#: pdscan.c:67
+msgid "too many items"
+msgstr ""
+
+#: pdscan.c:115
+msgid "non-character argument"
+msgstr ""
+
 #: signals.c:42
 msgid "pskill() is not supported on this platform"
 msgstr "这个平台不支持pskill()"
@@ -167,6 +175,6 @@ msgstr "这个平台不支持psnice()"
 msgid "invalid argument type"
 msgstr "参数种类不对"
 
-#: text.c:225 text.c:247
+#: text.c:223 text.c:245
 msgid "out of memory"
 msgstr "内存不足"

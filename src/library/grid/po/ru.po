@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-04-07 01:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -21,57 +21,69 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: gpar.c:473
+#: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
-#: grid.c:212
+#: grid.c:199
+msgid "Turning clipping on or off within a clipping path is no honoured"
+msgstr ""
+
+#: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "не могу обрезать до повернутой оконницы"
 
-#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
+#: grid.c:455
+msgid "Clipping paths within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:474
+msgid "Masks within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' "
 "смешались?)"
 
-#: grid.c:979
+#: grid.c:1246
 msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
-#: grid.c:1400
+#: grid.c:1693
 msgid "there is no layout defined"
 msgstr "нет заданного эскиза"
 
-#: grid.c:1620
+#: grid.c:1913
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "край многоугольника не найден (нулевая ширина или высота?)"
 
-#: grid.c:1629
+#: grid.c:1922
 msgid "polygon edge not found"
 msgstr "край многоугольника не найден"
 
-#: grid.c:1783
+#: grid.c:2076
 msgid "require at least two points to draw arrow"
 msgstr "надо как минимум две точки, чтобы нарисовать стрелку"
 
-#: grid.c:2102
+#: grid.c:2399
 msgid "non-finite control point in Xspline"
 msgstr "не-конечная контрольная точка в Xspline"
 
-#: grid.c:2982
+#: grid.c:3324
 msgid "non-finite x or y in graphics path"
 msgstr "бесконечный x или y в кривой крафика"
 
-#: grid.c:3026
+#: grid.c:3374
 msgid "Empty raster"
 msgstr "Пустой растр"
 
-#: grid.c:3509
+#: grid.c:3860
 msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
-#: grid.c:3597
+#: grid.c:3954
 msgid "unable to clip to rotated rectangle"
 msgstr "не могу обрезать до повернутого четырехугольника"
 
@@ -87,7 +99,7 @@ msgstr "неправильный 'layout.pos.col'"
 msgid "singular transformation matrix"
 msgstr "сингулярная трансформационная матрица"
 
-#: state.c:170
+#: state.c:180
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 
@@ -95,69 +107,73 @@ msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr ""
 
-#: unit.c:789 unit.c:1288
+#: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
 msgstr "неправильная или не разработанная единица"
 
-#: unit.c:1345 unit.c:1376
+#: unit.c:1355 unit.c:1386
 msgid "Viewport has zero dimension(s)"
 msgstr "Оконница имеет ноль измерений"
 
-#: unit.c:1408 unit.c:1423 unit.c:1438 unit.c:1453
+#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
 msgid "Unsupported unit conversion"
 msgstr "Неподдерживаемая конверсия единиц измерения"
 
-#: unit.c:1545
+#: unit.c:1555
 msgid "Invalid unit"
 msgstr "Неправильная единица"
 
-#: unit.c:1560
+#: unit.c:1570
 msgid "'units' must be character"
 msgstr "единицы должен быть буквами"
 
-#: unit.c:1563
+#: unit.c:1573
 msgid "'units' must be of length > 0"
 msgstr "единицы должны быть длиной > 0"
 
-#: unit.c:1574
+#: unit.c:1584
 msgid ""
 "data must be either NULL, have length 1, or match the length of the final "
 "unit vector"
 msgstr ""
 
-#: unit.c:1586
+#: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr ""
 
-#: unit.c:1590
+#: unit.c:1600
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr ""
 
-#: unit.c:1608
+#: unit.c:1618
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 
-#: unit.c:1613
+#: unit.c:1623
 msgid "non-NULL value supplied for plain unit"
 msgstr ""
 
-#: unit.c:1666 unit.c:1700 unit.c:1749
+#: unit.c:1676 unit.c:1710 unit.c:1759
 msgid "old version of unit class is no longer allowed"
 msgstr ""
 
-#: unit.c:1672
+#: unit.c:1682
 msgid "object is not coercible to a unit"
 msgstr ""
 
-#: unit.c:1698
+#: unit.c:1708
 msgid "object is not a unit"
 msgstr ""
 
-#: unit.c:1830
+#: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
 msgstr ""
 
-#: viewport.c:315
+#: viewport.c:56
+msgid "Mask is not logical value ('none' or 'inherit')"
+msgstr ""
+
+#: viewport.c:330
 msgid "non-finite location and/or size for viewport"
 msgstr "не-конечное положение и/или размер оконницы"
 

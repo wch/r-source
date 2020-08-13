@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-03-31 19:47+0200\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -74,31 +74,31 @@ msgstr "'plot.new' nie został jeszcze wywołany"
 msgid "invalid graphics state"
 msgstr "niepoprawny stan grafiki"
 
-#: graphics.c:2548
+#: graphics.c:2552
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 "urządzenie graficzne zostało zamknięte podczas wywołania funkcji 'locator()' "
 "lub 'idenfify()'"
 
-#: graphics.c:2598
+#: graphics.c:2602
 msgid "No graphics device is active"
 msgstr "Brak aktywnego urządzenia graficznego"
 
-#: graphics.c:3056
+#: graphics.c:3060
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr ""
 "strzałka o zerowej długości ma nieokreślony kąt tak więc zostaje pominięta"
 
-#: graphics.c:3137
+#: graphics.c:3141
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "niepoprawne par(\"bty\") = '%c'; nie wykonano funkcji 'box()'"
 
-#: graphics.c:3154
+#: graphics.c:3158
 msgid "invalid argument to GBox"
 msgstr "niepoprawny argument przekazany do 'GBox'"
 
-#: graphics.c:3361
+#: graphics.c:3365
 msgid "metric information not available for this device"
 msgstr "informacja o metryce nie jest dostępna dla tego urządzenia"
 

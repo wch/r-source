@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -450,7 +450,7 @@ msgstr "Zapisz skrypt"
 # src/library/grDevices/src/devWindows.c: 1593
 # G_("Return focus to Console")
 #: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
-#: src/library/grDevices/src/devWindows.c:1613
+#: src/library/grDevices/src/devWindows.c:1619
 msgid "Return focus to Console"
 msgstr "Ustaw fokus z powrotem na konsolę"
 
@@ -469,7 +469,7 @@ msgstr "Drukuj skrypt"
 # src/library/grDevices/src/devWindows.c: 1587
 # G_("Print")
 #: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
-#: src/library/grDevices/src/devWindows.c:1607
+#: src/library/grDevices/src/devWindows.c:1613
 msgid "Print"
 msgstr "Drukuj"
 
@@ -491,7 +491,7 @@ msgstr "Drukuj"
 # stop("File", texF, "does not exist in", getwd())
 #: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1791
-#: src/library/grDevices/src/devWindows.c:1645
+#: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
 msgstr "Plik"
 
@@ -536,8 +536,8 @@ msgstr "Zapisz jako..."
 # src/library/grDevices/src/devWindows.c: 1688
 # G_("Print...")
 #: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
-#: src/library/grDevices/src/devWindows.c:1666
-#: src/library/grDevices/src/devWindows.c:1708
+#: src/library/grDevices/src/devWindows.c:1672
+#: src/library/grDevices/src/devWindows.c:1714
 msgid "Print..."
 msgstr "Drukuj..."
 
@@ -638,7 +638,7 @@ msgstr "Bez tytułu"
 # G_("Select file")
 # src/gnuwin32/extra.c: 823
 # G_("Select file")
-#: src/gnuwin32/extra.c:1063
+#: src/gnuwin32/extra.c:1194
 msgid "Select file"
 msgstr "Wybierz plik"
 
@@ -699,7 +699,7 @@ msgstr "Wklej polecenia do konsoli"
 # GN_("Stay on top")
 #: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
-#: src/library/grDevices/src/devWindows.c:1705
+#: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
 msgstr "Zawsze na wierzchu"
 
@@ -1682,43 +1682,43 @@ msgstr "Edytor danych"
 
 # src/library/grDevices/src/devWindows.c: 932
 # G_("Portable network graphics file")
-#: src/library/grDevices/src/devWindows.c:949
+#: src/library/grDevices/src/devWindows.c:955
 msgid "Portable network graphics file"
 msgstr "Plik PNG"
 
 # src/library/grDevices/src/devWindows.c: 935
 # G_("Windows bitmap file")
-#: src/library/grDevices/src/devWindows.c:952
+#: src/library/grDevices/src/devWindows.c:958
 msgid "Windows bitmap file"
 msgstr "Plik bitmapy windowsa"
 
 # src/library/grDevices/src/devWindows.c: 938
 # G_("TIFF file")
-#: src/library/grDevices/src/devWindows.c:955
+#: src/library/grDevices/src/devWindows.c:961
 msgid "TIFF file"
 msgstr "Plik TIFF"
 
 # src/library/grDevices/src/devWindows.c: 941
 # G_("Jpeg file")
-#: src/library/grDevices/src/devWindows.c:958
+#: src/library/grDevices/src/devWindows.c:964
 msgid "Jpeg file"
 msgstr "Plik jpeg"
 
 # src/library/grDevices/src/devWindows.c: 963
 # G_("Postscript file")
-#: src/library/grDevices/src/devWindows.c:980
+#: src/library/grDevices/src/devWindows.c:986
 msgid "Postscript file"
 msgstr "Plik Postscript"
 
 # src/library/grDevices/src/devWindows.c: 975
 # G_("PDF file")
-#: src/library/grDevices/src/devWindows.c:992
+#: src/library/grDevices/src/devWindows.c:998
 msgid "PDF file"
 msgstr "Plik PDF"
 
 # src/library/grDevices/src/devWindows.c: 987
 # G_("Enhanced metafiles")
-#: src/library/grDevices/src/devWindows.c:1004
+#: src/library/grDevices/src/devWindows.c:1010
 msgid "Enhanced metafiles"
 msgstr "Rozszerzone metapliki"
 
@@ -1726,39 +1726,39 @@ msgstr "Rozszerzone metapliki"
 # G_("file path selected is too long: only 512 bytes are allowed")
 # src/library/grDevices/src/devWindows.c: 3435
 # G_("file path selected is too long: only 512 bytes are allowed")
-#: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3455
+#: src/library/grDevices/src/devWindows.c:1013
+#: src/library/grDevices/src/devWindows.c:3487
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr ""
 "wybrana ścieżka do pliku jest zbyt długa: tylko 512 bajtów jest dozwolone"
 
 # src/library/grDevices/src/devWindows.c: 1201
 # G_("No plot to replace!")
-#: src/library/grDevices/src/devWindows.c:1218
+#: src/library/grDevices/src/devWindows.c:1224
 msgid "No plot to replace!"
 msgstr "Brak wykresu do zastąpienia!"
 
 # src/library/grDevices/src/devWindows.c: 1249
 # G_("Variable name")
-#: src/library/grDevices/src/devWindows.c:1268
+#: src/library/grDevices/src/devWindows.c:1274
 msgid "Variable name"
 msgstr "Nazwa zmiennej"
 
 # src/library/grDevices/src/devWindows.c: 1256
 # G_("Variable doesn't exist or doesn't contain any plots!")
-#: src/library/grDevices/src/devWindows.c:1277
+#: src/library/grDevices/src/devWindows.c:1283
 msgid "Variable doesn't contain any plots!"
 msgstr "Zmienna nie zawiera żadnych wykresów!"
 
 # src/library/grDevices/src/devWindows.c: 1272
 # G_("Name of variable to save to")
-#: src/library/grDevices/src/devWindows.c:1292
+#: src/library/grDevices/src/devWindows.c:1298
 msgid "Name of variable to save to"
 msgstr "Nazwa zmiennej do której zapisać"
 
 # src/library/grDevices/src/devWindows.c: 1581
 # G_("Copy to the clipboard as a metafile")
-#: src/library/grDevices/src/devWindows.c:1601
+#: src/library/grDevices/src/devWindows.c:1607
 msgid "Copy to the clipboard as a metafile"
 msgstr "Kopiuj do schowka jako metaplik"
 
@@ -1766,8 +1766,8 @@ msgstr "Kopiuj do schowka jako metaplik"
 # G_("Stop locator")
 # src/library/grDevices/src/devWindows.c: 1610
 # G_("Stop locator")
-#: src/library/grDevices/src/devWindows.c:1619
-#: src/library/grDevices/src/devWindows.c:1630
+#: src/library/grDevices/src/devWindows.c:1625
+#: src/library/grDevices/src/devWindows.c:1636
 msgid "Stop locator"
 msgstr "Zatrzymaj lokalizator"
 
@@ -1775,32 +1775,32 @@ msgstr "Zatrzymaj lokalizator"
 # G_("Stop")
 # src/library/grDevices/src/devWindows.c: 1613
 # G_("Stop")
-#: src/library/grDevices/src/devWindows.c:1629
-#: src/library/grDevices/src/devWindows.c:1633
+#: src/library/grDevices/src/devWindows.c:1635
+#: src/library/grDevices/src/devWindows.c:1639
 msgid "Stop"
 msgstr "Stop"
 
 # src/library/grDevices/src/devWindows.c: 1615
 # G_("Continue")
-#: src/library/grDevices/src/devWindows.c:1635
+#: src/library/grDevices/src/devWindows.c:1641
 msgid "Continue"
 msgstr "Kontynuuj"
 
 # src/library/grDevices/src/devWindows.c: 1619
 # G_("Next")
-#: src/library/grDevices/src/devWindows.c:1639
+#: src/library/grDevices/src/devWindows.c:1645
 msgid "Next"
 msgstr "Następny"
 
 # src/library/grDevices/src/devWindows.c: 1620
 # G_("Next plot")
-#: src/library/grDevices/src/devWindows.c:1640
+#: src/library/grDevices/src/devWindows.c:1646
 msgid "Next plot"
 msgstr "Następny wykres"
 
 # src/library/grDevices/src/devWindows.c: 1626
 # G_("Save as")
-#: src/library/grDevices/src/devWindows.c:1646
+#: src/library/grDevices/src/devWindows.c:1652
 msgid "Save as"
 msgstr "Zapisz jako"
 
@@ -1810,154 +1810,154 @@ msgstr "Zapisz jako"
 # G_("%s quality...")
 # src/library/grDevices/src/devWindows.c: 1639
 # G_("%s quality...")
-#: src/library/grDevices/src/devWindows.c:1655
-#: src/library/grDevices/src/devWindows.c:1657
-#: src/library/grDevices/src/devWindows.c:1659
+#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1665
 #, c-format
 msgid "%s quality..."
 msgstr "%s jakości..."
 
 # src/library/grDevices/src/devWindows.c: 1641
 # G_("Copy to the clipboard")
-#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1667
 msgid "Copy to the clipboard"
 msgstr "Kopiuj do schowka"
 
 # src/library/grDevices/src/devWindows.c: 1642
 # G_("as a Bitmap\tCTRL+C")
-#: src/library/grDevices/src/devWindows.c:1662
+#: src/library/grDevices/src/devWindows.c:1668
 msgid "as a Bitmap\tCTRL+C"
 msgstr "jako Bitmapę\tCTRL+C"
 
 # src/library/grDevices/src/devWindows.c: 1643
 # G_("as a Metafile\tCTRL+W")
-#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1669
 msgid "as a Metafile\tCTRL+W"
 msgstr "jako Metaplik\tCTRL+W"
 
 # src/library/grDevices/src/devWindows.c: 1648
 # G_("close Device")
-#: src/library/grDevices/src/devWindows.c:1668
+#: src/library/grDevices/src/devWindows.c:1674
 msgid "close Device"
 msgstr "Zamknij okno"
 
 # src/library/grDevices/src/devWindows.c: 1649
 # G_("History")
-#: src/library/grDevices/src/devWindows.c:1669
+#: src/library/grDevices/src/devWindows.c:1675
 msgid "History"
 msgstr "Historia"
 
 # src/library/grDevices/src/devWindows.c: 1650
 # G_("Recording")
-#: src/library/grDevices/src/devWindows.c:1670
+#: src/library/grDevices/src/devWindows.c:1676
 msgid "Recording"
 msgstr "Nagrywanie"
 
 # src/library/grDevices/src/devWindows.c: 1653
 # G_("Add\tINS")
-#: src/library/grDevices/src/devWindows.c:1673
+#: src/library/grDevices/src/devWindows.c:1679
 msgid "Add\tINS"
 msgstr "Kopiuj\tINS"
 
 # src/library/grDevices/src/devWindows.c: 1654
 # G_("Replace")
-#: src/library/grDevices/src/devWindows.c:1674
+#: src/library/grDevices/src/devWindows.c:1680
 msgid "Replace"
 msgstr "Zamień"
 
 # src/library/grDevices/src/devWindows.c: 1656
 # G_("Previous\tPgUp")
-#: src/library/grDevices/src/devWindows.c:1676
+#: src/library/grDevices/src/devWindows.c:1682
 msgid "Previous\tPgUp"
 msgstr "Poprzedni\tPgUp"
 
 # src/library/grDevices/src/devWindows.c: 1657
 # G_("Next\tPgDown")
-#: src/library/grDevices/src/devWindows.c:1677
+#: src/library/grDevices/src/devWindows.c:1683
 msgid "Next\tPgDown"
 msgstr "Następny\tPgDown"
 
 # src/library/grDevices/src/devWindows.c: 1659
 # G_("Save to variable...")
-#: src/library/grDevices/src/devWindows.c:1679
+#: src/library/grDevices/src/devWindows.c:1685
 msgid "Save to variable..."
 msgstr "Zapisz do zmiennej..."
 
 # src/library/grDevices/src/devWindows.c: 1660
 # G_("Get from variable...")
-#: src/library/grDevices/src/devWindows.c:1680
+#: src/library/grDevices/src/devWindows.c:1686
 msgid "Get from variable..."
 msgstr "Pobierz ze zmiennej..."
 
 # src/library/grDevices/src/devWindows.c: 1662
 # G_("Clear history")
-#: src/library/grDevices/src/devWindows.c:1682
+#: src/library/grDevices/src/devWindows.c:1688
 msgid "Clear history"
 msgstr "Wyczyść historię"
 
 # src/library/grDevices/src/devWindows.c: 1663
 # G_("Resize")
-#: src/library/grDevices/src/devWindows.c:1683
+#: src/library/grDevices/src/devWindows.c:1689
 msgid "Resize"
 msgstr "Zmień rozmiar"
 
 # src/library/grDevices/src/devWindows.c: 1664
 # G_("R mode")
-#: src/library/grDevices/src/devWindows.c:1684
+#: src/library/grDevices/src/devWindows.c:1690
 msgid "R mode"
 msgstr "Tryb R"
 
 # src/library/grDevices/src/devWindows.c: 1666
 # G_("Fit to window")
-#: src/library/grDevices/src/devWindows.c:1686
+#: src/library/grDevices/src/devWindows.c:1692
 msgid "Fit to window"
 msgstr "Dopasuj do okna"
 
 # src/library/grDevices/src/devWindows.c: 1668
 # G_("Fixed size")
-#: src/library/grDevices/src/devWindows.c:1688
+#: src/library/grDevices/src/devWindows.c:1694
 msgid "Fixed size"
 msgstr "Ustalony rozmiar"
 
 # src/library/grDevices/src/devWindows.c: 1675
 # G_("Copy as metafile")
-#: src/library/grDevices/src/devWindows.c:1695
+#: src/library/grDevices/src/devWindows.c:1701
 msgid "Copy as metafile"
 msgstr "Kopiuj jako metaplik"
 
 # src/library/grDevices/src/devWindows.c: 1677
 # G_("Copy as bitmap")
-#: src/library/grDevices/src/devWindows.c:1697
+#: src/library/grDevices/src/devWindows.c:1703
 msgid "Copy as bitmap"
 msgstr "Kopiuj jako bitmapę"
 
 # src/library/grDevices/src/devWindows.c: 1680
 # G_("Save as metafile...")
-#: src/library/grDevices/src/devWindows.c:1700
+#: src/library/grDevices/src/devWindows.c:1706
 msgid "Save as metafile..."
 msgstr "Zapisz jako metaplik..."
 
 # src/library/grDevices/src/devWindows.c: 1682
 # G_("Save as postscript...")
-#: src/library/grDevices/src/devWindows.c:1702
+#: src/library/grDevices/src/devWindows.c:1708
 msgid "Save as postscript..."
 msgstr "Zapisz jako postscript..."
 
 # src/library/grDevices/src/devWindows.c: 3135
 # G_("Locator is active")
-#: src/library/grDevices/src/devWindows.c:3147
+#: src/library/grDevices/src/devWindows.c:3153
 msgid "Locator is active"
 msgstr "Lokalizator jest aktywny"
 
 # src/library/grDevices/src/devWindows.c: 3758
 # G_("Waiting to confirm page change...")
-#: src/library/grDevices/src/devWindows.c:3781
+#: src/library/grDevices/src/devWindows.c:3813
 msgid "Waiting to confirm page change..."
 msgstr "Oczekiwanie na potwierdzenie zmiany strony..."
 
 # src/library/grDevices/src/devWindows.c: 3770
 # G_("Click or hit ENTER for next page")
-#: src/library/grDevices/src/devWindows.c:3793
+#: src/library/grDevices/src/devWindows.c:3825
 msgid "Click or hit ENTER for next page"
 msgstr "Kliknij lub naciśnij ENTER aby przejść do następnej strony"
 

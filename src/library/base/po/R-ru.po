@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-07 01:08-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -179,6 +179,13 @@ msgstr "автозагрузчик не нашел '%s' в '%s'"
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "могу записать только векторные объекты"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "в настоящее время комплексные матрицы не разрешены"
 
@@ -188,8 +195,8 @@ msgstr "'x' должен быть матрицей по крайней мере с двумя измерениями"
 msgid "invalid 'dims'"
 msgstr "неправильные 'dims'"
 
-msgid "bad handler specification"
-msgstr "неправильное указание обработчика"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "не найдено 'restart' '%s'"
@@ -199,6 +206,13 @@ msgstr "не интерактивная сессия"
 
 msgid "not a valid restart specification"
 msgstr "неправильное указание 'restart'"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "обработчик должен быть функцией"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "аргумент 'where' нулевой длины"
@@ -1123,6 +1137,10 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "пакет %s не имеет пространства имен"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "пакет %s был собран до R 3.0.0: пожалуйста, инсталлируйте его заново"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "пространство имен %s %s загружается, но нужно %s %s"
 
@@ -1159,6 +1177,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "не могу загрузить код R пакета %s"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"в NAMESPACE указан 'exportClassPattern', но отсутствуют соответствующие "
+"классы в пакете %s"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1965,6 +1989,9 @@ msgstr[1] ""
 msgstr[2] ""
 "В %s :\n"
 " дополнительные аргументы %s не будут учтены"
+
+#~ msgid "bad handler specification"
+#~ msgstr "неправильное указание обработчика"
 
 #~ msgid "Partial match of '%s' to '%s' in data frame"
 #~ msgstr "Частичное соответствие '%s' и '%s' в таблице данных"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2014-03-26 10:01+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -330,6 +330,12 @@ msgstr " 不正な 'listing' "
 msgid "invalid 'origin'"
 msgstr " 不正な 'origin' です "
 
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
 msgid "'length' must be a 'unit' object"
 msgstr " 'length' は 'unit' オブジェクトでなければなりません "
 
@@ -469,6 +475,10 @@ msgstr " 不正な 'gp' 値です "
 msgid "invalid 'clip' value"
 msgstr " 不正な 'clip' 値です "
 
+#, fuzzy
+msgid "invalid 'mask' value"
+msgstr " 不正な 'ask' 値です "
+
 msgid "invalid 'xscale' in viewport"
 msgstr " viewport 中の 'xscale' が不正です "
 
@@ -579,10 +589,6 @@ msgstr[0] " 不正な viewport 名です "
 #~ msgstr ""
 #~ " 'grob' 引数は 'line.to', 'lines', 'segments' のいずれかの grob でなければ"
 #~ "なりません "
-
-#, fuzzy
-#~ msgid "invalid 'ask' value"
-#~ msgstr " 不正な 'ask' 値です "
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr " 添え字の符号は混在できません "

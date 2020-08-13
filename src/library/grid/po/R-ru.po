@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-07 02:21-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -331,6 +331,12 @@ msgstr "неправильный список"
 msgid "invalid 'origin'"
 msgstr "неправильный 'origin'"
 
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
 msgid "'length' must be a 'unit' object"
 msgstr "'length' должен быть объектом-единицей"
 
@@ -468,6 +474,10 @@ msgstr "неправильное значение 'gp'"
 msgid "invalid 'clip' value"
 msgstr "неправильное значение 'clip'"
 
+#, fuzzy
+msgid "invalid 'mask' value"
+msgstr "Неправильное значение 'ask'"
+
 msgid "invalid 'xscale' in viewport"
 msgstr "неправильное 'xscale' в оконнице"
 
@@ -572,10 +582,6 @@ msgstr[2] "Неправильные имена оконниц"
 
 #~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 #~ msgstr "аргумент 'grob' должен быть 'line.to', 'lines', или 'segments' grob"
-
-#, fuzzy
-#~ msgid "invalid 'ask' value"
-#~ msgstr "Неправильное значение 'ask'"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Не могу смешивать знаки индексов"

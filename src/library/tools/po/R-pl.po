@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 14:56\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -343,14 +343,14 @@ msgstr "Zmienne omijające ustawienia użytkownika/strony:"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr ""
-"pakiet %s istnieje, ale nie został zainstalowany pod R >= 2.10.0, tak więc "
-"'xrefs' nie może zostać sprawdzony"
+msgid ","
+msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
+msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
+
+#, fuzzy
+msgid "Non-file package-anchored link(s) in documentation object '%s':"
 msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -851,9 +851,6 @@ msgstr "Domyślny styl JSS nie może być zmieniony."
 msgid "inst/doc"
 msgstr "inst/doc"
 
-msgid ","
-msgstr ","
-
 msgid "ignored as vignettes have been rebuilt."
 msgstr "zostały zignorowane ponieważ ilustracje zostały odtworzone."
 
@@ -988,6 +985,13 @@ msgstr "Status wyjścia dla funkcji '.install_packages()'"
 #, fuzzy
 msgid "restoration failed"
 msgstr "ładowanie nie powiodło się"
+
+#, fuzzy
+msgid "invalid value"
+msgstr "niepoprawny pakiet"
+
+msgid "for R_CROSS_BUILD"
+msgstr ""
 
 msgid "error reading file '%s'"
 msgstr "błąd podczas czytania pliku '%s'"
@@ -1126,11 +1130,6 @@ msgstr "plik 'DESCRIPTION' nie został znaleziony"
 msgid "NEWS file not found"
 msgstr "plik 'NEWS' nie został znaleziony"
 
-msgid "No news found in given file using old-style R-like format."
-msgstr ""
-"Nie znaleziono wiadomości w podanym pliku używając starego stylu formatu "
-"podobnego do R."
-
 msgid "No news found in given file using package default format."
 msgstr ""
 "Nie znaleziono wiadomości w podanym pliku używając domyślnego formatu "
@@ -1189,6 +1188,10 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "Przetwarzanie pakietów:"
+
+#, fuzzy
+msgid "Invalid DESCRIPTION file for package %s"
+msgstr "niepoprawny plik 'DESCRIPTION'"
 
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
@@ -1267,21 +1270,6 @@ msgstr ""
 
 msgid "unknown header specification"
 msgstr "nieznana specyfikacja nagłówka"
-
-msgid "argument 'pkg' must be of length 1"
-msgstr "argument 'pkg' musi być długości 1"
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr "argument 'lib.loc' nigdy nie był używany i teraz jest przestarzały"
-
-msgid "bad operand"
-msgstr "zły operand"
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr "Pakiet '%s' swoje zależności zredukował do najmniejszego zbioru."
-
-msgid "argument 'vignette' must be of length 1"
-msgstr "argument 'vignette' musi być długości 1"
 
 msgid "R CMD build failed"
 msgstr "'R CMD build' nie powiodło się"
@@ -1364,6 +1352,9 @@ msgstr "argument 'delim' musi określać dwa znaki"
 msgid "only Rd syntax is currently supported"
 msgstr "aktualnie tylko składnia Rd jest wspierana"
 
+msgid "texi2dvi script/program not available, using emulation"
+msgstr ""
+
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr "Uruchomienie 'texi2dvi' na pliku '%s' nie powiodło się."
 
@@ -1402,6 +1393,13 @@ msgstr "argument 'text' musi być wektorem tekstowym"
 
 msgid "parsing '%s'"
 msgstr "przetwarzanie pliku %s"
+
+#, fuzzy
+msgid "Undeclared package %s in Rd xrefs"
+msgid_plural "Undeclared packages %s in Rd xrefs"
+msgstr[0] "Nieznany pakiet %s w krzyżowych referencjach Rd"
+msgstr[1] "Nieznane pakiety %s w krzyżowych referencjach Rd"
+msgstr[2] "Nieznane pakiety %s w krzyżowych referencjach Rd"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1637,6 +1635,33 @@ msgstr[0] "Odpowiedni wpis BibTeX:"
 msgstr[1] "Odpowiednie wpisy BibTeX:"
 msgstr[2] "Odpowiednie wpisy BibTeX:"
 
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr ""
+#~ "pakiet %s istnieje, ale nie został zainstalowany pod R >= 2.10.0, tak "
+#~ "więc 'xrefs' nie może zostać sprawdzony"
+
+#~ msgid "No news found in given file using old-style R-like format."
+#~ msgstr ""
+#~ "Nie znaleziono wiadomości w podanym pliku używając starego stylu formatu "
+#~ "podobnego do R."
+
+#~ msgid "argument 'pkg' must be of length 1"
+#~ msgstr "argument 'pkg' musi być długości 1"
+
+#~ msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+#~ msgstr "argument 'lib.loc' nigdy nie był używany i teraz jest przestarzały"
+
+#~ msgid "bad operand"
+#~ msgstr "zły operand"
+
+#~ msgid "Package '%s' had its dependencies reduced to a minimal set."
+#~ msgstr "Pakiet '%s' swoje zależności zredukował do najmniejszego zbioru."
+
+#~ msgid "argument 'vignette' must be of length 1"
+#~ msgstr "argument 'vignette' musi być długości 1"
+
 #~ msgid "%s must be a character string or a file/raw connection"
 #~ msgstr ""
 #~ "argument %s musi być łańcuchem tekstowym lub połączeniem plikowym/prostym"
@@ -1773,13 +1798,6 @@ msgstr[2] "Odpowiednie wpisy BibTeX:"
 
 #~ msgid "parsing file %s"
 #~ msgstr "parsowanie pliku %s"
-
-#, fuzzy
-#~ msgid "Undeclared package used in Rd xrefs:"
-#~ msgid_plural "Undeclared packages used in Rd xrefs:"
-#~ msgstr[0] "Nieznany pakiet %s w krzyżowych referencjach Rd"
-#~ msgstr[1] "Nieznane pakiety %s w krzyżowych referencjach Rd"
-#~ msgstr[2] "Nieznane pakiety %s w krzyżowych referencjach Rd"
 
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"

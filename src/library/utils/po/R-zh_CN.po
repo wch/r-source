@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -635,6 +635,10 @@ msgid ""
 "the 'code_files' argument"
 msgstr "泛型函数和其他S4对象（例如'%s'）不能被转储出来；用'code_files'这个参数"
 
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "'unzip'必需是单字符串"
+
 msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
 
@@ -677,6 +681,10 @@ msgstr "'destdir'不是目录"
 msgid "no package %s at the repositories"
 msgstr "貯藏處里没有%s这样的程序包"
 
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "询问不对"
+
 msgid "package %s does not exist on the local repository"
 msgstr "地方貯藏處里没有%s这样的程序包"
 
@@ -705,6 +713,10 @@ msgstr "无法在非互交的情况下选用CRAN镜像"
 
 msgid "cannot set repositories non-interactively"
 msgstr "无法在非互交情况下设定貯藏處"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "'package'的值必需是字符串或NULL"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 请选用一个貯藏處 ---"
@@ -947,6 +959,9 @@ msgstr "%s选项的值必需是长度为一的字符串或NULL"
 msgid "'file' must be a character string or connection"
 msgstr "'file'的值必需是字符串或联结"
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr "空白的文件开头"
 
@@ -1069,6 +1084,22 @@ msgstr "无法建立目录%s"
 
 msgid "invalid octal digit"
 msgstr "八进制数字格式不对"
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "指向%s的路径里不能有空格,"
+
+msgid "path is empty"
+msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile'的值必需是字符串或联结"

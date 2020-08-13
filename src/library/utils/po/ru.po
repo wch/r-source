@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-04-07 01:19-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -21,99 +21,99 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: io.c:329 io.c:333 io.c:343 io.c:574 io.c:774 io.c:827 io.c:840 io.c:844
-#: io.c:850 io.c:851 io.c:1097 io.c:1098 io.c:1100 io.c:1101 io.c:1102
-#: io.c:1103 io.c:1104 io.c:1105 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
+#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
+#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:79
+#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:79
 #: windows/widgets.c:82 windows/widgets.c:87
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
 
-#: io.c:352 io.c:837
+#: io.c:350 io.c:835
 msgid "invalid quote symbol set"
 msgstr "неправильная установка символа кавычек"
 
-#: io.c:364 io.c:860 io.c:1085
+#: io.c:362 io.c:858 io.c:1078
 msgid "cannot open the connection"
 msgstr "не могу открыть соединение"
 
-#: io.c:367 io.c:371
+#: io.c:365 io.c:369
 msgid "cannot read from this connection"
 msgstr "не могу прочитать из соединения"
 
-#: io.c:418 io.c:436
+#: io.c:416 io.c:434
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr "закавыченная подстрока строки %d заканчивается EOF"
 
-#: io.c:570
+#: io.c:567
 msgid "the first argument must be of mode character"
 msgstr "первый аргумент должен быть текстовым"
 
-#: io.c:600
+#: io.c:597
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr "неправильная строка 'numerals': \"%s\""
 
-#: io.c:776
+#: io.c:773
 #, c-format
 msgid "Selection: "
 msgstr "Выбор:"
 
-#: io.c:870 io.c:886
+#: io.c:868 io.c:883
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "не могу разместить буфер в 'readTableHead'"
 
-#: io.c:900
+#: io.c:896
 msgid "\\ followed by EOF"
 msgstr "\\ завершается EOF"
 
-#: io.c:953 io.c:958
+#: io.c:948 io.c:952
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "readTableHeader нашел неполную последнюю строку в '%s'"
 
-#: io.c:1016
+#: io.c:1009
 msgid "index out of range"
 msgstr "индекс вне пределов"
 
-#: io.c:1053
+#: io.c:1046
 #, c-format
 msgid "Problem closing connection:  %s"
 msgstr ""
 
-#: io.c:1055
+#: io.c:1048
 #, fuzzy
 msgid "Problem closing connection"
 msgstr "'file' -- это не соединение"
 
-#: io.c:1078
+#: io.c:1071
 msgid "'file' is not a connection"
 msgstr "'file' -- это не соединение"
 
-#: io.c:1081
+#: io.c:1074
 msgid "cannot write to this connection"
 msgstr "не могу писать в это соединение"
 
-#: io.c:1111
+#: io.c:1104
 msgid "'dec' must be a single character"
 msgstr "'dec' должен быть одним символом"
 
-#: io.c:1137
+#: io.c:1130
 #, fuzzy, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
 "поврежденная таблица данных -- длина колонки %d не соответствует строкам"
 
-#: io.c:1168
+#: io.c:1161
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "колонка %s считает себя фактором, но у нее нет числовых кодов"
 
-#: io.c:1186
+#: io.c:1179
 #, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "поврежденная матрица -- длины измерений не сходятся"
@@ -209,41 +209,41 @@ msgstr "неправильное значение '%s'"
 msgid "Registry key '%ls' not found"
 msgstr "Ключ реестра '%ls' не найден"
 
-#: windows/util.c:42
+#: windows/util.c:46
 msgid "unsupported version of Windows"
 msgstr "неподдерживаемая версия Windows"
 
-#: windows/util.c:281
+#: windows/util.c:285
 msgid "argument must be a character vector or a raw vector"
 msgstr "аргумент должен быть текстовым вектором или простым вектором"
 
-#: windows/util.c:320
+#: windows/util.c:324
 msgid "unable to open the clipboard"
 msgstr "не могу открыть буфер обмена"
 
-#: windows/util.c:325
+#: windows/util.c:329
 msgid "unable to write to the clipboard"
 msgstr "не могу писать в буфер обмена"
 
-#: windows/util.c:404
+#: windows/util.c:408
 msgid "'title' must be a character string"
 msgstr "'title' должен быть текстовой строкой"
 
-#: windows/util.c:413
+#: windows/util.c:417
 msgid "'text' must be a character string"
 msgstr "'text' должен быть текстовой строкой"
 
-#: windows/util.c:452
+#: windows/util.c:456
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' должен быть длиной 1"
 
-#: windows/util.c:565
+#: windows/util.c:569
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' должен быть списком"
 
-#: windows/util.c:569
+#: windows/util.c:573
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' элемент из %d -- не дескриптор окна"

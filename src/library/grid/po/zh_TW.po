@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -18,55 +18,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: gpar.c:473
+#: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
-#: grid.c:212
+#: grid.c:199
+msgid "Turning clipping on or off within a clipping path is no honoured"
+msgstr ""
+
+#: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "無法修剪至旋轉的視窗中"
 
-#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
+#: grid.c:455
+msgid "Clipping paths within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:474
+msgid "Masks within a clipping path are not honoured"
+msgstr ""
+
+#: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "無法彈到最上層的視窗('grid' 和 'graphics' 輸出有混合？)"
 
-#: grid.c:979
+#: grid.c:1246
 msgid "attempt to plot on null device"
 msgstr "不能在無效裝置上畫圖"
 
-#: grid.c:1400
+#: grid.c:1693
 msgid "there is no layout defined"
 msgstr "需要設定版面設置"
 
-#: grid.c:1620
+#: grid.c:1913
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "找不到多邊形的邊(零寬度或是零高度？)"
 
-#: grid.c:1629
+#: grid.c:1922
 msgid "polygon edge not found"
 msgstr "找不到多邊形的邊"
 
-#: grid.c:1783
+#: grid.c:2076
 msgid "require at least two points to draw arrow"
 msgstr "至少需要兩點才能畫一個箭頭"
 
-#: grid.c:2102
+#: grid.c:2399
 msgid "non-finite control point in Xspline"
 msgstr "Xspline 裡不能有無限值的控制點"
 
-#: grid.c:2982
+#: grid.c:3324
 msgid "non-finite x or y in graphics path"
 msgstr "圖形路徑裡 x 或 y 的值非限定"
 
-#: grid.c:3026
+#: grid.c:3374
 msgid "Empty raster"
 msgstr "空的柵格"
 
-#: grid.c:3509
+#: grid.c:3860
 msgid "invalid plotting symbol"
 msgstr "圖畫符號值無效"
 
-#: grid.c:3597
+#: grid.c:3954
 msgid "unable to clip to rotated rectangle"
 msgstr "無法修剪到旋轉的長方形上"
 
@@ -82,7 +94,7 @@ msgstr "'layout.pos.col' 的值無效"
 msgid "singular transformation matrix"
 msgstr "奇異轉換矩陣"
 
-#: state.c:170
+#: state.c:180
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "無法保留 'grid' 的狀況。是不是因為您開啟了太多的裝置？"
 
@@ -90,69 +102,73 @@ msgstr "無法保留 'grid' 的狀況。是不是因為您開啟了太多的裝�
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr ""
 
-#: unit.c:789 unit.c:1288
+#: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
 msgstr "要麼不明的單元，要麼這個單位目前沒有被實作"
 
-#: unit.c:1345 unit.c:1376
+#: unit.c:1355 unit.c:1386
 msgid "Viewport has zero dimension(s)"
 msgstr "檢視區的維度不可為零"
 
-#: unit.c:1408 unit.c:1423 unit.c:1438 unit.c:1453
+#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
 msgid "Unsupported unit conversion"
 msgstr "不支援的單元轉換"
 
-#: unit.c:1545
+#: unit.c:1555
 msgid "Invalid unit"
 msgstr "單元無效"
 
-#: unit.c:1560
+#: unit.c:1570
 msgid "'units' must be character"
 msgstr "'units' 必須是字元"
 
-#: unit.c:1563
+#: unit.c:1573
 msgid "'units' must be of length > 0"
 msgstr "'units' 的長度必須大於零"
 
-#: unit.c:1574
+#: unit.c:1584
 msgid ""
 "data must be either NULL, have length 1, or match the length of the final "
 "unit vector"
 msgstr ""
 
-#: unit.c:1586
+#: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr ""
 
-#: unit.c:1590
+#: unit.c:1600
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr ""
 
-#: unit.c:1608
+#: unit.c:1618
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 
-#: unit.c:1613
+#: unit.c:1623
 msgid "non-NULL value supplied for plain unit"
 msgstr ""
 
-#: unit.c:1666 unit.c:1700 unit.c:1749
+#: unit.c:1676 unit.c:1710 unit.c:1759
 msgid "old version of unit class is no longer allowed"
 msgstr ""
 
-#: unit.c:1672
+#: unit.c:1682
 msgid "object is not coercible to a unit"
 msgstr ""
 
-#: unit.c:1698
+#: unit.c:1708
 msgid "object is not a unit"
 msgstr ""
 
-#: unit.c:1830
+#: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
 msgstr ""
 
-#: viewport.c:315
+#: viewport.c:56
+msgid "Mask is not logical value ('none' or 'inherit')"
+msgstr ""
+
+#: viewport.c:330
 msgid "non-finite location and/or size for viewport"
 msgstr "檢視區的位置或大小不能是無限的"
 

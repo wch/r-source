@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2011-01-28 10:51+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -322,7 +322,7 @@ msgid "Save script"
 msgstr "Lagra skript"
 
 #: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
-#: src/library/grDevices/src/devWindows.c:1613
+#: src/library/grDevices/src/devWindows.c:1619
 msgid "Return focus to Console"
 msgstr "Flytt fokuset tilbake til konsollen"
 
@@ -331,13 +331,13 @@ msgid "Print script"
 msgstr "Skriv ut skript"
 
 #: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
-#: src/library/grDevices/src/devWindows.c:1607
+#: src/library/grDevices/src/devWindows.c:1613
 msgid "Print"
 msgstr "Skriv ut"
 
 #: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1791
-#: src/library/grDevices/src/devWindows.c:1645
+#: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
 msgstr "Fil"
 
@@ -358,8 +358,8 @@ msgid "Save as..."
 msgstr "Lagra som …"
 
 #: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
-#: src/library/grDevices/src/devWindows.c:1666
-#: src/library/grDevices/src/devWindows.c:1708
+#: src/library/grDevices/src/devWindows.c:1672
+#: src/library/grDevices/src/devWindows.c:1714
 msgid "Print..."
 msgstr "Skriv ut …"
 
@@ -414,7 +414,7 @@ msgstr "Klarte ikkje laga nytt skrivevindauge"
 msgid "Untitled"
 msgstr "Namnlaus"
 
-#: src/gnuwin32/extra.c:1063
+#: src/gnuwin32/extra.c:1194
 msgid "Select file"
 msgstr "Vel fil"
 
@@ -441,7 +441,7 @@ msgstr "Lim inn kommandoar i konsollen"
 
 #: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
-#: src/library/grDevices/src/devWindows.c:1705
+#: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
 msgstr "Hald øvst"
 
@@ -1019,186 +1019,186 @@ msgstr "Cellebreidder …"
 msgid "Data editor"
 msgstr "Dataredigering"
 
-#: src/library/grDevices/src/devWindows.c:949
+#: src/library/grDevices/src/devWindows.c:955
 msgid "Portable network graphics file"
 msgstr "Portabel nettverksgrafikk-fil"
 
-#: src/library/grDevices/src/devWindows.c:952
+#: src/library/grDevices/src/devWindows.c:958
 msgid "Windows bitmap file"
 msgstr "Windows-punktbiletfil"
 
-#: src/library/grDevices/src/devWindows.c:955
+#: src/library/grDevices/src/devWindows.c:961
 msgid "TIFF file"
 msgstr "TIFF-fil"
 
-#: src/library/grDevices/src/devWindows.c:958
+#: src/library/grDevices/src/devWindows.c:964
 msgid "Jpeg file"
 msgstr "JPEG-fil"
 
-#: src/library/grDevices/src/devWindows.c:980
+#: src/library/grDevices/src/devWindows.c:986
 msgid "Postscript file"
 msgstr "PostScript-fil"
 
-#: src/library/grDevices/src/devWindows.c:992
+#: src/library/grDevices/src/devWindows.c:998
 msgid "PDF file"
 msgstr "PDF-fil"
 
-#: src/library/grDevices/src/devWindows.c:1004
+#: src/library/grDevices/src/devWindows.c:1010
 msgid "Enhanced metafiles"
 msgstr "Enhanced metafile"
 
-#: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3455
+#: src/library/grDevices/src/devWindows.c:1013
+#: src/library/grDevices/src/devWindows.c:3487
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "for lang filadresse: maksgrensa er på 512 byte"
 
-#: src/library/grDevices/src/devWindows.c:1218
+#: src/library/grDevices/src/devWindows.c:1224
 msgid "No plot to replace!"
 msgstr "Manglar plott å byta ut"
 
-#: src/library/grDevices/src/devWindows.c:1268
+#: src/library/grDevices/src/devWindows.c:1274
 msgid "Variable name"
 msgstr "Variabelnamn"
 
-#: src/library/grDevices/src/devWindows.c:1277
+#: src/library/grDevices/src/devWindows.c:1283
 #, fuzzy
 msgid "Variable doesn't contain any plots!"
 msgstr "Variabelen finst ikkje, eller inneheld ikkje plott"
 
-#: src/library/grDevices/src/devWindows.c:1292
+#: src/library/grDevices/src/devWindows.c:1298
 msgid "Name of variable to save to"
 msgstr "Namn på variabelen å lagra til"
 
-#: src/library/grDevices/src/devWindows.c:1601
+#: src/library/grDevices/src/devWindows.c:1607
 msgid "Copy to the clipboard as a metafile"
 msgstr "Kopier to utklippstavla som metafil"
 
-#: src/library/grDevices/src/devWindows.c:1619
-#: src/library/grDevices/src/devWindows.c:1630
+#: src/library/grDevices/src/devWindows.c:1625
+#: src/library/grDevices/src/devWindows.c:1636
 msgid "Stop locator"
 msgstr "Stopp posisjonslesar"
 
-#: src/library/grDevices/src/devWindows.c:1629
-#: src/library/grDevices/src/devWindows.c:1633
+#: src/library/grDevices/src/devWindows.c:1635
+#: src/library/grDevices/src/devWindows.c:1639
 msgid "Stop"
 msgstr "Stopp"
 
-#: src/library/grDevices/src/devWindows.c:1635
+#: src/library/grDevices/src/devWindows.c:1641
 msgid "Continue"
 msgstr "Hald fram"
 
-#: src/library/grDevices/src/devWindows.c:1639
+#: src/library/grDevices/src/devWindows.c:1645
 msgid "Next"
 msgstr "Neste"
 
-#: src/library/grDevices/src/devWindows.c:1640
+#: src/library/grDevices/src/devWindows.c:1646
 msgid "Next plot"
 msgstr "Neste plott"
 
-#: src/library/grDevices/src/devWindows.c:1646
+#: src/library/grDevices/src/devWindows.c:1652
 msgid "Save as"
 msgstr "Lagra som"
 
-#: src/library/grDevices/src/devWindows.c:1655
-#: src/library/grDevices/src/devWindows.c:1657
-#: src/library/grDevices/src/devWindows.c:1659
+#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1665
 #, c-format
 msgid "%s quality..."
 msgstr "%s-kvalitet …"
 
-#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1667
 msgid "Copy to the clipboard"
 msgstr "Kopier til utklippstavla"
 
-#: src/library/grDevices/src/devWindows.c:1662
+#: src/library/grDevices/src/devWindows.c:1668
 msgid "as a Bitmap\tCTRL+C"
 msgstr "som punktbilete\tCTRL+C"
 
-#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1669
 msgid "as a Metafile\tCTRL+W"
 msgstr "Som metafil\tCTRL+w"
 
-#: src/library/grDevices/src/devWindows.c:1668
+#: src/library/grDevices/src/devWindows.c:1674
 msgid "close Device"
 msgstr "lukk eining"
 
-#: src/library/grDevices/src/devWindows.c:1669
+#: src/library/grDevices/src/devWindows.c:1675
 msgid "History"
 msgstr "Logg"
 
-#: src/library/grDevices/src/devWindows.c:1670
+#: src/library/grDevices/src/devWindows.c:1676
 msgid "Recording"
 msgstr "Opptak"
 
-#: src/library/grDevices/src/devWindows.c:1673
+#: src/library/grDevices/src/devWindows.c:1679
 msgid "Add\tINS"
 msgstr "Legg til\tINS"
 
-#: src/library/grDevices/src/devWindows.c:1674
+#: src/library/grDevices/src/devWindows.c:1680
 msgid "Replace"
 msgstr "Byt ut"
 
-#: src/library/grDevices/src/devWindows.c:1676
+#: src/library/grDevices/src/devWindows.c:1682
 msgid "Previous\tPgUp"
 msgstr "Førre\tPgUp"
 
-#: src/library/grDevices/src/devWindows.c:1677
+#: src/library/grDevices/src/devWindows.c:1683
 msgid "Next\tPgDown"
 msgstr "Neste\tPgDown"
 
-#: src/library/grDevices/src/devWindows.c:1679
+#: src/library/grDevices/src/devWindows.c:1685
 msgid "Save to variable..."
 msgstr "Lagra til variabel …"
 
-#: src/library/grDevices/src/devWindows.c:1680
+#: src/library/grDevices/src/devWindows.c:1686
 msgid "Get from variable..."
 msgstr "Hent frå variabel …"
 
-#: src/library/grDevices/src/devWindows.c:1682
+#: src/library/grDevices/src/devWindows.c:1688
 msgid "Clear history"
 msgstr "Tøm loggen"
 
-#: src/library/grDevices/src/devWindows.c:1683
+#: src/library/grDevices/src/devWindows.c:1689
 msgid "Resize"
 msgstr "Endra storleik"
 
-#: src/library/grDevices/src/devWindows.c:1684
+#: src/library/grDevices/src/devWindows.c:1690
 msgid "R mode"
 msgstr "R-modus"
 
-#: src/library/grDevices/src/devWindows.c:1686
+#: src/library/grDevices/src/devWindows.c:1692
 msgid "Fit to window"
 msgstr "Tilpassa til vindauget"
 
-#: src/library/grDevices/src/devWindows.c:1688
+#: src/library/grDevices/src/devWindows.c:1694
 msgid "Fixed size"
 msgstr "Fast storleik"
 
-#: src/library/grDevices/src/devWindows.c:1695
+#: src/library/grDevices/src/devWindows.c:1701
 msgid "Copy as metafile"
 msgstr "Kopier som metafil"
 
-#: src/library/grDevices/src/devWindows.c:1697
+#: src/library/grDevices/src/devWindows.c:1703
 msgid "Copy as bitmap"
 msgstr "Kopier som punktbilet"
 
-#: src/library/grDevices/src/devWindows.c:1700
+#: src/library/grDevices/src/devWindows.c:1706
 msgid "Save as metafile..."
 msgstr "Lagra som metafil …"
 
-#: src/library/grDevices/src/devWindows.c:1702
+#: src/library/grDevices/src/devWindows.c:1708
 msgid "Save as postscript..."
 msgstr "Lagra som PostScript …"
 
-#: src/library/grDevices/src/devWindows.c:3147
+#: src/library/grDevices/src/devWindows.c:3153
 msgid "Locator is active"
 msgstr "Posisjonslesar køyrer"
 
-#: src/library/grDevices/src/devWindows.c:3781
+#: src/library/grDevices/src/devWindows.c:3813
 msgid "Waiting to confirm page change..."
 msgstr "Ventar på stadfesting av sideskifte …"
 
-#: src/library/grDevices/src/devWindows.c:3793
+#: src/library/grDevices/src/devWindows.c:3825
 msgid "Click or hit ENTER for next page"
 msgstr "Klikk eller trykk «Enter» for neste side"
 

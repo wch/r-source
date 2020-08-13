@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 14:56\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-16 10:34+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -345,15 +345,15 @@ msgstr "Variablen überschreiben Nutzer- bzw. Rechnereinstellungen:"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr ""
-"Paket %s existiert, wurde aber nicht mit R >= 2.10.0 installiert, weshalb "
-"Querverweise nicht überprüft werden können"
+msgid ","
+msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Fehlende(r) Link(s) im Dokumentations-Objekt '%s':"
+
+#, fuzzy
+msgid "Non-file package-anchored link(s) in documentation object '%s':"
+msgstr "Verdächtige(r) Link(s) im Dokuobjekt '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
@@ -843,9 +843,6 @@ msgstr "Der Standard JSS style darf nicht geändert werden"
 msgid "inst/doc"
 msgstr "inst/doc"
 
-msgid ","
-msgstr ","
-
 msgid "ignored as vignettes have been rebuilt."
 msgstr "ignoriert, da Vignetten neu erzeugt wurden."
 
@@ -982,6 +979,13 @@ msgstr "install_packages() Exitstatus"
 msgid "restoration failed"
 msgstr "Laden fehlgeschlagen"
 
+#, fuzzy
+msgid "invalid value"
+msgstr "ungültiges Paket"
+
+msgid "for R_CROSS_BUILD"
+msgstr ""
+
 msgid "error reading file '%s'"
 msgstr "Fehler beim Lesen der Datei '%s'"
 
@@ -1115,11 +1119,6 @@ msgstr "DESCRIPTION Datei nicht gefunden"
 msgid "NEWS file not found"
 msgstr "NEWS Datei nicht gefunden"
 
-msgid "No news found in given file using old-style R-like format."
-msgstr ""
-"Keine Neuigkeiten in angegebener Datei mit dem alten R-ähnlichen Format "
-"gefunden"
-
 msgid "No news found in given file using package default format."
 msgstr ""
 "Keine Neuigkeiten in gegebener Datei mit dem Paket-Standardformat gefunden"
@@ -1177,6 +1176,10 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "Bearbeitete Pakete:"
+
+#, fuzzy
+msgid "Invalid DESCRIPTION file for package %s"
+msgstr "Unzulässige DESCRIPTION Datei"
 
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
@@ -1254,21 +1257,6 @@ msgstr ""
 
 msgid "unknown header specification"
 msgstr "Unbekannte Header-Spezifikation"
-
-msgid "argument 'pkg' must be of length 1"
-msgstr "Argument 'pkg' muss Länge 1 haben"
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr "das 'lib.loc' Argument wurde nie genutzt und ist nun veraltet"
-
-msgid "bad operand"
-msgstr "ungeeigneter Operand"
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr "Abhängigkeiten von Paket '%s' auf minimale Menge reduziert."
-
-msgid "argument 'vignette' must be of length 1"
-msgstr "Argument 'vignette' muss Länge 1 haben"
 
 msgid "R CMD build failed"
 msgstr "R CMD buils fehlgeschlagen"
@@ -1352,6 +1340,9 @@ msgstr "Argument 'delim' muss zwei Zeichen spezifizieren"
 msgid "only Rd syntax is currently supported"
 msgstr "momentan nur Rd Syntax unterstützt"
 
+msgid "texi2dvi script/program not available, using emulation"
+msgstr ""
+
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen."
 
@@ -1390,6 +1381,12 @@ msgstr "'text' muss ein Zeichenkettenvektor sein"
 
 msgid "parsing '%s'"
 msgstr "parse '%s'"
+
+#, fuzzy
+msgid "Undeclared package %s in Rd xrefs"
+msgid_plural "Undeclared packages %s in Rd xrefs"
+msgstr[0] "Unbekanntes Paket %s in Rd Kreuzreferenzen"
+msgstr[1] "Unbekannte Pakete %s in Rd Kreuzreferenzen"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1566,6 +1563,33 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Zugehöriger BibTeX Eintrag:"
 msgstr[1] "Zugehörige BibTeX Einträge:"
 
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr ""
+#~ "Paket %s existiert, wurde aber nicht mit R >= 2.10.0 installiert, weshalb "
+#~ "Querverweise nicht überprüft werden können"
+
+#~ msgid "No news found in given file using old-style R-like format."
+#~ msgstr ""
+#~ "Keine Neuigkeiten in angegebener Datei mit dem alten R-ähnlichen Format "
+#~ "gefunden"
+
+#~ msgid "argument 'pkg' must be of length 1"
+#~ msgstr "Argument 'pkg' muss Länge 1 haben"
+
+#~ msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+#~ msgstr "das 'lib.loc' Argument wurde nie genutzt und ist nun veraltet"
+
+#~ msgid "bad operand"
+#~ msgstr "ungeeigneter Operand"
+
+#~ msgid "Package '%s' had its dependencies reduced to a minimal set."
+#~ msgstr "Abhängigkeiten von Paket '%s' auf minimale Menge reduziert."
+
+#~ msgid "argument 'vignette' must be of length 1"
+#~ msgstr "Argument 'vignette' muss Länge 1 haben"
+
 #~ msgid "file"
 #~ msgstr "Datei"
 
@@ -1697,12 +1721,6 @@ msgstr[1] "Zugehörige BibTeX Einträge:"
 
 #~ msgid "byte"
 #~ msgstr "byte"
-
-#, fuzzy
-#~ msgid "Undeclared package used in Rd xrefs:"
-#~ msgid_plural "Undeclared packages used in Rd xrefs:"
-#~ msgstr[0] "Unbekanntes Paket %s in Rd Kreuzreferenzen"
-#~ msgstr[1] "Unbekannte Pakete %s in Rd Kreuzreferenzen"
 
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
@@ -2202,9 +2220,6 @@ msgstr[1] "Zugehörige BibTeX Einträge:"
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "Kann das Hilfedokument %s in Paket %s nicht finden"
-
-#~ msgid "Suspect link(s) in documentation object '%s':"
-#~ msgstr "Verdächtige(r) Link(s) im Dokuobjekt '%s':"
 
 #~ msgid ""
 #~ "'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as "

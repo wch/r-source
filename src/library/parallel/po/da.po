@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2011-11-29 09:15+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr "kan ikke forgrene, mulig årsag: %s"
 msgid "unable to terminate child: %s"
 msgstr "kan ikke oprette en datakanal"
 
-#: fork.c:321 fork.c:602
+#: fork.c:321 fork.c:602 ncpus.c:90 ncpus.c:126 ncpus.c:191
 msgid "memory allocation error"
 msgstr "allokeringsfejl for hukommelse"
 

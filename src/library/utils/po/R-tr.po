@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -616,6 +616,9 @@ msgid ""
 "the 'code_files' argument"
 msgstr ""
 
+msgid "invalid 'type'; must be a character string"
+msgstr ""
+
 msgid "unable to access index for repository %s"
 msgstr ""
 
@@ -658,6 +661,9 @@ msgstr ""
 msgid "no package %s at the repositories"
 msgstr ""
 
+msgid "invalid 'type'"
+msgstr ""
+
 msgid "package %s does not exist on the local repository"
 msgstr ""
 
@@ -683,6 +689,9 @@ msgid "mirror non-interactively"
 msgstr ""
 
 msgid "cannot set repositories non-interactively"
+msgstr ""
+
+msgid "invalid options(\"pkgType\"); must be a character string"
 msgstr ""
 
 msgid "--- Please select repositories for use in this session ---"
@@ -905,6 +914,9 @@ msgstr ""
 msgid "'file' must be a character string or connection"
 msgstr ""
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr ""
 
@@ -1022,6 +1034,21 @@ msgid "failed to create directory %s"
 msgstr ""
 
 msgid "invalid octal digit"
+msgstr ""
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+msgid "path contains '..'"
+msgstr ""
+
+msgid "path is empty"
 msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"

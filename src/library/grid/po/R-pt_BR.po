@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -395,6 +395,12 @@ msgstr "listing inválido"
 msgid "invalid 'origin'"
 msgstr "'origin' inválido"
 
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
 #, fuzzy
 msgid "'length' must be a 'unit' object"
 msgstr "'length' deve ser um objeto unitário"
@@ -551,6 +557,10 @@ msgid "invalid 'clip' value"
 msgstr "Valor 'clip' inválido"
 
 #, fuzzy
+msgid "invalid 'mask' value"
+msgstr "Valor 'ask' incorreto"
+
+#, fuzzy
 msgid "invalid 'xscale' in viewport"
 msgstr "'xscale' inválido em vista"
 
@@ -679,10 +689,6 @@ msgstr[1] "Nome(s) de vista inválido(s)"
 #, fuzzy
 #~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 #~ msgstr "O argumento 'grob'  deve ser 'line.to', 'lines', ou 'segments' grob"
-
-#, fuzzy
-#~ msgid "invalid 'ask' value"
-#~ msgstr "Valor 'ask' incorreto"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Não é possível mesclar os sinais dos índices"
