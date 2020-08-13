@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extract.data.frame}
@@ -27,7 +27,7 @@
 
   \item{i, j, ...}{elements to extract or replace.  For \code{[} and
     \code{[[}, these are \code{numeric} or \code{character} or, for
-    \code{[} only, empty.  Numeric values are coerced to integer as if
+    \code{[} only, empty or \code{logical}.  Numeric values are coerced to integer as if
     by \code{\link{as.integer}}.  For replacement by \code{[}, a logical
     matrix is allowed.}
 
@@ -182,7 +182,8 @@ stopifnot(identical(sw[, 1], sw[[1]]),
           is.list(s1 <- sw[1, , drop = TRUE]), identical(s1$Fertility, 80.2))
 tools::assertError(sw[, "Ferti"])
 }
-swiss[ c(1, 1:2), ]   # duplicate row, unique row names are created
+sw[sw$Fertility > 90,] # logical indexing, see also ?subset
+sw[c(1, 1:2), ]        # duplicate row, unique row names are created
 
 sw[sw <= 6] <- 6  # logical matrix indexing
 sw
