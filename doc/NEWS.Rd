@@ -233,6 +233,10 @@
       \item \code{update.default()} now calls the generic \code{update()}
       on the formula to work correctly for models with extended formulas;
       as reported and suggested by Neal Fultz in \PR{17865}.
+
+      \item Horizontal position of leaves in a dendrogram is now correct
+      also with \code{center = FALSE}; \PR{14938}, patch from Sebastian
+      Meyer.
     }
   }
 }

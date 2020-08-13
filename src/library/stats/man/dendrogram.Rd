@@ -1,6 +1,6 @@
 % File src/library/stats/man/dendrogram.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Copyright 2002-2015 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -247,8 +247,8 @@ plot(dend1, nodePar = list(pch = 2:1, cex = .4*2:1, col = 2:3),
 stopifnot(identical(as.hclust(dend1)[1:4], hc[1:4]))
 
 dend2 <- cut(dend1, h = 70)
+## leaves are wrong horizontally in R 4.0 and earlier:
 plot(dend2$upper)
-## leaves are wrong horizontally:
 plot(dend2$upper, nodePar = list(pch = c(1,7), col = 2:1))
 ##  dend2$lower is *NOT* a dendrogram, but a list of .. :
 plot(dend2$lower[[3]], nodePar = list(col = 4), horiz = TRUE, type = "tr")

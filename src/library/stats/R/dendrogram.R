@@ -637,7 +637,7 @@ plotNodeLimit <- function(x1, x2, subtree, center)
 		   x2)
     mid <- attr(subtree, "midpoint")
     center <- center || (inner && !is.numeric(mid))
-    x <- if(center) mean(c(x1,x2)) else x1 + (if(inner) mid else 0)
+    x <- if(center) mean(c(x1,x2)) else x1 + .midDend(subtree)
     list(x = x, limit = limit)
 }
 
