@@ -1,6 +1,6 @@
 % File src/library/base/man/cat.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cat}
@@ -32,7 +32,9 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
     created explicitly by \samp{"\\n"} are printed.  Otherwise, the
     output is broken into lines with print width equal to the option
     \code{width} if \code{fill} is \code{TRUE}, or the value of
-    \code{fill} if this is numeric.  Non-positive \code{fill} values are
+    \code{fill} if this is numeric.  Linefeeds are only inserted
+    \emph{between} elements, strings wider than \code{fill} are not
+    wrapped.  Non-positive \code{fill} values are
     ignored, with a warning.}
   \item{labels}{character vector of labels for the lines printed.
     Ignored if \code{fill} is \code{FALSE}.}
