@@ -4127,6 +4127,68 @@ fit0 <- glm.fit(x = rep(1, length(y)), y = y, offset = log(x),
                 family = gaussian("log"), start = 0)
 stopifnot(all.equal(fit$null.deviance, fit0$deviance))
 
+## UTF-8 truncation test, fails on R < 4.0
+if (l10n_info()$"UTF-8") {
+    # Use .Internal(seterrmessage(old.err)) to trigger truncation via
+    # Rsnprintf (mbcsTruncateToValid).
+    trunc_string <- function(x) {
+        old.err <- geterrmessage()
+        on.exit(.Internal(seterrmessage(old.err)))
+        unname(
+            vapply(
+                x,
+                function(y) {
+                    .Internal(seterrmessage(y))
+                    geterrmessage()
+                },
+                ""
+            )
+        )
+    }
+    # limits to detect the internal buffer size for truncation (now 8192)
+    buff.min <- 8
+    buff.max <- 7e4  # > buff.min
+    buff.size <- nchar(
+        trunc_string(paste0(rep(0:9, length.out = buff.max), collapse="")),
+        type='bytes'
+    )
+    stopifnot(buff.size >= buff.min + 1)
+    if(buff.size == buff.max)
+        # possibly, the buffer is no longer fixed size?
+        warning('BUFSIZE too large for UTF-8 truncation test?')
+    else {
+        string.base <- paste0(
+            rep(0:9, length.out = buff.size),
+            collapse=""
+        )
+        # Append UTF-8 sequences at the end of strings that are just
+        # a bit shorter than the buffer, each one byte longer than the
+        # previous.
+        string.starts <- substr(
+            rep(string.base, 6), 1,
+            nchar(string.base) - seq(buff.min, 3, -1)
+        )
+        # For each of the increasing length string, append 2, 3, and 4 byte
+        # (valid) UTF-8 characters.
+        string.ends <- rep(
+            c(
+                '\u00A2',            # <C2><A2>           (cent symbol)
+                '\u20AC',            # <E2><82><AC>       (euro symbol)
+                '\U00010348',        # <F0><90><8D><88>   (circle with dot)
+                NULL
+            ),
+            each=length(string.starts)
+        )
+        strings <- paste0(
+            string.starts,
+            '\U0001F600',  # 4 byte grinning face, extra padding char
+            string.ends
+        )
+        output <- trunc_string(strings)
+        stopifnot(validUTF8(strings)) # sanity check
+        stopifnot(validUTF8(output))
+    }
+}
 
 
 ## keep at end
