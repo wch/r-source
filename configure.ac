@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2019 R Core Team
+### Copyright (C) 1998-2020 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -79,7 +79,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 ## exclude some unsupported OSes
 case "${host_os}" in
    ## Darwin 1.3.1 was macOS 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
-   ## with 18 being 10.14.
+   ## with 19 being 10.15 (Catalina) and 20 11.0 (Big Sur)
    ## We no longer support < 10.6 (Snow Leopard, Darwin 10)
    ## https://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
@@ -1065,7 +1065,7 @@ case "${host_os}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
    hpux*)
-dnl leave this in as not easily overridden by userx
+dnl leave this in as not easily overridden by users
      AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
 dnl     case "${CC}" in
 dnl       cc|c89)
