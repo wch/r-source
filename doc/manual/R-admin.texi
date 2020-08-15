@@ -5103,10 +5103,11 @@ versions.
 If you plan to use the @code{tcltk} package for @R{}, you need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
-Unix-alikes), which is installed as part of the @acronym{CRAN} binary
-for @R{} and available as separate @code{tcl} and @code{tk} components
-from @uref{https://mac.R-project.org/libs-4/}.  This may need
-@command{configure} options
+Unix-alikes), which is installed under @file{/usr/local/lib} as part of
+the @acronym{CRAN} binary for @R{}.
+@c and available as separate @code{tcl} and @code{tk} components
+@c from @uref{https://mac.R-project.org/libs-4/}.
+This may need @command{configure} options
 @example
 -with-tcltk=/usr/local/lib
 @end example
@@ -5121,13 +5122,14 @@ There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native macOS style: this will not work with @Rapp{} because of
 conflicts over the macOS menu, but for those only using command-line
 @R{} this provides a much more intuitive interface to Tk for experienced
-Mac users.  Most versions of macOS come with Aqua Tcl/Tk libraries, but
-these are often not at all recent versions of Tcl/Tk (8.5.9 in High
-Sierra, which is not even the latest patched version in that series).
-It is better to install Tcl/Tk 8.6.x from the sources or a binary
-distribution from
-@uref{https://www.activestate.com/@/activetcl/@/downloads}.  Configure
-@R{} with
+Mac users.  Earlier versions of macOS came with an Aqua Tcl/Tk
+distribution but these were often not at all recent versions of Tcl/Tk
+(8.5.9 in High Sierra, which is not even the latest patched version in
+that series). (Catalina included a partial distribution which lacks the
+files needing to compile against Tcl/Tk.) It is better to install Tcl/Tk
+8.6.x from the sources or a binary distribution from
+@uref{https://www.activestate.com/@/activetcl/@/downloads}.  For the
+latter, onfigure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
