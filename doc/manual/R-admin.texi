@@ -5113,7 +5113,7 @@ the @acronym{CRAN} binary for @R{}.
 @c from @uref{https://mac.R-project.org/libs-4/}.
 This may need @command{configure} options
 @example
--with-tcltk=/usr/local/lib
+--with-tcltk=/usr/local/lib
 @end example
 or
 @example
@@ -5130,10 +5130,10 @@ Mac users.  Earlier versions of macOS came with an Aqua Tcl/Tk
 distribution but these were often not at all recent versions of Tcl/Tk
 (8.5.9 in High Sierra, which is not even the latest patched version in
 that series). (Catalina included a partial distribution which lacks the
-files needing to compile against Tcl/Tk.) It is better to install Tcl/Tk
+files needed to compile against Tcl/Tk.) It is better to install Tcl/Tk
 8.6.x from the sources or a binary distribution from
 @uref{https://www.activestate.com/@/activetcl/@/downloads}.  For the
-latter, onfigure @R{} with
+latter, configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
