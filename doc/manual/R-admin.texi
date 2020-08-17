@@ -4860,6 +4860,7 @@ sudo tar -xvzf pcre2-10.34-darwin.17-x86_64.tar.gz -C /
 curl -OL https://mac.r-project.org/libs-4/xz-5.2.4-darwin.17-x86_64.tar.gz
 sudo tar -xvzf xz-5.2.4-darwin.17-x86_64.tar.gz -C /
 @end example
+(Messages like @samp{usr/local/: Can't restore time} should be ignored.)
 @end itemize
 
 and desirable
@@ -5019,7 +5020,9 @@ sudo installer -pkg \
 (This will need to be re-run if the OS decides to update the Command
 Line Tools.)
 
-When tested@footnote{with @command{gcc} 10.2 on High Sierra.} it was not
+It is usually possible to build @R{} with GCC (built from the sources,
+from a @command{gfortran} distribution, from Homebrew, @dots{}).  When
+last tested@footnote{with @command{gcc} 10.2 on High Sierra.} it was not
 possible to use @command{gcc} to build the Quartz device, so
 @command{configure --without-aqua} may be required.
 
@@ -5050,8 +5053,9 @@ This also includes a full LAPACK which can be used @emph{via}
 often seriously old.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
-Threading in Accelerate is controlled by `Grand Central Dispatch' and is
-said not to need user control.
+Threading in Accelerate Is controlled by `Grand Central Dispatch' and is
+said not to need user control.  Test @file{nls.R} in package @pkg{stats}
+usually fails with the Accelerate BLAS.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -5145,9 +5149,9 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @node Java (macOS), Frameworks, Tcl/Tk headers and libraries, macOS
 @subsection Java
 
-The situation with Java support on macOS is messy,@footnote{For more
-details see @uref{https://www.macstrategy.com/@/article.php?3}.} and
-distribution of Java for all platforms changed in 2018.
+@c The situation with Java support on macOS is messy,@footnote{For more
+@c details see @uref{https://www.macstrategy.com/@/article.php?3}.} and
+@c distribution of Java for all platforms changed in 2018.
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade may remove one if already installed: it is intended to be
