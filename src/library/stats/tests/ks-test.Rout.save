@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-08-09 r78993) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-08-15 r79028) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.420   0.046   0.446 
+  0.416   0.050   0.448 
