@@ -6030,7 +6030,7 @@ add_dummies <- function(dir, Log)
     R_check_depr_def <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPRECATED_DEFUNCT_", "FALSE"))
     R_check_bogus_return <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_BOGUS_RETURN_", "TRUE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_BOGUS_RETURN_", "FALSE"))
     R_check_ascii_code <-
         config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
     R_check_ascii_data <-
@@ -6162,6 +6162,7 @@ add_dummies <- function(dir, Log)
         R_check_things_in_check_dir <- TRUE
         R_check_things_in_temp_dir <- TRUE
         R_check_vignette_titles <- TRUE
+        R_check_bogus_return <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
