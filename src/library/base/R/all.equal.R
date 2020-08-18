@@ -410,8 +410,22 @@ attr.all.equal <- function(target, current, ...,
 ## force absolute comparisons
 all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale)
 {
-    target <- as.POSIXct(target); current <- as.POSIXct(current)
-    check_tzones(target, current)
+    if(!inherits(target, "POSIXt"))
+        return("'target' is not a POSIXt")
+    if(!inherits(current, "POSIXt"))
+        return("'current' is not a POSIXt")
+    target <- as.POSIXct(target)
+    current <- as.POSIXct(current)
+    msg <- NULL
+    ## See check_tzones():
+    tz <- function(dt) {
+        if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
+    }
+    if(!identical(tz(target), tz(current)))
+        msg <- c("'tzone' attributes are inconsistent")
     attr(target, "tzone") <- attr(current, "tzone") <- NULL
-    all.equal.numeric(target, current, ..., tolerance = tolerance, scale = 1)
+    val <- all.equal.numeric(target, current, ...,
+                             tolerance = tolerance, scale = 1)
+    if(!isTRUE(val)) msg <- c(msg, val)
+    if(is.null(msg)) TRUE else msg
 }
