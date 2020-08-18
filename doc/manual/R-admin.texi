@@ -4796,12 +4796,13 @@ SAFE_FFLAGS=-axsse2
 
 (`macOS' was known as `OS X' from 2012--2016.)
 
-The instructions here are for 64-bit (@cputype{x86_64}) builds on 10.13
-(High Sierra) or later@footnote{macOS 11 remains to be seen even on
-Intel CPUs: no Fortran compiler is available for `Apple Silicon' at the
-time of writing.}.  @R{} can in principle be built for 10.6 and later,
-although this is little tested and it may be necessary to install later
-versions of software such as @code{libcurl}.
+The instructions here are for 64-bit (@cputype{x86_64}) builds on
+10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{The updoming
+macOS 11 `Big Sur' remains to be confirmed even on Intel CPUs: no
+Fortran compiler is available for `Apple Silicon' at the time of
+writing.}.  @R{} can in principle be built for 10.6--10.12, although
+this is little tested and it may be necessary to install later versions
+of software such as @code{libcurl}.
 
 @menu
 * Prerequisites::
@@ -4833,23 +4834,10 @@ The Command Line Tools provide C and C++ compilers derived from LLVM's
 @command{clang}.
 
 @item
-A Fortran compiler.  Installers@footnote{Some of these are
-unsigned packages: to install them you may need to right-click and
-select @code{Open with -> Installer}.} are available at
-
-@itemize
-
-@item
-For Sierra and High Sierra@*
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.3/@/gfortran-6.3-Sierra.dmg}
-
-@item
-For Mojave and later (but seems to work well enough on High Sierra)@*
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}
-@end itemize
-These install into @file{/usr/local/gfortran}: its @file{bin} directory
-does not need to be on the path as a full path can be used for
-@code{FC}: see below.
+A Fortran compiler. An installer for @command{gfortran} is available at
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}@footnote{This
+is said to be for Mojave and later but works well enough on High
+Sierra.}  This installs into @file{/usr/local/gfortran}.
 
 @item
 Binary components @code{pcre2} and @code{xz} (for
@@ -4866,7 +4854,10 @@ sudo tar -xvzf xz-5.2.4-darwin.17-x86_64.tar.gz -C /
 and desirable
 @itemize
 @item
-GNU @code{readline} from @uref{https://mac.R-project.org/libs-4/}, or
+GNU @code{readline} from
+@uref{https://mac.R-project.org/libs-4/},@footnote{For licence reasons
+this is version 5.2 of @code{readline}: for those who want a more recent
+version it is not difficult to compile it from its sources.} or
 configure with @option{--without-readline}.
 
 @item
@@ -4921,8 +4912,8 @@ included in the binary distribution of @R{} and there is a
 For C/C++ compilers supporting OpenMP, see the subsection below.
 
 To build @R{} itself from the sources with the compilers in the Command
-Line Tools (or Xcode) and one of the @command{gfortran} installers, use
-a file @file{config.site} containing
+Line Tools (or Xcode) and @command{gfortran} from the installer
+mentioned above, use a file @file{config.site} containing
 @example
 CC=clang
 OBJC=$CC
@@ -4935,8 +4926,12 @@ and configure by something like
 ./configure -C \
 --enable-R-shlib --enable-memory-profiling \
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
+--with-tcl-config=/usr/local/lib/tclConfig.sh \
+--with-tk-config=/usr/local/lib/tkConfig.sh \
 PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
+@noindent
+(See below for Tcl/Tk, including other options.)
 
 To install packages using compiled code one needs the Command Line Tools
 and appropriate compilers, e.g.@: Fortran and the C/C++ compilers from
@@ -5294,7 +5289,7 @@ High Sierra or later.  With the recommended compilers we can use
 @example
 CC="clang -mmacosx-version-min=10.13"
 CXX="clang++ -mmacosx-version-min=10.13"
-FC="gfortran -mmacosx-version-min=10.13"
+FC="/usr/local/gfortran/bin/gfortran -mmacosx-version-min=10.13"
 @end example
 
 @item
