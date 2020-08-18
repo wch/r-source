@@ -237,6 +237,10 @@
       \item Horizontal position of leaves in a dendrogram is now correct
       also with \code{center = FALSE}; \PR{14938}, patch from Sebastian
       Meyer.
+
+      \item A very old bug could cause a segfault in  \code{model.matrix()} 
+      when terms involved logical variables. Related to \PR{17879}, but not
+      a complete fix for that issue. 
     }
   }
 }
