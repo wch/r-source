@@ -469,9 +469,21 @@ function(db, remote = TRUE, verbose = FALSE)
                         NA)
             h <- h[[which(!i)[1L] - 1L]]
             pos <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
-            if(length(pos))
-                newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1",
-                              h[pos[1L]])
+            if(length(pos)) {
+                loc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1",
+                           h[pos[1L]])
+                ## Ouch.  According to RFC 7231, the location is a URI
+                ## reference, and may be relative in which case it needs
+                ## resolving against the effect request URI.
+                ## <https://tools.ietf.org/html/rfc7231#section-7.1.2>.
+                ## Not quite straightforward, hence do not report such
+                ## 301s. 
+                ## (Alternatively, could try reporting the 301 but no
+                ## new location.)
+                if(nzchar(parse_URI_reference(loc)[1L, "scheme"]))
+                    newLoc <- loc
+                ## (Note also that fragments would need extra care.)
+            }
         }
         ##
         if((s != "200") && use_curl) {
