@@ -367,7 +367,7 @@ add_dummies <- function(dir, Log)
     ## checkReplaceFuns
     ## checkFF
     ## .check_code_usage_in_package (with full set)
-    ## .check_T_and_F (with full set)
+    ## .check_bogus_return (with full set)
     ## .check_dotInternal (with full set)
     ## undoc, codoc, codocData, codocClasses
     ## checkDocFiles, checkDocStyle
@@ -1967,7 +1967,7 @@ add_dummies <- function(dir, Log)
         out1 <- if (length(out1) && length(out1a)) c(out1, "", out1a)
                 else c(out1, out1a)
 
-        out2 <- out3 <- out4 <- out5 <- out6 <- out7 <- out8 <- NULL
+        out2 <- out3 <- out4 <- out5 <- out6 <- out7 <- out8 <- out9 <- NULL
 
         if (!is_base_pkg && R_check_unsafe_calls) {
             Rcmd <- paste(opWarn_string, "\n",
@@ -2048,12 +2048,23 @@ add_dummies <- function(dir, Log)
                               sprintf("tools:::.check_depdef(dir = \"%s\", WINDOWS = %s)\n", pkgdir, win))
             out8 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
+
+        ## Potentially erroneous use of 'return' without '()'
+        if (!is_base_pkg && R_check_use_codetools && R_check_bogus_return) {
+            Rcmd <- paste(opWarn_string, "\n",
+                          if (do_install)
+                              sprintf("tools:::.check_bogus_return(package = \"%s\")\n", pkgname)
+                          else
+                              sprintf("tools:::.check_bogus_return(dir = \"%s\")\n", pkgdir))
+            out9 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
+        }
+
         t2 <- proc.time()
         print_time(t1, t2, Log)
 
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
-            length(out7) || length(out8)) {
+            length(out7) || length(out8) || length(out9)) {
             ini <- character()
             if(length(out4) ||
                (length(out8) &&
@@ -2112,6 +2123,10 @@ add_dummies <- function(dir, Log)
                 ini <- ""
                 wrapLog(gettextf("See section %s in '%s'.",
                                  sQuote("Good practice"), "?data"))
+            }
+            if (length(out9)) {
+                printLog0(Log, paste(c(ini, out9, ""), collapse = "\n"))
+                ini <- ""
             }
         } else resultLog(Log, "OK")
     }
@@ -6014,6 +6029,8 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "TRUE"))
     R_check_depr_def <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPRECATED_DEFUNCT_", "FALSE"))
+    R_check_bogus_return <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_BOGUS_RETURN_", "TRUE"))
     R_check_ascii_code <-
         config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
     R_check_ascii_data <-
@@ -6158,7 +6175,7 @@ add_dummies <- function(dir, Log)
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
                 R_check_executables <- R_check_permissions <-
-                    R_check_dot_internal <- R_check_ascii_code <-
+                    R_check_dot_internal <- R_check_bogus_return <- R_check_ascii_code <-
                         R_check_ascii_data <- R_check_compact_data <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_doc_sizes2 <-

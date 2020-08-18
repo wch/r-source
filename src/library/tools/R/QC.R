@@ -33,7 +33,7 @@
 ## .check_package_code_attach
 ## .check_package_code_data_into_globalenv
 ## .check_code_usage_in_package
-## .check_T_and_F
+## .check_bogus_return
 ## .check_dotInternal
 ## .check_package_parseRd
 ## .check_Rd_xrefs
@@ -71,7 +71,7 @@ langElts <- c("(", "{", ":", "~",
 ## typically function names of default methods for .Primitive s:
 conceptual_base_code <- c("c.default")
 
-##' a "default" print method used "below" (in several *.R):
+##' a "default" print method (see NAMESPACE):
 .print.via.format <- function(x, ...) {
     writeLines(format(x, ...))
     invisible(x)
@@ -6483,6 +6483,75 @@ function(x, ...)
             paste0("  ", x$bad_examples))
       })
 }
+
+### * .check_bogus_return
+
+## Find bogus 'return' statements probably intended as a return() call.
+## This uses codetools::findGlobals() to find functions which rely on a
+## global variable "return".
+## The code is derived from .check_T_and_F above.
+
+.check_bogus_return <-
+function(package, dir, lib.loc = NULL)
+{
+    bad_closures <- character()
+
+    find_bad_closures <- function(env) {
+        x <- lapply(as.list(env, all.names = TRUE, sorted = TRUE),
+                    function(v) {
+                        if (typeof(v) == "closure")
+                            codetools::findGlobals(v, merge = FALSE)$variables
+                    })
+        names(x)[vapply(x, function(s) any(s %in% "return"), NA)]
+    }
+
+    if(!missing(package)) {
+        if(length(package) != 1L)
+            stop("argument 'package' must be of length 1")
+        dir <- find.package(package, lib.loc)
+        if(package %notin% .get_standard_package_names()$base) {
+            .load_package_quietly(package, lib.loc)
+            code_env <- asNamespace(package)
+            bad_closures <- find_bad_closures(code_env)
+        }
+    }
+    else {
+        ## The dir case.
+        if(missing(dir))
+            stop("you must specify 'package' or 'dir'")
+        dir <- file_path_as_absolute(dir)
+        code_dir <- file.path(dir, "R")
+        if(dir.exists(code_dir)) {
+            code_env <- new.env(hash = TRUE)
+            dfile <- file.path(dir, "DESCRIPTION")
+            meta <- if(file_test("-f", dfile))
+                .read_description(dfile)
+            else
+                character()
+            .source_assignments_in_code_dir(code_dir, code_env, meta)
+            bad_closures <- find_bad_closures(code_env)
+        }
+    }
+
+    out <- list(bad_closures = bad_closures)
+    class(out) <- "check_bogus_return"
+    out
+}
+
+format.check_bogus_return <-
+function(x, ...)
+{
+    c(character(),
+      if(length(x$bad_closures)) {
+          msg <- ngettext(length(x$bad_closures),
+                          "Possibly missing '()' after 'return' in the following function:",
+                          "Possibly missing '()' after 'return' in the following functions:"
+                          )
+          c(strwrap(msg),
+            .pretty_format(x$bad_closures))
+      })
+}
+
 
 ### * .check_dotIntenal
 
