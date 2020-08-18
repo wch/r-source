@@ -891,8 +891,9 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		wcscpy (buf, pp);
 		R_wfixslash(buf);
 		/* remove trailing file separator(s) */
-		while ( *(p = buf + wcslen(buf) - 1) == L'/'  && p > buf
-			&& (p > buf+2 || *(p-1) != L':')) *p = L'\0';
+		p = buf + wcslen(buf) - 1;
+		while (p > buf && *p == L'/'
+		       && (p > buf+2 || *(p-1) != L':')) *p-- = L'\0';
 		p = wcsrchr(buf, L'/');
 		if(p == NULL) wcscpy(buf, L".");
 		else {
