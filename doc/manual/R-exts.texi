@@ -1618,10 +1618,10 @@ etc.).
 @vindex R_PACKAGE_NAME
 A @command{configure} script is run in an environment which has all the
 environment variables set for an @R{} session (see
-@file{@var{R_HOME}/etc/Renviron} plus @code{R_PACKAGE_NAME} (the name of
+@file{@var{R_HOME}/etc/Renviron}) plus @code{R_PACKAGE_NAME} (the name of
 the package), @code{R_PACKAGE_DIR} (the path of the target installation
 directory of the package, a temporary location for staged installs) and
-@code{R_ARCH} (the arch-dependent part of the path, often empty)
+@code{R_ARCH} (the arch-dependent part of the path, often empty).
 
 Under a Unix-alike only, an executable (Bourne shell) script
 @file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
@@ -1728,7 +1728,10 @@ AC_LANG(C++)
 The latter is important, as for example C headers may not be available
 to C++ programs or may not be written to avoid C++ name-mangling.  Note
 that an @R{} installation is not required to have a C++ compiler so
-@samp{CXX} may be empty.
+@samp{CXX} may be empty.  If the package specifies a non-default C++
+standard, use the @command{config} variable names (such as @code{CXX14})
+appropriate to the standard, but still set @code{CXX} and
+@code{CXXFLAGS}.
 
 @findex R CMD config
 You can use @code{R CMD config} to get the value of the basic
