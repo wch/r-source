@@ -5113,7 +5113,7 @@ use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
 Unix-alikes), which is installed under @file{/usr/local/lib} as part of
 the @acronym{CRAN} binary for @R{}.@footnote{Just that component can be
 selected from the installer for @R{}: at the `Installation Type' screen
-select `Customise' and then just the `Tcl/TK 8.6.6' component.}
+select `Customise' and then just the `Tcl/Tk 8.6.6' component.}
 @c and available as separate @code{tcl} and @code{tk} components
 @c from @uref{https://mac.R-project.org/libs-4/}.
 This may need @command{configure} options
