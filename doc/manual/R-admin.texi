@@ -1602,6 +1602,12 @@ library directory (under @file{~/Library/R},
 e.g.@: @file{~/Library/R/4.0/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
+@c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
+Those using the @command{zsh} shell (the default for new user accounts
+as from Catalina) might find the command @command{R} being masked by the
+@command{zsh} builtin @command{r} (which recalls commands).  One can use
+a full path to @R{} in an alias, or add @code{disable r} to @file{~/.zshrc}.
+
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
 It has been reported that running @Rapp{} may fail if no preferences are
 stored, so if it fails when launched for the very first time, try it
