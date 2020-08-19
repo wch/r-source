@@ -4797,12 +4797,15 @@ SAFE_FFLAGS=-axsse2
 (`macOS' was known as `OS X' from 2012--2016.)
 
 The instructions here are for 64-bit (@cputype{x86_64}) builds on
-10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{The updoming
+10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{The upcoming
 macOS 11 `Big Sur' remains to be confirmed even on Intel CPUs: no
-Fortran compiler is available for `Apple Silicon' at the time of
+Fortran compiler was available for `Apple Silicon' at the time of
 writing.}.  @R{} can in principle be built for 10.6--10.12, although
 this is little tested and it may be necessary to install later versions
-of software such as @code{libcurl}.
+of software such as @code{libcurl} and an older version@footnote{For
+example, from
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
+@command{gfortran}.
 
 @menu
 * Prerequisites::
@@ -4857,7 +4860,7 @@ and desirable
 GNU @code{readline} from
 @uref{https://mac.R-project.org/libs-4/},@footnote{For licence reasons
 this is version 5.2 of @code{readline}: for those who want a more recent
-version it is not difficult to compile it from its sources.} or
+version it is straightforward to compile it from its sources.} or
 configure with @option{--without-readline}.
 
 @item
@@ -4904,10 +4907,11 @@ A TeX installation. @xref{Other libraries}.
 
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
-@command{perl} (currently part of macOS but it has been announced that
-it will not be from macOS 11).  A version of @command{texi2any} has been
-included in the binary distribution of @R{} and there is a
-@code{texinfo} component at @uref{https://mac.R-project.org/libs-4/}.
+@command{perl} (currently an old but sufficient version is part of macOS
+but it has been announced that it may not be as from macOS 11 `Big
+Sur').  A version of @command{texi2any} has been included in the binary
+distribution of @R{} and there is a @code{texinfo} component at
+@uref{https://mac.R-project.org/libs-4/}.
 @end itemize
 For C/C++ compilers supporting OpenMP, see the subsection below.
 
@@ -4959,6 +4963,10 @@ and @samp{Open} if you get a further warning message.
 
 This applies also to some `nightly builds' from
 @uref{https://mac.R-project.org/}.
+
+If you run into problems with `quarantine' for tarballs downloaded in a
+browser, consider using @command{curl -OL} to download (as illustrated
+above) or @command{xattr -c} to remove extended attributes.
 
 @node Other C/C++ compilers, Other libraries, Prerequisites, macOS
 @subsection Other C/C++ compilers
@@ -5103,7 +5111,9 @@ If you plan to use the @code{tcltk} package for @R{}, you need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
 Unix-alikes), which is installed under @file{/usr/local/lib} as part of
-the @acronym{CRAN} binary for @R{}.
+the @acronym{CRAN} binary for @R{}.@footnote{Just that component can be
+selected from the installer for @R{}: at the `Installation Type' screen
+select `Customise' and then just the `Tcl/TK 8.6.6' component.}
 @c and available as separate @code{tcl} and @code{tk} components
 @c from @uref{https://mac.R-project.org/libs-4/}.
 This may need @command{configure} options
@@ -5156,7 +5166,7 @@ installed@footnote{In the unlikely event that the version reported does
 not start with @code{1.8.0}, @code{11} or higher you need to update your
 Java.} this should prompt you to install it.  You can also install
 directly a recent Java from Oracle (currently from
-@uref{https://www.oracle.com/java/technologies/javase-downloads.html}).
+@uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html}).
 Builds of OpenJDK may also be available, e.g.@: from
 @uref{https://adoptopenjdk.net} or @uref{http://jdk.java.net/}.  We
 recommend you install a version with long-term support, e.g.@: 8 or 11
