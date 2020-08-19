@@ -495,6 +495,12 @@ model.frame.default <-
 	else if(!is.null(naa <- getOption("na.action")))
 	    na.action <- naa
     }
+
+    ## The following logic is quite ancient and should possibly be revised
+    ## In particular it lets data=1 slip through and subsequent eval()
+    ## would interpret it as a sys.frame() index (PR#17879). 
+    ## For now, insert explicit check below
+
     if(missing(data))
 	data <- environment(formula)
     else if (!is.data.frame(data) && !is.environment(data)
@@ -502,6 +508,11 @@ model.frame.default <-
         data <- as.data.frame(data)
     else if (is.array(data))
         stop("'data' must be a data.frame, not a matrix or an array")
+
+    ## Explicitly check "data"
+    if (!is.data.frame(data) && !is.environment(data) && !is.list(data))
+        stop("'data' must be a data.frame, environment, or list")
+
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     env <- environment(formula)
@@ -758,6 +769,11 @@ get_all_vars <- function(formula, data = NULL, ...)
         data <- as.data.frame(data)
     else if (is.array(data))
         stop("'data' must be a data.frame, not a matrix or an array")
+
+    ## Explicitly check "data" -- see comment in model.frame.default
+    if (!is.data.frame(data) && !is.environment(data) && !is.list(data))
+        stop("'data' must be a data.frame, environment, or list")
+
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     env <- environment(formula)

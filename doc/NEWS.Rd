@@ -241,6 +241,9 @@
       \item A very old bug could cause a segfault in  \code{model.matrix()} 
       when terms involved logical variables. Related to \PR{17879}, but not
       a complete fix for that issue. 
+
+      \item \code{model.frame.default} allowed data=1, leading to involuntary
+      variable capture (rest of \PR{17879})
     }
   }
 }
