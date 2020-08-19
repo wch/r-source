@@ -281,7 +281,7 @@ void InitTypeTables(void) {
 
 SEXP type2str_nowarn(SEXPTYPE t) /* returns a CHARSXP */
 {
-    // if (t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
+    // if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
 	SEXP res = Type2Table[t].rcharName;
 	if (res != NULL) return res;
     // }
@@ -313,7 +313,7 @@ SEXP type2rstr(SEXPTYPE t) /* returns a STRSXP */
 
 const char *type2char(SEXPTYPE t) /* returns a char* */
 {
-    // if (t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
+    // if (t >=0 && t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
 	const char * res = Type2Table[t].cstrName;
 	if (res != NULL) return res;
     // }
