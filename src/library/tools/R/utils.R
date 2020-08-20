@@ -2130,7 +2130,7 @@ function(file, envir, enc = NA)
     exprs <- exprs[lengths(exprs) > 0L]
     for(e in exprs) {
 	if(is.call(e) && as.character(e[[1L]]) %in% assignmentSymbols)
-            eval(e, envir)
+            tryCatch(eval(e, envir), error = identity)
     }
     invisible()
 }
