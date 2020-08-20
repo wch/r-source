@@ -147,7 +147,7 @@
 	\item There is support for cross-compiling the C and Fortran
 	code in \R and standard packages on suitable (Linux) platforms.
 	This is mainly intended to allow developers to test later
-	versions of compilers -- for example using GCC 9.2 has
+	versions of compilers -- for example using GCC 9.2 or 10.x has
 	detected issues that GCC 8.3 in Rtools40 does not.
 
 	\item There is experimental support for cross-building \R
@@ -234,16 +234,16 @@
       on the formula to work correctly for models with extended formulas;
       as reported and suggested by Neal Fultz in \PR{17865}.
 
-      \item Horizontal position of leaves in a dendrogram is now correct
-      also with \code{center = FALSE}; \PR{14938}, patch from Sebastian
-      Meyer.
+      \item The horizontal position of leaves in a dendrogram is now
+      correct also with \code{center = FALSE}; \PR{14938}, patch from
+      Sebastian Meyer.
 
-      \item A very old bug could cause a segfault in  \code{model.matrix()} 
-      when terms involved logical variables. Related to \PR{17879}, but not
+      \item A very old bug could cause a segfault in \code{model.matrix()} 
+      when terms involved logical variables.  Related to \PR{17879}, but not
       a complete fix for that issue. 
 
-      \item \code{model.frame.default} allowed data=1, leading to involuntary
-      variable capture (rest of \PR{17879})
+      \item \code{model.frame.default()} allowed \code{data = 1}, leading to
+      involuntary variable capture (rest of \PR{17879}).
     }
   }
 }
