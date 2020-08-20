@@ -247,6 +247,9 @@
 
       \item \code{R_allocLD()} has been fixed to return memory aligned for
       long double type (PR#16534).
+
+      \item Fix incorrect calculation in \code{logLik.nls} \PR{16100}, patch
+      from Sebastian Meyer.
     }
   }
 }

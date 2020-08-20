@@ -75,6 +75,7 @@ summary(fit, cor = TRUE)
 stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
                     check.attributes = FALSE))
 stopifnot(df.residual(fit) == df.residual(fit0))
+stopifnot(all.equal(logLik(fit), logLik(fit0), tolerance = 1e-8))
 cf1 <- coef(summary(fit))[, 1:2]
 ## IGNORE_RDIFF_BEGIN
 fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
@@ -88,6 +89,7 @@ stopifnot(all.equal(cf1, cf0, tolerance = 1e-6),
           all.equal(cf1, cf0, tolerance = 1e-6))
 stopifnot(all.equal(residuals(fit2), residuals(fit0), tolerance = 1e5,
                     check.attributes = FALSE))
+stopifnot(all.equal(logLik(fit2), logLik(fit0), tolerance = 1e-8))
 
 
 DNase1 <- subset(DNase, Run == 1)

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2020-08-15 r79028) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-08-20 r79055) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin18.7.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -157,6 +157,7 @@ b -0.89
 > stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
 +                     check.attributes = FALSE))
 > stopifnot(df.residual(fit) == df.residual(fit0))
+> stopifnot(all.equal(logLik(fit), logLik(fit0), tolerance = 1e-8))
 > cf1 <- coef(summary(fit))[, 1:2]
 > ## IGNORE_RDIFF_BEGIN
 > fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
@@ -192,6 +193,7 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 +           all.equal(cf1, cf0, tolerance = 1e-6))
 > stopifnot(all.equal(residuals(fit2), residuals(fit0), tolerance = 1e5,
 +                     check.attributes = FALSE))
+> stopifnot(all.equal(logLik(fit2), logLik(fit0), tolerance = 1e-8))
 > 
 > 
 > DNase1 <- subset(DNase, Run == 1)
@@ -744,4 +746,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.547   0.082   1.615 
+  0.958   0.078   1.027 
