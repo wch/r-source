@@ -360,7 +360,7 @@ isS3stdGeneric <- function(f) {
     ## protect against technically valid but bizarre
     ## function(x) { { { UseMethod("gen")}}} by
     ## repeatedly consuming the { until we get to the first non { expr
-    while(as.character(bdexpr[[1L]]) == "{")
+    while(is.call(bdexpr) && (as.character(bdexpr[[1L]]) == "{"))
         bdexpr <- bdexpr[[2L]]
 
     ## We only check if it is a "standard" s3 generic. i.e. the first non-{
