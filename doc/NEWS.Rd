@@ -244,6 +244,9 @@
 
       \item \code{model.frame.default()} allowed \code{data = 1}, leading to
       involuntary variable capture (rest of \PR{17879}).
+
+      \item \code{R_allocLD()} has been fixed to return memory aligned for
+      long double type (PR#16534).
     }
   }
 }

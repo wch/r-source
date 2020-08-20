@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2019  The R Core Team.
+ *  Copyright (C) 1998--2020  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2288,7 +2288,7 @@ long double *R_allocLD(size_t nelem)
 #endif
     if (ld_align > 8) {
 	uintptr_t tmp = (uintptr_t) R_alloc(nelem + 1, sizeof(long double));
-	tmp = (tmp + ld_align - 1) & ~ld_align;
+	tmp = (tmp + ld_align - 1) & ~((uintptr_t)ld_align - 1);
 	return (long double *) tmp;
     } else {
 	return (long double *) R_alloc(nelem, sizeof(long double));
