@@ -510,7 +510,8 @@ model.frame.default <-
         stop("'data' must be a data.frame, not a matrix or an array")
 
     ## Explicitly check "data"
-    if (!is.data.frame(data) && !is.environment(data) && !is.list(data))
+    if (!is.data.frame(data) && !is.environment(data) && !is.list(data)
+        && !is.null(data))
         stop("'data' must be a data.frame, environment, or list")
 
     if(!inherits(formula, "terms"))
@@ -771,7 +772,8 @@ get_all_vars <- function(formula, data = NULL, ...)
         stop("'data' must be a data.frame, not a matrix or an array")
 
     ## Explicitly check "data" -- see comment in model.frame.default
-    if (!is.data.frame(data) && !is.environment(data) && !is.list(data))
+    if (!is.data.frame(data) && !is.environment(data) && !is.list(data)
+        && !is.null(data))
         stop("'data' must be a data.frame, environment, or list")
 
     if(!inherits(formula, "terms"))
