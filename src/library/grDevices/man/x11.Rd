@@ -220,9 +220,10 @@ X11.options(\dots, reset = FALSE)
   normally allows some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,
-  usually in Type 1 or TrueType formats: see the \dQuote{R Installation
-  and Administration Manual} for advice on how to obtain and install
-  such fonts.  At present the best rendering (including using kerning)
+  usually in Type 1 or TrueType formats: see the
+  \sQuote{R Installation and Administration} manual for advice on how to
+  obtain and install such fonts.
+  At present the best rendering (including using kerning)
   will be achieved with TrueType fonts: see
   \url{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}
   for ways to set up your system to prefer them.  The default family
@@ -340,7 +341,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
 
 \section{Conventions}{
   This section describes the implementation of the conventions for
-  graphics devices set out in the \dQuote{R Internals Manual}.
+  graphics devices set out in the \sQuote{R Internals} manual.
 
   \itemize{
     \item The default device size is 7 inches square.

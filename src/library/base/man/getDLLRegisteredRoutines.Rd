@@ -79,7 +79,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   }
 }
 \references{
-  \sQuote{Writing R Extensions Manual} for symbol registration.
+  \sQuote{Writing R Extensions} manual for symbol registration.
 
   R News, Volume 1/3, September 2001.   "In search of C/C++ & Fortran Symbols"
 }

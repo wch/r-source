@@ -55,7 +55,7 @@
   \code{\var{foo}}.
 }
 \seealso{
-  The chapter \dQuote{Processing Rd format} in the \dQuote{Writing \R
-    Extensions} manual.
+  The chapter \sQuote{Processing Rd format} in the
+  \sQuote{Writing R Extensions} manual.
 }
 \keyword{utilities}

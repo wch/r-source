@@ -266,9 +266,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     }
     \item{On Unix-alikes,}{when the package contains C/C++/Fortran code
       that needs compilation, on macOS you need to have installed the
-  \sQuote{Command-line tools for Xcode} (see the \sQuote{R Installation
-    and Administration Manual}) and if needed by the package a Fortran
-  compiler, and have them in your path.
+      \sQuote{Command-line tools for Xcode} (see the
+      \sQuote{R Installation and Administration} manual) and if needed
+      by the package a Fortran compiler, and have them in your path.
     }
   }
 }

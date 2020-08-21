@@ -83,8 +83,9 @@
   package are in non-system directories.  In this case, one can use the
   configure variables \code{LIBS} and \code{CPPFLAGS} to specify these
   locations (and set these via \option{--configure-vars}), see section
-  \dQuote{Configuration variables} in \dQuote{R Installation and
-  Administration} for more information.  (If these are used more than
+  \sQuote{Configuration variables} in
+  \sQuote{R Installation and Administration} for more information.
+  (If these are used more than
   once on the command line they are concatenated.)  The configure
   mechanism can be bypassed using the option \option{--no-configure}.
 #endif
@@ -194,9 +195,10 @@
   \code{\link{update.packages}} for automatic update of packages using
   the Internet or a local repository.
 
-  The section on \dQuote{Add-on packages} in \dQuote{R Installation and
-    Administration} and the chapter on \dQuote{Creating R packages} in
-  \dQuote{Writing \R Extensions}
+  The section on \sQuote{Add-on packages} in
+  \sQuote{R Installation and Administration}
+  and the chapter on \sQuote{Creating R packages} in
+  \sQuote{Writing R Extensions}
 #ifdef windows
   (on the Help menu in \code{RGui}),
 #endif

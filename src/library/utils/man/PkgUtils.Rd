@@ -38,7 +38,7 @@
 
   The defaults for some of the options to \command{R CMD build} can be
   set by environment variables \env{_R_BUILD_RESAVE_DATA_} and
-  \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing \R Extensions}.
+  \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing R Extensions}.
   Many of the checks in \command{R CMD check} can be turned off or on by
   environment variables: see Chapter \sQuote{Tools} of the
   \sQuote{R Internals} manual. 
@@ -68,9 +68,10 @@
   that if set forward slashes are used.
 }
 \seealso{
-  The sections on \dQuote{Checking and building packages} and
-  \dQuote{Processing Rd format} in \dQuote{Writing \R Extensions}
-  (see on Unix-alikes the \file{doc/manual} subdirectory of the \R source tree,
-   on Windows, see the Manuals sub-menu of the Help menu on the console).
+  The sections on \sQuote{Checking and building packages} and
+  \sQuote{Processing Rd format} in \sQuote{Writing R Extensions}
+  (see on Unix-alikes the \file{doc/manual} subdirectory of the \R
+  source tree, on Windows, see the Manuals sub-menu of the Help menu on
+  the console).
 }
 \keyword{utilities}

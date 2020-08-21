@@ -183,7 +183,7 @@ line information for new files, and issue a warning when
 }
 \seealso{
   The chapter on \dQuote{Tidying and profiling R code} in
-  \dQuote{Writing \R Extensions} (see the \file{doc/manual} subdirectory
+  \sQuote{Writing R Extensions} (see the \file{doc/manual} subdirectory
   of the \R source tree).
 
   \code{\link{summaryRprof}} to analyse the output file.

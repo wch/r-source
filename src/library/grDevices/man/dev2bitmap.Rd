@@ -109,7 +109,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
 
 \section{Conventions}{
   This section describes the implementation of the conventions for
-  graphics devices set out in the \dQuote{R Internals Manual}.  These
+  graphics devices set out in the \sQuote{R Internals} manual.  These
   devices follow the underlying device, so when viewed at the stated
   \code{res}:
 
