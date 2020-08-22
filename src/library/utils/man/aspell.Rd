@@ -94,10 +94,11 @@ aspell(files, filter, control = list(), encoding = "unknown",
   method) with the information about possibly mis-spelled words.
 }
 \references{
-  Kurt Hornik and Duncan Murdoch (2011),
-  Watch your spelling!
-  \emph{The R Journal} \bold{3}(2), 22--28.
-  \url{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Hornik+Murdoch.pdf}.
+  Kurt Hornik and Duncan Murdoch (2011).
+  \dQuote{Watch your spelling!}
+  \emph{The R Journal}, \bold{3}(2), 22--28.
+  \doi{10.32614/RJ-2011-014}.
+  %% \url{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Hornik+Murdoch.pdf}.
 }
 \seealso{
   \link{aspell-utils} for utilities for spell checking packages.

@@ -209,8 +209,9 @@ arima(x, order = c(0L, 0L, 0L),
   \emph{Technometrics}, \bold{22}, 389--395.
   \doi{10.2307/1268324}.
 
-  Ripley, B. D. (2002) Time series in \R 1.5.0.
-  \emph{R News}, \bold{2/2}, 2--7.
+  Ripley, B. D. (2002).
+  \dQuote{Time series in \R 1.5.0}.
+  \emph{R News}, \bold{2}(2), 2--7.
   \url{https://www.r-project.org/doc/Rnews/Rnews_2002-2.pdf}
 }
 

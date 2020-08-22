@@ -59,8 +59,10 @@ str2expression(text)
   Wadsworth & Brooks/Cole.
 
   Murdoch, D. (2010).
-  \href{https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source
-  References}.  \emph{The R Journal} 2/2, 16-19.
+  \dQuote{Source References}.
+  %% \href{https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source References}.
+  \emph{The R Journal}, \bold{2}(2), 16--19.
+  \doi{10.32614/RJ-2010-010}.
 }
 \seealso{
   \code{\link{scan}}, \code{\link{source}}, \code{\link{eval}},
