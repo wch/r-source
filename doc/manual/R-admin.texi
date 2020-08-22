@@ -4866,8 +4866,10 @@ and desirable
 GNU @code{readline} from
 @uref{https://mac.R-project.org/libs-4/},@footnote{For licence reasons
 this is version 5.2 of @code{readline}: for those who want a more recent
-version it is straightforward to compile it from its sources.} or
-configure with @option{--without-readline}.
+version it is straightforward to compile it from its sources.}.  If
+@code{readline} is not present, the emulation in Apple's version of
+@code{libedit} (aka @code{editline}) will be used: if you wish to avoid
+that, configure with @option{--without-readline}.
 
 @item
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig} and @code{tiff}
