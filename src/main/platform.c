@@ -3293,7 +3293,17 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("iconv"));
 #ifdef HAVE_LIBREADLINE
-    SET_STRING_ELT(ans, i, mkChar(rl_library_version));
+    /* libedit reports "EditLine wrapper": so we look at
+       rl_readline_version, which is currently 0x0402 */
+    const char *rl = rl_library_version;
+    if (streql(rl, "EditLine wrapper")) {
+	int num = rl_readline_version;
+	int maj = num / 256, min = num % 256;
+	char buf[40];
+	snprintf(buf, 40, "%d.%d (%s)", maj, min, rl);
+	SET_STRING_ELT(ans, i, mkChar(buf));
+    } else
+	SET_STRING_ELT(ans, i, mkChar(rl));
 #else
     SET_STRING_ELT(ans, i, mkChar(""));
 #endif
@@ -3306,7 +3316,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     && defined(HAVE_DECL_RTLD_NEXT) && HAVE_DECL_RTLD_NEXT
 
     /* Look for blas function dgemm and try to figure out in which
-       binary/shared library is it defined. This is based on experimentation
+       binary/shared library is it defined. That is based on experimentation
        and heuristics, and depends on implementation details
        of dynamic linkers.
     */

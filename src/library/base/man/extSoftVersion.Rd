@@ -1,6 +1,6 @@
 % File src/library/base/man/extSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2019 R Core Team
+% Copyright 2014-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{extSoftVersion}
@@ -34,7 +34,11 @@ extSoftVersion()
   \item{iconv}{The implementation and version of the \code{iconv}
   library in use (if known).}
   \item{readline}{The version of \code{readline} in use (if any,
-  otherwise \code{""}).}
+    otherwise \code{""}).  If using the emulation by \code{libedit} aka
+    \code{editline} this will be \code{"EditLine wrapper"} preceded by
+    the \code{readline} version it emulates: that is most likely to be
+    seen on macOS.
+  }
   \item{BLAS}{Name of the binary/executable file with the implementation of
   \code{BLAS} in use (if known, otherwise \code{""}).}
 
