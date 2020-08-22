@@ -819,6 +819,7 @@ AC_CHECK_LIB(dl, dlopen)
 
 ## Readline.
 if test "${use_readline}" = yes; then
+  dnl in libedit both headers exist as links to editline/readline.h
   AC_CHECK_HEADERS(readline/history.h readline/readline.h)
   r_save_LIBS="${LIBS}"
   LIBS=
@@ -841,12 +842,15 @@ if test "${use_readline}" = yes; then
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
   else
-    ## the NetBSD emulation supplied by macOS does not have these
+    ## the NetBSD emulation (libedit) supplied by macOS did not have these,
+    ## but it does now (10.13) have history_truncate_file
+    ## it has tilde_expand, which is documented to be like tilde_expand_word
+    ## 'does tilde expansion of strings of type ``~user/foo''
     AC_CHECK_FUNCS(history_truncate_file tilde_expand_word)
-    ## rl_completion_matches is >= 4.2.
-    ## rl_resize_terminal is >= 4.0 ane we use it only for >= 6.3.
-    ## rl_callback_sigcleanup is in pre-releases for 7.0, not yet used.
-    R_CHECK_FUNCS([rl_callback_sigcleanup rl_completion_matches rl_resize_terminal rl_sort_completion_matches], 
+    ## rl_completion_matches is >= 4.2 (emulation has it)
+    ## rl_resize_terminal is >= 4.0 but we use it only for >= 6.3.
+    ## rl_sort_completion_matches is >= 6.0 (not in emulation)
+    R_CHECK_FUNCS([rl_completion_matches rl_resize_terminal rl_sort_completion_matches], 
 [#include <stdio.h>
 #include <readline/readline.h>]
                  )

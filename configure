@@ -22952,7 +22952,7 @@ fi
 
 ## Readline.
 if test "${use_readline}" = yes; then
-  for ac_header in readline/history.h readline/readline.h
+    for ac_header in readline/history.h readline/readline.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -23190,7 +23190,10 @@ fi
   if test "${use_readline}" = no; then
     as_fn_error $? "--with-readline=yes (default) and headers/libs are not available" "$LINENO" 5
   else
-    ## the NetBSD emulation supplied by macOS does not have these
+    ## the NetBSD emulation (libedit) supplied by macOS did not have these,
+    ## but it does now (10.13) have history_truncate_file
+    ## it has tilde_expand, which is documented to be like tilde_expand_word
+    ## 'does tilde expansion of strings of type ``~user/foo''
     for ac_func in history_truncate_file tilde_expand_word
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
@@ -23203,10 +23206,10 @@ _ACEOF
 fi
 done
 
-    ## rl_completion_matches is >= 4.2.
-    ## rl_resize_terminal is >= 4.0 ane we use it only for >= 6.3.
-    ## rl_callback_sigcleanup is in pre-releases for 7.0, not yet used.
-    for ac_func in rl_callback_sigcleanup rl_completion_matches rl_resize_terminal rl_sort_completion_matches
+    ## rl_completion_matches is >= 4.2 (emulation has it)
+    ## rl_resize_terminal is >= 4.0 but we use it only for >= 6.3.
+    ## rl_sort_completion_matches is >= 6.0 (not in emulation)
+    for ac_func in rl_completion_matches rl_resize_terminal rl_sort_completion_matches
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
@@ -25427,7 +25430,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25430: \"$ac_link\") >&5
+(eval echo $as_me:25433: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25502,7 +25505,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25505: \"$ac_link\") >&5
+(eval echo $as_me:25508: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
