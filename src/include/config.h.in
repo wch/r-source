@@ -337,6 +337,9 @@
 /* Define to 1 if you have the `getpriority' function. */
 #undef HAVE_GETPRIORITY
 
+/* Define to 1 if you have the `getpwnam' function. */
+#undef HAVE_GETPWNAM
+
 /* Define to 1 if you have the `getpwuid' function. */
 #undef HAVE_GETPWUID
 

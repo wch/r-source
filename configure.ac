@@ -1901,7 +1901,7 @@ AC_CHECK_FUNCS(fseeko ftello matherr)
 ## POSIX functions
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
 R_CHECK_FUNCS([getgrgid], [#include <grp.h>])
-R_CHECK_FUNCS([getpwuid], [#include <pwd.h>])
+R_CHECK_FUNCS([getpwnam getpwuid], [#include <pwd.h>])
 R_CHECK_FUNCS([kill sigaction sigaltstack sigemptyset], [#include <signal.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
 if test "${ac_cv_have_decl_popen}" = "no"; then

@@ -479,8 +479,7 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 
 /* For compatibility with pre-readline-4.2 systems, also missing in
    Apple's emulation via the NetBSD editline library, aka libedit.
-   (Sources at http://thrysoee.dk/editline/ and e.g.
-   https://opensource.apple.com/source/libedit/libedit-55/).
+   _RL_FUNCTION_TYPEDEF is not currently defined anywhere.
 */
 # if !defined (_RL_FUNCTION_TYPEDEF)
 typedef void rl_vcpfunc_t (char *);

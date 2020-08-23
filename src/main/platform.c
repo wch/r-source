@@ -2218,7 +2218,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (strcmp(R_GUIType, "GNOME") == 0) {  /* always interactive */
 	LOGICAL(ans)[i] = TRUE;  /* also AQUA ? */
     } else {
-#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+#if defined(HAVE_LIBREADLINE)
 	extern Rboolean UsingReadline;
 	if (R_Interactive && UsingReadline) LOGICAL(ans)[i] = TRUE;
 #endif
@@ -3342,7 +3342,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     && defined(HAVE_DECL_RTLD_NEXT) && HAVE_DECL_RTLD_NEXT
 
     /* Look for blas function dgemm and try to figure out in which
-       binary/shared library is it defined. That is based on experimentation
+       binary/shared library it is defined.  That is based on experimentation
        and heuristics, and depends on implementation details
        of dynamic linkers.
     */
