@@ -117,12 +117,13 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
 
     const char *user, *temp, *s2, *home;
     char buff2[PATH_MAX];
+    struct passwd *pass;
 
     temp = strchr(s + 1, '/');
     if (temp == NULL) { // ~name
 	user = s + 1;
     } else { // ~name/path
-	/* text until string after slash */
+	/* extract text befoe first slash */
 	size_t len = (size_t)(temp - s + 1);
 	(void) strncpy(buff2, s + 1, len - 2);
 	buff2[len - 2] = '\0';
@@ -130,16 +131,19 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
 	s2 = s + len;
     }
     if (user[0] == 0) {
-	// follow readline
+	// follow readline (and not libedit) in preferring HOME
 	home = getenv("HOME");
-	if(home == NULL) return s;
-	/* Or follow libedit:
+#if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+	if(home == NULL) {
 	   pass = getpwuid(getuid());
            if(pass == NULL) return s;
-	   home = pass->pw_dir; */
+	   home = pass->pw_dir;
+	}
+#endif
+	if(home == NULL) return s;
     } else {
 #ifdef HAVE_GETPWNAM
-	struct passwd *pass = getpwnam(user);
+	pass = getpwnam(user);
 	if(pass == NULL) return s;
 	home = pass->pw_dir;
 #else
