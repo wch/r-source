@@ -4827,7 +4827,7 @@ example, from
 @node Prerequisites, Other C/C++ compilers, macOS, macOS
 @subsection Prerequisites
 
-The following are essential to build @R{}
+The following are essential to build @R{}:
 
 @itemize
 @item 
@@ -4836,7 +4836,7 @@ Apple's `Command Line Tools': these can be (re-)installed by running
 installation, running e.g.@: @command{make} in a terminal will offer the
 installation of the command-line tools.  If you have installed Xcode,
 this provides the command-line tools.  The tools may need to be
-reinstalled when macOS is upgraded, as upgrading partially removes
+reinstalled when macOS is upgraded, as upgrading may partially remove
 them.)
 
 The Command Line Tools provide C and C++ compilers derived from LLVM's
@@ -4900,7 +4900,7 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
 @item
-Support for @code{cairo} (without @code{Pango}) can be enabled if
+Support for @code{cairo} (without @code{Pango}) will be enabled if
 @code{pkg-config} and XQuartz are available.  Make sure the XQuartz's
 @code{pkg-config} files are found first on the configuration path: for
 example by setting
@@ -4915,9 +4915,11 @@ A TeX installation. @xref{Other libraries}.
 
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
-@command{perl} (currently an old but sufficient version is part of macOS
-but it has been announced that it may not be as from macOS 11 `Big
-Sur').  A version of @command{texi2any} has been included in the binary
+@command{perl} (currently version 5.18 is a default part of macOS but it
+has been announced that it may not be in future).
+@c macOS 10.15 release notes, but is in 11.0 betas so far.
+@c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
+A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
 @uref{https://mac.R-project.org/libs-4/}.
 @end itemize
@@ -5019,7 +5021,7 @@ CXX="/usr/local/clang/bin/clang++ -isysroot
 change, it can be found by running @command{xcrun -show-sdk-path}.
 
 The approach in the previous paragraph also works for Mojave, but for
-versions 10.x of the Command Line Tools an alternative as to install
+versions 10.x of the Command Line Tools an alternative is to install
 the headers to @file{/usr/include}: from a Terminal run
 @c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
 @example
@@ -5034,7 +5036,7 @@ Line Tools.)
 It is usually possible to build @R{} with GCC (built from the sources,
 from a @command{gfortran} distribution, from Homebrew, @dots{}).  When
 last tested@footnote{with @command{gcc} 10.2 on High Sierra.} it was not
-possible to use @command{gcc} to build the Quartz device, so
+possible to use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
@@ -5064,7 +5066,7 @@ This also includes a full LAPACK which can be used @emph{via}
 often seriously old.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
-Threading in Accelerate Is controlled by `Grand Central Dispatch' and is
+Threading in Accelerate is controlled by `Grand Central Dispatch' and is
 said not to need user control.  Test @file{nls.R} in package @pkg{stats}
 usually fails with the Accelerate BLAS.
 
@@ -5096,7 +5098,7 @@ helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about 380MB.
 @samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
 provides a graphical means to manage @TeX{} packages.  This is
-documented to require Sierra or later: for earlier versions see the
+documented to require High Sierra or later: for earlier versions see the
 instructions on the MacTeX front page.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
@@ -5166,7 +5168,7 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @c details see @uref{https://www.macstrategy.com/@/article.php?3}.} and
 @c distribution of Java for all platforms changed in 2018.
 
-macOS no longer comes with an installed Java runtime (JRE), and a macOS
+macOS no longer comes with an installed Java runtime (JRE) and a macOS
 upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
@@ -5216,16 +5218,12 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm"
 @noindent
 in @file{config.site}.
 
+@c jdk.java.net no longer has Java 11 LTS builds.
 To use the builds of OpenJDK from @uref{https://adoptopenjdk.net} (Apple
-package) or @uref{http://jdk.java.net/} (tarball) set @env{JAVA_HOME} to
-e.g.@: one of
+package) to
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
-JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home
 @end example
-@noindent
-where @file{@var{/path/to/JDK}} is wherever the tarball was
-unpacked.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.
