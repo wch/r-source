@@ -421,8 +421,11 @@ all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale)
     tz <- function(dt) {
         if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
     }
-    if(!identical(tz(target), tz(current)))
-        msg <- c("'tzone' attributes are inconsistent")
+    tzt <- tz(target)
+    tzc <- tz(current)
+    if(!isTRUE(tzt == tzc))
+        msg <- sprintf("'tzone' attributes are inconsistent ('%s' and '%s')",
+                       tzt, tzc)
     attr(target, "tzone") <- attr(current, "tzone") <- NULL
     val <- all.equal.numeric(target, current, ...,
                              tolerance = tolerance, scale = 1)
