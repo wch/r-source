@@ -1,6 +1,6 @@
 % File src/library/base/man/path.expand.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{path.expand}
@@ -25,6 +25,9 @@ path.expand(path)
   directory of \code{user}, but not on builds without \code{readline}
   installed.  (In an interactive session \code{capabilities("cledit")}
   will report if \code{readline} is available.)
+
+  There are possibly different concepts of \sQuote{home directory}: that
+  usually used is the setting of the environment variable \env{HOME}.
 
   The \sQuote{path names} need not exist nor be valid path names but
   they do need to be representable in the session encoding.
