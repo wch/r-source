@@ -2249,7 +2249,14 @@ USE_FC_TO_LINK =
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
 PKG_LIBS = $(SHLIB_OPENMP_FFLAGS)
 @end example
-in @file{src/Makevars} or @file{src/Makevsars.win}.  
+in @file{src/Makevars} or @file{src/Makevars.win}.
+
+@c Most often seen with clang and sanitizer flags.
+Common platforms may inline all OpenMP calls and so tolerate the
+omission of the OpenMP flag from @code{PKG_LIBS}, but this usually
+results in an installation failure with a different compiler or
+compilation flags.  So cross-check that e.g.@: @code{-fopenmp} appears
+in the linking line in the installation logs.
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
