@@ -28,7 +28,7 @@
 httpd <- function(path, query, ...)
 {
     linksToTopics <-
-        config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     .HTMLdirListing <- function(dir, base, up) {
         files <- list.files(dir)    # note, no hidden files are listed
         out <- HTMLheader(paste0("Listing of directory<br/>", dir),

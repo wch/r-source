@@ -6947,25 +6947,26 @@ class (in package @pkg{stats}).  To make these easy to read in the
 source file, @code{\code@{"\linkS4class@{abc@}"@}} expands to the form
 given above.
 
-There are two other forms of optional argument specified as
+There are two other forms with an optional argument, specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
-@code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
-@pkg{@var{pkg}}, to @emph{files} @file{@var{foo}.html} and
-@file{@var{bar}.html} respectively.  These are rarely needed, perhaps to
-refer to not-yet-installed packages (but there the @HTML{} help system
-will resolve the link at run time) or in the normally undesirable event
-that more than one package offers help on a topic@footnote{a common
-example in @acronym{CRAN} packages is @code{\link[mgcv]@{gam@}}.} (in
-which case the present package has precedence so this is only needed to
-refer to other packages).  They are currently only used in @HTML{} help
-(and ignored for hyperlinks in @LaTeX{} conversions of help pages), and
-link to the file rather than the topic (since there is no way to know
-which topics are in which files in an uninstalled package).  The
-@strong{only} reason to use these forms for base and recommended
-packages is to force a reference to a package that might be further down
-the search path.  Because they have been frequently misused, the @HTML{}
-help system looks for topic @code{@var{foo}} in package @pkg{@var{pkg}}
-if it does not find file @file{@var{foo}.html}.
+@code{\link[@var{pkg:bar}]@{@var{foo}@}}, to link to topics
+@code{@var{foo}} and @code{@var{bar}} respectively in the package
+@pkg{@var{pkg}}. They are currently only used in @HTML{} help (and
+ignored for hyperlinks in @LaTeX{} conversions of help pages). One
+should be careful about topics containing special characters (such as
+arithmetic operators) as they may result in unresolvable links, and
+preferably use a safer alias in the same help page.
+
+Historically (before @R{} version 4.1.0), links of the form
+@code{\link[@var{pkg}]@{@var{foo}@}} and
+@code{\link[@var{pkg:bar}]@{@var{foo}@}} used to be interpreted as links
+to @emph{files} @file{@var{foo}.html} and @file{@var{bar}.html} in
+package @pkg{@var{pkg}}, respectively. For this reason, the @HTML{} help
+system looks for file @file{@var{foo}.html} in package @pkg{@var{pkg}}
+if it does not find topic @code{@var{foo}}, and then searches for the
+topic in other installed packages. To test that links work both with
+both old and new systems, the pre-4.1.0 behaviour can be restored by
+setting the environment variable @env{_R_HELP_LINKS_TO_TOPICS_=false}.
 
 Packages referred to by these `other forms' should be declared in the
 @file{DESCRIPTION} file, in the @samp{Depends}, @samp{Imports},

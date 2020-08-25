@@ -78,7 +78,17 @@
 
       \item \code{path.expand()} can expand \samp{~user} on most
       Unix-alikes even when \code{readline} is not in use.
+
+      \item For HTML help (both dynamic and static), Rd file links to
+      help pages in external packages are now treated as references to
+      topics rather than file names, and falls back to a file link only
+      if the topic is not found in the target package. The earlier rule
+      which prioritized file names over topics can be restored by
+      setting the environment variable \env{_R_HELP_LINKS_TO_TOPICS_} to
+      a false value.
+  
     }
+
   }
 
   \subsection{GRAPHICS}{
