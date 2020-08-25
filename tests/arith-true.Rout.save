@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-08-15 r79028) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-08-25 r79079) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -20,7 +20,7 @@ Type 'q()' to quit R.
 > ###
 > ### '##P': These lines don't give TRUE but relevant ``Print output''
 > 
-> ### --> d-p-q-r-tests.R  for distribution things
+> ### --> d-p-q-r-tests.R & d-p-q-r-tst-2.R  for distribution things
 > 
 > .proctime00 <- proc.time()
 > opt.conformance <- 0
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.338 0.01 0.349 0 0 
+Time elapsed:  0.152 0.019 0.171 0 0 
 > 
