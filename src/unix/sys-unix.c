@@ -134,7 +134,7 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
 	// follow readline (and not libedit) in preferring HOME
 	home = getenv("HOME");
 #if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
-	if(home == NULL) {
+	if(home == NULL || streql(home, "")) {
 	   pass = getpwuid(getuid());
            if(pass == NULL) return s;
 	   home = pass->pw_dir;
