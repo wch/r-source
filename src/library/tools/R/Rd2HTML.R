@@ -167,8 +167,11 @@ createRedirects <- function(file, Rdobj)
     helpdir <- paste0(dirname(dirname(file)), "/help") # .../pkg/help/
     aliasName <- function(i) Rdobj[[i]][[1]]
     aliasFile <- function(i) file.path(helpdir, sprintf("%s.html", aliasName(i)))
-    redirMsg <- function(type, src, dest, status)
-        message(sprintf("\nREDIRECT:%s\t %s -> %s [ %s ]", type, src, dest, status), appendLF = FALSE)
+    redirMsg <- function(type, src, dest, status) {
+        ## change sprintf to gettextf to make translatable, but seems unnecessary
+        msg <- sprintf("\nREDIRECT:%s\t %s -> %s [ %s ]", type, src, dest, status)
+        message(msg, appendLF = FALSE)
+    }
     for (i in toProcess) {
         aname <- aliasName(i)
         afile <- aliasFile(i)
@@ -214,6 +217,10 @@ Rd2HTML <-
              dynamic = FALSE, no_links = FALSE, fragment=FALSE,
              stylesheet = "R.css", ...)
 {
+    ## Is this package help, as opposed to from Rdconv or similar?
+    ## Used to decide whether redirect files should be created when
+    ## generating static HTML
+    package_help <- inherits(Rd, "Rd") && (length(package) == 2L)
     if (missing(no_links) && is.null(Links) && !dynamic) no_links <- TRUE
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
@@ -817,7 +824,7 @@ Rd2HTML <-
             con <- stdout()
         } else {
 	    con <- file(out, "wt")
-            create_redirects <- !dynamic
+            create_redirects <- !dynamic && package_help
 	    on.exit(close(con))
 	}
     } else {
