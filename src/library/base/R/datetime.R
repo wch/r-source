@@ -593,13 +593,21 @@ anyNA.POSIXlt <- function(x, recursive = FALSE)
 
 ## <FIXME> check the argument validity
 ## This is documented to remove the timezone
-c.POSIXct <- function(..., recursive = FALSE)
-    .POSIXct(c(unlist(lapply(list(...),
-                             function(e) unclass(as.POSIXct(e))))))
+c.POSIXct <- function(..., recursive = FALSE) {
+    x <- list(...)
+    x <- lapply(x[!vapply(x, is.null, NA)],
+                function(e) unclass(as.POSIXct(e)))
+    tzones <- lapply(x, attr, "tzone")
+    tz <- if(length(unique(tzones)) == 1L) tzones[[1L]] else NULL
+    .POSIXct(as.double(unlist(x)), tz)
+}
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
-c.POSIXlt <- function(..., recursive = FALSE)
-    as.POSIXlt(do.call("c", lapply(list(...), as.POSIXct)))
+c.POSIXlt <- function(..., recursive = FALSE) {
+    x <- list(...)
+    as.POSIXlt(do.call("c",
+                       lapply(x[!vapply(x, is.null, NA)], as.POSIXct)))
+}
 
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz = "")
@@ -1325,7 +1333,7 @@ is.numeric.difftime <- function(x) FALSE
 ## Class generators added in 2.11.0, class order changed in 2.12.0.
 
 ## FIXME:
-## At least temporarily avoide structure() for performance reasons.
+## At least temporarily avoid structure() for performance reasons.
 ## .POSIXct <- function(xx, tz = NULL)
 ##     structure(xx, class = c("POSIXct", "POSIXt"), tzone = tz)
 .POSIXct <- function(xx, tz = NULL, cl = c("POSIXct", "POSIXt")) {
