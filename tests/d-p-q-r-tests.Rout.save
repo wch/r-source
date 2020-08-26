@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-08-25 r79079) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-08-25 r79080) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -885,6 +885,8 @@ Time   0.056   0.000   0.056
 > ## small 'x' used to suffer from cancellation
 > options(oo)
 > 
+> ## NB:  Do  *NOT*  add new examples here, but rather  in  ./d-p-q-r-tst-2.R
+> ## ==        ~~~                    ~~~~  ~~~               ~~~~~~~~~~~~~~~
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
 Time elapsed:  0.477 0.042 0.52 0 0 
