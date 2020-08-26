@@ -12,8 +12,9 @@ assertWarning <- tools::assertWarning
 as.nan <- function(x) { x[is.na(x) & !is.nan(x)] <- NaN ; x }
 ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 opt.conformance <- 0
-Meps <- .Machine $ double.eps
-xMax <- .Machine $ double.xmax
+onWindows <- .Platform$OS.type == "windows"
+b64 <- .Machine$sizeof.pointer == 8
+str(.Machine[grep("^sizeof", names(.Machine))]) ## also differentiate long-double..
 options(rErr.eps = 1e-30)
 rErr <- function(approx, true, eps = getOption("rErr.eps", 1e-30))
 {
@@ -261,7 +262,7 @@ stopifnot(all.equal(1/(1+mu), dnbinom(0, size = 1, mu = mu), tolerance = 1e-13))
 mu <- sort(outer(1:7, 10^c(0:10,50*(1:6))))
 NB <- dnbinom(5, size=1e305, mu=mu, log=TRUE)
 P  <- dpois  (5,                mu, log=TRUE)
-stopifnot(abs(rErr(NB,P)) < 9*Meps)# seen 2.5*
+stopifnot(abs(rErr(NB,P)) < 9*.Machine$double.eps)# seen 2.5*
 ## wrong in 3.1.0 and earlier
 
 
@@ -633,10 +634,26 @@ p201 <- proportions( rep( c(1, epsilon), c(201, 999-201)))
 x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
 stopifnot(sum(x <= 201) == 100000)
 
-## The PR#17577 bug fix for dgamma() is currently "optimized away" on Windows 32-bit (8087 proc).
-## --> check in ./reg-tests-1d.R (with no *.Rout.save) currently
+arch <- Sys.info()[["machine"]]
+if(!(onWindows && arch == "x86")) {
+## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
+stopifnot(exprs = {
+    all.equal(dgamma(2^-1027, shape = .99 , log=TRUE), 7.1127667376, tol=1e-10)
+    all.equal(dgamma(2^-1031, shape = 1e-2, log=TRUE), 702.8889158,  tol=1e-10)
+    all.equal(dgamma(2^-1048, shape = 1e-7, log=TRUE), 710.30007699, tol=1e-10)
+    all.equal(dgamma(2^-1048, shape = 1e-7, scale = 1e-315, log=TRUE),
+              709.96858768, tol=1e-10)
+})
+## all gave Inf in R <= 3.6.1
+} else cat("PR#17577 bug fix not checked, as it may not work on this platform\n")
+                                        # on Windows 32-bit (8087 proc).
 
-## Ditto for  pchisq(<LRG>, <LRG>, ..)
+if(!(onWindows && arch == "x86")) {
+ ## This gave a practically infinite loop (on 64-bit Lnx, Windows; not in 32-bit)
+    tools::assertWarning(p <- pchisq(1.00000012e200, df=1e200, ncp=100),
+                         "simpleWarning", verbose=TRUE)
+    stopifnot(p == 1)
+}
 
 
 

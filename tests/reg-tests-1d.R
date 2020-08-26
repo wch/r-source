@@ -6,6 +6,10 @@ tryCid <- function(expr) tryCatch(expr, error = identity)
 identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
 assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
 onWindows <- .Platform$OS.type == "windows"
+.M <- .Machine
+str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
+b64 <- .M$sizeof.pointer == 8
+
 
 ## body() / formals() notably the replacement versions
 x <- NULL; tools::assertWarning(   body(x) <-    body(mean))	# to be error
@@ -2997,23 +3001,6 @@ stopifnot(exprs = { length(prE) >= 3
 })
 
 
-.M <- .Machine
-str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
-b64 <- .M$sizeof.pointer == 8
-arch <- Sys.info()[["machine"]]
-if(!(onWindows && arch == "x86")) {
-## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
-stopifnot(exprs = {
-    all.equal(dgamma(2^-1027, shape = .99 , log=TRUE), 7.1127667376, tol=1e-10)
-    all.equal(dgamma(2^-1031, shape = 1e-2, log=TRUE), 702.8889158,  tol=1e-10)
-    all.equal(dgamma(2^-1048, shape = 1e-7, log=TRUE), 710.30007699, tol=1e-10)
-    all.equal(dgamma(2^-1048, shape = 1e-7, scale = 1e-315, log=TRUE),
-              709.96858768, tol=1e-10)
-})
-## all gave Inf in R <= 3.6.1
-} else cat("PR#17577 bug fix not checked, as it may not work on this platform\n")
-
-
 ## format(x, scientific = FALSE)  for large x
 xMAX <- .Machine$double.xmax
 ch <- format(xMAX, scientific = 400) # << scientific as 'scipen'
@@ -3031,14 +3018,6 @@ stopifnot(exprs = {
 for(ch in c("foo", "bar", "1", "a:b", "B space A", "`ABC", "'CBA"))
     stopifnot(identical(ch, format(as.symbol(ch))))
 ## gave  'Found no format() method for class "name"' in R <= 3.6.x
-
-
-if(!(onWindows && arch == "x86")) {
- ## This gave a practically infinite loop (on 64-bit Lnx, Windows; not in 32-bit)
-    tools::assertWarning(p <- pchisq(1.00000012e200, df=1e200, ncp=100),
-                         "simpleWarning", verbose=TRUE)
-    stopifnot(p == 1)
-}
 
 
 ## x %% +- Inf -- PR#17611  //  also  %/%  for "large" args
@@ -3120,7 +3099,7 @@ w <- function(class) {
 catch <- function(expr) tryCatch({ expr; FALSE }, warning = function(...) TRUE)
 stopifnot(! catch(suppressWarnings(w("foo"))))
 stopifnot(! catch(suppressWarnings(w("foo"), classes = c("bar", "foo"))))
-stopifnot(catch(suppressWarnings(w("foo"), classes = c("bar", "baz"))))
+stopifnot(  catch(suppressWarnings(w("foo"), classes = c("bar", "baz"))))
 rm(w, catch)
 
 
@@ -3133,7 +3112,7 @@ m <- function(class) {
 catch <- function(expr) tryCatch({ expr; FALSE }, message = function(...) TRUE)
 stopifnot(! catch(suppressMessages(m("foo"))))
 stopifnot(! catch(suppressMessages(m("foo"), classes = c("bar", "foo"))))
-stopifnot(catch(suppressMessages(m("foo"), classes = c("bar", "baz"))))
+stopifnot(  catch(suppressMessages(m("foo"), classes = c("bar", "baz"))))
 rm(m, catch)
 
 
