@@ -101,9 +101,11 @@ EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ @LIBINTL@ $(READLINE_LIBS) $(LI
 R_binary = R.bin
 R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
 @WANT_R_SHLIB_FALSE@R_bin_LDADD = $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS)
-## Linked against -lRblas becasue -lR is and otherwise ld complains.
+## Linked against -lRblas because -lR is and otherwise ld complains.
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -lR @BLAS_SHLIB_TRUE@-lRblas
-@BUILD_LTO_FALSE@R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ libR.a @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+## This should depend on MAIN_OBJS not MAIN_LIBS, but we can't use that.
+## There is also a dependence on libRblas when that is internal and static.
+@WANT_R_SHLIB_FALSE@R_bin_DEPENDENCIES = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)@USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 libR_la = libR$(R_DYLIB_EXT)
 libR_la_OBJECTS = $(OBJECTS)
