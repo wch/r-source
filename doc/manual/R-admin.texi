@@ -4952,6 +4952,15 @@ and appropriate compilers, e.g.@: Fortran and the C/C++ compilers from
 those tools.  Some packages have further requirements such as
 @command{pkg-config}.
 
+A subversion client, @command{svn} version 1.10, used to be part of
+macOS: a more recent client can be obtained
+from @uref{https://mac.r-project.org/tools/}.  For example, by
+@example
+curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
+tar xf subversion-1.14.0-darwin15.6.tar.gz
+sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
+@end example
+
 @menu
 * Note for Catalina users::
 @end menu
