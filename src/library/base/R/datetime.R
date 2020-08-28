@@ -592,14 +592,15 @@ anyNA.POSIXlt <- function(x, recursive = FALSE)
     anyNA(as.POSIXct(x))
 
 ## <FIXME> check the argument validity
-## This is documented to remove the timezone
+## This is documented to remove the timezone (unless all are marked with
+## the same).
 c.POSIXct <- function(..., recursive = FALSE) {
     x <- list(...)
     x <- lapply(x[!vapply(x, is.null, NA)],
                 function(e) unclass(as.POSIXct(e)))
     tzones <- lapply(x, attr, "tzone")
     tz <- if(length(unique(tzones)) == 1L) tzones[[1L]] else NULL
-    .POSIXct(as.double(unlist(x)), tz)
+    .POSIXct(c(unlist(x)), tz)
 }
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
