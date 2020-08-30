@@ -463,13 +463,22 @@ add_dummies <- function(dir, Log)
                 ## First check time on system running 'check',
                 ## by reading an external source in UTC
                 now <- tryCatch({
-                    foo <- suppressWarnings(readLines("http://worldtimeapi.org/api/timezone/UTC",
+                    foo <- suppressWarnings(readLines("https://worldtimeapi.org/api/timezone/etc/UTC",
                                                       warn = FALSE))
                     ## gives time in sub-secs
                     as.POSIXct(gsub(".*\"datetime\":\"([^Z]*).*", "\\1", foo),
                                "UTC", "%Y-%m-%dT%H:%M:%S")
                 }, error = function(e) NA)
                 if (is.na(now)) {
+                    now <- tryCatch({
+                        foo <- suppressWarnings(readLines("http://worldtimeapi.org/api/timezone/etc/UTC",
+                                                          warn = FALSE))
+                        ## gives time in sub-secs
+                        as.POSIXct(gsub(".*\"datetime\":\"([^Z]*).*", "\\1", foo),
+                                   "UTC", "%Y-%m-%dT%H:%M:%S")
+                    }, error = function(e) NA)
+                }
+                if (FALSE && is.na(now)) { ## seems permanently stopped
                     now <- tryCatch({
                         foo <- suppressWarnings(readLines("http://worldclockapi.com/api/json/utc/now",
                                                           warn = FALSE))
