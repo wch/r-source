@@ -4184,6 +4184,11 @@ stopifnot(exprs = {
 ## the last three cases failed in R <= 4.0.x
 
 
+## quantile(*, pr)  allows pr values very slightly outside [0,1]
+stopifnot( identical(quantile(0:1, 1+1e-14), c("100%" = 1)) )
+## failed  in R <= 4.0.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quantile.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,8 +45,8 @@ quantile.default <-
     if(na.p <- any(!p.ok)) { # set aside NA & NaN
         o.pr <- probs
         probs <- probs[p.ok]
-        probs <- pmax(0, pmin(1, probs)) # allow for slight overshoot
     }
+    probs <- pmax(0, pmin(1, probs)) # allow for slight overshoot
     np <- length(probs)
     if (n > 0 && np > 0) {
         if(type == 7) { # be completely back-compatible

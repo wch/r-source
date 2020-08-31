@@ -340,6 +340,9 @@
       correctly signal communication errors. Previously, such errors could
       lead to a segfault due to invalid memory access. Reported
       and debugged by Dmitriy Selivanov in \PR{17850}.
+
+      \item \code{quantile(x, pr)} more consistently works for \code{pr}
+      values slightly outside [0,1], thanks to Suharto Anggono's \PR{17891}.
     }
   }
 }
