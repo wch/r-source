@@ -1,6 +1,6 @@
 % File src/library/base/man/c.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 \name{c}
 \title{Combine Values into a Vector or List}
@@ -20,7 +20,8 @@ c(\dots)
   of the returned value, and all attributes except names are removed.
 }
 \arguments{
-  \item{\dots}{objects to be concatenated.}
+  \item{\dots}{objects to be concatenated.  All \code{\link{NULL}} entries
+    are dropped even before method dispatch.}
   \item{recursive}{logical.  If \code{recursive = TRUE}, the function
     recursively descends through lists (and pairlists) combining all
     their elements into a vector.}

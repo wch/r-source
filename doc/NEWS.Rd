@@ -88,7 +88,10 @@
       which prioritized file names over topics can be restored by
       setting the environment variable \env{_R_HELP_LINKS_TO_TOPICS_} to
       a false value.
-  
+
+      \item \code{c()} now removes \code{NULL} arguments before dispatching
+      to methods, thus simplifying the implementation of \code{c()} methods,
+      thanks to the report and patch by Lionel Henry in \PR{17900}.
     }
 
   }
@@ -253,9 +256,9 @@
       correct also with \code{center = FALSE}; \PR{14938}, patch from
       Sebastian Meyer.
 
-      \item A very old bug could cause a segfault in \code{model.matrix()} 
+      \item A very old bug could cause a segfault in \code{model.matrix()}
       when terms involved logical variables.  Related to \PR{17879}, but not
-      a complete fix for that issue. 
+      a complete fix for that issue.
 
       \item \code{model.frame.default()} allowed \code{data = 1}, leading to
       involuntary variable capture (rest of \PR{17879}).

@@ -4106,6 +4106,7 @@ fit0 <- glm.fit(x = rep(1, length(y)), y = y, offset = log(x),
                 family = gaussian("log"), start = 0)
 stopifnot(all.equal(fit$null.deviance, fit0$deviance))
 
+
 ## UTF-8 truncation test, fails on R < 4.0
 if (l10n_info()$"UTF-8") {
     # Use .Internal(seterrmessage(old.err)) to trigger truncation via
@@ -4168,6 +4169,20 @@ if (l10n_info()$"UTF-8") {
         stopifnot(validUTF8(output))
     }
 }
+
+
+## c() generic removes all NULL elements before dispatch
+c.foobar <- function(...) list("ok", ...)
+foobar <- structure(list(), class = "foobar")
+stopifnot(exprs = {
+    identical(c(foobar, one=1), list("ok", foobar, one=1))
+    identical(c(a = foobar), list("ok", a = foobar))
+    identical(c(a = NULL, b = foobar), list("ok", b = foobar))
+    identical(c(a = foobar, b = NULL), list("ok", a = foobar))
+    identical(c(a = NULL, b = foobar, c = NULL), list("ok", b = foobar))
+})
+## the last three cases failed in R <= 4.0.x
+
 
 
 ## keep at end
