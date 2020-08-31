@@ -8975,7 +8975,8 @@ float-divide-by-zero,function,implicit-unsigned-integer-truncation,
 implicit-signed-integer-truncation,implicit-integer-sign-change,
 integer-divide-by-zero,nonnull-attribute,null,object-size,
 pointer-overflow,return,returns-nonnull-attribute,shift,
-signed-integer-overflow,unreachable,unsigned-integer-overflow,vla-bound,vptr
+signed-integer-overflow,unreachable,unsigned-integer-overflow,
+unsigned-shift-base,vla-bound,vptr
 @end example
 
 @noindent
@@ -8997,23 +8998,25 @@ MAIN_LD="clang++ -fsanitize=undefined"
 @noindent
 Option @code{float-divide-by-zero} is undesirable for use with @R{}
 which allow such divisions as part of @acronym{IEC}@tie{}60559
-arithmetic.
+arithmetic, and in versions of @command{clang} since June 2019 it is no
+longer part of @option{-fsanitize=undefined}.
 
 For GCC see
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Instrumentation-Options.html}
 (or the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/@/onlinedocs/}: look for `Program
-Instrumentation Options') for the options supported by GCC: 8 supported
+Instrumentation Options') for the options supported by GCC: 10 supported
 @example
 -fsanitize=alignment,bool,bounds,builtin,enum,integer-divide-by-zero,
 nonnull-attribute,null,object-size,pointer-overflow,return,
-returns-nonnull-attribute,shift,unreachable,vla-bound,vptr
+returns-nonnull-attribute,shift,signed-integer-overflow,
+unreachable,vla-bound,vptr
 @end example
 @noindent
 plus the more specific versions @code{shift-base} and
 @code{shift-exponent} and non-default options
 @example
-bound-strict,float-cast-overflow,float-divide-by-zero,signed-integer-overflow
+bound-strict,float-cast-overflow,float-divide-by-zero
 @end example
 @noindent
 where @code{float-divide-by-zero} is not desirable for @R{} uses and
