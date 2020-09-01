@@ -4202,6 +4202,13 @@ stopifnot(exprs = {
 ## qxNN gave "Error in names(o.pr)[p.ok] <- names(qs) : ..."  in R <= 4.0.2
 
 
+## Vectorize() no longer keeps "garbage":
+vrep <- Vectorize(rep.int, "times")
+stopifnot(identical(sort(names(environment(vrep))),
+                    c("FUN", "SIMPLIFY", "USE.NAMES", "vectorize.args")))
+## names(..) was of length 7 in R <= 4.0.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
