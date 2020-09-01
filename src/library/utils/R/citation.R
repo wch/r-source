@@ -1073,7 +1073,6 @@ c.bibentry <-
 function(..., recursive = FALSE)
 {
     args <- list(...)
-    args <- args[!vapply(args, is.null, NA)]
     if(!all(vapply(args, inherits, NA, "bibentry")))
         warning(gettextf("method is only applicable to %s objects",
                          sQuote("bibentry")),
