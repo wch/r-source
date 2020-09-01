@@ -45441,6 +45441,8 @@ else
 /* end confdefs.h.  */
 
 #ifdef HAVE_BZLIB_H
+#include <stdlib.h> // for exit
+#include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
 int main() {
@@ -46150,6 +46152,7 @@ else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
+#include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
 int main()

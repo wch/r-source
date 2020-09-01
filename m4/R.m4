@@ -3185,6 +3185,8 @@ r_save_LIBS="${LIBS}"
 LIBS="-lbz2 ${LIBS}"
 AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_BZLIB_H
+#include <stdlib.h> // for exit
+#include <string.h> // for strcmp
 #include <bzlib.h>
 #endif
 int main() {
@@ -4180,6 +4182,7 @@ fi
 if test "x${have_libcurl}" = "xyes"; then
 AC_CACHE_CHECK([if libcurl supports https], [r_cv_have_curl_https],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h> // for exit
 #include <string.h>
 #include <curl/curl.h>
 int main()
