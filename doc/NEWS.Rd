@@ -341,8 +341,11 @@
       lead to a segfault due to invalid memory access. Reported
       and debugged by Dmitriy Selivanov in \PR{17850}.
 
-      \item \code{quantile(x, pr)} more consistently works for \code{pr}
+      \item \code{quantile(x, pr)} works more consistently for \code{pr}
       values slightly outside [0,1], thanks to Suharto Anggono's \PR{17891}.
+`
+      \item Libcurl-based internet access, including
+      \code{curlGetHeaders()}, was not respecting the \code{"timeout"} option.
     }
   }
 }
