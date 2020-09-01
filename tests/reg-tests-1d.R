@@ -4184,9 +4184,22 @@ stopifnot(exprs = {
 ## the last three cases failed in R <= 4.0.x
 
 
-## quantile(*, pr)  allows pr values very slightly outside [0,1]
+## quantile(*, pr)  allows pr values very slightly outside [0,1] -- PR#17891
 stopifnot( identical(quantile(0:1, 1+1e-14), c("100%" = 1)) )
 ## failed  in R <= 4.0.2
+
+
+## quantile(*, pr, names=FALSE)  with NA's in 'pr' -- PR#17892
+x <- (0:99)/64
+prN <- c(0.1, 0.5, 1, 2, 5, 10, 50, NA)/100
+qxN  <- quantile(x, probs = prN)
+qxNN <- quantile(x, probs = prN, names = FALSE)
+stopifnot(exprs = {
+    is.null(names(qxNN))
+    identical(qxNN, unname(qxN))
+    identical(NA_real_, quantile(x, probs = NA, names = FALSE))
+})
+## qxNN gave "Error in names(o.pr)[p.ok] <- names(qs) : ..."  in R <= 4.0.2
 
 
 

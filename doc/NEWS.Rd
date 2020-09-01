@@ -343,7 +343,10 @@
 
       \item \code{quantile(x, pr)} works more consistently for \code{pr}
       values slightly outside [0,1], thanks to Suharto Anggono's \PR{17891}.
-`
+
+      Further, \code{quantile(x, prN, names=FALSE)} now works even when
+      \code{prN} contains \code{NA}s, thanks to Anggono's \PR{17892}.
+
       \item Libcurl-based internet access, including
       \code{curlGetHeaders()}, was not respecting the \code{"timeout"} option.
     }
