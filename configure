@@ -45446,7 +45446,7 @@ else
 #include <bzlib.h>
 #endif
 int main() {
-    char *ver = BZ2_bzlibVersion();
+    const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
 

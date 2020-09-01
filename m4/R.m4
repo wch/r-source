@@ -3190,7 +3190,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <bzlib.h>
 #endif
 int main() {
-    char *ver = BZ2_bzlibVersion();
+    const char *ver = BZ2_bzlibVersion();
     exit(strcmp(ver, "1.0.6") < 0);
 }
 ]])], [r_cv_have_bzlib=yes], [r_cv_have_bzlib=no], [r_cv_have_bzlib=no])
