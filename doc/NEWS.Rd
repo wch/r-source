@@ -191,6 +191,16 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} can now scan package functions for
+      bogus \code{return} statements, which were possibly intended as
+      \code{return()} calls (wish of \PR{17180}, patch by Sebastian
+      Meyer). This check can be activated via the new environment
+      variable \env{_R_CHECK_BOGUS_RETURN_}, true for \code{--as-cran}.
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Function \code{plclust()} from the package \pkg{stats} and
