@@ -266,7 +266,7 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
     }
 #endif
     int timeout0 = asInteger(GetOption1(install("timeout")));
-    long timeout = timeout0 = NA_INTEGER ? 0 : 1000L * timeout0;
+    long timeout = (timeout0 == NA_INTEGER) ? 0 : (1000L * timeout0);
     curl_easy_setopt(hnd, CURLOPT_CONNECTTIMEOUT_MS, timeout);
     curl_easy_setopt(hnd, CURLOPT_TIMEOUT_MS, timeout);
     if (redirect) {
