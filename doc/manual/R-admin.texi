@@ -366,6 +366,12 @@ work with a version of @R{} from Subversion.  (You may need
 in the path to the build directory.  It is unlikely to work if the
 source directory has previously been used for a build.)
 
+There are many settings which can be customized when building @R{} and
+most are described in the file @file{config.site} in the top-level
+source directory.  This can be edited, but for an installation using
+@file{@var{BUILDDIR}} it is better to put the changed settings in a
+newly-created file @file{config.site} in the build directory.
+
 @c For those obtaining @R{} @emph{via} Subversion, one additional step is
 @c necessary:
 @c @cindex Vignettes
