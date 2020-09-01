@@ -50,6 +50,8 @@
 ## specified above.
 ## If unspecified, defaults to '-g -O2' for gcc, 
 ## and '-g' in all other cases except icc (for which see R-admin.html).
+## Be wary of aggressive settings such as -ffast-math, -Ofast and
+## -Werror (which is likely to cause configure to fail).
 ## CFLAGS=
 
 ## Defines for C compilation.
