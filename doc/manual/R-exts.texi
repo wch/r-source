@@ -3217,14 +3217,20 @@ directories from source control systems@footnote{called @file{CVS} or
 @file{.svn} or @file{.arch-ids} or @file{.bzr} or @file{.git} (but not
 files called @file{.git}) or @file{.hg}.} or from
 @command{eclipse}@footnote{called @file{.metadata}.}, directories with
-names ending @file{.Rcheck} or @file{Old} or @file{old} and files
+names @file{check}, @file{chm}, or ending @file{.Rcheck} or @file{Old}
+or @file{old} and files
 @file{GNUMakefile}@footnote{which is an error: GNU make uses
 @file{GNUmakefile}.}, @file{Read-and-delete-me} or with base names
 starting with @samp{.#}, or starting and ending with @samp{#}, or ending
-in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.  In
-addition, those files in the @file{R}, @file{demo} and @file{man}
+in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by
+default@footnote{see @code{tools:::.hidden_file_exclusions} and
+@code{tools:::get_exclude_patterns()} for further
+excluded files and file patterns, respectively.}.  In addition,
+same-package tarballs (from previous builds) and their binary forms will
+be excluded from the top-level directory, as well as
+those files in the @file{R}, @file{demo} and @file{man}
 directories which are flagged by @command{R CMD check} as having invalid
-names will be excluded.
+names.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.

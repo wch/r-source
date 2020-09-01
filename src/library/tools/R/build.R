@@ -1046,6 +1046,10 @@ inRbuildignore <- function(files, pkgdir) {
         exclude <- exclude | grepl("^.Rbuildindex[.]", allfiles)
         ## or simply?  exclude <- exclude | startsWith(allfiles, ".Rbuildindex.")
         exclude <- exclude | (bases %in% .hidden_file_exclusions)
+        ## exclude (old) source tarballs and binary packages (PR#17828)
+        exts <- "\\.(tar\\.gz|tar|tar\\.bz2|tar\\.xz|tgz|zip)"
+        exclude <- exclude | grepl(paste0("^", pkgname, "_[0-9.-]+", exts, "$"),
+                                   allfiles)
         unlink(allfiles[exclude], recursive = TRUE, force = TRUE,
                expand = FALSE)
         setwd(owd)
