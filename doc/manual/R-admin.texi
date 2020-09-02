@@ -4907,9 +4907,10 @@ library (see @code{?.libPaths}).
 
 @item
 Support for @code{cairo} (without @code{Pango}) will be enabled if
-@code{pkg-config} and XQuartz are available.  Make sure the XQuartz's
-@code{pkg-config} files are found first on the configuration path: for
-example by setting
+@code{pkg-config}@footnote{available from
+@uref{https://mac.R-project.org/libs-4/} as @code{pkgconfig}.} and
+XQuartz are available.  Make sure the XQuartz's @code{pkg-config} files
+are found first on the configuration path: for example by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
@@ -4959,13 +4960,20 @@ those tools.  Some packages have further requirements such as
 @command{pkg-config}.
 
 A subversion client, @command{svn} version 1.10, used to be part of
-macOS: a more recent client can be obtained
-from @uref{https://mac.r-project.org/tools/}.  For example, by
+macOS@footnote{but as a stub invoking an executable provided by the
+Command Line Tools and the latter is not in some 2020 versions of the
+Command Line Tools.}.  A more recent client can be obtained from
+@uref{https://mac.r-project.org/tools/}, for example by
 @example
 curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
 tar xf subversion-1.14.0-darwin15.6.tar.gz
 sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
 @end example
+
+For some distributions of Command Line Tools version 12,
+@option{-Wno-implicit-function-declaration} needs to be included in
+@code{CFLAGS} to configure @R{}@tie{}4.0.2 and earlier as well as some
+external software.
 
 @menu
 * Note for Catalina users::
