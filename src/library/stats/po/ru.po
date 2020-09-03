@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 01:58-0500\n"
+"PO-Revision-Date: 2020-08-28 16:07+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -29,16 +29,16 @@ msgstr "диапазон/пересечение скользящих медиан больше чем n"
 #: Srunmed.c:262
 #, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
-msgstr ""
+msgstr "runmed(x, .., na.action=\"na.fail\"): есть NAs начиная с x[%ld]"
 
 #: Srunmed.c:265
 msgid "runmed(): invalid 'na.action'"
-msgstr ""
+msgstr "runmed(): неправильная 'na.action'"
 
 #: Srunmed.c:315
 #, c-format
 msgid "na_action logic error (%d), please report!"
-msgstr ""
+msgstr "логическая ошибка в na_action (%d), пожалуйста, сообщите!"
 
 #: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
@@ -58,7 +58,7 @@ msgstr "approx(): попытка интерполировать пропущенные значения"
 
 #: approx.c:128
 msgid "approx(x,y, .., na.rm=FALSE): NA values in x are not allowed"
-msgstr ""
+msgstr "approx(x,y, .., na.rm=FALSE): пропущенные значения в x не разрешены"
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:39
 msgid "invalid argument type"
@@ -272,20 +272,22 @@ msgid ""
 "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
 "instead of 'n'"
 msgstr ""
+"nextn() не нашла решения < %d = INT_MAX (максимальное целое число); дайте ей "
+"'0+ n' вместо 'n'"
 
 #: fourier.c:233
 #, c-format
 msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
 msgstr ""
+"nextn<64>() не нашла решения < %ld = UINT64_MAX (максимальное целое число)"
 
 #: fourier.c:249
 msgid "no factors"
 msgstr "нет факторов"
 
 #: fourier.c:250
-#, fuzzy
 msgid "too many factors"
-msgstr "нет факторов"
+msgstr "слишком много факторов"
 
 #: fourier.c:253
 msgid "invalid factors"
@@ -293,7 +295,7 @@ msgstr "неправильные факторы"
 
 #: fourier.c:257
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
-msgstr ""
+msgstr "'n' должен иметь typeof(.) \"integer\" или \"double\""
 
 #: fourier.c:298
 #, c-format
@@ -301,6 +303,8 @@ msgid ""
 "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
 "\")"
 msgstr ""
+"nextn() = %<PRIu64> > 2^53 возможно, не удастся отобразать в R (как \"double"
+"\")"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, c-format
@@ -332,11 +336,11 @@ msgstr "перекрытие слишком мало"
 #: loessc.c:257
 #, c-format
 msgid "workspace required (%.0f) is too large%s."
-msgstr ""
+msgstr "требуемое рабочее пространство (%.0f) слишком велико%s."
 
 #: loessc.c:258
 msgid " probably because of setting 'se = TRUE'"
-msgstr ""
+msgstr "возможно, потому что 'se = TRUE'"
 
 #: loglin.c:371
 msgid "this should not happen"
@@ -364,7 +368,7 @@ msgstr "'delta' должно быть конечным и > 0"
 
 #: mAR.c:83
 msgid "assert failed in src/library/ts/src/carray.c"
-msgstr ""
+msgstr "высказывание не получилось в src/library/ts/src/carray.c"
 
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
@@ -523,6 +527,8 @@ msgid ""
 "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
 "no longer happen!"
 msgstr ""
+"'varlist' изменился (из nvar=%d) в новый %d в результате EncodeVars() -- "
+"такое больше не должно случаться!"
 
 #: model.c:2157
 msgid "'.' in formula and no 'data' argument"
@@ -624,7 +630,7 @@ msgstr "полученная длина градиента в 'optim' -- %d, а не %d"
 #: optim.c:152 optim.c:191
 #, c-format
 msgid "non-finite finite-difference value [%d]"
-msgstr ""
+msgstr "не-конечное конечно-разностное значение [%d]"
 
 #: optim.c:223 optim.c:429
 msgid "'fn' is not a function"

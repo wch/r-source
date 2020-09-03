@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 01:17-0500\n"
+"PO-Revision-Date: 2020-08-27 19:43+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
 "Language: ru\n"
@@ -33,11 +33,11 @@ msgstr "неверный список для подстановки"
 #: methods_list_dispatch.c:129
 #, c-format
 msgid "unexpected type '%s' for condition message"
-msgstr ""
+msgstr "неожиданный тип условного сообщения '%s'"
 
 #: methods_list_dispatch.c:132
 msgid "condition message must be length 1"
-msgstr ""
+msgstr "условное сообщение должно быть длиной 1"
 
 #: methods_list_dispatch.c:213
 msgid ""
@@ -57,17 +57,17 @@ msgstr ""
 "список методов для функции '%s'"
 
 #: methods_list_dispatch.c:402
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "S language method selection did not return normally when called from "
 "internal dispatch for function '%s'"
 msgstr ""
-"выбор метода языка S вызвал ошибку, когда был вызван из внутренней отправки "
-"для функции '%s'"
+"выбор метода языка S не закончился нормально, когда был вызван из внутренней "
+"отправки для функции '%s'"
 
 #: methods_list_dispatch.c:404
 msgid "Function name for method selection called internally"
-msgstr ""
+msgstr "Имя функции для выбора метода вызвано изнутри"
 
 #: methods_list_dispatch.c:498
 #, c-format

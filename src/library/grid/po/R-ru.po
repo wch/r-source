@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-08-13 10:30\n"
-"PO-Revision-Date: 2018-04-07 02:21-0500\n"
+"PO-Revision-Date: 2020-08-27 19:13+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -131,13 +131,12 @@ msgstr "надо задавать только правильные имена 'gpar'"
 msgid "invalid display list element"
 msgstr "неправильный элемент списка изображений"
 
-#, fuzzy
 msgid ""
 "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
 "TRUE')"
 msgstr ""
-"один или больше grobs переписан (grab НЕ будет точным; попробуйте 'wrap = "
-"TRUE')"
+"один или больше grobs переписан (grab НЕ будет точным; попробуйте 'wrap."
+"grobs = TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "оконница переписана (grab, ВОЗМОЖНО, не будет точным)"
@@ -332,10 +331,10 @@ msgid "invalid 'origin'"
 msgstr "неправильный 'origin'"
 
 msgid "Missing pattern fill has been set to transparent"
-msgstr ""
+msgstr "Пропущенный паттерн заливки определен как прозрачный"
 
 msgid "Gradient fill applied to object with no inside"
-msgstr ""
+msgstr "Градиентная заливка применена к объекту без внутренностей"
 
 msgid "'length' must be a 'unit' object"
 msgstr "'length' должен быть объектом-единицей"
@@ -373,9 +372,8 @@ msgstr "'x' и 'y' должны быть единицами или NULL"
 msgid "corrupt 'arrows' object"
 msgstr "поврежденный объект 'arrows'"
 
-#, fuzzy
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr "'x' и 'y' и 'id.lenghts' должны определять одну и ту же общую длину"
+msgstr "'x', 'y' и 'pathId.lengths' должны определять одну и ту же общую длину"
 
 msgid "x and y must be units"
 msgstr "x и y должны быть единицами"
@@ -422,9 +420,8 @@ msgstr "'x' и 'units' должен иметь длину > 0"
 msgid "invalid 'axis' or 'type'"
 msgstr "неправильный 'axis' или 'type'"
 
-#, fuzzy
 msgid "Not a unit object"
-msgstr "неправильный единичный объект"
+msgstr "Неправильный единичный объект"
 
 msgid "'Summary' function '%s' not meaningful for units"
 msgstr "Функция 'Summary' '%s' не имеет значения для единиц"
@@ -433,7 +430,7 @@ msgid "operator '%s' not meaningful for units"
 msgstr "оператор '%s' не имеет значения для единиц"
 
 msgid "'*' or '/' cannot be used as a unary operator"
-msgstr ""
+msgstr "'*' и '/' нельзя использовать как односторонний оператор"
 
 msgid "only one operand may be a unit"
 msgstr "только один операнд может быть единицей"
@@ -442,25 +439,22 @@ msgid "non-unit operand must be numeric"
 msgstr "операнды-не-единицы должны быть числовыми"
 
 msgid "can't divide with a unit"
-msgstr ""
+msgstr "не могу разделить с единицей"
 
 msgid "both operands must be units"
 msgstr "оба операнда должны быть единицами"
 
-#, fuzzy
 msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "индекс за пределами (подмножество единиц)"
 
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
-msgstr ""
+msgstr "Не могу создать единичный вектор нулевой длины (подмножество единиц)"
 
-#, fuzzy
 msgid "index must be of length 1"
-msgstr "'x' и 'y' должны быть выражены в единицах единичной длины"
+msgstr "индекс должен быть единичной длины"
 
-#, fuzzy
 msgid "replacement must be of length 1"
-msgstr "элемент 'gpar' '%s' не должен быть нулевой длины"
+msgstr "замена должна быть нулевой длины"
 
 msgid "invalid 'theta'"
 msgstr "неправильная theta"
@@ -474,9 +468,8 @@ msgstr "неправильное значение 'gp'"
 msgid "invalid 'clip' value"
 msgstr "неправильное значение 'clip'"
 
-#, fuzzy
 msgid "invalid 'mask' value"
-msgstr "Неправильное значение 'ask'"
+msgstr "Неправильное значение 'mask'"
 
 msgid "invalid 'xscale' in viewport"
 msgstr "неправильное 'xscale' в оконнице"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-08-13 10:30\n"
-"PO-Revision-Date: 2018-04-07 01:48-0500\n"
+"PO-Revision-Date: 2020-08-28 16:44+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -71,9 +71,8 @@ msgstr ""
 msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr "Данные использованы в объекте документации '%s', но не в коде:"
 
-#, fuzzy
 msgid "Variables with usage in documentation object '%s' but not in code:"
-msgstr "Данные использованы в объекте документации '%s', но не в коде:"
+msgstr "Переменные использованы в объекте документации '%s', но не в коде:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Имена аргументов в коде, но не в документации:"
@@ -300,9 +299,8 @@ msgstr ""
 "В поле Authors@R нет никого в роли сопровождающего, с адресом электронной "
 "почты и непустым именем."
 
-#, fuzzy
 msgid "Authors@R field gives persons with invalid ORCID identifiers:"
-msgstr "В поле Authors@R есть люди без имени:"
+msgstr "В поле Authors@R есть люди с неправильными идентификаторами ORCID:"
 
 msgid "Encoding '%s' is not portable"
 msgstr "Кодировка '%s' не переносима"
@@ -334,15 +332,14 @@ msgstr "Компоненты лицензии, являющиеся образцами, и нужно '+ file LICENSE':"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
 
-#, fuzzy
 msgid "Non-portable flags in file '%s':"
-msgstr "Непереносимые флаги в переменной '%s':"
+msgstr "Непереносимые флаги в файле '%s':"
 
 msgid "Variables overriding user/site settings:"
 msgstr "Переменные переписывают пользовательские установки:"
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
-msgstr ""
+msgstr "неправильный 'OS.type' \"%s\".  Такого быть не должно"
 
 msgid ","
 msgstr ","
@@ -350,9 +347,9 @@ msgstr ","
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Пропущенная связь или связи с объектом документации '%s':"
 
-#, fuzzy
 msgid "Non-file package-anchored link(s) in documentation object '%s':"
-msgstr "Пропущенные связ(и) с объектом документации '%s':"
+msgstr ""
+"Не-файловые закрепленные за пакетом связ(и) с объектом документации '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr "См. раздел 'Cross-references' руководства 'Writing R Extensions'."
@@ -364,10 +361,10 @@ msgid "..."
 msgstr "..."
 
 msgid "No dataset created in 'envir'"
-msgstr ""
+msgstr "Не создана база данных в 'envir'"
 
 msgid "Search path was changed"
-msgstr ""
+msgstr "Путь поиска изменился"
 
 msgid "File %s:"
 msgstr "Файл %s:"
@@ -620,13 +617,12 @@ msgstr "Файл DESCRIPTION для пакета '%s', а не для '%s'"
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "Продукт очерка %s не имеет известного расширения файла (%s)"
 
-#, fuzzy
 msgid ""
 "Failed to locate %s output file %s or %s for vignette with name %s and "
 "engine %s. The following files exist in working directory %s: %s"
 msgstr ""
-"Не удалось найти %s выходной файл (посредством %s) для очерка с именем %s. "
-"Вот какие файлы есть в папке %s: %s"
+"Не удалось найти %s выходной файл %s или %s для очерка с именем %s и сервера "
+"%s. Вот какие файлы есть в папке %s: %s"
 
 msgid ""
 "Located more than one %s output file (by engine %s) for vignette with name "
@@ -635,12 +631,11 @@ msgstr ""
 "Найден более чем один выходной файл %s (посредством %s) для очерка с именем "
 "%s: %s"
 
-#, fuzzy
 msgid ""
 "Failed to locate %s output file %s for vignette with name %s and engine %s. "
 "The following files exist in working directory %s: %s"
 msgstr ""
-"Не удалось найти %s выходной файл (посредством %s) для очерка с именем %s. "
+"Не удалось найти %s выходной файл %s для очерка с именем %s и сервера %s. "
 "Вот какие файлы есть в папке %s: %s"
 
 msgid "unable to create temp directory %s"
@@ -655,7 +650,6 @@ msgstr "Запускаю"
 msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr "Очерк %s переписывает вывод %s от очерка %s: %s"
 
-#, fuzzy
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
 "risking overwriting each other's output files"
@@ -663,34 +657,31 @@ msgstr ""
 "Обнаружены исходные файлы очерка (%s) с общими именами (%s) и поэтому есть "
 "риск переписывания выходных файлов друг друга"
 
-#, fuzzy
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
-msgstr "Очерк '%s' не ASCII, но кодировка не указана"
+msgstr "Ошибка: Очерк '%s' не ASCII, а кодировка не указана"
 
 msgid "--- re-building %s using %s"
-msgstr ""
+msgstr "--- пересоздаю %s с использованием %s"
 
-#, fuzzy
 msgid ""
 "Error: processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
-"выполнение очерка '%s' не удалось с диагностикой:\n"
+"Ошибка: выполнение очерка '%s' не удалось с диагностикой:\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "Error: tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
-"связывание очерка '%s' не удалось с диагностикой:\n"
+"Ошибка: связывание очерка '%s' не удалось с диагностикой:\n"
 "%s"
 
 msgid "--- finished re-building %s"
-msgstr ""
+msgstr "--- закончил пересоздание %s"
 
 msgid "--- failed re-building %s"
-msgstr ""
+msgstr "--- не удалось пересоздать %s"
 
 msgid "running 'make' failed"
 msgstr "не удался запуск 'make'"
@@ -703,7 +694,7 @@ msgstr ""
 "имя файла очерка '%s' не соответствует никакому из '%s' паттернов имен файла"
 
 msgid "+-+"
-msgstr ""
+msgstr "+-+"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Среди миниатюр '%s' '%s' и '%s' имеют одинаковые имена"
@@ -967,16 +958,14 @@ msgstr "не могу прочитать индексную информацию из файла '%s'"
 msgid ".install_packages() exit status"
 msgstr ".install_packages() статус выхода"
 
-#, fuzzy
 msgid "restoration failed"
-msgstr "загрузка не удалась"
+msgstr "восстановление не удалось"
 
-#, fuzzy
 msgid "invalid value"
-msgstr "неправильный пакет"
+msgstr "неправильное значение"
 
 msgid "for R_CROSS_BUILD"
-msgstr ""
+msgstr "для R_CROSS_BUILD"
 
 msgid "error reading file '%s'"
 msgstr "ошибка чтения файла '%s'"
@@ -998,30 +987,32 @@ msgid "no DLL was created"
 msgstr "DLL не создан"
 
 msgid "NOTE: fixed path"
-msgstr ""
+msgstr "ЗАМЕЧАНИЕ: предустановленный путь"
 
 msgid "NOTE: fixed library identification name"
-msgstr ""
+msgstr "ЗАМЕЧАНИЕ: предустановленное идентификационное название библиотеки"
 
 msgid "NOTE: fixed library path"
-msgstr ""
+msgstr "ЗАМЕЧАНИЕ: предустановленный путь для библиотеки"
 
 msgid "NOTE: fixed rpath"
-msgstr ""
+msgstr "ЗАМЕЧАНИЕ: предустановленный rpath"
 
 msgid ""
 "WARNING: shared objects/dynamic libraries with hard-coded temporary "
 "installation paths"
 msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: разделенные объекты / динамические библиотеки с встроенными "
+"временными инсталляционными путями"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "пакет %s удачно распакован, MD5 sums проверены"
 
 msgid "not using staged install with --libs-only"
-msgstr ""
+msgstr "не использую ступенчатую инсталляцию с --libs-only"
 
 msgid "staged installation is only possible with locking"
-msgstr ""
+msgstr "степенцатая инсталляция возможна только с блокировкой"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -1039,7 +1030,7 @@ msgid "empty 'data' directory"
 msgstr "пустая папка 'data'"
 
 msgid "WARNING: moving package to final location failed, copying instead"
-msgstr ""
+msgstr "ПРЕДУПРЕЖДЕНИЕ: перемещение в целевое место не удалось, копирую"
 
 msgid "cannot create unique directory for build"
 msgstr "не могу особую директорию для сборки"
@@ -1152,7 +1143,6 @@ msgstr ""
 "содержит много \\itemize.\n"
 "Использую первый."
 
-#, fuzzy
 msgid ""
 "Malformed NEWS.Rd file:\n"
 "Chunk starting\n"
@@ -1162,14 +1152,13 @@ msgstr ""
 "Неправильный файл NEWS.Rd:\n"
 "Кусок, начинающий\n"
 "  %s\n"
-"не содержит \\itemize."
+"не содержит \\item."
 
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"
 
-#, fuzzy
 msgid "Invalid DESCRIPTION file for package %s"
-msgstr "Неправильный файл 'DESCRIPTION'"
+msgstr "Неправильный файл DESCRIPTION в пакете %s"
 
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
@@ -1251,68 +1240,71 @@ msgid "R CMD build failed"
 msgstr "R CMD не удалась"
 
 msgid "PACKAGES files do not include MD5 sums in the win.binary case"
-msgstr ""
+msgstr "PACKAGES файлы не включают MD5-сумм в случае win.binary"
 
 msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
-msgstr ""
+msgstr ", поэтому прямая проверка невозможна. Приступаю к записи _PACKAGES"
 
 msgid "directly."
-msgstr ""
+msgstr "напрямую."
 
 msgid "No existing PACKAGES file found at"
-msgstr ""
+msgstr "Не нашел файла PACKAGES в"
 
 msgid "Existing PACKAGES file contained no rows and/or no columns"
-msgstr ""
+msgstr "Имеющийся в наличии файл PACKAGES не имеет строк и/или колонок"
 
 msgid "Specified fields no present in existing PACKAGES file:"
-msgstr ""
+msgstr "Указанные поля отстутствуют в имеющемся файле PACKAGES:"
 
 msgid ""
 "Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
 msgstr ""
+"Не могу обновить имеющийся файл PACKAGES. Приступаю к записи _PACKAGES "
+"напрямую."
 
 msgid "Updating existing repository [strict mode:"
-msgstr ""
+msgstr "Обновляю [strict mode текущего репозитория:"
 
 msgid "ON"
-msgstr ""
+msgstr "ВКЛ"
 
 msgid "OFF"
-msgstr ""
+msgstr "ВЫКЛ"
 
 msgid ""
 "]\n"
 "Detected PACKAGES file with"
 msgstr ""
+"]\n"
+"Обнаружен файл PACKAGES с"
 
 msgid "entries at"
-msgstr ""
+msgstr "элементами в"
 
 msgid "unable to find any package tarballs in"
-msgstr ""
+msgstr "не могу найти архивов пакета в"
 
 msgid "All existing entry MD5sums match tarballs."
-msgstr ""
+msgstr "Все наличные MD5-суммы элементов соответствуют архивам."
 
-#, fuzzy
 msgid "Found"
-msgstr "найден %s"
+msgstr "Найден"
 
 msgid "package versions to process."
-msgstr ""
+msgstr "версия пакета для работы."
 
 msgid "No new packages or updated package versions detected"
-msgstr ""
+msgstr "Не найдено новых пакетов или новых версий пакетов"
 
 msgid "[dryrun mode] Dryrun complete."
-msgstr ""
+msgstr "[dryrun mode] Холодный прогон завершен."
 
 msgid "Writing final updated PACKAGES files."
-msgstr ""
+msgstr "Записываю окончательные варианты обновленных файлов PACKAGES."
 
 msgid "update_PACKAGES complete."
-msgstr ""
+msgstr "обновление_PACKAGES завершено."
 
 msgid "'x' must be a single character string"
 msgstr "аргумент 'x' должен быть текстовой строкой"
@@ -1330,7 +1322,7 @@ msgid "only Rd syntax is currently supported"
 msgstr "сейчас поддерживается только Rd-синтаксис"
 
 msgid "texi2dvi script/program not available, using emulation"
-msgstr ""
+msgstr "программа или скрипт texi2dvi недоступна, использую эмуляцию"
 
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr "Запуск 'texi2dvi' на '%s' не удался."
@@ -1371,12 +1363,11 @@ msgstr "'text' должен быть текстовым вектором"
 msgid "parsing '%s'"
 msgstr "разбор '%s'"
 
-#, fuzzy
 msgid "Undeclared package %s in Rd xrefs"
 msgid_plural "Undeclared packages %s in Rd xrefs"
-msgstr[0] "Неизвестный пакет %s в Rd xrefs"
-msgstr[1] "Неизвестные пакеты %s в Rd xrefs"
-msgstr[2] "Неизвестные пакеты %s в Rd xrefs"
+msgstr[0] "Незадекларированные пакеты %s в Rd xrefs"
+msgstr[1] "Незадекларированные пакеты %s в Rd xrefs"
+msgstr[2] "Незадекларированные пакеты %s в Rd xrefs"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1534,18 +1525,15 @@ msgstr[2] ""
 
 msgid "duplicated vignette title:"
 msgid_plural "duplicated vignette titles:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "повторяющийся заголовок очерк(ов):"
+msgstr[1] "повторяющиеся заголовки очерков:"
+msgstr[2] "повторяющиеся заголовки очерков:"
 
-#, fuzzy
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
-msgstr[0] "Найдены возможные глобальные T или F в следующем Rd-файле примеров:"
-msgstr[1] ""
-"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
-msgstr[2] ""
-"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+msgstr[0] "РЕЗУЛЬТАТ: обработка следующих файлов не удалась:"
+msgstr[1] "РЕЗУЛЬТАТ: обработка следующих файлов не удалась:"
+msgstr[2] "РЕЗУЛЬТАТ: обработка следующих файлов не удалась:"
 
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
@@ -1553,10 +1541,9 @@ msgstr[0] "не могу перекодировать %s строку %s"
 msgstr[1] "не могу перекодировать %s строки %s"
 msgstr[2] "не могу перекодировать %s строки %s"
 
-#, fuzzy
 msgid "%s file\n"
 msgid_plural "%s files\n"
-msgstr[0] "файл\n"
+msgstr[0] "файлы\n"
 msgstr[1] "файлы\n"
 msgstr[2] "файлы\n"
 

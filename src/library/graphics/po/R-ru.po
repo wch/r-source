@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-03-24 10:13\n"
-"PO-Revision-Date: 2018-04-07 02:23-0500\n"
+"PO-Revision-Date: 2020-08-27 19:05+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -94,16 +94,16 @@ msgstr "неправильное количество имен"
 msgid "'formula' missing or incorrect"
 msgstr "'formula' пропущена или неправильная"
 
-#, fuzzy
 msgid "formula must specify 1 or 2 categorical variables"
-msgstr "'formula' должна определять в точности две переменные"
+msgstr "формула должна включать 1 или 2 качественные переменные"
 
 msgid "duplicated categorical values - try another formula or subset"
 msgstr ""
+"повторяющиеся качественные значения -- попробуйте другую формулу или "
+"подмножество"
 
-#, fuzzy
 msgid "formula with cbind() must specify 1 categorical variable"
-msgstr "'formula' должна определять в точности две переменные"
+msgstr "формула с cbind() должна включать 1 качественную переменную"
 
 msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
@@ -488,12 +488,11 @@ msgstr "логарифмическая шкала y:  yinch() бессмысленно"
 msgid "log scale:  xyinch() is nonsense"
 msgstr "логарифмическая шкала:  xyinch() бессмысленно"
 
-#, fuzzy
 msgid "Duplicated argument %s is disregarded"
 msgid_plural "Duplicated arguments %s are disregarded"
-msgstr[0] "дополнительный аргумент %s будет отброшен"
-msgstr[1] "дополнительные аргументы %s будут отброшены"
-msgstr[2] "дополнительные аргументы %s будут отброшены"
+msgstr[0] "%s дополнительный аргумент будет отброшен"
+msgstr[1] "%s дополнительных аргумента будет отброшено"
+msgstr[2] "%s дополнительных аргументов будет отброшено"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"

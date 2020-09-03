@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 01:16-0500\n"
+"PO-Revision-Date: 2020-08-27 18:57+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -436,14 +436,13 @@ msgid "unable to use encoding '%s'"
 msgstr "не могу использовать кодировку '%s'"
 
 #: devPS.c:5695
-#, fuzzy
 msgid "failed to increase definition string (shut down PDF device)"
-msgstr "не могу увеличить лимит страниц: пожалуйста, выключите устройство PDF"
+msgstr ""
+"не могу увеличить строку определений: пожалуйста, выключите устройство PDF"
 
 #: devPS.c:5737
-#, fuzzy
 msgid "failed to increase 'maxDefns'"
-msgstr "не могу увеличить 'maxRaster'"
+msgstr "не могу увеличить 'maxDefns'"
 
 #: devPS.c:6634 devPS.c:6637
 msgid "failed to increase 'maxRaster'"
@@ -486,9 +485,8 @@ msgid "failed to allocate masks"
 msgstr "не могу разместить маски"
 
 #: devPS.c:7159
-#, fuzzy
 msgid "failed to allocate definitions"
-msgstr "не могу разместить список шрифтов"
+msgstr "не могу разместить определения"
 
 #: devPS.c:7228
 #, c-format

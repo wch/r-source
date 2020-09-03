@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 16:15-0500\n"
+"PO-Revision-Date: 2020-08-19 21:23+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -414,9 +414,9 @@ msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): файл '%s' не существует\n"
 
 #: src/gnuwin32/system.c:893
-#, fuzzy, c-format
+#, c-format
 msgid "Workspace name '%s' is too long\n"
-msgstr "имя DLL '%s' слишком длинное"
+msgstr "имя рабочего пространства '%s' слишком длинное\n"
 
 #: src/gnuwin32/system.c:909 src/unix/system.c:452
 #, c-format
@@ -617,9 +617,8 @@ msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand' отсутствует в таблице загрузки"
 
 #: src/main/RNG.c:510
-#, fuzzy
 msgid "invalid sample type in 'RNGkind'"
-msgstr "у 'RNGkind' неправильный Normal тип"
+msgstr "у 'RNGkind' неправильный тип sample"
 
 #: src/main/RNG.c:556
 msgid "supplied seed is not a valid integer"
@@ -884,9 +883,9 @@ msgid "dimnames(<value>) is neither NULL nor list of length %d"
 msgstr "dimnames(<value>) не является ни NULL, ни списком длины %d"
 
 #: src/main/apply.c:330 src/main/coerce.c:2671
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list or expression"
-msgstr "'args' должны быть списком или выражением"
+msgstr "'%s' должны быть списком или выражением"
 
 #: src/main/arithmetic.c:44 src/main/eval.c:4455
 msgid "NaNs produced"
@@ -964,10 +963,10 @@ msgid "unimplemented real function of %d numeric arguments"
 msgstr "нереализованная действительная функция %d числовых аргументов"
 
 #: src/main/arithmetic.c:1651
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to '%s' which requires 1 or 2 arguments"
 msgid_plural "%d arguments passed to '%s' which requires 1 or 2 arguments"
-msgstr[0] "%d аргументов передано '%s', а требуется 1 или 2"
+msgstr[0] "%d аргумент передан '%s', а требуется 1 или 2"
 msgstr[1] "%d аргумента переданы '%s', а требуется 1 или 2"
 msgstr[2] "%d аргументов переданы '%s', а требуется 1 или 2"
 
@@ -1053,7 +1052,6 @@ msgid "negative extents to 3D array"
 msgstr "отрицательная протяженность трехмерной матрицы"
 
 #: src/main/array.c:245
-#, fuzzy
 msgid "'alloc3DArray': too many elements specified"
 msgstr "'alloc3Darray': задано слишком много элементов"
 
@@ -1084,9 +1082,9 @@ msgid "argument is not a matrix"
 msgstr "аргумент не является матрицей"
 
 #: src/main/array.c:1700 src/main/attrib.c:1210
-#, fuzzy, c-format
+#, c-format
 msgid "invalid first argument, must be %s"
-msgstr "неправильный первый аргумент, должна быть многомерная матрица"
+msgstr "неправильный первый аргумент, должен быть %s"
 
 #: src/main/array.c:1714
 #, c-format
@@ -1152,9 +1150,9 @@ msgid "cannot set attribute on a symbol"
 msgstr "не могу установить атрибуты для знака"
 
 #: src/main/attrib.c:398
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'names': must be vector or NULL"
-msgstr "неправильный тип (%s) для 'names': должен быть вектор"
+msgstr "неправильный тип (%s) для 'names': должен быть вектор или NULL"
 
 #: src/main/attrib.c:401
 #, c-format
@@ -1232,9 +1230,9 @@ msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "длина 'dimnames' [%d] не равна протяженности многомерной матрицы"
 
 #: src/main/attrib.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid "invalid second argument, must be %s"
-msgstr "неправильный второй аргумент"
+msgstr "неправильный второй аргумент, должен быть %s"
 
 #: src/main/attrib.c:1220
 msgid "length-0 dimension vector is invalid"
@@ -1377,9 +1375,9 @@ msgid "number of rows of matrices must match (see arg %d)"
 msgstr "количества строк матриц должны соответствовать (см. аргумент %d)"
 
 #: src/main/bind.c:1388
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create a matrix of type '%s'"
-msgstr "не могу создать матрицу из типа '%s'"
+msgstr "не могу создать матрицу типа '%s'"
 
 #: src/main/bind.c:1489
 #, c-format
@@ -1676,9 +1674,9 @@ msgid "invalid data of mode '%s' (too short)"
 msgstr "неправильные данные типа '%s' (слишком короткие)"
 
 #: src/main/coerce.c:1025 src/main/coerce.c:1147 src/main/coerce.c:1170
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' object cannot be coerced to type '%s'"
-msgstr "объект 'pairlist' не может быть преобразован в тип '%s'"
+msgstr "объект '%s' не может быть преобразован в тип '%s'"
 
 #: src/main/coerce.c:1190 src/main/coerce.c:1529
 msgid "no method for coercing this S4 class to a vector"
@@ -1713,19 +1711,17 @@ msgid "invalid body for function"
 msgstr "неправильное тело функции"
 
 #: src/main/coerce.c:1637
-#, fuzzy
 msgid "argument must be character"
-msgstr "аргумент '%s' должен быть текстовой строкой"
+msgstr "аргумент должен быть текстовой строкой"
 
 #: src/main/coerce.c:1642
-#, fuzzy
 msgid "argument must be a character string"
-msgstr "аргумент '%s' должен быть текстовой строкой"
+msgstr "аргумент должен быть текстовой строкой"
 
 #: src/main/coerce.c:1683
 #, c-format
 msgid "parsing result not of length one, but %d"
-msgstr ""
+msgstr "длина результата разбора текста не 1 но %d"
 
 #: src/main/coerce.c:1715
 msgid "invalid length 0 argument"
@@ -1733,7 +1729,7 @@ msgstr "неправильный аргумент нулевой длины"
 
 #: src/main/coerce.c:1731
 msgid "as.call(<character>) not feasible; consider str2lang(<char.>)"
-msgstr ""
+msgstr "as.call(<character>) не подходит; попробуйте str2lang(<char.>)"
 
 #: src/main/coerce.c:1734
 msgid "invalid argument list"
@@ -1742,7 +1738,7 @@ msgstr "неправильный список аргументов"
 #: src/main/coerce.c:1755
 #, c-format
 msgid "'length(x) = %lld > 1' in coercion to '%s'"
-msgstr ""
+msgstr "'length(x) = %lld > 1' перекодирован в '%s'"
 
 #: src/main/coerce.c:2099
 msgid "type \"single\" unimplemented in R"
@@ -1915,15 +1911,15 @@ msgid "cannot open file '%ls': %s"
 msgstr "не могу открыть файл '%ls': %s"
 
 #: src/main/connections.c:764
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%ls': it is a directory"
-msgstr "не могу открыть файл '%ls': %s"
+msgstr "не могу открыть файл '%ls': это дирекртория"
 
 #: src/main/connections.c:794 src/main/connections.c:1703
 #: src/main/connections.c:1854 src/main/connections.c:2050
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s': it is a directory"
-msgstr "не могу открыть файл '%s': %s"
+msgstr "не могу открыть файл '%s': это директория"
 
 #: src/main/connections.c:907
 msgid "connection is not open for reading"
@@ -2177,14 +2173,14 @@ msgid "allocation of raw connection failed"
 msgstr "размещение простого соединения не удалось"
 
 #: src/main/connections.c:2971
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a %s"
-msgstr "fifo-канал '%s' не готов"
+msgstr "'%s' не %s"
 
 #: src/main/connections.c:2975
-#, fuzzy, c-format
+#, c-format
 msgid "internal connection is not a %s"
-msgstr "соединение не открыто"
+msgstr "внутреннее соединение не %s"
 
 #: src/main/connections.c:2988
 msgid "'con' is not an output rawConnection"
@@ -2372,9 +2368,8 @@ msgid "invalid UTF-8 input in readChar()"
 msgstr "неправильный UTF-8 ввод в readChar()"
 
 #: src/main/connections.c:4697 src/main/connections.c:4707
-#, fuzzy
 msgid "truncating string with embedded nuls"
-msgstr "перевод строк с кодировкой \"bytes\" запрещено"
+msgstr "обрезка строк с nuls"
 
 #: src/main/connections.c:4808
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
@@ -2384,6 +2379,7 @@ msgstr "могу читать только побайтно на не-UTF-8 MBCS
 #, c-format
 msgid "text connection used with %s(), results may be incorrect"
 msgstr ""
+"текстовое соединение использовано с %s(), результаты могут быть неправильными"
 
 #: src/main/connections.c:4886
 msgid "'object' is too short"
@@ -2452,12 +2448,12 @@ msgstr ""
 #: src/main/connections.c:5517
 #, c-format
 msgid "using 'raw = TRUE' because '%s' is a fifo or pipe"
-msgstr ""
+msgstr "использую 'raw = TRUE' потому что '%s' -- fifo или pipe"
 
 #: src/main/connections.c:5524
 #, c-format
 msgid "'raw = FALSE' but '%s' is not a regular file"
-msgstr ""
+msgstr "'raw = FALSE' но '%s' не обычный файл"
 
 #: src/main/connections.c:5568
 msgid "URL scheme unsupported by this method"
@@ -2531,9 +2527,8 @@ msgid "bad write indicators"
 msgstr "плохие индикаторы записи"
 
 #: src/main/connections.c:6172
-#, fuzzy
 msgid "a server socket connection cannot be writeable"
-msgstr "средства сокетов не могут быть загружены"
+msgstr "нельзя писать в серверное соединение через сокет"
 
 #: src/main/connections.c:6174
 msgid "not a socket connection"
@@ -2644,9 +2639,8 @@ msgid "invalid component [[10]] in \"POSIXlt\" should be 'zone'"
 msgstr "неправильный компонент [[10]] в \"POSIXlt\" должен быть 'zone'"
 
 #: src/main/datetime.c:923
-#, fuzzy
 msgid "More than 9 list components in \"POSIXlt\" without timezone"
-msgstr "неправильный компонент [[10]] в \"POSIXlt\" должен быть 'zone'"
+msgstr "Больше 10 компонентов списка в \"POSIXlt\" без временной зоны"
 
 #: src/main/dcf.c:112 src/main/dcf.c:187 src/main/dcf.c:270
 msgid "could not allocate memory for 'read.dcf'"
@@ -3074,7 +3068,7 @@ msgstr "не хватает памяти во время вырезания ло
 
 #: src/main/engine.c:1111
 msgid "Clipping polygon that does not need clipping"
-msgstr ""
+msgstr "Вырезанние многоугольника, не нуждающегося в вырезании"
 
 #: src/main/engine.c:1495
 msgid "path rendering is not implemented for this device"
@@ -3220,12 +3214,12 @@ msgid "indexing '...' with non-positive index %d"
 msgstr "индексирование '...' с неположительным индексом %d"
 
 #: src/main/envir.c:1426
-#, fuzzy, c-format
+#, c-format
 msgid "the ... list contains fewer than %d element"
 msgid_plural "the ... list contains fewer than %d elements"
-msgstr[0] "список  ... не содержит никаких элементов"
-msgstr[1] "список ... не содержит %d элементов"
-msgstr[2] "список ... не содержит %d элементов"
+msgstr[0] "список  ... не содержит меньше чем %d элемент"
+msgstr[1] "список ... содержит меньше чем %d элемента"
+msgstr[2] "список ... содержит содержит меньше %d элементов"
 
 #: src/main/envir.c:1430
 #, c-format
@@ -3233,9 +3227,8 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d использовано в неправильном контексте, нет ... чтобы найти"
 
 #: src/main/envir.c:1449
-#, fuzzy
 msgid "indexing '...' with an invalid index"
-msgstr "индексирование '...' с неположительным индексом %d"
+msgstr "индексирование '...' с неправильным индексом %d"
 
 #: src/main/envir.c:1459 src/main/envir.c:1469
 msgid "incorrect context: the current call has no '...' to look in"
@@ -3389,9 +3382,9 @@ msgid "cannot change active binding if binding is locked"
 msgstr "не могу изменить активную связь когда связь блокирована"
 
 #: src/main/envir.c:3501 src/main/envir.c:3510
-#, fuzzy, c-format
+#, c-format
 msgid "no active binding for \"%s\""
-msgstr "нет связи для \"%s\""
+msgstr "нет активной связи для \"%s\""
 
 #: src/main/envir.c:3530 src/main/envir.c:3777
 msgid "unknown op"
@@ -3515,6 +3508,8 @@ msgid ""
 "Error: no more error handlers available (recursive errors?); invoking "
 "'abort' restart\n"
 msgstr ""
+"Ошибка: больше нет доступных обработчиков ошибок (рекурсивные ошибки?); "
+"запускаю 'abort' рестарт\n"
 
 #: src/main/errors.c:743
 msgid "Error in "
@@ -3952,9 +3947,8 @@ msgid "incorrect tag type at line %d"
 msgstr "некорректный тип тега на строке %d"
 
 #: src/main/gram.y:1409
-#, fuzzy
 msgid "allocation of source reference state failed"
-msgstr "не удалось размещение socket-соединения"
+msgstr "не удалось размещение source reference state"
 
 #: src/main/gram.y:1900
 msgid "contextstack overflow"
@@ -4090,7 +4084,7 @@ msgstr ""
 #: src/main/gram.y:2851
 #, c-format
 msgid "malformed raw string literal at line %d"
-msgstr ""
+msgstr "плохой знак неформатированной строки на строке %d"
 
 #: src/main/gram.y:3549 src/main/gram.y:3556 src/main/gram.y:3562
 #: src/main/gram.y:3569
@@ -4104,17 +4098,14 @@ msgid "internal parser error at line %d"
 msgstr "ошибка внутреннего парсера на строке %d"
 
 #: src/main/graphics.c:68
-#, fuzzy, c-format
+#, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
-msgstr "относительный размах значений =%4.0f * EPS мал (ось %d)"
+msgstr "относительный размах значений (%4.0f * EPS) мал (ось %d)"
 
 #: src/main/grep.c:153
-#, fuzzy, c-format
+#, c-format
 msgid "TRE pattern compilation error '%s'"
-msgstr ""
-"Ошибка компиляции паттерна PCRE\n"
-"\t'%s'\n"
-"\tв '%s'\n"
+msgstr "Ошибка компиляции паттерна TRE '%s'"
 
 #: src/main/grep.c:154
 #, c-format
@@ -4133,6 +4124,9 @@ msgid ""
 "\t'%s'\n"
 "\tfor element %d"
 msgstr ""
+"ошибка PCRE\n"
+"\t'%s'\n"
+"\tв элементе %d"
 
 #: src/main/grep.c:338 src/main/grep.c:410
 #, c-format
@@ -4151,14 +4145,13 @@ msgid "invalid regular expression '%s'"
 msgstr "неправильное регулярное выражение '%s'"
 
 #: src/main/grep.c:352
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "PCRE JIT compilation error\n"
 "\t'%s'"
 msgstr ""
-"Ошибка компиляции паттерна PCRE\n"
-"\t'%s'\n"
-"\tв '%s'\n"
+"Ошибка компиляции PCRE JIT\n"
+"\t'%s'"
 
 #: src/main/grep.c:421
 #, c-format
@@ -4221,9 +4214,9 @@ msgid "result string is too long"
 msgstr "строка результата слишком длинна"
 
 #: src/main/grep.c:2905
-#, fuzzy, c-format
+#, c-format
 msgid "'pcre2_patterninfo' returned '%d' "
-msgstr "'pcre_fullinfo' вернул '%d' "
+msgstr "'pcre2_patterninfo' вернул '%d' "
 
 #: src/main/grep.c:2922
 #, c-format
@@ -4254,9 +4247,8 @@ msgid "socket routines cannot be loaded"
 msgstr "средства сокетов не могут быть загружены"
 
 #: src/main/internet.c:232
-#, fuzzy
 msgid "maxlen must be non-negative"
-msgstr "'gap' должен быть положительным целым числом"
+msgstr "'maxlen' должен быть положительным целым числом"
 
 #: src/main/internet.c:255
 msgid "attempt to close invalid socket"
@@ -4545,14 +4537,14 @@ msgid "not safe to return vector pointer"
 msgstr "небезопасно возвращать указатель вектора"
 
 #: src/main/memory.c:4033
-#, fuzzy, c-format
+#, c-format
 msgid "attempt to set index %lld/%lld in SET_STRING_ELT"
-msgstr "попытка установить индекс %lu/%lu в SET_STRING_ELT"
+msgstr "попытка установить индекс %lld/%lld в SET_STRING_ELT"
 
 #: src/main/memory.c:4054
-#, fuzzy, c-format
+#, c-format
 msgid "attempt to set index %lld/%lld in SET_VECTOR_ELT"
-msgstr "попытка установить индекс %lu/%lu в SET_VECTOR_ELT"
+msgstr "попытка установить индекс %lld/%lld в SET_VECTOR_ELT"
 
 #: src/main/memory.c:4192 src/main/memory.c:4201 src/main/memory.c:4214
 #: src/main/memory.c:4231 src/main/memory.c:4246 src/main/memory.c:4262
@@ -4802,24 +4794,23 @@ msgid "corrupted options list"
 msgstr "лист опций поврежден"
 
 #: src/main/options.c:145
-#, fuzzy, c-format
+#, c-format
 msgid "invalid printing width %d, used 80"
-msgstr "неправильная ширина печати, использую 80"
+msgstr "неправильная ширина печати %d, использую 80"
 
 #: src/main/options.c:148
-#, fuzzy
 msgid "invalid printing width"
-msgstr "неправильная ширина печати, использую 80"
+msgstr "неправильная ширина печати"
 
 #: src/main/options.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "invalid printing digits %d, used 7"
-msgstr "неправильное количество цифр после запятой, использую 7"
+msgstr "неправильное количество цифр после запятой %d, использовал 7"
 
 #: src/main/options.c:166
-#, fuzzy, c-format
+#, c-format
 msgid "invalid printing digits %d"
-msgstr "неправильное количество цифр после запятой, использую 7"
+msgstr "неправильное количество цифр после запятой %d"
 
 #: src/main/options.c:182
 msgid "invalid 'deparse.cutoff', used 60"
@@ -4834,14 +4825,14 @@ msgid "list argument has no valid names"
 msgstr "у аргумента списка нет правильных имен"
 
 #: src/main/options.c:531
-#, fuzzy, c-format
+#, c-format
 msgid "option '%s' cannot be deleted"
-msgstr "zip файл '%s' не может быть открыт"
+msgstr "опция '%s' не может быть удалена"
 
 #: src/main/options.c:536 src/main/options.c:547 src/main/options.c:554
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' parameter, allowed %d...%d"
-msgstr "неправильный параметр 'digits', разрешается %d...%d"
+msgstr "неправильный параметр '%s', разрешается %d...%d"
 
 #: src/main/options.c:561 src/main/options.c:569 src/main/options.c:575
 #: src/main/options.c:583 src/main/options.c:590 src/main/options.c:595
@@ -4860,7 +4851,7 @@ msgstr "неправильное значение '%s'"
 #: src/main/options.c:617
 #, c-format
 msgid "value for '%s' outside of -1:2 is set to %d\n"
-msgstr ""
+msgstr "значение '%s' за пределами -1:2 изменено в %d\n"
 
 #: src/main/options.c:679
 msgid "'OutDec' must be a string of one character"
@@ -4876,12 +4867,12 @@ msgstr "OpenMP SIMD не поддерживается в этой сборке R
 
 #: src/main/options.c:798
 msgid "'PCRE_study' has no effect with PCRE2"
-msgstr ""
+msgstr "'PCRE_study' не работает в PCRE2"
 
 #: src/main/options.c:821
 #, c-format
 msgid "'%s' is deprecated and will be disabled"
-msgstr ""
+msgstr "'%s' не рекомендуется и будет отключено"
 
 #: src/main/options.c:834
 msgid "invalid argument"
@@ -4900,23 +4891,21 @@ msgid "invalid separator"
 msgstr "неправильный разделитель"
 
 #: src/main/paste.c:150 src/main/paste.c:365
-#, fuzzy, c-format
+#, c-format
 msgid "non-string argument to .Internal(%s)"
-msgstr "аргумент для внутренней вставки не является строкой"
+msgstr "аргумент .Internal(%s) не является строкой"
 
 #: src/main/paste.c:215 src/main/paste.c:286
 msgid "result would exceed 2^31-1 bytes"
 msgstr "результат будет превышать 2^31-1 байт"
 
 #: src/main/paste.c:378
-#, fuzzy
 msgid "strings with \"bytes\" encoding are not allowed"
-msgstr "перевод строк с кодировкой \"bytes\" запрещено"
+msgstr "строки с кодировкой \"bytes\" не разрешаются"
 
 #: src/main/paste.c:460
-#, fuzzy
 msgid "first argument must be atomic or environment"
-msgstr "аргумент должен быть окружением"
+msgstr "первый аргумент должен быть атомарным или окружением"
 
 #: src/main/paste.c:521
 msgid "'decimal.mark' must be a string of one character"
@@ -5019,9 +5008,9 @@ msgid "expanded 'to' name too long"
 msgstr "раскрытое имя 'to' слишком длинное"
 
 #: src/main/platform.c:861
-#, fuzzy, c-format
+#, c-format
 msgid "cannot rename file '%ls' to '%ls', reason '%s'"
-msgstr "не могу переименовать '%s' в '%s' по причине '%s'"
+msgstr "не могу переименовать файл '%ls' в '%ls' по причине '%s'"
 
 #: src/main/platform.c:876
 #, c-format
@@ -5102,7 +5091,7 @@ msgstr "слишком большая длина path"
 #: src/main/platform.c:2490
 #, c-format
 msgid "cannot overwrite non-directory %ls with directory %ls"
-msgstr ""
+msgstr "не могу записать не-директорию %ls поверх %ls"
 
 #: src/main/platform.c:2495
 #, c-format
@@ -5110,9 +5099,9 @@ msgid "problem creating directory %ls: %s"
 msgstr "проблема с созданием каталога %ls: %s "
 
 #: src/main/platform.c:2517
-#, fuzzy, c-format
+#, c-format
 msgid "problem reading directory %ls: %s"
-msgstr "проблема с чтением каталога %s: %s"
+msgstr "проблема с чтением каталога %ls: %s"
 
 #: src/main/platform.c:2537
 #, c-format
@@ -5122,7 +5111,7 @@ msgstr "проблема с копированием %ls в %ls: %s"
 #: src/main/platform.c:2744
 #, c-format
 msgid "cannot overwrite non-directory %s with directory %s"
-msgstr ""
+msgstr "не могу записать не-директорию %s поверх %s"
 
 #: src/main/platform.c:2749
 #, c-format
@@ -5148,9 +5137,9 @@ msgid "insufficient OS support on this platform"
 msgstr "недостаточная поддержка OS на этой платформе"
 
 #: src/main/platform.c:3115
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be of length at least one"
-msgstr "длина 'mode' должна быть не меньше единицы"
+msgstr "длина '%s' должна быть не меньше единицы"
 
 #: src/main/plot3d.c:120
 #, c-format
@@ -5326,9 +5315,8 @@ msgid "argument 'x' must be an integer vector"
 msgstr "аргумент 'x' должен быть целочисленным вектором"
 
 #: src/main/raw.c:147 src/main/raw.c:165
-#, fuzzy
 msgid "argument 'x' must be a numeric vector"
-msgstr "аргумент 'x' должен быть простым вектором"
+msgstr "аргумент 'x' должен быть числовым вектором"
 
 #: src/main/raw.c:188
 msgid "argument 'x' must be raw, integer or logical"
@@ -5654,9 +5642,9 @@ msgid "empty 'what' specified"
 msgstr "указан пустой 'what' "
 
 #: src/main/scan.c:736
-#, fuzzy, c-format
+#, c-format
 msgid "line %lld did not have %lld elements"
-msgstr "строка %d не содержит %d элементов"
+msgstr "строка %lld не содержит %lld элементов"
 
 #: src/main/scan.c:788
 msgid "number of items read is not a multiple of the number of columns"
@@ -5767,42 +5755,36 @@ msgid "argument must be coercible to non-negative integer"
 msgstr "аргумент должен быть преобразовываем в неотрицательное целое число"
 
 #: src/main/seq.c:1101
-#, fuzzy
 msgid "'lengths' is not of mode integer"
-msgstr "аргумент не является текстом"
+msgstr "'lengths' не является целым числом"
 
 #: src/main/seq.c:1104
-#, fuzzy
 msgid "'from' is not of mode integer"
-msgstr "аргумент не является текстом"
+msgstr "'from' не является целым числом"
 
 #: src/main/seq.c:1107
-#, fuzzy
 msgid "'by' is not of mode integer"
-msgstr "аргумент не является текстом"
+msgstr "'by' не является целым числом"
 
 #: src/main/seq.c:1114
-#, fuzzy
 msgid "'from' has length 0, but not 'lengths'"
-msgstr "длина группы 0, а длина данных > 0"
+msgstr "у 'from' длина 0, а не 'lengths'"
 
 #: src/main/seq.c:1116
-#, fuzzy
 msgid "'by' has length 0, but not 'lengths'"
-msgstr "длина группы 0, а длина данных > 0"
+msgstr "у 'by' длина 0, а не 'lengths'"
 
 #: src/main/seq.c:1123
-#, fuzzy
 msgid "'lengths' must be a vector of non-negative integers"
-msgstr "'gap' должен быть положительным целым числом"
+msgstr "'lengths' должен быть положительным целым числом"
 
 #: src/main/seq.c:1138
 msgid "'from' contains NAs"
-msgstr ""
+msgstr "'from' содержит NAs"
 
 #: src/main/seq.c:1143
 msgid "'by' contains NAs"
-msgstr ""
+msgstr "'by' содержит NAs"
 
 #: src/main/serialize.c:267 src/main/serialize.c:314 src/main/serialize.c:338
 msgid "unknown or inappropriate output format"
@@ -5920,9 +5902,8 @@ msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr "ReadItem: неизвестный тип %i, возможно записанный следующей версией R"
 
 #: src/main/serialize.c:2159 src/main/serialize.c:2250
-#, fuzzy
 msgid "invalid length of encoding name"
-msgstr "неправильный тип или длина для имени слота"
+msgstr "неправильная длина для названия кодировки"
 
 #: src/main/serialize.c:2169
 #, c-format
@@ -6075,11 +6056,11 @@ msgstr "конверсия 'text' в символы не удалась"
 
 #: src/main/source.c:244
 msgid "argument encoding=\"latin1\" is ignored in MBCS locales"
-msgstr ""
+msgstr "аргумент encoding=\"latin1\" пропускается на локалях MBCS"
 
 #: src/main/source.c:252
 msgid "argument encoding=\"UTF-8\" is ignored in MBCS locales"
-msgstr ""
+msgstr "аргумент encoding=\"UTF-8\" пропускается на локалях MBCS"
 
 #: src/main/source.c:254
 #, c-format
@@ -6333,9 +6314,9 @@ msgid "internal error in use of recursive indexing"
 msgstr "внутренняя ошибка во время использования рекурсивной индексации"
 
 #: src/main/subscript.c:206 src/main/subscript.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "invalid negative subscript in %s"
-msgstr "неправильный тип подгруппы '%s'"
+msgstr "неправильный отрицательный индекс в %s"
 
 #: src/main/subscript.c:259
 #, c-format
@@ -6553,9 +6534,9 @@ msgid "internal error: no translation needed"
 msgstr "внутренняя ошибка: перевод не нужен"
 
 #: src/main/sysutils.c:969 src/main/sysutils.c:973
-#, fuzzy, c-format
+#, c-format
 msgid "unable to translate '%s' to native encoding"
-msgstr "не могу записать в буфер обмена"
+msgstr "не могу перевести '%s' в исходную кодировку системы"
 
 #: src/main/sysutils.c:985 src/main/sysutils.c:1005 src/main/sysutils.c:1026
 #: src/main/sysutils.c:1045 src/main/sysutils.c:1094 src/main/sysutils.c:1160
@@ -6564,9 +6545,9 @@ msgid "'%s' must be called on a CHARSXP, but got '%s'"
 msgstr "'%s' должен быть вызван на CHARSXP, а получил '%s'"
 
 #: src/main/sysutils.c:1209
-#, fuzzy, c-format
+#, c-format
 msgid "unable to translate '%s' to UTF-8"
-msgstr "не могу разрешить '%s'"
+msgstr "не могу перевести '%s' в UTF-8"
 
 #: src/main/sysutils.c:1282
 #, c-format
@@ -6773,9 +6754,8 @@ msgid "warning message truncated to 255 chars"
 msgstr "предупреждающее сообщение сокращено до 255 символов"
 
 #: src/main/util.c:1826
-#, fuzzy
 msgid "Conversion failed"
-msgstr "неправильное значение версии"
+msgstr "Конвертирование не удалось"
 
 #: src/main/util.c:1944
 #, c-format
@@ -7153,9 +7133,8 @@ msgid "cannot open URL '%s'"
 msgstr "не могу открыть URL '%s'"
 
 #: src/modules/internet/internet.c:810
-#, fuzzy
 msgid "could not allocate memory for http headers"
-msgstr "не могу разместить память для 'read.dcf'"
+msgstr "не могу разместить память для заголовков http"
 
 #: src/modules/internet/internet.c:823 src/modules/internet/internet.c:989
 #: src/modules/internet/libcurl.c:214
@@ -7198,7 +7177,7 @@ msgstr "длины 'url' and 'destfile' должны совпадать"
 
 #: src/modules/internet/libcurl.c:523 src/modules/internet/libcurl.c:541
 msgid "out of memory"
-msgstr ""
+msgstr "не хватает памяти"
 
 #: src/modules/internet/libcurl.c:569
 #, c-format
@@ -7318,14 +7297,13 @@ msgstr "не удалось размещение socket-соединения"
 
 #: src/modules/internet/sockconn.c:247 src/modules/internet/sockconn.c:251
 #: src/modules/internet/sockconn.c:258 src/modules/internet/sockconn.c:266
-#, fuzzy
 msgid "allocation of server socket connection failed"
-msgstr "не удалось размещение socket-соединения"
+msgstr "не удалось размещение серверного socket-соединения"
 
 #: src/modules/internet/sockconn.c:275
 #, c-format
 msgid "creation of server socket failed: port %d cannot be opened"
-msgstr ""
+msgstr "не получилось создать серверный сокет: не могу открыть порт %d"
 
 #: src/modules/lapack/Lapack.c:66 src/modules/lapack/Lapack.c:85
 #, c-format
@@ -7462,9 +7440,8 @@ msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "аргумент %d функции 'Lapack' %s имеет неправильное значение"
 
 #: src/modules/lapack/Lapack.c:598
-#, fuzzy
 msgid "Lapack routine zgesv: system is exactly singular"
-msgstr "функция Lapack %s: система в точности сингулярная: U[%d,%d] = 0"
+msgstr "функция Lapack zgesv: система в точности сингулярная"
 
 #: src/modules/lapack/Lapack.c:676 src/modules/lapack/Lapack.c:722
 msgid "'b' must be a complex matrix"
@@ -7661,9 +7638,9 @@ msgid "pnbinom_mu() -> bratio() gave error code %d"
 msgstr "pnbinom_mu() -> bratio() выдал ошибку с кодом %d"
 
 #: src/nmath/pnchisq.c:302
-#, fuzzy, c-format
+#, c-format
 msgid "pnchisq(x=%g, f=%g, theta=%g, ..): not converged in %d iter."
-msgstr "pnchisq(x=%g, ..): не сошлось на %d итерации."
+msgstr "pnchisq(x=%g, f=%g, theta=%g, ..): не сошлось на %d итерации."
 
 #: src/nmath/polygamma.c:499
 #, c-format

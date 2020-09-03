@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 02:21-0500\n"
+"PO-Revision-Date: 2020-08-27 19:07+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -276,13 +276,12 @@ msgid "zero-length '%s' specified"
 msgstr "указана нулевая длина '%s'"
 
 #: plot.c:862
-#, fuzzy
 msgid "'gap.axis' must be of length one"
-msgstr "'hadj' должен быть единичной длины"
+msgstr "'gap.axis' должен быть единичной длины"
 
 #: plot.c:892
 msgid "'gap.axis' must be NA or a finite number"
-msgstr ""
+msgstr "'gap.axis' должен быть NA или конечным числом"
 
 #: plot.c:944
 msgid "'labels' is supplied and not 'at'"
@@ -549,7 +548,7 @@ msgstr "contour(): круговой/длинный список сегменто
 
 #: plot3d.c:1935
 msgid "no 'levels'"
-msgstr ""
+msgstr "нет 'levels'"
 
 #: plot3d.c:1939
 msgid "missing 'x' values"
@@ -570,7 +569,7 @@ msgstr "нужны увеличивающиеся значения 'y'"
 #: plot3d.c:1953
 #, c-format
 msgid "non-finite level values: levels[%d] = %g"
-msgstr ""
+msgstr "не-конечные значения уровней: levels[%d] = %g"
 
 #: plot3d.c:1966
 msgid "all z values are equal"

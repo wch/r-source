@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 3.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 01:19-0500\n"
+"PO-Revision-Date: 2020-08-28 17:09+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -83,12 +83,11 @@ msgstr "индекс вне пределов"
 #: io.c:1046
 #, c-format
 msgid "Problem closing connection:  %s"
-msgstr ""
+msgstr "Проблема с закрытием соединения: %s"
 
 #: io.c:1048
-#, fuzzy
 msgid "Problem closing connection"
-msgstr "'file' -- это не соединение"
+msgstr "Проблема с закрытием соединения"
 
 #: io.c:1071
 msgid "'file' is not a connection"
@@ -103,7 +102,7 @@ msgid "'dec' must be a single character"
 msgstr "'dec' должен быть одним символом"
 
 #: io.c:1130
-#, fuzzy, c-format
+#, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
 "поврежденная таблица данных -- длина колонки %d не соответствует строкам"
@@ -114,7 +113,6 @@ msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "колонка %s считает себя фактором, но у нее нет числовых кодов"
 
 #: io.c:1179
-#, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "поврежденная матрица -- длины измерений не сходятся"
 
@@ -146,7 +144,7 @@ msgstr "неправильное определение '%s'"
 #: stubs.c:254
 #, c-format
 msgid "'%s' contains missing values"
-msgstr ""
+msgstr "'%s' содержит пропущенные значения"
 
 #: utils.c:85
 msgid "'hostname' must be a character vector of length 1"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 01:18-0500\n"
+"PO-Revision-Date: 2020-08-28 16:45+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -27,9 +27,9 @@ msgid "argument 'files' must be character"
 msgstr "аргумент 'files' должен быть символьным"
 
 #: Rmd5.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "md5 failed on file '%ls'"
-msgstr "md5 на файле '%s' не удался"
+msgstr "md5 на файле '%ls' не удался"
 
 #: Rmd5.c:65
 #, c-format
@@ -96,9 +96,9 @@ msgid "No macro definition for '%s'."
 msgstr "Нет определения макроса для '%s'."
 
 #: gramRd.c:3239
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough arguments passed to user macro '%s'"
-msgstr "Максимум 4 аргумента разрешены для пользовательских макросов."
+msgstr "Недостаточно аргументов для пользовательских макроса '%s'"
 
 #: gramRd.c:3379 gramRd.c:3383
 #, c-format
@@ -164,11 +164,11 @@ msgstr "ошибка записи в процессе добавления файла"
 
 #: pdscan.c:67
 msgid "too many items"
-msgstr ""
+msgstr "слишком много пунктов"
 
 #: pdscan.c:115
 msgid "non-character argument"
-msgstr ""
+msgstr "не-символьный аргумент"
 
 #: signals.c:42
 msgid "pskill() is not supported on this platform"

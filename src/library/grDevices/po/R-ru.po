@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-08-13 10:30\n"
-"PO-Revision-Date: 2018-04-07 01:14-0500\n"
+"PO-Revision-Date: 2020-08-27 18:56+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -64,13 +64,13 @@ msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "'start' и 'end' должны быть различными и в пределах [0, 1]."
 
 msgid "'palette' does not match any given palette"
-msgstr ""
+msgstr "'palette' не соответствует ни одной из имеющихся палитр"
 
 msgid "'palette' is ambiguous"
-msgstr ""
+msgstr "непонятная 'palette'"
 
 msgid "'n' set to %s, the maximum available for %s palette"
-msgstr ""
+msgstr "'n' равна %s, это максимум, доступный для палитры %s"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' должна быть скаляром или 'sRGB'"
@@ -157,15 +157,13 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): использую postscript(file=\"%s\")"
 
 msgid "wrong 'type'; should never happen, please report!"
-msgstr ""
+msgstr "неправильный 'type'; так быть не должно, сообщите об ошибке!"
 
-#, fuzzy
 msgid "Invalid pattern type"
-msgstr "Неправильный тип шрифта"
+msgstr "Неправильный тип паттерна"
 
-#, fuzzy
 msgid "Invalid 'extend' value"
-msgstr "неправильное 'filename'"
+msgstr "Неправильное значение 'extend'"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "неправильные аргументы в '%s' (нужны именованные аргументы)"
@@ -193,7 +191,7 @@ msgid "invalid 'family' argument"
 msgstr "неправильный аргумент 'family'"
 
 msgid "'title' argument \"%s\" contains invalid characters"
-msgstr ""
+msgstr "аргумент 'title' \"%s\" содержит неправильные символы"
 
 msgid "invalid 'file' argument '%s'"
 msgstr "неправильный аргумент 'file' '%s'"
@@ -288,7 +286,7 @@ msgid "argument is not of class %s"
 msgstr "аргумент не принадлежит к классу %s"
 
 msgid "invalid \"recordedplot\":"
-msgstr ""
+msgstr "неправильный \"recordedplot\":"
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "снимок из другой версии R (до 3.3.0)"
@@ -309,7 +307,7 @@ msgid "'bandwidth' must be positive"
 msgstr "'bandwidth' должна быть положительной"
 
 msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
-msgstr ""
+msgstr "Надо обязательно поставить (из 'Recommended') пакет \"KernSmooth\""
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' должен быть \"range\", то есть длины 2"
@@ -396,7 +394,7 @@ msgid "invalid value for 'rescale'"
 msgstr "неправильное значение 'rescale'"
 
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
-msgstr ""
+msgstr "Вызовы типа '%s' небезопасны, их нужно заменить на '%s'"
 
 msgid "can only bring windows devices to the front"
 msgstr "могу лишь переместить устройства windows на первый план"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2018-04-07 01:17-0500\n"
+"PO-Revision-Date: 2020-08-27 19:22+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -23,11 +23,11 @@ msgstr ""
 
 #: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
-msgstr ""
+msgstr "updateGContext можно вызывать только после initGContext"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a clipping path is no honoured"
-msgstr ""
+msgstr "Нехорошо включать или выключать отсечение внутри контура отсечения"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
@@ -35,11 +35,11 @@ msgstr "не могу обрезать до повернутой оконницы"
 
 #: grid.c:455
 msgid "Clipping paths within a clipping path are not honoured"
-msgstr ""
+msgstr "Нехорошо делать контуры отсечения внутри контуров отсечения"
 
 #: grid.c:474
 msgid "Masks within a clipping path are not honoured"
-msgstr ""
+msgstr "Нехорошо делать маску внутри контура отсечения"
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
@@ -105,7 +105,7 @@ msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
-msgstr ""
+msgstr "Не могу создать единичный скаляр из нулевого единичного вектора"
 
 #: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
@@ -136,42 +136,44 @@ msgid ""
 "data must be either NULL, have length 1, or match the length of the final "
 "unit vector"
 msgstr ""
+"данные должны быть или NULL, или длиной 1, или соответствовать длине "
+"окончательного единичного вектора"
 
 #: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
-msgstr ""
+msgstr "нет сроки для единицы 'strwidth/height'"
 
 #: unit.c:1600
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr ""
+msgstr "нет 'grob' для единицы 'grobwidth/height'"
 
 #: unit.c:1618
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
+msgstr "'gPath' должен быть единичной грубины в единицах 'grobwidth/height'"
 
 #: unit.c:1623
 msgid "non-NULL value supplied for plain unit"
-msgstr ""
+msgstr "для plain единицы указано не-NULL значение"
 
 #: unit.c:1676 unit.c:1710 unit.c:1759
 msgid "old version of unit class is no longer allowed"
-msgstr ""
+msgstr "старая версия единичного класса больше не разрешается"
 
 #: unit.c:1682
 msgid "object is not coercible to a unit"
-msgstr ""
+msgstr "объект не конвертируется в вдиницу"
 
 #: unit.c:1708
 msgid "object is not a unit"
-msgstr ""
+msgstr "объект не является единицей"
 
 #: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
-msgstr ""
+msgstr "единицы можно умножать только на целые или десятичные числа"
 
 #: viewport.c:56
 msgid "Mask is not logical value ('none' or 'inherit')"
-msgstr ""
+msgstr "Маска не является логическим значением ('none' или 'inherit')"
 
 #: viewport.c:330
 msgid "non-finite location and/or size for viewport"
