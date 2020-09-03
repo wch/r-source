@@ -200,7 +200,7 @@
       variable \env{_R_CHECK_BOGUS_RETURN_}, true for \code{--as-cran}.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Function \code{plclust()} from the package \pkg{stats} and
@@ -362,6 +362,9 @@
 
       \item Libcurl-based internet access, including
       \code{curlGetHeaders()}, was not respecting the \code{"timeout"} option.
+
+      \item \code{as.Date(<char>)} now also works with an initial
+      \code{""}, thanks to Michael Chirico's \PR{17909}.
     }
   }
 }

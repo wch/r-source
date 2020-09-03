@@ -4209,6 +4209,14 @@ stopifnot(identical(sort(names(environment(vrep))),
 ## names(..) was of length 7 in R <= 4.0.2
 
 
+## as.Date( "" ) -- PR#17909
+dd <- c("", "2001-09-11")
+(D1 <- as.Date(    dd)) # failed in R <= 4.0.2
+(D2 <- as.Date(rev(dd)))
+stopifnot(is.na(D1[1]), identical(D1, rev(D2)))
+## "" was not treated correctly when at [1] in R <= 4.0.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
