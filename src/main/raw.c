@@ -89,7 +89,7 @@ SEXP attribute_hidden do_rawShift(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isRaw(x))
 	error(_("argument 'x' must be a raw vector"));
     if (shift == NA_INTEGER || shift < -8 || shift > 8)
-	error(_("argument 'shift' must be a small integer"));
+	error(_("argument 'n' must be a small integer"));
     PROTECT(ans = duplicate(x));
     if (shift > 0)
 	for (R_xlen_t i = 0; i < XLENGTH(x); i++)
