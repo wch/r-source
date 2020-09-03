@@ -4172,9 +4172,10 @@ if (l10n_info()$"UTF-8") {
     }
     ## These tests fail on R < 4.1
     ## 
-    ## Checking that truncation and `...` concatenation working correctly in
-    ## verrorcall_dflt.  Prior to 4.1 truncation detection did not work with
-    ## call set, and multibyte characters could be mangled by the `...`.
+    ## Checking that truncation and `...` concatenation are working
+    ## correctly in verrorcall_dflt.  Prior to 4.1 truncation detection did
+    ## not work with call set, and multibyte characters could be mangled by
+    ## the `...`.
     ##
     ## We assume getttext strings are not translated (or are translated
     ## to the same byte-length as the ones in source).
@@ -4234,7 +4235,6 @@ if (l10n_info()$"UTF-8") {
         ## we get a "incomplete final line" warning (converted to error)
         long_error(utf8.test, overflow=0)
 
-        ## OPTIONAL: Tests for R >= 4.1 to confirm truncation occurring properly
         overflow <- c(
              -6,   # Buffer unambiguosly unfilled for MB_CUR_MAX=6
              -5,   # Buffer maybe filled for MB_CUR_MAX=6
