@@ -4107,10 +4107,12 @@ fit0 <- glm.fit(x = rep(1, length(y)), y = y, offset = log(x),
 stopifnot(all.equal(fit$null.deviance, fit0$deviance))
 
 
-## UTF-8 truncation test, fails on R < 4.0
+## UTF-8 truncation tests
 if (l10n_info()$"UTF-8") {
-    # Use .Internal(seterrmessage(old.err)) to trigger truncation via
-    # Rsnprintf (mbcsTruncateToValid).
+    ## These tests fail on R < 4.0
+
+    ## Use .Internal(seterrmessage(old.err)) to trigger truncation via
+    ## Rsnprintf (mbcsTruncateToValid).
     trunc_string <- function(x) {
         old.err <- geterrmessage()
         on.exit(.Internal(seterrmessage(old.err)))
@@ -4125,7 +4127,7 @@ if (l10n_info()$"UTF-8") {
             )
         )
     }
-    # limits to detect the internal buffer size for truncation (now 8192)
+    ## limits to detect the internal buffer size for truncation (now 8192)
     buff.min <- 8
     buff.max <- 7e4  # > buff.min
     buff.size <- nchar(
@@ -4134,22 +4136,22 @@ if (l10n_info()$"UTF-8") {
     )
     stopifnot(buff.size >= buff.min + 1)
     if(buff.size == buff.max)
-        # possibly, the buffer is no longer fixed size?
+        ## possibly, the buffer is no longer fixed size?
         warning('BUFSIZE too large for UTF-8 truncation test?')
     else {
         string.base <- paste0(
             rep(0:9, length.out = buff.size),
             collapse=""
         )
-        # Append UTF-8 sequences at the end of strings that are just
-        # a bit shorter than the buffer, each one byte longer than the
-        # previous.
+        ## Append UTF-8 sequences at the end of strings that are just
+        ## a bit shorter than the buffer, each one byte longer than the
+        ## previous.
         string.starts <- substr(
             rep(string.base, 6), 1,
             nchar(string.base) - seq(buff.min, 3, -1)
         )
-        # For each of the increasing length string, append 2, 3, and 4 byte
-        # (valid) UTF-8 characters.
+        ## For each of the increasing length string, append 2, 3, and 4 byte
+        ## (valid) UTF-8 characters.
         string.ends <- rep(
             c(
                 '\u00A2',            # <C2><A2>           (cent symbol)
@@ -4167,6 +4169,148 @@ if (l10n_info()$"UTF-8") {
         output <- trunc_string(strings)
         stopifnot(validUTF8(strings)) # sanity check
         stopifnot(validUTF8(output))
+    }
+    ## These tests fail on R < 4.1
+    ## 
+    ## Checking that truncation and `...` concatenation working correctly in
+    ## verrorcall_dflt.  Prior to 4.1 truncation detection did not work with
+    ## call set, and multibyte characters could be mangled by the `...`.
+    ##
+    ## We assume getttext strings are not translated (or are translated
+    ## to the same byte-length as the ones in source).
+
+    ## We cannot use `tryCatch` as we're testing the C-level error construction
+    ## and that is not invoked when signalled errors are caught, hence:
+    capt_err_msg <- function(expr) {
+        tmp <- tempfile()
+        on.exit(unlink(tmp))
+        err.con <- getConnection(sink.number(type='message'))
+        sink(file(tmp, 'w'), type='message')
+        withRestarts(expr, abort=function() sink(err.con, type='message'))
+        ## add back newlines consumed by readlines; we assume a trailing one
+        ## exists, if it doesn't readLines will issue a warning
+        paste0(c(readLines(tmp), ""), collapse="\n")
+    }
+    ## Generate errors with long messages (length buff.size + overflow), ending
+    ## in `x`, to test truncation.  Will need to be updated if buff.size is
+    ## increased.  Function names / etc. are all carefully counted.
+    long_error <- function(x, overflow=0, buff.size=8192) {
+        overflow <- as.integer(overflow)
+        x <- paste0(as.character(x), collapse="")
+
+        ## Compute how many chars needed to fill buffer
+        call.len <- 51   # nchar of a_really...(stop(x)) - see below
+        extra.len <- 12  # "Error in  : "
+        extra.ws <- 3    # +2 spaces +1 \n from `tail`
+        chars.left <- buff.size - call.len - extra.len - extra.ws
+        chars <- nchar(x, type = 'bytes')
+        pad.chars <- chars.left - chars + as.integer(overflow)
+        stopifnot(pad.chars >= 0)
+        err.msg <- paste0(paste0(rev(rep_len(rev(LETTERS), pad.chars)),
+                                 collapse = ""), x)
+        ## force truncation despite 8170 warn length limit
+        old.opt <- options(warning.length = 8170, warn=2)
+        on.exit(options(old.opt))
+        a_really_long_function_to_cause_truncation <- function(x) x
+        f <- function(x)
+            a_really_long_function_to_cause_truncation(stop(x))
+        ## trigger error and capture std.err
+        capt_err_msg(f(err.msg))
+    }
+    buff.size.2 <- buff.size + 1     # .Internal(seterrmessage) drops 1 byte
+
+    ## 2 byte and 4 byte utf-8 encoded chars, avoid code points between \u00a0
+    ## and \u0100 as some iconv implementations will translate them into char
+    ## values in those ranges instead of into "<U+...>" in C locales.
+    utf8.test <- '\u0238\U00010348'
+
+    if(buff.size.2 != 8192) {
+        warning('These tests assume BUFSIZE = 8192')
+    } else {
+        ## Mangled multibyte in R < 4.1
+        stopifnot(validUTF8(long_error(utf8.test, overflow=-1)))
+
+        ## Truncation detection fails in R < 4.1, so newline isn't appended, so
+        ## we get a "incomplete final line" warning (converted to error)
+        long_error(utf8.test, overflow=0)
+
+        ## OPTIONAL: Tests for R >= 4.1 to confirm truncation occurring properly
+        overflow <- c(
+             -6,   # Buffer unambiguosly unfilled for MB_CUR_MAX=6
+             -5,   # Buffer maybe filled for MB_CUR_MAX=6
+             -4,   # Buffer full with '...\n\0'
+             -3,   # Lose 4 byte UTF-8 char
+             -2,
+             -1,
+              0,   # 4 byte UTF-8 char exactly replaced by '...\n', buffer full
+              1,   # Lose 2 byte UTF-8 char
+              2,
+              3,   # Lose first non UTF-8
+            # These will need to change if R_ConciseTraceback changes
+            -87,   # Room for traceback; options(showErrorCalls=TRUE)
+            -86    # No room for traceback.
+        )
+        le.res <- vapply(overflow, long_error, character(1),
+                         buff.size = buff.size.2, x = utf8.test)
+        stopifnot(validUTF8(utf8.test))  # sanity check
+        stopifnot(validUTF8(le.res))
+
+        ## # For first one, before truncation test, we've used 8186 bytes, so we
+        ## # know there was no truncation.  Code adds a trailing newline, which
+        ## # is why we get 8187.  For the second, we add one byte to the
+        ## # message, which puts us in maybe-truncated state, which adds 3 more
+        ## # bytes via with "...", so total of 8187 + 1 + 3 == 8191.
+        ## le.res.nc <- nchar(le.res)
+        ## data.frame(overflow,
+        ##            bytes=nchar(le.res, type='bytes'),
+        ##            snippet=substr(le.res, le.res.nc - 5, le.res.nc))
+        ##
+        ##    overflow bytes snippet
+        ## 1        -6  8187 XYZȸ𐍈\n
+        ## 2        -5  8191 ȸ𐍈...\n
+        ## 3        -4  8192 ȸ𐍈...\n
+        ## 4        -3  8189 Zȸ...\n
+        ## 5        -2  8190 Zȸ...\n
+        ## 6        -1  8191 Zȸ...\n
+        ## 7         0  8192 Zȸ...\n
+        ## 8         1  8191 YZ...\n
+        ## 9         2  8192 YZ...\n
+        ## 10        3  8192 XY...\n
+        ## 11      -87  8192 ation\n
+        ## 12      -86  8107 XYZȸ𐍈\n
+        ## test recursive errors in handler, Fails R < 4.0
+
+        handler_error <- function(x, overflow=0, buff.size=8192) {
+            overflow <- as.integer(overflow)
+            x <- paste0(as.character(x), collapse="")
+            pad.chars <- buff.size - nchar(x, type='bytes') + overflow
+            err.msg <- paste0(
+                paste0(rev(rep_len(rev(LETTERS), pad.chars)), collapse=""), x
+            )
+            old.opt <- options(
+                error=function(...) {
+                    options(error=old.opt[['error']])
+                    stop(err.msg)
+                }
+            )
+            capt_err_msg(stop('initial error'))
+        }
+        handler.error.trunc <- vapply(
+            c(0, 1, 5), handler_error, x=utf8.test, "", buff.size=buff.size.2
+        )
+        stopifnot(validUTF8(handler.error.trunc))
+
+        ## Test when warning.length is limiting
+
+        short_error <- function(call.=TRUE) {
+            old.opt <- options(warning.length=100)
+            on.exit(old.opt)
+            f <- function()
+                stop(paste0(rep_len(0:9, 110), collapse=""), call.=call.)
+            capt_err_msg(f())
+        }
+        ## trailing newline adds 1
+        stopifnot(nchar(short_error(call.=FALSE)) == 101L)
     }
 }
 
