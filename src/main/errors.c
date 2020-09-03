@@ -350,11 +350,12 @@ static char *Rstrncpy(char *dest, const char *src, size_t n)
 #define BUFSIZE 8192
 static R_INLINE void RprintTrunc(char *buf, int truncated)
 {
-    if(R_WarnLength < BUFSIZE - 20 &&
-      (truncated || strlen(buf) == R_WarnLength)) {
-
-	strcat(buf, " ");
-	strcat(buf, _("[... truncated]"));
+    if (truncated) {
+	char *msg = _("[... truncated]");
+	if (strlen(buf) + 1 + strlen(msg) < BUFSIZE) {
+	    strcat(buf, " ");
+	    strcat(buf, msg);
+	}
     }
 }
 
