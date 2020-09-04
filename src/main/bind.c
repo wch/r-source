@@ -773,7 +773,7 @@ SEXP attribute_hidden do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Remove any NULL elements before dispatch so
        they never influence the method implementation. */
-    args = R_listCompact(args);
+    args = R_listCompact(args, /* keep_first */ TRUE);
 
     /* Attempt method dispatch. */
 

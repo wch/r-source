@@ -21,7 +21,8 @@ c(\dots)
 }
 \arguments{
   \item{\dots}{objects to be concatenated.  All \code{\link{NULL}} entries
-    are dropped even before method dispatch.}
+    are dropped before method dispatch unless at the very beginning of the
+    argument list.}
   \item{recursive}{logical.  If \code{recursive = TRUE}, the function
     recursively descends through lists (and pairlists) combining all
     their elements into a vector.}
@@ -32,7 +33,8 @@ c(\dots)
   The output type is determined from the highest type of the components
   in the hierarchy NULL < raw < logical < integer < double < complex < character
   < list < expression.  Pairlists are treated as lists, whereas non-vector
-  components (such names and calls) are treated as one-element lists
+  components (such as \code{\link{name}}s / \code{symbol}s and \code{\link{call}}s)
+  are treated as one-element \code{\link{list}}s
   which cannot be unlisted even if \code{recursive = TRUE}.
 
   Note that in \R < 4.1.0, \code{\link{factor}}s were treated only via
@@ -40,7 +42,7 @@ c(\dots)
   \code{\link{c.factor}} method which combines factors into a factor.
 
   \code{c} is sometimes used for its side effect of removing attributes
-  except names, for example to turn an array into a vector.
+  except names, for example to turn an \code{\link{array}} into a vector.
   \code{as.vector} is a more intuitive way to do this, but also drops
   names.  Note that methods other than the default are not required
   to do this (and they will almost certainly preserve a class attribute).

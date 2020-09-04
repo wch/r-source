@@ -4315,17 +4315,23 @@ if (l10n_info()$"UTF-8") {
 }
 
 
-## c() generic removes all NULL elements before dispatch
+## c() generic removes all NULL elements --- *but* the first --- before dispatch
 c.foobar <- function(...) list("ok", ...)
 foobar <- structure(list(), class = "foobar")
 stopifnot(exprs = {
-    identical(c(foobar, one=1), list("ok", foobar, one=1))
-    identical(c(a = foobar), list("ok", a = foobar))
-    identical(c(a = NULL, b = foobar), list("ok", b = foobar))
-    identical(c(a = foobar, b = NULL), list("ok", a = foobar))
-    identical(c(a = NULL, b = foobar, c = NULL), list("ok", b = foobar))
+    identical(c(foobar, NULL, one=1,NULL), list("ok", foobar, one=1))
+    identical(c(a = foobar, pi, NULL, b="B",NULL), list("ok", a = foobar, pi, b="B"))
+    identical(c(a = foobar, b = NULL),     list("ok", a = foobar))
+    identical(c(foobar, b = foobar),       list("ok", foobar, b=foobar))
+    ## Back compatibly, w/ initial NULL, using c()'s default method: 
+    ##  ==> result has list() for foobar
+    identical(c(NULL,     foobar, NULL, NULL, 1), c(  list(), 1))
+    identical(c(NULL, b = foobar, NULL, NULL, 1), c(b=list(), 1))
+    identical(c(a = NULL, b = foobar),                 list())
+    identical(c(a = NULL, b = foobar, c = NULL),       list())
+    identical(c(NULL, a = NULL, b = foobar, c = NULL), list())
 })
-## the last three cases failed in R <= 4.0.x
+## the first three cases failed in R <= 4.0.x
 
 
 ## quantile(*, pr)  allows pr values very slightly outside [0,1] -- PR#17891

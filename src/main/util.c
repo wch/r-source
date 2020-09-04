@@ -519,7 +519,8 @@ SEXP nthcdr(SEXP s, int n)
 }
 
 /* Destructively removes R_NilValue ('NULL') elements from a pairlist. */
-SEXP R_listCompact(SEXP s) {
+SEXP R_listCompact(SEXP s, Rboolean keep_initial) {
+  if(!keep_initial)
     // skip initial NULL values
     while (s != R_NilValue && CAR(s) == R_NilValue)
 	s = CDR(s);

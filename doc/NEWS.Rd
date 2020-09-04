@@ -90,13 +90,14 @@
       a false value.
 
       \item \code{c()} now removes \code{NULL} arguments before dispatching
-      to methods, thus simplifying the implementation of \code{c()} methods,
-      thanks to the report and patch by Lionel Henry in \PR{17900}.
+      to methods, thus simplifying the implementation of \code{c()}
+      methods, \emph{but} for back compatibility reasons keeps \code{NULL}
+      when it is the first argument; from a report and patch proposal by
+      Lionel Henry in \PR{17900}.
 
       \item \code{Vectorize()}'s result function's environment no longer
       keeps unneeded objects.
     }
-
   }
 
   \subsection{GRAPHICS}{
