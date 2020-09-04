@@ -100,9 +100,9 @@ tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @noindent
 on systems that have a suitable@footnote{e.g.@: @acronym{GNU}
 @command{tar} version 1.15 or later, or that from the @samp{libarchive}
-(as used on macOS versions 10.6 and later) or `Heirloom Toolchest'
-distributions.}  @command{tar} installed.  On other systems you need to
-have the @command{gzip} program installed, when you can use
+(as used on macOS) or `Heirloom Toolchest' distributions.}
+@command{tar} installed.  On other systems you need to have the
+@command{gzip} program installed, when you can use
 
 @example
 gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar -xf -
@@ -241,7 +241,7 @@ as perhaps (it is tested less frequently on these platforms)
 @cindex Linux
 @cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for macOS (formerly OS X and Mac OS).  See the
+distributions and for macOS (formerly OS X and Mac OS X).  See the
 @acronym{FAQ} for current details.  These are installed in
 platform-specific ways, so for the rest of this chapter we consider only
 building from the sources.
@@ -1529,8 +1529,9 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X'. Click on that, then download the file
 @file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
-and later@footnote{macOS 11 remains to be seen even on Intel CPUs.}
-(High Sierra, Mojave, Catalina, @dots{}).
+and later on Intel CPU@footnote{macOS 11 has been a little tested on
+`Apple Silicon' using `Rosetta' emulation.}  (High Sierra, Mojave,
+Catalina, Big Sur, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -4808,14 +4809,13 @@ SAFE_FFLAGS=-axsse2
 
 (`macOS' was known as `OS X' from 2012--2016.)
 
-The instructions here are for 64-bit (@cputype{x86_64}) builds on
-10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{The upcoming
-macOS 11 `Big Sur' remains to be confirmed even on Intel CPUs: no
-Fortran compiler was available for `Apple Silicon' at the time of
-writing.}.  @R{} can in principle be built for 10.6--10.12, although
-this is little tested and it may be necessary to install later versions
-of software such as @code{libcurl} and an older version@footnote{For
-example, from
+The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
+10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{Details for the
+upcoming macOS 11 `Big Sur' remain to be confirmed: no Fortran compiler
+was available for `Apple Silicon' at the time of writing.}.  @R{} can in
+principle be built for 10.6--10.12, although this is little tested and
+it may be necessary to install later versions of software such as
+@code{libcurl} and an older version@footnote{For example, from
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
 @command{gfortran}.
 
@@ -4878,9 +4878,9 @@ version it is straightforward to compile it from its sources.}.  If
 that, configure with @option{--without-readline}.
 
 @item
-Components @code{jpeg}, @code{libpng}, @code{pkgconfig} and @code{tiff}
-from @uref{https://mac.R-project.org/libs-4/}, for the full range of
-bitmapped graphics devices.
+Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
+@code{pkgconfig} from @uref{https://mac.R-project.org/libs-4/}, for the
+full range of bitmapped graphics devices.
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -4959,10 +4959,11 @@ and appropriate compilers, e.g.@: Fortran and the C/C++ compilers from
 those tools.  Some packages have further requirements such as
 @command{pkg-config}.
 
+@c svn was in CLT 11.3.1, even in the opensource.apple.com repository
 A subversion client, @command{svn} version 1.10, used to be part of
 macOS@footnote{but as a stub invoking an executable provided by the
-Command Line Tools and the latter is not in some 2020 versions of the
-Command Line Tools.}.  A more recent client can be obtained from
+Command Line Tools and the latter is not in versions 11.5 and later of
+the Command Line Tools.}.  A more recent client can be obtained from
 @uref{https://mac.r-project.org/tools/}, for example by
 @example
 curl -OL https://mac.r-project.org/tools/subversion-1.14.0-darwin15.6.tar.gz
