@@ -163,7 +163,6 @@ inRbuildignore <- function(files, pkgdir) {
 
     add_build_stamp_to_description_file <- function(ldpath, pkgdir)
     {
-        options(digit.secs = 0) ## avoid sub-second timestamps
         db <- .read_description(ldpath)
         if(dir.exists(file.path(pkgdir, "src")))
             db["NeedsCompilation"] <- "yes"
@@ -174,7 +173,8 @@ inRbuildignore <- function(files, pkgdir) {
         if(user == "unknown") user <- Sys.getenv("LOGNAME")
         db["Packaged"] <-
             sprintf("%s; %s",
-                    format(Sys.time(), '', tz = 'UTC', usetz = TRUE),
+                    format(Sys.time(), "%Y-%m-%d %H:%M:%S",
+                           tz = 'UTC', usetz = TRUE),
                     user)
         .write_description(db, ldpath)
     }
