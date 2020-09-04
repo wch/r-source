@@ -1526,8 +1526,8 @@ the Windows@footnote{@samp{BWidget} still is on Windows but
 not in the main repositories for major Linux distributions).
 @c Not in Fedora since 17
 @c 2008 sources at https://sourceforge.net/projects/tktable/files/tktable/2.10/
-@c In May 2020 declared by DALY PhViD RSiena RSurvey dgmb fit4NM
-@c forensim rriskDistributions tcltk2
+@c In Sept 2020 declared by DALY PhViD RSiena RSurvey dgmb forensim
+@c rriskDistributions tcltk2
 
 @c In May 2020 declared by FFD GGEBiplotGUI OligoSpecificitySystem
 @c PBSmodelling asbio biplotbootGUI cncaGUI dgmb dpa multibiplotGUI rpanel
@@ -1553,6 +1553,13 @@ sudo mv bwidget-1.9.14 /usr/local/lib
 substituting a location on the Tcl search path for @file{/usr/local/lib} if
 needed.  (If no location on that search path is writeable, you will need
 to add one each time BWidget is to be used with @code{tcltk::addTclPath()}.)
+
+To (silently) test for the presence of @samp{Tktable} one can use
+
+@example
+library(tcltk)
+have_tktable <- !isFALSE(suppressWarnings(tclRequire('Tktable')))
+@end example
 
 @node Specifying URLs,  , Non-R scripts in packages, Package structure
 @subsection Specifying URLs
