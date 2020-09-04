@@ -1679,9 +1679,12 @@ static R_INLINE void cleanupEnvVector(SEXP v)
        to wake things up, so hold off for now. */
     return;
 
+    // avoid ODS compiler warning.
+ #ifdef FALSE
     R_xlen_t len = XLENGTH(v);
     for (R_xlen_t i = 0; i < len; i++)
 	SET_VECTOR_ELT(v, i, R_NilValue);
+#endif
 }
 
 static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
