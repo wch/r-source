@@ -4171,7 +4171,7 @@ if (l10n_info()$"UTF-8") {
         stopifnot(validUTF8(output))
     }
     ## These tests fail on R < 4.1
-    ## 
+    ##
     ## Checking that truncation and `...` concatenation are working
     ## correctly in verrorcall_dflt.  Prior to 4.1 truncation detection did
     ## not work with call set, and multibyte characters could be mangled by
@@ -4323,7 +4323,7 @@ stopifnot(exprs = {
     identical(c(a = foobar, pi, NULL, b="B",NULL), list("ok", a = foobar, pi, b="B"))
     identical(c(a = foobar, b = NULL),     list("ok", a = foobar))
     identical(c(foobar, b = foobar),       list("ok", foobar, b=foobar))
-    ## Back compatibly, w/ initial NULL, using c()'s default method: 
+    ## Back compatibly, w/ initial NULL, using c()'s default method:
     ##  ==> result has list() for foobar
     identical(c(NULL,     foobar, NULL, NULL, 1), c(  list(), 1))
     identical(c(NULL, b = foobar, NULL, NULL, 1), c(b=list(), 1))
@@ -4365,6 +4365,16 @@ dd <- c("", "2001-09-11")
 (D2 <- as.Date(rev(dd)))
 stopifnot(is.na(D1[1]), identical(D1, rev(D2)))
 ## "" was not treated correctly when at [1] in R <= 4.0.2
+
+
+## ..elt() propagates visibility consistently with ..n and other args, PR#17905
+local({
+    fn <- function(...) list(withVisible(...elt(1)), withVisible(..2))
+    stopifnot(identical(
+	fn(invisible(NULL), invisible(NULL)),
+	rep(list(withVisible(invisible(NULL))), 2)
+    ))
+})
 
 
 

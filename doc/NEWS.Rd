@@ -97,6 +97,9 @@
 
       \item \code{Vectorize()}'s result function's environment no longer
       keeps unneeded objects.
+
+      \item \code{...elt()} now propagates visibility consistently with
+      \code{..n}, thanks to Lionel Henry's \PR{17905}.
     }
   }
 

@@ -197,7 +197,7 @@ FUNTAB R_FunTab[] =
 
 /* Primitives */
 
-{"...elt",      do_dotsElt,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"...elt",      do_dotsElt,	0,    201,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"...length",   do_dotsLength,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"...names",    do_dotsNames,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"length",	do_length,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
