@@ -3057,7 +3057,7 @@ without X11, using @option{--with-x=no}.
 
 The command-line editing (and command completion) depends on the
 @acronym{GNU} @code{readline} library (including its headers): version
-4.2 or later is needed for all the features to be enabled.  Otherwise
+6.0 or later is needed for all the features to be enabled.  Otherwise
 you will need to configure with @option{--with-readline=no} (or
 equivalent).
 
@@ -3163,12 +3163,12 @@ looking in @file{/usr/xpg4/bin} which is used on some commercial
 Unixes).
 
 You will not be able to build most of the manuals unless you have
-@command{texi2any} version 5.1 or later installed, and if not most of
-the @HTML{} manuals will be linked to a version on @acronym{CRAN}. To
-make PDF versions of the manuals you will also need file
-@file{texinfo.tex} installed (which is part of the @acronym{GNU}
-@pkg{texinfo} distribution but is often made part of the @TeX{} package
-in re-distributions) as well as
+@command{texi2any} version 5.1 or later installed (which requires
+@command{perl}), and if not most of the @HTML{} manuals will be linked
+to a version on @acronym{CRAN}. To make PDF versions of the manuals you
+will also need file @file{texinfo.tex} installed (which is part of the
+@acronym{GNU} @pkg{texinfo} distribution but is often made part of the
+@TeX{} package in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
 script.  Some versions (including those from @pkg{texinfo} 5.2 and
 6.0-6.6) need to be run under @command{bash} rather than a Bourne shell,
@@ -3237,11 +3237,13 @@ earliest version we have tested.  (For Fedora users we believe the
 additional flags are needed for the @samp{cairo-xlib} package, then if
 suitable code can be compiled.  These tests will fail if
 @command{pkg-config} is not installed@footnote{If necessary the path to
-@command{pkg-config} can be specified by setting @env{PKG_CONFIG} in
-@file{config.site}, on the @command{configure} command line or in the
-environment.}, and are likely to fail if @code{cairo} was built
-statically (unusual).  Most systems with @code{Gtk+} 2.8 or later
-installed will have suitable libraries.
+@command{pkg-config}@footnote{There is a compatible re-implementation
+called @command{pkgconf} which can be used in the unlikely event that is
+installed but not linked to @command{pkg-config}.} can be specified by
+setting @env{PKG_CONFIG} in @file{config.site}, on the
+@command{configure} command line or in the environment.}, and are likely
+to fail if @code{cairo} was built statically (unusual).  Most systems
+with @code{Gtk+} 2.8 or later installed will have suitable libraries.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
@@ -3281,9 +3283,9 @@ but may need to be present to link the library (usually only an issue
 for static linking).
 
 Option @option{--with-system-tre} is also available: it needs a recent
-version of TRE. (The latest (2016) sources are in the @command{git}
-repository at @url{https://github.com/laurikari/tre/}, but at the time
-of writing the resulting build will not pass its checks.).
+version of TRE. (The latest sources are in the @command{git} repository
+at @url{https://github.com/laurikari/tre/}, but at the time of writing
+(2016) the resulting build did not pass its checks.).
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may
@@ -3312,10 +3314,10 @@ to replace the OS's collation support by that from ICU (International
 Components for Unicode, @uref{http://site.icu-project.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
-Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
-or @code{icu4c}.  It will be used by default where available: should a
-very old or broken version of ICU be found this can be suppressed by
-@option{--without-ICU}.
+Linux distributions, Solaris, FreeBSD, macOS and AIX, usually as
+@code{libicu} or @code{icu4c}.  It will be used by default where
+available: should a very old or broken version of ICU be found this can
+be suppressed by @option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
@@ -3330,7 +3332,7 @@ a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi glib2 harfbuzz libX11 libXext
 libXt libcurl libicu libjpeg libpng libtiff libtirpc libxcrypt ncurses
-pango pcre2 readline tcl tk xz zlib
+pango pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @end example
 
 
@@ -3392,8 +3394,8 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-0.fc32.x86_64/jre
-R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/that/server
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.265.b01-1.fc32.x86_64/jre
+R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
 Unfortunately this depends on the exact version of the JRE/JDK
@@ -3455,14 +3457,14 @@ sudo apt install default-jdk
 
 Some add-on packages need a C++ compiler.  This is specified by the
 configure variables @code{CXX}, @code{CXXFLAGS} and similar.
-@command{configure} will normally find a suitable compiler.  However, in
-many cases this will be a C++98 compiler, and it is
-possible to specify an alternative compiler for use with C++11 by the
-configure variables @code{CXX11}, @code{CXX11STD}, @code{CXX11FLAGS} and
-similar (@pxref{C++ Support}).  Again, @command{configure} will normally
-find a suitable value for @code{CXX11STD} if the compiler given by
-@code{CXX} is capable of compiling C++11 code, but it is possible that a
-completely different compiler will be needed.
+@command{configure} will normally find a suitable compiler.  It is
+possible to specify an alternative C++14 compiler by the configure
+variables @code{CXX14}, @code{CXX14STD}, @code{CXX14FLAGS} and similar
+(@pxref{C++ Support}).  Again, @command{configure} will normally find a
+suitable value for @code{CXX14STD} if the compiler given by @code{CXX}
+is capable of compiling C++14 code, but it is possible that a completely
+different compiler will be needed.  (Similar macros are provided for
+C++17 and C++20.)
 
 For source files with extension @file{.f90} or @file{.f95} containing
 free-form Fortran, the compiler defined by the macro @code{FC} is used
