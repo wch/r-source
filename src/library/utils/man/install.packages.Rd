@@ -359,8 +359,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \url{https://cran.r-project.org/package=RODBC}). If that indicates in
   the \samp{Depends} field a dependence on a later version of \R you
   will need to look in the \samp{Old sources} section and select the URL
-  of a version of comparable age to your \R.  The you can supply that
-  URL as the first argument of \code{install.packages()}.
+  of a version of comparable age to your \R.  Then you can supply that
+  URL as the first argument of \code{install.packages()}: you may
+  need to first manually install its dependencies.
 
   For other repositories, using \code{available.packages(filters =
     "OS_type")[\var{pkgname}, ]} will show if the package is available
