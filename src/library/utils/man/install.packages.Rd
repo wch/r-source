@@ -346,6 +346,26 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   Timeouts during installation might leave lock directories behind and
   not restore previous versions.
 }
+\section{Version requirements on source installs}{
+  If you are not running an up-to-date version of \R you may see a
+  message like
+\preformatted{
+   package ‘RODBC’ is not available (for R version 3.5.3)
+}
+  One possibility is that the package is not available in any of the
+  selected repositories; another is that is available but only for
+  current or recent versions of \R{}.  For \acronym{CRAN} packages take
+  a look at the package's CRAN page (e.g.,
+  \url{https://cran.r-project.org/package=RODBC}). If that indicates in
+  the \samp{Depends} field a dependence on a later version of \R you
+  will need to look in the \samp{Old sources} section and select the URL
+  of a version of comparable age to your \R.  The you can supply that
+  URL as the first argument of \code{install.packages()}.
+
+  For other repositories, using \code{available.packages(filters =
+    "OS_type")[\var{pkgname}, ]} will show if the package is available
+  for any \R version (for your OS).
+}
 \note{
   \describe{
     \item{On Unix-alikes:}{
