@@ -1967,6 +1967,41 @@ local archives, local files, @dots{}).  Function
 @code{setRepositories()} can select amongst those repositories that the
 @R{} installation is aware of.
 
+Something that sometimes puzzles users is that @code{install.packages()}
+may report that a package which they believe should be availablw is not
+found.  Some possible reasons:
+@itemize
+@item
+The package, such as @pkg{grid} or @pkg{tcltk}, is part of @R{}
+itself and not otherwise available.
+
+@item
+The package is not in the available repositories, so check which have been
+selected by
+@example
+getOption("repos")
+@end example
+
+@item
+The package is available, but not for the current version of @R{} or for
+the type of OS (Unix/Windows).  To retrieve the information on available
+versions of package @code{@var{pkg}}, use
+
+@example
+av <- available.packages(filters=list())
+av[av[, "Package"] == @var{pkg}, ]
+@end example
+
+@noindent
+in your @R{} session, and look at the @samp{Depends} and @samp{OS_type}
+fields (there may be more than one matching entry).  If the package
+depends on a version of @R{} later than the one in use, it is possible
+that an earlier version is available which will work with your version
+of @R{}: for @acronym{CRAN} look for `Old sources' on the package's
+@acronym{CRAN} landing page and manually retrieve an appropriate version (of
+comparable age to your version of @R{}).
+@end itemize
+
 Naive users sometimes forget that as well as installing a package, they
 have to use @code{library} to make its functionality available.
 
@@ -2080,8 +2115,9 @@ Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
 Tk.  See @ref{macOS} and @ref{Java (macOS)}.
 
-Tcl/Tk extensions @code{BWidget} and @code{Tktable} used to be
-distributed with @R{} but no longer are.
+Tcl/Tk extension @code{BWidget} used to be
+distributed with @R{} but no longer is; @code{Tktable} has been
+distributed with most versions of @R{} (but not 4.0.0).
 
 A few of the binary packages need other software to be installed on your
 system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
@@ -2172,7 +2208,7 @@ problems} can be specified @emph{via} the environment variable
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
-Compiler Collection or for @command{clang}.
+Compiler Collection, or for @command{clang}.
 
 Note that this mechanism can also be used when it necessary to change
 the optimization level whilst installing a particular package.  For
