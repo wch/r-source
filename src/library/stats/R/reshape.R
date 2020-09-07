@@ -57,7 +57,7 @@ reshape <-
 
     reshapeLong <-
         function(data, varying, v.names = NULL, timevar, idvar,
-                 ids = 1:NROW(data), times,
+                 ids = 1L:NROW(data), times,
                  drop = NULL,new.row.names = NULL)
         {
             ll <- unlist(lapply(varying,length))
