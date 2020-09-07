@@ -167,9 +167,9 @@ SEXP attribute_hidden do_numToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     R_xlen_t i, j = 0;
     double *x_ = REAL(x);
     for (i = 0; i < XLENGTH(x); i++) {
-	uint64_t *tmp = (uint64_t*) &(x_[i]);
-	for (int k = 0; k < 64; k++, (*tmp) >>= 1)
-	    RAW(ans)[j++] = (*tmp) & 0x1;
+	uint64_t *x_i = (uint64_t*) &(x_[i]), tmp = *x_i;
+	for (int k = 0; k < 64; k++, tmp >>= 1)
+	    RAW(ans)[j++] = tmp & 0x1;
     }
     UNPROTECT(2);
     return ans;
