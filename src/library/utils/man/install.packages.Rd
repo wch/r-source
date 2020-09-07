@@ -350,7 +350,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   If you are not running an up-to-date version of \R you may see a
   message like
 \preformatted{
-   package ‘RODBC’ is not available (for R version 3.5.3)
+   package 'RODBC' is not available (for R version 3.5.3)
 }
   One possibility is that the package is not available in any of the
   selected repositories; another is that is available but only for
