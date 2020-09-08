@@ -6,7 +6,6 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.0.2 patched}{
-\section{\Rlogo CHANGES IN R 4.0.2 patched}{
 
   \subsection{NEW FEATURES}{
     \itemize{
