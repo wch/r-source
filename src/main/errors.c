@@ -337,12 +337,12 @@ static char *Rstrncat(char *dest, const char *src, size_t n)
     return dest;
 }
 
-/* Rstrncat: like strncpy, but guaranteed to null-terminate and not to
+/* Rstrncpy: like strncpy, but guaranteed to null-terminate and not to
    split multi-byte characters */
 static char *Rstrncpy(char *dest, const char *src, size_t n)
 {
     strncpy(dest, src, n);
-    if (dest[n-1] != '\0') {
+    if (n) {
 	dest[n-1] = '\0';
 	mbcsTruncateToValid(dest);
     }
