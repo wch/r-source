@@ -100,6 +100,11 @@
 
       \item \code{...elt()} now propagates visibility consistently with
       \code{..n}, thanks to Lionel Henry's \PR{17905}.
+
+      \item \code{capture.output()} no longer uses NSE to evaluate its
+      arguments.  This makes evaluation of functions like
+      \code{parent.frame()} more consistent, thanks to Lionel Henry's
+      \PR{17907}.
     }
   }
 

@@ -19,7 +19,6 @@
 capture.output <- function(..., file=NULL, append=FALSE,
                            type = c("output", "message"), split = FALSE)
 {
-    args <- substitute(list(...))[-1L]
     type <- match.arg(type)
     rval <- NULL; closeit <- TRUE
     if (is.null(file))
@@ -36,19 +35,12 @@ capture.output <- function(..., file=NULL, append=FALSE,
     ## for error recovery: all output will be lost if file=NULL
     on.exit({sink(type=type, split=split); if(closeit) close(file)})
 
-    pf <- parent.frame()
-    evalVis <- function(expr)
-        withVisible(eval(expr, pf))
-
-    for(i in seq_along(args)) {
-        expr <- args[[i]]
-        tmp <- switch(mode(expr),
-                      "expression" = lapply(expr, evalVis),
-                      "call" =, "name" =  list(evalVis(expr)),
-                       stop("bad argument"))
-        for(item in tmp)
-            if (item$visible) print(item$value)
+    for(i in seq_len(...length())) {
+	out <- withVisible(...elt(i))
+	if (out$visible)
+	    print(out$value)
     }
+
     ## we need to close the text connection before returning 'rval'
     on.exit()
     sink(type=type, split=split)

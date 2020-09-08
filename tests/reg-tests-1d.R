@@ -4391,6 +4391,37 @@ stopifnot(sum(l0 <- as.logical(b0)) == 62L,
 ## gave an error in R <= 4.0.2
 
 
+## PR#17907 -- capture.output() now using standard evaluation (SE) :
+## parent.frame() returns the correct environment in capture.output()
+local({
+    fn <- function(env = parent.frame()) {
+	capture.output(env)
+	list(
+	    env,
+	    parent.frame()
+	)
+    }
+    env <- environment()
+    out <- fn()
+    stopifnot(
+	identical(out[[1]], out[[2]]),
+	identical(out[[1]], env)
+    )
+})
+## capture.output() works with forwarded dots
+local({
+    wrapper <- function(...) {
+	capture.output(..., type = "output")
+    }
+    out <- local({
+	foo <- 1
+	wrapper(foo)
+    })
+    stopifnot(identical(out, capture.output(1)))
+})
+## Failed when capture.output() was using NSE
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
