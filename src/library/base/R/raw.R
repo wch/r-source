@@ -31,7 +31,7 @@ intToBits <- function(x) .Internal(intToBits(x))
 numToInts <- function(x) .Internal(numToInts(x))
 numToBits <- function(x) .Internal(numToBits(x))
 
-packBits <- function(x, type=c("raw", "integer"))
+packBits <- function(x, type=c("raw", "integer", "double"))
 {
     type <- match.arg(type)
     .Internal(packBits(x, type))

@@ -25,7 +25,7 @@ rawShift(x, n)
 
 rawToBits(x)
 intToBits(x)
-packBits(x, type = c("raw", "integer"))
+packBits(x, type = c("raw", "integer", "double"))
 
 numToInts(x)
 numToBits(x)
@@ -61,7 +61,8 @@ numToBits(x)
   both cases the unpacking is least-significant bit first.
 
   \code{packBits} packs its input (using only the lowest bit for raw or
-  integer vectors) least-significant bit first to a raw or integer vector.
+  integer vectors) least-significant bit first to a raw, integer or double
+  (\dQuote{numeric}) vector.
 
   \code{numToInts()} and
   \code{numToBits()} split \code{\link{double}} precision numeric vectors
@@ -150,6 +151,11 @@ d2bI <- function(x) vapply(as.double(x), function(x) intToBits(numToInts(x)), ra
 d2b  <- function(x) vapply(as.double(x), function(x)           numToBits(x) , raw(64L))
 set.seed(1)
 x <- c(sort(rt(2048, df=1.5)),  2^(-10:10), 1+2^-(1:53))
-stopifnot( identical(d2b(x), d2bI(x)) )
+str(bx <- d2b(x)) # a  64 x 2122  raw matrix
+stopifnot( identical(bx, d2bI(x)) )
+
+## Show that  packBits(*, "double")  is the inverse of numToBits() :
+pbx <- apply(bx, 2, packBits, type="double")
+stopifnot( identical(pbx, x))
 }
 \keyword{classes}

@@ -180,20 +180,22 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP ans, x = CAR(args), stype = CADR(args);
-    Rboolean useRaw;
     R_xlen_t i, len = XLENGTH(x), slen;
-    int fac;
 
     if (TYPEOF(x) != RAWSXP && TYPEOF(x) != LGLSXP && TYPEOF(x) != INTSXP)
 	error(_("argument 'x' must be raw, integer or logical"));
     if (!isString(stype)  || LENGTH(stype) != 1)
 	error(_("argument '%s' must be a character string"), "type");
-    useRaw = strcmp(CHAR(STRING_ELT(stype, 0)), "integer");
-    fac = useRaw ? 8 : 32;
-    if (len% fac)
+    Rboolean
+	notI = strcmp(CHAR(STRING_ELT(stype, 0)), "integer"),
+	notR = strcmp(CHAR(STRING_ELT(stype, 0)), "raw"),
+	useRaw =  notI && !notR,
+	useInt = !notI &&  notR;
+    int fac = useRaw ? 8 : (useInt ? 32 : 64);
+    if (len % fac)
 	error(_("argument 'x' must be a multiple of %d long"), fac);
     slen = len/fac;
-    PROTECT(ans = allocVector(useRaw ? RAWSXP : INTSXP, slen));
+    PROTECT(ans = allocVector(useRaw ? RAWSXP : (useInt ? INTSXP : REALSXP), slen));
     for (i = 0; i < slen; i++)
 	if (useRaw) {
 	    Rbyte btmp = 0;
@@ -209,7 +211,7 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	    RAW(ans)[i] = btmp;
-	} else {
+	} else if(useInt) {
 	    unsigned int itmp = 0;
 	    for (int k = 31; k >= 0; k--) {
 		itmp <<= 1;
@@ -223,6 +225,28 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	    INTEGER(ans)[i] = (int) itmp;
+	} else { // 'useDouble'
+	    union {
+		double d;
+		int i[2];
+	    } u;
+	    for(int k = 0 ; k < 2 ; k++) {
+		int w = 0;
+		for(int b = 0 ; b < 32 ; b++) {
+		    int bit /* -Wall */ = 0;
+		    if (isRaw(x))
+			bit = RAW(x)[64*i + 32*k + b] & 0x1;
+		    else if (isLogical(x) || isInteger(x)) {
+			int j = INTEGER(x)[64*i + 32*k + b];
+			if (j == NA_INTEGER)
+			    error(_("argument 'x' must not contain NAs"));
+			bit = j & 0x1;
+		    }
+		    w = w | (bit << b);
+		}
+		u.i[k] = w;
+	    }
+	    REAL(ans)[i] = u.d;
 	}
     UNPROTECT(1);
     return ans;

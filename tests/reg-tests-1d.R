@@ -4422,6 +4422,13 @@ local({
 ## Failed when capture.output() was using NSE
 
 
+## Inverse of numToBits() via
+stopifnot(identical(packBits(b0, "double"), n0))
+r <- c(pi, 1+ (0:8)/4); head(b <- numToBits(r), 25)
+stopifnot(identical(packBits(b, "double"), r))
+## thanks to PR#17914 by Bill Dunlap
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

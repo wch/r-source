@@ -105,6 +105,9 @@
       arguments.  This makes evaluation of functions like
       \code{parent.frame()} more consistent, thanks to Lionel Henry's
       \PR{17907}.
+
+      \item \code{packBits(bits, type="double")} newly works as inverse of
+      \code{numToBits()}, thanks to Bill Dunlap's proposal in \PR{17914}.
     }
   }
 
