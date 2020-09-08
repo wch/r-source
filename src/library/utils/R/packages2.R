@@ -27,7 +27,7 @@ isBasePkg <- function(pkg) {
 
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L],
-             binary = FALSE, ...)
+             binary = FALSE, ...) ## ... is passed to installed.packages().
 {
     if (is.null(dependencies)) return(unique(pkgs))
     oneLib <- length(lib) == 1L
@@ -52,12 +52,19 @@ getDependencies <-
     p0 <- unique(pkgs)
     miss <-  !p0 %in% row.names(available)
     if(sum(miss)) {
-        msg <- paste0(if(binary) "as a binary package ", "for ",
-                      sub(" *\\(.*","", R.version.string))
+        msg <- paste0(if(binary) "as a binary package ",
+                      "for this version of R")
+        msg <- c(msg, "",
+                 paste0(ngettext(sum(miss),
+                          "A version of this package for your version of R might be available elsewhere,\nsee the ideas at\n",
+                          "Versions of these packages for your version of R might be available elsewhere,\nsee the ideas at\n"),
+                 "https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages")
+                 )
 	warning(sprintf(ngettext(sum(miss),
-				 "package %s is not available (%s)",
-				 "packages %s are not available (%s)"),
-			paste(sQuote(p0[miss]), collapse = ", "), msg),
+				 "package %s is not available %s",
+				 "packages %s are not available %s"),
+			paste(sQuote(p0[miss]), collapse = ", "),
+                        paste(msg, collapse = "\n")),
                 domain = NA, call. = FALSE)
         base <- vapply(p0[miss], isBasePkg, FALSE)
         if (sum(base))
@@ -713,6 +720,7 @@ install.packages <-
                  domain = NA)
     }
 
+    ## from here on we deal with source packages only.
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method, ...)
