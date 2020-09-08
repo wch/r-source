@@ -77,6 +77,8 @@
     "Blues"         = c(     2,  260,  220,   NA,   45,    5,   NA,   25,   98,   NA,  1.2,  1.3,   NA,   NA,      70,      NA),
     "Lajolla"       = c(     2,   90,  -20,   NA,   40,    5,   NA,   99,    5,   NA,  0.7,  0.8,   NA,   NA,     100,      NA),
     "Turku"         = c(     2,   10,  120,   NA,   20,    0,   NA,   95,    1,   NA,  1.7,  0.8,   NA,   NA,      55,      NA),
+    "Hawaii"        = c(     2,  -30,  200,   NA,   70,   35,   NA,   30,   92,   NA,  0.3,    1,   NA,   NA,      75,      NA),
+    "Batlow"        = c(     2,  270,  -40,   NA,   35,   35,   NA,   12,   88,   NA,  0.6,  1.1,   NA,   NA,      75,      NA),
     ##  3 : diverging
     "Blue-Red"      = c(     3,  260,    0,   NA,   80,   NA,   NA,   30,   90,   NA,  1.5,   NA,   NA,   NA,      NA,      NA),
     "Blue-Red 2"    = c(     3,  260,    0,   NA,  100,   NA,   NA,   50,   90,   NA,    1,   NA,   NA,   NA,      NA,      NA),
@@ -113,7 +115,8 @@
     "RdYlGn"        = c(     4,   10,   85,  140,  105,   45,   50,   35,   98,   35,  1.5,  1.2,  0.8,  1.2,     150,      75),
     "Spectral"      = c(     4,    0,   85,  270,   90,   45,   65,   37,   98,   37,    1,  1.2,    1,  1.2,     120,      NA),
     "Zissou 1"      = c(     4,  218,   71,   12,   46,   88,  165,   59,   82,   52,  0.2,    1,    3,    1,      33,      NA),
-    "Cividis"       = c(     4,  255,   NA,   75,   30,    0,   95,   13,   52,   92,  1.1,    1,    1,   NA,      47,      NA)
+    "Cividis"       = c(     4,  255,   NA,   75,   30,    0,   95,   13,   52,   92,  1.1,    1,    1,   NA,      47,      NA),
+    "Roma"          = c(     4,   10,  120,  265,   80,   25,   80,   25,   92,   25,  0.4,  1.5,  1.0,  1.2,      NA,      NA)
 ))
 .hcl_colors_parameters$type <- factor(.hcl_colors_parameters$type,
   labels = c("qualitative", "sequential", "diverging", "divergingx"))
