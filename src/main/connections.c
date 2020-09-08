@@ -437,7 +437,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	res = vasprintf(&b, format, ap);
 	if (res < 0) {
 	    b = buf;
-	    res = strlen(buf) + 1;
+	    res = (int)strlen(buf) + 1;
 	    buf[res-1] = '\n';
 	    warning(_("printing of extremely long output is truncated"));
 	} else usedVasprintf = TRUE;
