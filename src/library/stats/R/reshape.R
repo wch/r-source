@@ -77,7 +77,7 @@ reshape <-
                              idvar = idvar, timevar = timevar)
 
             ## use id variable(s) in wide data to create new row names
-            if (is.null(new.row.names) && !missing(ids)) {
+            if (is.null(new.row.names)) {
                 if (length(idvar) > 1L) {
                     ids <- interaction(data[, idvar], drop=TRUE)
                 } else if (idvar %in% names(data)) {
