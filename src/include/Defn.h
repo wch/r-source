@@ -1398,6 +1398,7 @@ char *mbcsTruncateToValid(char *s);
 Rboolean utf8Valid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
+int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap);
 
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */
