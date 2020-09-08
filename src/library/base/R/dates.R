@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ as.Date.character <- function(x, format,
                               optional = FALSE, ...)
 {
     charToDate <- function(x) {
+	is.na(x) <- !nzchar(x) # PR#17909
 	xx <- x[1L]
         if(is.na(xx)) {
             j <- 1L
@@ -430,7 +431,7 @@ months.Date <- function(x, abbreviate = FALSE)
 
 quarters.Date <- function(x, ...)
 {
-    x <- (as.POSIXlt(x)$mon) %/% 3L
+    x <- as.POSIXlt(x)$mon %/% 3L
     paste0("Q", x+1L)
 }
 
@@ -484,4 +485,3 @@ xtfrm.Date <- function(x) as.numeric(x)
 ## Added in 3.5.0.
 
 .Date <- function(xx, cl = "Date") `class<-`(xx, cl)
-

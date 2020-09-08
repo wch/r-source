@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.0.2 patched}{
+\section{\Rlogo CHANGES IN R 4.0.2 patched}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -82,6 +83,9 @@
 
       \item Libcurl-based internet access, including
       \code{curlGetHeaders()}, was not respecting the \code{"timeout"} option.
+
+      \item \code{as.Date(<char>)} now also works with an initial
+      \code{""}, thanks to Michael Chirico's \PR{17909}.
     }
   }
 }
