@@ -136,9 +136,9 @@ Rboolean compact_intseq_Inspect(SEXP x, int pre, int deep, int pvec,
     }
 #endif
 
-    int n = LENGTH(x);
+    R_xlen_t n = XLENGTH(x); // int .. LENGTH(.) not ok, e.g. for -1e9:2e9
     int n1 = INTEGER_ELT(x, 0);
-    int n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
+    int n2 = (int) ((inc == 1) ? n1 + n - 1 : n1 - n + 1);
     Rprintf(" %d : %d (%s)", n1, n2,
 	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");

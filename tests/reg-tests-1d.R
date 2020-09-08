@@ -4386,6 +4386,11 @@ stopifnot(sum(l0 <- as.logical(b0)) == 62L,
 ## was '0 0' for almost a month in R-devel
 
 
+## Now longer assuming integer length()
+.Internal(inspect(-199900000:2e9))
+## gave an error in R <= 4.0.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
