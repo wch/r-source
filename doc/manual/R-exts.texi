@@ -5545,6 +5545,14 @@ assumptions about OSes (and people all too frequently forget @R{} is
 used on platforms other than Linux, Windows and macOS --- and some
 forget macOS).
 
+@item
+Headers in subdirectories are often not portable.  For C++, this
+includes @file{bits/}, @file{tr1/} and @file{tr2/}, none of which exist
+on macOS (and @file{ext/} exists there but with different content from
+@command{g++}-based platforms).  Header @file{bits/stdc++.h} is both not
+portable and not recommended for end-user code even on platforms which
+include it.
+
 @end itemize
 
 Some additional information for C++ is available at
