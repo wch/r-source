@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -35,7 +35,8 @@ all.equal(target, current, \dots)
 
 \method{all.equal}{environment}(target, current, all.names=TRUE, \dots)
 
-\method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3, scale)
+\method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3, scale,
+          check.tzone = TRUE)
 
 
 attr.all.equal(target, current, \dots,
@@ -69,6 +70,8 @@ attr.all.equal(target, current, \dots,
     be specified by its full name.}
   \item{all.names}{logical passed to \code{\link{ls}} indicating if
     \dQuote{hidden} objects should also be considered in the environments.}
+  \item{check.tzone}{logical indicating if the \code{"tzone"} attributes
+    of \code{target} and \code{current} should be compared.}
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
     of \code{target} and \code{current} should be compared.}
 }
@@ -120,8 +123,11 @@ attr.all.equal(target, current, \dots,
   and is also used for reference classes (unless a specific
   \code{all.equal} method is defined).
 
-  The methods for the date-time classes by default allow a tolerance of
-  \code{tolerance = 0.001} seconds, and ignore \code{scale}.
+  The method for date-time objects uses \code{all.equal.numeric} to
+  compare times (in \code{"\link{POSIXct}"} representation) with a
+  default \code{tolerance} of 0.001 seconds, ignoring \code{scale}.
+  A time zone mismatch between \code{target} and \code{current} is
+  reported unless \code{check.tzone = FALSE}.
 
   \code{attr.all.equal} is used for comparing
   \code{\link{attributes}}, returning \code{NULL} or a
@@ -173,6 +179,17 @@ mtext(paste("mean(all.equal(x1, x2*(1 + eps_k))) {100 x} Mean rel.diff.=",
 ## With argument  countEQ=TRUE, get "the same" (w/o need for jittering):
 mtext(paste("all.equal(x1,x2, countEQ=TRUE) :",
           signif(all.eqNum(x1,x2, countEQ=TRUE), 3)), line= -6, col=2)
+
+## comparison of date-time objects
+now <- Sys.time()
+stopifnot(
+all.equal(now, now + 1e-4)  # TRUE (default tolerance = 0.001 seconds)
+)
+all.equal(now, now + 0.2)
+all.equal(now, as.POSIXlt(now, "UTC"))
+stopifnot(
+all.equal(now, as.POSIXlt(now, "UTC"), check.tzone = FALSE)  # TRUE
+)
 }
 \keyword{programming}% is.*
 \keyword{utilities}

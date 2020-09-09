@@ -297,6 +297,12 @@
 
       \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
       from Sebastian Meyer.
+
+      \item \code{all.equal.POSIXt()} no longer warns about and
+      subsequently ignores inconsistent \code{"tzone"} attributes, but
+      describes the difference in its return value (\PR{17277}).
+      This check can be disabled \emph{via} the new argument
+      \code{check.tzone = FALSE}; as suggested by Sebastian Meyer.
     }
   }
 }

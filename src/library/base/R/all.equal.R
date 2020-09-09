@@ -408,7 +408,8 @@ attr.all.equal <- function(target, current, ...,
 
 ## formerly in datetime.R
 ## force absolute comparisons
-all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale)
+all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale,
+                             check.tzone = TRUE)
 {
     if(!inherits(target, "POSIXt"))
         return("'target' is not a POSIXt")
@@ -417,15 +418,17 @@ all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale)
     target <- as.POSIXct(target)
     current <- as.POSIXct(current)
     msg <- NULL
-    ## See check_tzones():
-    tz <- function(dt) {
-        if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
+    if(check.tzone) {
+        ## See check_tzones():
+        tz <- function(dt) {
+            if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
+        }
+        tzt <- tz(target)
+        tzc <- tz(current)
+        if(!isTRUE(tzt == tzc))
+            msg <- sprintf("'tzone' attributes are inconsistent ('%s' and '%s')",
+                           tzt, tzc)
     }
-    tzt <- tz(target)
-    tzc <- tz(current)
-    if(!isTRUE(tzt == tzc))
-        msg <- sprintf("'tzone' attributes are inconsistent ('%s' and '%s')",
-                       tzt, tzc)
     attr(target, "tzone") <- attr(current, "tzone") <- NULL
     val <- all.equal.numeric(target, current, ...,
                              tolerance = tolerance, scale = 1)
