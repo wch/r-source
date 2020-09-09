@@ -210,6 +210,10 @@
       \code{return()} calls (wish of \PR{17180}, patch by Sebastian
       Meyer). This check can be activated via the new environment
       variable \env{_R_CHECK_BOGUS_RETURN_}, true for \code{--as-cran}.
+
+      \item \command{R CMD build} now omits tarballs and binaries of
+      previous builds from the top-level package directory; \PR{17828},
+      patch by Sebastian Meyer.
     }
   }
 
