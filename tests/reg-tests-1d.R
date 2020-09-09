@@ -4386,9 +4386,11 @@ stopifnot(sum(l0 <- as.logical(b0)) == 62L,
 ## was '0 0' for almost a month in R-devel
 
 
-## Now longer assuming integer length()
-.Internal(inspect(-199900000:2e9))
-## gave an error in R <= 4.0.2
+## No longer assuming integer length()
+if(.Machine$sizeof.pointer >= 8) {
+  .Internal(inspect(-199900000:2e9))
+  ## gave an error in R <= 4.0.2
+}
 
 
 ## PR#17907 -- capture.output() now using standard evaluation (SE) :
