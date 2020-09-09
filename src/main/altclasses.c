@@ -166,12 +166,12 @@ static void *compact_intseq_Dataptr(SEXP x, Rboolean writeable)
 	if (inc == 1) {
 	    /* compact sequences n1 : n2 with n1 <= n2 */
 	    for (R_xlen_t i = 0; i < n; i++)
-		data[i] = n1 + i;
+		data[i] = (int) (n1 + i);
 	}
 	else if (inc == -1) {
 	    /* compact sequences n1 : n2 with n1 > n2 */
 	    for (R_xlen_t i = 0; i < n; i++)
-		data[i] = n1 - i;
+		data[i] = (int) (n1 - i);
 	}
 	else
 	    error("compact sequences with increment %d not supported yet", inc);
