@@ -27,7 +27,7 @@ isBasePkg <- function(pkg) {
 
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L],
-             binary = FALSE, ...) ## ... is passed to installed.packages().
+             binary = FALSE, ..., av2) ## ... is passed to installed.packages().
 {
     if (is.null(dependencies)) return(unique(pkgs))
     oneLib <- length(lib) == 1L
@@ -51,30 +51,47 @@ getDependencies <-
     }
     p0 <- unique(pkgs)
     miss <-  !p0 %in% row.names(available)
-    if(sum(miss)) {
+    base <- vapply(p0, isBasePkg, FALSE)
+    if (sum(base))
+        warning(sprintf(ngettext(sum(base),
+                                 "package %s is a base package, and should not be updated",
+                                 "packages %s are base packages, and should not be updated"),
+                        paste(sQuote(p0[base]), collapse = ", ")),
+                domain = NA, call. = FALSE)
+    m0 <- miss & !base
+    msg2 <- NULL
+    if(sum(m0) && !is.null(av2)) {
+        keep <- rownames(av2) %in% p0[m0] ## there might be duplicate matches
+        av2 <- av2[keep, , drop = FALSE]
+        if(nrow(av2)) {
+            ds <- av2[, "Depends"]
+            ds[is.na(ds)] <- ""
+            x <- lapply(strsplit(sub("^[[:space:]]*", "", ds),
+                                 "[[:space:]]*,[[:space:]]*"),
+                        function(s) s[grepl("^R[[:space:]]*\\(", s)])
+            lens <- lengths(x)
+            pos <- which(lens > 0L)
+            av2 <- av2[pos,, drop = FALSE]; x <- x[pos]
+            msg2 <- paste(sQuote(av2[, "Package"]), "version", av2[, "Version"],
+                          "is in the repositories but depends on", unlist(x))
+        }
+    }
+    if(sum(m0)) {
         msg <- paste0(if(binary) "as a binary package ",
                       "for this version of R")
-        msg <- c(msg, "",
-                 paste0(ngettext(sum(miss),
-                          "A version of this package for your version of R might be available elsewhere,\nsee the ideas at\n",
-                          "Versions of these packages for your version of R might be available elsewhere,\nsee the ideas at\n"),
-                 "https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages")
+        msg3 <- c(paste0(ngettext(sum(m0),
+                                  "A version of this package for your version of R might be available elsewhere,\nsee the ideas at\n",
+                                  "Versions of these packages for your version of R might be available elsewhere,\nsee the ideas at\n"),
+                         "https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages")
                  )
-	warning(sprintf(ngettext(sum(miss),
+	warning(sprintf(ngettext(sum(m0),
 				 "package %s is not available %s",
 				 "packages %s are not available %s"),
-			paste(sQuote(p0[miss]), collapse = ", "),
-                        paste(msg, collapse = "\n")),
-                domain = NA, call. = FALSE)
-        base <- vapply(p0[miss], isBasePkg, FALSE)
-        if (sum(base))
-          warning(sprintf(ngettext(sum(base),
-                                   "package %s is a base package, and should not be updated",
-                                   "packages %s are base packages, and should not be updated"),
-                          paste(sQuote(p0[miss][base]), collapse = ", ")),
-                  domain = NA, call. = FALSE)
-        if (sum(miss) == 1L &&
-            !is.na(w <- match(tolower(p0[miss]),
+			paste(sQuote(p0[m0]), collapse = ", "),
+                        paste(c(msg, msg2, "", msg3), collapse = "\n")),
+               domain = NA, call. = FALSE)
+        if (sum(m0) == 1L &&
+            !is.na(w <- match(tolower(p0[m0]),
                               tolower(row.names(available))))) {
             warning(sprintf("Perhaps you meant %s ?",
                             sQuote(row.names(available)[w])),
@@ -84,7 +101,7 @@ getDependencies <-
     }
     p0 <- p0[!miss]
 
-    if(depends) { # check for dependencies, recursively
+    if(depends && length(p0)) { # check for dependencies, recursively
         p1 <- p0 # this is ok, as 1 lib only
         ## INSTALL prepends 'lib' to the libpath
         ## Here we are slightly more conservative
@@ -720,12 +737,26 @@ install.packages <-
                  domain = NA)
     }
 
-    ## from here on we deal with source packages only.
-    if(is.null(available))
-        available <- available.packages(contriburl = contriburl,
-                                        method = method, ...)
-    if(getDeps)
-        pkgs <- getDependencies(pkgs, dependencies, available, lib, ...)
+    ## from here on we deal with source packages in repos
+    if(is.null(available)) {
+        filters <- getOption("available_packages_filters")
+        if(!is.null(filters)) {
+            available <- available.packages(contriburl = contriburl,
+                                            method = method, ...)
+            av2 <- NULL
+        } else {
+            f <- setdiff(available_packages_filters_default,
+                         c("R_version", "duplicates"))
+            av2 <- available.packages(contriburl = contriburl, filters = f,
+                                      method = method, ...)
+            f <- available_packages_filters_db[["R_version"]]
+            f2 <- available_packages_filters_db[["duplicates"]]
+            available <- f2(f(av2))
+        }
+    }
+    if(getDeps) ## true except for type = "both" above.
+        pkgs <- getDependencies(pkgs, dependencies, available, lib, ...,
+                                av2 = av2)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
