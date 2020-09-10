@@ -1967,8 +1967,8 @@ local archives, local files, @dots{}).  Function
 @code{setRepositories()} can select amongst those repositories that the
 @R{} installation is aware of.
 
-Something that sometimes puzzles users is that @code{install.packages()}
-may report that a package which they believe should be availablw is not
+Something which sometimes puzzles users is that @code{install.packages()}
+may report that a package which they believe should be available is not
 found.  Some possible reasons:
 @itemize
 @item
