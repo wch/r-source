@@ -226,15 +226,16 @@ static int defaultSerializeVersion()
 #define R_assert(e) ((e) ? (void) 0 : error("assertion '%s' failed: file '%s', line %d\n", #e, __FILE__, __LINE__))
 #endif /* NDEBUG */
 
-/* Rsnprintf: like snprintf, but guaranteed to null-terminate. */
-static int Rsnprintf(char *buf, int size, const char *format, ...)
+/* Rsnprintf: like snprintf, but guaranteed to null-terminate. See
+   errors.c::Rvsnprintf_mbcs for a multi-byte safe version. */
+static int Rsnprintf(char *buf, size_t size, const char *format, ...)
 {
     int val;
     va_list(ap);
     va_start(ap, format);
     /* On Windows this no longer uses the non-C99 MSVCRT.dll version */
     val = vsnprintf(buf, size, format, ap);
-    buf[size-1] = '\0';
+    if(size) buf[size-1] = '\0';
     va_end(ap);
     return val;
 }

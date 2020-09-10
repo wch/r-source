@@ -876,6 +876,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 #endif
 
 # define R_BUFSIZE BUFSIZE
+// similar to dummy_vfprintf in connections.c
 attribute_hidden
 void Rcons_vprintf(const char *format, va_list arg)
 {
@@ -899,6 +900,8 @@ void Rcons_vprintf(const char *format, va_list arg)
 #else
     if(res >= R_BUFSIZE) { /* res is the desired output length */
 	usedRalloc = TRUE;
+	/* dummy_vfprintf protects against `res` being counted short; we do not
+	   do that here */
 	p = R_alloc(res+1, sizeof(char));
 	vsprintf(p, format, arg);
     } else if(res < 0) {
