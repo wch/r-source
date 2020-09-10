@@ -738,12 +738,12 @@ install.packages <-
     }
 
     ## from here on we deal with source packages in repos
+    av2 <- NULL
     if(is.null(available)) {
         filters <- getOption("available_packages_filters")
         if(!is.null(filters)) {
             available <- available.packages(contriburl = contriburl,
                                             method = method, ...)
-            av2 <- NULL
         } else {
             f <- setdiff(available_packages_filters_default,
                          c("R_version", "duplicates"))
