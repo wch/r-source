@@ -386,6 +386,8 @@
 
       Further, \code{quantile(x, prN, names=FALSE)} now works even when
       \code{prN} contains \code{NA}s, thanks to Anggono's \PR{17892}.
+      Ditto for ordered factors or \code{Date} objects
+      when \code{type = 1} or \code{3}, thanks to \PR{17899}.
 
       \item Libcurl-based internet access, including
       \code{curlGetHeaders()}, was not respecting the \code{"timeout"} option.

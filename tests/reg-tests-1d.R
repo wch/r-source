@@ -4389,8 +4389,8 @@ stopifnot(sum(l0 <- as.logical(b0)) == 62L,
 ## No longer assuming integer length()
 if(.Machine$sizeof.pointer >= 8) {
   .Internal(inspect(-199900000:2e9))
-  ## gave an error in R <= 4.0.2
 }
+## gave an error in R <= 4.0.2
 
 
 ## PR#17907 -- capture.output() now using standard evaluation (SE) :
@@ -4429,6 +4429,32 @@ stopifnot(identical(packBits(b0, "double"), n0))
 r <- c(pi, 1+ (0:8)/4); head(b <- numToBits(r), 25)
 stopifnot(identical(packBits(b, "double"), r))
 ## thanks to PR#17914 by Bill Dunlap
+
+
+## quantile(x, probs) when probs has NA's, PR#17899
+L <- list(ordered(letters[1:11]), # class "ordered" "factor"
+          seq(as.Date("2000-01-07"), as.Date("1997-12-17"), by="-1 month"))
+ct <- seq(as.POSIXct("2020-01-01 12:13:14", tz="UTC"), by="1 hour", length.out = 47)
+LL <- c(L, list(o0 = L[[1]][FALSE], D0 = L[[2]][FALSE],
+                ct = ct, lt = as.POSIXlt(ct), num= as.numeric(ct)))
+prb <- seq(0, 1, by=2^-8) # includes 0.25, 0.5, etc
+for(x in LL) {
+    cat("x : "); str(x, vec.len=3)
+    clx <- class(if(inherits(x, "POSIXlt")) as.POSIXct(x) else x)
+    ## for "ordered" *and* "Date", type must be 1 or 3
+    for(typ in sort(c(1, 3, if(!any(clx %in% c("ordered", "Date"))) c(2, 4:7)))) {
+        cat(typ, ": ")
+        stopifnot(exprs = {
+            identical(clx, class(q1 <- quantile(x, probs=  prb,     type=typ)))
+            identical(clx, class(qN <- quantile(x, probs=c(prb,NA), type=typ))) # failed
+            ## for "POSIXct", here q1 is integer, qN "double":
+            { if(inherits(q1, "POSIXct")) storage.mode(qN) <- storage.mode(q1); TRUE }
+            identical(qN[seq_along(q1)], q1)
+            is.na(    qN[length(qN)])
+        })
+    }; cat("\n")
+}
+## qN often lost class() e.g. for "ordered" and "Date" in  R <= 4.0.2
 
 
 
