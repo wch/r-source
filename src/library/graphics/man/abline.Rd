@@ -1,6 +1,6 @@
 % File src/library/graphics/man/abline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{abline}
@@ -11,7 +11,7 @@
 }
 \usage{
 abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
-       coef = NULL, untf = FALSE, ...)
+       coef = NULL, untf = FALSE, \dots)
 }
 \arguments{
   \item{a, b}{the intercept and slope, single values.}
@@ -28,11 +28,11 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
 }
 \details{
   Typical usages are
-\preformatted{abline(a, b, untf = FALSE, \dots)
-abline(h =, untf = FALSE, \dots)
-abline(v =, untf = FALSE, \dots)
-abline(coef =, untf = FALSE, \dots)
-abline(reg =, untf = FALSE, \dots)
+\preformatted{abline(a, b, ...)
+abline(h =, ...)
+abline(v =, ...)
+abline(coef =, ...)
+abline(reg =, ...)
 }
   The first form specifies the line in intercept/slope form
   (alternatively \code{a} can be specified on its own and is taken to

@@ -6276,7 +6276,7 @@ E.g., @file{abline.Rd} contains
 @group
 \details@{
   Typical usages are
-\preformatted@{abline(a, b, untf = FALSE, \dots)
+\preformatted@{abline(a, b, ...)
 ......
 @}
 @end group
