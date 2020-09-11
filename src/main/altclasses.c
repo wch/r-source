@@ -27,6 +27,10 @@
 #include <Print.h> /* for R_print */
 #include <R_ext/Itermacros.h>
 
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
+
 
 /***
  *** ALTREP Concrete Class Implementations
@@ -385,7 +389,7 @@ Rboolean compact_realseq_Inspect(SEXP x, int pre, int deep, int pvec,
     R_xlen_t n = XLENGTH(x);
     R_xlen_t n1 = (R_xlen_t) REAL_ELT(x, 0);
     R_xlen_t n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
-    Rprintf(" %ld : %ld (%s)", n1, n2,
+    Rprintf(" %lld : %lld (%s)", n1, n2,
 	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");
     return TRUE;
