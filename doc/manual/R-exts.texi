@@ -4440,6 +4440,12 @@ CXXFLAGS = `"$@{RBIN@}" CMD config CXXFLAGS` `"$@{RBIN@}" CMD config CXXPICFLAGS
 @end example
 
 @item
+Names of source files including @file{=} (such as
+@c from TCIU in 2020-09
+@file{src/complex_Sig=gen.c}) will confuse some @command{make} programs
+and should be avoided.
+
+@item
 Bash extensions also need to be avoided in shell scripts, including
 expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
