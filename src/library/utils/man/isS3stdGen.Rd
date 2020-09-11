@@ -1,6 +1,6 @@
 % File src/library/utils/man/isS3stdGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isS3stdGeneric}
@@ -14,16 +14,20 @@
 isS3stdGeneric(f)
 }
 \arguments{
-  \item{f}{A function object}
+  \item{f}{a function object}
 }
 \details{
   A closure is considered a standard S3 generic if the first expression
   in its body calls \code{\link{UseMethod}}. Functions which perform
   operations before calling \code{UseMethod} will not be considered
   \dQuote{standard} S3 generics.
+
+  If \code{f} is currently being traced, i.e., inheriting from class
+  \code{"traceable"}, the definition of the original untraced version of
+  the function is used instead.
 }
 \value{
-  If \code{f} is an S3 generic, a logical vector containing \code{TRUE}
+  If \code{f} is an S3 generic, a logical containing \code{TRUE}
   with the name of the S3 generic (the string passed to
   \code{UseMethod}). Otherwise, \code{FALSE} (unnamed).
 }

@@ -4457,6 +4457,13 @@ for(x in LL) {
 ## qN often lost class() e.g. for "ordered" and "Date" in  R <= 4.0.2
 
 
+## isS3stdGeneric() traced function:
+trace(print)
+stopifnot( isS3stdGeneric(print) )
+untrace(print)
+## was FALSE in R <= 4.0.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

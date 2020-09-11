@@ -394,6 +394,9 @@
 
       \item \code{as.Date(<char>)} now also works with an initial
       \code{""}, thanks to Michael Chirico's \PR{17909}.
+
+      \item \code{isS3stdGeneric(f)} now detects an S3 generic also when it
+      it is \code{trace()}d, thanks to Gabe Becker's \PR{17917}.
     }
   }
 }
