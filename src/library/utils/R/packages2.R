@@ -27,7 +27,7 @@ isBasePkg <- function(pkg) {
 
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L],
-             binary = FALSE, ..., av2) ## ... is passed to installed.packages().
+             binary = FALSE, ..., av2 = NULL) ## ... is passed to installed.packages().
 {
     if (is.null(dependencies)) return(unique(pkgs))
     oneLib <- length(lib) == 1L
