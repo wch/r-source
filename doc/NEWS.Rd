@@ -319,10 +319,10 @@
       On macOS, \code{"macOS"} is used by default if the system timezone
       database is a newer version than that in the \R installation.
 
-      \item When \code{install.packages()} fails to find a package in a
-      source repository it mentions package versions which are excluded
-      by their \R version requirement and links to hints on why a package
-      might not be found.
+      \item When \code{install.packages(type = "source")} fails to find
+       a package in a repository it mentions package versions which are
+       excluded by their \R version requirement and links to hints on
+       why a package might not be found.
     }
   }
 
