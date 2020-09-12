@@ -132,7 +132,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{grep(value = FALSE)} returns a vector of the indices
   of the elements of \code{x} that yielded a match (or not, for
   \code{invert = TRUE}).  This will be an integer vector unless the input
-  is a \emph{long vector}, when it will be a double vector.
+  is a \emph{\link{long vector}}, when it will be a double vector.
 
   \code{grep(value = TRUE)} returns a character vector containing the
   selected elements of \code{x} (after coercion, preserving names but no
@@ -269,7 +269,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{\link{apropos}} uses regexps and has more examples.
 
   \code{\link{grepRaw}} for matching raw vectors.
-  
+
   Options \code{PCRE_limit_recursion}, \code{PCRE_study} and
   \code{PCRE_use_JIT}.
 

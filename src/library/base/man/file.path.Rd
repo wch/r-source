@@ -1,4 +1,4 @@
-% File src/library/base/man/file.path.Rd
+% File src/library/base/man/file.path.Rdw
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
@@ -14,7 +14,7 @@
 file.path(\dots, fsep = .Platform$file.sep)
 }
 \arguments{
-  \item{\dots}{character vectors.  Long vectors are not supported.}
+  \item{\dots}{character vectors.  \link{Long vectors} are not supported.}
   \item{fsep}{the path separator to use (assumed to be ASCII).}
 }
 \details{
