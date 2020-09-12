@@ -190,7 +190,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 \section{Setting Proxies}{
   For the Windows-only method \code{"wininet"}, the \sQuote{Internet
   Options} of the system are used to choose proxies and so on; these are
-  set in the Control Panel and are those used for Internet Explorer.
+  set in the Control Panel and are those used for system browsers.
 
   The next two paragraphs apply to the internal code only.
 
