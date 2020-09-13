@@ -4432,6 +4432,7 @@ stopifnot(identical(packBits(b, "double"), r))
 
 
 ## quantile(x, probs) when probs has NA's, PR#17899
+stopifnot(identical(quantile(NULL), quantile(numeric()))) # back-compatibility
 L <- list(ordered(letters[1:11]), # class "ordered" "factor"
           seq(as.Date("2000-01-07"), as.Date("1997-12-17"), by="-1 month"))
 ct <- seq(as.POSIXct("2020-01-01 12:13:14", tz="UTC"), by="1 hour", length.out = 47)
@@ -4442,7 +4443,7 @@ for(x in LL) {
     cat("x : "); str(x, vec.len=3)
     clx <- class(if(inherits(x, "POSIXlt")) as.POSIXct(x) else x)
     ## for "ordered" *and* "Date", type must be 1 or 3
-    for(typ in sort(c(1, 3, if(!any(clx %in% c("ordered", "Date"))) c(2, 4:7)))) {
+    for(typ in if(any(clx %in% c("ordered", "Date"))) c(1,3) else 1:7) {
         cat(typ, ": ")
         stopifnot(exprs = {
             identical(clx, class(q1 <- quantile(x, probs=  prb,     type=typ)))

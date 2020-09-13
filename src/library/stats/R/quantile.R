@@ -33,7 +33,10 @@ quantile.default <-
             stop("(unordered) factors are not allowed")
         lx <- levels(x)
         x <- as.integer(x)
-    } else lx <- NULL
+    } else {
+        if(is.null(x)) x <- numeric() # for back-compatibility
+        lx <- NULL
+    }
     if (na.rm)
 	x <- x[!is.na(x)]
     else if (anyNA(x))
@@ -49,7 +52,7 @@ quantile.default <-
             index <- 1 + max(n - 1, 0) * probs
             lo <- floor(index)
             hi <- ceiling(index)
-            x <- sort(x, partial = if(n > 0) unique(c(lo, hi)[p.ok]))
+            x <- sort(x, partial = if(n == 0) numeric() else unique(c(lo, hi)[p.ok]))
             qs <- x[lo]
 	    i <- which(!p.ok | (index > lo & x[hi] != qs))# '!=' for '>' working w/ complex
 	    h <- (index - lo)[i] # > 0	by construction
@@ -83,7 +86,7 @@ quantile.default <-
                 if(any(sml <- abs(h) < fuzz, na.rm = TRUE)) h[sml] <- 0
             }
             x <- sort(x, partial =
-                      if(n > 0)
+                      if(n == 0) numeric() else
                       unique(c(1, j[p.ok & j>0L & j<=n], (j+1)[p.ok & j>0L & j<n], n))
                       )
             x <- c(x[1L], x[1L], x, x[n], x[n])

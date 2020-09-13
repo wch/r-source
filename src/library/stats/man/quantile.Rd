@@ -175,7 +175,7 @@ quantile(x,  probs = c(0.1, 0.5, 1, 2, 5, 10, 50, NA)/100)
 ### Compare different types
 quantAll <- function(x, prob, ...)
   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
-           quantile(x, prob, type=1)))
+           quantile(x, prob, type=1, ...)))
 p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 signif(quantAll(x, p), 4)
 
