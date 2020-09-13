@@ -8308,7 +8308,7 @@ function(x, ...)
                 ul <- tolower(z)
                 indp <- (grepl("^https?://cran.r-project.org/web/packages",
                                ul) &
-                         !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]]+(html|pdf|rds)$",
+                         !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]_]+(html|pdf|rds)$",
                                 ul))
                 indv <- grepl("https?://cran.r-project.org/web/views/[[:alnum:]]+[.]html$",
                               ul)
