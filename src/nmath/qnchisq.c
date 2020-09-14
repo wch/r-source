@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-2008   The R Core Team
+ *  Copyright (C) 2000--2020  The R Core Team
  *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,8 +46,9 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
-    pp = R_D_qIv(p);
-    if(pp > 1 - DBL_EPSILON) return lower_tail ? ML_POSINF : 0.0;
+    pp = R_D_qIv(p); // exp(p) iff log_p
+    if(pp > 1 - DBL_EPSILON)
+	return lower_tail ? ML_POSINF : 0.0; // early under/over flow  iff log_p (FIXME)
 
     /* Invert pnchisq(.) :
      * 1. finding an upper and lower bound */
@@ -59,7 +60,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
 	c = (df + 3*ncp)/(df + 2*ncp);
 	ff = (df + 2 * ncp)/(c*c);
 	ux = b + c * qchisq(p, ff, lower_tail, log_p);
-	if(ux < 0) ux = 1;
+	if(ux <= 0.) ux = 1;
 	ux0 = ux;
     }
 
