@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 2000-2019 The R Core Team
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,13 +54,13 @@
        --MM--
      */
 
-
+// R's  signif(x, digits)   via   Math2(args, fprec) in  ../main/arithmetic.c :
 double fprec(double x, double digits)
 {
     double l10, pow10, sgn, p10, P10;
     int e10, e2, do_round, dig;
-    /* Max.expon. of 10 (=308.2547) */
-    const static int max10e = (int) (DBL_MAX_EXP * M_LOG10_2);
+    // Max.expon. of 10 (w/o denormalizing or overflow; = R's  trunc( log10(.Machine$double.xmax) )
+    const static int max10e = (int) DBL_MAX_10_EXP; // == 308 ("IEEE")
 
     if (ISNAN(x) || ISNAN(digits))
 	return x + digits;
@@ -88,7 +88,7 @@ double fprec(double x, double digits)
 	if(e10 > max10e) { /* numbers less than 10^(dig-1) * 1e-308 */
 	    p10 =  R_pow_di(10., e10-max10e);
 	    e10 = max10e;
-	} 
+	}
 	if(e10 > 0) { /* Try always to have pow >= 1
 			 and so exactly representable */
 	    pow10 = R_pow_di(10., e10);

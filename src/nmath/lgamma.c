@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2018 The R Core Team
+ *  Copyright (C) 2000-2020 The R Core Team
  *  Copyright (C) 1998 Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -37,6 +37,8 @@
  *    The accuracy of this routine compares (very) favourably
  *    with those of the Sun Microsystems portable mathematical
  *    library.
+ *
+ *  ./toms708.c  has  gamln()
  */
 
 #include "nmath.h"
@@ -112,7 +114,7 @@ double lgammafn_sign(double x, int *sgn)
     if(fabs((x - trunc(x - 0.5)) * ans / x) < dxrel) {
 
 	/* The answer is less than half precision because
-	 * the argument is too near a negative integer. */
+	 * the argument is too near a negative integer; e.g. for  lgamma(1e-7 - 11) */
 
 	ML_WARNING(ME_PRECISION, "lgamma");
     }

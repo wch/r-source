@@ -30,7 +30,7 @@ pnbeta_raw(double x, double o_x, double a, double b, double ncp)
     const int    itrmax = 10000;  /* 100 is not enough for pf(ncp=200)
 				     see PR#11277 */
 
-    double a0, lbeta, c, errbd, x0, temp, tmp_c;
+    double a0, lBeta, c, errbd, x0, temp, tmp_c;
     int ierr;
 
     LDOUBLE ans, ax, gx, q, sumq;
@@ -46,15 +46,15 @@ pnbeta_raw(double x, double o_x, double a, double b, double ncp)
 
     x0 = floor(fmax2(c - 7. * sqrt(c), 0.));
     a0 = a + x0;
-    lbeta = lgammafn(a0) + lgammafn(b) - lgammafn(a0 + b);
+    lBeta = lbeta(a0, b); // = lgammafn(a0) + lgammafn(b) - lgammafn(a0 + b);
     /* temp = pbeta_raw(x, a0, b, TRUE, FALSE), but using (x, o_x): */
     bratio(a0, b, x, o_x, &temp, &tmp_c, &ierr, FALSE);
 
     gx = exp(a0 * log(x) + b * (x < .5 ? log1p(-x) : log(o_x))
-	     - lbeta - log(a0));
-    if (a0 > a)
+	     - lBeta - log(a0));
+    if (a0 > a) // x0 >= 1 (and *not* x0 << a)
 	q = exp(-c + x0 * log(c) - lgammafn(x0 + 1.));
-    else
+    else // a0 = a  <==  x0 << a
 	q = exp(-c);
 
     sumq = 1. - q;

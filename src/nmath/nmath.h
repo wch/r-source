@@ -58,7 +58,7 @@ double	Rf_gamma_cody(double);
 #else
 # define R_forceint(x)   round(x)
 #endif
-//R >= 3.1.0: # define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-7)
+//R >= 3.1.0:  previously, was defined as  (fabs((x) - R_forceint(x)) > 1e-7)
 # define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-7*fmax2(1., fabs(x)))
 
 #ifndef MATHLIB_STANDALONE
