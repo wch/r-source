@@ -128,7 +128,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   and \code{"libcurl"} methods only.
 
   The timeout for many parts of the transfer can be set by the option
-  \code{timeout} which defaults to 60 seconds.
+  \code{timeout} which defaults to 60 seconds.  This is often
+  insufficient for downloads of large files (hundreds of MB or more) and
+  so should be increased when \code{download.file} is used in packages
+  to do so.
 
   The level of detail provided during transfer can be set by the
   \code{quiet} argument and the \code{internet.info} option: the details
