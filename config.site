@@ -395,3 +395,46 @@
 ## parallelize ThinLTO or to change linker such as -fuse-ld=gold or
 ## -fuse-ld=lld (with gcc or clang).
 ## LTO_LD=
+
+## Programs which configure will look for on the path
+## AR
+## GETWD=pwd
+## A BSD-compatible install program or script:
+## tries ginstall scoinst install and falls back to tools/install-sh
+## INSTALL
+## LN_S="ln -s"
+## MAKE
+## Tries less more page pg in turn
+## PAGER
+## PAPERCONF
+## Tries pkg-config then pkgconf
+## PKG_CONFIG
+## RANLIB
+## REALPATH
+## Tries gtar gnutar tar
+## TAR
+## XMKMF
+## R_BZIPCMD=bzip2
+## R_GZIPCMD=gzip
+## looks for lpr then lp
+## R_PRINTCMD
+## tries firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open
+## R_BROWSER
+## tries acroread acroread4 xdg-open evince xpdf gv gnome-gv ggv
+##   okular kpdf open gpdf kghostview
+## R_PDFVIEWER
+## R_TEXI2DVICMD
+## R_UNZIPCMD=unzip
+## R_ZIPCMD=zip
+
+## Tries ginstall-info install-info
+## INSTALL_INFO
+## KPSEWHICH
+## MAKEINDEX
+## PDFLATEX
+## PDFTEX
+## TEXI2ANY
+## TEXI2DVI
+
+## The exception, looked for in /usr/xpg4/bin before the path
+## SED=sed
