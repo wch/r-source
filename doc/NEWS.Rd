@@ -146,6 +146,17 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item \command{configure} checks for a program \command{pkgconf}
+      if program \command{pkg-config} is not found.  These are now only
+      looked for on the path (like almost all other programs) so if needed
+      specify a full path to the command in \code{PKG_CONFIG}, for example
+      in file \file{config.site}.
+    }
+  }
+
+
   \subsection{LINK-TIME OPTIMIZATION on a UNIX-ALIKE}{
     \itemize{
       \item Configuring with flag \option{--enable-lto=R} now also uses
