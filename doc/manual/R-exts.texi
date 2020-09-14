@@ -1842,10 +1842,13 @@ machines used to produce the @acronym{CRAN} binary packages: however as
 Apple does not ship @file{.pc} files for its system libraries such as
 @samp{zlib}, it may well not find information on these.} on macOS) to do
 this is @command{pkg-config}.  The @file{configure} script will need to
-test for the presence of the command itself (see for example package
-@CRANpkg{Cairo}), and if present it can be asked if the software is
-installed, of a suitable version and for compilation/linking flags by
-e.g.@:
+test for the presence of the command itself@footnote{It is not wise to
+check the version of @command{pkg-config} as it is sometimes a link to
+@c in 2020 it was for Fedora but not Debian/Ubuntu
+@command{pkgconf}, a separate project with a different version series.}
+(see for example package @CRANpkg{Cairo}), and if present it can be
+asked if the software is installed, of a suitable version and for
+compilation/linking flags by e.g.@:
 
 @example
 $ pkg-config --exists 'QtCore >= 4.0.0'  # check the status
@@ -1867,6 +1870,17 @@ to try in turn @command{pkg-config --libs} and @command{pkg-config
 --static --libs}.} of that library (usually the dynamic one), and
 @command{pkg-config --static --libs} may be needed if the static library is
 to be used.
+
+@c package libproj repeatedly got this wrong in 2020.
+Static libraries are commonly used on macOS (and Windows) to facilitate
+bundling external software with binary distributions of packages.  This
+means that portable (source) packages need to allow for this.  It is
+@emph{not} safe to just use @command{pkg-config --static --libs}, as
+that will often include further libraries that are not necessarily
+installed on the user's system (or maybe only the versioned library such
+as @file{libjbig.so.2.1} is installed and not @file{libjbig.so} which
+would be needed to use @code{-ljbig} often included in
+@command{pkg-config --static --libs libtiff-4}).
 
 Sometimes the name by which the software is known to
 @command{pkg-config} is not what one might expect (e.g.@:
