@@ -90,6 +90,9 @@
 
       \item \code{as.Date(<char>)} now also works with an initial
       \code{""}, thanks to Michael Chirico's \PR{17909}.
+
+      \item \code{R_allocLD()} has been fixed to return memory aligned for
+      long double type (PR#16534).
     }
   }
 }
