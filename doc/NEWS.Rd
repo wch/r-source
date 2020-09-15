@@ -411,6 +411,10 @@
 
       \item \code{fisher.test()} no longer segfaults when called again after
       its internal stack has been exceeded (PR#17904).
+
+      \item Accessing a long vector represented by a compact integer
+      sequence no longer segfaults (reported and debugged by Hugh
+      Parsonage).
     }
   }
 }
