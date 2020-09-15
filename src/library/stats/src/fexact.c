@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2017   The R Core Team.
+ *  Copyright (C) 1999-2020   The R Core Team.
  *
  *  Based on ACM TOMS643 (1993)
  *
@@ -1031,9 +1031,12 @@ LoopNode: /* Generate a node */
 	for (i = 3; i <= nco; ++i) {
 	    key = it[i] + key * kyy;
 	}
-	if (key < -1)
+	if (key < -1) {
+	    nst = 0;
+	    nitc = 0;
 	    error(_("Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"),
 		  i, it[i], key, kyy);
+	}
 	/* Table index */
 	ipn = key % ldst + 1;
 	/* Find empty position */
@@ -1061,6 +1064,8 @@ LoopNode: /* Generate a node */
 	}
 
 	/* this happens less, now that we check for negative key above: */
+	nst = 0;
+	nitc = 0;
 	error(_("FEXACT error 30.  Stack length exceeded in f3xact,\n"
 		"  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
 		"Increase workspace or consider using 'simulate.p.value=TRUE'"),
