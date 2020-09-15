@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -459,6 +459,39 @@ static int isDuplicated(SEXP x, R_xlen_t indx, HashData *d)
     return 0;
 }
 
+static Rboolean duplicatedInit(SEXP x, HashData *d)
+{
+    Rboolean stop = FALSE;
+
+    if(TYPEOF(x) == STRSXP) {
+	R_xlen_t i, n = XLENGTH(x);
+	for(i = 0; i < n; i++) {
+	    if(IS_BYTES(STRING_ELT(x, i))) {
+		d->useUTF8 = FALSE;
+		stop = TRUE;
+		break;
+	    }
+	    if(ENC_KNOWN(STRING_ELT(x, i))) {
+		d->useUTF8 = TRUE;
+	    }
+	    /* uncached strings are currently not properly supported */
+	    if(!IS_CACHED(STRING_ELT(x, i))) {
+		d->useCache = FALSE;
+		stop = TRUE;
+		break;
+	    }
+	}
+    } else if (TYPEOF(x) == VECSXP) {
+	R_xlen_t i, n = XLENGTH(x);
+	for(i = 0; i < n; i++)
+	    if (duplicatedInit(VECTOR_ELT(x, i), d)) {
+		stop = TRUE;
+		break;
+	    }
+    }
+    return stop;
+}
+
 static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
 #ifdef LONG_VECTOR_SUPPORT
@@ -490,20 +523,8 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 #define DUPLICATED_INIT						\
     HashData data;						\
     HashTableSetup(x, &data, nmax);				\
-    if(TYPEOF(x) == STRSXP) {					\
-	data.useUTF8 = FALSE; data.useCache = TRUE;		\
-	for(i = 0; i < n; i++) {				\
-	    if(IS_BYTES(STRING_ELT(x, i))) {			\
-		data.useUTF8 = FALSE; break;			\
-	    }							\
-	    if(ENC_KNOWN(STRING_ELT(x, i))) {			\
-		data.useUTF8 = TRUE;				\
-	    }							\
-	    if(!IS_CACHED(STRING_ELT(x, i))) {			\
-		data.useCache = FALSE; break;			\
-	    }							\
-	}							\
-    }
+    data.useUTF8 = FALSE; data.useCache = TRUE;			\
+    duplicatedInit(x, &data);
 
 /* used in scan() */
 SEXP duplicated(SEXP x, Rboolean from_last)
