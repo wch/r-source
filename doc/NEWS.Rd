@@ -407,14 +407,17 @@
       it is \code{trace()}d, thanks to Gabe Becker's \PR{17917}.
 
       \item \code{R_allocLD()} has been fixed to return memory aligned for
-      long double type (PR#16534).
+      long double type \PR{16534}.
 
       \item \code{fisher.test()} no longer segfaults when called again after
-      its internal stack has been exceeded (PR#17904).
+      its internal stack has been exceeded \PR{17904}.
 
       \item Accessing a long vector represented by a compact integer
       sequence no longer segfaults (reported and debugged by Hugh
       Parsonage).
+
+      \item \code{duplicated()} now works also for strings with multiple
+      encodings inside a single vector \PR{17809}.
     }
   }
 }
