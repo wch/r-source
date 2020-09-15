@@ -865,6 +865,10 @@ install.packages <-
             }
             if(keep_outputs)
                 file.copy(paste0(update[, 1L], ".out"), outdir)
+            ## Keep binary packages possibly created via --build
+            file.copy(Sys.glob(paste0(update[, 1L], "*.zip")), cwd)
+            file.copy(Sys.glob(paste0(update[, 1L], "*.tgz")), cwd)
+            file.copy(Sys.glob(paste0(update[, 1L], "*.tar.gz")), cwd)
             setwd(cwd); on.exit()
             unlink(tmpd2, recursive = TRUE)
         } else {
