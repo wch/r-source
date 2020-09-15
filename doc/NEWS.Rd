@@ -303,9 +303,6 @@
       \item \code{model.frame.default()} allowed \code{data = 1}, leading to
       involuntary variable capture (rest of \PR{17879}).
 
-      \item \code{R_allocLD()} has been fixed to return memory aligned for
-      long double type (PR#16534).
-
       \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
       from Sebastian Meyer.
 
@@ -408,6 +405,9 @@
 
       \item \code{isS3stdGeneric(f)} now detects an S3 generic also when it
       it is \code{trace()}d, thanks to Gabe Becker's \PR{17917}.
+
+      \item \code{R_allocLD()} has been fixed to return memory aligned for
+      long double type (PR#16534).
     }
   }
 }
