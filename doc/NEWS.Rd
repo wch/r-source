@@ -408,6 +408,9 @@
 
       \item \code{R_allocLD()} has been fixed to return memory aligned for
       long double type (PR#16534).
+
+      \item \code{fisher.test()} no longer segfaults when called again after
+      its internal stack has been exceeded (PR#17904).
     }
   }
 }
