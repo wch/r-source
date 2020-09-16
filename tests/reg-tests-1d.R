@@ -4312,8 +4312,29 @@ if (l10n_info()$"UTF-8") {
         ## trailing newline adds 1
         stopifnot(nchar(short_error(call.=FALSE)) == 101L)
     }
-}
+    ## PrintGenericVector truncations
+    ##
+    ## New printing in r78508 needs to account for UTF-8 truncation
+    grin <- "\U0001F600"
+    lc1 <- paste0(c(rep(LETTERS, length.out=110), grin), collapse="")
+    lc2 <- paste0(c(rep(LETTERS, length.out=111), grin), collapse="")
+    list.mats <- list(matrix(list(structure(1:2, class=lc1))),
+                      matrix(list(structure(1:2, class=lc2))))
 
+    ## Allowed UTF-8 truncation in R < 4.1
+    ls1 <- paste0(c(rep(0:9, length.out=95), "\U0001F600"), collapse="")
+    ls2 <- paste0(c(rep(0:9, length.out=96), "\U0001F600"), collapse="")
+    long.strings <- list(matrix(list(ls1)), matrix(list(ls2)))
+
+    ## Invalid UTF-8 output as "\xf0\x9f..." so needs to be parsed to un-escape
+    capt_parse <- function(x) {
+        out <- capture.output(print(x))
+        eval(parse(text=paste0(c('c(', sprintf("'%s',", out), 'NULL)'),
+                               collapse=""))[[1]])
+    }
+    capt.parsed <- unlist(lapply(c(list.mats, long.strings), capt_parse))
+    stopifnot(validUTF8(capt.parsed))
+}
 
 ## c() generic removes all NULL elements --- *but* the first --- before dispatch
 c.foobar <- function(...) list("ok", ...)
