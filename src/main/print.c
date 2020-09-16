@@ -495,7 +495,6 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	    case STRSXP:
 		if (LENGTH(tmp) == 1) {
 		    const void *vmax = vmaxget();
-		    /* This can potentially overflow */
 		    const char *ctmp = translateChar(STRING_ELT(tmp, 0));
 		    int len = (int) strlen(ctmp);
 		    if(len < 100)
