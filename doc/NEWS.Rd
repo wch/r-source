@@ -311,6 +311,10 @@
       describes the difference in its return value (\PR{17277}).
       This check can be disabled \emph{via} the new argument
       \code{check.tzone = FALSE}; as suggested by Sebastian Meyer.
+
+      \item \code{all.equal(x,y)} now \dQuote{sees} the two different
+      \code{NA}s in factors, thanks to Bill Dunlap and others in
+      \PR{17897}.
     }
   }
 }

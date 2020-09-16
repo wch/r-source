@@ -4453,7 +4453,9 @@ stopifnot(identical(packBits(b, "double"), r))
 
 
 ## quantile(x, probs) when probs has NA's, PR#17899
-stopifnot(identical(quantile(NULL), quantile(numeric()))) # back-compatibility
+stopifnot(identical(quantile(NULL), quantile(numeric())), # back-compatibility
+	  identical(quantile(structure(numeric(), names = character()), names = FALSE),
+		    rep(NA_real_, 5)))
 L <- list(ordered(letters[1:11]), # class "ordered" "factor"
           seq(as.Date("2000-01-07"), as.Date("1997-12-17"), by="-1 month"))
 ct <- seq(as.POSIXct("2020-01-01 12:13:14", tz="UTC"), by="1 hour", length.out = 47)
@@ -4484,6 +4486,20 @@ trace(print)
 stopifnot( isS3stdGeneric(print) )
 untrace(print)
 ## was FALSE in R <= 4.0.2
+
+
+## PR#17897: all.equal.factor() did not distinguish the two different NA in factors
+x <- factor(3:1,              labels = c("a", "b", NA))
+y <- factor(c("c", "b", "a"), levels = c("a", "b", NA), exclude = NULL)
+x
+dput(x) ; dput(y) ## --> they are clearly different, but print the same:
+stopifnot(exprs = {
+    identical(capture.output(x),
+              capture.output(y))
+    is.character(ae <- all.equal(x,y))
+    !englishMsgs || grepl("NA mismatch", ae, fixed=TRUE)
+})
+## all.equal() gave TRUE wrongly, from 2012 till R <= 4.0.2
 
 
 
