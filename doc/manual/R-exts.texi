@@ -670,8 +670,8 @@ codes.
 @c DESCRIPTION field RdMacros
 An @samp{RdMacros} field can be used to hold a comma-separated list of
 packages from which the current package will import @file{Rd} macro
-definitions.  These package should also be listed in @samp{Imports},
-@samp{Suggests} or @samp{Depends}.  The macros in these packages will be 
+definitions.  These package should also be listed in @samp{Imports}
+(or @samp{Depends}).  The macros in these packages will be 
 imported after the system macros, in the 
 order listed in the @samp{RdMacros} field, before any macro definitions
 in the current package are loaded.  Macro definitions in individual
