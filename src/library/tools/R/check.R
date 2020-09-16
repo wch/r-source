@@ -1820,7 +1820,7 @@ add_dummies <- function(dir, Log)
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
+                if(any(grepl("(not declared from|Missing or unexported object|Including base/recommended)", out))) warningLog(Log)
                 else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 ## wrapLog(msg_DESCRIPTION)
@@ -1833,7 +1833,7 @@ add_dummies <- function(dir, Log)
 
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                if(any(grepl("not declared from", out))) warningLog(Log)
+                if(any(grepl("(not declared from|Missing or unexported object)", out))) warningLog(Log)
                 else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 ## wrapLog(msg_DESCRIPTION)
