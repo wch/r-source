@@ -102,9 +102,11 @@ imagedir:
 # This is odd -- better to clean the copy
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pR ../windlgs $(RPREFIX)/src/library
+ifeq "$(WIN)" "64" 	
 # Edit Makeconf
 	$(SED) -e 's!^BINPREF [?]= .*!BINPREF ?= "$$(RTOOLS40_ROOT)/mingw64/bin/"!' \
 	  $(R_HOME)/etc/x64/Makeconf > $(RPREFIX)/etc/x64/Makeconf
+endif	  
 # test dir
 	mkdir $(RPREFIX)/tests
 	$(MAKE) --no-print-directory -C ../../../tests -f Makefile.win \
@@ -164,7 +166,8 @@ extras:
 
 ## for Inno Setup installer
 
-R.iss: JRins.R header1.iss types3264.iss types32.iss code.iss \
+R.iss: JRins.R header1.iss types3264.iss types32.iss types64.iss code.iss \
+   reg.iss reg3264.iss reg64.iss \
    CustomMsg.iss imagedir fixups 32bit extras md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	../../../bin$(R_ARCH)/Rscript JRins.R \
