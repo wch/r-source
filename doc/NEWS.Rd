@@ -422,6 +422,9 @@
 
       \item \code{duplicated()} now works also for strings with multiple
       encodings inside a single vector \PR{17809}.
+
+      \item \code{tar()} no longer skips non-directory files, thanks to a
+      patch by Sebastian Meyer, fixing the remaining part of \PR{16716}.
     }
   }
 }
