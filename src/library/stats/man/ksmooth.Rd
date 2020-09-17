@@ -15,7 +15,7 @@ ksmooth(x, y, kernel = c("box", "normal"), bandwidth = 0.5,
         n.points = max(100L, length(x)), x.points)
 }
 \arguments{
- \item{x}{input x values.  Long vectors are supported.}
+ \item{x}{input x values.  \link{Long vectors} are supported.}
  \item{y}{input y values.  Long vectors are supported.}
  \item{kernel}{the kernel to be used.  Can be abbreviated.}
  \item{bandwidth}{the bandwidth. The kernels are scaled so that their

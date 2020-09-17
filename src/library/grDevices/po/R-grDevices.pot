@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: grDevices 4.0.0\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"Project-Id-Version: grDevices 4.1.0\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,6 +148,12 @@ msgstr ""
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
 
+msgid "Invalid pattern type"
+msgstr ""
+
+msgid "Invalid 'extend' value"
+msgstr ""
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr ""
 
@@ -284,6 +290,9 @@ msgid "'bandwidth' must be numeric"
 msgstr ""
 
 msgid "'bandwidth' must be positive"
+msgstr ""
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
 msgstr ""
 
 msgid "'r' must be a \"range\", hence of length 2"

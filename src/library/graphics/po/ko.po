@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -77,28 +77,28 @@ msgstr "plot.new는 아직까지 호출되지 않았습니다"
 msgid "invalid graphics state"
 msgstr "유효한 그래픽 상태가 아닙니다"
 
-#: graphics.c:2548
+#: graphics.c:2552
 msgid "graphics device closed during call to locator or identify"
 msgstr "locator 또는 identify 로의 호출이 있는 동안 그래픽 장치는 잠깁니다"
 
-#: graphics.c:2598
+#: graphics.c:2602
 msgid "No graphics device is active"
 msgstr "활성화된 그래픽 장치가 없습니다"
 
-#: graphics.c:3056
+#: graphics.c:3060
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "길이가 0인 arrow는 angle을 정할 수 없기 때문에 넘어갑니다"
 
-#: graphics.c:3137
+#: graphics.c:3141
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "유효한 par(\"bty\") = '%c'가 아니므로 그려질 box()가 없습니다"
 
-#: graphics.c:3154
+#: graphics.c:3158
 msgid "invalid argument to GBox"
 msgstr "유효하지 않은 인자가 GBox에 전달되었습니다"
 
-#: graphics.c:3361
+#: graphics.c:3365
 msgid "metric information not available for this device"
 msgstr "이 장치에 대한 metric information이 사용가능하지 않습니다"
 

@@ -67,6 +67,47 @@
       allowing to check Rd files marked with keyword \code{"internal"} as
       well.  The latter can be activated for \command{R CMD check} via
       experimental environment variable \env{_R_CHECK_RD_INTERNAL_TOO_}.
+
+      \item New functions \code{numToBits()} and \code{numToInts()}
+      extend the \code{raw} conversion utilities to (double precision)
+      \code{numeric}.
+
+      \item Functions \code{URLencode()} and \code{URLdecode()} in
+      package \pkg{utils} now work on vectors of URLs.
+      Based on patch from Bob Rudis submitted with \PR{17873}.
+
+      \item \code{path.expand()} can expand \samp{~user} on most
+      Unix-alikes even when \code{readline} is not in use.  It tries
+      harder to expand \samp{~}, for example should environment variable
+      \env{HOME} be unset.
+
+      \item For HTML help (both dynamic and static), Rd file links to
+      help pages in external packages are now treated as references to
+      topics rather than file names, and falls back to a file link only
+      if the topic is not found in the target package. The earlier rule
+      which prioritized file names over topics can be restored by
+      setting the environment variable \env{_R_HELP_LINKS_TO_TOPICS_} to
+      a false value.
+
+      \item \code{c()} now removes \code{NULL} arguments before dispatching
+      to methods, thus simplifying the implementation of \code{c()}
+      methods, \emph{but} for back compatibility reasons keeps \code{NULL}
+      when it is the first argument; from a report and patch proposal by
+      Lionel Henry in \PR{17900}.
+
+      \item \code{Vectorize()}'s result function's environment no longer
+      keeps unneeded objects.
+
+      \item \code{...elt()} now propagates visibility consistently with
+      \code{..n}, thanks to Lionel Henry's \PR{17905}.
+
+      \item \code{capture.output()} no longer uses NSE to evaluate its
+      arguments.  This makes evaluation of functions like
+      \code{parent.frame()} more consistent, thanks to Lionel Henry's
+      \PR{17907}.
+
+      \item \code{packBits(bits, type="double")} newly works as inverse of
+      \code{numToBits()}, thanks to Bill Dunlap's proposal in \PR{17914}.
     }
   }
 
@@ -105,6 +146,17 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item \command{configure} checks for a program \command{pkgconf}
+      if program \command{pkg-config} is not found.  These are now only
+      looked for on the path (like almost all other programs) so if needed
+      specify a full path to the command in \code{PKG_CONFIG}, for example
+      in file \file{config.site}.
+    }
+  }
+
+
   \subsection{LINK-TIME OPTIMIZATION on a UNIX-ALIKE}{
     \itemize{
       \item Configuring with flag \option{--enable-lto=R} now also uses
@@ -139,7 +191,7 @@
 	\item There is support for cross-compiling the C and Fortran
 	code in \R and standard packages on suitable (Linux) platforms.
 	This is mainly intended to allow developers to test later
-	versions of compilers -- for example using GCC 9.2 has
+	versions of compilers -- for example using GCC 9.2 or 10.x has
 	detected issues that GCC 8.3 in Rtools40 does not.
 
 	\item There is experimental support for cross-building \R
@@ -162,6 +214,20 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} can now scan package functions for
+      bogus \code{return} statements, which were possibly intended as
+      \code{return()} calls (wish of \PR{17180}, patch by Sebastian
+      Meyer). This check can be activated via the new environment
+      variable \env{_R_CHECK_BOGUS_RETURN_}, true for \code{--as-cran}.
+
+      \item \command{R CMD build} now omits tarballs and binaries of
+      previous builds from the top-level package directory; \PR{17828},
+      patch by Sebastian Meyer.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Function \code{plclust()} from the package \pkg{stats} and
@@ -180,9 +246,9 @@
       (retired in 2013).
 
       \item The \code{LINPACK} argument to \code{chol.default()},
-      \code{chol2inv()}, \code{solve.default()} and \code{svd()} has been
-      defunct since \R 3.1.0.  It was silently ignored but now gives an
-      error (and packages were still calling it with \code{LINPACK = TRUE}).
+      \code{chol2inv()}, \code{solve.default()} and \code{svd()} has
+      been defunct since \R 3.1.0.  It was silently ignored up to \R
+      4.0.3 but now gives an error.
     }
   }
 
@@ -218,11 +284,6 @@
       \code{addNA} is setting \code{na.action = na.pass} among others;
       reported as \PR{17770} by Thomas Soeiro.
 
-      \item Low-level socket read/write operations have been fixed to
-      correctly signal communication errors. Previously, such errors could
-      lead to a segfault due to invalid memory access. Reported
-      and debugged by Dmitriy Selivanov in \PR{17850}.
-
       \item The \command{R CMD check <pkg>} gives a longer and more
       comprehensible message when \file{DESCRIPTION} misses dependencies,
       e.g., in \code{Imports:}; thanks to the contributors of \PR{17179}.
@@ -230,6 +291,30 @@
       \item \code{update.default()} now calls the generic \code{update()}
       on the formula to work correctly for models with extended formulas;
       as reported and suggested by Neal Fultz in \PR{17865}.
+
+      \item The horizontal position of leaves in a dendrogram is now
+      correct also with \code{center = FALSE}; \PR{14938}, patch from
+      Sebastian Meyer.
+
+      \item A very old bug could cause a segfault in \code{model.matrix()}
+      when terms involved logical variables.  Related to \PR{17879}, but not
+      a complete fix for that issue.
+
+      \item \code{model.frame.default()} allowed \code{data = 1}, leading to
+      involuntary variable capture (rest of \PR{17879}).
+
+      \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
+      from Sebastian Meyer.
+
+      \item \code{all.equal.POSIXt()} no longer warns about and
+      subsequently ignores inconsistent \code{"tzone"} attributes, but
+      describes the difference in its return value (\PR{17277}).
+      This check can be disabled \emph{via} the new argument
+      \code{check.tzone = FALSE}; as suggested by Sebastian Meyer.
+
+      \item \code{all.equal(x,y)} now \dQuote{sees} the two different
+      \code{NA}s in factors, thanks to Bill Dunlap and others in
+      \PR{17897}.
     }
   }
 }
@@ -245,6 +330,11 @@
 
       On macOS, \code{"macOS"} is used by default if the system timezone
       database is a newer version than that in the \R installation.
+
+      \item When \code{install.packages(type = "source")} fails to find
+       a package in a repository it mentions package versions which are
+       excluded by their \R version requirement and links to hints on
+       why a package might not be found.
     }
   }
 
@@ -261,6 +351,16 @@
       \item There is a new \samp{LTO_LD} macro to set linker options for
       LTO compilation, for example to select an alternative linker or
       to parallelize thin LTO.
+    }
+  }
+
+    \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+
+      \item The \code{LINPACK} argument to \code{chol.default()},
+      \code{chol2inv()}, \code{solve.default()} and \code{svd()} has been
+      defunct since \R 3.1.0.  Using it now gives a warning which will
+      become an error in \R 4.1.0.
     }
   }
 
@@ -287,6 +387,44 @@
       \code{r2dtable()} now work correctly for large table entries (in the
       millions).  Reported by Sebastian Meyer and investigated by more
       helpers in \PR{16184}.
+
+      \item Low-level socket read/write operations have been fixed to
+      correctly signal communication errors. Previously, such errors could
+      lead to a segfault due to invalid memory access. Reported
+      and debugged by Dmitriy Selivanov in \PR{17850}.
+
+      \item \code{quantile(x, pr)} works more consistently for \code{pr}
+      values slightly outside [0,1], thanks to Suharto Anggono's \PR{17891}.
+
+      Further, \code{quantile(x, prN, names=FALSE)} now works even when
+      \code{prN} contains \code{NA}s, thanks to Anggono's \PR{17892}.
+      Ditto for ordered factors or \code{Date} objects
+      when \code{type = 1} or \code{3}, thanks to \PR{17899}.
+
+      \item Libcurl-based internet access, including
+      \code{curlGetHeaders()}, was not respecting the \code{"timeout"} option.
+
+      \item \code{as.Date(<char>)} now also works with an initial
+      \code{""}, thanks to Michael Chirico's \PR{17909}.
+
+      \item \code{isS3stdGeneric(f)} now detects an S3 generic also when it
+      it is \code{trace()}d, thanks to Gabe Becker's \PR{17917}.
+
+      \item \code{R_allocLD()} has been fixed to return memory aligned for
+      long double type \PR{16534}.
+
+      \item \code{fisher.test()} no longer segfaults when called again after
+      its internal stack has been exceeded \PR{17904}.
+
+      \item Accessing a long vector represented by a compact integer
+      sequence no longer segfaults (reported and debugged by Hugh
+      Parsonage).
+
+      \item \code{duplicated()} now works also for strings with multiple
+      encodings inside a single vector \PR{17809}.
+
+      \item \code{tar()} no longer skips non-directory files, thanks to a
+      patch by Sebastian Meyer, fixing the remaining part of \PR{16716}.
     }
   }
 }

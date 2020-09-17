@@ -947,8 +947,7 @@ function(dir, logs = NULL, drop_ok = TRUE, ...)
 {
     ## Build a data frame with columns
     ##   Package Version Check Status Output Flags
-    ## and some optimizations (in particular, Check Status Flags can be
-    ## factors).
+    ## and some optimizations.
 
     db_from_logs <- function(logs, drop_ok, ...) {
         out <- lapply(logs, analyze_check_log, drop_ok, ...)
@@ -1008,10 +1007,8 @@ function(dir, logs = NULL, drop_ok = TRUE, ...)
         sub("[[:space:]]+$", "", db[, "Output"], perl = TRUE)
 
     db <- as.data.frame(db, stringsAsFactors = FALSE)
-    db$Check <- as.factor(db$Check)
-    db$Status <- as.factor(db$Status)
-
     class(db) <- c("check_details", "data.frame")
+    
     db
 }
 

@@ -29,9 +29,7 @@
 
  */
 
-#define __MAIN__
 #include "internal.h"
-#undef __MAIN__
 
 __declspec(dllexport) cursor	ArrowCursor = NULL;
 __declspec(dllexport) cursor	BlankCursor = NULL;

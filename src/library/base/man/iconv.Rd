@@ -85,7 +85,7 @@ iconvlist()
 
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
-  the \dQuote{R Installation and Administration Manual} recommends
+  the \sQuote{R Installation and Administration} manual recommends
   installing GNU \samp{libiconv} on Solaris and AIX, for example.
 
   There are other implementations, e.g.\sspace{} NetBSD has used one from the

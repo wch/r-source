@@ -230,14 +230,24 @@ all.equal.environment <- function (target, current, all.names=TRUE, ...) {
 
 all.equal.factor <- function(target, current, ..., check.attributes = TRUE)
 {
-    if(!inherits(target, "factor"))
-	return("'target' is not a factor")
     if(!inherits(current, "factor"))
 	return("'current' is not a factor")
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
-    n <- all.equal(as.character(target), as.character(current),
-                   check.attributes = check.attributes, ...)
-    if(is.character(n)) msg <- c(msg, n)
+    class(target) <- class(current) <- NULL
+    nax <- is.na(target)
+    nay <- is.na(current)
+    n <- sum(nax != nay)
+    if(n > 1L)
+	msg <- c(msg, paste(n, "NA mismatches"))
+    else if (n == 1L)
+        msg <- c(msg, paste("1, NA mismatch"))
+    else { ## n == 0: nax == nay (w/ recycling!)
+	target  <- levels(target) [target [!nax]]
+	current <- levels(current)[current[!nay]]
+	n <- all.equal(target, current,
+		       check.attributes = check.attributes, ...)
+	if(is.character(n)) msg <- c(msg, n)
+    }
     if(is.null(msg)) TRUE else msg
 }
 
@@ -408,10 +418,30 @@ attr.all.equal <- function(target, current, ...,
 
 ## formerly in datetime.R
 ## force absolute comparisons
-all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale)
+all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale,
+                             check.tzone = TRUE)
 {
-    target <- as.POSIXct(target); current <- as.POSIXct(current)
-    check_tzones(target, current)
+    if(!inherits(target, "POSIXt"))
+        return("'target' is not a POSIXt")
+    if(!inherits(current, "POSIXt"))
+        return("'current' is not a POSIXt")
+    target <- as.POSIXct(target)
+    current <- as.POSIXct(current)
+    msg <- NULL
+    if(check.tzone) {
+        ## See check_tzones():
+        tz <- function(dt) {
+            if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
+        }
+        tzt <- tz(target)
+        tzc <- tz(current)
+        if(!isTRUE(tzt == tzc))
+            msg <- sprintf("'tzone' attributes are inconsistent ('%s' and '%s')",
+                           tzt, tzc)
+    }
     attr(target, "tzone") <- attr(current, "tzone") <- NULL
-    all.equal.numeric(target, current, ..., tolerance = tolerance, scale = 1)
+    val <- all.equal.numeric(target, current, ...,
+                             tolerance = tolerance, scale = 1)
+    if(!isTRUE(val)) msg <- c(msg, val)
+    if(is.null(msg)) TRUE else msg
 }

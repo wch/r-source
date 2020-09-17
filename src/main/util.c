@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -281,7 +281,7 @@ void InitTypeTables(void) {
 
 SEXP type2str_nowarn(SEXPTYPE t) /* returns a CHARSXP */
 {
-    // if (t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
+    // if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
 	SEXP res = Type2Table[t].rcharName;
 	if (res != NULL) return res;
     // }
@@ -313,7 +313,7 @@ SEXP type2rstr(SEXPTYPE t) /* returns a STRSXP */
 
 const char *type2char(SEXPTYPE t) /* returns a char* */
 {
-    // if (t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
+    // if (t >=0 && t < MAX_NUM_SEXPTYPE) { /* branch not really needed */
 	const char * res = Type2Table[t].cstrName;
 	if (res != NULL) return res;
     // }
@@ -516,6 +516,25 @@ SEXP nthcdr(SEXP s, int n)
     }
     else error(_("'nthcdr' needs a list to CDR down"));
     return R_NilValue;/* for -Wall */
+}
+
+/* Destructively removes R_NilValue ('NULL') elements from a pairlist. */
+SEXP R_listCompact(SEXP s, Rboolean keep_initial) {
+    if(!keep_initial)
+    // skip initial NULL values
+	while (s != R_NilValue && CAR(s) == R_NilValue)
+	    s = CDR(s);
+    
+    SEXP val = s;
+    SEXP prev = s;
+    while (s != R_NilValue) {
+	s = CDR(s);
+	if (CAR(s) == R_NilValue) // skip it
+	    SETCDR(prev, CDR(s));
+	else
+	    prev = s;
+    }
+    return val;
 }
 
 
@@ -891,8 +910,9 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		wcscpy (buf, pp);
 		R_wfixslash(buf);
 		/* remove trailing file separator(s) */
-		while ( *(p = buf + wcslen(buf) - 1) == L'/'  && p > buf
-			&& (p > buf+2 || *(p-1) != L':')) *p = L'\0';
+		p = buf + wcslen(buf) - 1;
+		while (p > buf && *p == L'/'
+		       && (p > buf+2 || *(p-1) != L':')) *p-- = L'\0';
 		p = wcsrchr(buf, L'/');
 		if(p == NULL) wcscpy(buf, L".");
 		else {
@@ -1477,7 +1497,7 @@ char* mbcsTruncateToValid(char *s)
 	   for the first non-continuation byte */
 	goodlen = slen - 1; /* at least 0 */
 	/* for char == signed char we assume 2's complement representation */
-	while (goodlen && ((s[goodlen] & '\xC0') == '\x80')) 
+	while (goodlen && ((s[goodlen] & '\xC0') == '\x80'))
 	    --goodlen;
     }
     while(goodlen < slen) {
@@ -1640,6 +1660,7 @@ void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar)
     }
     strncpy(buf, msg, (size_t) nc);
     buf[nc] = '\0';
+    mbcsTruncateToValid(buf);
     error("%s", buf);
 }
 
@@ -1657,6 +1678,7 @@ void F77_SYMBOL(rwarnc)(char *msg, int *nchar)
     }
     strncpy(buf, msg, (size_t) nc);
     buf[nc] = '\0';
+    mbcsTruncateToValid(buf);
     warning("%s", buf);
 }
 

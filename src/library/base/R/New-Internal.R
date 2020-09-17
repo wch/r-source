@@ -317,8 +317,8 @@ extSoftVersion <- function() .Internal(eSoftVersion())
 
 libcurlVersion <- function() .Internal(curlVersion())
 
-curlGetHeaders <- function(url, redirect = TRUE, verify = TRUE)
-    .Internal(curlGetHeaders(url, redirect, verify))
+curlGetHeaders <- function(url, redirect = TRUE, verify = TRUE, timeout = 0L)
+    .Internal(curlGetHeaders(url, redirect, verify, timeout))
 
 
 lengths <- function(x, use.names=TRUE) .Internal(lengths(x, use.names))

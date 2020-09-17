@@ -1373,6 +1373,7 @@ int utf8clen(char c);
 int Rf_AdobeSymbol2ucs2(int n);
 double R_strtod5(const char *str, char **endptr, char dec,
 		 Rboolean NA, int exact);
+SEXP R_listCompact(SEXP s, Rboolean keep_initial);
 
 typedef unsigned short R_ucs2_t;
 size_t mbcsToUcs2(const char *in, R_ucs2_t *out, int nout, int enc);
@@ -1397,6 +1398,8 @@ char *mbcsTruncateToValid(char *s);
 Rboolean utf8Valid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
+int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap);
+int Rsnprintf_mbcs(char *str, size_t size, const char *format, ...);
 
 SEXP fixup_NaRm(SEXP args); /* summary.c */
 void invalidate_cached_recodings(void);  /* from sysutils.c */

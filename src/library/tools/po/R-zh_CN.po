@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 14:56\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -337,13 +337,15 @@ msgstr ""
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
+msgid ","
+msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "使用手冊对象'%s'缺少联结:"
+
+#, fuzzy
+msgid "Non-file package-anchored link(s) in documentation object '%s':"
+msgstr "使用手冊对象'%s'联结可能不对:"
 
 #, fuzzy
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -828,9 +830,6 @@ msgstr "不能对缺省JSS式样进行修改"
 msgid "inst/doc"
 msgstr ""
 
-msgid ","
-msgstr ","
-
 msgid "ignored as vignettes have been rebuilt."
 msgstr ""
 
@@ -963,6 +962,13 @@ msgstr "程辑包无效."
 msgid "restoration failed"
 msgstr "载入失败"
 
+#, fuzzy
+msgid "invalid value"
+msgstr "程辑包无效."
+
+msgid "for R_CROSS_BUILD"
+msgstr ""
+
 msgid "error reading file '%s'"
 msgstr "读取文件'%s'时出了错"
 
@@ -1094,9 +1100,6 @@ msgstr "DESCRIPTION文件不对"
 msgid "NEWS file not found"
 msgstr "找不到'%s'这个文件"
 
-msgid "No news found in given file using old-style R-like format."
-msgstr "在所提供的文件中用老式R类的格式找不到任何新信息。"
-
 msgid "No news found in given file using package default format."
 msgstr "在所提供的文件中用缺省格式找不到任何新信息。"
 
@@ -1150,6 +1153,10 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
+
+#, fuzzy
+msgid "Invalid DESCRIPTION file for package %s"
+msgstr "DESCRIPTION文件不对"
 
 #, fuzzy
 msgid ""
@@ -1229,21 +1236,6 @@ msgstr "执行随机偏离检验--偶尔会失败"
 #, fuzzy
 msgid "unknown header specification"
 msgstr "非标准执照规格"
-
-msgid "argument 'pkg' must be of length 1"
-msgstr "参数'pkg'的长度必需是一"
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
-
-msgid "bad operand"
-msgstr "操作数不对"
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr "程辑包'%s'的从属被减低成最小集."
-
-msgid "argument 'vignette' must be of length 1"
-msgstr "参数'vignette'的长度必需为一"
 
 msgid "R CMD build failed"
 msgstr "R CMD build失败"
@@ -1327,6 +1319,9 @@ msgstr "参数'delim'必需指定两个字符"
 msgid "only Rd syntax is currently supported"
 msgstr "目前只支持Rd语法"
 
+msgid "texi2dvi script/program not available, using emulation"
+msgstr ""
+
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr "给'%s'调用'texi2dvi'失败了"
 
@@ -1367,6 +1362,11 @@ msgstr "参数'x'必需是字符矢量"
 
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
+
+#, fuzzy
+msgid "Undeclared package %s in Rd xrefs"
+msgid_plural "Undeclared packages %s in Rd xrefs"
+msgstr[0] "Rd xrefs里包含了不知来源的程序包%s"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1504,6 +1504,26 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
 
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
+
+#~ msgid "No news found in given file using old-style R-like format."
+#~ msgstr "在所提供的文件中用老式R类的格式找不到任何新信息。"
+
+#~ msgid "argument 'pkg' must be of length 1"
+#~ msgstr "参数'pkg'的长度必需是一"
+
+#~ msgid "bad operand"
+#~ msgstr "操作数不对"
+
+#~ msgid "Package '%s' had its dependencies reduced to a minimal set."
+#~ msgstr "程辑包'%s'的从属被减低成最小集."
+
+#~ msgid "argument 'vignette' must be of length 1"
+#~ msgstr "参数'vignette'的长度必需为一"
+
 #~ msgid "file"
 #~ msgstr "文件"
 
@@ -1611,11 +1631,6 @@ msgstr[0] ""
 
 #~ msgid ":"
 #~ msgstr "："
-
-#, fuzzy
-#~ msgid "Undeclared package used in Rd xrefs:"
-#~ msgid_plural "Undeclared packages used in Rd xrefs:"
-#~ msgstr[0] "Rd xrefs里包含了不知来源的程序包%s"
 
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
@@ -2079,9 +2094,6 @@ msgstr[0] ""
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "在程序包%s找不到%s这个帮助文件"
-
-#~ msgid "Suspect link(s) in documentation object '%s':"
-#~ msgstr "使用手冊对象'%s'联结可能不对:"
 
 #~ msgid ""
 #~ "'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as "

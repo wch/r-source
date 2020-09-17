@@ -78,10 +78,11 @@ besselY(x, nu)
 
   In order of \dQuote{Source} citation above:
 
-  Sockne, David J. (1973).
+  Sookne, David J. (1973).
   Bessel Functions of Real Argument and Integer Order.
   \emph{Journal of Research of the National Bureau of Standards},
   \bold{77B}, 125--132.
+  \doi{10.6028/jres.077B.012}.
 
   Cody, William J. (1983).
   Algorithm 597: Sequence of modified Bessel functions of the first kind.

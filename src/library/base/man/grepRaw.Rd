@@ -69,7 +69,7 @@ grepRaw(pattern, x, offset = 1L, ignore.case = FALSE,
 }
 
 \source{
-  The TRE library of Ville Laurikari (\url{http://laurikari.net/tre/})
+  The TRE library of Ville Laurikari (\url{https://laurikari.net/tre/})
   is used except for \code{fixed = TRUE}.
 }
 

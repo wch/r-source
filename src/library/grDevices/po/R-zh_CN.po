@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -155,6 +155,14 @@ msgstr "dev.new():用postscript(file=\"%s\")"
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
 
+#, fuzzy
+msgid "Invalid pattern type"
+msgstr "字体种类不对"
+
+#, fuzzy
+msgid "Invalid 'extend' value"
+msgstr "'filename'不对"
+
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'里的参数不对(需要有带名参数)"
 
@@ -296,6 +304,9 @@ msgstr "'bandwidth'必需是数字"
 
 msgid "'bandwidth' must be positive"
 msgstr "'bandwidth'的值必需是正数"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr ""
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r'的值应该为\"range\"，因此它的长度必需为二"

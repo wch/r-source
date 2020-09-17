@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-03-24 10:13\n"
-"PO-Revision-Date: 2018-04-07 15:49-0500\n"
+"PO-Revision-Date: 2020-08-28 15:57+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -269,6 +269,7 @@ msgstr "колонки 'контраст.obj' должны определять контраст (с нулевой суммой)"
 
 msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
 msgstr ""
+"'ties'не являются \"ordered\", функцией или списком (<string>, <function>)"
 
 msgid "collapsing to unique 'x' values"
 msgstr "свертывается в уникальные значения 'x'"
@@ -836,11 +837,8 @@ msgstr "неправильный аргумент 'lambda'"
 msgid "%s link not recognised"
 msgstr "%s ссылка не распознана"
 
-#, fuzzy
 msgid "link \"%s\" not available for %s family; available links are %s"
-msgstr ""
-"функция связи \"%s\" недоступна для пуассоновского семейства; доступны "
-"функции %s"
+msgstr "ссылка \"%s\" недоступна для семейства %s; доступные ссылки: %s"
 
 msgid "negative values not allowed for the 'Poisson' family"
 msgstr "отрицательные значения в пуассоновском семействе не разрешены"
@@ -858,29 +856,25 @@ msgstr ""
 msgid "y values must be 0 <= y <= 1"
 msgstr "значения y должны быть 0 <= y <= 1"
 
-#, fuzzy
 msgid "non-integer #successes in a %s glm!"
-msgstr "не целочисленные #successes в биномиальном 'glm'!"
+msgstr "не целочисленные #successes в %s glm!"
 
-#, fuzzy
 msgid "non-integer counts in a %s glm!"
-msgstr "не целочисленные счетчики в биномиальном 'glm'!"
+msgstr "не целочисленные счетчики в %s glm!"
 
-#, fuzzy
 msgid ""
 "for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
-"для семейства 'binomial', y должен быть вектором из нулей и единиц\n"
-"или двухколонной матрицей, где колонка 1 -- это количество успехов, а "
+"для семейства '%s', 'y' должен быть вектором из нулей и единиц\n"
+"или двухколочной матрицей, где колонка 1 -- это количество успехов, а "
 "колонка 2 -- количество неудач"
 
 msgid "cannot simulate from non-integer prior.weights"
 msgstr "не могу промоделировать исходят из нечисловых prior.weights"
 
-#, fuzzy
 msgid "non-positive values not allowed for the 'Gamma' family"
-msgstr "неположительные значения не разрешены для гамма-семейства"
+msgstr "неположительные значения не разрешены для семейства 'Gamma'"
 
 msgid "using weights as shape parameters"
 msgstr "использую веса в качестве параметров формы"
@@ -1375,9 +1369,8 @@ msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 "не-NA остаточная длина не соответствует случаям, использованным в подгонке"
 
-#, fuzzy
 msgid "too few cases i with h_ii > 0), n < k"
-msgstr "слишком мало случаев, n < k"
+msgstr "слишком мало случаев i вместе с h_ii > 0), n < k"
 
 msgid "predictors must all be numeric"
 msgstr "все предикторы должны быть числами"
@@ -1426,9 +1419,8 @@ msgstr "неправильный аргумент 'cell'"
 msgid "invalid argument 'degree'"
 msgstr "неправильный аргумент 'degree'"
 
-#, fuzzy
 msgid "iterTrace = %d is not obeyed since iterations = %d"
-msgstr "не выполнено, поскольку iterations ="
+msgstr "iterTrace = %d не выполнено поскольку iterations = %d"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "первый аргумент должен быть объектом \"loess\""
@@ -1563,24 +1555,20 @@ msgstr "eff.aovlist: не-ортогональные контрасты могут дать неправильный ответ"
 msgid "cannot create a formula from a zero-column data frame"
 msgstr "не могу создать формулу из таблицы данных без колонок"
 
-#, fuzzy
 msgid "invalid formula: %s"
-msgstr "неправильная формула"
+msgstr "неправильная формула: %s"
 
-#, fuzzy
 msgid "invalid formula %s: not a call"
-msgstr "неправильная формула в 'deriv'"
+msgstr "неправильная формула %s: не вызов"
 
-#, fuzzy
 msgid "invalid formula %s: assignment is deprecated"
-msgstr "неправильная формула в 'deriv'"
+msgstr "неправильная формула %s: присвоение не разрешено"
 
 msgid "invalid formula %s: extraneous call to `%s` is deprecated"
-msgstr ""
+msgstr "неправильная формула %s: внешний вызов `%s` не разрешается"
 
-#, fuzzy
 msgid "invalid formula %s"
-msgstr "неправильная формула"
+msgstr "неправильная формула %s"
 
 msgid "no terms component nor attribute"
 msgstr "нет ни компонента terms, ни атрибута"
@@ -1591,12 +1579,14 @@ msgstr "'termlabels' должен быть текстовым вектором с длиной не меньше единицы"
 msgid ""
 "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr ""
+"Неразбираемый 'response' \"%s\"; использование не разрешается.  Используйте "
+"as.name(.) или `..`!"
 
 msgid "reformulate"
-msgstr ""
+msgstr "reformulate"
 
 msgid "deprecatedWarning"
-msgstr ""
+msgstr "deprecatedWarning"
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' должен быть объектом класса %s"
@@ -1619,13 +1609,11 @@ msgstr "'offset' должен быть числом"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "несоответствие model frame и формулы в model.matrix()"
 
-#, fuzzy
 msgid "non-list contrasts argument ignored"
-msgstr "неправильный аргумент 'contrasts.arg'"
+msgstr "не-списочный аргумент для контрастов пропущен"
 
-#, fuzzy
 msgid "'contrasts.arg' argument must be named"
-msgstr "аргумент 'control' должен быть именованным списком"
+msgstr "аргумент 'contrasts.arg' должен быть именован"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "переменная '%s' отсутствует, ее контраст будет проигнорирован"
@@ -1853,13 +1841,11 @@ msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 "в точности один из of 'n', 'p1', 'p2', 'power', 'sig.level' должен быть NULL"
 
-#, fuzzy
 msgid "No p1 in [0, p2] can be found to achieve the desired power"
-msgstr "Не найдены p1 в [0, p2], чтобы достичь желаемой мощности"
+msgstr "Не найдены p1 в [0, p2], нужные для достижения желаемой мощности"
 
-#, fuzzy
 msgid "No p2 in [p1, 1] can be found to achieve the desired power"
-msgstr "Не найдены p2 в [p1, 1], чтобы достичь желаемой мощности"
+msgstr "Не найдены p2 в [p1, 1], нужные для достижения желаемой мощности"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "Не найден уровень значимости [0, 1], чтобы достичь желаемой мощности"
@@ -2279,9 +2265,8 @@ msgstr "'ts'-объект должен иметь одно или более наблюдений"
 msgid "'start' cannot be after 'end'"
 msgstr "'start' не может быть после 'end'"
 
-#, fuzzy
 msgid "'end' must be a whole number of cycles after 'start'"
-msgstr "'centers' должны быть числом или матрицей"
+msgstr "'end' должен быть целым числом, количеством циклов после 'start'"
 
 msgid "no time series supplied"
 msgstr "не указаны временные ряды"
@@ -2289,9 +2274,8 @@ msgstr "не указаны временные ряды"
 msgid "not all series have the same frequency"
 msgstr "не все серии имеют одинаковую частоту"
 
-#, fuzzy
 msgid "not all series have the same phase"
-msgstr "не все серии имеют одинаковую частоту"
+msgstr "не все серии имеют одинаковую фазу"
 
 msgid "non-intersecting series"
 msgstr "непересекающиеся серии"
@@ -2317,9 +2301,8 @@ msgstr "точковые графики -- только для одномерных временных рядов"
 msgid "'xy.labels' must be logical or character"
 msgstr "'xy.labels' должны быть символами или логическими"
 
-#, fuzzy
 msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
-msgstr "'frequency' и 'deltat' указаны оба и несовместимы"
+msgstr "'frequency' и 'deltat' оба не NULL и несовместимы"
 
 msgid "'frequency' not changed"
 msgstr "'frequency' не изменилась"
@@ -2394,9 +2377,8 @@ msgstr "'ratio' должно быть одним положительным числом."
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' и 'w' должны иметь одинаковую длину"
 
-#, fuzzy
 msgid "not enough (non-missing) 'x' observations"
-msgstr "недостаточно (конечных) данных 'x'"
+msgstr "недостаточно (не-пропущенных) данных 'x'"
 
 msgid "requested conf.level not achievable"
 msgstr "заданный доверительный интервал не достигаем"

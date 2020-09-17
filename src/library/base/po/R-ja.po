@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -175,6 +175,13 @@ msgstr " 自動ローダーは '%s' を '%s' 中に見つけられませんで�
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr " ベクトルオブジェクトしか書き込めません "
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr " 複素行列は現在許可されていません "
 
@@ -184,8 +191,8 @@ msgstr " 'x' は少なくとも二次元の配列でなければなりません 
 msgid "invalid 'dims'"
 msgstr " 無効な 'dims' です "
 
-msgid "bad handler specification"
-msgstr " 誤ったハンドラーの指定です "
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr " 'restart' '%s' が見付かりません "
@@ -195,6 +202,13 @@ msgstr " 対話的なセッションではありません "
 
 msgid "not a valid restart specification"
 msgstr " 有効な再スタート指定ではありません "
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr " ハンドラーは関数でなければなりません "
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr " 長さ 0 の引数 'where' です "
@@ -1144,6 +1158,11 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr " パッケージ %s は名前空間を持っていません "
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr ""
+" パッケージ %s は R 3.0.0 以前にビルドされました: 再インストールして下さい "
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr " 名前空間 %s %s はロードされていますが、%s %s が要求されています "
 
@@ -1183,6 +1202,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr " パッケージ %s 中の R コードをロードできません "
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+" 'NAMESPACE' の中で 'exportClassPattern' が指定されましたが、%s パッケージに"
+"は該当するクラスがありません "
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1927,6 +1952,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] " 余分な引数 %s は無視されます "
+
+#~ msgid "bad handler specification"
+#~ msgstr " 誤ったハンドラーの指定です "
 
 #~ msgid "Partial match of '%s' to '%s' in data frame"
 #~ msgstr " データフレーム中の名前 '%s' は '%s'と部分的にマッチしました "

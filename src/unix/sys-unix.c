@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -107,44 +107,74 @@ FILE *R_OpenInitFile(void)
 char *R_ExpandFileName_readline(const char *s, char *buff);  /* sys-std.c */
 #endif
 
-static char newFileName[PATH_MAX];
-static int HaveHOME=-1;
-static char UserHOME[PATH_MAX];
+#if defined(HAVE_PWD_H)
+# include <pwd.h>
+#endif
 
-/* Only interpret inputs of the form ~ and ~/... */
 static const char *R_ExpandFileName_unix(const char *s, char *buff)
 {
-    char *p;
-
     if(s[0] != '~') return s;
-    if(strlen(s) > 1 && s[1] != '/') return s;
-    if(HaveHOME < 0) {
-	p = getenv("HOME");
-	if(p && *p && (strlen(p) < PATH_MAX)) {
-	    strcpy(UserHOME, p);
-	    HaveHOME = 1;
-	} else
-	    HaveHOME = 0;
+
+    const char *user, *temp, *s2, *home;
+    char buff2[PATH_MAX];
+    struct passwd *pass;
+
+    temp = strchr(s + 1, '/');
+    if (temp == NULL) { // ~name
+	user = s + 1;
+    } else { // ~name/path
+	/* extract text befoe first slash */
+	size_t len = (size_t)(temp - s + 1);
+	(void) strncpy(buff2, s + 1, len - 2);
+	buff2[len - 2] = '\0';
+	user = buff2;
+	s2 = s + len;
     }
-    if(HaveHOME > 0 && (strlen(UserHOME) + strlen(s+1) < PATH_MAX)) {
-	strcpy(buff, UserHOME);
-	strcat(buff, s+1);
-	return buff;
-    } else return s;
+    if (user[0] == 0) {
+	// follow readline (and not libedit) in preferring HOME
+	home = getenv("HOME");
+#if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+	if(home == NULL || streql(home, "")) {
+	   pass = getpwuid(getuid());
+           if(pass == NULL) return s;
+	   home = pass->pw_dir;
+	}
+#endif
+	if(home == NULL) return s;
+    } else {
+#ifdef HAVE_GETPWNAM
+	pass = getpwnam(user);
+	if(pass == NULL) return s;
+	home = pass->pw_dir;
+#else
+        return s;
+#endif
+    }
+
+    if (temp == NULL) { // ~name
+	strcpy(buff, home);
+    } else { // ~name/path
+	size_t len = strlen(home) + 1 + strlen(s2) + 1;
+	if (len >= PATH_MAX) return s;
+	(void)snprintf(buff, len, "%s/%s", home, s2);
+    }
+
+    return buff;
 }
 
-/* tilde_expand (in libreadline) mallocs storage for its return value.
+/* tilde_expand_word (in libreadline) mallocs storage for its return value.
    The R entry point does not require that storage to be freed, so we
    copy the value to a static buffer, to void a memory leak in R<=1.6.0.
 
    This is not thread-safe, but as R_ExpandFileName is a public entry
-   point (in R-exts.texi) it will need to deprecated and replaced by a
+   point (in R-exts.texi) it would need to deprecated and replaced by a
    version which takes a buffer as an argument.
 
    BDR 10/2002
 */
 
 extern Rboolean UsingReadline;
+static char newFileName[PATH_MAX];
 
 const char *R_ExpandFileName(const char *s)
 {

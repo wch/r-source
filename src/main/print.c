@@ -77,7 +77,7 @@ static void PrintObject(SEXP, R_PrintData *);
 
 
 #define TAGBUFLEN 256
-#define TAGBUFLEN0 TAGBUFLEN + 6
+#define TAGBUFLEN0 (TAGBUFLEN + 6)
 static char tagbuf[TAGBUFLEN0 * 2]; /* over-allocate to allow overflow check */
 
 void PrintInit(R_PrintData *data, SEXP env)
@@ -434,9 +434,9 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 		    snprintf(pbuf, 115, "%s", str);
 		else {
 		    SEXP cls = PROTECT(R_data_class2(tmp));
-		    snprintf(pbuf, 115, "%s,%d",
-			     translateChar(STRING_ELT(cls, 0)),
-			     length(tmp));
+		    Rsnprintf_mbcs(pbuf, 115, "%s,%d",
+				   translateChar(STRING_ELT(cls, 0)),
+				   length(tmp));
 		    UNPROTECT(1);
 		}
 		UNPROTECT(3);
@@ -495,14 +495,14 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 	    case STRSXP:
 		if (LENGTH(tmp) == 1) {
 		    const void *vmax = vmaxget();
-		    /* This can potentially overflow */
 		    const char *ctmp = translateChar(STRING_ELT(tmp, 0));
 		    int len = (int) strlen(ctmp);
 		    if(len < 100)
 			snprintf(pbuf, 115, "\"%s\"", ctmp);
 		    else {
-			snprintf(pbuf, 101, "\"%s\"", ctmp);
-			pbuf[100] = '"'; pbuf[101] = '\0';
+			Rsnprintf_mbcs(pbuf, 101, "\"%s\"", ctmp);
+			size_t pbuflen = strlen(pbuf);
+			pbuf[pbuflen] = '"'; pbuf[pbuflen+1] = '\0';
 			strcat(pbuf, " [truncated]");
 		    }
 		    vmaxset(vmax);
@@ -618,9 +618,10 @@ static void PrintGenericVector(SEXP s, R_PrintData *data)
 		    /* internal version of isClass() */
 		    char str[201];
 		    const char *ss = translateChar(STRING_ELT(klass, 0));
-		    snprintf(str, 200, ".__C__%s", ss);
-		    if(findVar(install(str), data->env) != R_UnboundValue)
-			className = ss;
+		    int res = Rsnprintf_mbcs(str, 200, ".__C__%s", ss);
+		    if(res > 0 && res < 200 &&
+		       findVar(install(str), data->env) != R_UnboundValue)
+		        className = ss;
 		}
 	    }
 	    if(className) {
@@ -1026,15 +1027,13 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 		goto nextattr;
 	    if(useSlots) {
 		size_t space = TAGBUFLEN0 - strlen(tagbuf);
-		snprintf(ptag, space,
-			 "Slot \"%s\":", EncodeChar(PRINTNAME(TAG(a))));
-		tagbuf[TAGBUFLEN0] = 0; /* not sure this is needed */
+		Rsnprintf_mbcs(ptag, space,
+			       "Slot \"%s\":", EncodeChar(PRINTNAME(TAG(a))));
 	    }
 	    else {
 		size_t space = TAGBUFLEN0 - strlen(tagbuf);
-		snprintf(ptag, space,
-			 "attr(,\"%s\")", EncodeChar(PRINTNAME(TAG(a))));
-		tagbuf[TAGBUFLEN0] = 0; /* not sure this is needed */
+		Rsnprintf_mbcs(ptag, space,
+			       "attr(,\"%s\")", EncodeChar(PRINTNAME(TAG(a))));
 	    }
 	    Rprintf("%s", tagbuf); Rprintf("\n");
 	    if (TAG(a) == R_RowNamesSymbol) {

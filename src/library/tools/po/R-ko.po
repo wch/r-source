@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 14:56\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -355,14 +355,14 @@ msgstr ""
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr ""
-"패키지 %s는 존재하지만 버전 2.10.0 이상의 R에 설치되어 있기 않기 때문에 xrefs"
-"를 확인할 수 없습니다"
+msgid ","
+msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
+msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
+
+#, fuzzy
+msgid "Non-file package-anchored link(s) in documentation object '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -869,9 +869,6 @@ msgstr "기본 JSS 스타일은 아마도 변경되지 않을 것입니다."
 msgid "inst/doc"
 msgstr ""
 
-msgid ","
-msgstr ","
-
 msgid "ignored as vignettes have been rebuilt."
 msgstr ""
 
@@ -1006,6 +1003,13 @@ msgstr ""
 msgid "restoration failed"
 msgstr "로딩에 실패했습니다"
 
+#, fuzzy
+msgid "invalid value"
+msgstr "패키지가 잘못되었습니다"
+
+msgid "for R_CROSS_BUILD"
+msgstr ""
+
 msgid "error reading file '%s'"
 msgstr "파일 '%s'를 읽는데 에러가 발생했습니다"
 
@@ -1133,9 +1137,6 @@ msgstr "DESCRIPTION 파일을 찾을 수 없습니다."
 msgid "NEWS file not found"
 msgstr "NEWS 파일을 찾을 수 없습니다."
 
-msgid "No news found in given file using old-style R-like format."
-msgstr ""
-
 msgid "No news found in given file using package default format."
 msgstr ""
 
@@ -1174,6 +1175,10 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "다음의 패키지들을 프로세싱하고 있습니다:"
+
+#, fuzzy
+msgid "Invalid DESCRIPTION file for package %s"
+msgstr "DESCRIPTION 파일이 잘못되었습니다"
 
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
@@ -1248,21 +1253,6 @@ msgstr ""
 
 msgid "unknown header specification"
 msgstr ""
-
-msgid "argument 'pkg' must be of length 1"
-msgstr "인자 'pkg'는 반드시 길이가 1이어야 합니다"
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
-
-msgid "bad operand"
-msgstr "잘못된 연산자입니다"
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr ""
-
-msgid "argument 'vignette' must be of length 1"
-msgstr "인자 'vignette'는 반드시 길이가 1 이어야 합니다"
 
 msgid "R CMD build failed"
 msgstr "R CMD build가 실패했습니다"
@@ -1345,6 +1335,9 @@ msgstr "인자 'delim'는 반드시 두개의 문자를 지정해야 합니다"
 msgid "only Rd syntax is currently supported"
 msgstr ""
 
+msgid "texi2dvi script/program not available, using emulation"
+msgstr ""
+
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr "'%s'에 'texi2dvi'를 실행하는데 실패했습니다"
 
@@ -1385,6 +1378,11 @@ msgstr "'text'는 반드시 문자형 벡터이어야 합니다."
 
 msgid "parsing '%s'"
 msgstr "'%s'을 파싱(parsing)합니다"
+
+#, fuzzy
+msgid "Undeclared package %s in Rd xrefs"
+msgid_plural "Undeclared packages %s in Rd xrefs"
+msgstr[0] "Rd xrefs에 알 수 없는 패키지 %s입니다"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1515,6 +1513,22 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr ""
+#~ "패키지 %s는 존재하지만 버전 2.10.0 이상의 R에 설치되어 있기 않기 때문에 "
+#~ "xrefs를 확인할 수 없습니다"
+
+#~ msgid "argument 'pkg' must be of length 1"
+#~ msgstr "인자 'pkg'는 반드시 길이가 1이어야 합니다"
+
+#~ msgid "bad operand"
+#~ msgstr "잘못된 연산자입니다"
+
+#~ msgid "argument 'vignette' must be of length 1"
+#~ msgstr "인자 'vignette'는 반드시 길이가 1 이어야 합니다"
 
 #~ msgid "there is no package called '%s'"
 #~ msgstr "'%s'이라는 패키지가 없습니다"

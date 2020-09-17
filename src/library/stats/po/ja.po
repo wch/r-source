@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -275,7 +275,7 @@ msgstr " 因子 (factor) が不正です "
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
 msgstr ""
 
-#: fourier.c:295
+#: fourier.c:298
 #, c-format
 msgid ""
 "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
@@ -342,6 +342,10 @@ msgstr " 'iter' は有限かつ 0 以上でなくてはなりません "
 msgid "'delta' must be finite and > 0"
 msgstr " 'delta' は有限かつ正数でなくてはなりません "
 
+#: mAR.c:83
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr ""
+
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
 msgstr " qr_solve 中の特異行列です "
@@ -389,119 +393,119 @@ msgstr " 型 (%s) は変数 '%s' に対しては不正です "
 msgid "variable lengths differ (found for '%s')"
 msgstr " 変数 ('%s' に基づく) の長さが異なります "
 
-#: model.c:215
+#: model.c:218
 msgid "invalid result from na.action"
 msgstr " na.action の結果が不正です "
 
-#: model.c:372 model.c:380 optim.c:227
+#: model.c:379 model.c:387 optim.c:227
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
 
-#: model.c:391
+#: model.c:398
 msgid "invalid model frame"
 msgstr " モデルフレームが不正です "
 
-#: model.c:393
+#: model.c:400
 msgid "do not know how many cases"
 msgstr " ケースの数が幾つあるか分かりません "
 
-#: model.c:417
+#: model.c:424
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr " 変数 (%d 変数に基づく) の長さが異なります "
 
-#: model.c:421 model.c:428
+#: model.c:428 model.c:435
 #, c-format
 msgid "variable %d has no levels"
 msgstr " 変数 %d は水準を持ちません "
 
-#: model.c:540
+#: model.c:547
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr " 目的変数が右辺にあるため、捨て去られました "
 
-#: model.c:560
+#: model.c:567
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr " 項 %d は %.0g 行を必要とするかもしれません "
 
-#: model.c:564
+#: model.c:571
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr " 行列は %.0g 行を必要とするかもしれません "
 
-#: model.c:575
+#: model.c:582
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 " model.matrix 中の項 %d に問題があります: いかなる列も指定されていません "
 
-#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
+#: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
 msgstr " 項の名前は切りつめらられるでしょう "
 
-#: model.c:638
+#: model.c:645
 msgid "complex variables are not currently allowed in model matrices"
 msgstr " モデル行列中では複素数は現在許されていません "
 
-#: model.c:662
+#: model.c:669
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr " タイプ '%s' の変数はモデル行列中では許されません "
 
-#: model.c:887
+#: model.c:894
 msgid "invalid formula in 'update'"
 msgstr " 'update' 中の式が不正です "
 
-#: model.c:921
+#: model.c:928
 msgid "formula expected"
 msgstr " 式が期待されています "
 
-#: model.c:1089
+#: model.c:1096
 msgid "invalid term in model formula"
 msgstr " モデル式に不正な項があります "
 
-#: model.c:1180
+#: model.c:1187
 msgid "invalid model formula"
 msgstr " モデル式が不正です "
 
-#: model.c:1212 model.c:1518
+#: model.c:1219 model.c:1525
 msgid "invalid power in formula"
 msgstr " モデル式中に不正なべき乗があります "
 
-#: model.c:1261
+#: model.c:1268
 msgid "invalid model formula in ExtractVars"
 msgstr " ExtractVars 中のモデル式が不正です "
 
-#: model.c:1629
+#: model.c:1636
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr " データフレーム中の重複した名前 '%s' を '.' を使って複製しました "
 
-#: model.c:1696
+#: model.c:1703
 msgid "invalid model formula in EncodeVars"
 msgstr " EncodeVars 中のモデル式が不正です "
 
-#: model.c:1773
+#: model.c:1780
 msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
-#: model.c:1783
+#: model.c:1790
 msgid "'specials' must be NULL or a character vector"
 msgstr " 'specials' は NULL または文字ベクタでなくてはなりません "
 
-#: model.c:1794
+#: model.c:1801
 msgid "'data' argument is of the wrong type"
 msgstr " 'data' 引数が誤った型です "
 
-#: model.c:1866
+#: model.c:1873
 #, c-format
 msgid ""
 "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
 "no longer happen!"
 msgstr ""
 
-#: model.c:2150
+#: model.c:2157
 msgid "'.' in formula and no 'data' argument"
 msgstr " '.' が式中にありますが, 'data' 引数がありません "
 
@@ -596,6 +600,11 @@ msgstr " optim の目的関数が 1 つではなくて %d 個の結果を評価�
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr " optim 中で勾配は長さ %d (長さ %d ではなく) で評価されました "
+
+#: optim.c:152 optim.c:191
+#, c-format
+msgid "non-finite finite-difference value [%d]"
+msgstr ""
 
 #: optim.c:223 optim.c:429
 msgid "'fn' is not a function"
@@ -909,7 +918,7 @@ msgid "NAs produced"
 msgstr " NA が生成されました "
 
 #: random.c:60 random.c:66 random.c:72 random.c:87 random.c:167 random.c:256
-#: random.c:399
+#: random.c:394
 msgid "invalid arguments"
 msgstr " 引数 (複数) が不正です "
 
@@ -933,7 +942,7 @@ msgstr " 一番目の引数 'n' が不正です "
 msgid "invalid second argument 'size'"
 msgstr " 二番目の引数 'size' が不正です "
 
-#: rcont.c:83
+#: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""

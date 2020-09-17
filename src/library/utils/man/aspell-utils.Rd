@@ -64,8 +64,9 @@ aspell_write_personal_dictionary_file(x, out, language = "en",
 
   The C-level message string are obtained from the
   \file{po/\var{PACKAGE}.pot} message catalog file, with \var{PACKAGE}
-  the basename of \code{dir}.  See the section on \dQuote{C-level
-  messages} in \dQuote{Writing \R Extensions} for more information.
+  the basename of \code{dir}.
+  See the section on \sQuote{C-level messages} in
+  \sQuote{Writing R Extensions} for more information.
 
   When using Aspell, the vignette checking skips parameters and/or
   options of commands \verb{\Sexpr}, \verb{\citep}, \verb{\code},

@@ -27,6 +27,10 @@
 #include <Print.h> /* for R_print */
 #include <R_ext/Itermacros.h>
 
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
+
 
 /***
  *** ALTREP Concrete Class Implementations
@@ -136,9 +140,9 @@ Rboolean compact_intseq_Inspect(SEXP x, int pre, int deep, int pvec,
     }
 #endif
 
-    int n = LENGTH(x);
+    R_xlen_t n = XLENGTH(x); // int .. LENGTH(.) not ok, e.g. for -1e9:2e9
     int n1 = INTEGER_ELT(x, 0);
-    int n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
+    int n2 = (int) ((inc == 1) ? n1 + n - 1 : n1 - n + 1);
     Rprintf(" %d : %d (%s)", n1, n2,
 	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");
@@ -165,13 +169,13 @@ static void *compact_intseq_Dataptr(SEXP x, Rboolean writeable)
 
 	if (inc == 1) {
 	    /* compact sequences n1 : n2 with n1 <= n2 */
-	    for (int i = 0; i < n; i++)
-		data[i] = n1 + i;
+	    for (R_xlen_t i = 0; i < n; i++)
+		data[i] = (int) (n1 + i);
 	}
 	else if (inc == -1) {
 	    /* compact sequences n1 : n2 with n1 > n2 */
-	    for (int i = 0; i < n; i++)
-		data[i] = n1 - i;
+	    for (R_xlen_t i = 0; i < n; i++)
+		data[i] = (int) (n1 - i);
 	}
 	else
 	    error("compact sequences with increment %d not supported yet", inc);
@@ -385,7 +389,7 @@ Rboolean compact_realseq_Inspect(SEXP x, int pre, int deep, int pvec,
     R_xlen_t n = XLENGTH(x);
     R_xlen_t n1 = (R_xlen_t) REAL_ELT(x, 0);
     R_xlen_t n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
-    Rprintf(" %ld : %ld (%s)", n1, n2,
+    Rprintf(" %lld : %lld (%s)", n1, n2,
 	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");
     return TRUE;

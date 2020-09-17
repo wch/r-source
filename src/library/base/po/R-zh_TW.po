@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -176,6 +176,13 @@ msgstr "自動載入器在 '%2$s' 找不到 '%1$s' "
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "只能寫向量物件"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "複數矩陣現在不能用"
 
@@ -185,8 +192,8 @@ msgstr "'x' 必須是陣列，而且至少得有兩個維度"
 msgid "invalid 'dims'"
 msgstr "'dims' 無效"
 
-msgid "bad handler specification"
-msgstr "處置器柄規格無效"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "找不到 'restart' '%s'"
@@ -196,6 +203,13 @@ msgstr "非交互執行式"
 
 msgid "not a valid restart specification"
 msgstr "重新開始的規格無效"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "處理常式必須是函式"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "引數長度為零"
@@ -1106,6 +1120,10 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "套件 %s 沒具名字空間"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "套件 %s 是在 R 版本 3.0.0 之前建的：您得重新安裝"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "載入了命名空間 %1$s %2$s，但需要的是 %3$s %4$s"
 
@@ -1141,6 +1159,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "套件 %s 裡的 R 寫碼載入失敗"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"雖然 'exportClassPattern' 在 'NAMESPACE' 有設定但它在 %s 套件中沒有相對應的類"
+"別"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1853,6 +1877,9 @@ msgid_plural ""
 msgstr[0] ""
 "於 %s：\n"
 " 額外引數 %s 忽略不用"
+
+#~ msgid "bad handler specification"
+#~ msgstr "處置器柄規格無效"
 
 #~ msgid "Partial match of '%s' to '%s' in data frame"
 #~ msgstr "資料框裡 '%s' 部分符合 '%s'"

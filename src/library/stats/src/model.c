@@ -247,7 +247,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* and is ultimately called by modelmatrix. */
 
 static void firstfactor(double *x, int nrx, int ncx,
-			double *c, int nrc, int ncc, int *v)
+			double *c, int nrc, int ncc, int *v, int adj)
 {
     double *cj, *xj;
 
@@ -256,12 +256,12 @@ static void firstfactor(double *x, int nrx, int ncx,
 	cj = &c[j * (R_xlen_t)nrc];
 	for (int i = 0; i < nrx; i++)
 	    if(v[i] == NA_INTEGER) xj[i] = NA_REAL;
-	    else xj[i] = cj[v[i]-1];
+	    else xj[i] = cj[v[i]-1+adj];
     }
 }
 
 static void addfactor(double *x, int nrx, int ncx,
-		      double *c, int nrc, int ncc, int *v)
+		      double *c, int nrc, int ncc, int *v, int adj)
 {
     double *ck, *xj, *yj;
 
@@ -272,7 +272,7 @@ static void addfactor(double *x, int nrx, int ncx,
 	    ck = &c[k * (R_xlen_t)nrc];
 	    for (int i = 0; i < nrx; i++)
 	    if(v[i] == NA_INTEGER) yj[i] = NA_REAL;
-	    else yj[i] = ck[v[i]-1] * xj[i];
+	    else yj[i] = ck[v[i]-1+adj] * xj[i];
 	}
     }
 }
@@ -725,7 +725,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			// avoid overflow of jstart * nn PR#15578
 			firstfactor(&rx[jstart * nn], n, jnext - jstart,
 				    REAL(contrast), nrows(contrast),
-				    ncols(contrast), INTEGER(var_i)+adj);
+				    ncols(contrast), INTEGER(var_i), adj);
 			jnext = jnext + ncols(contrast);
 		    }
 		    else {
@@ -739,7 +739,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			int adj = isLogical(var_i)?1:0;
 			addfactor(&rx[jstart * nn], n, jnext - jstart,
 				  REAL(contrast), nrows(contrast),
-				  ncols(contrast), INTEGER(var_i)+adj);
+				  ncols(contrast), INTEGER(var_i), adj);
 			jnext = jnext + (jnext - jstart)*(ncols(contrast) - 1);
 		    }
 		    else {

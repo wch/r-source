@@ -50,7 +50,7 @@ solve(a, b, \dots)
   The default method is an interface to the LAPACK routines \code{DGESV}
   and \code{ZGESV}.
 
-  LAPACK is from \url{http://www.netlib.org/lapack}.
+  LAPACK is from \url{http://www.netlib.org/lapack/}.
 }
 \references{
   Anderson. E. and ten others (1999)

@@ -3,7 +3,7 @@
 ###
 ### '##P': These lines don't give TRUE but relevant ``Print output''
 
-### --> d-p-q-r-tests.R  for distribution things
+### --> d-p-q-r-tests.R & d-p-q-r-tst-2.R  for distribution things
 
 .proctime00 <- proc.time()
 opt.conformance <- 0

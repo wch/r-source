@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -181,6 +181,13 @@ msgstr "autolastaren fann ikkje «%s» i «%s»"
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "kan berre skriva vektorobjekt"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "komplekse matriser er førebels ikkje støtta"
 
@@ -190,8 +197,8 @@ msgstr "«x» må vera eit array-objekt med minst to dimensjonar"
 msgid "invalid 'dims'"
 msgstr "ugyldige «dims»-verdiar"
 
-msgid "bad handler specification"
-msgstr "ugyldig handsamarspesifikasjon"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "ingen «restart» «%s» funnen"
@@ -201,6 +208,13 @@ msgstr "ikkje ei interaktiv økt"
 
 msgid "not a valid restart specification"
 msgstr "ikkje ein gyldig omstartsdefinisjon"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "handsamaren må vera ein funksjon"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "argument «where» av lengd 0"
@@ -1167,6 +1181,10 @@ msgid "package %s does not have a namespace"
 msgstr "pakken «%s» har ikkje noko namnerom"
 
 #, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "pakken «%s» vart bygd før R 2.10.0 – reinstaller han"
+
+#, fuzzy
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
 
@@ -1206,6 +1224,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "klarte ikkje lasta R-kode i pakken «%s»"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i "
+"pakken %s"
 
 #, fuzzy
 msgid ""
@@ -1999,6 +2023,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#~ msgid "bad handler specification"
+#~ msgstr "ugyldig handsamarspesifikasjon"
 
 #, fuzzy
 #~ msgid "Partial match of '%s' to '%s' in data frame"

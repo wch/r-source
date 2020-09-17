@@ -7,6 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-base 3.6.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
 "Language: it\n"
@@ -15,8 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.1\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' è rimossa."
@@ -53,6 +53,10 @@ msgstr "valori infiniti o mancanti in 'x'"
 
 msgid "a dimension is zero"
 msgstr "una dimensione è zero"
+
+#, fuzzy
+msgid "\"all\" and \"exact\" are mutually exclusive"
+msgstr "\"hexNumeric\" e \"digits17\" sono mutuamente esclusivi"
 
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr "\"hexNumeric\" e \"digits17\" sono mutuamente esclusivi"
@@ -112,14 +116,14 @@ msgstr "'dim' non può essere di lunghezza 0"
 msgid "'dim' specifies too large an array"
 msgstr "'dim' specifica un array troppo esteso"
 
+msgid "'x' must have named dimnames"
+msgstr "'x' deve avere nomi dimensioni nominati"
+
 msgid "incorrect value for 'MARGIN'"
 msgstr "valore non corretto per 'MARGIN'"
 
 msgid "dim(x) must have a positive length"
 msgstr "dim(X) dev'essere di lunghezza positiva"
-
-msgid "'x' must have named dimnames"
-msgstr "'x' deve avere nomi dimensioni nominati"
 
 msgid "'pos=1' is not possible and has been warned about for years"
 msgstr "'pos=1' non è possibile con avvertimento da anni"
@@ -167,6 +171,16 @@ msgstr "esiste già un oggetto con questo nome"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "l'autocaricatore non trova '%s' in '%s'"
 
+msgid "can only splice inside a call"
+msgstr ""
+
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "si possono scrivere solo oggetti di tipo vector"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "matrici complesse non ammesse al momento"
 
@@ -176,8 +190,8 @@ msgstr "'x' dev'essere un array con almeno due dimensioni"
 msgid "invalid 'dims'"
 msgstr "'dims' non valido"
 
-msgid "bad handler specification"
-msgstr "specificazione dell'handler non valida"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "nessun 'riavvio' '%s' trovato"
@@ -187,6 +201,13 @@ msgstr "sessione non interattiva"
 
 msgid "not a valid restart specification"
 msgstr "specificazione di riavvio non valida"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "il gestore dev'essere una funzione"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "l'argomento 'where' lunghezza 0"
@@ -207,6 +228,10 @@ msgstr "'origin' dev'essere uno tra 'start', 'current' o 'end'"
 
 msgid "can only truncate an open connection"
 msgstr "si può troncare solo una connessione aperta"
+
+#, fuzzy
+msgid "invalid 'endian' argument"
+msgstr "argomento 'name' non valido"
 
 msgid "can only write vector objects"
 msgstr "si possono scrivere solo oggetti di tipo vector"
@@ -1126,8 +1151,18 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "il pacchetto %s non ha un namespace"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr ""
+"il pacchetto %s è stato creato prima di R 3.0.0: per piacere, va re-"
+"installato"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "namespace %s %s già caricato, ma %s %s è richiesto"
+
+#, fuzzy
+msgid "package %s has no 'package.rds' in Meta/"
+msgstr "il pacchetto %s non ha il file 'NAMESPACE'"
 
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
@@ -1162,6 +1197,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "non è possibile caricare il codice R nel pacchetto %s"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"'exportClassPattern' specificato in 'NAMESPACE' ma non corrispondono le "
+"classi nel pacchetto %s"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1469,15 +1510,16 @@ msgstr "'partial' non finito"
 msgid "argument lengths differ"
 msgstr "argomenti di lunghezza differente"
 
+msgid "method = \"quick\" is only for numeric 'x'"
+msgstr "method = \"quick\" è solo per 'x' di tipo numeric"
+
+#, fuzzy
 msgid ""
-"'x' must be atomic for 'sort.list'\n"
+"'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
 "'x' dev'essere atomico per 'sort.list'\n"
 "Si è chiamato 'sort' su una lista?"
-
-msgid "method = \"quick\" is only for numeric 'x'"
-msgstr "method = \"quick\" è solo per 'x' di tipo numeric"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' dev'essere TRUE, FALSE o un ambiente"
@@ -1518,8 +1560,8 @@ msgstr "'x' e 'to' devono riferirsi al medesimo file"
 msgid "additional arguments ignored in stop()"
 msgstr "ignorati gli argomenti aggiuntivi in stop()"
 
-msgid "Must use 'exprs' or unnamed expressions, but not both"
-msgstr "Si deve utilizzare 'exprs' o espressioni non nominate, ma non entrambi"
+msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
+msgstr ""
 
 msgid ""
 "%s and %s are not equal:\n"
@@ -1937,3 +1979,10 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 " gli argomenti extra %s saranno ignorati"
+
+#~ msgid "bad handler specification"
+#~ msgstr "specificazione dell'handler non valida"
+
+#~ msgid "Must use 'exprs' or unnamed expressions, but not both"
+#~ msgstr ""
+#~ "Si deve utilizzare 'exprs' o espressioni non nominate, ma non entrambi"

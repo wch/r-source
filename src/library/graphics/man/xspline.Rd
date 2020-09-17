@@ -72,7 +72,7 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE,
   Blanc, C. and Schlick, C. (1995),
   \emph{X-splines : A Spline Model Designed for the End User},
   in \emph{Proceedings of SIGGRAPH 95}, pp.\sspace{}377--386.
-  \url{http://dept-info.labri.fr/~schlick/DOC/sig1.html}
+  \url{https://dept-info.labri.fr/~schlick/DOC/sig1.html}
 }
 \seealso{
   \code{\link{polygon}}.

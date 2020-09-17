@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -356,6 +356,12 @@ msgstr "Ugyldig »grob«"
 msgid "invalid 'origin'"
 msgstr "Ugyldig »grob«"
 
+msgid "Missing pattern fill has been set to transparent"
+msgstr ""
+
+msgid "Gradient fill applied to object with no inside"
+msgstr ""
+
 #, fuzzy
 msgid "'length' must be a 'unit' object"
 msgstr "»arrow« skal være et arrow-objekt eller NULL"
@@ -496,6 +502,10 @@ msgstr "Ugyldig »grob«"
 
 #, fuzzy
 msgid "invalid 'clip' value"
+msgstr "Ugyldig »grob«"
+
+#, fuzzy
+msgid "invalid 'mask' value"
 msgstr "Ugyldig »grob«"
 
 #, fuzzy

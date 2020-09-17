@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -184,6 +184,13 @@ msgstr "autoindlæser fandt ikke '%s' i '%s'"
 msgid "can only splice inside a call"
 msgstr ""
 
+#, fuzzy
+msgid "can only splice vectors"
+msgstr "kan kun skrive vektorobjekter"
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr "kompleks matricer er ikke tilladt i øjeblikket"
 
@@ -193,8 +200,8 @@ msgstr "'x' skal være en array på mindst to dimensioner"
 msgid "invalid 'dims'"
 msgstr "ugyldig 'dims'"
 
-msgid "bad handler specification"
-msgstr "ugyldig håndteringsspecifikation"
+msgid "condition handlers must be specified with a condition class"
+msgstr ""
 
 msgid "no 'restart' '%s' found"
 msgstr "ingen 'restart' '%s' fundet"
@@ -204,6 +211,13 @@ msgstr "ikke en interaktiv session"
 
 msgid "not a valid restart specification"
 msgstr "ikke en gyldig genstartsspecifikation"
+
+#, fuzzy
+msgid "condition handlers must be functions"
+msgstr "håndtag skal være en funktion"
+
+msgid "pushing duplicate `%s` handler on top of the stack"
+msgstr ""
 
 msgid "argument 'where' of length 0"
 msgstr "argument 'where' med længden 0"
@@ -1133,6 +1147,10 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "pakke %s har ikke et navnerum"
 
+#, fuzzy
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr "pakke %s blev bygget før R 3.0.0: geninstaller den venligst"
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "navnerum %s %s bliver indlæst, men %s %s er krævet"
 
@@ -1170,6 +1188,12 @@ msgstr ""
 
 msgid "unable to load R code in package %s"
 msgstr "kan ikke indlæse R-kode i pakke %s"
+
+#, fuzzy
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+"'exportClassPattern' specificeret i 'NAMESPACE' men ingen matchende klasser "
+"i pakke %s"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1936,6 +1960,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstra argument %s vil blive ignoreret"
 msgstr[1] "ekstra argumentet %s vil blive ignoreret"
+
+#~ msgid "bad handler specification"
+#~ msgstr "ugyldig håndteringsspecifikation"
 
 #~ msgid "Partial match of '%s' to '%s' in data frame"
 #~ msgstr "Delvis match for '%s' til '%s' i dataramme"

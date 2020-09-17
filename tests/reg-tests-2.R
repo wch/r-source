@@ -2839,6 +2839,7 @@ read.csv(f, skipNul = TRUE, fileEncoding = "UTF-8-BOM")
 x <- Sys.time()
 all.equal(x,x)
 all.equal(x, as.POSIXlt(x))
+all.equal(x, as.numeric(x))  # errored in R <= 4.0.2
 all.equal(x, as.POSIXlt(x, tz = "EST5EDT"))
 all.equal(x, x+1e-4)
 isTRUE(all.equal(x, x+0.002)) # message will depend on representation error

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -273,7 +273,7 @@ msgstr "因子不对"
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
 msgstr ""
 
-#: fourier.c:295
+#: fourier.c:298
 #, c-format
 msgid ""
 "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
@@ -341,6 +341,10 @@ msgstr "'iter'必需是正数"
 msgid "'delta' must be finite and > 0"
 msgstr "'delta'必需是正数"
 
+#: mAR.c:83
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr ""
+
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
 msgstr "gr_solve里出现了奇异矩阵"
@@ -388,118 +392,118 @@ msgstr "参数'%2$s'的种类(%1$s)不对"
 msgid "variable lengths differ (found for '%s')"
 msgstr "变数的长度不一样('%s')"
 
-#: model.c:215
+#: model.c:218
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: model.c:372 model.c:380 optim.c:227
+#: model.c:379 model.c:387 optim.c:227
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
 
-#: model.c:391
+#: model.c:398
 msgid "invalid model frame"
 msgstr "模型框不对"
 
-#: model.c:393
+#: model.c:400
 msgid "do not know how many cases"
 msgstr "案例数目不清"
 
-#: model.c:417
+#: model.c:424
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "变数的长度不一样(变数%d)"
 
-#: model.c:421 model.c:428
+#: model.c:428 model.c:435
 #, c-format
 msgid "variable %d has no levels"
 msgstr "变数%d没有因子层"
 
-#: model.c:540
+#: model.c:547
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "在公式右手的反应略过不用"
 
-#: model.c:560
+#: model.c:567
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "%d项需要%.0g个列"
 
-#: model.c:564
+#: model.c:571
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "矩阵需要%.0g个列"
 
-#: model.c:575
+#: model.c:582
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
-#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
+#: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
-#: model.c:638
+#: model.c:645
 msgid "complex variables are not currently allowed in model matrices"
 msgstr "模型矩阵里目前不能有复数"
 
-#: model.c:662
+#: model.c:669
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "模型矩阵里不能有种类为'%s'的参数"
 
-#: model.c:887
+#: model.c:894
 msgid "invalid formula in 'update'"
 msgstr "'update'里的公式不对"
 
-#: model.c:921
+#: model.c:928
 msgid "formula expected"
 msgstr "需要公式"
 
-#: model.c:1089
+#: model.c:1096
 msgid "invalid term in model formula"
 msgstr "模型公式里有错误的项"
 
-#: model.c:1180
+#: model.c:1187
 msgid "invalid model formula"
 msgstr "模型公式不对"
 
-#: model.c:1212 model.c:1518
+#: model.c:1219 model.c:1525
 msgid "invalid power in formula"
 msgstr "公式里的幂不对"
 
-#: model.c:1261
+#: model.c:1268
 msgid "invalid model formula in ExtractVars"
 msgstr "ExtractVars里的模型公式不对"
 
-#: model.c:1629
+#: model.c:1636
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 
-#: model.c:1696
+#: model.c:1703
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars中的模型公式不对"
 
-#: model.c:1773
+#: model.c:1780
 msgid "argument is not a valid model"
 msgstr "参数不是正确的模型"
 
-#: model.c:1783
+#: model.c:1790
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials'的值要么是NULL要么是字符矢量"
 
-#: model.c:1794
+#: model.c:1801
 msgid "'data' argument is of the wrong type"
 msgstr "'data'参数种类有错"
 
-#: model.c:1866
+#: model.c:1873
 #, c-format
 msgid ""
 "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
 "no longer happen!"
 msgstr ""
 
-#: model.c:2150
+#: model.c:2157
 msgid "'.' in formula and no 'data' argument"
 msgstr "公式里有'.'，而没有'data'这一参数"
 
@@ -594,6 +598,11 @@ msgstr "optim内的目标函数长度被评估为%d，而不是一"
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "optim梯度长度被评估为%d，而不是%d"
+
+#: optim.c:152 optim.c:191
+#, c-format
+msgid "non-finite finite-difference value [%d]"
+msgstr ""
 
 #: optim.c:223 optim.c:429
 msgid "'fn' is not a function"
@@ -902,7 +911,7 @@ msgid "NAs produced"
 msgstr "产生了NA"
 
 #: random.c:60 random.c:66 random.c:72 random.c:87 random.c:167 random.c:256
-#: random.c:399
+#: random.c:394
 msgid "invalid arguments"
 msgstr "参数不对"
 
@@ -926,7 +935,7 @@ msgstr "第一参数'n'不对"
 msgid "invalid second argument 'size'"
 msgstr "第二参数'size'不对"
 
-#: rcont.c:83
+#: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr " rcont2 [%d,%d]: exp下益到0； 算法失败"

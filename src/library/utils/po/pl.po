@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:54-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2018-04-01 14:31+0200\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -16,100 +16,100 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: io.c:329 io.c:333 io.c:343 io.c:574 io.c:774 io.c:827 io.c:840 io.c:844
-#: io.c:850 io.c:851 io.c:1097 io.c:1098 io.c:1100 io.c:1101 io.c:1102
-#: io.c:1103 io.c:1104 io.c:1105 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: io.c:327 io.c:331 io.c:341 io.c:571 io.c:771 io.c:824 io.c:838 io.c:842
+#: io.c:848 io.c:849 io.c:1090 io.c:1091 io.c:1093 io.c:1094 io.c:1095
+#: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:79
+#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:79
 #: windows/widgets.c:82 windows/widgets.c:87
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
 
-#: io.c:352 io.c:837
+#: io.c:350 io.c:835
 msgid "invalid quote symbol set"
 msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 
-#: io.c:364 io.c:860 io.c:1085
+#: io.c:362 io.c:858 io.c:1078
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
-#: io.c:367 io.c:371
+#: io.c:365 io.c:369
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
-#: io.c:418 io.c:436
+#: io.c:416 io.c:434
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr ""
 "cytowany łańcuch tekstowy w linii %d przerwany przez znak końca pliku (EOF)"
 
-#: io.c:570
+#: io.c:567
 msgid "the first argument must be of mode character"
 msgstr "pierwszy argument musi być trybu tekstowego"
 
-#: io.c:600
+#: io.c:597
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr "niepoprawny łańcuch tekstowy 'numerals': \"%s\""
 
-#: io.c:776
+#: io.c:773
 #, c-format
 msgid "Selection: "
 msgstr "Wybór: "
 
-#: io.c:870 io.c:886
+#: io.c:868 io.c:883
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "nie można przydzielić bufora w 'readTableHead'"
 
-#: io.c:900
+#: io.c:896
 msgid "\\ followed by EOF"
 msgstr "\\ a następnie EOF"
 
-#: io.c:953 io.c:958
+#: io.c:948 io.c:952
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "niekompletna końcowa linia znaleziona przez 'readTableHeader' w '%s'"
 
-#: io.c:1016
+#: io.c:1009
 msgid "index out of range"
 msgstr "indeks poza zakresem"
 
-#: io.c:1053
+#: io.c:1046
 #, c-format
 msgid "Problem closing connection:  %s"
 msgstr "Problem podczas zamykania połączenia: %s"
 
-#: io.c:1055
+#: io.c:1048
 msgid "Problem closing connection"
 msgstr "Problem podczas zamykania połączenia"
 
-#: io.c:1078
+#: io.c:1071
 msgid "'file' is not a connection"
 msgstr "argument 'file' nie jest połączeniem"
 
-#: io.c:1081
+#: io.c:1074
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
-#: io.c:1111
+#: io.c:1104
 msgid "'dec' must be a single character"
 msgstr "argument 'dec' musi być pojedynczym znakiem"
 
-#: io.c:1137
+#: io.c:1130
 #, fuzzy, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
 "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
-#: io.c:1168
+#: io.c:1161
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 "kolumna %s twierdzi, że jest czynnikiem, ale nie posiada kodów liczbowych"
 
-#: io.c:1186
+#: io.c:1179
 #, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
@@ -205,41 +205,41 @@ msgstr "niepoprawna wartość '%s'"
 msgid "Registry key '%ls' not found"
 msgstr "Nie znaleziono klucza rejestru '%ls'"
 
-#: windows/util.c:42
+#: windows/util.c:46
 msgid "unsupported version of Windows"
 msgstr "niewspierana wersja systemu Windows"
 
-#: windows/util.c:281
+#: windows/util.c:285
 msgid "argument must be a character vector or a raw vector"
 msgstr "argument 'text' musi być wektorem tekstowym lub pustym wektorem"
 
-#: windows/util.c:320
+#: windows/util.c:324
 msgid "unable to open the clipboard"
 msgstr "nie można otworzyć schowka"
 
-#: windows/util.c:325
+#: windows/util.c:329
 msgid "unable to write to the clipboard"
 msgstr "nie można zapisać do schowka"
 
-#: windows/util.c:404
+#: windows/util.c:408
 msgid "'title' must be a character string"
 msgstr "argument 'title' musi być łańcuchem tekstowym"
 
-#: windows/util.c:413
+#: windows/util.c:417
 msgid "'text' must be a character string"
 msgstr "argument 'text' musi być łańcuchem tekstowym"
 
-#: windows/util.c:452
+#: windows/util.c:456
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "argument '%s' musi mieć długość równą 1"
 
-#: windows/util.c:565
+#: windows/util.c:569
 #, c-format
 msgid "'%s' must be a list"
 msgstr "argument '%s' musi być listą"
 
-#: windows/util.c:569
+#: windows/util.c:573
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "element %2$d '%1$s' nie jest uchwytem okna"

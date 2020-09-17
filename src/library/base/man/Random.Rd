@@ -260,7 +260,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   Knuth, D. E. (1997).
   \emph{The Art of Computer Programming}.
   Volume 2, third edition.\cr
-  Source code at \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
+  Source code at \url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
 
   Knuth, D. E. (2002).
   \emph{The Art of Computer Programming}.

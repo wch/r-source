@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -654,6 +654,10 @@ msgstr ""
 "제네릭 함수들과 다른 S4 객체들 (즉, '%s')는 덤프되어질 수 없으므로, "
 "'code_files'인자를 사용하세요"
 
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "'unzip'은 반드시 단일 문자열이어야 합니다"
+
 msgid "unable to access index for repository %s"
 msgstr "저장소 %s에 대한 인덱스에 접근할 수 없습니다"
 
@@ -698,6 +702,10 @@ msgstr "'destdir'는 디렉토리가 아닙니다"
 msgid "no package %s at the repositories"
 msgstr "저장소들로부터 패키지 %s를 찾을 수 없습니다"
 
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "잘못된 쿼리입니다"
+
 msgid "package %s does not exist on the local repository"
 msgstr "지역저장소에는 패키지 %s가 존재하지 않습니다"
 
@@ -724,6 +732,10 @@ msgstr ""
 
 msgid "cannot set repositories non-interactively"
 msgstr "비대화식으로 저장소드을 설정할 수 없습니다"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "'package'는 반드시 문자열 또는 NULL이어야 합니다"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 현재 세션에서 사용할 저장소를 선택해주세요 ---"
@@ -960,6 +972,9 @@ msgstr "%s 옵션은 반드시 길이가 1 인 문자형 벡터 또는 NULL이�
 msgid "'file' must be a character string or connection"
 msgstr "'file'은 반드시 문자열 또는 연결이어야 합니다"
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr ""
 
@@ -1083,6 +1098,23 @@ msgstr "디렉토리 %s를 생성하는데 실패했습니다"
 
 msgid "invalid octal digit"
 msgstr "유효하지 않은 10진 자릿입니다"
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "%s의 위치를 지정하는 파일경로에 공백이 포함되어 있습니다."
+
+#, fuzzy
+msgid "path is empty"
+msgstr "'dump'가 비어있습니다"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile'은 반드시 문자열 또는 연결이어야 합니다"

@@ -266,9 +266,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     }
     \item{On Unix-alikes,}{when the package contains C/C++/Fortran code
       that needs compilation, on macOS you need to have installed the
-  \sQuote{Command-line tools for Xcode} (see the \sQuote{R Installation
-    and Administration Manual}) and if needed by the package a Fortran
-  compiler, and have them in your path.
+      \sQuote{Command-line tools for Xcode} (see the
+      \sQuote{R Installation and Administration} manual) and if needed
+      by the package a Fortran compiler, and have them in your path.
     }
   }
 }
@@ -345,6 +345,27 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
   Timeouts during installation might leave lock directories behind and
   not restore previous versions.
+}
+\section{Version requirements on source installs}{
+  If you are not running an up-to-date version of \R you may see a
+  message like
+\preformatted{
+   package 'RODBC' is not available (for R version 3.5.3)
+}
+  One possibility is that the package is not available in any of the
+  selected repositories; another is that is available but only for
+  current or recent versions of \R{}.  For \acronym{CRAN} packages take
+  a look at the package's CRAN page (e.g.,
+  \url{https://cran.r-project.org/package=RODBC}). If that indicates in
+  the \samp{Depends} field a dependence on a later version of \R you
+  will need to look in the \samp{Old sources} section and select the URL
+  of a version of comparable age to your \R.  Then you can supply that
+  URL as the first argument of \code{install.packages()}: you may
+  need to first manually install its dependencies.
+
+  For other repositories, using \code{available.packages(filters =
+    "OS_type")[\var{pkgname}, ]} will show if the package is available
+  for any \R version (for your OS).
 }
 \note{
   \describe{

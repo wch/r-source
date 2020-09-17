@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-2013 The R Core Team
  *  Copyright (C) 2003-2013 The R Foundation
+ *  Copyright (C) 1998 Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -143,8 +143,9 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    b = 48 / (a * a),
 	    c = ((20700 * a / b - 98) * a - 16) * a + 96.36,
 	    d = ((94.5 / (b + c) - 3) / b + 1) * sqrt(a * M_PI_2) * ndf;
-
-	Rboolean P_ok1 = P > DBL_MIN || !log_p,  P_ok = P_ok1;
+	Rboolean
+	    P_ok1 = P > DBL_MIN || !log_p,
+	    P_ok  = P_ok1; // when true (after check below), use "normal scale": log_p=FALSE
 	if(P_ok1) {
 	    y = pow(d * P, 2.0 / ndf);
 	    P_ok = (y >= DBL_EPSILON);

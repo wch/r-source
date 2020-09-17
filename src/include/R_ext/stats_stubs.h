@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007  The R Core Team.
+ *  Copyright (C) 2007--2020  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,6 +24,7 @@
 #include <Rconfig.h>
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
+#include <R_ext/stats_package.h>
 
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 # define attribute_hidden __attribute__ ((visibility ("hidden")))
@@ -71,14 +72,17 @@ S_nlsb_iterate(double b[], double d[], double dr[], int iv[], int liv,
 }
 
 void attribute_hidden
-S_rcont2(int nrow[], int ncol[], int nrowt[], int ncolt[], 
-         int ntotal[], double fact[], int jwork[], int matrix[])
+S_rcont2(int nrow, int ncol, const int nrowt[], const int ncolt[],
+         int ntotal, const double fact[],
+	 int jwork[], int matrix[])
 {
-    static void(*fun)(int[], int[], int[], int[], int[], double[], 
-                      int[], int[]) = NULL;
+// <==> ../../library/stats/src/rcont.c
+#define _RCONT_FORMALS_(_FF_)						\
+    void(_FF_)(int, int, const int[], const int[], int, const double[], \
+               int[], int[])
+
+    static _RCONT_FORMALS_(*fun) = NULL;
     if (fun == NULL)
-	fun = (void(*)(int[], int[], int[], int[], int[], double[], 
-                       int[], int[]))
-	    R_GetCCallable("stats", "rcont2");
+	fun = (_RCONT_FORMALS_(*)) R_GetCCallable("stats", "rcont2");
     fun(nrow, ncol, nrowt, ncolt, ntotal, fact, jwork, matrix);
 }

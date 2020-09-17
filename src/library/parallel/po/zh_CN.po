@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 10:53-0700\n"
+"POT-Creation-Date: 2020-08-13 10:30-0700\n"
 "PO-Revision-Date: 2012-02-29 14:00+0000\n"
 "Last-Translator: Fei Chen <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -26,7 +26,7 @@ msgstr "无法分叉，可能的原因是：%s"
 msgid "unable to terminate child: %s"
 msgstr "无法建立管道"
 
-#: fork.c:321 fork.c:602
+#: fork.c:321 fork.c:602 ncpus.c:90 ncpus.c:126 ncpus.c:191
 msgid "memory allocation error"
 msgstr "内存分配错误"
 

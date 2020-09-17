@@ -1,6 +1,6 @@
 % File src/library/stats/man/quantile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quantile}
@@ -83,8 +83,9 @@ quantile(x, \dots)
     \item{Type 1}{Inverse of empirical distribution function.
       \eqn{\gamma = 0} if \eqn{g = 0}, and 1 otherwise.}
     \item{Type 2}{Similar to type 1 but with averaging at discontinuities.
-      \eqn{\gamma = 0.5} if \eqn{g = 0}, and 1 otherwise.}
-    \item{Type 3}{SAS definition: nearest even order statistic.
+      \eqn{\gamma = 0.5} if \eqn{g = 0}, and 1 otherwise (SAS default, see
+      Wicklin(2017)).}
+    \item{Type 3}{Nearest even order statistic (SAS default till ca. 2010).
       \eqn{\gamma = 0} if \eqn{g = 0} and \eqn{j} is even,
       and 1 otherwise.}
   }
@@ -136,6 +137,9 @@ quantile(x, \dots)
   }
   Further details are provided in Hyndman and Fan (1996) who recommended type 8.
   The default method is type 7, as used by S and by \R < 2.0.0.
+  Makkonen argues for type 6, also as already proposed by Weibull in 1939.
+  The Wikipedia page contains further information about availability of
+  these 9 types in software.
 }
 \author{
   of the version used in \R >= 2.0.0, Ivan Frohne and Rob J Hyndman.
@@ -148,6 +152,15 @@ quantile(x, \dots)
   Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical
   packages, \emph{American Statistician} \bold{50}, 361--365.
   \doi{10.2307/2684934}.
+
+  Wicklin, R. (2017) Sample quantiles: A comparison of 9 definitions; SAS Blog.
+  \url{https://blogs.sas.com/content/iml/2017/05/24/definitions-sample-quantiles.html}
+
+  %% Makkonen, L. and Pajari, M. (2014)  Defining Sample Quantiles by the True
+  %% Rank Probability. \emph{Journal of Probability and Statistics; Hindawi Publ.Corp.}
+  %% \doi{10.1155/2014/326579}
+  %%
+  Wikipedia: \url{https://en.wikipedia.org/wiki/Quantile#Estimating_quantiles_from_a_sample}
 }
 \seealso{
   \code{\link{ecdf}} for empirical distributions of which
@@ -161,9 +174,14 @@ quantile(x,  probs = c(0.1, 0.5, 1, 2, 5, 10, 50, NA)/100)
 
 ### Compare different types
 quantAll <- function(x, prob, ...)
-  t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...), quantile(x, prob, type=1)))
+  t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
+           quantile(x, prob, type=1, ...)))
 p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 signif(quantAll(x, p), 4)
+
+## 0\% and 100\% are equal to min(), max() for all types:
+stopifnot(t(quantAll(x, prob=0:1)) == range(x))
+
 ## for complex numbers:
 z <- complex(re=x, im = -10*x)
 signif(quantAll(z, p), 4)

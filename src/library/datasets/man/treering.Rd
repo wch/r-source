@@ -27,7 +27,7 @@ treering
 }
 \source{
   Time Series Data Library:
-  \url{http://www-personal.buseco.monash.edu.au/~hyndman/TSDL/},
+  \url{https://robjhyndman.com/TSDL/},
   series \file{CA535.DAT}
   %% now pointing to  \url{http://datamarket.com/data/list/?q=provider:tsdl}
   %% or specifially to

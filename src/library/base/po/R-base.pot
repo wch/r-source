@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: base 4.0.0\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"Project-Id-Version: base 4.1.0\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,6 +157,12 @@ msgstr ""
 msgid "can only splice inside a call"
 msgstr ""
 
+msgid "can only splice vectors"
+msgstr ""
+
+msgid "the LINPACK argument has been defunct since R 3.1.0"
+msgstr ""
+
 msgid "complex matrices not permitted at present"
 msgstr ""
 
@@ -166,7 +172,7 @@ msgstr ""
 msgid "invalid 'dims'"
 msgstr ""
 
-msgid "bad handler specification"
+msgid "condition handlers must be specified with a condition class"
 msgstr ""
 
 msgid "no 'restart' '%s' found"
@@ -176,6 +182,12 @@ msgid "not an interactive session"
 msgstr ""
 
 msgid "not a valid restart specification"
+msgstr ""
+
+msgid "condition handlers must be functions"
+msgstr ""
+
+msgid "pushing duplicate `%s` handler on top of the stack"
 msgstr ""
 
 msgid "argument 'where' of length 0"
@@ -1018,6 +1030,9 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr ""
 
+msgid "package %s was installed before R 4.0.0: please re-install it"
+msgstr ""
+
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr ""
 
@@ -1046,6 +1061,9 @@ msgid "package %s was installed by an R version with different internals; it nee
 msgstr ""
 
 msgid "unable to load R code in package %s"
+msgstr ""
+
+msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 
 msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"

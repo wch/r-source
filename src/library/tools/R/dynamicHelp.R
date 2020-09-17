@@ -27,6 +27,8 @@
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
 {
+    linksToTopics <-
+        config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
     .HTMLdirListing <- function(dir, base, up) {
         files <- list.files(dir)    # note, no hidden files are listed
         out <- HTMLheader(paste0("Listing of directory<br/>", dir),
@@ -169,7 +171,7 @@ httpd <- function(path, query, ...)
                 "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?pattern=",
-                       vapply(reQuote(s), utils::URLencode, "", reserved = TRUE),
+                       utils::URLencode(reQuote(s), reserved = TRUE),
                        "&fields.concept=1&agrep=0\">",
                        shtmlify(substr(s, 1L, 80L)),
                        "</a>",
@@ -310,8 +312,20 @@ httpd <- function(path, query, ...)
     	if (pkg == "NULL") pkg <- NULL  # There were multiple hits in the console
     	topic <- sub(topicRegexp, "\\2", path)
         ## if a package is specified, look there first, then everywhere
-    	if (!is.null(pkg)) # () avoids deparse here
+    	if (!is.null(pkg)) { # () avoids deparse here
     	    file <- utils::help(topic, package = (pkg), help_type = "text")
+            ## Before searching other packages, check if topic.Rd is
+            ## available as a file in the package.
+            if (!length(file) && linksToTopics) {
+                helppath <- system.file("help", package = pkg)
+                if (nzchar(helppath)) {
+                    contents <- readRDS(sub("/help$", "/Meta/Rd.rds", helppath, fixed = FALSE))
+                    helpfiles <- sub("\\.[Rr]d$", "", contents$File)
+                    if (topic %in% helpfiles) file <- file.path(helppath, topic)
+                }
+            }
+        }
+        ## Next, search for topic in all installed packages
     	if (!length(file))
             file <- utils::help(topic, help_type = "text", try.all.packages = TRUE)
 	if (!length(file)) {

@@ -30,6 +30,11 @@
   These are the same as \code{length(list(...))} or \code{names(list(...))}
   but without evaluating the expressions in \code{...} (which happens with
   \code{list(...)}).
+
+  Evaluating elements of \code{\dots} with \code{..1}, \code{..2},
+  \code{...elt(n)}, etc. propagates \link[=invisible]{visibility}. This
+  is consistent with the evaluation of named arguments which also
+  propagates visibility.
 }
 \usage{
 ...length()
@@ -63,7 +68,8 @@ tst.dl(1:10)    # 0  (because the first argument is 'x')
 tst.dl(4, 5)    # 1
 tst.dl(4, 5, 6) # 2  namely '5, 6'
 tst.dl(4, 5, 6, 7, sin(1:10), "foo"/"bar") # 5.    Note: no evaluation!
-tst.dns(4, 5, 6, 7, sin(1:10), "foo"/"bar")# NULL   "    "     " %"
+tst.dns(4, foo=5, 6, bar=7, sini = sin(1:10), "foo"/"bar")
+##        "foo"  NA "bar"  "sini"               NA
 }
 \keyword{programming}
 \keyword{documentation}

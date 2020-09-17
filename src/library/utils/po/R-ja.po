@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -656,6 +656,10 @@ msgstr ""
 " ジェネリック関数と他の S4 オブジェクト (例えば '%s') をダンプできませ"
 "ん。'code_files' 引数を使用してください。 "
 
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr " 'unzip' は単一の文字列でなければなりません "
+
 msgid "unable to access index for repository %s"
 msgstr " リポジトリー %s に対する索引にアクセスできません "
 
@@ -703,6 +707,10 @@ msgstr " 'destdir' はディレクトリではありません "
 msgid "no package %s at the repositories"
 msgstr " リポジトリには %s というパッケージはありません "
 
+#, fuzzy
+msgid "invalid 'type'"
+msgstr " 不正な問い合わせ "
+
 msgid "package %s does not exist on the local repository"
 msgstr " ローカルリポジトリには %s というパッケージはありません "
 
@@ -732,6 +740,10 @@ msgstr " CRAN ミラーの選択は対話的にしかできません "
 
 msgid "cannot set repositories non-interactively"
 msgstr " リポジトリーの設定は対話的にしかできません "
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr " 'package' は文字列か NULL でなければなりません "
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr " --- このセッションで使うリポジトリーを選んでください --- "
@@ -992,6 +1004,9 @@ msgstr " オプション %s は長さ 1 の文字列か NULL でなければな�
 msgid "'file' must be a character string or connection"
 msgstr " 'file' は文字列か NULL でなければなりません "
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr " ファイルの先頭が空です "
 
@@ -1117,6 +1132,23 @@ msgstr " ディレクトリ %s を作ることが出来ません "
 
 msgid "invalid octal digit"
 msgstr " 不正な 8 進数の数字です "
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr " %s へのパスは空白を含みます "
+
+#, fuzzy
+msgid "path is empty"
+msgstr " 'dump' が空です "
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr " 'tarfile' は文字列かコネクションでなければなりません "

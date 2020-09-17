@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-07-10 r78803) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-08-15 r79028) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3926,7 +3926,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x417f8d0>
+<environment: 0x49fc278>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4963,7 +4963,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x4d18ce8>
+<bytecode: 0x5788118>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -5921,8 +5921,8 @@ NULL
 > stopifnot(identical(as.hclust(dend1)[1:4], hc[1:4]))
 > 
 > dend2 <- cut(dend1, h = 70)
+> ## leaves are wrong horizontally in R 4.0 and earlier:
 > plot(dend2$upper)
-> ## leaves are wrong horizontally:
 > plot(dend2$upper, nodePar = list(pch = c(1,7), col = 2:1))
 > ##  dend2$lower is *NOT* a dendrogram, but a list of .. :
 > plot(dend2$lower[[3]], nodePar = list(col = 4), horiz = TRUE, type = "tr")
@@ -7587,7 +7587,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x6366650>
+<environment: 0x5966b98>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12281,14 +12281,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4c55978>
-<environment: 0x4c623c0>
+<bytecode: 0x5608de8>
+<environment: 0x56133d0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4c55828>
-<environment: 0x4c623c0>
+<bytecode: 0x5608c98>
+<environment: 0x56133d0>
 
 > 
 > 
@@ -14394,7 +14394,8 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > 
 > ### Compare different types
 > quantAll <- function(x, prob, ...)
-+   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...), quantile(x, prob, type=1)))
++   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
++            quantile(x, prob, type=1)))
 > p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 > signif(quantAll(x, p), 4)
         0.1%   0.5%     1%     2%     5%    10%      50%
@@ -14407,6 +14408,10 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
  [7,] -2.997 -2.592 -2.424 -2.245 -1.727 -1.339 -0.03473
  [8,] -3.004 -2.595 -2.430 -2.258 -1.731 -1.342 -0.03473
  [9,] -3.004 -2.595 -2.429 -2.257 -1.730 -1.341 -0.03473
+> 
+> ## 0% and 100% are equal to min(), max() for all types:
+> stopifnot(t(quantAll(x, prob=0:1)) == range(x))
+> 
 > ## for complex numbers:
 > z <- complex(re=x, im = -10*x)
 > signif(quantAll(z, p), 4)
@@ -16549,8 +16554,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x5967858>
-<environment: 0x5410910>
+<bytecode: 0x641c838>
+<environment: 0x6587b70>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17268,7 +17273,7 @@ mean of x mean of y
 
 data:  extra by group
 t = -1.8608, df = 17.776, p-value = 0.07939
-alternative hypothesis: true difference in means is not equal to 0
+alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
 95 percent confidence interval:
  -3.3654832  0.2054832
 sample estimates:
@@ -18977,7 +18982,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.304 0.194 7.534 0 0 
+Time elapsed:  7.509 0.199 7.747 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -412,7 +412,7 @@ static int NORET null_vfprintf(Rconnection con, const char *format, va_list ap)
 }
 
 /* va_copy is C99, but a draft standard had __va_copy.  Glibc has
-   __va_copy declared uncondiitonally */
+   __va_copy declared unconditionally */
 
 
 #if defined(HAVE_VASPRINTF) && !HAVE_DECL_VASPRINTF
@@ -420,6 +420,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap);
 #endif
 
 # define BUFSIZE 10000
+// similar to Rcons_vprintf in printutils.c
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     R_CheckStack2(BUFSIZE); // prudence
@@ -430,15 +431,15 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
     va_list aq;
 
     va_copy(aq, ap);
-    res = vsnprintf(buf, BUFSIZE, format, aq);
+    res = Rvsnprintf_mbcs(buf, BUFSIZE, format, aq);
     va_end(aq);
 #ifdef HAVE_VASPRINTF
     if(res >= BUFSIZE || res < 0) {
 	res = vasprintf(&b, format, ap);
 	if (res < 0) {
 	    b = buf;
-	    buf[BUFSIZE-1] = '\0';
 	    warning(_("printing of extremely long output is truncated"));
+	    res = (int)strlen(buf);
 	} else usedVasprintf = TRUE;
     }
 #else
@@ -449,14 +450,15 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	   so add some margin here */
 	b = R_alloc(res + 101, sizeof(char));
 	vsnprintf(b, res + 100, format, ap);
-    } else if(res < 0) { /* just a failure indication */
+    } else if(res < 0) {
+	/* Some non-C99 conforming vsnprintf implementations return -1 on
+	   truncation instead of only on error. */
 	vmax = vmaxget();
 	b = R_alloc(10*BUFSIZE, sizeof(char));
-	res = vsnprintf(b, 10*BUFSIZE, format, ap);
-	if (res < 0) {
-	    b[10*BUFSIZE - 1] = '\0';
+	res = Rvsnprintf_mbcs(b, 10*BUFSIZE, format, ap);
+	if (res < 0 || res >= 10*BUFSIZE) {
 	    warning(_("printing of extremely long output is truncated"));
-	    res = 10*BUFSIZE;
+	    res = (int)strlen(b);
 	}
     }
 #endif /* HAVE_VASPRINTF */

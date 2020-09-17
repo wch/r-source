@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2017  The R Core Team
+ *  Copyright (C) 1999-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -225,9 +225,9 @@ static void menueditorsave(control m)
     show(c); /* steal focus back from tool button */
 }
 
-/* global console configuration variables */
-char fontname[LF_FACESIZE+4];
-int fontsty, pointsize;
+/* global console configuration variables, from console.c */
+extern char fontname[LF_FACESIZE+4];
+extern int fontsty, pointsize;
 
 static void editorprint(control m)
 {

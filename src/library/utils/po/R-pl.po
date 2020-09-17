@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:14\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -663,6 +663,10 @@ msgstr ""
 "ogólne funkcje oraz inne obiekty S4 (na przykład, '%s') nie mogą zostać "
 "zrzucone; użyj argumentu 'code_files'"
 
+#, fuzzy
+msgid "invalid 'type'; must be a character string"
+msgstr "argument 'unzip' musi być pojedynczym łańcuchem tekstowym"
+
 msgid "unable to access index for repository %s"
 msgstr "nie można dostać się do indeksu dla repozytorium %s"
 
@@ -709,6 +713,10 @@ msgstr "wartość 'destdir' nie jest katalogiem"
 msgid "no package %s at the repositories"
 msgstr "brak pakietu %s w repozytoriach"
 
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "niepoprawne zapytanie"
+
 msgid "package %s does not exist on the local repository"
 msgstr "pakiet %s nie istnieje w lokalnym repozytorium"
 
@@ -737,6 +745,10 @@ msgstr "nieinteraktywnie"
 
 msgid "cannot set repositories non-interactively"
 msgstr "nie można wybrać repozytoriów nieinteraktywnie"
+
+#, fuzzy
+msgid "invalid options(\"pkgType\"); must be a character string"
+msgstr "argument 'package' musi być łańcuchem tekstowym lub wartością NULL"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Proszę wybrać repozytoria do użycia w tej sesji ---"
@@ -981,6 +993,9 @@ msgid "'file' must be a character string or connection"
 msgstr ""
 "argument 'file' musi być wartością NULL, łańcuchem tekstowym lub połączeniem"
 
+msgid "'as.is' should be specified by the caller; using TRUE"
+msgstr ""
+
 msgid "empty beginning of file"
 msgstr "puste rozpoczęcie pliku"
 
@@ -1109,6 +1124,23 @@ msgstr "nie udało się utworzyć katalogu %s"
 
 msgid "invalid octal digit"
 msgstr "niepoprawna cyfra ósemkowa"
+
+msgid "removing drive '%s'"
+msgstr ""
+
+msgid "removing leading '/'"
+msgstr ""
+
+msgid "path starts with '~'"
+msgstr ""
+
+#, fuzzy
+msgid "path contains '..'"
+msgstr "ścieżka do %s zawiera spacje,"
+
+#, fuzzy
+msgid "path is empty"
+msgstr "'dump' jest puste"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "argument 'tarfile' musi być łańcuchem tekstowym lub połączeniem"

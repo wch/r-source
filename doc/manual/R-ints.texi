@@ -3642,7 +3642,7 @@ of @R{} and the code for the console is currently in @file{R.dll}.
 
 @command{R.app} is a macOS application which provides a console.  Its
 sources are a separate project@footnote{an Xcode project, in SVN at
-@uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI}.}, and its binaries
+@uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/}.}, and its binaries
 link to an @R{} installation which it runs as a dynamic library
 @file{libR.dylib}.  The standard @acronym{CRAN} distribution of @R{} for
 macOS bundles the GUI and @R{} itself, but installing the GUI is optional
@@ -4386,6 +4386,11 @@ Default: false.
 Check if package-anchored Rd cross-references are to @emph{files} (and
 not aliases).
 Default: false.
+
+@item _R_CHECK_BOGUS_RETURN_
+If true and @env{_R_CHECK_USE_CODETOOLS_} is also true, functions are
+scanned for use of @code{return} rather than @code{return()}.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
@@ -4429,6 +4434,7 @@ _R_CHECK_THINGS_IN_TEMP_DIR_=true
 _R_CHECK_BASHISMS_=true
 _R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
+_R_CHECK_BOGUS_RETURN_=true
 @end example
 
 @noindent
@@ -4550,7 +4556,7 @@ regexp, and is not supported by all versions of @command{grep} or
 @command{sed}.  The Open Group Base Specifications, Issue 7, which are
 technically identical to  IEEE Std 1003.1 (POSIX), 2008,
 are available at
-@uref{http://pubs.opengroup.org/onlinepubs/9699919799/mindex.html}.
+@uref{https://pubs.opengroup.org/onlinepubs/9699919799/mindex.html}.
 @end itemize
 
 Under Windows, most users will not have these tools installed, and you

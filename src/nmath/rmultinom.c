@@ -75,7 +75,7 @@ void rmultinom(int n, double* prob, int K, int* rN)
 	rN[k] = 0;
     }
     if(fabs((double)(p_tot - 1.)) > 1e-7)
-	MATHLIB_ERROR(_("rbinom: probability sum should be 1, but is %g"), 
+	MATHLIB_ERROR(_("rbinom: probability sum should be 1, but is %g"),
 		      (double) p_tot);
     if (n == 0) return;
     if (K == 1 && p_tot == 0.) return;/* trivial border case: do as rbinom */

@@ -208,7 +208,7 @@ tiff(filename = "Rplot\%03d.tif",
 
 \section{Conventions}{
   This section describes the implementation of the conventions for
-  graphics devices set out in the \dQuote{R Internals Manual}.
+  graphics devices set out in the \sQuote{R Internals} manual.
 
   \itemize{
     \item The default device size is in pixels.

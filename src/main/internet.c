@@ -367,6 +367,6 @@ R_newCurlUrl(const char *description, const char * const mode, SEXP headers, int
 	error(_("internet routines cannot be loaded"));
 	return (Rconnection)0;
     }
-    return (Rconnection)0; /* -Wall */
+    return (Rconnection)0; /* -Wall in gcc, but Solaris compiler complains */
 }
 

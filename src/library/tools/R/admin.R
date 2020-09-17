@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -59,16 +59,20 @@ function(dir, outDir, builtStamp=character())
     OStype <- R.version$platform
     if (grepl("-apple-darwin", OStype) && nzchar(Sys.getenv("R_ARCH")))
         OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
+    ## Some build systems want to supply a package-build timestamp for
+    ## reproducibility
+    if (length(builtStamp) == 0L) {
+        ## Prefer date in ISO 8601 format, UTC, avoid sub-seconds.
+        builtStamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S",
+                             tz = "UTC", usetz = TRUE)
+    }
     Built <-
 	paste0("R ",
 	       paste(R.version[c("major", "minor")], collapse = "."),
 	       "; ",
 	       if(dir.exists(file.path(dir, "src"))) OStype else "",
 	       "; ",
-               ## Some build systems want to supply a package-build timestamp for reproducibility
-	       ## Prefer date in ISO 8601 format, UTC.
-	       if (length(builtStamp)==0) format(Sys.time(), tz = "UTC", usetz = TRUE) else builtStamp,
-	       ## Sys.time(),
+               builtStamp,
 	       "; ",
 	       .OStype())
 
@@ -92,9 +96,9 @@ function(dir, outDir, builtStamp=character())
     ## ctype <- Sys.getlocale("LC_CTYPE")
     ## Sys.setlocale("LC_CTYPE", "C")
     ## on.exit(Sys.setlocale("LC_CTYPE", ctype))
-    ## </COMMENT>    
+    ## </COMMENT>
     ## </FIXME>
-    
+
     .write_description(db, file.path(outDir, "DESCRIPTION"))
 
     outMetaDir <- file.path(outDir, "Meta")

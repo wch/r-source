@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 14:56\n"
+"POT-Creation-Date: 2020-08-13 10:30\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,13 +328,15 @@ msgstr ""
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
+msgid ","
 msgstr ""
 
 #, fuzzy
 msgid "Missing link or links in documentation object '%s':"
+msgstr "Tildelinger i \\usage i dokumentationsobjekt »%s«:"
+
+#, fuzzy
+msgid "Non-file package-anchored link(s) in documentation object '%s':"
 msgstr "Tildelinger i \\usage i dokumentationsobjekt »%s«:"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
@@ -784,9 +786,6 @@ msgstr ""
 msgid "inst/doc"
 msgstr ""
 
-msgid ","
-msgstr ""
-
 msgid "ignored as vignettes have been rebuilt."
 msgstr ""
 
@@ -918,6 +917,12 @@ msgstr ""
 msgid "restoration failed"
 msgstr ""
 
+msgid "invalid value"
+msgstr ""
+
+msgid "for R_CROSS_BUILD"
+msgstr ""
+
 msgid "error reading file '%s'"
 msgstr ""
 
@@ -1043,9 +1048,6 @@ msgstr ""
 msgid "NEWS file not found"
 msgstr ""
 
-msgid "No news found in given file using old-style R-like format."
-msgstr ""
-
 msgid "No news found in given file using package default format."
 msgstr ""
 
@@ -1083,6 +1085,9 @@ msgid ""
 msgstr ""
 
 msgid "Processing packages:"
+msgstr ""
+
+msgid "Invalid DESCRIPTION file for package %s"
 msgstr ""
 
 msgid ""
@@ -1157,21 +1162,6 @@ msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""
 
 msgid "unknown header specification"
-msgstr ""
-
-msgid "argument 'pkg' must be of length 1"
-msgstr ""
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
-
-msgid "bad operand"
-msgstr ""
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr ""
-
-msgid "argument 'vignette' must be of length 1"
 msgstr ""
 
 msgid "R CMD build failed"
@@ -1255,6 +1245,9 @@ msgstr ""
 msgid "only Rd syntax is currently supported"
 msgstr ""
 
+msgid "texi2dvi script/program not available, using emulation"
+msgstr ""
+
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr ""
 
@@ -1293,6 +1286,11 @@ msgstr ""
 
 msgid "parsing '%s'"
 msgstr ""
+
+msgid "Undeclared package %s in Rd xrefs"
+msgid_plural "Undeclared packages %s in Rd xrefs"
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "Package unavailable to check Rd xrefs: %s"

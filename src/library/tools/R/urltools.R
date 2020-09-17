@@ -452,10 +452,38 @@ function(db, remote = TRUE, verbose = FALSE)
             msg <- table_of_HTTP_status_codes[s]
         }
         ## Look for redirected URLs
-        if (any(grepl("301 Moved Permanently", h, useBytes = TRUE))) {
-            ind <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
-            if (length(ind))
-                newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
+        ## According to
+        ## <https://tools.ietf.org/html/rfc7230#section-3.1.2> the first
+        ## line of a response is the status-line, with "a possibly empty
+        ## textual phrase describing the status code", so only look for
+        ## a 301 status code in the first line.
+        if(grepl(" 301 ", h[1L], useBytes = TRUE) &&
+           !startsWith(u, "https://doi.org/") &&
+           !startsWith(u, "http://dx.doi.org/")) {
+            ## Get the new location from the last consecutive 301
+            ## obtained.
+            h <- split(h, c(0L, cumsum(h == "\r\n")[-length(h)]))
+            i <- vapply(h,
+                        function(e)
+                            grepl(" 301 ", e[1L], useBytes = TRUE),
+                        NA)
+            h <- h[[which(!i)[1L] - 1L]]
+            pos <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
+            if(length(pos)) {
+                loc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1",
+                           h[pos[1L]])
+                ## Ouch.  According to RFC 7231, the location is a URI
+                ## reference, and may be relative in which case it needs
+                ## resolving against the effect request URI.
+                ## <https://tools.ietf.org/html/rfc7231#section-7.1.2>.
+                ## Not quite straightforward, hence do not report such
+                ## 301s. 
+                ## (Alternatively, could try reporting the 301 but no
+                ## new location.)
+                if(nzchar(parse_URI_reference(loc)[1L, "scheme"]))
+                    newLoc <- loc
+                ## (Note also that fragments would need extra care.)
+            }
         }
         ##
         if((s != "200") && use_curl) {
@@ -474,7 +502,7 @@ function(db, remote = TRUE, verbose = FALSE)
     .check_http_B <- function(u) {
         ul <- tolower(u)
         cran <- ((grepl("^https?://cran.r-project.org/web/packages", ul) &&
-                  !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]]+(html|pdf|rds)$",
+                  !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]_]+(html|pdf|rds)$",
                          ul)) ||
                  (grepl("^https?://cran.r-project.org/web/views/[[:alnum:]]+[.]html$",
                         ul)) ||
@@ -562,6 +590,7 @@ function(db, remote = TRUE, verbose = FALSE)
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
         ind <- is.na(match(status, c(200L, 405L, NA))) |
+            nzchar(results[, 3L]) |
             nzchar(results[, 4L]) |
             nzchar(results[, 5L]) |
             nzchar(results[, 6L])

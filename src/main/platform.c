@@ -2218,7 +2218,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (strcmp(R_GUIType, "GNOME") == 0) {  /* always interactive */
 	LOGICAL(ans)[i] = TRUE;  /* also AQUA ? */
     } else {
-#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+#if defined(HAVE_LIBREADLINE)
 	extern Rboolean UsingReadline;
 	if (R_Interactive && UsingReadline) LOGICAL(ans)[i] = TRUE;
 #endif
@@ -2849,7 +2849,8 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(strlen(q) > PATH_MAX - 2) // allow for '/' and terminator
 	    error(_("invalid '%s' argument"), "to");
 	char dir[PATH_MAX];
-	strncpy(dir, q, PATH_MAX);
+	// gcc 10 with sanitizers objects to PATH_MAX here.
+	strncpy(dir, q, PATH_MAX - 1);
 	dir[PATH_MAX - 1] = '\0';
 	if (*(dir + (strlen(dir) - 1)) !=  '/')
 	    strcat(dir, "/");
@@ -3318,7 +3319,17 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("iconv"));
 #ifdef HAVE_LIBREADLINE
-    SET_STRING_ELT(ans, i, mkChar(rl_library_version));
+    /* libedit reports "EditLine wrapper": so we look at
+       rl_readline_version, which is currently 0x0402 */
+    const char *rl = rl_library_version;
+    if (streql(rl, "EditLine wrapper")) {
+	int num = rl_readline_version;
+	int maj = num / 256, min = num % 256;
+	char buf[40];
+	snprintf(buf, 40, "%d.%d (%s)", maj, min, rl);
+	SET_STRING_ELT(ans, i, mkChar(buf));
+    } else
+	SET_STRING_ELT(ans, i, mkChar(rl));
 #else
     SET_STRING_ELT(ans, i, mkChar(""));
 #endif
@@ -3331,7 +3342,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     && defined(HAVE_DECL_RTLD_NEXT) && HAVE_DECL_RTLD_NEXT
 
     /* Look for blas function dgemm and try to figure out in which
-       binary/shared library is it defined. This is based on experimentation
+       binary/shared library it is defined.  That is based on experimentation
        and heuristics, and depends on implementation details
        of dynamic linkers.
     */
