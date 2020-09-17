@@ -1,7 +1,7 @@
 #  File src/library/utils/R/objects.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -356,17 +356,17 @@ isS3method <- function(method, f, class, envir = parent.frame())
 }
 
 isS3stdGeneric <- function(f) {
-    bdexpr <- body(f)
+    bdexpr <- body(if(methods::is(f, "traceable")) f@original else f)
     ## protect against technically valid but bizarre
     ## function(x) { { { UseMethod("gen")}}} by
     ## repeatedly consuming the { until we get to the first non { expr
-    while(as.character(bdexpr[[1L]]) == "{")
+    while(is.call(bdexpr) && bdexpr[[1L]] == "{")
         bdexpr <- bdexpr[[2L]]
 
     ## We only check if it is a "standard" s3 generic. i.e. the first non-{
     ## expression is a call to UseMethod. This will return FALSE if any
     ## work occurs before the UseMethod call ("non-standard" S3 generic)
-    ret <- is.call(bdexpr) && identical(bdexpr[[1L]], as.name("UseMethod"))
+    ret <- is.call(bdexpr) && bdexpr[[1L]] == "UseMethod"
     if(ret)
         names(ret) <- bdexpr[[2L]] ## arg passed to UseMethod naming generic
     ret
