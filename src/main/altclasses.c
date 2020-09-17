@@ -27,6 +27,10 @@
 #include <Print.h> /* for R_print */
 #include <R_ext/Itermacros.h>
 
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
+
 
 /***
  *** ALTREP Concrete Class Implementations
@@ -385,7 +389,7 @@ Rboolean compact_realseq_Inspect(SEXP x, int pre, int deep, int pvec,
     R_xlen_t n = XLENGTH(x);
     R_xlen_t n1 = (R_xlen_t) REAL_ELT(x, 0);
     R_xlen_t n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
-    Rprintf(" %ld : %ld (%s)", n1, n2,
+    Rprintf(" %lld : %lld (%s)", n1, n2,
 	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");
     return TRUE;
@@ -1252,13 +1256,13 @@ static void InitMmapRealClass(DllInfo *dll)
 #ifdef Win32
 static void mmap_finalize(SEXP eptr)
 {
-    error("mmop objects not supported on Windows yet");
+    error("mmap objects not supported on Windows yet");
 }
 
 static SEXP mmap_file(SEXP file, int type, Rboolean ptrOK, Rboolean wrtOK,
 		      Rboolean serOK, Rboolean warn)
 {
-    error("mmop objects not supported on Windows yet");
+    error("mmap objects not supported on Windows yet");
 }
 #else
 /* derived from the example in
@@ -1961,7 +1965,7 @@ SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* When a wrapper has no useful meta-data, is no longer referenced
-   anywhere, and its data is unly accessible from the wrapper, then
+   anywhere, and its data is only accessible from the wrapper, then
    the wrapper can be unwrapped to its wrapped data, and its
    attributes can be transferred to the data.
 
