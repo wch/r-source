@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-08-15 r79028) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-09-17 r79222) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -14395,7 +14395,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > ### Compare different types
 > quantAll <- function(x, prob, ...)
 +   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
-+            quantile(x, prob, type=1)))
++            quantile(x, prob, type=1, ...)))
 > p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 > signif(quantAll(x, p), 4)
         0.1%   0.5%     1%     2%     5%    10%      50%
