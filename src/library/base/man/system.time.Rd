@@ -1,6 +1,6 @@
 % File src/library/base/man/system.time.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system.time}
@@ -36,6 +36,9 @@ system.time(expr, gcFirst = TRUE)
 }
 \seealso{
   \code{\link{proc.time}}, \code{\link{time}} which is for time series.
+
+  \code{\link{setTimeLimit}} to limit the (CPU/elapsed) time \R is allowed
+  to use.
 
   \code{\link{Sys.time}} to get the current date & time.
 }
