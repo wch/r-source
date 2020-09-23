@@ -265,11 +265,17 @@ static void setupwarnings(void)
     setAttrib(R_Warnings, R_NamesSymbol, allocVector(STRSXP, R_nwarnings));
 }
 
-/* Rvsnprintf_mbcs: like vsnprintf, but guaranteed to null-terminate and not to split
-   multi-byte characters, except if size is zero in which case the buffer is
-   untouched and thus may not be null-terminated.
+/* Rvsnprintf_mbcs: like vsnprintf, but guaranteed to null-terminate and not to
+   split multi-byte characters, except if size is zero in which case the buffer
+   is untouched and thus may not be null-terminated.
 
-   Dangerous pattern: `Rvsnprintf_mbcs(buf, size - n, )` with maybe n >= size*/
+   This function may be invoked by the error handler via REvprintf.  Do not
+   change it unless you are SURE that your changes are compatible with the
+   error handling mechanism.
+
+   REvprintf is also used in R_Suicide on Unix.
+
+   Dangerous pattern: `Rvsnprintf_mbcs(buf, size - n, )` with n >= size */
 #ifdef Win32
 int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
 		   va_list args);

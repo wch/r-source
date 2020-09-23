@@ -1479,7 +1479,14 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 }
 
 /* Truncate a string in place (in native encoding) so that it only contains
-   valid multi-byte characters. Has no effect in non-mbcs locales. */
+   valid multi-byte characters. Has no effect in non-mbcs locales. 
+
+   This function may be invoked by the error handler via
+   REvprintf->Rvsnprintf_mbcs.  Do not change it unless you are SURE that
+   your changes are compatible with the error handling mechanism.
+
+   REvprintf is also used in R_Suicide on Unix.
+   */
 attribute_hidden
 char* mbcsTruncateToValid(char *s)
 {
