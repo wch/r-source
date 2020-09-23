@@ -293,12 +293,6 @@
       correct also with \code{center = FALSE}; \PR{14938}, patch from
       Sebastian Meyer.
 
-      \item A very old bug could cause a segfault in \code{model.matrix()}
-      when terms involved logical variables.  Part of \PR{17879}.
-
-      \item \code{model.frame.default()} allowed \code{data = 1}, leading to
-      involuntary variable capture (rest of \PR{17879}).
-
       \item \code{all.equal.POSIXt()} no longer warns about and
       subsequently ignores inconsistent \code{"tzone"} attributes, but
       describes the difference in its return value (\PR{17277}).
@@ -424,6 +418,12 @@
 
       \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
       from Sebastian Meyer.
+
+      \item A very old bug could cause a segfault in \code{model.matrix()}
+      when terms involved logical variables.  Part of \PR{17879}.
+
+      \item \code{model.frame.default()} allowed \code{data = 1}, leading to
+      involuntary variable capture (rest of \PR{17879}).
     }
   }
 }
