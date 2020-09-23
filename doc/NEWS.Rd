@@ -111,6 +111,9 @@
 
       \item \code{phyper(11, 15, 0, 12, log.p=TRUE)} no longer gives
       \code{NaN}; reported as \PR{17271} by Alexey Stukalov.
+
+      \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
+      from Sebastian Meyer.
     }
   }
 }
