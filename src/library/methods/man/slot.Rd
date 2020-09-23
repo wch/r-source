@@ -50,7 +50,7 @@ getSlots(x)
     valid for this slot in this object's class.}
   \item{check}{In the replacement version of \code{slot}, a flag.  If
     \code{TRUE}, check the assigned value for validity
-    as the value of this slot.  User's coded should not set this to
+    as the value of this slot.  User's code should not set this to
     \code{FALSE} in normal use, since the resulting object can be invalid.
   }
   \item{x}{either the name of a class (as character string), or a class
