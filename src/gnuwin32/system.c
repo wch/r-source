@@ -1197,7 +1197,7 @@ int cmdlineoptions(int ac, char **av)
 		if (!isDir(tm)) {
 		    tm = getenv("TEMP");
 		    if (!isDir(tm))
-			tm = getenv("R_USER"); /* this one will succeed */
+			tm = getRUser(); /* this one will succeed */
 		}
 	    }
 	    /* in case getpid() is not unique -- has been seen under Windows */
