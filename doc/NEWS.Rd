@@ -277,9 +277,6 @@
       \item \code{boxplot()} now also accepts \code{call}s for labels such
       as \code{ylab}, the same as \code{plot()}.  Reported by Marius Hofert.
 
-      \item \code{phyper(11, 15, 0, 12, log.p=TRUE)} no longer gives
-      \code{NaN}; reported as \PR{17271} by Alexey Stukalov.
-
       \item The help page for \code{xtabs()} now correctly states that
       \code{addNA} is setting \code{na.action = na.pass} among others;
       reported as \PR{17770} by Thomas Soeiro.
@@ -425,6 +422,9 @@
 
       \item \code{tar()} no longer skips non-directory files, thanks to a
       patch by Sebastian Meyer, fixing the remaining part of \PR{16716}.
+
+      \item \code{phyper(11, 15, 0, 12, log.p=TRUE)} no longer gives
+      \code{NaN}; reported as \PR{17271} by Alexey Stukalov.
     }
   }
 }
