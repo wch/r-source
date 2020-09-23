@@ -1,7 +1,7 @@
 #  File src/library/grid/R/gpar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ validGP <- function(gpars) {
   }
   # alpha should be 0 to 1
   if (!is.na(match("alpha", names(gpars)))) {
-    if (any(gpars$alpha < 0 || gpars$alpha > 1))
+    if (any(gpars$alpha < 0) || any(gpars$alpha > 1))
       stop("invalid 'alpha' value")
   }
   # font should be integer and not NULL
