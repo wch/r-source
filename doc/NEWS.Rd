@@ -108,6 +108,9 @@
 
       \item \code{duplicated()} now works also for strings with multiple
       encodings inside a single vector \PR{17809}.
+
+      \item \code{phyper(11, 15, 0, 12, log.p=TRUE)} no longer gives
+      \code{NaN}; reported as \PR{17271} by Alexey Stukalov.
     }
   }
 }

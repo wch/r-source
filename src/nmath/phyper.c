@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 1999-2014  The R Core Team
+ *  Copyright (C) 1999-2020  The R Core Team
+ *  Copyright (C) 1998       Ross Ihaka
  *  Copyright (C) 2004	     Morten Welinder
  *  Copyright (C) 2004	     The R Foundation
  *
@@ -69,7 +69,7 @@ static double pdhyper (double x, double NR, double NB, double n, int log_p)
 	sum += term;
 	x--;
     }
-    
+
     double ss = (double) sum;
     return log_p ? log1p(ss) : 1 + ss;
 }
@@ -77,7 +77,7 @@ static double pdhyper (double x, double NR, double NB, double n, int log_p)
 
 /* FIXME: The old phyper() code was basically used in ./qhyper.c as well
  * -----  We need to sync this again!
-*/
+                      q         m           n         k   */
 double phyper (double x, double NR, double NB, double n,
 	       int lower_tail, int log_p)
 {
@@ -107,13 +107,21 @@ double phyper (double x, double NR, double NB, double n,
 	lower_tail = !lower_tail;
     }
 
-    if (x < 0)
+    /* support of dhyper() as a function of its parameters
+     * R:  .suppHyper <- function(m,n,k) max(0, k-n) : min(k, m)
+     * --  where R's (m,n, k) == (NR,NB, n)  here */
+    if (x < 0 || x < n - NB)
 	return R_DT_0;
     if (x >= NR || x >= n)
 	return R_DT_1;
-
     d  = dhyper (x, NR, NB, n, log_p);
+    // dhyper(.., log_p=FALSE) > 0 mathematically, but not always numerically :
+    if((!log_p && d == 0.) ||
+        (log_p && d == ML_NEGINF))
+	return R_DT_0;
     pd = pdhyper(x, NR, NB, n, log_p);
 
     return log_p ? R_DT_Log(d + pd) : R_D_Lval(d * pd);
 }
+
+// NB: MM has code for  AS 152 (Lund, 1980) >> R_77 (Shea, 1989) >> R_86 (Berger, 1991)
