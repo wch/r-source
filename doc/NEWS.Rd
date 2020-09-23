@@ -294,14 +294,10 @@
       Sebastian Meyer.
 
       \item A very old bug could cause a segfault in \code{model.matrix()}
-      when terms involved logical variables.  Related to \PR{17879}, but not
-      a complete fix for that issue.
+      when terms involved logical variables.  Part of \PR{17879}.
 
       \item \code{model.frame.default()} allowed \code{data = 1}, leading to
       involuntary variable capture (rest of \PR{17879}).
-
-      \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
-      from Sebastian Meyer.
 
       \item \code{all.equal.POSIXt()} no longer warns about and
       subsequently ignores inconsistent \code{"tzone"} attributes, but
@@ -425,6 +421,9 @@
 
       \item \code{phyper(11, 15, 0, 12, log.p=TRUE)} no longer gives
       \code{NaN}; reported as \PR{17271} by Alexey Stukalov.
+
+      \item Fix incorrect calculation in \code{logLik.nls()} \PR{16100}, patch
+      from Sebastian Meyer.
     }
   }
 }
