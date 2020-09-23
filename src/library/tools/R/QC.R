@@ -3141,6 +3141,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         if(length(strict)) {
             strict0 <- sort(intersect(strict, strict0))
             strict1 <- sort(setdiff(strict, strict0))
+            ## temporary workaround
+            strict1 <- setdiff(strict1, "bibtex")
             if(length(strict0)) bad_depends$orphaned <- strict0
             if(length(strict1)) bad_depends$orphaned1 <- strict1
         }
