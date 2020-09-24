@@ -671,10 +671,12 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     PROTECT(x);
 
     if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || y != R_NilValue) {
+	PROTECT(y);
 	if (n > 0 && ny == 0)
 	    error(_("replacement has length zero"));
 	if (n > 0 && n % ny)
 	    warning(_("number of items to replace is not a multiple of replacement length"));
+	UNPROTECT(1);
     }
 
 
