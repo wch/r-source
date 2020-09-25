@@ -151,8 +151,10 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	    n = 0;
 	    if (0.5 * dn >= umin) REAL(at)[n++] = 0.5 * dn;
 	    for (;;) {
-		if (dn > umax) break;		REAL(at)[n++] = dn;
-		if (5 * dn > umax) break;	REAL(at)[n++] = 5 * dn;
+		if (dn > umax) break;
+		REAL(at)[n++] = dn;
+		if (5 * dn > umax) break;
+		REAL(at)[n++] = 5 * dn;
 		dn *= 10;
 	    }
 	    break;
