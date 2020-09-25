@@ -55,7 +55,7 @@
   Mosaic displays for loglinear models.
   \emph{Proceedings of the Statistical Graphics Section},
   American Statistical Association, pp.\sspace{}61--68.
-  \url{http://www.math.yorku.ca/SCS/Papers/asa92.html}
+  \url{http://www.datavis.ca/papers/asa92.html}
 
   Friendly, M. (2000).
   \emph{Visualizing Categorical Data}.

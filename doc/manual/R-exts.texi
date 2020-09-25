@@ -7961,7 +7961,7 @@ be current.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{https://oprofile.sourceforge.net/}) and
+@command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/@/index.php/@/Tutorial}) for any
 executable or shared object.

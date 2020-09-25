@@ -76,7 +76,7 @@ fourfoldplot(x, color = c("#99CCFF", "#6699CC"),
   Friendly, M. (1994).
   A fourfold display for 2 by 2 by \eqn{k} tables.
   Technical Report 217, York University, Psychology Department.
-  \url{http://www.math.yorku.ca/SCS/Papers/4fold/4fold.ps.gz}
+  \url{http://datavis.ca/papers/4fold/4fold.pdf}
 }
 \seealso{
   \code{\link{mosaicplot}}

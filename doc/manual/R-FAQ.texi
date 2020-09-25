@@ -2930,7 +2930,10 @@ Course with Examples in R}, Richard M. Heiberger and Burt Holland
 For more information, see e.g.@: David Goldberg (1991), ``What Every
 Computer Scientist Should Know About Floating-Point Arithmetic'',
 @emph{ACM Computing Surveys}, @strong{23/1}, 5--48, also available via
-@url{http://www.validlab.com/goldberg/paper.pdf}.
+@c As of 2020-09-25, redirects to https without valid certificate ...
+@c @url{http://www.validlab.com/goldberg/paper.pdf}.
+@c See <https://en.wikipedia.org/wiki/IEEE_754>:
+@url{https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html}.
 
 Here is another example, this time using addition:
 

@@ -34,7 +34,8 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
   Time series analysis of Holocene climate data.
   \emph{Philosophical Transactions of the Royal Society of London Series
     A}, \bold{330}, 601--616.
-  \url{http://www.jstor.org/stable/53609}.
+  \doi{10.1098/rsta.1990.0041}.
+  \url{https://www.jstor.org/stable/53609}.
 
   Venables, W.N. and Ripley, B.D. (2002) \emph{Modern Applied
     Statistics with S.} Fourth edition. Springer. (Especially

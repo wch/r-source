@@ -45,7 +45,8 @@
   Bickel, P. J., Hammel, E. A., and O'Connell, J. W. (1975).
   Sex bias in graduate admissions: Data from Berkeley.
   \emph{Science}, \bold{187}, 398--403.
-  \url{http://www.jstor.org/stable/1739581}.
+  \doi{10.1126/science.187.4175.398}.
+  \url{https://www.jstor.org/stable/1739581}.
 }
 \examples{
 require(graphics)

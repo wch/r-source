@@ -41,7 +41,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   addition to the programs, suitable dictionaries need to be available.
   See \url{http://aspell.net},
   \url{http://hunspell.github.io/} and
-  \url{http://lasr.cs.ucla.edu/geoff/ispell.html}, respectively, for
+  \url{https://www.cs.hmc.edu/~geoff/ispell.html}, respectively, for
   obtaining the Aspell, Hunspell and (International) Ispell programs and
   dictionaries.
 
