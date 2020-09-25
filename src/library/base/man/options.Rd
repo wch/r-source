@@ -404,9 +404,13 @@ getOption(x, default = NULL)
       } }
     }
 
-    \item{\code{timeout}:}{integer.  The timeout for some Internet
-      operations, in seconds.  Default 60 seconds.  See
-      \code{\link{download.file}} and \code{\link{connections}}.}
+    \item{\code{timeout}:}{positive integer.  The timeout for some
+      Internet operations, in seconds.  Default 60 (seconds) but can be
+      set from environment variable
+      \env{R_DEFAULT_INTERNET_TIMEOUT}. (Invalid values of the option or
+      the variable are silently ignored: non-integer numeric values will
+      be truncated.)  See \code{\link{download.file}} and
+      \code{\link{connections}}.}
 
     \item{\code{topLevelEnvironment}:}{see \code{\link{topenv}} and
       \code{\link{sys.source}}.}

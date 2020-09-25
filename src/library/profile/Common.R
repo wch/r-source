@@ -2,7 +2,7 @@
 ### Additional commands can be placed in site or user Rprofile files
 ### (see ?Rprofile).
 
-### Copyright (C) 1995-2015 The R Core Team
+### Copyright (C) 1995-2020 The R Core Team
 
 ### Notice that it is a bad idea to use this file as a template for
 ### personal startup files, since things will be executed twice and in
@@ -28,7 +28,11 @@ options(warn = 0)
 # options(repos = c(CRAN="@CRAN@"))
 # options(BIOC = "http://www.bioconductor.org")
 
-options(timeout = 60)
+## setting from an env variable added in 4.0.2
+local({to <- as.integer(Sys.getenv("R_DEFAULT_INTERNET_TIMEOUT", 60))
+    if (is.na(to) || to <= 0) to <- 60L
+    options(timeout = to)
+})
 options(encoding = "native.enc")
 options(show.error.messages = TRUE)
 ## keep in sync with PrintDefaults() in  ../../main/print.c :
