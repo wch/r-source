@@ -4851,10 +4851,11 @@ SAFE_FFLAGS=-axsse2
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
 10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{Details for the
 upcoming macOS 11 `Big Sur' remain to be confirmed: no Fortran compiler
-was available for `Apple Silicon' at the time of writing.}.  @R{} can in
-principle be built for 10.6--10.12, although this is little tested and
-it may be necessary to install later versions of software such as
-@code{libcurl} and an older version@footnote{For example, from
+was available for `Apple Silicon' at the time of writing although there
+are ports under development.}.  @R{} can in principle be built for
+10.6--10.12, although this is little tested and it may be necessary to
+install later versions of software such as @code{libcurl} and an older
+version@footnote{For example, from
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
 @command{gfortran}.
 

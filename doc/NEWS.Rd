@@ -397,7 +397,9 @@
       when \code{type = 1} or \code{3}, thanks to \PR{17899}.
 
       \item Libcurl-based internet access, including
-      \code{curlGetHeaders()}, was not respecting the \code{"timeout"} option.
+      \code{curlGetHeaders()}, was not respecting the \code{"timeout"}
+      option.  If this causes unanticipated timeouts, consider
+      increasing the default by setting \env{R_DEFAULT_INTERNET_TIMEOUT}.
 
       \item \code{as.Date(<char>)} now also works with an initial
       \code{""}, thanks to Michael Chirico's \PR{17909}.
