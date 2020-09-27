@@ -661,8 +661,8 @@ codes.
 @c DESCRIPTION field RdMacros
 An @samp{RdMacros} field can be used to hold a comma-separated list of
 packages from which the current package will import @file{Rd} macro
-definitions.  These package should also be listed in @samp{Imports},
-@samp{Suggests} or @samp{Depends}.  The macros in these packages will be 
+definitions.  These package should also be listed in @samp{Imports}
+(or @samp{Depends}).  The macros in these packages will be 
 imported after the system macros, in the 
 order listed in the @samp{RdMacros} field, before any macro definitions
 in the current package are loaded.  Macro definitions in individual
@@ -1539,6 +1539,13 @@ sudo mv bwidget-1.9.14 /usr/local/lib
 substituting a location on the Tcl search path for @file{/usr/local/lib} if
 needed.  (If no location on that search path is writeable, you will need
 to add one each time BWidget is to be used with @code{tcltk::addTclPath()}.)
+
+To (silently) test for the presence of @samp{Tktable} one can use
+
+@example
+library(tcltk)
+have_tktable <- !isFALSE(suppressWarnings(tclRequire('Tktable')))
+@end example
 
 @node Specifying URLs,  , Non-R scripts in packages, Package structure
 @subsection Specifying URLs
@@ -2668,12 +2675,12 @@ published in December 2017, and a further revision (`C++20', with many
 new features) is scheduled for publication in May 2020.
 
 What standard a C++ compiler aims to support can be hard to determine:
-the value@footnote{Values @code{199711}, @code{201103L}, @code{201402L}
-and @code{201703L} are most commonly used for C++98, C++11, C++14 and
-C++17 respectively, but some compilers set @code{1L}.  At the time of
-writing there was no official value for C++20, but some compilers are
-using @code{202002L}, others @code{201703L}.} of @code{__cplusplus} may
-help but some compilers use it to denote a standard which is partially
+the value@footnote{Values @code{201103L}, @code{201402L} and
+@code{201703L} are most commonly used for C++11, C++14 and C++17
+respectively, but some compilers set @code{1L}.  At the time of writing
+there was no official value for C++20, but some compilers are using
+@code{202002L}, others @code{201703L}.} of @code{__cplusplus} may help
+but some compilers use it to denote a standard which is partially
 supported and some the latest standard which is (almost) fully
 supported.
 
@@ -5231,7 +5238,8 @@ floating-point arguments: @code{float}, @code{double}, @code{long
 double} and possibly more.  The standard specifies what happens with an
 argument of integer type but this is not always implemented, resulting
 in a report of `overloading ambiguity': this is commonly seen on
-Solaris, but for @code{pow} also seen on macOS.
+Solaris, but for @code{pow} also seen on macOS (and other platforms
+using @command{clang++}).
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
@@ -5267,11 +5275,11 @@ arguments: a few compilers give a compilation error.  Function
 @item
 The GNU C/C++ compilers support a large number of non-portable
 extensions.  For example, @code{INFINITY} (which is a @emph{float} value
-in C99 and C++11 but not C++98), for which @R{} provides the portable
-double value @code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).
-And @code{NAN}@footnote{also part of C++11 and later.} is just one NaN
-@emph{float} value: for use with @R{}, @code{NA_REAL} is usually what
-is intended, but @code{R_NaN} is also available.
+in C99 and C++11), for which @R{} provides the portable double value
+@code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).  And
+@code{NAN}@footnote{also part of C++11 and later.} is just one NaN
+@emph{float} value: for use with @R{}, @code{NA_REAL} is often what is
+intended, but @code{R_NaN} is also available.
 
 Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
@@ -6963,7 +6971,7 @@ class (in package @pkg{stats}).  To make these easy to read in the
 source file, @code{\code@{"\linkS4class@{abc@}"@}} expands to the form
 given above.
 
-There are two other forms of optional argument specified as
+There are two other forms with an optional argument, specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
 @pkg{@var{pkg}}, to @emph{files} @file{@var{foo}.html} and
@@ -7932,7 +7940,7 @@ be current.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{https://oprofile.sourceforge.net/}) and
+@command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/@/index.php/@/Tutorial}) for any
 executable or shared object.
