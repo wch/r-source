@@ -2048,11 +2048,11 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if (use_WC) ;
 	else if (use_UTF8) {
 	    s = translateCharUTF8(STRING_ELT(text, i));
-	    if (!utf8Valid(s)) error(("input string %d is invalid UTF-8"), i+1);
+	    if (!utf8Valid(s)) error(_("input string %d is invalid UTF-8"), i+1);
 	} else {
 	    s = translateChar(STRING_ELT(text, i));
 	    if (mbcslocale && !mbcsValid(s))
-		error(("input string %d is invalid in this locale"), i+1);
+		error(_("input string %d is invalid in this locale"), i+1);
 	}
 
 	if (fixed_opt) {
@@ -3270,10 +3270,10 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 		    INTEGER(matchlen)[j] = pmatch[j].rm_eo - so;
 		}
 		setAttrib(matchpos, install("match.length"), matchlen);
-		if(useBytes)
+		if(useBytes) {
 		    setAttrib(matchpos, install("index.type"), itype);
-		    setAttrib(matchpos, install("useBytes"),
-			      R_TrueValue);
+		    setAttrib(matchpos, install("useBytes"), R_TrueValue);
+		}
 		SET_VECTOR_ELT(ans, i, matchpos);
 		UNPROTECT(2);
 	    } else {
@@ -3287,10 +3287,10 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 		PROTECT(matchpos = ScalarInteger(-1));
 		PROTECT(matchlen = ScalarInteger(-1));
 		setAttrib(matchpos, install("match.length"), matchlen);
-		if(useBytes)
+		if(useBytes) {
 		    setAttrib(matchpos, install("index.type"), itype);
-		    setAttrib(matchpos, install("useBytes"),
-			      R_TrueValue);
+		    setAttrib(matchpos, install("useBytes"), R_TrueValue);
+		}
 		SET_VECTOR_ELT(ans, i, matchpos);
 		UNPROTECT(2);
 	    }
