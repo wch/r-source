@@ -263,6 +263,9 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	data.gap = asInteger(gap);
 	if (data.gap == NA_INTEGER || data.gap < 0)
 	    error(_("'gap' must be non-negative integer"));
+	static int gap_max = 1024;
+	if (data.gap > gap_max)
+	    error(_("'print.gap' must be less than %d"), gap_max);
     }
     advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
