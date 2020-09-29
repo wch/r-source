@@ -29,7 +29,7 @@ memDecompress(from,
   \item{type}{character string, the type of compression.  May be
     abbreviated to a single letter, defaults to the first of the alternatives.}
   \item{asChar}{logical: should the result be converted to a character
-    string?  NB: character string have a limit of
+    string?  NB: character strings have a limit of
     \eqn{2^{31}-1}{2^31 - 1} bytes, so raw vectors should be used for
     large inputs.}
   }
@@ -48,16 +48,20 @@ memDecompress(from,
   as \sQuote{zlib} format, for compression and decompression and RFC
   1952 for decompression only.)
 
+  \command{gzip} compression uses whatever is the default compression
+  level of the underlying library (usually \code{6}).
+
   \command{bzip2} compression always adds a header (\code{"BZh"}).  The
   underlying library only supports in-memory (de)compression of up to
-  \eqn{2^{31}-1}{2^31 - 1} elements.
+  \eqn{2^{31}-1}{2^31 - 1} elements.  Compression is equivalent to
+  \command{bzip2 -9} (the default).
 
   Compressing with \code{type = "xz"} is equivalent to compressing a
   file with \command{xz -9e} (including adding the \sQuote{magic}
   header): decompression should cope with the contents of any file
-  compressed with \command{xz} version 4.999 and some versions of
-  \command{lzma}.  There are other versions, in particular \sQuote{raw}
-  streams, that are not currently handled.
+  compressed by \command{xz} version 4.999 and later, as well as by some
+  versions of \command{lzma}.  There are other versions, in particular
+  \sQuote{raw} streams, that are not currently handled.
 
   All the types of compression can expand the input: for \code{"gzip"}
   and \code{"bzip2"} the maximum expansion is known and so
