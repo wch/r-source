@@ -55,7 +55,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     for workspace format version 1.}
   \item{compression_level}{integer: the level of compression to be
     used.  Defaults to \code{6} for \command{gzip} compression and to
-    \code{9} for \command{bzip2} or \command{xz} compression.}
+    \code{9} for \command{bzip2} or \command{xz} compression.  See the
+    help for \code{\link{file}} for possible values and their merits.}
   \item{eval.promises}{logical: should objects which are promises be
     forced before saving?}
   \item{precheck}{logical: should the existence of the objects be
