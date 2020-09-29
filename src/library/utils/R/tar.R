@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -420,9 +420,12 @@ tar <- function(tarfile, files = NULL,
 ### ----- from here on, using internal code -----
         ## must do this before tarfile is created
         if(is.null(files)) files <- "."
-        files <- list.files(files, recursive = TRUE, all.files = TRUE,
-                            full.names = TRUE, include.dirs = TRUE)
-
+        isd <- dir.exists(files)
+        files <- c(
+            list.files(files[isd], recursive = TRUE, all.files = TRUE,
+                       full.names = TRUE, include.dirs = TRUE),
+            files[!isd]
+        )
         con <- switch(match.arg(compression),
                       "none" =  file(tarfile, "wb"),
                       "gzip" =  gzfile(tarfile, "wb", compression = compression_level),
