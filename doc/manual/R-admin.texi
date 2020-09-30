@@ -4743,7 +4743,7 @@ Use of @code{_GLIBCXX_ASSERTIONS} will link @code{abort} and
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
-C++ compilers (@uref{http://clang.llvm.org}) based on the Clang
+C++ compilers (@uref{https://clang.llvm.org}) based on the Clang
 front-ends, invoked by @code{CC=clang CXX=clang++}, together with
 @command{gfortran}.  These take very similar options to the
 corresponding GCC compilers.
@@ -4754,7 +4754,7 @@ which is needed for some versions of @command{gfortran}.
 
 The current out-of-the-box default for @command{clang++} is to use the
 C++ runtime from the installed @command{g++}.  Using the runtime from
-the @code{libc++} project (@url{http://libcxx.llvm.org/}, Fedora RPM
+the @code{libc++} project (@url{https://libcxx.llvm.org/}, Fedora RPM
 @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++} has also been
 tested.
 
@@ -5124,7 +5124,7 @@ can be used @emph{via} the configuration options
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It was reported that for some non-Apple
 toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} from @url{releases.llvm.org} though.}
+not needed for @command{clang} from @uref{https://releases.llvm.org} though.}
 This also includes a full LAPACK which can be used @emph{via}
 @option{--with-lapack}: however, the version of LAPACK it contains is
 often seriously old.
@@ -5304,7 +5304,8 @@ selected by the option
 @end example
 
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly but those from @code{releases.llvm.org} do.)
+support frameworks correctly but those from
+@uref{https://releases.llvm.org} do.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a

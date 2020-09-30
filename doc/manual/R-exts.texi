@@ -8838,7 +8838,7 @@ More thorough checks of C++ code are done if the C++ library has been
 `annotated': at the time of writing this applied to @code{std::vector}
 in @code{libc++} for use with @command{clang} and gives rise to
 @samp{container-overflow}@footnote{see
-@uref{http://llvm.org/devmtg/2014-04/PDFs/LightningTalks/EuroLLVM%202014%20--%20container%20overflow.pdf}.}
+@uref{https://llvm.org/devmtg/2014-04/PDFs/LightningTalks/EuroLLVM%202014%20--%20container%20overflow.pdf}.}
 reports.
 
 It requires code to have been compiled @emph{and linked} with
@@ -9093,7 +9093,7 @@ and @option{-ftrapv}, said to be more reliable in @command{clang} than
 
 For more details on the topic see
 @uref{https://blog.regehr.org/archives/213} and
-@uref{http://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
+@uref{https://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
 (which has 3 parts).
 
 It may or may not be possible to build @R{} itself with
@@ -9180,7 +9180,7 @@ Sooner or later programmers will be faced with the need to debug
 compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with other debuggers such as @command{lldb}
-(@uref{http://lldb.llvm.org/}, used on macOS) and Sun's @command{dbx}:
+(@uref{https://lldb.llvm.org/}, used on macOS) and Sun's @command{dbx}:
 some debuggers have graphical front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
