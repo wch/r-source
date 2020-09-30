@@ -324,7 +324,7 @@
        why a package might not be found.
 
        \item The default value for \code{options("timeout")} can be set
-       from enviromnent variable \env{R_DEFAULT_INTERNET_TIMEOUT}, still
+       from environment variable \env{R_DEFAULT_INTERNET_TIMEOUT}, still
        defaulting to 60 (seconds) if that is not set or invalid.
 
        This may be needed when child \R processes are doing downloads,
