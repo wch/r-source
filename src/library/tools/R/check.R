@@ -2147,11 +2147,14 @@ add_dummies <- function(dir, Log)
 
         if (dir.exists("man") && !extra_arch) {
             checkingLog(Log, "Rd files")
+            t1 <- proc.time()
             minlevel <- Sys.getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1")
             Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
             ## This now evaluates \Sexpr, so run with usual packages.
             out <- R_runR0(Rcmd, R_opts2, elibs)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (length(out)) {
                 if(length(grep("^prepare.*Dropping empty section", out,
                                invert = TRUE)))
