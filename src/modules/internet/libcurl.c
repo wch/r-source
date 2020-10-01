@@ -55,6 +55,8 @@
 extern void Rsleep(double timeint);
 #endif
 
+static int current_timeout = 0;
+
 # if (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
 
 // curl/curl.h includes <sys/select.h> and headers it requires.
@@ -215,7 +217,11 @@ static int curlMultiCheckerrs(CURLM *mhnd)
 			url, type, status, strerr);
 	    } else {
 		strerr = curl_easy_strerror(msg->data.result);
-		warning(_("URL '%s': status was '%s'"), url, strerr);
+		if (streql(strerr, "Timeout was reached"))
+		    warning(_("URL '%s': Timeout of %d seconds was reached"),
+			    url, current_timeout);
+		else
+		    warning(_("URL '%s': status was '%s'"), url, strerr);
 	    }
 	    retval++;
 	}
@@ -267,6 +273,7 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 #endif
     int timeout0 = asInteger(GetOption1(install("timeout")));
     long timeout = (timeout0 == NA_INTEGER) ? 0 : (1000L * timeout0);
+    current_timeout = (timeout0 == NA_INTEGER) ? 0 : timeout0;
     curl_easy_setopt(hnd, CURLOPT_CONNECTTIMEOUT_MS, timeout);
     curl_easy_setopt(hnd, CURLOPT_TIMEOUT_MS, timeout);
     if (redirect) {
@@ -334,6 +341,10 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
        for some ftp header info (Content-Length and Accept-ranges). */
     curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
     curlCommon(hnd, redirect, verify);
+    if (timeout > 0) {
+	curl_easy_setopt(hnd, CURLOPT_TIMEOUT, timeout);
+	current_timeout = timeout;
+    }
 
     char errbuf[CURL_ERROR_SIZE];
     curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);
