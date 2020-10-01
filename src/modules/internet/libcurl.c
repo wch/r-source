@@ -341,10 +341,6 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
        for some ftp header info (Content-Length and Accept-ranges). */
     curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
     curlCommon(hnd, redirect, verify);
-    if (timeout > 0) {
-	curl_easy_setopt(hnd, CURLOPT_TIMEOUT, timeout);
-	current_timeout = timeout;
-    }
 
     char errbuf[CURL_ERROR_SIZE];
     curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);
