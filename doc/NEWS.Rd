@@ -302,6 +302,10 @@
       \item \code{all.equal(x,y)} now \dQuote{sees} the two different
       \code{NA}s in factors, thanks to Bill Dunlap and others in
       \PR{17897}.
+
+      \item \code{as.POSIXct()} now populates the \code{"tzone"}
+      attribute from its \code{tz} argument when \code{x} is a logical
+      vector consisting entirely of \code{NA} values. 
     }
   }
 }
