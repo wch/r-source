@@ -332,7 +332,7 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (verify == NA_LOGICAL)
 	error(_("invalid %s argument"), "verify");
     int timeout = asInteger(CADDDR(args));
-    if (verify == NA_INTEGER)
+    if (timeout == NA_INTEGER)
 	error(_("invalid %s argument"), "timeout");
 
     CURL *hnd = curl_easy_init();
