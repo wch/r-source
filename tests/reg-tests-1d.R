@@ -4489,17 +4489,34 @@ untrace(print)
 
 
 ## PR#17897: all.equal.factor() did not distinguish the two different NA in factors
-x <- factor(3:1,              labels = c("a", "b", NA))
-y <- factor(c("c", "b", "a"), levels = c("a", "b", NA), exclude = NULL)
+labs <- c("a", "b", NA)
+x <- factor(      3:1,                labels = labs)
+y <- factor(c(NA, 2:1), levels = 1:3, labels = labs)
 x
 dput(x) ; dput(y) ## --> they are clearly different, but print the same:
 stopifnot(exprs = {
     identical(capture.output(x),
               capture.output(y))
-    is.character(ae <- all.equal(x,y))
+    is.character(print(ae <- all.equal(x,y)))
     !englishMsgs || grepl("NA mismatch", ae, fixed=TRUE)
 })
 ## all.equal() gave TRUE wrongly, from 2012 till R <= 4.0.2
+
+
+## PR#17935:  `[.formula` for formulas with NULL:
+forms <- list(f0 = (~ NULL)
+            , f1 = (z ~ NULL)
+            , f2 = (NULL ~ x)
+            , f3 = (NULL ~ NULL)
+              )
+rr <- lapply(forms, function(f)
+        lapply(seq_along(f), function(ii) f[ii]))
+cN <- quote(NULL())
+stopifnot(exprs = {
+    identical( unique(lapply(rr , `[[`, 1)), list(`~`()))
+    identical( lapply(unname(rr), `[[`, 2),  list(cN, quote(z()), cN,cN) )
+})
+## subsetting failed for all 4 formulas in R <= 4.0.2
 
 
 

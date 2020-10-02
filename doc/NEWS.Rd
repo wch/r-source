@@ -305,7 +305,10 @@
 
       \item \code{as.POSIXct()} now populates the \code{"tzone"}
       attribute from its \code{tz} argument when \code{x} is a logical
-      vector consisting entirely of \code{NA} values. 
+      vector consisting entirely of \code{NA} values.
+
+      \item \code{(~ NULL)[1]} and similar formula subsetting now works,
+      thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
     }
   }
 }

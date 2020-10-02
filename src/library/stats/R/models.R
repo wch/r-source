@@ -124,7 +124,7 @@ print.formula <- function(x, showEnv = !identical(e, .GlobalEnv), ...)
 `[.formula` <- function(x,i) {
     ans <- NextMethod("[")
     ## as.character gives a vector.
-    if(length(ans) == 0L || as.character(ans[[1L]])[1L] == "~") {
+    if(length(ans) == 0L || (length(a1 <- ans[[1L]]) && as.character(a1)[[1L]] == "~")) {
 	class(ans) <- "formula"
         environment(ans) <- environment(x)
     }
