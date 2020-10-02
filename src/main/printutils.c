@@ -719,8 +719,11 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    }
 	}
 #ifndef __STDC_ISO_10646__
+// We know Solaris conforms even if the system headers do not define it.
+# ifndef __sun
 	if(Unicode_warning)
 	    warning(_("it is not known that wchar_t is Unicode on this platform"));
+# endif
 #endif
 
     } else
