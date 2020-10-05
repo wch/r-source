@@ -5,7 +5,7 @@ print(si <- sessionInfo(), locale=FALSE)
 Sys.info()
 ## Run (currently _only_)  when inside tests/  by
 '
-time   make test-large
+time   make test-Large
 ' # giving ~ 35 min [R-devel 2019-01]
 
 ## From CRAN package 'sfsmisc':
@@ -328,6 +328,15 @@ r <- tools::assertError(
  , verbose=TRUE) #
 ## typically would not seg.fault but give Calloc(..) error (with *wrong* size)
 stopifnot(grepl("^workspace .* is too large .* 'se = TRUE'", r[[1]]$message))
+
+
+## PR#17330 :  '[[<-' for index 2^31 :
+(i <- 2^31) > .Machine$integer.max
+system.time(x <- raw(i)) # ~ 0.8 sec ; needs 2 GB
+x [i]  <- r1 <- as.raw(1); stopifnot(x [i]  == r1)
+x[[i]] <- r2 <- as.raw(2); stopifnot(x[[i]] == r2)
+x[[i]] <- r3 <- as.raw(3); stopifnot(x[[i]] == r3)
+## failed in R <= 0.4.3 {even with large vectors}
 
 
 

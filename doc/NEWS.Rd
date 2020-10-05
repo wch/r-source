@@ -311,6 +311,9 @@
       thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
       Additionally, subsetting leaving an empty formula now works too,
       thanks to suggestions by Suharto Anggono.
+
+      \item \code{x[[2^31]] <- v} now works, thanks to the report and patch
+      by Suharto Anggono in \PR{17330}.
     }
   }
 }

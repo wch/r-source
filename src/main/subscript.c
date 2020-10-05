@@ -91,8 +91,21 @@ OneIndex(SEXP x, SEXP s, R_xlen_t nx, int partial, SEXP *newname,
 	indx = integerOneIndex(INTEGER_ELT(s, pos), nx, call);
 	break;
     case REALSXP:
-	indx = integerOneIndex((int)REAL_ELT(s, pos), nx, call);
+    {
+	double dblind = REAL_ELT(s, pos);
+	if(!ISNAN(dblind)) {
+	    /* see comment above integerOneIndex */
+	    if (dblind > 0) indx = (R_xlen_t)(dblind - 1);
+	    else if (dblind == 0 || nx < 2) {
+		ECALL3(call, _("attempt to select less than one element in %s"), "OneIndex <real>");
+	    } else if (nx == 2 && dblind > -3)
+		indx = (R_xlen_t)(2 + dblind);
+	    else {
+		ECALL3(call, _("attempt to select more than one element in %s"), "OneIndex <real>");
+	    }
+	}
 	break;
+    }
     case STRSXP:
 	vmax = vmaxget();
 	names = getAttrib(x, R_NamesSymbol);
