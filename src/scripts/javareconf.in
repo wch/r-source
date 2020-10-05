@@ -354,7 +354,7 @@ if test $ac_status != 0; then
 fi
 
 rm -f conftest.c conftest.o conftest.so Makevars
-cd ${wd}
+cd "${wd}"
 rm -Rf "${tempdir}"
 
 
