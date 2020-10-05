@@ -309,6 +309,8 @@
 
       \item \code{(~ NULL)[1]} and similar formula subsetting now works,
       thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
+      Additionally, subsetting leaving an empty formula now works too,
+      thanks to suggestions by Suharto Anggono.
     }
   }
 }

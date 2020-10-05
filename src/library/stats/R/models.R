@@ -123,9 +123,9 @@ print.formula <- function(x, showEnv = !identical(e, .GlobalEnv), ...)
 
 `[.formula` <- function(x,i) {
     ans <- NextMethod("[")
-    ## as.character gives a vector.
-    if(length(ans) == 0L || (length(a1 <- ans[[1L]]) && as.character(a1)[[1L]] == "~")) {
-	class(ans) <- "formula"
+    if(!length(ans) || is.symbol(a1 <- ans[[1L]]) && as.character(a1) == "~") {
+        if(is.null(ans)) ans <- list()
+        class(ans) <- "formula"
         environment(ans) <- environment(x)
     }
     ans
@@ -498,7 +498,7 @@ model.frame.default <-
 
     ## The following logic is quite ancient and should possibly be revised
     ## In particular it lets data=1 slip through and subsequent eval()
-    ## would interpret it as a sys.frame() index (PR#17879). 
+    ## would interpret it as a sys.frame() index (PR#17879).
     ## For now, insert explicit check below
 
     if(missing(data))
