@@ -23,11 +23,11 @@
 # include <config.h>
 #endif
 
-#include <Defn.h>
+#include <Defn.h>   // Rexp10  (et al)
 #include <float.h>  /* for DBL_MAX */
 #include <Graphics.h>
 #include <Print.h>
-#include <Rmath.h> // for Rexp10, imax2
+#include <Rmath.h> // for imax2
 
 /* used in graphics and grid */
 SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
@@ -44,7 +44,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
  */
     SEXP at = R_NilValue;/* -Wall*/
     double umin, umax, dn, rng, small;
-    int i, n, ne;
+    int i, n;
     if (!logflag || axp[2] < 0) { /* --- linear axis --- Only use axp[] arg. */
 	n = (int)(fabs(axp[2]) + 0.25);/* >= 0 */
 	dn = imax2(1, n);
@@ -66,6 +66,10 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	   n = 1,2,3.  see switch() below */
 	umin = usr[0];
 	umax = usr[1];
+#ifdef DEBUG_axis
+	REprintf("CreateAtVector(axp=(%g,%g,%g), usr=(%g,%g), _log_):",
+		 axp[0],axp[1],axp[2],  usr[0],usr[1]);
+#endif
 	if (umin > umax) {
 	    reversed = (axp[0] > axp[1]);
 	    if (reversed) {
@@ -99,40 +103,87 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	 */
 	switch(n) {
 	case 1: /* large range:	1	 * 10^k */
+	{
 	    i = (int)(floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25);
-	    ne = i / nint + 1;
+	    // want nint intervals, i.e. typically nint+1 breaks :
+	    int ne = i / nint;
+	    /* for nint breaks, i.e. typically nint-1 intervals, would be
+	     * ne = i / imax2(1, nint - 1);  *PLUS* replace s/nint/nint-1/ below !! */
 #ifdef DEBUG_axis
-	    REprintf("CreateAtVector [log-axis(), case 1]: (nint, ne) = (%d,%d)\n",
-		     nint, ne);
-#endif
-	    if (ne < 1)
-		error("log - axis(), 'at' creation, _LARGE_ range: "
-		      "ne = %d <= 0 !!\n"
-		      "\t axp[0:1]=(%g,%g) ==> i = %d;	nint = %d",
-		      ne, axp[0],axp[1], i, nint);
-	    rng = Rexp10((double)ne); /* >= 10 */
-	    n = 0;
-	    while (dn < umax) {
-		n++;
-		dn *= rng;
+	    REprintf(" .. case 1: umin,umax= %g,%g;\n  (nint=%d, ne=%d); ",
+		     umin, umax, nint, ne);
+	    if (ne < 1) {
+		REprintf("ne = %d <= 0 !!\n\t axp[0:1]=(%g,%g) ==> i = %d, nint = %d; ",
+			 ne, axp[0],axp[1], i, nint);
 	    }
+#endif
+	    double l10_max = log10(umax),
+		d0 = l10_max - log10(dn);
+#ifdef DEBUG_axis
+	    REprintf("exponent diff d0=%g\n", d0);
+#endif
+	    if(ne < 1) ne = 1;
+	    else // if ne is too large, i.e, the "final tick" is beyond umax, reduce it :
+		while(ne > 1 && nint*ne > d0) {
+		    ne--;
+#ifdef DEBUG_axis
+		    REprintf(" last > umax ==> ne--: ne=%d\n", ne);
+#endif
+		}
+	    int k = 1 + ne / 308; // >= 1, typically == 1.
+	    if(k > 1) {// i.e. ne > 308: 10^ne overflows; must split the multiplication
+		ne = k*(ne/k); // <= ne_{previous}
+#ifdef DEBUG_axis
+		REprintf(" original ne > 308: split in k=%d parts; new ne=%d\n", k,ne);
+#endif
+	    }
+	    /* Now, still in exponent-10 range: nint*ne <= d0 = l10_max - log10(dn)
+	     * If difference (=: d1) is "large", say > 3, increase the first at[] =: d0
+	     */
+	    double d1 = d0 - nint*ne; // >= 0
+#ifdef DEBUG_axis
+	    REprintf("expo.diff d0 - nint*ne =: d1=%g\n", d1);
+#endif
+	    d0 = dn;
+	    if(d1 > 3) {
+		d0 = dn * Rexp10(floor(d1/2));
+#ifdef DEBUG_axis
+		REprintf(" d0 := dn * 10 ^ fl(d1/2) = dn * 10^%d = %g\n",
+			 (int)floor(d1/2), d0);
+#endif
+	    }
+	    rng = Rexp10((double)ne/k); // = 10^(ne/k) >= 10
+	    n=0;
+	    dn=d0;
+	    while(dn < umax) {
+		for(int j=0; j < k; j++)
+		    dn *= rng;
+		n++;
+	    }
+#ifdef DEBUG_axis
+	    REprintf(" rng:=10^(ne/%d) = %g => n=%d, final dn=%g\n", k, rng, n, dn);
+#endif
 	    if (!n)
 		error("log - axis(), 'at' creation, _LARGE_ range: "
 		      "invalid {xy}axp or par; nint=%d\n"
 		      "	 axp[0:1]=(%g,%g), usr[0:1]=(%g,%g); i=%d, ni=%d",
 		      nint, axp[0],axp[1], umin,umax, i,ne);
 	    at = allocVector(REALSXP, n);
-	    dn = axp[0];
-	    n = 0;
-	    while (dn < umax) {
-		REAL(at)[n++] = dn;
-		dn *= rng;
+	    dn=d0;
+	    for(int i=0; i < n; i++) {
+		REAL(at)[i] = dn;
+		for(int j=0; j < k; j++)
+		    dn *= rng;
 	    }
 	    break;
-
+	}
 	case 2: /* medium range:  1, 5	  * 10^k */
 	    n = 0;
 	    if (0.5 * dn >= umin) n++;
+#ifdef DEBUG_axis
+	    REprintf(" .. case 2: (dn, umin,umax, n) = (%g, %g,%g, %d)\n",
+		     dn, umin, umax, n);
+#endif
 	    for (;;) {
 		if (dn > umax) break;
 		n++;
@@ -172,6 +223,10 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 		n++;
 		dn *= 10;
 	    }
+#ifdef DEBUG_axis
+	    REprintf(" .. case 3: (umin,umax) = (%g, %g); n=%d, dn=%g\n",
+		     umin, umax, n, dn);
+#endif
 	    if (!n)
 		error("log - axis(), 'at' creation, _SMALL_ range: "
 		      "invalid {xy}axp or par;\n"
