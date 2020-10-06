@@ -95,7 +95,7 @@ x != y
   error.  Using \code{\link{all.equal}} with \code{identical} or
   \code{\link{isTRUE}} is almost always preferable; see the examples.
   (This also applies to the other comparison operators.)
-  
+
   These operators are sometimes called as functions as
   e.g.\sspace{}\code{`<`(x, y)}: see the description of how
   argument-matching is done in \code{\link[base:groupGeneric]{Ops}}.
@@ -121,6 +121,9 @@ x != y
   locale).
 }
 \seealso{
+  \code{\link{Logic}} on how to \emph{combine} results of comparisons,
+  i.e., logical vectors.
+
   \code{\link{factor}} for the behaviour with factor arguments.
 
   \code{\link{Syntax}} for operator precedence.
