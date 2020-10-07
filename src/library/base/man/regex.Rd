@@ -210,14 +210,14 @@
 
   For complete details please consult the man pages for PCRE, especially
   \command{man pcrepattern} and \command{man pcreapi}, on your system or
-  from the sources at \url{http://www.pcre.org}.  (The version in use can be
+  from the sources at \url{https://www.pcre.org}.  (The version in use can be
   found by calling \code{\link{extSoftVersion}}.  It need not be the version
   described in the system's man page.  PCRE1 (reported as version < 10.00 by
   \code{\link{extSoftVersion}}) has been feature-frozen for some time
   (essentially 2012), the man pages at
-  \url{http://www.pcre.org/original/doc/html/} should be a good match.
+  \url{https://www.pcre.org/original/doc/html/} should be a good match.
   PCRE2 (PCRE version >= 10.00) has man pages at
-  \url{http://www.pcre.org/current/doc/html/}).
+  \url{https://www.pcre.org/current/doc/html/}).
 
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
@@ -357,7 +357,7 @@
   \url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
 
   The \code{pcre2pattern} or \code{pcrepattern} \command{man} page
-  (found as part of \url{http://www.pcre.org/original/pcre.txt}), and
+  (found as part of \url{https://www.pcre.org/original/pcre.txt}), and
   details of Perl's own implementation at
   \url{https://perldoc.perl.org/perlre.html}.
 }

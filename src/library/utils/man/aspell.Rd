@@ -40,7 +40,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   pipe interface activated via command line option \option{-a}.  In
   addition to the programs, suitable dictionaries need to be available.
   See \url{http://aspell.net},
-  \url{http://hunspell.github.io/} and
+  \url{https://hunspell.github.io/} and
   \url{https://www.cs.hmc.edu/~geoff/ispell.html}, respectively, for
   obtaining the Aspell, Hunspell and (International) Ispell programs and
   dictionaries.

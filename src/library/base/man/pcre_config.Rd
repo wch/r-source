@@ -26,7 +26,7 @@ pcre_config()
     architectures).}
   \item{stack}{Does match recursion use a stack (\code{TRUE}, the default
     for PCRE1 and PCRE2 older than 10.30) or a heap?  See the discussion at
-    \url{http://www.pcre.org/original/doc/html/pcrestack.html}  (Added
+    \url{https://www.pcre.org/original/doc/html/pcrestack.html}  (Added
     in \R 3.4.0.). No longer relevant and always \code{FALSE} in PCRE2
     since version 10.30 which no longer uses function recursion to remember
     backtracking positions.} 

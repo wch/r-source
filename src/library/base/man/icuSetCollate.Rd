@@ -77,7 +77,7 @@ icuGetCollate(type = c("actual", "valid"))
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
-      \url{http://www.unicode.org/reports/tr35/tr35-collation.html#Root_Collation}.
+      \url{https://www.unicode.org/reports/tr35/tr35-collation.html#Root_Collation}.
     }
   }
   For the specifications of \sQuote{real} ICU locales, see

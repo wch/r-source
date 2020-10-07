@@ -2696,7 +2696,7 @@ supported and some the latest standard which is (almost) fully
 supported.
 
 The webpage
-@uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
+@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.  @command{g++} claims full C++11 support from version 4.8.1.
 
@@ -2803,7 +2803,7 @@ Code needing C++14 features would do better to test for their presence
 @emph{via} `SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
 or
-@uref{http://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
+@uref{https://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
 It seems a reasonable assumption that any compiler promising some C++14
 conformance will provide these---e.g.@: @command{g++} 4.9.x did but
 4.8.5 did not.}.  That test could be
@@ -4834,7 +4834,7 @@ if(substr(jv, 1L, 2L) == "1.") @{
 Java 9 changed the format of this string (which used to be something
 like @samp{1.8.0_162-b12}); Java 11 gives @code{jv} as @samp{11+28}
 whereas Java 10.0.2 gave
-@samp{10.0.2+10}. (@uref{http://openjdk.java.net/jeps/322} details the
+@samp{10.0.2+10}. (@uref{https://openjdk.java.net/jeps/322} details the
 current scheme.  Note that it is necessary to allow for pre-releases
 like @samp{11-ea+22}.)
 
@@ -5235,8 +5235,8 @@ before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
-@uref{http://www.cplusplus.com/reference/} or
-@uref{http://en.cppreference.com/w/} and compare what is defined in the
+@uref{https://www.cplusplus.com/reference/} or
+@uref{https://en.cppreference.com/w/} and compare what is defined in the
 various standards.
 
 Both the compiler and OS (@emph{via} system header files, which may
@@ -5577,7 +5577,7 @@ include it.
 @end itemize
 
 Some additional information for C++ is available at
-@uref{http://journal.r-project.org/@/archive/@/2011-2/@/RJournal_2011-2_Plummer.pdf}
+@uref{https://journal.r-project.org/@/archive/@/2011-2/@/RJournal_2011-2_Plummer.pdf}
 by Martyn Plummer.
 
 @node Common symbols,  , Portable C and C++ code, Portable C and C++ code
@@ -5632,7 +5632,7 @@ that other users will not have.
 For Windows, check what other DLLs your package's DLL depends on
 (`imports' from in the DLL tools' parlance).  A convenient GUI-based
 tool to do so is `Dependency Walker'
-(@uref{http://www.dependencywalker.com/}) for both 32-bit and 64-bit
+(@uref{https://www.dependencywalker.com/}) for both 32-bit and 64-bit
 DLLs -- note that this will report as missing links to @R{}'s own DLLs
 such as @file{R.dll} and @file{Rblas.dll}.  The command-line tool
 @command{objdump} in the appropriate toolchain will also reveal what
@@ -8706,7 +8706,7 @@ mechanism can be helpful in isolating memory protect problems.
 
 If you have access to Linux on a common CPU type or supported versions
 of macOS or Solaris you can use @code{valgrind}
-(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+(@uref{https://www.valgrind.org/}, pronounced to rhyme with `tinned') to
 check for possible problems.  To run some examples under @code{valgrind}
 use something like
 
@@ -9134,7 +9134,7 @@ See
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
 
-`Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
+`Dr. Memory' from @uref{https://www.drmemory.org/} is a memory checker
 for (currently) 32-bit Windows, Linux and macOS with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
 works better if inlining and frame pointer optimizations are disabled.}
@@ -14516,7 +14516,7 @@ For historical reasons there are Fortran interfaces to functions
 @code{D1MACH} and @code{I1MACH}.  These can be called from C code as
 e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
 the original functions by Fox, Hall and Schryer on NetLib at
-@uref{http://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
+@uref{https://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
 (required by @R{}).
 
 @node Re-encoding, Condition handling and cleanup code, Utility functions, The R API
@@ -14741,7 +14741,7 @@ static R_INLINE int ind_2(int l, int j)
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably, see
-@uref{http://www.greenend.org.uk/@/rjk/@/tech/@/inline.html}, so this usage
+@uref{https://www.greenend.org.uk/@/rjk/@/tech/@/inline.html}, so this usage
 is for @code{static} functions as in the example.  All the @R{}
 configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
@@ -15768,7 +15768,7 @@ currently available that interface directly with @R{} and provide a
 @itemize
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available @emph{via} @uref{http://www.autstat.com/},
+Baier available @emph{via} @uref{https://www.autstat.com/},
 which works with @R{} packages to support transfer of data to and from
 @R{} and remote execution of @R{} commands, as well as embedding of an
 @R{} graphics window.

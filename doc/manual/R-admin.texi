@@ -3529,7 +3529,7 @@ these variables.
 
 The linear algebra routines in @R{} can make use of enhanced
 @acronym{BLAS} (Basic Linear Algebra Subprograms,
-@uref{http://www.netlib.org/@/blas/@/faq.html}) routines.  However,
+@uref{https://www.netlib.org/@/blas/@/faq.html}) routines.  However,
 these have to be explicitly requested at configure time: @R{} provides
 an internal @acronym{BLAS} which is well-tested and will be adequate for
 most uses of @R{}.
@@ -3700,7 +3700,7 @@ compile-time flag specifies 4 threads.)
 
 Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors
 and OSes, which was frozen in mid-2010.  OpenBLAS
-(@uref{http://www.openblas.net/}) is a descendant project with support
+(@uref{https://www.openblas.net/}) is a descendant project with support
 for some later CPUs.
 
 This can be used by configuring @R{} with something like
@@ -4463,7 +4463,7 @@ recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
-(currently) at @uref{http://sourceforge.net/@/p/@/predef/@/wiki/@/Home/}
+(currently) at @uref{https://sourceforge.net/@/p/@/predef/@/wiki/@/Home/}
 can be helpful.  The @R{} sources have used (often in included software
 under @file{src/extra})
 @example
@@ -5242,7 +5242,7 @@ Java.} this should prompt you to install it.  You can also install
 directly a recent Java from Oracle (currently from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html}).
 Builds of OpenJDK may also be available, e.g.@: from
-@uref{https://adoptopenjdk.net} or @uref{http://jdk.java.net/}.  We
+@uref{https://adoptopenjdk.net} or @uref{https://jdk.java.net/}.  We
 recommend you install a version with long-term support, e.g.@: 8 or 11
 (but not 9, 10, 12--16 which have/had a 6-month lifetime).
 
@@ -5686,7 +5686,7 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{http://cvsweb.openbsd.org/@/cgi-bin/@/cvsweb/@/ports/@/math/@/R/}. (Downgrading
+@uref{https://cvsweb.openbsd.org/@/cgi-bin/@/cvsweb/@/ports/@/math/@/R/}. (Downgrading
 the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
 developers.)
 
