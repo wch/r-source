@@ -321,6 +321,10 @@
       in \PR{17936}.  The change really corresponds to an improved
       \code{axisTicks()} (package \pkg{grDevices}), potentially influencing
       \pkg{grid} and \pkg{lattice}, for example.
+
+      \item \code{.traceback(n)} keeps source references again, as before
+      \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
+      including two patch proposals by Brodie Gaslam.
     }
   }
 }

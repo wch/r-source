@@ -4535,6 +4535,16 @@ stopifnot( length(unique(formL)) == 1,
 ## Gave error  "attempt to set an attribute on NULL" in R <= 4,0.3
 
 
+## Regression in .traceback()  PR#17930
+op <- options(keep.source=TRUE)
+f <- function() .traceback(1)
+g <- function() f()
+x <- g()
+stopifnot(inherits(attr(x[[1]], 'srcref'), "srcref"))
+options(op)
+## had worked up to R 3.6.3, but not from 4.0.0 to 4.0.3
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
