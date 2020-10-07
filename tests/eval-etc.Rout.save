@@ -1,5 +1,5 @@
 
-R version 4.0.2 Patched (2020-08-08 r78993) -- "Taking Off Again"
+R version 4.0.3 RC (2020-10-06 r79305) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1000,5 +1000,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.356 0.017 0.378 0 0 
+Time elapsed:  0.357 0.009 0.37 0 0 
 > 

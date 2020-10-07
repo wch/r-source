@@ -1,5 +1,5 @@
 
-R version 4.0.2 Patched (2020-08-08 r78993) -- "Taking Off Again"
+R version 4.0.3 RC (2020-10-06 r79305) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1526,5 +1526,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.705 0.063 1.775 0 0 
+Time elapsed:  1.7 0.057 1.766 0 0 
 > 
