@@ -1007,6 +1007,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    strftime(buff, 256, buf2, &tm);
 #endif
 	    buff[256] = '\0';
+	    mbcsTruncateToValid(buff);
 	    // Now assume tzone abbreviated name is < 40 bytes,
 	    // but they are currently 3 or 4 bytes.
 	    if(UseTZ) {

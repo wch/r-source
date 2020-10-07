@@ -4334,6 +4334,14 @@ if (l10n_info()$"UTF-8") {
     }
     capt.parsed <- unlist(lapply(c(list.mats, long.strings), capt_parse))
     stopifnot(validUTF8(capt.parsed))
+
+    ## Allowed MBCS truncation in R < 4.1
+    fmt <- paste0(c(rep_len("a", 253), "\U0001f600"), collapse="")
+    stopifnot(validUTF8(format(as.POSIXlt('2020-01-01'), fmt)))
+
+    f <- file(paste0(c(rep_len("a", 992), "\U0001F600"), collapse=""))
+    suppressWarnings(g <- gzcon(f))
+    stopifnot(!grepl("xf0", capture.output(g)[2]))
 }
 
 ## c() generic removes all NULL elements --- *but* the first --- before dispatch
