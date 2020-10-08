@@ -22,7 +22,7 @@ all:
 
 ## omit Factory: meaningless.
 YDATA =	africa antarctica asia australasia europe northamerica southamerica \
-  pacificnew etcetera backward
+  etcetera backward
 TABDATA = iso3166.tab zone.tab
 
 
