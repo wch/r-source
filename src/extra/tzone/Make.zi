@@ -23,9 +23,9 @@ all:
 ## omit Factory: meaningless.
 YDATA =	africa antarctica asia australasia europe northamerica southamerica \
   etcetera backward
-TABDATA = iso3166.tab zone.tab
+TABDATA = iso3166.tab zone1970.tab zone.tab
 
 
 install: $(YDATA) $(TABDATA)
-	$(ZIC) -y ./yearistype -d ../$(TZDIR) -L /dev/null $(YDATA)
+	$(ZIC) -d ../$(TZDIR) -L /dev/null $(YDATA)
 	cp $(TABDATA) ../$(TZDIR)
