@@ -1,6 +1,6 @@
 % File src/library/graphics/man/zAxis.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Axis}
@@ -56,6 +56,6 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
 }
 \seealso{
   \code{\link{axis}} (which is eventually called from all \code{Axis()}
-  methods in package \pkg{graphics}.
+  methods) in package \pkg{graphics}.
 }
 \keyword{aplot}

@@ -157,10 +157,10 @@ OlsonNames(tzdir = NULL)
   location in the file system varies,
   e.g.\sspace{}\file{/usr/share/zoneinfo} (Linux, macOS, FreeBSD),
   \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \ldots.  It is likely
-  that there is a file named something like \file{zone.tab} under that
-  directory listing the locations known as time-zone names (but not for
-  example \code{EST5EDT}).  See also
-  \url{https://en.wikipedia.org/wiki/Zone.tab}.
+  that there is a file named something like \file{zone1970.tab} or
+  (older) \file{zone.tab} under that directory listing the locations
+  known as time-zone names (but not for example \code{EST5EDT}).  See
+  also \url{https://en.wikipedia.org/wiki/Zone.tab}.
 
   Where \R was configured with option \option{--with-internal-tzcode}
   (the default on Windows: recommended on Solaris), the database at
