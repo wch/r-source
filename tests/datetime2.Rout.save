@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-06 r79301) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-10-07 r79311) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -139,7 +139,7 @@ Type 'q()' to quit R.
 > d <- expand.grid(day = 25:31, year = 2000:2010)
 > z2 <- with(d, ISOdate(year, 12, day))
 > z <- sort(c(z1, z2))
-> strftime(z, "%G %g %W %U %u %V %W %w")
+> strftime(z, "%G %g %W %U %u %V %W %w", tz="Europe/Paris")
   [1] "1999 99 00 00 6 52 00 6" "1999 99 00 01 7 52 00 0"
   [3] "2000 00 01 01 1 01 01 1" "2000 00 01 01 2 01 01 2"
   [5] "2000 00 01 01 3 01 01 3" "2000 00 01 01 4 01 01 4"

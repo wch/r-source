@@ -28,7 +28,7 @@ z1 <- with(d, ISOdate(year, 1, day))
 d <- expand.grid(day = 25:31, year = 2000:2010)
 z2 <- with(d, ISOdate(year, 12, day))
 z <- sort(c(z1, z2))
-strftime(z, "%G %g %W %U %u %V %W %w")
+strftime(z, "%G %g %W %U %u %V %W %w", tz="Europe/Paris")
 
 ## tests of earlier years.  Default format is OS-dependent, so don't test it.
 ## ISOdate only accepts positive years.
