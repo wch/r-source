@@ -1,6 +1,6 @@
 % File src/library/base/man/identical.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2001-2016 R Core Team
+% Copyright 2001-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{identical}
@@ -14,7 +14,7 @@
 \usage{
 identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
           ignore.bytecode = TRUE, ignore.environment = FALSE,
-          ignore.srcref = TRUE)
+          ignore.srcref = TRUE, NA.distinct.from.NaN = TRUE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
@@ -37,6 +37,11 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
     should be ignored when comparing \link{closure}s.}
   \item{ignore.srcref}{logical indicating if their \code{"srcref"}
     attributes should be ignored when comparing \link{closure}s.}
+  \item{NA.distinct.from.NaN}{logical indicating if numeric \code{\link{NA}}
+    should be treated as distinct from any \code{\link{NaN}};
+    \code{NA.distinct.from.NaN = FALSE} is useful for checking results of
+    computations involving \code{\link{NA}}s and silently implies
+    \code{single.NA = TRUE}.}
 }
 \details{
   A call to \code{identical} is the way to test exact equality in
@@ -155,6 +160,11 @@ f2 <- function() {}
 identical(f1,f2)# ignore.srcref= TRUE : TRUE
 identical(f1,f2,  ignore.srcref=FALSE)# FALSE
 options(op) # revert to previous state
+
+### Checking results of computations involving NAs ---------------------------
+
+identical(NA + 1, NA_real_, NA.distinct.from.NaN=FALSE) # TRUE
+identical(NA + 1, NaN, NA.distinct.from.NaN=FALSE)      # TRUE
 
 \dontshow{
 m0 <- m <- structure(cbind(I = 1, a = 1:3), foo = "bar", class = "matrix")
