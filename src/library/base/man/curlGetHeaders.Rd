@@ -14,7 +14,8 @@
   An optional function not supported on all platforms.
 }
 \usage{
-curlGetHeaders(url, redirect = TRUE, verify = TRUE, timeout = 0L)
+curlGetHeaders(url, redirect = TRUE, verify = TRUE,
+               timeout = 0L, TLS = "")
 }
 
 \arguments{
@@ -24,8 +25,15 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE, timeout = 0L)
     and applying to that host?}
   \item{timeout}{integer: the maximum time in seconds the request is
     allowed to take.  Non-positive and invalid values are ignored
-    (including the default).  (Added in \R 4.1.0.)
-  } 
+    (including the default).  (Added in \R 4.1.0.)}
+  \item{TLS}{character: the minimum version of the TLS protocal to be used
+    for \code{https://} URLs: the default (\code{""}) is no restriction
+    beyond that of the underlying \code{libcurl} (usually 1.0).  Other
+    valid values are \code{"1.1"}, \code{"1.2"} (both for \code{libcurl}
+    7.34.0 and later)  and \code{"1.3"} (7.52.0 and later), if supported
+    by the underlying version of \code{libcurl} and the SSL library it uses.}
+  %% 1.0 and 1.1 were deprecated in 2020.
+  %% e.g. libcurl in macOS 10.15 supports 1.3 but its LibreSSL does not.
 }
 
 \details{
@@ -64,11 +72,12 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE, timeout = 0L)
   For the interpretation of \sQuote{status} codes see
   \url{https://en.wikipedia.org/wiki/List_of_HTTP_status_codes} and
   \url{https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes}.
-  A successful FTP connection will usually have status 250 or 350.  
+  A successful FTP connection will usually have status 250, 257 or 350.  
 }
 
 \seealso{
   \code{\link{capabilities}("libcurl")} to see if this is supported.
+  \code{\link{libcurlVersion}} for the version of \code{libcurl} in use.
 
   \code{\link{options}} \code{HTTPUserAgent} and \code{timeout} are used.
 }

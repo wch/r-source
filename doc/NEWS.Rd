@@ -101,13 +101,20 @@
       \item \code{...elt()} now propagates visibility consistently with
       \code{..n}, thanks to Lionel Henry's \PR{17905}.
 
-      \item \code{capture.output()} no longer uses NSE to evaluate its
-      arguments.  This makes evaluation of functions like
-      \code{parent.frame()} more consistent, thanks to Lionel Henry's
-      \PR{17907}.
+      \item \code{capture.output()} no longer uses non-standard
+      evaluation to evaluate its arguments.  This makes evaluation of
+      functions like \code{parent.frame()} more consistent, thanks to
+      Lionel Henry's \PR{17907}.
 
       \item \code{packBits(bits, type="double")} newly works as inverse of
       \code{numToBits()}, thanks to Bill Dunlap's proposal in \PR{17914}.
+
+      \item \code{curlGetHeaders()} has two new arguments,
+      \code{timeout} to specify the timeout for that call (overriding
+      \code{getOption("timeout")}) and \code{TLS} to specify the minimum
+      TLS protocol version to be used for \code{https://} URLs
+      (\emph{inter alia} providing a means to check for sites using
+      deprecated TLS versions 1.0 and 1.1).
     }
   }
 

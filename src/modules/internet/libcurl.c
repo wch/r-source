@@ -334,6 +334,11 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     int timeout = asInteger(CADDDR(args));
     if (timeout == NA_INTEGER)
 	error(_("invalid %s argument"), "timeout");
+    SEXP sTLS = CAD4R(args);
+    const char *TLS = "";
+    if (isString(sTLS) && LENGTH(sTLS) == 1 && STRING_ELT(sTLS, 0) != NA_STRING)
+	TLS = translateChar(STRING_ELT(sTLS, 0));
+    else error(_("invalid %s argument"), "TLS");
 
     CURL *hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_URL, url);
@@ -348,6 +353,23 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (timeout > 0) {
 	curl_easy_setopt(hnd, CURLOPT_TIMEOUT, timeout);
 	current_timeout = timeout;
+    }
+    if (!streql(TLS, "")) {
+	// 7.34.0 was released 2013-12-17
+#if LIBCURL_VERSION_MAJOR > 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 34)
+	long TLS_ver = CURL_SSLVERSION_TLSv1_0;
+	if (streql(TLS, "1.0")) TLS_ver = CURL_SSLVERSION_TLSv1_0; 
+	else if (streql(TLS, "1.1")) TLS_ver = CURL_SSLVERSION_TLSv1_1; 
+	else if (streql(TLS, "1.2")) TLS_ver = CURL_SSLVERSION_TLSv1_2;
+# if LIBCURL_VERSION_MAJOR > 7 ||  (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 52)
+	else if (streql(TLS, "1.3")) TLS_ver = CURL_SSLVERSION_TLSv1_3;
+# endif
+	else error(_("invalid %s argument"), "TLS");
+	curl_easy_setopt(hnd, CURLOPT_SSLVERSION, TLS_ver);
+# else
+	error("TLS argument is unsupported in this libcurl version %d.%d",
+	      LIBCURL_VERSION_MAJOR, LIBCURL_VERSION_MINOR);
+#endif
     }
 
     char errbuf[CURL_ERROR_SIZE];
