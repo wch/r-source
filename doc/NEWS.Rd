@@ -5,6 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.0.3 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{all.equal(x,y)} now \dQuote{sees} the two different
+      \code{NA}s in factors, thanks to Bill Dunlap and others in
+      \PR{17897}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.0.3}{
 
   \subsection{NEW FEATURES}{
