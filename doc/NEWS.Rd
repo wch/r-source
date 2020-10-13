@@ -12,6 +12,11 @@
       \item \code{all.equal(x,y)} now \dQuote{sees} the two different
       \code{NA}s in factors, thanks to Bill Dunlap and others in
       \PR{17897}.
+
+      \item \code{(~ NULL)[1]} and similar formula subsetting now works,
+      thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
+      Additionally, subsetting leaving an empty formula now works too,
+      thanks to suggestions by Suharto Anggono.
     }
   }
 }
@@ -34,7 +39,7 @@
        why a package might not be found.
 
        \item The default value for \code{options("timeout")} can be set
-       from enviromnent variable \env{R_DEFAULT_INTERNET_TIMEOUT}, still
+       from environment variable \env{R_DEFAULT_INTERNET_TIMEOUT}, still
        defaulting to 60 (seconds) if that is not set or invalid.
 
        This may be needed when child \R processes are doing downloads,
