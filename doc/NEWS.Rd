@@ -306,18 +306,9 @@
       This check can be disabled \emph{via} the new argument
       \code{check.tzone = FALSE}; as suggested by Sebastian Meyer.
 
-      \item \code{all.equal(x,y)} now \dQuote{sees} the two different
-      \code{NA}s in factors, thanks to Bill Dunlap and others in
-      \PR{17897}.
-
       \item \code{as.POSIXct()} now populates the \code{"tzone"}
       attribute from its \code{tz} argument when \code{x} is a logical
       vector consisting entirely of \code{NA} values.
-
-      \item \code{(~ NULL)[1]} and similar formula subsetting now works,
-      thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
-      Additionally, subsetting leaving an empty formula now works too,
-      thanks to suggestions by Suharto Anggono.
 
       \item \code{x[[2^31]] <- v} now works, thanks to the report and patch
       by Suharto Anggono in \PR{17330}.
@@ -332,6 +323,22 @@
       \item \code{.traceback(n)} keeps source references again, as before
       \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
       including two patch proposals by Brodie Gaslam.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.0.3 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{all.equal(x,y)} now \dQuote{sees} the two different
+      \code{NA}s in factors, thanks to Bill Dunlap and others in
+      \PR{17897}.
+
+      \item \code{(~ NULL)[1]} and similar formula subsetting now works,
+      thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
+      Additionally, subsetting leaving an empty formula now works too,
+      thanks to suggestions by Suharto Anggono.
     }
   }
 }
@@ -450,9 +457,6 @@
       \item \code{duplicated()} now works also for strings with multiple
       encodings inside a single vector \PR{17809}.
 
-      \item \code{tar()} no longer skips non-directory files, thanks to a
-      patch by Sebastian Meyer, fixing the remaining part of \PR{16716}.
-
       \item \code{phyper(11, 15, 0, 12, log.p=TRUE)} no longer gives
       \code{NaN}; reported as \PR{17271} by Alexey Stukalov.
 
@@ -464,6 +468,9 @@
 
       \item \code{model.frame.default()} allowed \code{data = 1}, leading to
       involuntary variable capture (rest of \PR{17879}).
+
+      \item \code{tar()} no longer skips non-directory files, thanks to a
+      patch by Sebastian Meyer, fixing the remaining part of \PR{16716}.
     }
   }
 }
