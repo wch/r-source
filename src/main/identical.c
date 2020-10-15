@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2020  The R Core Team
+ *  Copyright (C) 2001-2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,17 +28,12 @@
 
 /* How are  R "double"s compared : */
 typedef enum {
-            bit_NA__num_bit = 0,// S's default - look at bit pattern, also for NA/NaN's
-            bit_NA__num_eq  = 1,// bitwise comparison for NA / NaN; '==' for other numbers
-         single_NA__num_bit = 2,// one kind of NA or NaN; for num, use 'bit'comparison
-         single_NA__num_eq  = 3,// one kind of NA or NaN; for num, use '==' : R's DEFAULT
- single_NA_and_NaN__num_bit = 4,// NA and NaN are all same; for num, use 'bit'comparison
- single_NA_and_NaN__num_eq  = 5,// NA and NaN are all same; for num, use '==' : R's DEFAULT
+    bit_NA__num_bit = 0,// S's default - look at bit pattern, also for NA/NaN's
+    bit_NA__num_eq  = 1,// bitwise comparison for NA / NaN; '==' for other numbers
+ single_NA__num_bit = 2,// one kind of NA or NaN; for num, use 'bit'comparison
+ single_NA__num_eq  = 3,// one kind of NA or NaN; for num, use '==' : R's DEFAULT
 } ne_strictness_type;
-/* NOTE: single_NA_and_NaN means !NA_DISTINCT_FROM_NAN and implied SINGLE_NA (without
-         SINGLE_NA, !NA_DISTINCT_FROM_NAN would not make sense). */
-
-#define NE_STRICT (NUM_EQ + (NA_DISTINCT_FROM_NAN ? SINGLE_NA * 2 : 4))
+/* NOTE:  ne_strict = NUM_EQ + (SINGLE_NA * 2)  = NUM_EQ | (SINGLE_NA << 1)   */
 
 static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
 
@@ -47,8 +42,7 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1,
-	ignore_env = 0, ignore_srcref = 1, NA_distinct_from_NaN = 1,
-        nargs = length(args), flags;
+	ignore_env = 0, ignore_srcref = 1, nargs = length(args), flags;
     /* avoid problems with earlier (and future) versions captured in S4
        methods: but this should be fixed where it is caused, in
        'methods'!
@@ -69,30 +63,25 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 	ignore_env = asLogical(CADR(args));
     if (nargs >= 8)
 	ignore_srcref = asLogical(CADDR(args));
-    if (nargs >= 9)
-	NA_distinct_from_NaN = asLogical(CADDDR(args));
 
-    if(num_eq               == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
-    if(single_NA            == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
-    if(attr_as_set          == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
-    if(ignore_bytecode      == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.bytecode");
-    if(ignore_env           == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.environment");
-    if(ignore_srcref        == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.srcref");
-    if(NA_distinct_from_NaN == NA_LOGICAL) error(_("invalid '%s' value"), "NA.distinct.from.NaN");
+    if(num_eq          == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
+    if(single_NA       == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
+    if(attr_as_set     == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
+    if(ignore_bytecode == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.bytecode");
+    if(ignore_env      == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.environment");
+    if(ignore_srcref   == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.srcref");
 
     flags = (num_eq ? 0 : 1) + (single_NA ? 0 : 2) + (attr_as_set ? 0 : 4) +
-	(ignore_bytecode ? 0 : 8) + (ignore_env ? 0 : 16) + (ignore_srcref ? 0 : 32) +
-	(NA_distinct_from_NaN ? 0 : 64);
+	(ignore_bytecode ? 0 : 8) + (ignore_env ? 0 : 16) + (ignore_srcref ? 0 : 32);
     return ScalarLogical(R_compute_identical(x, y, flags));
 }
 
-#define NUM_EQ		     (!(flags & 1))
-#define SINGLE_NA            (!(flags & 2))
-#define ATTR_AS_SET          (!(flags & 4))
-#define IGNORE_BYTECODE      (!(flags & 8))
-#define IGNORE_ENV           (!(flags & 16))
-#define IGNORE_SRCREF        (!(flags & 32))
-#define NA_DISTINCT_FROM_NAN (!(flags & 64))
+#define NUM_EQ		(!(flags & 1))
+#define SINGLE_NA       (!(flags & 2))
+#define ATTR_AS_SET     (!(flags & 4))
+#define IGNORE_BYTECODE (!(flags & 8))
+#define IGNORE_ENV      (!(flags & 16))
+#define IGNORE_SRCREF   (!(flags & 32))
 
 /* do the two objects compute as identical?
    Also used in unique.c */
@@ -204,7 +193,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	if(n != XLENGTH(y)) return FALSE;
 	else {
 	    double *xp = REAL(x), *yp = REAL(y);
-	    int ne_strict = NE_STRICT; 
+	    int ne_strict = NUM_EQ | (SINGLE_NA << 1);
 	    for(R_xlen_t i = 0; i < n; i++)
 		if(neWithNaN(xp[i], yp[i], ne_strict)) return FALSE;
 	}
@@ -216,7 +205,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	if(n != XLENGTH(y)) return FALSE;
 	else {
 	    Rcomplex *xp = COMPLEX(x), *yp = COMPLEX(y);
-	    int ne_strict = NE_STRICT; 
+	    int ne_strict = NUM_EQ | (SINGLE_NA << 1);
 	    for(R_xlen_t i = 0; i < n; i++)
 		if(neWithNaN(xp[i].r, yp[i].r, ne_strict) ||
 		   neWithNaN(xp[i].i, yp[i].i, ne_strict))
@@ -351,9 +340,6 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str)
 	    return(R_IsNA(y) ? FALSE : TRUE);
 	if(R_IsNA(y))
 	    return(R_IsNA(x) ? FALSE : TRUE);
-	/* fall through */
-    case single_NA_and_NaN__num_eq:
-    case single_NA_and_NaN__num_bit:
 	if(ISNAN(x))
 	    return(ISNAN(y) ? FALSE : TRUE);
 
@@ -364,7 +350,6 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str)
 
     switch (str) {
     case single_NA__num_eq:
-    case single_NA_and_NaN__num_eq:
 	return(x != y);
     case bit_NA__num_eq:
 	if(!ISNAN(x) && !ISNAN(y))
@@ -374,7 +359,6 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str)
 			  (const void *) &y, sizeof(double)) ? TRUE : FALSE;
     case bit_NA__num_bit:
     case single_NA__num_bit:
-    case single_NA_and_NaN__num_bit:
 	return memcmp((const void *) &x,
 		      (const void *) &y, sizeof(double)) ? TRUE : FALSE;
     default: /* Wall */

@@ -1,7 +1,7 @@
 #  File src/library/base/R/identical.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,11 +18,9 @@
 
 identical <- function(x, y, num.eq = TRUE, single.NA = TRUE,
                       attrib.as.set = TRUE, ignore.bytecode = TRUE,
-                      ignore.environment = FALSE, ignore.srcref = TRUE,
-                      NA.distinct.from.NaN = TRUE)
+                      ignore.environment = FALSE, ignore.srcref = TRUE)
     .Internal(identical(x,y, num.eq, single.NA, attrib.as.set,
-                        ignore.bytecode, ignore.environment, ignore.srcref,
-                        NA.distinct.from.NaN))
+                        ignore.bytecode, ignore.environment, ignore.srcref))
 
 ## till R 3.4.x:
 ## isTRUE <- function(x) identical(TRUE, x)
