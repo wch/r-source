@@ -106,8 +106,7 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
 }
 \seealso{
   \code{\link{all.equal}} for descriptions of how two objects differ;
-  \link{Comparison} for operators that generate elementwise comparisons.
-  \code{\link{isTRUE}} is a simple wrapper based on \code{identical}.
+  \code{\link{Comparison}} and \code{\link{Logic}} for elementwise comparisons.
 }
 \examples{
 identical(1, NULL) ## FALSE -- don't try this with ==
@@ -117,8 +116,8 @@ identical(1, as.integer(1)) ## FALSE, stored as different types
 x <- 1.0; y <- 0.99999999999
 ## how to test for object equality allowing for numeric fuzz :
 (E <- all.equal(x, y))
-isTRUE(E) # which is simply defined to just use
 identical(TRUE, E)
+isTRUE(E) # alternative test
 ## If all.equal thinks the objects are different, it returns a
 ## character string, and the above expression evaluates to FALSE
 
