@@ -51,7 +51,7 @@
 # include <sys/stat.h>
 #endif
 
-static int isDir(char *path);
+int attribute_hidden R_isWriteableDir(char *path);
 
 #ifdef HAVE_AQUA
 int (*ptr_CocoaSystem)(const char*);
@@ -238,7 +238,7 @@ SEXP attribute_hidden do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     Rboolean check = asLogical(CAR(args));
-    if(check && !isDir(R_TempDir)) {
+    if(check && !R_isWriteableDir(R_TempDir)) {
 	R_TempDir = NULL;
 	R_reInitTempDir(/* die_on_fail = */ FALSE);
     }
@@ -1739,7 +1739,7 @@ size_t ucstoutf8(char *s, const unsigned int wc)
 # define S_IFDIR __S_IFDIR
 #endif
 
-static int isDir(char *path)
+int attribute_hidden R_isWriteableDir(char *path)
 {
 #ifdef Win32
     struct _stati64 sb;
@@ -1763,7 +1763,7 @@ static int isDir(char *path)
     return isdir;
 }
 #else
-static int isDir(char *path)
+int attribute_hidden R_isWriteableDir(char *path)
 {
     return 1;
 }
@@ -1795,11 +1795,11 @@ void R_reInitTempDir(int die_on_fail)
     tmp = NULL; /* getenv("R_SESSION_TMPDIR");   no longer set in R.sh */
     if (!tmp) {
 	tm = getenv("TMPDIR");
-	if (!isDir(tm)) {
+	if (!R_isWriteableDir(tm)) {
 	    tm = getenv("TMP");
-	    if (!isDir(tm)) {
+	    if (!R_isWriteableDir(tm)) {
 		tm = getenv("TEMP");
-		if (!isDir(tm))
+		if (!R_isWriteableDir(tm))
 #ifdef Win32
 		    tm = getenv("R_USER"); /* this one will succeed */
 #else

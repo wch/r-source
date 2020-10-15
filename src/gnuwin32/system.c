@@ -866,20 +866,7 @@ void R_setupHistory(void)
     }
 }
 
-#include <sys/stat.h>
-static int isDir(char *path)
-{
-    struct stat sb;
-    int isdir = 0;
-    if(!path) return 0;
-    if(stat(path, &sb) == 0) {
-	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
-	/* We want to know if the directory is writable by this user,
-	   which mode does not tell us */
-	isdir &= (access(path, W_OK) == 0);
-    }
-    return isdir;
-}
+extern int R_isWriteableDir(char *path);
 
 static Rboolean use_workspace(Rstart Rp, char *name, Rboolean usedRdata)
 {
@@ -1192,11 +1179,11 @@ int cmdlineoptions(int ac, char **av)
 	{
 	    char *tm;
 	    tm = getenv("TMPDIR");
-	    if (!isDir(tm)) {
+	    if (!R_isWriteableDir(tm)) {
 		tm = getenv("TMP");
-		if (!isDir(tm)) {
+		if (!R_isWriteableDir(tm)) {
 		    tm = getenv("TEMP");
-		    if (!isDir(tm))
+		    if (!R_isWriteableDir(tm))
 			tm = getRUser(); /* this one will succeed */
 		}
 	    }
