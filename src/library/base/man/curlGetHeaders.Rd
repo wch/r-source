@@ -26,7 +26,7 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
   \item{timeout}{integer: the maximum time in seconds the request is
     allowed to take.  Non-positive and invalid values are ignored
     (including the default).  (Added in \R 4.1.0.)}
-  \item{TLS}{character: the minimum version of the TLS protocal to be used
+  \item{TLS}{character: the minimum version of the TLS protocol to be used
     for \code{https://} URLs: the default (\code{""}) is no restriction
     beyond that of the underlying \code{libcurl} (usually 1.0).  Other
     valid values are \code{"1.1"}, \code{"1.2"} (both for \code{libcurl}
