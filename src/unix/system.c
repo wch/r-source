@@ -479,6 +479,7 @@ int Rf_initialize_R(int ac, char **av)
 	if (ifd > 0)
 	    ifp = fdopen(ifd, "w+");
 	if(!ifp) R_Suicide(_("creating temporary file for '-e' failed"));
+	unlink(ifile);
 	res = fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
 	if(res != 1) error("fwrite error in initialize_R");
 	fflush(ifp);
