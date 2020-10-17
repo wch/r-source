@@ -323,6 +323,9 @@
       \item \code{.traceback(n)} keeps source references again, as before
       \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
       including two patch proposals by Brodie Gaslam.
+
+      \item \code{qnorm(<very large negative>, log.p=TRUE)} is now correct
+      to at least five digits where it was catastrophically wrong, previously.
     }
   }
 }

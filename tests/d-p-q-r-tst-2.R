@@ -13,7 +13,7 @@ as.nan <- function(x) { x[is.na(x) & !is.nan(x)] <- NaN ; x }
 ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 opt.conformance <- 0
 onWindows <- .Platform$OS.type == "windows"
-b64 <- .Machine$sizeof.pointer == 8
+b64 <- .Machine$sizeof.pointer >= 8 # 64 (or more) bits
 str(.Machine[grep("^sizeof", names(.Machine))]) ## also differentiate long-double..
 options(rErr.eps = 1e-30)
 rErr <- function(approx, true, eps = getOption("rErr.eps", 1e-30))
@@ -655,6 +655,25 @@ if(!(onWindows && arch == "x86")) {
                          "simpleWarning", verbose=TRUE)
     stopifnot(p == 1)
 }
+
+
+## Extreme tails  for  qnorm(*, log.p=TRUE)   :
+qs <- 2^seq(0, 155, by=1/8)
+lp  <- pnorm( qs, log.p=TRUE, lower.tail=FALSE)
+lp. <- pnorm(-qs, log.p=TRUE)
+stopifnot(all.equal(lp, lp., tol= 4e-16)) # actually exactly via code-identity
+## Both these gave NaNs (and warned about it):
+qpU <- qnorm(lp, log.p=TRUE, lower.tail=FALSE)
+qp. <- qnorm(lp, log.p=TRUE)
+## Show the (mostly) small differences :
+all.equal( qs, qpU, tol=0)
+all.equal(-qs, qp., tol=0)
+stopifnot(exprs = {
+    all.equal( qs,  qpU, tol=1e-15)
+    all.equal(-qs,  qp., tol=1e-15)
+    all.equal(-qp., qpU, tol=2e-16)# actually exact via code-identity
+})
+## both failed very badly in  R <= 4.0.x
 
 
 
