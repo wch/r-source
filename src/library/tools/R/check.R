@@ -652,12 +652,6 @@ add_dummies <- function(dir, Log)
         ## Check for portable file names.
         checkingLog(Log, "for portable file names")
 
-        ## Build list of exclude patterns.
-        ignore <- get_exclude_patterns()
-        ignore_file <- ".Rbuildignore"
-        if (ignore_file %in% dir())
-            ignore <- c(ignore, readLines(ignore_file))
-
         ## Ensure that the names of the files in the package are valid
         ## for at least the supported OS types.  Under Unix, we
         ## definitely cannot have '/'.  Under Windows, the control
@@ -700,8 +694,6 @@ add_dummies <- function(dir, Log)
                         full.names = TRUE, recursive = TRUE)
         allfiles <- c(allfiles, unique(dirname(allfiles)))
         allfiles <- af <- sub("^./", "", allfiles)
-        ignore_re <- paste0("(", paste(ignore, collapse = "|"), ")")
-        allfiles <- filtergrep(ignore_re, allfiles)
         bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
                                     basename(allfiles))]
         is_man <- endsWith(dirname(allfiles), "man")
