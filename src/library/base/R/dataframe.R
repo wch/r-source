@@ -1606,14 +1606,15 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 
 Math.data.frame <- function (x, ...)
 {
-    mode.ok <- vapply(x, function(x) is.numeric(x) || is.complex(x), NA)
+    mode.ok <- vapply(x, function(x)
+        is.numeric(x) || is.logical(x) || is.complex(x), NA)
     if (all(mode.ok)) {
 	x[] <- lapply(X = x, FUN = .Generic, ...)
 	return(x)
     } else {
 	vnames <- names(x)
 	if (is.null(vnames)) vnames <- seq_along(x)
-	stop("non-numeric variable(s) in data frame: ",
+	stop("non-numeric-alike variable(s) in data frame: ",
 	     paste(vnames[!mode.ok], collapse = ", "))
     }
 }
@@ -1699,8 +1700,8 @@ Summary.data.frame <- function(..., na.rm)
     args <- list(...)
     args <- lapply(args, function(x) {
         x <- as.matrix(x)
-        if(!is.numeric(x) && !is.complex(x))
-            stop("only defined on a data frame with all numeric variables")
+        if(!is.numeric(x) && !is.logical(x) && !is.complex(x))
+            stop("only defined on a data frame with all numeric-alike variables")
         x
     })
     do.call(.Generic, c(args, na.rm=na.rm))

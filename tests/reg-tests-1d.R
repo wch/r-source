@@ -4553,6 +4553,24 @@ options(op)
 ## had worked up to R 3.6.3, but not from 4.0.0 to 4.0.3
 
 
+## Summary() and Math() data.frame methods with *logical* columns
+a <- na.omit(airquality)
+aF <- a[FALSE,] # 0-row version of it
+dL0 <- data.frame(x=numeric(), L=logical()) # logical column
+stopifnot(exprs = {
+    ## "Summary" :
+    sum(aF) == 0 # gave Error  "only defined on a data frame with all numeric variables"
+    sum(subset(a, Ozone > 200)) == 0 # (ditto)
+    suppressWarnings(range(dL0) == c(Inf, -Inf)) # (2 warnings)
+    ## "Math" , gave Error..: non-numeric variable(s) in data frame :
+    identical(exp(data.frame(L=TRUE)), data.frame(L=exp(TRUE)))
+    identical(sinL0 <- sin(dL0), data.frame(x=numeric(), L=numeric()))
+    identical(sinL0, log1p(dL0))
+    identical(cumsum(dL0),       data.frame(x=numeric(), L=integer()))
+})
+## probably never worked in any R <= 4.0.3
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

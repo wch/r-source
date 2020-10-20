@@ -330,7 +330,13 @@
       including two patch proposals by Brodie Gaslam.
 
       \item \code{qnorm(<very large negative>, log.p=TRUE)} is now correct
-      to at least five digits where it was catastrophically wrong, previously.
+      to at least five digits where it was catastrophically wrong,
+      previously.
+
+      \item \code{sum(df)} and similar \code{"Summary"}- and
+      \code{"Math"}-group member functions now work for data frames
+      \code{df} with \code{\link{logical}} columns, notably also of zero
+      rows.  Reported to R-devel by Martin "b706".
     }
   }
 }

@@ -1,6 +1,6 @@
 % File src/library/base/man/groupGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{groupGeneric}
@@ -138,6 +138,11 @@
       \item \code{range}
     }
     Members of this group dispatch on the first argument supplied.
+
+    Note that the \code{\link{data.frame}} methods for the
+    \code{"Summary"} and \code{"Math"} groups require \dQuote{numeric-alike}
+    columns \code{x}, i.e., fulfilling \preformatted{
+      is.numeric(x) || is.logical(x) || is.complex(x)}
 
     \item Group \code{"Complex"}:
     \itemize{
