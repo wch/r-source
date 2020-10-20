@@ -38,7 +38,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Ecuador (Cuenca) [https]",Ecuador,Cuenca,https://mirror.cedia.org.ec/CRAN/,CEDIA,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "Ecuador (Quito) [https]",Ecuador,Quito,https://mirror.epn.edu.ec/CRAN/,Escuela Politécnica Nacional,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "El Salvador","El Salvador","San Salvador",http://cran.salud.gob.sv/,"Ministry of Health (Ministerio de Salud)","mirror # salud.gob.sv",1,sv
-"Estonia [https]",Estonia,Tartu,https://ftp.eenet.ee/pub/cran/,"EENet","eenet # eenet.ee",1,ee,
+"Estonia [https]",Estonia,Tartu,https://ftp.eenet.ee/pub/cran/,"EENet","eenet # eenet.ee",1,ee,"secure_mirror_from_master"
 "France (Lyon 1) [https]",France,Lyon,https://pbil.univ-lyon1.fr/CRAN/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr,"secure_mirror_from_master"
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille) [https]",France,Marseille,https://cran.biotools.fr/,"IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr,"secure_mirror_from_master"
@@ -80,7 +80,8 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "South Africa (Johannesburg) [https]","South Africa",Johannesburg,https://cran.mirror.ac.za/,"TENET, Johannesburg","Patrick Holahan <patrickh # tenet.ac.za>",1,za,"secure_mirror_from_master"
 "Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid) [https]",Spain,Madrid,https://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
-"Sweden [https]",Sweden,Umeå,https://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
+"Sweden (Borås) [https]",Sweden,Borås,https://ftpmirror1.infania.net/mirror/CRAN/,"Infania Networks","Mattias Björlin <mirror # infania.net>",1,se,
+"Sweden (Umeå) [https]",Sweden,Umeå,https://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
 "Switzerland [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
 "Taiwan (Taipei) [https]",Taiwan,Taipei,https://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","b90098 # csie.ntu.edu.tw",1,tw,"secure_mirror_from_master"
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
