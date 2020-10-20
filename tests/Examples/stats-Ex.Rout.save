@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-06 r79301) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-10-20 r79350) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -11056,6 +11056,21 @@ Residual standard error: 1.21 on 10 degrees of freedom
 > ## without noise.
 > x <- 1:10
 > y <- 2*x + 3                            # perfect fit
+> ## terminates in an error, because convergence cannot be confirmed:
+> try(nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321)))
+Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321)) : 
+  number of iterations exceeded maximum of 50
+> ## adjusting the convergence test by adding 'scaleOffset' to its denominator RSS:
+> nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
++     control = list(scaleOffset = 1, printEval=TRUE))
+  It.   1, fac=           1, eval (no.,total): ( 1,  1): new dev = 1.05935e-12
+Nonlinear regression model
+  model: y ~ a + b * x
+   data: parent.frame()
+a b 
+3 2 
+ residual sum-of-squares: 1.06e-12
+> ## Alternatively jittering the "too exact" values, slightly:
 > yeps <- y + rnorm(length(y), sd = 0.01) # added noise
 > nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 Nonlinear regression model
@@ -11064,13 +11079,9 @@ Nonlinear regression model
 a b 
 3 2 
  residual sum-of-squares: 0.000524
-> ## terminates in an error, because convergence cannot be confirmed:
-> try(nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321)))
-Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321)) : 
-  number of iterations exceeded maximum of 50
+> 
 > 
 > ## the nls() internal cheap guess for starting values can be sufficient:
-> 
 > x <- -(1:100)/10
 > y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
 > nlmod <- nls(y ~  Const + A * exp(B * x))
@@ -11118,6 +11129,9 @@ $printEval
 
 $warnOnly
 [1] FALSE
+
+$scaleOffset
+[1] 0
 
 > 
 > 
@@ -18982,7 +18996,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.067 0.506 15.794 0 0 
+Time elapsed:  4.496 0.171 4.985 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -115,6 +115,11 @@
       TLS protocol version to be used for \code{https://} URLs
       (\emph{inter alia} providing a means to check for sites using
       deprecated TLS versions 1.0 and 1.1).
+
+      \item For \code{nls()}, an optional constant \code{scaleOffset} may be added to
+      the denominator of the relative offset convergence test for cases where
+      the fit of a model is expected to be exact, thanks to a proposal by
+      John Nash.
     }
   }
 
