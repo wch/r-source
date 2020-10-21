@@ -17,6 +17,10 @@
       thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
       Additionally, subsetting leaving an empty formula now works too,
       thanks to suggestions by Suharto Anggono.
+
+      \item \code{.traceback(n)} keeps source references again, as before
+      \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
+      including two patch proposals by Brodie Gaslam.
     }
   }
 }
