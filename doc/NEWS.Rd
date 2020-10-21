@@ -325,10 +325,6 @@
       \code{axisTicks()} (package \pkg{grDevices}), potentially influencing
       \pkg{grid} and \pkg{lattice}, for example.
 
-      \item \code{.traceback(n)} keeps source references again, as before
-      \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
-      including two patch proposals by Brodie Gaslam.
-
       \item \code{qnorm(<very large negative>, log.p=TRUE)} is now correct
       to at least five digits where it was catastrophically wrong,
       previously.
@@ -353,6 +349,10 @@
       thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
       Additionally, subsetting leaving an empty formula now works too,
       thanks to suggestions by Suharto Anggono.
+
+      \item \code{.traceback(n)} keeps source references again, as before
+      \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
+      including two patch proposals by Brodie Gaslam.
 
       \item \code{unlist(plst, recursive=FALSE)} no longer drops content
       for pairlists with list components, thanks to the report and patch
