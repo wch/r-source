@@ -4571,6 +4571,21 @@ stopifnot(exprs = {
 ## probably never worked in any R <= 4.0.3
 
 
+## unlist(<pairlist w/ list>, recursive=FALSE), PR#17950
+l.ex <- list(a = list(1:5, LETTERS[1:5]), b = "Z", c = NA)
+stopifnot(identical(
+    unlist(as.pairlist(l.ex), recursive = FALSE),
+    unlist(            l.ex , recursive = FALSE)))
+##
+l2 <- list(a = "a", b = quote(b), c = pi+2i)# no list-entries
+stopifnot(
+    identical(
+        unlist(as.pairlist(l2), recursive = FALSE) -> ul2,
+        unlist(as.pairlist(l2))),
+    identical(ul2, unlist(l2, recursive = FALSE)))
+## lost content in R <= 4.0.3  ('FIXME' in source went lost in 2006)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -353,6 +353,10 @@
       thanks to a report and patch by Henrik Bengtsson in \PR{17935}.
       Additionally, subsetting leaving an empty formula now works too,
       thanks to suggestions by Suharto Anggono.
+
+      \item \code{unlist(plst, recursive=FALSE)} no longer drops content
+      for pairlists with list components, thanks to the report and patch
+      by Suharto Anggono in \PR{17950}.
     }
   }
 }
