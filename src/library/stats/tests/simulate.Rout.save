@@ -1,5 +1,5 @@
 
-R version 4.0.3 RC (2020-10-06 r79305) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-10-23 r79362) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -412,4 +412,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.303   0.054   0.343 
+  0.308   0.049   0.341 
