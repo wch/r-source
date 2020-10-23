@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-06 r79301) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-10-23 r79362) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1526,5 +1526,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  3.349 0.106 3.564 0 0 
+Time elapsed:  1.757 0.068 1.834 0 0 
 > 

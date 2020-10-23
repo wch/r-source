@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-06 r79301) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-10-23 r79362) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2597,6 +2597,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.333 0.03 0.368 0 0 
+Time elapsed:  0.178 0.019 0.198 0 0 
 > 
 > 
