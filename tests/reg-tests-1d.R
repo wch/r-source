@@ -4586,6 +4586,11 @@ stopifnot(
 ## lost content in R <= 4.0.3  ('FIXME' in source went lost in 2006)
 
 
+## `class<-` was mutating outside of an assignment context
+x <- c(1)
+xx <- `class<-`(x, "foo")
+stopifnot(identical(class(x), "numeric"))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
