@@ -472,10 +472,20 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     nunused = 0;
     for(i = 0; i < nargs; i++)
 	if (!used[i]) nunused++;
-    if (nunused == 1)
-	warning(_("argument not used by format"));
-    else if (nunused > 1)
-	warning(_("%d arguments not used by format"), nunused);
+    if (nunused > 0) {
+	if (nfmt == 1) {
+	    const char *f = translateChar(STRING_ELT(format, 0));
+	    if (nunused == 1)
+		warning(_("one argument not used by format '%s'"), f);
+	    else if (nunused > 1)
+		warning(_("%d arguments not used by format '%s'"), nunused, f);
+	} else {
+	    if (nunused == 1)
+		warning(_("one argument not used by format"));
+	    else if (nunused > 1)
+		warning(_("%d arguments not used by format"), nunused);
+	}
+    }
 
     UNPROTECT(nprotect);
     R_FreeStringBufferL(&outbuff);
