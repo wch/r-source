@@ -187,7 +187,11 @@ gettextf(fmt, \dots, domain = NULL)
   Describes the format options in table B-1 in the Appendix.
 
   The C Standards, especially ISO/IEC 9899:1999 for \sQuote{C99}.  Links
-  can be found at \url{https://developer.r-project.org/Portability.html}.
+  can be found at
+  \url{https://developer.r-project.org/Portability.html}.
+
+  \url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/snprintf.html }
+  for POSIX extensions such as numbered arguments.
 
   \command{man sprintf} on a Unix-alike system.
 }
