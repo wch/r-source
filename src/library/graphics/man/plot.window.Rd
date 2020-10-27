@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plot.window.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.window}
@@ -34,8 +34,8 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   \describe{
     \item{asp:}{
       If \code{asp} is a finite positive value then the window is
-      set up so that one data unit in the x direction is equal in length to
-      \code{asp} \eqn{\times}{*} one data unit in the y direction.
+      set up so that one data unit in the \eqn{y} direction is equal in length to
+      \code{asp} \eqn{\times}{*} one data unit in the \eqn{x} direction.
 
       Note that in this case, \code{\link{par}("usr")} is no longer
       determined by, e.g., \code{par("xaxs")}, but rather by \code{asp} and
