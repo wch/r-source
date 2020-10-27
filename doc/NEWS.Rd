@@ -21,6 +21,10 @@
       \item \code{.traceback(n)} keeps source references again, as before
       \R 4.0.0, fixing a regression; introduced by the \PR{17580}, reported
       including two patch proposals by Brodie Gaslam.
+
+      \item \code{unlist(plst, recursive=FALSE)} no longer drops content
+      for pairlists with list components, thanks to the report and patch
+      by Suharto Anggono in \PR{17950}.
     }
   }
 }

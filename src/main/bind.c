@@ -962,8 +962,12 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (mode == VECSXP || mode == EXPRSXP) {
 	if (!recurse) {
-	    for (i = 0; i < n; i++)
-		ListAnswer(VECTOR_ELT(args, i), 0, &data, call);
+	    if (TYPEOF(args) == VECSXP)
+		for (i = 0; i < n; i++)
+		    ListAnswer(VECTOR_ELT(args, i), 0, &data, call);
+	    else if (TYPEOF(args) == LISTSXP)
+		for ( ; args != R_NilValue; args = CDR(args))
+		    ListAnswer(CAR(args), 0, &data, call);
 	}
 	else ListAnswer(args, recurse, &data, call);
 	data.ans_length = xlength(ans);
