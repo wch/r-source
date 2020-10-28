@@ -3932,9 +3932,25 @@ add_dummies <- function(dir, Log)
             }
             ## It ran, but did it create any examples?
             if (file.exists(exfile)) {
-                enc <- if (!is.na(e <- desc["Encoding"])) {
-                    paste0("--encoding=", e)
-                } else ""
+                ## <FIXME>
+                ## This used to be
+                ##   enc <- if (!is.na(e <- desc["Encoding"])) {
+                ##       paste0("--encoding=", e)
+                ##   } else ""
+                ## but apparently these days .createExdotR() will always
+                ## use Rd2ex() with its outputEncoding = "UTF-8" default
+                ## so that the -Ex.R file will be in ASCII or UTF-8, and
+                ## the latter can be the case when there is no package
+                ## encoding.  However, always using
+                ##   enc <- "--encoding=UTF-8"
+                ## will warn in ASCII locales even in the all-ASCII
+                ## case, so for now let's give '--encoding=UTF-8' only
+                ## if there is a package encoding (even though the -Ex.R
+                ## may also be in UTF-8 if there is none).
+                enc <- if(!is.na(e <- desc["Encoding"])) {
+                           "--encoding=UTF-8"
+                       } else ""
+                ## </FIXME>
                 if (!this_multiarch) {
                     exout <- paste0(pkgname, "-Ex.Rout")
                     if(!run_one_arch(exfile, exout)) maybe_exit(1L)
