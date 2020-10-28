@@ -3721,8 +3721,8 @@ add_dummies <- function(dir, Log)
             ## moved here to avoid WARNING + OK
             if (nzchar(enc) && is_ascii) {
                 warningLog(Log,
-                           paste("checking a package with encoding ",
-                                 sQuote(e), " in an ASCII locale\n"))
+                           "checking a package with non-ASCII example code in an ASCII locale\n")
+                enc <- ""
                 any <- TRUE
             }
             Ropts <- if (nzchar(arch)) R_opts3 else R_opts
@@ -3944,12 +3944,12 @@ add_dummies <- function(dir, Log)
                 ## encoding.  However, always using
                 ##   enc <- "--encoding=UTF-8"
                 ## will warn in ASCII locales even in the all-ASCII
-                ## case, so for now let's give '--encoding=UTF-8' only
-                ## if there is a package encoding (even though the -Ex.R
-                ## may also be in UTF-8 if there is none).
-                enc <- if(!is.na(e <- desc["Encoding"])) {
-                           "--encoding=UTF-8"
-                       } else ""
+                ## case, so let us find out whether the -Ex.R file is
+                ## all ASCII, and use --encoding=UTF-8 if not.
+                enc <-
+                    if(length(suppressMessages(showNonASCIIfile(exfile)))) {
+                        "--encoding=UTF-8"
+                    } else ""
                 ## </FIXME>
                 if (!this_multiarch) {
                     exout <- paste0(pkgname, "-Ex.Rout")
