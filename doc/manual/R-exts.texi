@@ -1631,7 +1631,7 @@ directory of the package, a temporary location for staged installs) and
 @code{R_ARCH} (the arch-dependent part of the path, often empty).
 
 Under a Unix-alike only, an executable (Bourne shell) script
-@file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
+@command{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
 option @option{--clean} was given, and by @code{R CMD build} when
 preparing the package for building from its source.
 
