@@ -32,13 +32,13 @@ usage="Usage: R CMD config [options] [VAR]
 
 Get the value of a basic R configure variable VAR which must be among
 those listed in the 'Variables' section below, or the header and
-library flags necessary for linking against R.
+library flags necessary for linking a front-end against R.
 
 Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
-      --cppflags        print pre-processor flags required to compile
-			a C/C++ file using R as a library
+      --cppflags        print pre-processor flags required to compile a
+			C/C++ file as part of a front-end using R as a library
       --ldflags         print linker flags needed for linking a front-end
                         against the R library
       --no-user-files   ignore customization files under ~/.R
