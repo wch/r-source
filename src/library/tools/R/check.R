@@ -3719,12 +3719,12 @@ add_dummies <- function(dir, Log)
         {
             any <- FALSE
             ## moved here to avoid WARNING + OK
-            if (nzchar(enc) && is_ascii) {
-                warningLog(Log,
-                           "checking a package with non-ASCII example code in an ASCII locale\n")
-                enc <- ""
-                any <- TRUE
-            }
+            ##   if (nzchar(enc) && is_ascii) {
+            ##       warningLog(Log,
+            ##                  "checking a package with non-ASCII example code in an ASCII locale\n")
+            ##       enc <- ""
+            ##       any <- TRUE
+            ##   }
             Ropts <- if (nzchar(arch)) R_opts3 else R_opts
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             t1 <- proc.time()
