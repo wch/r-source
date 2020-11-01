@@ -12,7 +12,8 @@
 }
 \usage{
 nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024,
-            printEval = FALSE, warnOnly = FALSE, scaleOffset = 0)
+            printEval = FALSE, warnOnly = FALSE, scaleOffset = 0,
+            nDcentral = FALSE)
 }
 \arguments{
   \item{maxiter}{A positive integer specifying the maximum number of
@@ -39,6 +40,10 @@ nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024,
     \code{0} keeps the legacy behaviour of \code{nls()}.  A value such as
     \code{1} seems to work for problems of reasonable scale with very small
     residuals.}
+  \item{nDcentral}{only when \emph{numerical} derivatives are used:
+    \code{\link{logical}} indicating if \emph{central} differences
+    should be employed, i.e., \code{\link{numericDeriv}(*, central=TRUE)}
+    be used.}
 }
 \value{
   A \code{\link{list}} with components
@@ -48,6 +53,7 @@ nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024,
   \item{printEval}{}
   \item{warnOnly}{}
   \item{scaleOffset}{}
+  \item{nDcentreal}{}
   with meanings as explained under \sQuote{Arguments}.
 }
 \references{

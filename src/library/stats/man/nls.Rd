@@ -37,8 +37,10 @@ nls(formula, data, start, control, algorithm,
     references.  Can be abbreviated.}
   \item{trace}{logical value indicating if a trace of the iteration
     progress should be printed.  Default is \code{FALSE}.  If
-    \code{TRUE} the residual (weighted) sum-of-squares and the
-    parameter values are printed at the conclusion of each iteration.
+    \code{TRUE} the residual (weighted) sum-of-squares, the convergence
+    criterion and the parameter values are printed at the conclusion of
+    each iteration.  Note that \code{\link{format()}} is used, so these
+    mostly depend on \code{\link{getOption}("digits")}.
     When the \code{"plinear"} algorithm is used, the conditional
     estimates of the linear parameters are printed after the nonlinear
     parameters.  When the \code{"port"} algorithm is used the
@@ -266,6 +268,7 @@ try(nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321)))
 nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
     control = list(scaleOffset = 1, printEval=TRUE))
 ## Alternatively jittering the "too exact" values, slightly:
+set.seed(27)
 yeps <- y + rnorm(length(y), sd = 0.01) # added noise
 nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 
@@ -279,6 +282,12 @@ plot(x,y, main = "nls(*), data, true function and fit, n=100")
 curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 lines(x, predict(nlmod), col = 2)
 
+## Here, requiring close convergence, you need to use more accurate numerical
+##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
+options(digits = 10) # more accuracy for 'trace'
+try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
+   (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
+## --> convergence tolerance  4.997e-8 (in 11 iter.)
 
 \donttest{
 ## The muscle dataset in MASS is from an experiment on muscle

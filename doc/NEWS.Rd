@@ -120,6 +120,12 @@
       the denominator of the relative offset convergence test for cases where
       the fit of a model is expected to be exact, thanks to a proposal by
       John Nash.
+      \code{nls(*, trace=TRUE)} now also shows the convergence criterion.
+
+      \item Numeric differentiation \code{numericDeriv()} gets new optional
+      arguments \code{eps} and \code{central}, the latter for taking
+      central divided differences.  That can be activated for \code{nls()}
+      via \code{nls.control(nDcentral = TRUE)}.
     }
   }
 

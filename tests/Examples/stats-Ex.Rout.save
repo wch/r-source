@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-23 r79362) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-10-31 r79390) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -11071,6 +11071,7 @@ a b
 3 2 
  residual sum-of-squares: 1.06e-12
 > ## Alternatively jittering the "too exact" values, slightly:
+> set.seed(27)
 > yeps <- y + rnorm(length(y), sd = 0.01) # added noise
 > nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 Nonlinear regression model
@@ -11078,7 +11079,7 @@ Nonlinear regression model
    data: parent.frame()
 a b 
 3 2 
- residual sum-of-squares: 0.000524
+ residual sum-of-squares: 0.00135
 > 
 > 
 > ## the nls() internal cheap guess for starting values can be sufficient:
@@ -11094,6 +11095,40 @@ Consider specifying 'start' or using a selfStart model
 > curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 > lines(x, predict(nlmod), col = 2)
 > 
+> ## Here, requiring close convergence, you need to use more accurate numerical
+> ##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
+> options(digits = 10) # more accuracy for 'trace'
+> try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
+Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
+  No starting values specified for some parameters.
+Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
+Consider specifying 'start' or using a selfStart model
+Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  : 
+  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
+>    (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
+Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
+  No starting values specified for some parameters.
+Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
+Consider specifying 'start' or using a selfStart model
+ 1017460.306 (4.151743e+02): par = (1 1 1)
+ 758164.7503 (2.344683e+02): par = (13.42031396 1.961485 0.05947543745)
+ 269506.3537 (3.226620e+02): par = (51.75719817 -13.09155958 0.8428607712)
+ 68969.21891 (1.033820e+02): par = (76.0006985 -1.93522675 1.0190858)
+ 633.3672224 (1.294814e+00): par = (100.3761515 8.624648408 5.104490252)
+  151.440017 (9.388771e+00): par = (100.6344391 4.913490999 0.2849209664)
+ 53.08739445 (7.238414e+00): par = (100.6830407 6.899303393 0.4637755095)
+ 1.344478582 (5.971663e-01): par = (100.0368306 9.897714144 0.5169294926)
+0.9908415908 (1.546514e-02): par = (100.0300625 9.9144191 0.5023516843)
+0.9906046057 (1.836907e-05): par = (100.0288724 9.916224018 0.5025207336)
+0.9906046054 (9.943389e-08): par = (100.028875 9.916228366 0.50252165)
+0.9906046054 (4.996813e-08): par = (100.028875 9.916228377 0.5025216525)
+Nonlinear regression model
+  model: y ~ Const + A * exp(B * x)
+   data: parent.frame()
+      Const           A           B 
+100.0288750   9.9162284   0.5025217 
+ residual sum-of-squares: 0.9906046
+> ## --> convergence tolerance  4.997e-8 (in 11 iter.)
 > 
 > ## Don't show: 
 > options(od)
@@ -11133,6 +11168,9 @@ $warnOnly
 $scaleOffset
 [1] 0
 
+$nDcentral
+[1] FALSE
+
 > 
 > 
 > 
@@ -11149,54 +11187,26 @@ $scaleOffset
 > 
 > ### ** Examples
 > 
-> ## Don't show: 
-> od <- options(digits = 4)
-> ## End(Don't show)
 > myenv <- new.env()
-> assign("mean", 0., envir = myenv)
-> assign("sd", 1., envir = myenv)
-> assign("x", seq(-3., 3., len = 31), envir = myenv)
-> numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
- [1] 0.001350 0.002555 0.004661 0.008198 0.013903 0.022750 0.035930 0.054799
- [9] 0.080757 0.115070 0.158655 0.211855 0.274253 0.344578 0.420740 0.500000
-[17] 0.579260 0.655422 0.725747 0.788145 0.841345 0.884930 0.919243 0.945201
-[25] 0.964070 0.977250 0.986097 0.991802 0.995339 0.997445 0.998650
-attr(,"gradient")
-           [,1]     [,2]
- [1,] -0.004432  0.01330
- [2,] -0.007915  0.02216
- [3,] -0.013583  0.03532
- [4,] -0.022395  0.05375
- [5,] -0.035475  0.07804
- [6,] -0.053991  0.10798
- [7,] -0.078950  0.14211
- [8,] -0.110921  0.17747
- [9,] -0.149727  0.20962
-[10,] -0.194186  0.23302
-[11,] -0.241971  0.24197
-[12,] -0.289692  0.23175
-[13,] -0.333225  0.19993
-[14,] -0.368270  0.14731
-[15,] -0.391043  0.07821
-[16,] -0.398942  0.00000
-[17,] -0.391043 -0.07821
-[18,] -0.368270 -0.14731
-[19,] -0.333225 -0.19993
-[20,] -0.289692 -0.23175
-[21,] -0.241971 -0.24197
-[22,] -0.194186 -0.23302
-[23,] -0.149727 -0.20962
-[24,] -0.110921 -0.17747
-[25,] -0.078950 -0.14211
-[26,] -0.053991 -0.10798
-[27,] -0.035475 -0.07804
-[28,] -0.022395 -0.05375
-[29,] -0.013583 -0.03532
-[30,] -0.007915 -0.02216
-[31,] -0.004432 -0.01330
-> ## Don't show: 
-> options(od)
-> ## End(Don't show)
+> myenv$mean <- 0.
+> myenv$sd   <- 1.
+> myenv$x    <- seq(-3., 3., len = 31)
+> nD <- numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
+> str(nD)
+ num [1:31] 0.00135 0.00256 0.00466 0.0082 0.0139 ...
+ - attr(*, "gradient")= num [1:31, 1:2] -0.00443 -0.00792 -0.01358 -0.02239 -0.03547 ...
+> 
+> ## Visualize :
+> require(graphics)
+> matplot(myenv$x, cbind(c(nD), attr(nD, "gradient")), type="l")
+> abline(h=0, lty=3)
+> ## "gradient" is close to the true derivatives, you don't see any diff.:
+> curve( - dnorm(x), col=2, lty=3, lwd=2, add=TRUE)
+> curve(-x*dnorm(x), col=3, lty=3, lwd=2, add=TRUE)
+> ##
+> all.equal(attr(nD,"gradient"),
++           with(myenv, cbind(-dnorm(x), -x*dnorm(x)))) # shows 1.6e-8
+[1] "Mean relative difference: 1.609569e-08"
 > 
 > 
 > 
