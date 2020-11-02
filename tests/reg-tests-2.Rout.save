@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-23 r79362) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-11-02 r79393) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6363,7 +6363,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x3dcc0e8>
+<bytecode: 0x558e9b3e0c78>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6374,7 +6374,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x3dcc0e8>
+<bytecode: 0x558e9b3e0c78>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6386,7 +6386,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x3dcc0e8>
+<bytecode: 0x558e9b3e0c78>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -7368,8 +7368,16 @@ Warning messages:
 > x <- Sys.time()
 > all.equal(x,x)
 [1] TRUE
-> all.equal(x, as.POSIXlt(x))
+> 
+> # FIXME: check.tzone = FALSE needed because since 79037, all.equal.POSIXt
+> # strictly reports "" and the current time zone (even from TZ environment
+> # variable) as different.  The conversion round-trip from Sys.time()
+> # (POSIXct) via POSIXlt and back to POSIXct creates an object with the
+> # current time zone, yet the original is with "" as time zone (and both
+> # refer to the same time zone).
+> all.equal(x, as.POSIXlt(x), check.tzone = FALSE)
 [1] TRUE
+> 
 > all.equal(x, as.numeric(x))  # errored in R <= 4.0.2
 [1] "'current' is not a POSIXt"
 > all.equal(x, as.POSIXlt(x, tz = "EST5EDT"))

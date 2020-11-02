@@ -2838,7 +2838,15 @@ read.csv(f, skipNul = TRUE, fileEncoding = "UTF-8-BOM")
 ## all.equal datetime method
 x <- Sys.time()
 all.equal(x,x)
-all.equal(x, as.POSIXlt(x))
+
+# FIXME: check.tzone = FALSE needed because since 79037, all.equal.POSIXt
+# strictly reports "" and the current time zone (even from TZ environment
+# variable) as different.  The conversion round-trip from Sys.time()
+# (POSIXct) via POSIXlt and back to POSIXct creates an object with the
+# current time zone, yet the original is with "" as time zone (and both
+# refer to the same time zone).
+all.equal(x, as.POSIXlt(x), check.tzone = FALSE)
+
 all.equal(x, as.numeric(x))  # errored in R <= 4.0.2
 all.equal(x, as.POSIXlt(x, tz = "EST5EDT"))
 all.equal(x, x+1e-4)
