@@ -4591,6 +4591,21 @@ x <- c(1)
 xx <- `class<-`(x, "foo")
 stopifnot(identical(class(x), "numeric"))
 
+## Can splice expression vectors with attributes -- PR#17869
+local({
+    exprs <- structure(expression(1, 2, 3), attr = TRUE)
+    exprsSrcrefs <- parse(text = "1;2;3", keep.source = TRUE)
+    stopifnot(
+	identical(
+	    bquote({ ..(exprs) }, splice = TRUE),
+	    call("{", 1, 2, 3)
+	),
+	identical(
+	    bquote({ ..(exprsSrcrefs) }, splice = TRUE),
+	    call("{", 1, 2, 3)
+	)
+    )
+})
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

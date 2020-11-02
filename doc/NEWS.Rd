@@ -126,6 +126,11 @@
       arguments \code{eps} and \code{central}, the latter for taking
       central divided differences.  That can be activated for \code{nls()}
       via \code{nls.control(nDcentral = TRUE)}.
+
+      \item \code{bquote()} can now splice expression vectors with
+      attributes. This makes it possible to splice the result of
+      \code{parse(keep.source = TRUE)}. Report and patch provided by
+      Lionel Henry in \PR{17869}.
     }
   }
 
