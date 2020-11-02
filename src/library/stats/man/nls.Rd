@@ -39,7 +39,7 @@ nls(formula, data, start, control, algorithm,
     progress should be printed.  Default is \code{FALSE}.  If
     \code{TRUE} the residual (weighted) sum-of-squares, the convergence
     criterion and the parameter values are printed at the conclusion of
-    each iteration.  Note that \code{\link{format()}} is used, so these
+    each iteration.  Note that \code{\link{format}()} is used, so these
     mostly depend on \code{\link{getOption}("digits")}.
     When the \code{"plinear"} algorithm is used, the conditional
     estimates of the linear parameters are printed after the nonlinear
