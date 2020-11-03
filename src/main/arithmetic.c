@@ -2271,7 +2271,7 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 #define FINISH_Math5					\
     if(naflag) warning(R_MSG_NA);			\
 							\
-    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    if      (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
     else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
     else if (n == nd) SHALLOW_DUPLICATE_ATTRIB(sy, sd);	\

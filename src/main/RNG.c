@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -821,8 +821,8 @@ static void RNG_Init_R_KT(Int32 seed)
 
 /* Our PRNGs have at most 32 bit of precision. All generators except
    Knuth-TAOCP, Knuth-TAOCP-2002, and possibly the user-supplied ones
-   have 31 or 32 bits bits of precision; the others are assumed to
-   have at least at least 25. */
+   have 31 or 32 bits of precision; the others are assumed to
+   have at least 25. */
 static R_INLINE double ru()
 {
     double U = 33554432.0;
