@@ -1,7 +1,8 @@
 /* Modified for R to support round-to-even */
 /* Modified for R to buffer printf/fprintf output before printing to avoid
    problems with multi-byte characters */
-
+/* Modified for R to print U+xxxx escapes for wide characters not
+   representable in current encoding (no support for surrogate pairs) */
 /*************************************************************************
  *
  * $Id: trio.c,v 1.112 2008/11/09 10:52:26 breese Exp $
@@ -2748,11 +2749,29 @@ TRIO_ARGS4((self, wch, flags, width),
     width = sizeof(buffer);
   
   size = wctomb(buffer, wch);
-  if ((size <= 0) || (size > width) || (buffer[0] == NIL))
-    return 0;
 
-  string = buffer;
-  i = size;
+  /*
+   * R modification: use escape sequence, so that e.g. warnings about
+   * path-names not representable on Windows are more informative. This
+   * does not support surrogate pairs, but they cannot be printed by
+   * TRIO in the first place. R PR#17958.
+   */
+  if (size < 0 && width >= 8)
+    {
+      char ebuffer[9];
+      snprintf(ebuffer, 9, "<U+%04X>", (unsigned short) wch);
+      string = ebuffer;
+      i = 8; 
+    }
+  else if ((size <= 0) || (size > width) || (buffer[0] == NIL))
+    {
+      return 0;
+    }
+  else
+    {
+      string = buffer;
+      i = size;
+    }
   while ((width >= i) && (width-- > 0) && (i-- > 0))
     {
       /* The ctype parameters must be an unsigned char (or EOF) */
