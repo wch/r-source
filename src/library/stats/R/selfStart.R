@@ -1,7 +1,7 @@
 #  File src/library/stats/R/selfStart.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2001-2012 The R Core Team
+#  Copyright (C) 2001-2020 The R Core Team
 #  Copyright (C) 1997,1999 Jose C. Pinheiro and Douglas M. Bates
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 ###            self-starting nonlinear regression models
 ###
 ## see  >>> ./zzModels.R <<< for its use in "the standard"  SS*() models
+##            ~~~~~~~~~~
 
 ####* Constructors
 
@@ -93,7 +94,7 @@ getInitial.formula <-
 getInitial.selfStart <-
     function(object, data, mCall, LHS = NULL, ...)
 {
-    (attr(object, "initial"))(mCall = mCall, data = data, LHS = LHS)
+    (attr(object, "initial"))(mCall = mCall, data = data, LHS = LHS, ...)
 }
 
 getInitial.default <-

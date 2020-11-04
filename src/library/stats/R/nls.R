@@ -201,8 +201,10 @@ nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral 
              getAllPars = function() c( getPars(), c( .lin = lin ) ),
 	     getEnv = function() env,
 	     trace = function() {
-		 cat(sprintf("%-*s (%9e): par = (%s)\n", 3L+getOption("digits"),
-                             format(dev), convCrit(),
+		 d <- getOption("digits")
+		 cat(sprintf("%-*s (%9e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
+			     formatC(dev, digits=d, flag="#"),
+			     convCrit(),
 			     paste(vapply(c(getPars(), lin), format, ""), collapse=" ")))
 	     },
              Rmat = function()
@@ -363,8 +365,10 @@ nlsModel <- function(form, data, start, wts, upper=NULL, scaleOffset = 0, nDcent
 	     getAllPars = function() getPars(),
 	     getEnv = function() env,
 	     trace = function() {
-		 cat(sprintf("%-*s (%9e): par = (%s)\n", 3L+getOption("digits"),
-                             format(dev), convCrit(),
+		 d <- getOption("digits")
+		 cat(sprintf("%-*s (%9e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
+			     formatC(dev, digits=d, flag="#"),
+			     convCrit(),
 			     paste(vapply(getPars(), format, ""), collapse=" ")))
 	     },
 	     Rmat = function() qr.R(QR),
@@ -556,7 +560,7 @@ nls <-
             if(!missing(na.action))
                 warning("argument 'na.action' will be ignored")
 	    if(missing(start))
-		start <- getInitial(formula, mf)
+		start <- getInitial(formula, data=mf, control=control, trace=trace)
 	    startEnv <- new.env(hash = FALSE, parent = environment(formula)) # small
 	    for (i in names(start))
 		startEnv[[i]] <- start[[i]]
@@ -593,7 +597,8 @@ nls <-
     }
 
     ## set up iteration
-    if (missing(start)) start <- getInitial(formula, mf)
+    if(missing(start))
+        start <- getInitial(formula, data=mf, control=control, trace=trace)
     for(var in varNames[!varIndex])
         mf[[var]] <- eval(as.name(var), data, env)
     varNamesRHS <- varNamesRHS[ varNamesRHS %in% varNames[varIndex] ]
@@ -606,7 +611,7 @@ nls <-
 	control <- as.list(control)
 	ctrl[names(control)] <- control
     }
-    scOff <- ctrl$scaleOffset
+    scOff  <- ctrl$scaleOffset
     nDcntr <- ctrl$nDcentral
     m <- switch(algorithm,
 		plinear = nlsModel.plinear(formula, mf, start, wts,        scaleOffset=scOff, nDcentral=nDcntr),
