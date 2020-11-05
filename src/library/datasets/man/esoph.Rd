@@ -38,6 +38,8 @@
   Breslow, N. E. and Day, N. E. (1980)
   \emph{Statistical Methods in Cancer Research. Volume 1: The Analysis of
     Case-Control Studies.}  IARC Lyon / Oxford University Press.
+  % Currently at
+  % <https://publications.iarc.fr/Book-And-Report-Series/Iarc-Scientific-Publications/Statistical-Methods-In-Cancer-Research-Volume-I-The-Analysis-Of-Case-Control-Studies-1980>.
 }
 \author{Thomas Lumley}
 \examples{
