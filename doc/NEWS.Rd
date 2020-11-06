@@ -128,8 +128,10 @@
       via \code{nls.control(nDcentral = TRUE)}.
 
       \item \code{nls()} now passes the \code{trace} and \code{control}
-      arguments to \code{getInitial()}, notably for all selfStart models,
-      so these can also be fit in zero-noise situations via a \code{scaleOffset}.
+      arguments to \code{getInitial()}, notably for all self-starting models,
+      so these can also be fit in zero-noise situations via a
+      \code{scaleOffset}.  For this reason, the \code{initial} function of a
+      \code{selfStart} model now must have \code{...} in its argument list.
 
       \item \code{bquote()} can now splice expression vectors with
       attributes. This makes it possible to splice the result of
