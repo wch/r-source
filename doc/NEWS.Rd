@@ -133,10 +133,10 @@
       \code{scaleOffset}.  For this reason, the \code{initial} function of a
       \code{selfStart} model now must have \code{...} in its argument list.
 
-      \item \code{bquote()} can now splice expression vectors with
-      attributes. This makes it possible to splice the result of
-      \code{parse(keep.source = TRUE)}. Report and patch provided by
-      Lionel Henry in \PR{17869}.
+      \item \code{bquote(splice = TRUE)} can now splice expression
+      vectors with attributes: this makes it possible to splice the
+      result of \code{parse(keep.source = TRUE)}.  Report and patch
+      provided by Lionel Henry in \PR{17869}.
     }
   }
 

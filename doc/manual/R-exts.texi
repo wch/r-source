@@ -4996,10 +4996,10 @@ ones.  But not all platforms use those CPUs, and not all@footnote{Not
 doing so is the default on Windows, overridden for the @R{} executables.
 It is also the default on some Solaris compilers.} which use them
 configure them to allow the use of extended precision.  In particular,
-32-bit ARM CPUs do not (currently) have extended precision nor long
-doubles, and long double was 64-bit on HP/PA Linux.  On the other hand
-some CPUs have higher-precision modes than @cputype{x86_64} used for
-@code{long double}, notably 64-bit ARM and Sparc (as from v9).
+32-bit ARM CPUs do not have extended precision nor long doubles, and
+@command{clang} currently has long double the same as double on all ARM
+CPUs.  On the other hand some CPUs have higher-precision modes which may
+be used for @code{long double}, notably 64-bit PowerPC and Sparc.
 
 If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-double} and use appropriate
