@@ -241,7 +241,7 @@ as perhaps (it is tested less frequently on these platforms)
 @cindex Linux
 @cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for macOS (formerly OS X and Mac OS X).  See the
+distributions and for macOS.  See the
 @acronym{FAQ} for current details.  These are installed in
 platform-specific ways, so for the rest of this chapter we consider only
 building from the sources.
@@ -1244,7 +1244,7 @@ normally separate compilation units.
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
 also 8.4 and later.} LTO will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
-Fortran and C/C++.  @command{gfortran} 8,4, 9.2 and later can help
+Fortran and C/C++.  @command{gfortran} 8.4, 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
 with its @option{-fc-prototypes-external} option, e.g.@: that (at the
 time of writing) Fortran @code{LOGICAL} corresponds to
@@ -1523,15 +1523,13 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-(`macOS' was known as `OS X' from 2012--2016 and as `Mac OS X' before that.)
-
 [The rest of this paragraph is only relevant after release.]
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X'. Click on that, then download the file
 @file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
-and later on Intel CPU@footnote{macOS 11 has been a little tested on
-`Apple Silicon' using `Rosetta' emulation.}  (High Sierra, Mojave,
-Catalina, Big Sur, @dots{}).
+and later on Intel CPU@footnote{macOS 11 `Big Sur' has been a little
+tested on `Apple Silicon' using `Rosetta' emulation.}  (High Sierra,
+Mojave, Catalina, Big Sur, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -4845,8 +4843,6 @@ SAFE_FFLAGS=-axsse2
 @node macOS, Solaris, Linux, Platform notes
 @section macOS
 @cindex macOS
-
-(`macOS' was known as `OS X' from 2012--2016.)
 
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
 10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{Details for the
