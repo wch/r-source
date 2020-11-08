@@ -129,9 +129,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.  This is often
-  insufficient for downloads of large files (hundreds of MB or more) and
+  insufficient for downloads of large files (50MB or more) and
   so should be increased when \code{download.file} is used in packages
-  to do so.
+  to do so.  Note that the user can set the default timeout by the
+  environment variable \env{R_DEFAULT_INTERNET_TIMEOUT} in recent
+  versions of \R, so to ensure that this is not decreased packages should
+  use something like
+  \preformatted{
+    options(timeout = max(300, getOption("timeout")))
+  }
+  (It is unrealistic to require download times of less than 1s/MB.)
 
   The level of detail provided during transfer can be set by the
   \code{quiet} argument and the \code{internet.info} option: the details

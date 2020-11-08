@@ -1243,11 +1243,11 @@ normally separate compilation units.
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
 also 8.4 and later.} LTO will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
-Fortran and C/C++.  @command{gfortran} 8,4, 9.2 and later can help
+Fortran and C/C++.  @command{gfortran} 8.4, 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
-with its @option{-fc-prototypes-external} option, e.g.@: that (at the
-time of writing) Fortran @code{LOGICAL} corresponds to
-@code{int_least32_t *} in C.
+with option @option{-fc-prototypes-external}, e.g.@: that (at the time
+of writing) Fortran @code{LOGICAL} corresponds to @code{int_least32_t *}
+in C.
 
 @c This worked in 2019 but with Fedora 32 does not export dpotrf from dlapack.o
 On some systems it is possible to build the BLAS, LINPACK and LAPACK
