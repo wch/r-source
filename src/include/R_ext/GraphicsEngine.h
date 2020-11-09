@@ -77,10 +77,13 @@ extern "C" {
  *             - patterns
  *             - clipping paths
  *             - masks
+ *             Added deviceVersion
+ * Version 14: Added deviceClip
  */
 #define R_GE_definitions 13
+#define R_GE_deviceClip  14
 
-#define R_GE_version R_GE_definitions
+#define R_GE_version R_GE_deviceClip
 
 int R_GE_getVersion(void);
 

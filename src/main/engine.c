@@ -774,7 +774,8 @@ void GELine(double x1, double y1, double x2, double y2,
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK) return;
-    if (dd->dev->canClip == NA_LOGICAL) {
+    if (dd->dev->deviceVersion >= R_GE_deviceClip &&
+        dd->dev->deviceClip) {
         dd->dev->line(x1, y1, x2, y2, gc, dd->dev);
     } else {
         if (dd->dev->canClip) {
@@ -882,7 +883,8 @@ void GEPolyline(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK) return;
-    if (dd->dev->canClip == NA_LOGICAL) {
+    if (dd->dev->deviceVersion >= R_GE_deviceClip &&
+        dd->dev->deviceClip) {
         dd->dev->polyline(n, x, y, gc, dd->dev);
     } else if (dd->dev->canClip) {
 	clipPolyline(n, x, y, gc, 1, dd);  /* clips to device extent
@@ -1229,7 +1231,8 @@ void GEPolygon(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
-    if (dd->dev->canClip == NA_LOGICAL) {
+    if (dd->dev->deviceVersion >= R_GE_deviceClip &&
+        dd->dev->deviceClip) {
         dd->dev->polygon(n, x, y, gc, dd->dev);
     } else if (dd->dev->canClip) {
 	/*
@@ -1339,7 +1342,8 @@ void GECircle(double x, double y, double radius, const pGEcontext gc, pGEDevDesc
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
 
-    if (dd->dev->canClip == NA_LOGICAL) {
+    if (dd->dev->deviceVersion >= R_GE_deviceClip &&
+        dd->dev->deviceClip) {
         dd->dev->circle(x, y, radius, gc, dd->dev);
     } else {
         /*
@@ -1452,7 +1456,8 @@ void GERect(double x0, double y0, double x1, double y1,
     /*
      * For clipping logic, see comments in GECircle
      */
-    if (dd->dev->canClip == NA_LOGICAL) {
+    if (dd->dev->deviceVersion >= R_GE_deviceClip &&
+        dd->dev->deviceClip) {
         dd->dev->rect(x0, y0, x1, y1, gc, dd->dev);
     } else {
         result = clipRectCode(x0, y0, x1, y1, dd->dev->canClip, dd);
@@ -1632,7 +1637,8 @@ static void clipText(double x, double y, const char *str, cetype_t enc,
     textfn = (dd->dev->hasTextUTF8 ==TRUE) && enc == CE_UTF8 ?
 	dd->dev->textUTF8 : dd->dev->text;
 
-    if (dd->dev->canClip == NA_LOGICAL) {
+    if (dd->dev->deviceVersion >= R_GE_deviceClip &&
+        dd->dev->deviceClip) {
         textfn(x, y, str, rot, hadj, gc, dd->dev);
     } else {
         result = clipTextCode(x, y, str, enc, width, height, rot, hadj,
