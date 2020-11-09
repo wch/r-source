@@ -4499,6 +4499,18 @@ Unfortunately these checks slow down checking of examples, tests and
 vignettes, typically two-fold but in the worst cases at least a
 hundred-fold.
 
+The following environment variables can be used to customize the
+operation of @command{INSTALL}.
+
+@vtable @code
+@item _R_INSTALL_LIBSONLY_FORCE_DEPENDS_IMPORTS_
+If true, give an error if installing only package libraries via
+@option{--libs-only} and some package imported or dependened on is not
+available.
+Default: true (false only for special applications, which analyze native
+code of packages).
+@end vtable
+
 @node R coding standards, Testing R code, Tools, Top
 @chapter R coding standards
 

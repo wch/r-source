@@ -969,8 +969,13 @@ if(FALSE) {
         ## going on in parallel
 
         pkgInfo <- .split_description(.read_description("DESCRIPTION"))
-        pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports),
-                         names(pkgInfo$LinkingTo)))
+        R_install_force_depends_imports <- config_val_to_logical(Sys.getenv(
+                "_R_INSTALL_LIBSONLY_FORCE_DEPENDS_IMPORTS_", "TRUE"))
+        if (libs_only && isFALSE(R_install_force_depends_imports)) 
+            pkgs <- unique(c(names(names(pkgInfo$LinkingTo))))
+        else
+            pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports),
+                             names(pkgInfo$LinkingTo)))
         if (length(pkgs)) {
             miss <- character()
             for (pkg in pkgs) {
