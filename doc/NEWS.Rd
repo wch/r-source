@@ -143,12 +143,15 @@
   \subsection{GRAPHICS}{
     \itemize{
       \item The graphics engine version, \code{R_GE_version}, has been
-      bumped to 13 and so packages that provide graphics devices should
+      bumped to 14 and so packages that provide graphics devices should
       be reinstalled.
 
-      \item Graphics devices can now specify \code{canClip =
-        NA_LOGICAL}, in which case the graphics engine will never
-      perform any clipping of output itself.
+      \item Graphics devices should now specify \code{deviceVersion} to
+      indicate what version of the graphics engine they support.
+      
+      \item Graphics devices can now specify \code{deviceClip}.  If
+      \code{TRUE}, the graphics engine will never perform any clipping
+      of output itself.
 
       The clipping that the graphics engine does perform (for both
       \code{canClip = TRUE} and \code{canClip = FALSE}) has been
