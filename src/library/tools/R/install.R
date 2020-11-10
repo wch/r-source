@@ -970,7 +970,7 @@ if(FALSE) {
 
         pkgInfo <- .split_description(.read_description("DESCRIPTION"))
         R_install_force_depends_imports <- config_val_to_logical(Sys.getenv(
-                "_R_INSTALL_LIBSONLY_FORCE_DEPENDS_IMPORTS_", "TRUE"))
+                "_R_INSTALL_LIBS_ONLY_FORCE_DEPENDS_IMPORTS_", "TRUE"))
         if (libs_only && isFALSE(R_install_force_depends_imports)) 
             pkgs <- unique(c(names(names(pkgInfo$LinkingTo))))
         else

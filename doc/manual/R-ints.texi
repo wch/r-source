@@ -4503,7 +4503,7 @@ The following environment variables can be used to customize the
 operation of @command{INSTALL}.
 
 @vtable @code
-@item _R_INSTALL_LIBSONLY_FORCE_DEPENDS_IMPORTS_
+@item _R_INSTALL_LIBS_ONLY_FORCE_DEPENDS_IMPORTS_
 If true, give an error if installing only package libraries via
 @option{--libs-only} and some package imported or dependened on is not
 available.
