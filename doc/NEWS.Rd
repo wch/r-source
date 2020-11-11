@@ -137,6 +137,8 @@
       vectors with attributes: this makes it possible to splice the
       result of \code{parse(keep.source = TRUE)}.  Report and patch
       provided by Lionel Henry in \PR{17869}.
+
+      \item \code{textConnection()} gets an optional \code{name} argument.
     }
   }
 
