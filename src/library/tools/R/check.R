@@ -652,12 +652,6 @@ add_dummies <- function(dir, Log)
         ## Check for portable file names.
         checkingLog(Log, "for portable file names")
 
-        ## Build list of exclude patterns.
-        ignore <- get_exclude_patterns()
-        ignore_file <- ".Rbuildignore"
-        if (ignore_file %in% dir())
-            ignore <- c(ignore, readLines(ignore_file))
-
         ## Ensure that the names of the files in the package are valid
         ## for at least the supported OS types.  Under Unix, we
         ## definitely cannot have '/'.  Under Windows, the control
@@ -700,8 +694,6 @@ add_dummies <- function(dir, Log)
                         full.names = TRUE, recursive = TRUE)
         allfiles <- c(allfiles, unique(dirname(allfiles)))
         allfiles <- af <- sub("^./", "", allfiles)
-        ignore_re <- paste0("(", paste(ignore, collapse = "|"), ")")
-        allfiles <- filtergrep(ignore_re, allfiles)
         bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
                                     basename(allfiles))]
         is_man <- endsWith(dirname(allfiles), "man")
@@ -1243,6 +1235,16 @@ add_dummies <- function(dir, Log)
                         if(!any) {
                             any <- TRUE
                             msg <- paste0(sQuote(f), ": /bin/bash is not portable")
+                            noteLog(Log, msg)
+                        }
+                    }
+                    ## and bash need not be installed at all.
+                    if (file.exists(f) &&
+                        grepl("^#!.*env bash",
+                              readLines(f, 1L, warn = FALSE))) {
+                        if(!any) {
+                            any <- TRUE
+                            msg <- paste0(sQuote(f), ": 'env bash' is not portable as bash need not be installed")
                             noteLog(Log, msg)
                         }
                     }
@@ -2147,11 +2149,14 @@ add_dummies <- function(dir, Log)
 
         if (dir.exists("man") && !extra_arch) {
             checkingLog(Log, "Rd files")
+            t1 <- proc.time()
             minlevel <- Sys.getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1")
             Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
             ## This now evaluates \Sexpr, so run with usual packages.
             out <- R_runR0(Rcmd, R_opts2, elibs)
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (length(out)) {
                 if(length(grep("^prepare.*Dropping empty section", out,
                                invert = TRUE)))
@@ -3714,12 +3719,12 @@ add_dummies <- function(dir, Log)
         {
             any <- FALSE
             ## moved here to avoid WARNING + OK
-            if (nzchar(enc) && is_ascii) {
-                warningLog(Log,
-                           paste("checking a package with encoding ",
-                                 sQuote(e), " in an ASCII locale\n"))
-                any <- TRUE
-            }
+            ##   if (nzchar(enc) && is_ascii) {
+            ##       warningLog(Log,
+            ##                  "checking a package with non-ASCII example code in an ASCII locale\n")
+            ##       enc <- ""
+            ##       any <- TRUE
+            ##   }
             Ropts <- if (nzchar(arch)) R_opts3 else R_opts
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             t1 <- proc.time()
@@ -3927,9 +3932,25 @@ add_dummies <- function(dir, Log)
             }
             ## It ran, but did it create any examples?
             if (file.exists(exfile)) {
-                enc <- if (!is.na(e <- desc["Encoding"])) {
-                    paste0("--encoding=", e)
-                } else ""
+                ## <FIXME>
+                ## This used to be
+                ##   enc <- if (!is.na(e <- desc["Encoding"])) {
+                ##       paste0("--encoding=", e)
+                ##   } else ""
+                ## but apparently these days .createExdotR() will always
+                ## use Rd2ex() with its outputEncoding = "UTF-8" default
+                ## so that the -Ex.R file will be in ASCII or UTF-8, and
+                ## the latter can be the case when there is no package
+                ## encoding.  However, always using
+                ##   enc <- "--encoding=UTF-8"
+                ## will warn in ASCII locales even in the all-ASCII
+                ## case, so let us find out whether the -Ex.R file is
+                ## all ASCII, and use --encoding=UTF-8 if not.
+                enc <-
+                    if(length(suppressMessages(showNonASCIIfile(exfile)))) {
+                        "--encoding=UTF-8"
+                    } else ""
+                ## </FIXME>
                 if (!this_multiarch) {
                     exout <- paste0(pkgname, "-Ex.Rout")
                     if(!run_one_arch(exfile, exout)) maybe_exit(1L)

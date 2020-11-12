@@ -1,7 +1,7 @@
 #  File src/library/stats/R/zzModels.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright 1999--2018 The R Core Team
+#  Copyright 1999--2020 The R Core Team
 #  Copyright 1997, 1999 (C) Jose C. Pinheiro and Douglas M. Bates
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -39,7 +39,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
@@ -55,7 +55,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
                                              exp(- exp(lrc) * x)),
                                    data = xy,
                                    start = list(lrc = lrc),
-                                   algorithm = "plinear"))
+                                   algorithm = "plinear", ...))
               }
               else { ## nrow(.) == 3
                   ydiff <- diff(xy$y)
@@ -107,7 +107,7 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 4) {
@@ -117,8 +117,9 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
               xy <- data.frame(xy)
               lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[[2L]]) # log( rate constant)
               pars <- coef(nls(y ~ cbind(1, exp(- exp(lrc) * x)),
-                               data = xy, algorithm = "plinear",
-                               start = list(lrc = lrc)))
+                               data = xy,
+                               start = list(lrc = lrc),
+                               algorithm = "plinear", ...))
 	      setNames(c(pars[[2L]], pars[["lrc"]], exp(-pars[[1L]]) * log(-pars[[3L]]/pars[[2L]])),
 		       mCall[c("Asym", "lrc", "c0")])
           }, parameters = c("Asym", "lrc", "c0"))
@@ -144,7 +145,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
@@ -159,7 +160,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
               pars <- coef(nls(y ~ 1 - exp(-exp(lrc)*x),
                                data = xy,
                                start = list(lrc = lrc),
-                               algorithm = "plinear"))
+                               algorithm = "plinear", ...))
 	      setNames(pars [c(".lin", "lrc")],
 		       mCall[c("Asym", "lrc")])
           }, parameters = c("Asym", "lrc"))
@@ -189,7 +190,7 @@ SSbiexp <- # selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * inpu
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 5) {
@@ -207,7 +208,7 @@ SSbiexp <- # selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * inpu
               pars <- coef(nls(y ~ cbind(exp(-exp(lrc1)*x), exp(-exp(lrc2)*x)),
                                data = xy,
                                start = list(lrc1 = lrc1, lrc2 = lrc2),
-                               algorithm = "plinear"))
+                               algorithm = "plinear", ...))
 	      setNames(pars[c(3L, 1L, 4L, 2L)],
 		       mCall[c("A1", "lrc1", "A2", "lrc2")])
           }, parameters = c("A1", "lrc1", "A2", "lrc2"))
@@ -244,7 +245,7 @@ SSfol <- # selfStart(~Dose * (exp(lKe + lKa - lCl) * (exp(-exp(lKe) * input) -
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               data <- data.frame(data)
               resp <- eval(LHS, data)
@@ -261,13 +262,13 @@ SSfol <- # selfStart(~Dose * (exp(lKe + lKa - lCl) * (exp(-exp(lKe) * input) -
               cond.lin <- nls(resp ~ (exp(-input * exp(lKe))-exp(-input * exp(lKa))) * Dose,
                               data = list(resp = resp, input = input, Dose = Dose, lKe = lKe),
                               start = list(lKa = lKe + 1),
-                              algorithm = "plinear")
+                              algorithm = "plinear", ...)
               pars <- coef(cond.lin)
               cond.lin <- nls(resp ~ (Dose * (exp(-input*exp(lKe))-
                                               exp(-input*exp(lKa))))/(exp(lKa) - exp(lKe)),
                               data = data.frame(list(resp = resp, input = input, Dose = Dose)),
                               start = list(lKa = pars[["lKa"]], lKe = lKe),
-                              algorithm = "plinear")
+                              algorithm = "plinear", ...)
               pars <- coef(cond.lin)
               lKa <- pars[["lKa"]]
               lKe <- pars[["lKe"]]
@@ -303,7 +304,7 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 5) {
@@ -318,7 +319,7 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
                                          data = xy,
                                          start = list(xmid = ir[1L],
                                                       lscal = log(abs(ir[2L]))),
-                                         algorithm = "plinear")))
+                                         algorithm = "plinear", ...)))
               setNames(c(pars[3L], pars[3L] + pars[4L], pars[1L], exp(pars[2L])),
                        nm = mCall[c("A", "B", "xmid", "scal")])
           }, parameters = c("A", "B", "xmid", "scal"))
@@ -346,7 +347,7 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               }
               .value
         },
-        initial = function(mCall, data, LHS) {
+        initial = function(mCall, data, LHS, ...) {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if(nrow(xy) < 4) {
                   stop("too few distinct input values to fit a logistic model")
@@ -360,7 +361,7 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               pars <- coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
                                data = xy,
                                start = list(xmid = aux[[1L]], scal = aux[[2L]]),
-                               algorithm = "plinear"))
+                               algorithm = "plinear", ...))
               setNames(pars [c(".lin", "xmid", "scal")],
                        mCall[c("Asym", "xmid", "scal")])
         },
@@ -387,7 +388,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
@@ -399,7 +400,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               pars <- coef(nls(y ~ x/(K + x),
                                data = xy,
                                start = list(K = abs(pars[2L]/pars[1L])),
-                               algorithm = "plinear"))
+                               algorithm = "plinear", ...))
               setNames(pars[ c(".lin", "K")],
                        mCall[c(  "Vm", "K")])
           }, parameters = c("Vm", "K"))
@@ -432,7 +433,7 @@ SSgompertz <- #    selfStart( ~ Asym * exp(-b2 * b3^x),
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["x"]], LHS, data)
               if (nrow(xy) < 4) {
@@ -443,9 +444,9 @@ SSgompertz <- #    selfStart( ~ Asym * exp(-b2 * b3^x),
               pars <- NLSstAsymptotic(xyL)
               pars <- coef(nls(y ~ exp(-b2*b3^x),
                                data = xy,
-                               algorithm = "plinear",
                                start = c(b2 = pars[["b1"]],
-                                         b3 = exp(-exp(pars[["lrc"]])))))
+                                         b3 = exp(-exp(pars[["lrc"]]))),
+                               algorithm = "plinear", ...))
               setNames(pars[ c(".lin", "b2", "b3")],
                        mCall[c("Asym", "b2", "b3")])
           },
@@ -475,7 +476,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
               }
               .value
           },
-              initial = function(mCall, data, LHS)
+              initial = function(mCall, data, LHS, ...)
           {
               xy <- sortedXyData(mCall[["x"]], LHS, data)
               if (nrow(xy) < 5) {
@@ -490,8 +491,8 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
                               data = xy, subset = x > 0))
 	      setNames(coef(nls(y ~ cbind(1, -exp(-exp(lrc)*x^pwr)),
 				data = xy,
-				algorithm = "plinear",
-				start = c(lrc = pars[[1L]], pwr = pars[[2L]]))
+				start = c(lrc = pars[[1L]], pwr = pars[[2L]]),
+				algorithm = "plinear", ...)
 			    )[c(3,4,1,2)],
 		       mCall[c("Asym", "Drop", "lrc", "pwr")])
           },

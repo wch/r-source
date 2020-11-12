@@ -720,6 +720,11 @@ struct _DevDesc {
      */
     int deviceVersion;
 
+    /* This can be used to OVERRIDE canClip so that graphics engine
+     * leaves ALL clipping to the graphics device 
+     */
+    Rboolean deviceClip;
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

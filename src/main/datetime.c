@@ -37,7 +37,7 @@
 # include <config.h>
 #endif
 
-#include <Rmath.h> // Rexp10
+#include <Rmath.h> // for imin2()
 
 // to get tm_zone, tm_gmtoff defined in glibc.
 // some other header, e.g. math.h, might define the macro.
@@ -1007,6 +1007,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    strftime(buff, 256, buf2, &tm);
 #endif
 	    buff[256] = '\0';
+	    mbcsTruncateToValid(buff);
 	    // Now assume tzone abbreviated name is < 40 bytes,
 	    // but they are currently 3 or 4 bytes.
 	    if(UseTZ) {

@@ -717,7 +717,8 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    *buf = NULL;
 	size_t buf_len = 0;
 #else
-	    buf[INTERN_BUFSIZE];
+	    buf[INTERN_BUFSIZE + MB_LEN_MAX],
+	    buf2[MB_LEN_MAX + 1]; /* overflow bytes from MBCS truncation */
 #endif
 	int i, j, res;
 	SEXP tchar, rval;
@@ -736,16 +737,35 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
         for(i = 0; (read = getline(&buf, &buf_len, fp)) != (size_t)-1; i++) {
 	    if (buf[read - 1] == '\n')
 #else
-	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
-	    size_t read = strlen(buf);
-	    if(read >= INTERN_BUFSIZE - 1)
+	size_t read = 0;
+	size_t truncb = 0; /* number of overflow bytes from MBCS truncation */
+	buf[0] = '\0';
+	for (i = 0; fgets(buf + truncb, INTERN_BUFSIZE, fp) || truncb; i++) {
+	    buf2[0] = '\0';
+	    read = strlen(buf);
+	    if (read >= INTERN_BUFSIZE - 1 + truncb) {
 		warning(_("line %d may be truncated in call to system(, intern = TRUE)"), i + 1);
+		/* save trailing bytes in buf2 in case they are from incomplete
+		   multi-byte character, and hence will be removed from buf by
+		   mbcsTruncateToValid */
+		memcpy(buf2, buf + read - MB_LEN_MAX, MB_LEN_MAX);
+		buf2[MB_LEN_MAX] = '\0';
+		mbcsTruncateToValid(buf);
+		truncb = read - strlen(buf);
+	    }
+	    else truncb = 0;
+
 	    if (read > 0 && buf[read-1] == '\n')
 #endif
 		buf[read - 1] = '\0'; /* chop final CR */
 	    tchar = mkChar(buf);
 	    UNPROTECT(1);
 	    PROTECT(tlist = CONS(tchar, tlist));
+#ifndef HAVE_GETLINE
+	    if (truncb > 0 && truncb <= MB_LEN_MAX) 
+		/* recover overflow bytes and prepend them for next line */
+		strcpy(buf, buf2 + (MB_LEN_MAX - truncb));
+#endif
 	}
 #ifdef HAVE_GETLINE
         if (buf != NULL)
@@ -965,6 +985,22 @@ void fpu_setup(Rboolean start)
 #if (defined(__i386) || defined(__x86_64)) && defined(__INTEL_COMPILER) && __INTEL_COMPILER > 800
     _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_OFF);
     _MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_OFF);
+#endif
+
+#if defined(__ARM_ARCH) && defined(__ARM_32BIT_STATE) && defined(__ARM_FP)
+    uint32_t fpscr;
+
+    asm volatile("vmrs %0, fpscr" : "=r"(fpscr));
+    /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
+    fpscr = fpscr & 0xfcffffff;
+    asm volatile("vmsr fpscr, %0" : : "r"(fpscr));
+#elif defined(__ARM_ARCH) && defined(__ARM_64BIT_STATE) && defined(__ARM_FP)
+    uint64_t fpcr;
+
+    asm volatile("mrs %0, fpcr" : "=r"(fpcr));
+    /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
+    fpcr = fpcr & 0xfffffffffcffffff;
+    asm volatile("msr fpcr, %0" : : "r"(fpcr));
 #endif
     } else {
 #ifdef __FreeBSD__

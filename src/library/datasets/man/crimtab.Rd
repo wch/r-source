@@ -60,7 +60,7 @@
     random sampling.}
 }
 \source{
-  \url{http://pbil.univ-lyon1.fr/R/donnees/criminals1902.txt}
+  \url{https://pbil.univ-lyon1.fr/R/donnees/criminals1902.txt}
   thanks to Jean R. Lobry and \enc{Anne-Béatrice}{Anne-Beatrice} Dufour.
 }
 \references{

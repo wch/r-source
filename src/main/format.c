@@ -339,7 +339,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 #if defined(HAVE_LONG_DOUBLE) && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
         long double r_prec = r;
         /* use exact scaling factor in long double precision, if possible */
-        if (abs(kp) <= 27) {
+        if (abs(kp) <= KP_MAX) {
             if (kp > 0) r_prec /= tbl[kp+1]; else if (kp < 0) r_prec *= tbl[ -kp+1];
         }
 #ifdef HAVE_POWL
@@ -363,7 +363,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 #else /* not using long doubles */
 	double r_prec = r;
         /* use exact scaling factor in double precision, if possible */
-        if (abs(kp) <= 22) {
+        if (abs(kp) <= KP_MAX) {
             if (kp >= 0) r_prec /= tbl[kp+1]; else r_prec *= tbl[ -kp+1];
         }
         /* For IEC60559 1e-308 is not representable except by gradual underflow.
@@ -426,34 +426,30 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 
 void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 {
-    int left, right, sleft;
-    int mnl, mxl, rgt, mxsl, mxns, wF;
-    Rboolean roundingwidens;
-    int neg_i, neg, kpower, nsig;
-    int naflag, nanflag, posinf, neginf;
-
-    nanflag = 0;
-    naflag = 0;
-    posinf = 0;
-    neginf = 0;
-    neg = 0;
-    rgt = mxl = mxsl = mxns = INT_MIN;
-    mnl = INT_MAX;
+    Rboolean
+	naflag = FALSE, nanflag = FALSE,
+	posinf = FALSE, neginf = FALSE;
+    int neg = 0;
+    int mnl = INT_MAX,
+	mxl, rgt, mxsl, mxns;
+    mxl = rgt = mxsl = mxns = INT_MIN;
 
     for (R_xlen_t i = 0; i < n; i++) {
 	if (!R_FINITE(x[i])) {
-	    if(ISNA(x[i])) naflag = 1;
-	    else if(ISNAN(x[i])) nanflag = 1;
-	    else if(x[i] > 0) posinf = 1;
-	    else neginf = 1;
+	    if(ISNA(x[i])) naflag = TRUE;
+	    else if(ISNAN(x[i])) nanflag = TRUE;
+	    else if(x[i] > 0) posinf = TRUE;
+	    else neginf = TRUE;
 	} else {
+	    int neg_i, kpower, nsig;
+	    Rboolean roundingwidens;
 	    scientific(&x[i], &neg_i, &kpower, &nsig, &roundingwidens);
 
-	    left = kpower + 1;
+	    int left = kpower + 1;
 	    if (roundingwidens) left--;
 
-	    sleft = neg_i + ((left <= 0) ? 1 : left); /* >= 1 */
-	    right = nsig - left; /* #{digits} right of '.' ( > 0 often)*/
+	    int sleft = neg_i + ((left <= 0) ? 1 : left); /* >= 1 */
+	    int right = nsig - left; /* #{digits} right of '.' ( > 0 often)*/
 	    if (neg_i) neg = 1;	 /* if any < 0, need extra space for sign */
 
 	    /* Infinite precision "F" Format : */
@@ -480,7 +476,7 @@ void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 
     /* use nsmall only *after* comparing "F" vs "E": */
     if (rgt < 0) rgt = 0;
-    wF = mxsl + rgt + (rgt != 0);	/* width for F format */
+    int wF = mxsl + rgt + (rgt != 0);	/* width for F format */
 
     /*-- 'see' how "E" Exponential format would be like : */
     *e = (mxl > 100 || mnl <= -99) ? 2 /* 3 digit exponent */ : 1;
@@ -543,28 +539,19 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 		   int nsmall)
 {
 /* format.info() for  x[1..n] for both Re & Im */
-    int left, right, sleft;
+    Rboolean all_re_zero = TRUE, all_im_zero = TRUE,
+	naflag = FALSE,
+	rnan = FALSE, rposinf = FALSE, rneginf = FALSE,
+	inan = FALSE, iposinf = FALSE;
+    int neg = 0;
     int rt, mnl, mxl, mxsl, mxns, wF, i_wF;
     int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
-    Rboolean roundingwidens;
-    int neg_i, neg, kpower, nsig;
-    int naflag, rnanflag, rposinf, rneginf, inanflag, iposinf;
-    Rcomplex tmp;
-    Rboolean all_re_zero = TRUE, all_im_zero = TRUE;
-
-    naflag = 0;
-    rnanflag = 0;
-    rposinf = 0;
-    rneginf = 0;
-    inanflag = 0;
-    iposinf = 0;
-    neg = 0;
-
     rt	=  mxl =  mxsl =  mxns = INT_MIN;
     i_rt= i_mxl= i_mxsl= i_mxns= INT_MIN;
     i_mnl = mnl = INT_MAX;
 
     for (R_xlen_t i = 0; i < n; i++) {
+	Rcomplex tmp;
 #ifdef formatComplex_USING_signif
 	/* Now round */
 	z_prec_r(&tmp, &(x[i]), R_print.digits);
@@ -573,14 +560,18 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 	tmp.i = x[i].i;
 #endif
 	if(ISNA(tmp.r) || ISNA(tmp.i)) {
-	    naflag = 1;
+	    naflag = TRUE;
 	} else {
+	    Rboolean roundingwidens;
+	    int left, right, sleft,
+		neg_i, kpower, nsig;
+
 	    /* real part */
 
 	    if(!R_FINITE(tmp.r)) {
-		if (ISNAN(tmp.r)) rnanflag = 1;
-		else if (tmp.r > 0) rposinf = 1;
-		else rneginf = 1;
+		if (ISNAN(tmp.r)) rnan = TRUE;
+		else if (tmp.r > 0) rposinf = TRUE;
+		else rneginf = TRUE;
 	    } else {
 		if(x[i].r != 0) all_re_zero = FALSE;
 		scientific(&(tmp.r), &neg_i, &kpower, &nsig, &roundingwidens);
@@ -604,8 +595,8 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 	    /* we explicitly put the sign in when we print */
 
 	    if(!R_FINITE(tmp.i)) {
-		if (ISNAN(tmp.i)) inanflag = 1;
-		else iposinf = 1;
+		if (ISNAN(tmp.i)) inan = TRUE;
+		else iposinf = TRUE;
 	    } else {
 		if(x[i].i != 0) all_im_zero = FALSE;
 		scientific(&(tmp.i), &neg_i, &kpower, &nsig, &roundingwidens);
@@ -679,7 +670,7 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
 	    if (nsmall > rt) {rt = nsmall; wF = mxsl + rt + (rt != 0);}
 	    *dr = rt;
 	    *wr = wF;
-	    }
+	}
 	*ei = *di = 0;
 	*wi = i_wF;
     } else if(wF + i_wF < *wr + *wi + 2*R_print.scipen) {
@@ -700,11 +691,11 @@ void formatComplex(const Rcomplex *x, R_xlen_t n,
     if(*wi < 0) *wi = 0;
 
     /* Ensure space for Inf and NaN */
-    if (rnanflag && *wr < 3) *wr = 3;
-    if (rposinf &&  *wr < 3) *wr = 3;
-    if (rneginf &&  *wr < 4) *wr = 4;
-    if (inanflag && *wi < 3) *wi = 3;
-    if (iposinf  && *wi < 3) *wi = 3;
+    if (rnan    && *wr < 3) *wr = 3;
+    if (rposinf && *wr < 3) *wr = 3;
+    if (rneginf && *wr < 4) *wr = 4;
+    if (inan    && *wi < 3) *wi = 3;
+    if (iposinf && *wi < 3) *wi = 3;
 
     /* finally, ensure that there is space for NA */
 

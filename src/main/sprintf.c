@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2019     The R Core Team
+ *  Copyright (C) 2002--2020     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -86,7 +86,8 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     size_t n, cur, chunk;
 
     SEXP format, _this, a[MAXNARGS], ans /* -Wall */ = R_NilValue;
-    int ns, maxlen, lens[MAXNARGS], nthis, nstar, star_arg = 0;
+    int ns, maxlen, lens[MAXNARGS], nthis, nstar, star_arg = 0, nunused;
+    Rboolean used[MAXNARGS];
     static R_StringBuffer outbuff = {NULL, 0, MAXELTSIZE};
     Rboolean has_star, use_UTF8;
 
@@ -113,6 +114,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0; i < nargs; i++, args = CDR(args)) {
 	SEXPTYPE t_ai;
 	a[i] = CAR(args);
+	used[i] = FALSE;
 	if((t_ai = TYPEOF(a[i])) == LANGSXP || t_ai == SYMSXP) /* << maybe add more .. */
 	    error(_("invalid type of argument[%d]: '%s'"),
 		  i+1, CHAR(type2str(t_ai)));
@@ -221,6 +223,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    error(_("at most one asterisk '*' is supported in each conversion specification"));
 
 			_this = a[nstar];
+			used[nstar] = TRUE;
 			if(ns == 0 && TYPEOF(_this) == REALSXP) {
 			    _this = coerceVector(_this, INTSXP);
 			    PROTECT(a[nstar] = _this);
@@ -249,6 +252,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    nthis = cnt++;
 			}
 			_this = a[nthis];
+			used[nthis] = TRUE;
 			if (has_star) {
 			    size_t nf; char *p, *q = fmt2;
 			    for (p = fmt; *p; p++)
@@ -464,6 +468,24 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(ans, ns, mkCharCE(outputString,
 					 use_UTF8 ? CE_UTF8 : CE_NATIVE));
     } /* end for(ns ...) */
+
+    nunused = 0;
+    for(i = 0; i < nargs; i++)
+	if (!used[i]) nunused++;
+    if (nunused > 0) {
+	if (nfmt == 1) {
+	    const char *f = translateChar(STRING_ELT(format, 0));
+	    if (nunused == 1)
+		warning(_("one argument not used by format '%s'"), f);
+	    else if (nunused > 1)
+		warning(_("%d arguments not used by format '%s'"), nunused, f);
+	} else {
+	    if (nunused == 1)
+		warning(_("one argument not used by format"));
+	    else if (nunused > 1)
+		warning(_("%d arguments not used by format"), nunused);
+	}
+    }
 
     UNPROTECT(nprotect);
     R_FreeStringBufferL(&outbuff);

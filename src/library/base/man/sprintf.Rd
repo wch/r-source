@@ -1,6 +1,6 @@
 % File src/library/base/man/sprintf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sprintf}
@@ -41,7 +41,8 @@ gettextf(fmt, \dots, domain = NULL)
   The following is abstracted from Kernighan and Ritchie (see
   References): however the actual implementation will follow the C99
   standard and fine details (especially the behaviour under user error)
-  may depend on the platform.
+  may depend on the platform. References to numbered arguments come from
+  POSIX.
 
   The string \code{fmt} contains normal characters,
   which are passed through to the output string, and also conversion
@@ -186,7 +187,11 @@ gettextf(fmt, \dots, domain = NULL)
   Describes the format options in table B-1 in the Appendix.
 
   The C Standards, especially ISO/IEC 9899:1999 for \sQuote{C99}.  Links
-  can be found at \url{https://developer.r-project.org/Portability.html}.
+  can be found at
+  \url{https://developer.r-project.org/Portability.html}.
+
+  \url{https://pubs.opengroup.org/onlinepubs/9699919799/functions/snprintf.html }
+  for POSIX extensions such as numbered arguments.
 
   \command{man sprintf} on a Unix-alike system.
 }

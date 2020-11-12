@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@
                                       "13" = "High Sierra",
                                       "14" = "Mojave",
                                       "15" = "Catalina",
-                                      "16" = "Big Sur", # probably not 10.16
+                                      "16" = "Big Sur", # early pre-releases
                                       ""),
                                ver)
                    else

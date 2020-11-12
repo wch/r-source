@@ -1,6 +1,6 @@
 % File src/library/base/man/proc.time.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{proc.time}
@@ -30,7 +30,7 @@ proc.time()
   system times of any child processes spawned by it on which it has
   waited.  (The \code{print} method uses the \code{summary} method to
   combine the child times with those of the main process.)
-  
+
   The definition of \sQuote{user} and \sQuote{system} times is from your
   OS.  Typically it is something like
 
@@ -59,6 +59,9 @@ proc.time()
   \code{\link{system.time}} for timing an \R expression,
   \code{\link{gc.time}} for how much of the time was spent in garbage
   collection.
+
+  \code{\link{setTimeLimit}} to \emph{limit} the CPU or elapsed time for
+  the session or an expression.
 }
 \examples{\donttest{
 ## a way to time an R expression: system.time is preferred

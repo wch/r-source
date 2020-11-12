@@ -3089,7 +3089,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 
     ## Check RdMacros.
     RM <- setdiff(.get_requires_from_package_db(db, "RdMacros"),
-                  c(depends, imports, suggests))
+                  c(imports, depends))
     if(length(RM)) bad_depends$missing_rdmacros_depends <- RM
 
     ## (added in 4.0.0) Check for orphaned packages.
@@ -3231,7 +3231,7 @@ function(x, ...)
                 .pretty_format2("RdMacros packages not required:", bad)
             else
                 sprintf("RdMacros package not required: %s", sQuote(bad)),
-            strwrap("RdMacros packages must be contained in the DESCRIPTION Imports/Suggests/Depends entries."),
+            strwrap("RdMacros packages must be contained in the DESCRIPTION Imports/Depends entries."),
             "")
       },
       if(length(bad <- x$missing_namespace_depends)) {
@@ -4440,8 +4440,8 @@ function(package, dir, lib.loc = NULL)
             message(sprintf(ngettext(length(undeclared),
                                      "Undeclared package %s in Rd xrefs",
                                      "Undeclared packages %s in Rd xrefs"),
-                            paste(sQuote(undeclared), collapse = ", "),
-                            domain = NA))
+                            paste(sQuote(undeclared), collapse = ", ")),
+                    domain = NA)
     }
 
     mind_suspects <-
@@ -4702,8 +4702,9 @@ function(x, ...)
 function(fileName, pkgname)
 {
     oldSearch <- search()
-    dataEnv <- new.env(hash = TRUE);
-    utils::data(list = fileName, package = pkgname, envir = dataEnv);
+    dataEnv <- new.env(hash = TRUE)
+    suppressMessages(utils::data(list = fileName, package = pkgname,
+                                 envir = dataEnv))
     if (!length((ls(dataEnv)))) message("No dataset created in 'envir'")
     if (!identical(search(), oldSearch)) message("Search path was changed")
     invisible(NULL)

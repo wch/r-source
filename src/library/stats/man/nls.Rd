@@ -1,6 +1,6 @@
 % File src/library/stats/man/nls.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nls}
@@ -26,7 +26,7 @@ nls(formula, data, start, control, algorithm,
     a self-starting model, see \code{\link{selfStart}}), a very cheap
     guess for \code{start} is tried (if \code{algorithm != "plinear"}).
   }
-  \item{control}{an optional list of control settings.  See
+  \item{control}{an optional \code{\link{list}} of control settings.  See
     \code{\link{nls.control}} for the names of the settable control
     values and their effect.}
   \item{algorithm}{character string specifying the algorithm to use.
@@ -37,8 +37,10 @@ nls(formula, data, start, control, algorithm,
     references.  Can be abbreviated.}
   \item{trace}{logical value indicating if a trace of the iteration
     progress should be printed.  Default is \code{FALSE}.  If
-    \code{TRUE} the residual (weighted) sum-of-squares and the
-    parameter values are printed at the conclusion of each iteration.
+    \code{TRUE} the residual (weighted) sum-of-squares, the convergence
+    criterion and the parameter values are printed at the conclusion of
+    each iteration.  Note that \code{\link{format}()} is used, so these
+    mostly depend on \code{\link{getOption}("digits")}.
     When the \code{"plinear"} algorithm is used, the conditional
     estimates of the linear parameters are printed after the nonlinear
     parameters.  When the \code{"port"} algorithm is used the
@@ -87,7 +89,8 @@ nls(formula, data, start, control, algorithm,
   with care.
 }
 \section{Warning}{
-  \bold{Do not use \code{nls} on artificial "zero-residual" data.}
+  \bold{The default settings of \code{nls} generally fail on artificial
+    \dQuote{zero-residual} data problems.}
 
   The \code{nls} function uses a relative-offset convergence criterion
   that compares the numerical imprecision at the current parameter
@@ -95,9 +98,11 @@ nls(formula, data, start, control, algorithm,
   the form \deqn{y=f(x, \theta) + \epsilon}{y = f(x, \theta) + eps} (with
   \code{var(eps) > 0}).  It fails to indicate convergence on data of the form
   \deqn{y = f(x, \theta)} because the criterion amounts to
-  comparing two components of the round-off error.  If you wish to test
-  \code{nls} on artificial data please add a noise component, as shown
-  in the example below.
+  comparing two components of the round-off error.
+  To avoid a zero-divide in computing the convergence testing value, a
+  positive constant \code{scaleOffset} should be added to the denominator
+  sum-of-squares; it is set in \code{control}, as in the example below;
+  this does not yet apply to \code{algorithm = "port"}.
 
   The \code{algorithm = "port"} code appears unfinished, and does
   not even check that the starting value is within the bounds.
@@ -107,8 +112,8 @@ nls(formula, data, start, control, algorithm,
   A list of
   \item{m}{an \code{nlsModel} object incorporating the model.}
   \item{data}{the expression that was passed to \code{nls} as the data
-    argument.  The actual data values are present in the environment of
-    the \code{m} component.}
+    argument.  The actual data values are present in the \code{\link{environment}} of
+    the \code{m} components, e.g., \code{environment(m$conv)}.}
   \item{call}{the matched call with several components, notably
     \code{algorithm}.}
   \item{na.action}{the \code{"na.action"} attribute (if any) of the
@@ -142,7 +147,7 @@ nls(formula, data, start, control, algorithm,
   Chapter 10 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 
-  \url{http://www.netlib.org/port/} for the Port library
+  \url{https://www.netlib.org/port/} for the Port library
   documentation.
 }
 \author{
@@ -257,13 +262,18 @@ rbind(coef(Pur.wt), coef(Pur.wt1), coef(Pur.wt.grad))
 ## without noise.
 x <- 1:10
 y <- 2*x + 3                            # perfect fit
-yeps <- y + rnorm(length(y), sd = 0.01) # added noise
-nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 ## terminates in an error, because convergence cannot be confirmed:
 try(nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321)))
+## adjusting the convergence test by adding 'scaleOffset' to its denominator RSS:
+nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
+    control = list(scaleOffset = 1, printEval=TRUE))
+## Alternatively jittering the "too exact" values, slightly:
+set.seed(27)
+yeps <- y + rnorm(length(y), sd = 0.01) # added noise
+nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
+
 
 ## the nls() internal cheap guess for starting values can be sufficient:
-
 x <- -(1:100)/10
 y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
 nlmod <- nls(y ~  Const + A * exp(B * x))
@@ -272,6 +282,12 @@ plot(x,y, main = "nls(*), data, true function and fit, n=100")
 curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 lines(x, predict(nlmod), col = 2)
 
+## Here, requiring close convergence, you need to use more accurate numerical
+##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
+options(digits = 10) # more accuracy for 'trace'
+try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
+   (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
+## --> convergence tolerance  4.997e-8 (in 11 iter.)
 
 \donttest{
 ## The muscle dataset in MASS is from an experiment on muscle

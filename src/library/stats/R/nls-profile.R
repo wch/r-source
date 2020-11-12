@@ -1,8 +1,8 @@
 #  File src/library/stats/R/nls-profile.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-1999 Saikat DebRoy and Douglas M. Bates
-#  Copyright (C) 1999-2011  The R Core Team
+#  Copyright (C) 1999-2020 The R Core Team
+#  Copyright (C) 1999      Saikat DebRoy and Douglas M. Bates
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@ profiler.nls <- function(fitted, ...)
     defaultVary <- rep.int(TRUE, length(defaultPars))
     S.hat <- deviance(fitted) # need to allow for weights
     s2.hat <- summary(fitted)$sigma^2
-    thisEnv <- environment()
     on.exit(remove(fitted))
     prof <- list(getFittedPars = function() fittedPars,
                  getFittedModel = function() fittedModel,
@@ -48,14 +47,13 @@ profiler.nls <- function(fitted, ...)
                  if(missing(params) && missing(varying)) {
                      fittedModel$setVarying()
                      fittedModel$setPars(fittedPars)
-                     assign("defaultPars", fittedPars, envir = thisEnv)
-                     assign("defaultVary", rep.int(TRUE, length(defaultPars)),
-                            envir = thisEnv)
+                     defaultPars <<- fittedPars
+                     defaultVary <<- rep.int(TRUE, length(defaultPars))
                  } else {
                      if(!missing(params)) {
                          if(length(params) != length(fittedPars))
                              stop("'params' has wrong length")
-                         assign("defaultPars", params, envir = thisEnv)
+                         defaultPars <<- params
                      }
                      if(!missing(varying)) {
                          if(is.numeric(varying)) {
@@ -70,7 +68,7 @@ profiler.nls <- function(fitted, ...)
                                  stop("'varying' must be in seq_along(pars)")
                              varying <- !(names(fittedPars) %in% varying)
                          } else stop("'varying' must be logical, integer or character")
-                         assign("defaultVary", varying, envir = thisEnv)
+                         defaultVary <<- varying
                      }
                  }
              },

@@ -21,51 +21,49 @@
 ###            Nonlinear least squares for R
 ###
 
-numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1.0)
+numericDeriv <- function(expr, theta, rho = parent.frame(), dir = 1,
+                         eps = .Machine$double.eps ^ (1/if(central) 3 else 2), central = FALSE)
 {
     dir <- rep_len(dir, length(theta))
-    val <- .Call(C_numeric_deriv, expr, theta, rho, dir)
-    valDim <- dim(val)
-    if (!is.null(valDim)) {
-        if (valDim[length(valDim)] == 1)
-            valDim <- valDim[-length(valDim)]
-        if(length(valDim) > 1L)
-            dim(attr(val, "gradient")) <- c(valDim,
-                                            dim(attr(val, "gradient"))[-1L])
+    stopifnot(is.finite(eps), eps > 0)
+    val <- .Call(C_numeric_deriv, expr, theta, rho, dir, eps, central) ## ../src/nls.c
+    if (!is.null(d <- dim(val))) {
+        if(d[length(d)] == 1L)
+            d <- d[-length(d)]
+        if(length(d) > 1L)
+            dim(attr(val, "gradient")) <- c(d, dim(attr(val, "gradient"))[-1L])
     }
     val
 }
 
-nlsModel.plinear <- function(form, data, start, wts)
+nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral = FALSE)
 {
-    thisEnv <- environment()
+    ## thisEnv <- environment() # shared by all functions in the 'm' list; variable no longer needed
     env <- new.env(hash = TRUE, parent=environment(form))
-    for(i in names(data)) assign(i, data[[i]], envir = env)
+    for(i in names(data)) env[[i]] <- data[[i]]
     ind <- as.list(start)
-    p2 <- 0
+    p2 <- 0L #{non-linear parameters}
     for(i in names(ind)) {
         temp <- start[[i]]
         storage.mode(temp) <- "double"
-        assign(i, temp, envir = env)
-        ind[[i]] <- p2 + seq_along(start[[i]])
-        p2 <- p2 + length(start[[i]])
+        env[[i]] <- temp
+        ind[[i]] <- p2 + seq_along(temp)
+        p2 <- p2 + length(temp)
     }
-    lhs <- eval(form[[2L]], envir = env)
-    storage.mode(lhs) <- "double"
-    rhs <- eval(form[[3L]], envir = env)
-    storage.mode(rhs) <- "double"
+    lhs <- eval(form[[2L]], envir = env); storage.mode(lhs) <- "double"
+    rhs <- eval(form[[3L]], envir = env); storage.mode(rhs) <- "double"
     .swts <- if(!missing(wts) && length(wts))
         sqrt(wts) else 1 # more efficient than  rep_len(1, NROW(rhs))
-    assign(".swts", .swts, envir = env)
-    p1 <- NCOL(rhs)
-    p <- p1 + p2
+    env$.swts <- .swts
+    p1 <- NCOL(rhs) #{linear par.}
+    p <- p1 + p2    # total #{param.}
     n <- length(lhs)
     fac <- (n -  p)/p
     cc <- QR.B <- NA
     useParams <- rep_len(TRUE, p2)
     if(is.null(attr(rhs, "gradient"))) {
         getRHS.noVarying <- function()
-            numericDeriv(form[[3L]], names(ind), env)
+            numericDeriv(form[[3L]], names(ind), env, central = nDcentral)
         getRHS <- getRHS.noVarying
         rhs <- getRHS()
     } else {
@@ -75,9 +73,10 @@ nlsModel.plinear <- function(form, data, start, wts)
     dimGrad <- dim(attr(rhs, "gradient"))
     marg <- length(dimGrad)
     if(marg > 0) {
+        if(marg < 2L) stop("invalid  'attr(rhs, \"gradient\")'")
         gradSetArgs <- vector("list", marg + 1L)
         for(i in 2:marg)
-            gradSetArgs[[i]] <- rep_len(TRUE, dimGrad[i-1])
+            gradSetArgs[[i]] <- rep_len(TRUE, dimGrad[i-1L])
         useParams <- rep_len(TRUE, dimGrad[marg])
     } else {
         gradSetArgs <- vector("list", 2L)
@@ -88,10 +87,8 @@ nlsModel.plinear <- function(form, data, start, wts)
         switch(length(gradSetArgs) - 1L,
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]]),
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]]),
-               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
-                    gradSetArgs[[3L]]),
-               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
-                    gradSetArgs[[3L]], gradSetArgs[[4L]]))
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]], gradSetArgs[[3L]]),
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]], gradSetArgs[[3L]], gradSetArgs[[4L]]))
     getRHS.varying <- function()
     {
         ans <- getRHS.noVarying()
@@ -111,11 +108,11 @@ nlsModel.plinear <- function(form, data, start, wts)
             ddot <- function(A, b) as.matrix(A*b)
             dtdot <- function(A, b) t(b) %*% A
         } else if(p2 == 1) {
-            ddot <- function(A, b) A %*% b
+            ddot  <- function(A, b)   A  %*% b
             dtdot <- function(A, b) t(A) %*% b
         }
     } else {
-        ddot <- function(A, b) apply(A, MARGIN = 3L, FUN="%*%", b)
+        ddot  <- function(A, b) apply(A, MARGIN =   3L    , FUN = "%*%", b)
         dtdot <- function(A, b) apply(A, MARGIN = c(2L,3L), FUN = "%*%", b)
     }
 
@@ -126,21 +123,36 @@ nlsModel.plinear <- function(form, data, start, wts)
     internalPars <- getPars()
     setPars.noVarying <- function(newPars)
     {
-        assign("internalPars", newPars, envir = thisEnv)
-        for(i in names(ind)) {
-            assign(i, unname(newPars[ ind[[i]] ]), envir = env )
-        }
+        internalPars <<- newPars # into thisEnv
+        for(i in names(ind))
+            env[[i]] <- unname(newPars[ ind[[i]] ])
     }
     setPars.varying <- function(newPars)
     {
-        internalPars[useParams] <- newPars
+        internalPars[useParams] <<- newPars
         for(i in names(ind))
-            assign(i, unname(internalPars[ ind[[i]] ]), envir = env)
+            env[[i]] <- unname(internalPars[ ind[[i]] ])
     }
     setPars <- setPars.noVarying
     getPred <-
         if(is.matrix(rhs)) function(X) as.numeric(X %*% lin)
         else function(X) X * lin
+
+    if(scaleOffset) scaleOffset <- (n-p1) * scaleOffset^2
+    convCrit <- function() {
+        cc <<- c(topzero, qr.qty(QR.rhs, .swts * lhs)[ -(1L:p1)]) # envir = thisEnv
+        rr <- qr.qy(QR.rhs, cc)
+        B <- qr.qty(QR.rhs, .swts * ddot(attr(rhs, "gradient"), lin))
+        B[1L:p1, ] <- dtdot(.swts *      attr(rhs, "gradient"), rr)
+        R <- t( qr.R(QR.rhs)[1L:p1, ] )
+        if(p1 == 1)
+            B[1L,] <- B[1L,]/c(R)
+        else
+            B[1L:p1, ] <- forwardsolve(R, B[1L:p1, ])
+        QR.B <<- qr(B) ## envir = thisEnv
+        rr <- qr.qty(QR.B, cc)
+        sqrt( fac*sum(rr[1L:p1]^2) / (scaleOffset + sum(rr[-(1L:p1)]^2)) )
+    }
 
     m <-
         list(resid = function() resid,
@@ -149,88 +161,76 @@ nlsModel.plinear <- function(form, data, start, wts)
              deviance = function() dev,
              lhs = function() lhs,
              gradient = function() attr(rhs, "gradient"),
-             conv = function() {
-                 assign("cc", c(topzero, qr.qty(QR.rhs, .swts * lhs)[ -(1L:p1)]),
-                        envir = thisEnv)
-                 rr <- qr.qy(QR.rhs, cc)
-                 B <- qr.qty(QR.rhs, .swts * ddot(attr(rhs, "gradient"), lin))
-                 B[1L:p1, ] <- dtdot(.swts * attr(rhs, "gradient"), rr)
-                 R <- t( qr.R(QR.rhs)[1L:p1, ] )
-                 if(p1 == 1) B[1, ] <- B[1, ]/ c(R)
-                 else B[1L:p1, ] <- forwardsolve(R, B[1L:p1, ])
-                 assign("QR.B", qr(B), envir = thisEnv)
-                 rr <- qr.qty(QR.B, cc)
-                 sqrt( fac*sum(rr[1L:p1]^2) / sum(rr[-(1L:p1)]^2) )
-             },
+	     conv = function() convCrit(),
              incr = function() qr.solve(QR.B, cc),
-             setVarying = function(vary = rep_len(TRUE, length(useParams))) {
-                 assign("useParams", if(is.character(vary)) {
-                     temp <- logical(length(useParams))
-                     temp[unlist(ind[vary])] <- TRUE
-                     temp
-                 } else if(is.logical(vary) && length(vary) != length(useParams))
+             setVarying = function(vary = rep_len(TRUE, np)) {
+                 np <- length(useParams)
+                 useParams <<-
+                     if(is.character(vary)) {
+                         temp <- logical(np)
+                         temp[unlist(ind[vary])] <- TRUE
+                         temp
+                     } else if(is.logical(vary) && length(vary) != np)
                         stop("setVarying : 'vary' length must match length of parameters")
-                 else {
-                     vary
-                 }, envir = thisEnv)
+                     else
+                         vary # envir = thisEnv
                  gradCall[[length(gradCall)]] <<- useParams
                  if(all(useParams)) {
-                     assign("setPars", setPars.noVarying, envir = thisEnv)
-                     assign("getPars", getPars.noVarying, envir = thisEnv)
-                     assign("getRHS", getRHS.noVarying, envir = thisEnv)
+		     setPars <<- setPars.noVarying
+		     getPars <<- getPars.noVarying
+		     getRHS  <<-  getRHS.noVarying
                  } else {
-                     assign("setPars", setPars.varying, envir = thisEnv)
-                     assign("getPars", getPars.varying, envir = thisEnv)
-                     assign("getRHS", getRHS.varying, envir = thisEnv)
+		     setPars <<- setPars.varying
+		     getPars <<- getPars.varying
+		     getRHS  <<-  getRHS.varying
                  }
              },
              setPars = function(newPars) {
                  setPars(newPars)
-                 assign("QR.rhs",
-                        qr(.swts * assign("rhs", getRHS(), envir = thisEnv)),
-                        envir = thisEnv)
-                 assign("resid", qr.resid(QR.rhs, .swts * lhs),
-                        envir = thisEnv)
-                 assign("dev", sum(resid^2), envir = thisEnv )
-                 if(QR.rhs$rank < p1) {
-                     return(1)
+                 QR.rhs <<- qr(.swts * (rhs <<- getRHS())) # envir = thisEnv
+                 resid <<- qr.resid(QR.rhs, .swts * lhs) # envir = thisEnv
+                 dev <<- sum(resid^2) # envir = thisEnv
+                 if(QR.rhs$rank < p1) { # singular gradient
+                     TRUE
                  } else {
-                     assign("lin", qr.coef(QR.rhs, .swts * lhs),
-                            envir = thisEnv)
-                     return(0)
+                     lin <<- qr.coef(QR.rhs, .swts * lhs) # envir = thisEnv
+                     FALSE
                  }
              },
              getPars = function() getPars(),
              getAllPars = function() c( getPars(), c( .lin = lin ) ),
-             getEnv = function() env,
-             trace = function() {
-                 cat(format(dev),": ", format(c(getPars(), lin)))
-                 cat("\n")
-             },
+	     getEnv = function() env,
+	     trace = function() {
+		 d <- getOption("digits")
+		 cat(sprintf("%-*s (%9e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
+			     formatC(dev, digits=d, flag="#"),
+			     convCrit(),
+			     paste(vapply(c(getPars(), lin), format, ""), collapse=" ")))
+	     },
              Rmat = function()
-             qr.R(qr(.swts * cbind(ddot(attr(rhs, "gradient"), lin), rhs))),
+                 qr.R(qr(.swts * cbind(ddot(attr(rhs, "gradient"), lin), rhs))),
              predict = function(newdata = list(), qr = FALSE)
-             getPred(eval(form[[3L]], as.list(newdata), env))
+                 getPred(eval(form[[3L]], as.list(newdata), env))
              )
     class(m) <- c("nlsModel.plinear", "nlsModel")
     m$conv()
-    on.exit( remove( data, i, m, marg, n, p, start, temp, gradSetArgs) )
+    on.exit(remove(data, i, m, marg, dimGrad, n, p, p2, start, temp, gradSetArgs) )
     m
 }
 
-nlsModel <- function(form, data, start, wts, upper=NULL)
+nlsModel <- function(form, data, start, wts, upper=NULL, scaleOffset = 0, nDcentral = FALSE)
 {
-    thisEnv <- environment()
+    ## thisEnv <- environment() # shared by all functions in the 'm' list; variable no longer needed
     env <- new.env(hash = TRUE, parent = environment(form))
-    for(i in names(data)) assign(i, data[[i]], envir = env)
+    for(i in names(data)) env[[i]] <- data[[i]]
     ind <- as.list(start)
-    parLength <- 0
+    parLength <- 0L
     for(i in names(ind) ) {
         temp <- start[[i]]
         storage.mode(temp) <- "double"
-        assign(i, temp, envir = env)
-        ind[[i]] <- parLength + seq_along(start[[i]])
-        parLength <- parLength + length(start[[i]])
+        env[[i]] <- temp
+        ind[[i]] <- parLength + seq_along(temp)
+        parLength <- parLength + length(temp)
     }
     getPars.noVarying <- function() unlist(mget(names(ind), env))
     getPars <- getPars.noVarying
@@ -242,16 +242,17 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     rhs <- eval(form[[3L]], envir = env)
     .swts <- if(!missing(wts) && length(wts))
         sqrt(wts) else rep_len(1, length(rhs))
-    assign(".swts", .swts, envir = env)
+    env$.swts <- .swts
     resid <- .swts * (lhs - rhs)
     dev <- sum(resid^2)
     if(is.null(attr(rhs, "gradient"))) {
         getRHS.noVarying <- function() {
-            if(is.null(upper))
-                numericDeriv(form[[3L]], names(ind), env)
-            else
+            if(is.null(upper)) # always for "default"
+                numericDeriv(form[[3L]], names(ind), env, central = nDcentral)
+            else # possibly with "port"
                 numericDeriv(form[[3L]], names(ind), env,
-                             ifelse(internalPars < upper, 1, -1))
+                             dir = ## ifelse(internalPars < upper, 1, -1)
+                                 -1 + 2*(internalPars < upper), central = nDcentral)
         }
         getRHS <- getRHS.noVarying
         rhs <- getRHS()
@@ -264,7 +265,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     if(marg > 0L) {
         gradSetArgs <- vector("list", marg + 1L)
         for(i in 2L:marg)
-            gradSetArgs[[i]] <- rep_len(TRUE, dimGrad[i-1])
+            gradSetArgs[[i]] <- rep_len(TRUE, dimGrad[i-1L])
         useParams <- rep_len(TRUE, dimGrad[marg])
     } else {
         gradSetArgs <- vector("list", 2L)
@@ -297,19 +298,27 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     getPars.varying <- function() unlist(mget(names(ind), env))[useParams]
     setPars.noVarying <- function(newPars)
     {
-        assign("internalPars", newPars, envir = thisEnv)
+        internalPars <<- newPars # envir = thisEnv
         for(i in names(ind))
-            assign(i, unname(newPars[ ind[[i]] ]), envir = env)
+            env[[i]] <- unname(newPars[ ind[[i]] ])
     }
     setPars.varying <- function(newPars)
     {
-        internalPars[useParams] <- newPars
+        internalPars[useParams] <<- newPars
         for(i in names(ind))
-            assign(i, unname(internalPars[ ind[[i]] ]), envir = env)
+            env[[i]] <- unname(internalPars[ ind[[i]] ])
     }
     setPars <- setPars.noVarying
 
-    on.exit(remove(i, data, parLength, start, temp, m))
+    if(scaleOffset) scaleOffset <- (length(resid)-npar) * scaleOffset^2
+    convCrit <- function() {
+        if(npar == 0) return(0)
+        rr <- qr.qty(QR, c(resid)) # rotated residual vector
+        sqrt( sum(rr[1L:npar]^2) / (scaleOffset + sum(rr[-(1L:npar)]^2)))
+    }
+
+    on.exit(remove(i, data, parLength, start, temp, m, gr,
+                   marg, dimGrad, qrDim, gradSetArgs))
     ## must use weighted resid for use with "port" algorithm.
     m <-
 	list(resid = function() resid,
@@ -318,68 +327,71 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 	     deviance = function() dev,
 	     lhs = function() lhs,
 	     gradient = function() .swts * attr(rhs, "gradient"),
-	     conv = function() {
-		 if(npar == 0) return(0)
-		 rr <- qr.qty(QR, resid) # rotated residual vector
-		 sqrt( sum(rr[1L:npar]^2) / sum(rr[-(1L:npar)]^2))
-	     },
+	     conv = function() convCrit(),
 	     incr = function() qr.coef(QR, resid),
-	     setVarying = function(vary = rep_len(TRUE, length(useParams))) {
-		 assign("useParams",
-			if(is.character(vary)) {
-			    temp <- logical(length(useParams))
-			    temp[unlist(ind[vary])] <- TRUE
-			    temp
-			} else if(is.logical(vary) &&
-				  length(vary) != length(useParams))
-			stop("setVarying : 'vary' length must match length of parameters")
-			else {
-			    vary
-			}, envir = thisEnv)
-		 gradCall[[length(gradCall) - 1L]] <<- useParams
-		 if(all(useParams)) {
-		     assign("setPars", setPars.noVarying, envir = thisEnv)
-		     assign("getPars", getPars.noVarying, envir = thisEnv)
-		     assign("getRHS", getRHS.noVarying, envir = thisEnv)
-		     assign("npar", length(useParams), envir = thisEnv)
+	     setVarying = function(vary = rep_len(TRUE, np)) {
+                 np <- length(useParams)
+		 useParams <<- useP <-
+                     if(is.character(vary)) {
+                         temp <- logical(np)
+                         temp[unlist(ind[vary])] <- TRUE
+                         temp
+                     } else if(is.logical(vary) && length(vary) != np)
+                         stop("setVarying : 'vary' length must match length of parameters")
+                     else
+                         vary # envir = thisEnv
+		 gradCall[[length(gradCall) - 1L]] <<- useP
+		 if(all(useP)) {
+		     setPars <<- setPars.noVarying
+		     getPars <<- getPars.noVarying
+		     getRHS  <<-  getRHS.noVarying
+		     npar    <<- length(useP)
 		 } else {
-		     assign("setPars", setPars.varying, envir = thisEnv)
-		     assign("getPars", getPars.varying, envir = thisEnv)
-		     assign("getRHS", getRHS.varying, envir = thisEnv)
-                     ## FIXME this is which(useParams)
-		     assign("npar", length(seq_along(useParams)[useParams]),
-			    envir = thisEnv)
+		     setPars <<- setPars.varying
+		     getPars <<- getPars.varying
+		     getRHS  <<-  getRHS.varying
+		     npar    <<- sum(useP)
 		 }
 	     },
 	     setPars = function(newPars) {
 		 setPars(newPars)
-		 assign("resid", .swts *
-			(lhs - assign("rhs", getRHS(), envir = thisEnv)),
-			envir = thisEnv)
-		 assign("dev", sum(resid^2), envir = thisEnv)
+		 resid <<- .swts * (lhs - (rhs <<- getRHS())) # envir = thisEnv {2 x}
+		 dev   <<- sum(resid^2) # envir = thisEnv
 		 if(length(gr <- attr(rhs, "gradient")) == 1L) gr <- c(gr)
-		 assign("QR", qr(.swts * gr), envir = thisEnv )
+		 QR <<- qr(.swts * gr) # envir = thisEnv
 		 (QR$rank < min(dim(QR$qr))) # to catch the singular gradient matrix
 	     },
 	     getPars = function() getPars(),
 	     getAllPars = function() getPars(),
 	     getEnv = function() env,
 	     trace = function() {
-                 cat(format(dev),": ", format(getPars()))
-                 cat("\n")
-             },
+		 d <- getOption("digits")
+		 cat(sprintf("%-*s (%9e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
+			     formatC(dev, digits=d, flag="#"),
+			     convCrit(),
+			     paste(vapply(getPars(), format, ""), collapse=" ")))
+	     },
 	     Rmat = function() qr.R(QR),
 	     predict = function(newdata = list(), qr = FALSE)
-	     eval(form[[3L]], as.list(newdata), env)
+                 eval(form[[3L]], as.list(newdata), env)
 	     )
     class(m) <- "nlsModel"
     m
 }
 
 nls.control <- function(maxiter = 50, tol = 0.00001, minFactor = 1/1024,
-			printEval = FALSE, warnOnly = FALSE)
+			printEval = FALSE, warnOnly = FALSE, scaleOffset = 0,
+                        nDcentral = FALSE) {
+    stopifnot(is.numeric(tol), length(tol) == 1L, tol > 0,
+              is.numeric(minFactor),   length(minFactor) == 1L,
+              is.numeric(scaleOffset), length(scaleOffset) == 1L,
+              is.logical(nDcentral), length(nDcentral) == 1L, !is.na(nDcentral))
     list(maxiter = maxiter, tol = tol, minFactor = minFactor,
-	 printEval = printEval, warnOnly = warnOnly)
+	 printEval = printEval, warnOnly = warnOnly,
+         scaleOffset = scaleOffset, nDcentral = nDcentral)
+}
+
+## port_cpos, port_msg() , ... are in  ==> ./nlminb.R
 
 nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
 {
@@ -391,8 +403,9 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     if (length(control)) {
 	if (!is.list(control) || is.null(nms <- names(control)))
 	    stop("'control' argument must be a named list")
-	## remove those components that do not apply here
-	for(noN in intersect(nms, c("tol", "minFactor", "warnOnly", "printEval")))
+	## remove components that do not apply here
+	for(noN in intersect(nms, c("tol", "minFactor", "warnOnly", "printEval",
+                                    "scaleOffset", "nDcentral")))
 	    control[[noN]] <- NULL
 	nms <- names(control)
 	pos <- pmatch(nms, names(port_cpos))
@@ -547,10 +560,10 @@ nls <-
             if(!missing(na.action))
                 warning("argument 'na.action' will be ignored")
 	    if(missing(start))
-		start <- getInitial(formula, mf)
+		start <- getInitial(formula, data=mf, control=control, trace=trace)
 	    startEnv <- new.env(hash = FALSE, parent = environment(formula)) # small
 	    for (i in names(start))
-		assign(i, start[[i]], envir = startEnv)
+		startEnv[[i]] <- start[[i]]
 	    rhs <- eval(formula[[3L]], data, startEnv)
 	    n <- NROW(rhs)
             ## mimic what model.frame.default does
@@ -584,24 +597,29 @@ nls <-
     }
 
     ## set up iteration
-    if (missing(start)) start <- getInitial(formula, mf)
+    if(missing(start))
+        start <- getInitial(formula, data=mf, control=control, trace=trace)
     for(var in varNames[!varIndex])
         mf[[var]] <- eval(as.name(var), data, env)
     varNamesRHS <- varNamesRHS[ varNamesRHS %in% varNames[varIndex] ]
 
-    m <- switch(algorithm,
-		plinear = nlsModel.plinear(formula, mf, start, wts),
-		port    = nlsModel        (formula, mf, start, wts, upper),
-                ## Default:
-		nlsModel(formula, mf, start, wts))
-
+    ## requires 'control' to not contain extra entries (not fulfilled for several CRAN packages)
+    ## ctrl <- do.call(nls.control, as.list(if(!missing(control)) control))
+    ## Less nice, but more tolerant (to "garbage" which is also put into 'ctrl'):
     ctrl <- nls.control()
     if(!missing(control)) {
 	control <- as.list(control)
 	ctrl[names(control)] <- control
     }
+    scOff  <- ctrl$scaleOffset
+    nDcntr <- ctrl$nDcentral
+    m <- switch(algorithm,
+		plinear = nlsModel.plinear(formula, mf, start, wts,        scaleOffset=scOff, nDcentral=nDcntr),
+		port    = nlsModel        (formula, mf, start, wts, upper, scaleOffset=scOff, nDcentral=nDcntr),
+                default = nlsModel        (formula, mf, start, wts,        scaleOffset=scOff, nDcentral=nDcntr))
+
     ## Iterate
-    if (algorithm != "port") {
+    if (algorithm != "port") { ## i.e. "default" or  "plinear" :
 	if (!identical(lower, -Inf) || !identical(upper, +Inf)) {
 	    warning('upper and lower bounds ignored unless algorithm = "port"')
 	    cl$lower <- NULL # see PR#15960 -- confint() would use these regardless of algorithm

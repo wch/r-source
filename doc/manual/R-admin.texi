@@ -241,7 +241,7 @@ as perhaps (it is tested less frequently on these platforms)
 @cindex Linux
 @cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for macOS (formerly OS X and Mac OS X).  See the
+distributions and for macOS.  See the
 @acronym{FAQ} for current details.  These are installed in
 platform-specific ways, so for the rest of this chapter we consider only
 building from the sources.
@@ -1244,7 +1244,7 @@ normally separate compilation units.
 With @command{gcc}/@command{gfortran} 9.x and later@footnote{probably
 also 8.4 and later.} LTO will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
-Fortran and C/C++.  @command{gfortran} 8,4, 9.2 and later can help
+Fortran and C/C++.  @command{gfortran} 8.4, 9.2 and later can help
 understanding these by extracting C prototypes from Fortran source files
 with its @option{-fc-prototypes-external} option, e.g.@: that (at the
 time of writing) Fortran @code{LOGICAL} corresponds to
@@ -1523,15 +1523,13 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-(`macOS' was known as `OS X' from 2012--2016 and as `Mac OS X' before that.)
-
 [The rest of this paragraph is only relevant after release.]
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X'. Click on that, then download the file
 @file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
-and later on Intel CPU@footnote{macOS 11 has been a little tested on
-`Apple Silicon' using `Rosetta' emulation.}  (High Sierra, Mojave,
-Catalina, Big Sur, @dots{}).
+and later on Intel CPU@footnote{macOS 11 `Big Sur' has been a little
+tested on `Apple Silicon' using `Rosetta' emulation.}  (High Sierra,
+Mojave, Catalina, Big Sur, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -3529,7 +3527,7 @@ these variables.
 
 The linear algebra routines in @R{} can make use of enhanced
 @acronym{BLAS} (Basic Linear Algebra Subprograms,
-@uref{http://www.netlib.org/@/blas/@/faq.html}) routines.  However,
+@uref{https://www.netlib.org/@/blas/@/faq.html}) routines.  However,
 these have to be explicitly requested at configure time: @R{} provides
 an internal @acronym{BLAS} which is well-tested and will be adequate for
 most uses of @R{}.
@@ -3700,7 +3698,7 @@ compile-time flag specifies 4 threads.)
 
 Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors
 and OSes, which was frozen in mid-2010.  OpenBLAS
-(@uref{http://www.openblas.net/}) is a descendant project with support
+(@uref{https://www.openblas.net/}) is a descendant project with support
 for some later CPUs.
 
 This can be used by configuring @R{} with something like
@@ -4463,7 +4461,7 @@ recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
-(currently) at @uref{http://sourceforge.net/@/p/@/predef/@/wiki/@/Home/}
+(currently) at @uref{https://sourceforge.net/@/p/@/predef/@/wiki/@/Home/}
 can be helpful.  The @R{} sources have used (often in included software
 under @file{src/extra})
 @example
@@ -4743,7 +4741,7 @@ Use of @code{_GLIBCXX_ASSERTIONS} will link @code{abort} and
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
-C++ compilers (@uref{http://clang.llvm.org}) based on the Clang
+C++ compilers (@uref{https://clang.llvm.org}) based on the Clang
 front-ends, invoked by @code{CC=clang CXX=clang++}, together with
 @command{gfortran}.  These take very similar options to the
 corresponding GCC compilers.
@@ -4754,7 +4752,7 @@ which is needed for some versions of @command{gfortran}.
 
 The current out-of-the-box default for @command{clang++} is to use the
 C++ runtime from the installed @command{g++}.  Using the runtime from
-the @code{libc++} project (@url{http://libcxx.llvm.org/}, Fedora RPM
+the @code{libc++} project (@url{https://libcxx.llvm.org/}, Fedora RPM
 @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++} has also been
 tested.
 
@@ -4846,15 +4844,14 @@ SAFE_FFLAGS=-axsse2
 @section macOS
 @cindex macOS
 
-(`macOS' was known as `OS X' from 2012--2016.)
-
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
 10.13--10.15 (High Sierra, Mojave and Catalina)@footnote{Details for the
 upcoming macOS 11 `Big Sur' remain to be confirmed: no Fortran compiler
-was available for `Apple Silicon' at the time of writing.}.  @R{} can in
-principle be built for 10.6--10.12, although this is little tested and
-it may be necessary to install later versions of software such as
-@code{libcurl} and an older version@footnote{For example, from
+was available for `Apple Silicon' at the time of writing although there
+are ports under development.}.  @R{} can in principle be built for
+10.6--10.12, although this is little tested and it may be necessary to
+install later versions of software such as @code{libcurl} and an older
+version@footnote{For example, from
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
 @command{gfortran}.
 
@@ -5123,7 +5120,7 @@ can be used @emph{via} the configuration options
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It was reported that for some non-Apple
 toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} from @url{releases.llvm.org} though.}
+not needed for @command{clang} from @uref{https://releases.llvm.org} though.}
 This also includes a full LAPACK which can be used @emph{via}
 @option{--with-lapack}: however, the version of LAPACK it contains is
 often seriously old.
@@ -5241,7 +5238,7 @@ Java.} this should prompt you to install it.  You can also install
 directly a recent Java from Oracle (currently from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html}).
 Builds of OpenJDK may also be available, e.g.@: from
-@uref{https://adoptopenjdk.net} or @uref{http://jdk.java.net/}.  We
+@uref{https://adoptopenjdk.net} or @uref{https://jdk.java.net/}.  We
 recommend you install a version with long-term support, e.g.@: 8 or 11
 (but not 9, 10, 12--16 which have/had a 6-month lifetime).
 
@@ -5303,7 +5300,8 @@ selected by the option
 @end example
 
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly but those from @code{releases.llvm.org} do.)
+support frameworks correctly but those from
+@uref{https://releases.llvm.org} do.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
@@ -5684,7 +5682,7 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{http://cvsweb.openbsd.org/@/cgi-bin/@/cvsweb/@/ports/@/math/@/R/}. (Downgrading
+@uref{https://cvsweb.openbsd.org/@/cgi-bin/@/cvsweb/@/ports/@/math/@/R/}. (Downgrading
 the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
 developers.)
 

@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2015   The R Core Team
+ *   Copyright (C) 1997-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -273,6 +273,10 @@ void process_site_Renviron ()
     process_Renviron(buf);
 }
 
+#ifdef Win32
+extern char *getRUser(void);
+#endif
+
 /* try user Renviron: ./.Renviron, then ~/.Renviron */
 void process_user_Renviron()
 {
@@ -296,10 +300,7 @@ void process_user_Renviron()
     {
 	char buf[1024]; /* MAX_PATH is less than this */
 	/* R_USER is not necessarily set yet, so we have to work harder */
-	s = getenv("R_USER");
-	if(!s) s = getenv("HOME");
-	if(!s) return;
-	snprintf(buf, 1024, "%s/.Renviron", s);
+	snprintf(buf, 1024, "%s/.Renviron", getRUser());
 	s = buf;
     }
 #endif

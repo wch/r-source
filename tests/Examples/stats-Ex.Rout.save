@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-08-15 r79028) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-11-03 r79399) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1243,6 +1243,52 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 >   ySS <- SSbiexp(xx, 3.5, log(4), 1.5, log(1))
 >   ##                      ---          ---
 >   stopifnot(all.equal(y1+y2, ySS, tolerance = 1e-15))
+> 
+> ## Show a no-noise example
+> datN <- data.frame(time = (0:600)/64)
+> datN$conc <- predict(fm1, newdata=datN)
+> plot(conc ~ time, data=datN) # perfect, no noise
+> ## IGNORE_RDIFF_BEGIN
+> ## Fails by default (scaleOffset=0):
+> ## Not run: 
+> ##D         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN, trace=TRUE)
+> ## End(Not run)
+> ## Don't show: 
+> try( # maxiter=10: store less garbage
++         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
++             trace=TRUE, control = list(maxiter = 10)) )
+0.01722077  (5.338963e+02): par = (0.6168807 -1.783839 2.050204 0.2004597)
+3.308944e-06 (1.128925e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
+2.571093e-11 (7.684396e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+1.633875e-23 (4.263284e+03): par = (0.5793887 -1.787785 2.029277 0.1915474)
+5.883240e-29 (1.320900e+01): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.292713e-29 (1.705440e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.292713e-29 (1.705440e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.292713e-29 (1.705440e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.292713e-29 (1.705440e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.292713e-29 (1.705440e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.292713e-29 (1.705440e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
+Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  : 
+  number of iterations exceeded maximum of 10
+> ## End(Don't show)
+> fmX1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN, control = list(scaleOffset=1))
+> fmX  <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
++            control = list(scaleOffset=1, printEval=TRUE, tol=1e-11, nDcentral=TRUE), trace=TRUE)
+0.01722077    (6.548719e-02): par = (0.6168807 -1.783839 2.050204 0.2004597)
+  It.   1, fac=           1, eval (no.,total): ( 1,  1): new dev = 3.30894e-06
+3.308942e-06  (9.080047e-04): par = (0.5798674 -1.784335 2.028943 0.1920502)
+  It.   2, fac=           1, eval (no.,total): ( 1,  2): new dev = 2.57108e-11
+2.571082e-11  (2.531056e-06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66922e-23
+1.669220e-23  (2.039390e-12): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.670353e-23  (1.672696e-13): par = (2.029277 0.5793887 0.1915474 -1.787785)
+> all.equal(coef(fm1), coef(fmX1), tol=0) # ... rel.diff.: 1.57e-6
+[1] "Mean relative difference: 1.574125e-06"
+> all.equal(coef(fm1), coef(fmX),  tol=0) # ... rel.diff.: 1.03e-12
+[1] "Mean relative difference: 1.031784e-12"
+> ## IGNORE_RDIFF_END
+> stopifnot(all.equal(coef(fm1), coef(fmX1), tol = 6e-6),
++           all.equal(coef(fm1), coef(fmX ), tol = 1e-11))
 > 
 > 
 > 
@@ -3926,7 +3972,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x49fc278>
+<environment: 0x40f28b0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4963,7 +5009,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5788118>
+<bytecode: 0x4f7ac10>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7587,7 +7633,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5966b98>
+<environment: 0x5820b10>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11056,6 +11102,22 @@ Residual standard error: 1.21 on 10 degrees of freedom
 > ## without noise.
 > x <- 1:10
 > y <- 2*x + 3                            # perfect fit
+> ## terminates in an error, because convergence cannot be confirmed:
+> try(nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321)))
+Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321)) : 
+  number of iterations exceeded maximum of 50
+> ## adjusting the convergence test by adding 'scaleOffset' to its denominator RSS:
+> nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
++     control = list(scaleOffset = 1, printEval=TRUE))
+  It.   1, fac=           1, eval (no.,total): ( 1,  1): new dev = 1.05935e-12
+Nonlinear regression model
+  model: y ~ a + b * x
+   data: parent.frame()
+a b 
+3 2 
+ residual sum-of-squares: 1.06e-12
+> ## Alternatively jittering the "too exact" values, slightly:
+> set.seed(27)
 > yeps <- y + rnorm(length(y), sd = 0.01) # added noise
 > nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 Nonlinear regression model
@@ -11063,14 +11125,10 @@ Nonlinear regression model
    data: parent.frame()
 a b 
 3 2 
- residual sum-of-squares: 0.000524
-> ## terminates in an error, because convergence cannot be confirmed:
-> try(nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321)))
-Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321)) : 
-  number of iterations exceeded maximum of 50
+ residual sum-of-squares: 0.00135
+> 
 > 
 > ## the nls() internal cheap guess for starting values can be sufficient:
-> 
 > x <- -(1:100)/10
 > y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
 > nlmod <- nls(y ~  Const + A * exp(B * x))
@@ -11083,6 +11141,40 @@ Consider specifying 'start' or using a selfStart model
 > curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 > lines(x, predict(nlmod), col = 2)
 > 
+> ## Here, requiring close convergence, you need to use more accurate numerical
+> ##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
+> options(digits = 10) # more accuracy for 'trace'
+> try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
+Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
+  No starting values specified for some parameters.
+Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
+Consider specifying 'start' or using a selfStart model
+Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  : 
+  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
+>    (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
+Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
+  No starting values specified for some parameters.
+Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
+Consider specifying 'start' or using a selfStart model
+1017460.306    (4.151743e+02): par = (1 1 1)
+758164.7503    (2.344683e+02): par = (13.42031396 1.961485 0.05947543745)
+269506.3537    (3.226620e+02): par = (51.75719817 -13.09155958 0.8428607712)
+68969.21891    (1.033820e+02): par = (76.0006985 -1.93522675 1.0190858)
+633.3672224    (1.294814e+00): par = (100.3761515 8.624648408 5.104490252)
+151.4400170    (9.388771e+00): par = (100.6344391 4.913490999 0.2849209664)
+53.08739445    (7.238414e+00): par = (100.6830407 6.899303393 0.4637755095)
+1.344478582    (5.971663e-01): par = (100.0368306 9.897714144 0.5169294926)
+0.9908415908   (1.546514e-02): par = (100.0300625 9.9144191 0.5023516843)
+0.9906046057   (1.836907e-05): par = (100.0288724 9.916224018 0.5025207336)
+0.9906046054   (9.943389e-08): par = (100.028875 9.916228366 0.50252165)
+0.9906046054   (4.996813e-08): par = (100.028875 9.916228377 0.5025216525)
+Nonlinear regression model
+  model: y ~ Const + A * exp(B * x)
+   data: parent.frame()
+      Const           A           B 
+100.0288750   9.9162284   0.5025217 
+ residual sum-of-squares: 0.9906046
+> ## --> convergence tolerance  4.997e-8 (in 11 iter.)
 > 
 > ## Don't show: 
 > options(od)
@@ -11119,6 +11211,12 @@ $printEval
 $warnOnly
 [1] FALSE
 
+$scaleOffset
+[1] 0
+
+$nDcentral
+[1] FALSE
+
 > 
 > 
 > 
@@ -11135,54 +11233,26 @@ $warnOnly
 > 
 > ### ** Examples
 > 
-> ## Don't show: 
-> od <- options(digits = 4)
-> ## End(Don't show)
 > myenv <- new.env()
-> assign("mean", 0., envir = myenv)
-> assign("sd", 1., envir = myenv)
-> assign("x", seq(-3., 3., len = 31), envir = myenv)
-> numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
- [1] 0.001350 0.002555 0.004661 0.008198 0.013903 0.022750 0.035930 0.054799
- [9] 0.080757 0.115070 0.158655 0.211855 0.274253 0.344578 0.420740 0.500000
-[17] 0.579260 0.655422 0.725747 0.788145 0.841345 0.884930 0.919243 0.945201
-[25] 0.964070 0.977250 0.986097 0.991802 0.995339 0.997445 0.998650
-attr(,"gradient")
-           [,1]     [,2]
- [1,] -0.004432  0.01330
- [2,] -0.007915  0.02216
- [3,] -0.013583  0.03532
- [4,] -0.022395  0.05375
- [5,] -0.035475  0.07804
- [6,] -0.053991  0.10798
- [7,] -0.078950  0.14211
- [8,] -0.110921  0.17747
- [9,] -0.149727  0.20962
-[10,] -0.194186  0.23302
-[11,] -0.241971  0.24197
-[12,] -0.289692  0.23175
-[13,] -0.333225  0.19993
-[14,] -0.368270  0.14731
-[15,] -0.391043  0.07821
-[16,] -0.398942  0.00000
-[17,] -0.391043 -0.07821
-[18,] -0.368270 -0.14731
-[19,] -0.333225 -0.19993
-[20,] -0.289692 -0.23175
-[21,] -0.241971 -0.24197
-[22,] -0.194186 -0.23302
-[23,] -0.149727 -0.20962
-[24,] -0.110921 -0.17747
-[25,] -0.078950 -0.14211
-[26,] -0.053991 -0.10798
-[27,] -0.035475 -0.07804
-[28,] -0.022395 -0.05375
-[29,] -0.013583 -0.03532
-[30,] -0.007915 -0.02216
-[31,] -0.004432 -0.01330
-> ## Don't show: 
-> options(od)
-> ## End(Don't show)
+> myenv$mean <- 0.
+> myenv$sd   <- 1.
+> myenv$x    <- seq(-3., 3., len = 31)
+> nD <- numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
+> str(nD)
+ num [1:31] 0.00135 0.00256 0.00466 0.0082 0.0139 ...
+ - attr(*, "gradient")= num [1:31, 1:2] -0.00443 -0.00792 -0.01358 -0.02239 -0.03547 ...
+> 
+> ## Visualize :
+> require(graphics)
+> matplot(myenv$x, cbind(c(nD), attr(nD, "gradient")), type="l")
+> abline(h=0, lty=3)
+> ## "gradient" is close to the true derivatives, you don't see any diff.:
+> curve( - dnorm(x), col=2, lty=3, lwd=2, add=TRUE)
+> curve(-x*dnorm(x), col=3, lty=3, lwd=2, add=TRUE)
+> ##
+> all.equal(attr(nD,"gradient"),
++           with(myenv, cbind(-dnorm(x), -x*dnorm(x)))) # shows 1.6e-8
+[1] "Mean relative difference: 1.609569e-08"
 > 
 > 
 > 
@@ -12281,14 +12351,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5608de8>
-<environment: 0x56133d0>
+<bytecode: 0x4abc680>
+<environment: 0x4ac0d58>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5608c98>
-<environment: 0x56133d0>
+<bytecode: 0x4abc530>
+<environment: 0x4ac0d58>
 
 > 
 > 
@@ -14395,7 +14465,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > ### Compare different types
 > quantAll <- function(x, prob, ...)
 +   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
-+            quantile(x, prob, type=1)))
++            quantile(x, prob, type=1, ...)))
 > p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 > signif(quantAll(x, p), 4)
         0.1%   0.5%     1%     2%     5%    10%      50%
@@ -16414,7 +16484,7 @@ Median  -0.50 -0.13613265
 Mean    -0.50 -0.08208311
 3rd Qu.  0.75  0.50611122
 Max.     2.00  1.03072752
-> plot(x, y, main = "spline(x,y, ties=list(\"ordered\", mean)  for when x has ties")
+> plot(x, y, main = "spline(x,y, ties=list(\"ordered\", mean))  for when x has ties")
 > lines(sxyo, col="blue")
 > 
 > ## An example of monotone interpolation
@@ -16554,8 +16624,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x641c838>
-<environment: 0x6587b70>
+<bytecode: 0x5c37ec0>
+<environment: 0x7e903f8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18982,7 +19052,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.509 0.199 7.747 0 0 
+Time elapsed:  5.263 1.148 6.597 0 0 
 > grDevices::dev.off()
 null device 
           1 

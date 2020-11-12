@@ -225,7 +225,7 @@ X11.options(\dots, reset = FALSE)
   obtain and install such fonts.
   At present the best rendering (including using kerning)
   will be achieved with TrueType fonts: see
-  \url{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}
+  \url{https://www.freedesktop.org/software/fontconfig/fontconfig-user.html}
   for ways to set up your system to prefer them.  The default family
   (\code{"Helvetica"}) is likely not to use kerning: alternatives which
   should if you have them installed are \code{"Arial"},

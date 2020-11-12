@@ -124,8 +124,8 @@ system(command, intern = FALSE,
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string.  (Output lines of more than
-  8095 bytes will be split.)  If the command could not be run an \R
-  error is generated.
+  8095 bytes will be split on some systems.)
+  If the command could not be run an \R error is generated.
 #ifdef windows
   Under the \code{Rgui} console \code{intern = TRUE} also captures
   \code{stderr} unless \code{ignore.stderr = TRUE}.

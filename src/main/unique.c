@@ -695,25 +695,23 @@ R_xlen_t any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 #undef DUPLICATED_INIT
 
 
-/* .Internal(duplicated(x))	  [op=0]
-  .Internal(unique(x))		  [op=1]
-   .Internal(anyDuplicated(x))	  [op=2]
+/* .Internal(   duplicated(x, incomparables, fromLast, nmax))  [op=0]
+   .Internal(       unique(x, incomparables, fromLast, nmax))  [op=1]
+   .Internal(anyDuplicated(x, incomparables, fromLast      ))  [op=2]
 */
 SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, incomp, dup, ans;
-    int fromLast, nmax = NA_INTEGER;
+    SEXP x, dup, ans;
     R_xlen_t i, k, n;
 
     checkArity(op, args);
     x = CAR(args);
-    incomp = CADR(args);
+    SEXP incomp = CADR(args);
     if (length(CADDR(args)) < 1)
 	error(_("'fromLast' must be length 1"));
-    fromLast = asLogical(CADDR(args));
+    int fromLast = asLogical(CADDR(args));
     if (fromLast == NA_LOGICAL)
 	error(_("'fromLast' must be TRUE or FALSE"));
-
     Rboolean fL = (Rboolean) fromLast;
 
     /* handle zero length vectors, and NULL */
@@ -727,6 +725,7 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 	      (PRIMVAL(op) == 0 ? "duplicated" :
 	       (PRIMVAL(op) == 1 ? "unique" : /* 2 */ "anyDuplicated")));
     }
+    int nmax = NA_INTEGER;
     if (PRIMVAL(op) <= 1) {
 	nmax = asInteger(CADDDR(args));
 	if (nmax != NA_INTEGER && nmax <= 0)

@@ -1631,7 +1631,7 @@ directory of the package, a temporary location for staged installs) and
 @code{R_ARCH} (the arch-dependent part of the path, often empty).
 
 Under a Unix-alike only, an executable (Bourne shell) script
-@file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
+@command{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
 option @option{--clean} was given, and by @code{R CMD build} when
 preparing the package for building from its source.
 
@@ -2686,17 +2686,17 @@ published in December 2017, and a further revision (`C++20', with many
 new features) is scheduled for publication in May 2020.
 
 What standard a C++ compiler aims to support can be hard to determine:
-the value@footnote{Values @code{199711}, @code{201103L}, @code{201402L}
-and @code{201703L} are most commonly used for C++98, C++11, C++14 and
-C++17 respectively, but some compilers set @code{1L}.  At the time of
-writing there was no official value for C++20, but some compilers are
-using @code{202002L}, others @code{201703L}.} of @code{__cplusplus} may
-help but some compilers use it to denote a standard which is partially
+the value@footnote{Values @code{201103L}, @code{201402L} and
+@code{201703L} are most commonly used for C++11, C++14 and C++17
+respectively, but some compilers set @code{1L}.  At the time of writing
+there was no official value for C++20, but some compilers are using
+@code{202002L}, others @code{201703L}.} of @code{__cplusplus} may help
+but some compilers use it to denote a standard which is partially
 supported and some the latest standard which is (almost) fully
 supported.
 
 The webpage
-@uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
+@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.  @command{g++} claims full C++11 support from version 4.8.1.
 
@@ -2803,7 +2803,7 @@ Code needing C++14 features would do better to test for their presence
 @emph{via} `SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
 or
-@uref{http://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
+@uref{https://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
 It seems a reasonable assumption that any compiler promising some C++14
 conformance will provide these---e.g.@: @command{g++} 4.9.x did but
 4.8.5 did not.}.  That test could be
@@ -4834,7 +4834,7 @@ if(substr(jv, 1L, 2L) == "1.") @{
 Java 9 changed the format of this string (which used to be something
 like @samp{1.8.0_162-b12}); Java 11 gives @code{jv} as @samp{11+28}
 whereas Java 10.0.2 gave
-@samp{10.0.2+10}. (@uref{http://openjdk.java.net/jeps/322} details the
+@samp{10.0.2+10}. (@uref{https://openjdk.java.net/jeps/322} details the
 current scheme.  Note that it is necessary to allow for pre-releases
 like @samp{11-ea+22}.)
 
@@ -4996,10 +4996,10 @@ ones.  But not all platforms use those CPUs, and not all@footnote{Not
 doing so is the default on Windows, overridden for the @R{} executables.
 It is also the default on some Solaris compilers.} which use them
 configure them to allow the use of extended precision.  In particular,
-32-bit ARM CPUs do not (currently) have extended precision nor long
-doubles, and long double was 64-bit on HP/PA Linux.  On the other hand
-some CPUs have higher-precision modes than @cputype{x86_64} used for
-@code{long double}, notably 64-bit ARM and Sparc (as from v9).
+32-bit ARM CPUs do not have extended precision nor long doubles, and
+@command{clang} currently has long double the same as double on all ARM
+CPUs.  On the other hand some CPUs have higher-precision modes which may
+be used for @code{long double}, notably 64-bit PowerPC and Sparc.
 
 If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-double} and use appropriate
@@ -5235,8 +5235,8 @@ before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
-@uref{http://www.cplusplus.com/reference/} or
-@uref{http://en.cppreference.com/w/} and compare what is defined in the
+@uref{https://www.cplusplus.com/reference/} or
+@uref{https://en.cppreference.com/w/} and compare what is defined in the
 various standards.
 
 Both the compiler and OS (@emph{via} system header files, which may
@@ -5255,7 +5255,8 @@ floating-point arguments: @code{float}, @code{double}, @code{long
 double} and possibly more.  The standard specifies what happens with an
 argument of integer type but this is not always implemented, resulting
 in a report of `overloading ambiguity': this is commonly seen on
-Solaris, but for @code{pow} also seen on macOS.
+Solaris, but for @code{pow} also seen on macOS (and other platforms
+using @command{clang++}).
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
@@ -5291,11 +5292,11 @@ arguments: a few compilers give a compilation error.  Function
 @item
 The GNU C/C++ compilers support a large number of non-portable
 extensions.  For example, @code{INFINITY} (which is a @emph{float} value
-in C99 and C++11 but not C++98), for which @R{} provides the portable
-double value @code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).
-And @code{NAN}@footnote{also part of C++11 and later.} is just one NaN
-@emph{float} value: for use with @R{}, @code{NA_REAL} is usually what
-is intended, but @code{R_NaN} is also available.
+in C99 and C++11), for which @R{} provides the portable double value
+@code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).  And
+@code{NAN}@footnote{also part of C++11 and later.} is just one NaN
+@emph{float} value: for use with @R{}, @code{NA_REAL} is often what is
+intended, but @code{R_NaN} is also available.
 
 Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
@@ -5576,7 +5577,7 @@ include it.
 @end itemize
 
 Some additional information for C++ is available at
-@uref{http://journal.r-project.org/@/archive/@/2011-2/@/RJournal_2011-2_Plummer.pdf}
+@uref{https://journal.r-project.org/@/archive/@/2011-2/@/RJournal_2011-2_Plummer.pdf}
 by Martyn Plummer.
 
 @node Common symbols,  , Portable C and C++ code, Portable C and C++ code
@@ -5631,7 +5632,7 @@ that other users will not have.
 For Windows, check what other DLLs your package's DLL depends on
 (`imports' from in the DLL tools' parlance).  A convenient GUI-based
 tool to do so is `Dependency Walker'
-(@uref{http://www.dependencywalker.com/}) for both 32-bit and 64-bit
+(@uref{https://www.dependencywalker.com/}) for both 32-bit and 64-bit
 DLLs -- note that this will report as missing links to @R{}'s own DLLs
 such as @file{R.dll} and @file{Rblas.dll}.  The command-line tool
 @command{objdump} in the appropriate toolchain will also reveal what
@@ -7961,7 +7962,7 @@ be current.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{https://oprofile.sourceforge.net/}) and
+@command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
 @command{perf} (see
 @uref{https://perf.wiki.kernel.org/@/index.php/@/Tutorial}) for any
 executable or shared object.
@@ -8705,7 +8706,7 @@ mechanism can be helpful in isolating memory protect problems.
 
 If you have access to Linux on a common CPU type or supported versions
 of macOS or Solaris you can use @code{valgrind}
-(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+(@uref{https://www.valgrind.org/}, pronounced to rhyme with `tinned') to
 check for possible problems.  To run some examples under @code{valgrind}
 use something like
 
@@ -8837,7 +8838,7 @@ More thorough checks of C++ code are done if the C++ library has been
 `annotated': at the time of writing this applied to @code{std::vector}
 in @code{libc++} for use with @command{clang} and gives rise to
 @samp{container-overflow}@footnote{see
-@uref{http://llvm.org/devmtg/2014-04/PDFs/LightningTalks/EuroLLVM%202014%20--%20container%20overflow.pdf}.}
+@uref{https://llvm.org/devmtg/2014-04/PDFs/LightningTalks/EuroLLVM%202014%20--%20container%20overflow.pdf}.}
 reports.
 
 It requires code to have been compiled @emph{and linked} with
@@ -9092,7 +9093,7 @@ and @option{-ftrapv}, said to be more reliable in @command{clang} than
 
 For more details on the topic see
 @uref{https://blog.regehr.org/archives/213} and
-@uref{http://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
+@uref{https://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
 (which has 3 parts).
 
 It may or may not be possible to build @R{} itself with
@@ -9133,7 +9134,7 @@ See
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
 
-`Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
+`Dr. Memory' from @uref{https://www.drmemory.org/} is a memory checker
 for (currently) 32-bit Windows, Linux and macOS with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
 works better if inlining and frame pointer optimizations are disabled.}
@@ -9179,7 +9180,7 @@ Sooner or later programmers will be faced with the need to debug
 compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with other debuggers such as @command{lldb}
-(@uref{http://lldb.llvm.org/}, used on macOS) and Sun's @command{dbx}:
+(@uref{https://lldb.llvm.org/}, used on macOS) and Sun's @command{dbx}:
 some debuggers have graphical front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
@@ -14515,7 +14516,7 @@ For historical reasons there are Fortran interfaces to functions
 @code{D1MACH} and @code{I1MACH}.  These can be called from C code as
 e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
 the original functions by Fox, Hall and Schryer on NetLib at
-@uref{http://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
+@uref{https://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
 (required by @R{}).
 
 @node Re-encoding, Condition handling and cleanup code, Utility functions, The R API
@@ -14740,7 +14741,7 @@ static R_INLINE int ind_2(int l, int j)
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably, see
-@uref{http://www.greenend.org.uk/@/rjk/@/tech/@/inline.html}, so this usage
+@uref{https://www.greenend.org.uk/@/rjk/@/tech/@/inline.html}, so this usage
 is for @code{static} functions as in the example.  All the @R{}
 configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
@@ -15767,7 +15768,7 @@ currently available that interface directly with @R{} and provide a
 @itemize
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available @emph{via} @uref{http://www.autstat.com/},
+Baier available @emph{via} @uref{https://www.autstat.com/},
 which works with @R{} packages to support transfer of data to and from
 @R{} and remote execution of @R{} commands, as well as embedding of an
 @R{} graphics window.

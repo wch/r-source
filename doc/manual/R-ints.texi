@@ -1136,8 +1136,8 @@ functions are defined and also in file @file{size.c} which needs access
 to the sizes of the internal structures.)
 
 For background papers see
-@uref{http://homepage.stat.uiowa.edu/~luke/R/barrier.html} and
-@uref{http://homepage.stat.uiowa.edu/~luke/R/gengcnotes.html}.
+@uref{https://homepage.stat.uiowa.edu/~luke/R/barrier.html} and
+@uref{https://homepage.stat.uiowa.edu/~luke/R/gengcnotes.html}.
 
 @node Serialization Formats, Encodings for CHARSXPs, The write barrier, R Internal Structures
 @section Serialization Formats
@@ -4499,6 +4499,18 @@ Unfortunately these checks slow down checking of examples, tests and
 vignettes, typically two-fold but in the worst cases at least a
 hundred-fold.
 
+The following environment variables can be used to customize the
+operation of @command{INSTALL}.
+
+@vtable @code
+@item _R_INSTALL_LIBS_ONLY_FORCE_DEPENDS_IMPORTS_
+If true, give an error if installing only package libraries via
+@option{--libs-only} and some package imported or dependened on is not
+available.
+Default: true (false only for special applications, which analyze native
+code of packages).
+@end vtable
+
 @node R coding standards, Testing R code, Tools, Top
 @chapter R coding standards
 
@@ -4816,7 +4828,7 @@ introduce `long' versions @code{xlength} and @code{XLENGTH} which return
 @code{R_xlen_t} values.
 
 
-See also @uref{http://homepage.cs.uiowa.edu/~luke/talks/useR10.pdf}.
+See also @uref{https://homepage.cs.uiowa.edu/~luke/talks/useR10.pdf}.
 
 @node Large matrices,  , 64-bit types, Current and future directions
 @section Large matrices

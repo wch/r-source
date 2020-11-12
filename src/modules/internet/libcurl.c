@@ -55,11 +55,14 @@
 extern void Rsleep(double timeint);
 #endif
 
+static int current_timeout = 0;
+
 # if (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
 
 // curl/curl.h includes <sys/select.h> and headers it requires.
 
 #define curl_multi_wait R_curl_multi_wait
+
 
 static CURLMcode
 R_curl_multi_wait(CURLM *multi_handle,
@@ -215,7 +218,11 @@ static int curlMultiCheckerrs(CURLM *mhnd)
 			url, type, status, strerr);
 	    } else {
 		strerr = curl_easy_strerror(msg->data.result);
-		warning(_("URL '%s': status was '%s'"), url, strerr);
+		if (streql(strerr, "Timeout was reached"))
+		    warning(_("URL '%s': Timeout of %d seconds was reached"),
+			    url, current_timeout);
+		else
+		    warning(_("URL '%s': status was '%s'"), url, strerr);
 	    }
 	    retval++;
 	}
@@ -267,6 +274,7 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 #endif
     int timeout0 = asInteger(GetOption1(install("timeout")));
     long timeout = (timeout0 == NA_INTEGER) ? 0 : (1000L * timeout0);
+    current_timeout = (timeout0 == NA_INTEGER) ? 0 : timeout0;
     curl_easy_setopt(hnd, CURLOPT_CONNECTTIMEOUT_MS, timeout);
     curl_easy_setopt(hnd, CURLOPT_TIMEOUT_MS, timeout);
     if (redirect) {
@@ -324,8 +332,13 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (verify == NA_LOGICAL)
 	error(_("invalid %s argument"), "verify");
     int timeout = asInteger(CADDDR(args));
-    if (verify == NA_INTEGER)
+    if (timeout == NA_INTEGER)
 	error(_("invalid %s argument"), "timeout");
+    SEXP sTLS = CAD4R(args);
+    const char *TLS = "";
+    if (isString(sTLS) && LENGTH(sTLS) == 1 && STRING_ELT(sTLS, 0) != NA_STRING)
+	TLS = translateChar(STRING_ELT(sTLS, 0));
+    else error(_("invalid %s argument"), "TLS");
 
     CURL *hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_URL, url);
@@ -337,7 +350,27 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
        for some ftp header info (Content-Length and Accept-ranges). */
     curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
     curlCommon(hnd, redirect, verify);
-    if (timeout > 0) curl_easy_setopt(hnd, CURLOPT_TIMEOUT, timeout);
+    if (timeout > 0) {
+	curl_easy_setopt(hnd, CURLOPT_TIMEOUT, timeout);
+	current_timeout = timeout;
+    }
+    if (!streql(TLS, "")) {
+	// 7.34.0 was released 2013-12-17
+#if LIBCURL_VERSION_MAJOR > 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 34)
+	long TLS_ver = CURL_SSLVERSION_TLSv1_0;
+	if (streql(TLS, "1.0")) TLS_ver = CURL_SSLVERSION_TLSv1_0; 
+	else if (streql(TLS, "1.1")) TLS_ver = CURL_SSLVERSION_TLSv1_1; 
+	else if (streql(TLS, "1.2")) TLS_ver = CURL_SSLVERSION_TLSv1_2;
+# if LIBCURL_VERSION_MAJOR > 7 ||  (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 52)
+	else if (streql(TLS, "1.3")) TLS_ver = CURL_SSLVERSION_TLSv1_3;
+# endif
+	else error(_("invalid %s argument"), "TLS");
+	curl_easy_setopt(hnd, CURLOPT_SSLVERSION, TLS_ver);
+# else
+	error("TLS argument is unsupported in this libcurl version %d.%d",
+	      LIBCURL_VERSION_MAJOR, LIBCURL_VERSION_MINOR);
+#endif
+    }
 
     char errbuf[CURL_ERROR_SIZE];
     curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);

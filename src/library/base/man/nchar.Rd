@@ -135,7 +135,7 @@ nzchar(x, keepNA = FALSE)
   Wadsworth & Brooks/Cole.
 
   Unicode Standard Annex #11: \emph{East Asian Width.}
-  \url{http://www.unicode.org/reports/tr11/}
+  \url{https://www.unicode.org/reports/tr11/}
 }
 \seealso{
   \code{\link{strwidth}} giving width of strings for plotting;

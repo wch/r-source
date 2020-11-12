@@ -148,8 +148,10 @@
   specified.
 
   \code{"POSIXlt"} objects will often have an attribute \code{"tzone"},
-  a character vector of length 3 giving the time zone name from the
-  \env{TZ} environment variable and the names of the base time zone
+  a character vector of length 3 giving the time zone name (from the \env{TZ}
+  environment variable or argument \code{tz} of functions creating
+  \code{"POSIXlt"} objects; \code{""} marks the current time zone)
+  and the names of the base time zone
   and the alternate (daylight-saving) time zone.  Sometimes this may
   just be of length one, giving the \link{time zone} name.
 

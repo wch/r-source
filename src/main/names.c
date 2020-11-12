@@ -156,6 +156,7 @@ FUNTAB R_FunTab[] =
 {"makeLazy",	do_makelazy,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	  0}},
 {"identical",	do_identical,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	  0}},
 {"C_tryCatchHelper",do_tryCatchHelper,0,11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"getNamespaceValue",	do_getNSValue,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	  0}},
 
 
 /* Binary Operators, all primitives */
@@ -185,6 +186,8 @@ FUNTAB R_FunTab[] =
 {":",		do_colon,	0,	1,	2,	{PP_BINARY2, PREC_COLON,  0}},
 /* does not evaluate */
 {"~",		do_tilde,	0,	0,	-1,	{PP_BINARY,  PREC_TILDE,  0}},
+{"::",		do_colon2,	0,	200,	2,	{PP_BINARY2, PREC_NS,	  0}},
+{":::",		do_colon3,	0,	200,	2,	{PP_BINARY2, PREC_NS,	  0}},
 
 
 /* Logic Related Functions */
@@ -994,7 +997,7 @@ FUNTAB R_FunTab[] =
 
 {"eSoftVersion",do_eSoftVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"curlVersion", do_curlVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"curlGetHeaders",do_curlGetHeaders,0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"curlGetHeaders",do_curlGetHeaders,0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"curlDownload",do_curlDownload, 0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},

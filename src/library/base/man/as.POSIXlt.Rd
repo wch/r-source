@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -200,13 +200,14 @@ as.POSIXlt(Sys.time(), "EST" )   # somewhere in Eastern Canada
 as.POSIXlt(Sys.time(), "HST")    # in Hawaii
 as.POSIXlt(Sys.time(), "Australia/Darwin")
 }
-#ifdef windows
 
-cols <- c("code", "coordinates", "TZ", "comments")
-tmp <- read.delim(file.path(R.home("share"), "zoneinfo", "zone.tab"),
-                  header = FALSE, comment.char = "#", col.names = cols)
-if(interactive()) View(tmp)
-#endif
-}
+tab <- file.path(R.home("share"), "zoneinfo", "zone1970.tab")
+if(file.exists(tab)) {
+  cols <- c("code", "coordinates", "TZ", "comments")
+  tmp <- read.delim(file.path(R.home("share"), "zoneinfo", "zone1970.tab"),
+                    header = FALSE, comment.char = "#", col.names = cols)
+  if(interactive()) View(tmp)
+  head(tmp, 10)
+}}
 \keyword{utilities}
 \keyword{chron}

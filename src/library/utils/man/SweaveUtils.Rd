@@ -8,12 +8,14 @@
 \alias{RweaveChunkPrefix}
 \alias{RweaveEvalWithOpt}
 \alias{RweaveLatexFinish}
+\alias{RtangleFinish}
 \alias{RweaveLatexOptions}
 \alias{RweaveLatexWritedoc}
 \alias{RweaveTryStop}
 \alias{SweaveHooks}
 \alias{SweaveUtils}
 \alias{makeRweaveLatexCodeRunner}
+\alias{RtangleRuncode}
 \title{Sweave Driver Utilities}
 \description{
   These functions are handy for writing Sweave drivers and are
@@ -27,10 +29,12 @@ RtangleWritedoc(object, chunk)
 RweaveChunkPrefix(options)
 RweaveEvalWithOpt(expr, options)
 RweaveLatexFinish(object, error = FALSE)
+RtangleFinish(object, error = FALSE)
 RweaveLatexOptions(options)
 RweaveTryStop(err, options)
 SweaveHooks(options, run = FALSE, envir = .GlobalEnv)
 makeRweaveLatexCodeRunner(evalFunc = RweaveEvalWithOpt)
+RtangleRuncode(object, chunk, options)
 }
 \author{Friedrich Leisch, with contributions by Seth Falcon}
 \seealso{The \code{\link{Sweave}}, \code{\link{RweaveLatex}} help pages.

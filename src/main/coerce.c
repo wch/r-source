@@ -1179,8 +1179,17 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 
     SEXP ans = R_NilValue;	/* -Wall */
     if (ALTREP(v)) {
+	PROTECT(v); /* the methods should protect, but ... */
 	ans = ALTREP_COERCE(v, type);
-	if (ans) return ans;
+	if (ans) {
+	    /* attribute copying could be handled by a Coerce_Ex
+	       method as for Duplicate; for now, do it here */
+	    PROTECT(ans);
+	    SHALLOW_DUPLICATE_ATTRIB(ans, v);
+	    UNPROTECT(2); /* v, ans */
+	    return ans;
+	}
+	UNPROTECT(1); /* v */
     }
 
     /* code to allow classes to extend ENVSXP, SYMSXP, etc */
@@ -2900,6 +2909,9 @@ static int class2type(const char *s)
 
 static SEXP do_unsetS4(SEXP obj, SEXP newClass)
 {
+  // act now, as warning()s may be treated as errors:
+  UNSET_S4_OBJECT(obj);
+
   if(isNull(newClass))  { /* NULL class is only valid for S3 objects */
     warning(_("Setting class(x) to NULL;   result will no longer be an S4 object"));
   }
@@ -2910,7 +2922,6 @@ static SEXP do_unsetS4(SEXP obj, SEXP newClass)
   else
     warning(_("Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be an S4 object"),
 	    CHAR(asChar(newClass)));
-  UNSET_S4_OBJECT(obj);
   return obj;
 }
 
@@ -3004,7 +3015,9 @@ SEXP attribute_hidden R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     check1arg(args, call, "x");
 
-    if (MAYBE_SHARED(CAR(args))) SETCAR(args, shallow_duplicate(CAR(args)));
+    if (MAYBE_SHARED(CAR(args)) ||
+	((! IS_ASSIGNMENT_CALL(call)) && MAYBE_REFERENCED(CAR(args))))
+	SETCAR(args, shallow_duplicate(CAR(args)));
     ans = R_set_class(CAR(args), CADR(args), call);
     SETTER_CLEAR_NAMED(CAR(args));
     return ans;

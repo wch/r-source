@@ -1584,10 +1584,11 @@ doit <- function(...) {
     stopifnot(identical(list.files(), c(myF2, "ex2.tar")))
 }
 doit()
+if(nzchar(Sys.getenv("tar"))) doit(tar = "internal")
 if(nzchar(Sys.which("tar"))) doit(tar = "tar")
 ## internal tar silently ignored unused 'files' in R <= 4.0.2
 tools::assertWarning(verbose=TRUE,
-    tar(tempfile(fileext=".tar"), files = tempfile())
+    tar(tempfile(fileext=".tar"), files = tempfile(), tar = "internal")
 )
 
 

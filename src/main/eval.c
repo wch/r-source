@@ -189,6 +189,9 @@ static RCNTXT * findProfContext(RCNTXT *cptr)
     if (! R_Filter_Callframes)
 	return cptr->nextcontext;
 
+    if (cptr == R_ToplevelContext)
+	return NULL;
+
     /* Find parent context, same algorithm as in `parent.frame()`. */
     RCNTXT * parent = R_findParentContext(cptr, 1);
 
@@ -246,8 +249,9 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     if (R_Line_Profiling)
 	lineprof(buf, R_getCurrentSrcref());
 
-    RCNTXT *cptr = R_GlobalContext;
-    while ((cptr = findProfContext(cptr)) != NULL) {
+    for (RCNTXT *cptr = R_GlobalContext;
+	 cptr != NULL;
+	 cptr = findProfContext(cptr)) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
@@ -3708,12 +3712,6 @@ attribute_hidden
 int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 		  SEXP *ans)
 {
-    int i, nargs, lwhich, rwhich;
-    SEXP lclass, s, t, m, lmeth, lsxp, lgr, newvars;
-    SEXP rclass, rmeth, rgr, rsxp, value;
-    char *generic;
-    Rboolean useS4 = TRUE, isOps = FALSE;
-
     /* pre-test to avoid string computations when there is nothing to
        dispatch on because either there is only one argument and it
        isn't an object or there are two or more arguments but neither
@@ -3724,16 +3722,19 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	(CDR(args) == R_NilValue || ! isObject(CADR(args))))
 	return 0;
 
-    isOps = strcmp(group, "Ops") == 0;
+    SEXP s;
+    Rboolean isOps = strcmp(group, "Ops") == 0;
 
     /* try for formal method */
-    if(length(args) == 1 && !IS_S4_OBJECT(CAR(args))) useS4 = FALSE;
-    if(length(args) == 2 &&
-       !IS_S4_OBJECT(CAR(args)) && !IS_S4_OBJECT(CADR(args))) useS4 = FALSE;
-    if(useS4) {
+    if(length(args) == 1 && !IS_S4_OBJECT(CAR(args))) {
+	// no S4
+    } else if(length(args) == 2 && !IS_S4_OBJECT(CAR(args)) && !IS_S4_OBJECT(CADR(args))) {
+	// no S4
+    } else { // try to use S4 :
 	/* Remove argument names to ensure positional matching */
 	if(isOps)
 	    for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
+	SEXP value;
 	if(R_has_methods(op) &&
 	   (value = R_possible_dispatch(call, op, args, rho, FALSE))) {
 	       *ans = value;
@@ -3749,29 +3750,24 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	    return 0;
     }
 
-    if(isOps)
-	nargs = length(args);
-    else
-	nargs = 1;
+    int nargs = isOps ? length(args) : 1;
 
     if( nargs == 1 && !isObject(CAR(args)) )
 	return 0;
 
-    generic = PRIMNAME(op);
-
-    PROTECT(lclass = classForGroupDispatch(CAR(args)));
-
+    char *generic = PRIMNAME(op);
+    SEXP lclass = PROTECT(classForGroupDispatch(CAR(args))), rclass;
     if( nargs == 2 )
 	rclass = classForGroupDispatch(CADR(args));
     else
 	rclass = R_NilValue;
-
     PROTECT(rclass);
-    lsxp = R_NilValue; lgr = R_NilValue; lmeth = R_NilValue;
-    rsxp = R_NilValue; rgr = R_NilValue; rmeth = R_NilValue;
 
-    findmethod(lclass, group, generic, &lsxp, &lgr, &lmeth, &lwhich,
-	       args, rho);
+    SEXP lmeth = R_NilValue, lsxp = R_NilValue, lgr = R_NilValue,
+	 rmeth = R_NilValue, rsxp = R_NilValue, rgr = R_NilValue;
+    int lwhich, rwhich;
+    findmethod(lclass, group, generic,
+	       &lsxp, &lgr, &lmeth, &lwhich, args, rho);
     PROTECT(lgr);
 
     if( nargs == 2 )
@@ -3779,7 +3775,6 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 		   &rwhich, CDR(args), rho);
     else
 	rwhich = 0;
-
     PROTECT(rgr);
 
     if( !isFunction(lsxp) && !isFunction(rsxp) ) {
@@ -3826,11 +3821,12 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     /* we either have a group method or a class method */
 
-    PROTECT(m = allocVector(STRSXP,nargs));
     const void *vmax = vmaxget();
     s = args;
     const char *dispatchClassName = translateChar(STRING_ELT(lclass, lwhich));
-    for (i = 0 ; i < nargs ; i++) {
+
+    SEXP t, m = PROTECT(allocVector(STRSXP,nargs));
+    for (int i = 0 ; i < nargs ; i++) {
 	t = classForGroupDispatch(CAR(s));
 	if (isString(t) && (stringPositionTr(t, dispatchClassName) >= 0))
 	    SET_STRING_ELT(m, i, PRINTNAME(lmeth));
@@ -3840,7 +3836,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     }
     vmaxset(vmax);
 
-    newvars = PROTECT(createS3Vars(
+    SEXP newvars = PROTECT(createS3Vars(
 	PROTECT(mkString(generic)),
 	lgr,
 	PROTECT(stringSuffix(lclass, lwhich)),
@@ -5148,7 +5144,7 @@ static R_INLINE SEXP FIND_VAR_NO_CACHE(SEXP symbol, SEXP rho, SEXP cell)
     if (loc.cell && IS_ACTIVE_BINDING(loc.cell)) {
 	SEXP value = R_GetVarLocValue(loc);
 	return value;
-    }	
+    }
     else return R_GetVarLocValue(loc);
 }
 
@@ -7701,7 +7697,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  R_BCNodeStackTop[-2] = R_BCNodeStackTop[-1];
 	  R_BCNodeStackTop--;
 	  NEXT();
-      }	  
+      }
     LASTOP;
   }
 

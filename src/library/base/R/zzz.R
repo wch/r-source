@@ -56,6 +56,8 @@ is.name <- is.symbol
 
 .ArgsEnv <- new.env(hash = TRUE, parent = emptyenv())
 
+assign("::", function(pkg, name) NULL, envir = .ArgsEnv)
+assign(":::", function(pkg, name) NULL, envir = .ArgsEnv)
 assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
 assign("...length", function() NULL, envir = .ArgsEnv)
 assign("...names",  function() NULL, envir = .ArgsEnv)

@@ -83,44 +83,15 @@ getNamespaceUsers <- function(ns) {
     users
 }
 
-getExportedValue <- function(ns, name) {
-    ns <- asNamespace(ns)
-    if (isBaseNamespace(ns))
-	get(name, envir = ns, inherits = FALSE) # incl. error
-    else {
-	if (!is.null(oNam <- .getNamespaceInfo(ns, "exports")[[name]])) {
-	    get0(oNam, envir = ns)
-	} else { ##  <pkg> :: <dataset>  for lazydata :
-	    ld <- .getNamespaceInfo(ns, "lazydata")
-	    if (!is.null(obj <- ld[[name]]))
-		obj
-	    else { ## if there's a lazydata object with value NULL:
-		if(exists(name, envir = ld, inherits = FALSE))
-		    NULL
-		else
-		    stop(gettextf("'%s' is not an exported object from 'namespace:%s'",
-				  name, getNamespaceName(ns)),
-			 call. = FALSE, domain = NA)
-	    }
-	}
-    }
-}
-
-
-`::` <- function(pkg, name) {
-    pkg <- as.character(substitute(pkg))
-    name <- as.character(substitute(name))
-    getExportedValue(pkg, name)
-}
+getExportedValue <- function(ns, name)
+    .Internal(getNamespaceValue(ns, name, TRUE))
 
 ## NOTE: Both "::" and ":::" must signal an error for non existing objects
-
-`:::` <- function(pkg, name) {
-    pkg <- as.character(substitute(pkg))
-    name <- as.character(substitute(name))
-    get(name, envir = asNamespace(pkg), inherits = FALSE)
-}
-
+## :: and ::: are now SPECIALSXP primitives.
+## `::` <- function(pkg, name)
+##     .Internal(getNamespaceValue(substitute(pkg), substitute(name), TRUE))
+## `:::` <- function(pkg, name)
+##     .Internal(getNamespaceValue(substitute(pkg), substitute(name), FALSE))
 
 attachNamespace <- function(ns, pos = 2L, depends = NULL, exclude, include.only)
 {
@@ -1046,9 +1017,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages,
                 poss <- lapply(rev(current), "[", n)
                 poss <- poss[!sapply(poss, is.na)]
                 if(length(poss) >= 1L) {
-                    msg <- gettext("replacing previous import %s by %s when loading %s")
                     prev <- names(poss)[1L]
-                    warning(sprintf(msg,
+                    warning(sprintf(gettext("replacing previous import %s by %s when loading %s"),
                                     sQuote(paste(prev, n, sep = "::")),
                                     sQuote(paste(nsname, n, sep = "::")),
                                     sQuote(from)),

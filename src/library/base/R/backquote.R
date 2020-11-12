@@ -54,7 +54,7 @@ bquote <- function (expr, where = parent.frame(), splice = FALSE)
             tail <- if (p == n) NULL else e[(p + 1) : n]
             macro <- e[[p]]
             mexp <- eval(macro[[2L]], where)
-            if (! is.vector(mexp))
+            if (!is.vector(mexp) && !is.expression(mexp))
                 stop("can only splice vectors")
             c(lapply(head, unquote), mexp, as.list(unquote.list(tail)))
         }

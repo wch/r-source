@@ -254,7 +254,7 @@
   or PDF
   \url{https://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
   and in decimal, octal and hex at
-  \url{http://www.stat.auckland.ac.nz/~paul/R/CM/AdobeSym.html}.
+  \url{https://www.stat.auckland.ac.nz/~paul/R/CM/AdobeSym.html}.
 }
 \seealso{
   \code{demo(plotmath)},

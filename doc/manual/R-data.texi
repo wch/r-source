@@ -1384,8 +1384,8 @@ JDBC driver).
 @c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @c @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
 
-@pkg{PL/R} (@uref{http://joeconway.com/plr/,
-@code{http://@/joeconway.com/@/plr}}) is a project to embed R into
+@pkg{PL/R} (@uref{https://joeconway.com/plr/,
+@code{https://@/joeconway.com/@/plr}}) is a project to embed R into
 PostgreSQL.
 
 Package @CRANpkg{RMongo} provides an @R{} interface to a Java client for
@@ -2314,7 +2314,7 @@ possibility.
 
 If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
-example Gnumeric (@uref{http://www.gnome.org/projects/gnumeric/}) and
+example Gnumeric (@uref{https://www.gnome.org/projects/gnumeric/}) and
 OpenOffice (@uref{https://www.openoffice.org}).  You can also
 cut-and-paste between the display of a spreadsheet in such a program and
 R: @code{read.table} will read from the R console or, under Windows,

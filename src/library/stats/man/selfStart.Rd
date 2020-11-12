@@ -1,6 +1,6 @@
 % File src/library/stats/man/selfStart.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{selfStart}
@@ -22,13 +22,16 @@ selfStart(model, initial, parameters, template)
 \arguments{
   \item{model}{a function object defining a nonlinear model or
     a nonlinear \code{\link{formula}} object of the form \code{~ expression}.}
- \item{initial}{a function object, taking three arguments: \code{mCall},
-   \code{data}, and \code{LHS}, representing, respectively, a matched
-   call to the function \code{model}, a data frame in
+ \item{initial}{a function object, taking arguments \code{mCall},
+   \code{data}, and \code{LHS}, \emph{and} \code{...}, representing,
+   respectively, a matched call to the function \code{model}, a data frame in
    which to interpret the variables in \code{mCall}, and the expression
    from the left-hand side of the model formula in the call to \code{nls}.
    This function should return initial values for the parameters in
-   \code{model}.}
+   \code{model}.  The \code{...} is used by \code{\link{nls}()} to pass its
+   \code{control} and \code{trace} arguments for the cases where
+   \code{initial()} itself calls \code{nls()} as it does for the ten
+   self-starting nonlinear models in \R's \pkg{stats} package.}
   \item{parameters}{a character vector specifying the terms on the right
     hand side of \code{model} for which initial estimates should be
     calculated.  Passed as the \code{namevec} argument to the

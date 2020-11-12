@@ -34,7 +34,6 @@
 static window wselect;
 static button bFinish, bCancel;
 static listbox f_list;
-static char selected[100];
 static int done;
 
 static void cleanup(void)
@@ -47,14 +46,11 @@ static void cleanup(void)
 
 static void cancel(button b)
 {
-    strcpy(selected, "");
     done = 2;
 }
 
 static void finish(button b)
 {
-    strncpy(selected, GA_gettext(f_list), 100 - 1);
-    selected[100 - 1] = '\0';
     done = 1;
 }
 
@@ -142,8 +138,17 @@ SEXP Win_selectlist(SEXP args)
 	} else { /* cancel */
 	    PROTECT(ans = allocVector(STRSXP, 0));
 	}
-    } else
-	PROTECT(ans = mkString(selected));
+    } else {
+	if (done == 1) { /* Finish */
+	    i = getlistitem(f_list);
+	    if (i >= 0) 
+		PROTECT(ans = mkString(clist[i]));
+	    else 
+		PROTECT(ans = mkString("")); /* error/unreachable */
+	} else { /* cancel */
+	    PROTECT(ans = mkString(""));
+	}
+    }
 
     cleanup();
     show(RConsole);

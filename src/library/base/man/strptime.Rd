@@ -272,7 +272,7 @@ strptime(x, format, tz = "")
 \section{Time zone offsets}{
   Offsets from GMT (also known as UTC) are part of the conversion
   between timezones and to/from class \code{"POSIXct"}, but cause
-  difficulties as they often computed incorrectly.
+  difficulties as they are often computed incorrectly.
 
   They conventionally have the opposite sign from time-zone
   specifications (see \code{\link{Sys.timezone}}): positive values are

@@ -102,7 +102,8 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   estimation.
   \emph{Journal of the Royal Statistical Society series B},
   \bold{53}, 683--690.
-  \url{http://www.jstor.org/stable/2345597}.
+  \doi{10.1111/j.2517-6161.1991.tb01857.x}.
+  \url{https://www.jstor.org/stable/2345597}.
 
   Silverman, B. W. (1986).
   \emph{Density Estimation}.

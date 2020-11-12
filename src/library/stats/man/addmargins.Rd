@@ -59,7 +59,7 @@ addmargins(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
 \author{
   Bendix Carstensen, Steno Diabetes Center & Department of
   Biostatistics, University of Copenhagen,
-  \url{http://BendixCarstensen.com}, autumn 2003.
+  \url{https://BendixCarstensen.com}, autumn 2003.
   Margin naming enhanced by Duncan Murdoch.
 }
 

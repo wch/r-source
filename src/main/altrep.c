@@ -40,6 +40,10 @@
 #define ALTREP_SERIALIZED_CLASS_CLSSYM(x) CAR(x)
 #define ALTREP_SERIALIZED_CLASS_PKGSYM(x) CADR(x)
 #define ALTREP_SERIALIZED_CLASS_TYPE(x) INTEGER0(CADDR(x))[0]
+#define ALTREP_OBJECT_CLSSYM(x) ALTREP_SERIALIZED_CLASS_CLSSYM( \
+	ALTREP_SERIALIZED_CLASS(x))
+#define ALTREP_OBJECT_PKGSYM(x) ALTREP_SERIALIZED_CLASS_PKGSYM( \
+	ALTREP_SERIALIZED_CLASS(x))
 
 #define ALTREP_CLASS_BASE_TYPE(x) \
     ALTREP_SERIALIZED_CLASS_TYPE(ALTREP_CLASS_SERIALIZED_CLASS(x))
@@ -104,6 +108,13 @@ void attribute_hidden R_reinit_altrep_classes(DllInfo *dll)
 /**
  **  ALTREP Method Tables and Class Objects
  **/
+
+#define ALTREP_ERROR_IN_CLASS(msg, x) do {			\
+	error("%s [class: %s, pkg: %s]",			\
+	      msg,						\
+	      CHAR(PRINTNAME(ALTREP_OBJECT_CLSSYM(x))),		\
+	      CHAR(PRINTNAME(ALTREP_OBJECT_PKGSYM(x))));	\
+    } while(0)
 
 static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 {
@@ -265,9 +276,11 @@ static SEXP ALTREP_UNSERIALIZE_CLASS(SEXP info)
 	SEXP class = LookupClass(csym, psym);
 	if (class == NULL) {
 	    SEXP pname = ScalarString(PRINTNAME(psym));
+	    PROTECT(pname);
 	    R_tryCatchError(find_namespace, pname,
 			    handle_namespace_error, NULL);
 	    class = LookupClass(csym, psym);
+	    UNPROTECT(1);
 	}
 	return class;
     }
@@ -673,13 +686,12 @@ Rboolean altrep_Inspect_default(SEXP x, int pre, int deep, int pvec,
 
 static R_xlen_t altrep_Length_default(SEXP x)
 {
-    error("no Length method defined");
+    ALTREP_ERROR_IN_CLASS("no ALTREP Length method defined", x);
 }
 
 static void *altvec_Dataptr_default(SEXP x, Rboolean writeable)
 {
-    /**** use class info for better error message? */
-    error("cannot access data pointer for this ALTVEC object");
+    ALTREP_ERROR_IN_CLASS("cannot access data pointer for this ALTVEC object", x);
 }
 
 static const void *altvec_Dataptr_or_null_default(SEXP x)
@@ -778,12 +790,12 @@ altcomplex_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, Rcomplex *buf)
 
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
-    error("ALTSTRING classes must provide an Elt method");
+    ALTREP_ERROR_IN_CLASS("No Elt method found for ALTSTRING class", x);
 }
 
 static void altstring_Set_elt_default(SEXP x, R_xlen_t i, SEXP v)
 {
-    error("ALTSTRING classes must provide a Set_elt method");
+    ALTREP_ERROR_IN_CLASS("No Set_elt found for ALTSTRING class", x);
 }
 
 static int altstring_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }

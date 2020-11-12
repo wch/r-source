@@ -47,8 +47,8 @@ function(filename, desc = file.path(dirname(filename), "DESCRIPTION"))
 
 ### formerly Perl R::Utils::get_exclude_patterns
 
-## Return list of file patterns excluded by R CMD build and check.
-## Kept here so that we ensure that the lists are in sync, but not exported.
+## Return list of file patterns excluded by R CMD build.
+## Not exported.
 ## Has Unix-style '/' path separators hard-coded, but that is what dir() uses.
 get_exclude_patterns <- function()
     c("^\\.Rbuildignore$",

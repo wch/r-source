@@ -79,7 +79,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 \source{
   The internal C code uses \code{zlib} and is in particular based on the
   contributed \samp{minizip} application in the \code{zlib} sources
-  (from \url{http://zlib.net}) by Gilles Vollant.
+  (from \url{https://zlib.net/}) by Gilles Vollant.
 }
 
 \seealso{

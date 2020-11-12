@@ -4334,6 +4334,14 @@ if (l10n_info()$"UTF-8") {
     }
     capt.parsed <- unlist(lapply(c(list.mats, long.strings), capt_parse))
     stopifnot(validUTF8(capt.parsed))
+
+    ## Allowed MBCS truncation in R < 4.1
+    fmt <- paste0(c(rep_len("a", 253), "\U0001f600"), collapse="")
+    stopifnot(validUTF8(format(as.POSIXlt('2020-01-01'), fmt)))
+
+    f <- file(paste0(c(rep_len("a", 992), "\U0001F600"), collapse=""))
+    suppressWarnings(g <- gzcon(f))
+    stopifnot(!grepl("xf0", capture.output(g)[2]))
 }
 
 ## c() generic removes all NULL elements --- *but* the first --- before dispatch
@@ -4489,19 +4497,115 @@ untrace(print)
 
 
 ## PR#17897: all.equal.factor() did not distinguish the two different NA in factors
-x <- factor(3:1,              labels = c("a", "b", NA))
-y <- factor(c("c", "b", "a"), levels = c("a", "b", NA), exclude = NULL)
+labs <- c("a", "b", NA)
+x <- factor(      3:1,                labels = labs)
+y <- factor(c(NA, 2:1), levels = 1:3, labels = labs)
 x
 dput(x) ; dput(y) ## --> they are clearly different, but print the same:
 stopifnot(exprs = {
     identical(capture.output(x),
               capture.output(y))
-    is.character(ae <- all.equal(x,y))
+    is.character(print(ae <- all.equal(x,y)))
     !englishMsgs || grepl("NA mismatch", ae, fixed=TRUE)
 })
 ## all.equal() gave TRUE wrongly, from 2012 till R <= 4.0.2
 
 
+## PR#17935:  `[.formula` for formulas with NULL:
+forms <- list(f0 = (~ NULL)
+            , f1 = (z ~ NULL)
+            , f2 = (NULL ~ x)
+            , f3 = (NULL ~ NULL)
+              )
+rr <- lapply(forms, function(f)
+        lapply(seq_along(f), function(ii) f[ii]))
+cN <- quote(NULL())
+stopifnot(exprs = {
+    identical( unique(lapply(rr , `[[`, 1)), list(`~`()))
+    identical( lapply(unname(rr), `[[`, 2),  list(cN, quote(z()), cN,cN) )
+})
+## subsetting failed for all 4 formulas in R <= 4.0.3
+(tm1 <- (~ "~")[-1])
+(tq1 <- (~ `~`)[-1])
+stopifnot(exprs = {
+    identical((~ NA)[-1], quote(NA())) ## subsetting (~ NA) failed in R <= 4.0.3
+    identical(tm1,        `[[<-`(call("T"), 1L, "~")) ;  is.call(tm1)
+    identical(tq1,        structure(call("~"), class="formula", ".Environment" = globalenv()))
+})
+## zero-length formulas from subsetting are now equal to formula(NULL)
+exps <- expression(
+           (~ x)[FALSE]
+         , (~ x)[rep(FALSE, 2)]
+         , (y ~ x)[FALSE])
+formL <- lapply(exps, eval)
+stopifnot( length(unique(formL)) == 1,
+          all.equal(formL[[1]], formula(NULL)) )
+## Gave error  "attempt to set an attribute on NULL" in R <= 4,0.3
+
+
+## Regression in .traceback()  PR#17930
+op <- options(keep.source=TRUE)
+f <- function() .traceback(1)
+g <- function() f()
+x <- g()
+stopifnot(inherits(attr(x[[1]], 'srcref'), "srcref"))
+options(op)
+## had worked up to R 3.6.3, but not from 4.0.0 to 4.0.3
+
+
+## Summary() and Math() data.frame methods with *logical* columns
+a <- na.omit(airquality)
+aF <- a[FALSE,] # 0-row version of it
+dL0 <- data.frame(x=numeric(), L=logical()) # logical column
+stopifnot(exprs = {
+    ## "Summary" :
+    sum(aF) == 0 # gave Error  "only defined on a data frame with all numeric variables"
+    sum(subset(a, Ozone > 200)) == 0 # (ditto)
+    suppressWarnings(range(dL0) == c(Inf, -Inf)) # (2 warnings)
+    ## "Math" , gave Error..: non-numeric variable(s) in data frame :
+    identical(exp(data.frame(L=TRUE)), data.frame(L=exp(TRUE)))
+    identical(sinL0 <- sin(dL0), data.frame(x=numeric(), L=numeric()))
+    identical(sinL0, log1p(dL0))
+    identical(cumsum(dL0),       data.frame(x=numeric(), L=integer()))
+})
+## probably never worked in any R <= 4.0.3
+
+
+## unlist(<pairlist w/ list>, recursive=FALSE), PR#17950
+l.ex <- list(a = list(1:5, LETTERS[1:5]), b = "Z", c = NA)
+stopifnot(identical(
+    unlist(as.pairlist(l.ex), recursive = FALSE),
+    unlist(            l.ex , recursive = FALSE)))
+##
+l2 <- list(a = "a", b = quote(b), c = pi+2i)# no list-entries
+stopifnot(
+    identical(
+        unlist(as.pairlist(l2), recursive = FALSE) -> ul2,
+        unlist(as.pairlist(l2))),
+    identical(ul2, unlist(l2, recursive = FALSE)))
+## lost content in R <= 4.0.3  ('FIXME' in source went lost in 2006)
+
+
+## `class<-` was mutating outside of an assignment context
+x <- c(1)
+xx <- `class<-`(x, "foo")
+stopifnot(identical(class(x), "numeric"))
+
+## Can splice expression vectors with attributes -- PR#17869
+local({
+    exprs <- structure(expression(1, 2, 3), attr = TRUE)
+    exprsSrcrefs <- parse(text = "1;2;3", keep.source = TRUE)
+    stopifnot(
+	identical(
+	    bquote({ ..(exprs) }, splice = TRUE),
+	    call("{", 1, 2, 3)
+	),
+	identical(
+	    bquote({ ..(exprsSrcrefs) }, splice = TRUE),
+	    call("{", 1, 2, 3)
+	)
+    )
+})
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

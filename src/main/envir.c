@@ -3785,6 +3785,136 @@ SEXP attribute_hidden do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NamespaceRegistry;
 }
 
+static SEXP getVarValInFrame(SEXP rho, SEXP sym, int unbound_ok)
+{
+    SEXP val = findVarInFrame(rho, sym);
+    if (! unbound_ok && val == R_UnboundValue)
+	error(_("object '%s' not found"), EncodeChar(PRINTNAME(sym)));
+    if (TYPEOF(val) == PROMSXP) {
+	PROTECT(val);
+	val = eval(val, R_EmptyEnv);
+	UNPROTECT(1);
+    }
+    return val;
+}
+
+static SEXP checkVarName(SEXP call, SEXP name)
+{
+    switch(TYPEOF(name)) {
+    case SYMSXP: break;
+    case STRSXP:
+	if (LENGTH(name) >= 1) {
+	    name = installTrChar(STRING_ELT(name, 0));
+	    break;
+	}
+	/* else fall through */
+    default:
+	errorcall(call, _("bad variable name"));
+    }
+    return name;
+}
+
+static SEXP callR1(SEXP fun, SEXP arg)
+{
+    static SEXP R_xSymbol = NULL;
+    if (R_xSymbol == NULL)
+	R_xSymbol = install("x");
+
+    SEXP rho = PROTECT(NewEnvironment(R_NilValue, R_NilValue, R_BaseNamespace));
+    defineVar(R_xSymbol, arg, rho);
+    SEXP expr = PROTECT(lang2(fun, R_xSymbol));
+    SEXP val = eval(expr, rho);
+    UNPROTECT(2); /* rho, expr */
+    return val;
+}
+
+SEXP attribute_hidden R_getNSValue(SEXP call, SEXP ns, SEXP name, int exported)
+{
+    static SEXP R_loadNamespaceSymbol = NULL;
+    static SEXP R_exportsSymbol = NULL;
+    static SEXP R_lazydataSymbol = NULL;
+    static SEXP R_getNamespaceNameSymbol = NULL;
+    if (R_loadNamespaceSymbol == NULL) {
+	R_loadNamespaceSymbol = install("loadNamespace");
+	R_exportsSymbol = install("exports");
+	R_lazydataSymbol = install("lazydata");
+	R_getNamespaceNameSymbol = install("getNamespaceName");
+    }
+
+    if (R_IsNamespaceEnv(ns))
+	PROTECT(ns);
+    else {
+	SEXP pkg = checkNSname(call, ns);
+	ns = findVarInFrame(R_NamespaceRegistry, pkg);
+	if (ns == R_UnboundValue)
+	    ns = callR1(R_loadNamespaceSymbol, pkg);
+	PROTECT(ns);
+	if (! R_IsNamespaceEnv(ns))
+	    errorcall(call, _("bad namespace"));
+    }
+
+    name = checkVarName(call, name);
+
+    SEXP val;
+
+    /* base or non-exported variables */
+    if (ns == R_BaseNamespace || ! exported) {
+	val = getVarValInFrame(ns, name, FALSE);
+	UNPROTECT(1); /* ns */
+	return val;
+    }
+
+    /* exported variables */
+    SEXP info = PROTECT(getVarValInFrame(ns, R_NamespaceSymbol, FALSE));
+    SEXP exports = PROTECT(getVarValInFrame(info, R_exportsSymbol, FALSE));
+    SEXP exportName = PROTECT(getVarValInFrame(exports, name, TRUE));
+    if (exportName != R_UnboundValue) {
+	val = eval(checkVarName(call, exportName), ns);	
+	UNPROTECT(4);  /* ns, info, exports, exportName */
+	return val;
+    }
+
+    /* lazydata */
+    SEXP ld = PROTECT(getVarValInFrame(info, R_lazydataSymbol, FALSE));
+    val = getVarValInFrame(ld, name, TRUE);
+    if (val != R_UnboundValue) {
+	UNPROTECT(5); /* ns, info, exports, exportName, ld */
+	return val;
+    }
+
+    SEXP nsname = PROTECT(callR1(R_getNamespaceNameSymbol, ns));
+    if (TYPEOF(nsname) != STRSXP || LENGTH(nsname) != 1)
+	errorcall(call, "bad value returned by `getNamespaceName'");
+    errorcall(call,
+	      _("'%s' is not an exported object from 'namespace:%s'"),
+	      EncodeChar(PRINTNAME(name)),
+	      CHAR(STRING_ELT(nsname, 0)));
+    return NULL; /* not reached */
+}
+
+SEXP do_getNSValue(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP ns = CAR(args);
+    SEXP name = CADR(args);
+    int exported = asLogical(CADDR(args));
+
+    return R_getNSValue(R_NilValue, ns, name, exported);
+}
+
+SEXP do_colon2(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    /* use R_NilValue for the call to avoid changing the error message */
+    return R_getNSValue(R_NilValue, CAR(args), CADR(args), TRUE);
+}
+
+SEXP do_colon3(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return R_getNSValue(call, CAR(args), CADR(args), FALSE);
+}
+
 SEXP attribute_hidden do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* This function copies values of variables from one environment

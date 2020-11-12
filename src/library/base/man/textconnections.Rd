@@ -1,6 +1,6 @@
 % File src/library/base/man/textconnections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{textConnection}
@@ -12,6 +12,7 @@
 }
 \usage{
 textConnection(object, open = "r", local = FALSE,
+               name = deparse(substitute(object)),
                encoding = c("", "bytes", "UTF-8"))
 
 textConnectionValue(con)
@@ -28,6 +29,7 @@ textConnectionValue(con)
   \item{local}{logical.  Used only for output connections.  If \code{TRUE},
     output is assigned to a variable in the calling environment.  Otherwise
     the global environment is used.}
+  \item{name}{a \code{\link{character}} string specifying the connection name.}
   \item{encoding}{character string, partially matched.  Used only for input connections.  How
     marked strings in \code{object} should be handled: converted to the
     current locale, used byte-by-byte or translated to UTF-8.}
