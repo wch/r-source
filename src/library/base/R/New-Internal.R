@@ -290,6 +290,8 @@ iconvlist <- function()
     if(length(cnt)/length(ext) > 0.5) {
         ext <- grep("//$", ext, value = TRUE)
         ext <- sub("//$", "", ext)
+    } else if(grepl(",$", ext)) {
+	ext <- gsub(",$", "", ext)
     }
     sort.int(unlist(strsplit(ext, "[[:space:]]")))
 }

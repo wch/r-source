@@ -150,7 +150,7 @@
 
       \item Graphics devices should now specify \code{deviceVersion} to
       indicate what version of the graphics engine they support.
-      
+
       \item Graphics devices can now specify \code{deviceClip}.  If
       \code{TRUE}, the graphics engine will never perform any clipping
       of output itself.
@@ -379,6 +379,10 @@
       \item \code{unlist(plst, recursive=FALSE)} no longer drops content
       for pairlists with list components, thanks to the report and patch
       by Suharto Anggono in \PR{17950}.
+
+      \item \code{iconvlist()} now also works on MUSL based (Linux)
+      systems, from a report and patch suggestion by Wesley Chan in
+      \PR{17970}.
     }
   }
 }
