@@ -1018,9 +1018,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages,
                 poss <- lapply(rev(current), "[", n)
                 poss <- poss[!sapply(poss, is.na)]
                 if(length(poss) >= 1L) {
-                    msg <- gettext("replacing previous import %s by %s when loading %s")
                     prev <- names(poss)[1L]
-                    warning(sprintf(msg,
+                    warning(sprintf(gettext("replacing previous import %s by %s when loading %s"),
                                     sQuote(paste(prev, n, sep = "::")),
                                     sQuote(paste(nsname, n, sep = "::")),
                                     sQuote(from)),
