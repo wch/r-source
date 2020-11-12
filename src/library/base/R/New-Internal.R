@@ -290,9 +290,11 @@ iconvlist <- function()
     if(length(cnt)/length(ext) > 0.5) {
         ext <- grep("//$", ext, value = TRUE)
         ext <- sub("//$", "", ext)
+    } else if(any(grepl(",", ext, fixed=TRUE))) {
+        ## on Alpine Linux (MUSL), 'ext' has few lines of comma separated entries
+        ext <- gsub(",[[:space:]]", " ", sub(",$", "", ext))
     }
-    ## on MUSL, 'ext' has a few lines of comma separated entries
-    sort.int(unlist(strsplit(paste(ext, collapse=" "), ",?[[:space:]]")))
+    sort.int(unlist(strsplit(ext, "[[:space:]]")))
 }
 
 Cstack_info <- function() .Internal(Cstack_info())
