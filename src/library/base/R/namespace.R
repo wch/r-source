@@ -83,9 +83,8 @@ getNamespaceUsers <- function(ns) {
     users
 }
 
-## this may no longer be needed
 getExportedValue <- function(ns, name)
-    .Internal(getNamespaceValue(pkg, name, TRUE))
+    .Internal(getNamespaceValue(ns, name, TRUE))
 
 ## NOTE: Both "::" and ":::" must signal an error for non existing objects
 ## :: and ::: are now SPECIALSXP primitives.
