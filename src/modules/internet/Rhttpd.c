@@ -788,6 +788,97 @@ static void process_request(httpd_conn_t *c)
 #undef process_request
 #endif
 
+/* Remove . and .. from "p" following RFC 3986, 5.2.4.*/
+static char *remove_dot_segments(char *p) {
+
+    char *inbuf = Rstrdup(p);
+    char *in = inbuf;   /* first byte of input buffer */
+
+    char *outbuf = Rstrdup(p); /* can be malloc'd, the content is not used */
+    char *out = outbuf; /* last byte (terminator) of output buffer */
+    *out = '\0';
+    
+    while(*in) {
+/*
+       A.  If the input buffer begins with a prefix of "../" or "./",
+           then remove that prefix from the input buffer; otherwise,
+*/
+	if (in[0] == '.' && in[1] == '.' && in[2] == '/') {
+	    /* remove "../" */
+	    in += 3;
+	    continue;
+	}
+	if (in[0] == '.' && in[1] == '/') {
+	    /* remove "./" */
+	    in += 2;
+	    continue;
+	}
+/*
+       B.  if the input buffer begins with a prefix of "/./" or "/.",
+           where "." is a complete path segment, then replace that
+           prefix with "/" in the input buffer; otherwise,
+*/
+	if (in[0] == '/' && in[1] == '.' && in[2] == '/') {
+	    /* replace "/./" by "/"  */
+	    in += 2;
+	    continue;
+	}
+	if (in[0] == '/' && in[1] == '.' && in[2] == '\0') {
+	    /* replace trailing "/." by "/"  */
+	    in[1] = '\0';
+	    continue;
+	}
+/*
+       C.  if the input buffer begins with a prefix of "/../" or "/..",
+           where ".." is a complete path segment, then replace that
+           prefix with "/" in the input buffer and remove the last
+           segment and its preceding "/" (if any) from the output
+           buffer; otherwise,
+*/
+	if (in[0] == '/' && in[1] == '.' && in[2] == '.' && in[3] == '/') {
+	    /* replace "/../" by "/" */
+	    in += 3;
+	    /* remove trailing "/segment" from output */
+	    while(out > outbuf && *out != '/') out--;
+	    *out = '\0';
+	    continue;
+	}
+	if (in[0] == '/' && in[1] == '.' && in[2] == '.' && in[3] == '\0') {
+	    /* replace trailing "/.." by "/" */
+	    in[1] = '\0';
+	    /* remove trailing "/segment" from output */
+	    while(out > outbuf && *out != '/') out--;
+	    *out = '\0';
+	    continue;
+	}
+/*
+       D.  if the input buffer consists only of "." or "..", then remove
+           that from the input buffer; otherwise,
+*/
+	if ( (in[0] == '.' && in[1] == '\0') ||
+	     (in[0] == '.' && in[1] == '.' && in[2] == '\0') ) {
+	    /* remove input */
+	    in[0] = '\0';
+	    continue;
+	}
+/*
+       E.  move the first path segment in the input buffer to the end of
+           the output buffer, including the initial "/" character (if
+           any) and any subsequent characters up to, but not including,
+           the next "/" character or the end of the input buffer.
+*/
+	if (in[0] == '/') {
+	    *out++ = '/';
+	    in++;
+	}
+	for(; *in && *in != '/'; in++) *out++ = *in;
+	*out = '\0';
+    }
+
+    free(inbuf);
+    return outbuf;
+}
+
 /* this function is called to fetch new data from the client
  * connection socket and process it */
 static void worker_input_handler(void *data) {
@@ -946,7 +1037,7 @@ static void worker_input_handler(void *data) {
 			    return;
 			}
 			bol[strlen(bol) - 9] = 0;
-			c->url = Rstrdup(url);
+			c->url = remove_dot_segments(url);
 			c->part = PART_HEADER;
 			DBG(printf("parsed request, method=%d, URL='%s'\n", (int)c->method, c->url));
 		    } else if (c->part == PART_HEADER) {
