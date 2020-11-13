@@ -11277,9 +11277,10 @@ takes as argument an @code{int} giving the number of objects to
 unprotect when they are no longer needed.  The protection mechanism is
 stack-based, so @code{UNPROTECT(@var{n})} unprotects the last @var{n}
 objects which were protected.  The calls to @code{PROTECT} and
-@code{UNPROTECT} must balance when the user's code returns.  @R{} will
-warn about @code{"stack imbalance in .Call"} (or @code{.External}) if
-the housekeeping is wrong.
+@code{UNPROTECT} must balance when the user's code returns and should
+balance in all functions.  @R{} will warn about
+@code{"stack imbalance in .Call"} (or @code{.External}) if the 
+housekeeping is wrong. 
 
 Here is a small example of creating an @R{} numeric vector in C code:
 
@@ -11314,9 +11315,6 @@ then to just @code{PROTECT} everything in sight and @code{UNPROTECT}
 several thousand objects at the end. It will almost invariably be
 possible to either assign the objects as part of another object (which
 automatically protects them) or unprotect them immediately after use.
-
-Protection is not needed for objects which @R{} already knows are in
-use.  In particular, this applies to function arguments.
 
 There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
 object pointed to by the @code{SEXP} @var{s}, even if it is not the top item
@@ -11367,6 +11365,47 @@ compiled code: on the other hand it becomes the user's responsibility to
 release them when they are no longer needed (and this often requires the
 use of a finalizer).  It is less efficient than the normal protection
 mechanism, and should be used sparingly.
+
+For functions from packages as well as @R{} to safely co-operate in
+protecting objects, certain rules have to be followed:
+
+@itemize
+
+@item 
+Pointer-protection balance.  Calls to @code{PROTECT} and @code{UNPROTECT}
+should balance in each function.  A function may only call @code{UNPROTECT} or
+@code{REPROTECT} on objects it has itself protected.  Note that the pointer
+protection stack balance is restored automatically on non-local transfer of
+control (See @ref{Condition handling and cleanup code}.), as if a call to
+@code{UNPROTECT} was invoked with the right argument.
+
+@item
+Caller protection.  It is the responsibility of the caller that all
+arguments passed to a function are protected and will stay protected for the
+whole execution of the callee.  Typically this is achieved by @code{PROTECT}
+and @code{UNPROTECT} calls.
+
+@item
+Protecting return values. Any @R{} objects returned from a function are
+unprotected (the callee must maintain pointer-protection balance), and hence
+should be protected immediately by the caller. To be safe against future
+code changes, assume that any @R{} object returned from any function may
+need protection. Note that even when conceptually returning an existing
+protected object, that object may be duplicated.
+
+@item
+All functions/macros allocate.  To be safe against future code changes,
+assume that any function or macro may allocate and hence garbage collector
+may run and destroy unprotected objects.
+
+@end itemize
+
+It is always safe and recommended to follow those rules.  In fact, several
+@R{} functions and macros protect their own arguments and some functions do
+not allocate or do not allocate when used in a certain way, but that is
+subject to change, so relying on that may be fragile.  @code{PROTECT} and
+@code{PROTECT_WITH_INDEX} can be safely called with unprotected arguments
+and @code{UNPROTECT} does not allocate.
 
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
 @subsection Allocating storage
