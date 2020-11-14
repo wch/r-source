@@ -8,7 +8,7 @@ output:
 
 All functions in R are anonymous: they do not need to be bound to a
 variable.  If a function does happen to be bound to one or more
-variables, there is no way to recover the names those variables from a
+variables, there is no way to recover the names of those variables from a
 function object.
 
 Functions in R are written and printed using the syntax
@@ -36,7 +36,7 @@ Reduce(function(u, v) u + 1 / v, x, right = TRUE)
 
 might be more readable with a more concise notation.
 
-The tidyverse has introduces a formula-based notation. The `gsubfun`
+The tidyverse has introduced a formula-based notation. The `gsubfun`
 package uses another formula-based approach. And there are probably
 others. But these only work within the functions for which they are
 designed.
