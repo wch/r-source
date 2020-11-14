@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -53,10 +53,9 @@
 \alias{.C_R_startbcprof}
 \alias{.C_R_stopbcprof}
 
-#ifdef windows
+%% Only on Windows:
 \alias{.fixupGFortranStderr}
 \alias{.fixupGFortranStdout}
-#endif
 
 \alias{.doWrap}
 \alias{.doSortWrap}
@@ -111,14 +110,25 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
 .maskedMsg(same, pkg, by)
 
-#ifdef windows
+## Only on Windows:
 .fixupGFortranStdout()
 .fixupGFortranStderr()
-#endif
 }
 \arguments{
-  \item{x}{object from which to extract elements.}
-  \item{file}{The full path to the \file{DESCRIPTION} file of a package.}
+  \item{x}{an object
+    \describe{
+      \item{for \code{.subset*()}:}{from which to extract elements.}
+      \item{for \code{.row_names_info()}:}{with a \code{"row.names"} attribute, typically a
+	data frame.}
+      \item{for \code{.gt}, \code{.gtn}:}{typically S3- or S4-classed.}
+    }
+  }
+  \item{file}{\describe{
+      \item{.getRequiredPackages():}{The full path to the
+	\file{DESCRIPTION} file of a package.}
+      \item{lazyLoadDBfetch():}{the filepath to a lazyload database.}
+    }
+  }
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known to
@@ -131,8 +141,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
     \code{"packageDescription2"}.}
   \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
   \item{name}{name of image file to save or load.}
-  \item{x}{an object with a \code{"row.names"} attribute, typically a
-    data frame.}
   \item{type}{integer.  Currently \code{type = 0} returns the internal
     \code{"row.names"} attribute (possibly \code{NULL}), \code{type = 2}
     the number of rows implied by the attribute, and \code{type = 1} the
@@ -140,7 +148,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{n}{integer.  The number of rows.}
   \item{info}{character string such as \code{"package:MASS"}.}
   \item{key}{the object name in a lazyload database.}
-  \item{file}{the filepath to a lazyload database.}
   \item{compressed}{logical: are the values in the database compressed?}
   \item{refhook}{a load hook: see \code{\link{unserialize}}.}
   \item{seed}{a length-one integer vector.}
@@ -223,7 +230,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{"Knuth-TAOCP"} \link{RNG}.
 
   \code{.gt} and \code{.gtn} are callbacks from \code{\link{rank}} and
-  \code{\link{is.unsorted}} used for S3 classed objects.
+  \code{\link{is.unsorted}} used for (S3 or S4) classed objects.
 
   \code{.primTrace} and \code{.primUntrace} are the \link{primitive}
   functions underlying \code{\link{trace}} and \code{\link{untrace}}
@@ -248,12 +255,11 @@ lazyLoadDBfetch(key, file, compressed, hook)
   Objects starting \code{.C_} and \code{.F_} are references to
   registered C and Fortran entry points.
 
-#ifdef windows
+  \bold{Only on Windows}:\cr
   \code{.fixupGFortranStdout} and \code{.fixupGFortranStderr} are helper functions
   to enable standard output and standard error units in \code{gfortran} when
   executing external code via \code{system} and \code{system2}. By default, these
   units are disabled by the Windows profile when running inside RGui.
-#endif
 }
 \value{
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
