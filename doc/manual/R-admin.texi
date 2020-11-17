@@ -1523,13 +1523,13 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-[The rest of this paragraph is only relevant after release.]
-The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
-OS X'. Click on that, then download the file
-@file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
-and later on Intel CPUs@footnote{macOS 11 `Big Sur' has been a little
-tested on `Apple Silicon' using `Rosetta' emulation.}  (High Sierra,
-Mojave, Catalina, Big Sur, @dots{}).
+[The rest of this paragraph is only relevant after release.]  The front
+page of a @acronym{CRAN} site has a link `Download R for (Mac) OS
+X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
+and install it. This runs on macOS 10.13 and later on Intel
+CPUs@footnote{macOS 11 `Big Sur' has been a little tested on `Apple
+Silicon' using `Rosetta' emulation: there you need to install the Intel
+build of XQuartz.}  (High Sierra, Mojave, Catalina, Big Sur, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -1563,8 +1563,10 @@ want this time @dots{}).
 Various parts of the build require XQuartz to be installed: see
 @uref{https://xquartz.macosforge.org/}.  These include the @pkg{tcltk}
 package and the @code{X11} device: attempting to use these without
-XQuartz will remind you.  Also for the cairographics-based devices
-(which are not often used on macOS) such as @code{png(type = "cairo")}.
+XQuartz will remind you.@footnote{At least if @command{otool} is
+installed: it is part of the macOS Command Line Tools.}  Also for the
+cairographics-based devices (which are not often used on macOS) such as
+@code{png(type = "cairo")}.
 
 If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the
@@ -1597,15 +1599,15 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer puts links to @command{R} and
-@command{Rscript} in @file{/usr/local/bin}. If these are missing, you
-can run directly the copies in
+@command{Rscript} in @file{/usr/local/bin}. If these are missing (as
+they may be under `Big Sur', you can run directly the copies in
 @file{/Library/Frameworks/R.framework/Resources/}.} so these can be
 typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
-library directory (under @file{~/Library/R},
-e.g.@: @file{~/Library/R/4.0/library}), and that warnings, messages and
-other output to @file{stderr} are highlighted in bold.
+library directory (under @file{~/Library/R}, e.g.@:
+@file{~/Library/R/4.0/library}), and that warnings, messages and other
+output to @file{stderr} are highlighted in bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
 Those using the @command{zsh} shell (the default for new user accounts
