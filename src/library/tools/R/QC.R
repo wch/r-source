@@ -4646,7 +4646,7 @@ function(pkgDir)
     ## add try() to ensure that all datasets are looked at
     ## (if not all of each dataset).
     for(ds in ls(envir = dataEnv, all.names = TRUE)) {
-        if(inherits(suppressMessages(try(check_one(get(ds, envir = dataEnv), ds), silent = TRUE)),
+        if(inherits(suppressWarnings(suppressMessages(try(check_one(get(ds, envir = dataEnv), ds), silent = TRUE))),
                     "try-error")) {
             msg <- sprintf("Error loading dataset %s:\n ", sQuote(ds))
             message(msg, geterrmessage())
