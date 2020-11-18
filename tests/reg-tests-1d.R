@@ -2022,6 +2022,13 @@ dim(x) <- 2
 dimnames(x) <- list(c("a", "b"))
 stopifnot(! is.null(names(sort.int(x))))
 
+## is.unsorted fastpass incorrectly returned TRUE when constant-valued x was sorted descending
+x <- c(1, 1, 1)
+xs <- sort(x, decreasing = TRUE)
+stopifnot(!is.unsorted(xs, strictly = FALSE)) ## is.unsorted should be FALSE
+y <- as.integer(x)
+ys <- sort(x, decreasing = TRUE)
+stopifnot(!is.unsorted(ys, strictly = FALSE))
 
 ## match() with length one x and POSIXlt table (PR#17459):
 d <- as.POSIXlt("2018-01-01")
