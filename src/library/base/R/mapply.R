@@ -29,7 +29,7 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 	else if (!is.null(names1))
 	    names(answer) <- names1
     }
-    if(!isFALSE(SIMPLIFY) && length(answer))
+    if(!isFALSE(SIMPLIFY))
 	simplify2array(answer, higher = (SIMPLIFY == "array"))
     else answer
 }

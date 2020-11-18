@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/mcmapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ mcmapply <-
         else if (!is.null(names1))
             names(answer) <- names1
     }
-    if (!identical(SIMPLIFY, FALSE) && length(answer))
+    if (!identical(SIMPLIFY, FALSE))
         simplify2array(answer, higher = (SIMPLIFY == "array"))
     else answer
 }
