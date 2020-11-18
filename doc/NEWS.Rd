@@ -25,6 +25,10 @@
       \item \code{unlist(plst, recursive=FALSE)} no longer drops content
       for pairlists with list components, thanks to the report and patch
       by Suharto Anggono in \PR{17950}.
+
+      \item \code{round()} and \code{signif()} no longer tolerate wrong
+      argument names, notably in 1-argument calls; reported by Shane
+      Mueller on R-devel (mailing list); later reported as \PR{17976}.
     }
   }
 }

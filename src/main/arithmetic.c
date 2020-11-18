@@ -1635,9 +1635,11 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (length(args) >= 2 &&
 	isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
-	double digits = 0.; // round()
-	if(PRIMVAL(op) == 10004) // signif()
-	    digits = 6.;
+#define SET_DEFAULT_digits_			\
+	double digits = 0.; /* round() */	\
+	if(PRIMVAL(op) == 10004) /* signif() */	\
+	    digits = 6.
+	SET_DEFAULT_digits_;
 	PROTECT(args = list2(CAR(args), ScalarReal(digits))); nprotect++;
     }
 
@@ -1652,11 +1654,15 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 		       "%d arguments passed to '%s' which requires 1 or 2 arguments", n),
 	      n, PRIMNAME(op));
 
+    static SEXP R_x_Symbol = NULL;
     if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	if(n == 1) {
-	    double digits = 0.; // round()
-	    if(PRIMVAL(op) == 10004) // signif()
-		digits = 6.;
+	    if(R_x_Symbol == NULL) R_x_Symbol = install("x");
+	    // Ensure  we do not call it with a mis-named argument:
+	    if(CAR(args) == R_MissingArg ||
+	       (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
+		error(_("argument \"%s\" is missing, with no default"), "x");
+	    SET_DEFAULT_digits_;
 	    SETCDR(args, CONS(ScalarReal(digits), R_NilValue));
 	} else {
 	    /* If named, do argument matching by name */
