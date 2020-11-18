@@ -4505,7 +4505,7 @@ operation of @command{INSTALL}.
 @vtable @code
 @item _R_INSTALL_LIBS_ONLY_FORCE_DEPENDS_IMPORTS_
 If true, give an error if installing only package libraries via
-@option{--libs-only} and some package imported or dependened on is not
+@option{--libs-only} and some package imported or depended on is not
 available.
 Default: true (false only for special applications, which analyze native
 code of packages).
