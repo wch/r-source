@@ -304,10 +304,6 @@
       presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
       Meyer in \PR{16662}.
 
-      \item \code{round()} and \code{signif()} no longer tolerate wrong
-      argument names, notably in 1-argument calls; reported by Shane
-      Mueller on the  R-devel mailing list.
-
       \item \code{boxplot()} now also accepts \code{call}s for labels such
       as \code{ylab}, the same as \code{plot()}.  Reported by Marius Hofert.
 
@@ -383,6 +379,10 @@
       \item \code{iconvlist()} now also works on MUSL based (Linux)
       systems, from a report and patch suggestion by Wesley Chan in
       \PR{17970}.
+
+      \item \code{round()} and \code{signif()} no longer tolerate wrong
+      argument names, notably in 1-argument calls; reported by Shane
+      Mueller on R-devel (mailing list); later reported as \PR{17976}.
     }
   }
 }
