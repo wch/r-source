@@ -4118,6 +4118,8 @@ function(x, ...)
   , Filters = NULL
   , close.winProgressBar = function(con, ...) {}
   , DLL.version = function(path) {}
+  , .fixupGFortranStderr = function() {}
+  , .fixupGFortranStdout = function() {}
   , getClipboardFormats = function(numeric = FALSE) {}
   , getIdentification = function() {}
   , getWindowsHandle = function(which = "Console") {}
