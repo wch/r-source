@@ -3619,8 +3619,8 @@ SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot)
 {
     SEXP s = allocSExp(EXTPTRSXP);
     EXTPTR_PTR(s) = p;
-    EXTPTR_PROT(s) = CHK(prot);
-    EXTPTR_TAG(s) = CHK(tag);
+    EXTPTR_PROT(s) = CHK(prot); if (prot) INCREMENT_REFCNT(prot);
+    EXTPTR_TAG(s) = CHK(tag); if (tag) INCREMENT_REFCNT(tag);
     return s;
 }
 
@@ -3675,8 +3675,8 @@ SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot)
     SEXP s = allocSExp(EXTPTRSXP);
     tmp.fn = p;
     EXTPTR_PTR(s) = tmp.p;
-    EXTPTR_PROT(s) = CHK(prot);
-    EXTPTR_TAG(s) = CHK(tag);
+    EXTPTR_PROT(s) = CHK(prot); if (prot) INCREMENT_REFCNT(prot);
+    EXTPTR_TAG(s) = CHK(tag); if (tag) INCREMENT_REFCNT(tag);
     return s;
 }
 
