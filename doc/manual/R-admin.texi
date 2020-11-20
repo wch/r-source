@@ -241,7 +241,7 @@ as perhaps (it is tested less frequently on these platforms)
 @cindex Linux
 @cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for macOS (formerly OS X and Mac OS X).  See the
+distributions and for macOS.  See the
 @acronym{FAQ} for current details.  These are installed in
 platform-specific ways, so for the rest of this chapter we consider only
 building from the sources.
@@ -469,7 +469,7 @@ have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
 of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
 @file{texinfo.tex}, often made part of the @TeX{} package in
 re-distributions).  The path to @command{texi2any} can be set by macro
-@samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} require
+@samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} requires
 @command{perl}.
 
 The PDF versions can be viewed using any recent PDF viewer: they have
@@ -1522,13 +1522,14 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
-OS X'. Click on that, then download the file
-@file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
-and later on Intel CPUs@footnote{macOS 11 `Big Sur' has been a little
-tested on `Apple Silicon' using `Rosetta' emulation: there you need to
-install the Intel build of XQuartz.}  (High Sierra, Mojave, Catalina,
-Big Sur, @dots{}).
+[The rest of this paragraph is only relevant after release.]  The front
+page of a @acronym{CRAN} site has a link `Download R for (Mac) OS
+X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
+and install it. This runs on macOS 10.13 and later on @cputype{x86_64}
+(Intel) CPUs@footnote{macOS 11 `Big Sur' has been tested on
+@cputype{arm64} (aka `Apple Silicon' aka `M1') using `Rosetta'
+emulation: there you need to install the Intel build of XQuartz.}  (High
+Sierra, Mojave, Catalina, Big Sur, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -4961,9 +4962,10 @@ A TeX installation. @xref{Other libraries}.
 
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
-@command{perl} (currently version 5.18 is a default part of macOS but it
-has been announced that it may not be in future).
-@c macOS 10.15 release notes, but is in 11.0 betas so far.
+@command{perl} (currently version 5.18 (High Sierra) -- 5.28 is a
+default part of macOS but it has been announced that it may not be in
+future).
+@c macOS 10.15 release notes, but is in 11.0.
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
@@ -5072,7 +5074,7 @@ in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
-For Catalina, the system paths need to be specified @emph{via}
+From Catalina, the system paths need to be specified @emph{via}
 @example
 CC="/usr/local/clang/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
@@ -5081,7 +5083,8 @@ CXX="/usr/local/clang/bin/clang++ -isysroot
 @end example
 @noindent
 (Long lines split for the manual, only.)  Should the location of the SDK
-change, it can be found by running @command{xcrun -show-sdk-path}.
+change (or Xcode provides the SDK rather than the Command Line Tools), it
+can be found by running @command{xcrun -show-sdk-path}.
 
 The approach in the previous paragraph also works for Mojave, but for
 versions 10.x of the Command Line Tools an alternative is to install
