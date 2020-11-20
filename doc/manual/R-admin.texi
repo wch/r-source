@@ -469,7 +469,7 @@ have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
 of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
 @file{texinfo.tex}, often made part of the @TeX{} package in
 re-distributions).  The path to @command{texi2any} can be set by macro
-@samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} require
+@samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} requires
 @command{perl}.
 
 The PDF versions can be viewed using any recent PDF viewer: they have
@@ -1526,10 +1526,11 @@ Windows' CRLF line endings.
 [The rest of this paragraph is only relevant after release.]  The front
 page of a @acronym{CRAN} site has a link `Download R for (Mac) OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on macOS 10.13 and later on Intel
-CPUs@footnote{macOS 11 `Big Sur' has been a little tested on `Apple
-Silicon' using `Rosetta' emulation: there you need to install the Intel
-build of XQuartz.}  (High Sierra, Mojave, Catalina, Big Sur, @dots{}).
+and install it. This runs on macOS 10.13 and later on @cputype{x86_64}
+(Intel) CPUs@footnote{macOS 11 `Big Sur' has been tested on
+@cputype{arm64} (aka `Apple Silicon' aka `M1') using `Rosetta'
+emulation: there you need to install the Intel build of XQuartz.}  (High
+Sierra, Mojave, Catalina, Big Sur, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -4841,19 +4842,22 @@ in @code{SAFE_FFLAGS}, e.g.@: by
 SAFE_FFLAGS=-axsse2
 @end example
 
+@c What this architecture is known as varies. The kernel is called
+@c 'Darwin' and so autoconf uses 'apple-darwin<kernel version>' with
+@c current architectures x86_64 and aarch64.
+@c OTOH, 'file' reports architectures x86_64, arm64 and arm64e and
+@c Apple's clang has a -target flag with values like
+@c x86_64-apple-macos10.12 and arm64-apple-macos11
 
 @node macOS, Solaris, Linux, Platform notes
 @section macOS
 @cindex macOS
 
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
-10.13--10.15 (High Sierra, Mojave and Catalina) and 11.0 (Big
-Sur)@footnote{On Intel: no Fortran compiler was available for `Apple
-Silicon' at the time of writing although there are ports under
-development.}.  @R{} can in principle be built for 10.6--10.12, although
-this is little tested and it may be necessary to install later versions
-of software such as @code{libcurl} and an older version@footnote{For
-example, from
+10.13--10.15 (High Sierra, Mojave and Catalina) and 11.0 (Big Sur).
+@R{} can in principle be built for 10.6--10.12, although this is little
+tested and it may be necessary to install later versions of software
+such as @code{libcurl} and an older version@footnote{For example, from
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
 @command{gfortran}.
 
@@ -4866,6 +4870,7 @@ example, from
 * Frameworks::
 * Building R.app::
 * Building binary packages::
+* arm64::
 @end menu
 
 @node Prerequisites, Other C/C++ compilers, macOS, macOS
@@ -4960,9 +4965,10 @@ A TeX installation. @xref{Other libraries}.
 
 @item
 @command{texi2any} from a @samp{texinfo} distribution, which requires
-@command{perl} (currently version 5.18 is a default part of macOS but it
-has been announced that it may not be in future).
-@c macOS 10.15 release notes, but is in 11.0 betas so far.
+@command{perl} (currently version 5.18 (High Sierra) -- 5.28 is a
+default part of macOS but it has been announced that it may not be in
+future).
+@c macOS 10.15 release notes, but is in 11.0.
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
@@ -5071,7 +5077,7 @@ in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
-For Catalina, the system paths need to be specified @emph{via}
+From Catalina, the system paths need to be specified @emph{via}
 @example
 CC="/usr/local/clang/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
@@ -5080,7 +5086,8 @@ CXX="/usr/local/clang/bin/clang++ -isysroot
 @end example
 @noindent
 (Long lines split for the manual, only.)  Should the location of the SDK
-change, it can be found by running @command{xcrun -show-sdk-path}.
+change (or Xcode provides the SDK rather than the Command Line Tools), it
+can be found by running @command{xcrun -show-sdk-path}.
 
 The approach in the previous paragraph also works for Mojave, but for
 versions 10.x of the Command Line Tools an alternative is to install
@@ -5350,7 +5357,7 @@ See also the @file{INSTALL} file in the checkout or directly at
 application bundle can be run anywhere and it is customary to place it
 in the @file{/Applications} folder.
 
-@node Building binary packages,  , Building R.app, macOS
+@node Building binary packages, arm64, Building R.app, macOS
 @subsection Building binary packages
 
 @acronym{CRAN} macOS binary packages are distributed as tarballs with
@@ -5417,6 +5424,33 @@ have version @code{5.0.0}).
 @noindent
 The @acronym{CRAN} binary packages are built with the Apple compiler on High
 Sierra, which avoids the first two and any issues with C++ libraries.
+
+@node arm64,  , Building binary packages, macOS
+@subsection @samp{arm64}
+
+[This is work in progress.]
+
+In late 2020 Apple launched Macs with `Apple Silicon': this architecture
+has unfortunately many names, including @cputype{aarch64} (in the FOSS world)
+@cputype{arm64} and @cputype{arm64e} (by Apple): the machines are also
+known as `M1', Apple's name for their (first-generation) CPU.
+
+No Fortran compiler has been released for this architecture at the time of
+writing although there are ports under development.
+
+However, it is possible to build and run @R{} and the vast majority of
+packages for @cputype{x86_64} using `Rosetta' emulation.  To do so,
+install all the prerequisites and other software described above, but
+include the flag @option{-target arm64-apple-macos11} for
+@command{clang} and @command{clang++}, for example with a
+@file{config.site} file containing
+
+@example
+CC="clang -target x86_64-apple-macos10.13"
+OBJC=$CC
+CXX="clang++ -target x86_64-apple-macos10.13"
+FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
+@end example
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
