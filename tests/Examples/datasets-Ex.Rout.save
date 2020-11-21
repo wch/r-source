@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-11-03 r79399) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-11-20 r79451) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -98,12 +98,6 @@ Nonlinear regression model
 19.143 -0.633 
  residual sum-of-squares: 26
 > # using the plinear algorithm
-> fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
-+    start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
-32.946    (7.093411e-01): par = (-1.0498 22.126)
-25.992    (1.292894e-02): par = (-0.62572 19.103)
-25.990    (2.133335e-04): par = (-0.6327 19.142)
-25.990    (3.546157e-06): par = (-0.63282 19.143)
 > # using a self-starting model
 > fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 > summary(fm3)
@@ -3510,7 +3504,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.985 0.168 2.188 0 0 
+Time elapsed:  0.92 0.055 0.977 0 0 
 > grDevices::dev.off()
 null device 
           1 

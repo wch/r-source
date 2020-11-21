@@ -43,8 +43,10 @@ fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
 coef(fm1)
 fm1
 # using the plinear algorithm
+\donttest{# trace o/p differs by platform.
 fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
    start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
+}
 # using a self-starting model
 fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 summary(fm3)
