@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-31 r79390) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-11-21 r79452) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -129,13 +129,11 @@ Correlation of Coefficients:
   (Intercept)
 x -0.89      
 
-> ## IGNORE_RDIFF_END
 > cf0 <- coef(summary(fit0))[, 1:2]
 > fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +            weights = wts, trace = TRUE)
-      112.14 (3.040806e+02): par = (0.12345 0.54321)
-   0.0012128 (2.745726e-06): par = (0.0051705 0.99915)
-> ## IGNORE_RDIFF_BEGIN
+112.14    (3.04e+02): par = (0.12345 0.54321)
+0.0012128 (2.75e-06): par = (0.0051705 0.99915)
 > summary(fit, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -611,14 +609,17 @@ b    NA 0.611
 + 	 suppressWarnings(
 + 	     nls(y ~ myf(x,A,B,n), data=xy)))
 + }
-> t1 <- test(); t1$with.start
-      8291.9 (1.059803e+01): par = (1 1)
-      726.02 (5.044265e+00): par = (0.80544 2.4297)
-      552.85 (4.451170e+00): par = (1.29 2.129)
-      70.431 (1.287221e+00): par = (1.9565 1.967)
-      26.555 (4.444892e-02): par = (1.9788 2.0064)
-      26.503 (9.345974e-05): par = (1.9798 2.0046)
-      26.503 (7.168985e-07): par = (1.9799 2.0046)
+> ## IGNORE_RDIFF_BEGIN
+> t1 <- test()
+8291.9    (1.06e+01): par = (1 1)
+726.02    (5.04e+00): par = (0.80544 2.4297)
+552.85    (4.45e+00): par = (1.29 2.129)
+70.431    (1.29e+00): par = (1.9565 1.967)
+26.555    (4.44e-02): par = (1.9788 2.0064)
+26.503    (9.35e-05): par = (1.9798 2.0046)
+26.503    (7.17e-07): par = (1.9799 2.0046)
+> ## IGNORE_RDIFF_END
+> t1$with.start
 Nonlinear regression model
   model: y ~ myf(x, a, b, n)
    data: xy
@@ -787,4 +788,4 @@ List of 2
 > 
 > proc.time()
    user  system elapsed 
-  1.032   0.130   1.216 
+  1.130   0.159   1.374 

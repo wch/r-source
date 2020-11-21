@@ -202,7 +202,7 @@ nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral 
 	     getEnv = function() env,
 	     trace = function() {
 		 d <- getOption("digits")
-		 cat(sprintf("%-*s (%9e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
+		 cat(sprintf("%-*s (%.2e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
 			     formatC(dev, digits=d, flag="#"),
 			     convCrit(),
 			     paste(vapply(c(getPars(), lin), format, ""), collapse=" ")))
@@ -366,7 +366,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL, scaleOffset = 0, nDcent
 	     getEnv = function() env,
 	     trace = function() {
 		 d <- getOption("digits")
-		 cat(sprintf("%-*s (%9e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
+		 cat(sprintf("%-*s (%.2e): par = (%s)\n", d+4L+2L*(scaleOffset > 0),
 			     formatC(dev, digits=d, flag="#"),
 			     convCrit(),
 			     paste(vapply(getPars(), format, ""), collapse=" ")))

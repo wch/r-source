@@ -50,7 +50,6 @@ example(sessionInfo, run.donttest = TRUE)
 example(JohnsonJohnson, run.donttest = TRUE)
 example(ability.cov, run.donttest = TRUE)
 example(npk, run.donttest = TRUE)
-example(BOD, run.donttest = TRUE) # added in 4.1.0
 
 ## grDevices
 example(grSoftVersion, run.donttest = TRUE)
