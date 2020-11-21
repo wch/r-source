@@ -351,6 +351,10 @@
       \code{"Math"}-group member functions now work for data frames
       \code{df} with \code{\link{logical}} columns, notably also of zero
       rows.  Reported to R-devel by Martin "b706".
+
+      \item \code{unsplit()} had trouble with tibbles due to unsound use of
+      \code{rep(NA,len)}-indexing, which should use \code{NA_integer_}
+      Reported to R-devel by Mario Annau.
     }
   }
 }
