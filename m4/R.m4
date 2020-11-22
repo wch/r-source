@@ -1983,10 +1983,12 @@ AC_DEFUN([R_BITMAPS2],
 [BITMAP_CPPFLAGS=
 BITMAP_LIBS=
 if test "${use_jpeglib}" = yes; then
-   save_CPPFLAGS=${CPPFLAGS}
+  AC_MSG_CHECKING([if pkg-config knows about libjpeg])
+  save_CPPFLAGS=${CPPFLAGS}
   ## IJG version 9c (Jan 2018) has support as libjpeg.
   ## libjpeg-turbo has had this for a while.
   if "${PKG_CONFIG}" --exists libjpeg; then
+    AC_MSG_RESULT([yes])
     JPG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libjpeg`
     JPG_LIBS=`"${PKG_CONFIG}" --libs libjpeg`
     CPPFLAGS="${CPPFLAGS} ${JPG_CPPFLAGS}"
@@ -2006,10 +2008,14 @@ if test "${use_jpeglib}" = yes; then
     fi
     AC_DEFINE(HAVE_JPEG, 1,
 	      [Define if you have the JPEG headers and libraries.])
+  else
+    AC_MSG_RESULT([no])
   fi
 fi
 if test "${use_libpng}" = yes; then
+  AC_MSG_CHECKING([if pkg-config knows about libpng])
   if "${PKG_CONFIG}" --exists libpng; then
+    AC_MSG_RESULT([yes])
     save_CPPFLAGS=${CPPFLAGS}
     PNG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libpng`
     CPPFLAGS="${CPPFLAGS} ${PNG_CPPFLAGS}"
@@ -2032,14 +2038,18 @@ if test "${use_libpng}" = yes; then
       AC_DEFINE(HAVE_PNG, 1,
 	        [Define if you have the PNG headers and libraries.])
     fi
+  else
+    AC_MSG_RESULT([no : run 'pkg-config --print-errors libpng' for further info])
   fi
 fi
 if test "${use_libtiff}" = yes; then
+  AC_MSG_CHECKING([if pkg-config knows about libtiff])
   mod=
   ## pkg-config support was introduced in libtiff 4.0.0
   ## I guess the module name might change in future, so
   ## program defensively here.
   if "${PKG_CONFIG}" --exists libtiff-4; then
+    AC_MSG_RESULT([yes])
     mod=libtiff-4
   fi
   if test -n "${mod}"; then
@@ -2063,6 +2073,8 @@ if test "${use_libtiff}" = yes; then
         BITMAP_CPPFLAGS="${BITMAP_CPPFLAGS} ${TIF_CPPFLAGS}"
       fi
     fi
+  else
+    AC_MSG_RESULT([no])
   fi
 fi
 AC_SUBST(BITMAP_CPPFLAGS)
@@ -4155,7 +4167,7 @@ LIBS="${CURL_LIBS} ${LIBS}"
 AC_CHECK_HEADERS(curl/curl.h, [have_libcurl=yes], [have_libcurl=no])
 
 if test "x${have_libcurl}" = "xyes"; then
-AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl722],
+AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl728],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <curl/curl.h>
