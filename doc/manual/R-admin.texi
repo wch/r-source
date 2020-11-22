@@ -575,12 +575,12 @@ make mobi
 @end example
 
 @noindent
-This requires @command{ebook-convert} from @command{Calibre}
-(@uref{https://calibre-ebook.com/download}), or from most Linux
-distributions.  If necessary the path to @command{ebook-convert} can be
-set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
-(which contains a commented value suitable for macOS) or using
-@command{make -e}.
+This requires @command{ebook-convert} from
+@uref{https://calibre-ebook.com/@/download, @command{Calibre}}, or from
+most Linux distributions.  If necessary the path to
+@command{ebook-convert} can be set as make macro @env{EBOOK} to by
+editing @file{doc/manual/Makefile} (which contains a commented value
+suitable for macOS) or using @command{make -e}.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -1100,7 +1100,7 @@ that of the compiler used: currently it is C++11: this can be overridden
 by setting @samp{CXXSTD} when @R{} is configured, for example to
 @samp{-std=gnu++14}.
 
-@uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
+@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
 standards.
 
@@ -1208,7 +1208,7 @@ confused compiler messages.
 
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
-@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the only
+@uref{https://clang.llvm.org/@/docs/@/ThinLTO.html}.)  Currently the only
 LLVM compiler relevant to @R{} is @command{clang} for which this can be
 selected by setting macro @samp{LTO=-flto=thin}.  LLVM has
 @example
@@ -1403,7 +1403,7 @@ manual only documents that used for binary distributions of @R{} 4.0.x.
 
 The binary distribution of @R{} is currently built with tools
 distributed in @file{rtools40-x86_64.exe}. The webpage
-@uref{https://cran.r-project.org/bin/windows/Rtools/} describes how to
+@uref{https://cran.r-project.org/@/bin/@/windows/@/Rtools/} describes how to
 install the toolset and has links to example scripts to build and
 package @R{}.
 
@@ -3180,7 +3180,7 @@ do so described in file @file{config.site}.
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{https://github.com/@/libarchive/@/libarchive/}, as used as
+@uref{https://github.com/@/libarchive/@/libarchive/}, used as
 @command{tar} by FreeBSD and macOS 10.6 and later) or @command{tar} from
 the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/@/tools.html}), although the
@@ -3322,7 +3322,7 @@ for static linking).
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest sources are in the @command{git} repository
-at @url{https://github.com/laurikari/tre/}, but at the time of writing
+at @url{https://github.com/@/laurikari/@/tre/}, but at the time of writing
 (2016) the resulting build did not pass its checks.).
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
@@ -3384,7 +3384,7 @@ pango pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk @geq{} 8.4 installed: the sources are
-available at @uref{https://@/www.tcl.tk/}.  To specify the locations of the
+available at @uref{https://www.tcl.tk/}.  To specify the locations of the
 Tcl/Tk files you may need the configuration options
 
 @table @option
@@ -3606,7 +3606,7 @@ Debian/Ubuntu systems provide a system-specific way to switch the BLAS
 in use.  Build @R{} with @option{-with-blas} to select the OS version
 of the reference BLAS, and then use @command{update-alternatives} to
 switch between the available BLAS libraries.  See
-@uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
+@uref{https://wiki.debian.org/@/DebianScience/@/LinearAlgebraLibraries}.
 
 The URIs for several of these BLAS have been subject to frequent
 gratuitous changes, so you will need to search for their current
@@ -3682,12 +3682,12 @@ Linking against multiple static libraries requires one of
 @end example
 
 Consult its installation
-guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
+guide@footnote{@uref{http://math-atlas.sourceforge.net/@/atlas_install/}}
 for how to build ATLAS as a shared library or as a static library with
 position-independent code (on platforms where that matters).
 
 According to the ATLAS
-FAQ@footnote{@uref{http://math-atlas.sourceforge.net/faq.html#tnum}} the
+FAQ@footnote{@uref{http://math-atlas.sourceforge.net/@/faq.html#tnum}} the
 maximum number of threads used by multi-threaded ATLAS is set at compile
 time.  Also, the author advises against using multi-threaded ATLAS on
 hyperthreaded CPUs without restricting affinities at compile-time to one
@@ -3751,7 +3751,7 @@ encouraged to read the MKL User's Guide, which is installed with the
 library, before attempting to link to MKL.  This includes a `link line
 advisor' which will suggest appropriate incantations: its use is
 recommended.  Or see
-@uref{https://software.intel.com/content/www/us/en/develop/@/articles/@/intel-mkl-link-line-advisor.html}.
+@uref{https://software.intel.com/@/content/@/www/@/us/@/en/@/develop/@/articles/@/intel-mkl-link-line-advisor.html}.
 
 There are also versions of MKL for macOS@footnote{The issue for macOS
 has been the use of double-complex routines.} and Windows, but when
@@ -4432,9 +4432,9 @@ directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
 @command{notangle} is required.  Some Linux distributions include this
 command in package @pkg{noweb}.  It can also be installed from the
-sources at @url{https://www.cs.tufts.edu/~nr/noweb/}@footnote{The links
+sources at @url{https://www.cs.tufts.edu/@/~nr/@/noweb/}@footnote{The links
 there have proved difficult to access, in which case either point an FTP
-client at @uref{ftp://www.eecs.harvard.edu/pub/nr/} or grab the copy
+client at @uref{ftp://www.eecs.harvard.edu/@/pub/@/nr/} or grab the copy
 made available at
 @uref{https://developer.r-project.org/noweb-2.11b.tgz}.}.  The package
 sources are only re-created even in maintainer mode if
@@ -4755,7 +4755,7 @@ which is needed for some versions of @command{gfortran}.
 
 The current out-of-the-box default for @command{clang++} is to use the
 C++ runtime from the installed @command{g++}.  Using the runtime from
-the @code{libc++} project (@url{https://libcxx.llvm.org/}, Fedora RPM
+the @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora RPM
 @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++} has also been
 tested.
 
@@ -4921,9 +4921,11 @@ version it is straightforward to compile it from its sources.}.  If
 that, configure with @option{--without-readline}.
 
 @item
+@c You do not need zlib-system-stub if PKG_CONFIG_PATH includes /opt/X11/lib/pkgconfig
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
-@code{pkgconfig} from @uref{https://mac.R-project.org/libs-4/}, for the
-full range of bitmapped graphics devices.
+@code{pkgconfig}, @code{zlib-system-stub} from
+@uref{https://mac.R-project.org/libs-4/}, for the full range of
+bitmapped graphics devices.
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5119,7 +5121,7 @@ are available from @uref{https://mac.R-project.org/libs-4/} or
 @cindex LAPACK library
 The @code{Accelerate}
 library@footnote{@uref{https://developer.apple.com/@/documentation/@/accelerate}.}
-can be used @emph{via} the configuration options
+can be used @emph{via} the configuration option
 
 @example
 --with-blas="-framework Accelerate"
@@ -5251,7 +5253,7 @@ Java from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html,
 Oracle}).  Builds of OpenJDK may also be available, e.g.@: from
 @uref{https://adoptopenjdk.net, AdoptOpenJDK},
-@uref{https://www.azul.com/downloads/zulu-community/, Azul} or
+@uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
 long-term support, e.g.@: 8 or 11 (but not 9, 10, 12--16 which have/had
 a 6-month lifetime).
@@ -5480,7 +5482,10 @@ prerequisites.  @code{jpeg}, @code{libpng},
 @code{pcre2},@footnote{@emph{pro tem} built without JIT support.}
 @code{readline}, @code{tiff}, @code{xz} and Tcl/Tk@footnote{configured
 with @option{--enable-agua}.}  can easily be built from their sources
-(although the @code{libedit} emulation of readline will also work).
+(although the @code{libedit} emulation of readline will also work).  You
+will also need @code{pkgconfig}, @code{zlib-system-stub} from
+@uref{https://mac.R-project.org/libs-4/} for @command{pkg-config} and
+support files.
 
 @R{} was configured by
 
@@ -5497,6 +5502,13 @@ CC="clang -target arm64-apple-macos11"
 OBJC=$CC
 FC="/usr/local/gfortran11/bin/gfortran -mtune=native"
 CXX="clang++ -target arm64-apple-macos11"
+@end example
+
+As with Intel builds, it is possible to use the @code{Accelerate}
+library @emph{via} the configuration option
+
+@example
+--with-blas="-framework Accelerate"
 @end example
 
 
