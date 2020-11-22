@@ -5237,23 +5237,28 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @c details see @uref{https://www.macstrategy.com/@/article.php?3}.} and
 @c distribution of Java for all platforms changed in 2018.
 
-macOS no longer comes with an installed Java runtime (JRE) and a macOS
+macOS does not comes with an installed Java runtime (JRE) and a macOS
 upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
 not start with @code{1.8.0}, @code{11} or higher you need to update your
-Java.} this should prompt you to install it.  You can also install
-directly a recent Java from Oracle (currently from
+Java.} this should prompt you to install it.@footnote{Not at the time of
+writing for @cputype{arm64}.  On @cputype{x86_64} it installs from
+Oracle and you may prefer the licensing conditions of one of the
+alternative in the main text.} You can also install directly a recent
+Java from Oracle (currently from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html}).
 Builds of OpenJDK may also be available, e.g.@: from
-@uref{https://adoptopenjdk.net} or @uref{https://jdk.java.net/}.  We
-recommend you install a version with long-term support, e.g.@: 8 or 11
-(but not 9, 10, 12--16 which have/had a 6-month lifetime).
+@uref{https://adoptopenjdk.net, AdoptOpenJDK},
+@uref{https://www.azul.com/downloads/zulu-community/, Azul} or
+@uref{https://jdk.java.net/}.  We recommend you install a version with
+long-term support, e.g.@: 8 or 11 (but not 9, 10, 12--16 which have/had
+a 6-month lifetime).
 
 Binary distributions of @R{} are built against a specific version
-(e.g.@: 11.0.6) of Java so @command{sudo R CMD javareconf} will likely be
-needed before using Java-using packages.
+(e.g.@: 11.0.6) of Java so @command{sudo R CMD javareconf} will likely
+be needed to be run before using Java-using packages.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
@@ -5430,18 +5435,19 @@ Sierra, which avoids the first two and any issues with C++ libraries.
 
 [This is work in progress.]
 
-In late 2020 Apple launched Macs with `Apple Silicon': this architecture
+@menu
+* Native builds::
+@end menu
+
+In late 2020 Apple launched Macs using `Apple Silicon': this architecture
 has unfortunately many names, including @cputype{aarch64} (in the FOSS world)
 @cputype{arm64} and @cputype{arm64e} (by Apple): the machines are also
 known as `M1', Apple's name for their (first-generation) CPU.
 
-No Fortran compiler has been released for this architecture at the time of
-writing although there are ports under development.
-
-However, it is possible to build and run @R{} and the vast majority of
+It is possible to build and run @R{} and the vast majority of
 packages for @cputype{x86_64} using `Rosetta' emulation.  To do so,
 install all the prerequisites and other software described above, but
-include the flag @option{-target arm64-apple-macos11} for
+include the flag @option{-target x86_64-apple-macos10.13} for
 @command{clang} and @command{clang++}, for example with a
 @file{config.site} file containing
 
@@ -5451,6 +5457,48 @@ OBJC=$CC
 CXX="clang++ -target x86_64-apple-macos10.13"
 FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
 @end example
+
+@noindent
+(This may give warnings, in particular for the @command{gfortran} 8.2
+distribution that @code{libgfortran} was built for 10.14 --- but these
+seem harmless.)
+
+@node Native builds,  , arm64, arm64
+@subsubsection Native builds
+
+No Fortran compiler has been released for this architecture at the time
+of writing although there are ports under development.@footnote{We used
+the fork of @command{gfortran} from
+@url{https://github.com/@/iains/@/gcc-darwin-arm64}}  So this is section
+is completely experimental.
+
+At the time of writing no distribution of X11@footnote{XQuartz has
+sources on GitHub, so one could try building from those.} nor
+Java@footnote{build of OpenJDK had been announced but not released.} was
+available, so @R{} was configured with @option{--without-x}.  The
+prerequisites.  @code{jpeg}, @code{libpng},
+@code{pcre2},@footnote{@emph{pro tem} built without JIT support.}
+@code{readline}, @code{tiff}, @code{xz} and Tcl/Tk@footnote{configured
+with @option{--enable-agua}.}  can easily be built from their sources
+(although the @code{libedit} emulation of readline will also work).
+
+@R{} was configured by
+
+@example
+/path/to/configure --enable-R-shlib --enable-memory-profiling --without-x \
+PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+
+@noindent
+with a @file{config.site} file
+
+@example
+CC="clang -target arm64-apple-macos11"
+OBJC=$CC
+FC="/usr/local/gfortran11/bin/gfortran -mtune=native"
+CXX="clang++ -target arm64-apple-macos11"
+@end example
+
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
@@ -5462,8 +5510,8 @@ FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
 @end menu
 
 @R{} has been built successfully on Solaris 10 using the (zero cost)
-Oracle Developer Studio@footnote{Oracle Solaris Studio prior to 2016,
-and previously Sun Studio.} compilers: there has also been success with
+Oracle Developer Studio@footnote{Formerly known as Oracle Solaris Studio
+or Sun Studio.} compilers: there has also been success with
 @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)  How these compilers
