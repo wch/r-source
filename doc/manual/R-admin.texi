@@ -3383,7 +3383,7 @@ pango pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk @geq{} 8.4 installed: the sources are
-available at @uref{https://@/www.tcl.tk/}.  To specify the locations of the
+available at @uref{https://www.tcl.tk/}.  To specify the locations of the
 Tcl/Tk files you may need the configuration options
 
 @table @option
@@ -4914,9 +4914,11 @@ version it is straightforward to compile it from its sources.}.  If
 that, configure with @option{--without-readline}.
 
 @item
+@c You do not need zlib-system-stub if PKG_CONFIG_PATH includes /opt/X11/lib/pkgconfig
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
-@code{pkgconfig} from @uref{https://mac.R-project.org/libs-4/}, for the
-full range of bitmapped graphics devices.
+@code{pkgconfig}, @code{zlib-system-stub} from
+@uref{https://mac.R-project.org/libs-4/}, for the full range of
+bitmapped graphics devices.
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5112,7 +5114,7 @@ are available from @uref{https://mac.R-project.org/libs-4/} or
 @cindex LAPACK library
 The @code{Accelerate}
 library@footnote{@uref{https://developer.apple.com/@/documentation/@/accelerate}.}
-can be used @emph{via} the configuration options
+can be used @emph{via} the configuration option
 
 @example
 --with-blas="-framework Accelerate"
