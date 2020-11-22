@@ -1992,6 +1992,8 @@ if test "${use_jpeglib}" = yes; then
     JPG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libjpeg`
     JPG_LIBS=`"${PKG_CONFIG}" --libs libjpeg`
     CPPFLAGS="${CPPFLAGS} ${JPG_CPPFLAGS}"
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libjpeg' for further info])
   fi
   _R_HEADER_JPEGLIB
   CPPFLAGS=${save_CPPFLAGS}
@@ -2008,8 +2010,6 @@ if test "${use_jpeglib}" = yes; then
     fi
     AC_DEFINE(HAVE_JPEG, 1,
 	      [Define if you have the JPEG headers and libraries.])
-  else
-    AC_MSG_RESULT([no])
   fi
 fi
 if test "${use_libpng}" = yes; then
@@ -2039,7 +2039,7 @@ if test "${use_libpng}" = yes; then
 	        [Define if you have the PNG headers and libraries.])
     fi
   else
-    AC_MSG_RESULT([no : run 'pkg-config --print-errors libpng' for further info])
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libpng' for further info])
   fi
 fi
 if test "${use_libtiff}" = yes; then
@@ -2051,6 +2051,8 @@ if test "${use_libtiff}" = yes; then
   if "${PKG_CONFIG}" --exists libtiff-4; then
     AC_MSG_RESULT([yes])
     mod=libtiff-4
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libtiff-4' for further info])
   fi
   if test -n "${mod}"; then
     save_CPPFLAGS=${CPPFLAGS}
@@ -2073,8 +2075,6 @@ if test "${use_libtiff}" = yes; then
         BITMAP_CPPFLAGS="${BITMAP_CPPFLAGS} ${TIF_CPPFLAGS}"
       fi
     fi
-  else
-    AC_MSG_RESULT([no])
   fi
 fi
 AC_SUBST(BITMAP_CPPFLAGS)
