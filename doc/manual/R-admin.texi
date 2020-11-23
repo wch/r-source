@@ -2191,6 +2191,20 @@ the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com} -- this has been used for
 @code{OpenSSL} and @code{iodbc}.
 
+Those using Xcode/Command Line Tools 12 or later (as released for macOS
+11 `Big Sur') probably want to arrange that the flag
+
+@example
+-Wno-implicit-function-declaration
+@end example
+
+@noindent
+is part of @code{CFLAGS}.  Apple has changed the default to make
+implicit declarations a compilation error (something seen in no other
+compiler) and undesrstandably package authors have been unaware that
+this might be done --- issues are most often seen in @command{configure}
+scripts.
+
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
 
@@ -5131,10 +5145,14 @@ can be used @emph{via} the configuration option
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It was reported that for some non-Apple
 toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} from @uref{https://releases.llvm.org} though.}
-This also includes a full LAPACK which can be used @emph{via}
-@option{--with-lapack}: however, the version of LAPACK it contains is
-often seriously old.
+not needed for @command{clang} from @uref{https://releases.llvm.org}
+though.}  This also includes a full LAPACK which can be used @emph{via}
+@option{--with-lapack}: however, the version of LAPACK it contains has
+@c 3.2.1 in Big Sur.
+often been seriously old (and is not used unless @option{--with-lapack}
+is specified).  (For the Command Line Tools 12 and later, you need to
+ensure that @option{-Wno-implicit-function-declaration} is part of
+@code{CFLAGS}.)
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is
@@ -5441,7 +5459,7 @@ Sierra, which avoids the first two and any issues with C++ libraries.
 * Native builds::
 @end menu
 
-In late 2020 Apple launched Macs using `Apple Silicon': this architecture
+In November 2020 Apple launched Macs using `Apple Silicon': this architecture
 has unfortunately many names, including @cputype{aarch64} (in the FOSS world)
 @cputype{arm64} and @cputype{arm64e} (by Apple): the machines are also
 known as `M1', Apple's name for their (first-generation) CPU.
@@ -5476,16 +5494,15 @@ is completely experimental.
 
 At the time of writing no distribution of X11@footnote{XQuartz has
 sources on GitHub, so one could try building from those.} nor
-Java@footnote{build of OpenJDK had been announced but not released.} was
-available, so @R{} was configured with @option{--without-x}.  The
-prerequisites.  @code{jpeg}, @code{libpng},
-@code{pcre2},@footnote{@emph{pro tem} built without JIT support.}
-@code{readline}, @code{tiff}, @code{xz} and Tcl/Tk@footnote{configured
-with @option{--enable-agua}.}  can easily be built from their sources
-(although the @code{libedit} emulation of readline will also work).  You
-will also need @code{pkgconfig}, @code{zlib-system-stub} from
-@uref{https://mac.R-project.org/libs-4/} for @command{pkg-config} and
-support files.
+Java@footnote{builds of OpenJDK had been announced.} was available, so
+@R{} was configured with @option{--without-x}.  The prerequisites.
+@code{jpeg}, @code{libpng}, @code{pcre2},@footnote{@emph{pro tem} built
+without JIT support.}  @code{readline}, @code{tiff}, @code{xz} and
+Tcl/Tk@footnote{configured with @option{--enable-agua}.}  can easily be
+built from their sources (although the @code{libedit} emulation of
+readline will also work).  You will also need @code{pkgconfig},
+@code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/}
+for @command{pkg-config} and support files.
 
 @R{} was configured by
 
