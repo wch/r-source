@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-23 r79362) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-11-22 r79463) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -321,6 +321,7 @@ list(weight, ns(height, knots = c(`20%` = 60.8, `40%` = 63.6,
 > 
 > require(graphics)
 > ispl <- polySpline(interpSpline( weight ~ height,  women, bSpline = TRUE))
+> ## IGNORE_RDIFF_BEGIN
 > print( ispl )   # print the piecewise polynomial representation
 polynomial representation of spline for weight ~ height
    constant   linear   quadratic       cubic
@@ -339,6 +340,7 @@ polynomial representation of spline for weight ~ height
 70      154 4.510376  0.83935505 -0.34973127
 71      159 5.139893 -0.20983876  0.06994625
 72      164 4.930054  0.00000000  0.00000000
+> ## IGNORE_RDIFF_END
 > plot( ispl )    # plots over the range of the knots
 > points( women$height, women$weight )
 > 
