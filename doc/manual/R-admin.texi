@@ -1100,7 +1100,7 @@ that of the compiler used: currently it is C++11: this can be overridden
 by setting @samp{CXXSTD} when @R{} is configured, for example to
 @samp{-std=gnu++14}.
 
-@uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
+@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
 standards.
 
@@ -1207,7 +1207,7 @@ confused compiler messages.
 
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
-@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the only
+@uref{https://clang.llvm.org/@/docs/@/ThinLTO.html}.)  Currently the only
 LLVM compiler relevant to @R{} is @command{clang} for which this can be
 selected by setting macro @samp{LTO=-flto=thin}.  LLVM has
 @example
@@ -1402,7 +1402,7 @@ manual only documents that used for binary distributions of @R{} 4.0.x.
 
 The binary distribution of @R{} is currently built with tools
 distributed in @file{rtools40-x86_64.exe}. The webpage
-@uref{https://cran.r-project.org/bin/windows/Rtools/} describes how to
+@uref{https://cran.r-project.org/@/bin/@/windows/@/Rtools/} describes how to
 install the toolset and has links to example scripts to build and
 package @R{}.
 
@@ -3335,7 +3335,7 @@ for static linking).
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest sources are in the @command{git} repository
-at @url{https://github.com/laurikari/tre/}, but at the time of writing
+at @url{https://github.com/@/laurikari/@/tre/}, but at the time of writing
 (2016) the resulting build did not pass its checks.).
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
@@ -3619,7 +3619,7 @@ Debian/Ubuntu systems provide a system-specific way to switch the BLAS
 in use.  Build @R{} with @option{-with-blas} to select the OS version
 of the reference BLAS, and then use @command{update-alternatives} to
 switch between the available BLAS libraries.  See
-@uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
+@uref{https://wiki.debian.org/@/DebianScience/@/LinearAlgebraLibraries}.
 
 The URIs for several of these BLAS have been subject to frequent
 gratuitous changes, so you will need to search for their current
@@ -3695,12 +3695,12 @@ Linking against multiple static libraries requires one of
 @end example
 
 Consult its installation
-guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
+guide@footnote{@uref{http://math-atlas.sourceforge.net/@/atlas_install/}}
 for how to build ATLAS as a shared library or as a static library with
 position-independent code (on platforms where that matters).
 
 According to the ATLAS
-FAQ@footnote{@uref{http://math-atlas.sourceforge.net/faq.html#tnum}} the
+FAQ@footnote{@uref{http://math-atlas.sourceforge.net/@/faq.html#tnum}} the
 maximum number of threads used by multi-threaded ATLAS is set at compile
 time.  Also, the author advises against using multi-threaded ATLAS on
 hyperthreaded CPUs without restricting affinities at compile-time to one
@@ -3764,7 +3764,7 @@ encouraged to read the MKL User's Guide, which is installed with the
 library, before attempting to link to MKL.  This includes a `link line
 advisor' which will suggest appropriate incantations: its use is
 recommended.  Or see
-@uref{https://software.intel.com/content/www/us/en/develop/@/articles/@/intel-mkl-link-line-advisor.html}.
+@uref{https://software.intel.com/@/content/@/www/@/us/@/en/@/develop/@/articles/@/intel-mkl-link-line-advisor.html}.
 
 There are also versions of MKL for macOS@footnote{The issue for macOS
 has been the use of double-complex routines.} and Windows, but when
@@ -4445,9 +4445,9 @@ directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
 @command{notangle} is required.  Some Linux distributions include this
 command in package @pkg{noweb}.  It can also be installed from the
-sources at @url{https://www.cs.tufts.edu/~nr/noweb/}@footnote{The links
+sources at @url{https://www.cs.tufts.edu/@/~nr/@/noweb/}@footnote{The links
 there have proved difficult to access, in which case either point an FTP
-client at @uref{ftp://www.eecs.harvard.edu/pub/nr/} or grab the copy
+client at @uref{ftp://www.eecs.harvard.edu/@/pub/@/nr/} or grab the copy
 made available at
 @uref{https://developer.r-project.org/noweb-2.11b.tgz}.}.  The package
 sources are only re-created even in maintainer mode if
@@ -5263,7 +5263,7 @@ Java from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html,
 Oracle}).  Builds of OpenJDK may also be available, e.g.@: from
 @uref{https://adoptopenjdk.net, AdoptOpenJDK},
-@uref{https://www.azul.com/downloads/zulu-community/, Azul} or
+@uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
 long-term support, e.g.@: 8 or 11 (but not 9, 10, 12--16 which have/had
 a 6-month lifetime).
