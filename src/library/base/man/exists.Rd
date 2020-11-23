@@ -18,7 +18,7 @@ get0(x, envir = pos.to.env(-1L), mode = "any", inherits = TRUE,
      ifnotfound = NULL)
 }
 \arguments{
-  \item{x}{a variable name (given as a character string).}
+  \item{x}{a variable name (given as a character string or a symbol).}
   \item{where}{where to look for the object (see the details section); if
     omitted, the function will search as if the name of the object
     appeared unquoted in an expression.}
