@@ -5492,10 +5492,12 @@ the fork of @command{gfortran} from
 @url{https://github.com/@/iains/@/gcc-darwin-arm64}}  So this is section
 is completely experimental.
 
+Native Java builds are becoming available, for example
+@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
+
 At the time of writing no distribution of X11@footnote{XQuartz has
-sources on GitHub, so one could try building from those.} nor
-Java@footnote{builds of OpenJDK had been announced.} was available, so
-@R{} was configured with @option{--without-x}.  The prerequisites.
+sources on GitHub, so one could try building from those.} was available,
+so @R{} was configured with @option{--without-x}.  The prerequisites.
 @code{jpeg}, @code{libpng}, @code{pcre2},@footnote{@emph{pro tem} built
 without JIT support.}  @code{readline}, @code{tiff}, @code{xz} and
 Tcl/Tk@footnote{configured with @option{--enable-agua}.}  can easily be
