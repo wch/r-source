@@ -139,6 +139,11 @@
       provided by Lionel Henry in \PR{17869}.
 
       \item \code{textConnection()} gets an optional \code{name} argument.
+
+      \item \code{get()}, \code{exists()}, and \code{get0()} now signal
+      an error if the first argument has length greater than 1.
+      Preciously additional elements were silently ignored.  Suggested
+      by Antoine Fabri on R-devel.
     }
   }
 

@@ -2055,10 +2055,13 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(CAR(args)) == SYMSXP)
 	t1 = CAR(args);
-    else if (!isValidStringF(CAR(args)))
-	error(_("invalid first argument"));
-    else
+    else if (isValidStringF(CAR(args))) {
+	if (XLENGTH(CAR(args)) > 1)
+	    error(_("first argument has length > 1"));
 	t1 = installTrChar(STRING_ELT(CAR(args), 0));
+    }
+    else
+	error(_("invalid first argument"));
 
     /* envir :	originally, the "where=" argument */
 
