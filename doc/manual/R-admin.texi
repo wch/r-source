@@ -5508,7 +5508,8 @@ for @command{pkg-config} and support files.
 
 @example
 /path/to/configure --enable-R-shlib --enable-memory-profiling --without-x \
-PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
+JAVA_HOME=/path/to/zulu-11.jdk/Contents/Home
 @end example
 
 @noindent
