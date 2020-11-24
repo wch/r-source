@@ -5150,9 +5150,7 @@ though.}  This also includes a full LAPACK which can be used @emph{via}
 @option{--with-lapack}: however, the version of LAPACK it contains has
 @c 3.2.1 in Big Sur.
 often been seriously old (and is not used unless @option{--with-lapack}
-is specified).  (For the Command Line Tools 12 and later, you need to
-ensure that @option{-Wno-implicit-function-declaration} is part of
-@code{CFLAGS}.)
+is specified).
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 Threading in Accelerate is controlled by `Grand Central Dispatch' and is

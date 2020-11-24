@@ -2570,12 +2570,15 @@ acx_blas_save_LIBS="${LIBS}"
 LIBS="${FLIBS} ${LIBS}"
 
 dnl First, check BLAS_LIBS environment variable
+dnl Dummy xerbla was added in 2003 for the Goto BLAS.
+dnl Declaration added in 2020 for Apple's -Werror=implicit-function-declaration
 if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${dgemm} in ${BLAS_LIBS}])
-    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}], ${dgemm}(),
-      [acx_blas_ok=yes], [BLAS_LIBS=""])
+    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}
+                 void ${dgemm}();],
+		${dgemm}(), [acx_blas_ok=yes], [BLAS_LIBS=""])
     AC_MSG_RESULT([${acx_blas_ok}])
     LIBS="${r_save_LIBS}"
   fi
@@ -2746,6 +2749,86 @@ if test "${acx_blas_ok}" = yes; then
 #endif
 void F77_SYMBOL(xerbla)(char *srname, int *info)
 {}
+// declare (with empty args) before use.
+  void F77_SYMBOL(dasum)();
+  void F77_SYMBOL(daxpy)();
+  void F77_SYMBOL(dcopy)();
+  void F77_SYMBOL(ddot)();
+  void F77_SYMBOL(dgbmv)();
+  void F77_SYMBOL(dgemm)();
+  void F77_SYMBOL(dgemv)();
+  void F77_SYMBOL(dger)();
+  void F77_SYMBOL(dnrm2)();
+  void F77_SYMBOL(drot)();
+  void F77_SYMBOL(drotg)();
+  void F77_SYMBOL(drotm)();
+  void F77_SYMBOL(drotmg)();
+  void F77_SYMBOL(dsbmv)();
+  void F77_SYMBOL(dscal)();
+  void F77_SYMBOL(dsdot)();
+  void F77_SYMBOL(dspmv)();
+  void F77_SYMBOL(dspr)();
+  void F77_SYMBOL(dspr2)();
+  void F77_SYMBOL(dswap)();
+  void F77_SYMBOL(dsymm)();
+  void F77_SYMBOL(dsymv)();
+  void F77_SYMBOL(dsyr)();
+  void F77_SYMBOL(dsyr2)();
+  void F77_SYMBOL(dsyr2k)();
+  void F77_SYMBOL(dsyrk)();
+  void F77_SYMBOL(dtbmv)();
+  void F77_SYMBOL(dtbsv)();
+  void F77_SYMBOL(dtpmv)();
+  void F77_SYMBOL(dtpsv)();
+  void F77_SYMBOL(dtrmm)();
+  void F77_SYMBOL(dtrmv)();
+  void F77_SYMBOL(dtrsm)();
+  void F77_SYMBOL(dtrsv)();
+  void F77_SYMBOL(idamax)();
+  void F77_SYMBOL(lsame)();
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+/* cmplxblas */
+  void F77_SYMBOL(dcabs1)();
+  void F77_SYMBOL(dzasum)();
+  void F77_SYMBOL(dznrm2)();
+  void F77_SYMBOL(izamax)();
+  void F77_SYMBOL(zaxpy)();
+  void F77_SYMBOL(zcopy)();
+  void F77_SYMBOL(zdotc)();
+  void F77_SYMBOL(zdotu)();
+  void F77_SYMBOL(zdrot)();
+  void F77_SYMBOL(zdscal)();
+  void F77_SYMBOL(zgbmv)();
+  void F77_SYMBOL(zgemm)();
+  void F77_SYMBOL(zgemv)();
+  void F77_SYMBOL(zgerc)();
+  void F77_SYMBOL(zgeru)();
+  void F77_SYMBOL(zhbmv)();
+  void F77_SYMBOL(zhemm)();
+  void F77_SYMBOL(zhemv)();
+  void F77_SYMBOL(zher)();
+  void F77_SYMBOL(zherk)();
+  void F77_SYMBOL(zher2)();
+  void F77_SYMBOL(zher2k)();
+  void F77_SYMBOL(zhpmv)();
+  void F77_SYMBOL(zhpr)();
+  void F77_SYMBOL(zhpr2)();
+  void F77_SYMBOL(zrotg)();
+  void F77_SYMBOL(zscal)();
+  void F77_SYMBOL(zswap)();
+  void F77_SYMBOL(zsymm)();
+  void F77_SYMBOL(zsyr2k)();
+  void F77_SYMBOL(zsyrk)();
+  void F77_SYMBOL(ztbmv)();
+  void F77_SYMBOL(ztbsv)();
+  void F77_SYMBOL(ztpmv)();
+  void F77_SYMBOL(ztpsv)();
+  void F77_SYMBOL(ztrmm)();
+  void F77_SYMBOL(ztrmv)();
+  void F77_SYMBOL(ztrsm)();
+  void F77_SYMBOL(ztrsv)();
+#endif
+
 void blas_set () {
   F77_SYMBOL(dasum)();
   F77_SYMBOL(daxpy)();
