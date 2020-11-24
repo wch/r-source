@@ -1986,13 +1986,17 @@ AC_DEFUN([R_BITMAPS2],
 [BITMAP_CPPFLAGS=
 BITMAP_LIBS=
 if test "${use_jpeglib}" = yes; then
-   save_CPPFLAGS=${CPPFLAGS}
+  AC_MSG_CHECKING([if pkg-config knows about libjpeg])
+  save_CPPFLAGS=${CPPFLAGS}
   ## IJG version 9c (Jan 2018) has support as libjpeg.
   ## libjpeg-turbo has had this for a while.
   if "${PKG_CONFIG}" --exists libjpeg; then
+    AC_MSG_RESULT([yes])
     JPG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libjpeg`
     JPG_LIBS=`"${PKG_CONFIG}" --libs libjpeg`
     CPPFLAGS="${CPPFLAGS} ${JPG_CPPFLAGS}"
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libjpeg' for further info])
   fi
   _R_HEADER_JPEGLIB
   CPPFLAGS=${save_CPPFLAGS}
@@ -2012,7 +2016,9 @@ if test "${use_jpeglib}" = yes; then
   fi
 fi
 if test "${use_libpng}" = yes; then
+  AC_MSG_CHECKING([if pkg-config knows about libpng])
   if "${PKG_CONFIG}" --exists libpng; then
+    AC_MSG_RESULT([yes])
     save_CPPFLAGS=${CPPFLAGS}
     PNG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libpng`
     CPPFLAGS="${CPPFLAGS} ${PNG_CPPFLAGS}"
@@ -2035,15 +2041,21 @@ if test "${use_libpng}" = yes; then
       AC_DEFINE(HAVE_PNG, 1,
 	        [Define if you have the PNG headers and libraries.])
     fi
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libpng' for further info])
   fi
 fi
 if test "${use_libtiff}" = yes; then
+  AC_MSG_CHECKING([if pkg-config knows about libtiff])
   mod=
   ## pkg-config support was introduced in libtiff 4.0.0
   ## I guess the module name might change in future, so
   ## program defensively here.
   if "${PKG_CONFIG}" --exists libtiff-4; then
+    AC_MSG_RESULT([yes])
     mod=libtiff-4
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libtiff-4' for further info])
   fi
   if test -n "${mod}"; then
     save_CPPFLAGS=${CPPFLAGS}
@@ -4125,7 +4137,7 @@ AC_DEFUN([R_FUNC_MKTIME],
 #include <stdlib.h>
 #include <time.h>
 
-main() {
+int main() {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
