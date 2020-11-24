@@ -307,7 +307,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
