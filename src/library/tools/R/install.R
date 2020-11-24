@@ -148,10 +148,12 @@ if(FALSE) {
     }
 
     # This produces a (by default single) quoted string for use in a
-    # command sent to another R process.  Currently it only fixes backslashes;
-    # more extensive escaping might be a good idea
-    quote_path <- function(path, quote = "'")
-    	paste0(quote, gsub("\\", "\\\\", path, fixed=TRUE), quote)
+    # command sent to another R process.
+    quote_path <- function(path, quote = "'") {
+        path <- gsub("\\", "\\\\", path, fixed = TRUE)
+        path <- gsub(quote, paste0("\\", quote), path, fixed = TRUE)
+    	paste0(quote, path, quote)
+    }
 
     # Escape backslashes in a replacement string for gsub etc.
     # To be used when the replacement is a path name which may include
