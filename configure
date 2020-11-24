@@ -713,8 +713,6 @@ CURL_CONFIG
 BUILD_TRE_FALSE
 BUILD_TRE_TRUE
 PCRE2_CONFIG
-USE_MMAP_ZLIB_FALSE
-USE_MMAP_ZLIB_TRUE
 TIRPC_CPPFLAGS
 BUILD_XDR_FALSE
 BUILD_XDR_TRUE
@@ -25378,7 +25376,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25381: \"$ac_link\") >&5
+(eval echo $as_me:25379: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25453,7 +25451,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25456: \"$ac_link\") >&5
+(eval echo $as_me:25454: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -45341,50 +45339,7 @@ else
   LIBS="-lz ${LIBS}"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking mmap support for zlib" >&5
-$as_echo_n "checking mmap support for zlib... " >&6; }
-if ${r_cv_zlib_mmap+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "$cross_compiling" = yes; then :
-  r_cv_zlib_mmap=yes
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-// no main program to run ....
-caddr_t hello() {
-  // <FIXME> mmap returns char *
-  exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0));
-}
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_zlib_mmap=no
-else
-  r_cv_zlib_mmap=yes
 fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_zlib_mmap" >&5
-$as_echo "$r_cv_zlib_mmap" >&6; }
-
-fi
- if test "x${have_zlib}" = xno && test "x${r_cv_zlib_mmap}" = xyes; then
-  USE_MMAP_ZLIB_TRUE=
-  USE_MMAP_ZLIB_FALSE='#'
-else
-  USE_MMAP_ZLIB_TRUE='#'
-  USE_MMAP_ZLIB_FALSE=
-fi
-
 
 
 ## bzlib headers and libraries.
@@ -52740,10 +52695,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_XDR_TRUE}" && test -z "${BUILD_XDR_FALSE}"; then
   as_fn_error $? "conditional \"BUILD_XDR\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${USE_MMAP_ZLIB_TRUE}" && test -z "${USE_MMAP_ZLIB_FALSE}"; then
-  as_fn_error $? "conditional \"USE_MMAP_ZLIB\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_TRE_TRUE}" && test -z "${BUILD_TRE_FALSE}"; then
