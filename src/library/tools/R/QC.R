@@ -5450,7 +5450,7 @@ function(dir)
            as.character(e[[2L]][[1L]]) == "unlockBinding") return(TRUE)
         if(as.character(e[[1L]])[1L] %in% "assignInNamespace") {
             e3 <- as.character(e[[4L]])
-            if (e3 == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
+            if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
             return(e3 != pkgname)
         }
         FALSE
