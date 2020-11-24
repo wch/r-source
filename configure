@@ -22804,6 +22804,7 @@ esac
 ## </NOTE>
 ## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
+## This gives: 'sin' is a builtin with type 'double (double)'
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for sin in -lm" >&5
 $as_echo_n "checking for sin in -lm... " >&6; }
 if ${ac_cv_lib_m_sin+:} false; then :
@@ -23691,6 +23692,8 @@ fi
 
 ### * Checks for types.
 
+## clang complains when checking return type
+##   indirection requires pointer operand ('void' invalid)
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking return type of signal handlers" >&5
 $as_echo_n "checking return type of signal handlers... " >&6; }
 if ${ac_cv_type_signal+:} false; then :
@@ -25375,7 +25378,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25378: \"$ac_link\") >&5
+(eval echo $as_me:25381: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25450,7 +25453,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25453: \"$ac_link\") >&5
+(eval echo $as_me:25456: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -40897,7 +40900,7 @@ else
 #include <stdlib.h>
 #include <time.h>
 
-main() {
+int main() {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -42614,7 +42617,7 @@ else
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
-static int count_one (unsigned int namescount, char * *names, void *data)
+static int count_one (unsigned int namescount, const char * const *names, void *data)
 {return 0;}
 #ifdef FC_DUMMY_MAIN
 #ifndef FC_DUMMY_MAIN_EQ_F77
@@ -44303,7 +44306,7 @@ else
 #error cairo version >= 1.2 required
 #endif
 int main(void) {
-    cairo_t  *CC;
+    cairo_t  *CC = NULL; // silence picky compilers
     cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
     cairo_select_font_face (CC, "Helvetica", CAIRO_FONT_SLANT_NORMAL,
                             CAIRO_FONT_WEIGHT_BOLD);
@@ -45353,7 +45356,9 @@ else
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+// no main program to run ....
 caddr_t hello() {
+  // <FIXME> mmap returns char *
   exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0));
 }
 

@@ -813,6 +813,7 @@ AC_SUBST(LIBM)
 ## </NOTE>
 ## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
+## This gives: 'sin' is a builtin with type 'double (double)'
 AC_CHECK_LIB(m, sin)
 AC_CHECK_LIB(dl, dlopen)
 
@@ -900,6 +901,8 @@ R_HEADER_GLIBC2
 
 ### * Checks for types.
 
+## clang complains when checking return type
+##   indirection requires pointer operand ('void' invalid)
 AC_TYPE_SIGNAL
 ## liblzma uses uint64_t: used unconditionally in src/main/util.c
 AC_TYPE_UINT64_T

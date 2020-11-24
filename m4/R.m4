@@ -3137,7 +3137,9 @@ AC_DEFUN([_R_ZLIB_MMAP],
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+// no main program to run ....
 caddr_t hello() {
+  // <FIXME> mmap returns char *
   exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0));
 }
 ]])],
@@ -3627,7 +3629,7 @@ AC_CACHE_CHECK(for iconvlist, ac_cv_func_iconvlist, [
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
-static int count_one (unsigned int namescount, char * *names, void *data)
+static int count_one (unsigned int namescount, const char * const *names, void *data)
 {return 0;}],
     [iconvlist(count_one, NULL);],
       ac_cv_func_iconvlist=yes)
