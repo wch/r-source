@@ -95,23 +95,24 @@ with(OrchardSprays, {
   interaction.plot(rowpos, treatment, decrease, col = 2:9, lty = 1)
 })
 
-with(esoph, {
-  interaction.plot(agegp, alcgp, ncases/ncontrols, main = "'esoph' Data")
-  interaction.plot(agegp, tobgp, ncases/ncontrols, trace.label = "tobacco",
-                   fixed = TRUE, xaxt = "n")
-})
-## deal with NAs:
-esoph[66,] # second to last age group: 65-74
-esophNA <- esoph; esophNA$ncases[66] <- NA
-with(esophNA, {
-  interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5)
-                                # doesn't show *last* group either
-  interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5, type = "b")
-  ## alternative take non-NA's  {"cheating"}
-  interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5,
-                   fun = function(x) mean(x, na.rm = TRUE),
-                   sub = "function(x) mean(x, na.rm=TRUE)")
-})
-rm(esophNA) # to clear up
+%% FIXME esoph
+%% with(esoph, {
+%%   interaction.plot(agegp, alcgp, ncases/ncontrols, main = "'esoph' Data")
+%%   interaction.plot(agegp, tobgp, ncases/ncontrols, trace.label = "tobacco",
+%%                    fixed = TRUE, xaxt = "n")
+%% })
+%% ## deal with NAs:
+%% esoph[66,] # second to last age group: 65-74
+%% esophNA <- esoph; esophNA$ncases[66] <- NA
+%% with(esophNA, {
+%%   interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5)
+%%                                 # doesn't show *last* group either
+%%   interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5, type = "b")
+%%   ## alternative take non-NA's  {"cheating"}
+%%   interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5,
+%%                    fun = function(x) mean(x, na.rm = TRUE),
+%%                    sub = "function(x) mean(x, na.rm=TRUE)")
+%% })
+%% rm(esophNA) # to clear up
 }
 \keyword{hplot}

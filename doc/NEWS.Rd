@@ -6,6 +6,13 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item Data set \code{esoph} in package \pkg{datasets} now provides
+      the correct numbers of controls; previously it had the numbers of
+      cases added to these.  Reported by Alexander Fowler in \PR{17964}.
+    }
+  }
 
   \subsection{NEW FEATURES}{
     \itemize{
