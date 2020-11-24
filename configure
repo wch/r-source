@@ -40742,10 +40742,13 @@ else
 
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
+# include <unistd.h> // for unlink
+#endif
 
-main() {
+int main() {
     FILE *fp;
-    int pos;
+    long pos;
 
     fp = fopen("testit", "wb");
     fwrite("0123456789\n", 11, 1, fp);
