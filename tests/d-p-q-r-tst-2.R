@@ -681,7 +681,7 @@ px <- pnorm(-x * 1e152, log.p=TRUE)# all these underflowed previously
 stopifnot(exprs = {
     all.equal(-1.79769313486073e+308, pnorm(-1.896150381621e154, log.p=TRUE), tol=1e-14)
     is.finite(px)
-    abs(1 - diff(diff(px)) / -2.5e303) < 3e-11
+    abs(1 - diff(diff(px)) / -2.5e303) < 3e-11 * (1 + (.Machine$sizeof.longdouble < 16))
 })
 ## all these where -Inf  in R <= 4.0.x
 
