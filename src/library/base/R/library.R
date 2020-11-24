@@ -806,10 +806,13 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                 ## Note that this is sometimes used for source
                 ## packages, e.g. by promptPackage from package.skeleton
                 pfile <- file.path(p, "Meta", "package.rds")
-                info <- if(file.exists(pfile))
+                info <- if(file.exists(pfile)) {
                     ## this must have these fields to get installed
-                    readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
-                else {
+                    tryCatch(readRDS(pfile)$DESCRIPTION[c("Package",
+                                                          "Version")],
+                             error = function(e)
+                                 c(Package = NA, Version = NA))
+                } else {
                     info <- tryCatch(read.dcf(file.path(p, "DESCRIPTION"),
                                               c("Package", "Version"))[1, ],
                                      error = identity)
