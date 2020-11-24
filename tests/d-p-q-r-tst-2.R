@@ -675,6 +675,15 @@ stopifnot(exprs = {
 })
 ## both failed very badly in  R <= 4.0.x
 
+## pnorm(x, log.p=TRUE) now works for larger x, |x| <= 1.896..e154 {before: |x| < 1.34e154}
+x <- seq(134.5, 189, by=.5)
+px <- pnorm(-x * 1e152, log.p=TRUE)# all these underflowed previously
+stopifnot(exprs = {
+    all.equal(-1.79769313486073e+308, pnorm(-1.896150381621e154, log.p=TRUE), tol=1e-14)
+    is.finite(px)
+    abs(1 - diff(diff(px)) / -2.5e303) < 3e-11
+})
+## all these where -Inf  in R <= 4.0.x
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

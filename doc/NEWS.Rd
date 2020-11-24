@@ -367,6 +367,8 @@
       \item \code{unsplit()} had trouble with tibbles due to unsound use of
       \code{rep(NA,len)}-indexing, which should use \code{NA_integer_}
       Reported to R-devel by Mario Annau.
+
+      \item \code{pnorm(x, log.p=TRUE)} underflows to \code{-Inf} slightly later.
     }
   }
 }
