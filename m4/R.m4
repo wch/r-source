@@ -4137,7 +4137,7 @@ AC_DEFUN([R_FUNC_MKTIME],
 #include <stdlib.h>
 #include <time.h>
 
-main() {
+int main() {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
