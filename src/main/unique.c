@@ -896,6 +896,30 @@ static SEXP match_transform(SEXP s, SEXP env)
     return duplicate(s);
 }
 
+/* assumes that x does not have any element in bytes encoding */
+static SEXP asUTF8(SEXP x)
+{
+    R_xlen_t nx = xlength(x);
+    SEXP ux = NULL;
+    for(R_xlen_t i = 0; i < nx; i++) {
+	SEXP xi = STRING_ELT(x, i);
+	if (!IS_ASCII(xi) && !IS_UTF8(xi)) {
+	    if (!ux) {
+		ux = PROTECT(allocVector(STRSXP, nx));
+		for(R_xlen_t j = 0; j < i; j++)
+		    SET_STRING_ELT(ux, j, STRING_ELT(x, j));
+	    }
+	    SET_STRING_ELT(ux, i, mkCharCE(translateCharUTF8(xi), CE_UTF8));
+	} else if (ux)
+	    SET_STRING_ELT(ux, i, xi);
+    }
+    if (ux) {
+	UNPROTECT(1);
+	return ux;
+    } else
+	return x;
+}
+    
 // workhorse of R's match() and hence also  " ix %in% itable "
 SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 {
@@ -1025,6 +1049,10 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 			break;
 		    }
 		}
+	    }
+	    if(useUTF8) {
+		x = PROTECT(asUTF8(x)); nprot++;
+		table = PROTECT(asUTF8(table)); nprot++;
 	    }
 	    data.useUTF8 = useUTF8;
 	    data.useCache = useCache;
