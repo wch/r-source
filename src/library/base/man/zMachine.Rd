@@ -93,7 +93,7 @@
     builds of \R.}
 
   \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{when
-    \code{\link{capabilities}["long.double"]} is true, there are 10 such
+    \code{\link{capabilities}("long.double")} is true, there are 10 such
     \code{"longdouble.<kind>"} values, specifying the \code{long double}
     property corresponding to its \code{"double.*"} counterpart, above, see
     also \sQuote{Note}.}
