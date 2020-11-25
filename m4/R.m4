@@ -3094,10 +3094,7 @@ if test "${have_zlib}" != yes; then
 else
   LIBS="-lz ${LIBS}"
   AC_MSG_RESULT([yes])
-  _R_ZLIB_MMAP
 fi
-AM_CONDITIONAL(USE_MMAP_ZLIB,
-[test "x${have_zlib}" = xno && test "x${r_cv_zlib_mmap}" = xyes])
 ])# R_ZLIB
 
 ## _R_HEADER_ZLIB
@@ -3126,25 +3123,6 @@ int main() {
               [r_cv_header_zlib_h=no],
               [r_cv_header_zlib_h=no])])
 ])# _R_HEADER_ZLIB
-
-## _R_ZLIB_MMAP
-## ------------
-AC_DEFUN([_R_ZLIB_MMAP],
-[AC_CACHE_CHECK([mmap support for zlib],
-                [r_cv_zlib_mmap],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-caddr_t hello() {
-  exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0));
-}
-]])],
-              [r_cv_zlib_mmap=no],
-              [r_cv_zlib_mmap=yes],
-              [r_cv_zlib_mmap=yes])])
-])# _R_ZLIB_MMAP
 
 ## R_PCRE
 ## ------
@@ -3627,7 +3605,7 @@ AC_CACHE_CHECK(for iconvlist, ac_cv_func_iconvlist, [
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
-static int count_one (unsigned int namescount, char * *names, void *data)
+static int count_one (unsigned int namescount, const char * const *names, void *data)
 {return 0;}],
     [iconvlist(count_one, NULL);],
       ac_cv_func_iconvlist=yes)
