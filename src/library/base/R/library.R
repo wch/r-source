@@ -811,7 +811,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                     tryCatch(readRDS(pfile)$DESCRIPTION[c("Package",
                                                           "Version")],
                              error = function(e)
-                                 c(Package = NA, Version = NA))
+                                 c(Package = NA_character_,
+                                   Version = NA_character_))
                 } else {
                     info <- tryCatch(read.dcf(file.path(p, "DESCRIPTION"),
                                               c("Package", "Version"))[1, ],
@@ -819,7 +820,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                     if(inherits(info, "error")
                        || (length(info) != 2L)
                        || anyNA(info))
-                        c(Package = NA, Version = NA) # need dimnames below
+                        c(Package = NA_character_,
+                          Version = NA_character_) # need dimnames below
                     else
                         info
                 }
