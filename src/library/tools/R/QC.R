@@ -1691,27 +1691,31 @@ function(package, dir, lib.loc = NULL)
     ## Change in 3.0.0: we only look for methods named generic.class,
     ## not those registered by a 3-arg S3method().
     methods_stop_list <- nonS3methods(package_name)
-    methods_in_package <- sapply(all_S3_generics, function(g) {
-        ## This isn't really right: it assumes the generics are visible.
-        if(!exists(g, envir = code_env)) return(character())
-        ## <FIXME>
-        ## We should really determine the name g dispatches for, see
-        ## a current version of methods() [2003-07-07].  (Care is needed
-        ## for internal generics and group generics.)
-        name <- paste0(g, ".")
-        methods <-
-            functions_in_code[startsWith(functions_in_code, name)]
-        ## </FIXME>
-        methods <- setdiff(methods, methods_stop_list)
-        if(has_namespace) {
-            ## Find registered methods for generic g.
-            methods2 <- ns_S3_methods[ns_S3_generics == g]
-            ## but for these purposes check name.
-            OK <- startsWith(methods2, name)
-            methods <- c(methods, methods2[OK])
-        }
-        methods
-    })
+    methods_in_package <-
+        Map(function(g) {
+                ## This isn't really right: it assumes the generics are
+                ## visible. 
+                if(!exists(g, envir = code_env)) return(character())
+                ## <FIXME>
+                ## We should really determine the name g dispatches for,
+                ## see a current version of methods() [2003-07-07].
+                ## (Care is needed for internal generics and group
+                ## generics.) 
+                name <- paste0(g, ".")
+                methods <-
+                    functions_in_code[startsWith(functions_in_code, name)]
+                ## </FIXME>
+                methods <- setdiff(methods, methods_stop_list)
+                if(has_namespace) {
+                    ## Find registered methods for generic g.
+                    methods2 <- ns_S3_methods[ns_S3_generics == g]
+                    ## but for these purposes check name.
+                    OK <- startsWith(methods2, name)
+                    methods <- c(methods, methods2[OK])
+                }
+                methods
+            },
+            all_S3_generics)
     all_methods_in_package <- unlist(methods_in_package)
     ## There are situations where S3 methods might be documented as
     ## functions (i.e., with their full name), if they do something
@@ -1782,10 +1786,9 @@ function(package, dir, lib.loc = NULL)
         functions <- .transform_S3_method_markup(functions)
 
         methods_with_generic <-
-            sapply(intersect(functions, all_S3_generics),
-                   function(g)
-                   intersect(functions, methods_in_package[[g]]),
-                   simplify = FALSE)
+            Map(function(g)
+                    intersect(functions, methods_in_package[[g]]),
+                intersect(functions, all_S3_generics))
 
         if((length(methods_with_generic)) ||
            (length(methods_with_full_name)))
@@ -2708,7 +2711,7 @@ function(package, dir, lib.loc = NULL)
         ## replacement functions.
         S4_generics <- S4_generics[endsWith(names(S4_generics), "<-")]
         bad_S4_replace_methods <-
-            sapply(S4_generics,
+            lapply(S4_generics,
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
                        ind <- !vapply(mlist, .check_last_formal_arg, NA)
@@ -6462,7 +6465,7 @@ function(dir)
 function(dir)
 {
     if(!dir.exists(file.path(dir, "man"))) return(NULL)
-    sapply(Rd_db(dir = dir), .Rd_get_example_code)
+    lapply(Rd_db(dir = dir), .Rd_get_example_code)
 }
 
 format.check_T_and_F <-
