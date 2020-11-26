@@ -7554,11 +7554,16 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         (!localOnly &&
          !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_URL_CHECKS_IF_REMOTE_",
                                            "FALSE")))
+    check_urls_in_parallel <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_CHECK_URLS_IN_PARALLEL_",
+                                         "FALSE"))
     if(!capabilities("libcurl") && remote)
         out$no_url_checks <- TRUE
     else {
         udb <- url_db_from_package_sources(dir)
-        bad <- tryCatch(check_url_db(udb, remote = remote),
+        bad <- tryCatch(check_url_db(udb,
+                                     remote = remote,
+                                     parallel = check_urls_in_parallel),
                         error = identity)
         if(inherits(bad, "error")) {
             out$bad_urls <- bad
@@ -7640,7 +7645,10 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 ini <- "https://arxiv.org/abs/"
                 udb <- url_db(paste0(ini, ids),
                               rep.int("DESCRIPTION", length(ids)))
-                bad <- tryCatch(check_url_db(udb), error = identity)
+                bad <- tryCatch(check_url_db(udb,
+                                             parallel =
+                                                 check_urls_in_parallel),
+                                error = identity)
                 if(!inherits(bad, "error") && length(bad))
                     out$bad_arXiv_ids <-
                         substring(bad$URL, nchar(ini) + 1L)
@@ -7657,7 +7665,10 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 ids <- sub(.ORCID_iD_variants_regexp, "\\3", odb[, 1L])
                 ini <- "https://orcid.org/"
                 udb <- url_db(paste0(ini, ids), odb[, 2L])
-                bad <- tryCatch(check_url_db(udb), error = identity)
+                bad <- tryCatch(check_url_db(udb,
+                                             parallel =
+                                                 check_urls_in_parallel),
+                                error = identity)
                 if(!inherits(bad, "error") && length(bad))
                     out$bad_ORCID_iDs <-
                         cbind(substring(bad$URL, nchar(ini) + 1L),
