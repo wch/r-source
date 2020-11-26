@@ -681,12 +681,11 @@ stopifnot(identical(dim(xt), c(6L, 3L, 2L)), # of the 6 x 3 x 2 = 36 entries,
           ## the above 8 are zeros and the rest is 1 :
           all(xt[xt != 0] == 1))
 xtC <- xtabs(ncontrols ~ agegp + alcgp + tobgp, data = esoph2)
-## FIXME esoph
-## stopifnot(# no NA's in data, hence result should have none, just 0's:
-##     identical(asArr(unname(xtC)),
-## 	      array(c(4, 14, 15, 17, 9, 3,   0, 2, 5, 6, 3, 0,	 1, 4, 3, 3, 1, 0,
-## 		      7,  8,  7,  6, 0, 1,   2, 1, 4, 4, 1, 0,	 2, 0, 4, 6, 1, 0),
-## 		    dim = dim(xt))))
+stopifnot(# no NA's in data, hence result should have none, just 0's:
+    identical(asArr(unname(xtC)),
+ 	      array(c(4, 13, 10, 13, 4, 3,   0, 2, 4, 3, 1, 0,	 1, 2, 1, 1, 0, 0,
+ 		      7,  8,  2,  3, 0, 0,   2, 1, 2, 0, 0, 0,	 2, 0, 0, 1, 0, 0),
+ 		    dim = dim(xt))))
 
 DF <- as.data.frame(UCBAdmissions)
 xt <- xtabs(Freq ~ Gender + Admit, DF)
