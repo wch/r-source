@@ -401,6 +401,11 @@
       \item \code{round()} and \code{signif()} no longer tolerate wrong
       argument names, notably in 1-argument calls; reported by Shane
       Mueller on R-devel (mailing list); later reported as \PR{17976}.
+
+      \item \code{.Machine} has \code{longdouble.*} elements only if
+      \code{capabilities("long.double")} is true, as documented.
+      (Previously they were included if the platform had \code{long
+	double} idential to \code{double}, as ARM does.)
     }
   }
 }
