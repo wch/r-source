@@ -1707,6 +1707,9 @@ Summary.data.frame <- function(..., na.rm)
     do.call(.Generic, c(args, na.rm=na.rm))
 }
 
+xtfrm.data.frame <- function(x)
+    do.call(order, x)
+
 list2DF <-
 function(x = list(), nrow = NULL)
 {
