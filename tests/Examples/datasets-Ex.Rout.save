@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-11-21 r79452) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-11-26 r79508) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2156,13 +2156,13 @@ named numeric(0)
 > require(stats)
 > require(graphics) # for mosaicplot
 > summary(esoph)
-   agegp          alcgp         tobgp        ncases         ncontrols    
- 25-34:15   0-39g/day:23   0-9g/day:24   Min.   : 0.000   Min.   : 1.00  
- 35-44:15   40-79    :23   10-19   :24   1st Qu.: 0.000   1st Qu.: 3.00  
- 45-54:16   80-119   :21   20-29   :20   Median : 1.000   Median : 6.00  
- 55-64:16   120+     :21   30+     :20   Mean   : 2.273   Mean   :11.08  
- 65-74:15                                3rd Qu.: 4.000   3rd Qu.:14.00  
- 75+  :11                                Max.   :17.000   Max.   :60.00  
+   agegp          alcgp         tobgp        ncases         ncontrols     
+ 25-34:15   0-39g/day:23   0-9g/day:24   Min.   : 0.000   Min.   : 0.000  
+ 35-44:15   40-79    :23   10-19   :24   1st Qu.: 0.000   1st Qu.: 1.000  
+ 45-54:16   80-119   :21   20-29   :20   Median : 1.000   Median : 4.000  
+ 55-64:16   120+     :21   30+     :20   Mean   : 2.273   Mean   : 8.807  
+ 65-74:15                                3rd Qu.: 4.000   3rd Qu.:10.000  
+ 75+  :11                                Max.   :17.000   Max.   :60.000  
 > ## effects of alcohol, tobacco and interaction, age-adjusted
 > model1 <- glm(cbind(ncases, ncontrols) ~ agegp + tobgp * alcgp,
 +               data = esoph, family = binomial())
@@ -2177,11 +2177,11 @@ Terms added sequentially (first to last)
 
 
             Df Deviance Resid. Df Resid. Dev
-NULL                           87    227.241
-agegp        5   88.128        82    139.112
-tobgp        3   19.085        79    120.028
-alcgp        3   66.054        76     53.973
-tobgp:alcgp  9    6.489        67     47.484
+NULL                           87     367.95
+agegp        5  121.045        82     246.91
+tobgp        3   36.639        79     210.27
+alcgp        3  127.933        76      82.34
+tobgp:alcgp  9    5.451        67      76.89
 > ## Try a linear effect of alcohol and tobacco
 > model2 <- glm(cbind(ncases, ncontrols) ~ agegp + unclass(tobgp)
 +                                          + unclass(alcgp),
@@ -2194,26 +2194,26 @@ glm(formula = cbind(ncases, ncontrols) ~ agegp + unclass(tobgp) +
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--1.7628  -0.6426  -0.2709   0.3043   2.0421  
+-2.3018  -0.7234  -0.2306   0.5737   2.4290  
 
 Coefficients:
                Estimate Std. Error z value Pr(>|z|)    
-(Intercept)    -4.01097    0.31224 -12.846  < 2e-16 ***
-agegp.L         2.96113    0.65092   4.549 5.39e-06 ***
-agegp.Q        -1.33735    0.58918  -2.270  0.02322 *  
-agegp.C         0.15292    0.44792   0.341  0.73281    
-agegp^4         0.06668    0.30776   0.217  0.82848    
-agegp^5        -0.20288    0.19523  -1.039  0.29872    
-unclass(tobgp)  0.26162    0.08198   3.191  0.00142 ** 
-unclass(alcgp)  0.65308    0.08452   7.727 1.10e-14 ***
+(Intercept)    -4.92067    0.37344 -13.177  < 2e-16 ***
+agegp.L         3.81892    0.67862   5.627 1.83e-08 ***
+agegp.Q        -1.49473    0.60671  -2.464   0.0138 *  
+agegp.C         0.07923    0.46318   0.171   0.8642    
+agegp^4         0.12136    0.32203   0.377   0.7063    
+agegp^5        -0.24856    0.21153  -1.175   0.2400    
+unclass(tobgp)  0.43955    0.09623   4.568 4.93e-06 ***
+unclass(alcgp)  1.06766    0.10493  10.175  < 2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 227.241  on 87  degrees of freedom
-Residual deviance:  59.277  on 80  degrees of freedom
-AIC: 222.76
+    Null deviance: 367.953  on 87  degrees of freedom
+Residual deviance:  91.121  on 80  degrees of freedom
+AIC: 222.18
 
 Number of Fisher Scoring iterations: 6
 
@@ -3512,7 +3512,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.023 0.172 2.236 0 0 
+Time elapsed:  1.914 0.044 1.958 0 0 
 > grDevices::dev.off()
 null device 
           1 
