@@ -1,6 +1,6 @@
 % File src/library/base/man/gc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gc}
@@ -73,12 +73,15 @@ gcinfo(verbose)
   \code{\link{Memory}} on \R's memory management,
   and \code{\link{gctorture}} if you are an \R developer.
 
+  \code{\link{gc.time}()} reports \emph{time} used for garbage collection.
+
   \code{\link{reg.finalizer}} for actions to happen at garbage
   collection.
 }
 \examples{\donttest{
 gc() #- do it now
 gcinfo(TRUE) #-- in the future, show when R does it
+##            vvvvv use larger to *show* something
 x <- integer(100000); for(i in 1:18) x <- c(x, i)
 gcinfo(verbose = FALSE) #-- don't show it anymore
 
