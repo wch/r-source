@@ -1708,7 +1708,7 @@ Summary.data.frame <- function(..., na.rm)
 }
 
 xtfrm.data.frame <- function(x)
-    do.call(order, x)
+    match(seq_len(nrow(x)), do.call(order, x))
 
 list2DF <-
 function(x = list(), nrow = NULL)
