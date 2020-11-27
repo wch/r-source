@@ -2205,6 +2205,45 @@ compiler) and undesrstandably package authors have been unaware that
 this might be done --- issues are most often seen in @command{configure}
 scripts.
 
+Some care may be needed with selecting compilers when installing external
+software for use with packages.  The `system' compilers as used when
+building @R{} are @command{clang} and @command{clang++}, but the Apple
+toolchain also provides compilers called @command{gcc} and @command{g++}
+which despite their names are based on LLVM and @code{libc++} like the
+system ones and which behave in almost the same way as the system ones.
+Most Open Source software has a @command{configure} script developed
+using GNU @command{autoconf} and hence will select @command{gcc} and
+@command{g++} as the default compilers: this usually works fine.  For
+consistency one can use
+
+@example
+./configure CC=clang CFLAGS=-O2 CXX=clang++ CXXFLAGS=-O2
+@end example
+
+@noindent
+(avoiding @command{autoconf}'s default @option{-g}).  Be careful if you
+put the @file{/usr/local/gfortran/bin} directory on your path as that
+contains (real) @command{gcc} and @command{g++} which may be found
+rather the Apple-provided commands, and may not be able to find the
+headers and libraries@footnote{From Big Sur those libraries are not
+publicly visible: rather the system compiler link to `text-based
+definition (@file{.tbd}) files.} of the SDK.
+
+For @cputype{arm64}, not all configure scripts have been updated to
+recognize the platform and so might need the flag
+@option{--build=aarch64-apple-darwin20.1.0}.  Also, be aware that
+running the compilers from a @cputype{x86_64} application switches them
+to generating code for that CPU: this applies to a Terminal, a shell,
+@command{cmake} or (non-system) @command{make}.  One can use
+
+@example
+./configure CC="clang -target arm64-apple-macos11" CFLAGS=-O2 \
+CXX="clang++ -target arm64-apple-macos11" CXXFLAGS=-O2
+@end example
+
+@noindent
+to force @cputype{arm64} code.
+
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
 
@@ -4912,8 +4951,8 @@ is said to be for Mojave and later but works well enough on High
 Sierra.}  This installs into @file{/usr/local/gfortran}.
 
 @item
-Binary components @code{pcre2} and @code{xz} (for
-@code{liblzma}) from @uref{https://mac.R-project.org/libs-4/}.  For example
+Binary components @code{pcre2} and @code{xz} (for @code{liblzma}) from
+@uref{https://mac.R-project.org/libs-4/}.  For example
 @example
 curl -OL https://mac.r-project.org/libs-4/pcre2-10.34-darwin.17-x86_64.tar.gz
 sudo tar -xvzf pcre2-10.34-darwin.17-x86_64.tar.gz -C /
@@ -5487,8 +5526,10 @@ seem harmless.)
 No Fortran compiler has been released for this architecture at the time
 of writing although there are ports under development.@footnote{We used
 the fork of @command{gfortran} from
-@url{https://github.com/@/iains/@/gcc-darwin-arm64}}  So this is section
-is completely experimental.
+@url{https://github.com/@/iains/@/gcc-darwin-arm64}, and there is an
+experimental binary distribution at
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/tag/@/11-arm-alpha1}}
+So this is section is experimental.
 
 Native Java builds are becoming available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
