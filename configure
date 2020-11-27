@@ -41207,10 +41207,20 @@ rm -f core conftest.err conftest.$ac_objext \
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${acx_blas_ok}" >&5
 $as_echo "${acx_blas_ok}" >&6; }
     LIBS="${r_save_LIBS}"
+        if test "${acx_blas_ok}" = no; then
+       as_fn_error $? "BLAS was specified but not available" "$LINENO" 5
+    fi
   fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for an external BLAS" >&5
+$as_echo "$as_me: searching for an external BLAS" >&6;}
+fi
+
+if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for BLAS in default libraries" >&5
+$as_echo "$as_me: searching for BLAS in default libraries" >&6;}
   as_ac_var=`$as_echo "ac_cv_func_${dgemm}" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "${dgemm}" "$as_ac_var"
 if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
@@ -41221,6 +41231,8 @@ fi
 
 # BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for OpenBLAS" >&5
+$as_echo "$as_me: searching for OpenBLAS" >&6;}
         as_ac_Lib=`$as_echo "ac_cv_lib_openblas_$sgemm" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $sgemm in -lopenblas" >&5
 $as_echo_n "checking for $sgemm in -lopenblas... " >&6; }
@@ -41275,6 +41287,8 @@ fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for ATLAS" >&5
+$as_echo "$as_me: searching for ATLAS" >&6;}
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ATL_xerbla in -latlas" >&5
 $as_echo_n "checking for ATL_xerbla in -latlas... " >&6; }
 if ${ac_cv_lib_atlas_ATL_xerbla+:} false; then :
@@ -41376,6 +41390,8 @@ fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for PhiPACK" >&5
+$as_echo "$as_me: searching for PhiPACK" >&6;}
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
 $as_echo_n "checking for ${dgemm} in -lblas... " >&6; }
@@ -41529,6 +41545,8 @@ fi
 
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for Sun Performance library" >&5
+$as_echo "$as_me: searching for Sun Performance library" >&6;}
      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lsunperf" >&5
 $as_echo_n "checking for ${dgemm} in -lsunperf... " >&6; }
      r_save_LIBS="${LIBS}"
@@ -41577,6 +41595,8 @@ $as_echo "${acx_blas_ok}" >&6; }
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for IBM ESSL" >&5
+$as_echo "$as_me: searching for IBM ESSL" >&6;}
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
 $as_echo_n "checking for ${dgemm} in -lblas... " >&6; }
@@ -41680,6 +41700,8 @@ fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for generic BLAS library" >&5
+$as_echo "$as_me: searching for generic BLAS library" >&6;}
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
 $as_echo_n "checking for ${dgemm} in -lblas... " >&6; }
