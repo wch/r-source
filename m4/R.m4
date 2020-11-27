@@ -2543,6 +2543,7 @@ AC_SUBST(use_tcltk)
 ##   same order in the tests.
 ## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
 ## The sunperf test calls the library as now required.
+## 2020-11-27 --with-blas=foo now does not fallback to search.
 ## Based on acx_blas.m4 version 1.2 (2001-12-13)
 ## (Since renamed to ax_blas.m4)
 AC_DEFUN([R_BLAS_LIBS],
@@ -2572,7 +2573,7 @@ fi
 acx_blas_save_LIBS="${LIBS}"
 LIBS="${FLIBS} ${LIBS}"
 
-dnl First, check BLAS_LIBS environment variable
+dnl First, check BLAS_LIBS environment variable/command-line setting
 dnl Dummy xerbla was added in 2003 for the Goto BLAS.
 dnl Declaration added in 2020 for Apple's -Werror=implicit-function-declaration
 if test "${acx_blas_ok}" = no; then
@@ -2584,23 +2585,34 @@ if test "${acx_blas_ok}" = no; then
 		${dgemm}(), [acx_blas_ok=yes], [BLAS_LIBS=""])
     AC_MSG_RESULT([${acx_blas_ok}])
     LIBS="${r_save_LIBS}"
+    dnl from 2020-11 make failure an error: used to fallback to search
+    if test "${acx_blas_ok}" = no; then
+       AC_MSG_ERROR([BLAS was specified but not available])
+    fi
   fi
+fi
+
+if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for an external BLAS])
 fi
 
 dnl BLAS linked to by default?  (happens on some supercomputers)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for BLAS in default libraries])
   AC_CHECK_FUNC(${dgemm}, [acx_blas_ok=yes])
 fi
 
 dnl Taken from 2008 version of ax_blas.m4
 # BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for OpenBLAS])
         AC_CHECK_LIB(openblas, $sgemm, [acx_blas_ok=yes
                                         BLAS_LIBS="-lopenblas"])
 fi
 
 dnl BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for ATLAS])
   AC_CHECK_LIB(atlas, ATL_xerbla,
                [AC_CHECK_LIB(f77blas, ${dgemm},
                              [acx_blas_ok=yes
@@ -2610,6 +2622,7 @@ fi
 
 dnl BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for PhiPACK])
   AC_CHECK_LIB(blas, ${dgemm},
 	       [AC_CHECK_LIB(dgemm, $dgemm,
 		             [AC_CHECK_LIB(sgemm, ${sgemm},
@@ -2624,6 +2637,7 @@ dnl Some versions require -xlic_lib=sunperf: -lsunperf will not work
 dnl Not sure whether -lsunmath is required, but it helps anyway
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
+  AC_MSG_NOTICE([searching for Sun Performance library])
      AC_MSG_CHECKING([for ${dgemm} in -lsunperf])
      r_save_LIBS="${LIBS}"
      LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
@@ -2639,6 +2653,7 @@ fi
 
 dnl BLAS in IBM ESSL library? (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for IBM ESSL])
   AC_CHECK_LIB(blas, ${dgemm},
 	       [AC_CHECK_LIB(essl, ${dgemm},
 			     [acx_blas_ok=yes
@@ -2648,6 +2663,7 @@ fi
 
 dnl Generic BLAS library?
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for generic BLAS library])
   AC_CHECK_LIB(blas, ${dgemm},
                [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
 fi
