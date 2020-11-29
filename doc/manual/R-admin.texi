@@ -5214,18 +5214,19 @@ times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The @TeX{} implementation used by the developers is MacTeX@footnote{An
 essentially equivalent @TeX{} installation can be obtained by the Unix
-TeX Live installation scripts: MacTeX also contains GhostScript.}
+TeX Live installation scripts.}
 (@uref{https://www.tug.org/mactex/}): the full installation is about
-7GB, but a smaller version (`Basic TeX') is available at
+8.5GB, but a smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
 need to add some packages to build @R{}, e.g.@: for the 2020 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super
 helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
-@pkg{inconsolata} and @pkg{texinfo} which brought this to about 380MB.
-@samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
-provides a graphical means to manage @TeX{} packages.  This is
-documented to require High Sierra or later: for earlier versions see the
-instructions on the MacTeX front page.
+@pkg{inconsolata} and @pkg{texinfo} which brought this to about
+380MB.@footnote{Adding all the packages needed to check @acronym{CRAN}
+only increased this to about 560MB.}  @samp{TeX Live Utility} (available
+@emph{via} the MacTeX front page) provides a graphical means to manage
+@TeX{} packages.  This is documented to require High Sierra or later:
+for earlier versions see the instructions on the MacTeX front page.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
@@ -5272,7 +5273,8 @@ distribution but these were often not at all recent versions of Tcl/Tk
 (8.5.9 in High Sierra, which is not even the latest patched version in
 that series). (Catalina included a partial distribution which lacks the
 files needed to compile against Tcl/Tk.) It is better to install Tcl/Tk
-8.6.x from the sources or a binary distribution from
+8.6.x from the sources@footnote{Configure Tk with
+@option{--enable-aqua}.} or a binary distribution from
 @uref{https://www.activestate.com/@/activetcl/@/downloads}.  For the
 latter, configure @R{} with
 @example
