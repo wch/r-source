@@ -54,9 +54,9 @@
       character string, or by giving the first elements of their class
       vector and their length.
 
-      \item Unicode character width tables (as used by \code{nchar(,
-	type="w")}) have been updated to Unicode 12.1 by Brodie Gaslam
-      (\PR{17781}).
+      \item Unicode character width tables (as used by
+      \code{nchar(, type="w")}) have been updated to Unicode 12.1
+      by Brodie Gaslam (\PR{17781}).
 
       \item \code{capabilities()} gets new entry \code{"Rprof"} which is
       \code{TRUE} when \R has been configured with the equivalent of
@@ -80,7 +80,7 @@
       \code{numeric}.
 
       \item Functions \code{URLencode()} and \code{URLdecode()} in
-      package \pkg{utils} now work on vectors of URLs.
+      package \pkg{utils} now work on vectors of URIs.
       Based on patch from Bob Rudis submitted with \PR{17873}.
 
       \item \code{path.expand()} can expand \samp{~user} on most
@@ -105,40 +105,41 @@
       \item \code{Vectorize()}'s result function's environment no longer
       keeps unneeded objects.
 
-      \item \code{...elt()} now propagates visibility consistently with
-      \code{..n}, thanks to Lionel Henry's \PR{17905}.
+      \item Function \code{...elt()} now propagates visibility
+      consistently with \code{..n}, thanks to Lionel Henry's \PR{17905}.
 
       \item \code{capture.output()} no longer uses non-standard
       evaluation to evaluate its arguments.  This makes evaluation of
       functions like \code{parent.frame()} more consistent, thanks to
       Lionel Henry's \PR{17907}.
 
-      \item \code{packBits(bits, type="double")} newly works as inverse of
+      \item \code{packBits(bits, type="double")} now works as inverse of
       \code{numToBits()}, thanks to Bill Dunlap's proposal in \PR{17914}.
 
       \item \code{curlGetHeaders()} has two new arguments,
       \code{timeout} to specify the timeout for that call (overriding
       \code{getOption("timeout")}) and \code{TLS} to specify the minimum
-      TLS protocol version to be used for \code{https://} URLs
+      TLS protocol version to be used for \code{https://} URIs
       (\emph{inter alia} providing a means to check for sites using
       deprecated TLS versions 1.0 and 1.1).
 
-      \item For \code{nls()}, an optional constant \code{scaleOffset} may be added to
-      the denominator of the relative offset convergence test for cases where
-      the fit of a model is expected to be exact, thanks to a proposal by
-      John Nash.
-      \code{nls(*, trace=TRUE)} now also shows the convergence criterion.
+      \item For \code{nls()}, an optional constant \code{scaleOffset}
+      may be added to the denominator of the relative offset convergence
+      test for cases where the fit of a model is expected to be exact,
+      thanks to a proposal by John Nash.  \code{nls(*, trace=TRUE)} now
+      also shows the convergence criterion.
 
-      \item Numeric differentiation \code{numericDeriv()} gets new optional
-      arguments \code{eps} and \code{central}, the latter for taking
-      central divided differences.  That can be activated for \code{nls()}
-      via \code{nls.control(nDcentral = TRUE)}.
+      \item Numeric differentiation \emph{via} \code{numericDeriv()}
+      gets new optional arguments \code{eps} and \code{central}, the
+      latter for taking central divided differences.  The latter can be
+      activated for \code{nls()} via \code{nls.control(nDcentral =
+      TRUE)}.
 
       \item \code{nls()} now passes the \code{trace} and \code{control}
       arguments to \code{getInitial()}, notably for all self-starting models,
       so these can also be fit in zero-noise situations via a
       \code{scaleOffset}.  For this reason, the \code{initial} function of a
-      \code{selfStart} model now must have \code{...} in its argument list.
+      \code{selfStart} model must now have \code{...} in its argument list.
 
       \item \code{bquote(splice = TRUE)} can now splice expression
       vectors with attributes: this makes it possible to splice the
@@ -149,7 +150,7 @@
 
       \item \code{get()}, \code{exists()}, and \code{get0()} now signal
       an error if the first argument has length greater than 1.
-      Preciously additional elements were silently ignored.  Suggested
+      Previously additional elements were silently ignored.  Suggested
       by Antoine Fabri on R-devel.
     }
   }
@@ -157,8 +158,8 @@
   \subsection{GRAPHICS}{
     \itemize{
       \item The graphics engine version, \code{R_GE_version}, has been
-      bumped to 14 and so packages that provide graphics devices should
-      be reinstalled.
+      bumped to \code{14} and so packages that provide graphics devices
+      should be reinstalled.
 
       \item Graphics devices should now specify \code{deviceVersion} to
       indicate what version of the graphics engine they support.
@@ -256,7 +257,7 @@
 
       This provides a valuable check on code consistency.  It does work
       with GCC 8.3 as in Rtools40, but that does not detect everything
-      the \acronym{CRAN} checks with GCC 10 do.
+      the \acronym{CRAN} checks with current GCC do.
     }
   }
 
@@ -313,8 +314,8 @@
 
       \item \command{R CMD check} etc now warn when a package exports
       non-existing S4 classes or methods, also in case of no "methods"
-      presence; reported by Alex Bertram; repr.ex. and patch by Sebastian
-      Meyer in \PR{16662}.
+      presence; reported by Alex Bertram; reprpducible example and patch
+      by Sebastian Meyer in \PR{16662}.
 
       \item \code{boxplot()} now also accepts \code{call}s for labels such
       as \code{ylab}, the same as \code{plot()}.  Reported by Marius Hofert.
@@ -415,7 +416,7 @@
       \item \code{.Machine} has \code{longdouble.*} elements only if
       \code{capabilities("long.double")} is true, as documented.
       (Previously they were included if the platform had \code{long
-	double} idential to \code{double}, as ARM does.)
+	double} identical to \code{double}, as ARM does.)
     }
   }
 }
