@@ -47,7 +47,7 @@
       \item \code{.Machine} has \code{longdouble.*} elements only if
       \code{capabilities("long.double")} is true, as documented.
       (Previously they were included if the platform had \code{long
-	double} idential to \code{double}, as ARM does.)
+	double} identical to \code{double}, as ARM does.)
     }
   }
 }
