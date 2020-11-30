@@ -3600,6 +3600,19 @@ SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+/* C version of new.env */
+SEXP R_NewEnv(SEXP enclos, int hash, int size)
+{
+    if (hash) {
+	SEXP ssize = PROTECT(ScalarInteger(size));
+	SEXP ans = R_NewHashedEnv(enclos, ssize);
+	UNPROTECT(1); /* ssize */
+	return ans;
+    }
+    else
+	return NewEnvironment(R_NilValue, R_NilValue, enclos);
+}
+
 void R_RestoreHashCount(SEXP rho)
 {
     if (IS_HASHED(rho)) {

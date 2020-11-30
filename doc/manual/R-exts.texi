@@ -11839,6 +11839,16 @@ a new binding with the specified value is created in the global
 environment.  This corresponds to @code{assign(symbol, value, envir =
 rho, inherits = TRUE)}.
 
+At times it may also be useful to create a new environment frame in C code.
+@code{R_NewEnv} is a C version of the @R{} function @code{new.env}:
+
+@example
+@group
+SEXP R_NewEnv(SEXP enclos, int hash, ins size)
+@end group
+@end example
+@findex R_NewEnv
+
 @node Some convenience functions, Named objects and copying, Finding and setting variables, Handling R objects in C
 @subsection Some convenience functions
 
