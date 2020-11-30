@@ -369,13 +369,16 @@
       \code{rep(NA,len)}-indexing, which should use \code{NA_integer_}
       Reported to R-devel by Mario Annau.
 
-      \item \code{pnorm(x, log.p=TRUE)} underflows to \code{-Inf} slightly later.
+      \item \code{pnorm(x, log.p=TRUE)} underflows to \code{-Inf} slightly
+      later.
+
+      \item \code{show(<hidden S4 generic>)} prints better.
     }
   }
 }
 
 \section{\Rlogo CHANGES IN R 4.0.3 patched}{
-  
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item If an external BLAS is specified by \option{--with-blas=foo}

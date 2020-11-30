@@ -312,13 +312,15 @@ if(length(msg))
 showProc.time()
 
 
-if(dir.exists(file.path("myLib", "exNSS4"))) {
+if(dir.exists(file.path("myLib", "exNSS4"))) withAutoprint({
   require("exNSS4", lib="myLib")
   validObject(dd <- new("ddiM"))
   print(is(dd))  #  5 of them ..
+  writeLines(myGmeth <- capture.output(show(exNSS4:::myGenf)))
   stopifnot(exprs = {
             is(dd, "mM")
       inherits(dd, "mM")
+      grepl("showMethods(exNSS4:::myGenf)", myGmeth[length(myGmeth)], fixed=TRUE)
   })
   ## tests here should *NOT* assume recommended packages,
   ## let alone where they are installed
@@ -341,7 +343,7 @@ if(dir.exists(file.path("myLib", "exNSS4"))) {
     library(Matrix)
     stopifnot(isVirtualClass(getClass("atomicVector")))
   }
-}
+})
 showProc.time()
 
 

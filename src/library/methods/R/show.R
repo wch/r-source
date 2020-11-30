@@ -92,7 +92,8 @@ show <- function(object) showDefault(object)
               where = envir)
     setMethod("show", "genericFunction",
               function(object)  {
-                  cat(class(object)," for \"", object@generic,
+                  nam <- as.character(object@generic)
+                  cat(class(object)," for \"", nam,
                       "\" defined from package \"", object@package,
                       "\"\n", sep = "")
                   if(length(object@group))
@@ -103,12 +104,16 @@ show <- function(object) showDefault(object)
                           "\"\n", sep="")
                   cat("\n")
                   show(object@.Data)
+                  ns <- asNamespace(object@package)
+                  exported <- nam %in% names(.getNamespaceInfo(ns, "exports"))
+                  showGen <- if(exported) dQuote(nam, NULL)
+                             else paste(object@package, nam, sep=":::")
                   cat("Methods may be defined for arguments: ",
-                      paste(object@signature, collapse=", "), "\n",
-			    "Use  showMethods(\"", object@generic,
-			    "\")  for currently available ones.\n", sep="")
+                      paste0(object@signature, collapse=", "), "\n",
+                      "Use  showMethods(", showGen,
+                      ")  for currently available ones.\n", sep="")
                   if(.simpleInheritanceGeneric(object))
-                      cat("(This generic function excludes non-simple inheritance; see ?setIs)\n");
+                      cat("(This generic function excludes non-simple inheritance; see ?setIs)\n")
               },
               where = envir)
     setMethod("show", "classRepresentation",
