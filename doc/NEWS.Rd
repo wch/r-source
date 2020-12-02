@@ -10,7 +10,7 @@
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item If an external BLAS is specified by \option{--with-blas=foo}
-      or \emph{via} envionmental variable \env{BLAS_LIBS} is not found,
+      or \emph{via} envionment variable \env{BLAS_LIBS} is not found,
       this is now a configuration error.  The previous behaviour was not
       clear from the documentation: it was to continue the search as if
       \option{--with-blas=yes} was specified.

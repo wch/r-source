@@ -2113,7 +2113,10 @@ used to build @R{}: see @ref{macOS}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
-Tk.  See @ref{macOS} and @ref{Java (macOS)}.
+Tk.  See @ref{macOS} and @ref{Java (macOS)}.  Package @CRANpkg{rjags}
+needs a build of JAGS installed under @file{/usr/local}, such as those
+at
+@uref{https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/}.
 
 Tcl/Tk extension @code{BWidget} used to be
 distributed with @R{} but no longer is; @code{Tktable} has been
@@ -2188,7 +2191,8 @@ which case appropriate headers could be extracted from the
 sources@footnote{Note that capitalization and versioning may differ from
 the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com} -- this has been used for
-@code{OpenSSL} and @code{iodbc}.
+@code{OpenSSL}@footnote{no longer a system library in macOS 11.} and
+@code{iodbc}.
 
 Those using Xcode/Command Line Tools 12 or later (as released for macOS
 11 `Big Sur') probably want to arrange that the flag
@@ -2200,7 +2204,7 @@ Those using Xcode/Command Line Tools 12 or later (as released for macOS
 @noindent
 is part of @code{CFLAGS}.  Apple has changed the default to make
 implicit declarations a compilation error (something seen in no other
-compiler) and undesrstandably package authors have been unaware that
+compiler) and understandably package authors have been unaware that
 this might be done --- issues are most often seen in @command{configure}
 scripts.
 
