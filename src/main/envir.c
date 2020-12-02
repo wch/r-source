@@ -3189,12 +3189,16 @@ SEXP attribute_hidden do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     npos = length(pos);
     if (npos <= 0)
 	errorcall(call, _("invalid '%s' argument"), "pos");
-    PROTECT(env = allocVector(VECSXP, npos));
-    for (i = 0; i < npos; i++) {
-	SET_VECTOR_ELT(env, i, pos2env(INTEGER(pos)[i], call));
+    if (npos == 1)
+	env = pos2env(INTEGER(pos)[0], call);
+    else {
+	PROTECT(env = allocVector(VECSXP, npos));
+	for (i = 0; i < npos; i++) {
+	    SET_VECTOR_ELT(env, i, pos2env(INTEGER(pos)[i], call));
+	}
+	UNPROTECT(1); /* env */
     }
-    if (npos == 1) env = VECTOR_ELT(env, 0);
-    UNPROTECT(2);
+    UNPROTECT(1); /* pos */
     return env;
 }
 
