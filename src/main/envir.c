@@ -3846,6 +3846,7 @@ static SEXP callR1(SEXP fun, SEXP arg)
     defineVar(R_xSymbol, arg, rho);
     SEXP expr = PROTECT(lang2(fun, R_xSymbol));
     SEXP val = eval(expr, rho);
+    /**** ideally this should clear out rho if it isn't captured - LT */
     UNPROTECT(2); /* rho, expr */
     return val;
 }
