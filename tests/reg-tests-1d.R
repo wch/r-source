@@ -4614,6 +4614,25 @@ local({
     )
 })
 
+
+## some issues with task callbacks:
+## avoid adding a reference to the value:
+x <- c(1)
+old_xr <- .Internal(refcnt(x))
+TCB <- addTaskCallback(function(...) TRUE)
+x
+stopifnot(.Internal(refcnt(x)) == old_xr)
+removeTaskCallback(TCB)
+
+## these used to fail with "object 'foo' not found":
+TCB <- addTaskCallback(function(e, v, ...) { v; TRUE})
+quote(foo)
+removeTaskCallback(TCB)
+TCB <- addTaskCallback(function(...) { length(list(...)); TRUE},
+                       data = quote(foo))
+removeTaskCallback(TCB)
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
