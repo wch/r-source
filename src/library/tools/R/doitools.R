@@ -126,12 +126,16 @@ function(packages, lib.loc = NULL, verbose = FALSE, Rd = FALSE)
 }
 
 check_doi_db <-
-function(db, verbose = FALSE)
+function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
 {
     use_curl <-
+        !parallel &&
         config_val_to_logical(Sys.getenv("_R_CHECK_URLS_USE_CURL_",
                                          "TRUE")) &&
         requireNamespace("curl", quietly = TRUE)
+
+    if(parallel && is.null(pool))
+        pool <- curl::new_pool()    
     
     .gather <- function(d = character(),
                         p = list(),
@@ -144,15 +148,15 @@ function(db, verbose = FALSE)
         y
     }
 
-    .fetch <- function(u, d) {
-        if(verbose) message(sprintf("processing %s", d))
-        tryCatch(curlGetHeaders(u), error = identity)
-    }
+    .fetch_headers <-
+        if(parallel)
+            function(urls, dois)
+                .fetch_headers_via_curl(urls, verbose, pool)
+        else
+            function(urls, dois)
+                .fetch_headers_via_base(urls, verbose, dois)
 
-    .check <- function(d) {
-        u <- paste0("https://doi.org/", d)
-        ## Do we need to percent encode parts of the DOI name?
-        h <- .fetch(u, d)
+    .check <- function(d, u, h) {
         if(inherits(h, "error")) {
             s <- "-1"
             msg <- sub("[[:space:]]*$", "", conditionMessage(h))
@@ -211,7 +215,12 @@ function(db, verbose = FALSE)
 
     pos <- which(!ind)
     if(length(pos)) {
-        results <- do.call(rbind, lapply(dois[pos], .check))
+        doispos <- dois[pos]
+        urlspos <- paste0("https://doi.org/", doispos)
+        ## Do we need to percent encode parts of the DOI name?
+        headers <- .fetch_headers(urlspos, doispos)
+        results <- do.call(rbind,
+                           Map(.check, doispos, urlspos, headers))
         status <- as.numeric(results[, 1L])
         ind <- (status %notin% c(200L, 405L))
         if(any(ind)) {

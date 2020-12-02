@@ -405,121 +405,16 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         class(y) <- c("check_url_db", "data.frame")
         y
     }
-
-    .fetch <- function(u) {
-        if(verbose) message(sprintf("processing %s", u))
-        h <- tryCatch(curlGetHeaders(u), error = identity)
-        if(inherits(h, "error")) {
-            ## Currently, this info is only used in .check_http().
-            ## Might be useful for checking ftps too, so simply leave it
-            ## here instead of moving to .check_http().
-            msg <- conditionMessage(h)
-            if (grepl("libcurl error code (51|60)", msg)) {
-                h2 <- tryCatch(curlGetHeaders(u, verify = FALSE),
-                               error = identity)
-                attr(h, "no-verify") <- h2
-            }
-        }
-        h
-    }
-
-    .fetch_headers_via_base <- function(urls)
-        lapply(urls, .fetch)
-
-    .progress_bar <- function(length, msg = "") {
-        bar <- new.env(parent = baseenv())
-        if(is.null(length)) {
-            length <- 0L
-        }
-        ## <FIXME>
-        ## make codetools happy
-        done <- fmt <- NULL
-        ## </FIXME>
-        bar$length <- length
-        bar$done <- -1L
-        digits <- trunc(log10(length)) + 1L
-        bar$fmt <- paste0("\r", msg, "[ %", digits, "i / %", digits, "i ]")
-        bar$update <- function() {
-            assign("done", inherits = TRUE, done + 1L)
-            if (length <= 0L) {
-                return()
-            }
-            if (done >= length) {
-                cat("\r", strrep(" ", nchar(fmt)), "\r", sep = "")
-            } else {
-                cat(sprintf(fmt, done, length), sep = "")
-            }
-        }
-        environment(bar$update) <- bar
-        bar$update()
-        bar
-    }
-
-    .fetch_headers_via_curl <- function(urls) {
-        hs <- vector("list", length(urls))
-
-        bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")
-        for (i in seq_along(hs)) {
-            u <- urls[[i]]
-            h <- curl::new_handle(url = u)
-            curl::handle_setopt(h,
-                                nobody = TRUE,
-                                cookiesession = 1L,
-                                followlocation = 1L,
-                                http_version = 2L,
-                                ssl_enable_alpn = 0L)
-            if(grepl("^https?://github[.]com", u) &&
-               nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
-                curl::handle_setheaders(h, "Authorization" = paste("token", a))
-            }
-            handle_result <- local({
-                i <- i
-                function(x) {
-                    hs[[i]] <<- x
-                    bar$update()
-                }
-            })
-            handle_error <- local({
-                i <- i
-                function(x) {
-                    hs[[i]] <<-
-                        structure(list(message = x),
-                                  class = c("curl_error", "error", "condition"))
-                    bar$update()
-                }
-            })
-            curl::multi_add(h,
-                            done = handle_result,
-                            fail = handle_error,
-                            pool = pool)
-        }
-
-        curl::multi_run(pool = pool)
-   
-        out <- vector("list", length(hs))
-        for(i in seq_along(out)) {
-            if(inherits(hs[[i]], "error")) {
-                out[[i]] <- hs[[i]]
-            } else {
-                out[[i]] <- strsplit(rawToChar(hs[[i]]$headers),
-                                     "(?<=\r\n)",
-                                     perl = TRUE)[[1L]]
-                attr(out[[i]], "status") <- hs[[i]]$status_code
-            }
-        }
-        
-        out
-    }
     
     .fetch_headers <-
         if(parallel)
-            .fetch_headers_via_curl
+            function(urls)
+                .fetch_headers_via_curl(urls, verbose, pool)
         else
-            .fetch_headers_via_base
+            function(urls)
+                .fetch_headers_via_base(urls, verbose)
 
-    .check_ftp <- function(u, h = NULL) {
-        if(is.null(h))
-            h <- .fetch(u)
+    .check_ftp <- function(u, h) {
         if(inherits(h, "error")) {
             s <- "-1"
             msg <- sub("[[:space:]]*$", "", conditionMessage(h))
@@ -531,19 +426,25 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
     }
 
     .check_http <- if(remote)
-        function(u, h = NULL) c(.check_http_A(u, h), .check_http_B(u))
-    else
-        function(u, h = NULL) c(rep.int("", 3L),     .check_http_B(u))
+                       function(u, h) c(.check_http_A(u, h),
+                                        .check_http_B(u))
+                   else
+                       function(u, h) c(rep.int("", 3L),
+                                        .check_http_B(u))
 
-    .check_http_A <- function(u, h = NULL) {
-        if(is.null(h))
-            h <- .fetch(u)
+    .check_http_A <- function(u, h) {
         newLoc <- ""
         if(inherits(h, "error")) {
             s <- "-1"
             msg <- sub("[[:space:]]*$", "", conditionMessage(h))
-            if (!is.null(v <- attr(h, "no-verify"))) {
-                s2 <- as.character(attr(v, "status"))
+            if(grepl(paste(c("server certificate verification failed",
+                             "failed to get server cert",
+                             "libcurl error code (51|60)"),
+                           collapse = "|"),
+                     msg)) {
+                h2 <- tryCatch(curlGetHeaders(u, verify = FALSE),
+                               error = identity)
+                s2 <- as.character(attr(h2, "status"))
                 msg <- paste0(msg, "\n\t(Status without verification: ",
                               table_of_HTTP_status_codes[s2], ")")
             }
@@ -767,6 +668,102 @@ function(x, ...)
     y
 }
 
+.fetch_headers_via_base <- function(urls, verbose = FALSE, ids = urls)
+    Map(function(u, verbose, i) {
+            if(verbose) message(sprintf("processing %s", i))
+            tryCatch(curlGetHeaders(u), error = identity)
+        },
+        urls, verbose, ids)
+
+.fetch_headers_via_curl <- function(urls, verbose = FALSE, pool = NULL) {
+
+    .progress_bar <- function(length, msg = "") {
+        bar <- new.env(parent = baseenv())
+        if(is.null(length)) {
+            length <- 0L
+        }
+        ## <FIXME>
+        ## make codetools happy
+        done <- fmt <- NULL
+        ## </FIXME>
+        bar$length <- length
+        bar$done <- -1L
+        digits <- trunc(log10(length)) + 1L
+        bar$fmt <- paste0("\r", msg, "[ %", digits, "i / %", digits, "i ]")
+        bar$update <- function() {
+            assign("done", inherits = TRUE, done + 1L)
+            if (length <= 0L) {
+                return()
+            }
+            if (done >= length) {
+                cat("\r", strrep(" ", nchar(fmt)), "\r", sep = "")
+            } else {
+                cat(sprintf(fmt, done, length), sep = "")
+            }
+        }
+        environment(bar$update) <- bar
+        bar$update()
+        bar
+    }
+
+    if(is.null(pool))
+        pool <- curl::new_pool()
+
+    hs <- vector("list", length(urls))
+
+    bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")
+    for(i in seq_along(hs)) {
+        u <- urls[[i]]
+        h <- curl::new_handle(url = u)
+        curl::handle_setopt(h,
+                            nobody = TRUE,
+                            cookiesession = 1L,
+                            followlocation = 1L,
+                            http_version = 2L,
+                            ssl_enable_alpn = 0L)
+        if(grepl("^https?://github[.]com", u) &&
+           nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
+            curl::handle_setheaders(h, "Authorization" = paste("token", a))
+        }
+        handle_result <- local({
+            i <- i
+            function(x) {
+                hs[[i]] <<- x
+                bar$update()
+            }
+        })
+        handle_error <- local({
+            i <- i
+            function(x) {
+                hs[[i]] <<-
+                    structure(list(message = x),
+                              class = c("curl_error", "error", "condition"))
+                bar$update()
+            }
+        })
+        curl::multi_add(h,
+                        done = handle_result,
+                        fail = handle_error,
+                        pool = pool)
+    }
+
+    curl::multi_run(pool = pool)
+   
+    out <- vector("list", length(hs))
+    for(i in seq_along(out)) {
+        if(inherits(hs[[i]], "error")) {
+            out[[i]] <- hs[[i]]
+        } else {
+            out[[i]] <- strsplit(rawToChar(hs[[i]]$headers),
+                                 "(?<=\r\n)",
+                                 perl = TRUE)[[1L]]
+            attr(out[[i]], "status") <- hs[[i]]$status_code
+        }
+    }
+        
+    out
+}
+    
 .curl_GET_status <-
 function(u, verbose = FALSE)
 {
