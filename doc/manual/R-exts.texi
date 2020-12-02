@@ -9118,7 +9118,7 @@ Recent versions of @command{clang} on @cputype{x86_64} Linux have
 `ThreadSanitizer' (@uref{https://code.google.com/@/p/@/thread-sanitizer/}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
 (@uref{https://clang.llvm.org/@/docs/@/MemorySanitizer.html},
-@uref{https://code.google.com/@/p/@/memory-sanitizer/@/wiki/@/MemorySanitizer})
+@uref{https://github.com/google/sanitizers})
 for the detection of uninitialized memory.  Both are based on and
 provide similar functionality to tools in @command{valgrind}.
 

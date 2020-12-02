@@ -33,7 +33,7 @@
   as mosaic plots, sieve diagrams or association plots.
 }
 \source{
-  \url{http://euclid.psych.yorku.ca/ftp/sas/vcd/catdata/haireye.sas}
+  \url{http://www.datavis.ca/sas/vcd/catdata/haireye.sas}
 
   Snee (1974) gives the two-way table aggregated over \code{Sex}.  The
   \code{Sex} split of the \sQuote{Brown hair, Brown eye} cell was
