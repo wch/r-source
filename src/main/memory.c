@@ -3091,8 +3091,12 @@ static void R_gc_internal(R_size_t size_needed)
 	  VHEAP_FREE() < size_needed + R_MinFreeFrac * R_VSize)
 	num_old_gens_to_collect++;
 
-      if (size_needed > VHEAP_FREE())
-	R_VSize += size_needed - VHEAP_FREE();
+      if (size_needed > VHEAP_FREE()) {
+	  R_size_t expand = size_needed - VHEAP_FREE();
+	  if (R_VSize + expand > R_MaxVSize)
+	      mem_err_heap(size_needed);
+	  R_VSize += expand;
+      }
 
       gc_pending = TRUE;
       return;
