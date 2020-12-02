@@ -2114,7 +2114,10 @@ used to build @R{}: see @ref{macOS}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
-Tk.  See @ref{macOS} and @ref{Java (macOS)}.
+Tk.  See @ref{macOS} and @ref{Java (macOS)}.  Package @CRANpkg{rjags}
+needs a build of JAGS installed under @file{/usr/local}, such as those
+at
+@uref{https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/}.
 
 Tcl/Tk extension @code{BWidget} used to be
 distributed with @R{} but no longer is; @code{Tktable} has been
@@ -2189,7 +2192,8 @@ which case appropriate headers could be extracted from the
 sources@footnote{Note that capitalization and versioning may differ from
 the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com} -- this has been used for
-@code{OpenSSL} and @code{iodbc}.
+@code{OpenSSL}@footnote{no longer a system library in macOS 11.} and
+@code{iodbc}.
 
 Those using Xcode/Command Line Tools 12 or later (as released for macOS
 11 `Big Sur') probably want to arrange that the flag
@@ -5318,6 +5322,11 @@ a 6-month lifetime).
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 1.8.0_241 or 11.0.6) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
+
+(To use a @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{}
+install a @cputype{x86_64} of a Java JRE such as that from
+@uref{https://adoptopenjdk.net, AdoptOpenJDK}, then run @command{sudo R
+CMD javareconf}.)
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
