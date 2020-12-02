@@ -314,7 +314,7 @@
 
       \item \command{R CMD check} etc now warn when a package exports
       non-existing S4 classes or methods, also in case of no "methods"
-      presence; reported by Alex Bertram; reprpducible example and patch
+      presence; reported by Alex Bertram; reproducible example and patch
       by Sebastian Meyer in \PR{16662}.
 
       \item \code{boxplot()} now also accepts \code{call}s for labels such
@@ -382,7 +382,7 @@
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item If an external BLAS is specified by \option{--with-blas=foo}
-      or \emph{via} envionmental variable \env{BLAS_LIBS} is not found,
+      or \emph{via} environment variable \env{BLAS_LIBS} is not found,
       this is now a configuration error.  The previous behaviour was not
       clear from the documentation: it was to continue the search as if
       \option{--with-blas=yes} was specified.

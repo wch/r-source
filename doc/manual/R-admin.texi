@@ -2201,7 +2201,7 @@ Those using Xcode/Command Line Tools 12 or later (as released for macOS
 @noindent
 is part of @code{CFLAGS}.  Apple has changed the default to make
 implicit declarations a compilation error (something seen in no other
-compiler) and undesrstandably package authors have been unaware that
+compiler) and understandably package authors have been unaware that
 this might be done --- issues are most often seen in @command{configure}
 scripts.
 
