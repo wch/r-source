@@ -486,8 +486,8 @@ expr_not_sym	: 	NUM_CONST		{ $$ = $1;	setId(@$); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1);	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
 						{ $$ = xxdefun($1,$3,$6,&@$); 	setId(@$); }
-	|	'@' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(install("function"),$3,$6,&@$); 	setId(@$); }
-	|	'\\' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(install("function"),$3,$6,&@$); 	setId(@$); }
+	|	'@' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(R_FunctionSymbol,$3,$6,&@$); 	setId(@$); }
+	|	'\\' '(' formlist ')' cr expr_or_assign_or_help %prec LOW							{ $$ = xxdefun(R_FunctionSymbol,$3,$6,&@$); 	setId(@$); }
 	|	expr '(' sublist ')'		{ $$ = xxfuncall($1,$3);  setId(@$); modif_token( &@1, SYMBOL_FUNCTION_CALL ) ; }
 	|	IF ifcond expr_or_assign_or_help 	{ $$ = xxif($1,$2,$3);	setId(@$); }
 	|	IF ifcond expr_or_assign_or_help ELSE expr_or_assign_or_help	{ $$ = xxifelse($1,$2,$3,$5);	setId(@$); }
@@ -1209,7 +1209,7 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
     SEXP ans;
     if (GenerateCode) {
 	/* allow for rhs lambda expressions */
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol)
 	    return lang2(rhs, lhs);
 		    
 	if (TYPEOF(rhs) != LANGSXP)
@@ -1242,7 +1242,7 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
     if (GenerateCode) {
 	/* allow for symbols or lambda expressions */
 	if (TYPEOF(rhs) == SYMSXP ||
-	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol)
 	    return lang2(rhs, lhs);
 		    
 	if (TYPEOF(rhs) != LANGSXP)
@@ -1258,7 +1258,7 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
 
 static SEXP xxshortfun(SEXP formals, SEXP body, YYLTYPE *lloc)
 {
-    SEXP R_FunctionSymbol = install("function");
+    SEXP R_FunctionSymbol = R_FunctionSymbol;
     return xxdefun(R_FunctionSymbol, formals, body, lloc);
 }
     

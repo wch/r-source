@@ -2325,13 +2325,13 @@ yyreduce:
 
   case 55:
 #line 489 "gram.y" /* yacc.c:1646  */
-    { (yyval) = xxdefun(install("function"),(yyvsp[-3]),(yyvsp[0]),&(yyloc)); 	setId((yyloc)); }
+    { (yyval) = xxdefun(R_FunctionSymbol,(yyvsp[-3]),(yyvsp[0]),&(yyloc)); 	setId((yyloc)); }
 #line 2330 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 490 "gram.y" /* yacc.c:1646  */
-    { (yyval) = xxdefun(install("function"),(yyvsp[-3]),(yyvsp[0]),&(yyloc)); 	setId((yyloc)); }
+    { (yyval) = xxdefun(R_FunctionSymbol,(yyvsp[-3]),(yyvsp[0]),&(yyloc)); 	setId((yyloc)); }
 #line 2336 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -3511,7 +3511,7 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
     SEXP ans;
     if (GenerateCode) {
 	/* allow for rhs lambda expressions */
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol)
 	    return lang2(rhs, lhs);
 		    
 	if (TYPEOF(rhs) != LANGSXP)
@@ -3544,7 +3544,7 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
     if (GenerateCode) {
 	/* allow for symbols or lambda expressions */
 	if (TYPEOF(rhs) == SYMSXP ||
-	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol)
 	    return lang2(rhs, lhs);
 		    
 	if (TYPEOF(rhs) != LANGSXP)
@@ -3560,7 +3560,7 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
 
 static SEXP xxshortfun(SEXP formals, SEXP body, YYLTYPE *lloc)
 {
-    SEXP R_FunctionSymbol = install("function");
+    SEXP R_FunctionSymbol = R_FunctionSymbol;
     return xxdefun(R_FunctionSymbol, formals, body, lloc);
 }
     

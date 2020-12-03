@@ -1137,6 +1137,7 @@ static void SymbolShortcuts(void)
     R_SpecSymbol = install("spec");
     R_NamespaceEnvSymbol = install(".__NAMESPACE__.");
     R_AsCharacterSymbol = install("as.character");
+    R_FunctionSymbol = install("function");
 
     R_dot_Generic = install(".Generic");
     R_dot_Method = install(".Method");
