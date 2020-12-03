@@ -1161,8 +1161,10 @@ void attribute_hidden Rstd_Busy(int which)
    If ask = SA_SUICIDE, no save, no .Last, possibly other things.
  */
 
-
-
+/* Note: now there is R_unlink(), but rm -Rf may be optimized for specific
+   file-systems. Some file systems allow to delete directory trees without
+   explicit/synchronous traversal so that deletion appears to be very
+   fast (see e.g. zfs). */
 void R_CleanTempDir(void)
 {
     char buf[1024];

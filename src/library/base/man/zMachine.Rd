@@ -93,7 +93,7 @@
     builds of \R.}
 
   \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{when
-    \code{\link{capabilities}["long.double"]} is true, there are 10 such
+    \code{\link{capabilities}("long.double")} is true, there are 10 such
     \code{"longdouble.<kind>"} values, specifying the \code{long double}
     property corresponding to its \code{"double.*"} counterpart, above, see
     also \sQuote{Note}.}
@@ -110,7 +110,7 @@
   smallest positive double is about \code{5e-324}.
 }
 \note{
-  In the (typical) case where \code{\link{capabilities}["long.double"]} is
+  In the (typical) case where \code{\link{capabilities}("long.double")} is
   true, \R uses the \code{long double} C type in quite a few places internally
   for accumulators in e.g.\sspace{}\code{\link{sum}}, reading non-integer
   numeric constants into (binary) double precision numbers, or arithmetic
@@ -128,10 +128,16 @@
   double type of IEC 60559, padded to the double alignment used on the
   platform --- this seems to be the case for the common \R platforms
   using ix86 and x86_64 chips.
+
+  Note that it is legal for a platform to have a \code{long double} C
+  type which is identical to the \code{double} type --- this happens on
+  ARM cpus.  In that case \code{\link{capabilities}("long.double")} will
+  be false but \code{.Machine} may contain \code{"longdouble.<kind>"}
+  elements.
 }
 \source{
   Uses a C translation of Fortran code in the reference, modified by the
-  R Core Team to defeat over-optimization in recent compilers.
+  R Core Team to defeat over-optimization in modern compilers.
 }
 \references{
   Cody, W. J. (1988).

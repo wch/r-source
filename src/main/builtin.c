@@ -339,32 +339,28 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP enclos, size, ans;
-    int hash;
+    SEXP enclos;
+    int hash, size = 0;
 
     checkArity(op, args);
 
     hash = asInteger(CAR(args));
     args = CDR(args);
     enclos = CAR(args);
-    if (isNull(enclos)) {
+    if (isNull(enclos))
 	error(_("use of NULL environment is defunct"));
-	enclos = R_BaseEnv;
-    } else
-    if( !isEnvironment(enclos)   &&
+
+    if( !isEnvironment(enclos) &&
 	!isEnvironment((enclos = simple_as_environment(enclos))))
 	error(_("'enclos' must be an environment"));
 
     if( hash ) {
-	args = CDR(args);
-	PROTECT(size = coerceVector(CAR(args), INTSXP));
-	if (INTEGER(size)[0] == NA_INTEGER)
-	    INTEGER(size)[0] = 0; /* so it will use the internal default */
-	ans = R_NewHashedEnv(enclos, size);
-	UNPROTECT(1);
-    } else
-	ans = NewEnvironment(R_NilValue, R_NilValue, enclos);
-    return ans;
+	size = asInteger(CADR(args));
+	if (size == NA_INTEGER)
+	    size = 0; /* so it will use the internal default */
+    }
+    else size = 0;
+    return R_NewEnv(enclos, hash, size);
 }
 
 SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)

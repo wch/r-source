@@ -379,12 +379,16 @@ table_of_FTP_server_return_codes <-
       )
 
 check_url_db <-
-function(db, remote = TRUE, verbose = FALSE)
+function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
 {
     use_curl <-
+        !parallel &&
         config_val_to_logical(Sys.getenv("_R_CHECK_URLS_USE_CURL_",
                                          "TRUE")) &&
         requireNamespace("curl", quietly = TRUE)
+
+    if(parallel && is.null(pool))
+        pool <- curl::new_pool()    
 
     .gather <- function(u = character(),
                         p = list(),
@@ -401,26 +405,16 @@ function(db, remote = TRUE, verbose = FALSE)
         class(y) <- c("check_url_db", "data.frame")
         y
     }
+    
+    .fetch_headers <-
+        if(parallel)
+            function(urls)
+                .fetch_headers_via_curl(urls, verbose, pool)
+        else
+            function(urls)
+                .fetch_headers_via_base(urls, verbose)
 
-    .fetch <- function(u) {
-        if(verbose) message(sprintf("processing %s", u))
-        h <- tryCatch(curlGetHeaders(u), error = identity)
-        if(inherits(h, "error")) {
-            ## Currently, this info is only used in .check_http().
-            ## Might be useful for checking ftps too, so simply leave it
-            ## here instead of moving to .check_http().
-            msg <- conditionMessage(h)
-            if (grepl("libcurl error code (51|60)", msg)) {
-                h2 <- tryCatch(curlGetHeaders(u, verify = FALSE),
-                               error = identity)
-                attr(h, "no-verify") <- h2
-            }
-        }
-        h
-    }
-
-    .check_ftp <- function(u) {
-        h <- .fetch(u)
+    .check_ftp <- function(u, h) {
         if(inherits(h, "error")) {
             s <- "-1"
             msg <- sub("[[:space:]]*$", "", conditionMessage(h))
@@ -432,18 +426,25 @@ function(db, remote = TRUE, verbose = FALSE)
     }
 
     .check_http <- if(remote)
-        function(u) c(.check_http_A(u), .check_http_B(u))
-    else
-        function(u) c(rep.int("", 3L), .check_http_B(u))
+                       function(u, h) c(.check_http_A(u, h),
+                                        .check_http_B(u))
+                   else
+                       function(u, h) c(rep.int("", 3L),
+                                        .check_http_B(u))
 
-    .check_http_A <- function(u) {
-        h <- .fetch(u)
+    .check_http_A <- function(u, h) {
         newLoc <- ""
         if(inherits(h, "error")) {
             s <- "-1"
             msg <- sub("[[:space:]]*$", "", conditionMessage(h))
-            if (!is.null(v <- attr(h, "no-verify"))) {
-                s2 <- as.character(attr(v, "status"))
+            if(grepl(paste(c("server certificate verification failed",
+                             "failed to get server cert",
+                             "libcurl error code (51|60)"),
+                           collapse = "|"),
+                     msg)) {
+                h2 <- tryCatch(curlGetHeaders(u, verify = FALSE),
+                               error = identity)
+                s2 <- as.character(attr(h2, "status"))
                 msg <- paste0(msg, "\n\t(Status without verification: ",
                               table_of_HTTP_status_codes[s2], ")")
             }
@@ -568,7 +569,9 @@ function(db, remote = TRUE, verbose = FALSE)
     ## ftp.
     pos <- which(schemes == "ftp")
     if(length(pos) && remote) {
-        results <- do.call(rbind, lapply(urls[pos], .check_ftp))
+        urlspos <- urls[pos]
+        headers <- .fetch_headers(urlspos)
+        results <- do.call(rbind, Map(.check_ftp, urlspos, headers))
         status <- as.numeric(results[, 1L])
         ind <- (status < 0L) | (status >= 400L)
         if(any(ind)) {
@@ -585,7 +588,9 @@ function(db, remote = TRUE, verbose = FALSE)
     ## http/https.
     pos <- which(schemes == "http" | schemes == "https")
     if(length(pos)) {
-        results <- do.call(rbind, lapply(urls[pos], .check_http))
+        urlspos <- urls[pos]
+        headers <- .fetch_headers(urlspos)
+        results <- do.call(rbind, Map(.check_http, urlspos, headers))
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
@@ -663,6 +668,102 @@ function(x, ...)
     y
 }
 
+.fetch_headers_via_base <- function(urls, verbose = FALSE, ids = urls)
+    Map(function(u, verbose, i) {
+            if(verbose) message(sprintf("processing %s", i))
+            tryCatch(curlGetHeaders(u), error = identity)
+        },
+        urls, verbose, ids)
+
+.fetch_headers_via_curl <- function(urls, verbose = FALSE, pool = NULL) {
+
+    .progress_bar <- function(length, msg = "") {
+        bar <- new.env(parent = baseenv())
+        if(is.null(length)) {
+            length <- 0L
+        }
+        ## <FIXME>
+        ## make codetools happy
+        done <- fmt <- NULL
+        ## </FIXME>
+        bar$length <- length
+        bar$done <- -1L
+        digits <- trunc(log10(length)) + 1L
+        bar$fmt <- paste0("\r", msg, "[ %", digits, "i / %", digits, "i ]")
+        bar$update <- function() {
+            assign("done", inherits = TRUE, done + 1L)
+            if (length <= 0L) {
+                return()
+            }
+            if (done >= length) {
+                cat("\r", strrep(" ", nchar(fmt)), "\r", sep = "")
+            } else {
+                cat(sprintf(fmt, done, length), sep = "")
+            }
+        }
+        environment(bar$update) <- bar
+        bar$update()
+        bar
+    }
+
+    if(is.null(pool))
+        pool <- curl::new_pool()
+
+    hs <- vector("list", length(urls))
+
+    bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")
+    for(i in seq_along(hs)) {
+        u <- urls[[i]]
+        h <- curl::new_handle(url = u)
+        curl::handle_setopt(h,
+                            nobody = TRUE,
+                            cookiesession = 1L,
+                            followlocation = 1L,
+                            http_version = 2L,
+                            ssl_enable_alpn = 0L)
+        if(grepl("^https?://github[.]com", u) &&
+           nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
+            curl::handle_setheaders(h, "Authorization" = paste("token", a))
+        }
+        handle_result <- local({
+            i <- i
+            function(x) {
+                hs[[i]] <<- x
+                bar$update()
+            }
+        })
+        handle_error <- local({
+            i <- i
+            function(x) {
+                hs[[i]] <<-
+                    structure(list(message = x),
+                              class = c("curl_error", "error", "condition"))
+                bar$update()
+            }
+        })
+        curl::multi_add(h,
+                        done = handle_result,
+                        fail = handle_error,
+                        pool = pool)
+    }
+
+    curl::multi_run(pool = pool)
+   
+    out <- vector("list", length(hs))
+    for(i in seq_along(out)) {
+        if(inherits(hs[[i]], "error")) {
+            out[[i]] <- hs[[i]]
+        } else {
+            out[[i]] <- strsplit(rawToChar(hs[[i]]$headers),
+                                 "(?<=\r\n)",
+                                 perl = TRUE)[[1L]]
+            attr(out[[i]], "status") <- hs[[i]]$status_code
+        }
+    }
+        
+    out
+}
+    
 .curl_GET_status <-
 function(u, verbose = FALSE)
 {

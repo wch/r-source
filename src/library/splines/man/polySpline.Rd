@@ -1,6 +1,6 @@
 % File src/library/splines/man/polySpline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{polySpline}
@@ -36,9 +36,12 @@ as.polySpline(object, \dots)
   \code{\link{splineOrder}}
 }
 \examples{
+% May have rounding errors rather than true 0, e.g, with Apple Accelerate.
 require(graphics)
 ispl <- polySpline(interpSpline( weight ~ height,  women, bSpline = TRUE))
+## IGNORE_RDIFF_BEGIN
 print( ispl )   # print the piecewise polynomial representation
+## IGNORE_RDIFF_END
 plot( ispl )    # plots over the range of the knots
 points( women$height, women$weight )
 }

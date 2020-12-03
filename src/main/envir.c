@@ -2053,10 +2053,15 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* The first arg is the object name */
     /* It must be present and a non-empty string */
 
-    if (!isValidStringF(CAR(args)))
-	error(_("invalid first argument"));
-    else
+    if (TYPEOF(CAR(args)) == SYMSXP)
+	t1 = CAR(args);
+    else if (isValidStringF(CAR(args))) {
+	if (XLENGTH(CAR(args)) > 1)
+	    error(_("first argument has length > 1"));
 	t1 = installTrChar(STRING_ELT(CAR(args), 0));
+    }
+    else
+	error(_("invalid first argument"));
 
     /* envir :	originally, the "where=" argument */
 
@@ -3190,12 +3195,16 @@ SEXP attribute_hidden do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     npos = length(pos);
     if (npos <= 0)
 	errorcall(call, _("invalid '%s' argument"), "pos");
-    PROTECT(env = allocVector(VECSXP, npos));
-    for (i = 0; i < npos; i++) {
-	SET_VECTOR_ELT(env, i, pos2env(INTEGER(pos)[i], call));
+    if (npos == 1)
+	env = pos2env(INTEGER(pos)[0], call);
+    else {
+	PROTECT(env = allocVector(VECSXP, npos));
+	for (i = 0; i < npos; i++) {
+	    SET_VECTOR_ELT(env, i, pos2env(INTEGER(pos)[i], call));
+	}
+	UNPROTECT(1); /* env */
     }
-    if (npos == 1) env = VECTOR_ELT(env, 0);
-    UNPROTECT(2);
+    UNPROTECT(1); /* pos */
     return env;
 }
 
@@ -3591,6 +3600,19 @@ SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+/* C version of new.env */
+SEXP R_NewEnv(SEXP enclos, int hash, int size)
+{
+    if (hash) {
+	SEXP ssize = PROTECT(ScalarInteger(size));
+	SEXP ans = R_NewHashedEnv(enclos, ssize);
+	UNPROTECT(1); /* ssize */
+	return ans;
+    }
+    else
+	return NewEnvironment(R_NilValue, R_NilValue, enclos);
+}
+
 void R_RestoreHashCount(SEXP rho)
 {
     if (IS_HASHED(rho)) {
@@ -3824,6 +3846,7 @@ static SEXP callR1(SEXP fun, SEXP arg)
     defineVar(R_xSymbol, arg, rho);
     SEXP expr = PROTECT(lang2(fun, R_xSymbol));
     SEXP val = eval(expr, rho);
+    /**** ideally this should clear out rho if it isn't captured - LT */
     UNPROTECT(2); /* rho, expr */
     return val;
 }

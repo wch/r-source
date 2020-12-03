@@ -148,7 +148,7 @@ int main(void) {
 #error cairo version >= 1.2 required
 #endif
 int main(void) {
-    cairo_t  *CC;    
+    cairo_t  *CC = NULL; // silence picky compilers    
     cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
     cairo_select_font_face (CC, "Helvetica", CAIRO_FONT_SLANT_NORMAL, 
                             CAIRO_FONT_WEIGHT_BOLD);

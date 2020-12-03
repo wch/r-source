@@ -23,7 +23,7 @@ dynGet(x, ifnotfound = , minframe = 1L, inherits = FALSE)
 }
 \arguments{
   \item{x}{For \code{get}, an object name (given as a character
-    string).\cr
+    string or a symbol).\cr
     For \code{mget}, a character vector of object names.
   }
   \item{pos, envir}{where to look for the object (see \sQuote{Details}); if

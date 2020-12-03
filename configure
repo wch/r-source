@@ -713,8 +713,6 @@ CURL_CONFIG
 BUILD_TRE_FALSE
 BUILD_TRE_TRUE
 PCRE2_CONFIG
-USE_MMAP_ZLIB_FALSE
-USE_MMAP_ZLIB_TRUE
 TIRPC_CPPFLAGS
 BUILD_XDR_FALSE
 BUILD_XDR_TRUE
@@ -22804,6 +22802,7 @@ esac
 ## </NOTE>
 ## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
+## This gives: 'sin' is a builtin with type 'double (double)'
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for sin in -lm" >&5
 $as_echo_n "checking for sin in -lm... " >&6; }
 if ${ac_cv_lib_m_sin+:} false; then :
@@ -23691,6 +23690,8 @@ fi
 
 ### * Checks for types.
 
+## clang complains when checking return type
+##   indirection requires pointer operand ('void' invalid)
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking return type of signal handlers" >&5
 $as_echo_n "checking return type of signal handlers... " >&6; }
 if ${ac_cv_type_signal+:} false; then :
@@ -25375,7 +25376,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25378: \"$ac_link\") >&5
+(eval echo $as_me:25379: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25450,7 +25451,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25453: \"$ac_link\") >&5
+(eval echo $as_me:25454: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27275,7 +27276,7 @@ if test "${SAFE_FFLAGS+set}" != set; then
       ;;
     *)
       SAFE_FFLAGS="${FFLAGS}"
-      ::
+      ;;
     esac
   else
     SAFE_FFLAGS="${FFLAGS}"
@@ -28198,7 +28199,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -28511,7 +28512,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -28831,7 +28832,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -29150,7 +29151,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -29538,7 +29539,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -29956,7 +29957,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -30381,7 +30382,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -30805,7 +30806,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -31296,7 +31297,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -32114,7 +32115,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -32939,7 +32940,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -33763,7 +33764,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -34656,7 +34657,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -35474,7 +35475,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -36299,7 +36300,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -37123,7 +37124,7 @@ namespace cxx11
     }
 
     int
-    test(const int c, volatile int v)
+    test(const int c, volatile int v) // 'volatile is deprecated in C++20'
     {
       static_assert(is_same<int, decltype(0)>::value == true, "");
       static_assert(is_same<int, decltype(c)>::value == false, "");
@@ -40742,10 +40743,13 @@ else
 
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
+# include <unistd.h> // for unlink
+#endif
 
-main() {
+int main() {
     FILE *fp;
-    int pos;
+    long pos;
 
     fp = fopen("testit", "wb");
     fwrite("0123456789\n", 11, 1, fp);
@@ -40894,7 +40898,7 @@ else
 #include <stdlib.h>
 #include <time.h>
 
-main() {
+int main() {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -41176,6 +41180,7 @@ $as_echo_n "checking for ${dgemm} in ${BLAS_LIBS}... " >&6; }
     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 void ${xerbla}(char *srname, int *info){}
+                 void ${dgemm}();
 #ifdef FC_DUMMY_MAIN
 #ifndef FC_DUMMY_MAIN_EQ_F77
 #  ifdef __cplusplus
@@ -41202,10 +41207,20 @@ rm -f core conftest.err conftest.$ac_objext \
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${acx_blas_ok}" >&5
 $as_echo "${acx_blas_ok}" >&6; }
     LIBS="${r_save_LIBS}"
+        if test "${acx_blas_ok}" = no; then
+       as_fn_error $? "BLAS was specified but not available" "$LINENO" 5
+    fi
   fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for an external BLAS" >&5
+$as_echo "$as_me: searching for an external BLAS" >&6;}
+fi
+
+if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for BLAS in default libraries" >&5
+$as_echo "$as_me: searching for BLAS in default libraries" >&6;}
   as_ac_var=`$as_echo "ac_cv_func_${dgemm}" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "${dgemm}" "$as_ac_var"
 if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
@@ -41216,6 +41231,8 @@ fi
 
 # BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for OpenBLAS" >&5
+$as_echo "$as_me: searching for OpenBLAS" >&6;}
         as_ac_Lib=`$as_echo "ac_cv_lib_openblas_$sgemm" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $sgemm in -lopenblas" >&5
 $as_echo_n "checking for $sgemm in -lopenblas... " >&6; }
@@ -41270,6 +41287,8 @@ fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for ATLAS" >&5
+$as_echo "$as_me: searching for ATLAS" >&6;}
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ATL_xerbla in -latlas" >&5
 $as_echo_n "checking for ATL_xerbla in -latlas... " >&6; }
 if ${ac_cv_lib_atlas_ATL_xerbla+:} false; then :
@@ -41371,6 +41390,8 @@ fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for PhiPACK" >&5
+$as_echo "$as_me: searching for PhiPACK" >&6;}
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
 $as_echo_n "checking for ${dgemm} in -lblas... " >&6; }
@@ -41524,6 +41545,8 @@ fi
 
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for Sun Performance library" >&5
+$as_echo "$as_me: searching for Sun Performance library" >&6;}
      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lsunperf" >&5
 $as_echo_n "checking for ${dgemm} in -lsunperf... " >&6; }
      r_save_LIBS="${LIBS}"
@@ -41572,6 +41595,8 @@ $as_echo "${acx_blas_ok}" >&6; }
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for IBM ESSL" >&5
+$as_echo "$as_me: searching for IBM ESSL" >&6;}
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
 $as_echo_n "checking for ${dgemm} in -lblas... " >&6; }
@@ -41675,6 +41700,8 @@ fi
 fi
 
 if test "${acx_blas_ok}" = no; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: searching for generic BLAS library" >&5
+$as_echo "$as_me: searching for generic BLAS library" >&6;}
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
 $as_echo_n "checking for ${dgemm} in -lblas... " >&6; }
@@ -41834,6 +41861,86 @@ else
 #endif
 void F77_SYMBOL(xerbla)(char *srname, int *info)
 {}
+// declare (with empty args) before use.
+  void F77_SYMBOL(dasum)();
+  void F77_SYMBOL(daxpy)();
+  void F77_SYMBOL(dcopy)();
+  void F77_SYMBOL(ddot)();
+  void F77_SYMBOL(dgbmv)();
+  void F77_SYMBOL(dgemm)();
+  void F77_SYMBOL(dgemv)();
+  void F77_SYMBOL(dger)();
+  void F77_SYMBOL(dnrm2)();
+  void F77_SYMBOL(drot)();
+  void F77_SYMBOL(drotg)();
+  void F77_SYMBOL(drotm)();
+  void F77_SYMBOL(drotmg)();
+  void F77_SYMBOL(dsbmv)();
+  void F77_SYMBOL(dscal)();
+  void F77_SYMBOL(dsdot)();
+  void F77_SYMBOL(dspmv)();
+  void F77_SYMBOL(dspr)();
+  void F77_SYMBOL(dspr2)();
+  void F77_SYMBOL(dswap)();
+  void F77_SYMBOL(dsymm)();
+  void F77_SYMBOL(dsymv)();
+  void F77_SYMBOL(dsyr)();
+  void F77_SYMBOL(dsyr2)();
+  void F77_SYMBOL(dsyr2k)();
+  void F77_SYMBOL(dsyrk)();
+  void F77_SYMBOL(dtbmv)();
+  void F77_SYMBOL(dtbsv)();
+  void F77_SYMBOL(dtpmv)();
+  void F77_SYMBOL(dtpsv)();
+  void F77_SYMBOL(dtrmm)();
+  void F77_SYMBOL(dtrmv)();
+  void F77_SYMBOL(dtrsm)();
+  void F77_SYMBOL(dtrsv)();
+  void F77_SYMBOL(idamax)();
+  void F77_SYMBOL(lsame)();
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+/* cmplxblas */
+  void F77_SYMBOL(dcabs1)();
+  void F77_SYMBOL(dzasum)();
+  void F77_SYMBOL(dznrm2)();
+  void F77_SYMBOL(izamax)();
+  void F77_SYMBOL(zaxpy)();
+  void F77_SYMBOL(zcopy)();
+  void F77_SYMBOL(zdotc)();
+  void F77_SYMBOL(zdotu)();
+  void F77_SYMBOL(zdrot)();
+  void F77_SYMBOL(zdscal)();
+  void F77_SYMBOL(zgbmv)();
+  void F77_SYMBOL(zgemm)();
+  void F77_SYMBOL(zgemv)();
+  void F77_SYMBOL(zgerc)();
+  void F77_SYMBOL(zgeru)();
+  void F77_SYMBOL(zhbmv)();
+  void F77_SYMBOL(zhemm)();
+  void F77_SYMBOL(zhemv)();
+  void F77_SYMBOL(zher)();
+  void F77_SYMBOL(zherk)();
+  void F77_SYMBOL(zher2)();
+  void F77_SYMBOL(zher2k)();
+  void F77_SYMBOL(zhpmv)();
+  void F77_SYMBOL(zhpr)();
+  void F77_SYMBOL(zhpr2)();
+  void F77_SYMBOL(zrotg)();
+  void F77_SYMBOL(zscal)();
+  void F77_SYMBOL(zswap)();
+  void F77_SYMBOL(zsymm)();
+  void F77_SYMBOL(zsyr2k)();
+  void F77_SYMBOL(zsyrk)();
+  void F77_SYMBOL(ztbmv)();
+  void F77_SYMBOL(ztbsv)();
+  void F77_SYMBOL(ztpmv)();
+  void F77_SYMBOL(ztpsv)();
+  void F77_SYMBOL(ztrmm)();
+  void F77_SYMBOL(ztrmv)();
+  void F77_SYMBOL(ztrsm)();
+  void F77_SYMBOL(ztrsv)();
+#endif
+
 void blas_set () {
   F77_SYMBOL(dasum)();
   F77_SYMBOL(daxpy)();
@@ -42530,7 +42637,7 @@ else
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
-static int count_one (unsigned int namescount, char * *names, void *data)
+static int count_one (unsigned int namescount, const char * const *names, void *data)
 {return 0;}
 #ifdef FC_DUMMY_MAIN
 #ifndef FC_DUMMY_MAIN_EQ_F77
@@ -44219,7 +44326,7 @@ else
 #error cairo version >= 1.2 required
 #endif
 int main(void) {
-    cairo_t  *CC;
+    cairo_t  *CC = NULL; // silence picky compilers
     cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
     cairo_select_font_face (CC, "Helvetica", CAIRO_FONT_SLANT_NORMAL,
                             CAIRO_FONT_WEIGHT_BOLD);
@@ -45254,48 +45361,7 @@ else
   LIBS="-lz ${LIBS}"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking mmap support for zlib" >&5
-$as_echo_n "checking mmap support for zlib... " >&6; }
-if ${r_cv_zlib_mmap+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "$cross_compiling" = yes; then :
-  r_cv_zlib_mmap=yes
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-caddr_t hello() {
-  exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0));
-}
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_zlib_mmap=no
-else
-  r_cv_zlib_mmap=yes
 fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_zlib_mmap" >&5
-$as_echo "$r_cv_zlib_mmap" >&6; }
-
-fi
- if test "x${have_zlib}" = xno && test "x${r_cv_zlib_mmap}" = xyes; then
-  USE_MMAP_ZLIB_TRUE=
-  USE_MMAP_ZLIB_FALSE='#'
-else
-  USE_MMAP_ZLIB_TRUE='#'
-  USE_MMAP_ZLIB_FALSE=
-fi
-
 
 
 ## bzlib headers and libraries.
@@ -46041,7 +46107,7 @@ done
 if test "x${have_libcurl}" = "xyes"; then
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.28.0" >&5
 $as_echo_n "checking if libcurl is version 7 and >= 7.28.0... " >&6; }
-if ${r_cv_have_curl722+:} false; then :
+if ${r_cv_have_curl728+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   if test "$cross_compiling" = yes; then :
@@ -46078,8 +46144,8 @@ rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
 fi
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl722" >&5
-$as_echo "$r_cv_have_curl722" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl728" >&5
+$as_echo "$r_cv_have_curl728" >&6; }
 fi
 if test "x${r_cv_have_curl728}" = xno; then
   have_libcurl=no
@@ -46146,13 +46212,20 @@ if test -n "${PKG_CONFIG}"; then
 BITMAP_CPPFLAGS=
 BITMAP_LIBS=
 if test "${use_jpeglib}" = yes; then
-   save_CPPFLAGS=${CPPFLAGS}
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking if pkg-config knows about libjpeg" >&5
+$as_echo_n "checking if pkg-config knows about libjpeg... " >&6; }
+  save_CPPFLAGS=${CPPFLAGS}
   ## IJG version 9c (Jan 2018) has support as libjpeg.
   ## libjpeg-turbo has had this for a while.
   if "${PKG_CONFIG}" --exists libjpeg; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
     JPG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libjpeg`
     JPG_LIBS=`"${PKG_CONFIG}" --libs libjpeg`
     CPPFLAGS="${CPPFLAGS} ${JPG_CPPFLAGS}"
+  else
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no: run 'pkg-config --print-errors libjpeg' for further info" >&5
+$as_echo "no: run 'pkg-config --print-errors libjpeg' for further info" >&6; }
   fi
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking if jpeglib version >= 6b" >&5
 $as_echo_n "checking if jpeglib version >= 6b... " >&6; }
@@ -46245,7 +46318,11 @@ $as_echo "#define HAVE_JPEG 1" >>confdefs.h
   fi
 fi
 if test "${use_libpng}" = yes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking if pkg-config knows about libpng" >&5
+$as_echo_n "checking if pkg-config knows about libpng... " >&6; }
   if "${PKG_CONFIG}" --exists libpng; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
     save_CPPFLAGS=${CPPFLAGS}
     PNG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libpng`
     CPPFLAGS="${CPPFLAGS} ${PNG_CPPFLAGS}"
@@ -46389,15 +46466,25 @@ fi
 $as_echo "#define HAVE_PNG 1" >>confdefs.h
 
     fi
+  else
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no: run 'pkg-config --print-errors libpng' for further info" >&5
+$as_echo "no: run 'pkg-config --print-errors libpng' for further info" >&6; }
   fi
 fi
 if test "${use_libtiff}" = yes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking if pkg-config knows about libtiff" >&5
+$as_echo_n "checking if pkg-config knows about libtiff... " >&6; }
   mod=
   ## pkg-config support was introduced in libtiff 4.0.0
   ## I guess the module name might change in future, so
   ## program defensively here.
   if "${PKG_CONFIG}" --exists libtiff-4; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
     mod=libtiff-4
+  else
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no: run 'pkg-config --print-errors libtiff-4' for further info" >&5
+$as_echo "no: run 'pkg-config --print-errors libtiff-4' for further info" >&6; }
   fi
   if test -n "${mod}"; then
     save_CPPFLAGS=${CPPFLAGS}
@@ -52630,10 +52717,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_XDR_TRUE}" && test -z "${BUILD_XDR_FALSE}"; then
   as_fn_error $? "conditional \"BUILD_XDR\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${USE_MMAP_ZLIB_TRUE}" && test -z "${USE_MMAP_ZLIB_FALSE}"; then
-  as_fn_error $? "conditional \"USE_MMAP_ZLIB\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_TRE_TRUE}" && test -z "${BUILD_TRE_FALSE}"; then

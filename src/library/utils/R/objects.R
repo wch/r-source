@@ -272,6 +272,8 @@ print.MethodsFunction <- function(x, byclass = attr(x, "byclass"), ...)
 
 getS3method <- function(f, class, optional = FALSE, envir = parent.frame())
 {
+    stopifnot(is.character(f), length(f) == 1L)
+    stopifnot(is.character(class), length(class) == 1L)
     if(!any(f == getKnownS3generics())) {
         truegf <- findGeneric(f, envir)
         if(nzchar(truegf)) f <- truegf

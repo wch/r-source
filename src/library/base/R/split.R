@@ -66,14 +66,17 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
     x
 }
 
+## (Note: use rep(NA_integer_, len) for indexing here. Logical NA confuses 
+## tibbles and only coincidentally does the right thing otherwise, 
+## because len is longer than value[[1]]. Otherwise recycling would kick in.) 
 unsplit <- function (value, f, drop = FALSE)
 {
     len <- length(if (is.list(f)) f[[1L]] else f)
     if (is.data.frame(value[[1L]])) {
-        x <- value[[1L]][rep(NA, len),, drop = FALSE]
+        x <- value[[1L]][rep(NA_integer_, len),, drop = FALSE]
         rownames(x) <- unsplit(lapply(value, rownames), f, drop = drop)
     } else
-        x <- value[[1L]][rep(NA, len)]
+        x <- value[[1L]][rep(NA_integer_, len)]
     split(x, f, drop = drop) <- value
     x
 }

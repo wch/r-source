@@ -218,7 +218,7 @@ allowInterrupts(expr)
    signalled with arbitrary protocols (error, warning, etc), it is
    recommended to use this permissive variant whenever you are handling
    conditions signalled from a foreign context. For instance, invocation
-   of a \code{"muffleWarnings"} restart should be optional because the
+   of a \code{"muffleWarning"} restart should be optional because the
    warning might have been signalled by the user or from a different
    package with the \code{stop} or \code{message} protocols. Only use
    \code{invokeRestart} when you have control of the signalling context,

@@ -1324,6 +1324,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
                      void *cleandata, SEXP cont);
 
 /* Environment and Binding Features */
+SEXP R_NewEnv(SEXP, int, int);
 void R_RestoreHashCount(SEXP rho);
 Rboolean R_IsPackageEnv(SEXP rho);
 SEXP R_PackageEnvName(SEXP rho);

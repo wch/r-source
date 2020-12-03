@@ -1657,6 +1657,30 @@ static SEXP mkHandlerEntry(SEXP klass, SEXP parentenv, SEXP handler, SEXP rho,
 #define ENTRY_HANDLER(e) VECTOR_ELT(e, 2)
 #define ENTRY_TARGET_ENVIR(e) VECTOR_ELT(e, 3)
 #define ENTRY_RETURN_RESULT(e) VECTOR_ELT(e, 4)
+#define CLEAR_ENTRY_CALLING_ENVIR(e) SET_VECTOR_ELT(e, 1, R_NilValue)
+#define CLEAR_ENTRY_TARGET_ENVIR(e) SET_VECTOR_ELT(e, 3, R_NilValue)
+
+SEXP attribute_hidden R_UnwindHandlerStack(SEXP target)
+{
+    SEXP hs;
+
+    /* check that the target is in the current stack */
+    for (hs = R_HandlerStack; hs != target && hs != R_NilValue; hs = CDR(hs))
+	if (hs == target)
+	    break;
+    if (hs != target)
+	return target; /* restoring a saved stack */
+
+    for (hs = R_HandlerStack; hs != target; hs = CDR(hs)) {
+	/* pop top handler; may not be needed */
+	R_HandlerStack = CDR(hs);
+
+	/* clear the two environments to reduce reference counts */
+	CLEAR_ENTRY_CALLING_ENVIR(CAR(hs));
+	CLEAR_ENTRY_TARGET_ENVIR(CAR(hs));
+    }
+    return target;
+}
 
 #define RESULT_SIZE 4
 

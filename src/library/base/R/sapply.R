@@ -1,7 +1,7 @@
 #  File src/library/base/R/sapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 ##' @return x itself, or an array if the simplification "is sensible"
 simplify2array <- function(x, higher = TRUE)
 {
+    if(!length(x)) return(x)
     if(length(common.len <- unique(lengths(x))) > 1L)
         return(x)
     if(common.len == 1L) {
@@ -64,7 +65,7 @@ sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
     answer <- lapply(X = X, FUN = FUN, ...)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
-    if(!isFALSE(simplify) && length(answer))
+    if(!isFALSE(simplify))
 	simplify2array(answer, higher = (simplify == "array"))
     else answer
 }

@@ -1657,14 +1657,19 @@ static int countCycleRefs(SEXP rho, SEXP val)
     return crefs;
 }
 
+static R_INLINE void clearPromise(SEXP p)
+{
+    SET_PRVALUE(p, R_UnboundValue);
+    SET_PRENV(p, R_NilValue);
+    SET_PRCODE(p, R_NilValue); /* for calls with literal values */
+}
+
 static R_INLINE void cleanupEnvDots(SEXP d)
 {
     for (; d != R_NilValue && REFCNT(d) == 1; d = CDR(d)) {
 	SEXP v = CAR(d);
-	if (REFCNT(v) == 1 && TYPEOF(v) == PROMSXP) {
-	    SET_PRVALUE(v, R_UnboundValue);
-	    SET_PRENV(v, R_NilValue);
-	}
+	if (REFCNT(v) == 1 && TYPEOF(v) == PROMSXP)
+	    clearPromise(v);
 	SETCAR(d, R_NilValue);
     }
 }
@@ -1708,8 +1713,7 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
 		if (REFCNT(v) == 1 && v != val) {
 		    switch(TYPEOF(v)) {
 		    case PROMSXP:
-			SET_PRVALUE(v, R_UnboundValue);
-			SET_PRENV(v, R_NilValue);
+			clearPromise(v);
 			break;
 		    case DOTSXP:
 			cleanupEnvDots(v);
@@ -1732,10 +1736,8 @@ void attribute_hidden unpromiseArgs(SEXP pargs)
        double check the refcounts on pargs as a sanity check. */
     for (; pargs != R_NilValue; pargs = CDR(pargs)) {
 	SEXP v = CAR(pargs);
-	if (TYPEOF(v) == PROMSXP && REFCNT(v) == 1) {
-	    SET_PRVALUE(v, R_UnboundValue);
-	    SET_PRENV(v, R_NilValue);
-	}
+	if (TYPEOF(v) == PROMSXP && REFCNT(v) == 1)
+	    clearPromise(v);
 	SETCAR(pargs, R_NilValue);
     }
 }

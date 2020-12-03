@@ -285,11 +285,12 @@ lines(x, predict(nlmod), col = 2)
 ## Here, requiring close convergence, you need to use more accurate numerical
 ##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
 options(digits = 10) # more accuracy for 'trace'
+## IGNORE_RDIFF_BEGIN
 try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
    (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
 ## --> convergence tolerance  4.997e-8 (in 11 iter.)
+## IGNORE_RDIFF_END
 
-\donttest{
 ## The muscle dataset in MASS is from an experiment on muscle
 ## contraction on 21 animals.  The observed variables are Strip
 ## (identifier of muscle), Conc (Cacl concentration) and Length
@@ -304,10 +305,9 @@ with(muscle, table(Strip)) # 2, 3 or 4 obs per strip
 
 ## We first use the plinear algorithm to fit an overall model,
 ## ignoring that alpha and beta might vary with Strip.
-
-## IGNORE_RDIFF_BEGIN
 musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
               start = list(th = 1), algorithm = "plinear")
+## IGNORE_RDIFF_BEGIN
 summary(musc.1)
 ## IGNORE_RDIFF_END
 
@@ -323,7 +323,6 @@ musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
 ## IGNORE_RDIFF_BEGIN
 summary(musc.2)
 ## IGNORE_RDIFF_END
-}
 \dontshow{options(od)}
 }
 \keyword{nonlinear}

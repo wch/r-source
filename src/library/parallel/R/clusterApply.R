@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/clusterApply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
         else if (!is.null(names1))
             names(answer) <- names1
     }
-    if (!isFALSE(SIMPLIFY) && length(answer))
+    if (!isFALSE(SIMPLIFY))
         simplify2array(answer, higher = (SIMPLIFY == "array"))
     else answer
 }
@@ -232,7 +232,7 @@ parSapply <-
                         chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
-    if(!isFALSE(simplify) && length(answer))
+    if(!isFALSE(simplify))
 	simplify2array(answer, higher = (simplify == "array"))
     else answer
 }
@@ -246,7 +246,7 @@ parSapplyLB <-
                           chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
-    if(!isFALSE(simplify) && length(answer))
+    if(!isFALSE(simplify))
 	simplify2array(answer, higher = (simplify == "array"))
     else answer
 }

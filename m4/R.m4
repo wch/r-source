@@ -1503,10 +1503,13 @@ AC_DEFUN([R_FUNC_FTELL],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
+# include <unistd.h> // for unlink
+#endif
 
-main() {
+int main() {
     FILE *fp;
-    int pos;
+    long pos;
 
     fp = fopen("testit", "wb");
     fwrite("0123456789\n", 11, 1, fp);
@@ -1983,13 +1986,17 @@ AC_DEFUN([R_BITMAPS2],
 [BITMAP_CPPFLAGS=
 BITMAP_LIBS=
 if test "${use_jpeglib}" = yes; then
-   save_CPPFLAGS=${CPPFLAGS}
+  AC_MSG_CHECKING([if pkg-config knows about libjpeg])
+  save_CPPFLAGS=${CPPFLAGS}
   ## IJG version 9c (Jan 2018) has support as libjpeg.
   ## libjpeg-turbo has had this for a while.
   if "${PKG_CONFIG}" --exists libjpeg; then
+    AC_MSG_RESULT([yes])
     JPG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libjpeg`
     JPG_LIBS=`"${PKG_CONFIG}" --libs libjpeg`
     CPPFLAGS="${CPPFLAGS} ${JPG_CPPFLAGS}"
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libjpeg' for further info])
   fi
   _R_HEADER_JPEGLIB
   CPPFLAGS=${save_CPPFLAGS}
@@ -2009,7 +2016,9 @@ if test "${use_jpeglib}" = yes; then
   fi
 fi
 if test "${use_libpng}" = yes; then
+  AC_MSG_CHECKING([if pkg-config knows about libpng])
   if "${PKG_CONFIG}" --exists libpng; then
+    AC_MSG_RESULT([yes])
     save_CPPFLAGS=${CPPFLAGS}
     PNG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libpng`
     CPPFLAGS="${CPPFLAGS} ${PNG_CPPFLAGS}"
@@ -2032,15 +2041,21 @@ if test "${use_libpng}" = yes; then
       AC_DEFINE(HAVE_PNG, 1,
 	        [Define if you have the PNG headers and libraries.])
     fi
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libpng' for further info])
   fi
 fi
 if test "${use_libtiff}" = yes; then
+  AC_MSG_CHECKING([if pkg-config knows about libtiff])
   mod=
   ## pkg-config support was introduced in libtiff 4.0.0
   ## I guess the module name might change in future, so
   ## program defensively here.
   if "${PKG_CONFIG}" --exists libtiff-4; then
+    AC_MSG_RESULT([yes])
     mod=libtiff-4
+  else
+    AC_MSG_RESULT([no: run 'pkg-config --print-errors libtiff-4' for further info])
   fi
   if test -n "${mod}"; then
     save_CPPFLAGS=${CPPFLAGS}
@@ -2528,6 +2543,7 @@ AC_SUBST(use_tcltk)
 ##   same order in the tests.
 ## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
 ## The sunperf test calls the library as now required.
+## 2020-11-27 --with-blas=foo now does not fallback to search.
 ## Based on acx_blas.m4 version 1.2 (2001-12-13)
 ## (Since renamed to ax_blas.m4)
 AC_DEFUN([R_BLAS_LIBS],
@@ -2557,32 +2573,46 @@ fi
 acx_blas_save_LIBS="${LIBS}"
 LIBS="${FLIBS} ${LIBS}"
 
-dnl First, check BLAS_LIBS environment variable
+dnl First, check BLAS_LIBS environment variable/command-line setting
+dnl Dummy xerbla was added in 2003 for the Goto BLAS.
+dnl Declaration added in 2020 for Apple's -Werror=implicit-function-declaration
 if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${dgemm} in ${BLAS_LIBS}])
-    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}], ${dgemm}(),
-      [acx_blas_ok=yes], [BLAS_LIBS=""])
+    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}
+                 void ${dgemm}();],
+		${dgemm}(), [acx_blas_ok=yes], [BLAS_LIBS=""])
     AC_MSG_RESULT([${acx_blas_ok}])
     LIBS="${r_save_LIBS}"
+    dnl from 2020-11 make failure an error: used to fallback to search
+    if test "${acx_blas_ok}" = no; then
+       AC_MSG_ERROR([BLAS was specified but not available])
+    fi
   fi
+fi
+
+if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for an external BLAS])
 fi
 
 dnl BLAS linked to by default?  (happens on some supercomputers)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for BLAS in default libraries])
   AC_CHECK_FUNC(${dgemm}, [acx_blas_ok=yes])
 fi
 
 dnl Taken from 2008 version of ax_blas.m4
 # BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for OpenBLAS])
         AC_CHECK_LIB(openblas, $sgemm, [acx_blas_ok=yes
                                         BLAS_LIBS="-lopenblas"])
 fi
 
 dnl BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for ATLAS])
   AC_CHECK_LIB(atlas, ATL_xerbla,
                [AC_CHECK_LIB(f77blas, ${dgemm},
                              [acx_blas_ok=yes
@@ -2592,6 +2622,7 @@ fi
 
 dnl BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for PhiPACK])
   AC_CHECK_LIB(blas, ${dgemm},
 	       [AC_CHECK_LIB(dgemm, $dgemm,
 		             [AC_CHECK_LIB(sgemm, ${sgemm},
@@ -2606,6 +2637,7 @@ dnl Some versions require -xlic_lib=sunperf: -lsunperf will not work
 dnl Not sure whether -lsunmath is required, but it helps anyway
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
+  AC_MSG_NOTICE([searching for Sun Performance library])
      AC_MSG_CHECKING([for ${dgemm} in -lsunperf])
      r_save_LIBS="${LIBS}"
      LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
@@ -2621,6 +2653,7 @@ fi
 
 dnl BLAS in IBM ESSL library? (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for IBM ESSL])
   AC_CHECK_LIB(blas, ${dgemm},
 	       [AC_CHECK_LIB(essl, ${dgemm},
 			     [acx_blas_ok=yes
@@ -2630,6 +2663,7 @@ fi
 
 dnl Generic BLAS library?
 if test "${acx_blas_ok}" = no; then
+  AC_MSG_NOTICE([searching for generic BLAS library])
   AC_CHECK_LIB(blas, ${dgemm},
                [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
 fi
@@ -2734,6 +2768,86 @@ if test "${acx_blas_ok}" = yes; then
 #endif
 void F77_SYMBOL(xerbla)(char *srname, int *info)
 {}
+// declare (with empty args) before use.
+  void F77_SYMBOL(dasum)();
+  void F77_SYMBOL(daxpy)();
+  void F77_SYMBOL(dcopy)();
+  void F77_SYMBOL(ddot)();
+  void F77_SYMBOL(dgbmv)();
+  void F77_SYMBOL(dgemm)();
+  void F77_SYMBOL(dgemv)();
+  void F77_SYMBOL(dger)();
+  void F77_SYMBOL(dnrm2)();
+  void F77_SYMBOL(drot)();
+  void F77_SYMBOL(drotg)();
+  void F77_SYMBOL(drotm)();
+  void F77_SYMBOL(drotmg)();
+  void F77_SYMBOL(dsbmv)();
+  void F77_SYMBOL(dscal)();
+  void F77_SYMBOL(dsdot)();
+  void F77_SYMBOL(dspmv)();
+  void F77_SYMBOL(dspr)();
+  void F77_SYMBOL(dspr2)();
+  void F77_SYMBOL(dswap)();
+  void F77_SYMBOL(dsymm)();
+  void F77_SYMBOL(dsymv)();
+  void F77_SYMBOL(dsyr)();
+  void F77_SYMBOL(dsyr2)();
+  void F77_SYMBOL(dsyr2k)();
+  void F77_SYMBOL(dsyrk)();
+  void F77_SYMBOL(dtbmv)();
+  void F77_SYMBOL(dtbsv)();
+  void F77_SYMBOL(dtpmv)();
+  void F77_SYMBOL(dtpsv)();
+  void F77_SYMBOL(dtrmm)();
+  void F77_SYMBOL(dtrmv)();
+  void F77_SYMBOL(dtrsm)();
+  void F77_SYMBOL(dtrsv)();
+  void F77_SYMBOL(idamax)();
+  void F77_SYMBOL(lsame)();
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
+/* cmplxblas */
+  void F77_SYMBOL(dcabs1)();
+  void F77_SYMBOL(dzasum)();
+  void F77_SYMBOL(dznrm2)();
+  void F77_SYMBOL(izamax)();
+  void F77_SYMBOL(zaxpy)();
+  void F77_SYMBOL(zcopy)();
+  void F77_SYMBOL(zdotc)();
+  void F77_SYMBOL(zdotu)();
+  void F77_SYMBOL(zdrot)();
+  void F77_SYMBOL(zdscal)();
+  void F77_SYMBOL(zgbmv)();
+  void F77_SYMBOL(zgemm)();
+  void F77_SYMBOL(zgemv)();
+  void F77_SYMBOL(zgerc)();
+  void F77_SYMBOL(zgeru)();
+  void F77_SYMBOL(zhbmv)();
+  void F77_SYMBOL(zhemm)();
+  void F77_SYMBOL(zhemv)();
+  void F77_SYMBOL(zher)();
+  void F77_SYMBOL(zherk)();
+  void F77_SYMBOL(zher2)();
+  void F77_SYMBOL(zher2k)();
+  void F77_SYMBOL(zhpmv)();
+  void F77_SYMBOL(zhpr)();
+  void F77_SYMBOL(zhpr2)();
+  void F77_SYMBOL(zrotg)();
+  void F77_SYMBOL(zscal)();
+  void F77_SYMBOL(zswap)();
+  void F77_SYMBOL(zsymm)();
+  void F77_SYMBOL(zsyr2k)();
+  void F77_SYMBOL(zsyrk)();
+  void F77_SYMBOL(ztbmv)();
+  void F77_SYMBOL(ztbsv)();
+  void F77_SYMBOL(ztpmv)();
+  void F77_SYMBOL(ztpsv)();
+  void F77_SYMBOL(ztrmm)();
+  void F77_SYMBOL(ztrmv)();
+  void F77_SYMBOL(ztrsm)();
+  void F77_SYMBOL(ztrsv)();
+#endif
+
 void blas_set () {
   F77_SYMBOL(dasum)();
   F77_SYMBOL(daxpy)();
@@ -2996,10 +3110,7 @@ if test "${have_zlib}" != yes; then
 else
   LIBS="-lz ${LIBS}"
   AC_MSG_RESULT([yes])
-  _R_ZLIB_MMAP
 fi
-AM_CONDITIONAL(USE_MMAP_ZLIB,
-[test "x${have_zlib}" = xno && test "x${r_cv_zlib_mmap}" = xyes])
 ])# R_ZLIB
 
 ## _R_HEADER_ZLIB
@@ -3028,25 +3139,6 @@ int main() {
               [r_cv_header_zlib_h=no],
               [r_cv_header_zlib_h=no])])
 ])# _R_HEADER_ZLIB
-
-## _R_ZLIB_MMAP
-## ------------
-AC_DEFUN([_R_ZLIB_MMAP],
-[AC_CACHE_CHECK([mmap support for zlib],
-                [r_cv_zlib_mmap],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-caddr_t hello() {
-  exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0));
-}
-]])],
-              [r_cv_zlib_mmap=no],
-              [r_cv_zlib_mmap=yes],
-              [r_cv_zlib_mmap=yes])])
-])# _R_ZLIB_MMAP
 
 ## R_PCRE
 ## ------
@@ -3529,7 +3621,7 @@ AC_CACHE_CHECK(for iconvlist, ac_cv_func_iconvlist, [
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
-static int count_one (unsigned int namescount, char * *names, void *data)
+static int count_one (unsigned int namescount, const char * const *names, void *data)
 {return 0;}],
     [iconvlist(count_one, NULL);],
       ac_cv_func_iconvlist=yes)
@@ -4039,7 +4131,7 @@ AC_DEFUN([R_FUNC_MKTIME],
 #include <stdlib.h>
 #include <time.h>
 
-main() {
+int main() {
     if(sizeof(time_t) < 8) exit(1);
 
     struct tm tm;
@@ -4155,7 +4247,7 @@ LIBS="${CURL_LIBS} ${LIBS}"
 AC_CHECK_HEADERS(curl/curl.h, [have_libcurl=yes], [have_libcurl=no])
 
 if test "x${have_libcurl}" = "xyes"; then
-AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl722],
+AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl728],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <curl/curl.h>
