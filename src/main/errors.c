@@ -1662,7 +1662,16 @@ static SEXP mkHandlerEntry(SEXP klass, SEXP parentenv, SEXP handler, SEXP rho,
 
 SEXP attribute_hidden R_UnwindHandlerStack(SEXP target)
 {
-    for (SEXP hs = R_HandlerStack; hs != target; hs = CDR(hs)) {
+    SEXP hs;
+
+    /* check that the target is in the current stack */
+    for (hs = R_HandlerStack; hs != target && hs != R_NilValue; hs = CDR(hs))
+	if (hs == target)
+	    break;
+    if (hs != target)
+	return target; /* restoring a saved stack */
+
+    for (hs = R_HandlerStack; hs != target; hs = CDR(hs)) {
 	/* pop top handler; may not be needed */
 	R_HandlerStack = CDR(hs);
 
