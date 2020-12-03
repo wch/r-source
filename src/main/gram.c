@@ -3510,13 +3510,12 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
-	/* allow for symbols or lambda expressions */
-	if (TYPEOF(rhs) == SYMSXP ||
-	    TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
+	/* allow for rhs lambda expressions */
+	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("function"))
 	    return lang2(rhs, lhs);
 		    
 	if (TYPEOF(rhs) != LANGSXP)
-	    error(_("The pipe operator requires a function call, a symbol, "
+	    error(_("The pipe operator requires a function call "
 		    "or an anonymous function expression as RHS"));
 
         SEXP fun = CAR(rhs);

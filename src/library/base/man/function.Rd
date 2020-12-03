@@ -7,7 +7,6 @@
 \alias{function}
 \alias{return}
 \alias{closure}
-\alias{\\}
 
 \title{Function Definition}
 \usage{

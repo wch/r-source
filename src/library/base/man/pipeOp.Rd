@@ -15,16 +15,11 @@
 }
 \arguments{
   \item{lhs}{expression producing a value.}
-  \item{rhs}{a call expression, a \code{function} expression, or a
-    function name.}
+  \item{rhs}{a call expression or a \code{function} expression.}
 }
 \details{
   A pipe expression passes, or pipes, the result of the \code{lhs}
   expression to the \code{rhs} expression.
-
-  If the \code{rhs} expression is a function name or a function
-  expression, then the function is called with the \code{lhs} value as
-  its argument. So \code{x |> f} is interpreted as \code{f(x)}.
 
   If the \code{rhs} expression is a call, then the \code{lhs} is
   inserted as the first argument in the call. So \code{x |> f(y)} is
@@ -32,6 +27,11 @@
   \code{lhs} calls may not be syntactically special, such as \code{+} or
   \code{if}.
   
+  If the \code{rhs} expression is a \code{function} expression, then the
+  function is called with the \code{lhs} value as its argument.  This is
+  useful when the \code{lhs} needs to be passed as anargument other than
+  the first in the \code{rhs} call. See the \code{lm} example below.
+
   Pipe notation allows a nested sequence of calls to be written in a way
   that may make the sequence of processing steps easier to follow.
 
@@ -51,15 +51,16 @@
 }
 \examples{
 # simple uses:
-mtcars |> head
+mtcars |> head()
 mtcars |> head(2)
-mtcars |> subset(cyl == 4) |> nrow
+mtcars |> subset(cyl == 4) |> nrow()
 
 # passing the lhs into an argument other than the first:
 mtcars |> subset(cyl == 4) |> function(d) lm(mpg ~ disp, data = d)
 mtcars |> subset(cyl == 4) |> \(d) lm(mpg ~ disp, data = d)
 
 # the pipe operator is implemented as a syntax transformation:
-quote(mtcars |> subset(cyl == 4) |> nrow)
+quote(mtcars |> subset(cyl == 4) |> nrow())
+quote(x |> function(x) x + 1)
 }
 \keyword{data}
