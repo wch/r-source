@@ -152,6 +152,13 @@
       an error if the first argument has length greater than 1.
       Previously additional elements were silently ignored.  Suggested
       by Antoine Fabri on R-devel.
+
+      \item \R{} now provides a simple native pipe syntax \code{|>} as
+      well as a shorthand notation for creating functions,
+      e.g. \code{\(x) x + 1} is parsed as \code{function(x) x + 1}. The
+      pipe implementation as a syntax transformation was motivated by
+      suggestions from Jim Hester and Lionel Henry. These features are
+      experimental and may change prior to release.
     }
   }
 

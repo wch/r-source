@@ -1,6 +1,6 @@
 % File src/library/base/man/function.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{function}
@@ -11,6 +11,7 @@
 \title{Function Definition}
 \usage{
 \special{function( arglist ) expr}
+\special{\\( arglist ) expr}
 \special{return(value)}
 }
 \description{
@@ -34,7 +35,13 @@
 
   If the end of a function is reached without calling \code{return}, the
   value of the last evaluated expression is returned.
+
+  The shorthand form \code{\\(x) x + 1} is parsed as \code{function(x) x
+    + 1}. It may be helpful in making code containing simple function
+  expressions more readable.
 }
+\note{ \bold{The shorthand function notation is experimental and may change
+    prior to release.} }
 
 \section{Technical details}{
   This type of function is not the only type in \R: they are called
