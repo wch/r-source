@@ -1,6 +1,6 @@
 % File src/library/base/man/function.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{function}
@@ -42,6 +42,7 @@
 }
 \note{ \bold{The shorthand function notation is experimental and may change
     prior to release.} }
+
 \section{Technical details}{
   This type of function is not the only type in \R: they are called
   \emph{closures} (a name with origins in LISP) to distinguish them from
