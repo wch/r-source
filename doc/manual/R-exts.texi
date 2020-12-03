@@ -5656,6 +5656,15 @@ in the @file{libs} directory will show what they depend on: watch for
 any dependencies in @file{/usr/local/lib} or
 @file{/usr/local/gfortran/lib}, notably @file{libgfortran.?.dylib} and
 @file{libquadmath.0.dylib}.
+@ifset UseExternalXrefs
+(For ways to fix these,
+@pxref{Building binary packages, , Building binary-packages,
+R-admin, R Installation and Administration}.)
+@end ifset
+@ifclear UseExternalXrefs
+(For ways to fix these, see the section `Building binary packages' in
+the `R Installation and Administration' manual'.)
+@end ifclear
 
 Many people (including the @acronym{CRAN} package repository) will not
 accept source packages containing binary files as the latter are a

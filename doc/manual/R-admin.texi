@@ -1527,10 +1527,12 @@ Windows' CRLF line endings.
 page of a @acronym{CRAN} site has a link `Download R for (Mac) OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.13 and later on @cputype{x86_64}
-(Intel) CPUs@footnote{macOS 11 `Big Sur' has been tested on
-@cputype{arm64} (aka `Apple Silicon' aka `M1') using `Rosetta'
-emulation: there you need to install the Intel build of XQuartz.}  (High
-Sierra, Mojave, Catalina, Big Sur, @dots{}).
+(Intel) CPU (High Sierra, Mojave, Catalina, Big Sur, @dots{}).  It can
+also be installed on @cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs
+running Big Sur using `Rosetta' emulation@footnote{You may be asked to
+install Rosetta at first use --
+@url{https://support.apple.com/@/en-us/@/HT211861} -- which needs
+administrator privileges.}, as can @acronym{CRAN} binary packages.
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -2117,7 +2119,7 @@ installed and several packages need X11 installed, including those using
 Tk.  See @ref{macOS} and @ref{Java (macOS)}.  Package @CRANpkg{rjags}
 needs a build of JAGS installed under @file{/usr/local}, such as those
 at
-@uref{https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/}.
+@uref{https://sourceforge.net/@/projects/@/mcmc-jags/@/files/@/JAGS/@/4.x/@/Mac%20OS%20X/}.
 
 Tcl/Tk extension @code{BWidget} used to be
 distributed with @R{} but no longer is; @code{Tktable} has been
@@ -2129,6 +2131,10 @@ system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 framework installed from @uref{https://mac.R-project.org/libs/}: the
 appropriate version at the time of writing was
 @uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
+
+The same instructions apply when installing binary packages into the
+@acronym{CRAN} distribution of @R{} running on an @cputype{arm64} (aka
+`Apple Silicon' aka `M1') Mac.
 
 The default compilers specified are shown in file
 @file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At
@@ -2146,9 +2152,9 @@ So for example on Mojave or later you could select a specific
 non-Apple build of @command{clang} for both C and C++ with extensive
 checking by having in @file{~/.R/Makevars}
 @example
-CC=/usr/local/clang/bin/clang -isysroot
+CC = /usr/local/clang/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
-CXX=/usr/local/clang/bin/clang++ -isysroot
+CXX = /usr/local/clang/bin/clang++ -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 CXX11 = $CXX
 CXX14 = $CXX
@@ -2181,6 +2187,17 @@ for the @code{libomp.dylib} library to be found at both install time and run
 time, for example by copying/linking it somewhere that is searched such
 as @file{/usr/local/lib}.
 
+Installing a source package containing C/C++ code into @acronym{CRAN}
+distribution of @R{} running on an @cputype{arm64} Mac requires telling
+the compiler(s) to generate Intel code.  For example, for Command Line
+Tools / Xcode 12.x one could have in @file{~/.R/Makevars}
+
+@example
+CC = clang -target x86_64-apple-macos10.15
+CXX = clang++ -target x86_64-apple-macos10.15
+@end example
+
+
 Apple includes many Open Source libraries in macOS but increasingly
 without the corresponding headers (not even in Xcode nor the Command
 Line Tools): they are often rather old versions.  If installing packages
@@ -2195,8 +2212,8 @@ the Open Source project.} available @emph{via}
 @code{OpenSSL}@footnote{no longer a system library in macOS 11.} and
 @code{iodbc}.
 
-Those using Xcode/Command Line Tools 12 or later (as released for macOS
-11 `Big Sur') probably want to arrange that the flag
+Those using Command Line Tools / Xcode 12 or later (as released for
+macOS 11 `Big Sur') probably want to arrange that the flag
 
 @example
 -Wno-implicit-function-declaration
@@ -2205,9 +2222,9 @@ Those using Xcode/Command Line Tools 12 or later (as released for macOS
 @noindent
 is part of @code{CFLAGS}.  Apple has changed the default to make
 implicit declarations a compilation error (something seen in no other
-compiler) and understandably package authors have been unaware that
-this might be done --- issues are most often seen in @command{configure}
-scripts.
+compiler) and understandably authors of packages and external software
+have been unaware that this might be done --- most issues seen were in
+@command{configure} scripts.
 
 Some care may be needed with selecting compilers when installing external
 software for use with packages.  The `system' compilers as used when
@@ -2231,7 +2248,7 @@ contains (real) @command{gcc} and @command{g++} which may be found
 rather the Apple-provided commands, and may not be able to find the
 headers and libraries@footnote{From Big Sur those libraries are not
 publicly visible: rather the system compiler link to `text-based
-definition (@file{.tbd}) files.} of the SDK.
+definition' (@file{.tbd}) files.} of the SDK.
 
 For @cputype{arm64}, not all configure scripts have been updated to
 recognize the platform and so might need the flag
@@ -5086,6 +5103,9 @@ external software.
 @node Note for Catalina and Big Sur users,  , Prerequisites, Prerequisites
 @subsubsection Note for Catalina and Big Sur users
 
+A later Fortran compiler for Catalina and later is available at
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg} .
+
 The default security settings for Catalina and later can make it
 difficult to install Apple packages built after 2019-06-01 which have
 not been `notarized'@footnote{See
@@ -5105,6 +5125,19 @@ If you run into problems with `quarantine' for tarballs downloaded in a
 browser, consider using @command{curl -OL} to download (as illustrated
 above) or @command{xattr -c} to remove extended attributes.
 
+Should one want to build @R{} for Intel on an @cputype{arm64} Big Sur
+Mac, add the target for the C and C++ compilers:
+
+@example
+CC="clang -target x86_64-apple-macos10.15"
+OBJC=$CC
+CXX="clang++ -target x86_64-apple-macos10.15"
+@end example
+
+@noindent
+and install the Fortran compiler and external software as described
+above.
+
 @node Other C/C++ compilers, Other libraries, Prerequisites, macOS
 @subsection Other C/C++ compilers
 
@@ -5112,7 +5145,7 @@ Other distributions of @command{clang} are available from
 @uref{https://releases.llvm.org/}.  In particular, these include support
 for OpenMP which Apple builds of @command{clang} do not, and may contain
 more bugfixes and new features (such as better diagnostics) than that in
-Command Line Tools/Xcode.
+Command Line Tools / Xcode.
 
 Suppose one of these distributions is installed under
 @file{/usr/local/clang}. Use a file @file{config.site} containing
@@ -5145,8 +5178,8 @@ CXX="/usr/local/clang/bin/clang++ -isysroot
 @end example
 @noindent
 (Long lines split for the manual, only.)  Should the location of the SDK
-change (or Xcode provides the SDK rather than the Command Line Tools), it
-can be found by running @command{xcrun -show-sdk-path}.
+change (or where Xcode provides the SDK rather than the Command Line
+Tools), it can be found by running @command{xcrun -show-sdk-path}.
 
 The approach in the previous paragraph also works for Mojave, but for
 versions 10.x of the Command Line Tools an alternative is to install
@@ -5539,7 +5572,7 @@ of writing although there are ports under development.@footnote{We used
 the fork of @command{gfortran} from
 @url{https://github.com/@/iains/@/gcc-darwin-arm64}, and there is an
 experimental binary distribution at
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/tag/@/11-arm-alpha1}}
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}}
 So this is section is experimental.
 
 Native Java builds are becoming available, for example
