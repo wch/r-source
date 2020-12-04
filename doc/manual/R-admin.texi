@@ -4928,7 +4928,7 @@ SAFE_FFLAGS=-axsse2
 @cindex macOS
 
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
-10.13--10.15 (High Sierra, Mojave and Catalina) and 11.0 (Big Sur).
+10.13--10.15 (High Sierra, Mojave and Catalina) and 11 (Big Sur).
 @R{} can in principle be built for 10.6--10.12, although this is little
 tested and it may be necessary to install later versions of software
 such as @code{libcurl} and an older version@footnote{For example, from
@@ -5044,7 +5044,7 @@ A TeX installation. @xref{Other libraries}.
 @command{perl} (currently version 5.18 (High Sierra) -- 5.28 is a
 default part of macOS but it has been announced that it may not be in
 future).
-@c macOS 10.15 release notes, but is in 11.0.
+@c macOS 10.15 release notes, but is in 11
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
