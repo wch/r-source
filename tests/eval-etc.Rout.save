@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-10-23 r79362) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-04 r79554) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -516,7 +516,7 @@ check_EPD: function (obj, show = !hasReal(obj), oNam = deparse(substitute(obj)),
     noLdbl <- (.Machine$sizeof.longdouble <= 8)
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = eq.tol)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol, check.environments = FALSE)
         if (is.na(match(oNam, not.identical.ldouble))) {
             ae.txt <- "all.equal(*,*, tol = ..)"
             cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
@@ -558,7 +558,7 @@ quote({
     noLdbl <- (.Machine$sizeof.longdouble <= 8)
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = eq.tol)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol, check.environments = FALSE)
         if (is.na(match(oNam, not.identical.ldouble))) {
             ae.txt <- "all.equal(*,*, tol = ..)"
             cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
@@ -989,6 +989,7 @@ Warning messages:
 8: In dput(x, control = control) : deparse may be incomplete
 9: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 10: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
+> ##=============
 > 
 > summary(warnings())
 Summary of (a total of 10) warning messages:
@@ -1000,5 +1001,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.358 0.018 0.383 0 0 
+Time elapsed:  0.205 0.032 0.449 0 0 
 > 

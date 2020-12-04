@@ -256,7 +256,7 @@ assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
 assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
        envir = .GenericArgsEnv)
 
-## Keep this in sync with
+## Keep this in sync with ../../tools/R/utils.R
 ##   tools:::.make_S3_methods_table_for_base()
 ## for computing the methods table and
 ##   tools:::.deparse_S3_methods_table_for_base()
@@ -338,6 +338,7 @@ matrix(c("!", "hexmode",
          "all.equal", "environment",
          "all.equal", "factor",
          "all.equal", "formula",
+         "all.equal", "function",
          "all.equal", "language",
          "all.equal", "list",
          "all.equal", "numeric",

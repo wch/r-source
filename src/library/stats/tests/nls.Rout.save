@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-11-21 r79452) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-04 r79554) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -632,11 +632,12 @@ Nonlinear regression model
 > ## finally worked in 2.4.0
 > ##__no.start: failed in 3.0.2
 > ## 2018-09 fails on macOS with Accelerate framework.
-> stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
+> stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]]), check.environments = FALSE))
 > rm(a,b)
 > t2 <- test(FALSE)
 > stopifnot(all.equal(lapply(t1, .n),
-+ 		    lapply(t2, .n), tolerance = 0.16))# different random error
++ 		    lapply(t2, .n), tolerance = 0.16, # different random error
++                     check.environments = FALSE))
 > 
 > 
 > ## list 'start'
@@ -788,4 +789,4 @@ List of 2
 > 
 > proc.time()
    user  system elapsed 
-  1.130   0.159   1.374 
+  0.910   0.067   1.033 

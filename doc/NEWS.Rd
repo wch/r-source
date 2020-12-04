@@ -159,6 +159,12 @@
       pipe implementation as a syntax transformation was motivated by
       suggestions from Jim Hester and Lionel Henry. These features are
       experimental and may change prior to release.
+
+      \item \code{all.equal(f, g)} for \code{function}s now by default also
+      compares their \code{environment(.)}s, notably via new
+      \code{all.equal} method for class \code{function}.  Comparison of
+      \code{nls()} fits, e.g., may now need \code{all.equal(m1, m2,
+	check.environments=FALSE)}.
     }
   }
 

@@ -13,6 +13,7 @@
 \alias{all.equal.envRefClass}
 \alias{all.equal.factor}
 \alias{all.equal.formula}
+\alias{all.equal.function}
 \alias{all.equal.list}
 \alias{all.equal.language}
 \alias{all.equal.POSIXt}
@@ -34,6 +35,8 @@ all.equal(target, current, \dots)
           check.attributes = TRUE, use.names = TRUE)
 
 \method{all.equal}{environment}(target, current, all.names=TRUE, \dots)
+
+\method{all.equal}{function}(target, current, check.environments=TRUE, \dots)
 
 \method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3, scale,
           check.tzone = TRUE)
@@ -60,7 +63,7 @@ attr.all.equal(target, current, \dots,
   \item{formatFUN}{a \code{\link{function}} of two arguments,
     \code{err}, the relative, absolute or scaled error, and
     \code{what}, a character string indicating the \emph{kind} of error;
-    maybe used, e.g., to format relative and absolute errors differently.}
+    may be used, e.g., to format relative and absolute errors differently.}
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
@@ -70,6 +73,10 @@ attr.all.equal(target, current, \dots,
     be specified by its full name.}
   \item{all.names}{logical passed to \code{\link{ls}} indicating if
     \dQuote{hidden} objects should also be considered in the environments.}
+  \item{check.environments}{logical requiring that the
+    \code{\link{environment}()}s of functions should be compared, too.
+    You may need to set \code{check.environments=FALSE} in unexpected
+    cases, such as when comparing two \code{\link{nls}()} fits.}
   \item{check.tzone}{logical indicating if the \code{"tzone"} attributes
     of \code{target} and \code{current} should be compared.}
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
