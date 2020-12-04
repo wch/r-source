@@ -1542,8 +1542,8 @@ For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
 
 It is important that if you use a binary installer package that your OS
-is fully updated: look at `Updates' from the `App Store'
-(`Software Update' in 'System Preferences' on Catalina) to be sure.
+is fully updated: look at `Software Update' in 'System Preferences'
+(`Updates' from the `App Store' on Mojave and earlier) to be sure.
 (If using XQuartz, check that is current.)
 
 To install, just double-click on the icon of the file you downloaded.
@@ -1721,13 +1721,14 @@ A version of @R{} can be run directly from the command-line as e.g.@:
 
 @noindent
 However, @Rapp{} will always run the `current' version, that is the last
-installed version.  A small utility, @command{Rswitch.app} (available at
-@url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
-Catalina), can be used to change the `current' version.  This is of
-limited use as @Rapp{} is compiled against a particular version of @R{}
-and will likely crash if switched to an earlier version.  This may allow
-you to install a development version of @R{} (de-selecting @Rapp{}) and
-then switch back to the release version.
+installed version.
+@c A small utility, @command{Rswitch.app} (available at
+@c @url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
+@c Catalina), can be used to change the `current' version.  This is of
+@c limited use as @Rapp{} is compiled against a particular version of @R{}
+@c and will likely crash if switched to an earlier version.  This may allow
+@c you to install a development version of @R{} (de-selecting @Rapp{}) and
+@c then switch back to the release version.
 
 
 @node Running R, Add-on packages, Installing R under macOS, Top
