@@ -5520,7 +5520,6 @@ The @acronym{CRAN} binary packages are built with the Apple compiler on High
 Sierra, which avoids the first two and any issues with C++ libraries.
 
 @node Solaris, FreeBSD, macOS, Platform notes
-@node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
 @cindex Solaris
 
