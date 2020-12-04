@@ -71,10 +71,12 @@
                                       ""),
                                ver)
                    else
+                       ## it looks like 11.1 is also Big Sur, with the
+                       # next major change (Autumn 2021?) to 12
                        sprintf("macOS %s %s",
                                switch(ver2,
                                       "0" = "Big Sur",
-                                      ""),
+                                      "Big Sur"),
                                ver)
                },
                "SunOS" = {

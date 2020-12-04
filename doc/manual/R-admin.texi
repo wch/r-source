@@ -232,19 +232,18 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd64, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin} and @samp{i386-@/sun-@/solaris} as well
-as perhaps (it is tested less frequently on these platforms)
-@samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
-@samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
-@samp{powerpc-@/ibm-@/aix6*}
+@samp{x86_64-@/apple-@/darwin}, @samp{aarch64-@/apple-@/darwin} and
+@samp{i386-@/sun-@/solaris} as well as perhaps (it is tested less
+frequently on these platforms) @samp{i386-@/*-@/freebsd},
+@samp{x86_64-@/*-@/freebsd}, @samp{i386-@/*-@/netbsd},
+@samp{x86_64-@/*-@/openbsd} and @samp{powerpc-@/ibm-@/aix6*}
 
 @cindex Linux
 @cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for macOS.  See the
-@acronym{FAQ} for current details.  These are installed in
-platform-specific ways, so for the rest of this chapter we consider only
-building from the sources.
+distributions (see the @acronym{FAQ} for current details) and for
+macOS.  These are installed in platform-specific ways, so for the rest
+of this chapter we consider only building from the sources.
 
 Cross-building is not possible: installing @R{} builds a minimal version
 of @R{} and then runs many @R{} scripts to complete the build.
@@ -5104,7 +5103,8 @@ external software.
 @subsubsection Note for Catalina and Big Sur users
 
 A later Fortran compiler for Catalina and later is available at
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg} .
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg}.
+(That does not run on High Sierra.)
 
 The default security settings for Catalina and later can make it
 difficult to install Apple packages built after 2019-06-01 which have
@@ -5575,6 +5575,11 @@ experimental binary distribution at
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}}
 So this is section is experimental.
 
+At the time of writing updating a build failed because of the bug
+described at
+@uref{https://openradar.appspot.com/@/FB8914243}
+but @emph{ab initio} builds worked.
+
 Native Java builds are becoming available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
 
@@ -5582,12 +5587,15 @@ At the time of writing no distribution of X11@footnote{XQuartz has
 sources on GitHub, so one could try building from those.} was available,
 so @R{} was configured with @option{--without-x}.  The prerequisites.
 @code{jpeg}, @code{libpng}, @code{pcre2},@footnote{@emph{pro tem} built
-without JIT support.}  @code{readline}, @code{tiff}, @code{xz} and
+without JIT support.}  @code{readline},@footnote{the @code{libedit}
+emulation can also be used.} @code{tiff}, @code{xz} and
 Tcl/Tk@footnote{configured with @option{--enable-agua}.}  can easily be
 built from their sources (although the @code{libedit} emulation of
 readline will also work).  You will also need @code{pkgconfig},
 @code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/}
-for @command{pkg-config} and support files.
+for @command{pkg-config} and support files.  Experimentally, some
+prerequisites are available at at
+@uref{https://mac.r-project.org/libs-arm/}.
 
 @R{} was configured by
 
