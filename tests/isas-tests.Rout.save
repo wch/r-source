@@ -1,5 +1,5 @@
 
-R version 4.0.3 Patched (2020-10-23 r79362) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-12-04 r79559) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2597,6 +2597,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.169 0.023 0.192 0 0 
+Time elapsed:  0.16 0.024 0.185 0 0 
 > 
 > 

@@ -1,5 +1,5 @@
 
-R version 4.0.3 Patched (2020-10-23 r79362) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-12-04 r79559) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -619,5 +619,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.463 0.138 1.618 0.002 0.004 
+Time elapsed:  1.5 0.108 1.614 0.002 0.004 
 > 
