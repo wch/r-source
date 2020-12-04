@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-12-04 r79554) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-04 r79555) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -989,7 +989,6 @@ Warning messages:
 8: In dput(x, control = control) : deparse may be incomplete
 9: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 10: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
-> ##=============
 > 
 > summary(warnings())
 Summary of (a total of 10) warning messages:
@@ -1001,5 +1000,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.205 0.032 0.449 0 0 
+Time elapsed:  0.361 0.015 0.379 0 0 
 > 
