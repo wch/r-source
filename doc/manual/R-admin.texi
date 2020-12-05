@@ -574,12 +574,12 @@ make mobi
 @end example
 
 @noindent
-This requires @command{ebook-convert} from @command{Calibre}
-(@uref{https://calibre-ebook.com/download}), or from most Linux
-distributions.  If necessary the path to @command{ebook-convert} can be
-set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
-(which contains a commented value suitable for macOS) or using
-@command{make -e}.
+This requires @command{ebook-convert} from
+@uref{https://calibre-ebook.com/@/download, @command{Calibre}}, or from
+most Linux distributions.  If necessary the path to
+@command{ebook-convert} can be set as make macro @env{EBOOK} to by
+editing @file{doc/manual/Makefile} (which contains a commented value
+suitable for macOS) or using @command{make -e}.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -2088,15 +2088,14 @@ sources on Windows without any additional tools.
 @node macOS packages, Customizing package compilation, Windows packages, Installing packages
 @subsection macOS
 
-On macOS @code{install.packages} works as it does on
-other Unix-alike systems, but there is an additional type
-@code{mac.binary} (available for the @acronym{CRAN} distribution but not
-when compiling @R{} from source) which can be passed to
-@code{install.packages} in order to download and install binary packages
-from a suitable repository.  These binary package files for macOS have
-the extension @samp{.tgz}.  The @Rapp{} GUI provides menus for
-installation of either binary or source packages, from @acronym{CRAN} or
-local files.
+On macOS @code{install.packages} works as it does on other Unix-alike
+systems, but there is an additional type @code{mac.binary} (available
+for the @acronym{CRAN} distribution but not when compiling @R{} from
+source) which can be passed to @code{install.packages} in order to
+download and install binary packages from a suitable repository.  These
+binary package files for macOS have the extension @samp{.tgz}.  The
+@Rapp{} GUI provides menus for installation of either binary or source
+packages, from @acronym{CRAN}, other repositories or local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -2129,7 +2128,7 @@ system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the GTK
 framework installed from @uref{https://mac.R-project.org/libs/}: the
 appropriate version at the time of writing was
-@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
+@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}.
 
 The same instructions apply when installing binary packages into the
 @acronym{CRAN} distribution of @R{} running on an @cputype{arm64} (aka
@@ -2248,21 +2247,6 @@ rather the Apple-provided commands, and may not be able to find the
 headers and libraries@footnote{From Big Sur those libraries are not
 publicly visible: rather the system compiler link to `text-based
 definition' (@file{.tbd}) files.} of the SDK.
-
-For @cputype{arm64}, not all configure scripts have been updated to
-recognize the platform and so might need the flag
-@option{--build=aarch64-apple-darwin20.1.0}.  Also, be aware that
-running the compilers from a @cputype{x86_64} application switches them
-to generating code for that CPU: this applies to a Terminal, a shell,
-@command{cmake} or (non-system) @command{make}.  One can use
-
-@example
-./configure CC="clang -target arm64-apple-macos11" CFLAGS=-O2 \
-CXX="clang++ -target arm64-apple-macos11" CXXFLAGS=-O2
-@end example
-
-@noindent
-to force @cputype{arm64} code.
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
@@ -5037,7 +5021,7 @@ A TeX installation. @xref{Other libraries}.
 @command{perl} (currently version 5.18 (High Sierra) -- 5.28 is a
 default part of macOS but it has been announced that it may not be in
 future).
-@c macOS 10.15 release notes, but is in 11.0.
+@c macOS 10.15 release notes, but is in 11
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
