@@ -1644,9 +1644,9 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 
 Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit()} for data frames and matrices (the latter are the
-default for command-line @R{} but not @Rapp{}) requires an X sub-system
-to be installed: see @ref{macOS}.  So do the @pkg{tcltk} package and
-some third-party packages.
+default for command-line @R{} but not @Rapp{}) requires
+@uref{https://xquartz.macosforge.org/, XQuartz} to be installed.  So do
+the @pkg{tcltk} package and some third-party packages.
 
 @node Uninstalling under macOS, Multiple versions, Running R under macOS, Installing R under macOS
 @section Uninstalling under macOS
@@ -2089,15 +2089,14 @@ sources on Windows without any additional tools.
 @node macOS packages, Customizing package compilation, Windows packages, Installing packages
 @subsection macOS
 
-On macOS @code{install.packages} works as it does on
-other Unix-alike systems, but there is an additional type
-@code{mac.binary} (available for the @acronym{CRAN} distribution but not
-when compiling @R{} from source) which can be passed to
-@code{install.packages} in order to download and install binary packages
-from a suitable repository.  These binary package files for macOS have
-the extension @samp{.tgz}.  The @Rapp{} GUI provides menus for
-installation of either binary or source packages, from @acronym{CRAN} or
-local files.
+On macOS @code{install.packages} works as it does on other Unix-alike
+systems, but there is an additional type @code{mac.binary} (available
+for the @acronym{CRAN} distribution but not when compiling @R{} from
+source) which can be passed to @code{install.packages} in order to
+download and install binary packages from a suitable repository.  These
+binary package files for macOS have the extension @samp{.tgz}.  The
+@Rapp{} GUI provides menus for installation of either binary or source
+packages, from @acronym{CRAN}, other repositories or local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -2130,7 +2129,7 @@ system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the GTK
 framework installed from @uref{https://mac.R-project.org/libs/}: the
 appropriate version at the time of writing was
-@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
+@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}.
 
 The same instructions apply when installing binary packages into the
 @acronym{CRAN} distribution of @R{} running on an @cputype{arm64} (aka
