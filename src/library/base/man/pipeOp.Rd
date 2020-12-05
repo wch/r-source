@@ -29,7 +29,7 @@
   
   If the \code{rhs} expression is a \code{function} expression, then the
   function is called with the \code{lhs} value as its argument.  This is
-  useful when the \code{lhs} needs to be passed as anargument other than
+  useful when the \code{lhs} needs to be passed as an argument other than
   the first in the \code{rhs} call. See the \code{lm} example below.
 
   Pipe notation allows a nested sequence of calls to be written in a way
