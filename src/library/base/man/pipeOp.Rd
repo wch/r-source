@@ -8,7 +8,7 @@
 \alias{pipeOp}
 \title{Pipe Operator}
 \description{
-  Pipe a value into a call expression or a function.
+  Pipe a value into a call expression or a function expression.
 }
 \usage{
 \special{lhs |> rhs}
@@ -43,7 +43,7 @@
   Returns the result of evaluating the transformed expression.
 }
 \note{ \bold{Pipe support is experimental and may change prior to release.} }
-\seealso{
+\section{Background}{
   The pipe operator is motivated by the pipe introduced in the
   \CRANpkg{magrittr} package, but more streamlined. It is similar to
   pipe or pipeline operators introduced in other languages, including
