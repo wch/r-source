@@ -1133,10 +1133,12 @@ inRbuildignore <- function(files, pkgdir) {
                 msg <- paste("WARNING: Added dependency on R >= 3.5.0 because",
                              "serialized objects in serialize/load version 3",
                              "cannot be read in older versions of R. File(s)",
-                             "containing such objects:",
-                             .pretty_format(sort(toonew)),
-                             "\n")
-                printLog(Log, strwrap(msg, indent = 2L, exdent = 2L), "\n")
+                             "containing such objects:")
+                printLog(Log,
+                         paste(c(strwrap(msg, indent = 2L, exdent = 2L),
+                                 paste0("  ", .pretty_format(sort(toonew)))),
+                               collapse = "\n"),
+                         "\n")
             }
         }
 
