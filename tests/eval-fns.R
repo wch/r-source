@@ -57,7 +57,8 @@ check_EPD <- function(obj, show = !hasReal(obj), oNam = deparse(substitute(obj))
     noLdbl <- (.Machine$sizeof.longdouble <= 8) ## TRUE typically from  --disable-long-double
     if(!identical(obj, ob2, ignore.environment=TRUE,
                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = eq.tol)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol, # in case of functions:
+                        check.environments=FALSE)
         if(is.na(match(oNam, not.identical.ldouble))) {
             ae.txt <- "all.equal(*,*, tol = ..)"
             ## differs for "no-ldouble": sprintf("all.equal(*,*, tol = %.3g)", eq.tol)

@@ -22,27 +22,50 @@ all.equal.default <- function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
     ## use data.class as unlike class it does not give "integer"
-    if(is.language(target) || is.function(target))
+    if(is.language(target))
 	return(all.equal.language(target, current, ...))
+    if(is.function(target)) {
+        .Deprecated("all.equal(*)", old="all.equal.default(<function>)")
+	return(all.equal.function(target, current, ...))
+    }
     if(is.environment(target) || is.environment(current))# both: unclass() fails on env.
 	return(all.equal.environment(target, current, ...))
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
     msg <- switch (mode(target),
-                   integer = ,
-                   complex = ,
-                   numeric = all.equal.numeric(target, current, ...),
+                   integer   = ,
+                   complex   = ,
+                   numeric   = all.equal.numeric  (target, current, ...),
                    character = all.equal.character(target, current, ...),
-                   logical = ,
-                   raw = all.equal.raw(target, current, ...),
+                   logical   = ,
+                   raw       = all.equal.raw      (target, current, ...),
 		   ## assumes that slots are implemented as attributes :
-		   S4 = attr.all.equal(target, current, ...),
+		   S4        = attr.all.equal(target, current, ...),
                    if(data.class(target) != data.class(current)) {
                        gettextf("target is %s, current is %s",
                                 data.class(target), data.class(current))
                    } else NULL)
     if(is.null(msg)) TRUE else msg
 }
+
+all.equal.function <- function(target, current, check.environments = TRUE, ...)
+{
+    msg <- all.equal.language(target, current, ...)
+    if(check.environments) {
+        ## pre-check w/ identical(), for speed & against infinite recursion:
+        ee <- identical(environment(target),
+                        environment(current), ignore.environment=FALSE)
+        if(!ee)
+            ee <- all.equal.environment(environment(target),
+                                        environment(current), ...)
+        if(isTRUE(msg))
+            ee
+        else
+            c(msg, if(!isTRUE(ee)) ee)
+    } else
+        msg
+}
+
 
 all.equal.numeric <-
     function(target, current, tolerance = sqrt(.Machine$double.eps),
@@ -257,8 +280,7 @@ all.equal.formula <- function(target, current, ...)
     ## the misquided one in package Formula
     if(length(target) != length(current))
 	return(paste0("target, current differ in having response: ",
-                      length(target) == 3L,
-                      ", ",
+                      length(target ) == 3L, ", ",
                       length(current) == 3L))
     ## <NOTE>
     ## This takes same-length formulas as all equal if they deparse
@@ -277,7 +299,7 @@ all.equal.language <- function(target, current, ...)
     mc <- mode(current)
     if(mt == "expression" && mc == "expression")
 	return(all.equal.list(target, current, ...))
-    ttxt <- paste(deparse(target), collapse = "\n")
+    ttxt <- paste(deparse(target ), collapse = "\n")
     ctxt <- paste(deparse(current), collapse = "\n")
     msg <- c(if(mt != mc)
 	     paste0("Modes of target, current: ", mt, ", ", mc),
@@ -434,7 +456,7 @@ all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale,
             if(is.null(tz <- attr(dt, "tzone"))) "" else tz[1L]
         }
         ## FIXME: check_tzones() ignores differences with "" as time zone,
-        ## regardless of whether that other time zone is the current one. 
+        ## regardless of whether that other time zone is the current one.
         ## However, this code does not handle "" at all, so that it is
         ## treated as "inconsistent" even with the current time zone,
         ## leading to surprising results, e.g.

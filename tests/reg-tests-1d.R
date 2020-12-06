@@ -4598,6 +4598,7 @@ x <- c(1)
 xx <- `class<-`(x, "foo")
 stopifnot(identical(class(x), "numeric"))
 
+
 ## Can splice expression vectors with attributes -- PR#17869
 local({
     exprs <- structure(expression(1, 2, 3), attr = TRUE)
@@ -4631,6 +4632,16 @@ removeTaskCallback(TCB)
 TCB <- addTaskCallback(function(...) { length(list(...)); TRUE},
                        data = quote(foo))
 removeTaskCallback(TCB)
+
+
+## all.equal(<functions>) should check environments (Kevin Van Horn, R-devel)
+f <- function(x) function(y) x+y
+dif <- all.equal(f(5), f(0))
+stopifnot(is.function(f(5)),
+          is.character(dif), grepl("difference", dif))
+## all.equal() gave TRUE in  R <= 4.0.x
+
+
 
 
 ## keep at end

@@ -70,12 +70,16 @@
                                       "16" = "Big Sur", # early pre-releases
                                       ""),
                                ver)
-                   else
+                   else if(ver1[1L] == "11")
+                       ## it looks like 11.1 is also Big Sur, with the
+                       # next major change (Autumn 2021?) to 12
                        sprintf("macOS %s %s",
                                switch(ver2,
                                       "0" = "Big Sur",
-                                      ""),
+                                      "Big Sur"),
                                ver)
+                   else
+                       sprintf("macOS %s", ver)
                },
                "SunOS" = {
                    ver <- system('uname -r', intern = TRUE)

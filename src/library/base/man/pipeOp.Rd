@@ -24,12 +24,12 @@
   If the \code{rhs} expression is a call, then the \code{lhs} is
   inserted as the first argument in the call. So \code{x |> f(y)} is
   interpreted as \code{f(x, y)}. To avoid ambiguities, functions in
-  \code{lhs} calls may not be syntactically special, such as \code{+} or
+  \code{rhs} calls may not be syntactically special, such as \code{+} or
   \code{if}.
   
   If the \code{rhs} expression is a \code{function} expression, then the
   function is called with the \code{lhs} value as its argument.  This is
-  useful when the \code{lhs} needs to be passed as anargument other than
+  useful when the \code{lhs} needs to be passed as an argument other than
   the first in the \code{rhs} call. See the \code{lm} example below.
 
   Pipe notation allows a nested sequence of calls to be written in a way

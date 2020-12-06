@@ -232,19 +232,18 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd64, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin} and @samp{i386-@/sun-@/solaris} as well
-as perhaps (it is tested less frequently on these platforms)
-@samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
-@samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
-@samp{powerpc-@/ibm-@/aix6*}
+@samp{x86_64-@/apple-@/darwin}, @samp{aarch64-@/apple-@/darwin} and
+@samp{i386-@/sun-@/solaris} as well as perhaps (it is tested less
+frequently on these platforms) @samp{i386-@/*-@/freebsd},
+@samp{x86_64-@/*-@/freebsd}, @samp{i386-@/*-@/netbsd},
+@samp{x86_64-@/*-@/openbsd} and @samp{powerpc-@/ibm-@/aix6*}
 
 @cindex Linux
 @cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for macOS.  See the
-@acronym{FAQ} for current details.  These are installed in
-platform-specific ways, so for the rest of this chapter we consider only
-building from the sources.
+distributions (see the @acronym{FAQ} for current details) and for
+macOS.  These are installed in platform-specific ways, so for the rest
+of this chapter we consider only building from the sources.
 
 Cross-building is not possible: installing @R{} builds a minimal version
 of @R{} and then runs many @R{} scripts to complete the build.
@@ -1543,8 +1542,8 @@ For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
 
 It is important that if you use a binary installer package that your OS
-is fully updated: look at `Updates' from the `App Store'
-(`Software Update' in 'System Preferences' on Catalina) to be sure.
+is fully updated: look at `Software Update' in 'System Preferences'
+(`Updates' from the `App Store' on Mojave and earlier) to be sure.
 (If using XQuartz, check that is current.)
 
 To install, just double-click on the icon of the file you downloaded.
@@ -1645,9 +1644,9 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 
 Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit()} for data frames and matrices (the latter are the
-default for command-line @R{} but not @Rapp{}) requires an X sub-system
-to be installed: see @ref{macOS}.  So do the @pkg{tcltk} package and
-some third-party packages.
+default for command-line @R{} but not @Rapp{}) requires
+@uref{https://xquartz.macosforge.org/, XQuartz} to be installed.  So do
+the @pkg{tcltk} package and some third-party packages.
 
 @node Uninstalling under macOS, Multiple versions, Running R under macOS, Installing R under macOS
 @section Uninstalling under macOS
@@ -1722,13 +1721,14 @@ A version of @R{} can be run directly from the command-line as e.g.@:
 
 @noindent
 However, @Rapp{} will always run the `current' version, that is the last
-installed version.  A small utility, @command{Rswitch.app} (available at
-@url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
-Catalina), can be used to change the `current' version.  This is of
-limited use as @Rapp{} is compiled against a particular version of @R{}
-and will likely crash if switched to an earlier version.  This may allow
-you to install a development version of @R{} (de-selecting @Rapp{}) and
-then switch back to the release version.
+installed version.
+@c A small utility, @command{Rswitch.app} (available at
+@c @url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
+@c Catalina), can be used to change the `current' version.  This is of
+@c limited use as @Rapp{} is compiled against a particular version of @R{}
+@c and will likely crash if switched to an earlier version.  This may allow
+@c you to install a development version of @R{} (de-selecting @Rapp{}) and
+@c then switch back to the release version.
 
 
 @node Running R, Add-on packages, Installing R under macOS, Top
@@ -2089,15 +2089,14 @@ sources on Windows without any additional tools.
 @node macOS packages, Customizing package compilation, Windows packages, Installing packages
 @subsection macOS
 
-On macOS @code{install.packages} works as it does on
-other Unix-alike systems, but there is an additional type
-@code{mac.binary} (available for the @acronym{CRAN} distribution but not
-when compiling @R{} from source) which can be passed to
-@code{install.packages} in order to download and install binary packages
-from a suitable repository.  These binary package files for macOS have
-the extension @samp{.tgz}.  The @Rapp{} GUI provides menus for
-installation of either binary or source packages, from @acronym{CRAN} or
-local files.
+On macOS @code{install.packages} works as it does on other Unix-alike
+systems, but there is an additional type @code{mac.binary} (available
+for the @acronym{CRAN} distribution but not when compiling @R{} from
+source) which can be passed to @code{install.packages} in order to
+download and install binary packages from a suitable repository.  These
+binary package files for macOS have the extension @samp{.tgz}.  The
+@Rapp{} GUI provides menus for installation of either binary or source
+packages, from @acronym{CRAN}, other repositories or local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -2130,7 +2129,7 @@ system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the GTK
 framework installed from @uref{https://mac.R-project.org/libs/}: the
 appropriate version at the time of writing was
-@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
+@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}.
 
 The same instructions apply when installing binary packages into the
 @acronym{CRAN} distribution of @R{} running on an @cputype{arm64} (aka
@@ -4928,7 +4927,7 @@ SAFE_FFLAGS=-axsse2
 @cindex macOS
 
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
-10.13--10.15 (High Sierra, Mojave and Catalina) and 11.0 (Big Sur).
+10.13--10.15 (High Sierra, Mojave and Catalina) and 11 (Big Sur).
 @R{} can in principle be built for 10.6--10.12, although this is little
 tested and it may be necessary to install later versions of software
 such as @code{libcurl} and an older version@footnote{For example, from
@@ -5044,7 +5043,7 @@ A TeX installation. @xref{Other libraries}.
 @command{perl} (currently version 5.18 (High Sierra) -- 5.28 is a
 default part of macOS but it has been announced that it may not be in
 future).
-@c macOS 10.15 release notes, but is in 11.0.
+@c macOS 10.15 release notes, but is in 11
 @c https://developer.apple.com/documentation/macos-release-notes/macos-catalina-10_15-release-notes
 A version of @command{texi2any} has been included in the binary
 distribution of @R{} and there is a @code{texinfo} component at
@@ -5104,7 +5103,8 @@ external software.
 @subsubsection Note for Catalina and Big Sur users
 
 A later Fortran compiler for Catalina and later is available at
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg} .
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg}.
+(That does not run on High Sierra.)
 
 The default security settings for Catalina and later can make it
 difficult to install Apple packages built after 2019-06-01 which have
@@ -5575,6 +5575,11 @@ experimental binary distribution at
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}}
 So this is section is experimental.
 
+At the time of writing updating a build failed because of the bug
+described at
+@uref{https://openradar.appspot.com/@/FB8914243}
+but @emph{ab initio} builds worked.
+
 Native Java builds are becoming available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
 
@@ -5582,12 +5587,15 @@ At the time of writing no distribution of X11@footnote{XQuartz has
 sources on GitHub, so one could try building from those.} was available,
 so @R{} was configured with @option{--without-x}.  The prerequisites.
 @code{jpeg}, @code{libpng}, @code{pcre2},@footnote{@emph{pro tem} built
-without JIT support.}  @code{readline}, @code{tiff}, @code{xz} and
+without JIT support.}  @code{readline},@footnote{the @code{libedit}
+emulation can also be used.} @code{tiff}, @code{xz} and
 Tcl/Tk@footnote{configured with @option{--enable-agua}.}  can easily be
 built from their sources (although the @code{libedit} emulation of
 readline will also work).  You will also need @code{pkgconfig},
 @code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/}
-for @command{pkg-config} and support files.
+for @command{pkg-config} and support files.  Experimentally, some
+prerequisites are available at at
+@uref{https://mac.r-project.org/libs-arm/}.
 
 @R{} was configured by
 

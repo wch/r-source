@@ -79,7 +79,7 @@ fil <- tempfile()
 dput(base::mean, fil)
 ## ... read it back into 'bar' and confirm it is the same
 bar <- dget(fil)
-stopifnot(all.equal(bar, base::mean))
+stopifnot(all.equal(bar, base::mean, check.environments = FALSE))
 
 ## Create a function with comments
 baz <- function(x) {
