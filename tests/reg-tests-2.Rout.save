@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-12-04 r79558) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-04 r79561) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3259,7 +3259,7 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [31] print         prompt        rbind         row.names     row.names<-  
 [36] rowsum        split         split<-       stack         str          
 [41] subset        summary       t             tail          transform    
-[46] type.convert  unique        unstack       within        xtfrm        
+[46] type.convert  unique        unstack       within       
 > meth2gen("dendrogram")
  [1] [[            as.dendrogram as.hclust     cophenetic    cut          
  [6] labels        merge         nobs          plot          print        
@@ -6363,7 +6363,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x37152d8>
+<bytecode: 0x56019365e400>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6374,7 +6374,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x37152d8>
+<bytecode: 0x56019365e400>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6386,7 +6386,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x37152d8>
+<bytecode: 0x56019365e400>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
