@@ -1096,15 +1096,17 @@ inRbuildignore <- function(files, pkgdir) {
                recursive = TRUE)
 
         ## work on 'data' directory if present
-        if(!str_parse_logic(desc["LazyData"], FALSE) &&
-           (dir.exists(file.path(pkgname, "data")) ||
-            file_test("-f", file.path(pkgname, "R", "sysdata.rda")))) {
-            messageLog(Log, "looking to see if a 'data/datalist' file should be added")
-            ## in some cases data() needs the package installed as
-            ## there are links to the package's namespace
-            tryCatch(add_datalist(pkgname),
-                     error = function(e)
-                     printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n"))
+        if(dir.exists(file.path(pkgname, "data")) ||
+           file_test("-f", file.path(pkgname, "R", "sysdata.rda"))) {
+            if(!str_parse_logic(desc["LazyData"], FALSE)) {
+                messageLog(Log,
+                           "looking to see if a 'data/datalist' file should be added")
+                ## in some cases data() needs the package installed as
+                ## there are links to the package's namespace
+                tryCatch(add_datalist(pkgname),
+                         error = function(e)
+                             printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n"))
+            }
             ## allow per-package override
             resave_data1 <- parse_description_field(desc, "BuildResaveData",
                                                     resave_data, logical=FALSE)
