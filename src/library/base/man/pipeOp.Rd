@@ -24,7 +24,7 @@
   If the \code{rhs} expression is a call, then the \code{lhs} is
   inserted as the first argument in the call. So \code{x |> f(y)} is
   interpreted as \code{f(x, y)}. To avoid ambiguities, functions in
-  \code{lhs} calls may not be syntactically special, such as \code{+} or
+  \code{rhs} calls may not be syntactically special, such as \code{+} or
   \code{if}.
   
   If the \code{rhs} expression is a \code{function} expression, then the
