@@ -3506,13 +3506,36 @@ static SEXP R_forSymbol = NULL;
 static SEXP R_whileSymbol = NULL;
 static SEXP R_repeatSymbol = NULL;
 
+static void check_for_right_assign(SEXP rhs)
+{
+    /* Right assignments after a final lambda expression will assign
+       in the local environment of the call, which is probably not
+       intended. To help, signal a warning if the body is an
+       assignment. */
+    SEXP body = CADDR(rhs);
+    SEXP R_AssignSymbol = install("<-"); /* should make this static */
+    if (TYPEOF(body) == LANGSXP && CAR(body) == R_AssignSymbol) {
+	SEXP var = CADR(body);
+	const char *vname = NULL;
+	if (TYPEOF(var) == SYMSXP)
+	    vname = CHAR(PRINTNAME(var));
+	else if (TYPEOF(var) == STRSXP && XLENGTH(var) == 1)
+	    vname = CHAR(STRING_ELT(var, 0));
+	if (vname != NULL)
+	    warning(_("assignment creates unused local variable '%s'"),
+		    vname);
+    }
+}
+
 static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
 	/* allow for rhs lambda expressions */
-	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol)
+	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol) {
+	    check_for_right_assign(rhs);
 	    return lang2(rhs, lhs);
+	}
 		    
 	if (TYPEOF(rhs) != LANGSXP)
 	    error(_("The pipe operator requires a function call "
