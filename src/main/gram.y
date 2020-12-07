@@ -1239,7 +1239,7 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 		    
 	if (TYPEOF(rhs) != LANGSXP)
 	    error(_("The pipe operator requires a function call "
-		    "or an anonymous function expression as RHS"));
+		    "or a function expression as RHS"));
 
 	/* allow for a top-level placeholder */
 	SEXP phcell = findPlaceholderCell(rhs);
