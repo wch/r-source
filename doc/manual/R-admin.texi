@@ -1643,9 +1643,9 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 
 Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit()} for data frames and matrices (the latter are the
-default for command-line @R{} but not @Rapp{}) requires an X sub-system
-to be installed: see @ref{macOS}.  So do the @pkg{tcltk} package and
-some third-party packages.
+default for command-line @R{} but not @Rapp{}) requires
+@uref{https://xquartz.macosforge.org/, XQuartz} to be installed.  So do
+the @pkg{tcltk} package and some third-party packages.
 
 @node Uninstalling under macOS, Multiple versions, Running R under macOS, Installing R under macOS
 @section Uninstalling under macOS
@@ -4932,19 +4932,20 @@ The following are essential to build @R{}:
 @itemize
 @item 
 Apple's `Command Line Tools': these can be (re-)installed by running
-@command{xcode-select --install} in a terminal.  (If you have a fresh OS
-installation, running e.g.@: @command{make} in a terminal will offer the
-installation of the command-line tools.  If you have installed Xcode,
-this provides the command-line tools.  The tools may need to be
-reinstalled when macOS is upgraded, as upgrading may partially remove
-them.)
+@command{xcode-select --install} in a terminal.
+
+If you have a fresh OS installation, running e.g.@: @command{make} in a
+terminal will offer the installation of the command-line tools.  If you
+have installed Xcode, this provides the command-line tools.  The tools
+may need to be reinstalled when macOS is upgraded, as upgrading may
+partially or completely remove them.
 
 The Command Line Tools provide C and C++ compilers derived from LLVM's
 @command{clang}.
 
 @item
 A Fortran compiler. An installer for @command{gfortran} is available at
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}@footnote{This
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.@footnote{This
 is said to be for Mojave and later but works well enough on High
 Sierra.}  This installs into @file{/usr/local/gfortran}.
 
@@ -4987,10 +4988,10 @@ location of @file{/opt/X11}, e.g.@: by
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 @noindent
-although linked versions under @file{/usr/X11} will be found.  (It
-seems that for recent versions of macOS/XQuartz @file{/usr/X11} may
-exist but be a link to a non-existent directory: reinstalling XQuartz
-might help.)
+although without this linked versions under @file{/usr/X11} will be
+found.  (It seems that for some versions of macOS/XQuartz
+@file{/usr/X11} may exist but be a link to a non-existent directory:
+reinstalling XQuartz might help.)
 
 @item
 An Objective-C compiler, as provided by @command{clang} in the Command
@@ -5052,9 +5053,9 @@ PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconf
 (See below for Tcl/Tk, including other options.)
 
 To install packages using compiled code one needs the Command Line Tools
-and appropriate compilers, e.g.@: Fortran and the C/C++ compilers from
-those tools.  Some packages have further requirements such as
-@command{pkg-config}.
+(or Xcode) and appropriate compilers, e.g.@: Fortran and the C/C++
+compilers from those tools.  Some packages have further requirements
+such as @command{pkg-config}.
 
 @c svn was in CLT 11.3.1, even in the opensource.apple.com repository
 A subversion client, @command{svn} version 1.10, used to be part of
@@ -5090,11 +5091,9 @@ not been `notarized'@footnote{See
 @uref{https://developer.apple.com/@/documentation/@/xcode/@/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/zipfiles (for example, for @command{pandoc}).
-
-There are workarounds, including in some cases not installing the latest
-version.  Usually one can use @samp{Open With}
-(Control/right/two-finger-click in Finder), then select @samp{Installer}
-and @samp{Open} if you get a further warning message.
+Usually one can use @samp{Open With} (Control/right/two-finger-click in
+Finder), then select @samp{Installer} and @samp{Open} if you get a
+further warning message.
 
 This applies also to some `nightly builds' from
 @uref{https://mac.R-project.org/}.
@@ -5229,16 +5228,16 @@ times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The @TeX{} implementation used by the developers is MacTeX@footnote{An
 essentially equivalent @TeX{} installation can be obtained by the Unix
-TeX Live installation scripts.}
-(@uref{https://www.tug.org/mactex/}): the full installation is about
-8.5GB, but a smaller version (`Basic TeX') is available at
+TeX Live installation scripts.}  (@uref{https://www.tug.org/mactex/}):
+the full installation is about 8.5GB, but a smaller version (`Basic
+TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
 need to add some packages to build @R{}, e.g.@: for the 2020 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super
 helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about
 380MB.@footnote{Adding all the packages needed to check @acronym{CRAN}
-only increased this to about 560MB.}  @samp{TeX Live Utility} (available
+increased this to about 560MB.}  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
 @TeX{} packages.  This is documented to require High Sierra or later:
 for earlier versions see the instructions on the MacTeX front page.
@@ -5304,6 +5303,10 @@ library(tcltk)
 tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @end example
 
+Note that some Tcl/Tk extensions only support the X11 interface: this
+includes @code{Tktable} and the @acronym{CRAN} package
+@CRANpkg{tkrplot}.
+
 @node Java (macOS), Frameworks, Tcl/Tk headers and libraries, macOS
 @subsection Java
 
@@ -5323,7 +5326,7 @@ Oracle and you may prefer the licensing conditions of one of the
 alternatives in the main text.} You can also install directly a recent
 Java from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html,
-Oracle}).  Builds of OpenJDK may also be available, e.g.@: from
+Oracle}.  Builds of OpenJDK may also be available, e.g.@: from
 @uref{https://adoptopenjdk.net, AdoptOpenJDK},
 @uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
@@ -5448,9 +5451,9 @@ However, there are some important details.
 @itemize
 
 @item
-Current @acronym{CRAN} macOS distributions are targeted at High Sierra so it is
-wise to ensure that the compilers used generate code that will run on
-High Sierra or later.  With the recommended compilers we can use
+Current @acronym{CRAN} macOS distributions are targeted at High Sierra
+so it is wise to ensure that the compilers generate code that will run
+on High Sierra or later.  With the recommended compilers we can use
 @example
 CC="clang -mmacosx-version-min=10.13"
 CXX="clang++ -mmacosx-version-min=10.13"
@@ -5474,7 +5477,7 @@ install_name_tool -change /usr/local/clang/lib/libc++.1.dylib \
 @var{pkg}.so
 
 install_name_tool -change /usr/local/gfortran/lib/libgfortran.5.dylib \
-/Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libgfortran.5.dylib \
+/Library/Frameworks/R.framework/Resources/lib/libgfortran.5.dylib \
 @var{pkg}.so
 @end example
 
