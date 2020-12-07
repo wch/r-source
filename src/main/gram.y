@@ -1225,6 +1225,8 @@ static void check_for_right_assign(SEXP rhs)
     }
 }
 
+static SEXP findPlaceholderCell(SEXP);
+
 static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
@@ -1239,9 +1241,15 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 	    error(_("The pipe operator requires a function call "
 		    "or an anonymous function expression as RHS"));
 
+	/* allow for a top-level placeholder */
+	SEXP phcell = findPlaceholderCell(rhs);
+	if (phcell != NULL) {
+	    SETCAR(phcell, lhs);
+	    return rhs;
+	}
+
         SEXP fun = CAR(rhs);
         SEXP args = CDR(rhs);
-
 
 	/* rule out syntactically special functions */
 	/* the IS_SPECIAL_SYMBOL bit is set in names.c */
@@ -4152,4 +4160,25 @@ static SEXP fixup_pipe_rhs(SEXP lhs, SEXP rhs)
 
     SETCAR(placeholder_cell, lhs);
     return rhs;
+}
+
+static SEXP findPlaceholderCell(SEXP rhs)
+{
+    if (R_PlaceholderSymbol == NULL)
+	R_PlaceholderSymbol = install("_");
+    SEXP phcell = NULL;
+    int count = 0;
+    if (checkForPlaceholder(CAR(rhs)))
+	signal_ph_error(rhs);
+    for (SEXP a = CDR(rhs); a != R_NilValue; a = CDR(a))
+	if (CAR(a) == R_PlaceholderSymbol) {
+	    if (phcell == NULL)
+		phcell = a;
+	    count++;
+	}
+	else if (checkForPlaceholder(CAR(a)))
+	    signal_ph_error(rhs);
+    if (count > 1)
+	errorcall(rhs, "pipe placeholder may only appear once");
+    return phcell;
 }
