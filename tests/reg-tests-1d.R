@@ -4634,7 +4634,7 @@ TCB <- addTaskCallback(function(...) { length(list(...)); TRUE},
 removeTaskCallback(TCB)
 
 
-## all.equal(<functions>) should check environments (Kevin Van Horn, R-devel)
+## all.equal(<functions>) should check.environment (Kevin Van Horn, R-devel)
 f <- function(x) function(y) x+y
 dif <- all.equal(f(5), f(0))
 stopifnot(is.function(f(5)),

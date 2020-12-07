@@ -164,7 +164,7 @@
       compares their \code{environment(.)}s, notably via new
       \code{all.equal} method for class \code{function}.  Comparison of
       \code{nls()} fits, e.g., may now need \code{all.equal(m1, m2,
-	check.environments=FALSE)}.
+	check.environment=FALSE)}.
     }
   }
 
