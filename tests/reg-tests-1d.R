@@ -4642,6 +4642,16 @@ stopifnot(is.function(f(5)),
 ## all.equal() gave TRUE in  R <= 4.0.x
 
 
+## p.adjust(<empty>, n=0) - PR#18002
+## (1st fix-proposal computed wrongly w/ NAs:
+pp <- 2^-(40:1); pp[17:19] <- NA
+ppa <- p.adjust(pp, "holm") # worked always but was not strictly tested
+stopifnot(all.equal(c(3.365e-11, 6.548e-11, 1.273e-10, 2.474e-10, 4.802e-10,
+                      9.313e-10, 1.804e-09), ppa[1:7]))
+n0 <- numeric()
+stopifnot(identical(n0, p.adjust(n0, n = length(n0))))
+## errored in R <= 4.0.3
+
 
 
 ## keep at end

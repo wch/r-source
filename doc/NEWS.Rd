@@ -433,6 +433,8 @@
       \code{capabilities("long.double")} is true, as documented.
       (Previously they were included if the platform had \code{long
 	double} identical to \code{double}, as ARM does.)
+
+      \item \code{p.adjust(numeric(), n=0)} now works, fixing \PR{18002}.
     }
   }
 }
