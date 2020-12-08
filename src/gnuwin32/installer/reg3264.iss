@@ -2,8 +2,10 @@
 Name: "{group}\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('i386')
 Name: "{group}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('x64') and Is64BitInstallMode
 
-Name: "{commondesktop}\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('i386')
-Name: "{commondesktop}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('x64') and Is64BitInstallMode
+Name: "{commondesktop}\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('i386') and IsAdmin
+Name: "{userdesktop}\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('i386') and NonAdmin
+Name: "{commondesktop}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('x64') and Is64BitInstallMode and IsAdmin
+Name: "{userdesktop}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('x64') and Is64BitInstallMode and NonAdmin
 
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('i386')
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"; Check: isComponentSelected('x64') and Is64BitInstallMode 
