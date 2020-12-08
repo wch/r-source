@@ -24,7 +24,7 @@ svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     if(!capabilities("cairo"))
-        stop("Cairo-based devices are not available for this platform")
+        stop("svg: Cairo-based devices are not available for this platform")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     if (missing(symbolfamily)) symbolfamily <- symbolfamilyDefault(family)
@@ -41,7 +41,7 @@ cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     if(!capabilities("cairo"))
-        stop("Cairo-based devices are not available for this platform")
+        stop("cairo_pdf: Cairo-based devices are not available for this platform")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     if (missing(symbolfamily)) symbolfamily <- symbolfamilyDefault(family)
@@ -59,7 +59,7 @@ cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     if(!capabilities("cairo"))
-        stop("Cairo-based devices are not available for this platform")
+        stop("cairo_ps: Cairo-based devices are not available for this platform")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     if (missing(symbolfamily)) symbolfamily <- symbolfamilyDefault(family)
