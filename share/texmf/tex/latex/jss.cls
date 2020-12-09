@@ -20,9 +20,9 @@
 %% original source files, as listed above, are part of the
 %% same distribution. (The sources need not necessarily be
 %% in the same archive or directory.)
-\def\fileversion{3.1}
+\def\fileversion{3.2}
 \def\filename{jss}
-\def\filedate{2020/08/03}
+\def\filedate{2020/12/09}
 %%
 %% Package `jss' to use with LaTeX2e for JSS publications (http://www.jstatsoft.org/)
 %% License: GPL-2 | GPL-3
@@ -487,7 +487,7 @@
 \if@notitle
   %% \AtBeginDocument{\maketitle}
 \else
-  \AtBeginDocument{\maketitle}
+  \@ifundefined{AddToHook}{\AtBeginDocument{\maketitle}}{\AddToHook{begindocument}[maketitle]{\maketitle}}
 \fi
 %% commands
 \newcommand\code{\bgroup\@makeother\_\@makeother\~\@makeother\$\@codex}
