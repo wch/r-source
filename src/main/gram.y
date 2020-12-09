@@ -383,6 +383,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		SLOT
 %token		PIPE
 %token		PIPE2
+%token		PIPE3
 
 /* This is the precedence table, low to high */
 %left		'?'
@@ -393,6 +394,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %right		LEFT_ASSIGN
 %right		EQ_ASSIGN
 %left		RIGHT_ASSIGN
+%left		PIPE3
 %left		'~' TILDE
 %left		PIPE PIPE2
 %left		OR OR2
@@ -472,6 +474,7 @@ expr_not_sym	: 	NUM_CONST		{ $$ = $1;	setId(@$); }
 	|	expr OR expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr AND2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
+	|	expr PIPE3 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
 	|	expr PIPE2 expr			{ $$ = xxpipe2($1,$3);  setId(@$); }
 	|	'(' SYMBOL ')' SHORTFUN expr_or_assign_or_help
@@ -1220,7 +1223,7 @@ static void check_for_right_assign(SEXP rhs)
 	else if (TYPEOF(var) == STRSXP && XLENGTH(var) == 1)
 	    vname = CHAR(STRING_ELT(var, 0));
 	if (vname != NULL)
-	    warning(_("assignment creates unused local variable '%s'"),
+	    warning(_("unused assignment to local variable '%s'"),
 		    vname);
     }
 }
@@ -1231,12 +1234,19 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
+	/* allow for parenthesized RHS */
+	static SEXP R_ParenSymbol = NULL;
+	if (R_ParenSymbol == NULL)
+	    R_ParenSymbol = install("(");
+	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_ParenSymbol)
+	    return lang2(rhs, lhs);
+
 	/* allow for rhs lambda expressions */
 	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == R_FunctionSymbol) {
 	    check_for_right_assign(rhs);
 	    return lang2(rhs, lhs);
 	}
-		    
+
 	if (TYPEOF(rhs) != LANGSXP)
 	    error(_("The pipe operator requires a function call "
 		    "or a function expression as RHS"));
@@ -2258,6 +2268,7 @@ static void yyerror(const char *s)
 	"NS_GET_INT",	"':::'",
 	"PIPE",         "'|>'",
 	"PIPE2",        "'>>'",
+	"PIPE3",        "'|>>'",
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -3404,6 +3415,10 @@ static int token(void)
 	    return OR2;
 	}
 	else if (nextchar('>')) {
+	    if (nextchar('>')) {
+		yylval = install_and_save("|>>");
+		return PIPE3;
+	    }
 	    yylval = install_and_save("|>");
 	    return PIPE;
 	}
@@ -3639,6 +3654,7 @@ static int yylex(void)
     case AND2:
     case PIPE:
     case PIPE2:
+    case PIPE3:
     case SPECIAL:
     case FUNCTION:
     case WHILE:
