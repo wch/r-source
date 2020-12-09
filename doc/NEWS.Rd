@@ -195,6 +195,12 @@
 
       These new features are only supported (so far) on Cairo graphics
       devices and the \code{pdf()} device.
+
+      \item (Not Windows.)
+      A warning is given when a Cairo-based type is specified for a
+      \code{png()}, \code{jpeg()}, \code{tiff()} or \code{bmp()}
+      device but Cairo is unsupported (so \code{type = "Xlib"}
+      is tried instead).
     }
   }
 
