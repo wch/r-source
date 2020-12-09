@@ -386,6 +386,9 @@
       later.
 
       \item \code{show(<hidden S4 generic>)} prints better.
+
+      \item \code{read.table()} and relatives treated an "NA" column name as
+      missing when \code{check.names=FALSE} \PR{18007}.
     }
   }
 }
