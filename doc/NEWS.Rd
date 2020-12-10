@@ -401,6 +401,13 @@
 
 \section{\Rlogo CHANGES IN R 4.0.3 patched}{
 
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item File \file{share/texmf/tex/latex/jss.cls} has been updated
+      to work with LaTeX versions since Oct 2020.
+    }
+  }
+  
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item If an external BLAS is specified by \option{--with-blas=foo}
