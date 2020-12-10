@@ -3957,8 +3957,10 @@ stopifnot(all.equal(cf1, cfL))
 
 
 ## UTF8 validity checking internal in R (from PCRE, PR#17755)
-stopifnot(identical(validUTF8('\ud800'), FALSE))
-
+## This is the byte representation of U+D800 (a part of a surrogate
+## pair) in UTF-8, but do not rely on parser (which on some platforms
+## has mis-parsed that)
+stopifnot(identical(validUTF8("\xed\xa0\x80"), FALSE))
 
 ## summary.warnings()  -- reported by Allison Meisner, jhmi.edu
 testf <- function(x) {
