@@ -44,7 +44,7 @@ numericDeriv(expr, theta, rho = parent.frame(), dir = 1,
   \code{theta}.
 }
 \author{Saikat DebRoy \email{saikat@stat.wisc.edu};
-  tweaks and \code{eps}, \code{central} options by R Core.}
+  tweaks and \code{eps}, \code{central} options by R Core Team.}
 \examples{
 myenv <- new.env()
 myenv$mean <- 0.
@@ -61,8 +61,11 @@ abline(h=0, lty=3)
 curve( - dnorm(x), col=2, lty=3, lwd=2, add=TRUE)
 curve(-x*dnorm(x), col=3, lty=3, lwd=2, add=TRUE)
 ##
+## IGNORE_RDIFF_BEGIN
+# shows 1.609e-8 on most platforms
 all.equal(attr(nD,"gradient"),
-          with(myenv, cbind(-dnorm(x), -x*dnorm(x)))) # shows 1.6e-8
+          with(myenv, cbind(-dnorm(x), -x*dnorm(x))))
+## IGNORE_RDIFF_END
 }
 \keyword{models}
 

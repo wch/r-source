@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-12-04 r79558) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-10 r79603) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -11333,9 +11333,12 @@ $nDcentral
 > curve( - dnorm(x), col=2, lty=3, lwd=2, add=TRUE)
 > curve(-x*dnorm(x), col=3, lty=3, lwd=2, add=TRUE)
 > ##
+> ## IGNORE_RDIFF_BEGIN
+> # shows 1.609e-8 on most platforms
 > all.equal(attr(nD,"gradient"),
-+           with(myenv, cbind(-dnorm(x), -x*dnorm(x)))) # shows 1.6e-8
++           with(myenv, cbind(-dnorm(x), -x*dnorm(x))))
 [1] "Mean relative difference: 1.609569e-08"
+> ## IGNORE_RDIFF_END
 > 
 > 
 > 
