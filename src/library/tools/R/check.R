@@ -5256,7 +5256,7 @@ add_dummies <- function(dir, Log)
                 else {
                     this <- unique(grep("Warning: replacing previous import",
                                         lines, fixed = TRUE, value = TRUE))
-                    this <- grep(paste0(sQuote(pkgname), "$"), this,
+                    this <- grep(paste0("when loading .*", pkgname, ".*$"), this,
                                  value = TRUE)
                     lines <- filtergrep("Warning: replacing previous import", lines,
                                         fixed = TRUE)
