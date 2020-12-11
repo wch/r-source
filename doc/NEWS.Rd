@@ -399,7 +399,8 @@
       \item \code{pnorm(x, log.p = TRUE)} underflows to \code{-Inf} slightly
       later.
 
-      \item \code{show(<hidden S4 generic>)} prints better.
+      \item \code{show(<hidden S4 generic>)} prints better and without
+      quotes for non-hidden S4 generics.
 
       \item \code{read.table()} and relatives treated an "NA" column name as
       missing when \code{check.names = FALSE} \PR{18007}.
@@ -418,7 +419,7 @@
       to work with LaTeX versions since Oct 2020.
     }
   }
-  
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item If an external BLAS is specified by \option{--with-blas=foo}
