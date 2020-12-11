@@ -188,7 +188,7 @@ stopifnot(identical(nn, n2))
 ## See the R language manual,
 ## https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Literal-constants
 ## and bug 16098 https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=16098
-## This character may or nor be printable (the platform decides)
+## This character may or not be printable (the platform decides)
 ## and if it is, may not have a glyph in the font used.
 "\U1d4d7" # On Windows this gives the incorrect value of "\Ud4d7"
 
