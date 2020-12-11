@@ -160,7 +160,7 @@ d$`1st column`
 ## Mixing octal and hexadecimal in the same string is OK
 (hw2 <- "\110\x65\154\x6c\157\x20\127\x6f\162\x6c\144\x21")
 
-## \u is also hexadecimal, but supported up to 4 numbers,
+## \u is also hexadecimal, but supported up to 4 digits,
 ## using Unicode specification.  In the previous example,
 ## you can simply replace \x with \u.
 (hw3 <- "\u48\u65\u6c\u6c\u6f\u20\u57\u6f\u72\u6c\u64\u21")
@@ -178,7 +178,7 @@ stopifnot(identical(hw, hw1), identical(hw1, hw2), identical(hw2, hw3))
 }
 ##   -->   Error: mixing Unicode and octal/hex escapes .....
 
-## \U works like \u, but supports up to eight numbers.
+## \U works like \u, but supports up to six hex digits.
 ## So we can replace \u with \U in the previous example.
 n2 <- "\U0126\U0119\U1114\U022d\U2001\U03e2\U0954\U0f3f\U13d3\U147b\U203c"
 stopifnot(identical(nn, n2))
@@ -188,6 +188,8 @@ stopifnot(identical(nn, n2))
 ## See the R language manual,
 ## https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Literal-constants
 ## and bug 16098 https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=16098
+## Thus character may or nor be printable (the platform decides)
+## and if it is, may not have a glyph in the font used.
 "\U1d4d7" # On Windows this gives the incorrect value of "\Ud4d7"
 
 ## nul characters (for terminating strings in C) are not allowed (parse errors)
