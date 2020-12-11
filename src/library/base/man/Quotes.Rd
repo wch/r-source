@@ -101,9 +101,9 @@
 }
 
 \note{
-  UTF-16 surrogate pairs in \code{\unnnn\uoooo} form will be converted
-  to a single Unicode point, so for example \code{\uD834\uDD1E} gives
-  the single character \code{\U1D11E}.  However, unpaired values in
+  UTF-16 surrogate pairs in \code{"\unnnn\uoooo"} form will be converted
+  to a single Unicode point, so for example \code{"\uD834\uDD1E"} gives
+  the single character \code{"\U1D11E"}.  However, unpaired values in
   the surrogate range such as in the string \code{"abc\uD834de"} will be
   converted to a non-standard-conformant UTF-8 string (as is done by most
   other software): this may change in future.
