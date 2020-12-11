@@ -397,7 +397,7 @@
       missing when \code{check.names = FALSE} \PR{18007}.
 
       \item Parsing strings containing UTF-16 surrogate pairs such as
-      \code{\uD834\uDD1E} works better on some (uncommon) platforms.
+      \code{"\uD834\uDD1E"} works better on some (uncommon) platforms.
     }
   }
 }
