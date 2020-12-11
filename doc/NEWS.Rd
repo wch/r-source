@@ -164,7 +164,15 @@
       compares their \code{environment(.)}s, notably via new
       \code{all.equal} method for class \code{function}.  Comparison of
       \code{nls()} fits, e.g., may now need \code{all.equal(m1, m2,
-	check.environment=FALSE)}.
+	check.environment = FALSE)}.
+
+      \item The parser now treats \samp{\\Unnnnnnnn} escapes larger
+      than \code{"\U10FFFF"} as an error as they cannot be represented
+      by valid UTF-8.
+
+      Where such escapes are use for outputting non-printable
+      characters, 6 (not 8) hex digits are used (as it was decided that
+      the first two would always be zero).
     }
   }
 
