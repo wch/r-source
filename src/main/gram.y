@@ -32,7 +32,8 @@
 
 #if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
 /* This may not be 100% true (see the comment in rlocale.h),
-   but it seems true in normal locales */
+   but it seems true in normal locales.  Also seems to be true for __sun__.
+ */
 # define __STDC_ISO_10646__
 #endif
 
@@ -2506,10 +2507,11 @@ static int NumericValue(int c)
 
 /* The idea here is that if a string contains \u escapes that are not
    valid in the current locale, we should switch to UTF-8 for that
-   string.  Needs Unicode wide-char support.
+   string.  Needs Unicode wide-char support or out substitutes.
 
-   Defining __STDC_ISO_10646__ is done by the OS (nor to) in wchar.t.
-   Some (e.g. Solaris, FreeBSD) have Unicode wchar_t but do not define it.
+   Defining __STDC_ISO_10646__ is done by the OS (or not) in wchar.t.
+   Some (e.g. macOS, Solaris, FreeBSD) have Unicode wchar_t but do not
+   define it: we override macOS and FreeBSD earlier in this file.
 */
 
 #if defined(Win32) || defined(__STDC_ISO_10646__)
@@ -2517,7 +2519,8 @@ typedef wchar_t ucs_t;
 # define mbcs_get_next2 mbcs_get_next
 #else
 typedef unsigned int ucs_t;
-# define WC_NOT_UNICODE 
+# define WC_NOT_UNICODE
+// which is used to select our mbtoucs rather than system mbrtowc
 static int mbcs_get_next2(int c, ucs_t *wc)
 {
     int i, res, clen = 1; char s[9];
@@ -2573,8 +2576,7 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
     R_CheckStack2(nb);
     char s[nb];
     memset(s, 0, nb); /* safety */
-    /* This used to differentiate WC_NOT_UNICODE but we inserted the
-     * Unicode value in wcs. */
+    // This used to differentiate WC_NOT_UNICODE but not needed
     wcstoutf8(s, (const wchar_t *)wcs, sizeof(s));
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharCE(s, CE_UTF8));

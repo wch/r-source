@@ -66,8 +66,11 @@
 
 #include "RBufferUtils.h"
 
-
-#if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
+/* At times we want to convert marked UTF-8 strings to wchar_t*. We
+ * can use our facilities to do so in a UTF-8 locale or system
+ * facilities if the platform tells us that wchar_t is UCS-4 or we
+ * know that about the platform. */
+#if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun))
 /* This may not be 100% true (see the comment in rlocales.h),
    but it seems true in normal locales */
 # define __STDC_ISO_10646__
@@ -725,11 +728,8 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    }
 	}
 #ifndef __STDC_ISO_10646__
-// We know Solaris conforms even if the system headers do not define it.
-# ifndef __sun
 	if(Unicode_warning)
 	    warning(_("it is not known that wchar_t is Unicode on this platform"));
-# endif
 #endif
 
     } else
