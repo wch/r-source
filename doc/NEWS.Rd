@@ -385,16 +385,19 @@
       rows.  Reported to R-devel by Martin "b706".
 
       \item \code{unsplit()} had trouble with tibbles due to unsound use of
-      \code{rep(NA,len)}-indexing, which should use \code{NA_integer_}
+      \code{rep(NA, len)}-indexing, which should use \code{NA_integer_}
       Reported to R-devel by Mario Annau.
 
-      \item \code{pnorm(x, log.p=TRUE)} underflows to \code{-Inf} slightly
+      \item \code{pnorm(x, log.p = TRUE)} underflows to \code{-Inf} slightly
       later.
 
       \item \code{show(<hidden S4 generic>)} prints better.
 
       \item \code{read.table()} and relatives treated an "NA" column name as
-      missing when \code{check.names=FALSE} \PR{18007}.
+      missing when \code{check.names = FALSE} \PR{18007}.
+
+      \item Parsing strings containing UTF-16 surrogate pairs such as
+      \code{\uD834\uDD1E} works better on some (uncommon) platforms.
     }
   }
 }
