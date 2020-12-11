@@ -74,8 +74,9 @@
   Raw character constants are also available using a syntax similar to
   the one used in C++: \code{r"(...)"} with \code{...} any character
   sequence, except that it must not contain the closing sequence
-  \samp{)"}. The delimiter pairs \code{[]} and \code{\{\}} can also be
-  used, and \code{R} can be used in place of \code{r}. For  additional
+  \samp{)"}. %"
+  The delimiter pairs \code{[]} and \code{\{\}} can also be
+  used, and \code{R} can be used in place of \code{r}.  For additional
   flexibility, a number of dashes can be placed between the opening quote
   and the opening delimiter, as long as the same number of dashes appear
   between the closing delimiter and the closing quote.
@@ -98,6 +99,16 @@
   backticks may be essential is to delimit variable names in formulae:
   see \code{\link{formula}}.
 }
+
+\note{
+  Handling of UTF-16 surrogate pairs in \code{"\unnnn\uoooo"} form is
+  platform-dependent: these are better specified by \code{"\U"}, for
+  example \code{"\U1D11E"} rather than \code{"\uD834\uDD1E"}.  The
+  handling of unpaired values in the surrogate range such as in the
+  string \code{"abc\uD834de"} is even more platform-dependent and may
+  become an error.
+}
+
 \seealso{
   \code{\link{Syntax}} for other aspects of the syntax.
 
