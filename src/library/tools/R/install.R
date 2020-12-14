@@ -973,7 +973,7 @@ if(FALSE) {
         pkgInfo <- .split_description(.read_description("DESCRIPTION"))
         R_install_force_depends_imports <- config_val_to_logical(Sys.getenv(
                 "_R_INSTALL_LIBS_ONLY_FORCE_DEPENDS_IMPORTS_", "TRUE"))
-        if (libs_only && isFALSE(R_install_force_depends_imports)) 
+        if (libs_only && isFALSE(R_install_force_depends_imports))
             pkgs <- unique(c(names(names(pkgInfo$LinkingTo))))
         else
             pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports),
@@ -2559,10 +2559,17 @@ if(FALSE) {
         }
     } else if (use_fc_link && (with_f77 || with_f9x))
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
-                      "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
+                      "SHLIB_LD='$(SHLIB_FCLD)'",
+                      ## avoid $(LIBINTL) and $(LIBR)
+                      "ALL_LIBS='$(PKG_LIBS) $(SHLIB_LIBADD)'",
+                      makeargs)
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
-    if (with_f77 || with_f9x)
-        shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
+    if (with_f77 || with_f9x) {
+        if (use_fc_link)
+            shlib_libadd <- c(shlib_libadd, "$(FCLIBS_XTRA)")
+        else
+            shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
+    }
 
     if (length(pkg_libs))
         makeargs <- c(makeargs,
