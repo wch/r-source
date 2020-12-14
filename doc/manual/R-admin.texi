@@ -2196,6 +2196,8 @@ CC = clang -target x86_64-apple-macos10.15
 CXX = clang++ -target x86_64-apple-macos10.15
 @end example
 
+@noindent
+(Using @code{-arch x86_64} also works.)
 
 Apple includes many Open Source libraries in macOS but increasingly
 without the corresponding headers (not even in Xcode nor the Command
@@ -2262,7 +2264,8 @@ CXX="clang++ -target arm64-apple-macos11" CXXFLAGS=-O2
 @end example
 
 @noindent
-to force @cputype{arm64} code.
+to force @cputype{arm64} code.  (Using @code{-arch arm64} also works.)
+
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
