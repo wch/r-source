@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-12-04 r79561) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-14 r79624) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -8069,4 +8069,13 @@ mean of x
 +     options(op)
 +     unlink(tf)
 + }
+> 
+> 
+> ## identical(*) on "..." object
+> (ddd <- (function(...) environment())(1)$...) # <...>
+<...>
+>  dd2 <- (function(...) environment())(1)$...
+> stopifnot( identical(ddd, dd2) )
+> ## In R <= 4.0.3,  printed to console (no warning, no message!):
+> ## "Unknown Type: ... (11)"
 > 

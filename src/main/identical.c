@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2016  The R Core Team
+ *  Copyright (C) 2001-2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -304,6 +304,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	  subsititute(PREXPR(y), PRENV(y))));*/
     case S4SXP:
 	/* attributes already tested, so all slots identical */
+	return TRUE;
+    case DOTSXP: // "constant entity" (see below), but known
 	return TRUE;
     default:
 	/* these are all supposed to be types that represent constant
