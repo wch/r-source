@@ -114,6 +114,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                       nlines = 1, quiet = TRUE, skip = 0,
                       strip.white = TRUE,
                       blank.lines.skip = blank.lines.skip,
+                      na.strings=character(0),# NA colname if !check.names 
                       comment.char = comment.char, allowEscapes = allowEscapes,
                       encoding = encoding, skipNul = skipNul)
         col1 <- if(missing(col.names)) length(first) else length(col.names)

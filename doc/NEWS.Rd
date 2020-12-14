@@ -164,7 +164,19 @@
       compares their \code{environment(.)}s, notably via new
       \code{all.equal} method for class \code{function}.  Comparison of
       \code{nls()} fits, e.g., may now need \code{all.equal(m1, m2,
-	check.environments=FALSE)}.
+	check.environment = FALSE)}.
+
+      \item The parser now treats \samp{\\Unnnnnnnn} escapes larger than
+      the upper limit for Unicode points (\samp{\\U10FFFF}) as an error
+      as they cannot be represented by valid UTF-8.
+
+      Where such escapes are use for outputting non-printable
+      characters, 6 (not 8) hex digits are used (as it was decided by
+      Unicode  that the first two would always be zero).
+
+      \item Code converting UTF-8 strings (e.g., \code{tolower()} and some
+      \sQuote{printing} now uses internal routines rather than system
+      functions:  these detect more uses of invalid UTF-8 strings.
     }
   }
 
@@ -195,6 +207,12 @@
 
       These new features are only supported (so far) on Cairo graphics
       devices and the \code{pdf()} device.
+
+      \item (Not Windows.)
+      A warning is given when a Cairo-based type is specified for a
+      \code{png()}, \code{jpeg()}, \code{tiff()} or \code{bmp()}
+      device but Cairo is unsupported (so \code{type = "Xlib"}
+      is tried instead).
     }
   }
 
@@ -379,18 +397,32 @@
       rows.  Reported to R-devel by Martin "b706".
 
       \item \code{unsplit()} had trouble with tibbles due to unsound use of
-      \code{rep(NA,len)}-indexing, which should use \code{NA_integer_}
+      \code{rep(NA, len)}-indexing, which should use \code{NA_integer_}
       Reported to R-devel by Mario Annau.
 
-      \item \code{pnorm(x, log.p=TRUE)} underflows to \code{-Inf} slightly
+      \item \code{pnorm(x, log.p = TRUE)} underflows to \code{-Inf} slightly
       later.
 
-      \item \code{show(<hidden S4 generic>)} prints better.
+      \item \code{show(<hidden S4 generic>)} prints better and without
+      quotes for non-hidden S4 generics.
+
+      \item \code{read.table()} and relatives treated an "NA" column name as
+      missing when \code{check.names = FALSE} \PR{18007}.
+
+      \item Parsing strings containing UTF-16 surrogate pairs such as
+      \code{"\uD834\uDD1E"} works better on some (uncommon) platforms.
     }
   }
 }
 
 \section{\Rlogo CHANGES IN R 4.0.3 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item File \file{share/texmf/tex/latex/jss.cls} has been updated
+      to work with LaTeX versions since Oct 2020.
+    }
+  }
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
@@ -433,6 +465,11 @@
       \code{capabilities("long.double")} is true, as documented.
       (Previously they were included if the platform had \code{long
 	double} identical to \code{double}, as ARM does.)
+
+      \item \code{p.adjust(numeric(), n=0)} now works, fixing \PR{18002}.
+
+      \item \code{identical(x,y)} no longer prints "Unknown Type .." for
+      \code{typeof(x) == "..."} objects.
     }
   }
 }

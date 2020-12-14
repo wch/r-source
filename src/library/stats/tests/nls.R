@@ -245,12 +245,12 @@ t1$with.start
 ## finally worked in 2.4.0
 ##__no.start: failed in 3.0.2
 ## 2018-09 fails on macOS with Accelerate framework.
-stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]]), check.environments = FALSE))
+stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]]), check.environment = FALSE))
 rm(a,b)
 t2 <- test(FALSE)
 stopifnot(all.equal(lapply(t1, .n),
 		    lapply(t2, .n), tolerance = 0.16, # different random error
-                    check.environments = FALSE))
+                    check.environment = FALSE))
 
 
 ## list 'start'

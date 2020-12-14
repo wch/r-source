@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/cairo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
                 symbolfamily)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    if(!capabilities("cairo"))
+        stop("svg: Cairo-based devices are not available for this platform")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     if (missing(symbolfamily)) symbolfamily <- symbolfamilyDefault(family)
@@ -38,12 +40,14 @@ cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
                       fallback_resolution = 300, symbolfamily)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    if(!capabilities("cairo"))
+        stop("cairo_pdf: Cairo-based devices are not available for this platform")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     if (missing(symbolfamily)) symbolfamily <- symbolfamilyDefault(family)
     invisible(.External(C_devCairo, filename, 6L, 72*width, 72*height,
                         pointsize, bg, NA_integer_, antialias, onefile,
-                        family, fallback_resolution, 
+                        family, fallback_resolution,
                         checkSymbolFont(symbolfamily)))
 }
 
@@ -54,6 +58,8 @@ cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
                      fallback_resolution = 300, symbolfamily)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
+    if(!capabilities("cairo"))
+        stop("cairo_ps: Cairo-based devices are not available for this platform")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     if (missing(symbolfamily)) symbolfamily <- symbolfamilyDefault(family)
@@ -75,15 +81,15 @@ comparePangoVersion <- function(a, b) {
     b <- as.integer(strsplit(b, "[.]")[[1L]])
     for (k in seq_along(a)) {
         if (k <= length(b)) {
-            if (a[k] > b[k]) 
+            if (a[k] > b[k])
                 return(1)
-            else if (a[k] < b[k]) 
+            else if (a[k] < b[k])
                 return(-1L)
         } else {
             return(1L)
         }
     }
-    if (length(b) > length(a)) 
+    if (length(b) > length(a))
         return(-1L)
     else
         return(0L)
@@ -94,7 +100,7 @@ symbolType1support <- function() {
     pangoVersion == "" ||
         comparePangoVersion(pangoVersion, "1.44") < 0
 }
-    
+
 cairoSymbolFont <- function(family, usePUA = TRUE) {
     font <- as.character(family)
     attr(font, "usePUA") <- as.logical(usePUA)

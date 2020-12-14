@@ -1,7 +1,7 @@
 #  File src/library/methods/R/show.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -104,9 +104,9 @@ show <- function(object) showDefault(object)
                           "\"\n", sep="")
                   cat("\n")
                   show(object@.Data)
-                  ns <- asNamespace(object@package)
-                  exported <- nam %in% names(.getNamespaceInfo(ns, "exports"))
-                  showGen <- if(exported) dQuote(nam, NULL)
+                  exported <- isBaseNamespace(ns <- asNamespace(object@package)) ||
+                      nam %in% names(.getNamespaceInfo(ns, "exports"))
+                  showGen <- if(exported) nam # was dQuote(nam, NULL)
                              else paste(object@package, nam, sep=":::")
                   cat("Methods may be defined for arguments: ",
                       paste0(object@signature, collapse=", "), "\n",

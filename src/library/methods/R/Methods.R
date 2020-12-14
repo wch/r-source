@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -926,18 +926,14 @@ showMethods <-
 {
     if(missing(showEmpty))
 	showEmpty <- !missing(f)
-    if(isFALSE(printTo))
-        con <- textConnection(NULL, "w")
-    else
-        con <- printTo
+    con <- if(isFALSE(printTo)) textConnection(NULL, "w") else printTo
     ## must resolve showEmpty in line; using an equivalent default
     ## fails because R resets the "missing()" result for f later on (grumble)
     if(is.function(f)) {
         fdef <- f ## note that this causes missing(fdef) to be FALSE below
         if(missing(where))
             where <- environment(f)
-        f <- deparse(substitute(f))
-        if(length(f) > 1L) f <- paste(f, collapse = "; ")
+        f <- deparse1(substitute(f))
     }
     if(!is(f, "character"))
         stop(gettextf("first argument should be the names of one of more generic functions (got object of class %s)",
@@ -1037,7 +1033,7 @@ showMethods <-
         sig <- simplify2array(method)
         if (!is.matrix(sig))
             sig <- matrix(sig, ncol=length(method))
-        idx <- apply(sig, 2, match, classes, 0)
+        idx <- apply(sig, 2, match, classes, 0L)
         if (!is.matrix(idx))
             idx <- matrix(idx, ncol=ncol(sig))
         keep <- colSums(idx != 0) != 0

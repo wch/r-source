@@ -516,7 +516,7 @@ check_EPD: function (obj, show = !hasReal(obj), oNam = deparse(substitute(obj)),
     noLdbl <- (.Machine$sizeof.longdouble <= 8)
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = eq.tol, check.environments = FALSE)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol, check.environment = FALSE)
         if (is.na(match(oNam, not.identical.ldouble))) {
             ae.txt <- "all.equal(*,*, tol = ..)"
             cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
@@ -558,7 +558,7 @@ quote({
     noLdbl <- (.Machine$sizeof.longdouble <= 8)
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = eq.tol, check.environments = FALSE)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol, check.environment = FALSE)
         if (is.na(match(oNam, not.identical.ldouble))) {
             ae.txt <- "all.equal(*,*, tol = ..)"
             cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 

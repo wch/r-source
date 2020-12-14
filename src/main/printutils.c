@@ -66,8 +66,11 @@
 
 #include "RBufferUtils.h"
 
-
-#if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
+/* At times we want to convert marked UTF-8 strings to wchar_t*. We
+ * can use our facilities to do so in a UTF-8 locale or system
+ * facilities if the platform tells us that wchar_t is UCS-4 or we
+ * know that about the platform. */
+#if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun))
 /* This may not be 100% true (see the comment in rlocales.h),
    but it seems true in normal locales */
 # define __STDC_ISO_10646__
@@ -642,12 +645,14 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 #ifndef __STDC_ISO_10646__
 	Rboolean Unicode_warning = FALSE;
 #endif
-	if(ienc != CE_UTF8)  mbs_init(&mb_st);
+	// avoid system mbrtowc in a UTF-8 locale
+	Rboolean use_ucs = ienc == CE_UTF8 || utf8locale;
+	if(!use_ucs)  mbs_init(&mb_st);
 #ifdef Win32
 	else if(WinUTF8out) { memcpy(q, UTF8in, 3); q += 3; }
 #endif
 	for (i = 0; i < cnt; i++) {
-	    res = (int)((ienc == CE_UTF8) ? utf8toucs(&wc, p):
+	    res = (int)(use_ucs ? utf8toucs(&wc, p):
 			mbrtowc(&wc, p, MB_CUR_MAX, NULL));
 	    if(res >= 0) { /* res = 0 is a terminator */
 		if (ienc == CE_UTF8 && IS_HIGH_SURROGATE(wc))
@@ -696,14 +701,18 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 			/* The problem here is that wc may be
 			   printable according to the Unicode tables,
 			   but it may not be printable on the output
-			   device concerned. */
+			   device concerned.
+
+			   And the system iswprintf may not correspond
+			   to the latest Unicode tables.
+			*/
 			for(j = 0; j < res; j++) *q++ = *p++;
 		    } else {
 # if !defined (__STDC_ISO_10646__) && !defined (Win32)
-			Unicode_warning = TRUE;
+			if(!use_ucs) Unicode_warning = TRUE;
 # endif
 			if(k > 0xffff)
-			    snprintf(buf, 11, "\\U%08x", k);
+			    snprintf(buf, 11, "\\U%06x", k);
 			else
 			    snprintf(buf, 11, "\\u%04x", k);
 			j = (int) strlen(buf);
@@ -719,11 +728,8 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    }
 	}
 #ifndef __STDC_ISO_10646__
-// We know Solaris conforms even if the system headers do not define it.
-# ifndef __sun
 	if(Unicode_warning)
 	    warning(_("it is not known that wchar_t is Unicode on this platform"));
-# endif
 #endif
 
     } else

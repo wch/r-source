@@ -237,5 +237,9 @@ if(require("Matrix", .Library)) {
                   pmax(as.Matrix(M), 7))
     })
     rm(M)
+
+    ## show(<S4 generic>) from base
+    show(chol2inv) # last line now has .. showMethods(chol2inv) ..
+
     detach("package:Matrix", unload=TRUE)
 }##{Matrix}

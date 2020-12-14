@@ -3169,3 +3169,11 @@ if(capabilities("Rprof")) {
     options(op)
     unlink(tf)
 }
+
+
+## identical(*) on "..." object
+(ddd <- (function(...) environment())(1)$...) # <...>
+ dd2 <- (function(...) environment())(1)$...
+stopifnot( identical(ddd, dd2) )
+## In R <= 4.0.3,  printed to console (no warning, no message!):
+## "Unknown Type: ... (11)"

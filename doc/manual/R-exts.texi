@@ -1994,8 +1994,9 @@ double-complex BLAS routines, but no single-precision nor complex
 routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
 to be@footnote{at least on Unix-alikes: the Windows build currently
 resolves such dependencies to a static Fortran library when
-@file{Rblas.dll} is built.} included following it, as most BLAS
-libraries are written at least partially in Fortran.
+@file{Rblas.dll} is built.  Also, not if @code{USE_FC_TO_LINK} is used.}
+included following it, as most BLAS libraries are written at least
+partially in Fortran.
 
 @item LAPACK_LIBS
 @vindex LAPACK_LIBS
@@ -2270,7 +2271,10 @@ USE_FC_TO_LINK =
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
 PKG_LIBS = $(SHLIB_OPENMP_FFLAGS)
 @end example
-in @file{src/Makevars} or @file{src/Makevars.win}.
+in @file{src/Makevars} or @file{src/Makevars.win}.  Note however, that
+when this is used @code{$(FLIBS)} should not be included in
+@code{PKG_LIBS} since it is for linking Fortran-compiled code by the C
+compiler.
 
 @c Most often seen with clang and sanitizer flags.
 Common platforms may inline all OpenMP calls and so tolerate the

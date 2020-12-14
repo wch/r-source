@@ -1,7 +1,7 @@
 #  File src/library/stats/R/p.adjust.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ p.adjust <- function(p, method = p.adjust.methods, n = length(p))
     p <- as.numeric(p)
     p0 <- setNames(p, nm)
     if(all(nna <- !is.na(p))) nna <- TRUE
-    p <- p[nna]
+    else p <- p[nna]
     lp <- length(p)
     stopifnot(n >= lp)
     if (n <= 1) return(p0)

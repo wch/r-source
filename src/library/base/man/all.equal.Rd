@@ -36,7 +36,7 @@ all.equal(target, current, \dots)
 
 \method{all.equal}{environment}(target, current, all.names=TRUE, \dots)
 
-\method{all.equal}{function}(target, current, check.environments=TRUE, \dots)
+\method{all.equal}{function}(target, current, check.environment=TRUE, \dots)
 
 \method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3, scale,
           check.tzone = TRUE)
@@ -73,9 +73,9 @@ attr.all.equal(target, current, \dots,
     be specified by its full name.}
   \item{all.names}{logical passed to \code{\link{ls}} indicating if
     \dQuote{hidden} objects should also be considered in the environments.}
-  \item{check.environments}{logical requiring that the
+  \item{check.environment}{logical requiring that the
     \code{\link{environment}()}s of functions should be compared, too.
-    You may need to set \code{check.environments=FALSE} in unexpected
+    You may need to set \code{check.environment=FALSE} in unexpected
     cases, such as when comparing two \code{\link{nls}()} fits.}
   \item{check.tzone}{logical indicating if the \code{"tzone"} attributes
     of \code{target} and \code{current} should be compared.}

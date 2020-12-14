@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-12-04 r79558) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-10 r79607) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -928,8 +928,20 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 +                   pmax(as.Matrix(M), 7))
 +     })
 +     rm(M)
++ 
++     ## show(<S4 generic>) from base
++     show(chol2inv) # last line now has .. showMethods(chol2inv) ..
++ 
 +     detach("package:Matrix", unload=TRUE)
 + }##{Matrix}
 Loading required package: Matrix
 <sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient
+standardGeneric for "chol2inv" defined from package "base"
+
+function (x, ...) 
+standardGeneric("chol2inv")
+<bytecode: 0x9127e08>
+<environment: 0x912a7b8>
+Methods may be defined for arguments: x
+Use  showMethods(chol2inv)  for currently available ones.
 > 

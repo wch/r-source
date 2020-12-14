@@ -19,10 +19,7 @@ polypath(x, y = NULL,
   \item{x, y}{vectors containing the coordinates of the vertices
     of the path.}
    \item{col}{the color for filling the path. The default,
-     \code{NA}, is to leave paths unfilled, unless \code{density} is
-     specified.  (For back-compatibility, \code{NULL} is equivalent to
-     \code{NA}.)  If \code{density} is specified with a positive value
-     this gives the color of the shading lines.}
+     \code{NA}, is to leave paths unfilled.}
   \item{border}{the color to draw the border.  The default, \code{NULL},
     means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
     omit borders.
