@@ -186,6 +186,8 @@ static void	NextArg(SEXP, SEXP, SEXP); /* add named element to list end */
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 static int 	processLineDirective();
 
+static SEXP R_PlaceholderSymbol;
+
 /* These routines allocate constants */
 
 static SEXP	mkComplex(const char *);
@@ -1261,10 +1263,7 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 		    "or a function expression as RHS"));
 
 	/* allow for a top-level placeholder */
-	static SEXP R_UnderscoreSymbol = NULL;
-	if (R_UnderscoreSymbol == NULL)
-	    R_UnderscoreSymbol = install("_");
-	SEXP phcell = findPlaceholderCell(R_UnderscoreSymbol, rhs);
+	SEXP phcell = findPlaceholderCell(R_PlaceholderSymbol, rhs);
 	if (phcell != NULL) {
 	    SETCAR(phcell, lhs);
 	    return rhs;
@@ -1302,9 +1301,6 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
 	    error(_("The pipe operator requires a function call, a symbol, "
 		    "or an anonymous function expression as RHS"));
 
-	static SEXP R_PlaceholderSymbol = NULL;
-	if (R_PlaceholderSymbol == NULL)
-	    R_PlaceholderSymbol = install("_");
 	return fixup_pipe_rhs(R_PlaceholderSymbol, lhs, rhs);
     }
     RELEASE_SV(lhs);
@@ -1549,6 +1545,7 @@ void InitParser(void)
     INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
+    R_PlaceholderSymbol = install("_");
 }
 
 static void FinalizeSrcRefStateOnError(void *dummy)
@@ -4157,8 +4154,6 @@ static void growID( int target ){
     PS_SET_IDS(lengthgets2(PS_IDS, new_size));
 }
 
-static SEXP R_PlaceholderSymbol = NULL;
-
 static void NORET signal_ph_error(SEXP rhs, SEXP ph) {
     errorcall(rhs, _("pipe placeholder must only appear as a top-level "
 		     "argument in the RHS call")); //****
@@ -4187,14 +4182,14 @@ static SEXP fixup_pipe_rhs(SEXP placeholder, SEXP lhs, SEXP rhs)
 	    if (placeholder_cell == NULL)
 		placeholder_cell = cur;
 	    else
-		errorcall(rhs, "pipe placeholder may only appear once");
+		errorcall(rhs, _("pipe placeholder may only appear once"));
 	}
 	else if (TYPEOF(arg) == LANGSXP &&
 		 checkForPlaceholder(placeholder, arg))
 	    signal_ph_error(rhs, placeholder);
     }
     if (placeholder_cell == NULL)
-	errorcall(rhs, "no pipe placeholder in RHS call"); //****
+	errorcall(rhs, _("no pipe placeholder in RHS call")); //****
 
     SETCAR(placeholder_cell, lhs);
     return rhs;
@@ -4215,7 +4210,7 @@ static SEXP findPlaceholderCell(SEXP placeholder, SEXP rhs)
 	else if (checkForPlaceholder(placeholder, CAR(a)))
 	    signal_ph_error(rhs, placeholder);
     if (count > 1)
-	errorcall(rhs, "pipe placeholder may only appear once");//****
+	errorcall(rhs, _("pipe placeholder may only appear once"));//****
     return phcell;
 }
 
@@ -4232,12 +4227,8 @@ static SEXP wrapRHSBrace(SEXP lhs, SEXP rhs)
     if (TYPEOF(arg) != LANGSXP)
 	errorcall(rhs, _("malformed pipe RHS"));
 
-    if (CAR(arg) != R_CLNEQSymbol) {
-	static SEXP R_UnderscoreSymbol = NULL;
-	if (R_UnderscoreSymbol == NULL)
-	    R_UnderscoreSymbol = install("_");
-	return fixup_pipe_rhs(R_UnderscoreSymbol, lhs, arg);
-    }
+    if (CAR(arg) != R_CLNEQSymbol)
+	return fixup_pipe_rhs(R_PlaceholderSymbol, lhs, arg);
 
 #ifndef LAMBDA_IN_BRACE
     SEXP var = CADR(arg);
