@@ -467,6 +467,9 @@
 	double} identical to \code{double}, as ARM does.)
 
       \item \code{p.adjust(numeric(), n=0)} now works, fixing \PR{18002}.
+
+      \item \code{identical(x,y)} no longer prints "Unknown Type .." for
+      \code{typeof(x) == "..."} objects.
     }
   }
 }
