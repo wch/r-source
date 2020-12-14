@@ -2498,10 +2498,17 @@ if(FALSE) {
         }
     } else if (use_fc_link && (with_f77 || with_f9x))
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
-                      "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
+                      "SHLIB_LD='$(SHLIB_FCLD)'",
+                      ## avoid $(LIBINTL) and $(LIBR)
+                      "ALL_LIBS='$(PKG_LIBS) $(SHLIB_LIBADD)'",
+                      makeargs)
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
-    if (with_f77 || with_f9x)
-        shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
+    if (with_f77 || with_f9x) {
+        if (use_fc_link)
+            shlib_libadd <- c(shlib_libadd, "$(FCLIBS_XTRA)")
+        else
+            shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
+    }
 
     if (length(pkg_libs))
         makeargs <- c(makeargs,
