@@ -170,9 +170,9 @@
       the upper limit for Unicode points (\samp{\\U10FFFF}) as an error
       as they cannot be represented by valid UTF-8.
 
-      Where such escapes are use for outputting non-printable
+      Where such escapes are used for outputting non-printable
       characters, 6 (not 8) hex digits are used (as it was decided by
-      Unicode  that the first two would always be zero).
+      Unicode that the first two would always be zero).
 
       \item Code converting UTF-8 strings (e.g., \code{tolower()} and some
       \sQuote{printing}) now uses internal routines rather than system
