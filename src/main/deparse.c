@@ -1415,6 +1415,16 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	}
 	break; // end{case LANGSXP} ---------------------------------------------
     case STRSXP:
+	{
+	    /* for printing the pipe placeholder in a pipe expression */
+	    extern SEXP R_PlaceholderToken; /* from gram.y */
+	    if (s == R_PlaceholderToken &&
+		TYPEOF(s) == STRSXP && XLENGTH(s) == 1) {
+		print2buff(CHAR(STRING_ELT(s, 0)), d);
+		break;
+	    }
+	}
+	/* fall through */
     case LGLSXP:
     case INTSXP:
     case REALSXP:

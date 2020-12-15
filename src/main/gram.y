@@ -185,8 +185,10 @@ static SEXP	NewList(void);
 static void	NextArg(SEXP, SEXP, SEXP); /* add named element to list end */
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 static int 	processLineDirective();
+static int      checkForPlaceholder(SEXP placeholder, SEXP arg);
 
-static SEXP R_PlaceholderSymbol;
+static int HavePlaceholder = FALSE; 
+attribute_hidden SEXP R_PlaceholderToken = NULL;
 
 /* These routines allocate constants */
 
@@ -387,6 +389,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		PIPE
 %token		PIPE2
 %token		PIPE3
+%token          PLACEHOLDER
 
 /* This is the precedence table, low to high */
 %left		'?'
@@ -549,6 +552,10 @@ sub	:					{ $$ = xxsub0();	 }
 	|	STR_CONST EQ_ASSIGN expr_or_help    { $$ = xxsymsub1($1,$3, &@1); 	modif_token( &@2, EQ_SUB ) ; }
 	|	NULL_CONST EQ_ASSIGN 		{ $$ = xxnullsub0(&@1); 	modif_token( &@2, EQ_SUB ) ; }
 	|	NULL_CONST EQ_ASSIGN expr_or_help   { $$ = xxnullsub1($3, &@1); 	modif_token( &@2, EQ_SUB ) ; }
+	|       PLACEHOLDER                     { $$ = xxsub1($1, &@1);  }
+	|       SYMBOL EQ_ASSIGN PLACEHOLDER    { $$ = xxsymsub1($1,$3, &@1);      modif_token( &@2, EQ_SUB ) ; modif_token( &@1, SYMBOL_SUB ) ; }
+	|	STR_CONST EQ_ASSIGN PLACEHOLDER { $$ = xxsymsub1($1,$3, &@1); 	modif_token( &@2, EQ_SUB ) ; }
+	|	NULL_CONST EQ_ASSIGN PLACEHOLDER { $$ = xxnullsub1($3, &@1); 	modif_token( &@2, EQ_SUB ) ; }	
 	;
 
 formlist:					{ $$ = xxnullformal(); }
@@ -1263,7 +1270,7 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 		    "or a function expression as RHS"));
 
 	/* allow for a top-level placeholder */
-	SEXP phcell = findPlaceholderCell(R_PlaceholderSymbol, rhs);
+	SEXP phcell = findPlaceholderCell(R_PlaceholderToken, rhs);
 	if (phcell != NULL) {
 	    SETCAR(phcell, lhs);
 	    return rhs;
@@ -1301,7 +1308,7 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
 	    error(_("The pipe operator requires a function call, a symbol, "
 		    "or an anonymous function expression as RHS"));
 
-	return fixup_pipe_rhs(R_PlaceholderSymbol, lhs, rhs);
+	return fixup_pipe_rhs(R_PlaceholderToken, lhs, rhs);
     }
     RELEASE_SV(lhs);
     RELEASE_SV(rhs);
@@ -1545,7 +1552,9 @@ void InitParser(void)
     INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
-    R_PlaceholderSymbol = install("_");
+    R_PlaceholderToken = ScalarString(mkChar("_"));
+    MARK_NOT_MUTABLE(R_PlaceholderToken);
+    R_PreserveObject(R_PlaceholderToken);
 }
 
 static void FinalizeSrcRefStateOnError(void *dummy)
@@ -1668,6 +1677,7 @@ static void ParseInit(void)
     EndOfFile = 0;
     xxcharcount = 0;
     npush = 0;
+    HavePlaceholder = FALSE;
 }
 
 static void initData(void)
@@ -1702,6 +1712,9 @@ static SEXP R_Parse1(ParseStatus *status)
 	break;
     case 3:                     /* Valid expr '\n' terminated */
     case 4:                     /* Valid expr ';' terminated */
+        if (checkForPlaceholder(R_PlaceholderToken, R_CurrentExpr))
+	    errorcall(R_CurrentExpr,
+		      _("pipe placeholder may only appear in pipe"));
 	*status = PARSE_OK;
 	break;
     }
@@ -2281,6 +2294,7 @@ static void yyerror(const char *s)
 	"PIPE",         "'|>'",
 	"PIPE2",        "'>>'",
 	"PIPE3",        "'|>>'",
+	"PLACEHOLDER",  "_",
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -3208,6 +3222,16 @@ static int SymbolValue(int c)
     return SYMBOL;
 }
 
+static int Placeholder(int c)
+{
+    DECLARE_YYTEXT_BUFP(yyp);
+    YYTEXT_PUSH(c, yyp);
+    YYTEXT_PUSH('\0', yyp);
+    HavePlaceholder = TRUE;
+    PRESERVE_SV(yylval = R_PlaceholderToken);
+    return PLACEHOLDER;
+}
+
 static void setParseFilename(SEXP newname) {
     SEXP class;
     
@@ -3335,7 +3359,8 @@ static int token(void)
 	return StringValue(c, TRUE);
  symbol:
 
-    if (c == '.' || c == '_') return SymbolValue(c);
+    if (c == '.') return SymbolValue(c);
+    if (c == '_') return Placeholder(c);
     if(mbcslocale) {
 	mbcs_get_next(c, &wc);
 	if (iswalpha(wc)) return SymbolValue(c);
@@ -4156,12 +4181,14 @@ static void growID( int target ){
 
 static void NORET signal_ph_error(SEXP rhs, SEXP ph) {
     errorcall(rhs, _("pipe placeholder must only appear as a top-level "
-		     "argument in the RHS call")); //****
+		     "argument in the RHS call"));
 }
     
 static int checkForPlaceholder(SEXP placeholder, SEXP arg)
 {
-    if (arg == placeholder)
+    if (! HavePlaceholder)
+    	return FALSE;
+    else if (arg == placeholder)
 	return TRUE;
     else if (TYPEOF(arg) == LANGSXP)
 	for (SEXP cur = arg; cur != R_NilValue; cur = CDR(cur))
@@ -4189,7 +4216,7 @@ static SEXP fixup_pipe_rhs(SEXP placeholder, SEXP lhs, SEXP rhs)
 	    signal_ph_error(rhs, placeholder);
     }
     if (placeholder_cell == NULL)
-	errorcall(rhs, _("no pipe placeholder in RHS call")); //****
+	errorcall(rhs, _("no pipe placeholder in RHS call"));
 
     SETCAR(placeholder_cell, lhs);
     return rhs;
@@ -4210,7 +4237,7 @@ static SEXP findPlaceholderCell(SEXP placeholder, SEXP rhs)
 	else if (checkForPlaceholder(placeholder, CAR(a)))
 	    signal_ph_error(rhs, placeholder);
     if (count > 1)
-	errorcall(rhs, _("pipe placeholder may only appear once"));//****
+	errorcall(rhs, _("pipe placeholder may only appear once"));
     return phcell;
 }
 
@@ -4228,7 +4255,7 @@ static SEXP wrapRHSBrace(SEXP lhs, SEXP rhs)
 	errorcall(rhs, _("malformed pipe RHS"));
 
     if (CAR(arg) != R_CLNEQSymbol)
-	return fixup_pipe_rhs(R_PlaceholderSymbol, lhs, arg);
+	return fixup_pipe_rhs(R_PlaceholderToken, lhs, arg);
 
 #ifndef LAMBDA_IN_BRACE
     SEXP var = CADR(arg);
