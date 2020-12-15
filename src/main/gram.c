@@ -3930,7 +3930,11 @@ void InitParser(void)
     INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
+#ifdef DOUBLE_UNDERSCORE_PLACEHOLDER
+    R_PlaceholderToken = ScalarString(mkChar("__"));
+#else
     R_PlaceholderToken = ScalarString(mkChar("_"));
+#endif
     MARK_NOT_MUTABLE(R_PlaceholderToken);
     R_PreserveObject(R_PlaceholderToken);
 }
@@ -4672,7 +4676,11 @@ static void yyerror(const char *s)
 	"PIPE",         "'|>'",
 	"PIPE2",        "'>>'",
 	"PIPE3",        "'|>>'",
+#ifdef DOUBLE_UNDERSCORE_PLACEHOLDER
+	"PLACEHOLDER",  "__",
+#else
 	"PLACEHOLDER",  "_",
+#endif
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -5738,7 +5746,11 @@ static int token(void)
  symbol:
 
     if (c == '.') return SymbolValue(c);
+#ifdef DOUBLE_UNDERSCORE_PLACEHOLDER
+    if (c == '_' && nextchar('_')) return Placeholder(c);
+#else
     if (c == '_') return Placeholder(c);
+#endif
     if(mbcslocale) {
 	mbcs_get_next(c, &wc);
 	if (iswalpha(wc)) return SymbolValue(c);
