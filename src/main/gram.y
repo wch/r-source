@@ -390,6 +390,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		PIPE2
 %token		PIPE3
 %token          PLACEHOLDER
+%token          PIPEBIND
 
 /* This is the precedence table, low to high */
 %left		'?'
@@ -403,6 +404,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %left		PIPE3
 %left		'~' TILDE
 %left		PIPE PIPE2
+%left		PIPEBIND
 %left		OR OR2
 %left		AND AND2
 %left		UNOT NOT
@@ -483,6 +485,7 @@ expr_not_sym	: 	NUM_CONST		{ $$ = $1;	setId(@$); }
 	|	expr PIPE3 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
 	|	expr PIPE2 expr			{ $$ = xxpipe2($1,$3);  setId(@$); }
+	|	expr PIPEBIND expr		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	'(' SYMBOL ')' SHORTFUN expr_or_assign_or_help
 						{ $$ = xxfirstformal0($2); 	modif_token( &@2, SYMBOL_FORMALS ) ;
 						  $$ = xxshortfun($$,$5,&@$); 	setId(@$); }
@@ -1245,6 +1248,17 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 {
     SEXP ans;
     if (GenerateCode) {
+	/* allow x ==> x + 1 on RHS */
+	if (TYPEOF(rhs) == LANGSXP && CAR(rhs) == install("==>")) {
+	    SEXP var = CADR(rhs);
+	    SEXP expr = CADDR(rhs);
+	    SEXP phcell = findPlaceholderCell(var, expr);
+	    if (phcell == NULL)
+		error(_("no placeholder found on RHS"));
+	    SETCAR(phcell, lhs);
+	    return expr;
+	}
+	    
 	/* allow for parenthesized RHS */
 	static SEXP R_ParenSymbol = NULL;
 	if (R_ParenSymbol == NULL)
@@ -2297,6 +2311,7 @@ static void yyerror(const char *s)
 	"PIPE",         "'|>'",
 	"PIPE2",        "'>>'",
 	"PIPE3",        "'|>>'",
+	"PIPEBND",        "'==>'",
 #ifdef DOUBLE_UNDERSCORE_PLACEHOLDER
 	"PLACEHOLDER",  "__",
 #else
@@ -3433,6 +3448,10 @@ static int token(void)
 	return '!';
     case '=':
 	if (nextchar('=')) {
+	    if (nextchar('>')) {
+		yylval = install_and_save("==>");
+		return PIPEBIND;
+	    }
 	    yylval = install_and_save("==");
 	    return EQ;
 	}
@@ -3712,6 +3731,7 @@ static int yylex(void)
     case PIPE:
     case PIPE2:
     case PIPE3:
+    case PIPEBIND:
     case SPECIAL:
     case FUNCTION:
     case WHILE:
