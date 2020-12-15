@@ -1317,7 +1317,6 @@ static SEXP xxpipe2(SEXP lhs, SEXP rhs)
 
 static SEXP xxshortfun(SEXP formals, SEXP body, YYLTYPE *lloc)
 {
-    SEXP R_FunctionSymbol = R_FunctionSymbol;
     return xxdefun(R_FunctionSymbol, formals, body, lloc);
 }
     
