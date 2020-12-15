@@ -175,7 +175,7 @@
       Unicode  that the first two would always be zero).
 
       \item Code converting UTF-8 strings (e.g., \code{tolower()} and some
-      \sQuote{printing} now uses internal routines rather than system
+      \sQuote{printing}) now uses internal routines rather than system
       functions:  these detect more uses of invalid UTF-8 strings.
     }
   }
