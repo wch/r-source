@@ -1602,7 +1602,7 @@ can be viewed from @Rapp{}'s `Help' menu.
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer puts links to @command{R} and
 @command{Rscript} in @file{/usr/local/bin}. If these are missing (as
-they may be under `Big Sur', you can run directly the copies in
+they may be under `Big Sur'), you can run directly the copies in
 @file{/Library/Frameworks/R.framework/Resources/}.} so these can be
 typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
@@ -5107,7 +5107,7 @@ external software.
 @node Note for Catalina and Big Sur users,  , Prerequisites, Prerequisites
 @subsubsection Note for Catalina and Big Sur users
 
-A later Fortran compiler for Catalina and later is available at
+A more recent Fortran compiler for Catalina and later is available at
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg}.
 (That does not run on High Sierra.)
 
@@ -5119,10 +5119,8 @@ by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/zipfiles (for example, for @command{pandoc}).
 Usually one can use @samp{Open With} (Control/right/two-finger-click in
 Finder), then select @samp{Installer} and @samp{Open} if you get a
-further warning message.
-
-This applies also to some `nightly builds' from
-@uref{https://mac.R-project.org/}.
+further warning message.  This applies also to some `nightly builds'
+from @uref{https://mac.R-project.org/}.
 
 If you run into problems with `quarantine' for tarballs downloaded in a
 browser, consider using @command{curl -OL} to download (as illustrated
@@ -5334,13 +5332,11 @@ installed at first use.  Check if a JRE is installed by running
 installed@footnote{In the unlikely event that the version reported does
 not start with @code{1.8.0}, @code{11} or higher you need to update your
 Java.} this should prompt you to install it.@footnote{Not at the time of
-writing for @cputype{arm64}.  On @cputype{x86_64} it installs from
-Oracle and you may prefer the licensing conditions of one of the
-alternatives in the main text.} You can also install directly a recent
+writing for @cputype{arm64}.} You can also install directly a recent
 Java from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html,
-Oracle}.  Builds of OpenJDK may also be available, e.g.@: from
-@uref{https://adoptopenjdk.net, AdoptOpenJDK},
+Oracle}.  Builds of OpenJDK with a less restricive licence may also be
+available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
 @uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
 long-term support, e.g.@: 8 or 11 (but not 9, 10, 12--16 which have/had
@@ -5350,7 +5346,8 @@ Binary distributions of @R{} are built against a specific version
 (e.g.@: 1.8.0_241 or 11.0.6) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
 
-To use a @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{}
+To use Java (specifically, package @CRANpkg{rJava} with a @acronym{CRAN}
+(@cputype{x86_64}) binary distribution of @R{} on @cputype{arm64}
 install a @cputype{x86_64} of a Java JRE such as that from
 @uref{https://adoptopenjdk.net, AdoptOpenJDK}, then run @command{sudo R
 CMD javareconf}.
@@ -5362,7 +5359,7 @@ environment variable @env{JAVA_HOME} to choose between these, both when
 run.
 
 Configuring and building @R{} both looks for a JRE and for support for
-compiling JNI programs (used by packages @CRANpkg{rJava} and
+compiling JNI programs (used to install packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the latter requires a JDK (Java SDK) and not just a
 JRE@footnote{As from Java 11, there is no separate client JRE
 distribution from Oracle, but there may be from OpenJDK.}.
@@ -5389,7 +5386,7 @@ in @file{config.site}.
 
 @c jdk.java.net no longer has Java 11 LTS builds.
 To use the builds of OpenJDK from @uref{https://adoptopenjdk.net,
-AdoptOpenJDK} set
+AdoptOpenJDK} set e.g.@:
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
 @end example
@@ -5567,7 +5564,7 @@ the fork of @command{gfortran} from
 @url{https://github.com/@/iains/@/gcc-darwin-arm64}, and there is an
 experimental binary distribution at
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}}
-So this is section is experimental.
+So this section is experimental.
 
 At the time of writing updating a build failed because of the bug
 described at
@@ -5581,12 +5578,11 @@ At the time of writing no distribution of X11@footnote{XQuartz has
 sources on GitHub, so one could try building from those.} was available,
 so @R{} was configured with @option{--without-x}.  The prerequisites.
 @code{jpeg}, @code{libpng}, @code{pcre2},@footnote{@emph{pro tem} built
-without JIT support.}  @code{readline},@footnote{the @code{libedit}
-emulation can also be used.} @code{tiff}, @code{xz} and
-Tcl/Tk@footnote{configured with @option{--enable-agua}.}  can easily be
-built from their sources (although the @code{libedit} emulation of
-@code{readline} will also work).  You will also need @code{pkgconfig}
-and @code{zlib-system-stub} from
+without JIT support as the build segfaults if that is enabled.}
+@code{readline},@footnote{the @code{libedit} emulation can also be
+used.} @code{tiff}, @code{xz} and Tcl/Tk@footnote{configured with
+@option{--enable-agua}.}  can easily be built from their sources.  You
+will also need @code{pkgconfig} and @code{zlib-system-stub} from
 @uref{https://mac.R-project.org/libs-4/} for @command{pkg-config} and
 support files.  Experimentally, some prerequisites are available at
 @uref{https://mac.r-project.org/libs-arm/}.
@@ -5616,7 +5612,7 @@ library @emph{via} the configuration option
 --with-blas="-framework Accelerate"
 @end example
 
-Note that most pf this software will not co-exist with that needed for
+Note that most of this software will not co-exist with that needed for
 @cputype{x86_64} builds.  The pre-built Fortran compilers both live
 under @file{/usr/local/gfortran} and cannot easily be relocated.
 Libraries such as @code{libjpeg}, @code{liblzma}, @code{libpcre2},
