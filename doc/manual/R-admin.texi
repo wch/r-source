@@ -5284,7 +5284,7 @@ This may need @command{configure} options
 @end example
 or
 @example
---with-tcl-config=/usr/local/lib/tclConfig.sh 
+--with-tcl-config=/usr/local/lib/tclConfig.sh
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
 Note that this requires a matching XQuartz installation.
@@ -5618,9 +5618,17 @@ under @file{/usr/local/gfortran} and cannot easily be relocated.
 Libraries such as @code{libjpeg}, @code{liblzma}, @code{libpcre2},
 @code{libpng}, @code{libreadline} and @code{libtiff} are looked for in
 @file{/usr/local/lib}: as these are all distributed as static libraries
-this only matters when building from source.  However, Tcl/Tk (dynamic
-libraries and support files) are also located under @file{/usr/local/lib} so
-only one architecture can be installed even at run time.
+this only matters when building @R{} from source.  However, Tcl/Tk
+(dynamic libraries and support files) are by default also located under
+@file{/usr/local/lib} so only one architecture can be installed even at
+run time.  One option is to build the native Aqua Tcl/Tk as foundations
+(@command{configure} option @option{--enable-framework}) and configure
+@R{} including the lines
+
+@example
+--with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
+--with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
+@end example
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
