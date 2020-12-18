@@ -2690,7 +2690,8 @@ c Goto's BLAS at least needs a XERBLA
       zres = zdotu(2, zx, 1, zx, 1)
       ztemp = (0.0d0,0.0d0)
       do 10 i = 1,2
- 10      ztemp = ztemp + zx(i)*zx(i)
+         ztemp = ztemp + zx(i)*zx(i)
+ 10      continue
       if(abs(zres - ztemp) > 1.0d-10) then
         iflag = 1
       else
