@@ -1210,10 +1210,12 @@ Fortran usually work for the platform's native compilers.
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{_WIN32} will be defined: on 64-bit Windows builds also
-@samp{_WIN64}, and on macOS @samp{__APPLE__} is defined.@footnote{There
-is also @samp{__APPLE_CC__}, but that indicates a compiler with
-Apple-specific features, not the OS.  It is used in
-@file{Rinlinedfuns.h}.}
+@samp{_WIN64}.  On macOS @samp{__APPLE__} is defined@footnote{There is
+also @samp{__APPLE_CC__}, but that indicates a compiler with
+Apple-specific features not the OS, although for historical reasons is
+is defined by LLVM @command{clang}.  It is used in
+@file{Rinlinedfuns.h}.}; for an `Apple Silicon' platform, test for both
+@samp{__APPLE__} and @samp{__arm64__}.
 
 The default rules can be tweaked by setting macros@footnote{the POSIX
 terminology, called `make variables' by GNU make.} in a file

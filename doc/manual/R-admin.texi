@@ -5646,6 +5646,13 @@ CPP='clang -E' CXXCPP='clang++ -E'
 This cannot be done as simply for Fortran as that would need a bi-arch
 version of @code{libgfortran}.
 
+@c https://developer.apple.com/documentation/xcode/building_a_universal_macos_binary
+According to Apple C/C++ code intended to only this architecture can be
+enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
+@code{__aarch64__} : you may want to also condition on
+@code{__APPLE__} as those macros are defined on other OSes, at least for
+@command{clang} and @command{gcc} (@code{__aarch64__}).
+
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
 @cindex Solaris
