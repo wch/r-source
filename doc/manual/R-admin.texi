@@ -5184,8 +5184,8 @@ Tools), it can be found by running @command{xcrun -show-sdk-path}.
 
 It is usually possible to build @R{} with GCC (built from the sources,
 from a @command{gfortran} distribution, from Homebrew, @dots{}).  When
-last tested@footnote{with @command{gcc} 10.2 on High Sierra.} it was not
-possible to use @command{gcc} to build the @code{quartz()} device, so
+last tested@footnote{with @command{gcc} 10.2.} it was not possible to
+use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
@@ -5571,20 +5571,18 @@ described at
 @uref{https://openradar.appspot.com/@/FB8914243}
 but @emph{ab initio} builds worked.
 
-Native Java builds are becoming available, for example
-@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
-
 At the time of writing no distribution of X11@footnote{XQuartz has
 sources on GitHub, so one could try building from those.} was available,
 so @R{} was configured with @option{--without-x}.  The prerequisites.
-@code{jpeg}, @code{libpng}, @code{pcre2},@footnote{@emph{pro tem} built
-without JIT support as the build segfaults if that is enabled.}
-@code{readline},@footnote{the @code{libedit} emulation can also be
-used.} @code{tiff}, @code{xz} and Tcl/Tk@footnote{configured with
-@option{--enable-agua}.}  can easily be built from their sources.  You
-will also need @code{pkgconfig} and @code{zlib-system-stub} from
-@uref{https://mac.R-project.org/libs-4/} for @command{pkg-config} and
-support files.  Experimentally, some prerequisites are available at
+@code{pcre2},@footnote{@emph{pro tem} built without JIT support as the
+build segfaults if that is enabled.}  @code{readline},@footnote{the
+@code{libedit} emulation can also be used.}  @code{xz} and (Aqua)
+Tcl/Tk@footnote{configured with @option{--enable-agua}.}  can easily be
+built from their sources. (Without X11 support, the bitmap device
+support libraries @code{jpeg}, @code{libpng} and @code{tiff} are not
+needed.  Nor currently is @code{pkgconfig} needed to build @R{}.)
+
+Experimentally, some prerequisites are available at
 @uref{https://mac.r-project.org/libs-arm/}.
 
 @R{} was configured by
@@ -5605,6 +5603,9 @@ FC="/usr/local/gfortran/bin/gfortran -mtune=native"
 CXX="clang++ -target arm64-apple-macos11"
 @end example
 
+Native Java builds are becoming available, for example
+@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
+
 As with Intel builds, it is possible to use the @code{Accelerate}
 library @emph{via} the configuration option
 
@@ -5615,20 +5616,35 @@ library @emph{via} the configuration option
 Note that most of this software will not co-exist with that needed for
 @cputype{x86_64} builds.  The pre-built Fortran compilers both live
 under @file{/usr/local/gfortran} and cannot easily be relocated.
-Libraries such as @code{libjpeg}, @code{liblzma}, @code{libpcre2},
-@code{libpng}, @code{libreadline} and @code{libtiff} are looked for in
-@file{/usr/local/lib}: as these are all distributed as static libraries
-this only matters when building @R{} from source.  However, Tcl/Tk
-(dynamic libraries and support files) are by default also located under
-@file{/usr/local/lib} so only one architecture can be installed even at
-run time.  One option is to build the native Aqua Tcl/Tk as foundations
-(@command{configure} option @option{--enable-framework}) and configure
-@R{} including the lines
+Libraries such as @code{liblzma}, @code{libpcre2} and @code{libreadline}
+are looked for in @file{/usr/local/lib}: as these are all distributed as
+static libraries this only matters when building @R{} from source.
+However, Tcl/Tk (dynamic libraries and support files) are by default
+also located under @file{/usr/local/lib} so only one architecture can be
+installed even at run time.  One option is to build the native Aqua
+Tcl/Tk as foundations (use @command{configure} option
+@option{--enable-framework} for both) and configure @R{} including the
+lines
 
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
 @end example
+
+It is possible to build external libraries containing both architectures
+which could then be used for both builds.  A typical configure line
+might be
+
+@example
+./configure --enable-static --disable-shared \
+CC='clang -arch arm64 -arch x86_64' CFLAGS=-O2 \
+CXX='clang++ -arch arm64 -arch x86_64' CXXFLAGS=-O2 \
+CPP='clang -E' CXXCPP='clang++ -E'
+@end example
+
+@noindent
+This cannot be done as simply for Fortran as that would need a bi-arch
+version of @code{libgfortran}.
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
