@@ -177,6 +177,10 @@
       \item Code converting UTF-8 strings (e.g., \code{tolower()} and some
       \sQuote{printing}) now uses internal routines rather than system
       functions:  these detect more uses of invalid UTF-8 strings.
+
+      There are warnings (including from the parser) on the use of unpaired
+      surrogate Unicode points such as \samp{\\uD834} (which cannot be
+      converted to valid UTF-8).
     }
   }
 

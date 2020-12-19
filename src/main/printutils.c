@@ -449,12 +449,13 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    }
 		    p++;
 		} else {
+		    // conceivably an invalid \U escape could use 11 or 12
 		    len += iswprint((wint_t)k) ? Ri18n_wcwidth(wc) :
 		    	(k > 0xffff ? 10 : 6);
 		    i += (res - 1);
 		    p += res;
 		}
-	    } else {
+	    } else { /* invalid char */
 		len += 4;
 		p++;
 	    }

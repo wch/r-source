@@ -1433,8 +1433,11 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
 	    R_wchar_t cvalue =  ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
 	    m = Rwcrtomb32(t, cvalue, n - res);
 	    p++;
-	} else
+	} else {
+	    if (IS_HIGH_SURROGATE(*p) || IS_LOW_SURROGATE(*p))
+		warning("unpaired surrogate Unicode point %x", *p);
 	    m = Rwcrtomb32(t, (R_wchar_t)(*p), n - res);
+	}
 	if (!m) break;
 	res += m;
 	if (t)
