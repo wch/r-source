@@ -5335,7 +5335,7 @@ Java.} this should prompt you to install it.@footnote{Not at the time of
 writing for @cputype{arm64}.} You can also install directly a recent
 Java from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html,
-Oracle}.  Builds of OpenJDK with a less restricive licence may also be
+Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
 @uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
