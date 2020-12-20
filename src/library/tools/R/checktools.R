@@ -151,6 +151,11 @@ function(dir,
         pos <- pmatch(names(reverse), names(defaults), nomatch = 0L)
         defaults[pos] <- reverse[pos > 0L]
 
+        subset_reverse_repos <- !identical(defaults$repos, getOption("repos"))
+        if(subset_reverse_repos &&
+           !all(defaults$repos %in% getOption("repos")))
+            stop("'reverse$repos' should be a subset of getOption(\"repos\")")
+
         rnames <- if(is.list(defaults$which)) {
             ## No recycling of repos for now.
             defaults$recursive <- rep_len(as.list(defaults$recursive),
@@ -195,7 +200,7 @@ function(dir,
         rnames <- setdiff(rnames, pnames)
 
         pos <- match(rnames, available[, "Package"], nomatch = 0L)
-        if(!identical(defaults$repos, getOption("repos"))) {
+        if(subset_reverse_repos) {
             pos <- split(pos[pos > 0L], available[pos, "Repository"])
             ## Only want the reverse dependencies for which Repository
             ## starts with an entry in defaults$repos.
@@ -1011,7 +1016,7 @@ function(dir, logs = NULL, drop_ok = TRUE, ...)
 
     db <- as.data.frame(db, stringsAsFactors = FALSE)
     class(db) <- c("check_details", "data.frame")
-    
+
     db
 }
 
