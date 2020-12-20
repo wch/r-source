@@ -8210,7 +8210,7 @@ Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version), @command{Shark} (in version of @code{Xcode}
 up to those for Snow Leopard), and @command{Instruments} (part of
 @code{Xcode}, see
-@uref{https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/index.html}).
+@uref{https://help.apple.com/instruments/mac/current}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
