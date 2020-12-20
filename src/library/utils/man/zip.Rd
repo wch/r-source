@@ -1,6 +1,6 @@
 % File src/library/utils/man/zip.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{zip}
@@ -23,9 +23,9 @@ zip(zipfile, files, flags = "-r9X", extras = "",
   \item{zip}{A character string specifying the external command to be used.}
 }
 \details{
-  On a Unix-alike, the default for \code{zip} will by default use the
-  value of \env{R_ZIPCMD}, which is set in \file{etc/Renviron} if an
-  \code{unzip} command was found during configuration.  On Windows, the
+  On a Unix-alike, the default for \code{zip} will use the
+  value of \env{R_ZIPCMD}, whose default is set in \file{etc/Renviron}
+  to the \code{zip} command found during configuration.  On Windows, the
   default relies on a \command{zip} program (for example that from
   Rtools) being in the path.
 

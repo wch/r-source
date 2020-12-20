@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zip.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -101,7 +101,10 @@ zip <- function(zipfile, files, flags = "-r9X", extras = "",
                 zip = Sys.getenv("R_ZIPCMD", "zip"))
 {
     if (missing(flags) && (!is.character(files) || !length(files)))
-        stop("'files' must a character vector specifying one or more filepaths")
+        stop("'files' must be a character vector specifying one or more filepaths")
+    if(!is.character(zip) || length(zip) != 1L || !nzchar(zip))
+        stop("argument 'zip' must be a non-empty character string")
+
     args <- c(flags, shQuote(path.expand(zipfile)),
               shQuote(files), extras)
     if (sum(nchar(c(args, Sys.getenv()))) + length(args) > 8000) {
