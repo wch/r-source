@@ -9499,11 +9499,28 @@ currently -1 (no limit) and 5 respectively.
 @node Debugging on macOS,  , Inspecting R objects, Debugging compiled code
 @subsection Debugging on macOS
 
+To debug code in a package it is easiest to unpack it in a directory and
+install it with
+
+@example
+R CMD INSTALL --dsym @var{pkgname}
+@end example
+
+@noindent
+as macOS does not store debugging symbols in the @file{.so} file.  (It
+is not necessary to have @R{} built with debugging symbols, although
+compiling the package should be done including @option{-g} in
+@code{CFLAGS} / @code{CXXFLAGS} / @code{FCFLAGS} as appropriate.)
+
 Security measures may prevent running a @acronym{CRAN} binary
 distribution of @R{} under @command{lldb} or attaching this as a
 debugger
 (@uref{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#I-cannot-attach-debugger-to-R}),
-although both were possible on High Sierra in mid-2020.
+although both were possible on High Sierra in mid-2020.  This can also
+affect locally compiled builds, where attaching to an interactive @R{}
+session under Big Sur worked in late 2020 after giving permission
+@emph{via} a popup-up.  (To debug in what Apple deems a non-interactive
+session, e.g. logged in remotely, see @command{man DevToolsSecurity}.)
 
 Debugging a local build of @R{} on macOS can raise additional hurdles as
 environment variables such as @env{DYLD_FALLBACK_LIBRARY_PATH} are not
@@ -9518,16 +9535,30 @@ Process 16828 launched: '/path/to/bin/exec/R' (x86_64)
 dyld: Library not loaded: libR.dylib
   Referenced from: /path/to/bin/exec/R
 @end example
-@indent
-It may be simplest to attach the debugger to a running process (see
-above).  A quick workaround is to symlink the dylibs under
-@file{R_HOME/lib} to somewhere where they will be found such as the
-current working directory.  It would be possible to do as the
-distribution does@footnote{See
+
+@noindent
+A quick workaround is to symlink the dylibs under @file{R_HOME/lib} to
+somewhere where they will be found such as the current working
+directory.  It would be possible to do as the distribution
+does@footnote{See
 @uref{https://svn.r-project.org/R-dev-web/trunk/CRAN/QA/Simon/R-build/fixpathR}:
 @samp{@@executable_path} could be used rather than absolute paths.}  and
 use @command{install_name_tool}, but that would have to be done for all
 the dylibs including those in packages.
+
+It may be simplest to attach the debugger to a running process (see
+above).  Specifcally, run @R{} and when it is at the prompt just before
+a command that is to be debugged, at a terminal 
+
+@example
+pw -ef | grep exec/R
+# identify the pid @var{pid} for the next command
+lldb -p @var{pid}
+(lldb) continue
+@end example
+
+@noindent
+and then return to the @R{} console.
 
 For non-interactive use, one may need @command{lldb --batch}.
 
