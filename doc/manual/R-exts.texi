@@ -4549,8 +4549,7 @@ features from later standards.  (Although @R{} only requires Fortran 90,
 
 @R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
 @code{COMPLEX*16}.  (One can also use something like
-@code{COMPLEX(KIND=KIND(0.0D0))}@footnote{See
-@uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
+@code{COMPLEX(KIND=KIND(0.0D0))}.)
 
 
 Not all common @R{} platforms conform to the expected standards, e.g.@:
@@ -13716,6 +13715,7 @@ what the @code{.Fortran} call used) but only has 8.
 @menu
 * Fortran character strings::
 * Fortran LOGICAL::
+* Passing functions::
 @end menu
 
 @node Fortran character strings, Fortran LOGICAL, Calling C from Fortran and vice versa, Calling C from Fortran and vice versa
@@ -13875,7 +13875,7 @@ the character length(s) from C to Fortran. A portable way to do this is
 It is strongly recommended that packages which call from C/C++
 BLAS/LAPACK routines with character arguments adopt this approach.
 
-@node Fortran LOGICAL,  , Fortran character strings, Calling C from Fortran and vice versa
+@node Fortran LOGICAL, Passing functions, Fortran character strings, Calling C from Fortran and vice versa
 @subsection Fortran LOGICAL
 
 Passing Fortran LOGICAL variables to/from C/C++ is potentially
@@ -13887,6 +13887,38 @@ However, recent versions of @command{gfortran} @emph{via} the option
 *} as a mismatch. It is possible to use @code{iso_c_binding} in Fortran
 to map LOGICAL variables to the C99 type @code{_Bool}, but it is usually
 simpler to pass integers to and fro.
+
+@node Passing functions,  , Fortran LOGICAL, Calling C from Fortran and vice versa
+@subsection Passing functions
+
+A number of packages call C functions passed as arguments to Fortran
+code along the lines of
+
+@example
+c         subroutine fcn(m,n,x,fvec,iflag)
+c         integer m,n,iflag
+c         double precision x(n),fvec(m)
+...
+      subroutine lmdif(fcn, ...
+@end example
+
+@noindent
+where the C declaration and call are
+
+@example
+void fcn_lmdif(int *m, int *n, double *par, double *fvec, int *iflag);
+
+void F77_NAME(lmdif)(void (*fcn_lmdif)(int *m, int *n, double *par,
+                                       double *fvec, int *iflag), ...
+
+F77_CALL(lmdif)(&fcn_lmdif, ...
+@end example
+
+This works on most platforms but depends on the C and Fortran compilers
+(which need not be from the same family) agreeing on calling
+conventions.  Several instances have been seen where this fails on
+@cputype{arm64} macOS.  The most portable solution seems to be to
+convert the Fortran code to C, perhaps using @command{f2c}.
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
