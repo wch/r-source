@@ -4655,6 +4655,12 @@ stopifnot(identical(n0, p.adjust(n0, n = length(n0))))
 ## errored in R <= 4.0.3
 
 
+## show(<standardGeneric>) where it has package ".GlobalEnv"
+f <- function(x) x
+setGeneric("f")
+f # failed for a while (in R-devel only)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
