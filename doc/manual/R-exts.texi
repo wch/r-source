@@ -13829,7 +13829,7 @@ void cmsg(const char *msg)
 @end example
 
 Passing a variable-length string from C to Fortran is trickier, but
-@uref{https://software.intel.com/@/content/@/www/@/us/@/en/@/develop/@/documentation/@/fortran-compiler-developer-guide-and-reference/@/top/@/compiler-reference/@/mixed-language-programming/@/standard-tools-for-interoperability/@/bind.html}
+@uref{https://software.intel.com/@/content/@/www/@/us/@/en/@/develop/@/documentation/@/fortran-compiler-oneapi-dev-guide-and-reference/@/top/@/compiler-reference/@/mixed-language-programming/@/standard-tools-for-interoperability/@/bind.html}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
 single character, and for these we can write a wrapper in Fortran
 along the lines of
