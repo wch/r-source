@@ -4908,10 +4908,10 @@ SAFE_FFLAGS=-axsse2
 
 The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
 10.13--10.15 (High Sierra, Mojave and Catalina) and 11 (Big
-Sur)@footnote{For `Apple Silicon' see R-devel.}.  @R{} can in principle
-be built for 10.6--10.12, although this is little tested and it may be
-necessary to install later versions of software such as @code{libcurl}
-and an older version@footnote{For example, from
+Sur)@footnote{For `Apple Silicon' aka `M1' see R-devel.}.  @R{} can in
+principle be built for 10.6--10.12, although this is little tested and
+it may be necessary to install later versions of software such as
+@code{libcurl} and an older version@footnote{For example, from
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
 @command{gfortran}.
 
@@ -5173,8 +5173,8 @@ Line Tools.)
 
 It is usually possible to build @R{} with GCC (built from the sources,
 from a @command{gfortran} distribution, from Homebrew, @dots{}).  When
-last tested@footnote{with @command{gcc} 10.2 on High Sierra.} it was not
-possible to use @command{gcc} to build the @code{quartz()} device, so
+last tested@footnote{with @command{gcc} 10.2.} it was not possible to
+use @command{gcc} to build the @code{quartz()} device, so
 @command{configure --without-aqua} may be required.
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
@@ -5273,7 +5273,7 @@ This may need @command{configure} options
 @end example
 or
 @example
---with-tcl-config=/usr/local/lib/tclConfig.sh 
+--with-tcl-config=/usr/local/lib/tclConfig.sh
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
 Note that this requires a matching XQuartz installation.
@@ -5324,7 +5324,7 @@ Java.} this should prompt you to install it.@footnote{Not at the time of
 writing for @cputype{arm64}.} You can also install directly a recent
 Java from
 @uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html,
-Oracle}.  Builds of OpenJDK with a less restricive licence may also be
+Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
 @uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
