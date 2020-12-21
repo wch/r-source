@@ -4532,8 +4532,7 @@ features from later standards.  (Although @R{} only requires Fortran 90,
 
 @R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
 @code{COMPLEX*16}.  (One can also use something like
-@code{COMPLEX(KIND=KIND(0.0D0))}@footnote{See
-@uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
+@code{COMPLEX(KIND=KIND(0.0D0))}.)
 
 
 Not all common @R{} platforms conform to the expected standards, e.g.@:
