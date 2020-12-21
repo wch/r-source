@@ -9547,7 +9547,7 @@ use @command{install_name_tool}, but that would have to be done for all
 the dylibs including those in packages.
 
 It may be simplest to attach the debugger to a running process (see
-above).  Specifcally, run @R{} and when it is at the prompt just before
+above).  Specifically, run @R{} and when it is at the prompt just before
 a command that is to be debugged, at a terminal 
 
 @example
