@@ -1233,7 +1233,7 @@ There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
 Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
-@uref{https://msdn.microsoft.com/@/en-us/@/library/@/ms710252%28v=vs.85%29.aspx})
+@uref{https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc})
 but is also implemented on Linux/Unix/macOS.
 
 All of the packages described later in this chapter provide clients to
