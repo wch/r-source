@@ -7226,6 +7226,23 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         bad <- Filter(length, bad)
         if(length(bad))
             out$Rd_keywords_or_concepts_more_than_one <- .fmt(bad)
+        ## Also check for URLs which should use \doi with the DOI name.
+        .fmt <- function(x) {
+            Map(function(f, e) {
+                    c(paste0("  File ", sQuote(f), ":"),
+                      paste0("    ", e))
+                },
+                names(x), x)
+        }
+        bad <- lapply(Rdb,
+                      function(Rd) {
+                          grep("https?://(dx[.])?doi[.]org/10",
+                               .get_urls_from_Rd(Rd),
+                               value = TRUE)
+                      })
+        bad <- Filter(length, bad)
+        if(length(bad))
+            out$Rd_URLs_which_should_use_doi <- .fmt(bad)
     }
 
 
@@ -7445,9 +7462,18 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         ## matching wrapped texts for to ease reporting ...
         out$descr_bad_URLs <- descr[ind]
     }
-    if(any(ind <- grepl("https?://.*doi.org/", descr)))
+    if(any(ind <- grepl(paste(c("https?://.*doi.org/",
+                                "(^|[^<])doi:",
+                                "<doi[^:]",
+                                "<10[.]"),
+                              collapse = "|"),
+                        descr, ignore.case = TRUE)))
         out$descr_bad_DOIs <- descr[ind]
-    if(any(ind <- grepl("https?://arxiv.org", descr)))
+    if(any(ind <- grepl(paste(c("https?://arxiv.org",
+                                "(^|[^<])arxiv:",
+                                "<arxiv[^:]"),
+                              collapse = "|"),
+                        descr, ignore.case = TRUE)))
         out$descr_bad_arXiv_ids <- descr[ind]
 
     skip_dates <-
@@ -8475,6 +8501,10 @@ function(x, ...)
             if(length(y <- x$Rd_keywords_or_concepts_more_than_one))
                 paste(c("Found the following \\keyword or \\concept entries",
                         "which likely give several index terms:",
+                        unlist(y)),
+                      collapse = "\n"),
+            if(length(y <- x$Rd_URLs_which_should_use_doi))
+                paste(c("Found the following URLs which should use \\doi (with the DOI name only):",
                         unlist(y)),
                       collapse = "\n")))
       )
