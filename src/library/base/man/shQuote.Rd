@@ -40,7 +40,8 @@ shQuote(string, type = c("sh", "csh", "cmd", "cmd2"))
   In Windows, command line interpretation is done by the application
   as well as the shell.  It may depend on the compiler used:
   Microsoft's rules for the C run-time are given at 
-  \url{https://msdn.microsoft.com/library/ms880421}. It may depend on
+  \url{https://docs.microsoft.com/en-us/previous-versions/ms880421(v=msdn.10)}.
+  It may depend on
   the whim of the programmer of the application: check its
   documentation.  The \code{type = "cmd"} quoting surrounds the string
   by double quotes and escapes internal double quotes by a backslash.

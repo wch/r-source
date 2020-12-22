@@ -1377,7 +1377,7 @@ proposal for a unified `front-end' package @CRANpkg{DBI}
 `back-end', the most developed of which is @CRANpkg{RMySQL}.  Also on
 @acronym{CRAN} are the back-ends @CRANpkg{ROracle},
 @CRANpkg{RPostgreSQL} and @CRANpkg{RSQLite} (which works with the
-bundled DBMS @code{SQLite}, @uref{https://www.sqlite.org}) and
+bundled DBMS @code{SQLite}, @uref{https://www.sqlite.org/index.html}) and
 @CRANpkg{RJDBC} (which uses Java and can connect to any DBMS that has a
 JDBC driver).
 
@@ -1819,7 +1819,7 @@ Borland which has a binary flat-file format that became popular, with
 file extension @file{.dbf}.  It has been adopted for the 'Xbase' family
 of databases, covering dBase, Clipper, FoxPro and their Windows
 equivalents Visual dBase, Visual Objects and Visual FoxPro (see
-@uref{https://www.clicketyclick.dk/databases/xbase/format}).
+@uref{https://www.clicketyclick.dk/databases/xbase/format/}).
 A dBase file contains
 a header and then a series of fields and so is most similar to an @R{}
 data frame.  The data itself is stored in text format, and can include
@@ -2314,7 +2314,7 @@ possibility.
 
 If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
-example Gnumeric (@uref{https://www.gnome.org/projects/gnumeric/}) and
+example Gnumeric (@uref{http://www.gnumeric.org}) and
 OpenOffice (@uref{https://www.openoffice.org}).  You can also
 cut-and-paste between the display of a spreadsheet in such a program and
 R: @code{read.table} will read from the R console or, under Windows,

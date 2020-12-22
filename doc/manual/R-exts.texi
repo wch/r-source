@@ -7608,7 +7608,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@uref{https://www.rstudio.com/}).
+example RStudio (@uref{https://rstudio.com/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
@@ -8856,7 +8856,7 @@ and for checking C++ you may also need @pkg{libubsan}.} of @command{gcc}
 and @command{clang} on common Linux and macOS platforms.  See
 @uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
 @uref{https://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
-@uref{https://code.google.com/@/p/@/address-sanitizer/}.
+@uref{https://github.com/google/sanitizers}.
 
 More thorough checks of C++ code are done if the C++ library has been
 `annotated': at the time of writing this applied to @code{std::vector}
@@ -8931,7 +8931,7 @@ without OpenMP, @option{-pthread} is also required.)
 
 For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
-@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/AddressSanitizerFLags}.
+@uref{https://github.com/google/sanitizers/wiki/AddressSanitizerFlags}.
 With @command{gcc} additional control is available @emph{via} the
 @option{--param} flag: see its @command{man} page.
 
@@ -8943,7 +8943,7 @@ break __asan_report_error
 @end example
 @noindent
 (See
-@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
+@uref{https://github.com/google/sanitizers/wiki/AddressSanitizerAndDebugger}.)
 
 More recent versions@footnote{including @command{gcc} 7.1 and
 @command{clang} 4.0.0: for @command{gcc} it is implied by
@@ -8975,7 +8975,7 @@ libraries called from Tcl/Tk.
 @subsubsection Using the Leak Sanitizer
 
 For @code{x86_64} Linux there is a leak sanitizer, `LSan': see
-@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/LeakSanitizer}.
+@uref{https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer}.
 This is available on recent versions of @code{gcc} and @code{clang}, and
 where available is compiled in as part of ASan.
 
@@ -9129,7 +9129,7 @@ code with @command{gcc} but there has been success with @command{clang}.
 @subsection Other analyses with `clang'
 
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
-`ThreadSanitizer' (@uref{https://code.google.com/@/p/@/thread-sanitizer/}),
+`ThreadSanitizer' (@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
 (@uref{https://clang.llvm.org/@/docs/@/MemorySanitizer.html},
 @uref{https://github.com/google/sanitizers})
