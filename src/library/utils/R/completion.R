@@ -1157,7 +1157,7 @@ fileCompletions <- function(token)
         comps <- c(fargComps, comps)
         ## Give a custom completer function a chance to add to this list
         if (is.function(fcustom <- rc.getOption("custom.argument.completer")))
-            comps <- c(fcustom(fun, text), comps)
+            comps <- c(fcustom(guessedFunction, text), comps)
         .CompletionEnv[["comps"]] <- comps
     }
 }
