@@ -5594,14 +5594,20 @@ JAVA_HOME=/path/to/zulu-11.jdk/Contents/Home
 @end example
 
 @noindent
-with a @file{config.site} file
+with a @file{config.site} file containing
 
 @example
 CC="clang -target arm64-apple-macos11"
+CFLAGS="-falign-functions=64 -g -O2"
 OBJC=$CC
 FC="/usr/local/gfortran/bin/gfortran -mtune=native"
 CXX="clang++ -target arm64-apple-macos11"
 @end example
+
+@noindent
+The first flag in @code{CFLAGS} is needed to inter-work with the current
+experimental @command{gfortran} without segfaulting in some
+circumstances.
 
 Native Java builds are becoming available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
@@ -5647,22 +5653,11 @@ This cannot be done as simply for Fortran as that would need compiler
 and library (@code{libgfortran}) support.
 
 @c https://developer.apple.com/documentation/xcode/building_a_universal_macos_binary
-According to Apple, C/C++ code intended to only this architecture can be
-enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
-@code{__aarch64__} : you may want to also condition on
-@code{__APPLE__} as those macros are defined on other OSes, at least for
-@command{clang} and @command{gcc} (@code{__aarch64__}).
-
-A small number of packages pass C functions as argument to Fortran
-subroutines and segfault when they are called.  A workaround is to
-install those packages using @command{gcc} from the experimental
-@command{gfortran} distribution, for example by using a temporary
-@file{~/.R/Makeconf} file containing something like
-
-@example
-CC = /usr/local/gfortran/bin/gcc
-CFLAGS = -g -O2
-@end example
+According to Apple, C/C++ code intended only for this architecture can
+be enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
+@code{__aarch64__} : you may want to also condition on @code{__APPLE__}
+as those macros are defined on other OSes, at least for @command{clang}
+and @command{gcc} (@code{__aarch64__}).
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris

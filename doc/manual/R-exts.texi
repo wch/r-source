@@ -13914,11 +13914,11 @@ void F77_NAME(lmdif)(void (*fcn_lmdif)(int *m, int *n, double *par,
 F77_CALL(lmdif)(&fcn_lmdif, ...
 @end example
 
+@c clang and experimental gfortran on M1 macOS in late 2020.
 This works on most platforms but depends on the C and Fortran compilers
-(which need not be from the same family) agreeing on calling
-conventions.  Several instances have been seen where this fails on
-@cputype{arm64} macOS.  The most portable solution seems to be to
-convert the Fortran code to C, perhaps using @command{f2c}.
+agreeing on calling conventions: this have been seen to fail.  The most
+portable solution seems to be to convert the Fortran code to C, perhaps
+using @command{f2c}.
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
