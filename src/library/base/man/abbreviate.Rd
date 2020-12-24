@@ -1,6 +1,6 @@
 % File src/library/base/man/abbreviate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2020 R Core Team
 % Copyright 2008-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -73,7 +73,10 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   If \code{use.classes} is true (the default), this is really only
   suitable for English, and prior to \R 3.3.0 did not work correctly
   with non-ASCII characters in multibyte locales.  It will warn if used
-  with non-ASCII characters (and required to reduce the length).
+  with non-ASCII characters (and required to reduce the length).  It is
+  unlikely to work well with inputs not in the Unicode Basic Multilingual
+  Plane nor on (rare) platforms where wide characters are not encoded in
+  Unicode.
 
   As from \R 3.3.0 the concept of \sQuote{vowel} is extended from
   English vowels by including characters which are accented versions of

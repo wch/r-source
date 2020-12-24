@@ -204,7 +204,7 @@ int Ri18n_wcswidth (const wchar_t *s, size_t n)
  *  So we replace them.  May also be needed on FreeBSD.
  ********************************************************************/
 #if defined(__APPLE__)
-/* allow for both PowerPC and Intel platforms */
+/* allow for PowerPC, Intel and arm64 platforms */
 #ifdef WORDS_BIGENDIAN
 static const char UNICODE[] = "UCS-4BE";
 #else
@@ -214,6 +214,8 @@ static const char UNICODE[] = "UCS-4LE";
 /* in Defn.h which is not included here */
 extern const char *locale2charset(const char *);
 
+// Is there any guarantee that wcrtomb here will work?
+// Its return code is not checked.  Most likely used in UTF-8, though.
 #define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {	                                                             \
   char    mb_buf[MB_LEN_MAX+1];			                     \

@@ -147,6 +147,7 @@ FILE *R_fopen(const char *filename, const char *mode)
 
    On NT-based versions of Windows, file names are stored in 'Unicode'
    (UCS-2), and _wfopen is provided to access them by UCS-2 names.
+   <FIXME> since Windows 2000 they are UTF-16LE
 */
 
 #if defined(Win32)

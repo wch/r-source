@@ -39,9 +39,9 @@
 #include <wctype.h>
 
 /*
- * The R_wchar_t typedef represents a single Unicode code point.  On most systems it's the same
- * as wchar_t, but on Windows (and others?) where wchar_t is too small and UTF-16 is used,
- * it is an unsigned int instead.
+  The R_wchar_t typedef represents a single Unicode code point.  On
+  most systems it is the same as wchar_t, but on Windows (and others?)
+  where wchar_t is too small and UTF-16 is used, it is an unsigned int .
  */
  
 #ifdef Win32
@@ -127,16 +127,18 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define iswctype(__x,__y) Ri18n_iswctype(__x,__y)
 #endif
 
-/* These definitions are from winnls.h in Mingw_w64.  We don't need the rest of that file. */
+/* These definitions are from winnls.h in MinGW-W64.  We don't need
+ * the rest of that file. */
 
 #define HIGH_SURROGATE_START 0xd800
 #define HIGH_SURROGATE_END 0xdbff
 #define LOW_SURROGATE_START 0xdc00
 #define LOW_SURROGATE_END 0xdfff
 
-/* The first two of these definitions use the argument twice which is bad, but we include them here in
- * the original form for consistency with Mingw_w64.  Users should be careful that evaluating
- * the argument doesn't result in side effects.
+/* The first two of these definitions use the argument twice which is
+ * bad, but we include them here in the original form for consistency
+ * with Mingw_w64.  Users should be careful that evaluating the
+ * argument doesn't result in side effects.
  */
 
 #define IS_HIGH_SURROGATE(wch) (((wch) >= HIGH_SURROGATE_START) && ((wch) <= HIGH_SURROGATE_END))
