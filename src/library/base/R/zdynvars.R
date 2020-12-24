@@ -1,7 +1,7 @@
 #  File src/library/base/R/zdynvars.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -39,13 +39,13 @@
 
 .libPaths <- local({
     .lib.loc <- character()            # Profiles need to set this.
-    function(new) {
+    function(new, include.site = TRUE) {
         if(!missing(new)) {
             ## paths don't really need to be unique, but searching
             ## large library trees repeatedly would be inefficient.
             ## Use normalizePath for display
             new <- Sys.glob(path.expand(new))
-            paths <- c(new, .Library.site, .Library)
+            paths <- c(new, if(include.site) .Library.site, .Library)
             paths <- paths[dir.exists(paths)]
             .lib.loc <<- unique(normalizePath(paths, "/"))
         }

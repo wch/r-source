@@ -181,6 +181,10 @@
       There are warnings (including from the parser) on the use of unpaired
       surrogate Unicode points such as \samp{\\uD834} (which cannot be
       converted to valid UTF-8).
+
+      \item \code{.libPaths()} gets a new option \code{include.site},
+      allowing to \emph{not} include the site library, thanks to Dario
+      Strbenac's suggestion and Gabe Becker's \PR{18016}.
     }
   }
 
