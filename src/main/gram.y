@@ -32,7 +32,7 @@
 
 #if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
 /* This may not be 100% true (see the comment in rlocale.h),
-   but it seems true in normal locales.  Also seems to be true for __sun__.
+   but it seems true in normal locales.  Also seems to be true for __sun.
  */
 # define __STDC_ISO_10646__
 #endif
@@ -2291,6 +2291,7 @@ static int SkipSpace(void)
 	}
     } else
 #endif
+	// does not support non-ASCII spaces, unlike Windows
 	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f') ;
     return c;
 }

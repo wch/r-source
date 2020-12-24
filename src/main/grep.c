@@ -492,6 +492,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (haveBytes) {
 	    useBytes = TRUE;
 	} else {
+	    // FIXME handle Latin-1-marked inputs.
+	    // use_UTF8 means use wchar_t* for the TRE engine
 	    if (perl_opt && mbcslocale) use_UTF8 = TRUE;
 	    if (!use_UTF8)
 		for (i = 0; i < tlen; i++)
@@ -595,7 +597,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    const char *laststart, *ebuf;
 	    if (useBytes)
 		split = CHAR(STRING_ELT(tok, itok));
-	    else if (use_UTF8) {
+	    else if (use_UTF8) { // includes Latin-1 support
 		split = translateCharUTF8(STRING_ELT(tok, itok));
 		if (!utf8Valid(split))
 		    error(_("'split' string %d is invalid UTF-8"), itok+1);
@@ -1180,6 +1182,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
+	// FIXME handle Latin-1
 	if (perl_opt && mbcslocale) use_UTF8 = TRUE;
 	else if (IS_UTF8(STRING_ELT(pat, 0))) use_UTF8 = TRUE;
 	if (!use_UTF8)
@@ -1975,6 +1978,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!useBytes) {
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
+	// FIXME: handle Latin-1-marked inputs
 	else if (IS_UTF8(STRING_ELT(pat, 0)) ||
 		 IS_UTF8(STRING_ELT(rep, 0)))
 	    use_UTF8 = TRUE;
@@ -2861,6 +2865,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales,
 	   and as from 2.11.0 in TRE too. */
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
+	// FIXME handle Latin-1-encoded inputs
 	else if (IS_UTF8(STRING_ELT(pat, 0))) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
@@ -3205,6 +3210,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if(!useBytes) {
+	// This gets Latin-1-marked right
 	use_WC = !IS_ASCII(STRING_ELT(pat, 0));
 	if(!use_WC) {
 	    for(i = 0 ; i < n ; i++) {
@@ -3314,7 +3320,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* pcre_config was added in PCRE 4.0, with PCRE_CONFIG_UTF8 .
    PCRE_CONFIG_UNICODE_PROPERTIES had been added by 8.10,
-   the earliest version we allow.
+   the earliest version we allowed when coding this.
  */
 #ifdef HAVE_PCRE2
 SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)

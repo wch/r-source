@@ -1267,6 +1267,7 @@ int attribute_hidden utf8clen(char c)
     return 1 + utf8_table4[c & 0x3f];
 }
 
+/* These are misnamed: they convert a single char */
 static R_wchar_t
 utf16toucs(wchar_t high, wchar_t low)
 {

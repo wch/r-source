@@ -1641,7 +1641,7 @@ size_t ucstomb(char *s, const unsigned int wc)
     return strlen(buf);
 }
 
-/* used in plot.c for non-UTF-8 MBCS */
+/* used in engine.c for non-UTF-8 MBCS */
 size_t attribute_hidden
 mbtoucs(unsigned int *wc, const char *s, size_t n)
 {
