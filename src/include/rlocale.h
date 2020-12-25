@@ -92,6 +92,7 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
  * defined(Win32) || defined(__APPLE__) || defined(_AIX)
  */
 extern wctype_t Ri18n_wctype(const char *);
+// Apparently wint_t is unsigned short on Windows, unsigned int on Linux
 extern int      Ri18n_iswctype(wint_t, wctype_t);
 
 #ifndef IN_RLOCALE_C
