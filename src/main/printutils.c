@@ -417,6 +417,7 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    k = utf8toucs32(wc, p);
 		else
 		    k = wc;
+		// OK to cast as k is small
 		if(0x20 <= k && k < 0x7f && iswprint((wint_t)k)) {
 		    switch(wc) {
 		    case L'\\':
@@ -450,6 +451,7 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    p++;
 		} else {
 		    // conceivably an invalid \U escape could use 11 or 12
+		    // Should not just cast here, as that may truncate.
 		    len += iswprint((wint_t)k) ? Ri18n_wcwidth(wc) :
 		    	(k > 0xffff ? 10 : 6);
 		    i += (res - 1);
@@ -660,6 +662,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    k = wc;
 		/* To be portable, treat \0 explicitly */
 		if(res == 0) {k = 0; wc = L'\0';}
+		// OK to cast as k is small
 		if(0x20 <= k && k < 0x7f && iswprint((wint_t) k)) {
 		    switch(wc) {
 		    case L'\\': *q++ = '\\'; *q++ = '\\'; p++; break;
@@ -696,6 +699,8 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    }
 		    p++;
 		} else {
+		    /* wc could be an unpaired surrogate and this does
+		     * not do the same as Rstrwid */
 		    if(iswprint(wc)) {
 			/* The problem here is that wc may be
 			   printable according to the Unicode tables,
