@@ -5598,7 +5598,7 @@ with a @file{config.site} file containing
 
 @example
 CC="clang -target arm64-apple-macos11"
-CFLAGS="-falign-functions=64 -g -O2"
+CFLAGS="-falign-functions=8 -g -O2"
 OBJC=$CC
 FC="/usr/local/gfortran/bin/gfortran -mtune=native"
 CXX="clang++ -target arm64-apple-macos11"
@@ -5606,8 +5606,7 @@ CXX="clang++ -target arm64-apple-macos11"
 
 @noindent
 The first flag in @code{CFLAGS} is needed to inter-work with the current
-experimental @command{gfortran} without segfaulting in some
-circumstances.
+experimental @command{gfortran} without segfaulting in some packages.
 
 Native Java builds are becoming available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
