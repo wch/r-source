@@ -166,22 +166,6 @@
       \code{nls()} fits, e.g., may now need \code{all.equal(m1, m2,
 	check.environment = FALSE)}.
 
-      \item The parser now treats \samp{\\Unnnnnnnn} escapes larger than
-      the upper limit for Unicode points (\samp{\\U10FFFF}) as an error
-      as they cannot be represented by valid UTF-8.
-
-      Where such escapes are used for outputting non-printable
-      characters, 6 (not 8) hex digits are used (as it was decided by
-      Unicode that the first two would always be zero).
-
-      \item Code converting UTF-8 strings (e.g., \code{tolower()} and some
-      \sQuote{printing}) now uses internal routines rather than system
-      functions:  these detect more uses of invalid UTF-8 strings.
-
-      There are warnings (including from the parser) on the use of unpaired
-      surrogate Unicode points such as \samp{\\uD834} (which cannot be
-      converted to valid UTF-8).
-
       \item \code{.libPaths()} gets a new option \code{include.site},
       allowing to \emph{not} include the site library, thanks to Dario
       Strbenac's suggestion and Gabe Becker's \PR{18016}.
@@ -311,6 +295,36 @@
       \item \command{R CMD build} now omits tarballs and binaries of
       previous builds from the top-level package directory; \PR{17828},
       patch by Sebastian Meyer.
+    }
+  }
+
+  \subsection{ENCODING-RELATED CHANGES}{
+    \itemize{
+      \item The parser now treats \samp{\\Unnnnnnnn} escapes larger than
+      the upper limit for Unicode points (\samp{\\U10FFFF}) as an error
+      as they cannot be represented by valid UTF-8.
+
+      Where such escapes are used for outputting non-printable
+      characters, 6 (not 8) hex digits are used (as it was decided by
+      Unicode that the first two would always be zero).
+
+      \item The parser now looks for non-ASCII spaces on Solaris, in
+      addition to Windows, macOS, FreeBSD and OSes such as Linux that
+      declare \code{wchar_t} is encoded as Unicode.
+
+      \item There are warnings (including from the parser) on the use of
+      unpaired surrogate Unicode points such as \samp{\\uD834} (which
+      cannot be converted to valid UTF-8).
+
+      \item \code{tolower()}, \code{toupper()} and \code{chartr()} have
+      more support for inputs with a marked encoding (UTF-8 or Latin-1)
+      in a single-byte locale.
+
+      \item The code for the evaluating default (extended) regular
+      expressions now uses the same character-classification functions
+      as the rest of \R; in some cases (Windows, AIX, macOS) these
+      replace limited system ones, the differences being in non-Latin
+      characters.
     }
   }
 
