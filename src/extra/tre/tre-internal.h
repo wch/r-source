@@ -70,6 +70,8 @@ typedef wint_t tre_cint_t;
 #define TRE_MB_CUR_MAX 1
 #endif /* !TRE_MULTIBYTE */
 
+#include "rlocale.h"
+
 #define tre_isalnum iswalnum
 #define tre_isalpha iswalpha
 #ifdef HAVE_ISWBLANK
