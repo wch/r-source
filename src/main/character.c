@@ -44,11 +44,13 @@ Comparison is done directly unless you happen to be comparing the same
 string in different encodings.
 
 nzchar and nchar(, "bytes") are independent of the encoding
-nchar(, "char") nchar(, "width") handle UTF-8 directly, translate Latin-1
+nchar(, "char") nchar(, "width") handle UTF-8 and Latin-1 directly 
 substr substr<-  handle UTF-8 and Latin-1 directly
 tolower toupper chartr  translate UTF-8 to wchar, rest to current charset
   which needs Unicode wide characters
-abbreviate strtrim  translate
+abbreviate translates non-ASCII inputs to UTF-8 then wchar_t*.
+strtrim translates to the native encoding
+make.names translates to the native encoding, works in wchar_t in a MBCS.
 
 All the string matching functions handle UTF-8 directly, otherwise
 translate (latin1 to UTF-8, otherwise to native).
@@ -70,17 +72,22 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 #endif
 
 /* Used to indicate that we can safely converted marked UTF-8 strings
- * to wchar_t* */
+   to wchar_t* -- not currently used.
+*/
 #if defined(Win32) || defined(__STDC_ISO_10646__) || defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun)
 # define TO_WCS_OK 1
+#else
+/*
+  Maybe warn if utf8towcs is used, but no known platforms.
+ */
 #endif
 
 #include <Defn.h>
 #include <Internal.h>
 #include <errno.h>
-#include <R_ext/RS.h>  /* for Calloc/Free */
+#include <R_ext/RS.h>  // for Calloc/Free
 #include <R_ext/Itermacros.h>
-#include <rlocale.h>
+#include <rlocale.h>   // overrides iswxxxx on some platforms.
 
 /* We use a shared buffer here to avoid reallocing small buffers, and
    keep a standard-size (MAXELTSIZE = 8192) buffer allocated shared
@@ -97,13 +104,14 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
 
-/* primitive */
+/* primitive, nzchar(x, keepNA = FALSE) where the second argument is optional.
+   Encoding of x is immaterial.
+*/
 SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, ans;
     int nargs = length(args);
 
-    // checkArity(op, args);  .Primitive()  &  may have 1 or 2 args now
+    // checkArity(op, args);  .Primitive() and may have 1 or 2 args
     if (nargs < 1 || nargs > 2)
 	errorcall(call,
 		  ngettext("%d argument passed to '%s' which requires %d to %d",
@@ -114,7 +122,7 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (isFactor(CAR(args)))
 	error(_("'%s' requires a character vector"), "nzchar()");
-    PROTECT(x = coerceVector(CAR(args), STRSXP));
+    SEXP x = PROTECT(coerceVector(CAR(args), STRSXP));
     if (!isString(x))
 	error(_("'%s' requires a character vector"), "nzchar()");
 
@@ -124,7 +132,7 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (keepNA == NA_LOGICAL) keepNA = FALSE;
     }
     R_xlen_t i, len = XLENGTH(x);
-    PROTECT(ans = allocVector(LGLSXP, len));
+    SEXP ans = PROTECT(allocVector(LGLSXP, len));
     if (keepNA)
 	for (i = 0; i < len; i++) {
 	    SEXP sxi = STRING_ELT(x, i);
@@ -160,6 +168,9 @@ int R_nchar(SEXP string, nchar_type type_,
 		for( ; *p; p += utf8clen(*p)) nc++;
 		return nc;
 	    }
+	} else if (IS_LATIN1(string)) {
+	    // just count bytes
+	    return (int) strlen(CHAR(string));
 	} else if (IS_BYTES(string)) {
 	    if (!allowNA) /* could do chars 0 */
 		error(_("number of characters is not computable in \"bytes\" encoding, %s"),
@@ -185,12 +196,14 @@ int R_nchar(SEXP string, nchar_type type_,
 		R_wchar_t ucs;
 		int nc = 0;
 		for( ; *p; p += utf8clen(*p)) {
+		    /* FIXME Perhaps give width 1 or NA to all chars beyond
+		     * the BMP? */
 		    utf8toucs(&wc1, p);
 		    if (IS_HIGH_SURROGATE(wc1))
 		    	ucs = utf8toucs32(wc1, p);
 		    else
 		    	ucs = wc1;
-		    nc += Ri18n_wcwidth(ucs);
+		    nc += Ri18n_wcwidth(ucs); // cannot work beyond BMP on Windows
 		}
 		return nc;
 	    }
@@ -199,6 +212,9 @@ int R_nchar(SEXP string, nchar_type type_,
 		error(_("width is not computable for %s in \"bytes\" encoding"),
 		      msg_name);
 	    return NA_INTEGER;
+	} else if (IS_LATIN1(string)) {
+	    // just count bytes as they are all width-1 chars
+	    return (int) strlen(CHAR(string));
 	} else if (mbcslocale) {
 	    const char *xi = translateChar(string);
 	    int nc = (int) mbstowcs(NULL, xi, 0);
@@ -861,7 +877,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 		int nc = (int) utf8towcs(NULL, s, 0);
 		if (nc > minlen) {
 		    warn = TRUE;
-		    const wchar_t *wc = wtransChar(el);
+		    const wchar_t *wc = wtransChar(el); // to WCS-2 on Windows
 		    nc = (int) wcslen(wc);
 		    R_AllocStringBuffer(sizeof(wchar_t)*(nc+1), &cbuff);
 		    SET_STRING_ELT(ans, i, wstripchars(wc, minlen, usecl));
@@ -952,7 +968,6 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* else leave alone */
 	    }
 	}
-//	l = (int) strlen(tmp);        /* needed? */
 	SET_STRING_ELT(ans, i, mkChar(tmp));
 	/* do we have a reserved word?  If so the name is invalid */
 	if (!isValidName(tmp)) {
@@ -990,15 +1005,11 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(x)) error(_("non-character argument"));
     n = XLENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
-#ifdef TO_WCS_OK
-    /* utf8towcs is really to UCS-4/2 */
-    for (i = 0; i < n; i++)
-	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
-    if (mbcslocale || use_UTF8 == TRUE)
-#else
-    if (mbcslocale)
-#endif
-    {
+    for (i = 0; i < n; i++) {
+	SEXP xi = STRING_ELT(x, i);
+	if (IS_UTF8(xi) || IS_LATIN1(xi)) use_UTF8 = TRUE;
+    }
+    if (mbcslocale || use_UTF8 == TRUE) {
 	int nb, nc, j;
 	wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
 	wchar_t * wc;
@@ -1015,17 +1026,21 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (use_UTF8 && ienc == CE_UTF8) {
 		    xi = CHAR(el);
 		    nc = (int) utf8towcs(NULL, xi, 0);
+		} else if (use_UTF8 && ienc == CE_LATIN1) {
+		    xi = translateCharUTF8(el); // in case it is really in CP1252
+		    nc = (int) utf8towcs(NULL, xi, 0);
+		    ienc = CE_UTF8;
 		} else {
 		    xi = translateChar(el);
 		    nc = (int) mbstowcs(NULL, xi, 0);
 		    ienc = CE_NATIVE;
 		}
 		if (nc >= 0) {
-		    /* FIXME use this buffer for new string as well */
 		    wc = (wchar_t *)
 			R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 		    if (ienc == CE_UTF8) {
 			utf8towcs(wc, xi, nc + 1);
+			// FIXME: This cannot cope with surrogate pairs
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = (int) wcstoutf8(NULL, wc, INT_MAX);
 			cbuf = CallocCharBuf(nb);
@@ -1033,6 +1048,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 			SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
 		    } else {
 			mbstowcs(wc, xi, nc + 1);
+			// FIXME: This cannot cope with surrogate pairs
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = (int) wcstombs(NULL, wc, 0);
 			cbuf = CallocCharBuf(nb);
@@ -1071,6 +1087,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/* These assume one wchar_t per char so will not work with surrogate pairs */
 typedef enum { WTR_INIT, WTR_CHAR, WTR_RANGE } wtr_type;
 struct wtr_spec {
     wtr_type type;
@@ -1319,7 +1336,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     char *cbuf;
     SEXP el;
     cetype_t ienc;
-    Rboolean use_UTF8 = FALSE;
+    Rboolean use_WC = FALSE;
     const void *vmax;
 
     checkArity(op, args);
@@ -1337,13 +1354,21 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "new");
     if (!isString(x)) error("invalid '%s' argument", "x");
 
-    for (i = 0; i < n; i++)
-	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
+    /* If we have marked strings we want to do this in Unicode as some
+     * of them might be mis-represented by translateChar.  But
+     * utf8towcs may not be reliable unless TO_WCS_OK is defined.
+     */
+    for (i = 0; i < n; i++) {
+	SEXP xi = STRING_ELT(x, i);
+	if (IS_UTF8(xi) || IS_LATIN1(xi)) use_WC = TRUE;
+    }
 
-    if (getCharCE(STRING_ELT(old, 0)) == CE_UTF8) use_UTF8 = TRUE;
-    if (getCharCE(STRING_ELT(_new, 0)) == CE_UTF8) use_UTF8 = TRUE;
+    if (IS_UTF8(STRING_ELT(old, 0)) ||
+	IS_LATIN1(STRING_ELT(old, 0))) use_WC = TRUE;
+    if (IS_UTF8(STRING_ELT(_new, 0)) ||
+	IS_LATIN1(STRING_ELT(_new, 0))) use_WC = TRUE;
 
-    if (mbcslocale || use_UTF8 == TRUE) {
+    if (mbcslocale || use_WC == TRUE) {
 	int j, nb, nc;
 	xtable_t *xtable, *tbl;
 	int xtable_cnt;
@@ -1361,10 +1386,16 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	trs_new->type = WTR_INIT;
 	trs_new->next = NULL;
 	/* Build the old and new wtr_spec lists. */
-	if (use_UTF8 && getCharCE(STRING_ELT(old, 0)) == CE_UTF8) {
+	if (use_WC && IS_UTF8(STRING_ELT(old, 0))) {
 	    s = CHAR(STRING_ELT(old, 0));
 	    nc = (int) utf8towcs(NULL, s, 0);
 	    if (nc < 0) error(_("invalid UTF-8 string 'old'"));
+	    wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+	    utf8towcs(wc, s, nc + 1);
+	} else if (use_WC && IS_LATIN1(STRING_ELT(old, 0))) {
+	    s = translateCharUTF8(STRING_ELT(old, 0));
+	    nc = (int) utf8towcs(NULL, s, 0);
+	    if (nc < 0) error(_("invalid UTF-8 string 'old'")); // but must be valid
 	    wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 	    utf8towcs(wc, s, nc + 1);
 	} else {
@@ -1380,8 +1411,14 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	trs_cnt->next = NULL;
 	wtr_build_spec(wc, trs_cnt); /* use count only */
 
-	if (use_UTF8 && getCharCE(STRING_ELT(_new, 0)) == CE_UTF8) {
+	if (use_WC && IS_UTF8(STRING_ELT(_new, 0))) {
 	    s = CHAR(STRING_ELT(_new, 0));
+	    nc = (int) utf8towcs(NULL, s, 0);
+	    if (nc < 0) error(_("invalid UTF-8 string 'new'"));
+	    wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+	    utf8towcs(wc, s, nc + 1);
+	} else if (use_WC && IS_LATIN1(STRING_ELT(_new, 0))) {
+	    s = translateCharUTF8(STRING_ELT(_new, 0));
 	    nc = (int) utf8towcs(NULL, s, 0);
 	    if (nc < 0) error(_("invalid UTF-8 string 'new'"));
 	    wc = (wchar_t *) R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
@@ -1440,7 +1477,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(y, i, NA_STRING);
 	    else {
 		ienc = getCharCE(el);
-		if (use_UTF8 && ienc == CE_UTF8) {
+		if (use_WC && ienc == CE_UTF8) {
 		    xi = CHAR(el);
 		    nc = (int) utf8towcs(NULL, xi, 0);
 		} else {
@@ -1575,6 +1612,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 		continue;
 	    }
 	    w = INTEGER(width)[i % nw];
+	    // FIXME: this could do a better job with UTF-8 or Latin-1 input
 	    This = translateChar(STRING_ELT(x, i));
 	    nc = (int) strlen(This);
 	    buf = R_AllocStringBuffer(nc, &cbuff);

@@ -1,6 +1,6 @@
 % File src/library/base/man/chartr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chartr}
@@ -53,8 +53,7 @@ casefold(x, upper = FALSE)
   the current locale (see \code{\link{Encoding}}) if the corresponding
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.  The result will be in the current locale's encoding unless
-  the corresponding input was in UTF-8, when it will be in UTF-8 when
-  the system has Unicode wide characters.
+  the corresponding input was in UTF-8 on Latin-1, when it will be in UTF-8.
 }
 \seealso{
   \code{\link{sub}} and \code{\link{gsub}} for other

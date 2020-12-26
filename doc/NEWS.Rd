@@ -316,9 +316,9 @@
       unpaired surrogate Unicode points such as \samp{\\uD834} (which
       cannot be converted to valid UTF-8).
 
-      \item \code{tolower()}, \code{toupper()} and \code{chartr()} have
-      more support for inputs with a marked encoding (UTF-8 or Latin-1)
-      in a single-byte locale.
+      \item \code{nchar()}, \code{tolower()}, \code{toupper()} and
+      \code{chartr()} have more support for inputs with a marked
+      encoding (UTF-8 or Latin-1) in a single-byte locale.
 
       \item The code for the evaluating default (extended) regular
       expressions now uses the same character-classification functions
