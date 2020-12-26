@@ -979,6 +979,7 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 	    mbs_init(&mb_st);
 	    while (*s) {
 		wc = 0;
+		// FIXME this does not allow for surrogate pairs (implausible)
 		res = mbrtowc(&wc, s, MB_LEN_MAX, &mb_st);
 		if(res == -1) error("invalid multibyte string '%s'", s);
 		if (iswdigit(wc) && font != PlainFont) {
@@ -1091,6 +1092,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 	    const char *p = str;
 	    mbstate_t mb_st;
 	    mbs_init(&mb_st);
+	    // FIXME this does not allow for surrogate pairs
 	    while ((used = Mbrtowc(&wc, p, n, &mb_st)) > 0) {
 		/* On Windows could have sign extension here */
 		glyphBBox = GlyphBBox((unsigned int) wc, gc, dd);

@@ -416,6 +416,7 @@ Rboolean isBlankString(const char *s)
     if(mbcslocale) {
 	wchar_t wc; size_t used; mbstate_t mb_st;
 	mbs_init(&mb_st);
+	// This does not allow for surrogate pairs, but all blanks are in BMP
 	while( (used = Mbrtowc(&wc, s, MB_CUR_MAX, &mb_st)) ) {
 	    if(!iswspace((wint_t) wc)) return FALSE;
 	    s += used;

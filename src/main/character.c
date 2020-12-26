@@ -46,8 +46,8 @@ string in different encodings.
 nzchar and nchar(, "bytes") are independent of the encoding
 nchar(, "char") nchar(, "width") handle UTF-8 and Latin-1 directly 
 substr substr<-  handle UTF-8 and Latin-1 directly
-tolower toupper chartr  translate UTF-8 to wchar, rest to current charset
-  which needs Unicode wide characters
+tolower toupper chartr  translate UTF-8 and Latin-1 to wchar (which needs 
+  Unicode wide characters), rest to current charset
 abbreviate translates non-ASCII inputs to UTF-8 then wchar_t*.
 strtrim translates to the native encoding
 make.names translates to the native encoding, works in wchar_t in a MBCS.
@@ -1054,7 +1054,8 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 			SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
 		    } else {
 			mbstowcs(wc, xi, nc + 1);
-			// FIXME: This cannot cope with surrogate pairs
+			/* FIXME: This cannot cope with surrogate pairs,
+			   if mbstowcs can make them. */ 
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = (int) wcstombs(NULL, wc, 0);
 			cbuf = CallocCharBuf(nb);
