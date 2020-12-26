@@ -169,6 +169,10 @@
       \item \code{.libPaths()} gets a new option \code{include.site},
       allowing to \emph{not} include the site library, thanks to Dario
       Strbenac's suggestion and Gabe Becker's \PR{18016}.
+
+      \item \code{.libPaths()} gets a new option \code{include.site},
+      allowing to \emph{not} include the site library, thanks to Gabe
+      Becker's \PR{18016}.
     }
   }
 
