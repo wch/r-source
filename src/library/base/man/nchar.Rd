@@ -82,8 +82,8 @@ nzchar(x, keepNA = FALSE)
 
   For \code{nzchar}, a logical vector of the same length as \code{x},
   true if and only if the element has non-zero length; if the element is
-  \code{NA}, \code{nzchar()} is true when \code{keepNA} is false, as by
-  default, and \code{NA} otherwise.
+  \code{NA}, \code{nzchar()} is true when \code{keepNA} is false (the
+  default) and \code{NA} otherwise.
 }
 \note{
   This does \strong{not} by default give the number of characters that
@@ -126,7 +126,9 @@ nzchar(x, keepNA = FALSE)
   the locale, being one except in some East Asian locales on some OSes
   (notably Windows).
 
-  Control characters are given width zero.
+  Control characters are given width zero in multi-byte locales, but are
+  usually given width one in single-byte ones (as their positions are
+  often undefined and maybe re-used as in CP1252 \emph{vs} Latin-1).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -183,7 +183,13 @@ int Ri18n_wcwidth(R_wchar_t c)
     return zw ? 0 : 1; // assume unknown chars are width one.
 }
 
-/* Used in character.c, errors.c, ../gnuwin32/console.c */
+/* Used in character.c, errors.c, ../gnuwin32/console.c
+   
+   Only works in the BMP on Windows as does not handle surrogate pairs.
+
+   Strings in R are restricted to 2^31-1 bytes but could conceivably
+   have a width exceeding that.
+*/
 attribute_hidden
 int Ri18n_wcswidth (const wchar_t *s, size_t n)
 {
