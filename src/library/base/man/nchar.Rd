@@ -34,7 +34,7 @@ nzchar(x, keepNA = FALSE)
   \code{2}, as that is the number of printing characters used when
   strings are written to output, and \code{nzchar()} is \code{TRUE}.  The
   default for \code{nchar()}, \code{NA}, means to use \code{keepNA = TRUE}
-  unless \code{type} is \code{"width"}.
+  unless \code{type} is \code{"width"}.}
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of
@@ -125,9 +125,6 @@ nzchar(x, keepNA = FALSE)
   \code{nchar} for characters in that class (and some others) depends on
   the locale, being one except in some East Asian locales on some OSes
   (notably Windows).
-
-  On Windows the current implementation will not find the correct width
-  for strings involving characters beyond the Basic Multilingual Plane.
 
   Control characters are given width zero.
 }
