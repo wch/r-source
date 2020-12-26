@@ -99,7 +99,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 		       "greater" = c(max(p.l, 0), 1),
 		       "less" = c(0, min(p.u, 1)))
     }
-    else if ((k == 2) & is.null(p)) {
+    else if ((k == 2) && is.null(p)) {
 	DELTA <- ESTIMATE[1L] - ESTIMATE[2L]
 	YATES <- min(YATES, abs(DELTA) / sum(1/n))
 	WIDTH <- (switch(alternative,

@@ -20,7 +20,7 @@ pairwise.t.test <-
 function(x, g, p.adjust.method = p.adjust.methods, pool.sd = !paired,
          paired = FALSE, alternative = c("two.sided", "less", "greater"), ...)
 {
-    if (paired & pool.sd)
+    if (paired && pool.sd)
         stop("pooling of SD is incompatible with paired tests")
     DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(g)))
     g <- factor(g)

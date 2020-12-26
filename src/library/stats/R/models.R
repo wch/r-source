@@ -490,7 +490,7 @@ model.frame.default <-
     } else
         formula <- as.formula(formula)
     if(missing(na.action)) {
-	if(!is.null(naa <- attr(data, "na.action")) & mode(naa)!="numeric")
+	if(!is.null(naa <- attr(data, "na.action")) && mode(naa)!="numeric")
 	    na.action <- naa
 	else if(!is.null(naa <- getOption("na.action")))
 	    na.action <- naa
@@ -678,11 +678,11 @@ model.matrix.default <- function(object, data = environment(object),
 model.response <- function (data, type = "any")
 {
     if (attr(attr(data, "terms"), "response")) {
-	if (is.list(data) | is.data.frame(data)) {
+	if (is.list(data) || is.data.frame(data)) {
 	    v <- data[[1L]]
 	    if (type == "numeric" && is.factor(v)) {
 		warning('using type = "numeric" with a factor response will be ignored')
-	    } else if (type == "numeric" | type == "double")
+	    } else if (type == "numeric" || type == "double")
 		storage.mode(v) <- "double"
 	    else if (type != "any") stop("invalid response type")
 	    if (is.matrix(v) && ncol(v) == 1L) dim(v) <- NULL

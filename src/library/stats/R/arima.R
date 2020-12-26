@@ -201,7 +201,7 @@ arima <- function(x, order = c(0L, 0L, 0L),
             dx <- diff(dx, 1L, order[2L])
             dxreg <- diff(dxreg, 1L, order[2L])
         }
-        if(seasonal$period > 1L & seasonal$order[2L] > 0) {
+        if(seasonal$period > 1L && seasonal$order[2L] > 0) {
             dx <- diff(dx, seasonal$period, seasonal$order[2L])
             dxreg <- diff(dxreg, seasonal$period, seasonal$order[2L])
         }

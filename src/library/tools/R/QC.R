@@ -7985,7 +7985,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
        !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_VERSIONS_",
                                          "FALSE")))
         out$bad_version <- list(v_m, v_d)
-    if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
+    if((v_m$major == v_d$major) && (v_m$minor >= v_d$minor + 10))
         out$version_with_jump_in_minor <- list(v_m, v_d)
 
     ## Check submission recency and frequency.

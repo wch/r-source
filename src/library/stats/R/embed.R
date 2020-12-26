@@ -24,7 +24,7 @@ embed <- function (x, dimension = 1)
     if (is.matrix(x)) {
         n <- nrow(x)
         m <- ncol(x)
-        if ((dimension < 1) | (dimension > n))
+        if ((dimension < 1) || (dimension > n))
             stop ("wrong embedding dimension")
         y <- matrix(0.0, n - dimension + 1L, dimension * m)
         for (i in seq_len(m))
@@ -33,7 +33,7 @@ embed <- function (x, dimension = 1)
         return (y)
     } else if (is.vector(x) || is.ts(x)) {
         n <- length (x)
-        if ((dimension < 1) | (dimension > n))
+        if ((dimension < 1) || (dimension > n))
             stop ("wrong embedding dimension")
         m <- n - dimension + 1L
         data <- x[1L:m + rep.int(dimension:1L, rep.int(m, dimension)) - 1L]

@@ -266,8 +266,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    	stopRd(code, Rdfile, err$message)
 	    }
 
-	    if(length(output) & (options$results != "hide")){
-
+	    if(length(output) && (options$results != "hide")) {
 		output <- paste(output, collapse="\n")
 		if(options$strip.white %in% c("all", "true")) {
 		    output <- sub("^[[:space:]]*\n", "", output)

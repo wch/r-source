@@ -261,7 +261,7 @@ ts.intersect <- function(..., dframe = FALSE)
 
 diff.ts <- function (x, lag = 1, differences = 1, ...)
 {
-    if (lag < 1 | differences < 1)
+    if (lag < 1 || differences < 1)
         stop("bad value for 'lag' or 'differences'")
     if (lag * differences >= NROW(x)) return(x[0L])
     ## <FIXME>
