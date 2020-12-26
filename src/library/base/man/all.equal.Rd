@@ -34,7 +34,8 @@ all.equal(target, current, \dots)
 \method{all.equal}{list}(target, current, \dots,
           check.attributes = TRUE, use.names = TRUE)
 
-\method{all.equal}{environment}(target, current, all.names=TRUE, \dots)
+\method{all.equal}{environment}(target, current, all.names = TRUE,
+          evaluate = TRUE, \dots)
 
 \method{all.equal}{function}(target, current, check.environment=TRUE, \dots)
 
@@ -73,6 +74,10 @@ attr.all.equal(target, current, \dots,
     be specified by its full name.}
   \item{all.names}{logical passed to \code{\link{ls}} indicating if
     \dQuote{hidden} objects should also be considered in the environments.}
+  \item{evaluate}{for the \code{environment} method: \code{\link{logical}} indicating if
+    \dQuote{promises should be forced}, i.e., typically formal function arguments
+    be evaluated for comparison.  If false, only the \code{\link{names}} of
+    the objects in the two environments are checked for equality.}
   \item{check.environment}{logical requiring that the
     \code{\link{environment}()}s of functions should be compared, too.
     You may need to set \code{check.environment=FALSE} in unexpected

@@ -4661,6 +4661,48 @@ setGeneric("f")
 f # failed for a while (in R-devel only)
 
 
+## all.equal.function() in case the env contains '...' -- PR#18010
+a <- (function(...) function() NULL)(1)
+b <- (function(...) function() NULL)(1) # want "a .eq. b"
+D <- (function(...) function() NULL)(22)# want "D .NE. b"
+e.. <- (function(...) environment())(1)
+str( ddd <-            e..[["..."]] ) # ... 1
+str( Ddd <- environment(D)[["..."]] ) # ... 22
+stopifnot(exprs = {
+    all.equal(a, b) # failed with "Component “...”: target is not list-like" since r79585 (2020-12-07)
+    all.equal(e.., environment(a))
+    ## all.equal() dispatch for "..." objects ('ddd') directly:
+    typeof(ddd) == "..."
+    ## FIXME: is.character(aeD <- all.equal(a, D) )
+})
+##  for identical() ==> ./reg-tests-2.R  -- as it's about "output"
+op <- options(keep.source = FALSE) # don't keep "srcref" etc
+##
+Qlis <- list(NULL
+## FIXME!  These should work
+## , ddd = ddd
+## , Ddd = Ddd
+, Qass   = quote(x <- 1)
+, Qbrc   = quote({1})
+, Qparen = quote((1))
+, Qif    = quote(if(1)2)
+, Qif2   = quote(if(1)2 else 3)
+, Qwhile = quote(while(1) 2)
+)
+##
+sapply(Qlis, class)
+stopifnot( sapply(Qlis, function(obj) all.equal(obj, obj)) )
+options(op) # only the first failed in R <= 4.0.3
+
+## TODO:
+aS <- (function(x) function() NULL)(stop('hello'))
+bS <- (function(x) function() NULL)(stop('hello'))
+try( all.equal(aS, bS) ) ## now (check.environment=TRUE) triggers the promise ..
+## Should  all.equal.environment(*, no.force) should not evaluate the promise ??
+(aeS <- all.equal(aS, bS, evaluate=FALSE)) # no promises forced
+stopifnot(grepl("same names.* not identical", aeS))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

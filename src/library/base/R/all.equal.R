@@ -18,6 +18,9 @@
 
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
+## not really: do this inside all.equal.default() :
+## all.equal.... <- function(target, current, ...) TRUE
+
 all.equal.default <- function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
@@ -30,8 +33,10 @@ all.equal.default <- function(target, current, ...)
     }
     if(is.environment(target) || is.environment(current))# both: unclass() fails on env.
 	return(all.equal.environment(target, current, ...))
-    if(is.recursive(target))
-	return(all.equal.list(target, current, ...))
+    if(is.recursive(target)) {
+        ## FIXME: "..." is recursive but not a list
+        return(all.equal.list(target, current, ...))
+    }
     msg <- switch (mode(target),
                    integer   = ,
                    complex   = ,
@@ -217,9 +222,14 @@ all.equal.envRefClass <- function (target, current, ...) {
     if(is.null(msg)) TRUE else msg
 }
 
-all.equal.environment <- function (target, current, all.names=TRUE, ...) {
+all.equal.environment <- function (target, current, all.names=TRUE, evaluate=TRUE, ...) {
     if(!is.environment (target)) return( "'target' is not an environment")
     if(!is.environment(current)) return("'current' is not an environment")
+    if(identical(target, current)) # only true if *same* address
+                 ## ignore.environment =
+                 ##     if(!is.na(i <- match("check.environment", ...names())))
+                 ##         ! ...elt(i) else FALSE))
+        return(TRUE)
     ae.run <- dynGet("__all.eq.E__", NULL)
     if(is.null(ae.run))
 	"__all.eq.E__" <- environment() # -> 5 visible + 6 ".<..>" objects
@@ -247,8 +257,21 @@ all.equal.environment <- function (target, current, all.names=TRUE, ...) {
 	if(do1(ae.run)) return(TRUE)
 	## else, continue:
     }
-    all.equal.list(as.list.environment(target , all.names=all.names, sorted=TRUE),
-		   as.list.environment(current, all.names=all.names, sorted=TRUE), ...)
+    if(evaluate) {
+        Lt <- as.list.environment(target , all.names=all.names, sorted=TRUE)
+        Lc <- as.list.environment(current, all.names=all.names, sorted=TRUE)
+        ## identical(*,*) for the environment with `...` and general consistency:
+        if(identical(Lt, Lc))
+            TRUE
+        else
+            all.equal.list(Lt, Lc, ...)
+    } else { ## do *not* force promises, i.e. *not* coerce to list
+        if(!identical(nt <- sort(names(target )),
+                      nc <- sort(names(current))))
+            paste("names of environments differ:", all.equal(nt, nc, ...), collapse=" ")
+        else
+            "environments contain objects of the same names, but are not identical"
+    }
 }
 
 all.equal.factor <- function(target, current, ..., check.attributes = TRUE)
