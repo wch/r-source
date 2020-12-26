@@ -492,6 +492,9 @@
 
       \item \code{identical(x,y)} no longer prints "Unknown Type .." for
       \code{typeof(x) == "..."} objects.
+
+      \item Fix (auto-)\code{print()}ing of named complex vectors, see
+      \PR{17868} and \PR{18019}.
     }
   }
 }

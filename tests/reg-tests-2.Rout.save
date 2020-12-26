@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2020-12-14 r79624) -- "Unsuffered Consequences"
+R Under development (unstable) (2020-12-26 r79687) -- "Unsuffered Consequences"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -8069,6 +8069,17 @@ mean of x
 +     options(op)
 +     unlink(tf)
 + }
+> 
+> 
+> ## printing *named* complex vectors (*not* arrays), PR#17868 (and PR#18019):
+> a <- 1:12; (z <- a + a*1i); names(z) <- letters[seq_along(z)]; z
+ [1]  1+ 1i  2+ 2i  3+ 3i  4+ 4i  5+ 5i  6+ 6i  7+ 7i  8+ 8i  9+ 9i 10+10i
+[11] 11+11i 12+12i
+     a      b      c      d      e      f      g      h      i      j      k 
+ 1+ 1i  2+ 2i  3+ 3i  4+ 4i  5+ 5i  6+ 6i  7+ 7i  8+ 8i  9+ 9i 10+10i 11+11i
+     l 
+12+12i
+> ## fixed in R-devel in July 2020;  R 4.0.3 patched on Dec 26, 2020
 > 
 > 
 > ## identical(*) on "..." object
