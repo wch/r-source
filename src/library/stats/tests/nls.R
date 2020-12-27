@@ -52,9 +52,11 @@ a <- b <- 1; c <- -0.1
 y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
 plot(x,y)
 curve(a+b*x+c*x^2, add = TRUE)
+## IGNORE_RDIFF_BEGIN
 nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1), algorithm = "port")
 (fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1),
            algorithm = "port", lower = c(0, 0, 0)))
+## IGNORE_RDIFF_END
 if(have_MASS) print(confint(fm))
 
 ## weighted nls fit
@@ -65,11 +67,9 @@ wts <- rep(c(1, 2), length = 10); wts[5] <- 0
 fit0 <- lm(yeps ~ x, weights = wts)
 ## IGNORE_RDIFF_BEGIN
 summary(fit0, cor = TRUE)
-## IGNORE_RDIFF_END
 cf0 <- coef(summary(fit0))[, 1:2]
 fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
            weights = wts, trace = TRUE)
-## IGNORE_RDIFF_BEGIN
 summary(fit, cor = TRUE)
 ## IGNORE_RDIFF_END
 stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
@@ -237,7 +237,10 @@ test <- function(trace=TRUE)
 	 suppressWarnings(
 	     nls(y ~ myf(x,A,B,n), data=xy)))
 }
-t1 <- test(); t1$with.start
+## IGNORE_RDIFF_BEGIN
+t1 <- test()
+## IGNORE_RDIFF_END
+t1$with.start
 ##__with.start:
 ## failed to find n in 2.2.x
 ## found wrong n in 2.3.x

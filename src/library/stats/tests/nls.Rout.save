@@ -1,5 +1,5 @@
 
-R version 4.0.3 Patched (2020-12-04 r79559) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-12-27 r79705) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -72,6 +72,7 @@ function (x, Asym, xmid, scal)
 > y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
 > plot(x,y)
 > curve(a+b*x+c*x^2, add = TRUE)
+> ## IGNORE_RDIFF_BEGIN
 > nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1), algorithm = "port")
 Nonlinear regression model
   model: y ~ a + b * x + c * I(x^2)
@@ -91,6 +92,7 @@ Nonlinear regression model
  residual sum-of-squares: 0.468
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
+> ## IGNORE_RDIFF_END
 > if(have_MASS) print(confint(fm))
 Waiting for profiling to be done...
      2.5%    97.5%
@@ -129,13 +131,11 @@ Correlation of Coefficients:
   (Intercept)
 x -0.89      
 
-> ## IGNORE_RDIFF_END
 > cf0 <- coef(summary(fit0))[, 1:2]
 > fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +            weights = wts, trace = TRUE)
 112.14 :  0.12345 0.54321
 0.0012128 :  0.0051705 0.9991529
-> ## IGNORE_RDIFF_BEGIN
 > summary(fit, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -611,7 +611,8 @@ b    NA 0.611
 + 	 suppressWarnings(
 + 	     nls(y ~ myf(x,A,B,n), data=xy)))
 + }
-> t1 <- test(); t1$with.start
+> ## IGNORE_RDIFF_BEGIN
+> t1 <- test()
 8291.9 :  1 1
 726.02 :  0.80544 2.42971
 552.85 :  1.290 2.129
@@ -619,6 +620,8 @@ b    NA 0.611
 26.555 :  1.9788 2.0064
 26.503 :  1.9798 2.0046
 26.503 :  1.9799 2.0046
+> ## IGNORE_RDIFF_END
+> t1$with.start
 Nonlinear regression model
   model: y ~ myf(x, a, b, n)
    data: xy
