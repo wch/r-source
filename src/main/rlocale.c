@@ -282,12 +282,16 @@ extern const char *locale2charset(const char *);
 }
 /* Solaris 8 was missing iswblank.  Its man page was missing iswcntrl,
    but the function is there.  MinGW used not to have iswblank until
-   mingw-runtime-3.11. */
+   mingw-runtime-3.11. 
+
+   Probably history nowadays.
+*/
 # ifndef HAVE_ISWBLANK
 #  define iswblank(wc) iswctype(wc, wctype("blank"))
 # endif
 #endif
 
+#if defined(Win32) || defined(_AIX) || defined(__APPLE__) || !defined(HAVE_ISWBLANK)
 /* These are the functions which C99 and POSIX define.  However,
    not all are used elsewhere in R (so are static),
    but they are used in Ri18n_iswctype. */
@@ -342,7 +346,6 @@ static const Ri18n_wctype_func_l Ri18n_wctype_func[] = {
     {NULL,     0,     NULL}
 };
 
-#if defined(Win32) || defined(_AIX) || defined(__APPLE__)
 /* These two are used (via macros) in X11 dataentry so need to be visible. */
 wctype_t Ri18n_wctype(const char *name)
 {
