@@ -55,6 +55,7 @@
 #include <limits.h>
 #include <R_ext/Riconv.h>
 
+// ------------------------- width functions --------------------
 // This seems based on Markus Kuhn's function but with 1-based 'max'
 static int wcsearch(int wint, const struct interval *table, int max)
 {
@@ -84,7 +85,7 @@ static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
     max--;
 
     /* This quickly gives one for ASCII characters since the table
-       starts at 0xa0 */
+       starts at 0xa1 */
     if (wint < table[0].first || wint > table[max].last) return 1;
     while (max >= min) {
 	mid = (min + max) / 2;
@@ -204,10 +205,13 @@ int Ri18n_wcswidth (const wchar_t *s, size_t n)
     return rs;
 }
 
+// ------------------- end of  width functions --------------------
+
 /*********************************************************************
- *  macOS's wide character type functions are based on FreeBSD
+ *  macOS's wide character type functions are based on NetBSD
  *  and only work correctly for Latin-1 characters.
- *  So we replace them.  May also be needed on FreeBSD.
+ * (Confirmed for macOS 11.1 in 2020-12.)
+ *  So we replace them.  May also be needed on *BSD.
  ********************************************************************/
 #if defined(__APPLE__)
 /* allow for PowerPC, Intel and arm64 platforms */
@@ -262,7 +266,7 @@ extern const char *locale2charset(const char *);
  *  all locale wchar_t == UNICODE
  ********************************************************************/
 #if defined(Win32) || defined(_AIX)
-#define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
+# define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {									\
     return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
 }
@@ -272,20 +276,21 @@ extern const char *locale2charset(const char *);
  *  iswalpha etc. do function correctly for Linux
  ********************************************************************/
 #ifndef ISWFUNC
-#define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
+# define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {                                                                       \
     return isw ## ISWNAME (wc); \
 }
 /* Solaris 8 was missing iswblank.  Its man page was missing iswcntrl,
    but the function is there.  MinGW used not to have iswblank until
    mingw-runtime-3.11. */
-#ifndef HAVE_ISWBLANK
-#define iswblank(wc) iswctype(wc, wctype("blank"))
-#endif
+# ifndef HAVE_ISWBLANK
+#  define iswblank(wc) iswctype(wc, wctype("blank"))
+# endif
 #endif
 
 /* These are the functions which C99 and POSIX define.  However,
-   not all are used elsewhere in R, but they are used in Ri18n_iswctype. */
+   not all are used elsewhere in R (so are static),
+   but they are used in Ri18n_iswctype. */
 
     ISWFUNC(upper)
     ISWFUNC(lower)
@@ -337,7 +342,8 @@ static const Ri18n_wctype_func_l Ri18n_wctype_func[] = {
     {NULL,     0,     NULL}
 };
 
-/* These two used (via macros) in X11 dataentry */
+#if defined(Win32) || defined(_AIX) || defined(__APPLE__)
+/* These two are used (via macros) in X11 dataentry so need to be visible. */
 wctype_t Ri18n_wctype(const char *name)
 {
     int i;
@@ -355,3 +361,4 @@ int Ri18n_iswctype(wint_t wc, wctype_t desc)
 	     Ri18n_wctype_func[i].wctype != desc ; i++ );
     return (*Ri18n_wctype_func[i].func)(wc);
 }
+#endif

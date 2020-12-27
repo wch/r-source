@@ -19,7 +19,7 @@
 
 /* R i18n fake locale functions. */
 enum { MB_Default, MB_ja_JP, MB_ko_KR, MB_zh_SG, MB_zh_CN, MB_zh_HK,
-       MB_zh_TW, MB_SIZE };
+       MB_zh_TW, MB_SIZE }; // this sets MB_SIZE to 7
 
 struct interval {
     int first;

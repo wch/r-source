@@ -91,9 +91,19 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
  * We define alternatives to be used if
  * defined(Win32) || defined(__APPLE__) || defined(_AIX)
  */
+
+// Used directly for "blank" in gram.y on some platforms
 extern wctype_t Ri18n_wctype(const char *);
 // Apparently wint_t is unsigned short on Windows, unsigned int on Linux
 extern int      Ri18n_iswctype(wint_t, wctype_t);
+
+/* 
+   iswspace is used in Rstrptime.h, character.c and util.c
+   iswalpha, iswalnum used in gram.y and in X11/dataentry.c
+   iswdigit is used in plotmath.c X11/dataentry.c (and indirectly in gram.y) 
+   iswprint is used in printutils.c
+*/
+#if defined(Win32) || defined(_AIX) || defined(__APPLE__)
 
 #ifndef IN_RLOCALE_C
 /* We want to avoid these redefinitions in rlocale.c itself */
@@ -126,6 +136,8 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define iswalnum(__x)     Ri18n_iswctype(__x, Ri18n_wctype("alnum"))
 #define wctype(__x)       Ri18n_wctype(__x)
 #define iswctype(__x,__y) Ri18n_iswctype(__x,__y)
+#endif
+
 #endif
 
 /* These definitions are from winnls.h in MinGW-W64.  We don't need
