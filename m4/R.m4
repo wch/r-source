@@ -1965,10 +1965,21 @@ if test "${use_libtiff}" = yes; then
     else
       # tiff 4.0.x may need lzma too: SU's static build does
       unset ac_cv_lib_tiff_TIFFOpen
-      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-llzma ${BITMAP_LIBS} -llzma])
+      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-llzma ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xyes; then
         AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
         BITMAP_LIBS="-ltiff -llzma ${BITMAP_LIBS}"
+      else
+        have_tiff=no
+      fi
+    fi
+    if test "x${have_tiff}" != xyes; then
+      # tiff 4.1.x may need webp too:
+      unset ac_cv_lib_tiff_TIFFOpen
+      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-lwebp -llzma ${BITMAP_LIBS}])
+      if test "x${have_tiff}" = xyes; then
+        AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
+        BITMAP_LIBS="-ltiff -lwebp  -llzma ${BITMAP_LIBS}"
       else
         have_tiff=no
       fi
@@ -2030,6 +2041,8 @@ if test "${use_libpng}" = yes; then
       AC_CHECK_LIB(png, png_create_write_struct, 
                    [have_png=yes], [have_png=no], [${PNG_LIBS} ${LIBS}])
       if test "${have_png}" = no; then
+        dnl currently this is the same as --libs, but might change.
+        unset ac_cv_lib_png_png_create_write_struct
         PNG_LIBS=`"${PKG_CONFIG}" --static --libs libpng`
         AC_CHECK_LIB(png, png_create_write_struct, 
                      [have_png=yes], [have_png=no], [${PNG_LIBS} ${LIBS}])
@@ -2068,6 +2081,7 @@ if test "${use_libtiff}" = yes; then
       AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no],
                    [${TIF_LIBS} ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xno; then
+        unset ac_cv_lib_tiff_TIFFOpen
         TIF_LIBS=`"${PKG_CONFIG}" --static --libs ${mod}`
         AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no],
                      [${TIF_LIBS} ${BITMAP_LIBS}])
