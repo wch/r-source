@@ -53,8 +53,10 @@ y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
 plot(x,y)
 curve(a+b*x+c*x^2, add = TRUE)
 nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1), algorithm = "port")
+## IGNORE_RDIFF_BEGIN
 (fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1),
            algorithm = "port", lower = c(0, 0, 0)))
+## IGNORE_RDIFF_END
 if(have_MASS) print(confint(fm))
 
 ## weighted nls fit
@@ -353,7 +355,9 @@ curve(errE(x), 1e-9, 1e-4, log="xy", n=512, ylim = c(1.5e-11, 5e-7),
 axis(1, at = 2^-(52/2), label = quote(sqrt(epsilon[c])), col=4, col.axis=4, line=-1/2)
 axis(1, at = 2^-(52/3), label = quote(epsilon[c]^{1/3}), col=4, col.axis=4, line=-1/2)
 curve(errE(x, central=TRUE), n=512, col=2, add = TRUE) -> rexC
+## IGNORE_RDIFF_BEGIN
 str(xy1 <- approx(rex , xout= sqrt(2^-52)) )
 str(xy2 <- approx(rexC, xout=(2^-52)^(1/3)))
+## IGNORE_RDIFF_END
 lines(xy1, type="h", col=4)
 lines(xy2, type="h", col=4)
