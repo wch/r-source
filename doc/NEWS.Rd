@@ -308,17 +308,16 @@
       characters, 6 (not 8) hex digits are used (as it was decided by
       Unicode that the first two would always be zero).
 
-      \item The parser now looks for non-ASCII spaces on Solaris, in
-      addition to Windows, macOS, FreeBSD and OSes such as Linux that
-      declare \code{wchar_t} is encoded as Unicode.
+      \item The parser now looks for non-ASCII spaces on Solaris (as
+      previously on most other OSes).
 
       \item There are warnings (including from the parser) on the use of
       unpaired surrogate Unicode points such as \samp{\\uD834} (which
       cannot be converted to valid UTF-8).
 
-      \item \code{nchar()}, \code{tolower()}, \code{toupper()} and
-      \code{chartr()} have more support for inputs with a marked
-      encoding (UTF-8 or Latin-1) in a single-byte locale.
+      \item Functions \code{nchar()}, \code{tolower()}, \code{toupper()}
+      and \code{chartr()} and those using regular expressions have more
+      support for inputs with a marked Latin-1 encoding.
 
       \item The code for the evaluating default (extended) regular
       expressions now uses the same character-classification functions
