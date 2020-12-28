@@ -291,7 +291,7 @@ extern const char *locale2charset(const char *);
 # endif
 #endif
 
-#if defined(Win32) || defined(_AIX) || defined(__APPLE__) || !defined(HAVE_ISWBLANK)
+#if defined(USE_RI18N_FNS) || !defined(HAVE_ISWBLANK)
 /* These are the functions which C99 and POSIX define.  However,
    not all are used elsewhere in R (so are static),
    but they are used in Ri18n_iswctype. */

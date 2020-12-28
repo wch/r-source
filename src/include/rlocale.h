@@ -104,6 +104,7 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
    iswprint is used in printutils.c
 */
 #if defined(Win32) || defined(_AIX) || defined(__APPLE__)
+#define USE_RI18N_FNS
 
 #ifndef IN_RLOCALE_C
 /* We want to avoid these redefinitions in rlocale.c itself */
