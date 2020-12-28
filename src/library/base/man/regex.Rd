@@ -222,7 +222,7 @@
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
   locales and if any of the inputs are marked as UTF-8 (see
-  \code{\link{Encoding}}).
+  \code{\link{Encoding}}, or as Latin-1 except in a Latin-1 locale.
 
   All the regular expressions described for extended regular expressions
   are accepted except \samp{\\<} and \samp{\\>}: in Perl all backslashed
