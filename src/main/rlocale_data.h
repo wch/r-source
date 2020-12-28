@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2015   The R Core Team
+ *  Copyright (C) 2005-2020   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1390,7 +1390,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x100000,0x10fffd,{1,1,1,1,2,1,1}}, // EA ambiguous
 };
 
-#if defined(__APPLE__) || defined(Win32) || defined(_AIX)
+#if defined(USE_RI18N_FNS) || !defined(HAVE_ISWBLANK)
 /* ------------------- iswalpha -------------------- */
 static const struct interval table_walpha[] = {
     { 0x41, 0x5a },
@@ -3614,7 +3614,8 @@ static const struct interval table_wxdigit[] = {
 };
 static const int table_wxdigit_count =
   (sizeof(table_wxdigit)/sizeof(struct interval));
-#endif
+
+#endif // USE_RI18N_FNS
 
 /* -------------------helper for wcwidth -------------------- */
 
