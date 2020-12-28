@@ -46,7 +46,7 @@
 
 #define IN_RLOCALE_C 1 /* used in rlocale.h */
 #include <rlocale.h>
-#include "rlocale_data.h"
+#include "rlocale_widths.h"
 
 #include <wctype.h>
 #include <wchar.h>
@@ -210,7 +210,7 @@ int Ri18n_wcswidth (const wchar_t *s, size_t n)
 /*********************************************************************
  *  macOS's wide character type functions are based on NetBSD
  *  and only work correctly for Latin-1 characters.
- * (Confirmed for macOS 11.1 in 2020-12.)
+ *  (Confirmed for macOS 11.1 in 2020-12.)
  *  So we replace them.  May also be needed on *BSD.
  ********************************************************************/
 #if defined(__APPLE__)
@@ -261,8 +261,8 @@ extern const char *locale2charset(const char *);
 #endif // __APPLE__
 
 /*********************************************************************
- *  iswalpha etc. does not function correctly for Windows
- *  iswalpha etc. does not function at all in AIX.
+ *  iswalpha etc. do not function correctly for Windows
+ *  iswalpha etc. do not function at all in AIX.
  *  all locale wchar_t == UNICODE
  ********************************************************************/
 #if defined(Win32) || defined(_AIX)
@@ -273,7 +273,8 @@ extern const char *locale2charset(const char *);
 #endif
 
 /*********************************************************************
- *  iswalpha etc. do function correctly for Linux
+ *  iswalpha etc. do function correctly on other Unix-alikes
+ *  so we have a fallback, which is no longer used.
  ********************************************************************/
 #ifndef ISWFUNC
 # define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
@@ -283,6 +284,7 @@ extern const char *locale2charset(const char *);
 #endif
 
 #if defined(USE_RI18N_FNS)
+#include "rlocale_data.h"
 /* These are the functions which C99 and POSIX define.  However,
    not all are used elsewhere in R (so are static),
    but they are used in Ri18n_iswctype. */

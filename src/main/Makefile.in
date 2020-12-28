@@ -59,6 +59,7 @@ HEADERS = \
 	machar.c \
 	qsort-body.c \
 	rlocale_data.h \
+	rlocale_widths.h \
 	split-incl.c \
 	unzip.h \
 	valid_utf8.h \
