@@ -418,9 +418,6 @@
 /* Define to 1 if you have the `isnan' function. */
 #undef HAVE_ISNAN
 
-/* Define to 1 if you have the `iswblank' function. */
-#undef HAVE_ISWBLANK
-
 /* Define to 1 if you have the `iswctype' function. */
 #undef HAVE_ISWCTYPE
 

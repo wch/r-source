@@ -74,9 +74,7 @@ typedef wint_t tre_cint_t;
 
 #define tre_isalnum iswalnum
 #define tre_isalpha iswalpha
-#ifdef HAVE_ISWBLANK
 #define tre_isblank iswblank
-#endif /* HAVE_ISWBLANK */
 #define tre_iscntrl iswcntrl
 #define tre_isdigit iswdigit
 #define tre_isgraph iswgraph
@@ -122,7 +120,8 @@ typedef short tre_cint_t;
 
 #endif /* !TRE_WCHAR */
 
-/* _WIN32 opt-out is R addition - iswctype is missing "blank" */
+/* _WIN32 opt-out is R addition - iswctype was missing "blank"
+   R requires iswctype and wctype */
 #if !defined(_WIN32) && defined(TRE_WCHAR) && defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE)
 #define TRE_USE_SYSTEM_WCTYPE 1
 #endif

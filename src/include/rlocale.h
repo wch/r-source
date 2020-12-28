@@ -88,14 +88,7 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
  * Japanese "a-ru" of R as a letter. 
  * Therefore Japanese "Buraian.Ripuri-" of "Brian Ripley" is
  * shown of hex-string.:-)
- * We define alternatives to be used if
- * defined(Win32) || defined(__APPLE__) || defined(_AIX)
  */
-
-// Used directly for "blank" in gram.y on some platforms
-extern wctype_t Ri18n_wctype(const char *);
-// Apparently wint_t is unsigned short on Windows, unsigned int on Linux
-extern int      Ri18n_iswctype(wint_t, wctype_t);
 
 /* 
    iswspace is used in Rstrptime.h, character.c and util.c
@@ -105,6 +98,10 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 */
 #if defined(Win32) || defined(_AIX) || defined(__APPLE__)
 #define USE_RI18N_FNS
+
+extern wctype_t Ri18n_wctype(const char *);
+// Apparently wint_t is unsigned short on Windows, unsigned int on Linux
+extern int      Ri18n_iswctype(wint_t, wctype_t);
 
 #ifndef IN_RLOCALE_C
 /* We want to avoid these redefinitions in rlocale.c itself */

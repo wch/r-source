@@ -223,6 +223,9 @@
       looked for on the path (like almost all other programs) so if needed
       specify a full path to the command in \code{PKG_CONFIG}, for example
       in file \file{config.site}.
+
+      \item C99 function \code{iswblank} is required -- it was last seen
+      missing ca 2003 so the workaround has been removed.
     }
   }
 

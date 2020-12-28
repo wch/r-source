@@ -1390,7 +1390,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x100000,0x10fffd,{1,1,1,1,2,1,1}}, // EA ambiguous
 };
 
-#if defined(USE_RI18N_FNS) || !defined(HAVE_ISWBLANK)
+#if defined(USE_RI18N_FNS)
 /* ------------------- iswalpha -------------------- */
 static const struct interval table_walpha[] = {
     { 0x41, 0x5a },

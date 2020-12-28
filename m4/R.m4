@@ -3664,11 +3664,10 @@ for ac_header in wchar wctype; do
   fi
 done
 if test "$want_mbcs_support" = yes ; then
-dnl Solaris 8 is missing iswblank, but we can make it from iswctype.
 dnl These are all C99, but Cygwin lacks wcsftime & wcstod
   R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime wcstod], [#include <wchar.h>])
   R_CHECK_FUNCS([mbstowcs wcstombs], [#include <stdlib.h>])
-  R_CHECK_FUNCS([wctrans iswblank wctype iswctype], 
+  R_CHECK_FUNCS([wctrans wctype iswctype], 
 [#include <wchar.h>
 #include <wctype.h>])
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcstombs \
