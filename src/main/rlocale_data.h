@@ -20,18 +20,19 @@
 /* Data for replacement iswxxxxx functions used only on
    Windows, macOS and AIX
 
-   It is not clear how they were originally derived when contribtued
+   It is not clear how they were originally derived when contributed
    by Ei-ji Nakama.  Sources for updating include the Unicode tables;
 
    https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
    (described in http://www.unicode.org/L2/L1999/UnicodeData.html)
    
-   with the help of Marcus' Kuhn' 'uniset' Perl script
+   with the help of Marcus Kuhn's 'uniset' Perl script
    (https://www.cl.cam.ac.uk/~mgk25/download/uniset.tar.gz: update the
    tables it contains to current Unicode) and some ideas are mentioned
    in the comments.
 
-   Or look at the glibc sources.
+   Or look at the glibc sources (data in localedata/unicode-gen).
+   That generates a file i18n_ctype via a Python script gen_unicode_ctype.py.
  */
 
 /* ------------------- iswalpha -------------------- */
@@ -45,6 +46,16 @@
    iswalnum is derived in rlocale.c
 
    Something like uniset +cat=Lu +cat=Ll +cat=Lt +cat=Lo c
+
+   glibc has 
+
+   'Alphabetic' in DERIVED_CORE_PROPERTIES[code_point])
+   or
+   # Consider all the non-ASCII digits as alphabetic.
+   # ISO C 99 forbids us to have them in category “digit”,
+   # but we want iswalnum to return true on them.
+   (UNICODE_ATTRIBUTES[code_point]['category'] == 'Nd'
+   and not (code_point >= 0x0030 and code_point <= 0x0039)))
 */
 static const struct interval table_walpha[] = {
     { 0x41, 0x5a },
@@ -381,17 +392,19 @@ static const int table_walpha_count =
     (sizeof(table_walpha)/sizeof(struct interval));
 
 /* ------------------- iswblank -------------------- */
-// defined as 'space or tab': see comments for isspace
+/* defined as 'space or tab': see comments for isspace
+   tab  + "Category Zs without mention of '<noBreak>'"
+ */
 static const struct interval table_wblank[] = {
-  { 0x9, 0x9 },
-  { 0x20, 0x20 },
-  { 0xa0, 0xa0 }, /* non-breaking space */
-  { 0x1680, 0x1680 }, /* ogham space mark */
-  { 0x2000, 0x2006 }, /* why not figure space, 2007? Not in glibc */
-  { 0x2008, 0x200b },
-//  { 0x202f, 0x202f }, /* narrow no-break space */
-  { 0x205f, 0x205f }, /* medium mathematical space */
-  { 0x3000, 0x3000 }  /* (CJK) ideographic space */
+    { 0x9, 0x9 },
+    { 0x20, 0x20 },
+//  { 0xa0, 0xa0 }, /* non-breaking space, omitted by glibc, in Solaris */
+    { 0x1680, 0x1680 }, /* ogham space mark */
+    { 0x2000, 0x2006 }, /* not figure space, 2007? */
+    { 0x2008, 0x200a }, /* not zero-width-space, 200b */
+//  { 0x202f, 0x202f }, /* narrow no-break space, omitted by glibc, in Solaris */
+    { 0x205f, 0x205f }, /* medium mathematical space */
+    { 0x3000, 0x3000 }  /* (CJK) ideographic space */
 };
 static const int table_wblank_count =
     (sizeof(table_wblank)/sizeof(struct interval));
@@ -403,7 +416,7 @@ static const struct interval table_wcntrl[] = {
   { 0x2028, 0x2029 } // Line and paragraph separators
 };
 static const int table_wcntrl_count =
-  (sizeof(table_wcntrl)/sizeof(struct interval));
+    (sizeof(table_wcntrl)/sizeof(struct interval));
 
 /* ------------------- iswdigit -------------------- */
 /* The C99 standard defines this as just 0-9 */
@@ -411,14 +424,31 @@ static const struct interval table_wdigit[] = {
     { 0x30, 0x39 }
 };
 static const int table_wdigit_count =
-  (sizeof(table_wdigit)/sizeof(struct interval));
+    (sizeof(table_wdigit)/sizeof(struct interval));
 
 /* ------------------- iswgraph -------------------- */
-/* FIXME.  This should not need a separate table, as it is defined in
-   the C99 standard as
+/* Could be derived from other tables: C99 says
 
-   'any wide character for which iswprint is true and iswspace is false'
- */
+   The iswgraph function tests for any wide character for which
+   iswprint is true and iswspace is false
+   
+   glibc has
+
+    return (UNICODE_ATTRIBUTES[code_point]['name']
+            and UNICODE_ATTRIBUTES[code_point]['name'] != '<control>'
+            and not is_space(code_point))
+
+   PCRE has
+
+      Graphic character. Implement this as not Z (space or separator) and
+      not C (other), except for Cf (format) with a few exceptions. This seems
+      to be what Perl does. The exceptional characters are:
+
+      U+061C           Arabic Letter Mark
+      U+180E           Mongolian Vowel Separator
+      U+2066 - U+2069  Various "isolate"s
+*/
+
 static const struct interval table_wgraph[] = {
     { 0x21, 0x7e },
     { 0xa0, 0x220 },
@@ -687,6 +717,7 @@ static const struct interval table_wgraph[] = {
     { 0x1ff2, 0x1ff4 },
     { 0x1ff6, 0x1ffe },
     { 0x2007, 0x2007 },
+    { 0x200b, 0x200b }, // excluded from space
     { 0x200c, 0x2027 },
     { 0x202a, 0x2052 },
     { 0x2057, 0x2057 },
@@ -819,6 +850,18 @@ static const int table_wgraph_count =
    a lowercase letter or is one of a locale-specific set of wide
    characters for which none of iswcntrl, iswdigit, iswpunct, or iswspace
    is true.
+
+   glibc has 
+
+    # Some characters are defined as “Lowercase” in
+    # DerivedCoreProperties.txt but do not have a mapping to upper
+    # case. For example, ꜰ U+A72F “LATIN LETTER SMALL CAPITAL F” is
+    # one of these.
+    return (to_upper(code_point) != code_point
+            # <U00DF> is lowercase, but without simple to_upper mapping.
+            or code_point == 0x00DF
+            or (code_point in DERIVED_CORE_PROPERTIES
+                and 'Lowercase' in DERIVED_CORE_PROPERTIES[code_point]))
 */
 static const struct interval table_wlower[] = {
     { 0x61, 0x7a },
@@ -1220,12 +1263,19 @@ static const struct interval table_wlower[] = {
     { 0x10428, 0x1044d }
 };
 static const int table_wlower_count =
-  (sizeof(table_wlower)/sizeof(struct interval));
+    (sizeof(table_wlower)/sizeof(struct interval));
 
 /* ------------------- iswprint -------------------- */
+/* glibc has
+
+    return (UNICODE_ATTRIBUTES[code_point]['name']
+            and UNICODE_ATTRIBUTES[code_point]['name'] != '<control>'
+            and UNICODE_ATTRIBUTES[code_point]['category'] not in ['Zl', 'Zp'])
+
+ */
 static const struct interval table_wprint[] = {
     { 0x20, 0x7e },
-    { 0xa0, 0x220 },
+    { 0xa0, 0x220 }, // glibc has <U00A0>..<U0377>
     { 0x222, 0x233 },
     { 0x250, 0x2ad },
     { 0x2b0, 0x2ee },
@@ -1614,7 +1664,7 @@ static const struct interval table_wprint[] = {
     { 0x100000, 0x10fffd }
 };
 static const int table_wprint_count =
-  (sizeof(table_wprint)/sizeof(struct interval));
+    (sizeof(table_wprint)/sizeof(struct interval));
 
 /* ------------------- iswpunct -------------------- */
 /* Defined in the C99 standard as
@@ -1624,20 +1674,34 @@ static const int table_wprint_count =
    true'
 
    Something like uniset +cat=Pc +cat=Pd +cat=Ps +cat=Pe +cat=Pi +cat=Pf +cat=Po +cat=Sm +cat=Sc +cat=Sk +cat=So +00AD c
+
+   glibc has
+
+        # The traditional POSIX definition of punctuation is every graphic,
+        # non-alphanumeric character.
+        return (is_graph(code_point)
+                and not is_alpha(code_point)
+                and not is_digit(code_point))
+
+   PCRE has
+
+      Punctuation: all Unicode punctuation, plus ASCII characters that
+      Unicode treats as symbols rather than punctuation, for Perl
+      compatibility (these are $+<=>^`|~).
 */
 static const struct interval table_wpunct[] = {
     { 0x21, 0x2f }, // includes $ & + 
     { 0x3a, 0x40 },
     { 0x5b, 0x60 },
     { 0x7b, 0x7e },
-    { 0xa1, 0xa9 }, // a0 is a space, so was an error.
-    { 0xab, 0xb1 }, // ad is soft hyphen, but b2 and b3 were wrong
+    { 0xa1, 0xa9 }, // a0 is a space, which glibc includes
+    { 0xab, 0xb1 }, // glibc includes b2 and b3 (superscript 2 and 3)
     { 0xb4, 0xb4 },
     { 0xb6, 0xb9 },
     { 0xbb, 0xbf },
     { 0xd7, 0xd7 },
     { 0xf7, 0xf7 },
-    { 0x2b9, 0x2ba },
+//    { 0x2b9, 0x2ba }, // glibc does not have these
     { 0x2c2, 0x2cf },
     { 0x2d2, 0x2df },
     { 0x2e5, 0x2ed },
@@ -1872,13 +1936,13 @@ static const struct interval table_wpunct[] = {
     { 0x1d789, 0x1d789 },
     { 0x1d7a9, 0x1d7a9 },
     { 0x1d7c3, 0x1d7c3 },
-    { 0xe0001, 0xe0001 },
-    { 0xe0020, 0xe007f },
-    { 0xf0000, 0xffffd },
-    { 0x100000, 0x10fffd }
+    { 0xe0001, 0xe0001 }, // tag
+    { 0xe0020, 0xe007f }, // tags
+    { 0xf0000, 0xffffd }, // private use
+    { 0x100000, 0x10fffd } // private use
 };
 static const int table_wpunct_count =
-  (sizeof(table_wpunct)/sizeof(struct interval));
+    (sizeof(table_wpunct)/sizeof(struct interval));
 
 /* ------------------- iswspace -------------------- */
 /* Defined in the C99 standard as
@@ -1887,22 +1951,28 @@ static const int table_wpunct_count =
    white-space wide characters for which none of iswalnum, iswgraph,
    or iswpunct is true.'
 
+   Differs from iswblank in adding { 0xa, 0xd }, { 0x2028, 0x2029 }
+
+   There is also Unicode's PropList.txt, which includes U+0085,2000..200A,202F
+   so this was changed for R 4.1.0
+
    Something like uniset +cat=Zs +cat=Zl +cat=Zp c
+   but glibc has 'without mention of "<noBreak>"', hence a0, 2007, 202f.
 */
 static const struct interval table_wspace[] = {
-    { 0x9, 0xd },
+    { 0x9, 0xd }, /* tab, LF, vtab, FF, CR */
     { 0x20, 0x20 },
-    { 0xa0, 0xa0 }, /* non-breaking space */
+//    { 0xa0, 0xa0 }, /* non-breaking space, omitted by glibc */
     { 0x1680, 0x1680 }, /* ogham space mark */
-    { 0x2000, 0x2006 }, /* why not figure space, 2007? */
-    { 0x2008, 0x200b }, /* Unicode does not have 200B as a space */
+    { 0x2000, 0x2006 }, /* not figure space, 2007? */
+    { 0x2008, 0x200a }, /* not zero-width-space, 200b */
     { 0x2028, 0x2029 }, /* line separator, para separator */
-//  { 0x202f, 0x202f }, /* narrow no-break space, not in glibc */
+//    { 0x202f, 0x202f }, /* narrow no-break space, omitted by glibc */
     { 0x205f, 0x205f }, /* medium mathematical space */
     { 0x3000, 0x3000 }  /* (CJK) ideographic space */
 };
 static const int table_wspace_count =
-  (sizeof(table_wspace)/sizeof(struct interval));
+    (sizeof(table_wspace)/sizeof(struct interval));
 
 /* ------------------- iswupper -------------------- */
 /* Defined in the C99 standard as
@@ -2294,15 +2364,15 @@ static const struct interval table_wupper[] = {
     { 0x10400, 0x10425 }
 };
 static const int table_wupper_count =
-  (sizeof(table_wupper)/sizeof(struct interval));
+    (sizeof(table_wupper)/sizeof(struct interval));
 
 
 /* ------------------- iswxdigit -------------------- */
 /* Defined in the C99 standard to be just these */
 static const struct interval table_wxdigit[] = {
-  { 0x30, 0x39 },
-  { 0x41, 0x46 },
-  { 0x61, 0x66 }
+    { 0x30, 0x39 },
+    { 0x41, 0x46 },
+    { 0x61, 0x66 }
 };
 static const int table_wxdigit_count =
-  (sizeof(table_wxdigit)/sizeof(struct interval));
+    (sizeof(table_wxdigit)/sizeof(struct interval));
