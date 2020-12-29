@@ -3065,6 +3065,7 @@ static int SymbolValue(int c)
     int kw;
     DECLARE_YYTEXT_BUFP(yyp);
     if(mbcslocale) {
+	// FIXME potentially need R_wchar_t with UTF-8 Windows.
 	wchar_t wc; int i, clen;
 	clen = mbcs_get_next(c, &wc);
 	while(1) {
@@ -3225,6 +3226,7 @@ static int token(void)
 
     if (c == '.') return SymbolValue(c);
     if(mbcslocale) {
+	// FIXME potentially need R_wchar_t with UTF-8 Windows.
 	mbcs_get_next(c, &wc);
 	if (iswalpha(wc)) return SymbolValue(c);
     } else
