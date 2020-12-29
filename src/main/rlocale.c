@@ -186,21 +186,28 @@ int Ri18n_wcwidth(R_wchar_t c)
 
 /* Used in character.c, errors.c, ../gnuwin32/console.c
    
-   Only works in the BMP on Windows as does not handle surrogate pairs.
-
    Strings in R are restricted to 2^31-1 bytes but could conceivably
    have a width exceeding that.
 */
 attribute_hidden
-int Ri18n_wcswidth (const wchar_t *s, size_t n)
+int Ri18n_wcswidth (const wchar_t *wc, size_t n)
 {
     int rs = 0;
-    while ((n-- > 0) && (*s != L'\0'))
+    while ((n-- > 0) && (*wc != L'\0'))
     {
-	int now = Ri18n_wcwidth (*s);
-	if (now == -1) return -1;
-	rs += now;
-	s++;
+	if (IS_SURROGATE_PAIR(*wc, *(wc+1))) {
+	    R_wchar_t val =
+		((*wc & 0x3FF) << 10) + (*(wc+1) & 0x3FF) + 0x010000;
+	    int now = Ri18n_wcwidth (val);
+	    if (now == -1) return -1;
+	    rs += now;
+	    wc += 2;
+	} else {
+	    int now = Ri18n_wcwidth (*wc);
+	    if (now == -1) return -1;
+	    rs += now;
+	    wc++;
+	}
     }
     return rs;
 }
@@ -224,8 +231,15 @@ static const char UNICODE[] = "UCS-4LE";
 /* in Defn.h which is not included here */
 extern const char *locale2charset(const char *);
 
-// Is there any guarantee that wcrtomb here will work?
-// Its return code is not checked.  Most likely used in UTF-8, though.
+/* I have no idea what is going on here.  The input is a wide
+   character, and that is always UCS-4 on macOS.  So converting to
+   native and then to UCS-4 makes no sense at all.
+
+   Although there are non-UTF-8 locales on Windows, no one uses them
+   apart perhaps from C.
+
+   BDR
+*/
 #define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {	                                                             \
   char    mb_buf[MB_LEN_MAX+1];			                     \
