@@ -192,18 +192,16 @@ int R_nchar(SEXP string, nchar_type type_,
 		    error(_("invalid multibyte string, %s"), msg_name);
 		return NA_INTEGER;
 	    } else {
-		wchar_t wc1;
-		R_wchar_t ucs;
 		int nc = 0;
 		for( ; *p; p += utf8clen(*p)) {
-		    /* FIXME Perhaps give width 1 or NA to all chars beyond
-		     * the BMP? */
+		    wchar_t wc1;
 		    utf8toucs(&wc1, p);
+		    R_wchar_t ucs;
 		    if (IS_HIGH_SURROGATE(wc1))
 		    	ucs = utf8toucs32(wc1, p);
 		    else
 		    	ucs = wc1;
-		    nc += Ri18n_wcwidth(ucs); // cannot work beyond BMP on Windows
+		    nc += Ri18n_wcwidth(ucs);
 		}
 		return nc;
 	    }
