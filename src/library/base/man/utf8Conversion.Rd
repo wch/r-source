@@ -1,6 +1,6 @@
 % File src/library/base/man/utf8Conversion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{utf8Conversion}
@@ -49,7 +49,7 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
   \code{0x10FFFF}, and so valid UTF-8 encodings are never more than 4
   bytes.
 
-  The code points in the surrogate-pair range \code{0xD000} to
+  The code points in the surrogate-pair range \code{0xD800} to
   \code{0xDFFF} are prohibited in UTF-8 and so are regarded as invalid
   by \code{utf8ToInt} and by default by \code{intToUtf8}.
 

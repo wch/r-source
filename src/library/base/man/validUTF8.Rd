@@ -1,6 +1,6 @@
 % File src/library/base/man/validUTF8.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015-2018 R Core Team
+% Copyright 2015-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{validUTF8}
@@ -26,7 +26,8 @@ validEnc(x)
 
   \code{validUTF8} ignores any marked encoding (see
   \code{\link{Encoding}}) and so looks directly if the bytes in each
-  string are valid UTF-8.
+  string are valid UTF-8.  (For the validity of \sQuote{noncharacters}
+  see the help for \code{\link{intToUtf8}}.)
 
   \code{validEnc} regards character strings as validly encoded unless
   their encodings are marked as UTF-8 or they are unmarked and the \R
