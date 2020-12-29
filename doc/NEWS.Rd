@@ -435,6 +435,9 @@
 
       \item Parsing strings containing UTF-16 surrogate pairs such as
       \code{"\uD834\uDD1E"} works better on some (uncommon) platforms.
+      \code{sprintf("\%X", utf8ToInt("\uD834\uDD1E"))} should now give
+      \code{"1D11E"} on all platforms.
+      %% failed on Solaris
     }
   }
 }
