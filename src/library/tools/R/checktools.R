@@ -250,12 +250,14 @@ function(dir,
     ## Need to install depends which are not installed or installed but
     ## old.
     libs <- c(libdir, .libPaths())
-    installed <- utils::installed.packages(libs)[, "Package"]
-    depends <-
-        c(setdiff(depends, installed),
-          intersect(intersect(depends, installed),
-                    utils::old.packages(libs,
-                                        available = available)[, "Package"]))
+    installed <- utils::installed.packages(libs)
+    installed <- installed[!duplicated(installed[, "Package"]), ,
+                           drop = FALSE]
+    outofdate <- utils::old.packages(instPkgs = installed,
+                                     available = available)[, "Package"]
+    installed <- installed[, "Package"]
+    depends <- c(setdiff(depends, installed),
+                 intersect(intersect(depends, installed), outofdate))
     if(length(depends)) {
         message(paste(strwrap(sprintf("installing dependencies %s",
                                       paste(sQuote(sort(depends)),
