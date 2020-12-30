@@ -75,7 +75,7 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
 \references{
   \url{https://tools.ietf.org/html/rfc3629}, the current standard for UTF-8.
   
-  \url{http://www.unicode.org/versions/corrigendum9.html} for non-characters.
+  \url{https://www.unicode.org/versions/corrigendum9.html} for non-characters.
 }
 \examples{\donttest{
 ## will only display in some locales and fonts

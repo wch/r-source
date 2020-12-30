@@ -157,7 +157,7 @@ socketTimeout(socket, timeout = -1)
   connections were introduced, method \code{"wininet"} is only available
   on Windows (it uses the WinINet functions of that OS) and method
   \code{"libcurl"} (using the library of that name:
-  \url{https://curl.haxx.se/libcurl/}) is required on a Unix-alike but
+  \url{https://curl.se/libcurl/}) is required on a Unix-alike but
   optional on Windows.  Method \code{"default"} uses method
   \code{"internal"} for \samp{file:} URLs and \code{"libcurl"} for
   \code{ftps:} URLs.  On a Unix-alike it uses \code{"libcurl"} for
@@ -574,8 +574,10 @@ socketTimeout(socket, timeout = -1)
   Chambers, J. M. (1998)
   \emph{Programming with Data.  A Guide to the S Language.} Springer.
 
-  Ripley, B. D. (2001) Connections. \emph{R News}, \bold{1/1}, 16--7.
-  \url{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
+  Ripley, B. D. (2001).
+  \dQuote{Connections.}
+  \emph{R News}, \bold{1}(1), 16--7.
+  \url{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}.
 }
 
 \seealso{

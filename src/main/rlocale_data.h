@@ -1667,6 +1667,22 @@ static const int table_wdigit_count =
   (sizeof(table_wdigit)/sizeof(struct interval));
 
 /* ------------------- iswgraph -------------------- */
+/* Could be derived from other tables: C99 says
+
+   The iswgraph function tests for any wide character for which
+   iswprint is true and iswspace is false
+   
+   PCRE has
+
+      Graphic character. Implement this as not Z (space or separator) and
+      not C (other), except for Cf (format) with a few exceptions. This seems
+      to be what Perl does. The exceptional characters are:
+
+      U+061C           Arabic Letter Mark
+      U+180E           Mongolian Vowel Separator
+      U+2066 - U+2069  Various "isolate"s
+*/
+
 static const struct interval table_wgraph[] = {
     { 0x21, 0x7e },
     { 0xa0, 0x220 },
@@ -1935,6 +1951,7 @@ static const struct interval table_wgraph[] = {
     { 0x1ff2, 0x1ff4 },
     { 0x1ff6, 0x1ffe },
     { 0x2007, 0x2007 },
+    { 0x200b, 0x200b }, // excluded from space
     { 0x200c, 0x2027 },
     { 0x202a, 0x2052 },
     { 0x2057, 0x2057 },
@@ -2467,7 +2484,7 @@ static const int table_wlower_count =
 /* ------------------- iswprint -------------------- */
 static const struct interval table_wprint[] = {
     { 0x20, 0x7e },
-    { 0xa0, 0x220 },
+    { 0xa0, 0x220 }, // glibc has <U00A0>..<U0377>
     { 0x222, 0x233 },
     { 0x250, 0x2ad },
     { 0x2b0, 0x2ee },
@@ -2860,17 +2877,18 @@ static const int table_wprint_count =
 
 /* ------------------- iswpunct -------------------- */
 static const struct interval table_wpunct[] = {
-    { 0x21, 0x2f },
+    { 0x21, 0x2f }, // includes $ & + 
     { 0x3a, 0x40 },
     { 0x5b, 0x60 },
     { 0x7b, 0x7e },
-    { 0xa0, 0xa9 },
-    { 0xab, 0xb4 },
+    { 0xa1, 0xa9 }, // a0 is a space, which glibc includes
+    { 0xab, 0xb1 }, // glibc includes b2 and b3 (superscript 2 and 3)
+    { 0xb4, 0xb4 },
     { 0xb6, 0xb9 },
     { 0xbb, 0xbf },
     { 0xd7, 0xd7 },
     { 0xf7, 0xf7 },
-    { 0x2b9, 0x2ba },
+//    { 0x2b9, 0x2ba }, // glibc does not have these
     { 0x2c2, 0x2cf },
     { 0x2d2, 0x2df },
     { 0x2e5, 0x2ed },
@@ -3115,13 +3133,14 @@ static const int table_wpunct_count =
 
 /* ------------------- iswspace -------------------- */
 static const struct interval table_wspace[] = {
-    { 0x9, 0xd },
+    { 0x9, 0xd }, /* tab, LF, vtab, FF, CR */
     { 0x20, 0x20 },
-    { 0xa0, 0xa0 }, /* non-breaking space */
+//    { 0xa0, 0xa0 }, /* non-breaking space, omitted by glibc */
     { 0x1680, 0x1680 }, /* ogham space mark */
-    { 0x2000, 0x2006 }, /* why not figure space, 2007? */
-    { 0x2008, 0x200b },
+    { 0x2000, 0x2006 }, /* not figure space, 2007? */
+    { 0x2008, 0x200a }, /* not zero-width-space, 200b */
     { 0x2028, 0x2029 }, /* line separator, para separator */
+//    { 0x202f, 0x202f }, /* narrow no-break space, omitted by glibc */
     { 0x205f, 0x205f }, /* medium mathematical space */
     { 0x3000, 0x3000 }  /* (CJK) ideographic space */
 };

@@ -109,11 +109,9 @@ as.single(x, \dots)
 
   \url{https://en.wikipedia.org/wiki/IEEE_754-1985},
   \url{https://en.wikipedia.org/wiki/IEEE_754-2008},
+  \url{https://en.wikipedia.org/wiki/IEEE_754-2019},
   \url{https://en.wikipedia.org/wiki/Double_precision},
   \url{https://en.wikipedia.org/wiki/Denormal_number}.
-
-  \url{http://754r.ucbtest.org/} for links to information
-  on the standards.
 }
 \seealso{
   \code{\link{integer}}, \code{\link{numeric}}, \code{\link{storage.mode}}.

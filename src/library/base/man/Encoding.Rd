@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -86,11 +86,11 @@ enc2utf8(x)
   
   There is some ambiguity as to what is meant by a \sQuote{Latin-1}
   locale, since some OSes (notably Windows) make use of character
-  positions used for control characters in the ISO 8859-1 character set.
-  How such characters are interpreted is system-dependent but as from \R
-  3.5.0 they are if possible interpreted as per Windows codepage 1252
-  (which Microsoft calls \sQuote{Windows Latin 1 (ANSI)}) when
-  converting to e.g.\sspace{}UTF-8.
+  positions undefined (or used for control characters) in the ISO 8859-1
+  character set.  How such characters are interpreted is
+  system-dependent but as from \R 3.5.0 they are if possible interpreted
+  as per Windows codepage 1252 (which Microsoft calls \sQuote{Windows
+  Latin 1 (ANSI)}) when converting to e.g.\sspace{}UTF-8.
 }
 \value{
   A character vector.

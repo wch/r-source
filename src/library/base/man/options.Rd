@@ -299,7 +299,7 @@ getOption(x, default = NULL)
       \code{\link{pcre_config}}), but it uses recursion by default with
       a recursion limit of 10000000 which potentially needs a very large
       C stack: see the discussion at
-      \url{http://www.pcre.org/original/doc/html/pcrestack.html}.  If
+      \url{https://www.pcre.org/original/doc/html/pcrestack.html}.  If
       true, the limit is reduced using \R's estimate of the C stack size
       available (if known), otherwise 10000.  If \code{NA}, the limit is
       imposed only if any input string has 1000 or more bytes.  The

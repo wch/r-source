@@ -56,7 +56,7 @@ besselY(x, nu)
 }
 \source{
   The C code is a translation of Fortran routines from
-  \url{http://www.netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
+  \url{https://www.netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
   The four source code files for bessel[IJKY] each contain a paragraph
   \dQuote{Acknowledgement} and \dQuote{References}, a short summary of
   which is
@@ -78,10 +78,11 @@ besselY(x, nu)
 
   In order of \dQuote{Source} citation above:
 
-  Sockne, David J. (1973).
+  Sookne, David J. (1973).
   Bessel Functions of Real Argument and Integer Order.
   \emph{Journal of Research of the National Bureau of Standards},
   \bold{77B}, 125--132.
+  \doi{10.6028/jres.077B.012}.
 
   Cody, William J. (1983).
   Algorithm 597: Sequence of modified Bessel functions of the first kind.

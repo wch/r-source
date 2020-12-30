@@ -81,7 +81,7 @@ memDecompress(from,
   \code{bzip2} and \code{xz} libraries in use.
 
   \url{https://en.wikipedia.org/wiki/Data_compression} for background on
-  data compression, \url{http://zlib.net/},
+  data compression, \url{https://zlib.net/},
   \url{https://en.wikipedia.org/wiki/Gzip}, \url{http://www.bzip.org/},
   \url{https://en.wikipedia.org/wiki/Bzip2}, \url{https://tukaani.org/xz/}
   and \url{https://en.wikipedia.org/wiki/Xz} for references about the

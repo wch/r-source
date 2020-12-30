@@ -63,7 +63,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
-  See \url{http://www.w3.org/Graphics/SVG/}.  The output from \code{svg}
+  See \url{https://www.w3.org/Graphics/SVG/}.  The output from \code{svg}
   is SVG version 1.1 for \code{onefile = FALSE} (the default), otherwise
   SVG 1.2.  (Few SVG viewers are capable of displaying multi-page SVG
   files.)

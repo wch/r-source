@@ -1,6 +1,6 @@
 % File src/library/base/man/Comparison.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Comparison}
@@ -115,7 +115,7 @@ x != y
   introduction see
   \url{https://en.wikipedia.org/wiki/Collating_sequence}.  The
   \emph{Unicode Collation Algorithm}
-  (\url{http://unicode.org/reports/tr10/}) is likely to be increasingly
+  (\url{https://unicode.org/reports/tr10/}) is likely to be increasingly
   influential.  Where available \R by default makes use of ICU
   (\url{http://site.icu-project.org/}) for collation (except in a C
   locale).

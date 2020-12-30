@@ -236,7 +236,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   handling of invalid regular expressions and the collation of character
   ranges, so the results will have changed slightly over the years.
 
-  For Perl-style matching PCRE2 or PCRE (\url{http://www.pcre.org}) is
+  For Perl-style matching PCRE2 or PCRE (\url{https://www.pcre.org}) is
   used: again the results may depend (slightly) on the version of PCRE
   in use.
 }
