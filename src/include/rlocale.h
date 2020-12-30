@@ -138,6 +138,16 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 
 #endif
 
+#if defined(__APPLE__)
+// # define USE_RI18N_CASE
+#endif
+
+#ifdef USE_RI18N_CASE
+R_wchar_t Ri18n_toupper(R_wchar_t wc);
+R_wchar_t Ri18n_tolower(R_wchar_t wc);
+#endif
+
+
 /* These definitions are from winnls.h in MinGW-W64.  We don't need
  * the rest of that file. */
 
@@ -159,7 +169,7 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 # define utf8toucs32		Rf_utf8toucs32
 R_wchar_t utf8toucs32(wchar_t high, const char *s);
 
-// convert strings UTF <-> UCS-4 (stored in R_wchar_t aka int)
+// convert strings UTF-8 <-> UCS-4 (stored in R_wchar_t aka int)
 # define utf8towcs4		Rf_utf8towcs4
 size_t utf8towcs4(R_wchar_t *wc, const char *s, size_t n);
 #define wcs4toutf8              Rf_wcs4toutf8

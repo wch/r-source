@@ -1016,7 +1016,9 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (mbcslocale || use_UTF8 == TRUE) {
 	int nb, nc, j;
+#ifndef USE_RI18N_CASE
 	wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
+#endif
 	wchar_t * wc;
 	char * cbuf;
 
@@ -1026,6 +1028,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	    el = STRING_ELT(x, i);
 	    if (el == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
 	    else {
+		/* FIXME: in Windows UTF-8 locales, use UTF-8 branch */
 		const char *xi;
 		ienc = getCharCE(el);
 		if (use_UTF8 && ienc == CE_UTF8) {
@@ -1041,21 +1044,47 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ienc = CE_NATIVE;
 		}
 		if (nc >= 0) {
-		    wc = (wchar_t *)
-			R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 		    if (ienc == CE_UTF8) {
+#ifdef USE_RI18N_CASE
+			R_wchar_t *wcr = (R_wchar_t *)
+			    R_AllocStringBuffer((nc+1)*sizeof(R_wchar_t), &cbuff);
+			utf8towcs4(wcr, xi, nc + 1);
+			if (ul)
+			    for (j = 0; j < nc; j++)
+				wcr[j] = Ri18n_toupper(wcr[j]);
+			else
+			    for (j = 0; j < nc; j++)
+				wcr[j] = Ri18n_tolower(wcr[j]);
+			nb = (int) wcs4toutf8(NULL, wcr, INT_MAX);
+			cbuf = CallocCharBuf(nb);
+			wcs4toutf8(cbuf, wcr, nb);
+			SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
+#else
+			wc = (wchar_t *)
+			    R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 			utf8towcs(wc, xi, nc + 1);
-			// FIXME: This cannot cope with surrogate pairs
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = (int) wcstoutf8(NULL, wc, INT_MAX);
 			cbuf = CallocCharBuf(nb);
 			wcstoutf8(cbuf, wc, nb);
 			SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
+#endif
 		    } else {
+			wc = (wchar_t *)
+			    R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 			mbstowcs(wc, xi, nc + 1);
-			/* FIXME: This cannot cope with surrogate pairs,
+#ifdef USE_RI18N_CASE
+			if (ul)
+			    for (j = 0; j < nc; j++)
+				wc[j] = Ri18n_toupper(wc[j]);
+			else
+			    for (j = 0; j < nc; j++)
+				wc[j] = Ri18n_tolower(wc[j]);
+#else
+			/* This cannot cope with surrogate pairs,
 			   if mbstowcs can make them. */ 
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
+#endif
 			nb = (int) wcstombs(NULL, wc, 0);
 			cbuf = CallocCharBuf(nb);
 			wcstombs(cbuf, wc, nb + 1);

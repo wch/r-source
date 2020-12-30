@@ -385,3 +385,64 @@ int Ri18n_iswctype(wint_t wc, wctype_t desc)
     return (*Ri18n_wctype_func[i].func)(wc);
 }
 #endif
+
+#ifdef USE_RI18N_CASE
+/* 
+   These tables were prepared by the R code
+
+tab <- read.table('UnicodeData.txt', sep = ';', header = FALSE)
+tab <- tab[, c("V1", "V13", "V14")]
+names(tab) <- c('pt', 'uc', 'lc')
+toupper <- tab[tab$uc !="", 1:2]
+tolower <- tab[tab$lc !="", c(1,3)]
+cat(with(toupper, sprintf("  { 0x%s, 0x%s},", pt, uc)),
+   sep = "\n", file = "rlocale_upper.h")
+cat(with(tolower, sprintf("  { 0x%s, 0x%s},", pt, lc)),
+   sep = "\n", file = "rlocale_lower.h")
+
+   from https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
+*/
+
+struct pair {int from; int to;};
+
+static const struct pair table_toupper[] = {
+#include "rlocale_upper.h"
+};
+
+static const struct pair table_tolower[] = {
+#include "rlocale_lower.h"
+};
+
+static int tlsearch(int wint, const struct pair *table, int max)
+{
+    int min = 0, mid;
+    max--;
+
+    if (wint < table[0].from || wint > table[max].from)
+	return -1;
+    while (max >= min) {
+	mid = (min + max) / 2;
+	if (wint > table[mid].from)
+	    min = mid + 1;
+	else if (wint < table[mid].from)
+	    max = mid - 1;
+	else
+	    return table[mid].to;
+    }
+    return -1;
+}
+
+R_wchar_t Ri18n_toupper(R_wchar_t wc)
+{
+    int res = tlsearch(wc, table_toupper,
+		       sizeof(table_toupper)/sizeof(struct pair));
+    return (res >= 0 ? res : wc);
+}
+
+R_wchar_t Ri18n_tolower(R_wchar_t wc)
+{
+    int res = tlsearch(wc, table_tolower,
+		       sizeof(table_tolower)/sizeof(struct pair));
+    return (res >= 0 ? res : wc);
+}
+#endif
