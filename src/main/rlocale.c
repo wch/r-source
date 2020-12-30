@@ -220,6 +220,8 @@ int Ri18n_wcswidth (const wchar_t *wc, size_t n)
  *  (Confirmed for macOS 11.1 in 2020-12.)
  *  So we replace them.  May also be needed on *BSD.
  ********************************************************************/
+
+#ifdef OLD
 #if defined(__APPLE__)
 /* allow for PowerPC, Intel and arm64 platforms */
 #ifdef WORDS_BIGENDIAN
@@ -231,7 +233,7 @@ static const char UNICODE[] = "UCS-4LE";
 /* in Defn.h which is not included here */
 extern const char *locale2charset(const char *);
 
-/* I have no idea what is going on here.  The input is a wide
+/* I have no idea what was going on here.  The input is a wide
    character, and that is always UCS-4 on macOS.  So converting to
    native and then to UCS-4 makes no sense at all.
 
@@ -273,13 +275,14 @@ extern const char *locale2charset(const char *);
   return(-1);                                                        \
 }
 #endif // __APPLE__
+#endif
 
 /*********************************************************************
  *  iswalpha etc. do not function correctly for Windows
  *  iswalpha etc. do not function at all in AIX.
  *  all locale wchar_t == UNICODE
  ********************************************************************/
-#if defined(Win32) || defined(_AIX)
+#if defined(Win32) || defined(_AIX) || defined(__APPLE__)
 # define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {									\
     return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
