@@ -651,9 +651,6 @@
 /* Define to 1 if you have the `rintl' function. */
 #undef HAVE_RINTL
 
-/* Define to 1 if you have the `rl_callback_sigcleanup' function. */
-#undef HAVE_RL_CALLBACK_SIGCLEANUP
-
 /* Define to 1 if you have the `rl_completion_matches' function. */
 #undef HAVE_RL_COMPLETION_MATCHES
 
