@@ -1,5 +1,5 @@
 
-R version 4.0.3 Patched (2020-12-04 r79559) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-12-29 r79727) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.196   0.034   0.217 
+  0.198   0.044   0.224 

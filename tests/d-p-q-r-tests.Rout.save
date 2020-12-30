@@ -1,5 +1,5 @@
 
-R version 4.0.3 Patched (2020-12-04 r79559) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-12-29 r79727) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1498,5 +1498,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.602 0.026 1.634 0 0 
+Time elapsed:  1.601 0.016 1.623 0 0 
 > 

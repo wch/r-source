@@ -1,5 +1,5 @@
 
-R version 4.0.3 Patched (2020-12-27 r79705) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-12-29 r79727) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -749,4 +749,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.533   0.079   1.601 
+  1.558   0.072   1.625 

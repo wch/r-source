@@ -1,5 +1,5 @@
 
-R version 4.0.3 Patched (2020-12-04 r79559) -- "Bunny-Wunnies Freak Out"
+R version 4.0.3 Patched (2020-12-29 r79727) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2310,7 +2310,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.45 0.024 1.481 0 0 
+Time elapsed:  1.43 0.027 1.466 0 0 
 > grDevices::dev.off()
 null device 
           1 
