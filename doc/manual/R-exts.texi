@@ -10099,15 +10099,14 @@ routines with a variable number of arguments invoked @emph{via} the
 arguments which tells @R{} not to check the actual number passed.
 
 Routines for use with the @code{.C} and @code{.Fortran} interfaces are
-described with similar data structures, but which have two additional
-fields for describing the type and ``style'' of each argument.  Each of
-these can be omitted. However, if specified, each should be an array
-with the same number of elements as the number of parameters for the
-routine.  The types array should contain the @code{SEXP} types
-describing the expected type of the argument. (Technically, the elements
-of the types array are of type @code{R_NativePrimitiveArgType} which is
-just an unsigned integer.)  The @R{} types and corresponding type
-identifiers are provided in the following table:
+described with similar data structures, which have one optional
+additional field for describing the type of each argument.  If
+specified, this field should be an array with the @code{SEXP} types
+describing the expected type of each argument of the routine.
+(Technically, the elements of the types array are of type
+@code{R_NativePrimitiveArgType} which is just an unsigned integer.)
+The @R{} types and corresponding type identifiers are provided in the
+following table:
 
 @quotation
 @multitable {@code{character  }} {@code{SINGLESXP}}
