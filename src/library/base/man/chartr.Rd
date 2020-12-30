@@ -53,7 +53,7 @@ casefold(x, upper = FALSE)
   the current locale (see \code{\link{Encoding}}) if the corresponding
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.  The result will be in the current locale's encoding unless
-  the corresponding input was in UTF-8 on Latin-1, when it will be in UTF-8.
+  the corresponding input was in UTF-8 or Latin-1, when it will be in UTF-8.
 }
 \seealso{
   \code{\link{sub}} and \code{\link{gsub}} for other
