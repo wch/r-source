@@ -14,8 +14,8 @@
 getS3method(f, class, optional = FALSE, envir = parent.frame())
 }
 \arguments{
-  \item{f}{character: name of the generic.}
-  \item{class}{character: name of the class.}
+  \item{f}{a character string giving the name of the generic.}
+  \item{class}{a character string giving the name of the class.}
   \item{optional}{logical: should failure to find the generic or a
     method be allowed?}
   \item{envir}{the \code{\link{environment}} in which the method and its

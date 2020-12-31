@@ -1,6 +1,6 @@
 % File src/library/stats/man/runmed.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{runmed}
@@ -105,7 +105,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   }
 
 
-  Currently long vectors are only supported for \code{algorithm = "Stuetzle"}.
+  Currently \link{long vectors} are only supported for \code{algorithm = "Stuetzle"}.
 }
 \references{
   \enc{Härdle}{Haerdle}, W. and Steiger, W. (1995)

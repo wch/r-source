@@ -222,7 +222,7 @@
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
   locales and if any of the inputs are marked as UTF-8 (see
-  \code{\link{Encoding}}).
+  \code{\link{Encoding}}.
 
   All the regular expressions described for extended regular expressions
   are accepted except \samp{\\<} and \samp{\\>}: in Perl all backslashed
@@ -350,8 +350,7 @@
   \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}} and \code{\link{strsplit}}.
 
-  The TRE documentation at
-  \url{https://laurikari.net/tre/documentation/regex-syntax/}.
+  The \href{https://htmlpreview.github.io/?https://raw.githubusercontent.com/laurikari/tre/master/doc/tre-syntax.html}{TRE regexp syntax}.
 
   The POSIX 1003.2 standard at
   \url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
@@ -359,6 +358,6 @@
   The \code{pcre2pattern} or \code{pcrepattern} \command{man} page
   (found as part of \url{https://www.pcre.org/original/pcre.txt}), and
   details of Perl's own implementation at
-  \url{https://perldoc.perl.org/perlre.html}.
+  \url{https://perldoc.perl.org/perlre}.
 }
 \keyword{character}

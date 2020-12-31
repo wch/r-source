@@ -1,6 +1,6 @@
 % File src/library/stats/man/splinefun.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splinefun}
@@ -191,7 +191,7 @@ str(spline(x, y, n = 201, ties="ordered")) # all '$y' entries are NaN
 ## The default (ties=mean) is ok, but most efficient to use instead is
 sxyo <- spline(x, y, n = 201, ties= list("ordered", mean))
 sapply(sxyo, summary)# all fine now
-plot(x, y, main = "spline(x,y, ties=list(\"ordered\", mean)  for when x has ties")
+plot(x, y, main = "spline(x,y, ties=list(\"ordered\", mean))  for when x has ties")
 lines(sxyo, col="blue")
 
 ## An example of monotone interpolation

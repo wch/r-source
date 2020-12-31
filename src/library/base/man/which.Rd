@@ -1,6 +1,6 @@
 % File src/library/base/man/which.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{which}
@@ -34,7 +34,7 @@ arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
 }
 \value{
   If \code{arr.ind == FALSE} (the default), an integer vector,
-  or a double vector if \code{x} is a \emph{long vector}, with
+  or a double vector if \code{x} is a \emph{\link{long vector}}, with
   \code{length} equal to \code{sum(x)}, i.e., to the number of
   \code{TRUE}s in \code{x}.
 

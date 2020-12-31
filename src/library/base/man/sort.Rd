@@ -121,7 +121,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
       encodings are supported. Collation always follows the "C" locale.
     }
     \item{
-      Long vectors (with more than 2^32 elements) and \code{complex}
+      \link{Long vectors} (with more than 2^32 elements) and \code{complex}
       vectors are not supported yet.
     }
   }

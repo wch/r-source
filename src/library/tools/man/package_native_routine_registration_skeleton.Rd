@@ -37,8 +37,10 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   }
 }
 \details{
-  Registration is described in section 5.4.1 of \sQuote{Writing R
-    Extensions}. This function produces a skeleton of the C code which
+  Registration is described in section
+  \sQuote{Registering native routines} of
+  \sQuote{Writing R Extensions}.
+  This function produces a skeleton of the C code which
   needs to be added to enable registration, conventionally as file
   \file{src/init.c} or appended to the sole C file of the package.
 

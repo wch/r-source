@@ -115,7 +115,7 @@ seq(length.out= )
   programmers should not rely on which.
 
   \code{seq_along} and \code{seq_len} return an integer vector, unless
-  it is a \emph{long vector} when it will be double.
+  it is a \emph{\link{long vector}} when it will be double.
 }
 
 \references{
