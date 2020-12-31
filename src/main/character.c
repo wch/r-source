@@ -1051,10 +1051,10 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 			utf8towcs4(wcr, xi, nc + 1);
 			if (ul)
 			    for (j = 0; j < nc; j++)
-				wcr[j] = Ri18n_toupper(wcr[j]);
+				wcr[j] = Ri18n_towupper(wcr[j]);
 			else
 			    for (j = 0; j < nc; j++)
-				wcr[j] = Ri18n_tolower(wcr[j]);
+				wcr[j] = Ri18n_towlower(wcr[j]);
 			nb = (int) wcs4toutf8(NULL, wcr, INT_MAX);
 			cbuf = CallocCharBuf(nb);
 			wcs4toutf8(cbuf, wcr, nb);
@@ -1076,10 +1076,10 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef USE_RI18N_CASE
 			if (ul)
 			    for (j = 0; j < nc; j++)
-				wc[j] = Ri18n_toupper(wc[j]);
+				wc[j] = Ri18n_towupper(wc[j]);
 			else
 			    for (j = 0; j < nc; j++)
-				wc[j] = Ri18n_tolower(wc[j]);
+				wc[j] = Ri18n_towlower(wc[j]);
 #else
 			/* This cannot cope with surrogate pairs,
 			   if mbstowcs can make them. */ 

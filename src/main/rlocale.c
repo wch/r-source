@@ -432,14 +432,14 @@ static int tlsearch(int wint, const struct pair *table, int max)
     return -1;
 }
 
-R_wchar_t Ri18n_toupper(R_wchar_t wc)
+R_wchar_t Ri18n_towupper(R_wchar_t wc)
 {
     int res = tlsearch(wc, table_toupper,
 		       sizeof(table_toupper)/sizeof(struct pair));
     return (res >= 0 ? res : wc);
 }
 
-R_wchar_t Ri18n_tolower(R_wchar_t wc)
+R_wchar_t Ri18n_towlower(R_wchar_t wc)
 {
     int res = tlsearch(wc, table_tolower,
 		       sizeof(table_tolower)/sizeof(struct pair));

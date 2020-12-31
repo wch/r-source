@@ -143,8 +143,8 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #endif
 
 #ifdef USE_RI18N_CASE
-R_wchar_t Ri18n_toupper(R_wchar_t wc);
-R_wchar_t Ri18n_tolower(R_wchar_t wc);
+R_wchar_t Ri18n_towupper(R_wchar_t wc);
+R_wchar_t Ri18n_towlower(R_wchar_t wc);
 #endif
 
 
