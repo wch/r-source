@@ -45,7 +45,8 @@
 
    iswalnum is derived in rlocale.c
 
-   Something like uniset +cat=Lu +cat=Ll +cat=Lt +cat=Lo c
+   Something like 
+   uniset +cat=Lu +cat=Ll +cat=Lt +cat=Lo +cat=Nd -0030..0039 c
 
    glibc has 
 
@@ -1980,6 +1981,8 @@ static const int table_wspace_count =
    'an uppercase letter or is one of a locale-specific set of wide
    characters for which none of iswcntrl, iswdigit, iswpunct, or
    iswspace is true.'
+
+   uniset +cat=Lu c
 */
 static const struct interval table_wupper[] = {
     { 0x41, 0x5a },
@@ -2208,6 +2211,7 @@ static const struct interval table_wupper[] = {
     { 0x4f0, 0x4f0 },
     { 0x4f2, 0x4f2 },
     { 0x4f4, 0x4f4 },
+    { 0x4f6, 0x4f6 }, // missing prior to R 4.1.0
     { 0x4f8, 0x4f8 },
     { 0x500, 0x500 },
     { 0x502, 0x502 },
