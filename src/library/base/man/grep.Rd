@@ -241,6 +241,18 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   in use.
 }
 
+\note{
+  Aspects will be platform-dependent as well as local-dependent: for
+  example the implementation of character classes (except
+  \code{[:digit:]} and \code{[:xdigit:]}).  One can expect results to be
+  consistent for ASCII inputs and when working in UTF-8 mode (when most
+  platforms will use Unicode character tables, although those are
+  updated frequently and subject to some degree of interpretation -- is
+  a circled capital letter alphabetic or a symbol?).  However, results
+  in 8-bit encodings can differ considerably between platforms, modes
+  and from the UTF-8 versions.
+}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

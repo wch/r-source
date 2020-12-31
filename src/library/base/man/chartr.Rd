@@ -40,7 +40,8 @@ casefold(x, upper = FALSE)
 
   \code{tolower} and \code{toupper} convert upper-case characters in a
   character vector to lower-case, or vice versa.  Non-alphabetic
-  characters are left unchanged.
+  characters are left unchanged.  More than one character can be mapped
+  to a single upper-case character.
 
   \code{casefold} is a wrapper for \code{tolower} and \code{toupper}
   provided for compatibility with S-PLUS.
@@ -54,6 +55,13 @@ casefold(x, upper = FALSE)
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.  The result will be in the current locale's encoding unless
   the corresponding input was in UTF-8 or Latin-1, when it will be in UTF-8.
+}
+\note{
+  These functions are platform-dependent, usually using OS services.
+  The latter can be quite deficient, for example only covering ASCII
+  characters in 8-bit locales.  The definition of \sQuote{alphabetic} is
+  platform-dependent and liable to change over time as most platforms
+  are based on the frequently-updated Unicode tables.
 }
 \seealso{
   \code{\link{sub}} and \code{\link{gsub}} for other
