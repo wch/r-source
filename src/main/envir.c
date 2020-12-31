@@ -1631,8 +1631,8 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 		R_xlen_t n = XLENGTH(gfuns);
 		for (R_xlen_t i = 0; i < n; i++)
 		    if (symbol == VECTOR_ELT(gfuns, i))
-			error(_("creating a new local variable '%s' "
-				"would mask a global function"),
+			error(_("new local variable '%s' would "
+				"conflict with use as a global function"),
 			      CHAR(PRINTNAME(symbol)));
 	    }
 
@@ -1641,8 +1641,8 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 		R_xlen_t n = XLENGTH(gvars);
 		for (R_xlen_t i = 0; i < n; i++)
 		    if (symbol == VECTOR_ELT(gvars, i))
-			error(_("creating a new local variable '%s' "
-				"would mask a global variable"),
+			error(_("new local variable '%s' would "
+				"conflict with use as a global variable"),
 			      CHAR(PRINTNAME(symbol)));
 	    }
 	    UNPROTECT(1); /* value */
