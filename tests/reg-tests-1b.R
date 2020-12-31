@@ -906,10 +906,11 @@ stopifnot(TRUE & -3i, FALSE | 0+1i,
 
 
 ## Tests of save/load with different types of compression
-x <- xx <- 1:1000
+xx <- 1:1000
 test1 <- function(ascii, compress)
 {
     tf <- tempfile()
+    x <- xx
     save(x, ascii = ascii, compress = compress, file = tf)
     load(tf)
     stopifnot(identical(x, xx))
@@ -1222,7 +1223,7 @@ if(any(ii <- is.na(rbeta(5000, 100, 0.001))))
 
 
 ## print.ls_str() should not eval() some objects
-E <- environment((function(miss)function(){})())
+E <- environment((function(miss){i <- o <- cl <- NULL;function(){}})())
 E$i <- 2:4
 E$o <- as.name("foobar")
 E$cl <- expression(sin(x))[[1]]

@@ -295,7 +295,7 @@ doPrimitiveMethod <-
     }
     else
         on.exit(rm(list=name, envir=ev))
-    assign(name, def, envir = ev)
+    .addLocalToCallenv(name, def, envir = ev)
     eval(call, ev)
 }
 
@@ -1601,7 +1601,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
     mc[args] <- lapply(args, as.name)
     names(mc)[names(mc) == "..."] <- ""
     mc[[1L]] <- quote(.dotsMethod)
-    assign(name, method, env)
+    .addLocalToCallenv(name, method, env)
     eval(mc, env)
 }
 

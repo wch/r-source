@@ -1222,8 +1222,8 @@ static R_INLINE Rboolean R_CheckJIT(SEXP fun)
 /* FIXME: this should not depend on internals from envir.c but does for now. */
 /* copied from envir.c for now */
 #define IS_USER_DATABASE(rho)  (OBJECT((rho)) && inherits((rho), "UserDefinedDatabase"))
-#define IS_STANDARD_UNHASHED_FRAME(e) (! IS_USER_DATABASE(e) && HASHTAB(e) == R_NilValue)
-#define IS_STANDARD_HASHED_FRAME(e) (! IS_USER_DATABASE(e) && HASHTAB(e) != R_NilValue)
+#define IS_STANDARD_UNHASHED_FRAME(e) (! IS_USER_DATABASE(e) && TYPEOF(HASHTAB(e)) != VECSXP)
+#define IS_STANDARD_HASHED_FRAME(e) (! IS_USER_DATABASE(e) && TYPEOF(HASHTAB(e)) == VECSXP)
 
 /* This makes a snapshot of the local variables in cmpenv and creates
    a new environment with the same top level environment and bindings
@@ -1408,7 +1408,7 @@ SEXP attribute_hidden R_cmpfun1(SEXP fun)
     PROTECT(call = lang2(fcall, fun));
     PROTECT(val = eval(call, R_GlobalEnv));
     if (TYPEOF(BODY(val)) != BCODESXP)
-	/* Compilation may have failed because R alocator could not malloc
+	/* Compilation may have failed because R allocator could not malloc
 	   memory to extend the R heap, so we run GC to release some pages.
 	   This problem has been observed while byte-compiling packages on
 	   installation: serialization uses malloc to allocate buffers and
@@ -1834,6 +1834,20 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
     return val;
 }
 
+static SEXP R_findGlobals(SEXP);
+
+static void add_vars_info(SEXP fun, SEXP rho)
+{
+    if (TYPEOF(BODY_EXPR(fun)) != LANGSXP)
+	return;
+    SEXP info = R_getClosureVarsInfo(fun);
+    if (info == R_NilValue) {
+	info = R_findGlobals(fun);
+	R_setClosureVarsInfo(fun, info);
+    }
+    R_setEnvVarsInfo(rho, info);
+}
+
 static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op)
 {
@@ -1843,6 +1857,7 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
 
     begincontext(&cntxt, CTXT_RETURN, call, newrho, sysparent, arglist, op);
 
+    add_vars_info(op, newrho);
     body = BODY(op);
     if (R_CheckJIT(op)) {
 	int old_enabled = R_jit_enabled;
@@ -2078,7 +2093,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
     return val;
 }
 
-static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
+static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc, int check)
 {
     SEXP vl;
 
@@ -2091,7 +2106,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
 	       assignment process in try_assign_unwrap(). */
 	    PROTECT(vl);
 	    PROTECT(vl = R_shallow_duplicate_attr(vl));
-	    defineVar(symbol, vl, rho);
+	    defineVarEX(symbol, vl, rho, check);
 	    INCREMENT_NAMED(vl);
 	    UNPROTECT(2);
 	}
@@ -2106,7 +2121,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
 	error(_("object '%s' not found"), EncodeChar(PRINTNAME(symbol)));
 
     PROTECT(vl = shallow_duplicate(vl));
-    defineVar(symbol, vl, rho);
+    defineVarEX(symbol, vl, rho, check);
     *ploc = R_findVarLocInFrame(rho, symbol);
     INCREMENT_NAMED(vl);
     UNPROTECT(1);
@@ -2587,7 +2602,7 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal,  R_varloc_t tmploc,
     if (isSymbol(expr)) { /* now we are down to the target symbol */
 	PROTECT(expr);
 	if(forcelocal) {
-	    nval = EnsureLocal(expr, rho, ploc);
+	    nval = EnsureLocal(expr, rho, ploc, TRUE);
 	}
 	else {
 	    nval = eval(expr, ENCLOS(rho));
@@ -6659,7 +6674,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    SETSTACK(-1, seq);
 	}
 
-	defineVar(symbol, R_NilValue, rho);
+	defineVarEX(symbol, R_NilValue, rho, FALSE);
 	BCNPUSH(GET_BINDING_CELL(symbol, rho));
 
 	SEXP value = allocVector(RAWSXP, sizeof(R_loopinfo_t));
@@ -6898,7 +6913,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (! SET_BINDING_VALUE(loc, value)) {
 	    SEXP symbol = VECTOR_ELT(constants, sidx);
 	    PROTECT(value);
-	    defineVar(symbol, value, rho);
+	    defineVarEX(symbol, value, rho, FALSE);
 	    UNPROTECT(1);
 	}
 	NEXT();
@@ -7154,6 +7169,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	}
 	R_Visible = TRUE;
 	BCNPUSH(value);
+	if (getAttrib(body, R_dotFunVarsInfoSymbol) == R_NilValue)
+	    /* value is protected on the stack after BCNPUSH */
+	    setAttrib(body, R_dotFunVarsInfoSymbol, R_findGlobals(value));
 	NEXT();
       }
     OP(UMINUS, 1): FastUnary(-, R_SubSym);
@@ -7204,7 +7222,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	R_varloc_t loc;
 	if (value == R_UnboundValue ||
 	    TYPEOF(value) == PROMSXP) {
-	    value = EnsureLocal(symbol, rho, &loc);
+	    value = EnsureLocal(symbol, rho, &loc, FALSE);
 	    if (loc.cell == NULL)
 		loc.cell = R_NilValue;
 	}
@@ -7241,7 +7259,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	}
 	INCREMENT_NAMED(value);
 	if (! SET_BINDING_VALUE(cell, value))
-	    defineVar(symbol, value, rho);
+	    defineVarEX(symbol, value, rho, FALSE);
 	R_BCNodeStackTop -= 2; /* now pop cell and LHS value off the stack */
 	/* original right-hand side value is now on top of stack again */
 #ifdef OLD_RHS_NAMED
@@ -8058,7 +8076,10 @@ SEXP attribute_hidden do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isEnvironment(env))
 	error(_("invalid environment"));
 
-    return mkCLOSXP(forms, body, env);
+    SEXP val = PROTECT(mkCLOSXP(forms, body, env));
+    setAttrib(body, R_dotFunVarsInfoSymbol, R_findGlobals(val));
+    UNPROTECT(1);
+    return val;
 }
 
 SEXP attribute_hidden do_is_builtin_internal(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -8342,6 +8363,479 @@ SEXP NORET do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env) {
     error(_("byte code profiling is not supported in this build"));
 }
 #endif
+
+
+/* find potential local variables */
+static SEXP R_for_sym = NULL;
+static SEXP R_gets_sym = NULL;
+static SEXP R_eq_sym = NULL;
+static SEXP R_function_sym = NULL;
+static SEXP R_assign_sym = NULL;
+static SEXP R_delayedAssign_sym = NULL;
+static SEXP R_quote_sym = NULL;
+static SEXP R_local_sym = NULL;
+static SEXP R_expression_sym = NULL;
+static SEXP R_atsign_sym = NULL;
+
+#define INIT_FIND_LOCALS_SYMBOLS() do {				\
+	if (R_for_sym == NULL) {				\
+	    R_for_sym = install("for");				\
+	    R_gets_sym = install("<-");				\
+	    R_eq_sym = install("=");				\
+	    R_function_sym = install("function");		\
+	    R_assign_sym = install("assign");			\
+	    R_delayedAssign_sym = install("delayedAssign");	\
+	    R_quote_sym = install("quote");			\
+	    R_local_sym = install("local");			\
+	    R_expression_sym = install("expression");		\
+	    R_atsign_sym = install("@");			\
+	}							\
+    } while(0)
+
+typedef struct {
+    int quoteUsed;
+    int skipQuote;
+    int localUsed;
+    int skipLocal;
+    int expressionUsed;
+    int skipExpression;
+} locals_info_t;
+
+#ifdef MATCH_COMPILER_FIND_LOCALS
+static SEXP locals(SEXP expr, SEXP locs, locals_info_t *info)
+{
+    if (TYPEOF(expr) == LANGSXP) {
+	SEXP fun = CAR(expr);
+	if (fun == R_function_sym)
+	    return locs;
+	if (fun == R_for_sym) {
+	    locs = CONS(CADR(expr), locs);
+	    locs = locals(CADDR(expr), locs, info);
+	    return locals(CADDDR(expr), locs, info);
+	}
+	else if (fun == R_quote_sym && length(expr) == 2) {
+	    info->quoteUsed = TRUE;
+	    if (info->skipQuote)
+		return locs;
+	    else
+		return locals(CADR(expr), locs, info);
+	}
+	else if (fun == R_local_sym && length(expr) == 2) {
+	    info->localUsed = TRUE;
+	    if (info->skipLocal)
+		return locs;
+	    else
+		return locals(CADR(expr), locs, info);
+	}
+	else if (fun == R_expression_sym && length(expr) == 2) {
+	    info->expressionUsed = TRUE;
+	    if (info->skipExpression)
+		return locs;
+	    else
+		return locals(CADR(expr), locs, info);
+	}
+	else if (fun == R_gets_sym || fun == R_eq_sym) {
+	    SEXP lhs = CADR(expr);
+	    SEXP rhs = CADDR(expr);
+	    locs = locals(lhs, locs, info);
+	    while (TYPEOF(lhs) == LANGSXP)
+		lhs = CADR(lhs);
+	    if (TYPEOF(lhs) == SYMSXP)
+		locs = CONS(lhs, locs);
+	    else if (TYPEOF(lhs) == STRSXP && LENGTH(lhs) == 1) {
+		PROTECT(locs);
+		locs = CONS(install(CHAR(STRING_ELT(lhs, 0))), locs);
+		UNPROTECT(1); /* locs */
+	    }
+	    return locals(rhs, locs, info);
+	}
+	else if ((fun == R_assign_sym || fun == R_delayedAssign_sym) &&
+		 length(expr) == 3) {
+	    /*** in principle should do a match.call here */
+	    /* OK not to check for a re-definition and err on the
+	       side of adding more potetial locals */
+	    SEXP arg = CADR(expr);
+	    if (TYPEOF(arg) == STRSXP && LENGTH(arg) == 1) {
+		PROTECT(locs);
+		locs = CONS(install(CHAR(STRING_ELT(arg, 0))), locs);
+		UNPROTECT(1); /* locs */
+	    }
+	    return locals(CADDR(expr), locs, info);
+	}
+	else {
+	    for (SEXP h = expr; h != R_NilValue; h = CDR(h))
+		if (TYPEOF(CAR(h)) == LANGSXP)
+		    locs = locals(CAR(h), locs, info);
+	    return locs;
+	}
+    }
+    return locs;
+}
+#else
+static SEXP locals(SEXP expr, SEXP locs, locals_info_t *info)
+{
+    if (TYPEOF(expr) == LANGSXP) {
+	SEXP fun = CAR(expr);
+	if (fun == R_function_sym)
+	    return locs;
+	if (fun == R_for_sym) {
+	    locs = CONS(CADR(expr), locs);
+	    locs = locals(CADDR(expr), locs, info);
+	    return locals(CADDDR(expr), locs, info);
+	}
+	else if (fun == R_gets_sym || fun == R_eq_sym) {
+	    SEXP lhs = CADR(expr);
+	    SEXP rhs = CADDR(expr);
+	    locs = locals(lhs, locs, info);
+	    while (TYPEOF(lhs) == LANGSXP)
+		lhs = CADR(lhs);
+	    if (TYPEOF(lhs) == SYMSXP)
+		locs = CONS(lhs, locs);
+	    else if (TYPEOF(lhs) == STRSXP && LENGTH(lhs) == 1) {
+		PROTECT(locs);
+		locs = CONS(install(CHAR(STRING_ELT(lhs, 0))), locs);
+		UNPROTECT(1); /* locs */
+	    }
+	    return locals(rhs, locs, info);
+	}
+	else if ((fun == R_assign_sym || fun == R_delayedAssign_sym)) {
+	    /*** in principle should do a match.call here */
+	    /* OK not to check for a re-definition and err on the
+	       side of adding more potetial locals */
+	    SEXP arg = CADR(expr);
+	    if (TYPEOF(arg) == STRSXP && LENGTH(arg) == 1) {
+		PROTECT(locs);
+		locs = CONS(install(CHAR(STRING_ELT(arg, 0))), locs);
+		UNPROTECT(1); /* locs */
+	    }
+	    for (SEXP h = expr; h != R_NilValue; h = CDR(h))
+		if (TYPEOF(CAR(h)) == LANGSXP)
+		    locs = locals(CAR(h), locs, info);
+	    return locs;
+	}
+	else {
+	    for (SEXP h = expr; h != R_NilValue; h = CDR(h))
+		if (TYPEOF(CAR(h)) == LANGSXP)
+		    locs = locals(CAR(h), locs, info);
+	    return locs;
+	}
+    }
+    return locs;
+}
+#endif
+
+static int find_in_list(SEXP obj, SEXP val)
+{
+    switch (TYPEOF(val)) {
+    case LANGSXP:
+    case LISTSXP:
+	for (SEXP v = val; v != R_NilValue; v = CDR(v))
+	    if (obj == CAR(v))
+		return TRUE;
+	break;
+    case VECSXP:
+	{
+	    R_xlen_t n = XLENGTH(val);
+	    for (R_xlen_t i = 0; i < n; i++)
+		if (obj == VECTOR_ELT(val, i))
+		    return TRUE;
+	}
+	break;
+    }
+    return FALSE;
+}
+
+static SEXP delete_duplicates(SEXP x)
+{
+    SEXP val = R_NilValue;
+    while (x != R_NilValue) {
+	SEXP h = x;
+	x = CDR(x);
+	if (! find_in_list(CAR(h), val)) {
+	    SETCDR(h, val);
+	    val = h;
+	}
+    }
+    return val;
+}
+
+static SEXP findLocalsCore(SEXP forms, SEXP body, locals_info_t *info)    
+{
+    SEXP locs = R_NilValue;
+    for (SEXP h = forms; h != R_NilValue; h = CDR(h)) {
+	locs = CONS(TAG(h), locs);
+	if (TYPEOF(CAR(h)) == LANGSXP)
+	    locs = locals(CAR(h), locs, info);
+    }
+    locs = locals(body, locs, info);
+    return delete_duplicates(locs);
+}
+
+static int exists_in_frame(SEXP sym, SEXP env)
+{
+    /* disable GC in case running an acive binding allocates */
+    /* ideally this should avoid triggering active bindings */
+    int enabled = R_GCEnabled;
+    R_GCEnabled = FALSE;
+    int found = (findVarInFrame(env, sym) != R_UnboundValue);
+    R_GCEnabled = enabled;
+    return found;
+}
+    
+static int isBaseVar(SEXP sym, SEXP env)
+{
+    for (; env != R_EmptyEnv; env = ENCLOS(env)) {
+	if (env == R_BaseNamespace)
+	    return SYMVALUE(sym) != R_UnboundValue;
+	else {
+	    SEXP locs = R_getEnvVarsInfo(env);
+	    if (TYPEOF(locs) == VECSXP) {
+		R_xlen_t n = XLENGTH(locs);
+		for (R_xlen_t i = 0; i < n; i++)
+		    if (VECTOR_ELT(locs, i) == sym)
+			return FALSE;
+	    }
+	    else if (R_EnvironmentIsLocked(env)) {
+		if (exists_in_frame(sym, env))
+		    return FALSE;
+	    }
+	}
+    }
+    return FALSE;
+}
+
+#define SHADOWED(sym, locs, env) \
+    (find_in_list(sym, locs) || ! isBaseVar(sym, env))
+
+static SEXP findLocals(SEXP forms, SEXP body, SEXP env)
+{
+    locals_info_t info_data, *info = &info_data;
+    info->skipQuote = info->quoteUsed = FALSE;
+    info->skipLocal = info->localUsed = FALSE;
+    info->skipExpression = info->expressionUsed = FALSE;
+
+    SEXP locs = findLocalsCore(forms, body, info);
+
+    int again = FALSE;
+    if (info->quoteUsed && ! SHADOWED(R_quote_sym, locs, env)) {
+	info->skipQuote = TRUE;
+	again = TRUE;
+    }
+    if (info->localUsed && ! SHADOWED(R_local_sym, locs, env)) {
+	info->skipLocal = TRUE;
+	again = TRUE;
+    }
+    if (info->expressionUsed && ! SHADOWED(R_expression_sym, locs, env)) {
+	info->skipExpression = TRUE;
+	again = TRUE;
+    }
+    if (again)
+	locs = findLocalsCore(forms, body, info);
+
+    return PairToVectorList(locs);
+}
+
+static SEXP R_findLocals(SEXP val)
+{
+    INIT_FIND_LOCALS_SYMBOLS();
+    if (TYPEOF(val) != CLOSXP)
+	error("can only find locals in closures");
+
+    SEXP forms = FORMALS(val);
+    SEXP body = BODY_EXPR(val);
+    SEXP env = CLOENV(val);
+    return findLocals(forms, body, env);
+}
+
+SEXP attribute_hidden do_find_locals(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return R_findLocals(CAR(args));
+}
+
+SEXP R_getEnvVarsInfo(SEXP rho)
+{
+    return getAttrib(rho, R_dotFunVarsInfoSymbol);
+}
+
+void R_setEnvVarsInfo(SEXP rho, SEXP val)
+{
+    if (TYPEOF(val) != VECSXP)
+	error(".locals must be a vector of symbols");
+    setAttrib(rho, R_dotFunVarsInfoSymbol, val);
+}
+
+static SEXP fun_globs(SEXP, SEXP, SEXP);
+static void globsList(SEXP, SEXP, SEXP);
+static void globs(SEXP, SEXP, SEXP);
+
+static void globsList(SEXP el, SEXP val, SEXP rho)
+{
+    for (; el != R_NilValue; el = CDR(el))
+        if (CAR(el) != R_MissingArg)
+            globs(CAR(el), val, rho);
+}
+
+static SEXP newVarQueue()
+{
+    SEXP val = PROTECT(list2(allocVector(VECSXP, 16), R_NilValue));
+
+    /* use allocVector in case ScalarInteger result is non-mutable */
+    SETCADR(val, allocVector(INTSXP, 1));
+    INTEGER0(CADR(val))[0] = 0;
+
+    UNPROTECT(1); /* val */
+    return val;
+}
+
+static SEXP newGlobVars()
+{
+    SEXP val = PROTECT(allocVector(VECSXP, 3));
+
+    SET_VECTOR_ELT(val, 0, newVarQueue());
+    SET_VECTOR_ELT(val, 1, newVarQueue());
+
+    UNPROTECT(1); /* val */
+    return val;
+}
+
+static void pushNewVar(SEXP sym, SEXP queue)
+{
+    /* do nothing if sym is already in the queue */
+    int n = INTEGER0(CADR(queue))[0];
+    SEXP x = CAR(queue);
+    for (int i = 0; i < n; i++)
+	if (sym == VECTOR_ELT(x, i))
+	    return;
+
+    /* expand the queue vector if necessary */
+    if (n >= LENGTH(x)) {
+	SEXP new_x = allocVector(VECSXP, 2 * LENGTH(x));
+	for (int i = 0; i < n; i++)
+	    SET_VECTOR_ELT(new_x, i, VECTOR_ELT(x, i));
+	SETCAR(queue, new_x);
+	x = new_x;
+    }
+
+    /* push sym onto the queue */
+    INTEGER0(CADR(queue))[0]++;
+    SET_VECTOR_ELT(x, n, sym);
+}
+
+static void addGlobVar(SEXP sym, SEXP val)
+{
+    pushNewVar(sym, VECTOR_ELT(val, 0));
+}
+
+static void addGlobFun(SEXP sym, SEXP val)
+{
+    pushNewVar(sym, VECTOR_ELT(val, 1));
+}
+
+static void finishGlobVars(SEXP val, SEXP locs)
+{
+    for (int k = 0; k < 2; k++) {
+	int n = INTEGER0(CADR(VECTOR_ELT(val, k)))[0];
+	SEXP x = CAR(VECTOR_ELT(val, k));
+
+	/* count non-locals and set locals to R_NilValue */
+	int nn = 0;
+	for (int i = 0; i < n; i++)
+	    if (find_in_list(VECTOR_ELT(x, i), locs))
+		SET_VECTOR_ELT(x, i, R_NilValue);
+	    else
+		nn++;
+
+	/* copy non-locals into a new vector */
+	SEXP new_x = allocVector(VECSXP, nn);
+	for (int i = 0, j = 0; i < n; i++) {
+	    SEXP s = VECTOR_ELT(x, i);
+	    if (s != R_NilValue) {
+		SET_VECTOR_ELT(new_x, j, s);
+		j++;
+	    }
+	}
+
+	/* set result component to new vector of globals */
+	SET_VECTOR_ELT(val, k, new_x);
+    }
+    SET_VECTOR_ELT(val, 2, locs);
+}
+
+static void mergeGlobVars(SEXP val, SEXP val2)
+{
+    /* val contains queues; val3 contains vectors */
+    /* push the variables in val2 onto the queues in val */
+    for (int k = 0; k < 2; k++) {
+	SEXP x = VECTOR_ELT(val, k);
+	SEXP y = VECTOR_ELT(val2, k);
+	R_xlen_t n = XLENGTH(y);
+	for (R_xlen_t i = 0; i < n; i++)
+	    pushNewVar(VECTOR_ELT(y, i), x);
+    }
+}
+
+static void globs(SEXP e, SEXP val, SEXP rho)
+{
+    if (TYPEOF(e) == SYMSXP)
+	addGlobVar(e, val);
+    else if (TYPEOF(e) == LANGSXP) {
+        SEXP fun = CAR(e);
+        if (fun == R_function_sym) {
+            addGlobFun(R_function_sym, val);
+	    SEXP forms = CADR(e);
+	    SEXP body = CADDR(e);
+            SEXP val2 = PROTECT(fun_globs(forms, body, rho));
+	    mergeGlobVars(val, val2);
+	    UNPROTECT(1); /* val2 */
+        }
+        else if (fun == R_DoubleColonSymbol ||
+                 fun == R_TripleColonSymbol)
+            return;
+        else if (fun == R_DollarSymbol || fun == R_atsign_sym)
+            globs(CADR(e), val, rho);
+        else if (TYPEOF(fun) == SYMSXP) {
+            addGlobFun(fun, val);
+            globsList(CDR(e), val, rho);
+        }
+        else globsList(e, val, rho);
+    }
+}
+
+static SEXP fun_globs(SEXP forms, SEXP body, SEXP rho)
+{
+    SEXP locs = PROTECT(findLocals(forms, body, rho));
+    SEXP val = PROTECT(newGlobVars());
+    SEXP env = PROTECT(R_NewEnv(rho, FALSE, 0));
+    R_xlen_t nlocs = XLENGTH(locs);
+    for (R_xlen_t i = 0; i < nlocs; i++)
+	defineVar(VECTOR_ELT(locs, i), R_NilValue, env);
+    globsList(forms, val, env);
+    globs(body, val, env);
+    finishGlobVars(val, locs);
+    UNPROTECT(3); /* locs, val, env */
+    return val;
+}
+
+static SEXP R_findGlobals(SEXP fun)
+{
+    INIT_FIND_LOCALS_SYMBOLS();
+
+    if (TYPEOF(fun) != CLOSXP)
+        error("can only find globals in closures");
+    PROTECT(fun);
+    SEXP val = fun_globs(FORMALS(fun), BODY_EXPR(fun), ENCLOS(fun));
+    UNPROTECT(1); /* fun */
+
+    return val;
+}
+
+SEXP attribute_hidden do_find_globals(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return R_findGlobals(CAR(args));
+}
+
 
 /* end of byte code section */
 

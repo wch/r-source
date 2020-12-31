@@ -775,6 +775,9 @@ FUNTAB R_FunTab[] =
 {"wrap_meta",	do_wrap_meta,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"tryWrap",	do_tryWrap,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"altrep_class",do_altrep_class, 0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"findLocals",do_find_locals, 0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"findGlobals",do_find_globals, 0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"strictCallVars",do_strict_call_vars, 0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Functions To Interact with the Operating System */
 
@@ -1150,6 +1153,8 @@ static void SymbolShortcuts(void)
     R_dot_GenericCallEnv = install(".GenericCallEnv");
     R_dot_GenericDefEnv = install(".GenericDefEnv");
     R_dot_packageName = install(".packageName");
+    R_base_dot_nextMethod = install(".nextMethod");
+    R_dotFunVarsInfoSymbol = install(".funVarsInfo");
 }
 
 

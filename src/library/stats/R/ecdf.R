@@ -30,7 +30,7 @@ ecdf <- function (x)
 		      method = "constant", yleft = 0, yright = 1, f = 0,
                       ties = "ordered")
     class(rval) <- c("ecdf", "stepfun", class(rval))
-    assign("nobs", n, envir=environment(rval))# e.g. to reconstruct rank(x)
+    .addLocalToCallenv("nobs", n, envir=environment(rval))# e.g. to reconstruct rank(x)
     attr(rval, "call") <- sys.call()
     rval
 }

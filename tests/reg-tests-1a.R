@@ -4268,7 +4268,7 @@ envfun <- function(L) {
   assign("test", L$test, p)
   environment(p$test) <- p
 }
-solver <- function(L) envfun(L)
+solver <- function(L) { test <- NULL; envfun(L) }
 L <- list(test = function() 1 + 2)
 
 environment(L$test)

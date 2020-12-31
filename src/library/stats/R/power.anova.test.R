@@ -32,28 +32,39 @@ function (groups = NULL, n = NULL, between.var = NULL, within.var = NULL,
        any(0 > sig.level | sig.level > 1))
 	stop("'sig.level' must be numeric in [0, 1]")
 
-    p.body <- quote({
+    p.fun <- function(groups, n, within.var, between.var, sig.level) {
 	lambda <- (groups-1)*n*(between.var/within.var)
 	pf(qf(sig.level, groups-1, (n-1)*groups, lower.tail = FALSE),
 	   groups-1, (n-1)*groups, lambda, lower.tail = FALSE)
-    })
+    }
 
     if (is.null(power))
-	power <- eval(p.body)
-    else if (is.null(groups))
-	groups <- uniroot(function(groups) eval(p.body) - power,
-			  c(2, 1e+02))$root
-    else if (is.null(n))
-	n <- uniroot(function(n) eval(p.body) - power, c(2, 1e+05))$root
-    else if (is.null(within.var))
-	within.var <- uniroot(function(within.var) eval(p.body) - power,
-			      between.var * c(1e-07, 1e+07))$root
-    else if (is.null(between.var))
-	between.var <- uniroot(function(between.var) eval(p.body) - power,
-			       within.var * c(1e-07, 1e+07))$root
-    else if (is.null(sig.level))
-	sig.level <- uniroot(function(sig.level) eval(p.body) - power,
-			     c(1e-10, 1 - 1e-10))$root
+	power <- p.fun(groups, n, within.var, between.var, sig.level)
+    else if (is.null(groups)) {
+        fun.groups <- function(groups)
+            p.fun(groups, n, within.var, between.var, sig.level) - power
+	groups <- uniroot(fun.groups, c(2, 1e+02))$root
+    }
+    else if (is.null(n)) {
+        fun.n <- function(n)
+            p.fun(groups, n, within.var, between.var, sig.level) - power
+	n <- uniroot(fun.n, c(2, 1e+05))$root
+    }
+    else if (is.null(within.var)) {
+        fun.wv <- function(within.var)
+            p.fun(groups, n, within.var, between.var, sig.level) - power
+	within.var <- uniroot(fun.wv, between.var * c(1e-07, 1e+07))$root
+    }
+    else if (is.null(between.var)) {
+        fun.var <- function(between.var)
+            p.fun(groups, n, within.var, between.var, sig.level) - power
+	between.var <- uniroot(fun.var, within.var * c(1e-07, 1e+07))$root
+    }
+    else if (is.null(sig.level)) {
+        fun.sl <- function(sig.level)
+            p.fun(groups, n, within.var, between.var, sig.level) - power
+	sig.level <- uniroot(fun.sl, c(1e-10, 1 - 1e-10))$root
+    }
     else stop("internal error", domain = NA)
     NOTE <- "n is number in each group"
     METHOD <- "Balanced one-way analysis of variance power calculation"

@@ -74,6 +74,7 @@ vapply <- function(X, FUN, FUN.VALUE, ...,  USE.NAMES = TRUE)
 {
     FUN <- match.fun(FUN)
     if(!is.vector(X) || is.object(X)) X <- as.list(X)
+    i <- NULL ## will be used 
     .Internal(vapply(X, FUN, FUN.VALUE, USE.NAMES))
 }
 

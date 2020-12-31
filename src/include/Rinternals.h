@@ -591,8 +591,8 @@ typedef union {
 /* Closure Access Macros */
 #define FORMALS(x)	((x)->u.closxp.formals)
 #define BODY(x)		((x)->u.closxp.body)
-#define CLOENV(x)	((x)->u.closxp.env)
 #define RDEBUG(x)	((x)->sxpinfo.debug)
+#define CLOENV_RAW(x)	((x)->u.closxp.env)
 #define SET_RDEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
 #define RSTEP(x)	((x)->sxpinfo.spare)
 #define SET_RSTEP(x,v)	(((x)->sxpinfo.spare)=(v))
@@ -928,6 +928,8 @@ void (SET_RTRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
 void SET_CLOENV(SEXP x, SEXP v);
+SEXP R_getClosureVarsInfo(SEXP fun);
+void R_setClosureVarsInfo(SEXP fun, SEXP info);
 
 /* Symbol Access Functions */
 SEXP (PRINTNAME)(SEXP x);
@@ -948,6 +950,8 @@ void (SET_ENVFLAGS)(SEXP x, int v);
 void SET_FRAME(SEXP x, SEXP v);
 void SET_ENCLOS(SEXP x, SEXP v);
 void SET_HASHTAB(SEXP x, SEXP v);
+SEXP R_getEnvVarsInfo(SEXP rho);
+void R_setEnvVarsInfo(SEXP rho, SEXP val);
 
 /* Promise Access Functions */
 /* First five have macro versions in Defn.h */
@@ -1059,6 +1063,9 @@ LibExtern SEXP	R_dot_packageName;// ".packageName"
 LibExtern SEXP  R_dot_target;       /* ".target" */
 LibExtern SEXP  R_dot_Generic;      /* ".Generic" */
 
+LibExtern SEXP  R_base_dot_nextMethod;    /* ".nextMethod" */
+LibExtern SEXP  R_dotFunVarsInfoSymbol;  /* .funVarsInfo */
+
 /* Missing Values - others from Arith.h */
 #define NA_STRING	R_NaString
 LibExtern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
@@ -1124,6 +1131,7 @@ void Rf_copyVector(SEXP, SEXP);
 int Rf_countContexts(int, int);
 SEXP Rf_CreateTag(SEXP);
 void Rf_defineVar(SEXP, SEXP, SEXP);
+void Rf_defineVarEX(SEXP, SEXP, SEXP, int);
 SEXP Rf_dimgets(SEXP, SEXP);
 SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_DropDims(SEXP);
@@ -1547,6 +1555,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define countContexts		Rf_countContexts
 #define CreateTag		Rf_CreateTag
 #define defineVar		Rf_defineVar
+#define defineVarEX		Rf_defineVarEX
 #define dimgets			Rf_dimgets
 #define dimnamesgets		Rf_dimnamesgets
 #define DropDims                Rf_DropDims

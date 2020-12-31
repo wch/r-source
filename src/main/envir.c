@@ -173,21 +173,6 @@ static SEXP getActiveValue(SEXP fun)
 /* Macro version of isNull for only the test against R_NilValue */
 #define ISNULL(x) ((x) == R_NilValue)
 
-/* Function to determine whethr an environment contains special symbols */
-Rboolean R_envHasNoSpecialSymbols (SEXP env)
-{
-    SEXP frame;
-
-    if (HASHTAB(env) != R_NilValue)
-	return FALSE;
-
-    for (frame = FRAME(env); frame != R_NilValue; frame = CDR(frame))
-	if (IS_SPECIAL_SYMBOL(TAG(frame)))
-	    return FALSE;
-
-    return TRUE;
-}
-
 /*----------------------------------------------------------------------
 
   Hash Tables
@@ -207,7 +192,7 @@ Rboolean R_envHasNoSpecialSymbols (SEXP env)
 #define SET_HASHPRI(x,v)     SET_TRUELENGTH(x,v)
 #define HASHCHAIN(table, i)  ((SEXP *) STDVEC_DATAPTR(table))[i]
 
-#define IS_HASHED(x)	     (HASHTAB(x) != R_NilValue)
+#define IS_HASHED(x)	     (TYPEOF(HASHTAB(x)) == VECSXP)
 
 /*----------------------------------------------------------------------
 
@@ -838,7 +823,7 @@ void attribute_hidden unbindVar(SEXP symbol, SEXP rho)
 	error(_("unbind in the base environment is unimplemented"));
     if (FRAME_IS_LOCKED(rho))
 	error(_("cannot remove bindings from a locked environment"));
-    if (HASHTAB(rho) == R_NilValue) {
+    if (! IS_HASHED(rho)) {
 	SEXP list;
 	list = RemoveFromList(symbol, FRAME(rho), &found);
 	if (found) {
@@ -916,7 +901,7 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
 	return(tmp);
     }
 
-    if (HASHTAB(rho) == R_NilValue) {
+    if (! IS_HASHED(rho)) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue && TAG(frame) != symbol)
 	    frame = CDR(frame);
@@ -1026,7 +1011,7 @@ SEXP findVarInFrame3(SEXP rho, SEXP symbol, Rboolean doGet)
 	    MARK_NOT_MUTABLE(val); /* to keep complex assignment code sane */
 	}
 	return(val);
-    } else if (HASHTAB(rho) == R_NilValue) {
+    } else if (! IS_HASHED(rho)) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
 	    if (TAG(frame) == symbol)
@@ -1075,7 +1060,7 @@ static Rboolean existsVarInFrame(SEXP rho, SEXP symbol)
 		val = FALSE;
 	}
 	return(val);
-    } else if (HASHTAB(rho) == R_NilValue) {
+    } else if (! IS_HASHED(rho)) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
 	    if (TAG(frame) == symbol)
@@ -1119,7 +1104,7 @@ void readS3VarsFromFrame(SEXP rho,
 
     if (TYPEOF(rho) == NILSXP ||
 	rho == R_BaseNamespace || rho == R_BaseEnv || rho == R_EmptyEnv ||
-	IS_USER_DATABASE(rho) || HASHTAB(rho) != R_NilValue) goto slowpath;
+	IS_USER_DATABASE(rho) || IS_HASHED(rho)) goto slowpath;
 
     SEXP frame = FRAME(rho);
 
@@ -1594,7 +1579,83 @@ SEXP findFun(SEXP symbol, SEXP rho)
 
 */
 
+static int R_strict_check = FALSE;
+static int R_strict_check_inited = FALSE;
+
+SEXP attribute_hidden
+do_strict_call_vars(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    int old = R_strict_check;
+    int new = asLogical(CAR(args));
+    if (new != NA_LOGICAL) {
+	R_strict_check = new;
+	R_strict_check_inited = TRUE;
+    }
+    return old ? R_TrueValue : R_FalseValue;
+}
+
+static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
+{
+    SEXP info = R_getEnvVarsInfo(rho);
+    if (TYPEOF(info) == VECSXP && XLENGTH(info) == 3) {
+	SEXP locs = VECTOR_ELT(info, 2);
+	if (TYPEOF(locs) == VECSXP) {
+	    R_xlen_t n = XLENGTH(locs);
+	    for (R_xlen_t i = 0; i < n; i++)
+		if (symbol == VECTOR_ELT(locs, i))
+		    return;
+	}
+
+	if (! R_strict_check_inited) {
+	    R_strict_check_inited = TRUE;
+	    if (getenv("R_STRICT_VAR_CHECK") != NULL)
+		R_strict_check = TRUE;
+	}
+
+	if (R_strict_check) {
+	    if (symbol == R_TmpvalSymbol ||
+		CHAR(PRINTNAME(symbol))[0] == '.')
+		return;
+
+	    PROTECT(value); /* need PROTECT if switch to a warning() */
+	    error(_("cannot create a new local variable '%s'"),
+		  CHAR(PRINTNAME(symbol)));
+	    UNPROTECT(1); /* value */
+	}
+	else {
+	    PROTECT(value); /* need PROTECT if switch to a warning() */
+
+	    SEXP gfuns = VECTOR_ELT(info, 1);
+	    if (TYPEOF(gfuns) == VECSXP) {
+		R_xlen_t n = XLENGTH(gfuns);
+		for (R_xlen_t i = 0; i < n; i++)
+		    if (symbol == VECTOR_ELT(gfuns, i))
+			error(_("creating a new local variable '%s' "
+				"would mask a global function"),
+			      CHAR(PRINTNAME(symbol)));
+	    }
+
+	    SEXP gvars = VECTOR_ELT(info, 0);
+	    if (TYPEOF(gvars) == VECSXP) {
+		R_xlen_t n = XLENGTH(gvars);
+		for (R_xlen_t i = 0; i < n; i++)
+		    if (symbol == VECTOR_ELT(gvars, i))
+			error(_("creating a new local variable '%s' "
+				"would mask a global variable"),
+			      CHAR(PRINTNAME(symbol)));
+	    }
+	    UNPROTECT(1); /* value */
+	}
+    }
+}
+
 void defineVar(SEXP symbol, SEXP value, SEXP rho)
+{
+    defineVarEX(symbol, value, rho, TRUE);
+}
+
+attribute_hidden void defineVarEX(SEXP symbol, SEXP value, SEXP rho, int check)
 {
     int hashcode;
     SEXP frame, c;
@@ -1631,7 +1692,7 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	if (IS_SPECIAL_SYMBOL(symbol))
 	    UNSET_NO_SPECIAL_SYMBOLS(rho);
 
-	if (HASHTAB(rho) == R_NilValue) {
+	if (! IS_HASHED(rho)) {
 	    /* First check for an existing binding */
 	    frame = FRAME(rho);
 	    while (frame != R_NilValue) {
@@ -1644,6 +1705,8 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	    }
 	    if (FRAME_IS_LOCKED(rho))
 		error(_("cannot add bindings to a locked environment"));
+	    if (check)
+		check_new_local(symbol, value, rho);
 	    SET_FRAME(rho, CONS(value, FRAME(rho)));
 	    SET_TAG(FRAME(rho), symbol);
 	}
@@ -1754,7 +1817,7 @@ static SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 	return symbol;
     }
 
-    if (HASHTAB(rho) == R_NilValue) {
+    if (! IS_HASHED(rho)) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
 	    if (TAG(frame) == symbol) {
@@ -2492,7 +2555,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SEXP p, loadenv = CAR(args);
 
 	    PROTECT(s = allocSExp(ENVSXP));
-	    if (HASHTAB(loadenv) != R_NilValue) {
+	    if (IS_HASHED(loadenv)) {
 		int i, n;
 		n = length(HASHTAB(loadenv));
 		for (i = 0; i < n; i++) {
@@ -2887,7 +2950,7 @@ SEXP R_lsInternal3(SEXP env, Rboolean all, Rboolean sorted)
 	k += BuiltinSize(all, 0);
     else if (isEnvironment(env) ||
 	isEnvironment(env = simple_as_environment(env))) {
-	if (HASHTAB(env) != R_NilValue)
+	if (IS_HASHED(env))
 	    k += HashTableSize(HASHTAB(env), all);
 	else
 	    k += FrameSize(FRAME(env), all);
@@ -2901,7 +2964,7 @@ SEXP R_lsInternal3(SEXP env, Rboolean all, Rboolean sorted)
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	BuiltinNames(all, 0, ans, &k);
     else if (isEnvironment(env)) {
-	if (HASHTAB(env) != R_NilValue)
+	if (IS_HASHED(env))
 	    HashTableNames(HASHTAB(env), all, ans, &k);
 	else
 	    FrameNames(FRAME(env), all, ans, &k);
@@ -2948,7 +3011,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     // k := length(env) = envxlength(env) :
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	k = BuiltinSize(all, 0);
-    else if (HASHTAB(env) != R_NilValue)
+    else if (IS_HASHED(env))
 	k = HashTableSize(HASHTAB(env), all);
     else
 	k = FrameSize(FRAME(env), all);
@@ -2959,7 +3022,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     k = 0;
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	BuiltinValues(all, 0, ans, &k);
-    else if (HASHTAB(env) != R_NilValue)
+    else if (IS_HASHED(env))
 	HashTableValues(HASHTAB(env), all, ans, &k);
     else
 	FrameValues(FRAME(env), all, ans, &k);
@@ -2967,7 +3030,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     k = 0;
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	BuiltinNames(all, 0, names, &k);
-    else if (HASHTAB(env) != R_NilValue)
+    else if (IS_HASHED(env))
 	HashTableNames(HASHTAB(env), all, names, &k);
     else
 	FrameNames(FRAME(env), all, names, &k);
@@ -3036,7 +3099,7 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	k = BuiltinSize(all, 0);
-    else if (HASHTAB(env) != R_NilValue)
+    else if (IS_HASHED(env))
 	k = HashTableSize(HASHTAB(env), all);
     else
 	k = FrameSize(FRAME(env), all);
@@ -3047,7 +3110,7 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     k2 = 0;
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	BuiltinValues(all, 0, tmp2, &k2);
-    else if (HASHTAB(env) != R_NilValue)
+    else if (IS_HASHED(env))
 	HashTableValues(HASHTAB(env), all, tmp2, &k2);
     else
 	FrameValues(FRAME(env), all, tmp2, &k2);
@@ -3080,7 +3143,7 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	k = 0;
 	if (env == R_BaseEnv || env == R_BaseNamespace)
 	    BuiltinNames(all, 0, names, &k);
-	else if(HASHTAB(env) != R_NilValue)
+	else if(IS_HASHED(env))
 	    HashTableNames(HASHTAB(env), all, names, &k);
 	else
 	    FrameNames(FRAME(env), all, names, &k);
@@ -3099,7 +3162,7 @@ TYPE_ NAME_(SEXP rho)							\
     if(IS_USER_DATABASE(rho)) {						\
 	R_ObjectTable *tb = (R_ObjectTable*) R_ExternalPtrAddr(HASHTAB(rho)); \
 	return LENGTH_FN_(tb->objects(tb));				\
-    } else if( HASHTAB(rho) != R_NilValue)				\
+    } else if(IS_HASHED(rho))						\
 	return HashTableSize(HASHTAB(rho), 1);				\
     else if (rho == R_BaseEnv || rho == R_BaseNamespace) 		\
 	return BuiltinSize(1, 0);					\
@@ -4413,3 +4476,17 @@ void attribute_hidden findFunctionForBody(SEXP body) {
     }
 }
 
+/* Function to determine whether an environment contains special symbols */
+Rboolean R_envHasNoSpecialSymbols (SEXP env)
+{
+    SEXP frame;
+
+    if (IS_HASHED(env))
+	return FALSE;
+
+    for (frame = FRAME(env); frame != R_NilValue; frame = CDR(frame))
+	if (IS_SPECIAL_SYMBOL(TAG(frame)))
+	    return FALSE;
+
+    return TRUE;
+}

@@ -231,8 +231,10 @@ all.equal.environment <- function (target, current, all.names=TRUE, evaluate=TRU
                  ##         ! ...elt(i) else FALSE))
         return(TRUE)
     ae.run <- dynGet("__all.eq.E__", NULL)
-    if(is.null(ae.run))
+    if(is.null(ae.run)) {
+        mm <- NULL ## will be modified in do1()
 	"__all.eq.E__" <- environment() # -> 5 visible + 6 ".<..>" objects
+    }
     else { ## ae.run contains previous target, current, ..
 
 	## If we exactly match one of these, we return TRUE here,

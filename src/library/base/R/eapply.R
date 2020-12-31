@@ -19,5 +19,7 @@
 eapply <- function (env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 {
     FUN <- match.fun(FUN)
+    X <- NULL ## will be used in the .Internal
+    i <- NULL ## will be used in the .Internal 
     .Internal(eapply(env, FUN, all.names, USE.NAMES))
 }

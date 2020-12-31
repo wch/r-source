@@ -25,6 +25,7 @@ lapply <- function (X, FUN, ...)
     if(!is.vector(X) || is.object(X)) X <- as.list(X)
     ## Note ... is not passed down.  Rather the internal code
     ## evaluates FUN(X[i], ...) in the frame of this function
+    i <- NULL ## will be used in the .Internal()
     .Internal(lapply(X, FUN))
 }
 
@@ -33,6 +34,7 @@ rapply <-
              how = c("unlist", "replace", "list"), ...)
 {
     ## 'object' is checked in C now
+    X <- NULL ## will be used in the .Internal()
     how <- match.arg(how)
     res <- .Internal(rapply(object, f, classes, deflt, how))
     if(how == "unlist") unlist(res, recursive = TRUE) else res

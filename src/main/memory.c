@@ -732,6 +732,10 @@ static R_size_t R_NodesInUse = 0;
     dc__action__(CDR(__n__), dc__extra__); \
     break; \
   case CLOSXP: \
+    dc__action__(CLOENV_RAW(__n__), dc__extra__); \
+    dc__action__(FORMALS(__n__), dc__extra__); \
+    dc__action__(BODY(__n__), dc__extra__); \
+    break; \
   case PROMSXP: \
   case LANGSXP: \
   case DOTSXP: \
@@ -4298,15 +4302,51 @@ void (SET_MISSING)(SEXP x, int v) { SET_MISSING(CHKCONS(x), v); }
 /* Closure Accessors */
 SEXP (FORMALS)(SEXP x) { return CHK(FORMALS(CHK(x))); }
 SEXP (BODY)(SEXP x) { return CHK(BODY(CHK(x))); }
-SEXP (CLOENV)(SEXP x) { return CHK(CLOENV(CHK(x))); }
 int (RDEBUG)(SEXP x) { return RDEBUG(CHK(x)); }
 int (RSTEP)(SEXP x) { return RSTEP(CHK(x)); }
 
 void (SET_FORMALS)(SEXP x, SEXP v) { FIX_REFCNT(x, FORMALS(x), v); CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
 void (SET_BODY)(SEXP x, SEXP v) { FIX_REFCNT(x, BODY(x), v); CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }
-void (SET_CLOENV)(SEXP x, SEXP v) { FIX_REFCNT(x, CLOENV(x), v); CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
 void (SET_RDEBUG)(SEXP x, int v) { SET_RDEBUG(CHK(x), v); }
 void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(CHK(x), v); }
+
+SEXP (CLOENV)(SEXP x)
+{
+    SEXP env = CHK(CLOENV_RAW(CHK(x)));
+    return (TYPEOF(env) == LISTSXP) ? CAR0(env) : env;
+}
+
+void (SET_CLOENV)(SEXP x, SEXP v)
+{
+    FIX_REFCNT(x, CLOENV_RAW(x), v);
+    CHECK_OLD_TO_NEW(x, v);
+    CLOENV_RAW(x) = v;
+}
+
+attribute_hidden SEXP R_getClosureVarsInfo(SEXP fun)
+{
+    if (TYPEOF(BODY(fun)) == BCODESXP)
+	/* bytecode objects may have locals in a .local attribute */
+	/* getAttrib has too much overhead so just search the list */
+	for (SEXP a = ATTRIB(BODY(fun)); a != R_NilValue; a = CDR(a))
+	    if (TAG(a) == R_dotFunVarsInfoSymbol)
+		return CAR(a);
+
+    SEXP env = CHK(CLOENV_RAW(CHK(fun)));
+    return (TYPEOF(env) == LISTSXP) ? CDR(env) : R_NilValue;
+}
+
+attribute_hidden void R_setClosureVarsInfo(SEXP fun, SEXP info)
+{
+    /* this should only be called for non-compiled functions */
+    /* ideally we would have a field in closures used only at runtime */
+    /* but it would need to be cleared when changing formals, body, or env */
+    SEXP env = CLOENV(fun);
+    if (TYPEOF(env) != ENVSXP)
+	error("closure variable info already set");
+    SET_CLOENV(fun, CONS(env, info));
+}
+
 
 /* These are only needed with the write barrier on */
 #ifdef TESTING_WRITE_BARRIER

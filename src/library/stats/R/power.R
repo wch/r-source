@@ -36,33 +36,45 @@ power.t.test <-
     tside <- switch(alternative, one.sided = 1, two.sided = 2)
     if (tside == 2 && !is.null(delta)) delta <- abs(delta)
 
-    p.body <-
-        if (strict && tside == 2) # count rejections in opposite tail
-            quote({
+    if (strict && tside == 2) # count rejections in opposite tail
+        p.fun <-
+            function(n, delta, sd, sig.level) {
                 nu <- pmax(1e-7, n - 1) * tsample
                 qu <- qt(sig.level/tside, nu, lower.tail = FALSE)
-                pt( qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower.tail = FALSE) +
-                pt(-qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower.tail = TRUE)
-            })
-        else ## normal case:
-            quote({nu <- pmax(1e-7, n - 1) * tsample
-                   pt(qt(sig.level/tside, nu, lower.tail = FALSE),
-                      nu, ncp = sqrt(n/tsample) * delta/sd, lower.tail = FALSE)})
-
+                pt( qu, nu, ncp = sqrt(n/tsample) * delta/sd,
+                   lower.tail = FALSE) +
+                    pt(-qu, nu,
+                       ncp = sqrt(n/tsample) * delta/sd, lower.tail = TRUE)
+            }
+    else ## normal case:
+        p.fun <-
+            function(n, delta, sd, sig.level) {
+                nu <- pmax(1e-7, n - 1) * tsample
+                pt(qt(sig.level/tside, nu, lower.tail = FALSE),
+                   nu, ncp = sqrt(n/tsample) * delta/sd, lower.tail = FALSE)
+            }
+    
     if (is.null(power))
-	power <- eval(p.body)
-    else if (is.null(n))
-	n <- uniroot(function(n) eval(p.body) - power,
-		     c(2, 1e7), tol=tol, extendInt = "upX")$root
-    else if (is.null(sd))
-	sd <- uniroot(function(sd) eval(p.body) - power,
+	power <- p.fun(n, delta, sd, sig.level)
+    else if (is.null(n)) {
+        fun.n <- function(n) p.fun(n, delta, sd, sig.level) - power
+	n <- uniroot(fun.n, c(2, 1e7), tol=tol, extendInt = "upX")$root
+    }
+    else if (is.null(sd)) {
+        fun.sd <- function(sd) p.fun(n, delta, sd, sig.level) - power
+	sd <- uniroot(fun.sd,
 		      delta * c(1e-7, 1e+7), tol=tol, extendInt = "downX")$root
-    else if (is.null(delta))
-	delta <- uniroot(function(delta) eval(p.body) - power,
-		      sd * c(1e-7, 1e+7), tol=tol, extendInt = "upX")$root
-    else if (is.null(sig.level))
-	sig.level <- uniroot(function(sig.level) eval(p.body) - power,
-		      c(1e-10, 1-1e-10), tol=tol, extendInt = "yes")$root
+    }
+    else if (is.null(delta)) {
+        fun.delta <- function(delta) p.fun(n, delta, sd, sig.level) - power
+	delta <- uniroot(fun.delta,
+                         sd * c(1e-7, 1e+7), tol=tol, extendInt = "upX")$root
+    }
+    else if (is.null(sig.level)) {
+        fun.sl <- function(sig.level) p.fun(n, delta, sd, sig.level) - power  
+	sig.level <- uniroot(fun.sl,
+                             c(1e-10, 1-1e-10), tol=tol, extendInt = "yes")$root
+    }
     else # Shouldn't happen
 	stop("internal error", domain = NA)
     NOTE <- switch(type,

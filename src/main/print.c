@@ -1028,6 +1028,8 @@ static void printAttributes(SEXP s, R_PrintData *data, Rboolean useSlots)
 	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SrcrefSymbol
 	       || TAG(a) == R_WholeSrcrefSymbol || TAG(a) == R_SrcfileSymbol)
 		goto nextattr;
+	    if (TAG(a) == R_dotFunVarsInfoSymbol && TYPEOF(s) == ENVSXP)
+		goto nextattr;
 	    if(useSlots) {
 		size_t space = TAGBUFLEN0 - strlen(tagbuf);
 		Rsnprintf_mbcs(ptag, space,

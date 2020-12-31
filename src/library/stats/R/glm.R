@@ -176,6 +176,10 @@ glm.fit <-
     mu.eta <- family$mu.eta
     valideta <- family$valideta %||% function(eta) TRUE
     validmu  <- family$validmu  %||% function(mu)  TRUE
+    n <- NULL ## filled in by eval of initialize expressions
+    m <- NULL ## filled in by eval of some initialize expressions
+    n0 <- NULL ## filled in by eval of some initialize expressions
+    y1 <- NULL ## filled in by eval of some initialize expressions
     if(is.null(mustart)) {
         ## calculates mustart and may change y and weights and set n (!)
         eval(family$initialize)
