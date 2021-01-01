@@ -1,6 +1,6 @@
 % File src/library/base/man/utf8Conversion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{utf8Conversion}
@@ -23,7 +23,7 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
     character string or multiple individual characters?}
   \item{allow_surrogate_pairs}{logical: should interpretation of
     surrogate pairs be attempted?  (See \sQuote{Details}.)
-    Only supported for \code{multiple = FALSE} and in \R 3.5.0 and later.}
+    Only supported for \code{multiple = FALSE}.}
 }
 \details{
   These will work in any locale, including on platforms that do not
@@ -31,8 +31,9 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
 
   Unicode defines a name and a number of all of the glyphs it
   encompasses: the numbers are called \emph{code points}: since RFC3629
-  they run from \code{0} to \code{0x10FFFF} (with about 12\% being
-  assigned by version 10.0 of the Unicode standard).
+  they run from \code{0} to \code{0x10FFFF} (with about 5\% being
+  assigned by version 13.0 of the Unicode standard and 7\% reserved for
+  \sQuote{private use}).
   
   \code{intToUtf8} does not by default handle surrogate pairs: inputs in
   the surrogate ranges are mapped to \code{NA}.  They might occur if a
@@ -92,13 +93,13 @@ intToUtf8(x, TRUE)
 (xx <- intToUtf8(x, , TRUE)) # will only display in some locales and fonts
 charToRaw(xx)
 
-\dontrun{## An example of how surrogate pairs might occur
+\donttest{## An example of how surrogate pairs might occur
 x <- "\U10437"
 charToRaw(x)
 foo <- tempfile()
 writeLines(x, file(foo, encoding = "UTF-16LE"))
 ## next two are OS-specific, but are mandated by POSIX
-system(paste("od -x", foo)) # 2-byte units, correct on little-endian platform
+system(paste("od -x", foo)) # 2-byte units, correct on little-endian platforms
 system(paste("od -t x1", foo)) # single bytes as hex
 y <- readBin(foo, "integer", 2, 2, FALSE, endian = "little")
 sprintf("\%X", y)
