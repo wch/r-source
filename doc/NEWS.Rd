@@ -308,9 +308,9 @@
       as they cannot be represented by valid UTF-8.
 
       Where such escapes are used for outputting non-printable
-      characters, 6 (not 8) hex digits are used (as it was decided by
-      Unicode that the first two would always be zero). For clarity,
-      braces are used, for example \samp{\\U\{1d4d7\}}.
+      (inclduing unassigned) characters, 6 (not 8) hex digits are used
+      (rather than 8 with leading zeros).  For clarity, braces are used,
+      for example \samp{\\U\{0effff\}}.
 
       \item The parser now looks for non-ASCII spaces on Solaris (as
       previously on most other OSes).
@@ -335,7 +335,7 @@
       \item There is a build-time option to replace the system's
       wide-character \code{wctrans} C function by tables shipped with
       \R: use \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.
-      On Windows this allows \code{tolower()} / \code{toupper()} to work
+      On Windows this allows \code{tolower()} and \code{toupper()} to work
       with Unicode characters beyond the Basic Multilingual Plane and is
       intended to become the default.
     }
