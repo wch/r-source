@@ -322,11 +322,14 @@
       and \code{chartr()} and those using regular expressions have more
       support for inputs with a marked Latin-1 encoding.
 
+      \item The character-classification functions used to replace the
+      system \code{iswxxxx} functions on Windows, macOS and AIX have
+      been updated to Unicode 13.0.0 -- in particular, many more UTF-8
+      characters are regarded as printable.
+
       \item The code for the evaluating default (extended) regular
       expressions now uses the same character-classification functions
-      as the rest of \R; in some cases (Windows, AIX, macOS) these
-      replace limited system ones, the differences being in non-Latin
-      characters.
+      as the rest of \R.
     }
   }
 
