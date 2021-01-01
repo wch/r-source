@@ -1595,6 +1595,17 @@ do_strict_call_vars(SEXP call, SEXP op, SEXP args, SEXP rho)
     return old ? R_TrueValue : R_FalseValue;
 }
 
+static int exists_in_frame(SEXP sym, SEXP env)
+{
+    /* disable GC in case running an acive binding allocates */
+    /* ideally this should avoid triggering active bindings */
+    int enabled = R_GCEnabled;
+    R_GCEnabled = FALSE;
+    int found = (findVarInFrame(env, sym) != R_UnboundValue);
+    R_GCEnabled = enabled;
+    return found;
+}
+    
 static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 {
     SEXP info = R_getEnvVarsInfo(rho);
@@ -1625,7 +1636,7 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 	}
 	else {
 	    PROTECT(value); /* need PROTECT if switch to a warning() */
-
+#ifdef CHECK_USING_STATIC_GLOBALS
 	    SEXP gfuns = VECTOR_ELT(info, 1);
 	    if (TYPEOF(gfuns) == VECSXP) {
 		R_xlen_t n = XLENGTH(gfuns);
@@ -1645,6 +1656,34 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 				"conflict with use as a global variable"),
 			      CHAR(PRINTNAME(symbol)));
 	    }
+#else
+	    /* check enclosing call environments */
+	    SEXP e;
+	    for (e = ENCLOS(rho); e != R_EmptyEnv; e = ENCLOS(e)) {
+		info = R_getEnvVarsInfo(e);
+		if (TYPEOF(info) != VECSXP || XLENGTH(info) != 3)
+		    break;
+		SEXP locs = VECTOR_ELT(info, 2);
+		if (TYPEOF(locs) != VECSXP)
+		    break;
+		R_xlen_t n = XLENGTH(locs);
+		for (R_xlen_t i = 0; i < n; i++)
+		    if (symbol == VECTOR_ELT(locs, i))
+			error(_("new local variable '%s' would conflict "
+				"with variable in enclosing call environment"),
+			      CHAR(PRINTNAME(symbol)));
+	    }
+
+	    /* check enclosing locked environments */
+	    for (; e != R_EmptyEnv; e = ENCLOS(e)) {
+		if (! FRAME_IS_LOCKED(e) && e != R_BaseNamespace)
+		    break;
+		if (exists_in_frame(symbol, e))
+		    error(_("new local variable '%s' would conflict "
+			    "with variable in enclosing namespace"),
+			  CHAR(PRINTNAME(symbol)));
+	    }
+#endif
 	    UNPROTECT(1); /* value */
 	}
     }
