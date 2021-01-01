@@ -28,6 +28,7 @@ DISTFILES = README \
 	missing \
 	move-if-change \
 	rsync-recommended \
+	uniset \
 	updatefat
 
 CLEANFILES =
