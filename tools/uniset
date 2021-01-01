@@ -2,6 +2,9 @@
 # Uniset -- Unicode subset manager -- Markus Kuhn
 # http://www.cl.cam.ac.uk/~mgk25/download/uniset.tar.gz
 
+# slightly modified for R to produce single-column output in
+# the style previously used (l/c a-f, no leading zeroes).
+
 require 5.014;
 use open ':utf8';
 use FindBin qw($RealBin);  # to find directory where this file is located

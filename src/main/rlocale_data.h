@@ -29,7 +29,8 @@
    with the help of Marcus Kuhn's 'uniset' Perl script
    (https://www.cl.cam.ac.uk/~mgk25/download/uniset.tar.gz: update the
    tables it contains to current Unicode) and some ideas are mentioned
-   in the comments.
+   in the comments.  The (slightly modified) version used is in the
+   top-level tools directory.
 
    Or look at the glibc sources (data in localedata/unicode-gen).
    That generates a file i18n_ctype via a Python script gen_unicode_ctype.py.
