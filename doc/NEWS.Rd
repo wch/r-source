@@ -309,13 +309,14 @@
 
       Where such escapes are used for outputting non-printable
       characters, 6 (not 8) hex digits are used (as it was decided by
-      Unicode that the first two would always be zero).
+      Unicode that the first two would always be zero). For clarity,
+      braces are used, for example \samp{\\U\{1d4d7\}}.
 
       \item The parser now looks for non-ASCII spaces on Solaris (as
       previously on most other OSes).
 
       \item There are warnings (including from the parser) on the use of
-      unpaired surrogate Unicode points such as \samp{\\uD834} (which
+      unpaired surrogate Unicode points such as \samp{\\uD834}.  (These
       cannot be converted to valid UTF-8).
 
       \item Functions \code{nchar()}, \code{tolower()}, \code{toupper()}
@@ -328,8 +329,15 @@
       characters are regarded as printable.
 
       \item The code for the evaluating default (extended) regular
-      expressions now uses the same character-classification functions
-      as the rest of \R.
+      expressions now uses the same replacement character-classification
+      functions as the rest of \R on Windows, macOS and AIX.
+
+      \item There is a build-time option to replace the system's
+      wide-character \code{wctrans} C function by tables shipped with
+      \R: use \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.
+      On Windows this allows \code{tolower()} / \code{toupper()} to work
+      with Unicode characters beyond the Basic Multilingual Plane and is
+      intended to become the default.
     }
   }
 
