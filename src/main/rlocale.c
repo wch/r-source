@@ -397,9 +397,9 @@ tab <- tab[, c("V1", "V13", "V14")]
 names(tab) <- c('pt', 'uc', 'lc')
 toupper <- tab[tab$uc !="", 1:2]
 tolower <- tab[tab$lc !="", c(1,3)]
-cat(with(toupper, sprintf("  { 0x%s, 0x%s},", pt, uc)),
+cat(with(toupper, sprintf("  { 0x%s, 0x%s },", pt, uc)),
    sep = "\n", file = "rlocale_toupper.h")
-cat(with(tolower, sprintf("  { 0x%s, 0x%s},", pt, lc)),
+cat(with(tolower, sprintf("  { 0x%s, 0x%s },", pt, lc)),
    sep = "\n", file = "rlocale_tolower.h")
 
    from https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
