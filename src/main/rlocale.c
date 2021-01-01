@@ -313,7 +313,7 @@ extern const char *locale2charset(const char *);
     ISWFUNC(xdigit)
     ISWFUNC(space)
     ISWFUNC(print)
-    /* derived below
+    /* derived below from print and space
     ISWFUNC(graph)
     */
     ISWFUNC(blank)
@@ -331,9 +331,13 @@ static int Ri18n_iswalnum (wint_t wc)
     return (Ri18n_iswctype(wc, Ri18n_wctype("digit")) ||
 	    Ri18n_iswctype(wc, Ri18n_wctype("alpha"))    );
 }
+
 /* Defined in the C99 standard as
 
    'any wide character for which iswprint is true and iswspace is false'
+
+   As this is used rarely (and iswprint is used a lot), we chose to
+   derive this one.
 */
 
 static int Ri18n_iswgraph (wint_t wc)
