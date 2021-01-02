@@ -496,12 +496,12 @@ AC_ARG_WITH([internal-tzcode],
 [use_internal_tzcode=default])
 
 AC_ARG_WITH([internal-towlower],
-[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper@<:@no, yes on Windows and macOS@:>@])],
+[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS@:>@])],
 [use_internal_towlower=${withval}],
 [use_internal_towlower=default])
 
 AC_ARG_WITH([internal-iswxxxxx],
-[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal time-zone code @<:@no, yes on Windows, macOS and AIX@:>@])],
+[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS and AIX@:>@])],
 [use_internal_iswxxxxx=${withval}],
 [use_internal_iswxxxxx=default])
 

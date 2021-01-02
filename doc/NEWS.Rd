@@ -228,7 +228,7 @@
       missing ca 2003 so the workaround has been removed.
 
       \item There are new \command{configure} options
-      \option{--with-internal-iswxxxx} and
+      \option{--with-internal-iswxxxxx} and
       \option{--with-internal-towlower} which allows the system
       wide-character classification and case-switching routines to be
       replaced by internal ones.  The first has long been used on macOS,
@@ -338,9 +338,9 @@
       support for inputs with a marked Latin-1 encoding.
 
       \item The character-classification functions used (by default) to
-      replace the system \code{iswxxxx} functions on Windows, macOS and
+      replace the system \code{iswxxxxx} functions on Windows, macOS and
       AIX have been updated to Unicode 13.0.0 -- in particular, many
-      more UTF-8 characters are regarded as printable.
+      more UTF-8 characters (such as emojis) are regarded as printable.
 
       \item The code for evaluating default (extended) regular
       expressions now uses the same character-classification functions
@@ -354,7 +354,8 @@
       \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.  On
       Windows and Solaris this allows \code{tolower()} and
       \code{toupper()} to work with Unicode characters beyond the Basic
-      Multilingual Plane and is intended to become the default there.
+      Multilingual Plane and is intended to become the default there (it
+      currently is on macOS).
     }
   }
 

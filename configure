@@ -1849,11 +1849,11 @@ Optional Packages:
                           use system valgrind headers (if available) [no]
   --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
   --with-internal-towlower
-                          use internal code for towlower/upper[no, yes on
-                          Windows and macOS]
+                          use internal code for towlower/upper [no, yes on
+                          macOS]
   --with-internal-iswxxxxx
-                          use internal time-zone code [no, yes on Windows,
-                          macOS and AIX]
+                          use internal iswprint etc. [no, yes on macOS and
+                          AIX]
   --with-recommended-packages
                           use/install recommended R packages [yes]
   --with-ICU              use ICU library (if available) [yes]

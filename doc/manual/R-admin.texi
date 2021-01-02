@@ -944,6 +944,23 @@ as @file{Europe/London}.  On all tested OSes the system timezone was
 deduced correctly, but if necessary it can be set as the value of
 environment variable @env{TZ}.
 
+Options @option{--with-internal-iswxxxxx} and
+@option{--with-internal-towlower} were introduced in @R{} 4.1.0.  These
+control the replacement of the system wide-character classification
+functions (such as @code{iswprint}) and case-changing functions by ones
+contained in the @R{} sources.  Replacement of the classification
+functions has been done for many years on macOS and AIX (and Windows):
+option @option{--with-internal-iswxxxxx} allows this to be suppressed on
+those platforms or used on others (it is recommended for Solaris).
+Replacing the case-changing functions is new in @R{} 4.1.0 and the
+default on macOS.  These options will only matter to those working with
+non-ASCII character data, especially in languages written in a
+non-Western script (which includes `symbols' such as emoji).  Note that
+one of those @code{iswxxxxx} is @code{iswprint} which is used to decide
+whether to output a character as a glyph or as a @samp{\U@{xxxxxx@}}
+escape--for example, -try @samp{"\U1f600"}.  (Replacing the system
+functions provides a degree of plaform-independence (including to OS
+updates) but replaces it with a dependence on the @R{} version.)
 
 @menu
 * Debugging Symbols::
@@ -5727,6 +5744,11 @@ reporting in the non-existent DST variant.  Using @command{configure}
 option @option{--with-internal-tzcode} is recommended, and required if
 you find time-zone abbreviations being given odd values (as has been
 seen on 64-bit builds without it).
+
+Using configure options @option{--with-internal-iswxxxxx} and
+@option{--with-internal-towlower} is recommended for those working with
+non-Western character data (as the system implementations use old tables
+only covering the Unicode Basic Multilingual Plane).
 
 When using the Oracle compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
