@@ -1635,8 +1635,8 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 	    UNPROTECT(1); /* value */
 	}
 	else {
-	    PROTECT(value); /* need PROTECT if switch to a warning() */
 #ifdef CHECK_USING_STATIC_GLOBALS
+	    PROTECT(value); /* need PROTECT if switch to a warning() */
 	    SEXP gfuns = VECTOR_ELT(info, 1);
 	    if (TYPEOF(gfuns) == VECSXP) {
 		R_xlen_t n = XLENGTH(gfuns);
@@ -1656,8 +1656,35 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 				"conflict with use as a global variable"),
 			      CHAR(PRINTNAME(symbol)));
 	    }
+	    UNPROTECT(1); /* value */
 #else
+	    int used_as_gfun = FALSE;
+	    SEXP gfuns = VECTOR_ELT(info, 1);
+	    if (TYPEOF(gfuns) == VECSXP) {
+		R_xlen_t n = XLENGTH(gfuns);
+		for (R_xlen_t i = 0; i < n; i++)
+		    if (symbol == VECTOR_ELT(gfuns, i)) {
+			used_as_gfun = TRUE;
+			break;
+		    }
+	    }
+
+	    int used_as_gvar = FALSE;
+	    SEXP gvars = VECTOR_ELT(info, 0);
+	    if (TYPEOF(gvars) == VECSXP) {
+		R_xlen_t n = XLENGTH(gvars);
+		for (R_xlen_t i = 0; i < n; i++)
+		    if (symbol == VECTOR_ELT(gvars, i)) {
+			used_as_gfun = TRUE;
+			break;
+		    }
+	    }
+
+	    if (! used_as_gfun && ! used_as_gvar)
+		return;
+
 	    /* check enclosing call environments */
+	    PROTECT(value); /* need PROTECT if switch to a warning() */
 	    SEXP e;
 	    for (e = ENCLOS(rho); e != R_EmptyEnv; e = ENCLOS(e)) {
 		info = R_getEnvVarsInfo(e);
@@ -1669,8 +1696,8 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 		R_xlen_t n = XLENGTH(locs);
 		for (R_xlen_t i = 0; i < n; i++)
 		    if (symbol == VECTOR_ELT(locs, i))
-			error(_("new local variable '%s' would conflict "
-				"with variable in enclosing call environment"),
+			error(_("new local variable '%s' would mask "
+				"variable in enclosing call environment"),
 			      CHAR(PRINTNAME(symbol)));
 	    }
 
@@ -1679,12 +1706,12 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 		if (! FRAME_IS_LOCKED(e) && e != R_BaseNamespace)
 		    break;
 		if (exists_in_frame(symbol, e))
-		    error(_("new local variable '%s' would conflict "
-			    "with variable in enclosing namespace"),
+		    error(_("new local variable '%s' would mask "
+			    "variable in enclosing namespace"),
 			  CHAR(PRINTNAME(symbol)));
 	    }
-#endif
 	    UNPROTECT(1); /* value */
+#endif
 	}
     }
 }
