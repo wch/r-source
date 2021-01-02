@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2020   The R Core Team
+ *  Copyright (C) 2005-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,17 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/*  The original version of this file was contributed by Ei-ji Nakama.
- *  See also the comments in ../include/rlocale.h.
+/*  The original version of this file was contributed in 2005 by Ei-ji
+ *  Nakama, along with rlocale_data.h and ../include/rlocale.h.
  *
- *  It provides replacements for the wctype functions on
+ *  The naming is misleading: apart from the width data this is not
+ *  locale-specfic.  It is rather about the use of non-Latin
+ *  characters (including symbols, emojis ...).
+ *
+ *  It provides replacements for the wctype (iswxxxxx) functions on
  *  Windows (where they are not correct in e.g. Japanese)
  *  AIX (missing)
- *  macOS in CJK (where these just call the ctype functions)
+ *  macOS in CJK (where these just called the ctype functions)
  *
  *  It also provides wc[s]width, where widths of CJK fonts are often
  *  wrong in vendor-supplied versions and in Markus Kuhn's version

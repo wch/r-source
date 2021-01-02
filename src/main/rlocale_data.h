@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2020   The R Core Team
+ *  Copyright (C) 2005-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
  */
+
+/* rlocale_widths.h was split out in 2020-12 */
 
 /* Data for replacement iswxxxxx functions used only on
    Windows, macOS and AIX
