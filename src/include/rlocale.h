@@ -96,7 +96,7 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
    iswdigit is used in plotmath.c X11/dataentry.c (and indirectly in gram.y) 
    iswprint is used in printutils.c
 */
-#ifdef Win32
+#if defined(Win32) && !defined(USE_RI18N_FNS)
 # define USE_RI18N_FNS
 #endif
 

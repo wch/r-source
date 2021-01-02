@@ -1193,7 +1193,7 @@
 /* Define to 1 to use internal code for `towlower' and `towupper'. */
 /* #undef USE_RI18N_CASE */
 
-/* Define to 1 to use internal iswprint etc. */
+/* Define to 1 to use internal `iswprint' etc. */
 #define USE_RI18N_FNS 1
 
 /* Define if the old Solaris multithreading library can be used. (For intl) */
