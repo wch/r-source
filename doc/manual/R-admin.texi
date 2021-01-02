@@ -232,11 +232,14 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd64, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin}, @samp{aarch64-@/apple-@/darwin} and
-@samp{i386-@/sun-@/solaris} as well as perhaps (it is tested less
-frequently on these platforms) @samp{i386-@/*-@/freebsd},
-@samp{x86_64-@/*-@/freebsd}, @samp{i386-@/*-@/netbsd},
-@samp{x86_64-@/*-@/openbsd} and @samp{powerpc-@/ibm-@/aix6*}
+@samp{x86_64-@/apple-@/darwin},
+@samp{aarch64-@/apple-@/darwin}@footnote{aka `Apple Silicon': the
+triplet name may change and is known to some as
+@samp{arm64-@/apple-@/darwin}.} and @samp{i386-@/sun-@/solaris} as well
+as perhaps (it is tested less frequently on these platforms)
+@samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
+@samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
+@samp{powerpc-@/ibm-@/aix6*}
 
 @cindex Linux
 @cindex macOS
@@ -1553,7 +1556,8 @@ administrator privileges.}, as can @acronym{CRAN} binary packages.
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
 unsigned/not notarized: to install those Control/right/two-finger click,
-select @samp{Open With} and @samp{Installer}.)
+select @samp{Open With} and @samp{Installer}.)  There is usually an
+experimental tarball (not package) for @cputype{arm64}.
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -1606,12 +1610,13 @@ For building @R{} from source, see @ref{macOS}.
 There are two ways to run @R{} on macOS from a @acronym{CRAN} binary
 distribution.
 
-There is a GUI console normally installed with the @R{} icon in
-@file{/Applications} which you can run by double-clicking (e.g.@: from
-Launchpad or Finder).  (If you cannot find it there it was possibly
-installed elsewhere so try searching for it in Spotlight.) This is
-usually referred to as @Rapp{} to distinguish it from command-line @R{}:
-its user manual is currently part of the macOS FAQ at
+There is a GUI console normally installed@footnote{Not yet available for
+@cputype{arm64}.} with the @R{} icon in @file{/Applications} which you
+can run by double-clicking (e.g.@: from Launchpad or Finder).  (If you
+cannot find it there it was possibly installed elsewhere so try
+searching for it in Spotlight.) This is usually referred to as @Rapp{}
+to distinguish it from command-line @R{}: its user manual is currently
+part of the macOS FAQ at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
 can be viewed from @Rapp{}'s `Help' menu.
 
