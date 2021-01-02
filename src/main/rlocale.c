@@ -218,89 +218,15 @@ int Ri18n_wcswidth (const wchar_t *wc, size_t n)
  *  macOS's wide character type functions are based on NetBSD
  *  and only work correctly for Latin-1 characters.
  *  (Confirmed for macOS 11.1 in 2020-12.)
- *  So we replace them.  May also be needed on *BSD.
+ *  So we replace them.  May also be needed on *BSD, and are on AIX
  ********************************************************************/
 
-#ifdef OLD
-#if defined(__APPLE__)
-/* allow for PowerPC, Intel and arm64 platforms */
-#ifdef WORDS_BIGENDIAN
-static const char UNICODE[] = "UCS-4BE";
-#else
-static const char UNICODE[] = "UCS-4LE";
-#endif
 
-/* in Defn.h which is not included here */
-extern const char *locale2charset(const char *);
-
-/* I have no idea what was going on here.  The input is a wide
-   character, and that is always UCS-4 on macOS.  So converting to
-   native and then to UCS-4 makes no sense at all.
-
-   Although there are non-UTF-8 locales on Windows, no one uses them
-   apart perhaps from C.
-
-   BDR
-*/
-#define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
-{	                                                             \
-  char    mb_buf[MB_LEN_MAX+1];			                     \
-  size_t  mb_len;                                                    \
-  int     ucs4_buf[2];				                     \
-  size_t  wc_len;                                                    \
-  void   *cd;					                     \
-  char    fromcode[128];                                             \
-  char   *_mb_buf;						     \
-  char   *_wc_buf;						     \
-  size_t  rc ;							     \
-								     \
-  strncpy(fromcode, locale2charset(NULL), sizeof(fromcode));         \
-  fromcode[sizeof(fromcode) - 1] = '\0';                             \
-  if(0 == strcmp(fromcode, "UTF-8"))				     \
-       return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count);\
-  memset(mb_buf, 0, sizeof(mb_buf));				     \
-  memset(ucs4_buf, 0, sizeof(ucs4_buf));			     \
-  wcrtomb( mb_buf, wc, NULL);					     \
-  if((void *)(-1) != (cd = Riconv_open(UNICODE, fromcode))) {	     \
-      wc_len = sizeof(ucs4_buf);		                     \
-      _wc_buf = (char *)ucs4_buf;				     \
-      mb_len = strlen(mb_buf);					     \
-      _mb_buf = (char *)mb_buf;					     \
-      rc = Riconv(cd, (const char **)&_mb_buf, (size_t *)&mb_len,	     \
-		  (char **)&_wc_buf, (size_t *)&wc_len);	     \
-      Riconv_close(cd);						     \
-      wc = ucs4_buf[0];                                              \
-      return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
-  }                                                                  \
-  return(-1);                                                        \
-}
-#endif // __APPLE__
-#endif
-
-/*********************************************************************
- *  iswalpha etc. do not function correctly for Windows
- *  iswalpha etc. do not function at all in AIX.
- *  all locale wchar_t == UNICODE
- ********************************************************************/
-#if defined(Win32) || defined(_AIX) || defined(__APPLE__)
+#ifdef USE_RI18N_FNS
 # define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {									\
     return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
 }
-#endif
-
-/*********************************************************************
- *  iswalpha etc. do function correctly on other Unix-alikes
- *  so we have a fallback, which is no longer used.
- ********************************************************************/
-#ifndef ISWFUNC
-# define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
-{                                                                       \
-    return isw ## ISWNAME (wc); \
-}
-#endif
-
-#if defined(USE_RI18N_FNS)
 #include "rlocale_data.h"
 /* These are the functions which C99 and POSIX define.  However,
    not all are used elsewhere in R (so are static),

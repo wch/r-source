@@ -226,6 +226,20 @@
 
       \item C99 function \code{iswblank} is required -- it was last seen
       missing ca 2003 so the workaround has been removed.
+
+      \item There are new \command{configure} options
+      \option{--with-internal-iswxxxx} and
+      \option{--with-internal-towlower} which allows the system
+      wide-character classification and case-switching routines to be
+      replaced by internal ones.  The first has long been used on macOS,
+      AIX (and Windows) but this enables it to be unselected there and
+      selected for other platforms.  The second is new in this version
+      of \R and is selected by default on macOS.
+
+      System versions of these functions are often minimally implemented
+      (sometimes only for ASCII characters) and do not cover the full
+      range of Unicode points: for example Solaris (and Windows) only
+      cover the Basic Multilingual Plane.
     }
   }
 
@@ -308,9 +322,9 @@
       as they cannot be represented by valid UTF-8.
 
       Where such escapes are used for outputting non-printable
-      (inclduing unassigned) characters, 6 (not 8) hex digits are used
-      (rather than 8 with leading zeros).  For clarity, braces are used,
-      for example \samp{\\U\{0effff\}}.
+      (inclduing unassigned) characters, 6 hex digits are used (rather
+      than 8 with leading zeros).  For clarity, braces are used, for
+      example \samp{\\U\{0effff\}}.
 
       \item The parser now looks for non-ASCII spaces on Solaris (as
       previously on most other OSes).
@@ -323,21 +337,24 @@
       and \code{chartr()} and those using regular expressions have more
       support for inputs with a marked Latin-1 encoding.
 
-      \item The character-classification functions used to replace the
-      system \code{iswxxxx} functions on Windows, macOS and AIX have
-      been updated to Unicode 13.0.0 -- in particular, many more UTF-8
-      characters are regarded as printable.
+      \item The character-classification functions used (by default) to
+      replace the system \code{iswxxxx} functions on Windows, macOS and
+      AIX have been updated to Unicode 13.0.0 -- in particular, many
+      more UTF-8 characters are regarded as printable.
 
-      \item The code for the evaluating default (extended) regular
-      expressions now uses the same replacement character-classification
-      functions as the rest of \R on Windows, macOS and AIX.
+      \item The code for evaluating default (extended) regular
+      expressions now uses the same character-classification functions
+      as the rest of \R (they previously differed on Windows, macOS and
+      AIX.)
 
       \item There is a build-time option to replace the system's
       wide-character \code{wctrans} C function by tables shipped with
-      \R: use \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.
-      On Windows this allows \code{tolower()} and \code{toupper()} to work
-      with Unicode characters beyond the Basic Multilingual Plane and is
-      intended to become the default.
+      \R: use \command{configure} option
+      \option{--with-internal-towlower} or (on Windows)
+      \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.  On
+      Windows and Solaris this allows \code{tolower()} and
+      \code{toupper()} to work with Unicode characters beyond the Basic
+      Multilingual Plane and is intended to become the default there.
     }
   }
 

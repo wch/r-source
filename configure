@@ -1058,6 +1058,8 @@ with_system_tre
 with_valgrind_instrumentation
 with_system_valgrind_headers
 with_internal_tzcode
+with_internal_towlower
+with_internal_iswxxxxx
 with_recommended_packages
 with_ICU
 enable_byte_compiled_packages
@@ -1846,6 +1848,12 @@ Optional Packages:
   --with-system-valgrind-headers
                           use system valgrind headers (if available) [no]
   --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
+  --with-internal-towlower
+                          use internal code for towlower/upper[no, yes on
+                          Windows and macOS]
+  --with-internal-iswxxxxx
+                          use internal time-zone code [no, yes on Windows,
+                          macOS and AIX]
   --with-recommended-packages
                           use/install recommended R packages [yes]
   --with-ICU              use ICU library (if available) [yes]
@@ -4258,6 +4266,24 @@ if test "${with_internal_tzcode+set}" = set; then :
   withval=$with_internal_tzcode; use_internal_tzcode=${withval}
 else
   use_internal_tzcode=default
+fi
+
+
+
+# Check whether --with-internal-towlower was given.
+if test "${with_internal_towlower+set}" = set; then :
+  withval=$with_internal_towlower; use_internal_towlower=${withval}
+else
+  use_internal_towlower=default
+fi
+
+
+
+# Check whether --with-internal-iswxxxxx was given.
+if test "${with_internal_iswxxxxx+set}" = set; then :
+  withval=$with_internal_iswxxxxx; use_internal_iswxxxxx=${withval}
+else
+  use_internal_iswxxxxx=default
 fi
 
 
@@ -25376,7 +25402,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25379: \"$ac_link\") >&5
+(eval echo $as_me:25405: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25451,7 +25477,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25454: \"$ac_link\") >&5
+(eval echo $as_me:25480: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -40942,6 +40968,35 @@ fi
 
 fi
 
+if test x${use_internal_iswxxxxx} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_iswxxxxx=yes;
+     ;;
+   aix*)
+     use_internal_iswxxxxx=yes;
+     ;;
+esac
+fi
+if test x${use_internal_iswxxxxx} = xyes; then
+
+$as_echo "#define USE_RI18N_FNS 1" >>confdefs.h
+
+fi
+
+if test x${use_internal_towlower} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_towlower=yes;
+     ;;
+esac
+fi
+if test x${use_internal_towlower} = xyes; then
+
+$as_echo "#define USE_RI18N_CASE 1" >>confdefs.h
+
+fi
+
 ac_fn_c_check_header_mongrel "$LINENO" "complex.h" "ac_cv_header_complex_h" "$ac_includes_default"
 if test "x$ac_cv_header_complex_h" = xyes; then :
   r_c99_complex=yes
@@ -52531,7 +52586,7 @@ fi
 
 
 ### shell for use in scripts: we allow R_SHELL to set the script,
-### since some AIX systems have zsh as sh.
+### since some AIX and macOS systems have zsh as sh.
 : ${R_SHELL=${SHELL}}
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: using as R_SHELL for scripts ... ${R_SHELL}" >&5

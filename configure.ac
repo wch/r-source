@@ -495,6 +495,16 @@ AC_ARG_WITH([internal-tzcode],
 [use_internal_tzcode=${withval}],
 [use_internal_tzcode=default])
 
+AC_ARG_WITH([internal-towlower],
+[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper@<:@no, yes on Windows and macOS@:>@])],
+[use_internal_towlower=${withval}],
+[use_internal_towlower=default])
+
+AC_ARG_WITH([internal-iswxxxxx],
+[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal time-zone code @<:@no, yes on Windows, macOS and AIX@:>@])],
+[use_internal_iswxxxxx=${withval}],
+[use_internal_iswxxxxx=default])
+
 
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
@@ -2096,6 +2106,31 @@ if test "${use_internal_tzcode}" != yes; then
   R_FUNC_MKTIME
 fi
 
+if test x${use_internal_iswxxxxx} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_iswxxxxx=yes;
+     ;; 
+   aix*)
+     use_internal_iswxxxxx=yes;
+     ;; 
+esac
+fi
+if test x${use_internal_iswxxxxx} = xyes; then
+  AC_DEFINE(USE_RI18N_FNS, 1, [Define to 1 to use internal `iswprint' etc.])
+fi
+
+if test x${use_internal_towlower} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_towlower=yes;
+     ;; 
+esac
+fi
+if test x${use_internal_towlower} = xyes; then
+  AC_DEFINE(USE_RI18N_CASE, 1, [Define to 1 to use internal code for `towlower' and `towupper'.])
+fi
+
 R_C99_COMPLEX
 R_FUNC_CTANH
 
@@ -2668,7 +2703,7 @@ AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
 R_OPENMP_SIMDRED
 
 ### shell for use in scripts: we allow R_SHELL to set the script,
-### since some AIX systems have zsh as sh.
+### since some AIX and macOS systems have zsh as sh.
 : ${R_SHELL=${SHELL}}
 AC_SUBST(R_SHELL)
 AC_MSG_RESULT([using as R_SHELL for scripts ... ${R_SHELL}])
