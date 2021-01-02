@@ -2114,6 +2114,9 @@ case "${host_os}" in
    aix*)
      use_internal_iswxxxxx=yes;
      ;; 
+   solaris*)
+     use_internal_iswxxxxx=yes;
+     ;; 
 esac
 fi
 if test x${use_internal_iswxxxxx} = xyes; then
@@ -2123,6 +2126,9 @@ fi
 if test x${use_internal_towlower} = xdefault; then
 case "${host_os}" in
    darwin*)
+     use_internal_towlower=yes;
+     ;; 
+   solaris*)
      use_internal_towlower=yes;
      ;; 
 esac

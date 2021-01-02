@@ -54,10 +54,6 @@
       character string, or by giving the first elements of their class
       vector and their length.
 
-      \item Unicode character width tables (as used by
-      \code{nchar(, type="w")}) have been updated to Unicode 12.1
-      by Brodie Gaslam (\PR{17781}).
-
       \item \code{capabilities()} gets new entry \code{"Rprof"} which is
       \code{TRUE} when \R has been configured with the equivalent of
       \command{--enable-R-profiling} (as it is by default): related to
@@ -233,8 +229,9 @@
       wide-character classification and case-switching routines to be
       replaced by internal ones.  The first has long been used on macOS,
       AIX (and Windows) but this enables it to be unselected there and
-      selected for other platforms.  The second is new in this version
-      of \R and is selected by default on macOS.
+      selected for other platforms (it is the new default on Solaris).
+      The second is new in this version of \R and is selected by default
+      on macOS and Solaris.
 
       System versions of these functions are often minimally implemented
       (sometimes only for ASCII characters) and do not cover the full
@@ -337,6 +334,10 @@
       and \code{chartr()} and those using regular expressions have more
       support for inputs with a marked Latin-1 encoding.
 
+      \item Unicode character width tables (as used by
+      \code{nchar(, type="w")}) have been updated to Unicode 12.1
+      by Brodie Gaslam (\PR{17781}).
+
       \item The character-classification functions used (by default) to
       replace the system \code{iswxxxxx} functions on Windows, macOS and
       AIX have been updated to Unicode 13.0.0 -- in particular, many
@@ -351,11 +352,10 @@
       wide-character \code{wctrans} C function by tables shipped with
       \R: use \command{configure} option
       \option{--with-internal-towlower} or (on Windows)
-      \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.  On
-      Windows and Solaris this allows \code{tolower()} and
-      \code{toupper()} to work with Unicode characters beyond the Basic
-      Multilingual Plane and is intended to become the default there (it
-      currently is on macOS).
+      \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.  This
+      allows \code{tolower()} and \code{toupper()} to work with Unicode
+      characters beyond the Basic Multilingual Plan where on supported
+      by system functions (e.g. on Solaris where it is the new default).
     }
   }
 

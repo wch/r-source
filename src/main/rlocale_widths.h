@@ -38,12 +38,15 @@ struct interval_wcwidth {
 /* Background info for the first column is in
    http://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
    http://www.unicode.org/reports/tr11/
+
+   For the 2020-05 updating, see 
+   https://github.com/brodieG/char-width
 */
 
 /* Anything not in this table nor the zero-width one is width one */
 
-/* glibc treats the ARIB STD 24 speed limit numbers U+3248-324F and the I Ching
- * hexagrams U+4DC0-4DFF as wide, so we do too.
+/* glibc treats the ARIB STD 24 speed limit numbers U+3248-324F
+ *  and the I Ching hexagrams U+4DC0-4DFF as wide, so we do too.
  */
 
 static const struct interval_wcwidth table_wcwidth[] = {
@@ -1384,7 +1387,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x1fa80,0x1fa82,{2,2,2,2,2,2,2}},
     {0x1fa90,0x1fa95,{2,2,2,2,2,2,2}},
     // 13.0.0 has all in planes 2 and 3 as wide chars
-    // should have merged separate entries
+    // so have merged separate entries
     {0x20000,0x3fffd,{2,2,2,2,2,2,2}},
     // {0xf0000,0xffffd,{1,1,1,1,2,1,1}}, // Private use, so ??
     // {0x100000,0x10fffd,{1,1,1,1,2,1,1}}, // Private use, so ??

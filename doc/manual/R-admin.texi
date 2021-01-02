@@ -951,14 +951,14 @@ functions (such as @code{iswprint}) and case-changing functions by ones
 contained in the @R{} sources.  Replacement of the classification
 functions has been done for many years on macOS and AIX (and Windows):
 option @option{--with-internal-iswxxxxx} allows this to be suppressed on
-those platforms or used on others (it is recommended for Solaris).
+those platforms or used on others (it is now the default for Solaris).
 Replacing the case-changing functions is new in @R{} 4.1.0 and the
 default on macOS.  These options will only matter to those working with
 non-ASCII character data, especially in languages written in a
 non-Western script (which includes `symbols' such as emoji).  Note that
 one of those @code{iswxxxxx} is @code{iswprint} which is used to decide
 whether to output a character as a glyph or as a @samp{\U@{xxxxxx@}}
-escape--for example, -try @samp{"\U1f600"}.  (Replacing the system
+escape---for example, try @samp{"\U1f600"}.  (Replacing the system
 functions provides a degree of plaform-independence (including to OS
 updates) but replaces it with a dependence on the @R{} version.)
 
