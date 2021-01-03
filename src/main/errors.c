@@ -420,7 +420,11 @@ static int wd(const char * buf)
 	wchar_t wc[2000];
 	mbstowcs(wc, buf, nc + 1);
 	// FIXME: width could conceivably exceed MAX_INT.
+#ifdef USE_RI18N_WIDTH
 	nw = Ri18n_wcswidth(wc, 2147483647);
+#else
+	nw = wcswidth(wc, 2147483647);
+#endif
 	return (nw < 1) ? nc : nw;
     }
     return nc;

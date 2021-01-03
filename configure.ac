@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2020 R Core Team
+### Copyright (C) 1998-2021 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -496,14 +496,19 @@ AC_ARG_WITH([internal-tzcode],
 [use_internal_tzcode=default])
 
 AC_ARG_WITH([internal-towlower],
-[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS@:>@])],
+[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS and Solaris@:>@])],
 [use_internal_towlower=${withval}],
 [use_internal_towlower=default])
 
 AC_ARG_WITH([internal-iswxxxxx],
-[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS and AIX@:>@])],
+[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS, Solaris and AIX@:>@])],
 [use_internal_iswxxxxx=${withval}],
 [use_internal_iswxxxxx=default])
+
+AC_ARG_WITH([internal-wcwidth],
+[AS_HELP_STRING([--with-internal-wcwidth],[use internal wcwidth @<:@yes@:>@])],
+[use_internal_wcwidth=${withval}],
+[use_internal_wcwidth=yes])
 
 
 ## <FIXME>
@@ -2121,6 +2126,10 @@ esac
 fi
 if test x${use_internal_iswxxxxx} = xyes; then
   AC_DEFINE(USE_RI18N_FNS, 1, [Define to 1 to use internal `iswprint' etc.])
+fi
+
+if test x${use_internal_wcwidth} = xyes; then
+  AC_DEFINE(USE_RI18N_WIDTH, 1, [Define to 1 to use internal `wcwidth'])
 fi
 
 if test x${use_internal_towlower} = xdefault; then

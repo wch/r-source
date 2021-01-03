@@ -50,7 +50,6 @@
 
 #define IN_RLOCALE_C 1 /* used in rlocale.h */
 #include <rlocale.h>
-#include "rlocale_widths.h"
 
 #include <wctype.h>
 #include <wchar.h>
@@ -59,7 +58,14 @@
 #include <limits.h>
 #include <R_ext/Riconv.h>
 
-// ------------------------- width functions --------------------
+#if defined(USE_RI18N_WIDTH) || defined(USE_RI18N_FNS)
+
+/* used for zero-width table and in rlocale_data.h */
+struct interval {
+    int first;
+    int last;
+};
+
 // This seems based on Markus Kuhn's function but with 1-based 'max'
 static int wcsearch(int wint, const struct interval *table, int max)
 {
@@ -80,6 +86,12 @@ static int wcsearch(int wint, const struct interval *table, int max)
     }
     return 0;
 }
+#endif
+
+// ------------------------- width functions --------------------
+#ifdef USE_RI18N_WIDTH
+
+#include "rlocale_widths.h"
 
 static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
 			 int max, int locale)
@@ -156,7 +168,8 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"",				        MB_Default},
 };
 
-// used in character.c, ../gnuwin32/console.c , ../library/grDevices/src/devP*.c :
+/* used in character.c, ../gnuwin32/console.c (for an MBCS locale) ,
+ * ../library/grDevices/src/devP*.c */
 int Ri18n_wcwidth(R_wchar_t c)
 {
     char lc_str[128];
@@ -188,7 +201,7 @@ int Ri18n_wcwidth(R_wchar_t c)
     return zw ? 0 : 1; // assume unknown chars are width one.
 }
 
-/* Used in character.c, errors.c, ../gnuwin32/console.c
+/* Used in character.c, errors.c, ../gnuwin32/console.c (for an MBCS locale)
    
    Strings in R are restricted to 2^31-1 bytes but could conceivably
    have a width exceeding that.
@@ -215,8 +228,9 @@ int Ri18n_wcswidth (const wchar_t *wc, size_t n)
     }
     return rs;
 }
+#endif
 
-// ------------------- end of  width functions --------------------
+// ------------------- end of width functions --------------------
 
 /*********************************************************************
  *  macOS's wide character type functions are based on NetBSD
@@ -322,6 +336,7 @@ int Ri18n_iswctype(wint_t wc, wctype_t desc)
 }
 #endif
 
+// ------------------------- tolower/upper functions --------------------
 #ifdef USE_RI18N_CASE
 /* 
    These tables were prepared by the R code
@@ -381,4 +396,5 @@ R_wchar_t Ri18n_towlower(R_wchar_t wc)
 		       sizeof(table_tolower)/sizeof(struct pair));
     return (res >= 0 ? res : wc);
 }
+// ----------------- end of tolower/upper functions --------------------
 #endif

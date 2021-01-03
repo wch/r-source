@@ -50,6 +50,7 @@ typedef unsigned int R_wchar_t;
 typedef wchar_t R_wchar_t;
 #endif 
 
+#ifdef USE_RI18N_WIDTH
 /*
  * Windows CJK
  * In Unicode, there is not a rule about character width. 
@@ -81,6 +82,7 @@ typedef wchar_t R_wchar_t;
  
 extern int Ri18n_wcwidth(R_wchar_t);
 extern int Ri18n_wcswidth (const wchar_t *, size_t);
+#endif
 
 /* macOS CJK and WindowXP(Japanese)
  * iswctypes of macOS calls isctypes. no i18n.

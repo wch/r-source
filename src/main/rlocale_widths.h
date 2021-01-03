@@ -23,12 +23,6 @@
 enum { MB_Default, MB_ja_JP, MB_ko_KR, MB_zh_SG, MB_zh_CN, MB_zh_HK,
        MB_zh_TW, MB_SIZE }; // this sets MB_SIZE to 7
 
-/* used for zero-width table and in rlocale_data.h */
-struct interval {
-    int first;
-    int last;
-};
-
 struct interval_wcwidth {
     int first;
     int last;
@@ -1426,7 +1420,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
  *
  *    200B ('zero width space') is in Cf, so does not need to be an exception.
  *
- *    Updated based on the Unicode 12.1.0 tables at
+ *    2020-05: updated based on the Unicode 12.1.0 tables at
  *    https://www.unicode.org/Public/12.1.0/ucd/UnicodeData.txt
  *    https://www.unicode.org/Public/12.1.0/ucd/EastAsianWidth.txt
  *

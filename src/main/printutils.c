@@ -458,7 +458,12 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    /* no need to worry about truncation as iswprint
 		     * gets replaced on Windows */
 		    // conceivably an invalid \U escape could use 11 or 12
-		    len += iswprint(k) ? Ri18n_wcwidth(k) :
+		    len += iswprint(k) ?
+#ifdef USE_RI18N_WIDTH
+			Ri18n_wcwidth(k) :
+#else
+			wcwidth((wchar_t) k) :
+#endif
 		    	(k > 0xffff ? 10 : 6);
 		    i += (res - 1);
 		    p += res;

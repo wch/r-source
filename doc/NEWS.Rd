@@ -224,14 +224,17 @@
       missing ca 2003 so the workaround has been removed.
 
       \item There are new \command{configure} options
-      \option{--with-internal-iswxxxxx} and
-      \option{--with-internal-towlower} which allows the system
-      wide-character classification and case-switching routines to be
-      replaced by internal ones.  The first has long been used on macOS,
-      AIX (and Windows) but this enables it to be unselected there and
-      selected for other platforms (it is the new default on Solaris).
-      The second is new in this version of \R and is selected by default
-      on macOS and Solaris.
+      \option{--with-internal-iswxxxxx},
+      \option{--with-internal-towlower} and
+      \option{--with-internal-wcwidth} which allows the system functions
+      for wide-character classification, case-switching and width
+      (\code{wcwidth} and \code{wcswidth}) to be replaced by internal
+      ones.  The first has long been used on macOS, AIX (and Windows)
+      but this enables it to be unselected there and selected for other
+      platforms (it is the new default on Solaris).  The second is new
+      in this version of \R and is selected by default on macOS and
+      Solaris.  The third has long been the default and remains so as it
+      contains customizations for East Asian languages.
 
       System versions of these functions are often minimally implemented
       (sometimes only for ASCII characters) and do not cover the full
@@ -334,10 +337,6 @@
       and \code{chartr()} and those using regular expressions have more
       support for inputs with a marked Latin-1 encoding.
 
-      \item Unicode character width tables (as used by
-      \code{nchar(, type="w")}) have been updated to Unicode 12.1
-      by Brodie Gaslam (\PR{17781}).
-
       \item The character-classification functions used (by default) to
       replace the system \code{iswxxxxx} functions on Windows, macOS and
       AIX have been updated to Unicode 13.0.0 -- in particular, many
@@ -353,9 +352,10 @@
       \R: use \command{configure} option
       \option{--with-internal-towlower} or (on Windows)
       \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.  This
-      allows \code{tolower()} and \code{toupper()} to work with Unicode
-      characters beyond the Basic Multilingual Plan where on supported
-      by system functions (e.g. on Solaris where it is the new default).
+      may be needed to allow \code{tolower()} and \code{toupper()} to
+      work with Unicode characters beyond the Basic Multilingual Plan
+      where on supported by system functions (e.g. on Solaris where it
+      is the new default).
     }
   }
 
@@ -477,6 +477,10 @@
     \itemize{
       \item File \file{share/texmf/tex/latex/jss.cls} has been updated
       to work with LaTeX versions since Oct 2020.
+
+      \item Unicode character width tables (as used by
+      \code{nchar(, type = "w")}) have been updated to Unicode 12.1
+      by Brodie Gaslam (\PR{17781}), including many emoji.
     }
   }
 

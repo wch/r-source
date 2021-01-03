@@ -201,7 +201,11 @@ int R_nchar(SEXP string, nchar_type type_,
 		    	ucs = utf8toucs32(wc1, p);
 		    else
 		    	ucs = wc1;
+#ifdef USE_RI18N_WIDTH
 		    nc += Ri18n_wcwidth(ucs);
+#else
+		    nc += wcwidth(ucs);
+#endif
 		}
 		return nc;
 	    }
@@ -226,7 +230,12 @@ int R_nchar(SEXP string, nchar_type type_,
 		    R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 		mbstowcs(wc, xi, nc + 1);
 		// FIXME: width could conceivably exceed MAX_INT.
+#ifdef USE_RI18N_WIDTH
 		int nci18n = Ri18n_wcswidth(wc, 2147483647);
+#else
+		// do not use this unless R_wchar_t is wchar_t
+		int nci18n = wcswidth(wc, 2147483647);
+#endif
 		vmaxset(vmax);
 		return (nci18n < 1) ? nc : nci18n;
 	    } else if (allowNA)
@@ -1622,7 +1631,6 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     char *buf;
     const char *p; char *q;
     int w0, wsum, k, nb;
-    wchar_t wc;
     mbstate_t mb_st;
     const void *vmax;
 
@@ -1655,8 +1663,13 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 	    wsum = 0;
 	    mbs_init(&mb_st);
 	    for (p = This, w0 = 0, q = buf; *p ;) {
+		wchar_t wc;
 		nb =  (int) Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
-		w0 = Ri18n_wcwidth((R_wchar_t)wc);
+#ifdef USE_RI18N_WIDTH
+		w0 = Ri18n_wcwidth((R_wchar_t) wc);
+#else
+		w0 = wcwidth(wc);
+#endif
 		if (w0 < 0) { p += nb; continue; } /* skip non-printable chars */
 		wsum += w0;
 		if (wsum <= w) {

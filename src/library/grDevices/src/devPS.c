@@ -734,7 +734,11 @@ static double
 	    status = (int) mbcsToUcs2((char *)str, ucs2s, (int) ucslen, enc);
 	    if (status >= 0)
 		for(i = 0 ; i < ucslen ; i++) {
+#ifdef USE_RI18N_WIDTH
 		    wx = (short)(500 * Ri18n_wcwidth(ucs2s[i]));
+#else
+		    wx = (short)(500 * wcwidth(ucs2s[i]));
+#endif
 		    /* printf("width for U+%04x is %d\n", ucs2s[i], wx); */
 		    sum += wx;
 		}
@@ -896,7 +900,14 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
     /* Design values for all CJK fonts */
     *ascent = 0.880;
     *descent = -0.120;
-    if (c == 0 || c > 65535) *width = 1.; else *width = 0.5*Ri18n_wcwidth(c);
+    if (c == 0 || c > 65535) *width = 1.;
+    else {
+#ifdef USE_RI18N_WIDTH
+	*width = 0.5*Ri18n_wcwidth(c);
+#else
+	*width = 0.5*wcwidth(c);
+#endif
+    }
 }
 
 

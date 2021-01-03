@@ -5587,10 +5587,9 @@ experimental binary distribution at
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}}
 So this section is experimental.
 
-At the time of writing updating a build failed because of the bug
-described at
-@uref{https://openradar.appspot.com/@/FB8914243}
-but @emph{ab initio} builds worked.
+At the time of writing updating a build may fail because of the bug
+described at @uref{https://openradar.appspot.com/@/FB8914243} but
+@emph{ab initio} builds worked.
 
 At the time of writing no distribution of X11@footnote{XQuartz has
 sources on GitHub, so one could try building from those.} was available,

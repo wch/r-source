@@ -1060,6 +1060,7 @@ with_system_valgrind_headers
 with_internal_tzcode
 with_internal_towlower
 with_internal_iswxxxxx
+with_internal_wcwidth
 with_recommended_packages
 with_ICU
 enable_byte_compiled_packages
@@ -1850,10 +1851,11 @@ Optional Packages:
   --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
   --with-internal-towlower
                           use internal code for towlower/upper [no, yes on
-                          macOS]
+                          macOS and Solaris]
   --with-internal-iswxxxxx
-                          use internal iswprint etc. [no, yes on macOS and
-                          AIX]
+                          use internal iswprint etc. [no, yes on macOS,
+                          Solaris and AIX]
+  --with-internal-wcwidth use internal wcwidth [yes]
   --with-recommended-packages
                           use/install recommended R packages [yes]
   --with-ICU              use ICU library (if available) [yes]
@@ -4284,6 +4286,15 @@ if test "${with_internal_iswxxxxx+set}" = set; then :
   withval=$with_internal_iswxxxxx; use_internal_iswxxxxx=${withval}
 else
   use_internal_iswxxxxx=default
+fi
+
+
+
+# Check whether --with-internal-wcwidth was given.
+if test "${with_internal_wcwidth+set}" = set; then :
+  withval=$with_internal_wcwidth; use_internal_wcwidth=${withval}
+else
+  use_internal_wcwidth=yes
 fi
 
 
@@ -25402,7 +25413,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25405: \"$ac_link\") >&5
+(eval echo $as_me:25416: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25477,7 +25488,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25480: \"$ac_link\") >&5
+(eval echo $as_me:25491: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -40984,6 +40995,12 @@ fi
 if test x${use_internal_iswxxxxx} = xyes; then
 
 $as_echo "#define USE_RI18N_FNS 1" >>confdefs.h
+
+fi
+
+if test x${use_internal_wcwidth} = xyes; then
+
+$as_echo "#define USE_RI18N_WIDTH 1" >>confdefs.h
 
 fi
 
