@@ -132,7 +132,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{grep(value = FALSE)} returns a vector of the indices
   of the elements of \code{x} that yielded a match (or not, for
   \code{invert = TRUE}).  This will be an integer vector unless the input
-  is a \emph{long vector}, when it will be a double vector.
+  is a \emph{\link{long vector}}, when it will be a double vector.
 
   \code{grep(value = TRUE)} returns a character vector containing the
   selected elements of \code{x} (after coercion, preserving names but no
@@ -231,7 +231,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 \source{
   The C code for POSIX-style regular expression matching has changed
   over the years.  As from \R 2.10.0 (Oct 2009) the TRE library of Ville
-  Laurikari (\url{https://laurikari.net/tre/}) is used.  The POSIX
+  Laurikari (\url{https://github.com/laurikari/tre}) is used.  The POSIX
   standard does give some room for interpretation, especially in the
   handling of invalid regular expressions and the collation of character
   ranges, so the results will have changed slightly over the years.
@@ -239,6 +239,18 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   For Perl-style matching PCRE2 or PCRE (\url{https://www.pcre.org}) is
   used: again the results may depend (slightly) on the version of PCRE
   in use.
+}
+
+\note{
+  Aspects will be platform-dependent as well as local-dependent: for
+  example the implementation of character classes (except
+  \code{[:digit:]} and \code{[:xdigit:]}).  One can expect results to be
+  consistent for ASCII inputs and when working in UTF-8 mode (when most
+  platforms will use Unicode character tables, although those are
+  updated frequently and subject to some degree of interpretation -- is
+  a circled capital letter alphabetic or a symbol?).  However, results
+  in 8-bit encodings can differ considerably between platforms, modes
+  and from the UTF-8 versions.
 }
 
 \references{
@@ -269,7 +281,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{\link{apropos}} uses regexps and has more examples.
 
   \code{\link{grepRaw}} for matching raw vectors.
-  
+
   Options \code{PCRE_limit_recursion}, \code{PCRE_study} and
   \code{PCRE_use_JIT}.
 

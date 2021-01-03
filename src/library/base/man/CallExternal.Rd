@@ -43,7 +43,7 @@
 
   For details about how to write code to use with these functions see
   the chapter on \sQuote{System and foreign language interfaces} in
-  the \sQuote{Writing \R Extensions} manual.  They differ in the way the
+  the \sQuote{Writing R Extensions} manual.  They differ in the way the
   arguments are passed to the C code:  \code{.External} allows for a
   variable or unlimited number of arguments.
 

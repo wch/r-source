@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -222,7 +222,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   downloading a file from a repository or from a local file.
 
   Possible values of \code{type} are (currently) \code{"source"},
-  \code{"mac.binary"}, \code{"mac.binary.el-capitan"} and
+  \code{"mac.binary"}, and
   \code{"win.binary"}: the appropriate binary type where supported can
   also be selected as \code{"binary"}.
 
@@ -266,9 +266,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     }
     \item{On Unix-alikes,}{when the package contains C/C++/Fortran code
       that needs compilation, on macOS you need to have installed the
-  \sQuote{Command-line tools for Xcode} (see the \sQuote{R Installation
-    and Administration Manual}) and if needed by the package a Fortran
-  compiler, and have them in your path.
+      \sQuote{Command-line tools for Xcode} (see the
+      \sQuote{R Installation and Administration} manual) and if needed
+      by the package a Fortran compiler, and have them in your path.
     }
   }
 }

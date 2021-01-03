@@ -88,7 +88,7 @@ promptImport(object, filename = NULL, name = NULL,
 }
 \seealso{
   \code{\link{promptData}}, \code{\link{help}} and the chapter on
-  \dQuote{Writing \R documentation} in \dQuote{Writing \R Extensions}
+  \sQuote{Writing R documentation} in \sQuote{Writing R Extensions}
   (see the \file{doc/manual} subdirectory of the \R source tree).
 
   For creation of many help pages (for a package),

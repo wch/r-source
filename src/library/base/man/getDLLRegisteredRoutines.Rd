@@ -79,9 +79,12 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   }
 }
 \references{
-  \sQuote{Writing R Extensions Manual} for symbol registration.
+  \sQuote{Writing R Extensions} manual for symbol registration.
 
-  R News, Volume 1/3, September 2001.   "In search of C/C++ & Fortran Symbols"
+  Duncan Temple Lang (2001).
+  \dQuote{In Search of C/C++ & FORTRAN Routines}.
+  \emph{R News}, \bold{1}(3), 20--23.
+  \url{https://www.r-project.org/doc/Rnews/Rnews_2001-3.pdf}.
 }
 \author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}}
 

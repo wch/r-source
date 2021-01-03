@@ -195,7 +195,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
 \section{Conventions}{
   This section describes the implementation of the conventions for
-  graphics devices set out in the \dQuote{R Internals Manual}.
+  graphics devices set out in the \sQuote{R Internals} manual.
 
   \itemize{
     \item The default device size is 7 inches square.
@@ -292,8 +292,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   More details of font families and encodings and especially handling
   text in a non-Latin-1 encoding and embedding fonts can be found in
 
-  Paul Murrell and Brian Ripley (2006) Non-standard fonts in PostScript
-  and PDF graphics. \emph{R News}, 6(2):41--47.
+  Paul Murrell and Brian Ripley (2006).
+  \dQuote{Non-standard fonts in PostScript and PDF graphics.}
+  \emph{R News}, \bold{6}(2), 41--47.
   \url{https://www.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
 \examples{

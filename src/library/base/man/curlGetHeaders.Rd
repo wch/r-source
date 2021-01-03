@@ -1,6 +1,6 @@
 % File src/library/base/man/curlGetHeaders.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015 R Core Team
+% Copyright 2015-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{curlGetHeaders}
@@ -59,7 +59,7 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE)
   For the interpretation of \sQuote{status} codes see
   \url{https://en.wikipedia.org/wiki/List_of_HTTP_status_codes} and
   \url{https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes}.
-  A successful FTP connection will usually have status 250 or 350.  
+  A successful FTP connection will usually have status 250, 257 or 350.  
 }
 
 \seealso{

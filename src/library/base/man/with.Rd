@@ -79,7 +79,7 @@ within(data, expr, \dots)
 }
 \references{
   Thomas Lumley (2003)  \emph{Standard nonstandard evaluation rules}.
-  \url{http://developer.r-project.org/nonstandard-eval.pdf}
+  \url{https://developer.r-project.org/nonstandard-eval.pdf}
 }
 \examples{
 with(mtcars, mpg[cyl == 8  &  disp > 350])

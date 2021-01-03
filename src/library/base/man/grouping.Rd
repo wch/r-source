@@ -29,7 +29,7 @@ grouping(\dots)
 
   Under the covers, the \code{"radix"} method of \code{\link{order}} is
   used, and the same caveats apply, including restrictions on character
-  encodings and lack of support for long vectors (those with
+  encodings and lack of support for \link{long vectors} (those with
   \eqn{2^{31}}{2^31} or more elements). Real-valued numbers are slightly
   rounded to account for numerical imprecision.
   

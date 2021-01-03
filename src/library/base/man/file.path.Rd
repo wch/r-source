@@ -1,4 +1,4 @@
-% File src/library/base/man/file.path.Rd
+% File src/library/base/man/file.path.Rdw
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
@@ -14,7 +14,7 @@
 file.path(\dots, fsep = .Platform$file.sep)
 }
 \arguments{
-  \item{\dots}{character vectors.  Long vectors are not supported.}
+  \item{\dots}{character vectors.  \link{Long vectors} are not supported.}
   \item{fsep}{the path separator to use (assumed to be ASCII).}
 }
 \details{
@@ -33,9 +33,9 @@ file.path(\dots, fsep = .Platform$file.sep)
   separated by \code{fsep} if all arguments have positive length;
   otherwise, an empty character vector (unlike \code{\link{paste}}).
 
-  An element of the result will be marked (see \code{\link{Encoding}} as
+  An element of the result will be marked (see \code{\link{Encoding}}) as
   UTF-8 if run in a UTF-8 locale (when marked inputs are converted to
-  UTF-8) or if an component of the result is marked as UTF-8, or as
+  UTF-8) or if a component of the result is marked as UTF-8, or as
   Latin-1 in a non-Latin-1 locale.
 }
 \note{

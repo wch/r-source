@@ -27,7 +27,11 @@
   University of California,
   La Jolla, California USA 92093-0220.
 
-  \url{ftp://cdiac.esd.ornl.gov/pub/maunaloa-co2/maunaloa.co2}.
+  \url{https://scrippsco2.ucsd.edu/data/atmospheric_co2/}.
+
+  Note that the data are subject to revision (based on recalibration of
+  standard gases) by the Scripps institute, and hence may not agree
+  exactly with the data provided by \R.
 }
 \references{
   Cleveland, W. S. (1993)

@@ -1,9 +1,9 @@
 % File src/library/base/man/ns-reflect.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007, 2015 R Core Team
+% Copyright 2003-2020 R Core Team
 % Distributed under GPL 2 or later
 
-\name{ns-reflect.Rd}
+\name{ns-reflect}
 \title{Namespace Reflection Support}
 
 \alias{getExportedValue}
