@@ -3680,6 +3680,10 @@ dnl These are all C99, but Cygwin lacks wcsftime & wcstod
     fi
   done
 fi
+dnl These are POSIX. not used by default.
+if test "$want_mbcs_support" = yes ; then
+  R_CHECK_FUNCS([wcwidth wcswidth], [#include <wchar.h>])
+fi
 dnl it seems IRIX once had wctrans but not wctrans_t: we check this when we
 dnl know we have the headers and wctrans().
 dnl Also Solaris 2.6 (very old) seems to be missing mbstate_t

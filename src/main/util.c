@@ -1400,10 +1400,10 @@ utf8towcs4(R_wchar_t *wc, const char *s, size_t n)
     ssize_t m, res = 0;
     const char *t;
     R_wchar_t *p;
-    R_wchar_t local;
 
     if(wc)
 	for(p = wc, t = s; ; p++, t += m) {
+	    // FIXME this gives a warning on Windows.
 	    m  = (ssize_t) utf8toucs(p, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs32'"), s);
 	    if (m == 0) break;
@@ -1413,6 +1413,7 @@ utf8towcs4(R_wchar_t *wc, const char *s, size_t n)
 	}
     else
 	for(t = s; ; t += m) {
+	    wchar_t local;
 	    m  = (ssize_t) utf8toucs(&local, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs32'"), s);
 	    if (m == 0) break;

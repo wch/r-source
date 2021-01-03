@@ -169,7 +169,10 @@ static cjk_locale_name_t cjk_locale_name[] = {
 };
 
 /* used in character.c, ../gnuwin32/console.c (for an MBCS locale) ,
- * ../library/grDevices/src/devP*.c */
+   ../library/grDevices/src/devP*.c 
+   
+   NB: Windows (at least MinGW-W64) does not have this function.
+*/
 int Ri18n_wcwidth(R_wchar_t c)
 {
     char lc_str[128];
@@ -205,6 +208,8 @@ int Ri18n_wcwidth(R_wchar_t c)
    
    Strings in R are restricted to 2^31-1 bytes but could conceivably
    have a width exceeding that.
+   
+   NB: Windows (at least MinGW-W64) does not have this function.
 */
 attribute_hidden
 int Ri18n_wcswidth (const wchar_t *wc, size_t n)

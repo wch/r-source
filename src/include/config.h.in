@@ -925,6 +925,9 @@
 /* Define to 1 if you have the `wcstombs' function. */
 #undef HAVE_WCSTOMBS
 
+/* Define to 1 if you have the `wcswidth' function. */
+#undef HAVE_WCSWIDTH
+
 /* Define to 1 if you have the `wctrans' function. */
 #undef HAVE_WCTRANS
 
@@ -936,6 +939,9 @@
 
 /* Define to 1 if you have the <wctype.h> header file. */
 #undef HAVE_WCTYPE_H
+
+/* Define to 1 if you have the `wcwidth' function. */
+#undef HAVE_WCWIDTH
 
 /* Define if you have the 'wint_t' type. (For intl) */
 #undef HAVE_WINT_T
