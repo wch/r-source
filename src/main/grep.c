@@ -2860,21 +2860,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(text))
 	error(_("invalid '%s' argument"), "text");
 
-    PROTECT(itype = ScalarString(mkChar(useBytes ? "bytes" : "chars")));
-
     n = XLENGTH(text);
-    if (!useBytes) {
-	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
-	if (onlyASCII)
-	    for (i = 0; i < n; i++) {
-		if(STRING_ELT(text, i) == NA_STRING) continue;
-		if (!IS_ASCII(STRING_ELT(text, i))) {
-		    onlyASCII = FALSE;
-		    break;
-		}
-	    }
-	useBytes = onlyASCII;
-    }
     if (!useBytes) {
 	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
 	if (!haveBytes)
@@ -2886,6 +2872,20 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(haveBytes) {
 	    useBytes = TRUE;
 	}
+    }
+    PROTECT(itype = ScalarString(mkChar(useBytes ? "bytes" : "chars")));
+
+    if (!useBytes) {
+	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
+	if (onlyASCII)
+	    for (i = 0; i < n; i++) {
+		if(STRING_ELT(text, i) == NA_STRING) continue;
+		if (!IS_ASCII(STRING_ELT(text, i))) {
+		    onlyASCII = FALSE;
+		    break;
+		}
+	    }
+	useBytes = onlyASCII;
     }
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales,
@@ -3213,22 +3213,8 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(text))
 	error(_("invalid '%s' argument"), "text");
 
-    PROTECT(itype = ScalarString(mkChar(useBytes ? "bytes" : "chars")));
-
     n = XLENGTH(text);
 
-    if (!useBytes) {
-	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
-	if(onlyASCII)
-	    for(i = 0; i < n; i++) {
-		if(STRING_ELT(text, i) == NA_STRING) continue;
-		if (!IS_ASCII(STRING_ELT(text, i))) {
-		    onlyASCII = FALSE;
-		    break;
-		}
-	    }
-	useBytes = onlyASCII;
-    }
     if(!useBytes) {
 	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
 	if(!haveBytes)
@@ -3241,6 +3227,20 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(haveBytes) {
 	    useBytes = TRUE;
 	}
+    }
+    PROTECT(itype = ScalarString(mkChar(useBytes ? "bytes" : "chars")));
+
+    if (!useBytes) {
+	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
+	if(onlyASCII)
+	    for(i = 0; i < n; i++) {
+		if(STRING_ELT(text, i) == NA_STRING) continue;
+		if (!IS_ASCII(STRING_ELT(text, i))) {
+		    onlyASCII = FALSE;
+		    break;
+		}
+	    }
+	useBytes = onlyASCII;
     }
 
     if(!useBytes) {

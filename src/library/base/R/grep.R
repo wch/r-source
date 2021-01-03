@@ -94,9 +94,13 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
     if (!is.character(text)) text <- as.character(text)
-    if(!perl || fixed)
+    if(!perl || fixed) {
+        if(perl) warning(
+              gettextf("argument '%s' will be ignored", "perl = TRUE"),
+              domain = NA)
         return(.Internal(regexec(as.character(pattern), text, ignore.case, fixed,
                                  useBytes)))
+    }
 
     ## For perl = TRUE, re-use regexpr(perl = TRUE) which always
     ## captures subexpressions.
@@ -127,7 +131,7 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
     }
     if(identical(attr(m, "useBytes"), TRUE))
         y <- lapply(y, `attr<-`, "useBytes", TRUE)
-    y
+    lapply(y, `attr<-`, "index.type", attr(m, "index.type"))
 }
 
 agrep <-
