@@ -13,7 +13,7 @@
   This help page documents the regular expression patterns supported by
   \code{\link{grep}} and related functions \code{grepl}, \code{regexpr},
   \code{gregexpr}, \code{sub} and \code{gsub}, as well as by
-  \code{\link{strsplit}}.
+  \code{\link{strsplit}}, \code{\link{agrep}} and \code{agrepl}.
 }
 \details{
   A \sQuote{regular expression} is a pattern that describes a set of
@@ -348,7 +348,7 @@
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
   \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
-  \code{\link{ls}} and \code{\link{strsplit}}.
+  \code{\link{ls}}, \code{\link{strsplit}} and \code{\link{agrep}}.
 
   The \href{https://htmlpreview.github.io/?https://raw.githubusercontent.com/laurikari/tre/master/doc/tre-syntax.html}{TRE regexp syntax}.
 
