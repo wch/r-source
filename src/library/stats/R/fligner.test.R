@@ -59,7 +59,7 @@ function(x, g, ...)
         stop("data are essentially constant")
 
     a <- qnorm((1 + rank(abs(x)) / (n + 1)) / 2)
-    STATISTIC <- sum(tapply(a, g, "sum")^2 / tapply(a, g, "length"))
+    STATISTIC <- sum(tapply(a, g, sum)^2 / tapply(a, g, length))
     STATISTIC <- (STATISTIC - n * mean(a)^2) / var(a)
     PARAMETER <- k - 1
     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
