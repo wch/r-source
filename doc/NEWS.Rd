@@ -11,6 +11,10 @@
     \itemize{
       \item File \file{share/texmf/tex/latex/jss.cls} has been updated
       to work with LaTeX versions since Oct 2020.
+
+      \item Unicode character width tables (as used by
+      \code{nchar(, type = "w")}) have been updated to Unicode 12.1
+      by Brodie Gaslam (\PR{17781}), including many emoji.
     }
   }
 
