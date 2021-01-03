@@ -1197,7 +1197,7 @@
 #define USE_RI18N_FNS 1
 
 /* Define to 1 to use internal `wcwidth' */
-/* #undef USE_RI18N_WIDTH */
+#define USE_RI18N_WIDTH
 
 /* Define if the old Solaris multithreading library can be used. (For intl) */
 /* #undef USE_SOLARIS_THREADS */
