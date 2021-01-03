@@ -14,7 +14,7 @@
 \alias{xtfrm.POSIXct}
 \alias{xtfrm.POSIXlt}
 \alias{xtfrm.difftime}
-%% \alias{xtfrm.data.frame}
+\alias{xtfrm.data.frame}
 \title{Auxiliary Function for Sorting and Ranking}
 \description{
   A generic auxiliary function that produces a numeric vector which

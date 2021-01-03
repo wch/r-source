@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2020-12-30 r79727) -- "Unsuffered Consequences"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R Under development (unstable) (2021-01-03 r79774) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -2296,7 +2296,7 @@ IS: [1] TRUE
 [1] TRUE
 > res <- try(as.factor( x ), silent = TRUE)
 Warning message:
-In xtfrm.default(x) : cannot xtfrm data frames
+In xtfrm.data.frame(x) : cannot xtfrm data frames
 > if(!inherits(res, 'try-error')) report(is.factor(res))
 [1] TRUE
 > res <- try(as.function( x ), silent = TRUE)
@@ -2326,7 +2326,7 @@ In xtfrm.default(x) : cannot xtfrm data frames
 > if(!inherits(res, 'try-error')) report(is.numeric_version(res))
 > res <- try(as.ordered( x ), silent = TRUE)
 Warning message:
-In xtfrm.default(x) : cannot xtfrm data frames
+In xtfrm.data.frame(x) : cannot xtfrm data frames
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 [1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
@@ -2397,7 +2397,7 @@ IS: [1] TRUE
 [1] TRUE
 > res <- try(as.factor( x ), silent = TRUE)
 Warning message:
-In xtfrm.default(x) : cannot xtfrm data frames
+In xtfrm.data.frame(x) : cannot xtfrm data frames
 > if(!inherits(res, 'try-error'))
 +    report({if(is.factor(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
 +    } else   !isall.equal(x, res)})
@@ -2450,7 +2450,7 @@ Calls: report -> stopifnot
 +    } else   !isall.equal(x, res)})
 > res <- try(as.ordered( x ), silent = TRUE)
 Warning message:
-In xtfrm.default(x) : cannot xtfrm data frames
+In xtfrm.data.frame(x) : cannot xtfrm data frames
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
 +    } else   !isall.equal(x, res)})
@@ -2532,7 +2532,7 @@ Calls: report -> stopifnot
 [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 Warning message:
-In xtfrm.default(x) : cannot xtfrm data frames
+In xtfrm.data.frame(x) : cannot xtfrm data frames
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
 [1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
@@ -2566,7 +2566,7 @@ In xtfrm.default(x) : cannot xtfrm data frames
 >   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 Warning message:
-In xtfrm.default(x) : cannot xtfrm data frames
+In xtfrm.data.frame(x) : cannot xtfrm data frames
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 [1] TRUE
 > f <- try(as.package_version( x ), silent = TRUE)
@@ -2609,6 +2609,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.166 0.025 0.192 0 0 
+Time elapsed:  0.11 0.004 0.114 0 0 
 > 
 > 
