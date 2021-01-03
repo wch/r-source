@@ -962,7 +962,7 @@ non-Western script (which includes `symbols' such as emoji).  Note that
 one of those @code{iswxxxxx} is @code{iswprint} which is used to decide
 whether to output a character as a glyph or as a @samp{\U@{xxxxxx@}}
 escape---for example, try @samp{"\U1f600"}.  (Replacing the system
-functions provides a degree of plaform-independence (including to OS
+functions provides a degree of platform-independence (including to OS
 updates) but replaces it with a dependence on the @R{} version.)
 
 @menu
@@ -4531,8 +4531,7 @@ directory.  To re-create the sources from
 @command{notangle} is required.  Some Linux distributions include this
 command in package @pkg{noweb}.  It can also be installed from the
 sources at @url{https://www.cs.tufts.edu/@/~nr/@/noweb/}@footnote{The links
-there have proved difficult to access, in which case either point an FTP
-client at @uref{ftp://www.eecs.harvard.edu/@/pub/@/nr/} or grab the copy
+there have proved difficult to access, in which case grab the copy
 made available at
 @uref{https://developer.r-project.org/noweb-2.11b.tgz}.}.  The package
 sources are only re-created even in maintainer mode if

@@ -319,7 +319,7 @@
       as they cannot be represented by valid UTF-8.
 
       Where such escapes are used for outputting non-printable
-      (inclduing unassigned) characters, 6 hex digits are used (rather
+      (including unassigned) characters, 6 hex digits are used (rather
       than 8 with leading zeros).  For clarity, braces are used, for
       example \samp{\\U\{0effff\}}.
 
