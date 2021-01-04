@@ -1,6 +1,6 @@
 ### cairo.m4 -- extra macros for configuring R for cairo    -*- Autoconf -*-
 ###
-### Copyright (C) 2008 R Core Team
+### Copyright (C) 2008-2021 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -70,7 +70,8 @@ else
                     [AC_LINK_IFELSE([AC_LANG_SOURCE([[
 #include <pango/pango.h>
 #include <pango/pangocairo.h>
-#include <cairo-xlib.h>
+//#include <cairo-xlib.h>
+#include <stddef.h>
 #if CAIRO_VERSION  < 10200
 #error cairo version >= 1.2 required
 #endif
@@ -144,6 +145,7 @@ int main(void) {
                      [AC_LINK_IFELSE([AC_LANG_SOURCE([[
 #include <cairo.h>
 #include <cairo-xlib.h>
+#include <stddef.h>
 #if CAIRO_VERSION  < 10200
 #error cairo version >= 1.2 required
 #endif
