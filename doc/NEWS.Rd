@@ -165,6 +165,9 @@
       \item \code{.libPaths()} gets a new option \code{include.site},
       allowing to \emph{not} include the site library, thanks to Dario
       Strbenac's suggestion and Gabe Becker's \PR{18016}.
+
+      \item Lithuanian translations are now available, thanks to
+      Rimantas Žakauskas.
     }
   }
 
