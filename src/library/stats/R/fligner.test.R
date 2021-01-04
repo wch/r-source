@@ -59,8 +59,10 @@ function(x, g, ...)
         stop("data are essentially constant")
 
     a <- qnorm((1 + rank(abs(x)) / (n + 1)) / 2)
-    STATISTIC <- sum(tapply(a, g, sum)^2 / tapply(a, g, length))
-    STATISTIC <- (STATISTIC - n * mean(a)^2) / var(a)
+    a <- a - mean(a)
+    v <- sum(a^2) / (n - 1)
+    a <- split(a, g)
+    STATISTIC <- sum(lengths(a) * vapply(a, mean, 0)^2) / v
     PARAMETER <- k - 1
     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
     names(STATISTIC) <- "Fligner-Killeen:med chi-squared"
