@@ -204,7 +204,10 @@ int R_nchar(SEXP string, nchar_type type_,
 #ifdef USE_RI18N_WIDTH
 		    nc += Ri18n_wcwidth(ucs);
 #else
-		    nc += wcwidth(ucs);
+		    {
+			int this = wcwidth(ucs);
+			if (this >= 0) nc += this;
+		    }
 #endif
 		}
 		return nc;
@@ -233,7 +236,9 @@ int R_nchar(SEXP string, nchar_type type_,
 #ifdef USE_RI18N_WIDTH
 		int nci18n = Ri18n_wcswidth(wc, 2147483647);
 #else
-		// do not use this unless R_wchar_t is wchar_t
+		// We do not use this unless R_wchar_t is wchar_t
+		// This could be -1 if there are non-printable chars,
+		// then this is ignored
 		int nci18n = wcswidth(wc, 2147483647);
 #endif
 		vmaxset(vmax);

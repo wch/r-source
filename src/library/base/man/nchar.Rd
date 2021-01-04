@@ -66,6 +66,8 @@ nzchar(x, keepNA = FALSE)
   \code{type = "width"} gives (an approximation to) the number of
   columns used in printing each element in a terminal font, taking into
   account double-width, zero-width and \sQuote{composing} characters.
+  The approximation is likely to be poor when there are unassigned or
+  non-printing characters.
 
   If \code{allowNA = TRUE} and an element is detected as invalid in a
   multi-byte character set such as UTF-8, its number of characters and

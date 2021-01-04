@@ -237,9 +237,12 @@
       contains customizations for East Asian languages.
 
       System versions of these functions are often minimally implemented
-      (sometimes only for ASCII characters) and do not cover the full
+      (sometimes only for ASCII characters) and may not cover the full
       range of Unicode points: for example Solaris (and Windows) only
       cover the Basic Multilingual Plane.
+
+      \item Cairo installations without X11 are more likely to be
+      detected by \command{configure}.
     }
   }
 

@@ -456,13 +456,18 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    p++;
 		} else {
 		    /* no need to worry about truncation as iswprint
-		     * gets replaced on Windows */
+		     * and wcwidth get replaced on Windows */
 		    // conceivably an invalid \U escape could use 11 or 12
 		    len += iswprint(k) ?
 #ifdef USE_RI18N_WIDTH
 			Ri18n_wcwidth(k) :
 #else
-			wcwidth((wchar_t) k) :
+			/* this is expected to return -1 for
+			   non-printable (including unassigned)
+			   characters: that is unlikely to occur,
+			   although the system's idea of 'printing'
+			   may differ from the internal tables */
+			imax2(wcwidth((wchar_t) k), 0) :
 #endif
 		    	(k > 0xffff ? 10 : 6);
 		    i += (res - 1);
