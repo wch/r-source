@@ -1,6 +1,6 @@
 ### cairo.m4 -- extra macros for configuring R for cairo    -*- Autoconf -*-
 ###
-### Copyright (C) 2008 R Core Team
+### Copyright (C) 2008-2021 R Core Team
 ###
 ### This file is part of R.
 ###
