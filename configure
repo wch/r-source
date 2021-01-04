@@ -44356,7 +44356,8 @@ else
 
 #include <pango/pango.h>
 #include <pango/pangocairo.h>
-#include <cairo-xlib.h>
+//#include <cairo-xlib.h>
+#include <stddef.h>
 #if CAIRO_VERSION  < 10200
 #error cairo version >= 1.2 required
 #endif
@@ -44452,7 +44453,8 @@ else
 /* end confdefs.h.  */
 
 #include <cairo.h>
-#include <cairo-xlib.h>
+//#include <cairo-xlib.h>
+#include <stddef.h>
 #if CAIRO_VERSION  < 10200
 #error cairo version >= 1.2 required
 #endif
