@@ -5608,13 +5608,6 @@ built from their sources. (Without X11 support, the bitmap device
 support libraries @code{jpeg}, @code{libpng} and @code{tiff} are not
 needed.  Nor currently is @code{pkgconfig} needed to build @R{}.)
 
-Experimentally, some prerequisites are available at
-@uref{https://mac.r-project.org/libs-arm64/}.  These install into
-@file{/opt/R/arm64} to allow them to co-exist with Intel versions.
-Using those would need adding @file{/opt/R/arm64/bin} to the @env{PATH}
-and @file{/opt/R/arm64/include} and @file{/opt/R/arm64/lib} to the C
-include and library paths.
-
 @R{} was configured by
 
 @example
@@ -5687,6 +5680,59 @@ be enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
 @code{__aarch64__} : you may want to also condition on @code{__APPLE__}
 as those macros are defined on other OSes, at least for @command{clang}
 and @command{gcc} (@code{__aarch64__}).
+
+The rest of this sub-section describes the future @acronym{CRAN}
+distributions, which will make use of directory @file{/opt/R/arm64}
+rather than @file{/usr/local}.
+
+A Fortran compiler and some prerequisites are available at
+@uref{https://mac.r-project.org/libs-arm64/} which install into
+@file{/opt/R/arm64} to allow them to co-exist with Intel versions. It is
+simplest to first create that directory and adjust its ownership if
+desired:
+
+@example
+sudo mkdir -p /opt/R/arm64
+sudo chown -R myaccount /opt/R
+@end example
+
+@noindent
+Then components can be downloaded and unpacked, for example
+
+@example
+curl -OL https://mac.r-project.org/libs-arm64/jpeg-9d-darwin.20-arm64.tar.gz
+tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
+@end example
+
+@noindent
+(using @command{sudo} if necessary: it will be for the @file{tcltk} file
+which partially unpacks into @file{/Library/Frameworks}).
+
+Then add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
+@file{config.site} something like
+
+@example
+CC="clang -target arm64-apple-macos11"
+OBJC=$CC
+FC="/opt/R/arm64/gfortran/bin/gfortran -mtune=native"
+CXX="clang++ -target arm64-apple-macos11"
+CFLAGS="-falign-functions=8 -g -O2 -Wall -pedantic"
+CPPFLAGS=-I/opt/R/arm64/include
+LDFLAGS=-L/opt/R/arm64/lib
+R_LD_LIBRARY_PATH=/opt/R/arm64/lib
+@end example
+
+@noindent
+and configure @R{} using something like
+
+@example
+/path/to/configure --enable-R-shlib --enable-memory-profiling --without-x \
+--with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
+--with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
+PKG_CONFIG_PATH=/opt/R/arm64/local/lib/pkgconfig:/usr/lib/pkgconfig \
+JAVA_HOME=/path/to/zulu-11.jdk/Contents/Home
+@end example
+
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
