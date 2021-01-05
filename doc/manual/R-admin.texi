@@ -5584,112 +5584,34 @@ seem harmless.)
 @node Native builds,  , `Apple Silicon', `Apple Silicon'
 @subsubsection Native builds
 
-No Fortran compiler has been released for this architecture at the time
-of writing although there are ports under development.@footnote{We used
-the fork of @command{gfortran} from
-@url{https://github.com/@/iains/@/gcc-darwin-arm64}, and there are
-experimental binary distributions at
-@uref{https://mac.r-project.org/@/libs-arm64/} and
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}}
-So this section is experimental.
+This section is experimental, and everything said should be prefixed by
+`at the time of writing'.  It follows the planned @acronym{CRAN}
+distribution in using @file{/opt/R/arm64} rather than @file{/usr/local}:
+this largely allows natively-compiled software to co-exist with
+Intel-compiled software (although the C/C++ compilers and linker will
+still search @file{/usr/local/include} and @file{/usr/local/lib}).
 
-At the time of writing updating a build may fail because of the bug
-described at @uref{https://openradar.appspot.com/@/FB8914243} but
-@emph{ab initio} builds worked.
+No Fortran compiler has been released for this architecture although
+there are ports under development.  We used the preliminary fork of
+@command{gfortran} from
+@url{https://github.com/@/iains/@/gcc-darwin-arm64} of which there are
+binary distributions at @uref{https://mac.r-project.org/@/libs-arm64/}
+and
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}.
+It seems these have been built using the SDK path for Xcode and not that
+for the Command Line Tools which causes a few quirks when using the
+Fortran compiler to link compiled C/C++ code.
 
-At the time of writing no distribution of X11@footnote{XQuartz has
-sources on GitHub, so one could try building from those.} was available,
-so @R{} was configured with @option{--without-x}.  The prerequisites.
-@code{pcre2},@footnote{@emph{pro tem} built without JIT support as the
-build segfaults if that is enabled.}  @code{readline},@footnote{the
-@code{libedit} emulation can also be used.}  @code{xz} and (Aqua)
-Tcl/Tk@footnote{configured with @option{--enable-agua}.}  can easily be
-built from their sources. (Without X11 support, the bitmap device
-support libraries @code{jpeg}, @code{libpng} and @code{tiff} are not
-needed.  Nor currently is @code{pkgconfig} needed to build @R{}.)
+No distribution of X11@footnote{XQuartz has sources on GitHub, so one
+could try building from those.} is available, so @R{} was configured
+with @option{--without-x}.  Similarly, Aqua Tcl/Tk needs to be used
+rather than the X11-based variant used for Intel build (and some
+packages, notably @CRANpkg{tkrplot}, do not support that).
 
-@R{} was configured by
-
-@example
-/path/to/configure --enable-R-shlib --enable-memory-profiling --without-x \
-PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
-JAVA_HOME=/path/to/zulu-11.jdk/Contents/Home
-@end example
-
-@noindent
-with a @file{config.site} file containing
-
-@example
-CC="clang -target arm64-apple-macos11"
-CFLAGS="-falign-functions=8 -g -O2"
-OBJC=$CC
-FC="/usr/local/gfortran/bin/gfortran -mtune=native"
-CXX="clang++ -target arm64-apple-macos11"
-@end example
-
-@noindent
-The first flag in @code{CFLAGS} is needed to inter-work with the current
-experimental @command{gfortran} without segfaulting in some packages.
-
-Native Java builds are becoming available, for example
-@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
-
-As with Intel builds, it is possible to use the @code{Accelerate}
-library @emph{via} the configuration option
-
-@example
---with-blas="-framework Accelerate"
-@end example
-
-Note that most of this software will not co-exist with that needed for
-@cputype{x86_64} builds.  The pre-built Fortran compilers both live
-under @file{/usr/local/gfortran} and cannot easily be relocated.
-Libraries such as @code{liblzma}, @code{libpcre2} and @code{libreadline}
-are looked for in @file{/usr/local/lib}: as these are all distributed as
-static libraries this only matters when building @R{} from source.
-However, Tcl/Tk (dynamic libraries and support files) are by default
-also located under @file{/usr/local/lib} so only one architecture can be
-installed even at run time.  One option is to build the native Aqua
-Tcl/Tk as foundations (use @command{configure} option
-@option{--enable-framework} for both) and configure @R{} including the
-lines
-
-@example
---with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
---with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
-@end example
-
-It is possible to build external libraries containing both architectures
-which could then be used for both builds.  A typical configure line
-might be
-
-@example
-./configure --enable-static --disable-shared \
-CC='clang -arch arm64 -arch x86_64' CFLAGS=-O2 \
-CXX='clang++ -arch arm64 -arch x86_64' CXXFLAGS=-O2 \
-CPP='clang -E' CXXCPP='clang++ -E'
-@end example
-
-@noindent
-This cannot be done as simply for Fortran as that would need compiler
-and library (@code{libgfortran}) support.
-
-@c https://developer.apple.com/documentation/xcode/building_a_universal_macos_binary
-According to Apple, C/C++ code intended only for this architecture can
-be enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
-@code{__aarch64__} : you may want to also condition on @code{__APPLE__}
-as those macros are defined on other OSes, at least for @command{clang}
-and @command{gcc} (@code{__aarch64__}).
-
-The rest of this sub-section describes the future @acronym{CRAN}
-distributions, which will make use of directory @file{/opt/R/arm64}
-rather than @file{/usr/local}.
-
-A Fortran compiler and some prerequisites are available at
-@uref{https://mac.r-project.org/libs-arm64/} which install into
-@file{/opt/R/arm64} to allow them to co-exist with Intel versions. It is
-simplest to first create that directory and adjust its ownership if
-desired:
+Binary builds of the prerequisites are available at
+@uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
+into @file{/opt/R/arm64}: it is simplest to first create that directory
+and adjust its ownership if desired:
 
 @example
 sudo mkdir -p /opt/R/arm64
@@ -5705,10 +5627,17 @@ tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
 @end example
 
 @noindent
-(using @command{sudo} if necessary: it will be for the @file{tcltk} file
-which partially unpacks into @file{/Library/Frameworks}).
+(using @command{sudo} if necessary: it will be for the @file{tcltk}
+tarball which partially unpacks into @file{/Library/Frameworks}) (and
+hence conflicts with Intel versions of Aqua Tcl/Tk, for example from
+ActiveTcl).
 
-Then add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
+Prerequisite @code{readline} can easily be built from source, although 
+@code{libedit} emulation can also be used.  If compiling from source,
+@code{pcre2} needs to be built without JIT support as the
+build segfaults if that is enabled.
+
+Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
 @file{config.site} something like
 
 @example
@@ -5723,16 +5652,53 @@ R_LD_LIBRARY_PATH=/opt/R/arm64/lib
 @end example
 
 @noindent
-and configure @R{} using something like
+(the first flag in @code{CFLAGS} is needed to inter-work with the
+current @command{gfortran} without segfaulting in some packages).  Then
+configure @R{} using something like
 
 @example
 /path/to/configure --enable-R-shlib --enable-memory-profiling --without-x \
---with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
---with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
-PKG_CONFIG_PATH=/opt/R/arm64/local/lib/pkgconfig:/usr/lib/pkgconfig \
-JAVA_HOME=/path/to/zulu-11.jdk/Contents/Home
+  --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
+  --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
+  PKG_CONFIG_PATH=/opt/R/arm64/local/lib/pkgconfig:/usr/lib/pkgconfig \
+  JAVA_HOME=/path/to/zulu-11.jdk/Contents/Home
 @end example
 
+Updating a build may fail because of the bug
+described at @uref{https://openradar.appspot.com/@/FB8914243} but
+@emph{ab initio} builds worked.
+
+Native Java builds are becoming available, for example
+@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
+
+As with Intel builds, use the @code{Accelerate} library could be used
+@emph{via} the configuration option
+
+@example
+--with-blas="-framework Accelerate"
+@end example
+
+It is possible to build external C/C++ libraries containing both
+architectures which could then be used for building packages.  A typical
+configure line might be
+
+@example
+./configure --enable-static --disable-shared \
+CC='clang -arch arm64 -arch x86_64' CFLAGS=-O2 \
+CXX='clang++ -arch arm64 -arch x86_64' CXXFLAGS=-O2 \
+CPP='clang -E' CXXCPP='clang++ -E'
+@end example
+
+@noindent
+Such libraries installed into the usual default of @file{/usr/local}
+will be usable for both @cputype{arm64} and @cputype{x86_64} builds.
+
+@c https://developer.apple.com/documentation/xcode/building_a_universal_macos_binary
+According to Apple, C/C++ code intended only for this architecture can
+be enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
+@code{__aarch64__} : you may want to also condition on @code{__APPLE__}
+as those macros are defined on other OSes, at least for @command{clang}
+and @command{gcc} (@code{__aarch64__}).
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris

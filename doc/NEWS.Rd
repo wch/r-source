@@ -359,8 +359,8 @@
       \option{--with-internal-towlower} or (on Windows)
       \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.  This
       may be needed to allow \code{tolower()} and \code{toupper()} to
-      work with Unicode characters beyond the Basic Multilingual Plan
-      where on supported by system functions (e.g. on Solaris where it
+      work with Unicode characters beyond the Basic Multilingual Plane
+      where not supported by system functions (e.g. on Solaris where it
       is the new default).
     }
   }
