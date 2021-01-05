@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -13,7 +13,8 @@
   This help page documents the regular expression patterns supported by
   \code{\link{grep}} and related functions \code{grepl}, \code{regexpr},
   \code{gregexpr}, \code{sub} and \code{gsub}, as well as by
-  \code{\link{strsplit}}, \code{\link{agrep}} and \code{agrepl}.
+  \code{\link{strsplit}} and optionally by \code{\link{agrep}} and
+  \code{\link{agrepl}}.
 }
 \details{
   A \sQuote{regular expression} is a pattern that describes a set of
