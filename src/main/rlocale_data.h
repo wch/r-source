@@ -49,10 +49,13 @@
    iswalnum is derived in rlocale.c
 
    Something like (uniset does not read First, Last ranges)
-   uniset +cat=Lu +cat=Ll +cat=Lt +cat=Lm +cat=Lo +cat=Nd -0030..0039 \
+   uniset +cat=Lu +cat=Ll +cat=Lt +cat=Lm +cat=Lo +cat=Nd +cat=Nl \
+   -0030..0039 \
    +3400..4DBF +4E00..9FFC +AC00..D7A3 +17000..187F7 +18D00..18D08 \
    +20000..2A6DD +2A700..2B734 +2B740..2B81D +2B820..2CEA1 +2CEB0..2EBE0 \
    +30000..3134A c > alpha.h
+
+   We regard private use ranges as none of these except printable.
 
    glibc has 
 
@@ -271,7 +274,7 @@ static const struct interval table_walpha[] = {
     { 0x166f, 0x167f },
     { 0x1681, 0x169a },
     { 0x16a0, 0x16ea },
-    { 0x16f1, 0x16f8 },
+    { 0x16ee, 0x16f8 },
     { 0x1700, 0x170c },
     { 0x170e, 0x1711 },
     { 0x1720, 0x1731 },
@@ -350,7 +353,7 @@ static const struct interval table_walpha[] = {
     { 0x213c, 0x213f },
     { 0x2145, 0x2149 },
     { 0x214e, 0x214e },
-    { 0x2183, 0x2184 },
+    { 0x2160, 0x2188 },
     { 0x2c00, 0x2c2e },
     { 0x2c30, 0x2c5e },
     { 0x2c60, 0x2ce4 },
@@ -371,9 +374,10 @@ static const struct interval table_walpha[] = {
     { 0x2dd0, 0x2dd6 },
     { 0x2dd8, 0x2dde },
     { 0x2e2f, 0x2e2f },
-    { 0x3005, 0x3006 },
+    { 0x3005, 0x3007 },
+    { 0x3021, 0x3029 },
     { 0x3031, 0x3035 },
-    { 0x303b, 0x303c },
+    { 0x3038, 0x303c },
     { 0x3041, 0x3096 },
     { 0x309d, 0x309f },
     { 0x30a1, 0x30fa },
@@ -390,7 +394,7 @@ static const struct interval table_walpha[] = {
     { 0xa610, 0xa62b },
     { 0xa640, 0xa66e },
     { 0xa67f, 0xa69d },
-    { 0xa6a0, 0xa6e5 },
+    { 0xa6a0, 0xa6ef },
     { 0xa717, 0xa71f },
     { 0xa722, 0xa788 },
     { 0xa78b, 0xa7bf },
@@ -472,15 +476,16 @@ static const struct interval table_walpha[] = {
     { 0x1003f, 0x1004d },
     { 0x10050, 0x1005d },
     { 0x10080, 0x100fa },
+    { 0x10140, 0x10174 },
     { 0x10280, 0x1029c },
     { 0x102a0, 0x102d0 },
     { 0x10300, 0x1031f },
-    { 0x1032d, 0x10340 },
-    { 0x10342, 0x10349 },
+    { 0x1032d, 0x1034a },
     { 0x10350, 0x10375 },
     { 0x10380, 0x1039d },
     { 0x103a0, 0x103c3 },
     { 0x103c8, 0x103cf },
+    { 0x103d1, 0x103d5 },
     { 0x10400, 0x1049d },
     { 0x104a0, 0x104a9 },
     { 0x104b0, 0x104d3 },
@@ -618,6 +623,7 @@ static const struct interval table_walpha[] = {
     { 0x11ee0, 0x11ef2 },
     { 0x11fb0, 0x11fb0 },
     { 0x12000, 0x12399 },
+    { 0x12400, 0x1246e },
     { 0x12480, 0x12543 },
     { 0x13000, 0x1342e },
     { 0x14400, 0x14646 },
@@ -769,6 +775,7 @@ static const struct interval table_wdigit[] = {
 static const int table_wdigit_count =
     (sizeof(table_wdigit)/sizeof(struct interval));
 
+#if UNUSED
 /* ------------------- iswgraph -------------------- */
 /* Could be derived from other tables: C99 says
 
@@ -1541,6 +1548,7 @@ static const struct interval table_wgraph[] = {
 };
 static const int table_wgraph_count =
   (sizeof(table_wgraph)/sizeof(struct interval));
+#endif
 
 /* ------------------- iswlower -------------------- */
 /* This is defined in the C99 standard as 
@@ -2224,14 +2232,16 @@ static const int table_wlower_count =
 
 uniset  +cat=Lu +cat=Ll +cat=Lt +cat=Lm +cat=Lo +cat=Nd +cat=Pc +cat=Pd \
   +cat=Ps +cat=Pe +cat=Pi +cat=Pf +cat=Po +cat=Sm +cat=Sc +cat=Sk +cat=So \
-  +cat=No +cat=Mn +cat=Mc +cat=Me +cat=Zs +cat=Zl +cat=Zp \
-  +cat=Nl +cat=No +cat=Cf \
+  +cat=No +cat=Mn +cat=Mc +cat=Me +cat=Zs +cat=Nl +cat=No +cat=Cf \
   +00AD \
   +3400..4DBF +4E00..9FFC +AC00..D7A3 +17000..187F7 +18D00..18D08 \
   +20000..2A6DD +2A700..2B734 +2B740..2B81D +2B820..2CEA1 +2CEB0..2EBE0 \
   +30000..3134A \
   +E000..F8FF +F0000..FFFFD +100000..10FFFD \
   c > print.h
+
+Some spaces are not printable (0x9..0xD), nor 2028..2029
+We regard private use ranges as printable: glibc does not.
  */
 static const struct interval table_wprint[] = {
     { 0x20, 0x7e },
@@ -2477,7 +2487,8 @@ static const struct interval table_wprint[] = {
     { 0x1fdd, 0x1fef },
     { 0x1ff2, 0x1ff4 },
     { 0x1ff6, 0x1ffe },
-    { 0x2000, 0x2064 },
+    { 0x2000, 0x2027 },
+    { 0x202a, 0x2064 },
     { 0x2066, 0x2071 },
     { 0x2074, 0x208e },
     { 0x2090, 0x209c },
@@ -2926,7 +2937,7 @@ static const int table_wprint_count =
    Something like 
    uniset +cat=Pc +cat=Pd +cat=Ps +cat=Pe +cat=Pi +cat=Pf +cat=Po \
    +cat=Sm +cat=Sc +cat=Sk +cat=So +cat=No +cat=Mn +cat=Mc +cat=Me \
-   +00AD c > punct.h
+   +cat=Cf c > punct.h
 
    glibc has
 
@@ -2969,17 +2980,17 @@ static const struct interval table_wpunct[] = {
     { 0x58d, 0x58f },
     { 0x591, 0x5c7 },
     { 0x5f3, 0x5f4 },
-    { 0x606, 0x61b },
+    { 0x600, 0x61c },
     { 0x61e, 0x61f },
     { 0x64b, 0x65f },
     { 0x66a, 0x66d },
     { 0x670, 0x670 },
     { 0x6d4, 0x6d4 },
-    { 0x6d6, 0x6dc },
-    { 0x6de, 0x6e4 },
+    { 0x6d6, 0x6e4 },
     { 0x6e7, 0x6ed },
     { 0x6fd, 0x6fe },
     { 0x700, 0x70d },
+    { 0x70f, 0x70f },
     { 0x711, 0x711 },
     { 0x730, 0x74a },
     { 0x7a6, 0x7b0 },
@@ -2993,8 +3004,7 @@ static const struct interval table_wpunct[] = {
     { 0x830, 0x83e },
     { 0x859, 0x85b },
     { 0x85e, 0x85e },
-    { 0x8d3, 0x8e1 },
-    { 0x8e3, 0x903 },
+    { 0x8d3, 0x903 },
     { 0x93a, 0x93c },
     { 0x93e, 0x94f },
     { 0x951, 0x957 },
@@ -3109,7 +3119,7 @@ static const struct interval table_wpunct[] = {
     { 0x17d8, 0x17db },
     { 0x17dd, 0x17dd },
     { 0x17f0, 0x17f9 },
-    { 0x1800, 0x180d },
+    { 0x1800, 0x180e },
     { 0x1885, 0x1886 },
     { 0x18a9, 0x18a9 },
     { 0x1920, 0x192b },
@@ -3149,9 +3159,11 @@ static const struct interval table_wpunct[] = {
     { 0x1fdd, 0x1fdf },
     { 0x1fed, 0x1fef },
     { 0x1ffd, 0x1ffe },
-    { 0x2010, 0x2027 },
+    { 0x200b, 0x2027 },
+    { 0x202a, 0x202e },
     { 0x2030, 0x205e },
-    { 0x2070, 0x2070 },
+    { 0x2060, 0x2064 },
+    { 0x2066, 0x2070 },
     { 0x2074, 0x207e },
     { 0x2080, 0x208e },
     { 0x20a0, 0x20bf },
@@ -3255,13 +3267,14 @@ static const struct interval table_wpunct[] = {
     { 0xfe20, 0xfe52 },
     { 0xfe54, 0xfe66 },
     { 0xfe68, 0xfe6b },
+    { 0xfeff, 0xfeff },
     { 0xff01, 0xff0f },
     { 0xff1a, 0xff20 },
     { 0xff3b, 0xff40 },
     { 0xff5b, 0xff65 },
     { 0xffe0, 0xffe6 },
     { 0xffe8, 0xffee },
-    { 0xfffc, 0xfffd },
+    { 0xfff9, 0xfffd },
     { 0x10100, 0x10102 },
     { 0x10107, 0x10133 },
     { 0x10137, 0x1013f },
@@ -3312,8 +3325,8 @@ static const struct interval table_wpunct[] = {
     { 0x11038, 0x1104d },
     { 0x11052, 0x11065 },
     { 0x1107f, 0x11082 },
-    { 0x110b0, 0x110bc },
-    { 0x110be, 0x110c1 },
+    { 0x110b0, 0x110c1 },
+    { 0x110cd, 0x110cd },
     { 0x11100, 0x11102 },
     { 0x11127, 0x11134 },
     { 0x11140, 0x11143 },
@@ -3387,6 +3400,7 @@ static const struct interval table_wpunct[] = {
     { 0x11fc0, 0x11ff1 },
     { 0x11fff, 0x11fff },
     { 0x12470, 0x12474 },
+    { 0x13430, 0x13438 },
     { 0x16a6e, 0x16a6f },
     { 0x16af0, 0x16af5 },
     { 0x16b30, 0x16b3f },
@@ -3399,11 +3413,10 @@ static const struct interval table_wpunct[] = {
     { 0x16fe2, 0x16fe2 },
     { 0x16fe4, 0x16fe4 },
     { 0x16ff0, 0x16ff1 },
-    { 0x1bc9c, 0x1bc9f },
+    { 0x1bc9c, 0x1bca3 },
     { 0x1d000, 0x1d0f5 },
     { 0x1d100, 0x1d126 },
-    { 0x1d129, 0x1d172 },
-    { 0x1d17b, 0x1d1e8 },
+    { 0x1d129, 0x1d1e8 },
     { 0x1d200, 0x1d245 },
     { 0x1d2e0, 0x1d2f3 },
     { 0x1d300, 0x1d356 },
@@ -3473,6 +3486,8 @@ static const struct interval table_wpunct[] = {
     { 0x1fad0, 0x1fad6 },
     { 0x1fb00, 0x1fb92 },
     { 0x1fb94, 0x1fbca },
+    { 0xe0001, 0xe0001 },
+    { 0xe0020, 0xe007f },
     { 0xe0100, 0xe01ef }
 };
 static const int table_wpunct_count =
