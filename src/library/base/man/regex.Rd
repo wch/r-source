@@ -344,7 +344,7 @@
 }
 \author{
   This help page is based on the TRE documentation and the POSIX
-  standard, and the \code{pcre2pattern} man page from PCRE2 10.35
+  standard, and the \code{pcre2pattern} man page from PCRE2 10.35.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
