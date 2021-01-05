@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2019 The R Core Team
+#  Copyright (C) 2015-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -735,6 +735,11 @@ function(x, ...)
                             followlocation = 1L,
                             http_version = 2L,
                             ssl_enable_alpn = 0L)
+        timeout <- as.integer(getOption("timeout"))
+        if(!is.na(timeout) && (timeout > 0L))
+            curl::handle_setopt(h,
+                                connecttimeout = timeout,
+                                timeout = timeout)
         if(grepl("^https?://github[.]com", u) &&
            nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
             curl::handle_setheaders(h, "Authorization" = paste("token", a))
@@ -793,6 +798,11 @@ function(u, verbose = FALSE)
                         followlocation = 1,
                         http_version = 2L,
                         ssl_enable_alpn = 0)
+    timeout <- as.integer(getOption("timeout"))
+    if(!is.na(timeout) && (timeout > 0L))
+        curl::handle_setopt(h,
+                            connecttimeout = timeout,
+                            timeout = timeout)
     if(startsWith(u, "https://github.com") &&
        nzchar(a <- Sys.getenv("GITHUB_PAT", "")))
         curl::handle_setheaders(h, "Authorization" = paste("token", a))
