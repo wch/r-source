@@ -1,6 +1,6 @@
 % File src/library/base/man/agrep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{agrep}
@@ -26,9 +26,9 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
        ignore.case = FALSE, fixed = TRUE, useBytes = FALSE)
 }
 \arguments{
-  \item{pattern}{a non-empty character string or a character string
-    containing a regular expression (for \code{fixed = FALSE}) to be
-    matched.
+  \item{pattern}{a non-empty character string to be matched.  For
+    \code{fixed = FALSE} this should contain an extended
+    \link{regular expression}. 
     Coerced by \code{\link{as.character}} to a string if possible.}
   \item{x}{character vector where matches are sought.
     Coerced by \code{\link{as.character}} to a character vector if
@@ -75,7 +75,7 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   deletions and substitutions required to transform one string into
   another.
 
-  This uses \code{tre} by Ville Laurikari
+  This uses the \code{tre} code by Ville Laurikari
   (\url{https://github.com/laurikari/tre}), which supports MBCS
   character matching.
 
