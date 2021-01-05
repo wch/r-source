@@ -90,7 +90,9 @@ is.matrix(x)
 \preformatted{  dim(x) <- c(nx, ny)
   dimnames(x) <- list(row_names, col_names)
 }
-will avoid duplicating \code{x}.
+  will avoid duplicating \code{x} \emph{and} preserve
+  \code{\link{class}(x)} which may be useful, e.g.,
+  for \code{\link{Date}} objects.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

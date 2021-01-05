@@ -83,7 +83,7 @@ enc2utf8(x)
   \code{\link{match}}, \code{\link{pmatch}}, \code{\link{charmatch}},
   \code{\link{duplicated}} and \code{\link{unique}} all match in UTF-8
   if any of the elements are marked as UTF-8.
-  
+
   There is some ambiguity as to what is meant by a \sQuote{Latin-1}
   locale, since some OSes (notably Windows) make use of character
   positions undefined (or used for control characters) in the ISO 8859-1
@@ -100,16 +100,19 @@ enc2utf8(x)
 }
 \examples{
 ## x is intended to be in latin1
-x <- "fa\xE7ile"
-Encoding(x)
+x. <- x <- "fa\xE7ile"
+Encoding(x.) # "unknown" (Linux) | "latin-1" (Win 32 server) | ....
 Encoding(x) <- "latin1"
 x
 xx <- iconv(x, "latin1", "UTF-8")
-Encoding(c(x, xx))
+Encoding(c(x., x, xx))
 c(x, xx)
-Encoding(xx) <- "bytes"
-xx # will be encoded in hex
-cat("xx = ", xx, "\n", sep = "")
+xb <- xx; Encoding(xb) <- "bytes"
+xb # will be encoded in hex
+cat("x = ", x, ", xx = ", xx, ", xb = ", xb, "\n", sep = "")
+(Ex <- Encoding(c(x.,x,xx,xb)))
+stopifnot(identical(Ex, c(Encoding(x.), Encoding(x),
+                          Encoding(xx), Encoding(xb))))
 }
 \keyword{utilities}
 \keyword{character}

@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -9,7 +9,8 @@
 \alias{bindtextdomain}
 \title{Translate Text Messages}
 \description{
-  If Native Language Support was enabled in this build of \R, attempt to
+  If Native Language Support (NLS) was enabled in this build of \R (see
+  the \code{bindtextdomain()} example), attempt to
   translate character vectors or set where the translations are to be found.
 }
 \usage{
@@ -30,14 +31,19 @@ bindtextdomain(domain, dirname = NULL)
 }
 \details{
   If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
-  or \code{ngettext}  is called from a function in the namespace of 
-  package \pkg{pkg} the domain is set to \code{"R-pkg"}.  Otherwise 
+  or \code{ngettext}  is called from a function in the namespace of
+  package \pkg{pkg} the domain is set to \code{"R-pkg"}.  Otherwise
   there is no default domain.
 
   If a suitable domain is found, each character string is offered for
   translation, and replaced by its translation into the current language
   if one is found.  The value (logical) \code{NA} suppresses any
   translation.
+
+  The \emph{language} to be used for message translation is determined by
+  your OS default and/or the locale setting at \R's startup, see
+  \code{\link{Sys.getlocale}()}, and notably the \env{LANGUAGE} environment
+  variable.
 
   Conventionally the domain for \R warning/error messages in package
   \pkg{pkg} is \code{"R-pkg"}, and that for C-level messages is \code{"pkg"}.
