@@ -5599,8 +5599,13 @@ binary distributions at @uref{https://mac.r-project.org/@/libs-arm64/}
 and
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}.
 It seems these have been built using the SDK path for Xcode and not that
-for the Command Line Tools which causes a few quirks when using the
-Fortran compiler to link compiled C/C++ code.
+for the Command Line Tools which causes some problems@footnote{such as
+being unable to find @code{-lm}.} when using the Fortran compiler to
+link: to fix that change the symbolic link
+@file{/opt/R/arm64/gfortran/SDK} to point to your SDK, e.g.@: to
+@file{/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk} (the
+appropriate path can be found by running @command{xcrun
+-show-sdk-path}).
 
 No distribution of X11@footnote{XQuartz has sources on GitHub, so one
 could try building from those.} is available, so @R{} was configured
@@ -5628,8 +5633,8 @@ tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
 @end example
 
 @noindent
-(using @command{sudo} if necessary: it will be for the @file{tcltk}
-tarball which partially unpacks into @file{/Library/Frameworks}) (and
+using @command{sudo} if necessary (it will be for the @file{tcltk}
+tarball which partially unpacks into @file{/Library/Frameworks}) and
 hence conflicts with Intel versions of Aqua Tcl/Tk, for example from
 ActiveTcl).
 
@@ -5667,7 +5672,7 @@ configure @R{} using something like
 
 Updating a build may fail because of the bug
 described at @uref{https://openradar.appspot.com/@/FB8914243} but
-@emph{ab initio} builds worked.
+@emph{ab initio} builds work.
 
 Native Java builds are becoming available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
