@@ -1606,6 +1606,28 @@ static int exists_in_frame(SEXP sym, SEXP env)
     return found;
 }
     
+static int isBaseVar(SEXP sym, SEXP env)
+{
+    for (; env != R_EmptyEnv; env = ENCLOS(env)) {
+	if (env == R_BaseNamespace || env == R_BaseEnv)
+	    return SYMVALUE(sym) != R_UnboundValue;
+	else if (exists_in_frame(sym, env))
+	    return FALSE;
+	else {
+	    SEXP info = R_getEnvVarsInfo(env);
+	    if (TYPEOF(info) == VECSXP && XLENGTH(info) == 3 &&
+		TYPEOF(VECTOR_ELT(info, 2)) == VECSXP) {
+		SEXP locs = VECTOR_ELT(info, 2);
+		R_xlen_t n = XLENGTH(locs);
+		for (R_xlen_t i = 0; i < n; i++)
+		    if (VECTOR_ELT(locs, i) == sym)
+			return FALSE;
+	    }
+	}
+    }
+    return FALSE;
+}
+
 static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 {
     SEXP info = R_getEnvVarsInfo(rho);
@@ -1658,6 +1680,9 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 	    }
 	    UNPROTECT(1); /* value */
 #else
+	    if (symbol == R_TmpvalSymbol)
+		return;
+
 	    int used_as_gfun = FALSE;
 	    SEXP gfuns = VECTOR_ELT(info, 1);
 	    if (TYPEOF(gfuns) == VECSXP) {
@@ -1675,10 +1700,40 @@ static void check_new_local(SEXP symbol, SEXP value, SEXP rho)
 		R_xlen_t n = XLENGTH(gvars);
 		for (R_xlen_t i = 0; i < n; i++)
 		    if (symbol == VECTOR_ELT(gvars, i)) {
-			used_as_gfun = TRUE;
+			used_as_gvar = TRUE;
 			break;
 		    }
 	    }
+
+	    if (isBaseVar(symbol, rho)) {
+		PROTECT(value); /* need PROTECT if switch to a warning() */
+		static SEXP R_T_sym = NULL;
+		static SEXP R_F_sym = NULL;
+		static SEXP R_pi_sym = NULL;
+		if (R_T_sym == NULL) {
+		    R_T_sym = install("T");
+		    R_F_sym = install("F");
+		    R_pi_sym = install("pi");
+		}
+		if (used_as_gvar &&
+		    (symbol == R_T_sym ||
+		     symbol == R_F_sym ||
+		     symbol == R_pi_sym)) {
+		    error(_("new local variable '%s' would mask "
+			    "base variable"),
+			  CHAR(PRINTNAME(symbol)));
+		}
+		if (used_as_gfun &&
+		    (TYPEOF(value) == CLOSXP ||
+		     TYPEOF(value) == BUILTINSXP ||
+		     TYPEOF(value) == SPECIALSXP))
+		    /* use active binding to prevent assigning a function? */
+		    error(_("new local function '%s' would mask "
+			    "base function"),
+			  CHAR(PRINTNAME(symbol)));
+		UNPROTECT(1); /* value */
+	    }
+	    return;
 
 	    if (! used_as_gfun && ! used_as_gvar)
 		return;
