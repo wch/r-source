@@ -91,6 +91,22 @@ static int wcsearch(int wint, const struct interval *table, int max)
 // ------------------------- width functions --------------------
 #ifdef USE_RI18N_WIDTH
 
+/* wcwidth and wcswidth, from POSIX 2001 (formerly in some draft C
+ * standards but not implemented in Windows).  One could argue that
+ * the width of non-printable / unassigned characters is immaterial
+ * (they will be represented by escapes) so could be given a
+ * conventional value such as 0 or 1.  POSIX suggests returning -1 for
+ * non-printable characters, but these were not written that way in
+ * 2005.
+ *
+ * It is not always clear what to do for unassigned code points
+ * (especially 'private use' ones).
+ *
+ * Although what a character represents may be locale-specific,
+ * reference images are available at
+ * https://www.unicode.org/charts/PDF/ whose width can be assessed.
+ */
+
 #include "rlocale_widths.h"
 
 static int wcwidthsearch(int wint, const struct interval_wcwidth *table,

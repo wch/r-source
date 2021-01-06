@@ -348,9 +348,12 @@
       AIX have been updated to Unicode 13.0.0 -- in particular, many
       more UTF-8 characters (such as emojis) are regarded as printable.
 
+      The character-width tables have been updated to include new
+      assignments in Unicode 13.0.0.
+
       \item The code for evaluating default (extended) regular
       expressions now uses the same character-classification functions
-      as the rest of \R (they previously differed on Windows, macOS and
+      as the rest of \R (previously they differed on Windows, macOS and
       AIX.)
 
       \item There is a build-time option to replace the system's

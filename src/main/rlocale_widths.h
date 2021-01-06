@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2020   The R Core Team
+ *  Copyright (C) 2005-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,30 +33,56 @@ struct interval_wcwidth {
    http://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
    http://www.unicode.org/reports/tr11/
 
-   For the 2020-05 updating, see 
+   For the 2020-05 updating, see
    https://github.com/brodieG/char-width
+
+   2021-01 updated to Unicode 13.0.0, extracting the wide and
+   fullwidth chars by the R script
+
+tab <- read.table("EastAsianWidth.txt", header=FALSE, sep=";")
+names(tab) <- c("range", "class")
+tab <- tab[startsWith(tab$class, "W") |  startsWith(tab$class, "F"),]
+xx <- strsplit(tab$range, "..", fixed = TRUE)
+tab$first <- as.integer(paste0('0x',  sapply(xx, '[', 1)))
+tab$last <- as.integer(paste0('0x', sapply(xx, function(x) x[length(x)])))
+unlink("wd"); prev <- end <- 0
+for(i in seq_along(tab$first))
+{
+    if (prev > 0 && tab$first[i] == tab$last[i-1] + 1) end <- tab$last[i]
+    else {
+        if(prev > 0)
+            cat(sprintf("    {0x%x,0x%x,{2,2,2,2,2,2,2}},\n", prev, end),
+                file = "wd", append = TRUE)
+        prev <- tab$first[i]; end <- tab$last[i]
+    }
+}
+cat(sprintf("    {0x%x,0x%x,{2,2,2,2,2,2,2}},\n",
+            prev, end), file = "wd", append = TRUE)
+
 */
 
 /* Anything not in this table nor the zero-width one is width one */
 
 /* glibc treats the ARIB STD 24 speed limit numbers U+3248-324F
- *  and the I Ching hexagrams U+4DC0-4DFF as wide, so we do too.
+ * (ambiguous in Unicode)
+ * and the I Ching hexagrams U+4DC0-4DFF as wide.
+ * (normal in Unicode tables).
  */
 
 static const struct interval_wcwidth table_wcwidth[] = {
     {0xa1,0xa1,{1,2,2,1,2,1,1}}, // 'East Asian' ambiguous
-    {0xa2,0xa3,{1,2,1,1,1,2,1}},
+    {0xa2,0xa3,{1,2,1,1,1,2,1}}, // Na
     {0xa4,0xa4,{1,2,2,2,2,1,1}}, // EA ambiguous
-    {0xa5,0xa5,{1,1,1,1,1,2,1}},
-    {0xa6,0xa6,{1,2,1,1,1,1,1}},
+    {0xa5,0xa5,{1,1,1,1,1,2,1}}, // Na
+    {0xa6,0xa6,{1,2,1,1,1,1,1}}, // Na
     {0xa7,0xa7,{1,2,2,2,2,2,2}}, // EA ambiguous
     {0xa8,0xa8,{1,2,2,2,2,1,1}}, // EA ambiguous
     {0xa9,0xa9,{1,2,1,1,1,1,1}},
     {0xaa,0xaa,{1,2,2,1,2,1,1}}, // EA ambiguous
-    {0xac,0xac,{1,2,1,1,1,1,1}},
-    {0xad,0xad,{1,1,2,1,2,1,1}},
-    {0xae,0xae,{1,2,2,1,2,1,1}}, // EA ambiguous
-    {0xaf,0xaf,{1,2,1,1,1,1,2}},
+    {0xac,0xac,{1,2,1,1,1,1,1}}, // Na
+    {0xad,0xad,{1,1,2,1,2,1,1}}, // EA ambiguous
+    {0xae,0xae,{1,2,2,1,2,1,1}}, // EA ambiguous:
+    {0xaf,0xaf,{1,2,1,1,1,1,2}}, // Na
     {0xb0,0xb1,{1,2,2,2,2,2,2}}, // EA ambiguous
     {0xb2,0xb3,{1,1,2,1,2,1,1}}, // EA ambiguous
     {0xb4,0xb4,{1,2,2,1,2,1,1}}, // EA ambiguous
@@ -75,7 +101,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0xd7,0xd7,{1,2,2,2,2,2,2}}, // EA ambiguous
     {0xd8,0xd8,{1,2,2,1,2,1,1}}, // EA ambiguous
     {0xd9,0xdd,{1,2,1,1,1,1,1}},
-    {0xde,0xdf,{1,2,2,1,2,1,1}}, // 0xde is EA ambiguous
+    {0xde,0xdf,{1,2,2,1,2,1,1}}, // EA ambiguous
 #ifdef					Win32
     {0xe0,0xe1,{1,2,1,2,1,1,1}}, // EA ambiguous
 #else					/* Win32 */
@@ -487,29 +513,20 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x2e9b,0x2ef3,{2,2,2,2,2,2,2}},
     {0x2f00,0x2fd5,{2,2,2,2,2,2,2}},
     {0x2ff0,0x2ffb,{2,2,2,2,2,2,2}},
-    {0x3000,0x3029,{2,2,2,2,2,2,2}},
-    {0x302e,0x302f,{2,2,2,2,2,2,2}},
-    {0x3030,0x303e,{2,2,2,2,2,2,2}},
+    {0x3000,0x3000,{2,2,2,2,2,2,2}}, // IDEOGRAPHIC SPACE
+    {0x3001,0x303e,{2,2,2,2,2,2,2}},
     {0x3041,0x3096,{2,2,2,2,2,2,2}},
-    {0x309b,0x30ff,{2,2,2,2,2,2,2}},
-    {0x3105,0x312d,{2,2,2,2,2,2,2}},
-    {0x312e,0x312f,{2,2,2,2,2,2,2}},
+    {0x3099,0x30ff,{2,2,2,2,2,2,2}},
+    {0x3105,0x312f,{2,2,2,2,2,2,2}},
     {0x3131,0x318e,{2,2,2,2,2,2,2}},
-    {0x3190,0x31ba,{2,2,2,2,2,2,2}},
-    {0x31c0,0x31e3,{2,2,2,2,2,2,2}},
+    {0x3190,0x31e3,{2,2,2,2,2,2,2}},
     {0x31f0,0x321e,{2,2,2,2,2,2,2}},
-    {0x3220,0x32fe,{2,2,2,2,2,2,2}},
-    {0x32ff,0x32ff,{2,2,2,2,2,2,2}},
-    {0x3300,0x33ff,{2,2,2,2,2,2,2}},
-    {0x3400,0x4db5,{2,2,2,2,2,2,2}}, // CJK Unified Ideographs Extension A (to 4dbf)
-    {0x4db6,0x4dbf,{2,2,2,2,2,2,2}},
-    {0x4dc0,0x4dff,{2,2,2,2,2,2,2}},
-    {0x4e00,0x9fcc,{2,2,2,2,2,2,2}}, // CJK Unified Ideographs (to 9fff)
-    {0x9fcd,0x9fff,{2,2,2,2,2,2,2}},
-    {0xa000,0xa48c,{2,2,2,2,2,2,2}},
-    {0xa490,0xa4c6,{2,2,2,2,2,2,2}},
-    {0xa960,0xa97c,{2,2,2,2,2,2,2}},
-//    {0xa960,0xa97c,{2,2,2,2,2,2,2}},
+    {0x3220,0x3247,{2,2,2,2,2,2,2}},
+    {0x3250,0x4dbf,{2,2,2,2,2,2,2}},
+    {0x4e00,0xa48c,{2,2,2,2,2,2,2}}, // CJK UNIFIED IDEOGRAPH and Yi
+    {0xa490,0xa4c6,{2,2,2,2,2,2,2}}, // Yi
+    {0xa960,0xa97c,{2,2,2,2,2,2,2}}, // HANGUL
+    {0xf900,0xfaff,{2,2,2,2,2,2,2}}, // CJK COMPATIBILITY IDEOGRAPH
     {0xac00,0xd7a3,{2,2,2,2,2,2,2}}, // Hangul
     {0xe000,0xe002,{1,1,1,1,2,1,1}}, // EA ambiguous to f8ff
     {0xe003,0xe003,{1,1,1,1,2,2,1}},
@@ -1317,10 +1334,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0xf7ed,0xf7ee,{1,1,1,1,2,2,2}},
     {0xf7ef,0xf848,{1,1,1,1,2,1,2}},  // EA ambiguous to f8ff
     {0xf849,0xf8ef,{1,1,1,1,2,1,1}},
-    {0xf900,0xfa6d,{2,2,2,2,2,2,2}}, // CJK COMPATIBILITY IDEOGRAPH
-    {0xfa6e,0xfa6f,{2,2,2,2,2,2,2}},
-    {0xfa70,0xfad9,{2,2,2,2,2,2,2}}, // CJK COMPATIBILITY IDEOGRAPH
-    {0xfada,0xfaff,{2,2,2,2,2,2,2}},
+    {0xf900,0xfaff,{2,2,2,2,2,2,2}}, // CJK COMPATIBILITY IDEOGRAPH
     {0xfe10,0xfe19,{2,2,2,2,2,2,2}}, // Presentation forms, small signs
     {0xfe30,0xfe52,{2,2,2,2,2,2,2}},
     {0xfe54,0xfe66,{2,2,2,2,2,2,2}},
@@ -1329,9 +1343,11 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0xff64,0xff64,{1,1,1,1,1,2,1}},
     {0xffe0,0xffe6,{2,2,2,2,2,2,2}}, // fullwidth
     {0xfffd,0xfffd,{1,1,1,1,2,1,1}}, // EA ambiguous
-    {0x16fe0,0x16fe3,{2,2,2,2,2,2,2}},
+    {0x16fe0,0x16fe4,{2,2,2,2,2,2,2}},
+    {0x16ff0,0x16ff1,{2,2,2,2,2,2,2}},
     {0x17000,0x187f7,{2,2,2,2,2,2,2}},
-    {0x18800,0x18af2,{2,2,2,2,2,2,2}},
+    {0x18800,0x18cd5,{2,2,2,2,2,2,2}},
+    {0x18d00,0x18d08,{2,2,2,2,2,2,2}},
     {0x1b000,0x1b11e,{2,2,2,2,2,2,2}},
     {0x1b150,0x1b152,{2,2,2,2,2,2,2}},
     {0x1b164,0x1b167,{2,2,2,2,2,2,2}},
@@ -1366,25 +1382,24 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x1f680,0x1f6c5,{2,2,2,2,2,2,2}},
     {0x1f6cc,0x1f6cc,{2,2,2,2,2,2,2}},
     {0x1f6d0,0x1f6d2,{2,2,2,2,2,2,2}},
-    {0x1f6d5,0x1f6d5,{2,2,2,2,2,2,2}},
+    {0x1f6d5,0x1f6d7,{2,2,2,2,2,2,2}},
     {0x1f6eb,0x1f6ec,{2,2,2,2,2,2,2}},
-    {0x1f6f4,0x1f6fa,{2,2,2,2,2,2,2}},
+    {0x1f6f4,0x1f6fc,{2,2,2,2,2,2,2}},
     {0x1f7e0,0x1f7eb,{2,2,2,2,2,2,2}},
-    {0x1f90d,0x1f971,{2,2,2,2,2,2,2}},
-    {0x1f973,0x1f976,{2,2,2,2,2,2,2}},
-    {0x1f97a,0x1f9a2,{2,2,2,2,2,2,2}},
-    {0x1f9a5,0x1f9aa,{2,2,2,2,2,2,2}},
-    {0x1f9ae,0x1f9ca,{2,2,2,2,2,2,2}},
+    {0x1f90c,0x1f93a,{2,2,2,2,2,2,2}},
+    {0x1f93c,0x1f945,{2,2,2,2,2,2,2}},
+    {0x1f947,0x1f978,{2,2,2,2,2,2,2}},
+    {0x1f97a,0x1f9cb,{2,2,2,2,2,2,2}},
     {0x1f9cd,0x1f9ff,{2,2,2,2,2,2,2}},
-    {0x1fa70,0x1fa73,{2,2,2,2,2,2,2}},
+    {0x1fa70,0x1fa74,{2,2,2,2,2,2,2}},
     {0x1fa78,0x1fa7a,{2,2,2,2,2,2,2}},
-    {0x1fa80,0x1fa82,{2,2,2,2,2,2,2}},
-    {0x1fa90,0x1fa95,{2,2,2,2,2,2,2}},
-    // 13.0.0 has all in planes 2 and 3 as wide chars
-    // so have merged separate entries
-    {0x20000,0x3fffd,{2,2,2,2,2,2,2}},
-    // {0xf0000,0xffffd,{1,1,1,1,2,1,1}}, // Private use, so ??
-    // {0x100000,0x10fffd,{1,1,1,1,2,1,1}}, // Private use, so ??
+    {0x1fa80,0x1fa86,{2,2,2,2,2,2,2}},
+    {0x1fa90,0x1faa8,{2,2,2,2,2,2,2}},
+    {0x1fab0,0x1fab6,{2,2,2,2,2,2,2}},
+    {0x1fac0,0x1fac2,{2,2,2,2,2,2,2}},
+    {0x1fad0,0x1fad6,{2,2,2,2,2,2,2}},
+    // 13.0.0 has all in planes 2 and 3 as wide chars, assigned or not
+    {0x20000,0x3ffff,{2,2,2,2,2,2,2}}
 };
 
 /* From http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
