@@ -15,6 +15,10 @@
       \item Unicode character width tables (as used by
       \code{nchar(, type = "w")}) have been updated to Unicode 12.1
       by Brodie Gaslam (\PR{17781}), including many emoji.
+
+      \item The internal table for \code{iswprint} (used on Windows,
+      macOS and AIX) has been updated to include many recent Unicode
+      characters.
     }
   }
 
