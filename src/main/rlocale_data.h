@@ -36,6 +36,8 @@
 
    Or look at the glibc sources (data in localedata/unicode-gen).
    That generates a file i18n_ctype via a Python script gen_unicode_ctype.py.
+
+   Unicode 14.0 is expected ca 2021-09.
  */
 
 /* ------------------- iswalpha -------------------- */
@@ -2241,6 +2243,8 @@ uniset  +cat=Lu +cat=Ll +cat=Lt +cat=Lm +cat=Lo +cat=Nd +cat=Pc +cat=Pd \
   c > print.h
 
 Some spaces are not printable (0x9..0xD), nor 2028..2029
+However, 200D (zero-width joiner) has to be, and is not in native macOS.
+
 We regard private use ranges as printable: glibc does not.
  */
 static const struct interval table_wprint[] = {

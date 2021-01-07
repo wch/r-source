@@ -59,6 +59,7 @@ for(i in seq_along(tab$first))
 cat(sprintf("    {0x%x,0x%x,{2,2,2,2,2,2,2}},\n",
             prev, end), file = "wd", append = TRUE)
 
+Unicode 14.0 is expected ca 2021-09.
 */
 
 /* Anything not in this table nor the zero-width one is width one */
