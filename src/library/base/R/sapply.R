@@ -34,13 +34,15 @@ simplify2array <- function(x, higher = TRUE)
         r <- unlist(x, recursive = FALSE)
         if(length(r) == n) r else x
     }
-    else if(common.len > 1L) {
+    else {
         n <- length(x)
         ## make sure that array(*) will not call rep() {e.g. for 'call's}:
 	r <- unlist(x, recursive = FALSE, use.names = FALSE)
-        if(higher && length(c.dim <- unique(lapply(x, dim))) == 1 &&
-           is.numeric(c.dim <- c.dim[[1L]]) &&
-           prod(d <- c(c.dim, n)) == length(r)) {
+        if(is.null(r))
+            x
+        else if(higher && length(c.dim <- unique(lapply(x, dim))) == 1 &&
+                is.numeric(c.dim <- c.dim[[1L]]) &&
+                prod(d <- c(c.dim, n)) == length(r)) {
 
             iN1 <- is.null(n1 <- dimnames(x[[1L]]))
             n2 <- names(x)
@@ -56,7 +58,6 @@ simplify2array <- function(x, higher = TRUE)
                   is.null(n2 <- names(x)))) list(n1,n2))
         else x
     }
-    else x
 }
 
 sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
