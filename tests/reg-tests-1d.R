@@ -4664,15 +4664,26 @@ f # failed for a while (in R-devel only)
 ## all.equal.function() in case the env contains '...' -- PR#18010
 a <- (function(...) function() NULL)(1)
 b <- (function(...) function() NULL)(1) # want "a .eq. b"
-D <- (function(...) function() NULL)(22)# want "D .NE. b"
+D <- (function(...) function() NULL)(1:2 < 3) # want "D .NE. b"
 e.. <- (function(...) environment())(1)
-str( ddd <-            e..[["..."]] ) # ... 1
-str( Ddd <- environment(D)[["..."]] ) # ... 22
+...maker <- function(expr)   (function(...) environment())(expr)  [["..."]]
+..2maker <- function(e1, e2) (function(...) environment())(e1, e2)[["..."]]
+str( ddd <- ...maker(1) )
+str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...": c(TRUE,TRUE)
+str( D2  <- ..2maker(TRUE,TRUE))      # length 2, mode "...": TRUE TRUE
 stopifnot(exprs = {
+    identical(ddd, ...maker(1))
+    identical(Ddd, ...maker(1:2 < 3))
+    identical(Ddd, ...maker(c(TRUE, TRUE)))
+    is.character(aeLD <- all.equal(quote(x+1), ddd))
+    grepl("Mode",    aeLD[1])
+    grepl("deparse", aeLD[2])
     all.equal(a, b) # failed with "Component “...”: target is not list-like" since r79585 (2020-12-07)
     all.equal(e.., environment(a))
     ## all.equal() dispatch for "..." objects ('ddd') directly:
     typeof(ddd) == "..."
+    typeof(D2) == "..."
+    length(D2) == 2
     ## FIXME: is.character(aeD <- all.equal(a, D) )
 })
 ##  for identical() ==> ./reg-tests-2.R  -- as it's about "output"
@@ -4694,11 +4705,11 @@ sapply(Qlis, class)
 stopifnot( sapply(Qlis, function(obj) all.equal(obj, obj)) )
 options(op) # only the first failed in R <= 4.0.3
 
-## TODO:
+## See PR#18012 -- may well change
 aS <- (function(x) function() NULL)(stop('hello'))
 bS <- (function(x) function() NULL)(stop('hello'))
 try( all.equal(aS, bS) ) ## now (check.environment=TRUE) triggers the promise ..
-## Should  all.equal.environment(*, no.force) should not evaluate the promise ??
+## Now have a way *not* to evaluate aka force the promise:
 (aeS <- all.equal(aS, bS, evaluate=FALSE)) # no promises forced
 stopifnot(grepl("same names.* not identical", aeS))
 

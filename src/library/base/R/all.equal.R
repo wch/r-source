@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -323,10 +323,13 @@ all.equal.language <- function(target, current, ...)
     if(mt == "expression" && mc == "expression")
 	return(all.equal.list(target, current, ...))
     ttxt <- paste(deparse(target ), collapse = "\n")
-    ctxt <- paste(deparse(current), collapse = "\n")
+    ## try: if 'current' is not "language" and deparse() bails out for DOTSXP, see PR#18029
+    ctxt <- tryCatch(paste(deparse(current), collapse = "\n"), error=function(e) NULL)
     msg <- c(if(mt != mc)
 	     paste0("Modes of target, current: ", mt, ", ", mc),
-	     if(ttxt != ctxt) {
+	     if(is.null(ctxt))
+		 "current is not deparse()able"
+	     else if(ttxt != ctxt) {
 		 if(pmatch(ttxt, ctxt, 0L))
 		     "target is a subset of current"
 		 else if(pmatch(ctxt, ttxt, 0L))

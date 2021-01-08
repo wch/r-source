@@ -545,6 +545,8 @@
 
       \item Fix (auto-)\code{print()}ing of named complex vectors, see
       \PR{17868} and \PR{18019}.
+
+      \item \code{all.equal(<language>, <...>)} now works, fixing \PR{18029}.
     }
   }
 }
