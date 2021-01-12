@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2021 R Core Team
 % Copyright      2008 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -30,17 +30,16 @@ Sys.info()
     cannot be ascertained.  This may differ from the real user in
     \sQuote{set-user-ID} processes.}
 
-#ifdef unix
-  The first five fields come from the \code{uname(2)} system call.  The
-  login name comes from \code{getlogin(2)}, and the user names from
-  \code{getpwuid(getuid())} and \code{getpwuid(geteuid())}
-#endif
-#ifdef windows
-  The last three fields give the same value on Windows.
-#endif  
+  \describe{
+    \item{On Unix-alike platforms: }{
+      The first five fields come from the \code{uname(2)} system call.  The
+      login name comes from \code{getlogin(2)}, and the user names from
+      \code{getpwuid(getuid())} and \code{getpwuid(geteuid())}.}
+    \item{On Windows: }{The last three fields give the same value.}
+  }
 }
 \details{
-  This uses POSIX or Windows system calls.  Note that OS names might not
+  This uses POSIX or Windows system calls.  Note that OS names (\code{sysname}) might not
   be what you expect: for example macOS identifies itself as
   \samp{Darwin} and Solaris as \samp{SunOS}.
 
@@ -59,7 +58,7 @@ Sys.info()
     "17.7.0"                  # macOS 10.13.6
     "5.11"                    # Solaris
   }
-  
+
   There is no guarantee that the node or login or user names will be
   what you might reasonably expect.  (In particular on some Linux
   distributions the login name is unknown from sessions with re-directed
@@ -70,10 +69,12 @@ Sys.info()
   on Unix-alikes, provided only the POSIX options \option{-[Ggu][nr]} are
   used (and not the many BSD and GNU extensions).  \command{whoami} is
   equivalent to \command{id -un} (on Solaris, \command{/usr/xpg4/bin/id -un}).
-#ifdef windows
 
-  Windows may report unexpected versions: see the help for
-  \code{\link{win.version}}.
+  Windows may report unexpected versions: there, see the help for
+#ifdef windows
+    \code{\link{win.version}()}.
+#else
+    \code{win.version()}.
 #endif
 }
 

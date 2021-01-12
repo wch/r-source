@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2019 The R Core Team
+#  Copyright (C) 2015-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ function(x)
 }
 
 .get_urls_from_Rd <-
-function(x)
+function(x, href = TRUE, ifdef = FALSE)
 {
     urls <- character()
     recurse <- function(e) {
@@ -52,8 +52,22 @@ function(x)
         ## Rd2HTML and Rd2latex remove whitespace and \n from URLs.
         if(identical(tag, "\\url")) {
             urls <<- c(urls, lines2str(.Rd_deparse(e, tag = FALSE)))
-        } else if(identical(tag, "\\href")) {
+        } else if(href && identical(tag, "\\href")) {
+            ## One could also record the \href text argument in the
+            ## names, but then one would need to process named and
+            ## unnamed extracted URLs separately.
             urls <<- c(urls, lines2str(.Rd_deparse(e[[1L]], tag = FALSE)))
+        } else if(ifdef && length(tag) && (tag %in% c("\\if", "\\ifelse"))) {
+            ## cf. testRdConditional()
+            condition <- e[[1L]]
+            if(all(RdTags(condition) == "TEXT")) {
+                if(any(c("TRUE", "html") %in%
+                       trimws(strsplit(paste(condition, collapse = ""), 
+                                       ",")[[1L]])))
+                    recurse(e[[2L]])
+                else if(tag == "\\ifelse")
+                    recurse(e[[3L]])
+            }
         } else if(is.list(e))
             lapply(e, recurse)
     }
@@ -721,6 +735,11 @@ function(x, ...)
                             followlocation = 1L,
                             http_version = 2L,
                             ssl_enable_alpn = 0L)
+        timeout <- as.integer(getOption("timeout"))
+        if(!is.na(timeout) && (timeout > 0L))
+            curl::handle_setopt(h,
+                                connecttimeout = timeout,
+                                timeout = timeout)
         if(grepl("^https?://github[.]com", u) &&
            nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
             curl::handle_setheaders(h, "Authorization" = paste("token", a))
@@ -779,6 +798,11 @@ function(u, verbose = FALSE)
                         followlocation = 1,
                         http_version = 2L,
                         ssl_enable_alpn = 0)
+    timeout <- as.integer(getOption("timeout"))
+    if(!is.na(timeout) && (timeout > 0L))
+        curl::handle_setopt(h,
+                            connecttimeout = timeout,
+                            timeout = timeout)
     if(startsWith(u, "https://github.com") &&
        nzchar(a <- Sys.getenv("GITHUB_PAT", "")))
         curl::handle_setheaders(h, "Authorization" = paste("token", a))

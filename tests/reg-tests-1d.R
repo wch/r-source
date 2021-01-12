@@ -4655,6 +4655,77 @@ stopifnot(identical(n0, p.adjust(n0, n = length(n0))))
 ## errored in R <= 4.0.3
 
 
+## show(<standardGeneric>) where it has package ".GlobalEnv"
+f <- function(x) x
+setGeneric("f")
+f # failed for a while (in R-devel only)
+
+
+## all.equal.function() in case the env contains '...' -- PR#18010
+a <- (function(...) function() NULL)(1)
+b <- (function(...) function() NULL)(1) # want "a .eq. b"
+D <- (function(...) function() NULL)(1:2 < 3) # want "D .NE. b"
+e.. <- (function(...) environment())(1)
+##' General creator of "..."  (DOTSXP) objects (short form by Suharto Anggono):
+...maker <- function(...) get("...")
+str( ddd <- ...maker(1) )
+str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...": c(TRUE,TRUE)
+str( D2  <- ...maker(TRUE,TRUE))      # length 2, mode "...": TRUE TRUE
+stopifnot(exprs = {
+    identical(ddd, ...maker(1))
+    identical(Ddd, ...maker(1:2 < 3))
+    is.character(aeLD <- all.equal(quote(x+1), ddd))
+    grepl("Mode",    aeLD[1])
+    grepl("deparse", aeLD[2])
+    all.equal(a, b) # failed with "Component “...”: target is not list-like" since r79585 (2020-12-07)
+    all.equal(e.., environment(a))
+    ## all.equal() dispatch for "..." objects ('ddd') directly:
+    typeof(ddd) == "..."
+    typeof(D2) == "..."
+    length(D2) == 2
+    ## FIXME: is.character(aeD <- all.equal(a, D) )
+})
+##  for identical() ==> ./reg-tests-2.R  -- as it's about "output"
+op <- options(keep.source = FALSE) # don't keep "srcref" etc
+##
+Qlis <- list(NULL
+## FIXME!  These should work
+## , ddd = ddd
+## , Ddd = Ddd
+, Qass   = quote(x <- 1)
+, Qbrc   = quote({1})
+, Qparen = quote((1))
+, Qif    = quote(if(1)2)
+, Qif2   = quote(if(1)2 else 3)
+, Qwhile = quote(while(1) 2)
+)
+##
+sapply(Qlis, class)
+stopifnot( sapply(Qlis, function(obj) all.equal(obj, obj)) )
+## only the first failed in R <= 4.0.3
+
+## See PR#18012 -- may well change
+aS <- (function(x) function() NULL)(stop('hello'))
+bS <- (function(x) function() NULL)(stop('hello'))
+try( all.equal(aS, bS) ) ## now (check.environment=TRUE) triggers the promise ..
+## Now have a way *not* to evaluate aka force the promise:
+(aeS <- all.equal(aS, bS, evaluate=FALSE)) # no promises forced
+stopifnot(grepl("same names.* not identical", aeS))
+
+
+## PR#18032: identical(<DOTSXP>,*)
+ddd <- ...maker(47)
+DDD <- ...maker(ch = {cat("Hu hu!\n"); "arg1"}, two = 1+1, pi, ABC="A")
+stopifnot(exprs = {
+    identical(ddd,ddd)
+    identical(DDD,DDD)
+    identical  (ddd, ...maker(47))
+    ! identical(ddd, ...maker(7 )) # these *are* different
+    ! identical(ddd, DDD)
+})
+options(op)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

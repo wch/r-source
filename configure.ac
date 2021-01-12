@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2020 R Core Team
+### Copyright (C) 1998-2021 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -494,6 +494,21 @@ AC_ARG_WITH([internal-tzcode],
 [AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no, yes on macOS@:>@])],
 [use_internal_tzcode=${withval}],
 [use_internal_tzcode=default])
+
+AC_ARG_WITH([internal-towlower],
+[AS_HELP_STRING([--with-internal-towlower],[use internal code for towlower/upper @<:@no, yes on macOS and Solaris@:>@])],
+[use_internal_towlower=${withval}],
+[use_internal_towlower=default])
+
+AC_ARG_WITH([internal-iswxxxxx],
+[AS_HELP_STRING([--with-internal-iswxxxxx],[use internal iswprint etc. @<:@no, yes on macOS, Solaris and AIX@:>@])],
+[use_internal_iswxxxxx=${withval}],
+[use_internal_iswxxxxx=default])
+
+AC_ARG_WITH([internal-wcwidth],
+[AS_HELP_STRING([--with-internal-wcwidth],[use internal wcwidth @<:@yes@:>@])],
+[use_internal_wcwidth=${withval}],
+[use_internal_wcwidth=yes])
 
 
 ## <FIXME>
@@ -2096,6 +2111,41 @@ if test "${use_internal_tzcode}" != yes; then
   R_FUNC_MKTIME
 fi
 
+if test x${use_internal_iswxxxxx} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_iswxxxxx=yes;
+     ;; 
+   aix*)
+     use_internal_iswxxxxx=yes;
+     ;; 
+   solaris*)
+     use_internal_iswxxxxx=yes;
+     ;; 
+esac
+fi
+if test x${use_internal_iswxxxxx} = xyes; then
+  AC_DEFINE(USE_RI18N_FNS, 1, [Define to 1 to use internal `iswprint' etc.])
+fi
+
+if test x${use_internal_wcwidth} = xyes; then
+  AC_DEFINE(USE_RI18N_WIDTH, 1, [Define to 1 to use internal `wcwidth'])
+fi
+
+if test x${use_internal_towlower} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_towlower=yes;
+     ;; 
+   solaris*)
+     use_internal_towlower=yes;
+     ;; 
+esac
+fi
+if test x${use_internal_towlower} = xyes; then
+  AC_DEFINE(USE_RI18N_CASE, 1, [Define to 1 to use internal code for `towlower' and `towupper'.])
+fi
+
 R_C99_COMPLEX
 R_FUNC_CTANH
 
@@ -2668,7 +2718,7 @@ AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
 R_OPENMP_SIMDRED
 
 ### shell for use in scripts: we allow R_SHELL to set the script,
-### since some AIX systems have zsh as sh.
+### since some AIX and macOS systems have zsh as sh.
 : ${R_SHELL=${SHELL}}
 AC_SUBST(R_SHELL)
 AC_MSG_RESULT([using as R_SHELL for scripts ... ${R_SHELL}])

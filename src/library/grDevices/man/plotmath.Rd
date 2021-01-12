@@ -252,7 +252,7 @@
   % \url{https://www.adobe.com/products/postscript/pdfs/PLRM.pdf} now points to
   \url{https://www.adobe.com/content/dam/acom/en/devnet/actionscript/articles/PLRM.pdf}
   or PDF
-  \url{https://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
+  \url{https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
   and in decimal, octal and hex at
   \url{https://www.stat.auckland.ac.nz/~paul/R/CM/AdobeSym.html}.
 }

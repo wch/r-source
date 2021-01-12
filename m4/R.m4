@@ -1965,10 +1965,21 @@ if test "${use_libtiff}" = yes; then
     else
       # tiff 4.0.x may need lzma too: SU's static build does
       unset ac_cv_lib_tiff_TIFFOpen
-      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-llzma ${BITMAP_LIBS} -llzma])
+      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-llzma ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xyes; then
         AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
         BITMAP_LIBS="-ltiff -llzma ${BITMAP_LIBS}"
+      else
+        have_tiff=no
+      fi
+    fi
+    if test "x${have_tiff}" != xyes; then
+      # tiff 4.1.x may need webp too:
+      unset ac_cv_lib_tiff_TIFFOpen
+      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-lwebp -llzma ${BITMAP_LIBS}])
+      if test "x${have_tiff}" = xyes; then
+        AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
+        BITMAP_LIBS="-ltiff -lwebp  -llzma ${BITMAP_LIBS}"
       else
         have_tiff=no
       fi
@@ -2030,6 +2041,8 @@ if test "${use_libpng}" = yes; then
       AC_CHECK_LIB(png, png_create_write_struct, 
                    [have_png=yes], [have_png=no], [${PNG_LIBS} ${LIBS}])
       if test "${have_png}" = no; then
+        dnl currently this is the same as --libs, but might change.
+        unset ac_cv_lib_png_png_create_write_struct
         PNG_LIBS=`"${PKG_CONFIG}" --static --libs libpng`
         AC_CHECK_LIB(png, png_create_write_struct, 
                      [have_png=yes], [have_png=no], [${PNG_LIBS} ${LIBS}])
@@ -2068,6 +2081,7 @@ if test "${use_libtiff}" = yes; then
       AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no],
                    [${TIF_LIBS} ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xno; then
+        unset ac_cv_lib_tiff_TIFFOpen
         TIF_LIBS=`"${PKG_CONFIG}" --static --libs ${mod}`
         AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no],
                      [${TIF_LIBS} ${BITMAP_LIBS}])
@@ -2690,7 +2704,8 @@ c Goto's BLAS at least needs a XERBLA
       zres = zdotu(2, zx, 1, zx, 1)
       ztemp = (0.0d0,0.0d0)
       do 10 i = 1,2
- 10      ztemp = ztemp + zx(i)*zx(i)
+         ztemp = ztemp + zx(i)*zx(i)
+ 10      continue
       if(abs(zres - ztemp) > 1.0d-10) then
         iflag = 1
       else
@@ -3649,11 +3664,10 @@ for ac_header in wchar wctype; do
   fi
 done
 if test "$want_mbcs_support" = yes ; then
-dnl Solaris 8 is missing iswblank, but we can make it from iswctype.
 dnl These are all C99, but Cygwin lacks wcsftime & wcstod
   R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime wcstod], [#include <wchar.h>])
   R_CHECK_FUNCS([mbstowcs wcstombs], [#include <stdlib.h>])
-  R_CHECK_FUNCS([wctrans iswblank wctype iswctype], 
+  R_CHECK_FUNCS([wctrans wctype iswctype], 
 [#include <wchar.h>
 #include <wctype.h>])
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcstombs \
@@ -3665,6 +3679,10 @@ dnl These are all C99, but Cygwin lacks wcsftime & wcstod
       want_mbcs_support=no
     fi
   done
+fi
+dnl These are POSIX. not used by default.
+if test "$want_mbcs_support" = yes ; then
+  R_CHECK_FUNCS([wcwidth wcswidth], [#include <wchar.h>])
 fi
 dnl it seems IRIX once had wctrans but not wctrans_t: we check this when we
 dnl know we have the headers and wctrans().

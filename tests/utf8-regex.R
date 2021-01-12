@@ -178,3 +178,37 @@ stopifnot(y == c(x[1], " abc", "a b c ", "a b c"))
 
 ## Bad mapping of code points to characters with surrogate pairs (in R 4.0)
 stopifnot(regexpr("b", "\U0001F937b", perl = TRUE) == 2)
+
+## Mixed MBCS and "bytes" encoded, regression in r73569 (Bugzilla 18021)
+x <- rep("\u00e9ab", 2)
+Encoding(x[2]) <- "bytes"
+res <- c("a", "a")
+stopifnot(identical(regmatches(x, regexpr("a", x, perl=TRUE)), res),
+          identical(regmatches(x, regexpr("a", x)), res),
+          identical(unlist(regmatches(x, regexpr("a", x, perl=TRUE))), res),
+          identical(unlist(regmatches(x, regexpr("a", x))), res),
+          identical(unlist(regmatches(x, regexec("a", x, perl=TRUE))), res),
+          identical(unlist(regmatches(x, regexec("a", x))), res),
+          ## Fixed = TRUE
+          identical(regmatches(x, regexpr("a", x, fixed=TRUE)), res),
+          identical(unlist(regmatches(x, regexpr("a", x, fixed=TRUE))), res),
+          identical(unlist(regmatches(x, regexec("a", x, fixed=TRUE))), res))
+
+## Bytes index computation on ASCII used as "character" on non-ASCII
+## Identical itself produces error if we end up with byte encoded
+## values, which is what we're trying to avoid.
+
+x <- rep("eab", 2)
+y <- c("eab", "e\u03b1b")
+res <- c("a", "\u03b1")
+stopifnot(identical(regmatches(y, regexpr("a", x)), res),
+          identical(regmatches(y, regexpr("a", x, perl=TRUE)), res),
+          identical(unlist(regmatches(y, gregexpr("a", x))), res),
+          identical(unlist(regmatches(y, gregexpr("a", x, perl=TRUE))), res),
+          identical(unlist(regmatches(y, regexec("a", x))), res),
+          identical(unlist(regmatches(y, regexec("a", x, perl=TRUE))), res),
+          ## Fixed = TRUE
+          identical(regmatches(y, regexpr("a", x, fixed=TRUE)), res),
+          identical(unlist(regmatches(y, gregexpr("a", x, fixed=TRUE))), res),
+          identical(unlist(regmatches(y, regexec("a", x, fixed=TRUE))), res))
+

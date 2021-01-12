@@ -1,6 +1,6 @@
 % File src/library/tools/man/check_packages_in_dir.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013-2017 R Core Team
+% Copyright 2013-2020 R Core Team
 % Distributed under GPL 2 or later
 
 \name{check_packages_in_dir}
@@ -51,8 +51,8 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE, ...)
     package names.}
   \item{reverse}{a list with names partially matching \code{"repos"},
     \code{"which"}, or \code{"recursive"}, giving the repositories to
-    use for locating reverse dependencies (default:
-    \code{getOption("repos")}), the types of reverse dependencies
+    use for locating reverse dependencies (a subset of
+    \code{getOption("repos")}, the default), the types of reverse dependencies
     (default: \code{c("Depends", "Imports", "LinkingTo")}, with
     shorthands \code{"most"} and \code{"all"} as for
     \code{\link{package_dependencies}}), and indicating whether to also

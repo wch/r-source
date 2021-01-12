@@ -49,8 +49,8 @@ validDetails.roundrect <- function(x) {
         stop("'r' must be a 'unit' object")
     valid.just(x$just)
     # Make sure that x and y are of length 1
-    if (length(x$x) != 1 | length(x$y) != 1 |
-        length(x$width) != 1 | length(x$height) != 1)
+    if (length(x$x) != 1 || length(x$y) != 1 ||
+        length(x$width) != 1 || length(x$height) != 1)
         stop("'x', 'y', 'width', and 'height' must have length 1")
     x
 }

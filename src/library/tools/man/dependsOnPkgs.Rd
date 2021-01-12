@@ -1,6 +1,6 @@
 % File src/library/tools/man/getDepList.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2015 R Core Team
+% Copyright 2008-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dependsOnPkgs}
@@ -37,8 +37,12 @@ dependsOnPkgs(pkgs,
   A character vector of package names, which does not include any from
   \code{pkgs}.
 }
-% do not test as result depends if recommended packages are installed.
+\seealso{
+  \code{\link{package_dependencies}()} to get the regular
+  (\dQuote{forward}) dependencies of a package.
+}
 \examples{\donttest{
+% do not test as result depends if recommended packages are installed.
 ## there are few dependencies in a vanilla R installation:
 ## lattice may not be installed
 dependsOnPkgs("lattice")

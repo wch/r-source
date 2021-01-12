@@ -30,9 +30,9 @@
 #include "Parse.h"
 #include <R_ext/Print.h>
 
-#if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
+#if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun))
 /* This may not be 100% true (see the comment in rlocale.h),
-   but it seems true in normal locales.  Also seems to be true for __sun__.
+   but it seems true in normal locales.
  */
 # define __STDC_ISO_10646__
 #endif
@@ -2406,10 +2406,12 @@ static char yytext[MAXELTSIZE];
 static int SkipSpace(void)
 {
     int c;
-    static wctype_t blankwct = 0;
 
+#if defined(USE_RI18N_FNS) // includes Win32
+    static wctype_t blankwct = 0;
     if (!blankwct)
 	blankwct = Ri18n_wctype("blank");
+#endif
 
 #ifdef Win32
     if(!mbcslocale) { /* 0xa0 is NBSP in all 8-bit Windows locales */
@@ -2441,11 +2443,16 @@ static int SkipSpace(void)
 	    if (c == '\n' || c == R_EOF) break;
 	    if ((unsigned int) c < 0x80) break;
 	    clen = mbcs_get_next(c, &wc);
+#if defined(USE_RI18N_FNS)
 	    if(! Ri18n_iswctype(wc, blankwct) ) break;
+#else
+	    if(! iswblank(wc) ) break;
+#endif
 	    for(i = 1; i < clen; i++) c = xxgetc();
 	}
     } else
 #endif
+	// does not support non-ASCII spaces, unlike Windows
 	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f') ;
     return c;
 }
@@ -3213,6 +3220,7 @@ static int SymbolValue(int c)
     int kw;
     DECLARE_YYTEXT_BUFP(yyp);
     if(mbcslocale) {
+	// FIXME potentially need R_wchar_t with UTF-8 Windows.
 	wchar_t wc; int i, clen;
 	clen = mbcs_get_next(c, &wc);
 	while(1) {
@@ -3388,6 +3396,7 @@ static int token(void)
     if (c == '_') return Placeholder(c);
 #endif
     if(mbcslocale) {
+	// FIXME potentially need R_wchar_t with UTF-8 Windows.
 	mbcs_get_next(c, &wc);
 	if (iswalpha(wc)) return SymbolValue(c);
     } else

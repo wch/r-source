@@ -26,7 +26,7 @@ as.call(x)
   \describe{
     \item{\code{call} }{returns an unevaluated function call, that is, an
       unevaluated expression which consists of the named function applied to
-      the given arguments (\code{name} must be a quoted string which gives
+      the given arguments (\code{name} must be a string which gives
       the name of a function to be called).  Note that although the call is
       unevaluated, the arguments \code{\dots} are evaluated.
 
@@ -47,8 +47,7 @@ as.call(x)
     }
     \item{\code{as.call(x)}: }{Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
       The first element of the list becomes the function part of the call,
-      so should be a function or the name of one (as a symbol; a quoted
-      string will not do).
+      so should be a function or the name of one (as a symbol; a character string will not do).
 
       If you think of using \code{as.call(<string>)}, consider using
       \code{\link{str2lang}(*)} which is an efficient version of

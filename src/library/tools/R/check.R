@@ -199,6 +199,11 @@ setRlibs <-
         }
     }
 
+    unlink_dummies <- function(pkgs) {
+        pd <- file.path(tmplib, pkgs)
+        unlink(pd[file.exists(file.path(pd, "dummy_for_check"))], TRUE)
+    }
+
     sug <- if (suggests)  names(pi$Suggests)
     else {
         ## we always need to be able to recognise 'vignettes'
@@ -231,13 +236,13 @@ setRlibs <-
                 if (pkg %in% recommended) unlink(file.path(tmplib, pkg), TRUE)
                 ## hard-code dependencies for now.
                 if (pkg == "mgcv")
-                    unlink(file.path(tmplib, c("Matrix", "lattice", "nlme") %w/o% thispkg), TRUE)
+                    unlink_dummies(c("Matrix", "lattice", "nlme") %w/o% thispkg)
                 if (pkg == "Matrix")
-                    unlink(file.path(tmplib, "lattice" %w/o% thispkg), TRUE)
+                    unlink_dummies("lattice" %w/o% thispkg)
                 if (pkg == "class")
-                    unlink(file.path(tmplib, "MASS" %w/o% thispkg), TRUE)
+                    unlink_dummies("MASS" %w/o% thispkg)
                 if (pkg == "nlme")
-                    unlink(file.path(tmplib, "lattice" %w/o% thispkg), TRUE)
+                    unlink_dummies("lattice" %w/o% thispkg)
             }
             where <- find.package(pkg, quiet = TRUE)
             if(length(where)) {

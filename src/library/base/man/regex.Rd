@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -13,7 +13,8 @@
   This help page documents the regular expression patterns supported by
   \code{\link{grep}} and related functions \code{grepl}, \code{regexpr},
   \code{gregexpr}, \code{sub} and \code{gsub}, as well as by
-  \code{\link{strsplit}}.
+  \code{\link{strsplit}} and optionally by \code{\link{agrep}} and
+  \code{\link{agrepl}}.
 }
 \details{
   A \sQuote{regular expression} is a pattern that describes a set of
@@ -222,7 +223,7 @@
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
   locales and if any of the inputs are marked as UTF-8 (see
-  \code{\link{Encoding}}).
+  \code{\link{Encoding}}, or as Latin-1 except in a Latin-1 locale.
 
   All the regular expressions described for extended regular expressions
   are accepted except \samp{\\<} and \samp{\\>}: in Perl all backslashed
@@ -343,15 +344,14 @@
 }
 \author{
   This help page is based on the TRE documentation and the POSIX
-  standard, and the \code{pcre2pattern} man page from PCRE2 10.35
+  standard, and the \code{pcre2pattern} man page from PCRE2 10.35.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
   \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
-  \code{\link{ls}} and \code{\link{strsplit}}.
+  \code{\link{ls}}, \code{\link{strsplit}} and \code{\link{agrep}}.
 
-  The TRE documentation at
-  \url{https://laurikari.net/tre/documentation/regex-syntax/}.
+  The \href{https://htmlpreview.github.io/?https://raw.githubusercontent.com/laurikari/tre/master/doc/tre-syntax.html}{TRE regexp syntax}.
 
   The POSIX 1003.2 standard at
   \url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
@@ -359,6 +359,6 @@
   The \code{pcre2pattern} or \code{pcrepattern} \command{man} page
   (found as part of \url{https://www.pcre.org/original/pcre.txt}), and
   details of Perl's own implementation at
-  \url{https://perldoc.perl.org/perlre.html}.
+  \url{https://perldoc.perl.org/perlre}.
 }
 \keyword{character}

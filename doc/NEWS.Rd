@@ -54,10 +54,6 @@
       character string, or by giving the first elements of their class
       vector and their length.
 
-      \item Unicode character width tables (as used by
-      \code{nchar(, type="w")}) have been updated to Unicode 12.1
-      by Brodie Gaslam (\PR{17781}).
-
       \item \code{capabilities()} gets new entry \code{"Rprof"} which is
       \code{TRUE} when \R has been configured with the equivalent of
       \command{--enable-R-profiling} (as it is by default): related to
@@ -166,17 +162,12 @@
       \code{nls()} fits, e.g., may now need \code{all.equal(m1, m2,
 	check.environment = FALSE)}.
 
-      \item The parser now treats \samp{\\Unnnnnnnn} escapes larger than
-      the upper limit for Unicode points (\samp{\\U10FFFF}) as an error
-      as they cannot be represented by valid UTF-8.
+      \item \code{.libPaths()} gets a new option \code{include.site},
+      allowing to \emph{not} include the site library, thanks to Dario
+      Strbenac's suggestion and Gabe Becker's \PR{18016}.
 
-      Where such escapes are use for outputting non-printable
-      characters, 6 (not 8) hex digits are used (as it was decided by
-      Unicode  that the first two would always be zero).
-
-      \item Code converting UTF-8 strings (e.g., \code{tolower()} and some
-      \sQuote{printing} now uses internal routines rather than system
-      functions:  these detect more uses of invalid UTF-8 strings.
+      \item Lithuanian translations are now available, thanks to
+      Rimantas Žakauskas.
     }
   }
 
@@ -231,6 +222,30 @@
       looked for on the path (like almost all other programs) so if needed
       specify a full path to the command in \code{PKG_CONFIG}, for example
       in file \file{config.site}.
+
+      \item C99 function \code{iswblank} is required -- it was last seen
+      missing ca 2003 so the workaround has been removed.
+
+      \item There are new \command{configure} options
+      \option{--with-internal-iswxxxxx},
+      \option{--with-internal-towlower} and
+      \option{--with-internal-wcwidth} which allows the system functions
+      for wide-character classification, case-switching and width
+      (\code{wcwidth} and \code{wcswidth}) to be replaced by internal
+      ones.  The first has long been used on macOS, AIX (and Windows)
+      but this enables it to be unselected there and selected for other
+      platforms (it is the new default on Solaris).  The second is new
+      in this version of \R and is selected by default on macOS and
+      Solaris.  The third has long been the default and remains so as it
+      contains customizations for East Asian languages.
+
+      System versions of these functions are often minimally implemented
+      (sometimes only for ASCII characters) and may not cover the full
+      range of Unicode points: for example Solaris (and Windows) only
+      cover the Basic Multilingual Plane.
+
+      \item Cairo installations without X11 are more likely to be
+      detected by \command{configure}.
     }
   }
 
@@ -303,6 +318,52 @@
       \item \command{R CMD build} now omits tarballs and binaries of
       previous builds from the top-level package directory; \PR{17828},
       patch by Sebastian Meyer.
+    }
+  }
+
+  \subsection{ENCODING-RELATED CHANGES}{
+    \itemize{
+      \item The parser now treats \samp{\\Unnnnnnnn} escapes larger than
+      the upper limit for Unicode points (\samp{\\U10FFFF}) as an error
+      as they cannot be represented by valid UTF-8.
+
+      Where such escapes are used for outputting non-printable
+      (including unassigned) characters, 6 hex digits are used (rather
+      than 8 with leading zeros).  For clarity, braces are used, for
+      example \samp{\\U\{0effff\}}.
+
+      \item The parser now looks for non-ASCII spaces on Solaris (as
+      previously on most other OSes).
+
+      \item There are warnings (including from the parser) on the use of
+      unpaired surrogate Unicode points such as \samp{\\uD834}.  (These
+      cannot be converted to valid UTF-8).
+
+      \item Functions \code{nchar()}, \code{tolower()}, \code{toupper()}
+      and \code{chartr()} and those using regular expressions have more
+      support for inputs with a marked Latin-1 encoding.
+
+      \item The character-classification functions used (by default) to
+      replace the system \code{iswxxxxx} functions on Windows, macOS and
+      AIX have been updated to Unicode 13.0.0.
+
+      The character-width tables have been updated to include new
+      assignments in Unicode 13.0.0.
+
+      \item The code for evaluating default (extended) regular
+      expressions now uses the same character-classification functions
+      as the rest of \R (previously they differed on Windows, macOS and
+      AIX.)
+
+      \item There is a build-time option to replace the system's
+      wide-character \code{wctrans} C function by tables shipped with
+      \R: use \command{configure} option
+      \option{--with-internal-towlower} or (on Windows)
+      \samp{-DUSE_RI18N_CASE} in \samp{CFLAGS} when building \R.  This
+      may be needed to allow \code{tolower()} and \code{toupper()} to
+      work with Unicode characters beyond the Basic Multilingual Plane
+      where not supported by system functions (e.g. on Solaris where it
+      is the new default).
     }
   }
 
@@ -411,6 +472,12 @@
 
       \item Parsing strings containing UTF-16 surrogate pairs such as
       \code{"\uD834\uDD1E"} works better on some (uncommon) platforms.
+      \code{sprintf("\%X", utf8ToInt("\uD834\uDD1E"))} should now give
+      \code{"1D11E"} on all platforms.
+      %% failed on Solaris
+
+      \item \code{identical(x,y)} is no longer true for differing
+      \code{DOTSXP} objects, fixing \PR{18032}.
     }
   }
 }
@@ -421,6 +488,14 @@
     \itemize{
       \item File \file{share/texmf/tex/latex/jss.cls} has been updated
       to work with LaTeX versions since Oct 2020.
+
+      \item Unicode character width tables (as used by
+      \code{nchar(, type = "w")}) have been updated to Unicode 12.1
+      by Brodie Gaslam (\PR{17781}), including many emoji.
+
+      \item The internal table for \code{iswprint} (used on Windows,
+      macOS and AIX) has been updated to include many recent Unicode
+      characters.
     }
   }
 
@@ -470,6 +545,11 @@
 
       \item \code{identical(x,y)} no longer prints "Unknown Type .." for
       \code{typeof(x) == "..."} objects.
+
+      \item Fix (auto-)\code{print()}ing of named complex vectors, see
+      \PR{17868} and \PR{18019}.
+
+      \item \code{all.equal(<language>, <...>)} now works, fixing \PR{18029}.
     }
   }
 }

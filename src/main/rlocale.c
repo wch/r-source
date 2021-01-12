@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2020   The R Core Team
+ *  Copyright (C) 2005-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,17 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/*  The original version of this file was contributed by Ei-ji Nakama.
- *  See also the comments in ../include/rlocale.h.
+/*  The original version of this file was contributed in 2005 by Ei-ji
+ *  Nakama, along with rlocale_data.h and ../include/rlocale.h.
  *
- *  It provides replacements for the wctype functions on
+ *  The naming is misleading: apart from the width data this is not
+ *  locale-specfic.  It is rather about the use of non-Latin
+ *  characters (including symbols, emojis ...).
+ *
+ *  It provides replacements for the wctype (iswxxxxx) functions on
  *  Windows (where they are not correct in e.g. Japanese)
  *  AIX (missing)
- *  macOS in CJK (where these just call the ctype functions)
+ *  macOS in CJK (where these just called the ctype functions)
  *
  *  It also provides wc[s]width, where widths of CJK fonts are often
  *  wrong in vendor-supplied versions and in Markus Kuhn's version
@@ -46,7 +50,6 @@
 
 #define IN_RLOCALE_C 1 /* used in rlocale.h */
 #include <rlocale.h>
-#include "rlocale_data.h"
 
 #include <wctype.h>
 #include <wchar.h>
@@ -54,6 +57,14 @@
 #include <locale.h>
 #include <limits.h>
 #include <R_ext/Riconv.h>
+
+#if defined(USE_RI18N_WIDTH) || defined(USE_RI18N_FNS)
+
+/* used for zero-width table and in rlocale_data.h */
+struct interval {
+    int first;
+    int last;
+};
 
 // This seems based on Markus Kuhn's function but with 1-based 'max'
 static int wcsearch(int wint, const struct interval *table, int max)
@@ -75,6 +86,40 @@ static int wcsearch(int wint, const struct interval *table, int max)
     }
     return 0;
 }
+#endif
+
+// ------------------------- width functions --------------------
+#ifdef USE_RI18N_WIDTH
+
+/* wcwidth and wcswidth, from POSIX 2001 (formerly in some draft C
+ * standards but not implemented in Windows).  One could argue that
+ * the width of non-printable / unassigned characters is immaterial
+ * (they will be represented by escapes) so could be given a
+ * conventional value such as 0 or 1.  POSIX suggests returning -1 for
+ * non-printable characters, but these were not written that way in
+ * 2005.
+ *
+ * It is not always clear what to do for unassigned code points
+ * (especially 'private use' ones).
+ *
+ * Although what a character represents may be locale-specific,
+ * reference images are available at
+ * https://www.unicode.org/charts/PDF/ whose width can be assessed.
+ *
+ * There is a problem with character-by-character appoaches: apart
+ * from surrogate pairs, some glyphs are defined in combinations of
+ * others.  For human languages this is largely (but not entirely)
+ * covered by giving combining characters zero width.  However, quite
+ * a few emoji are defined as combinations of others: e.g.
+ * 'polar bear' is bear+snowflake with a zero-width joiner,
+ * "\U1f43b\u200d\u2744" which gets width 2+0+1.
+ * (https://emojipedia.org/polar-bear/,
+ * https://emojipedia.org/emoji-zwj-sequence/).  There are a few such
+ * in human languages:
+ * https://en.wikipedia.org/wiki/Zero-width_joiner.
+ */
+
+#include "rlocale_widths.h"
 
 static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
 			 int max, int locale)
@@ -84,7 +129,7 @@ static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
     max--;
 
     /* This quickly gives one for ASCII characters since the table
-       starts at 0xa0 */
+       starts at 0xa1 */
     if (wint < table[0].first || wint > table[max].last) return 1;
     while (max >= min) {
 	mid = (min + max) / 2;
@@ -151,7 +196,14 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"",				        MB_Default},
 };
 
-// used in character.c, ../gnuwin32/console.c , ../library/grDevices/src/devP*.c :
+/* used in character.c, ../gnuwin32/console.c (for an MBCS locale) ,
+   ../library/grDevices/src/devP*.c 
+
+   Unlike the POSIX description this does not return -1 for
+   non-printable Unicode points.
+   
+   NB: Windows (at least MinGW-W64) does not have this function.
+*/
 int Ri18n_wcwidth(R_wchar_t c)
 {
     char lc_str[128];
@@ -183,101 +235,60 @@ int Ri18n_wcwidth(R_wchar_t c)
     return zw ? 0 : 1; // assume unknown chars are width one.
 }
 
-/* Used in character.c, errors.c, ../gnuwin32/console.c */
+/* Used in character.c, errors.c, ../gnuwin32/console.c (for an MBCS locale)
+   
+   Strings in R are restricted to 2^31-1 bytes but could conceivably
+   have a width exceeding that.
+   
+   Unlike the POSIX description this does not return -1 for strings
+   containing non-printable Unicode points.
+
+   NB: Windows (at least MinGW-W64) does not have this function.
+*/
 attribute_hidden
-int Ri18n_wcswidth (const wchar_t *s, size_t n)
+int Ri18n_wcswidth (const wchar_t *wc, size_t n)
 {
     int rs = 0;
-    while ((n-- > 0) && (*s != L'\0'))
+    while ((n-- > 0) && (*wc != L'\0'))
     {
-	int now = Ri18n_wcwidth (*s);
-	if (now == -1) return -1;
-	rs += now;
-	s++;
+	if (IS_SURROGATE_PAIR(*wc, *(wc+1))) {
+	    /* surrogate pairs should only occur with 'short' wchar_t,
+	     * that is Windows and perhaps 32-bit AIX */
+	    R_wchar_t val =
+		((*wc & 0x3FF) << 10) + (*(wc+1) & 0x3FF) + 0x010000;
+	    int now = Ri18n_wcwidth (val);
+	    if (now == -1) return -1;
+	    rs += now;
+	    wc += 2;
+	} else {
+	    int now = Ri18n_wcwidth (*wc);
+	    if (now == -1) return -1;
+	    rs += now;
+	    wc++;
+	}
     }
     return rs;
 }
-
-/*********************************************************************
- *  macOS's wide character type functions are based on FreeBSD
- *  and only work correctly for Latin-1 characters.
- *  So we replace them.  May also be needed on FreeBSD.
- ********************************************************************/
-#if defined(__APPLE__)
-/* allow for both PowerPC and Intel platforms */
-#ifdef WORDS_BIGENDIAN
-static const char UNICODE[] = "UCS-4BE";
-#else
-static const char UNICODE[] = "UCS-4LE";
 #endif
 
-/* in Defn.h which is not included here */
-extern const char *locale2charset(const char *);
-
-#define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
-{	                                                             \
-  char    mb_buf[MB_LEN_MAX+1];			                     \
-  size_t  mb_len;                                                    \
-  int     ucs4_buf[2];				                     \
-  size_t  wc_len;                                                    \
-  void   *cd;					                     \
-  char    fromcode[128];                                             \
-  char   *_mb_buf;						     \
-  char   *_wc_buf;						     \
-  size_t  rc ;							     \
-								     \
-  strncpy(fromcode, locale2charset(NULL), sizeof(fromcode));         \
-  fromcode[sizeof(fromcode) - 1] = '\0';                             \
-  if(0 == strcmp(fromcode, "UTF-8"))				     \
-       return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count);\
-  memset(mb_buf, 0, sizeof(mb_buf));				     \
-  memset(ucs4_buf, 0, sizeof(ucs4_buf));			     \
-  wcrtomb( mb_buf, wc, NULL);					     \
-  if((void *)(-1) != (cd = Riconv_open(UNICODE, fromcode))) {	     \
-      wc_len = sizeof(ucs4_buf);		                     \
-      _wc_buf = (char *)ucs4_buf;				     \
-      mb_len = strlen(mb_buf);					     \
-      _mb_buf = (char *)mb_buf;					     \
-      rc = Riconv(cd, (const char **)&_mb_buf, (size_t *)&mb_len,	     \
-		  (char **)&_wc_buf, (size_t *)&wc_len);	     \
-      Riconv_close(cd);						     \
-      wc = ucs4_buf[0];                                              \
-      return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
-  }                                                                  \
-  return(-1);                                                        \
-}
-#endif // __APPLE__
+// ------------------- end of width functions --------------------
 
 /*********************************************************************
- *  iswalpha etc. does not function correctly for Windows
- *  iswalpha etc. does not function at all in AIX.
- *  all locale wchar_t == UNICODE
+ *  macOS's wide character type functions are based on NetBSD
+ *  and only work(ed) correctly for Latin-1 characters.
+ *  So we replace them.  May also be needed on *BSD, and are on AIX
  ********************************************************************/
-#if defined(Win32) || defined(_AIX)
-#define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
+
+
+#ifdef USE_RI18N_FNS
+# define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {									\
     return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
 }
-#endif
-
-/*********************************************************************
- *  iswalpha etc. do function correctly for Linux
- ********************************************************************/
-#ifndef ISWFUNC
-#define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
-{                                                                       \
-    return isw ## ISWNAME (wc); \
-}
-/* Solaris 8 was missing iswblank.  Its man page was missing iswcntrl,
-   but the function is there.  MinGW used not to have iswblank until
-   mingw-runtime-3.11. */
-#ifndef HAVE_ISWBLANK
-#define iswblank(wc) iswctype(wc, wctype("blank"))
-#endif
-#endif
-
+#include "rlocale_data.h"
 /* These are the functions which C99 and POSIX define.  However,
-   not all are used elsewhere in R, but they are used in Ri18n_iswctype. */
+   not all are used elsewhere in R (so are static),
+   but they are used in Ri18n_iswctype. */
 
     ISWFUNC(upper)
     ISWFUNC(lower)
@@ -286,7 +297,9 @@ extern const char *locale2charset(const char *);
     ISWFUNC(xdigit)
     ISWFUNC(space)
     ISWFUNC(print)
+    /* derived below from print and space
     ISWFUNC(graph)
+    */
     ISWFUNC(blank)
     ISWFUNC(cntrl)
     ISWFUNC(punct)
@@ -301,6 +314,20 @@ static int Ri18n_iswalnum (wint_t wc)
 {
     return (Ri18n_iswctype(wc, Ri18n_wctype("digit")) ||
 	    Ri18n_iswctype(wc, Ri18n_wctype("alpha"))    );
+}
+
+/* Defined in the C99 standard as
+
+   'any wide character for which iswprint is true and iswspace is false'
+
+   As this is used rarely (and iswprint is used a lot), we chose to
+   derive this one.
+*/
+
+static int Ri18n_iswgraph (wint_t wc)
+{
+    return (Ri18n_iswctype(wc, Ri18n_wctype("print")) &&
+	    !Ri18n_iswctype(wc, Ri18n_wctype("space"))    );
 }
 
 
@@ -329,7 +356,7 @@ static const Ri18n_wctype_func_l Ri18n_wctype_func[] = {
     {NULL,     0,     NULL}
 };
 
-/* These two used (via macros) in X11 dataentry */
+/* These two are used (via macros) in X11 dataentry so need to be visible. */
 wctype_t Ri18n_wctype(const char *name)
 {
     int i;
@@ -347,3 +374,67 @@ int Ri18n_iswctype(wint_t wc, wctype_t desc)
 	     Ri18n_wctype_func[i].wctype != desc ; i++ );
     return (*Ri18n_wctype_func[i].func)(wc);
 }
+#endif
+
+// ------------------------- tolower/upper functions --------------------
+#ifdef USE_RI18N_CASE
+/* 
+   These tables were prepared by the R code
+
+tab <- read.table('UnicodeData.txt', sep = ';', header = FALSE)
+tab <- tab[, c("V1", "V13", "V14")]
+names(tab) <- c('pt', 'uc', 'lc')
+toupper <- tab[tab$uc !="", 1:2]
+tolower <- tab[tab$lc !="", c(1,3)]
+cat(with(toupper, sprintf("  { 0x%s, 0x%s },", pt, uc)),
+   sep = "\n", file = "rlocale_toupper.h")
+cat(with(tolower, sprintf("  { 0x%s, 0x%s },", pt, lc)),
+   sep = "\n", file = "rlocale_tolower.h")
+
+   from https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
+*/
+
+struct pair {int from; int to;};
+
+static const struct pair table_toupper[] = {
+#include "rlocale_toupper.h"
+};
+
+static const struct pair table_tolower[] = {
+#include "rlocale_tolower.h"
+};
+
+static int tlsearch(int wint, const struct pair *table, int max)
+{
+    int min = 0, mid;
+    max--;
+
+    if (wint < table[0].from || wint > table[max].from)
+	return -1;
+    while (max >= min) {
+	mid = (min + max) / 2;
+	if (wint > table[mid].from)
+	    min = mid + 1;
+	else if (wint < table[mid].from)
+	    max = mid - 1;
+	else
+	    return table[mid].to;
+    }
+    return -1;
+}
+
+R_wchar_t Ri18n_towupper(R_wchar_t wc)
+{
+    int res = tlsearch(wc, table_toupper,
+		       sizeof(table_toupper)/sizeof(struct pair));
+    return (res >= 0 ? res : wc);
+}
+
+R_wchar_t Ri18n_towlower(R_wchar_t wc)
+{
+    int res = tlsearch(wc, table_tolower,
+		       sizeof(table_tolower)/sizeof(struct pair));
+    return (res >= 0 ? res : wc);
+}
+// ----------------- end of tolower/upper functions --------------------
+#endif

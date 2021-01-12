@@ -30,7 +30,7 @@ plot.design <-
 	    stop("'y' must be a numeric vector")
 	if(!is.data.frame(x)) # or allow factor (see 2 lines below)?? {FIXME}
 	    stop("'x' must be a data frame")
-	if(!all(sapply(x, is.factor)) & !is.factor(x)) # incl "ordered"
+	if(!all(sapply(x, is.factor)) && !is.factor(x)) # incl "ordered"
 	    stop("all columns/components of 'x' must be factors")
 	k <- ncol(x)
         if(anyNA(y)) {

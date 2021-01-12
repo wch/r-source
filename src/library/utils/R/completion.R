@@ -90,7 +90,7 @@ findExactMatches <- function(pattern, values)
 
 findFuzzyMatches <- function(pattern, values) {
     ## FIXME: option to allow experimentation, remove eventually
-    if (!is.null(ffun <- getOption("fuzzy.match.fun"))) {
+    if (!is.null(ffun <- rc.getOption("fuzzy.match.fun"))) {
         return (ffun(pattern, values))
     }
     ## Try exact matches first, and return them if found
@@ -333,7 +333,7 @@ makeRegexpSafe <- function(s)
 ## Operators that are handled specially.  Order is important, ::: must
 ## come before :: (because :: will match :::)
 
-specialOps <- c("$", "@", ":::", "::", "?", "[", "[[")
+specialOps <- c("$", "@", ":::", "::", "?", "[[", "[")
 
 
 specialOpCompletionsHelper <- function(op, suffix, prefix)
@@ -858,7 +858,6 @@ fileCompletionPreferred <- function()
         lbss <- head.default(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
         ((sum(lbss == "'") %% 2 == 1) ||
          (sum(lbss == '"') %% 2 == 1))
-
     })
 }
 
@@ -1070,8 +1069,11 @@ fileCompletions <- function(token)
                     substring(helpCompletions(fullToken$prefix, fullToken$token),
                               2L + nchar(fullToken$prefix), 1000L)    # drop initial "prefix + ?"
                 }
-                else if (!probablySpecial)
+                else if (!probablySpecial) # probably a filename
                     fileCompletions(fullToken$token) # FIXME: but not if probablyBacktick
+                ## Give a custom completer function a chance to add to this list
+                else if (is.function(fcustomQuote <- rc.getOption("custom.quote.completer")))
+                    fcustomQuote(fullToken)
             .setFileComp(FALSE)
             ## str(c(fullToken, list(comps = tentativeCompletions)))
             ## Adjust for self-computed token
@@ -1153,6 +1155,9 @@ fileCompletions <- function(token)
             comps <- paste0(prefix, comps)
         }
         comps <- c(fargComps, comps)
+        ## Give a custom completer function a chance to add to this list
+        if (is.function(fcustom <- rc.getOption("custom.argument.completer")))
+            comps <- c(fcustom(guessedFunction, text), comps)
         .CompletionEnv[["comps"]] <- comps
     }
 }

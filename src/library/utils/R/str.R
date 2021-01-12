@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -353,18 +353,19 @@ str.default <-
 		    " of ", as.character(le), "\n", sep = "")
 	    }
 	    if (is.na(max.level) || nest.lev < max.level) {
+		nms <- names(object)
 		nam.ob <-
-		    if(is.null(nam.ob <- names(object))) rep.int("", le)
-		    else { ncn <- nchar.w(nam.ob)
+		    if(is.null(nms)) rep.int("", le)
+		    else { ncn <- nchar.w(nms)
 			   if(anyNA(ncn)) ## slower, but correct:
-			      ncn <- vapply(nam.ob, format.info, 0L)
-			   format(nam.ob, width = max(ncn), justify="left")
+			      ncn <- vapply(nms, format.info, 0L)
+			   format(nms, width = max(ncn), justify="left")
 		       }
 		for (i in seq_len(min(list.len,le) ) ) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep = "")
 		    envir <- # pass envir for 'promise' components:
 			if(typeof(object[[i]]) == "promise") {
-			    structure(object, nam= as.name(nam.ob[i]))
+			    structure(object, nam = as.name(nms[i]))
 			} # else NULL
 		    strSub(object[[i]], give.length=give.length,
                            nest.lev = nest.lev + 1,
@@ -500,7 +501,7 @@ str.default <-
 		objExp <- eval(bquote(substitute(.(attr(envir, "nam")), envir)))
 		cat("to ")
 		strSub(objExp)
-	    } else cat(" <...>\n")
+	    } else cat(" <?>\n")
 	    return(invisible())
 	} else {
 	    ##-- NOT-atomic / not-vector  "unclassified object" ---

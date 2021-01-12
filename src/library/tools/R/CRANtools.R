@@ -113,23 +113,6 @@ function(packages, results = NULL, details = NULL, issues = NULL)
               collapse = "\n\n")
     }
 
-    ## summarize_mtnotes <- function(p, m) {
-    ##     if(!length(m)) return(character())
-    ##     tests <- m[, "Test"]
-    ##     paths <- m[, "Path"]
-    ##     isdir <- !grepl("-Ex.Rout$", paths)
-    ##     if(any(isdir))
-    ##         paths[isdir] <- sprintf("%s/", paths[isdir])
-    ##     paste(c(paste("Memtest notes:",
-    ##                   paste(unique(tests), collapse = " ")),
-    ##             sprintf("See: %s",
-    ##                     paste(sprintf("<https://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
-    ##                                   tests,
-    ##                                   paths),
-    ##                           collapse = ",\n     "))),
-    ##           collapse = "\n")
-    ## }
-
     summarize_issues <- function(i) {
         if(!length(i)) return(character())
         ## In principle the hyperrefs can be obtained from the package

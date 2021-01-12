@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,9 @@
 
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
+## not really: do this inside all.equal.default() :
+## all.equal.... <- function(target, current, ...) TRUE
+
 all.equal.default <- function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
@@ -30,8 +33,10 @@ all.equal.default <- function(target, current, ...)
     }
     if(is.environment(target) || is.environment(current))# both: unclass() fails on env.
 	return(all.equal.environment(target, current, ...))
-    if(is.recursive(target))
-	return(all.equal.list(target, current, ...))
+    if(is.recursive(target)) {
+        ## FIXME: "..." is recursive but not a list
+        return(all.equal.list(target, current, ...))
+    }
     msg <- switch (mode(target),
                    integer   = ,
                    complex   = ,
@@ -217,9 +222,14 @@ all.equal.envRefClass <- function (target, current, ...) {
     if(is.null(msg)) TRUE else msg
 }
 
-all.equal.environment <- function (target, current, all.names=TRUE, ...) {
+all.equal.environment <- function (target, current, all.names=TRUE, evaluate=TRUE, ...) {
     if(!is.environment (target)) return( "'target' is not an environment")
     if(!is.environment(current)) return("'current' is not an environment")
+    if(identical(target, current)) # only true if *same* address
+                 ## ignore.environment =
+                 ##     if(!is.na(i <- match("check.environment", ...names())))
+                 ##         ! ...elt(i) else FALSE))
+        return(TRUE)
     ae.run <- dynGet("__all.eq.E__", NULL)
     if(is.null(ae.run))
 	"__all.eq.E__" <- environment() # -> 5 visible + 6 ".<..>" objects
@@ -247,8 +257,21 @@ all.equal.environment <- function (target, current, all.names=TRUE, ...) {
 	if(do1(ae.run)) return(TRUE)
 	## else, continue:
     }
-    all.equal.list(as.list.environment(target , all.names=all.names, sorted=TRUE),
-		   as.list.environment(current, all.names=all.names, sorted=TRUE), ...)
+    if(evaluate) {
+        Lt <- as.list.environment(target , all.names=all.names, sorted=TRUE)
+        Lc <- as.list.environment(current, all.names=all.names, sorted=TRUE)
+        ## identical(*,*) for the environment with `...` and general consistency:
+        if(identical(Lt, Lc))
+            TRUE
+        else
+            all.equal.list(Lt, Lc, ...)
+    } else { ## do *not* force promises, i.e. *not* coerce to list
+        if(!identical(nt <- sort(names(target )),
+                      nc <- sort(names(current))))
+            paste("names of environments differ:", all.equal(nt, nc, ...), collapse=" ")
+        else
+            "environments contain objects of the same names, but are not identical"
+    }
 }
 
 all.equal.factor <- function(target, current, ..., check.attributes = TRUE)
@@ -300,10 +323,13 @@ all.equal.language <- function(target, current, ...)
     if(mt == "expression" && mc == "expression")
 	return(all.equal.list(target, current, ...))
     ttxt <- paste(deparse(target ), collapse = "\n")
-    ctxt <- paste(deparse(current), collapse = "\n")
+    ## try: if 'current' is not "language" and deparse() bails out for DOTSXP, see PR#18029
+    ctxt <- tryCatch(paste(deparse(current), collapse = "\n"), error=function(e) NULL)
     msg <- c(if(mt != mc)
 	     paste0("Modes of target, current: ", mt, ", ", mc),
-	     if(ttxt != ctxt) {
+	     if(is.null(ctxt))
+		 "current is not deparse()able"
+	     else if(ttxt != ctxt) {
 		 if(pmatch(ttxt, ctxt, 0L))
 		     "target is a subset of current"
 		 else if(pmatch(ctxt, ttxt, 0L))

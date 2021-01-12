@@ -466,7 +466,13 @@ static double PicTeX_StrWidth(const char *str,
 	    if (status >= 0) 
 		for (i = 0; i < ucslen; i++)
 		    if(ucs[i] < 128) sum += charwidth[ptd->fontface-1][ucs[i]];
-		    else sum += (double) Ri18n_wcwidth(ucs[i]) * 0.5; /* A guess */
+		    else {
+#ifdef USE_RI18N_WIDTH
+			sum += (double) Ri18n_wcwidth(ucs[i]) * 0.5; /* A guess */
+#else
+			sum += (double) wcwidth((wchar_t)ucs[i]) * 0.5; /* A guess */
+#endif
+		    }
 	    else
 		warning(_("invalid string in '%s'"), "PicTeX_StrWidth");
 	} else

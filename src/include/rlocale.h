@@ -26,7 +26,7 @@
  * (a) supplies wrapper/substitute wc[s]width functions for use in 
  *    character.c, errors.c, printutils.c, devPS.c, RGui console.
  * (b) Defines a replacment for iswctype to be used on Windows, maxOS and AIX.
- * in gram.c 
+ * in gram.c, the TRE engine and elsewhere.
  *
  * It is not an installed header.
  */
@@ -39,9 +39,12 @@
 #include <wctype.h>
 
 /*
- * The R_wchar_t typedef represents a single Unicode code point.  On most systems it's the same
- * as wchar_t, but on Windows (and others?) where wchar_t is too small and UTF-16 is used,
- * it is an unsigned int instead.
+  The R_wchar_t typedef represents a single Unicode code point.  On
+  most systems it is the same as wchar_t, but on Windows (and 32-bit
+  AIX and perhaps others) where wchar_t is too small and UTF-16 is
+  used, it needs to be an unsigned int .
+
+  AIX ref: https://www.gnu.org/software/gnulib/manual/html_node/wcwidth.html
  */
  
 #ifdef Win32
@@ -50,6 +53,11 @@ typedef unsigned int R_wchar_t;
 typedef wchar_t R_wchar_t;
 #endif 
 
+#if !defined(USE_RI18N_WIDTH) && (!defined(HAVE_WCWIDTH) || !defined(HAVE_WCSWIDTH))
+# define USE_RI18N_WIDTH 1
+#endif
+
+#ifdef USE_RI18N_WIDTH
 /*
  * Windows CJK
  * In Unicode, there is not a rule about character width. 
@@ -81,6 +89,7 @@ typedef wchar_t R_wchar_t;
  
 extern int Ri18n_wcwidth(R_wchar_t);
 extern int Ri18n_wcswidth (const wchar_t *, size_t);
+#endif
 
 /* macOS CJK and WindowXP(Japanese)
  * iswctypes of macOS calls isctypes. no i18n.
@@ -88,10 +97,22 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
  * Japanese "a-ru" of R as a letter. 
  * Therefore Japanese "Buraian.Ripuri-" of "Brian Ripley" is
  * shown of hex-string.:-)
- * We define alternatives to be used if
- * defined(Win32) || defined(__APPLE__) || defined(_AIX)
  */
+
+/* 
+   iswspace is used in Rstrptime.h, character.c and util.c
+   iswalpha, iswalnum used in gram.y and in X11/dataentry.c
+   iswdigit is used in plotmath.c X11/dataentry.c (and indirectly in gram.y) 
+   iswprint is used in printutils.c
+*/
+#if defined(Win32) && !defined(USE_RI18N_FNS)
+# define USE_RI18N_FNS
+#endif
+
+#ifdef USE_RI18N_FNS
+
 extern wctype_t Ri18n_wctype(const char *);
+// Apparently wint_t is unsigned short on Windows, unsigned int on Linux
 extern int      Ri18n_iswctype(wint_t, wctype_t);
 
 #ifndef IN_RLOCALE_C
@@ -127,16 +148,26 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define iswctype(__x,__y) Ri18n_iswctype(__x,__y)
 #endif
 
-/* These definitions are from winnls.h in Mingw_w64.  We don't need the rest of that file. */
+#endif
+
+#ifdef USE_RI18N_CASE
+R_wchar_t Ri18n_towupper(R_wchar_t wc);
+R_wchar_t Ri18n_towlower(R_wchar_t wc);
+#endif
+
+
+/* These definitions are from winnls.h in MinGW-W64.  We don't need
+ * the rest of that file. */
 
 #define HIGH_SURROGATE_START 0xd800
 #define HIGH_SURROGATE_END 0xdbff
 #define LOW_SURROGATE_START 0xdc00
 #define LOW_SURROGATE_END 0xdfff
 
-/* The first two of these definitions use the argument twice which is bad, but we include them here in
- * the original form for consistency with Mingw_w64.  Users should be careful that evaluating
- * the argument doesn't result in side effects.
+/* The first two of these definitions use the argument twice which is
+ * bad, but we include them here in the original form for consistency
+ * with Mingw_w64.  Users should be careful that evaluating the
+ * argument doesn't result in side effects.
  */
 
 #define IS_HIGH_SURROGATE(wch) (((wch) >= HIGH_SURROGATE_START) && ((wch) <= HIGH_SURROGATE_END))
@@ -145,5 +176,11 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 
 # define utf8toucs32		Rf_utf8toucs32
 R_wchar_t utf8toucs32(wchar_t high, const char *s);
+
+// convert strings UTF-8 <-> UCS-4 (stored in R_wchar_t aka int)
+# define utf8towcs4		Rf_utf8towcs4
+size_t utf8towcs4(R_wchar_t *wc, const char *s, size_t n);
+#define wcs4toutf8              Rf_wcs4toutf8
+size_t wcs4toutf8(char *s, const R_wchar_t *wc, size_t n);
 
 #endif /* R_LOCALE_H */

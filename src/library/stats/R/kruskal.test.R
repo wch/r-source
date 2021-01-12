@@ -56,7 +56,7 @@ function(x, g, ...)
         stop("not enough observations")
     r <- rank(x)
     TIES <- table(x)
-    STATISTIC <- sum(tapply(r, g, "sum")^2 / tapply(r, g, "length"))
+    STATISTIC <- sum(tapply(r, g, sum)^2 / tapply(r, g, length))
     ## keep as n+1 to avoid (implausible) integer overflows
     STATISTIC <- ((12 * STATISTIC / (n * (n + 1)) - 3 * (n + 1)) /
                   (1 - sum(TIES^3 - TIES) / (n^3 - n)))

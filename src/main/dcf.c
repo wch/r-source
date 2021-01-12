@@ -219,14 +219,12 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 				    field_is_foldable_p(field_name,
 							fold_excludes);
 			    }
+			    offset = regmatch[0].rm_eo;
 			    if(field_fold) {
-				offset = regmatch[0].rm_eo;
 				/* Also remove trailing whitespace. */
 				if((tre_regexecb(&trailblank, line, 1,
 						 regmatch, 0) == 0))
 				    line[regmatch[0].rm_so] = '\0';
-			    } else {
-				offset = 0;
 			    }
 			    SET_STRING_ELT(retval, m + nwhat * k,
 					   mkChar(line + offset));

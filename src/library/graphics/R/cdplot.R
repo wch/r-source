@@ -82,7 +82,7 @@ function(x, y,
     yaxlabels <- yaxlabels[ylevels]
 
     ## unconditional density of x
-    dx <- if(is.null(from) & is.null(to))
+    dx <- if(is.null(from) && is.null(to))
         stats::density(x, bw = bw, n = n, ...)
     else
         stats::density(x, bw = bw, from = from, to = to, n = n, ...)

@@ -671,7 +671,7 @@ partialPathMatch <- function(pathsofar, path, strict=FALSE, grep) {
       ok <- TRUE
       npsfe <- length(pathSoFarElts)
       index <- 1
-      while (ok & index <= npsfe) {
+      while (ok && index <= npsfe) {
         if (grep[index])
           ok <- (grep(pathSoFarElts[index], pathElts[index]) == 1)
         else

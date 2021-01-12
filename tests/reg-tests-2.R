@@ -3171,6 +3171,11 @@ if(capabilities("Rprof")) {
 }
 
 
+## printing *named* complex vectors (*not* arrays), PR#17868 (and PR#18019):
+a <- 1:12; (z <- a + a*1i); names(z) <- letters[seq_along(z)]; z
+## fixed in R-devel in July 2020;  R 4.0.3 patched on Dec 26, 2020
+
+
 ## identical(*) on "..." object
 (ddd <- (function(...) environment())(1)$...) # <...>
  dd2 <- (function(...) environment())(1)$...

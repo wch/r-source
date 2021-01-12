@@ -36,7 +36,10 @@ signif(x, digits = 6)
   \dQuote{round to even} when rounding off a 5.
 
   \code{signif} rounds the values in its first argument to the specified
-  number of significant digits.
+  number of significant digits.   Hence, for \code{numeric} \code{x},
+  \code{signif(x, dig)} is the same as \code{round(x, dig - ceiling(log10(abs(x))))}.
+  For \code{\link{complex}} \code{x}, this is not the case, % currently (?)
+  see the \sQuote{Details}.
 }
 \arguments{
   \item{x}{a numeric vector.  Or, for \code{round} and \code{signif}, a

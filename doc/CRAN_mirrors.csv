@@ -101,5 +101,5 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA","Carl Skipper <remarks # stat.cmu.edu>",1,us
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com/,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor # hoobly.com>",1,us
 "USA (TN) [https]",USA,"Oak Ridge",https://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
-"USA (TX 1) [https]",USA,Dallas,https://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",0,us,"secure_mirror_from_master"
+"USA (TX 1) [https]",USA,Dallas,https://cran.microsoft.com/,"Revolution Analytics, Dallas, TX","Joseph Chandy <Joseph.Chandy # microsoft.com>",1,us,"secure_mirror_from_master"
 "Uruguay [https]",Uruguay,Montevideo,https://espejito.fder.edu.uy/cran/,"Facultad de Derecho, Universidad de la República","root # fder.edu.uy",1,uy,"secure_mirror_from_master"

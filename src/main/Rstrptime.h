@@ -179,6 +179,8 @@ day_of_the_year (stm *tm)
 #include <wchar.h>
 #include <wctype.h>
 
+#include <rlocale.h> // to possibly override iswspace
+
 #define DT_WBUFSIZE 25
 static wchar_t w_weekday_name[][DT_WBUFSIZE] =
 {

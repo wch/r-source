@@ -49,7 +49,7 @@ par <- function (..., no.readonly = FALSE)
 	if (all(unlist(lapply(args, is.character))))
 	    args <- as.list(unlist(args))
 	if (length(args) == 1) {
-	    if (is.list(args[[1L]]) | is.null(args[[1L]]))
+	    if (is.list(args[[1L]]) || is.null(args[[1L]]))
 		args <- args[[1L]]
 	    else
 		if(is.null(names(args)))

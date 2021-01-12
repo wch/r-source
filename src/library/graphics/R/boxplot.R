@@ -286,7 +286,7 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 
     width <-
 	if(!is.null(width)) {
-	    if(length(width) != n | anyNA(width) | any(width <= 0))
+	    if(length(width) != n || anyNA(width) || any(width <= 0))
 		stop("invalid boxplot widths")
 	    boxwex * width/max(width)
 	}

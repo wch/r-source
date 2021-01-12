@@ -120,7 +120,7 @@ bw.ucv <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
     d <- Z[[1L]]; cnt <- Z[[2L]]
     fucv <- function(h) .Call(C_bw_ucv, n, d, cnt, h)
     h <- optimize(fucv, c(lower, upper), tol = tol)$minimum
-    if(h < lower+tol | h > upper-tol)
+    if(h < lower+tol || h > upper-tol)
         warning("minimum occurred at one end of the range")
     h
 }
@@ -141,7 +141,7 @@ bw.bcv <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
     d <- Z[[1L]]; cnt <- Z[[2L]]
     fbcv <- function(h) .Call(C_bw_bcv, n, d, cnt, h)
     h <- optimize(fbcv, c(lower, upper), tol = tol)$minimum
-    if(h < lower+tol | h > upper-tol)
+    if(h < lower+tol || h > upper-tol)
         warning("minimum occurred at one end of the range")
     h
 }

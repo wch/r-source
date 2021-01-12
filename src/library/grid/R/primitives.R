@@ -80,7 +80,7 @@ validDetails.move.to <- function(x) {
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
   # Make sure that x and y are of length 1
-  if (length(x$x) > 1 | length(x$y) > 1)
+  if (length(x$x) > 1 || length(x$y) > 1)
     stop("'x' and 'y' must have length 1")
   x
 }
@@ -115,7 +115,7 @@ validDetails.line.to <- function(x) {
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
   # Make sure that x and y are of length 1
-  if (length(x$x) > 1 | length(x$y) > 1)
+  if (length(x$x) > 1 || length(x$y) > 1)
     stop("'x' and 'y' must have length 1")
   if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")

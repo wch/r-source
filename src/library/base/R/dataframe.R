@@ -1707,8 +1707,15 @@ Summary.data.frame <- function(..., na.rm)
     do.call(.Generic, c(args, na.rm=na.rm))
 }
 
-## xtfrm.data.frame <- function(x)
-##     stop("cannot xtfrm data frames")
+xtfrm.data.frame <- function(x) {
+    if(tolower(Sys.getenv("_R_STOP_ON_XTFRM_DATA_FRAME_")) %in%
+       c("1", "yes", "true"))
+        stop("cannot xtfrm data frames")
+    else {
+        warning("cannot xtfrm data frames")
+        NextMethod("xtfrm")
+    }
+}
 
 list2DF <-
 function(x = list(), nrow = NULL)

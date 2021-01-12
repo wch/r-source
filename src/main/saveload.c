@@ -927,12 +927,16 @@ in version 1 workspaces"));
 	/* FALLTHROUGH */
     case LISTSXP:
     case LANGSXP:
-    case CLOSXP:
     case PROMSXP:
     case DOTSXP:
 	NewMakeLists(TAG(obj), sym_list, env_list);
 	NewMakeLists(CAR(obj), sym_list, env_list);
 	NewMakeLists(CDR(obj), sym_list, env_list);
+	break;
+    case CLOSXP:
+	NewMakeLists(CLOENV(obj), sym_list, env_list);
+	NewMakeLists(FORMALS(obj), sym_list, env_list);
+	NewMakeLists(BODY(obj), sym_list, env_list);
 	break;
     case EXTPTRSXP:
 	NewMakeLists(EXTPTR_PROT(obj), sym_list, env_list);
@@ -1054,13 +1058,17 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp, Output
 	    break;
 	case LISTSXP:
 	case LANGSXP:
-	case CLOSXP:
 	case PROMSXP:
 	case DOTSXP:
 	    /* Dotted pair objects */
 	    NewWriteItem(TAG(s), sym_list, env_list, fp, m, d);
 	    NewWriteItem(CAR(s), sym_list, env_list, fp, m, d);
 	    NewWriteItem(CDR(s), sym_list, env_list, fp, m, d);
+	    break;
+	case CLOSXP:
+	    NewWriteItem(CLOENV(s), sym_list, env_list, fp, m, d);
+	    NewWriteItem(FORMALS(s), sym_list, env_list, fp, m, d);
+	    NewWriteItem(BODY(s), sym_list, env_list, fp, m, d);
 	    break;
 	case EXTPTRSXP:
 	    NewWriteItem(EXTPTR_PROT(s), sym_list, env_list, fp, m, d);
@@ -1143,7 +1151,7 @@ static void NewDataSave (SEXP s, FILE *fp, OutputRoutines *m, SaveLoadData *d)
 	R_assert(TYPEOF(CAR(iterator)) == ENVSXP);
 	NewWriteItem(ENCLOS(CAR(iterator)), sym_table, env_table, fp, m, d);
 	NewWriteItem(FRAME(CAR(iterator)), sym_table, env_table, fp, m, d);
-	NewWriteItem(TAG(CAR(iterator)), sym_table, env_table, fp, m, d);
+	NewWriteItem(HASHTAB(CAR(iterator)), sym_table, env_table, fp, m, d);
     }
     NewWriteItem(s, sym_table, env_table, fp, m, d);
 

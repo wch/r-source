@@ -190,7 +190,7 @@ stopifnot(identical(nn, n2))
 ## and bug 16098 https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=16098
 ## This character may or not be printable (the platform decides)
 ## and if it is, may not have a glyph in the font used.
-"\U1d4d7" # On Windows this gives the incorrect value of "\Ud4d7"
+"\U1d4d7" # On Windows this used to give the incorrect value of "\Ud4d7"
 
 ## nul characters (for terminating strings in C) are not allowed (parse errors)
 \dontrun{% as above, these errors cannot be caught via try*(..)

@@ -144,7 +144,7 @@ contr.treatment <-
 	if(n < 2L)
 	    stop(gettextf("contrasts not defined for %d degrees of freedom",
                           n - 1L), domain = NA)
-	if (base < 1L | base > n)
+	if (base < 1L || base > n)
 	    stop("baseline group number out of range")
 	contr <- contr[, -base, drop = FALSE]
     }

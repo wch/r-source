@@ -21,12 +21,10 @@ Sys.getenv <- function(x = NULL, unset = "", names = NA)
     if (is.null(x)) {
         ## This presumes that '=' does not appear as part of the name
         ## of an environment variable.  That used to happen on Windows.
-	x <- strsplit(.Internal(Sys.getenv(character(), "")), "=", fixed=TRUE)
-	v <- n <- character(LEN <- length(x))
-	for (i in 1L:LEN) {
-	    n[i] <- x[[i]][1L]
-	    v[i] <- paste(x[[i]][-1L], collapse = "=")
-	}
+        x <- .Internal(Sys.getenv(character(), ""))
+        m <- regexpr("=", x, fixed = TRUE)
+        n <- substring(x, 1L, m - 1L)
+        v <- substring(x, m + 1L)
 	if (isFALSE(names))
 	    v[sort.list(n)]
 	else { # with names

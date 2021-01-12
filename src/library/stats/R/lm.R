@@ -159,7 +159,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
         y <- drop(y)
     if(!is.null(offset))
         y <- y - offset
-    if (NROW(y) != n | length(w) != n)
+    if (NROW(y) != n || length(w) != n)
 	stop("incompatible dimensions")
     if (any(w < 0 | is.na(w)))
 	stop("missing or negative weights not allowed")

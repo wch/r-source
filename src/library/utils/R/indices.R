@@ -110,7 +110,7 @@ packageDescription <-
         return(NA)
     }
 
-    if(drop & length(fields) == 1L)
+    if(drop && length(fields) == 1L)
         return(retval[[1L]])
 
     class(retval) <- "packageDescription"
