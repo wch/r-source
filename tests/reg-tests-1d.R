@@ -4666,15 +4666,14 @@ a <- (function(...) function() NULL)(1)
 b <- (function(...) function() NULL)(1) # want "a .eq. b"
 D <- (function(...) function() NULL)(1:2 < 3) # want "D .NE. b"
 e.. <- (function(...) environment())(1)
-...maker <- function(expr)   (function(...) environment())(expr)  [["..."]]
-..2maker <- function(e1, e2) (function(...) environment())(e1, e2)[["..."]]
+##' General creator of "..."  (DOTSXP) objects (short form by Suharto Anggono):
+...maker <- function(...) get("...")
 str( ddd <- ...maker(1) )
 str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...": c(TRUE,TRUE)
-str( D2  <- ..2maker(TRUE,TRUE))      # length 2, mode "...": TRUE TRUE
+str( D2  <- ...maker(TRUE,TRUE))      # length 2, mode "...": TRUE TRUE
 stopifnot(exprs = {
     identical(ddd, ...maker(1))
     identical(Ddd, ...maker(1:2 < 3))
-    identical(Ddd, ...maker(c(TRUE, TRUE)))
     is.character(aeLD <- all.equal(quote(x+1), ddd))
     grepl("Mode",    aeLD[1])
     grepl("deparse", aeLD[2])
@@ -4703,7 +4702,7 @@ Qlis <- list(NULL
 ##
 sapply(Qlis, class)
 stopifnot( sapply(Qlis, function(obj) all.equal(obj, obj)) )
-options(op) # only the first failed in R <= 4.0.3
+## only the first failed in R <= 4.0.3
 
 ## See PR#18012 -- may well change
 aS <- (function(x) function() NULL)(stop('hello'))
@@ -4712,6 +4711,19 @@ try( all.equal(aS, bS) ) ## now (check.environment=TRUE) triggers the promise ..
 ## Now have a way *not* to evaluate aka force the promise:
 (aeS <- all.equal(aS, bS, evaluate=FALSE)) # no promises forced
 stopifnot(grepl("same names.* not identical", aeS))
+
+
+## PR#18032: identical(<DOTSXP>,*)
+ddd <- ...maker(47)
+DDD <- ...maker(ch = {cat("Hu hu!\n"); "arg1"}, two = 1+1, pi, ABC="A")
+stopifnot(exprs = {
+    identical(ddd,ddd)
+    identical(DDD,DDD)
+    identical  (ddd, ...maker(47))
+    ! identical(ddd, ...maker(7 )) # these *are* different
+    ! identical(ddd, DDD)
+})
+options(op)
 
 
 

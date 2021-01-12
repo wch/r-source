@@ -475,6 +475,9 @@
       \code{sprintf("\%X", utf8ToInt("\uD834\uDD1E"))} should now give
       \code{"1D11E"} on all platforms.
       %% failed on Solaris
+
+      \item \code{identical(x,y)} is no longer true for differing
+      \code{DOTSXP} objects, fixing \PR{18032}.
     }
   }
 }

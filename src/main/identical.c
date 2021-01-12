@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2020  The R Core Team
+ *  Copyright (C) 2001-2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -88,7 +88,6 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 Rboolean
 R_compute_identical(SEXP x, SEXP y, int flags)
 {
-    SEXP ax, ay, atrx, atry;
     if(x == y) /* same pointer */
 	return TRUE;
     if(TYPEOF(x) != TYPEOF(y) ||
@@ -102,6 +101,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	/* This matches NAs */
 	return Seql(x, y);
     }
+    SEXP ax, ay;
     if (IGNORE_SRCREF && TYPEOF(x) == CLOSXP) {
 	/* Remove "srcref" attribute - and below, treat body(x), body(y) */
 	SEXP x_ = PROTECT(duplicate(x)), y_ = PROTECT(duplicate(y));
@@ -151,8 +151,9 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 		    if(streql(tx, CHAR(PRINTNAME(TAG(ely))))) {
 			/* We need to treat row.names specially here */
 			if(streql(tx, "row.names")) {
-			    PROTECT(atrx = getAttrib(x, R_RowNamesSymbol));
-			    PROTECT(atry = getAttrib(y, R_RowNamesSymbol));
+			    SEXP
+				atrx = PROTECT(getAttrib(x, R_RowNamesSymbol)),
+				atry = PROTECT(getAttrib(y, R_RowNamesSymbol));
 			    if(!R_compute_identical(atrx, atry, flags)) {
 				UNPROTECT(4); /* atrx, atry, ax, ay */
 				return FALSE;
@@ -171,9 +172,10 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 		    return FALSE;
 		}
 	    }
-	    UNPROTECT(2); /* ax, ay */    
+	    UNPROTECT(2); /* ax, ay */
 	}
     }
+
     switch (TYPEOF(x)) {
     case NILSXP:
 	return TRUE;
@@ -244,6 +246,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     }
     case LANGSXP:
     case LISTSXP:
+    case DOTSXP:
     {
 	while (x != R_NilValue) {
 	    if(y == R_NilValue)
@@ -293,24 +296,18 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)RAW(x), (void *)RAW(y),
 		      XLENGTH(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
-
-/*  case PROMSXP: args are evaluated, so will not be seen */
+    case PROMSXP: // args are evaluated -- but can be seen from DOTSXP dissection
 	/* test for equality of the substituted expression -- or should
 	   we require both expression and environment to be identical? */
-	/*#define PREXPR(x)	((x)->u.promsxp.expr)
-	  #define PRENV(x)	((x)->u.promsxp.env)
-	  return(R_compute_identical(subsititute(PREXPR(x), PRENV(x),
-				     flags),
-	  subsititute(PREXPR(y), PRENV(y))));*/
+	return(R_compute_identical(substitute(PREXPR(x), PRENV(x)),
+				   substitute(PREXPR(y), PRENV(y)), flags));
     case S4SXP:
 	/* attributes already tested, so all slots identical */
-	return TRUE;
-    case DOTSXP: // "constant entity" (see below), but known
 	return TRUE;
     default:
 	/* these are all supposed to be types that represent constant
 	   entities, so no further testing required ?? */
-	printf("Unknown Type: %s (%x)\n", type2char(TYPEOF(x)), TYPEOF(x));
+	printf("Unknown Type in identical(): %s (%x)\n", type2char(TYPEOF(x)), TYPEOF(x));
 	return TRUE;
     }
 }
