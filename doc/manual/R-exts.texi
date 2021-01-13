@@ -1757,7 +1757,11 @@ to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and
 @samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.
 
 To check for an external BLAS library using the @code{AX_BLAS} macro
-from the official Autoconf Macro Archive, one can simply do
+from the official Autoconf Macro
+Archive@footnote{@uref{https://www.gnu.org/software/autoconf-archive/ax_blas.html}. If
+you include macros from that archive you need to arrange for them to be
+included in the package sources for use by @command{autoreconf}.}, one
+can use
 
 @example
 @group
