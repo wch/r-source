@@ -936,6 +936,22 @@ void fpu_setup(Rboolean start)
     _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_OFF);
     _MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_OFF);
 #endif
+
+#if defined(__ARM_ARCH) && defined(__ARM_32BIT_STATE) && defined(__ARM_FP)
+    uint32_t fpscr;
+
+    asm volatile("vmrs %0, fpscr" : "=r"(fpscr));
+    /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
+    fpscr = fpscr & 0xfcffffff;
+    asm volatile("vmsr fpscr, %0" : : "r"(fpscr));
+#elif defined(__ARM_ARCH) && defined(__ARM_64BIT_STATE) && defined(__ARM_FP)
+    uint64_t fpcr;
+
+    asm volatile("mrs %0, fpcr" : "=r"(fpcr));
+    /* clear/disable DN (default NaN) and FZ (flush to zero) bits */
+    fpcr = fpcr & 0xfffffffffcffffff;
+    asm volatile("msr fpcr, %0" : : "r"(fpcr));
+#endif
     } else {
 #ifdef __FreeBSD__
     fpsetmask(~0);
