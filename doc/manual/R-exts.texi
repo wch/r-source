@@ -4559,6 +4559,17 @@ features from later standards.  (Although @R{} only requires Fortran 90,
 @code{COMPLEX(KIND=KIND(0.0D0))}.)
 
 
+@c https://gcc.gnu.org/onlinedocs/gfortran/KIND-Type-Parameters.html
+@c https://stackoverflow.com/questions/838310/fortran-90-kind-parameter
+The use of Fortran types such as @code{REAL(KIND=8)} is very far from
+portable.  According of the standards this merely enumerates different
+supported types, so @code{DOUBLE PRECISION} might be @code{REAL(KIND=3)}
+(and is on an actual compiler).  Even if for a particular compiler the
+value indicates the size in bytes, which values are supported is
+platform-specific --- for example @command{gfortran} supports values of 4
+and 8 on all current platforms and 10 and 16 on a few (but not for
+example on @cputype{arm} CPUs).
+
 Not all common @R{} platforms conform to the expected standards, e.g.@:
 C99 for C code.  One common area of problems is the @code{*printf}
 functions where Windows does not support @code{%lld}, @code{%Lf} and
