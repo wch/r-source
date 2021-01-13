@@ -1,6 +1,6 @@
 
-R version 4.0.3 Patched (2020-12-29 r79727) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R version 4.0.3 Patched (2021-01-08 r79820) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -590,7 +590,7 @@ attr(,"class")
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.209 0.012 0.222 0 0 
+Time elapsed:  0.418 0.025 0.445 0 0 
 > grDevices::dev.off()
 null device 
           1 

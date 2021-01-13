@@ -1,6 +1,6 @@
 
-R version 4.0.3 Patched (2020-12-29 r79727) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R version 4.0.3 Patched (2021-01-08 r79820) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.278   0.058   0.318 
+  0.557   0.067   0.617 

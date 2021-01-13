@@ -1,6 +1,6 @@
 
-R version 4.0.3 Patched (2020-12-29 r79727) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R version 4.0.3 Patched (2021-01-08 r79820) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -86,7 +86,7 @@ Type 'q()' to quit R.
 > require(stats)
 > # simplest form of fitting a first-order model to these data
 > fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
-+    start = c(A = 20, lrc = log(.35)))
++            start = c(A = 20, lrc = log(.35)))
 > coef(fm1)
        A      lrc 
 19.14258 -0.63282 
@@ -97,13 +97,15 @@ Nonlinear regression model
      A    lrc 
 19.143 -0.633 
  residual sum-of-squares: 26
-> # using the plinear algorithm
+> # using the plinear algorithm  (trace o/p differs by platform)
+> ## IGNORE_RDIFF_BEGIN
 > fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
-+    start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
++            start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
 32.946 :  -1.0498 22.1260
 25.992 :  -0.62572 19.10319
 25.99 :  -0.6327 19.1419
 25.99 :  -0.63282 19.14256
+> ## IGNORE_RDIFF_END
 > # using a self-starting model
 > fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 > summary(fm3)
@@ -3510,7 +3512,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.797 0.07 2.881 0 0 
+Time elapsed:  5.371 0.118 5.555 0 0 
 > grDevices::dev.off()
 null device 
           1 
