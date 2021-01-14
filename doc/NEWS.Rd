@@ -322,8 +322,8 @@
   
   \subsection{PACKAGE INSTALLATION on macOS}{
     \itemize{
-      \item The default personal library directory now differs by CPU
-      type, one of
+      \item The default personal library directory on \acronym{CRAN}
+      builds now differs by CPU type, one of
 \preformatted{
       ~/Library/R/x86_64/x.y/library
       ~/Library/R/arm64/x.y/library

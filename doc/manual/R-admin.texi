@@ -5028,9 +5028,8 @@ that, configure with @option{--without-readline}.
 @item
 @c You do not need zlib-system-stub if PKG_CONFIG_PATH includes /opt/X11/lib/pkgconfig
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
-@code{pkgconfig}, @code{zlib-system-stub} from
-@uref{https://mac.R-project.org/libs-4/}, for the full range of
-bitmapped graphics devices.
+@code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
+for the full range of bitmapped graphics devices.
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5372,11 +5371,11 @@ Binary distributions of @R{} are built against a specific version
 (e.g.@: 1.8.0_241 or 11.0.6) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
 
-To use Java (specifically, package @CRANpkg{rJava} with a @acronym{CRAN}
-(@cputype{x86_64}) binary distribution of @R{} on @cputype{arm64}
-install a @cputype{x86_64} of a Java JRE such as that from
-@uref{https://adoptopenjdk.net, AdoptOpenJDK}, then run @command{sudo R
-CMD javareconf}.
+To use Java (specifically, package @CRANpkg{rJava}) with a
+@acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
+@cputype{arm64} macOS install a @cputype{x86_64} build of a Java JRE
+such as that from @uref{https://adoptopenjdk.net, AdoptOpenJDK}, then
+run @command{sudo R CMD javareconf}.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
@@ -5456,10 +5455,10 @@ to @command{pkg-config}).
 @node Building R.app, Building binary packages, Frameworks, macOS
 @subsection Building R.app
 
-Note that building the @Rapp{} GUI console is a separate project, using
-Xcode.  Before compiling @Rapp{} make sure the current version of @R{}
-is installed in @file{/Library/Frameworks/R.framework} and working at
-the command-line (this can be a binary install).
+Building the @Rapp{} GUI console is a separate project, using Xcode.
+Before compiling @Rapp{} make sure the current version of @R{} is
+installed in @file{/Library/Frameworks/R.framework} and working at the
+command-line (this can be a binary install).
 
 The current sources can be checked out by
 @example
@@ -5529,7 +5528,7 @@ release).
 @item
 For C++ code there is the possibility that calls will be generated to
 entry points not in the system @file{/usr/lib/libc++.1.dylib}.  The
-previous step allows this to be tested again the system library on the
+previous step allows this to be tested against the system library on the
 build OS, but not against earlier ones.  It may be possible to
 circumvent that by static linking to @file{libc++.a} and
 @file{libc++abi.a} by something like
@@ -5582,7 +5581,7 @@ distribution that @code{libgfortran} was built for 10.14 --- but these
 seem harmless.)
 
 To correctly set the architecture (which will be auto-detected as
-@code{aarch64}, use something like
+@code{aarch64}), use something like
 
 @example
 /path/to/configure --build=x86_64-apple-darwin20
