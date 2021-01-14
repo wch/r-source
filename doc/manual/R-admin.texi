@@ -1635,7 +1635,7 @@ typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R}, e.g.@:
-@file{~/Library/R/4.0/library}), and that warnings, messages and other
+@file{~/Library/R/x86_64/4.0/library}), and that warnings, messages and other
 output to @file{stderr} are highlighted in bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete

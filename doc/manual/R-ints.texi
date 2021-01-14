@@ -3701,7 +3701,7 @@ interface pointer for the @code{quartz()} device(s).
 
 @item
 The default path for a personal library directory is set as
-@file{~/Library/R/x.y/library}.
+@file{~/Library/R/arch/x.y/library}.
 @c This is done in @file{etc/Renviron}.
 
 @item

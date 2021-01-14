@@ -96,6 +96,22 @@ esac
 
 R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
+
+MAC_CPU=
+case "${host_os}" in
+  darwin*)
+    case "${host_cpu}" in
+       aarch64)
+       MAC_CPU="arm64"
+       ;;
+       *)
+       MAC_CPU="${host_cpu}"
+       ;;
+    esac
+    AC_SUBST(MAC_CPU)
+    ;;
+esac
+
 R_OS="${host_os}"
 AC_SUBST(R_OS)
 

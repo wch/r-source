@@ -1,6 +1,6 @@
 % File src/library/base/man/libPaths.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{libPaths}
@@ -64,7 +64,7 @@
 
   By default \env{R_LIBS} is unset, and \env{R_LIBS_USER} is set to
   directory \file{R/\var{R.version$platform}-library/\var{x.y}}
-  of the home directory (or \file{Library/R/\var{x.y}/library} for
+  of the home directory (or \file{Library/R/\var{arch}/\var{x.y}/library} for
   CRAN macOS builds), for \R \var{x.y.z}.
 
   \code{.Library.site} can be set via the environment variable
