@@ -5581,6 +5581,13 @@ FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
 distribution that @code{libgfortran} was built for 10.14 --- but these
 seem harmless.)
 
+To correctly set the architecture (which will be auto-detected as
+@code{aarch64}, use something like
+
+@example
+/path/to/configure --build=x86_64-apple-darwin20
+@end example
+
 @node Native builds,  , `Apple Silicon', `Apple Silicon'
 @subsubsection Native builds
 
