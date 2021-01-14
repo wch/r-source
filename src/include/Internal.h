@@ -443,6 +443,7 @@ SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unserializeFromConn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unsetenv(SEXP, SEXP, SEXP, SEXP);
+SEXP do_usedVSizeTrigger(SEXP, SEXP, SEXP, SEXP);
 SEXP NORET do_usemethod(SEXP, SEXP, SEXP, SEXP);
 SEXP do_utf8ToInt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_validEnc(SEXP, SEXP, SEXP, SEXP);
