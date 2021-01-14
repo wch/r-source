@@ -490,6 +490,30 @@ SEXP attribute_hidden do_maxNSize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return ScalarReal(R_GetMaxNSize());
 }
 
+/* 
+   Used VSize trigger, which aims to prevent the used VSize from rising
+   above this limit. This is achieved by forcing garbage collection
+   whenever the used R_VSize is greater than the threshold. 
+ */
+static R_size_t R_UsedVSizeTrigger = R_SIZE_T_MAX;
+
+SEXP attribute_hidden do_usedVSizeTrigger(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    const double MB = 1048576.0;
+    double newval = asReal(CAR(args));
+
+    if (newval > 0) {
+	if (newval == R_PosInf)
+	    R_UsedVSizeTrigger = R_SIZE_T_MAX;
+	else
+        R_UsedVSizeTrigger = (((R_size_t) newval * MB) + 1) / vsfac;
+    }
+
+    if (R_UsedVSizeTrigger == R_SIZE_T_MAX)
+	return ScalarReal(R_PosInf);
+    else
+	return ScalarReal(R_UsedVSizeTrigger * vsfac / MB); 
+}
 
 /* Miscellaneous Globals. */
 
@@ -2622,6 +2646,9 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	case LGLSXP:
 	    node_class = 1;
 	    alloc_size = NodeClassSize[1];
+	    if (R_UsedVSizeTrigger < R_V_maxused + alloc_size) {
+		    R_gc_internal(0);
+		}
 	    if (FORCE_GC || NO_FREE_NODES() || VHEAP_FREE() < alloc_size) {
 		R_gc_internal(alloc_size);
 		if (NO_FREE_NODES())
@@ -2771,6 +2798,9 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
     old_R_VSize = R_VSize;
 
     /* we need to do the gc here so allocSExp doesn't! */
+    if (R_UsedVSizeTrigger < R_V_maxused + alloc_size) {
+	R_gc_internal(0);
+    }
     if (FORCE_GC || NO_FREE_NODES() || VHEAP_FREE() < alloc_size) {
 	R_gc_internal(alloc_size);
 	if (NO_FREE_NODES())
