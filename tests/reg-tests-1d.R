@@ -4667,11 +4667,13 @@ b <- (function(...) function() NULL)(1) # want "a .eq. b"
 D <- (function(...) function() NULL)(1:2 < 3) # want "D .NE. b"
 e.. <- (function(...) environment())(1)
 ##' General creator of "..."  (DOTSXP) objects (short form by Suharto Anggono):
-...maker <- function(...) get("...")
+...maker <- function(...) get("...") ## fails if called without argument
+...maker <- function(...) (function(...) environment())(...)[["..."]]
 str( ddd <- ...maker(1) )
 str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...": c(TRUE,TRUE)
 str( D2  <- ...maker(TRUE,TRUE))      # length 2, mode "...": TRUE TRUE
 stopifnot(exprs = {
+    identical(alist(a=)$a, ...maker())# "*the* missing", the empty symbol
     identical(ddd, ...maker(1))
     identical(Ddd, ...maker(1:2 < 3))
     is.character(aeLD <- all.equal(quote(x+1), ddd))
@@ -4683,7 +4685,10 @@ stopifnot(exprs = {
     typeof(ddd) == "..."
     typeof(D2) == "..."
     length(D2) == 2
-    ## FIXME: is.character(aeD <- all.equal(a, D) )
+    is.character(aeD <- all.equal(a, D) )
+    grepl("same length", aeD)
+    grepl("...", aeD, fixed=TRUE)
+    grepl("not identical", aeD)
     ##
     ## names(<DOTSXP>):
     is.null(names(ddd))
@@ -4694,9 +4699,10 @@ stopifnot(exprs = {
 op <- options(keep.source = FALSE) # don't keep "srcref" etc
 ##
 Qlis <- list(NULL
-## FIXME!  These should work
-## , ddd = ddd
-## , Ddd = Ddd
+## Next 3 must work as identical(X,X) is true:
+, ddd = ddd
+, Ddd = Ddd
+, D2  = D2
 , Qass   = quote(x <- 1)
 , Qbrc   = quote({1})
 , Qparen = quote((1))

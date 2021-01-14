@@ -179,6 +179,8 @@
       other hand, in \file{R-lang}, the R language manual, we now warn
       against relying on the structure or even existence of such
       \code{dot-dot-dot} objects.
+
+      \item \code{all.equal()} no longer errors on \code{DOTSXP} objects.
     }
   }
 
