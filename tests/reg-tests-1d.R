@@ -4684,6 +4684,11 @@ stopifnot(exprs = {
     typeof(D2) == "..."
     length(D2) == 2
     ## FIXME: is.character(aeD <- all.equal(a, D) )
+    ##
+    ## names(<DOTSXP>):
+    is.null(names(ddd))
+    identical(           c( "ch",                         "","three"),
+              names(...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2)))
 })
 ##  for identical() ==> ./reg-tests-2.R  -- as it's about "output"
 op <- options(keep.source = FALSE) # don't keep "srcref" etc

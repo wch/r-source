@@ -149,12 +149,11 @@
       Previously additional elements were silently ignored.  Suggested
       by Antoine Fabri on R-devel.
 
-      \item \R{} now provides a shorthand notation for creating
-      functions, e.g. \code{\(x) x + 1} is parsed as \code{function(x) x
-      + 1}.  This features is experimental and may change prior to
-      release.
+      \item \R{} now provides a shorthand notation for creating functions,
+      e.g. \code{\(x) x + 1} is parsed as \code{function(x) x + 1}.  This
+      feature is experimental and may change prior to release.
 
-      \item \R{} now provides a simple native froward pipe syntax
+      \item \R{} now provides a simple native forward pipe syntax
       \code{|>}.  The simple form of the forward pipe inserts the
       left-hand side as the first argument in the right-hand side call. A
       syntax is also provided for passing the left-hand side as an
@@ -175,6 +174,11 @@
 
       \item Lithuanian translations are now available, thanks to
       Rimantas Žakauskas.
+
+      \item \code{names()} now works for \code{DOTSXP} objects.  On the
+      other hand, in \file{R-lang}, the R language manual, we now warn
+      against relying on the structure or even existence of such
+      \code{dot-dot-dot} objects.
     }
   }
 
