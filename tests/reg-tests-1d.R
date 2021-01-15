@@ -4672,6 +4672,17 @@ e.. <- (function(...) environment())(1)
 str( ddd <- ...maker(1) )
 str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...": c(TRUE,TRUE)
 str( D2  <- ...maker(TRUE,TRUE))      # length 2, mode "...": TRUE TRUE
+str( D3n <- ...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2) )
+(lD2 <- D2[]) # (unnamed) list of 2 promises
+str(lD2) # failed in R <= 4.0.3
+str(D3n[]) #   (ditto)
+str(lD2[[1]])         # promise (no longer on R level in future!)
+str(D3n[][["three"]]) #  (ditto)
+nlD1 <- nlD <- lD2
+names(nlD1) <- c("first", "");       nlD1
+names(nlD ) <- c("first", "second"); nlD
+str(nlD1)# worked previously, wrongly printing 'symbol first'
+str(nlD) # worked already in R <= 4.0.3
 stopifnot(exprs = {
     identical(alist(a=)$a, ...maker())# "*the* missing", the empty symbol
     identical(ddd, ...maker(1))
@@ -4692,13 +4703,14 @@ stopifnot(exprs = {
     ##
     ## names(<DOTSXP>):
     is.null(names(ddd))
-    identical(           c( "ch",                         "","three"),
-              names(...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2)))
+    identical(c("ch", "", "three"), names(D3n))
 })
 ##  for identical() ==> ./reg-tests-2.R  -- as it's about "output"
 op <- options(keep.source = FALSE) # don't keep "srcref" etc
 ##
 Qlis <- list(NULL
+, lD2  = lD2
+, nlD1 = nlD1
 ## Next 3 must work as identical(X,X) is true:
 , ddd = ddd
 , Ddd = Ddd

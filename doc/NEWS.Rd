@@ -319,7 +319,7 @@
       the \acronym{CRAN} checks with current GCC do.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION on macOS}{
     \itemize{
       \item The default personal library directory on \acronym{CRAN}
@@ -502,6 +502,9 @@
 
       \item \code{identical(x,y)} is no longer true for differing
       \code{DOTSXP} objects, fixing \PR{18032}.
+
+      \item \code{str()} now works correctly for DOTSXP and related
+      exotics, even when these are doomed.
     }
   }
 }

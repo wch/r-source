@@ -240,6 +240,7 @@ str.default <-
 				   control = dCtrl, nlines = nlines)
     n.of. <- function(n, singl, plural) paste(n, ngettext(n, singl, plural))
     n.of <- function(n, noun) n.of.(n, noun, paste0(noun,"s"))
+    l.i <- function(i) paste0("[[",i,"]]")
     arrLenstr <- function(obj) {
 	rnk <- length(di. <- dim(obj))
 	di <- paste0(ifelse(di. > 1, "1:",""), di.,
@@ -354,6 +355,12 @@ str.default <-
 	    }
 	    if (is.na(max.level) || nest.lev < max.level) {
 		nms <- names(object)
+		if("promise" %in% (oTypes <- vapply(object, typeof, ""))) {
+		    envP <- object # a list; ensure all promises are named
+		    if(is.null(nms)) names(envP) <- rep.int("", le)
+		    if(any(zch <- !nzchar(names(envP)["promise" == oTypes]))) ## name them
+			names(envP)[zch] <- l.i(which(zch))
+		}
 		nam.ob <-
 		    if(is.null(nms)) rep.int("", le)
 		    else { ncn <- nchar.w(nms)
@@ -364,8 +371,8 @@ str.default <-
 		for (i in seq_len(min(list.len,le) ) ) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep = "")
 		    envir <- # pass envir for 'promise' components:
-			if(typeof(object[[i]]) == "promise") {
-			    structure(object, nam = as.name(nms[i]))
+			if(oTypes[[i]] == "promise") {
+			    structure(envP, nam = as.name(names(envP)[i]))
 			} # else NULL
 		    strSub(object[[i]], give.length=give.length,
                            nest.lev = nest.lev + 1,
@@ -496,16 +503,16 @@ str.default <-
 		str1 <- paste(" atomic", le.str)
 	    }
 	} else if(typeof(object) == "promise") {
-	    cat(" promise ")
-	    if (!is.null(envir)) {
-		objExp <- eval(bquote(substitute(.(attr(envir, "nam")), envir)))
-		cat("to ")
-		strSub(objExp)
-	    } else cat(" <?>\n")
+	    cat(" promise to ")
+	    objExp <-
+		if (is.null(envir) || is.null(nam <- attr(envir, "nam")))
+		    substitute(.x., as.environment(list(.x. = object)))
+		else
+		    eval(bquote(substitute(.(nam), envir)))
+	    strSub(objExp)
 	    return(invisible())
 	} else {
 	    ##-- NOT-atomic / not-vector  "unclassified object" ---
-	    ##str1 <- paste(" ??? of length", le, ":")
 	    str1 <- paste("length", le)
 	}
 	##-- end  if else..if else...  {still non-list case}
