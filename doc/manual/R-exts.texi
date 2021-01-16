@@ -1733,6 +1733,7 @@ if test -z "$CXX"; then
   AC_MSG_ERROR([No C++ compiler is available])
 fi
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
+CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 AC_LANG(C++)
 @end example
 
