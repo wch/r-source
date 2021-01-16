@@ -28,7 +28,7 @@
 
   The \code{rhs} form \code{symbol => call} can be used to pass the
   \code{lhs} as an argument other than the first in the call \code{call}.
-  \code{call} must contain one, and only one,  occurrance of the placeholder
+  \code{call} must contain one, and only one, occurrence of the placeholder
   \code{symbol} at top level, which is replaced by \code{lhs}.
 
   To avoid ambiguities, functions in \code{rhs} calls may not be
