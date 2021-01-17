@@ -94,20 +94,12 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 \note{
   In principle these devices are independent of X11 (as is seen by their
   presence on Windows).  But on a Unix-alike the cairo libraries may be
-  distributed as part of the X11 system and hence that (on \code{x86_64}
-  macOS, XQuartz) may need to be installed.
+  distributed as part of the X11 system and hence that (for example, on
+  \code{x86_64} macOS, XQuartz) may need to be installed.
 }
 
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
-}
-
-
-\seealso{
-  \code{\link{Devices}}, \code{\link{dev.print}}, \code{\link{pdf}},
-  \code{\link{postscript}}
-
-  \code{\link{capabilities}} to see if cairo is supported.
 }
 
 \section{Anti-aliasing}{
@@ -132,6 +124,18 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     \item Circle radii have a minimum of 1/72 inch.
     \item Colours are interpreted by the viewing application.
   }
+}
+
+\section{Warning}{
+  Support for all these devices are optional, so in packages they should
+  be used conditionally after checking \code{\link{capabilities}("cairo")}.
+}
+
+\seealso{
+  \code{\link{Devices}}, \code{\link{dev.print}}, \code{\link{pdf}},
+  \code{\link{postscript}}
+
+  \code{\link{capabilities}} to see if cairo is supported.
 }
 
 \keyword{device}

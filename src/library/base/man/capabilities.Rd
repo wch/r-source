@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -88,12 +88,16 @@ capabilities(what = NULL,
     \code{\link{tracemem}}.}
   \item{cairo}{is there support for the \code{\link{svg}},
     \code{\link{cairo_pdf}} and \code{\link{cairo_ps}} devices, and
-    for \code{type = "cairo"} in the
+    for \code{type = "cairo"} in the \code{\link{bmp}},
+    \code{\link{jpeg}}, \code{\link{png}} and \code{\link{tiff}}
+    devices?
 #ifdef unix
-    \code{\link{X11}},
+    Prior to \R 4.1.0 this also indicated Cairo support in the
+    \code{\link{X11}} device, but it is now possible to build \R with
+    Cairo support for the bitmap devices without support for the
+    \code{X11} device (usually when that is not supported at all).
 #endif
-    \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
-    and \code{\link{tiff}} devices?}
+  }
 
   \item{ICU}{is ICU available for collation?  See the help on
     \link{Comparison} and \code{\link{icuSetCollate}}: it is never
@@ -115,7 +119,7 @@ capabilities(what = NULL,
     3.3.0 always true for Unix-alikes, and true for CRAN Windows builds.}
 }
 \seealso{\code{\link{.Platform}} and \code{\link{extSoftVersion}} (and
-    links there) for availability capabilities \emph{external} to \R but
+    links there) for availability of capabilities \emph{external} to \R but
     used from \R functions.
   }
 \examples{
