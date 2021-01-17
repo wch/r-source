@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -112,7 +112,7 @@ capabilities(what = NULL,
     3.3.0 always true for Unix-alikes, and true for CRAN Windows builds.}
 }
 \seealso{\code{\link{.Platform}} and \code{\link{extSoftVersion}} (and
-    links there) for availability capabilities \emph{external} to \R but
+    links there) for availability of capabilities \emph{external} to \R but
     used from \R functions.
   }
 \examples{
