@@ -46465,6 +46465,8 @@ fi
 
       if test "${have_png}" = no; then
                 unset ac_cv_lib_png_png_create_write_struct
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libpng with static libs" >&5
+$as_echo "$as_me: checking for libpng with static libs" >&6;}
         PNG_LIBS=`"${PKG_CONFIG}" --static --libs libpng`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for png_create_write_struct in -lpng" >&5
 $as_echo_n "checking for png_create_write_struct in -lpng... " >&6; }
@@ -46616,6 +46618,8 @@ fi
 
       if test "x${have_tiff}" = xno; then
         unset ac_cv_lib_tiff_TIFFOpen
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libtiff with static libs" >&5
+$as_echo "$as_me: checking for libtiff with static libs" >&6;}
         TIF_LIBS=`"${PKG_CONFIG}" --static --libs ${mod}`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
 $as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
@@ -46974,7 +46978,10 @@ $as_echo "#define HAVE_TIFF 1" >>confdefs.h
       BITMAP_LIBS="-ltiff ${BITMAP_LIBS}"
     else
       # tiff 4.0.x may need lzma too: SU's static build does
+      # OTOH, it will normally be in LIBS at this point in configure
       unset ac_cv_lib_tiff_TIFFOpen
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libtiff with -llzma" >&5
+$as_echo "$as_me: checking for libtiff with -llzma" >&6;}
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
 $as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
 if ${ac_cv_lib_tiff_TIFFOpen+:} false; then :
@@ -47037,6 +47044,8 @@ $as_echo "#define HAVE_TIFF 1" >>confdefs.h
     if test "x${have_tiff}" != xyes; then
       # tiff 4.1.x may need webp too:
       unset ac_cv_lib_tiff_TIFFOpen
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libtiff with -lwebp" >&5
+$as_echo "$as_me: checking for libtiff with -lwebp" >&6;}
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
 $as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
 if ${ac_cv_lib_tiff_TIFFOpen+:} false; then :
