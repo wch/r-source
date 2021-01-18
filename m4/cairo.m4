@@ -54,13 +54,24 @@ else
     fi
       if "${PKG_CONFIG}" --exists cairo-xlib; then
          xmodlist="${modlist} cairo-xlib"
+       r_cairo_xlib=yes
       else
          xmodlist="${modlist}"
       fi
     CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
     CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
-    CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
-    CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
+    case "${host_os}" in
+      darwin*)
+        ## This is for static macOS build
+	## FIXME: doing that unconditionally is really not a good idea
+        CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
+        CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
+        ;;
+      *)
+        CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
+        CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
+        ;;
+    esac
 
     CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
     LIBS="${LIBS} ${CAIRO_LIBS}"
@@ -119,6 +130,7 @@ int main(void) {
       fi
       if "${PKG_CONFIG}" --exists cairo-xlib; then
          xmodlist="${modlist} cairo-xlib"
+         r_cairo_xlib=yes
       else
          xmodlist="${modlist}"
       fi
@@ -171,6 +183,10 @@ if test "x${r_cv_has_pangocairo}" = xyes; then
 fi
 if test "x${r_cv_cairo_works}" = xyes; then
    AC_DEFINE(HAVE_WORKING_CAIRO, 1, [Define to 1 if you have cairo.])
+   if test "x${r_cairo_xlib}" = xyes; then
+      AC_DEFINE(HAVE_WORKING_X11_CAIRO, 1,
+               [Define to 1 if you have cairo including Xlib.])
+   fi
 fi
 if test "x${r_cairo_pdf}" = xyes; then
    AC_DEFINE(HAVE_CAIRO_PDF, 1, [Define to 1 if you have cairo-ps.]) 

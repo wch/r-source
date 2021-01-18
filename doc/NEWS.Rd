@@ -180,7 +180,12 @@
       against relying on the structure or even existence of such
       \code{dot-dot-dot} objects.
 
-      \item \code{all.equal()} no longer errors on \code{DOTSXP} objects.
+      \item \code{all.equal()} no longer gives an error on \code{DOTSXP}
+      objects.
+
+      \item \code{capabilities("cairo")} now applies only to the
+      file-based() devices as it is now possible (if very unusual) to
+      build \R with Cairo support for those but not for \code{X11()}.
     }
   }
 
@@ -258,7 +263,11 @@
       cover the Basic Multilingual Plane.
 
       \item Cairo installations without X11 are more likely to be
-      detected by \command{configure}.
+      detected by \command{configure}, when the file-based Cairo devices
+      will be available but not @code{X11(type = "cairo")}.
+
+      Pango installations using static libraries on macOS are more
+      likely to be detected.
     }
   }
 

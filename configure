@@ -44352,13 +44352,24 @@ $as_echo "$r_cv_has_pangocairo" >&6; }
     fi
       if "${PKG_CONFIG}" --exists cairo-xlib; then
          xmodlist="${modlist} cairo-xlib"
+       r_cairo_xlib=yes
       else
          xmodlist="${modlist}"
       fi
     CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
     CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
-    CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
-    CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
+    case "${host_os}" in
+      darwin*)
+        ## This is for static macOS build
+	## FIXME: doing that unconditionally is really not a good idea
+        CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
+        CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
+        ;;
+      *)
+        CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
+        CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
+        ;;
+    esac
 
     CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
     LIBS="${LIBS} ${CAIRO_LIBS}"
@@ -44440,6 +44451,7 @@ $as_echo "$r_cv_has_cairo" >&6; }
       fi
       if "${PKG_CONFIG}" --exists cairo-xlib; then
          xmodlist="${modlist} cairo-xlib"
+         r_cairo_xlib=yes
       else
          xmodlist="${modlist}"
       fi
@@ -44512,6 +44524,11 @@ if test "x${r_cv_cairo_works}" = xyes; then
 
 $as_echo "#define HAVE_WORKING_CAIRO 1" >>confdefs.h
 
+   if test "x${r_cairo_xlib}" = xyes; then
+
+$as_echo "#define HAVE_WORKING_X11_CAIRO 1" >>confdefs.h
+
+   fi
 fi
 if test "x${r_cairo_pdf}" = xyes; then
 
@@ -46557,6 +46574,8 @@ fi
 
       if test "${have_png}" = no; then
                 unset ac_cv_lib_png_png_create_write_struct
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libpng with static libs" >&5
+$as_echo "$as_me: checking for libpng with static libs" >&6;}
         PNG_LIBS=`"${PKG_CONFIG}" --static --libs libpng`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for png_create_write_struct in -lpng" >&5
 $as_echo_n "checking for png_create_write_struct in -lpng... " >&6; }
@@ -46708,6 +46727,8 @@ fi
 
       if test "x${have_tiff}" = xno; then
         unset ac_cv_lib_tiff_TIFFOpen
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libtiff with static libs" >&5
+$as_echo "$as_me: checking for libtiff with static libs" >&6;}
         TIF_LIBS=`"${PKG_CONFIG}" --static --libs ${mod}`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
 $as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
@@ -47066,7 +47087,10 @@ $as_echo "#define HAVE_TIFF 1" >>confdefs.h
       BITMAP_LIBS="-ltiff ${BITMAP_LIBS}"
     else
       # tiff 4.0.x may need lzma too: SU's static build does
+      # OTOH, it will normally be in LIBS at this point in configure
       unset ac_cv_lib_tiff_TIFFOpen
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libtiff with -llzma" >&5
+$as_echo "$as_me: checking for libtiff with -llzma" >&6;}
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
 $as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
 if ${ac_cv_lib_tiff_TIFFOpen+:} false; then :
@@ -47129,6 +47153,8 @@ $as_echo "#define HAVE_TIFF 1" >>confdefs.h
     if test "x${have_tiff}" != xyes; then
       # tiff 4.1.x may need webp too:
       unset ac_cv_lib_tiff_TIFFOpen
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libtiff with -lwebp" >&5
+$as_echo "$as_me: checking for libtiff with -lwebp" >&6;}
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
 $as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
 if ${ac_cv_lib_tiff_TIFFOpen+:} false; then :

@@ -1964,7 +1964,9 @@ if test "${use_libtiff}" = yes; then
       BITMAP_LIBS="-ltiff ${BITMAP_LIBS}"
     else
       # tiff 4.0.x may need lzma too: SU's static build does
+      # OTOH, it will normally be in LIBS at this point in configure
       unset ac_cv_lib_tiff_TIFFOpen
+      AC_MSG_NOTICE([checking for libtiff with -llzma])
       AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-llzma ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xyes; then
         AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
@@ -1974,8 +1976,10 @@ if test "${use_libtiff}" = yes; then
       fi
     fi
     if test "x${have_tiff}" != xyes; then
-      # tiff 4.1.x may need webp too:
+      # tiff >= 4.1.0 may need webp too:
+      # (actually, it could also need jbig zstd libdeflate ....)
       unset ac_cv_lib_tiff_TIFFOpen
+      AC_MSG_NOTICE([checking for libtiff with -lwebp])
       AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [-lwebp -llzma ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xyes; then
         AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
@@ -2043,6 +2047,7 @@ if test "${use_libpng}" = yes; then
       if test "${have_png}" = no; then
         dnl currently this is the same as --libs, but might change.
         unset ac_cv_lib_png_png_create_write_struct
+        AC_MSG_NOTICE([checking for libpng with static libs])
         PNG_LIBS=`"${PKG_CONFIG}" --static --libs libpng`
         AC_CHECK_LIB(png, png_create_write_struct, 
                      [have_png=yes], [have_png=no], [${PNG_LIBS} ${LIBS}])
@@ -2082,6 +2087,7 @@ if test "${use_libtiff}" = yes; then
                    [${TIF_LIBS} ${BITMAP_LIBS}])
       if test "x${have_tiff}" = xno; then
         unset ac_cv_lib_tiff_TIFFOpen
+        AC_MSG_NOTICE([checking for libtiff with static libs])
         TIF_LIBS=`"${PKG_CONFIG}" --static --libs ${mod}`
         AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no],
                      [${TIF_LIBS} ${BITMAP_LIBS}])
