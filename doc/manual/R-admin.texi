@@ -1600,15 +1600,16 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer puts links to @command{R} and
-@command{Rscript} in @file{/usr/local/bin}. If these are missing (as
+@command{Rscript} in @file{/usr/local/bin}.  If these are missing (as
 they may be under `Big Sur'), you can run directly the copies in
-@file{/Library/Frameworks/R.framework/Resources/}.} so these can be
-typed as commands like any other Unix-alike: see the next chapter of
-this manual.  There are some small differences which may surprise users
-of @R{} on other platforms, notably the default location of the personal
-library directory (under @file{~/Library/R}, e.g.@:
-@file{~/Library/R/4.0/library}), and that warnings, messages and other
-output to @file{stderr} are highlighted in bold.
+@file{/Library/Frameworks/R.framework/Resources/} or link those yourself
+to somewhere on your path.} so these can be typed as commands like any
+other Unix-alike: see the next chapter of this manual.  There are some
+small differences which may surprise users of @R{} on other platforms,
+notably the default location of the personal library directory (under
+@file{~/Library/R}, e.g.@: @file{~/Library/R/4.0/library}), and that
+warnings, messages and other output to @file{stderr} are highlighted in
+bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
 Those using the @command{zsh} shell (the default for new user accounts
@@ -4492,8 +4493,7 @@ directory.  To re-create the sources from
 @command{notangle} is required.  Some Linux distributions include this
 command in package @pkg{noweb}.  It can also be installed from the
 sources at @url{https://www.cs.tufts.edu/@/~nr/@/noweb/}@footnote{The links
-there have proved difficult to access, in which case either point an FTP
-client at @uref{ftp://www.eecs.harvard.edu/@/pub/@/nr/} or grab the copy
+there have proved difficult to access, in which case grab the copy
 made available at
 @uref{https://developer.r-project.org/noweb-2.11b.tgz}.}.  The package
 sources are only re-created even in maintainer mode if
@@ -4977,9 +4977,8 @@ that, configure with @option{--without-readline}.
 @item
 @c You do not need zlib-system-stub if PKG_CONFIG_PATH includes /opt/X11/lib/pkgconfig
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
-@code{pkgconfig}, @code{zlib-system-stub} from
-@uref{https://mac.R-project.org/libs-4/}, for the full range of
-bitmapped graphics devices.
+@code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
+for the full range of bitmapped graphics devices.
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5146,7 +5145,7 @@ in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
-From Catalina, the system paths need to be specified @emph{via}
+For Mojave and later the system paths need to be specified @emph{via}
 @example
 CC="/usr/local/clang/bin/clang -isysroot
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
@@ -5413,10 +5412,10 @@ to @command{pkg-config}).
 @node Building R.app, Building binary packages, Frameworks, macOS
 @subsection Building R.app
 
-Note that building the @Rapp{} GUI console is a separate project, using
-Xcode.  Before compiling @Rapp{} make sure the current version of @R{}
-is installed in @file{/Library/Frameworks/R.framework} and working at
-the command-line (this can be a binary install).
+Building the @Rapp{} GUI console is a separate project, using Xcode.
+Before compiling @Rapp{} make sure the current version of @R{} is
+installed in @file{/Library/Frameworks/R.framework} and working at the
+command-line (this can be a binary install).
 
 The current sources can be checked out by
 @example
@@ -5486,7 +5485,7 @@ release).
 @item
 For C++ code there is the possibility that calls will be generated to
 entry points not in the system @file{/usr/lib/libc++.1.dylib}.  The
-previous step allows this to be tested again the system library on the
+previous step allows this to be tested against the system library on the
 build OS, but not against earlier ones.  It may be possible to
 circumvent that by static linking to @file{libc++.a} and
 @file{libc++abi.a} by something like
