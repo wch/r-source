@@ -1628,15 +1628,16 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer puts links to @command{R} and
-@command{Rscript} in @file{/usr/local/bin}. If these are missing (as
+@command{Rscript} in @file{/usr/local/bin}.  If these are missing (as
 they may be under `Big Sur'), you can run directly the copies in
-@file{/Library/Frameworks/R.framework/Resources/}.} so these can be
-typed as commands like any other Unix-alike: see the next chapter of
-this manual.  There are some small differences which may surprise users
-of @R{} on other platforms, notably the default location of the personal
-library directory (under @file{~/Library/R}, e.g.@:
-@file{~/Library/R/x86_64/4.0/library}), and that warnings, messages and other
-output to @file{stderr} are highlighted in bold.
+@file{/Library/Frameworks/R.framework/Resources/} or link those yourself
+to somewhere on your path.} so these can be typed as commands like any
+other Unix-alike: see the next chapter of this manual.  There are some
+small differences which may surprise users of @R{} on other platforms,
+notably the default location of the personal library directory (under
+@file{~/Library/R}, e.g.@: @file{~/Library/R/x86_64/4.0/library}), and
+that warnings, messages and other output to @file{stderr} are
+highlighted in bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
 Those using the @command{zsh} shell (the default for new user accounts
