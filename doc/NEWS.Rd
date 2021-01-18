@@ -184,7 +184,7 @@
       objects.
 
       \item \code{capabilities("cairo")} now applies only to the
-      file-based() devices as it is now possible (if very unusual) to
+      file-based devices as it is now possible (if very unusual) to
       build \R with Cairo support for those but not for \code{X11()}.
     }
   }
@@ -214,8 +214,8 @@
       \code{viewport(mask)} that can also be a grob, which defines
       a mask.
 
-      These new features are only supported (so far) on Cairo graphics
-      devices and the \code{pdf()} device.
+      These new features are only supported (so far) on Cairo-based
+      graphics devices and the \code{pdf()} device.
 
       \item (Not Windows.)
       A warning is given when a Cairo-based type is specified for a
@@ -264,7 +264,7 @@
 
       \item Cairo installations without X11 are more likely to be
       detected by \command{configure}, when the file-based Cairo devices
-      will be available but not @code{X11(type = "cairo")}.
+      will be available but not \code{X11(type = "cairo")}.
 
       Pango installations using static libraries on macOS are more
       likely to be detected.
@@ -331,8 +331,9 @@
 
   \subsection{PACKAGE INSTALLATION on macOS}{
     \itemize{
-      \item The default personal library directory on \acronym{CRAN}
-      builds now differs by CPU type, one of
+      \item The default personal library directory on builds with
+      \option{--enable-aqua} (including\acronym{CRAN} builds) now
+      differs by CPU type, one of
 \preformatted{
       ~/Library/R/x86_64/x.y/library
       ~/Library/R/arm64/x.y/library
