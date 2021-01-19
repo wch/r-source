@@ -4670,8 +4670,12 @@ e.. <- (function(...) environment())(1)
 ...maker <- function(...) get("...") ## fails if called without argument
 ...maker <- function(...) (function(...) environment())(...)[["..."]]
 str( ddd <- ...maker(1) )
-str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...": c(TRUE,TRUE)
-str( D2  <- ...maker(TRUE,TRUE))      # length 2, mode "...": TRUE TRUE
+str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...":
+str( D2  <- ...maker(TRUE,TRUE))      # length 2, mode "...":
+str( D3n <- ...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2) )
+assertErrV(lD2 <- D2[]) #  type '...' is not subsettable
+assertErrV(D3n[]) #   (ditto)
+assertErrV(D3n[][["three"]]) #  (ditto)
 str( D3n <- ...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2) )
 (lD2 <- D2[]) # (unnamed) list of 2 promises
 str(lD2) # failed in R <= 4.0.3
@@ -4709,12 +4713,11 @@ stopifnot(exprs = {
 op <- options(keep.source = FALSE) # don't keep "srcref" etc
 ##
 Qlis <- list(NULL
-, lD2  = lD2
-, nlD1 = nlD1
-## Next 3 must work as identical(X,X) is true:
+## Next 4 now must work as identical(X,X) is true:
 , ddd = ddd
 , Ddd = Ddd
 , D2  = D2
+, D3n = D3n
 , Qass   = quote(x <- 1)
 , Qbrc   = quote({1})
 , Qparen = quote((1))

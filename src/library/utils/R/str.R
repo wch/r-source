@@ -550,6 +550,15 @@ str.default <-
 	    } else if (mod == "argument"){
 		format.fun <- deParse
 	    } else {
+		if(mod == "...") { # DOTSXP
+		    format.fun <- function(x) { # use le := length(x)
+			le <- length(x) ## for testing <<<<< FIXME DROP!! <<<<<<<<<<
+			hasNm <- nzchar(nm <- names(x) %||% rep.int("", le))
+			nm[hasNm] <- paste0(nm[hasNm], "=")
+			paste0("(", paste(paste0(nm,"*"), collapse=", "),
+			       ")")
+		    }
+		}
 		give.mode <- TRUE
 	    }
 	    if(give.mode) str1 <- paste0(str1, ', mode "', mod,'":')
@@ -627,7 +636,8 @@ str.default <-
 	}
 
 	cat(if(give.head) paste0(str1, " "),
-	    formObj(if(ile >= 1) object[seq_len(ile)] else if(v.len > 0) object),
+	    formObj(if(ile >= 1 && mod != "...") object[seq_len(ile)]
+		    else if(v.len > 0) object),
 	    if(le > v.len) " ...", "\n", sep = "")
 
     } ## else (not function nor list)----------------------------------------
