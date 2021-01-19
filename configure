@@ -47151,7 +47151,8 @@ $as_echo "#define HAVE_TIFF 1" >>confdefs.h
       fi
     fi
     if test "x${have_tiff}" != xyes; then
-      # tiff 4.1.x may need webp too:
+      # tiff >= 4.1.0 may need webp too:
+      # (actually, it could also need jbig zstd libdeflate ....)
       unset ac_cv_lib_tiff_TIFFOpen
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libtiff with -lwebp" >&5
 $as_echo "$as_me: checking for libtiff with -lwebp" >&6;}
