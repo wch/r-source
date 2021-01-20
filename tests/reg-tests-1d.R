@@ -4673,9 +4673,11 @@ str( ddd <- ...maker(1) )
 str( Ddd <- environment(D)[["..."]] ) # length 1, mode "...":
 str( D2  <- ...maker(TRUE,TRUE))      # length 2, mode "...":
 str( D3n <- ...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2) )
+if(FALSE) { # not yet
 assertErrV(lD2 <- D2[]) #  type '...' is not subsettable
 assertErrV(D3n[]) #   (ditto)
 assertErrV(D3n[][["three"]]) #  (ditto)
+}
 str( D3n <- ...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2) )
 stopifnot(exprs = {
     identical(alist(a=)$a, ...maker())# "*the* missing", the empty symbol
