@@ -4677,16 +4677,6 @@ assertErrV(lD2 <- D2[]) #  type '...' is not subsettable
 assertErrV(D3n[]) #   (ditto)
 assertErrV(D3n[][["three"]]) #  (ditto)
 str( D3n <- ...maker(ch = {cat("HOO!\n"); "arg1"}, 2, three=1+2) )
-(lD2 <- D2[]) # (unnamed) list of 2 promises
-str(lD2) # failed in R <= 4.0.3
-str(D3n[]) #   (ditto)
-str(lD2[[1]])         # promise (no longer on R level in future!)
-str(D3n[][["three"]]) #  (ditto)
-nlD1 <- nlD <- lD2
-names(nlD1) <- c("first", "");       nlD1
-names(nlD ) <- c("first", "second"); nlD
-str(nlD1)# worked previously, wrongly printing 'symbol first'
-str(nlD) # worked already in R <= 4.0.3
 stopifnot(exprs = {
     identical(alist(a=)$a, ...maker())# "*the* missing", the empty symbol
     identical(ddd, ...maker(1))
