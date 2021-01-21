@@ -1117,6 +1117,10 @@ create objects these can use code `earlier' in the package (see the
 provided that the objects created do not depend on those packages except
 @emph{via} namespace imports.
 
+Extreme care is needed if top-level computations are made to depend on
+availability or not of other packages.  In particular this applies to
+@code{setMethods} and @code{setClass} calls.
+
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of one or more @R{} objects: please
 use suitable compression as suggested by @code{tools::resaveRdaFiles},
@@ -1307,7 +1311,7 @@ Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
 top level of the package will @emph{not} be installed and so not be
 known to users of Windows and macOS compiled packages (and not seen
-by those who use @command{R CMD INSTALL} or @command{install.packages}
+by those who use @command{R CMD INSTALL} or @code{install.packages()}
 on the tarball).  So any information files you wish an end user to see
 should be included in @file{inst}.  Note that if the named exceptions
 also occur in @file{inst}, the version in @file{inst} will be that seen
@@ -1598,16 +1602,19 @@ for this and others.  Some checks can be done by the
 @code{checkbashisms} Perl script at
 @c 'checkbaskisms' really is the correct path
 @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}, also
-available in most Linux distributions in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}.}) shell script @file{configure} in
-your package which (if present) is executed by @code{R CMD INSTALL}
-before any other action is performed.  This can be a script created by
-the Autoconf mechanism, but may also be a script written by yourself.
-Use this to detect if any nonstandard libraries are present such that
-corresponding code in the package can be disabled at install time rather
-than giving error messages when the package is compiled or used.  To
-summarize, the full power of Autoconf is available for your extension
-package (including variable substitution, searching for libraries,
-etc.).
+available in most Linux distributions in a package named either
+@samp{devscripts} or @samp{devscripts-checkbashisms}: a possibly later
+version can be extracted from Debian sources such as
+@uref{http://deb.debian.org/@/debian/@/pool/@/main/@/d/@/devscripts/@/devscripts_2.20.5.tar.xz}.}
+shell script @file{configure} in your package which (if present) is
+executed by @code{R CMD INSTALL} before any other action is performed.
+This can be a script created by the Autoconf mechanism, but may also be
+a script written by yourself.  Use this to detect if any nonstandard
+libraries are present such that corresponding code in the package can be
+disabled at install time rather than giving error messages when the
+package is compiled or used.  To summarize, the full power of Autoconf
+is available for your extension package (including variable
+substitution, searching for libraries, etc.).
 
 @vindex R_PACKAGE_DIR
 @vindex R_PACKAGE_NAME
@@ -1745,7 +1752,11 @@ be used with @R{} versions before 3.6.0 should use the legacy forms
 should depend on @samp{R (< 4.0)}.)
 
 To check for an external BLAS library using the @code{AX_BLAS} macro
-from the official Autoconf Macro Archive, one can simply do
+from the official Autoconf Macro
+Archive@footnote{@uref{https://www.gnu.org/software/autoconf-archive/ax_blas.html}. If
+you include macros from that archive you need to arrange for them to be
+included in the package sources for use by @command{autoreconf}.}, one
+can use
 
 @example
 @group
@@ -7598,7 +7609,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@uref{https://www.rstudio.com/}).
+example RStudio (@uref{https://rstudio.com/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
@@ -8846,7 +8857,7 @@ and for checking C++ you may also need @pkg{libubsan}.} of @command{gcc}
 and @command{clang} on common Linux and macOS platforms.  See
 @uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
 @uref{https://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
-@uref{https://code.google.com/@/p/@/address-sanitizer/}.
+@uref{https://github.com/google/sanitizers}.
 
 More thorough checks of C++ code are done if the C++ library has been
 `annotated': at the time of writing this applied to @code{std::vector}
@@ -8921,7 +8932,7 @@ without OpenMP, @option{-pthread} is also required.)
 
 For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
-@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/AddressSanitizerFLags}.
+@uref{https://github.com/google/sanitizers/wiki/AddressSanitizerFlags}.
 With @command{gcc} additional control is available @emph{via} the
 @option{--param} flag: see its @command{man} page.
 
@@ -8933,7 +8944,7 @@ break __asan_report_error
 @end example
 @noindent
 (See
-@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
+@uref{https://github.com/google/sanitizers/wiki/AddressSanitizerAndDebugger}.)
 
 More recent versions@footnote{including @command{gcc} 7.1 and
 @command{clang} 4.0.0: for @command{gcc} it is implied by
@@ -8965,7 +8976,7 @@ libraries called from Tcl/Tk.
 @subsubsection Using the Leak Sanitizer
 
 For @code{x86_64} Linux there is a leak sanitizer, `LSan': see
-@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/LeakSanitizer}.
+@uref{https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer}.
 This is available on recent versions of @code{gcc} and @code{clang}, and
 where available is compiled in as part of ASan.
 
@@ -9119,7 +9130,7 @@ code with @command{gcc} but there has been success with @command{clang}.
 @subsection Other analyses with `clang'
 
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
-`ThreadSanitizer' (@uref{https://code.google.com/@/p/@/thread-sanitizer/}),
+`ThreadSanitizer' (@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
 (@uref{https://clang.llvm.org/@/docs/@/MemorySanitizer.html},
 @uref{https://github.com/google/sanitizers})
@@ -9536,7 +9547,7 @@ use @command{install_name_tool}, but that would have to be done for all
 the dylibs including those in packages.
 
 It may be simplest to attach the debugger to a running process (see
-above).  Specifcally, run @R{} and when it is at the prompt just before
+above).  Specifically, run @R{} and when it is at the prompt just before
 a command that is to be debugged, at a terminal 
 
 @example

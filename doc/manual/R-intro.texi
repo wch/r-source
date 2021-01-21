@@ -7536,7 +7536,7 @@ file @file{README.Rterm} for command-line editing under
 
 When using @R{} with GNU@footnote{It is possible to build @R{} using an
 emulation of GNU @strong{readline}, such as one based on NetBSD's
-@strong{editline} (also known as @strong{libedit}), it which case only a
+@strong{editline} (also known as @strong{libedit}), in which case only a
 subset of the capabilities may be provided.} @strong{readline}
 capabilities, the functions described below are available, as well as
 others (probably) documented in @command{man readline} or @command{info
