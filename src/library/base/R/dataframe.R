@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2020 The R Core Team
+# Changes Copyright (C) 1998-2021 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -232,7 +232,7 @@ as.data.frame.list <-
     ## data.frame() is picky with its 'row.names':
     alis <- c(list(check.names = check.names, fix.empty.names = fix.empty.names,
 		   stringsAsFactors = stringsAsFactors),
-	      if(!is.null(row.names)) list(row.names = row.names))
+	      if(!missing(row.names)) list(row.names = row.names))
     x <- do.call(data.frame, c(x, alis))
     if(any.m) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
     x

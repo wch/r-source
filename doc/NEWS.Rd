@@ -516,6 +516,10 @@
 
       \item \code{str()} now works correctly for DOTSXP and related
       exotics, even when these are doomed.
+
+      \item \code{as.data.frame.list(L, row.names=NULL)} now behaves in line
+      with \code{data.frame()}, disregarding names of components of
+      \code{L}, fixing \PR{18034}, reported by Kevin Tappe.
     }
   }
 }
