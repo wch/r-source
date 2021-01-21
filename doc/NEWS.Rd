@@ -183,6 +183,7 @@
       \item \code{all.equal()} no longer gives an error on \code{DOTSXP}
       objects.
 
+      %% The Homebrew arm64 libs have cairo but not cairo-xlib
       \item \code{capabilities("cairo")} now applies only to the
       file-based devices as it is now possible (if very unusual) to
       build \R with Cairo support for those but not for \code{X11()}.
