@@ -1928,8 +1928,7 @@ licence).
 * Using Makevars::
 * Configure example::
 * Using F9x code::
-* Using C++11 code::
-* Using C++14 and later::
+* Using C++ code::
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2634,7 +2633,7 @@ R CMD INSTALL \
 or by setting the environment variables @code{ODBC_INCLUDE} and
 @code{ODBC_LIBS}.
 
-@node Using F9x code, Using C++11 code, Configure example, Configure and cleanup
+@node Using F9x code, Using C++ code, Configure example, Configure and cleanup
 @subsection Using F9x code
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
@@ -2691,8 +2690,8 @@ define a module of the same name in multiple source files.
 @c As was done by frailtypack in 2018-12: gfortran accepted this, ODS
 @c on Solaris did not.
 
-@node Using C++11 code, Using C++14 and later, Using F9x code, Configure and cleanup
-@subsection Using C++11 code
+@node Using C++ code,  , Using F9x code, Configure and cleanup
+@subsection Using C++ code
 
 @R{} can be built without a C++ compiler although one is available (but
 not necessarily installed) on all known @R{} platforms.  As from @R{}
@@ -2777,9 +2776,6 @@ Note that the mechanisms described here specify C++11 for code compiled
 by @command{R CMD SHLIB} as used by default by @command{R CMD INSTALL}.
 They do not necessarily apply if there is a @file{src/Makefile} file,
 nor to compilation done in vignettes or @emph{via} other packages.
-
-@node Using C++14 and later,  , Using C++11 code, Configure and cleanup
-@subsection Using C++14 and later
 
 Support for a C++14 compiler (where available) has been in @R{}
 since version 3.4.0.  Similar considerations to C++11 apply, with the
@@ -4553,10 +4549,9 @@ R-admin, R Installation and Administration},
 @end ifset
 
 Portable C++ code needs to follow the 2011 standard or to specify
-C+14/17/20 (see @ref{Using C++14 and later}) where available (which is
-not the case on all @R{} platforms).  Currently C++14 code is less
-portable than C++11 and C++17/20 support is patchy across @R{}
-platforms.
+C+14/17/20 where available (which is not the case on all @R{}
+platforms).  Currently C++14 code is a little less portable than C++11
+and C++17/20 support is patchy across @R{} platforms.
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
@@ -5240,7 +5235,7 @@ versions the default standard was that of the compiler used, often C++98
 or C++14.  Packages which are for use only with @R{} 3.6.2 or later can
 assume C++11 or specify a later standard.  However, those which may be
 used in earlier versions need to specify C++11 explicitly (@pxref{Using
-C++11 code}) or be tested under all of C++11, C++98 and C++14.
+C++ code}) or be tested under all of C++11, C++98 and C++14.
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
