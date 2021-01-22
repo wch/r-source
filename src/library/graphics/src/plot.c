@@ -1349,17 +1349,8 @@ SEXP C_plotXY(SEXP args)
 
     PLOT_XY_DEALING("plot.xy");
 
-    if (isNull(CAR(args))) type = 'p';
-    else {
-	if (isString(CAR(args)) && LENGTH(CAR(args)) == 1 &&
-	    LENGTH(pch = STRING_ELT(CAR(args), 0)) >= 1) {
-	    if(LENGTH(pch) > 1)
-		warning(_("plot type '%s' will be truncated to first character"),
-			CHAR(pch));
-	    type = CHAR(pch)[0];
-	}
-	else error(_("invalid plot type"));
-    }
+    /* plot.xy ensures 'type' is 1 ASCII character */
+    type = CHAR(STRING_ELT(CAR(args), 0))[0];
     args = CDR(args);
 
     PROTECT(pch = FixupPch(CAR(args), gpptr(dd)->pch));
