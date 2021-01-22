@@ -1635,7 +1635,7 @@ to somewhere on your path.} so these can be typed as commands like any
 other Unix-alike: see the next chapter of this manual.  There are some
 small differences which may surprise users of @R{} on other platforms,
 notably the default location of the personal library directory (under
-@file{~/Library/R}, e.g.@: @file{~/Library/R/x86_64/4.0/library}), and
+@file{~/Library/R}, e.g.@: @file{~/Library/R/x86_64/4.1/library}), and
 that warnings, messages and other output to @file{stderr} are
 highlighted in bold.
 
@@ -5138,8 +5138,8 @@ A more recent Fortran compiler for Catalina and later is available at
 (That does not run on High Sierra.)
 
 The default security settings for Catalina and later can make it
-difficult to install Apple packages built after 2019-06-01 which have
-not been `notarized'@footnote{See
+difficult to install recently-built Apple packages which have not been
+`notarized'@footnote{See
 @uref{https://developer.apple.com/@/documentation/@/xcode/@/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/zipfiles (for example, for @command{pandoc}).
@@ -5562,12 +5562,11 @@ has unfortunately many names, including @cputype{aarch64} (in the FOSS world)
 @cputype{arm64} and @cputype{arm64e} (by Apple): the machines are also
 known as `M1', Apple's name for their (first-generation) CPU.
 
-It is possible to build and run @R{} and the vast majority of
-packages for @cputype{x86_64} using `Rosetta' emulation.  To do so,
-install all the prerequisites and other software described above, but
-include the flag @option{-target x86_64-apple-macos10.13} for
-@command{clang} and @command{clang++}, for example with a
-@file{config.site} file containing
+It is possible to build and run @R{} and almost all packages for
+@cputype{x86_64} using `Rosetta' emulation.  To do so, install all the
+prerequisites and other software described above, but include the flag
+@option{-target x86_64-apple-macos10.13} for @command{clang} and
+@command{clang++}, for example with a @file{config.site} file containing
 
 @example
 CC="clang -target x86_64-apple-macos10.13"
