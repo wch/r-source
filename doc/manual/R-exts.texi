@@ -2715,18 +2715,13 @@ supported.
 The webpage
 @uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
-features.  @command{g++} claims full C++11 support from version 4.8.1.
+features.
 
-As from version 3.6.2@footnote{version 3.6.0 except on Windows.}, @R{}
-selects a default C++ compiler with options that conform as far as
-possible@footnote{allowing `GNU extensions', but if possible excluding
-C++14 features.} to C++11. Packages which do not specify @samp{R (>=
-4.0)} in their @file{DESCRIPTION} files need to explicitly require
-C++11, hence the rest of this section.
-
-In order to specify C++11 code in a package to be used with @R{}
-versions from 3.1.0 but before 3.6.2, the package's @file{Makevars} file
-(or @file{Makevars.win} on Windows) should include the line
+Different versions of @R{} have specified different minimum C++
+standards, so for maximal portability a package should specify the
+standard it requires.  In order to specify C++11 code in a package,
+@file{Makevars} file (or @file{Makevars.win} on Windows) should include
+the line
 
 @example
 CXX_STD = CXX11
@@ -2747,8 +2742,8 @@ If a package does have a @file{src/Makevars[.win]} file then setting the
 make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
 SHLIB} to work correctly in the package's @file{src} directory.
 
-If a package using C++11 has a @command{configure} script it is
-essential that it selects the correct compiler, @emph{via} something like
+If a package using C++ has a @command{configure} script it is essential
+that it selects the correct C++ standard, @emph{via} something like
 
 @example
 CXX11=`"$@{R_HOME@}/bin/R" CMD config CXX11`
@@ -2780,50 +2775,25 @@ nor to compilation done in vignettes or @emph{via} other packages.
 Support for a C++14 compiler (where available) has been in @R{}
 since version 3.4.0.  Similar considerations to C++11 apply, with the
 variables associated with the C++14 compiler using the prefix
-@samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in a
+@samp{CXX14} instead of @samp{CXX11}. For example, to use C++14 code in a
 package, the package's @file{Makevars} file (or @file{Makevars.win} on
 Windows) should include the line
 @example
 CXX_STD = CXX14
 @end example
 
-In the absence of a @file{Makevars} file, C++14 support can also be
-requested by the line
-@example
-SystemRequirements: C++14
-@end example
-@noindent
-in the @file{DESCRIPTION} file. Finally, the C++14 compiler can be
-used systematically by setting the environment variable @env{USE_CXX14}.
+Essentially complete C++14 support is available from GCC 5, LLVM
+@command{clang} 3.4 and currently-used versions of Apple
+@command{clang}.
 
-Essentially complete C++14 support is available from GCC 5 and
-LLVM @command{clang} 3.4 and currently-used versions of Apple @command{clang}.
-
-Code written for C++11 that emulates features of C++14 will
-not necessarily compile under a C++14 compiler@footnote{As from @R{}
-3.4.0, @command{configure} attempts to supply a C++14 compiler only if
-explicitly requested.  However, earlier versions of @R{} will use the
-default C++14 mode of @command{g++} 6 and later.}, since the emulation
-typically leads to a namespace clash.  In order to ensure that the code
-also compiles under C++14, something like the following should be
-done:
-@example
-#if __cplusplus >= 201402L
-using std::make_unique;
-#else
-// your emulation
-#endif
-@end example
-
-@noindent
-Code needing C++14 features would do better to test for their presence
-@emph{via} `SD-6 feature tests'@footnote{See
+Code needing C++14 features can check for their presence @emph{via}
+`SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
 or
 @uref{https://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
 It seems a reasonable assumption that any compiler promising some C++14
 conformance will provide these---e.g.@: @command{g++} 4.9.x did but
-4.8.5 did not.}.  That test could be
+4.8.5 did not.}.  Such a check could be
 
 @example
 #include <memory> // header where this is defined
@@ -2863,6 +2833,9 @@ still-current Linux distributions and the OpenCSW compilers for
 Solaris. (There is no support for C++17 in the ODS 12.6 Solaris
 compiler, thought to be the final version.)
 
+It is intended that the default C++ version will be increased in future
+versions of @R{} but that it will still be possible to specify C++11 or
+C++14 by the mechanisms described here.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -5228,14 +5201,14 @@ Writing portable C and C++ code is mainly a matter of observing the
 standards (C99, C++11 or where declared C++14/17/20) and testing that
 extensions (such as POSIX functions) are supported.
 
-@strong{C++ standards}: As from version 3.6.0 (3.6.2 on Windows), @R{}
-defaults to C++11 where available@footnote{which it is on all known
-platforms, and is required as from @R{} 4.0.0}. However, in earlier
+@strong{C++ standards}: From version 3.6.0 (3.6.2 on Windows), @R{}
+defaulted to C++11 where available@footnote{which it is on all known
+platforms, and is required as from @R{} 4.0.0}.  However, in earlier
 versions the default standard was that of the compiler used, often C++98
-or C++14.  Packages which are for use only with @R{} 3.6.2 or later can
-assume C++11 or specify a later standard.  However, those which may be
-used in earlier versions need to specify C++11 explicitly (@pxref{Using
-C++ code}) or be tested under all of C++11, C++98 and C++14.
+or C++14, and the default is likely to change in future.  For maximal
+portability a package should either specify a standard (@pxref{Using C++
+code}) or be tested under all of C++11, C++98 and C++14.  (Specifying
+C++14 or later will limit portability.)
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -5356,9 +5329,9 @@ out-of-order declarations: in standard-conformant Fortran variables must
 be declared (explicitly or implicitly) before use in other declarations
 such as dimensions.
 
-GNU Fortran 10 gives a compilation error for the previously widespread
-practice of passing a Fortran array element where an array is expected,
-or a scalar instead of a length-one array.  See
+GNU Fortran 10 and later give a compilation error for the previously
+widespread practice of passing a Fortran array element where an array is
+expected, or a scalar instead of a length-one array.  See
 @uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.
 
 @item
