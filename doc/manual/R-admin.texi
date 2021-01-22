@@ -4909,12 +4909,12 @@ SAFE_FFLAGS=-axsse2
 @section macOS
 @cindex macOS
 
-The instructions here are for Intel 64-bit (@cputype{x86_64}) builds on
-10.13--10.15 (High Sierra, Mojave and Catalina) and 11 (Big
-Sur)@footnote{For `Apple Silicon' aka `M1' see R-devel.}.  @R{} can in
-principle be built for 10.6--10.12, although this is little tested and
-it may be necessary to install later versions of software such as
-@code{libcurl} and an older version@footnote{For example, from
+The main instructions here are for Intel 64-bit (@cputype{x86_64})
+builds on 10.13--10.15 (High Sierra, Mojave and Catalina) and 11 (Big
+Sur).  @R{} can in principle be built for 10.6--10.12, although this is
+little tested and it may be necessary to install later versions of
+software such as @code{libcurl} and an older version@footnote{For
+example, from
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
 @command{gfortran}.
 
@@ -4927,6 +4927,7 @@ it may be necessary to install later versions of software such as
 * Frameworks::
 * Building R.app::
 * Building binary packages::
+* `Apple Silicon'::
 @end menu
 
 @node Prerequisites, Other C/C++ compilers, macOS, macOS
@@ -5090,8 +5091,8 @@ A more recent Fortran compiler for Catalina and later is available at
 (That does not run on High Sierra.)
 
 The default security settings for Catalina and later can make it
-difficult to install Apple packages built after 2019-06-01 which have
-not been `notarized'@footnote{See
+difficult to install recently-built Apple packages which have not been
+`notarized'@footnote{See
 @uref{https://developer.apple.com/@/documentation/@/xcode/@/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/zipfiles (for example, for @command{pandoc}).
@@ -5103,19 +5104,6 @@ from @uref{https://mac.R-project.org/}.
 If you run into problems with `quarantine' for tarballs downloaded in a
 browser, consider using @command{curl -OL} to download (as illustrated
 above) or @command{xattr -c} to remove extended attributes.
-
-Should one want to build @R{} for Intel on an @cputype{arm64} Big Sur
-Mac, add the target for the C and C++ compilers:
-
-@example
-CC="clang -target x86_64-apple-macos10.15"
-OBJC=$CC
-CXX="clang++ -target x86_64-apple-macos10.15"
-@end example
-
-@noindent
-and install the Fortran compiler and external software as described
-above.
 
 @node Other C/C++ compilers, Other libraries, Prerequisites, macOS
 @subsection Other C/C++ compilers
@@ -5337,6 +5325,12 @@ Binary distributions of @R{} are built against a specific version
 (e.g.@: 1.8.0_241 or 11.0.6) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
 
+To use Java (specifically, package @CRANpkg{rJava}) with a
+@acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
+@cputype{arm64} macOS install a @cputype{x86_64} build of a Java JRE
+such as that from @uref{https://adoptopenjdk.net, AdoptOpenJDK}, then
+run @command{sudo R CMD javareconf}.
+
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
 environment variable @env{JAVA_HOME} to choose between these, both when
@@ -5439,7 +5433,7 @@ See also the @file{INSTALL} file in the checkout or directly at
 application bundle can be run anywhere and it is customary to place it
 in the @file{/Applications} folder.
 
-@node Building binary packages,  , Building R.app, macOS
+@node Building binary packages, `Apple Silicon', Building R.app, macOS
 @subsection Building binary packages
 
 @acronym{CRAN} macOS binary packages are distributed as tarballs with
@@ -5506,6 +5500,42 @@ have version @code{5.0.0}).
 @noindent
 The @acronym{CRAN} binary packages are built with the Apple compiler on High
 Sierra, which avoids the first two and any issues with C++ libraries.
+
+@node `Apple Silicon',  , Building binary packages, macOS
+@subsection @samp{arm64} aka `Apple Silicon'
+
+In November 2020 Apple launched Macs using `Apple Silicon': this architecture
+has unfortunately many names, including @cputype{aarch64} (in the FOSS world)
+@cputype{arm64} and @cputype{arm64e} (by Apple): the machines are also
+known as `M1', Apple's name for their (first-generation) CPU.
+
+It is possible to build and run @R{} and almost all packages for
+@cputype{x86_64} using `Rosetta' emulation.  To do so, install all the
+prerequisites and other software described above, but include the flag
+@option{-target x86_64-apple-macos10.13} for @command{clang} and
+@command{clang++}, for example with a @file{config.site} file containing
+
+@example
+CC="clang -target x86_64-apple-macos10.13"
+OBJC=$CC
+CXX="clang++ -target x86_64-apple-macos10.13"
+FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
+@end example
+
+@noindent
+(This may give warnings, in particular for the @command{gfortran} 8.2
+distribution that @code{libgfortran} was built for 10.14 --- but these
+seem harmless.)
+
+To correctly set the architecture (which will be auto-detected as
+@code{aarch64}), use something like
+
+@example
+/path/to/configure --build=x86_64-apple-darwin20
+@end example
+
+For @cputype{arm64} native builds, see the version of this manual for
+R-devel, 4.1.0-to-be.
 
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
