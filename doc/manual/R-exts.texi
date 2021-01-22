@@ -2701,7 +2701,7 @@ standard (`C++11').  A minor update@footnote{The changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
 (`C++14') was published in December 2014.  A revision (`C++17') was
 published in December 2017, and a further revision (`C++20', with many
-new features) is scheduled for publication in May 2020.
+new features) was published in December 2020.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L} and
@@ -2800,6 +2800,9 @@ SystemRequirements: C++14
 in the @file{DESCRIPTION} file. Finally, the C++14 compiler can be
 used systematically by setting the environment variable @env{USE_CXX14}.
 
+Essentially complete C++14 support is available from GCC 5 and
+LLVM @command{clang} 3.4 and currently-used versions of Apple @command{clang}.
+
 Code written for C++11 that emulates features of C++14 will
 not necessarily compile under a C++14 compiler@footnote{As from @R{}
 3.4.0, @command{configure} attempts to supply a C++14 compiler only if
@@ -2857,11 +2860,12 @@ specified in an analogous way (replacing @code{14} by @code{17} or
 can be used (and probably should be as support is still patchy,
 especially library support).
 
-C++17 and C++20 support are available with the default builds of @R{} on
+C++17 and C++20 support is available with the default builds of @R{} on
 macOS and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support
-for C++17 needs version 7 or later: this is more recent than some
-still-current Linux distributions.
-@c e.g. Ubuntu 16.04LTS
+for C++17 needs version 7 or later: that is more recent than some
+still-current Linux distributions and the OpenCSW compilers for
+Solaris. (There is no support for C++17 in the ODS 12.6 Solaris
+compiler, thought to be the final version.)
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
