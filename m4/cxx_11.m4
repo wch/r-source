@@ -11,7 +11,8 @@
 #   Check for baseline language coverage in the compiler for the specified
 #   version of the C++ standard.  If necessary, add switches to CXX and
 #   CXXCPP to enable support.  VERSION may be '11' (for the C++11 standard),
-#   '14' (for the C++14 standard) or '17' (for the C++17 standard)
+#   '14' (for the C++14 standard), '17' (for the C++17 standard) or
+#   '20' (for the C++20 standard) 
 #
 #   The second argument, if specified, indicates whether you insist on an
 #   extended mode (e.g. -std=gnu++11) or a strict conformance mode (e.g.
@@ -50,6 +51,8 @@ dnl  For C++11 we check that the date on the
 dnl  __cplusplus macro is not too recent so that a C++14 compiler does not
 dnl  pass as a C++11, for example. The tests for C++17 have been
 dnl  modified and are not conditional on the compiler.
+dnl  If e.g. CXX11STD is set, test it first not last.
+dnl  Add support for C++20, with no new tests
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   m4_if([$1], [11], [ax_cxx_compile_alternatives="11 0x"],
