@@ -8887,7 +8887,7 @@ ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
 An alternative is to pipe the output through
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
-@uref{https://llvm.org/@/svn/@/llvm-project/@/compiler-rt/@/trunk/@/lib/@/asan/scripts/@/asan_symbolize.py}:
+@uref{https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/asan/scripts/asan_symbolize.py}:
 it makes use of @command{llvm-symbolizer} if available.} and perhaps
 then (for compiled C++ code) @command{c++filt}.  (On macOS, you may need
 to run @command{dsymutil} to get line-number reports.)
