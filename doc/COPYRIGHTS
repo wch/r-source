@@ -543,7 +543,7 @@ tools/uniset
 is by Marcus Kuhn (https://www.cl.cam.ac.uk/~mgk25/) but contains
 neither licence nor copyright claim.
 
-m4/cxx_11.m4
+m4/cxx.m4
 #   Copyright (c) 2008 Benjamin Kosnik <bkoz@redhat.com>
 #   Copyright (c) 2012 Zack Weinberg <zackw@panix.com>
 #   Copyright (c) 2013 Roy Stogner <roystgnr@ices.utexas.edu>
