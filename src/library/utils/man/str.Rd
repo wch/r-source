@@ -1,6 +1,7 @@
+
 % File src/library/utils/man/str.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{str}
@@ -110,6 +111,19 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
 \value{
   \code{str} does not return anything, for efficiency reasons.
   The obvious side effect is output to the terminal.
+}
+\note{
+  See the extensive annotated \sQuote{Examples} below.
+
+  The default method tries to \dQuote{work always}, but needs to make some
+  assumptions for the case when \code{object} has a \code{\link{class}} but
+  no own \code{str()} method which is \emph{the typical} case: There it
+  relies on \code{"\link{[}"} and \code{"\link{[[}"} subsetting methods to
+  be compatible with \code{\link{length}()}.  When this is not the case, or
+  when \code{is.list(object)} is \code{TRUE}, but \code{length(object)}
+  differs from \code{length(\link{unclass}(object))} it treats it as
+  \dQuote{irregular} and reports the contents of \code{unclass(object)}
+  as \dQuote{hidden list}.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch} since 1990.
 }

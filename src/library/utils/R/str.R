@@ -337,8 +337,14 @@ str.default <-
 	    else cat(" ", if(!is.null(names(object))) "Named ",
 		     if(i.pl)"pair", "list()\n", sep = "")
 	} else { # list, length >= 1 :
-	    if(irregCl <- has.class && identical(object[[1L]], object)) {
-		le <- length(object <- unclass(object))
+	    if(irregCl <- has.class &&
+		   ## vapply(), lapply .. typically use length(unclass(object))
+		   (length(uncObj <- unclass(object)) != le # << igraph communities
+		    || identical(object[[1L]], object)
+		    || inherits(tryCatch(object[[le]], error=identity), "error")# igraph
+		   )
+	       ) {
+		le <- length(object <- uncObj)
 		std.attr <- c(std.attr, "class")
 	    }
 	    if(no.list || (has.class &&

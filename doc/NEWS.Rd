@@ -517,6 +517,10 @@
       \item \code{str()} now works correctly for DOTSXP and related
       exotics, even when these are doomed.
 
+      Additionally, it no longer fails for \code{list}s with a \code{class} and
+      \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
+      necessarily fail, as currently for different \CRANpkg{igraph} objects.
+
       \item \code{as.data.frame.list(L, row.names=NULL)} now behaves in line
       with \code{data.frame()}, disregarding names of components of
       \code{L}, fixing \PR{18034}, reported by Kevin Tappe.

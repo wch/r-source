@@ -4755,6 +4755,29 @@ stopifnot(identical(RN,    rownames      (dfcars1)) ,
 ## dfcarsN == dfcars1  in  R <= 4.0.x
 
 
+## str(x) when x has "unusal" length() semantics such that lapply() / vapply() fails:
+length.Strange4 <- function(x) 4
+`[[.Strange4` <- function(x, i) {
+    stopifnot(length(i) == 1)
+    if(i %in% 1:4) paste(sprintf("content of  x[[%d]]", i))
+    else stop("invalid [[-index, partly out of 1..4")
+}
+`[.Strange4` <- function(x, i) {
+    isM <- length(i) > 1
+    if(all(i %in% 1:4)) paste(sprintf("content of  x[%s]",
+                                      if(isM) paste0("c(", i, collapse=", ", ")")
+                                      else paste0(i, collapse=", ")))
+    else stop("invalid indices, partly out of 1..4")
+}
+L <- structure(as.list(1:6), class="Strange4")
+stopifnot(is.list(L), length(L) == 4, length(unclass(L)) == 6)
+assertErrV(lapply(L, length))
+assertErrV(vapply(L, typeof, ""))
+lns <- capture.output(str(L)) # no longer fails
+stopifnot(length(lns) == 1+6,  grepl("hidden list", lns[1]))
+## str() failed for these and similar in R <= 4.0.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
