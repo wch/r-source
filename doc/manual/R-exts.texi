@@ -5320,9 +5320,9 @@ The GNU Fortran compiler also supports a large number of non-portable
 extensions, the most commonly encountered one being
 @code{ISNAN}@footnote{There is a portable way to do this in Fortran 2003
 (@code{ieee_is_nan()} in module @code{ieee_arithmetic}), but ironically
-that is not supported in the commonly-used versions 4.x of GNU Fortran.
-A pretty robust alternative is to test @code{if(my_var /= my_var)}.}.
-Some are listed at
+that is not supported in the versions 4.x of GNU Fortran.  A pretty
+robust alternative is to test @code{if(my_var /= my_var)}.}.  Some are
+listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gfortran/@/Extensions-implemented-in-GNU-Fortran.html}.
 One that frequently catches package writers is that it allows
 out-of-order declarations: in standard-conformant Fortran variables must
