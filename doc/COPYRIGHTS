@@ -544,13 +544,22 @@ is by Marcus Kuhn (https://www.cl.cam.ac.uk/~mgk25/) but contains
 neither licence nor copyright claim.
 
 m4/cxx.m4
+Based on ax_cxx_compile_stdcxx.m4
 #   Copyright (c) 2008 Benjamin Kosnik <bkoz@redhat.com>
 #   Copyright (c) 2012 Zack Weinberg <zackw@panix.com>
 #   Copyright (c) 2013 Roy Stogner <roystgnr@ices.utexas.edu>
 #   Copyright (c) 2014, 2015 Google Inc.; contributed by Alexey Sokolov <sokolov@google.com>
 #   Copyright (c) 2015 Paul Norman <penorman@mac.com>
-#   Copyright (c) 2015 Moritz Klammler <moriClinicalTrialSummarytz@klammler.eu>
+#   Copyright (c) 2015 Moritz Klammler <moritz@klammler.eu>
 #   Copyright (c) 2016 Krzesimir Nowak <qdlacz@gmail.com>
+#   Copyright (c) 2016, 2018 Krzesimir Nowak <qdlacz@gmail.com>
+#   Copyright (c) 2019 Enji Cooper <yaneurabeya@gmail.com>
+#
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved.  This file is offered as-is, without any
+#   warranty.
+
 
 m4/stat-time.m4
 
