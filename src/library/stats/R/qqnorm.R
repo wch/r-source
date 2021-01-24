@@ -33,7 +33,7 @@ qqnorm.default <-
         ylim <- range(y)
     x <- qnorm(ppoints(n))[order(order(y))]
     if(has.na) {
-        y <- x; x <- yN; x[!ina] <- y
+        y <- x; x <- rep.int(NA_real_, length(ina)); x[!ina] <- y
         y <- yN
     }
     if(plot.it)
