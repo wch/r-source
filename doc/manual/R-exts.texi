@@ -2253,12 +2253,12 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++11 compiler and not necessarily to the C++14/17/20 compiler: users of
-the latter should do their own @command{configure} checks.  If you do
-use your own checks, make sure that OpenMP support is complete by
-compiling and linking an OpenMP-using program: on some platforms the
-runtime library is optional and on others that library depends on other
-optional libraries.
+C++ compiler and not necessarily to the C++17/20 compiler: users of the
+latter should do their own @command{configure} checks.  If you do use
+your own checks, make sure that OpenMP support is complete by compiling
+and linking an OpenMP-using program: on some platforms the runtime
+library is optional and on others that library depends on other optional
+libraries.
 @c For clang pre-7, libomp.so depended on libatomic.
 
 Some care is needed when compilers are from different families which may
@@ -2696,11 +2696,13 @@ define a module of the same name in multiple source files.
 @R{} can be built without a C++ compiler although one is available (but
 not necessarily installed) on all known @R{} platforms.  As from @R{}
 4.0.0 a C++ compiler will be selected only if it conforms to the 2011
-standard (`C++11').  A minor update@footnote{The changes are linked from
-@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
-(`C++14') was published in December 2014.  A revision (`C++17') was
-published in December 2017, and a further revision (`C++20', with many
-new features) was published in December 2020.
+standard (`C++11').  A minor update@footnote{Some changes are linked
+from
+@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}:
+there were also additional deprecations.} (`C++14') was published in
+December 2014 and will be used by default as from @R{} 4.1.0 if
+supported.  Further revisions `C++17' (in December 2017), and `C++20'
+(with many new features in December 2020) have been published since.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L} and
@@ -2757,10 +2759,12 @@ AC_LANG(C++)
 @end example
 
 @noindent
-(paying attention to all the quotes required).
+if C++11 was specified, but using @code{CXX} instead of @code{CXX11} if
+no standard was specified.
 
-If you want to compile C++11 code in a subdirectory, make sure you pass
-down the macros to specify that compiler, e.g.@: in @file{src/Makevars}
+If you want to compile C++ code in a subdirectory, make sure you pass
+down the macros to specify the appropriate compiler, e.g.@: in
+@file{src/Makevars}
 @example
 sublibs:
          @@(cd libs && $(MAKE) \
@@ -2822,20 +2826,12 @@ back-compatibility @option{-std=gnu1y}.
 
 C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
 specified in an analogous way (replacing @code{14} by @code{17} or
-@code{20}) but compiler/OS support is platform-dependent.  Feature tests
-can be used (and probably should be as support is still patchy,
-especially library support).
-
-C++17 and C++20 support is available with the default builds of @R{} on
-macOS and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support
-for C++17 needs version 7 or later: that is more recent than some
+@code{20}) but compiler/OS support is platform-dependent.  Both C++17
+and C++20 support are available with the default builds of @R{} on macOS
+and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support for
+C++17 needs version 7 or later: that is more recent than some
 still-current Linux distributions and the OpenCSW compilers for
-Solaris. (There is no support for C++17 in the ODS 12.6 Solaris
-compiler, thought to be the final version.)
-
-It is intended that the default C++ version will be increased in future
-versions of @R{} but that it will still be possible to specify C++11 or
-C++14 by the mechanisms described here.
+Solaris.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages

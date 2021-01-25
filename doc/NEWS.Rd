@@ -316,6 +316,27 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The default C++ standard has been changed to C++14 where
+      available (which it is on all currently checked platforms): if not
+      (as before) C++11 is used if available otherwise C++ is not
+      supported.
+
+      Packages which specify C++11 will still be installed using C++11.
+
+      C++14 compilers may give deprecation warnings, most often for
+      \code{std::random_shuffle} (deprecated in C++14 and removed in
+      C++17).  Either specify C++11 (see \sQuote{Writing R Extenions})
+      or modernize the code and if needed specify C++14.  The latter has
+      been supported since \R 3.4.0 so the package's \file{DESCRIPTION}
+      would need to include something like
+\preformatted{
+     Depends: R (>= 3.4)
+}
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION on Windows}{
     \itemize{
       \item \command{R CMD INSTALL} and \command{R CMD SHLIB} make use
@@ -333,7 +354,7 @@
   \subsection{PACKAGE INSTALLATION on macOS}{
     \itemize{
       \item The default personal library directory on builds with
-      \option{--enable-aqua} (including\acronym{CRAN} builds) now
+      \option{--enable-aqua} (including \acronym{CRAN} builds) now
       differs by CPU type, one of
 \preformatted{
       ~/Library/R/x86_64/x.y/library
