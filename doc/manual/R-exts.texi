@@ -15657,7 +15657,7 @@ A possible implementation is
 void R_Suicide (const char *message)
 @{
     char  pp[1024];
-    snprintf(pp, 1024, "Fatal error: %s\n", s);
+    snprintf(pp, 1024, "Fatal error: %s\n", message);
     R_ShowMessage(pp);
     R_CleanUp(SA_SUICIDE, 2, 0);
 @}
