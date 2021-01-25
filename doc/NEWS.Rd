@@ -444,6 +444,10 @@
       \code{chol2inv()}, \code{solve.default()} and \code{svd()} has
       been defunct since \R 3.1.0.  It was silently ignored up to \R
       4.0.3 but now gives an error.
+
+      \item Subsetting/indexing, i.e. \code{ddd[*]} on a \code{DOTSXP}
+      (dot-dot-dot) object \code{ddd} has been disabled; it worked by
+      accident only, undocumentedly.
     }
   }
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -683,6 +683,7 @@ static R_INLINE R_xlen_t scalarIndex(SEXP s)
     else return -1;
 }
 
+// called from (R `[` => ) do_subset, but also from R .subset() :
 SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ax, px, x, subs;
@@ -798,7 +799,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     ax = x;
     if (isVector(x))
 	PROTECT(ax);
-    else if (isPairList(x)) {
+    else if (type == LISTSXP || type == LANGSXP) { // *not* <DOTSXP>[]  :
 	SEXP dim = getAttrib(x, R_DimSymbol);
 	int ndim = length(dim);
 	if (ndim > 1) {
