@@ -5963,6 +5963,11 @@ and @file{/opt/csw/lib/amd64} may need to be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
 
+The latest version of @command{gcc} available in the OpenCSW
+distribution at the time of writing was 5.5.0 (and had been since Oct
+2017).  Later versions can be built from the sources, e.g.@: 9.3.0 (which
+supports C++17, unlike 5.x).
+
 
 @node FreeBSD, OpenBSD, Solaris, Platform notes
 @section FreeBSD
