@@ -2822,6 +2822,13 @@ still-current Linux distributions and the OpenCSW compilers for
 Solaris. (There is no support for C++17 in the ODS 12.6 Solaris
 compiler, thought to be the final version.)
 
+Note that C++17 or C++20 `support' does not mean complete support: use
+feature tests as well as resources such as
+@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support},
+@uref{https://gcc.gnu.org/projects/cxx-status.html} and
+@uref{https://libcxx.llvm.org/docs/Cxx1zStatus.html]} to see if the
+features you want to use are widely implemented.
+
 It is intended that the default C++ version will be increased in future
 versions of @R{} but that it will still be possible to specify C++11 or
 C++14 by the mechanisms described here.
