@@ -2826,12 +2826,19 @@ back-compatibility @option{-std=gnu1y}.
 
 C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
 specified in an analogous way (replacing @code{14} by @code{17} or
-@code{20}) but compiler/OS support is platform-dependent.  Both C++17
-and C++20 support are available with the default builds of @R{} on macOS
+@code{20}) but compiler/OS support is platform-dependent.  Some C++17
+and C++20 support is available with the default builds of @R{} on macOS
 and Windows as from @R{} 4.0.0.  Much of @command{g++}'s support for
 C++17 needs version 7 or later: that is more recent than some
 still-current Linux distributions and the OpenCSW compilers for
 Solaris.
+
+Note that C++17 or C++20 `support' does not mean complete support: use
+feature tests as well as resources such as
+@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support},
+@uref{https://gcc.gnu.org/projects/cxx-status.html} and
+@uref{https://libcxx.llvm.org/docs/Cxx1zStatus.html]} to see if the
+features you want to use are widely implemented.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
