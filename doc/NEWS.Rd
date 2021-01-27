@@ -327,7 +327,7 @@
 
       C++14 compilers may give deprecation warnings, most often for
       \code{std::random_shuffle} (deprecated in C++14 and removed in
-      C++17).  Either specify C++11 (see \sQuote{Writing R Extenions})
+      C++17).  Either specify C++11 (see \sQuote{Writing R Extensions})
       or modernize the code and if needed specify C++14.  The latter has
       been supported since \R 3.4.0 so the package's \file{DESCRIPTION}
       would need to include something like
