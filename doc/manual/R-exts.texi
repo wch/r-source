@@ -551,7 +551,7 @@ exceptionally for a package designed to always be used with
 @code{keep.source = TRUE}.
 
 @c DESCRIPTION field ByteCompile
-The @samp{ByteCompile} logical field controls if the package code is to
+The @samp{ByteCompile} logical field controls if the package R code is to
 be byte-compiled on installation: the default is to byte-compile.  This
 can be overridden by installing with flag @option{--no-byte-compile}.
 
@@ -618,7 +618,7 @@ portable.  If a package has a specified encoding, you should run
 
 @c DESCRIPTION NeedsCompilation
 The @samp{NeedsCompilation} field should be set to @code{"yes"} if the
-package contains code which to be compiled, otherwise @code{"no"} (when
+package contains native code which needs to be compiled, otherwise @code{"no"} (when
 the package could be installed from source on any platform without
 additional tools).  This is used by @code{install.packages(type =
 "both")} in @R{} >= 2.15.2 on platforms where binary packages are the
