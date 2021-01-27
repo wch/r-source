@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: base 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Project-Id-Version: R 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-01-27 10:07\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,6 +203,9 @@ msgstr ""
 msgid "argument 'object' must deparse to a single character string"
 msgstr ""
 
+msgid "'name' must be a single character string"
+msgstr ""
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr ""
 
@@ -346,7 +350,7 @@ msgstr ""
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr ""
 
 msgid ","
@@ -358,7 +362,10 @@ msgstr ""
 msgid "list of length %d not meaningful"
 msgstr ""
 
-msgid "only defined on a data frame with all numeric variables"
+msgid "only defined on a data frame with all numeric-alike variables"
+msgstr ""
+
+msgid "cannot xtfrm data frames"
 msgstr ""
 
 msgid "character string is not in a standard unambiguous format"
@@ -685,6 +692,9 @@ msgstr ""
 msgid "all arguments must be named"
 msgstr ""
 
+msgid "argument '%s' will be ignored"
+msgstr ""
+
 msgid "match distance components must be non-negative"
 msgstr ""
 
@@ -998,9 +1008,6 @@ msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
 msgid "namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s"
-msgstr ""
-
-msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
 
 msgid "namespace is already attached"
@@ -1349,6 +1356,9 @@ msgid "method = \"quick\" is only for numeric 'x'"
 msgstr ""
 
 msgid "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\nHave you called 'sort' on a list?"
+msgstr ""
+
+msgid "cannot xtfrm 'x'"
 msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"

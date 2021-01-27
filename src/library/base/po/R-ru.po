@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-01-27 10:07\n"
 "PO-Revision-Date: 2020-08-19 21:47+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -219,6 +219,10 @@ msgstr "'headers' должен иметь имена и не должен быть NA"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "аргумент 'object' должно быть возможно сконвертировать в строку"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "аргумент 'object' должно быть возможно сконвертировать в строку"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' должен быть одним из: 'start', 'current' или 'end'"
 
@@ -369,7 +373,8 @@ msgstr "<0 строк> (или 'row.names' нулевой длины)"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr "неправильный 'max' / getOption(\"max.print\"):"
 
-msgid "non-numeric variable(s) in data frame:"
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "нечисловая переменн(ая) в таблице данных:"
 
 msgid ","
@@ -381,8 +386,13 @@ msgstr "%s определено только для таблиц данных одинаковых размеров"
 msgid "list of length %d not meaningful"
 msgstr "список длины %d не значим"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "определено только для таблиц данных со всеми числовыми переменными"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "не таблица данных"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "текстовая строка не относится к стандартному однозначному формату"
@@ -740,6 +750,10 @@ msgstr "значение '%s' не найдено"
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "аргумент 'drop' не будет учтен"
+
 msgid "match distance components must be non-negative"
 msgstr "компоненты соответствий расстояний должны быть неотрицательными"
 
@@ -1082,9 +1096,6 @@ msgid ""
 msgstr ""
 "пространство имен %s недоступно и было заменено\n"
 "на .GlobalEnv в результате работы с объектом %s"
-
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
 msgid "namespace is already attached"
 msgstr "пространство имен уже присоединено"
@@ -1477,6 +1488,9 @@ msgid ""
 msgstr ""
 "'x' для 'sort.list', method \"shell\" и \"quick\" должен быть атомарным\n"
 "Вы вызывали 'sort' на список?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' должен быть TRUE, FALSE, или environment"
@@ -1975,6 +1989,9 @@ msgstr[1] ""
 msgstr[2] ""
 "В %s :\n"
 " дополнительные аргументы %s не будут учтены"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
 #~ msgid "bad handler specification"
 #~ msgstr "неправильное указание обработчика"

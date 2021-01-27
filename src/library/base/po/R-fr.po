@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-01-27 10:07\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -231,6 +231,12 @@ msgstr ""
 "la reconstruction de code (deparse)  de l'argument 'object' doit résulter en "
 "une chaîne de caractères unique"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr ""
+"la reconstruction de code (deparse)  de l'argument 'object' doit résulter en "
+"une chaîne de caractères unique"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' doit être un de 'start', 'current' ou 'end'"
 
@@ -394,7 +400,7 @@ msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
 #, fuzzy
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variable non numérique dans le tableau de données :"
 
 msgid ","
@@ -407,10 +413,15 @@ msgstr "seulement défini pour des tableaux de données de même taille"
 msgid "list of length %d not meaningful"
 msgstr "une liste de longueur %d n'a aucun sens"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr ""
 "seulement défini pour des tableaux de données dont toutes les variables sont "
 "numériques"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "pas un tableau de données"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "la chaîne de caractères n'est pas dans un format standard non ambigu"
@@ -789,6 +800,10 @@ msgstr "valeur pour %s introuvable"
 msgid "all arguments must be named"
 msgstr "tous les arguments doivent être nommés"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "l'argument 'drop' sera ignoré"
+
 msgid "match distance components must be non-negative"
 msgstr "les composantes 'match distance' ne peuvent être négatives"
 
@@ -1143,9 +1158,6 @@ msgid ""
 msgstr ""
 "l'espace de nom %s n'est pas disponible et a été remplacé\n"
 "par .GlobalEnv lors du traitement de l'objet %s"
-
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' n'est pas un objet exporté depuis 'namespace:%s'"
 
 msgid "namespace is already attached"
 msgstr "l'espace de noms est déjà attaché"
@@ -1565,6 +1577,9 @@ msgid ""
 msgstr ""
 "'x' doit être atomique pour 'sort.list'\n"
 "Avez-vous appelé 'sort' sur une liste ?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' doit être TRUE, FALSE ou un environnement"
@@ -2035,6 +2050,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "l'argument supplémentaire %s sera ignoré"
 msgstr[1] "l'argument supplémentaire %s sera ignoré"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' n'est pas un objet exporté depuis 'namespace:%s'"
 
 #~ msgid "bad handler specification"
 #~ msgstr "mauvaise définition de manipulateur (handler)"

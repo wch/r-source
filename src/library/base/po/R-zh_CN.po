@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-01-27 10:07\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -226,6 +226,10 @@ msgstr "'X'必需有带名字的维名"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "参数'object'必需解析成单一个字符串"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "参数'object'必需解析成单一个字符串"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin'参数的值必需是'start'，'current'或'end'中的一个"
 
@@ -377,7 +381,7 @@ msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
 #, fuzzy
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "数据框里有非数值的参数"
 
 msgid ","
@@ -390,8 +394,13 @@ msgstr "只适用于大小相同的数据框"
 msgid "list of length %d not meaningful"
 msgstr "%d长度的串列没有意义"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "只适用于全数值数据框"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "不是数据框"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
@@ -750,6 +759,10 @@ msgstr "%s的值没有"
 msgid "all arguments must be named"
 msgstr "所有参数都必需有名字"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "忽略'drop'参数"
+
 msgid "match distance components must be non-negative"
 msgstr "匹配距离组件不能有负值"
 
@@ -1084,9 +1097,6 @@ msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
 msgstr ""
-
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s'不是'namespace:%s'内的出口对象："
 
 msgid "namespace is already attached"
 msgstr "已经连接上名字空间了"
@@ -1483,6 +1493,9 @@ msgid ""
 msgstr ""
 "'sort.list'的'x'必需为原子值\n"
 "你是不是在串列上调用了'sort'函数？"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local'的值必需是'TRUE'，或是'FALSE'，或是环境"
@@ -1898,6 +1911,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s'不是'namespace:%s'内的出口对象："
 
 #~ msgid "bad handler specification"
 #~ msgstr "处置器柄规格不对"

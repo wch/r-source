@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-base 3.6.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-01-27 10:07\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -223,6 +223,12 @@ msgstr ""
 "l'argomento 'object' dev'essere ritrattato in una singola stringa di "
 "caratteri"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr ""
+"l'argomento 'object' dev'essere ritrattato in una singola stringa di "
+"caratteri"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' dev'essere uno tra 'start', 'current' o 'end'"
 
@@ -381,7 +387,8 @@ msgstr "<0 righe> (o 0-length row.names)"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr "'max' / getOption(\"max.print\") non valido:"
 
-msgid "non-numeric variable(s) in data frame:"
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variabili non numeriche nel data frame:"
 
 msgid ","
@@ -393,8 +400,13 @@ msgstr "%s è definito solo per data frame di dimensioni identiche"
 msgid "list of length %d not meaningful"
 msgstr "lista di lunghezza %d non significativa"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "è definito solo per data frame con sole variabili numeriche"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "non è un data frame"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "la stringa di caratteri non è in un formato standard"
@@ -756,6 +768,10 @@ msgstr "valore per %s non trovato"
 msgid "all arguments must be named"
 msgstr "tutti gli argomenti devono essere nominati"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "argomento 'drop' sarà ignorato"
+
 msgid "match distance components must be non-negative"
 msgstr ""
 "i componenti della distanza di corrispondenza devono essere non-negativi"
@@ -1102,9 +1118,6 @@ msgid ""
 msgstr ""
 "namespace %s non disponibile ed è stato sostituito\n"
 "da .GlobalEnv durante l'elaborazione dell'oggetto %s"
-
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' non è un oggetto esportato dal 'namespace:%s'"
 
 msgid "namespace is already attached"
 msgstr "namespace già agganciato"
@@ -1520,6 +1533,9 @@ msgid ""
 msgstr ""
 "'x' dev'essere atomico per 'sort.list'\n"
 "Si è chiamato 'sort' su una lista?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' dev'essere TRUE, FALSE o un ambiente"
@@ -1979,6 +1995,9 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 " gli argomenti extra %s saranno ignorati"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' non è un oggetto esportato dal 'namespace:%s'"
 
 #~ msgid "bad handler specification"
 #~ msgstr "specificazione dell'handler non valida"

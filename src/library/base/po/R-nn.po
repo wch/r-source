@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-01-27 10:07\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -229,6 +229,10 @@ msgstr "«X» må namn namngjevne «dimnames»"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "«origin» må vera éin av «start», «current» og «end»"
 
@@ -389,7 +393,7 @@ msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
 #, fuzzy
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "ikkje numerisk variabel i dataramme:"
 
 msgid ","
@@ -402,8 +406,13 @@ msgstr "berre definert for datarammer av lik storleik"
 msgid "list of length %d not meaningful"
 msgstr "liste av lengd %d gjev ikkje meining"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "berre definert på dataramme med berre numeriske variablar"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "ikkje ei dataramme"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "teiknstrengen er ikkje i eit standard utvetydig format"
@@ -788,6 +797,10 @@ msgstr "fann ikkje fila «%s»"
 msgid "all arguments must be named"
 msgstr "alle argumenta må ha namn"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "«drop»-argumentet vert ignorert"
+
 msgid "match distance components must be non-negative"
 msgstr "treffavstandskomponentane må vera ikkje-negative"
 
@@ -1136,9 +1149,6 @@ msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
 msgstr ""
-
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "«%s» er ikkje eit eksportert objekt frå «namespace:%s»"
 
 msgid "namespace is already attached"
 msgstr "namnerommet er alt kopla til"
@@ -1559,6 +1569,9 @@ msgid ""
 msgstr ""
 "«x» må vera atomsk for «sort.list».\n"
 "Har du kalla «sort» på ei liste?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "«local» må vera TRUE, FALSE eller ein omgjevnad"
@@ -2023,6 +2036,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "«%s» er ikkje eit eksportert objekt frå «namespace:%s»"
 
 #~ msgid "bad handler specification"
 #~ msgstr "ugyldig handsamarspesifikasjon"

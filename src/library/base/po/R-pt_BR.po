@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-01-27 10:07\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -231,6 +231,10 @@ msgstr "'X' deve ser dimnames nomeados"
 msgid "argument 'object' must deparse to a single character string"
 msgstr ""
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "'normal.kind' deve ser uma string de caracteres de tamanho 1."
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' deve ser um dentre 'start', 'current' ou 'end'"
 
@@ -397,7 +401,7 @@ msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
 #, fuzzy
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variável não numérica no data frame:"
 
 msgid ","
@@ -410,10 +414,15 @@ msgstr "definido somente para data frames com tamanhos iguais"
 msgid "list of length %d not meaningful"
 msgstr "lista de comprimento %d sem sentido"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr ""
 "somente definido para um data frame com todas as variáveis numéricas ou "
 "complexas"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "não é um data frame"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "string de caracteres não é um formato padrão não ambíguo"
@@ -804,6 +813,10 @@ msgid "all arguments must be named"
 msgstr "todos os argumentos devem ser nomeados"
 
 #, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "argumento 'drop' será ignorado"
+
+#, fuzzy
 msgid "match distance components must be non-negative"
 msgstr "componentes de 'max.distance' devem ser não negativos"
 
@@ -1182,9 +1195,6 @@ msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
 msgstr ""
-
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' não é um objeto exportado de 'namespace:%s'"
 
 #, fuzzy
 msgid "namespace is already attached"
@@ -1620,6 +1630,9 @@ msgid ""
 msgstr ""
 "'x' deve ser atômico para 'sort.list'\n"
 "Você tentou usar 'sort' em uma lista?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 #, fuzzy
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -2087,6 +2100,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "argumento 'drop' será ignorado"
 msgstr[1] "argumento 'drop' será ignorado"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' não é um objeto exportado de 'namespace:%s'"
 
 #~ msgid "bad handler specification"
 #~ msgstr "especificação de handler inválido"
