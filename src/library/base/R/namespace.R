@@ -36,10 +36,11 @@ getNamespace <- function(name) {
     if (!is.null(ns)) ns
     else tryCatch(loadNamespace(name),
                   error = function(e) {
+                    if(!nzchar(Sys.getenv("_R_NO_REPORT_MISSING_NAMESPACES_")))
                       warning(gettextf("namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s",
                                        sQuote(name)[1L], sQuote(where)),
                               domain = NA, call. = FALSE, immediate. = TRUE)
-                      .GlobalEnv
+                    .GlobalEnv
                   })
 }
 
