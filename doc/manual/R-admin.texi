@@ -1546,22 +1546,23 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-[The rest of this paragraph is only relevant after release.]  The front
-page of a @acronym{CRAN} site has a link `Download R for (Mac) OS
-X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on macOS 10.13 and later on @cputype{x86_64}
-(Intel) CPU (High Sierra, Mojave, Catalina, Big Sur, @dots{}).  It can
-also be installed on @cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs
-running Big Sur using `Rosetta' emulation@footnote{You may be asked to
-install Rosetta at first use --
-@url{https://support.apple.com/@/en-us/@/HT211861} -- which needs
-administrator privileges.}, as can @acronym{CRAN} binary packages.
+[The rest of this paragraph is only relevant after release.]
+The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
+OS X'. Click on that, then download the file
+@file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
+and later on @cputype{x86_64} (Intel) CPU (High Sierra, Mojave,
+Catalina, Big Sur, @dots{}).  It can also be installed on
+@cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs running Big Sur
+using `Rosetta' emulation@footnote{You may be asked to install Rosetta
+at first use -- @url{https://support.apple.com/@/en-us/@/HT211861} --
+which may need administrator privileges.}, as can @acronym{CRAN} binary
+packages.
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
 unsigned/not notarized: to install those Control/right/two-finger click,
-select @samp{Open With} and @samp{Installer}.)  There is usually an
-experimental tarball (not package) for @cputype{arm64}.
+select @samp{Open With} and @samp{Installer}.)  There may be an
+experimental tarball for @cputype{arm64}.
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -1569,7 +1570,8 @@ tested) install @R{} from the sources (see @ref{macOS}).
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
 (`Updates' from the `App Store' on Mojave and earlier) to be sure.
-(If using XQuartz, check that is current.)
+(If using XQuartz, check that is current but as at the time of writing
+the latest version was 2.7.11 from October 2016 it likely is.)
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -1588,12 +1590,12 @@ of the application where you installed it (which may not be where you
 want this time @dots{}).
 
 Various parts of the build require XQuartz to be installed: see
-@uref{https://www.xquartz.org/}.  These include the @pkg{tcltk}
-package and the @code{X11} device: attempting to use these without
-XQuartz will remind you.@footnote{At least if @command{otool} is
-installed: it is part of the macOS Command Line Tools.}  Also for the
-cairographics-based devices (which are not often used on macOS) such as
-@code{png(type = "cairo")}.
+@uref{https://www.xquartz.org/}.  These include the @pkg{tcltk} package
+and the @code{X11} device: attempting to use these without XQuartz will
+remind you.@footnote{At least if @command{otool} is installed: it is
+part of the macOS Command Line Tools.}  This is also needed for most
+builds of the cairographics-based devices (which are not often used on
+macOS) such as @code{png(type = "cairo")}.
 
 If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the
