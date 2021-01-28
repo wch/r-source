@@ -1111,7 +1111,7 @@ Solaris: c++11 c++14 (from 12.5)
 
 @c c++1y does not pass the configure test in 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
-@c @uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#Cxx14} for which
+@c @uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx14} for which
 @c C++14 features it supported.} in version 4.9.x) remaining as a deprecated
 @c synonym.
 

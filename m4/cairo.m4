@@ -52,17 +52,18 @@ else
        modlist="${modlist} cairo-svg"
        r_cairo_svg=yes
     fi
-      if "${PKG_CONFIG}" --exists cairo-xlib; then
-         xmodlist="${modlist} cairo-xlib"
-       r_cairo_xlib=yes
-      else
-         xmodlist="${modlist}"
-      fi
+    if "${PKG_CONFIG}" --exists cairo-xlib; then
+       xmodlist="${modlist} cairo-xlib"
+     r_cairo_xlib=yes
+    else
+       xmodlist="${modlist}"
+    fi
     CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
     CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
     case "${host_os}" in
       darwin*)
-        ## This is for static macOS build
+        ## This is for a static macOS build,
+	## although XQuartz does not currently have pangocairo.
 	## FIXME: doing that unconditionally is really not a good idea
         CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
         CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
@@ -134,11 +135,13 @@ int main(void) {
       else
          xmodlist="${modlist}"
       fi
+      ## XQuartz's cairo.pc pulls in X11 headers without cairo-xlib
       CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
       CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
       case "${host_os}" in
         darwin*)
           ## This is for static macOS build
+	  ## XQuartz's cairo.pc pulls in static X11 libs without cairo-xlib
 	  ## FIXME: doing that unconditionally is really not a good idea
           CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
           CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
