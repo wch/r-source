@@ -59,7 +59,7 @@
                 this <- sub(" .*", "", sub("^\t", "", out[ind]))
                 ##  message("tcltk DLL is linked to ", shQuote(this))
                 if(!file.exists(this))
-                    stop("X11 library is missing: install XQuartz from xquartz.macosforge.org",
+                    stop("X11 library is missing: install XQuartz from www.xquartz.org",
                          domain = NA)
             }
         }
