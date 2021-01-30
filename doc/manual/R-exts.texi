@@ -1702,7 +1702,7 @@ You will very likely need to ensure that the same C compiler and
 compiler flags are used in the @file{configure} tests as when compiling
 @R{} or your package.  Under a Unix-alike, you can achieve this by
 including the following fragment early in @file{configure.ac}
-(@emph{before} calling @code{AC_PROG_CC})
+(@emph{before} calling @code{AC_PROG_CC} or anything which calls it)
 
 @example
 @group
@@ -1723,13 +1723,13 @@ in order to use the correct version of @R{} when running the script as
 part of @code{R CMD INSTALL}, and the quotes since @samp{$@{R_HOME@}}
 might contain spaces.)
 
-If your code does load checks then you may also need
+If your code does load checks (for example, to check for an entry point in
+a library or to run code) then you will also need
 @example
 LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 @end example
 
-@noindent
-and packages written with C++ need to pick up the details for the C++
+Packages written with C++ need to pick up the details for the C++
 compiler and switch the current language to C++ by something like
 @example
 CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
@@ -1746,7 +1746,7 @@ The latter is important, as for example C headers may not be available
 to C++ programs or may not be written to avoid C++ name-mangling.  Note
 that an @R{} installation is not required to have a C++ compiler so
 @samp{CXX} may be empty.  If the package specifies a non-default C++
-standard, use the @command{config} variable names (such as @code{CXX14})
+standard, use the @command{config} variable names (such as @code{CXX17})
 appropriate to the standard, but still set @code{CXX} and
 @code{CXXFLAGS}.
 

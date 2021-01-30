@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RMethodUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -824,13 +824,27 @@ cacheMetaData <-
     ## to update class and method information.
     pkg <- getPackageName(where)
     classes <- getClasses(where)
+    lev <- 0L
     if (attach) {
+        msg <- Sys.getenv("_R_TRACE_LOADNAMESPACE_", "")
+        if (nzchar(msg)) {
+            if(pkg %in%
+               c("base", "tools", "utils", "grDevices", "graphics",
+                 "stats", "datasets", "methods", "grid", "splines", "stats4",
+                 "tcltk", "compiler", "parallel")) lev <- 0L
+            else {
+                lev <- as.integer(msg)
+                if(is.na(lev)) lev <- 0L
+            }
+        }
         for(cl in classes) {
+            if(lev > 0L) message("caching class ", cl)
             ## NOT getClassDef, it will use cache
             cldef <- get(classMetaName(cl), where)
             if(is(cldef, "classRepresentation"))
                 .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"),
                             where)
+            if(lev > 0L) message("done caching class ", cl)
         }
     } else {
         for(cl in classes) {
@@ -864,6 +878,7 @@ cacheMetaData <-
         fpkg <- packages[[i]]
         if(!identical(fpkg, pkg) && doCheck) {
             if(attach) {
+                if(lev > 0L) message("getting generic ", f)
                 env <- as.environment(where)
                 ## All instances of this generic in different attached packages must
                 ## agree with the cached version of the generic for consistent
@@ -890,9 +905,10 @@ cacheMetaData <-
             fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
         if(!is(fdef, "genericFunction"))
             next ## silently ignores all generics not visible from searchWhere
-        if(attach)
+        if(attach) {
             .cacheGeneric(f, fdef)
-        else
+            if(lev > 0L) message("done getting generic ", f)
+        } else
             .uncacheGeneric(f, fdef)
         methods <- .updateMethodsInTable(fdef, where, attach)
         cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
