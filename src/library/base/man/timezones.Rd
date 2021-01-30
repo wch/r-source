@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -170,8 +170,10 @@ OlsonNames(tzdir = NULL)
   system database at \file{/var/db/timezone/zoneinfo} and that
   distributed with \R is used by default.  Environment variable
   \env{TZDIR} can be used to point to a different \file{zoneinfo}
-  database: value \code{"internal"} indicates that the database from the
-  \R sources and \code{"macOS"} indicates the system database.
+  database: value \code{"internal"} indicates the database from the
+  \R sources and \code{"macOS"} indicates the system database. (Setting
+  either of those values would not be recognized by other software using
+  \env{TZDIR}.)
 
   Setting \env{TZDIR} is also supported by the native services on some
   OSes, e.g.\sspace{}Linux using \code{glibc} except in secure modes.
