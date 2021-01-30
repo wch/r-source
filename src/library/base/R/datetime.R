@@ -1383,25 +1383,32 @@ OlsonNames <- function(tzdir = NULL)
         if(.Platform$OS.type == "windows")
             tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
         else {
-            ## Try known locations in turn.
-            ## The list is not exhaustive (mac OS 10.13's
-            ## /usr/share/zoneinfo is a symlink) and there is a risk that
-            ## the wrong one is found.
-            ## We assume that if the second exists that the system was
-            ## configured with --with-internal-tzcode
-            tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
-                        file.path(R.home("share"), "zoneinfo"),
-                        "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
-                        "/share/zoneinfo", # in musl's search
-                        "/usr/share/lib/zoneinfo", # Solaris, AIX
-                        "/usr/lib/zoneinfo",   # early glibc
-                        "/usr/local/etc/zoneinfo", # tzcode default
-                        "/etc/zoneinfo", "/usr/etc/zoneinfo")
-            tzdirs <- tzdirs[file.exists(tzdirs)]
-            if (!length(tzdirs)) {
-                warning("no Olson database found")
-                return(character())
-            } else tzdir <- tzdirs[1L]
+            if(Sys.getenv("TZDIR") == "internal")
+                tzdir <- file.path(R.home("share"), "zoneinfo")
+            else if (grepl("darwin", R.Version()$os) &&
+                     Sys.getenv("TZDIR") == "macOS") {
+                tzdir <- "/var/db/timezone/zoneinfo"
+            } else {
+                ## Try known locations in turn.
+                ## The list is not exhaustive (mac OS 10.13's
+                ## /usr/share/zoneinfo is a symlink) and there is a risk that
+                ## the wrong one is found.
+                ## We assume that if the second exists that the system was
+                ## configured with --with-internal-tzcode
+                tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
+                            file.path(R.home("share"), "zoneinfo"),
+                            "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
+                            "/share/zoneinfo", # in musl's search
+                            "/usr/share/lib/zoneinfo", # Solaris, AIX
+                            "/usr/lib/zoneinfo",   # early glibc
+                            "/usr/local/etc/zoneinfo", # tzcode default
+                            "/etc/zoneinfo", "/usr/etc/zoneinfo")
+                tzdirs <- tzdirs[file.exists(tzdirs)]
+                if (!length(tzdirs)) {
+                    warning("no Olson database found")
+                    return(character())
+                } else tzdir <- tzdirs[1L]
+            }
         }
     } else if(!dir.exists(tzdir))
         stop(sprintf("%s is not a directory", sQuote(tzdir)), domain = NA)
