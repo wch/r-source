@@ -5650,8 +5650,9 @@ ActiveTcl).
 
 Prerequisite @code{readline} can easily be built from source, although
 @code{libedit} emulation can also be used.  If compiling from source,
-@code{pcre2} (at least for version 10.36) needs to be built without JIT
-support as the build segfaults if that is enabled.
+@code{pcre2} (at least up to version 10.36) needs to be built without JIT
+support as the build segfaults if that is enabled, so do run @code{make
+check} on your build.
 
 Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
 @file{config.site} something like
