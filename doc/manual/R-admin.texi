@@ -5614,12 +5614,15 @@ link: to fix that change the symbolic link
 appropriate path can be found by running @command{xcrun
 -show-sdk-path}).
 
-No distribution of X11@footnote{XQuartz has sources on GitHub, so one
-could try building from those.} is available, so @R{} was configured
-with @option{--without-x}.  Similarly, Aqua Tcl/Tk needs to be used
-rather than the X11-based variant used for Intel build (and some
-packages, notably @CRANpkg{tkrplot}, do not support that, nor is
-@code{TkTable} available ).
+A beta installation of XQuartz is available @emph{via}
+@uref{https://www.xquartz.org/releases/XQuartz-2.8.0_beta1.html}: this
+is dual-architecture so supports both @cputype{arm64} and
+@cputype{x86_64} builds.
+
+A binary package of Aqua Tcl/Tk is supplied rather than the X11-based
+variant used for Intel build (and some packages, notably
+@CRANpkg{tkrplot}, do not support that, nor is @code{TkTable}
+available).
 
 Binary builds of the prerequisites are available at
 @uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
@@ -5645,10 +5648,10 @@ tarball which partially unpacks into @file{/Library/Frameworks}) and
 hence conflicts with Intel versions of Aqua Tcl/Tk, for example from
 ActiveTcl).
 
-Prerequisite @code{readline} can easily be built from source, although 
+Prerequisite @code{readline} can easily be built from source, although
 @code{libedit} emulation can also be used.  If compiling from source,
-@code{pcre2} needs to be built without JIT support as the
-build segfaults if that is enabled.
+@code{pcre2} (at least for version 10.36) needs to be built without JIT
+support as the build segfaults if that is enabled.
 
 Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
 @file{config.site} something like
@@ -5670,7 +5673,7 @@ current @command{gfortran} without segfaulting in some packages).  Then
 configure @R{} using something like
 
 @example
-/path/to/configure --enable-R-shlib --enable-memory-profiling --without-x \
+/path/to/configure --enable-R-shlib --enable-memory-profiling \
   --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
   --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
   PKG_CONFIG_PATH=/opt/R/arm64/local/lib/pkgconfig:/usr/lib/pkgconfig \
