@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,6 +64,9 @@ Sys.timezone <- function(location = TRUE)
                 Sys.setenv(TZDIR = "macOS")
         }
     }
+    if(Sys.getenv("TZDIR") == "macOS" && grepl("darwin", R.Version()$os))
+        Sys.setenv(TZDIR = "/var/db/timezone/zoneinfo")
+
 
     ## At least tzcode and glibc respect TZDIR.
     ## glibc uses $(datadir)/zoneinfo
