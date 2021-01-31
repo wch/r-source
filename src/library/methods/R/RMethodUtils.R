@@ -838,13 +838,13 @@ cacheMetaData <-
             }
         }
         for(cl in classes) {
-            if(lev > 0L) message("caching class ", cl)
+            if(lev > 2L) message("--- caching class ", sQuote(cl))
             ## NOT getClassDef, it will use cache
             cldef <- get(classMetaName(cl), where)
             if(is(cldef, "classRepresentation"))
                 .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"),
                             where)
-            if(lev > 0L) message("done caching class ", cl)
+            if(lev > 2L) message("--- done caching class ", sQuote(cl))
         }
     } else {
         for(cl in classes) {
@@ -876,9 +876,10 @@ cacheMetaData <-
     for(i in seq_along(generics)) {
         f <- generics[[i]]
         fpkg <- packages[[i]]
+        .tr <- attach && (lev > 2L || lev == -5L)
         if(!identical(fpkg, pkg) && doCheck) {
+            if(.tr) message("--- getting generic ", sQuote(f), " (and methods)")
             if(attach) {
-                if(lev > 0L) message("getting generic ", f)
                 env <- as.environment(where)
                 ## All instances of this generic in different attached packages must
                 ## agree with the cached version of the generic for consistent
@@ -907,11 +908,11 @@ cacheMetaData <-
             next ## silently ignores all generics not visible from searchWhere
         if(attach) {
             .cacheGeneric(f, fdef)
-            if(lev > 0L) message("done getting generic ", f)
         } else
             .uncacheGeneric(f, fdef)
         methods <- .updateMethodsInTable(fdef, where, attach)
         cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
+        if(.tr) message("--- done getting generic ", sQuote(f))
     }
     .doLoadActions(where, attach)
     invisible(NULL) ## as some people call this at the end of functions
