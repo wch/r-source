@@ -492,7 +492,7 @@ getGeneric <-
     }
 }
 
-## low-level version
+## low-level version (called from high level)
 .getGeneric <- function(f, where = .GlobalEnv, # default only for C search
                         package = "")
 {
@@ -505,19 +505,13 @@ getGeneric <-
             message("Empty function name in .getGeneric")
             dput(sys.calls())
         }
+        ## ../src/methods_list_dispatch.c -- R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package) :
         value <- .Call(C_R_getGeneric, f, FALSE, as.environment(where), package)
         ## cache public generics (usually these will have been cached already
         ## and we get to this code for non-exported generics)
-        if(!is.null(value) && !is.null(vv <- .GlobalEnv[[f]]) &&
-           identical(vv, value))
+        if(!is.null(value) && !is.null(vv <- .GlobalEnv[[f]]) && identical(vv, value))
             .cacheGeneric(f, value)
     }
-    ##     if(is.null(value) && nzchar(package) && !identical(package, "base")) {
-    ##         env <- .requirePackage(package, FALSE)
-    ##         if(is.environment(env))
-    ##           value <- .Call("R_getGeneric", f, FALSE, env, package,
-    ##                      PACKAGE = "methods")
-    ##     }
     value
 }
 
