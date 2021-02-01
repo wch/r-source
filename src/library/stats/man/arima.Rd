@@ -112,7 +112,7 @@ arima(x, order = c(0L, 0L, 0L),
   Further, if \code{include.mean} is true (the default for an ARMA
   model), this formula applies to \eqn{X - m} rather than \eqn{X}.  For
   ARIMA models with differencing, the differenced series follows a
-  zero-mean ARMA model. If am \code{xreg} term is included, a linear
+  zero-mean ARMA model. If an \code{xreg} term is included, a linear
   regression (with a constant term if \code{include.mean} is true and
   there is no differencing) is fitted with an ARMA model for the error
   term.
