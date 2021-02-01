@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -972,7 +972,7 @@ checkRdaFiles <- function(paths)
         if (grepl("RD[ABX][1-9]", magic, useBytes = TRUE)) {
             res[p, "ASCII"]  <- substr(magic, 3, 3) == "A"
             ver <- sub("(RD[ABX])([1-9])", "\\2", magic, useBytes = TRUE)
-            res$version <- as.integer(ver)
+            res[p, "version"] <- as.integer(ver)
         }
     }
     res

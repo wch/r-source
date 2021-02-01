@@ -621,6 +621,10 @@
       \item \code{as.data.frame.list(L, row.names=NULL)} now behaves in line
       with \code{data.frame()}, disregarding names of components of
       \code{L}, fixing \PR{18034}, reported by Kevin Tappe.
+
+      \item \code{checkRdaFiles(ff)$version} is now correct also when
+      \code{ff} contains files of different versions, thanks to a report
+      and patch from Sebastian Meyer in \PR{18041}.
     }
   }
 }

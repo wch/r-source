@@ -4779,6 +4779,13 @@ stopifnot(length(lns) == 1+6,  grepl("hidden list", lns[1]))
 ## str() failed for these and similar in R <= 4.0.x
 
 
+## PR#18041:  checkRdaFiles(<more-than-1>) $ version
+save(pi, file = rda2 <- tempfile(fileext = ".rda"), version = 2)
+save(pi, file = rda3 <- tempfile(fileext = ".rda"), version = 3)
+stopifnot(identical(2:3, tools::checkRdaFiles(c(rda2, rda3))$version))
+## gave '3 3' in R <= 4.0.3
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
