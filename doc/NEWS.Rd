@@ -73,6 +73,10 @@
       \PR{17868} and \PR{18019}.
 
       \item \code{all.equal(<language>, <...>)} now works, fixing \PR{18029}.
+
+      \item \code{as.data.frame.list(L, row.names=NULL)} now behaves in line
+      with \code{data.frame()}, disregarding names of components of
+      \code{L}, fixing \PR{18034}, reported by Kevin Tappe.
     }
   }
 }
