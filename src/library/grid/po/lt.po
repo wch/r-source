@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grid 4.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58+0000\n"
 "PO-Revision-Date: 2020-12-08 14:24+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.4.1\n"
 
 #: gpar.c:523
@@ -24,7 +25,8 @@ msgstr "updateGContext turi būti iškviestas tik po initGContext"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a clipping path is no honoured"
-msgstr "Atskyrimo įjungimas arba išjungimas atskirties linijoje nėra leidžiamas"
+msgstr ""
+"Atskyrimo įjungimas arba išjungimas atskirties linijoje nėra leidžiamas"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
@@ -40,7 +42,9 @@ msgstr "Šablonai atskirties linijoje nėra leidžiami"
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr "negalima atverti aukščiausio lygio peržiūros srities (sumaišyta 'grid' ir 'graphics' išvestis?)"
+msgstr ""
+"negalima atverti aukščiausio lygio peržiūros srities (sumaišyta 'grid' ir "
+"'graphics' išvestis?)"
 
 #: grid.c:1246
 msgid "attempt to plot on null device"
@@ -127,8 +131,12 @@ msgid "'units' must be of length > 0"
 msgstr "'units' ilgis turi būti >0"
 
 #: unit.c:1584
-msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
-msgstr "duomenys turi būti NULL (ilgis 1) arba atitikti galutinio vieneto vektoriaus ilgį"
+msgid ""
+"data must be either NULL, have length 1, or match the length of the final "
+"unit vector"
+msgstr ""
+"duomenys turi būti NULL (ilgis 1) arba atitikti galutinio vieneto vektoriaus "
+"ilgį"
 
 #: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
@@ -169,4 +177,3 @@ msgstr "Šablonas nėra loginė reikšmė ('none' arba 'inherit')"
 #: viewport.c:330
 msgid "non-finite location and/or size for viewport"
 msgstr "nebaigtinė peržiūros srities vieta ir/arba dydis"
-

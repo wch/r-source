@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-01-27 10:07\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1175,6 +1175,9 @@ msgstr "wartość %s nie została znaleziona"
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "przestrzeń nazw %s %s jest już załadowana, ale %s %s jest wymagana"
 
+msgid "- loading"
+msgstr ""
+
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "przestrzeń nazw %s jest już zamknięta w 'loadNamespace()'"
 
@@ -1241,14 +1244,54 @@ msgstr ""
 "pakiet %s był zainstalowany przez wersję R z innymi metodami wewnętrznymi; "
 "musi być przeinstalowany aby móc użyć go z tą wersją R"
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "nie można załadować kodu R w pakiecie %s"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "'exportClassPattern' określono w pliku 'NAMESPACE', ale brak pasujących klas "
 "w pakiecie %s"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- procesing classes"
+msgstr "błędna klasa"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1270,6 +1313,9 @@ msgstr ""
 msgid "in %s methods for export not found: %s"
 msgstr "w pakiecie %s metody do eksportu nie zostały znalezione: %s"
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "wiele tablic metod znaleziono dla %s"
 
@@ -1280,6 +1326,18 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "w pakiecie %s metody %s zostały określone do eksportu, ale nie zostały "
 "zdefiniowane"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "Ładowanie wymaganej przestrzeni nazw: %s"

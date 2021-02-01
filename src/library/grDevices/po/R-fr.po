@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2014-03-17 10:46+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -20,6 +20,15 @@ msgstr ""
 
 msgid "invalid 'filename'"
 msgstr "argument 'filename' incorrect"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
 
 msgid "'coef' must not be negative"
 msgstr "'coef' ne peut pas être négatif"
@@ -355,6 +364,15 @@ msgstr "Les périphériques disponibles sont %s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' doit être spécifié à moins que 'units = \"px\""
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
 
 msgid "invalid 'title'"
 msgstr "'title' incorrect"

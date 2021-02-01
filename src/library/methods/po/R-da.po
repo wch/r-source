@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -729,6 +729,21 @@ msgid "no generic function found for %s"
 msgstr ""
 
 msgid "Empty function name in .getGeneric"
+msgstr ""
+
+msgid "--- caching class"
+msgstr ""
+
+msgid "--- done caching class"
+msgstr ""
+
+msgid "--- getting generic"
+msgstr ""
+
+msgid "(and methods)"
+msgstr ""
+
+msgid "--- done getting generic"
 msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"

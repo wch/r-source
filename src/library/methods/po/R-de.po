@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2018-04-05 14:50+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -898,6 +898,22 @@ msgstr "keine generische Funktion für %s gefunden"
 
 msgid "Empty function name in .getGeneric"
 msgstr "Leerer Funktionsname in .getGeneric"
+
+msgid "--- caching class"
+msgstr ""
+
+msgid "--- done caching class"
+msgstr ""
+
+msgid "--- getting generic"
+msgstr ""
+
+#, fuzzy
+msgid "(and methods)"
+msgstr "für Methode %s()"
+
+msgid "--- done getting generic"
+msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -2243,9 +2259,6 @@ msgstr[1] ""
 #~ "Methode %s aus Klasse %s wurde bis zur Installation nicht als "
 #~ "Klassenmethode behandelt,\n"
 #~ "Mögliche Beschädigung der Methoden der Klasse"
-
-#~ msgid "for method %s()"
-#~ msgstr "für Methode %s()"
 
 #~ msgid ".TraceWithMethods: after computing what, whereF"
 #~ msgstr ".TraceWithMethods: nach der Berechnung what, whereF"

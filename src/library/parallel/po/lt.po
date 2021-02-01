@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: parallel 4.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
 "PO-Revision-Date: 2020-11-29 16:30+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -38,8 +38,11 @@ msgid "invalid '%s' argument"
 msgstr "neteisingas argumentas '%s'"
 
 #: fork.c:437
-msgid "Error while shutting down parallel: unable to terminate some child processes\n"
-msgstr "Klaida išjungiant lygiagrečiai: negali nutraukti kai kurių antrinių procesų\n"
+msgid ""
+"Error while shutting down parallel: unable to terminate some child "
+"processes\n"
+msgstr ""
+"Klaida išjungiant lygiagrečiai: negali nutraukti kai kurių antrinių procesų\n"
 
 #: fork.c:526 fork.c:529
 msgid "unable to create a pipe"
@@ -112,4 +115,3 @@ msgstr "reikalaujamas CPU rinkinys per didelis šiai sistemai"
 #: fork.c:1260
 msgid "retrieving CPU affinity set failed"
 msgstr "CPU atitikimo rinkinio nuskaitymo klaida"
-

@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2020-11-29 17:00+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -148,9 +149,6 @@ msgstr "Paketas %s: DESCRIPTION failas nerastas"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' turi būti NULL, simbolių eilutė arba ryšys"
-
-msgid "bad argument"
-msgstr "blogas argumentas"
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr "'full.names' turi būti TRUE keliems keliams."
@@ -308,8 +306,8 @@ msgstr "Įveskite aplinkos numerį arba 0, kad išeitumėte"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-"susigrąžinti iškvietimą ne interaktyviai; sistemos išmestos, naudoti debugger"
-"(), kad peržiūrėti"
+"susigrąžinti iškvietimą ne interaktyviai; sistemos išmestos, naudoti "
+"debugger(), kad peržiūrėti"
 
 msgid "No suitable frames for recover()"
 msgstr "Nėra tinkamų sistemų dėl recover()"
@@ -1207,9 +1205,14 @@ msgstr "bandymas nustatyti '%s' ignoruojamas"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' turi būti vieno simbolio eilutė"
 
-msgid "'files' must a character vector specifying one or more filepaths"
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr ""
 "'files' turi būti tekstinis vektorius nurodantis vieną ar daugiau failo kelių"
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "'url' turi būti netuščia simbolių eilutė"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1379,17 +1382,30 @@ msgstr[2] ""
 "Šalinama paketų iš %s\n"
 "(kadangi %s nenurodytas)"
 
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "paketas %s negalimas (%s)"
-msgstr[1] "paketai %s negalimi (%s)"
-msgstr[2] "%s paketų yra negalimi (%s)"
-
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] "paketas %s yra pagrindinis paketas ir nebus atnaujintas"
 msgstr[1] "paketai %s yra pagrindiniai paketai ir nebus atnaujinti"
 msgstr[2] "%s paketų yra pagrindiniai paketai ir nebus atnaujinti"
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "paketas %s negalimas (%s)"
+msgstr[1] "paketai %s negalimi (%s)"
+msgstr[2] "%s paketų yra negalimi (%s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1504,6 +1520,9 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "neteisingas romėniškas skaitmuo: %s"
 msgstr[1] "neteisingi romėniški skaitmenys: %s"
 msgstr[2] "neteisingų romėniškų skaitmenų: %s"
+
+#~ msgid "bad argument"
+#~ msgstr "blogas argumentas"
 
 #~ msgid "2. %d Sweave files for basename %s found"
 #~ msgstr "2. Rasti %d Sweave failai, skirti pagrindiniam vardui %s"

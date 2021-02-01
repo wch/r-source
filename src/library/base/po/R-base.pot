@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-01-27 10:07\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1022,6 +1022,9 @@ msgstr ""
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr ""
 
+msgid "- loading"
+msgstr ""
+
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr ""
 
@@ -1067,10 +1070,49 @@ msgstr ""
 msgid "package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version"
 msgstr ""
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr ""
 
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
+
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+msgid "--- procesing classes"
 msgstr ""
 
 msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
@@ -1085,6 +1127,9 @@ msgstr ""
 msgid "in %s methods for export not found: %s"
 msgstr ""
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr ""
 
@@ -1092,6 +1137,18 @@ msgid "failed to find metadata object for %s"
 msgstr ""
 
 msgid "in package %s methods %s were specified for export but not defined"
+msgstr ""
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
 msgstr ""
 
 msgid "Loading required namespace: %s"

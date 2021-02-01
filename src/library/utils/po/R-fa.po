@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -142,9 +142,6 @@ msgid "Package %s: DESCRIPTION file not found"
 msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
-msgstr ""
-
-msgid "bad argument"
 msgstr ""
 
 msgid "'full.names' must be TRUE for multiple paths."
@@ -1136,7 +1133,10 @@ msgstr ""
 msgid "'unzip' must be a single character string"
 msgstr ""
 
-msgid "'files' must a character vector specifying one or more filepaths"
+msgid "'files' must be a character vector specifying one or more filepaths"
+msgstr ""
+
+msgid "argument 'zip' must be a non-empty character string"
 msgstr ""
 
 msgid ""
@@ -1286,16 +1286,27 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#, fuzzy
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "که پیش‌نیاز است در دسترس نمی‌باشد %s بسته"
-msgstr[1] "که پیش‌نیاز هستند در دسترس نمی‌باشند %s بسته‌های"
-
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "که پیش‌نیاز است در دسترس نمی‌باشد %s بسته"
+msgstr[1] "که پیش‌نیاز هستند در دسترس نمی‌باشند %s بسته‌های"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"

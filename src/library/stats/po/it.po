@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: stats 3.6.3\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -202,12 +202,12 @@ msgstr ""
 "Prova ad incrementare la dimensione dell'area di lavoro e possibilmente "
 "'mult'"
 
-#: fexact.c:1035
+#: fexact.c:1037
 #, c-format
 msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
 msgstr "Bug in fexact3, it[i=%d]=%d: chiave negativa %d (kyy=%d)\n"
 
-#: fexact.c:1064
+#: fexact.c:1069
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -219,7 +219,7 @@ msgstr ""
 "Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p."
 "value=TRUE'"
 
-#: fexact.c:1399
+#: fexact.c:1404
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
@@ -229,7 +229,7 @@ msgstr ""
 "kval=%d.\n"
 "Prova ad incrementare la dimensione dell'area di lavoro."
 
-#: fexact.c:1412
+#: fexact.c:1417
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -241,7 +241,7 @@ msgstr ""
 "Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p."
 "value=TRUE'."
 
-#: fexact.c:1449
+#: fexact.c:1454
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -545,21 +545,21 @@ msgstr "length(m) dev'essere almeno due"
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "L'argomento Sx dev'essere un vettore numerico di uno più corto di m[]"
 
-#: nls.c:99
+#: nls.c:95
 msgid "'control' must be a list"
 msgstr "'control' dev'essere una lista"
 
-#: nls.c:101
+#: nls.c:97
 msgid "'m' must be a list"
 msgstr "'m' dev'essere una lista"
 
-#: nls.c:107 nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:168 nls.c:173
-#: nls.c:178 nls.c:183 nls.c:188 nls.c:193
+#: nls.c:104 nls.c:109 nls.c:114 nls.c:119 nls.c:124 nls.c:132 nls.c:137
+#: nls.c:142 nls.c:147 nls.c:152 nls.c:157
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' assente"
 
-#: nls.c:234
+#: nls.c:233
 msgid "singular gradient"
 msgstr "gradiente singolare"
 
@@ -568,41 +568,45 @@ msgstr "gradiente singolare"
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "fattore di incremento %g sotto 'minFactor' %g"
 
-#: nls.c:264
+#: nls.c:263
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "il numero di iterazioni ha superato il massimo di %d"
 
-#: nls.c:269
+#: nls.c:267
 msgid "converged"
 msgstr "convergente"
 
-#: nls.c:290
+#: nls.c:284
 msgid "'theta' should be of type character"
 msgstr "'theta' dev'essere di tipo character"
 
-#: nls.c:292 port.c:382
+#: nls.c:286 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr "l'utilizzo dell'ambiente NULL è rimosso"
 
-#: nls.c:296
+#: nls.c:290
 msgid "'rho' should be an environment"
 msgstr "'rho' dev'essere un environment"
 
-#: nls.c:299
+#: nls.c:296
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' non è un vettore numerico della lunghezza giusta"
 
-#: nls.c:313 nls.c:347
+#: nls.c:299
+msgid "'central' is NA, but must be TRUE or FALSE"
+msgstr ""
+
+#: nls.c:315
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valore mancante o infinito generato durante il calcolo del modello"
 
-#: nls.c:321
+#: nls.c:328
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "la variabile '%s' è di tipo integer, non numeric"
 
-#: nls.c:323
+#: nls.c:330
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "la variabile '%s' non è numeric"

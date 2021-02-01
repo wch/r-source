@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-utils 3.6.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -156,9 +156,6 @@ msgstr "Pacchetto %s: file DESCRIPTION non trovato"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' dev'essere NULL, una stringa di caratteri o una connessione"
-
-msgid "bad argument"
-msgstr "argomento errato"
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr "'full.names' dev'essere TRUE per percorsi multipli."
@@ -1236,10 +1233,15 @@ msgstr "tentata impostazione di '%s' ignorata"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' dev'essere una stringa di caratteri singola"
 
-msgid "'files' must a character vector specifying one or more filepaths"
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr ""
 "'files' dev'essere un vettore di caratteri che specifica uno o più "
 "riferimenti"
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "'url' dev'essere una stringa di caratteri non-vuota"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1401,17 +1403,29 @@ msgstr[1] ""
 "Rimozione pacchetti da %s\n"
 "(come %s non è specificato)"
 
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "il pacchetto %s non è disponibile (%s)"
-msgstr[1] "i pacchetti %s non sono disponibili (%s)"
-
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] ""
 "il pacchetto %s è un pacchetto base e non dovrebbe essere aggiornato"
 msgstr[1] ""
 "i pacchetti %s sono pacchetti base e non dovrebbero essere aggiornati"
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "il pacchetto %s non è disponibile (%s)"
+msgstr[1] "i pacchetti %s non sono disponibili (%s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1513,3 +1527,6 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "numero romano non valido: %s"
 msgstr[1] "numeri romani non validi: %s"
+
+#~ msgid "bad argument"
+#~ msgstr "argomento errato"

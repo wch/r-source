@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -288,7 +288,7 @@ msgstr "Zapisz skrypt jako"
 # G_("Open script")
 # src/gnuwin32/pager.c: 431
 # G_("Open script")
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:431
 #: src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "Otwórz skrypt"
@@ -299,7 +299,7 @@ msgstr "Otwórz skrypt"
 # G_("No RGui console to paste to")
 # src/gnuwin32/pager.c: 205
 # G_("No RGui console to paste to")
-#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:184 src/gnuwin32/pager.c:204
+#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
 msgid "No RGui console to paste to"
 msgstr "Brak konsoli RGui do której można wkleić"
 
@@ -391,8 +391,8 @@ msgstr "Wytnij"
 # GN_("Copy")
 # src/gnuwin32/pager.c: 478
 # G_("Copy")
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
-#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:305
+#: src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
 #: src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "Kopiuj"
@@ -432,8 +432,8 @@ msgstr "Usuń"
 # GN_("Select all")
 # src/gnuwin32/pager.c: 484
 # G_("Select all")
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
-#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:308
+#: src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "Zaznacz wszystko"
 
@@ -449,7 +449,7 @@ msgstr "Zapisz skrypt"
 # G_("Return focus to Console")
 # src/library/grDevices/src/devWindows.c: 1593
 # G_("Return focus to Console")
-#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
+#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:451
 #: src/library/grDevices/src/devWindows.c:1619
 msgid "Return focus to Console"
 msgstr "Ustaw fokus z powrotem na konsolę"
@@ -468,7 +468,7 @@ msgstr "Drukuj skrypt"
 # G_("Print")
 # src/library/grDevices/src/devWindows.c: 1587
 # G_("Print")
-#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
+#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1104
 #: src/library/grDevices/src/devWindows.c:1613
 msgid "Print"
 msgstr "Drukuj"
@@ -489,7 +489,7 @@ msgstr "Drukuj"
 # stop("File", file, "does not exist in", getwd())
 # src/library/utils/tests/Sweave-tst.R: 30
 # stop("File", texF, "does not exist in", getwd())
-#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1791
 #: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
@@ -501,7 +501,7 @@ msgstr "Plik"
 # G_("New script")
 # src/gnuwin32/pager.c: 468
 # G_("New script")
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1124
 msgid "New script"
 msgstr "Nowy skrypt"
 
@@ -511,7 +511,7 @@ msgstr "Nowy skrypt"
 # G_("Open script...")
 # src/gnuwin32/pager.c: 469
 # G_("Open script...")
-#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1125
 msgid "Open script..."
 msgstr "Otwórz skrypt..."
 
@@ -535,7 +535,7 @@ msgstr "Zapisz jako..."
 # G_("Print...")
 # src/library/grDevices/src/devWindows.c: 1688
 # G_("Print...")
-#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
+#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1138
 #: src/library/grDevices/src/devWindows.c:1672
 #: src/library/grDevices/src/devWindows.c:1714
 msgid "Print..."
@@ -555,7 +555,7 @@ msgstr "Zamknij skrypt"
 # G_("Edit")
 # src/library/utils/src/windows/dataentry.c: 1796
 # G_("Edit")
-#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:476 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1143
 #: src/library/utils/src/windows/dataentry.c:1797
 msgid "Edit"
 msgstr "Edytuj"
@@ -644,13 +644,13 @@ msgstr "Wybierz plik"
 
 # src/gnuwin32/pager.c: 89
 # G_("Error opening file")
-#: src/gnuwin32/pager.c:88
+#: src/gnuwin32/pager.c:89
 msgid "Error opening file"
 msgstr "Błąd podczas otwierania pliku"
 
 # src/gnuwin32/pager.c: 96
 # G_("Insufficient memory to display file in internal pager")
-#: src/gnuwin32/pager.c:95
+#: src/gnuwin32/pager.c:96
 msgid "Insufficient memory to display file in internal pager"
 msgstr "Brak wystarczającej pamięci aby wyświetlić plik w wewnętrznej stronie"
 
@@ -664,7 +664,7 @@ msgstr "Brak wystarczającej pamięci aby wyświetlić plik w wewnętrznej stron
 # G_("No selection")
 # src/gnuwin32/pager.c: 209
 # G_("No selection")
-#: src/gnuwin32/pager.c:176 src/gnuwin32/pager.c:188 src/gnuwin32/pager.c:208
+#: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
 #: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "Brak zaznaczenia"
@@ -675,7 +675,7 @@ msgstr "Brak zaznaczenia"
 # G_("Paste to console")
 # src/gnuwin32/pager.c: 480
 # G_("Paste to console")
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:435 src/gnuwin32/pager.c:479
+#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:436 src/gnuwin32/pager.c:480
 msgid "Paste to console"
 msgstr "Wklej do konsoli"
 
@@ -685,7 +685,7 @@ msgstr "Wklej do konsoli"
 # G_("Paste commands to console")
 # src/gnuwin32/pager.c: 482
 # G_("Paste commands to console")
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:440 src/gnuwin32/pager.c:481
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:441 src/gnuwin32/pager.c:482
 msgid "Paste commands to console"
 msgstr "Wklej polecenia do konsoli"
 
@@ -697,7 +697,7 @@ msgstr "Wklej polecenia do konsoli"
 # G_("Stay on top")
 # src/library/utils/src/windows/dataentry.c: 1703
 # GN_("Stay on top")
-#: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
 #: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
@@ -711,7 +711,7 @@ msgstr "Zawsze na wierzchu"
 # GN_("Close")
 # src/library/utils/src/windows/dataentry.c: 1792
 # G_("Close")
-#: src/gnuwin32/pager.c:311 src/gnuwin32/pager.c:474
+#: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
 #: src/library/utils/src/windows/dataentry.c:1706
 #: src/library/utils/src/windows/dataentry.c:1793
 msgid "Close"
@@ -721,7 +721,7 @@ msgstr "Zamknij"
 # G_("Save to File...")
 # src/gnuwin32/pager.c: 472
 # G_("Save to File...")
-#: src/gnuwin32/pager.c:471 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1139
 msgid "Save to File..."
 msgstr "Zapisz do pliku..."
 
@@ -729,13 +729,13 @@ msgstr "Zapisz do pliku..."
 # G_("View")
 # src/gnuwin32/pager.c: 487
 # G_("View")
-#: src/gnuwin32/pager.c:486 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1156
 msgid "View"
 msgstr "Widok"
 
 # src/gnuwin32/pager.c: 519
 # G_("Unable to create pager window")
-#: src/gnuwin32/pager.c:518
+#: src/gnuwin32/pager.c:519
 msgid "Unable to create pager window"
 msgstr "Nie można utworzyć okna strony"
 
@@ -1371,7 +1371,7 @@ msgstr "Nie można ustawić '%s' jako katalogu roboczego"
 #: src/extra/graphapp/dialogs.c:604 src/extra/graphapp/dialogs.c:622
 #: src/extra/graphapp/dialogs.c:628 src/extra/graphapp/dialogs.c:729
 #: src/extra/graphapp/dialogs.c:743 src/extra/graphapp/dialogs.c:749
-#: src/library/utils/src/windows/widgets.c:126
+#: src/library/utils/src/windows/widgets.c:122
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -1400,7 +1400,7 @@ msgstr "Anuluj"
 # src/library/utils/src/windows/widgets.c: 124
 # G_("OK")
 #: src/extra/graphapp/dialogs.c:624 src/extra/graphapp/dialogs.c:745
-#: src/library/utils/src/windows/widgets.c:125
+#: src/library/utils/src/windows/widgets.c:121
 msgid "OK"
 msgstr "OK"
 

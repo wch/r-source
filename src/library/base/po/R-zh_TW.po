@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-01-27 10:07\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2021-01-27 10:34+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1105,6 +1105,9 @@ msgstr "%s 不存在"
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "載入了命名空間 %1$s %2$s，但需要的是 %3$s %4$s"
 
+msgid "- loading"
+msgstr ""
+
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "命名空間 %s 已經在 'loadNamespace' 封條了"
 
@@ -1168,14 +1171,54 @@ msgstr ""
 "套件 %s 被之前某個具有不同內部結構的 R 版本所安裝；它需要重新安裝以用於目前"
 "的 R 版本"
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "套件 %s 裡的 R 寫碼載入失敗"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "雖然 'exportClassPattern' 在 'NAMESPACE' 有設定但它在 %s 套件中沒有相對應的類"
 "別"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- procesing classes"
+msgstr "類別無效"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1193,6 +1236,9 @@ msgstr "從 %s 匯出功能裡找不到適用於 %s 的相應方法"
 msgid "in %s methods for export not found: %s"
 msgstr "用於匯出的 %s 方法不存在：%s "
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "%s 存在多個方法表"
 
@@ -1201,6 +1247,18 @@ msgstr "找不到關於 %s 的隱喻資料物件"
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "在 %s 套件中 %s 方法指定被用於匯出，但它的定義並不存在"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "載入需要的命名空間：%s"
@@ -1241,7 +1299,9 @@ msgstr "載入 %2$s 將代替前次匯入 %1$s ..?.. %3$s"
 msgid ""
 "No generic function %s found corresponding to requested imported methods "
 "from package %s when loading %s (malformed exports?)"
-msgstr "程式套件 \"%2$s\" 裡沒有相應於為 \"%1$s\" 所要求的匯入方法的泛型函式 \"%3$s\" (是不是匯出的格式不對？)"
+msgstr ""
+"程式套件 \"%2$s\" 裡沒有相應於為 \"%1$s\" 所要求的匯入方法的泛型函式 \"%3$s"
+"\" (是不是匯出的格式不對？)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "不能在封閉命名空間裡進行匯出加入"

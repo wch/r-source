@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-01-27 10:07\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1167,6 +1167,9 @@ msgstr "fann ikkje «%s»"
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
 
+msgid "- loading"
+msgstr ""
+
 #, fuzzy
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "namnerommet «%s» er alt forsegla i «loadNamespace»"
@@ -1232,14 +1235,54 @@ msgid ""
 "to be reinstalled for use with this R version"
 msgstr ""
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "klarte ikkje lasta R-kode i pakken «%s»"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i "
 "pakken %s"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- procesing classes"
+msgstr "feil klasse"
 
 #, fuzzy
 msgid ""
@@ -1261,6 +1304,9 @@ msgstr "Fann ingen funksjon som svarar til metodeeksportar frå %s for: %s"
 msgid "in %s methods for export not found: %s"
 msgstr "i %s-metodar for eksport ikkje funne: %s"
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "fann fleire metodetabellar for %s"
 
@@ -1271,6 +1317,18 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "i pakken «%s» er metodane «%s» spesifiserte for eksport, men er ikkje "
 "definerte"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "Lastar nødvendig namnerom: %s"

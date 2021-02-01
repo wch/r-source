@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-graphics 3.6.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -379,6 +379,17 @@ msgstr "non possono lavorare con piu' di una coordinata 'x'"
 
 msgid "must have a response variable"
 msgstr "deve avere una variabile risposta"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "larghezza boxplot non valida"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "larghezza boxplot non valida"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' applicato a un non data frame"

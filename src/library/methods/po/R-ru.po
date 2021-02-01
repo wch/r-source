@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2020-08-27 19:40+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -873,6 +873,22 @@ msgstr "не найдено общей функции для %s"
 
 msgid "Empty function name in .getGeneric"
 msgstr "Пустое имя функции в .getGeneric"
+
+msgid "--- caching class"
+msgstr ""
+
+msgid "--- done caching class"
+msgstr ""
+
+msgid "--- getting generic"
+msgstr ""
+
+#, fuzzy
+msgid "(and methods)"
+msgstr "для метода %s()"
+
+msgid "--- done getting generic"
+msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -2190,9 +2206,6 @@ msgstr[2] "нет определения класса %s в указанной позиции, %s, определения: %s"
 #~ msgstr ""
 #~ "Метод %s из класса %s не был преобразован в метод класса, покуда не был "
 #~ "установлен. Возможно повреждение методов в классе."
-
-#~ msgid "for method %s()"
-#~ msgstr "для метода %s()"
 
 #~ msgid ".TraceWithMethods: after computing what, whereF"
 #~ msgstr ".TraceWithMethods: после расчета, что, whereF"

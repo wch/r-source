@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -373,6 +373,17 @@ msgstr "한개 이상의 'x'좌표를 처리할 수 없습니다"
 
 msgid "must have a response variable"
 msgstr "반드시 종속변수를 가져야 합니다"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "박스플롯의 너비들이 유효하지 않습니다"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "박스플롯의 너비들이 유효하지 않습니다"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame'이 데이터프레임이 아닌것에 적용되었습니다"

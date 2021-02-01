@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-01-27 10:07\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2021-01-27 10:37+0100\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -1114,13 +1114,18 @@ msgstr "%s nerastas"
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "vardų erdvė %s %s jau įkelta, bet turi būti %s %s"
 
+msgid "- loading"
+msgstr ""
+
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "vardų erdvė %s jau patvirtinta 'loadNamespace'"
 
 msgid ""
 "failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
 "defined in the %s namespace"
-msgstr "nepavyko priskirti RegisteredNativeSymbol %s, į %s nuo %s jau yra apibrėžtas %s vardų erdvėje"
+msgstr ""
+"nepavyko priskirti RegisteredNativeSymbol %s, į %s nuo %s jau yra apibrėžtas "
+"%s vardų erdvėje"
 
 msgid ""
 "failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
@@ -1175,11 +1180,51 @@ msgstr ""
 "paketą %s įdiegė R versija; ji turi būti iš naujo įdiegta naudojantis šia R "
 "versija"
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "negalima įkelti R kodo pakete %s"
 
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
+
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr "S4 eksportas nurodytas 'NAMESPACE', bet neapibrėžtas %s pakete"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- procesing classes"
+msgstr "neteisinga klasė"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1196,6 +1241,9 @@ msgstr "nerasta funkcija atitinkanti metodus eksportuoti iš %s: %s"
 msgid "in %s methods for export not found: %s"
 msgstr "eksporto %s metoduose nerasta: %s"
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "daugybinių metodų lentelės rastos %s"
 
@@ -1204,6 +1252,18 @@ msgstr "nepavyko surasti metaduomenų objekto %s"
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "pakete %s metodai %s nurodyti eksportui, bet neapibrėžti"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "Įkeliama reikalinga vardų erdvė: %s"

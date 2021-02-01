@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-tools 3.6.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -342,9 +342,6 @@ msgstr "Le variabili sovrastano le impostazioni utente/sito:"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid ","
-msgstr ","
-
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Collegamenti mancanti nell'oggetto documentazione '%s':"
 
@@ -576,6 +573,9 @@ msgstr "Il pacchetto macro Rd '%s' non è installato."
 
 msgid "No Rd macros in package '%s'."
 msgstr "Nessuna macro Rd nel pacchetto '%s'."
+
+msgid "Previous alias or file overwritten by alias:"
+msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr "più di una sezione \\examples, si utilizza la prima"
@@ -844,6 +844,9 @@ msgstr "Lo stile predefinito JSS non dovrebbe essere modificato."
 msgid "inst/doc"
 msgstr "inst/doc"
 
+msgid ","
+msgstr ","
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr "ignorata perché le vignette sono state ricreate."
 
@@ -887,6 +890,9 @@ msgstr "la directory del pacchetto %s non esiste"
 
 msgid "no packages to check"
 msgstr "nessun pacchetto da controllare"
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
 
 msgid "downloading reverse dependencies ..."
 msgstr "scaricando dipendenze inverse ..."
@@ -1435,6 +1441,12 @@ msgstr[0] ""
 "Trovata una possibile globale 'T' o 'F' negli esempi del seguente file Rd:"
 msgstr[1] ""
 "Trovata una possibile globale 'T' o 'F' negli esempi dei seguenti file Rd:"
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] "Trovata una possibile globale'T' o 'F' nella seguente funzione:"
+msgstr[1] "Trovata una possibile globale'T' o 'F' nelle seguenti funzioni:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"

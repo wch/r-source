@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2018-04-16 10:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -153,9 +153,6 @@ msgstr "Paket %s: DESCRIPTION nicht gefunden"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' muss NULL, eine Zeichenkette oder eine Verbindung sein"
-
-msgid "bad argument"
-msgstr "unbrauchbares Argument"
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr "'full.names' muss TRUE sein bei mehrfachen Pfaden."
@@ -1225,10 +1222,15 @@ msgstr "Versuch ignoriert '%s' zu setzen"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' muss eine einzelne Zeichenkette sein"
 
-msgid "'files' must a character vector specifying one or more filepaths"
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr ""
 "'files' muss ein Zeichenkettenvektor sein, der einen oder mehrere Pfade "
 "spezifiziert"
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "'url' muss eine nicht-leere Zeichenkette sein"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1388,15 +1390,27 @@ msgstr[1] ""
 "Entferne Pakete von %s\n"
 "(da %s nicht spezifiziert)"
 
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "Paket %s ist nicht verfügbar (%s)"
-msgstr[1] "Pakete %s sind nicht verfügbar (%s)"
-
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] "Paket %s ist ein Basispaket und sollte nicht aktualisiert werden"
 msgstr[1] "Pakete %s sind Basispakete und sollten nicht aktualisiert werden"
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "Paket %s ist nicht verfügbar (%s)"
+msgstr[1] "Pakete %s sind nicht verfügbar (%s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1494,6 +1508,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ungültige römische Zahl: %s"
 msgstr[1] "ungültige römische Zahlen: %s"
+
+#~ msgid "bad argument"
+#~ msgstr "unbrauchbares Argument"
 
 #~ msgid "package %s not found"
 #~ msgstr "Paket %s nicht gefunden"

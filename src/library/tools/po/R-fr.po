@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -363,9 +363,6 @@ msgstr "Des variables remplacent les valeurs utilisateur/site :"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
 
-msgid ","
-msgstr ","
-
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
 
@@ -613,6 +610,9 @@ msgstr "Pas de docs trouvés pour le package %s"
 #, fuzzy
 msgid "No Rd macros in package '%s'."
 msgstr "Pas de docs trouvés pour le package %s"
+
+msgid "Previous alias or file overwritten by alias:"
+msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr "plus d'une section \\example, utilisation de la première"
@@ -885,6 +885,9 @@ msgstr "Le style par défaut JSS ne peut être modifié."
 msgid "inst/doc"
 msgstr ""
 
+msgid ","
+msgstr ","
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr ""
 
@@ -928,6 +931,9 @@ msgstr "le répertoire de package %s n'existe pas"
 
 msgid "no packages to check"
 msgstr "pas de packages à vérifier"
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
 
 msgid "downloading reverse dependencies ..."
 msgstr "téléchargement des dépendances inverses ..."
@@ -1488,6 +1494,16 @@ msgstr[0] ""
 msgstr[1] ""
 "Des utilisations globales possibles de 'T' ou 'F' sont trouvées dans les "
 "exemples des fichiers Rd suivants :"
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] ""
+"L'utilisation globale possible de 'T' ou 'F' est trouvée dans la fonction "
+"suivante :"
+msgstr[1] ""
+"Des utilisations globales possibles de 'T' ou 'F' sont trouvées dans les "
+"fonctions suivantes :"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -763,6 +763,22 @@ msgstr "为'%s'找不到泛型函数"
 
 msgid "Empty function name in .getGeneric"
 msgstr ".getGeneric里不能有空的函数名字"
+
+msgid "--- caching class"
+msgstr ""
+
+msgid "--- done caching class"
+msgstr ""
+
+msgid "--- getting generic"
+msgstr ""
+
+#, fuzzy
+msgid "(and methods)"
+msgstr "为方法%s()"
+
+msgid "--- done getting generic"
+msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr "%s找不到方法；'cacheGenericsMetaData()'没有作用"
@@ -1877,9 +1893,6 @@ msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: 
 #~ "installed.  Possible corruption of the methods in the class."
 #~ msgstr ""
 #~ "在安装之前类别%s里的%s方法无法被处理成类别方法。在类别里有能出现方法损坏"
-
-#~ msgid "for method %s()"
-#~ msgstr "为方法%s()"
 
 #~ msgid ".TraceWithMethods: after computing what, whereF"
 #~ msgstr ".TraceWithMethods: 在计算什么后，whereF"

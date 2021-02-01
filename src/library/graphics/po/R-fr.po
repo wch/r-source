@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2014-03-17 10:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -385,6 +385,17 @@ msgstr "incapable de traiter plus d'une coordonnée 'x'"
 
 msgid "must have a response variable"
 msgstr "il doit y avoir une variable réponse"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "largeurs des boites à dispersion incorrectes"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "largeurs des boites à dispersion incorrectes"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' appliqué à autre chose qu'à un tableau de données"

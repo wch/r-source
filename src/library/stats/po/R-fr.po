@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2014-03-17 11:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -985,9 +985,6 @@ msgstr "tous les groupes doivent contenir des données"
 msgid "not enough observations"
 msgstr "pas assez d'observations"
 
-msgid "data are essentially constant"
-msgstr "les données sont pratiquement constantes"
-
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr "les NA ne sont pas autorisés dans 'groups' ou 'blocks'"
 
@@ -1668,6 +1665,10 @@ msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr ""
 "'data' doit être un tableau de données et non pas une matrice ou un tableau"
 
+#, fuzzy
+msgid "'data' must be a data.frame, environment, or list"
+msgstr "'data' doit être une liste ou un environnement"
+
 msgid "variable '%s' is not a factor"
 msgstr "la variable '%s' n'est pas un facteur"
 
@@ -1768,6 +1769,9 @@ msgstr "nom de paramètre inconnu"
 
 msgid "levels truncated to positive values only"
 msgstr "les niveaux ont été réduits aux valeurs positives"
+
+msgid "invalid  'attr(rhs, \"gradient\")'"
+msgstr ""
 
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr ""
@@ -2029,7 +2033,8 @@ msgstr "'formula' manquante"
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr ""
 
-msgid "factors are not allowed"
+#, fuzzy
+msgid "(unordered) factors are not allowed"
 msgstr "les facteurs ne sont pas autorisés"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
@@ -2079,6 +2084,9 @@ msgid "'varying' arguments must be the same length"
 msgstr "les arguments varying doivent avoir la même longueur"
 
 msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
+
+msgid "'idvar' must uniquely identify records"
 msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
@@ -2347,6 +2355,9 @@ msgstr "'mu' doit être un nombre"
 
 msgid "'y' is missing for paired test"
 msgstr "'y' est manquant pour un test apparié"
+
+msgid "data are essentially constant"
+msgstr "les données sont pratiquement constantes"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' doit être TRUE, FALSE, NULL or caractère (vecteur)."

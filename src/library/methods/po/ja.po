@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58+0000\n"
 "PO-Revision-Date: 2013-03-01 04:12+0200 \n"
 "Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -92,7 +92,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 " この呼び出しでは 関数 '%s' に対する直接的または継承メソッドはありません "
 
-#: methods_list_dispatch.c:581 methods_list_dispatch.c:1146
+#: methods_list_dispatch.c:581 methods_list_dispatch.c:1152
 msgid "invalid object (non-function) used as method"
 msgstr " (関数ではない) 不正なオブジェクトがメソッドとして使われました "
 
@@ -199,12 +199,12 @@ msgstr ""
 msgid "class should be either a character-string name or a class definition"
 msgstr " クラスは文字列の名前かクラス定義のどちらかでなければなりません "
 
-#: methods_list_dispatch.c:1055
+#: methods_list_dispatch.c:1061
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr " プリミティブな \"%s\" に対する総称 (generic) を得るのに失敗しました "
 
-#: methods_list_dispatch.c:1062
+#: methods_list_dispatch.c:1068
 #, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

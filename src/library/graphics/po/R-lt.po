@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: graphics 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2020-11-29 17:23+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -300,7 +301,7 @@ msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width' turi būti skaitinis, >= 0"
 
 msgid "horizontal specification overrides: Number of columns := %d"
-msgstr "horizontalus detalizavimas pakeičia: stulpelių skaičius: =% d"
+msgstr "horizontalus detalizavimas pakeičia: stulpelių skaičius:= %d"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' neturi poveikio, kai tiesės segmentai nėra piešiami"
@@ -364,6 +365,17 @@ msgstr "negalima apdoroti daugiau nei vienos 'x' koordinatės"
 
 msgid "must have a response variable"
 msgstr "turi turėti atsako kintamąjį"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "neteisingas stačiakampės diagramos plotis"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "neteisingas stačiakampės diagramos plotis"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' taikomas ne duomenų sistemai"
