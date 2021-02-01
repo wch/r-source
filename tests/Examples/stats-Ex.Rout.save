@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2020-12-30 r79727) -- "Unsuffered Consequences"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R Under development (unstable) (2021-01-31 r79912) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -3755,6 +3755,28 @@ arima(presidents, c(2, 0, 0))  4 840.0458
 arima(presidents, c(2, 0, 1))  5 838.1272
 fit3                           5 838.1639
 arima(presidents, c(3, 0, 1))  6 838.8124
+> 
+> ## An example of using the  'fixed'  argument:
+> ## Note that the period of the seasonal component is taken to be
+> ## frequency(presidents), i.e. 4.
+> (fitSfx <- arima(presidents, order=c(2,0,1), seasonal=c(1,0,0),
++                  fixed=c(NA, NA, 0.5, -0.1, 50), transform.pars=FALSE))
+
+Call:
+arima(x = presidents, order = c(2, 0, 1), seasonal = c(1, 0, 0), transform.pars = FALSE, 
+    fixed = c(NA, NA, 0.5, -0.1, 50))
+
+Coefficients:
+         ar1     ar2  ma1  sar1  intercept
+      0.2047  0.6269  0.5  -0.1         50
+s.e.  0.0734  0.0747  0.0   0.0          0
+
+sigma^2 estimated as 84.01:  log likelihood = -416.07,  aic = 838.14
+> ## The partly-fixed & smaller model seems better (as we "knew too much"):
+> AIC(fitSfx, arima(presidents, order=c(2,0,1), seasonal=c(1,0,0)))
+                                                             df      AIC
+fitSfx                                                        3 838.1406
+arima(presidents, order = c(2, 0, 1), seasonal = c(1, 0, 0))  6 839.7095
 > 
 > ## An example of ARIMA forecasting:
 > predict(fit3, 3)
