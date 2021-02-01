@@ -4753,7 +4753,7 @@ dfcars1 <- as.data.frame.list(lmtcars)# default: missing(row.names); uses RN
 dfcarsN <- as.data.frame.list(lmtcars, row.names = NULL)# does *not* use  RN
 stopifnot(identical(RN,    rownames      (dfcars1)) ,
           identical(-32L, .row_names_info(dfcarsN))) # now has "automatic" (integer) row names
-## dfcarsN == dfcars1  in  R <= 4.0.x
+## dfcarsN == dfcars1  in  R <= 4.0.3
 
 
 ## str(x) when x has "unusal" length() semantics such that lapply() / vapply() fails:
