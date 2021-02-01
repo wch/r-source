@@ -211,8 +211,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         ns
     } else {
         lev <- 0L
-        ## values 1,2,3,4 give increasingly detailed tracing
-        ## negative values trace specific actions
+        ## Values 1,2,3,4 give increasingly detailed tracing
+        ## Negative values trace specific actions, -5 for S4 generics/methods
         msg <- Sys.getenv("_R_TRACE_LOADNAMESPACE_", "")
         if (nzchar(msg)) {
             if(package %in%
@@ -593,7 +593,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         ## register any S3 methods
         if(lev > 1L) message("-- registerS3methods for ", dQuote(package))
-       registerS3methods(nsInfo$S3methods, package, env)
+        registerS3methods(nsInfo$S3methods, package, env)
         if(lev > 1L) message("-- done registerS3methods for ", dQuote(package))
 
         ## load any dynamic libraries
