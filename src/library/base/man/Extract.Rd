@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -102,7 +102,7 @@ x$name <- value
   The default methods work somewhat differently for atomic vectors,
   matrices/arrays and for recursive (list-like, see
   \code{\link{is.recursive}}) objects.  \code{$} is only valid for
-  recursive objects, and is only discussed in the section below on
+  recursive objects (and \code{\link{NULL}}), and is only discussed in the section below on
   recursive objects.
 
   Subsetting (except by an empty index) will drop all attributes except

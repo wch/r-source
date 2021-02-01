@@ -1230,7 +1230,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* used in eval.c */
+/* also used in eval.c */
 SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 {
     SEXP y, nlist;
@@ -1246,13 +1246,13 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
 	    errorcall(call, "$ operator not defined for this S4 class");
+
+	UNPROTECT(1); /* x */
+	PROTECT(x);
     }
-    UNPROTECT(1); /* x */
-    PROTECT(x);
 
-    /* If this is not a list object we return NULL. */
-
-    if (isPairList(x)) {
+    // isPairList(x)  but *not* <DOTSXP> :
+    if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP || TYPEOF(x) == NILSXP) {
 	SEXP xmatch = R_NilValue;
 	int havematch;
 	havematch = 0;
