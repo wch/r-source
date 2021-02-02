@@ -3469,7 +3469,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.19 and 8.6.9 have been tested (including
+Versions of Tcl/Tk up to 8.5.19 and 8.6.11 have been tested (including
 most versions of 8.4.x, but not recently).
 
 Note that the @file{tk.h} header includes@footnote{This is true even for
@@ -5247,6 +5247,12 @@ that if you install tools from the sources they will by default be
 installed under @file{/usr/local} and not supersede the system
 versions.
 
+Parallel installation of packages will make use of the utility
+@command{timeout} if available.  A dual-architecture build can be
+downloaded from @uref{https://www.stats.ox.ac.uk/pub/bdr/timeout}: make
+it executable (@code{chmod 755 timeout}) and put it somewhere on your
+path.
+
 @node Tcl/Tk headers and libraries, Java (macOS), Other libraries, macOS
 @subsection Tcl/Tk headers and libraries
 
@@ -5784,6 +5790,11 @@ Note that paths such as @file{/opt/csw/lib}, @file{/usr/local/lib/amd64}
 and @file{/opt/csw/lib/amd64} may need to be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
+
+The latest version of @command{gcc} available in the OpenCSW
+distribution at the time of writing was 5.5.0 (and had been since Oct
+2017).  Later versions can be built from the sources, e.g.@: 9.3.0 (which
+supports C++17, unlike 5.x).
 
 
 @node FreeBSD, OpenBSD, Solaris, Platform notes
