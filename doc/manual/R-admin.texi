@@ -5725,6 +5725,11 @@ be enclosed in an @code{#ifdef} block using macro @code{__arm64__} or
 as those macros are defined on other OSes, at least for @command{clang}
 and @command{gcc} (@code{__aarch64__}).
 
+If building software or installing packages with @command{cmake} (or a
+non-Apple @command{make}) ensure it contains the @cputype{arm64}
+architecture (use @command{file} to be sure).  Running compilers from an
+@cputype{x86_64} executable will generate @cputype{x86_64} code @dots{}.
+
 @node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
 @cindex Solaris
