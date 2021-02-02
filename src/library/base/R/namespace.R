@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,14 +34,15 @@ getNamespace <- function(name) {
 ..getNamespace <- function(name, where) {
     ns <- .Internal(getRegisteredNamespace(name))
     if (!is.null(ns)) ns
-    else tryCatch(loadNamespace(name),
-                  error = function(e) {
-                    if(!nzchar(Sys.getenv("_R_NO_REPORT_MISSING_NAMESPACES_")))
-                      warning(gettextf("namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s",
-                                       sQuote(name)[1L], sQuote(where)),
-                              domain = NA, call. = FALSE, immediate. = TRUE)
-                    .GlobalEnv
-                  })
+    else tryCatch(loadNamespace(name), error = function(e) {
+             tr <- Sys.getenv("_R_NO_REPORT_MISSING_NAMESPACES_")
+             if( tr == "false" || (where != "<unknown>" && !nzchar(tr)) ) {
+                 warning(gettextf("namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s",
+                                  sQuote(name)[1L], sQuote(where)),
+                         domain = NA, call. = FALSE, immediate. = TRUE)
+             }
+             .GlobalEnv
+         })
 }
 
 loadedNamespaces <- function() names(.Internal(getNamespaceRegistry()))
