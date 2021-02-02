@@ -1570,8 +1570,9 @@ tested) install @R{} from the sources (see @ref{macOS}).
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
 (`Updates' from the `App Store' on Mojave and earlier) to be sure.
-(If using XQuartz, check that is current but as at the time of writing
-the latest version was 2.7.11 from October 2016 it likely is.)
+(If using XQuartz, check that is current: at the time of writing
+the latest version was 2.7.11 from October 2016 but a beta of 2.8.0 had
+just become available.)
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
