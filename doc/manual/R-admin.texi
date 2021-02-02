@@ -5293,6 +5293,12 @@ that if you install tools from the sources they will by default be
 installed under @file{/usr/local} and not supersede the system
 versions.
 
+Parallel installation of packages will make use of the utility
+@command{timeout} if available.  A dual-architecture build can be
+downloaded from @uref{https://www.stats.ox.ac.uk/pub/bdr/timeout}: make
+it executable (@code{chmod 755 timeout}) and put it somewhere on your
+path.
+
 @node Tcl/Tk headers and libraries, Java (macOS), Other libraries, macOS
 @subsection Tcl/Tk headers and libraries
 

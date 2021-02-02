@@ -187,6 +187,9 @@
       \item \code{capabilities("cairo")} now applies only to the
       file-based devices as it is now possible (if very unusual) to
       build \R with Cairo support for those but not for \code{X11()}.
+
+      \item There is optional support for tracing the progress of
+    \code{loadNamespace} --- see its help.
     }
   }
 
