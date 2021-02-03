@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2020   The R Core Team
+ *   Copyright (C) 1997-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -184,19 +184,40 @@ static int process_Renviron(const char *filename)
     FILE *fp;
     char *s, *p, sm[BUF_SIZE], *lhs, *rhs, msg[MSG_SIZE+50];
     int errs = 0;
+    const char *line_prefix = "\n      ";
+    const char *ignored_msg = "\n   They were ignored\n";
+    const char *truncated_msg = "[... truncated]";
+    Rboolean complete_line;
 
     if (!filename || !(fp = R_fopen(filename, "r"))) return 0;
     snprintf(msg, MSG_SIZE+50,
 	     "\n   File %s contains invalid line(s)", filename);
 
     while(fgets(sm, BUF_SIZE, fp)) {
-	sm[BUF_SIZE-1] = '\0';
+	sm[BUF_SIZE-1] = '\0'; /* should not be needed */
+	/* embedded nulls are not supported */
+	complete_line = feof(fp) || Rf_strchr(sm, '\n');
 	s = rmspace(sm);
 	if(strlen(s) == 0 || s[0] == '#') continue;
-	if(!(p = Rf_strchr(s, '='))) {
+	if(!(p = Rf_strchr(s, '=')) || !complete_line) {
 	    errs++;
-	    if(strlen(msg) < MSG_SIZE) {
-		strcat(msg, "\n      "); strcat(msg, s);
+	    if (strlen(msg) + strlen(line_prefix) + strlen(s) < MSG_SIZE) {
+		strcat(msg, line_prefix);
+		strcat(msg, s);
+	    } else if (strlen(msg) + strlen(line_prefix) + 50 + 
+                       strlen(truncated_msg) < MSG_SIZE) {
+		strcat(msg, line_prefix);
+		strncat(msg, s, 50);
+		strcat(msg, truncated_msg);
+	    }
+	    if (!complete_line) {
+		/* skip the rest of the line */
+		while(!complete_line && fgets(sm, BUF_SIZE, fp)) {
+		    sm[BUF_SIZE-1] = '\0'; /* should not be needed */
+		    complete_line = feof(fp) || Rf_strchr(sm, '\n');
+		}
+		if (!complete_line)
+		    break; /* error or EOF at line start */
 	    }
 	    continue;
 	}
@@ -208,7 +229,8 @@ static int process_Renviron(const char *filename)
     }
     fclose(fp);
     if (errs) {
-	strcat(msg, "\n   They were ignored\n");
+	if (strlen(msg) + strlen(ignored_msg) < MSG_SIZE+50)
+	   strcat(msg, ignored_msg);
 	R_ShowMessage(msg);
     }
     return 1;
