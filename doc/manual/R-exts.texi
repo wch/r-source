@@ -2699,11 +2699,13 @@ define a module of the same name in multiple source files.
 @R{} can be built without a C++ compiler although one is available (but
 not necessarily installed) on all known @R{} platforms.  As from @R{}
 4.0.0 a C++ compiler will be selected only if it conforms to the 2011
-standard (`C++11').  A minor update@footnote{The changes are linked from
-@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
-(`C++14') was published in December 2014.  A revision (`C++17') was
-published in December 2017, and a further revision (`C++20', with many
-new features) was published in December 2020.
+standard (`C++11').  A minor update@footnote{Some changes are linked
+from
+@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}:
+there were also additional deprecations.} (`C++14') was published in
+December 2014 and will be used by default as from @R{} 4.1.0 if
+supported.  Further revisions `C++17' (in December 2017), and `C++20'
+(with many new features in December 2020) have been published since.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L} and
@@ -5253,6 +5255,15 @@ helpful to look up functions at
 @uref{https://www.cplusplus.com/reference/} or
 @uref{https://en.cppreference.com/w/} and compare what is defined in the
 various standards.
+
+More care is needed for functions such as @code{mallinfo} which are not
+specified by any of these standards---hopefully the @command{man} page
+on your system will tell you so.  Searching online for such pages for
+various OSes (preferably at least Linux, macOS and Solaris, and the
+FreeBSD manual pages at @uref{https://www.freebsd.org/cgi/man.cgi} allow
+you to select many OSes@footnote{`SunOS 5.10' is the most current for
+Solaris.}) should reveal useful information but a @file{configure}
+script is likely to be needed to check availability and functionality.
 
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
@@ -8887,7 +8898,7 @@ ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
 An alternative is to pipe the output through
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
-@uref{https://llvm.org/@/svn/@/llvm-project/@/compiler-rt/@/trunk/@/lib/@/asan/scripts/@/asan_symbolize.py}:
+@uref{https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/asan/scripts/asan_symbolize.py}:
 it makes use of @command{llvm-symbolizer} if available.} and perhaps
 then (for compiled C++ code) @command{c++filt}.  (On macOS, you may need
 to run @command{dsymutil} to get line-number reports.)
@@ -11306,9 +11317,10 @@ takes as argument an @code{int} giving the number of objects to
 unprotect when they are no longer needed.  The protection mechanism is
 stack-based, so @code{UNPROTECT(@var{n})} unprotects the last @var{n}
 objects which were protected.  The calls to @code{PROTECT} and
-@code{UNPROTECT} must balance when the user's code returns.  @R{} will
-warn about @code{"stack imbalance in .Call"} (or @code{.External}) if
-the housekeeping is wrong.
+@code{UNPROTECT} must balance when the user's code returns and should
+balance in all functions.  @R{} will warn about
+@code{"stack imbalance in .Call"} (or @code{.External}) if the 
+housekeeping is wrong. 
 
 Here is a small example of creating an @R{} numeric vector in C code:
 
@@ -15558,7 +15570,7 @@ A possible implementation is
 void R_Suicide (const char *message)
 @{
     char  pp[1024];
-    snprintf(pp, 1024, "Fatal error: %s\n", s);
+    snprintf(pp, 1024, "Fatal error: %s\n", message);
     R_ShowMessage(pp);
     R_CleanUp(SA_SUICIDE, 2, 0);
 @}
