@@ -1545,10 +1545,10 @@ the Windows@footnote{@samp{BWidget} still is on Windows but
 not in the main repositories for major Linux distributions).
 @c Not in Fedora since 17
 @c 2008 sources at https://sourceforge.net/projects/tktable/files/tktable/2.10/
-@c In Sept 2020 declared by DALY PhViD RSiena RSurvey dgmb forensim
+@c In Feb 2021 declared by DALY PhViD RSiena RSurvey dgmb forensim
 @c rriskDistributions tcltk2
 
-@c In May 2020 declared by FFD GGEBiplotGUI OligoSpecificitySystem
+@c In Feb 2021 declared by FFD GGEBiplotGUI OligoSpecificitySystem
 @c PBSmodelling asbio biplotbootGUI cncaGUI dgmb dpa multibiplotGUI rpanel
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
 fairly easy to do: first find the Tcl search path:
@@ -5264,6 +5264,15 @@ helpful to look up functions at
 @uref{https://www.cplusplus.com/reference/} or
 @uref{https://en.cppreference.com/w/} and compare what is defined in the
 various standards.
+
+More care is needed for functions such as @code{mallinfo} which are not
+specified by any of these standards---hopefully the @command{man} page
+on your system will tell you so.  Searching online for such pages for
+various OSes (preferably at least Linux, macOS and Solaris, and the
+FreeBSD manual pages at @uref{https://www.freebsd.org/cgi/man.cgi} allow
+you to select many OSes@footnote{`SunOS 5.10' is the most current for
+Solaris.}) should reveal useful information but a @file{configure}
+script is likely to be needed to check availability and functionality.
 
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
