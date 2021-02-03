@@ -1202,31 +1202,30 @@ static char* win_getlasterror_str(void)
 static Rboolean	fifo_open(Rconnection con)
 {
     Rfifoconn this = con->private;
-    unsigned int uin_pipname_len = strlen(con->description);
     unsigned int uin_mode_len = strlen(con->mode);
     char *hch_pipename = NULL;
-    const char *hch_tempname = NULL;
     Rboolean boo_retvalue = TRUE;
+    const char *pipe_prefix = "\\\\.\\pipe\\";
 
     /* Prepare FIFO filename */
-    if (!uin_pipname_len) {
-	hch_pipename = R_tmpnam("fifo", "\\\\.\\pipe\\");
-    } else {
-	if (strncmp("\\\\.\\pipe\\", con->description, 9) != 0) {
-	    uin_pipname_len += strlen("\\\\.\\pipe\\") + 1;
-	    hch_pipename = (char*) malloc(uin_pipname_len);
-	    if (!hch_pipename) error(_("allocation of fifo name failed"));
-	    ZeroMemory(hch_pipename, uin_pipname_len);
-/*	    strcpy_s(hch_pipename, uin_pipname_len, "\\\\.\\pipe\\");  Win XP doesn't support this */
-	    strcpy(hch_pipename, "\\\\.\\pipe\\");
-	} else {
-	    hch_pipename = (char*)malloc(uin_pipname_len);
-	    if (!hch_pipename) error(_("allocation of fifo name failed"));
-	    ZeroMemory(hch_pipename, uin_pipname_len);
-	}
-	hch_tempname = R_ExpandFileName(con->description);
-/*	strcat_s(hch_pipename, uin_pipname_len, hch_tempname);  Win XP doesn't support this */
-	strcat(hch_pipename, hch_tempname);
+    if (strlen(con->description) == 0) 
+	hch_pipename = R_tmpnam("fifo", pipe_prefix); /* malloc */
+    else {
+	const char* hch_tempname = R_ExpandFileName(con->description);
+	size_t len = strlen(hch_tempname);
+	Rboolean add_prefix = FALSE;
+	if (strncmp(pipe_prefix, con->description, strlen(pipe_prefix)) != 0) {
+	    len += strlen(pipe_prefix);
+	    add_prefix = TRUE;
+	}	
+	hch_pipename = (char*) malloc(len+1);
+	if (!hch_pipename)
+	    error(_("allocation of fifo name failed"));
+	if (add_prefix) {
+	    strcpy(hch_pipename, pipe_prefix);
+	    strcat(hch_pipename, hch_tempname);
+	} else
+	    strcpy(hch_pipename, hch_tempname);
     }
 
     /* Prepare FIFO open mode */
@@ -1291,12 +1290,11 @@ static Rboolean	fifo_open(Rconnection con)
 
     /* Free malloc-ed variables */
     free(hch_pipename);
-    if (hch_tempname) free((void*) hch_tempname);
 
     /* Finalize FIFO configuration (only if FIFO is opened/created) */
     if (boo_retvalue && this->hdl_namedpipe) {
 	con->isopen = TRUE;
-	con->text = uin_mode_len >= 2 && con->mode[uin_mode_len - 1] == 'b';
+	con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
 	set_iconv(con);
 	con->save = -1000;
     }
