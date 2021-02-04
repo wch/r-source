@@ -628,6 +628,12 @@
       \item \code{checkRdaFiles(ff)$version} is now correct also when
       \code{ff} contains files of different versions, thanks to a report
       and patch from Sebastian Meyer in \PR{18041}.
+
+      \item Message translation domains, e.g., for errors and warnings, are
+      now correctly determined also when e.g., a \pkg{base} function is
+      called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
+      thanks to a patch from Joris Goosen fixing \PR{17998}.
+
     }
   }
 }

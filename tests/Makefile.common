@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/tests/Makefile.common
 
-## If you add test scripts here, review  ../src/library/tools/R/testing.R
+## If you add test scripts here, review  ../src/library/tools/R/testing.R <<<<<<<<<<<<
 
 test-src-gct = \
 	eval-etc.R \
@@ -52,7 +52,7 @@ test-src-reg-1 = array-subset.R \
   reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-1d.R reg-tests-2.R \
   reg-examples1.R reg-examples2.R reg-packages.R p-qbeta-strict-tst.R d-p-q-r-tst-2.R \
   r-strict-tst.R \
-  reg-IO.R reg-IO2.R reg-plot.R reg-S4-examples.R reg-BLAS.R
+  reg-IO.R reg-IO2.R reg-plot.R reg-S4-examples.R reg-BLAS.R reg-translation.R
 ## added to in Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
@@ -128,6 +128,14 @@ reg-plot.Rout: reg-plot.R
 	@$(ECHO) $(ECHO_N) \
 	  "  comparing 'reg-plot.pdf' to '$(srcdir)/reg-plot.pdf.save' ...$(ECHO_C)" >> $@.log
 	@$(RDIFF) reg-plot.pdf $(srcdir)/reg-plot.pdf.save >> $@.log
+	@$(ECHO) "$(ECHO_T) OK" >> $@.log
+	@cat $@.log; rm $@.log
+
+## Using $(R2) (whenever LC_ALL=C is not needed - so LANGUAGE can work)
+reg-translation.Rout: reg-translation.R
+	@rm -f $@ $@.fail $@.log
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)" > $@.log
+	@$(R2) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && rm $@.log && exit 1)
 	@$(ECHO) "$(ECHO_T) OK" >> $@.log
 	@cat $@.log; rm $@.log
 
