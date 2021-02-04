@@ -95,7 +95,7 @@ static char *findRbrace(char *s)
     return pr;
 }
 
-#define BUF_SIZE 10000
+#define BUF_SIZE 100000
 static char *findterm(char *s)
 {
     char *p, *q, *r2, *ss=s;
