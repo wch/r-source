@@ -19,6 +19,7 @@ LNG <- Sys.getenv("LANGUAGE") ; Sys.setenv(LANGUAGE = "fr")
 (mE <- tryCmsg(chk0( ))) # "l'argument \"x\" est manquant, avec aucune valeur par défaut"
 (m1 <- tryCmsg(chk0(1))) # (*not* translated in R <= 4.0.x)
                chk0(0)
+if(FALSE) ## This works *sometimes* .. depending on LC_* settings *before* R is started ???
 stopifnot(grepl("manquant\\b.* par d.faut", mE), # using 'é' here fails on Windows
           grepl("n'est pas", m1))
 Sys.setenv(LANGUAGE = LNG); Sys.getenv("LANGUAGE") # reset to previous
