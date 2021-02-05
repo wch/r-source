@@ -19,7 +19,7 @@ LNG <- Sys.getenv("LANGUAGE") ; Sys.setenv(LANGUAGE = "fr")
 (mE <- tryCmsg(chk0( ))) # "l'argument \"x\" est manquant, avec aucune valeur par défaut"
 (m1 <- tryCmsg(chk0(1))) # (*not* translated in R <= 4.0.x)
                chk0(0)
-stopifnot(grepl("manquant\\b.* par défaut", mE),
+stopifnot(grepl("manquant\\b.* par d.faut", mE), # using 'é' here fails on Windows
           grepl("n'est pas", m1))
 Sys.setenv(LANGUAGE = LNG); Sys.getenv("LANGUAGE") # reset to previous
 ## Default 'domain' for stop()  was not determined correctly in R <= 4.0.3
