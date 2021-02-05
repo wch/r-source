@@ -64,7 +64,7 @@ arima(x, order = c(0L, 0L, 0L),
 
     The entries of the \code{fixed} vector should consist of the
     values at which the user wishes to \dQuote{fix} the corresponding
-    coefficient, or \code{NA} if that coefficient should \empht{not} be
+    coefficient, or \code{NA} if that coefficient should \emph{not} be
     fixed, but estimated.
 
     The argument \code{transform.pars} will be set to \code{FALSE} if any
