@@ -1569,10 +1569,10 @@ tested) install @R{} from the sources (see @ref{macOS}).
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
-(`Updates' from the `App Store' on Mojave and earlier) to be sure.
-(If using XQuartz, check that is current: at the time of writing
-the latest version was 2.7.11 from October 2016 but a beta of 2.8.0 had
-just become available.)
+(`Updates' from the `App Store' on Mojave and earlier) to be sure.  (If
+using XQuartz, check that is compatible: at the time of writing the
+latest version was 2.7.11 from October 2016 but betas of 2.8.0 had just
+become available and were being offered as upgrades.)
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -1594,7 +1594,7 @@ Various parts of the build require XQuartz to be installed: see
 @uref{https://www.xquartz.org/}.  These include the @pkg{tcltk} package
 and the @code{X11} device: attempting to use these without XQuartz will
 remind you.@footnote{At least if @command{otool} is installed: it is
-part of the macOS Command Line Tools.}  This is also needed for most
+part of the macOS Command Line Tools.}  This is also needed for some
 builds of the cairographics-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")}.
 
@@ -5029,7 +5029,6 @@ version it is straightforward to compile it from its sources.}.  If
 that, configure with @option{--without-readline}.
 
 @item
-@c You do not need zlib-system-stub if PKG_CONFIG_PATH includes /opt/X11/lib/pkgconfig
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
 @code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
 for the full range of bitmapped graphics devices.
@@ -5037,7 +5036,7 @@ for the full range of bitmapped graphics devices.
 @item
 An X sub-system unless configuring using @option{--without-x}: see
 @uref{https://www.xquartz.org/}. @R{}'s @command{configure}
-script can be told to look for @code{X11} in @code{XQuartz}'s main
+script can be told to look for @code{X11} in XQuartz's main
 location of @file{/opt/X11}, e.g.@: by
 @example
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
@@ -5061,8 +5060,8 @@ library (see @code{?.libPaths}).
 Support for @code{cairo} (without @code{Pango}) will be enabled if
 @code{pkg-config}@footnote{available from
 @uref{https://mac.R-project.org/libs-4/} as @code{pkgconfig}.} and
-XQuartz are available.  Make sure the XQuartz's @code{pkg-config} files
-are found first on the configuration path: for example by setting
+XQuartz are available.  Make sure XQuartz's @code{pkg-config} files are
+found first on the configuration path: for example by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
@@ -5123,9 +5122,17 @@ tar xf subversion-1.14.0-darwin15.6.tar.gz
 sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
 @end example
 
-For some distributions of Command Line Tools version 12,
+The instructions above get @code{cairo} from XQuartz.  At the time of
+writing the beta distributions of XQuartz 2.8.0 did not contain
+@code{cairo}, so an alternative is to statically link @code{cairo} by
+downloding and unpacking components @code{cairo}, @code{fontconfig},
+@code{freetype}, @code{pixman} and @code{zlib-system-stub} and not
+having @file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH} (or at
+least, not before @file{/usr/local/lib/pkgconfig}).
+
+As from Command Line Tools version 12,
 @option{-Wno-implicit-function-declaration} needs to be included in
-@code{CFLAGS} to configure @R{}@tie{}4.0.2 and earlier as well as some
+@code{CFLAGS} to configure @R{} up to 4.0.2 and earlier as well as some
 external software.
 
 @menu
@@ -5622,12 +5629,12 @@ appropriate path can be found by running @command{xcrun
 -show-sdk-path}).
 
 A beta installation of XQuartz is available @emph{via}
-@uref{https://www.xquartz.org/releases/XQuartz-2.8.0_beta1.html}: this
-is dual-architecture so supports both @cputype{arm64} and
-@cputype{x86_64} builds.
+@uref{https://www.xquartz.org/releases/}: this is dual-architecture so
+supports both @cputype{arm64} and @cputype{x86_64} builds.  It does not
+contain @code{cairo}.
 
 A binary package of Aqua Tcl/Tk is supplied rather than the X11-based
-variant of Tk used for Intel build (and some packages, notably
+variant of Tk used for Intel builds (and some packages, notably
 @CRANpkg{tkrplot}, do not support that, nor is @code{TkTable}
 available).  If XQuartz is installed it is possible to build the
 X11-based variant of Tk from source.
