@@ -5396,6 +5396,13 @@ Similarly for constants: for example @code{SIZE_MAX} is defined in
 @code{stdint.h} alongside @code{size_t}.
 
 @item
+Some headers are not portable: we have just mentioned @file{malloc.h}
+and often @acronym{CRAN} submissions attempt to use @file{endian.h}.
+The latter is a @code{glibc} extension: some OSs have
+@file{machine/endian.h} or @file{sys/endian.h} but some have neither.
+@c macOS has machine/endian.h.  Solaris has none.
+
+@item
 For C++ code, be careful to specify namespaces where needed.  Many
 functions are defined by the standards to be in the @code{std}
 namespace, but @command{g++} puts many such also in the C++ main
