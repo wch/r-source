@@ -3385,8 +3385,9 @@ suitable code can be compiled.  These tests will fail if
 environment. There is a compatible re-implementation of
 @command{pkg-config} called @command{pkgconf} which can be used in the
 unlikely event that is installed but not linked to
-@command{pkg-config}.}, and are likely to fail if @code{cairo} was
-built statically (unusual).  Most systems with @code{Gtk+} 2.8 or later
+@command{pkg-config}.}, and are likely to fail if @code{cairo} was built
+statically (unusual except on macOS where there is a workaround in
+@command{configure}).  Most systems with @code{Gtk+} 2.8 or later
 installed will have suitable libraries.
 
 For the best font experience with these devices you need suitable fonts
@@ -3412,7 +3413,7 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
-(versions 4.0.[5-10] and 4.1.0 have been tested) respectively.
+(versions 4.0.[5-10] and 4.[12].0 have been tested) respectively.
 @command{pkg-config} is used if available and so needs the appropriate
 @file{.pc} file (which requires @code{libtiff} version 4.x and is not
 available on all platforms for @code{jpeg} before version 9c).  They
