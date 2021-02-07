@@ -62,11 +62,11 @@ else
     CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
     case "${host_os}" in
       darwin*)
-        ## This is for a static macOS build,
-	## although XQuartz does not currently have pangocairo.
-	## FIXME: doing that unconditionally is really not a good idea
-        CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
-        CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
+        ## This was for a static macOS build,
+	## although XQuartz does not have pangocairo.
+	## So the only possible use is Homebrew which is dynamic
+        CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
+        CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
         ;;
       *)
         CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
@@ -141,7 +141,7 @@ int main(void) {
       case "${host_os}" in
         darwin*)
           ## This is for static macOS build
-	  ## XQuartz's cairo.pc pulls in static X11 libs without cairo-xlib
+	  ## XQuartz's cairo.pc pulled in static X11 libs without cairo-xlib
 	  ## FIXME: doing that unconditionally is really not a good idea
           CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
           CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
@@ -174,6 +174,8 @@ int main(void) {
 	]])],[r_cv_cairo_works=yes],[r_cv_cairo_works=no
           CAIRO_LIBS=
           CAIRO_CFLAGS=
+          CAIROX11_LIBS=
+          CAIROX11_CFLAGS=
         ])])
       CPPFLAGS=${save_CPPFLAGS}
       LIBS=${save_LIBS}
