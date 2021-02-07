@@ -1,7 +1,7 @@
 #  File src/library/utils/R/combn.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,11 +58,11 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 		d <- dim(r)
 		if(length(d) > 1L)
 		    c(d, count)
-		else if(len.r > 1L)
+		else if(len.r != 1L)
 		    c(len.r, count)
-		else # MM: *still* a matrix - a la "drop = FALSE"
+		else # NB: scalar result (len.r=1, d=NULL) gives 1D array
 		    c(d, count)
-	    } ## NULL in all 'else' cases
+	    }
     }
 
     if(simplify)

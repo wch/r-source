@@ -63,7 +63,7 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
 combn(letters[1:4], 2)
 (m <- combn(10, 5, min))   # minimum value in each combination
 mm <- combn(15, 6, function(x) matrix(x, 2, 3))
-stopifnot(round(choose(10, 5)) == length(m),
+stopifnot(round(choose(10, 5)) == length(m), is.array(m), # 1-dimensional
           c(2,3, round(choose(15, 6))) == dim(mm))
 
 ## Different way of encoding points:
@@ -76,7 +76,8 @@ combn(c(1,1,1,1,2,2,2,3,3,4), 3, tabulate, nbins = 4)
 ## Assuring the identity
 for(n in 1:7)
  for(m in 0:n) stopifnot(is.array(cc <- combn(n, m)),
-                         dim(cc) == c(m, choose(n, m)))
+                         dim(cc) == c(m, choose(n, m)),
+                         identical(cc, combn(n, m, identity)) || m == 1)
 }
 \keyword{utilities}
 \keyword{iteration}
