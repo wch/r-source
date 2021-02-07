@@ -1017,22 +1017,30 @@ cut.POSIXt <-
         if(valid == 8L) incr <- 25*3600 # DSTdays
         if(valid == 6L) {               # months
             start$mday <- 1L
-            end <- as.POSIXlt(max(x, na.rm = TRUE))
+            maxx <- max(x, na.rm = TRUE)
+            end <- as.POSIXlt(maxx)
             step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
             end <- as.POSIXlt(end + (31 * step * 86400))
             end$mday <- 1L
             end$isdst <- -1L
             breaks <- seq(start, end, breaks)
+            ## 31 days ahead could give an empty level, so
+	    lb <- length(breaks)
+	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
         } else if(valid == 7L) {        # years
             start$mon <- 0L
             start$mday <- 1L
-            end <- as.POSIXlt(max(x, na.rm = TRUE))
+            maxx <- max(x, na.rm = TRUE)
+            end <- as.POSIXlt(maxx)
             step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
             end <- as.POSIXlt(end + (366 * step* 86400))
             end$mon <- 0L
             end$mday <- 1L
             end$isdst <- -1L
             breaks <- seq(start, end, breaks)
+            ## 366 days ahead could give an empty level, so
+	    lb <- length(breaks)
+	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
         } else if(valid == 9L) {        # quarters
             qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
             start$mon <- qtr[start$mon + 1L]
