@@ -382,7 +382,7 @@ this should never happen in end-user code.
 @node The 'data', Allocation classes, Rest of header, SEXPs
 @subsection The `data'
 
-A @code{SEXPREC} is a C structure containing the 32-bit header as
+A @code{SEXPREC} is a C structure containing the 64-bit header as
 described above, three pointers (to the attributes, previous and next
 node) and the node data, a union
 
