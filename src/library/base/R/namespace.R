@@ -661,7 +661,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             }
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
-	    if(lev > 2L) message('--- procesing classes')
+	    if(lev > 2L) message('--- processing classes')
             ##we take any pattern, but check to see if the matches are classes
             pClasses <- character()
             aClasses <- methods::getClasses(ns)

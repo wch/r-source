@@ -5126,7 +5126,7 @@ sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
 The instructions above get @code{cairo} from XQuartz.  At the time of
 writing the beta distributions of XQuartz 2.8.0 did not contain
 @code{cairo}, so an alternative is to statically link @code{cairo} by
-downloding and unpacking components @code{cairo}, @code{fontconfig},
+downloading and unpacking components @code{cairo}, @code{fontconfig},
 @code{freetype}, @code{pixman} and @code{zlib-system-stub} and not
 having @file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH} (or at
 least, not before @file{/usr/local/lib/pkgconfig}).

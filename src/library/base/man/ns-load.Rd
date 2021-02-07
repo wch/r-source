@@ -112,12 +112,12 @@ isNamespaceLoaded(name)
   which can help track down the causes of unexpected messages (including
   which package(s) they come from since \code{loadNamespace} is called in
   many ways including from itself and by \code{::} and can be called by
-  \code{load}). Setting the environmwnt variable
+  \code{load}). Setting the environment variable
   \env{_R_TRACE_LOADNAMESPACE_} to a numerical value will generate
   additional messages on progress.  Non-zero values,
   e.g.\sspace{}\code{1}, report which namespace is being loaded and when
   loading completes: values \code{2} to \code{4} report in increasing
-  detail.  Negative values are reserved for tracing specfic features and
+  detail.  Negative values are reserved for tracing specific features and
   their current meanings are documented in source-code comments.
 
   Loading standard packages is never traced.
