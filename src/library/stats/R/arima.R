@@ -410,7 +410,6 @@ predict.Arima <-
     ncxreg <- myNCOL(xreg)
     if (myNCOL(newxreg) != ncxreg)
         stop("'xreg' and 'newxreg' have different numbers of columns")
-    class(xreg) <- NULL
     xtsp <- tsp(rsd)
     n <- length(rsd)
     arma <- object$arma
@@ -418,7 +417,6 @@ predict.Arima <-
     narma <- sum(arma[1L:4L])
     if (length(coefs) > narma) {
         if (names(coefs)[narma + 1L] == "intercept") {
-            xreg <- cbind(intercept = rep(1, n), xreg)
             newxreg <- cbind(intercept = rep(1, n.ahead), newxreg)
             ncxreg <- ncxreg + 1L
         }
