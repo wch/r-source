@@ -9,8 +9,8 @@
 \title{Extract or Replace Matched Substrings}
 \description{
   Extract or replace matched substrings from match data obtained by
-  \code{\link{regexpr}}, \code{\link{gregexpr}} or
-  \code{\link{regexec}}.
+  \code{\link{regexpr}}, \code{\link{gregexpr}},
+  \code{\link{regexec}} or \code{\link{gregexec}}.
 }
 \usage{
 regmatches(x, m, invert = FALSE)
@@ -93,6 +93,33 @@ s
 m <- gregexpr(", *", s)
 ## And finally extract the non-matched parts.
 regmatches(x, m, invert = TRUE)
+
+## regexec() and gregexec() return overlapping ranges because the
+## first match is the full match.  This conflicts with regmatches()<-
+## and regmatches(..., invert=TRUE).  We can work-around by dropping
+## the first match.
+drop_first <- function(x) {
+    if(!anyNA(x) && all(x > 0)) {
+        ml <- attr(x, 'match.length')
+        if(is.matrix(x)) x <- x[-1,] else x <- x[-1]
+        attr(x, 'match.length') <- if(is.matrix(x)) ml[-1,] else ml[-1]
+    }
+    x
+}
+m <- gregexec("(\\\\w+) \\\\(((?:\\\\w+(?:, )?)+)\\\\)", x)
+regmatches(x, m)
+try(regmatches(x, m, invert=TRUE))
+regmatches(x, lapply(m, drop_first))
+## invert=TRUE loses matrix structure because we are retrieving what
+## is in between every sub-match
+regmatches(x, lapply(m, drop_first), invert=TRUE)
+y <- z <- x
+## Notice **list**(...) on the RHS
+regmatches(y, lapply(m, drop_first)) <- list(c("<NAME>", "<HOBBY-LIST>"))
+y
+regmatches(z, lapply(m, drop_first), invert=TRUE) <-
+    list(sprintf("<\%d>", 1:5))
+z
 }
 \keyword{character}
 \keyword{utilities}

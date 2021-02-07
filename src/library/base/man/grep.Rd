@@ -12,11 +12,12 @@
 \alias{regexpr}
 \alias{gregexpr}
 \alias{regexec}
+\alias{gregexec}
 \description{
-  \code{grep}, \code{grepl}, \code{regexpr}, \code{gregexpr} and
-  \code{regexec} search for matches to argument \code{pattern} within
-  each element of a character vector: they differ in the format of and
-  amount of detail in the results.
+  \code{grep}, \code{grepl}, \code{regexpr}, \code{gregexpr}, 
+  \code{regexec} and \code{gregexec} search for matches to argument
+  \code{pattern} within each element of a character vector: they differ in
+  the format of and amount of detail in the results.
 
   \code{sub} and \code{gsub} perform replacement of the first and all
   matches respectively.
@@ -41,6 +42,9 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 
 regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
+        fixed = FALSE, useBytes = FALSE)
+
+gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
         fixed = FALSE, useBytes = FALSE)
 }
 \arguments{
@@ -100,9 +104,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   backreferences which are not defined in \code{pattern} the result is
   undefined (but most often the backreference is taken to be \code{""}).
 
-  For \code{regexpr}, \code{gregexpr} and \code{regexec} it is an error
-  for \code{pattern} to be \code{NA}, otherwise \code{NA} is permitted
-  and gives an \code{NA} match.
+  For \code{regexpr}, \code{gregexpr}, \code{regexec} and \code{gregexec}
+  it is an error for \code{pattern} to be \code{NA}, otherwise \code{NA}
+  is permitted and gives an \code{NA} match.
 
   Both \code{grep} and \code{grepl} take missing values in \code{x} as
   not matching a non-missing \code{pattern}.
@@ -176,6 +180,11 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   interpretation of positions and length and the attributes follows
   \code{regexpr}.
 
+  \code{gregexec} returns the same as \code{regexec}, except that to
+  accommodate multiple matches per element of \code{text}, the integer
+  sequences for each match are made into columns of a matrix, with one
+  matrix per element of \code{text} with matches.
+
   Where matching failed because of resource limits (especially for
   \code{perl = TRUE}) this is regarded as a non-match, usually with a
   warning.
@@ -206,7 +215,8 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   If you can make use of \code{useBytes = TRUE}, the strings will not be
   checked before matching, and the actual matching will be faster.
   Often byte-based matching suffices in a UTF-8 locale since byte
-  patterns of one character never match part of another.
+  patterns of one character never match part of another.  Character ranges
+  may produce unexpected results.
 
   PCRE-based matching by default used to put additional effort into
   \sQuote{studying} the compiled pattern when \code{x}/\code{text} has
@@ -394,10 +404,15 @@ URL_parts <- function(x) {
 }
 URL_parts(x)
 
-## There is no gregexec() yet, but one can emulate it by running
-## regexec() on the regmatches obtained via gregexpr().  E.g.:
+## gregexec() may match multiple times within a single string.
 pattern <- "([[:alpha:]]+)([[:digit:]]+)"
 s <- "Test: A1 BC23 DEF456"
+m <- gregexec(pattern, s)
+m
+regmatches(s, m)
+
+## Before gregexec() was implemented, one could emulate it by running
+## regexec() on the regmatches obtained via gregexpr().  E.g.:
 lapply(regmatches(s, gregexpr(pattern, s)),
        function(e) regmatches(e, regexec(pattern, e)))
 }
