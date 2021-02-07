@@ -1,7 +1,7 @@
 #  File src/library/stats/R/power.anova.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,9 +28,8 @@ function (groups = NULL, n = NULL, between.var = NULL, within.var = NULL,
       stop("number of groups must be at least 2")
     if (!is.null(n) && n < 2)
       stop("number of observations in each group must be at least 2")
-    if(!is.null(sig.level) && !is.numeric(sig.level) ||
-       any(0 > sig.level | sig.level > 1))
-	stop("'sig.level' must be numeric in [0, 1]")
+    assert_NULL_or_prob(sig.level)
+    assert_NULL_or_prob(power)
 
     p.body <- quote({
 	lambda <- (groups-1)*n*(between.var/within.var)

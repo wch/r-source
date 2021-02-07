@@ -1,7 +1,7 @@
 #  File src/library/stats/R/power.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,9 +24,8 @@ power.t.test <-
 {
     if ( sum(vapply(list(n, delta, sd, power, sig.level), is.null, NA)) != 1 )
 	stop("exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL")
-    if(!is.null(sig.level) && !is.numeric(sig.level) ||
-       any(0 > sig.level | sig.level > 1))
-	stop("'sig.level' must be numeric in [0, 1]")
+    assert_NULL_or_prob(sig.level)
+    assert_NULL_or_prob(power)
 
     type <- match.arg(type)
     alternative <- match.arg(alternative)
@@ -88,9 +87,8 @@ power.prop.test <-
 {
     if ( sum(vapply(list(n, p1, p2, power, sig.level), is.null, NA)) != 1 )
 	stop("exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL")
-    if(!is.null(sig.level) && !is.numeric(sig.level) ||
-       any(0 > sig.level | sig.level > 1))
-	stop("'sig.level' must be numeric in [0, 1]")
+    assert_NULL_or_prob(sig.level)
+    assert_NULL_or_prob(power)
 
     alternative <- match.arg(alternative)
     tside <- switch(alternative, one.sided = 1, two.sided = 2)
@@ -157,5 +155,14 @@ print.power.htest <- function(x, digits = getOption("digits"), ...)
     cat(paste(format(names(x), width = 15L, justify = "right"),
 	      format(x, digits=digits), sep = " = "), sep = "\n")
     if(!is.null(note)) cat("\n", "NOTE: ", note, "\n\n", sep = "") else cat("\n")
+    invisible(x)
+}
+
+assert_NULL_or_prob <- function (x)
+{
+    if(!is.null(x) && (!is.numeric(x) || any(0 > x | x > 1)))
+        stop(gettextf("'%s' must be numeric in [0, 1]",
+                      deparse1(substitute(x))),
+             call. = FALSE)
     invisible(x)
 }
