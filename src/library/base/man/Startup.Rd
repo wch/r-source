@@ -1,6 +1,6 @@
 % File src/library/base/man/Startup.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Startup}
@@ -136,6 +136,9 @@
   e.g.\sspace{}\file{\var{\link{R_HOME}}/etc/i386/Renviron.site}.
   And e.g.\sspace{}\file{.Renviron.i386} will be used in preference
   to \file{.Renviron}.
+
+  There is a 100,000 byte limit on the length of a line (after expansions)
+  in environment files (prior to \R 4.1 it was 10,000).
 }
 \note{
   It is not intended that there be interaction with the user during

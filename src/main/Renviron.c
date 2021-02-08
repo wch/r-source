@@ -33,6 +33,10 @@
 #include <Fileio.h>
 #include <ctype.h>		/* for isspace */
 
+#ifdef Win32
+#include <trioremap.h> /* to ensure snprintf result is null terminated */
+#endif
+
 /* remove leading and trailing space */
 static char *rmspace(char *s)
 {
@@ -188,6 +192,7 @@ static int process_Renviron(const char *filename)
     const char *line_prefix = "\n      ";
     const char *ignored_msg = "\n   They were ignored\n";
     const char *truncated_msg = "[... truncated]";
+    const char *too_long = " (too long)";
     Rboolean errs = FALSE;
 
     while(fgets(sm, BUF_SIZE, fp)) {
@@ -199,19 +204,29 @@ static int process_Renviron(const char *filename)
 	if(!(p = Rf_strchr(s, '=')) || !complete_line) {
 	    if(!errs) {
 		errs = TRUE;
-		snprintf(msg, MSG_SIZE,
-			 "\n   File %s contains invalid line(s)", filename);
+		Rsnprintf_mbcs(msg, MSG_SIZE,
+			       "\n   File %s contains invalid line(s)",
+		               filename);
 	    }
-	    if (strlen(msg) + strlen(line_prefix) + strlen(s) < MSG_SIZE) {
+	    if (strlen(msg) + strlen(line_prefix) + strlen(s) +
+	        strlen(ignored_msg) < MSG_SIZE) {
+
 		strcat(msg, line_prefix);
 		strcat(msg, s);
 	    } else if (strlen(msg) + strlen(line_prefix) +
-				50 + strlen(truncated_msg) < MSG_SIZE) {
+		                45 + strlen(truncated_msg) +
+                                     strlen(ignored_msg) < MSG_SIZE) {
 		strcat(msg, line_prefix);
-		strncat(msg, s, 50);
+		strncat(msg, s, 45);
+		mbcsTruncateToValid(msg);
 		strcat(msg, truncated_msg);
 	    }
 	    if (!complete_line) {
+		if (strlen(msg) + strlen(too_long) +
+		    strlen(ignored_msg) < MSG_SIZE) {
+
+		    strcat(msg, too_long);
+		}
 		/* skip the rest of the line */
 		while(!complete_line && fgets(sm, BUF_SIZE, fp)) {
 		    sm[BUF_SIZE-1] = '\0'; /* should not be needed */

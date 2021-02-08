@@ -548,6 +548,10 @@
       Additionally, it no longer fails for \code{list}s with a \code{class} and
       \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
       necessarily fail, as currently for different \CRANpkg{igraph} objects.
+
+      \item Too long lines in environment files (e.g. \code{Renviron}) no
+      longer crash \R. This limit has been increased to 100,000 bytes
+      (\PR{18001}).
     }
   }
 }
