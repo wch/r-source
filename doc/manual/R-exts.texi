@@ -4826,6 +4826,16 @@ Non-ASCII filenames can also cause problems (particularly in non-UTF-8
 locales).
 
 @item
+Take care in namimg @LaTeX{} macros (also known as `commands') in
+vignette sources: if these are also defined in a future version of one
+of the @LaTeX{} packages used there will be a fatal error.  One instance
+in 2021 was package @samp{hyperref} newly defining @samp{\C}, @samp{\F},
+@samp{\G}, @samp{\U} and @samp{\textapprox}.  If you are confident that
+your definitions will be the only ones relevant you can use
+@samp{\renewcommand} but it is better to use names clearly associated
+with your package.
+
+@item
 Make sure that any version requirement for Java code is both declared in
 the @samp{SystemRequirements} field@footnote{If a Java interpreter is
 required directly (not @emph{via} @CRANpkg{rJava}) this must be declared
@@ -4919,8 +4929,9 @@ and conditional.
 
 Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
-example macOS 10.16 has been announced not to have them.  Python 2 has
-passed end-of-life and been removed from some major distributions.
+example macOS 10.16 was announced not to have them (but released as
+macOS 11 with them).  Python 2 has passed end-of-life and been removed
+from some major distributions.
 
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
