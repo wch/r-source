@@ -4845,8 +4845,10 @@ installed might not be the same as when the package is run and will not
 be for binary packages).  Java 8 is available for fewer platforms than
 Java 7, and Java 11 for fewer still (at the time of writing, only
 @cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
-Oracle and Linux on several CPUs, Intel-based macOS, 32- and 64-bit
-Windows and AIX from from @uref{https://adoptopenjdk.net}).
+Oracle; Linux on several CPUs, Intel-based macOS, 32-
+and 64-bit Windows and AIX from from @uref{https://adoptopenjdk.net} and
+@cputype{arm64} macOS from Zulu -- several OSes provide builds of
+OpenJDK including FreeBSD and most Linux distributions).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
@@ -5230,7 +5232,8 @@ extensions (such as POSIX functions) are supported.
 
 @strong{C++ standards}: From version 3.6.0 (3.6.2 on Windows), @R{}
 defaulted to C++11 where available@footnote{which it is on all known
-platforms, and is required as from @R{} 4.0.0}.  However, in earlier
+platforms, and is required as from @R{} 4.0.0}; @R{} 4.1.0 defaults to
+C++14 (where available).  However, in earlier
 versions the default standard was that of the compiler used, often C++98
 or C++14, and the default is likely to change in future.  For maximal
 portability a package should either specify a standard (@pxref{Using C++
