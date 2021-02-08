@@ -1115,45 +1115,48 @@ static char * determine_domain_gettext(SEXP domain_, SEXP rho)
 	/* First we try to see if sysparent leads us to a namespace, because gettext
 	   might have a different environment due to being called from (in?) a closure.
 	   If that fails we try cloenv, as the original code did. */
-	for(size_t attempt = 0; attempt < 2 && !strlen(domain); attempt++) {
+	SEXP ns = R_NilValue;
+	for(size_t attempt = 0; attempt < 2 && isNull(ns); attempt++) {
 	    rho = (cptr == NULL) ?
 		R_EmptyEnv :
 		attempt == 0 ? cptr->sysparent : cptr->cloenv;
 	    while(rho != R_EmptyEnv) {
 		if (rho == R_GlobalEnv) break;
 		else if (R_IsNamespaceEnv(rho)) {
-		    domain = translateChar(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
+		    ns = R_NamespaceEnvSpec(rho);
 		    break;
 		}
-		rho = CDR(rho);
+		rho = ENCLOS(rho);
 	    }
 	}
-    }
-
-    if(strlen(domain)) {
-	size_t len = strlen(domain)+3;
-	buf = R_alloc(len, sizeof(char));
-
-	Rsnprintf_mbcs(buf, len, "R-%s", domain);
-	domain = buf;
-
+	if (!isNull(ns)) {
+	    PROTECT(ns);
+	    domain = translateChar(STRING_ELT(ns, 0));
+	    if (strlen(domain)) {
+		size_t len = strlen(domain)+3;
+		buf = R_alloc(len, sizeof(char));
+		Rsnprintf_mbcs(buf, len, "R-%s", domain);
+		UNPROTECT(1); /* ns */
 #ifdef DEBUG_GETTEXT
-	REprintf("Managed to determine 'domain' from environment as: '%s'\n", domain);
+		REprintf("Managed to determine 'domain' from environment as: '%s'\n", buf);
 #endif
-    }
-    else if(isString(domain_))
-	domain = translateChar(STRING_ELT(domain_, 0));
-    else if(isLogical(domain_) && LENGTH(domain_) == 1 && LOGICAL(domain_)[0] == NA_LOGICAL)
-	;
-    else error(_("invalid '%s' value"), "domain");
-
-    if(!strlen(domain))
+		return buf;
+	    }
+	    UNPROTECT(1); /* ns */ 
+	}
 	return NULL;
 
-    buf = R_alloc(strlen(domain) + 1, sizeof(char));
-    strcpy(buf, domain);
-
-    return buf;
+    } else if(isString(domain_)) {
+	domain = translateChar(STRING_ELT(domain_, 0));
+	if (!strlen(domain))
+	    return NULL;
+	buf = R_alloc(strlen(domain) + 1, sizeof(char));
+	strcpy(buf, domain);
+	return buf;
+	
+    } else if(isLogical(domain_) && LENGTH(domain_) == 1 && LOGICAL(domain_)[0] == NA_LOGICAL)
+	return NULL;
+    else error(_("invalid '%s' value"), "domain");
 }
 
 
