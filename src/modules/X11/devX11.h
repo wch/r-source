@@ -83,6 +83,10 @@ Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
 	/* specific structure					*/
 	/********************************************************/
 
+/* 
+   A similar-enough structure of the same name is used in
+   src/library/grDevices/src/cairo/cairoBM.h
+*/
 typedef struct {
     /* Graphics Parameters */
     /* Local device copy so that we can detect */

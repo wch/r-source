@@ -17,6 +17,14 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Included by
+
+  cairoBM.c (with NO_X11 defined)
+  src/modules/X11/devX11.c if HAVE_WORKING_X11_CAIRO is defined
+
+  pX11Desc is a pointer to one of two similar structures defined in
+  cairoBM.h and devX11.h
+*/
 
 /* Entry points used
 
