@@ -90,7 +90,7 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 
   \code{\link{Sys.glob}} for wildcard expansion on file paths.
   \code{\link{basename}} and \code{dirname}, useful for splitting paths
-  into filename and directory parts.
+  into non-directory (aka \sQuote{filename}) and directory parts.
 }
 \examples{
 list.files(R.home())

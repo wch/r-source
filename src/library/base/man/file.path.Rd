@@ -1,6 +1,6 @@
 % File src/library/base/man/file.path.Rdw
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.path}
@@ -37,6 +37,9 @@ file.path(\dots, fsep = .Platform$file.sep)
   UTF-8 if run in a UTF-8 locale (when marked inputs are converted to
   UTF-8) or if a component of the result is marked as UTF-8, or as
   Latin-1 in a non-Latin-1 locale.
+}
+\seealso{
+  \code{\link{basename}}, \code{\link{normalizePath}}, \code{\link{path.expand}}.
 }
 \note{
   The components are by default separated by \code{/}
