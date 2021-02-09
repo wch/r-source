@@ -3422,10 +3422,14 @@ Should support for these devices @strong{not} be required or broken
 system libraries need to be avoided there are @command{configure}
 options @option{--without-libpng}, @option{--without-jpeglib} and
 @option{--without-libtiff}.  The TIFF library has many optional features
-such as @code{jpeg}, @code{libz}, @code{lzma}, @code{jbig} and
-@code{jpeg12}, none of which is required for the @code{tiff()} devices
-but may need to be present to link the library (usually only an issue
-for static linking).
+such as @code{jpeg}, @code{libz}, @code{lzma}, @code{webp} @code{jbig}
+and @code{jpeg12}, none of which is required for the @code{tiff()}
+devices but may need to be present to link the library (usually only an
+issue for static linking).  @command{pkg-config} can tell you what other
+libraries are required by for example @command{pkg-config
+--print-requires libpng} or, for static linking, @command{pkg-config
+--print-requires --print-requires-private fontconfig} (these are not
+recursive).
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest sources are in the @command{git} repository

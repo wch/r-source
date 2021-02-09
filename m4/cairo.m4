@@ -35,6 +35,9 @@ else
   ])
   if test "x${r_cv_has_pangocairo}" = "xyes"; then
     modlist="pangocairo"
+    ## These tests are useful for existence of features but
+    ## because cairo is built as a single library they
+    ## currently make no difference to CPPFLAGS nor LIBS
     for module in cairo-png; do
       if "${PKG_CONFIG}" --exists ${module}; then
 	modlist="${modlist} ${module}"
@@ -54,7 +57,7 @@ else
     fi
     if "${PKG_CONFIG}" --exists cairo-xlib; then
        xmodlist="${modlist} cairo-xlib"
-     r_cairo_xlib=yes
+       r_cairo_xlib=yes
     else
        xmodlist="${modlist}"
     fi
@@ -135,14 +138,15 @@ int main(void) {
       else
          xmodlist="${modlist}"
       fi
-      ## XQuartz's cairo.pc pulls in X11 headers without cairo-xlib
+      ## Because cairo is built as a single library which succeed
+      ## currently makes no difference to CPPFLAGS nor LIBS
       CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
       CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
       case "${host_os}" in
         darwin*)
           ## This is for static macOS build
-	  ## XQuartz's cairo.pc pulled in static X11 libs without cairo-xlib
 	  ## FIXME: doing that unconditionally is really not a good idea
+          ## if cairo was built with xlib support then X11 libs will be linked.
           CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
           CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
           ;;

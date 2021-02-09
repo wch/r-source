@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2008--2020  R Core Team
+ *  Copyright (C) 2008--2021  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1301,7 +1301,9 @@ PangoCairo_Text(double x, double y,
 # define USE_FC 1
 #endif
 
+// CAIRO_HAS_FT_FONT is defined (or not) in cairo-features.h
 #if CAIRO_HAS_FT_FONT && USE_FC
+// The branch used on macOS
 
 SEXP in_CairoFT(void) 
 {
@@ -1479,6 +1481,8 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 }
 
 #else
+// Branch without using FreeType/FontConfig
+// This is the branch used on Windows
 
 SEXP in_CairoFT(void) 
 {
