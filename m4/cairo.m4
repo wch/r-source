@@ -63,19 +63,14 @@ else
     fi
     CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
     CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
-    case "${host_os}" in
-      darwin*)
-        ## This was for a static macOS build,
-	## although XQuartz does not have pangocairo.
-	## So the only possible use is Homebrew which is dynamic
-        CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
-        CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
-        ;;
-      *)
-        CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
-        CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
-        ;;
-    esac
+    if test "x$use_static_cairo" = xyes; then
+       AC_MSG_NOTICE([using static cairo])
+       CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
+       CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
+    else
+       CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
+       CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
+    fi
 
     CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
     LIBS="${LIBS} ${CAIRO_LIBS}"
@@ -138,23 +133,16 @@ int main(void) {
       else
          xmodlist="${modlist}"
       fi
-      ## Because cairo is built as a single library which succeed
-      ## currently makes no difference to CPPFLAGS nor LIBS
       CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
       CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
-      case "${host_os}" in
-        darwin*)
-          ## This is for static macOS build
-	  ## FIXME: doing that unconditionally is really not a good idea
-          ## if cairo was built with xlib support then X11 libs will be linked.
+      if test "x$use_static_cairo" = xyes; then
+      	  AC_MSG_NOTICE([using static cairo])
           CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
           CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
-          ;;
-        *)
+      else
           CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
           CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
-          ;;
-      esac
+      fi
 
       CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS} ${CAIROX11_CPPFLAGS}"
       LIBS="${LIBS} ${CAIRO_LIBS}"

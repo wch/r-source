@@ -270,8 +270,9 @@
       detected by \command{configure}, when the file-based Cairo devices
       will be available but not \code{X11(type = "cairo")}.
 
-      Pango installations using static libraries on macOS are more
-      likely to be detected.
+      \item There is a new option \options{--with-static-cairo} which is
+      the default on macOS.  This should be used when only static cairo
+      (and where relevant, Pango) libraries are available.
     }
   }
 

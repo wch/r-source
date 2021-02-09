@@ -3370,10 +3370,10 @@ with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
 The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()}
-and @code{tiff()} graphics devices uses the @code{cairo} and
-(optionally) @code{Pango} libraries.  Cairo version 1.2.0 or later is
-required.  Pango needs to be at least version 1.10, and 1.12 is the
-earliest version we have tested.  (For Fedora users we believe the
+and @code{tiff()} graphics devices uses the @code{cairo} and (optionally
+but much preferred) @code{Pango} libraries.  Cairo version 1.2.0 or
+later is required.  Pango needs to be at least version 1.10, and 1.12 is
+the earliest version we have tested.  (For Fedora users we believe the
 @code{pango-devel} RPM and its dependencies suffice.)  @R{} checks for
 @command{pkg-config}, and uses that to check first that the
 @samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
@@ -3386,9 +3386,10 @@ environment. There is a compatible re-implementation of
 @command{pkg-config} called @command{pkgconf} which can be used in the
 unlikely event that is installed but not linked to
 @command{pkg-config}.}, and are likely to fail if @code{cairo} was built
-statically (unusual except on macOS where there is a workaround in
-@command{configure}).  Most systems with @code{Gtk+} 2.8 or later
-installed will have suitable libraries.
+statically unless @command{configure} option
+@option{--with-static-cairo} is used (it is the default on macOS).  Most
+systems with @code{Gtk+} 2.8 or later installed will have suitable
+libraries.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
@@ -5065,8 +5066,8 @@ library (see @code{?.libPaths}).
 Support for @code{cairo} (without @code{Pango}) will be enabled if
 @code{pkg-config}@footnote{available from
 @uref{https://mac.R-project.org/libs-4/} as @code{pkgconfig}.} and
-XQuartz are available.  Make sure XQuartz's @code{pkg-config} files are
-found first on the configuration path: for example by setting
+XQuartz 2.7.x are available.  Make sure XQuartz's @code{pkg-config}
+files are found first on the configuration path: for example by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
@@ -5134,6 +5135,11 @@ downloading and unpacking components @code{cairo}, @code{fontconfig},
 @code{freetype}, @code{pixman} and @code{zlib-system-stub} and not
 having @file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH} (or at
 least, not before @file{/usr/local/lib/pkgconfig}).
+
+If you have another build@footnote{For example, some Hombrew
+distributions.} of @code{cairo} with dynamic libraries, you can add
+option @option{--without-static-cairo} to the @command{configure} call
+(it probably would work anyway).
 
 As from Command Line Tools version 12,
 @option{-Wno-implicit-function-declaration} needs to be included in

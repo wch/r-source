@@ -526,6 +526,10 @@ AC_ARG_WITH([internal-wcwidth],
 [use_internal_wcwidth=${withval}],
 [use_internal_wcwidth=yes])
 
+AC_ARG_WITH([internal-tzcode],
+[AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no, yes on macOS@:>@])],
+[use_internal_tzcode=${withval}],
+[use_internal_tzcode=default])
 
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
@@ -557,6 +561,21 @@ AC_ARG_ENABLE([byte-compiled-packages],
 [want_byte_compiled_packages=yes])
 AM_CONDITIONAL(BYTE_COMPILE_PACKAGES,
                [test "x${want_byte_compiled_packages}" = xyes])
+
+AC_ARG_WITH([static-cairo],
+[AS_HELP_STRING([--with-static-cairo],[allow for the use of static cairo libraries @<:@no, yes on macOS@:>@])],
+[use_static_cairo=${withval}],
+[use_static_cairo=default])
+if test "x$use_static_cairo" = xdefault; then
+  case "${host_os}" in
+    darwin*)
+      use_static_cairo=yes
+      ;;
+    *)
+      use_static_cairo=no
+      ;;
+  esac
+fi
 
 ### ** Precious variables.
 
