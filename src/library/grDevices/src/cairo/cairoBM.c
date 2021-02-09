@@ -42,8 +42,6 @@
 #define HAVE_CAIRO_SVG 1
 #define HAVE_CAIRO_PDF 1
 #define HAVE_CAIRO_PS 1
-/* and if not using pango, this selects fontconfig */
-//#define USE_FC 1
 
 # define raise our_raise
 # include <Defn.h>

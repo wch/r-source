@@ -189,7 +189,11 @@
       build \R with Cairo support for those but not for \code{X11()}.
 
       \item There is optional support for tracing the progress of
-    \code{loadNamespace} --- see its help.
+      \code{loadNamespace} --- see its help.
+
+      \item \code{grSoftVersion()} now reports the versions of FreeType
+      and FontConfig if they are used directly (not \emph{via} Pango),
+      as is most commonly done on macOS.
     }
   }
 
@@ -267,12 +271,17 @@
       cover the Basic Multilingual Plane.
 
       \item Cairo installations without X11 are more likely to be
-      detected by \command{configure}, when the file-based Cairo devices
-      will be available but not \code{X11(type = "cairo")}.
+      detected by \command{configure}, when the file-based Cairo
+      graphics devices will be available but not \code{X11(type =
+      "cairo")}.
 
-      \item There is a new option \option{--with-static-cairo} which is
-      the default on macOS.  This should be used when only static cairo
-      (and where relevant, Pango) libraries are available.
+      \item There is a new \command{configure} option
+      \option{--with-static-cairo} which is the default on macOS.  This
+      should be used when only static cairo (and where relevant, Pango)
+      libraries are available.
+
+      \item Cairo-based graphics devices on platforms without Pango but
+      with freetype/fontconfig will make use of the latter for font selection.
     }
   }
 

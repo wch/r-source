@@ -93,8 +93,9 @@ X11.options(\dots, reset = FALSE)
   \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"},
     \code{"nbcairo"} or \code{"dbcairo"}.  Only the first will be
     available if the system was compiled without support for
-    cairographics.  The default is \code{"cairo"} where available except
-    on macOS, otherwise \code{"Xlib"}.}
+    cairographics.  The default is \code{"cairo"} where \R was built
+    using \code{pangocairo} (so not usually on macOS), otherwise
+    \code{"Xlib"}.}
 
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}

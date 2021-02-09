@@ -1305,23 +1305,36 @@ PangoCairo_Text(double x, double y,
    No diagnostics that glyphs are present, no kerning. 
  */
 
-#ifdef __APPLE__
-# define USE_FC 1
-#endif
-
 // CAIRO_HAS_FT_FONT is defined (or not) in cairo-features.h
-#if CAIRO_HAS_FT_FONT && USE_FC
-// The branch used on macOS
+#if CAIRO_HAS_FT_FONT
+/* 
+   The branch used on macOS and other-Unix alikes without pango but
+   with freetype2/fontconfig (FT implies FC in Cairo).
+*/
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include <fontconfig/fontconfig.h>
 
 SEXP in_CairoFT(void) 
 {
-    return mkString("yes");
+//    return mkString("yes");
+
+    FT_Library ft;
+    FT_Error err = FT_Init_FreeType(&ft);
+    if (err) return mkString("unknown");
+    FT_Int major, minor, patch;
+    FT_Library_Version(ft, &major, &minor, &patch);
+    char buf[100];
+    snprintf(buf, 100, "%d.%d.%d/%d.%d.%d",
+	     major, minor, patch,
+	     FC_MAJOR, FC_MINOR, FC_REVISION);
+    return mkString(buf);
 }
 
-/* FT implies FC in Cairo */
 #include <cairo-ft.h>
 
-/* cairo font cache - to prevent unnecessary font look ups */
+/* cairo font cache - to prevent unnecessary font lookups */
 typedef struct Rc_font_cache_s {
     const char *family;
     int face;
@@ -1489,8 +1502,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 }
 
 #else
-// Branch without using FreeType/FontConfig
-// This is the branch used on Windows
+// Branch without using FreeType/FontConfig, including on Windows
 
 SEXP in_CairoFT(void) 
 {
