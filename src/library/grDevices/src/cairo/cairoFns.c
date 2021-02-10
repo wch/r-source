@@ -747,7 +747,7 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 				 (const char *) file, index, &face) ||
 		    (index && !FT_New_Face(ft_library, 
 					   (const char *) file, 0, &face))) {
-		    FcFontSetDestroy (fs);
+//		    FcFontSetDestroy (fs);
 
 #ifdef __APPLE__
 		    /* FreeType is broken on macOS in that face index
