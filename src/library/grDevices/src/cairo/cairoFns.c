@@ -1303,9 +1303,13 @@ PangoCairo_Text(double x, double y,
    http://cairographics.org/manual/cairo-text.html
 
    No diagnostics that glyphs are present, no kerning. 
- */
 
-// CAIRO_HAS_FT_FONT is defined (or not) in cairo-features.h
+   CAIRO_HAS_FT_FONT is defined (or not) in cairo-features.h included
+   by cairo.h.  Windows builds of cairo often have it but the include
+   paths in Windows R are not set up to include freetype2, needed by
+   cairo-ft.h and ft2build.h.
+*/
+
 #if CAIRO_HAS_FT_FONT && !defined(_WIN32)
 /* 
    The branch used on macOS and other-Unix alikes without pango but
@@ -1313,7 +1317,7 @@ PangoCairo_Text(double x, double y,
 */
 
 #include <cairo-ft.h>
-#include <ft2build.h>
+#include <ft2build.h> // currently included by cairo-ft.h
 #include FT_FREETYPE_H
 #include <fontconfig/fontconfig.h>
 
@@ -1411,9 +1415,9 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 
     /* then try to load the font into FT */
     if (fs) {
-	int j = 0, index = 0;
-	while (j < fs->nfont) {
+	for (int j = 0; j < fs->nfont; j++) {
 	    /* find the font file + face index and use it with FreeType */
+	    int index = 0;
 	    if (FcPatternGetString (fs->fonts[j], FC_FILE, 0, &file)
 		== FcResultMatch &&
 		FcPatternGetInteger(fs->fonts[j], FC_INDEX, 0, &index)
@@ -1429,7 +1433,6 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 				 (const char *) file, index, &face) ||
 		    (index && !FT_New_Face(ft_library, 
 					   (const char *) file, 0, &face))) {
-		    FcFontSetDestroy (fs);
 
 #ifdef __APPLE__
 		    /* FreeType is broken on macOS in that face index
@@ -1439,28 +1442,27 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 		    if (style == 2) style = 1; else if (style == 1) style = 2;
 		    if (face->num_faces > 1 && 
 			(face->style_flags & 3) != style) {
-			FT_Face alt_face;
-			int i = 0;
-			while (i < face->num_faces)
+			for (int i = 0; i < face->num_faces; i++) {
+			    FT_Face alt_face;
 			    if (!FT_New_Face(ft_library, 
 					     (const char *) file, 
-					     i++, &alt_face)) {
+					     i, &alt_face)) {
 				if ((alt_face->style_flags & 3) == style) {
 				    FT_Done_Face(face);
 				    face = alt_face;
 				    break;
 				} else FT_Done_Face(alt_face);
 			    }
+			}
 		    }
 #endif
 
 		    return cairo_ft_font_face_create_for_ft_face(face, FT_LOAD_DEFAULT);
 		}
 	    }
-	    j++;
-	}
+	} // end of for loop
 	FcFontSetDestroy (fs);
-    }
+    } // if fs
     return NULL;
 }
 
