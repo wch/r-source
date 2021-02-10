@@ -1306,12 +1306,13 @@ PangoCairo_Text(double x, double y,
  */
 
 // CAIRO_HAS_FT_FONT is defined (or not) in cairo-features.h
-#if CAIRO_HAS_FT_FONT
+#if CAIRO_HAS_FT_FONT && !defined(_WIN32)
 /* 
    The branch used on macOS and other-Unix alikes without pango but
    with freetype2/fontconfig (FT implies FC in Cairo).
 */
 
+#include <cairo-ft.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <fontconfig/fontconfig.h>
@@ -1331,8 +1332,6 @@ SEXP in_CairoFT(void)
 	     FC_MAJOR, FC_MINOR, FC_REVISION);
     return mkString(buf);
 }
-
-#include <cairo-ft.h>
 
 /* cairo font cache - to prevent unnecessary font lookups */
 typedef struct Rc_font_cache_s {

@@ -19,9 +19,9 @@ grSoftVersion()
   \item{cairo}{the version of cairographics in use, or \code{""} if
     cairographics is not available.}
   \item{cairoFT}{the FreeType/FontConfig versions if cairographics is
-    using the FreeType and FontConfig libraries directly (not \emph{via}
-    pango); otherwise, \code{""}.  Earlier versions of \R returned
-    \code{"yes"} rather than the version.}
+    using those libraries directly (not \emph{via} pango); otherwise,
+    \code{""}.  Earlier versions of \R returned \code{"yes"} rather than
+    the versions.  The FontConfig version is determined when \R is built.}
   \item{pango}{the version of pango in use, or \code{""} if
     pango is not available.}
 
