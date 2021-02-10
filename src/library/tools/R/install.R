@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -1413,9 +1413,6 @@ if(FALSE) {
 		if (!thislazy && resave_data) {
 		    paths <- Sys.glob(c(file.path(is, "*.rda"),
 					file.path(is, "*.RData")))
-		    if (pkg_name == "cyclones")
-			paths <-
-			    c(paths, Sys.glob(file.path(is, "*.Rdata")))
 		    if (length(paths)) {
 			starsmsg(paste0(stars, "*"), "resaving rda files")
 			resaveRdaFiles(paths, compress = "auto")
