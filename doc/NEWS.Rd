@@ -567,6 +567,15 @@
       cairo-based graphics devices on macOS has been repaired:
       previously italic and bold italic text were frequently rendered as
       plain text.
+
+      \item \code{add_datalist(*, force = TRUE)} (from package
+      \pkg{tools}) now actually updates an existing \file{data/datalist}
+      file for new content, thanks to a report and patch by Sebastian
+      Meyer in \PR{18048}.
+
+      \item \code{cut.Date()} and \code{cut.POSIXt()} could produce
+      an empty last interval for \code{breaks = "months"} or
+      \code{breaks = "years"}.  Reported as \PR{18053} by Christopher Carbone.      
     }
   }
 }
