@@ -217,7 +217,7 @@ setRlibs <-
             sug
         }
         if(tests) ## we need the test-suite package available
-            c(sug, intersect(names(pi$Suggests), c("RUnit", "testthat")))
+            c(sug, intersect(names(pi$Suggests), c("RUnit", "testthat", "tinytest")))
         else sug
     }
     deps <- unique(c(names(pi$Depends), names(pi$Imports),
