@@ -118,10 +118,12 @@ capabilities(what = NULL,
     \code{\link{download.file}} and \code{\link{url}}.   As from \R
     3.3.0 always true for Unix-alikes, and true for CRAN Windows builds.}
 }
-\seealso{\code{\link{.Platform}} and \code{\link{extSoftVersion}} (and
-    links there) for availability of capabilities \emph{external} to \R but
-    used from \R functions.
-  }
+\seealso{
+  \code{\link{.Platform}}, \code{\link{extSoftVersion}}, and
+  \code{\link{grSoftVersion}} (and links there)
+  for availability of capabilities \emph{external} to \R but
+  used from \R functions.
+}
 \examples{
 capabilities()
 
