@@ -4826,7 +4826,7 @@ Non-ASCII filenames can also cause problems (particularly in non-UTF-8
 locales).
 
 @item
-Take care in namimg @LaTeX{} macros (also known as `commands') in
+Take care in naming @LaTeX{} macros (also known as `commands') in
 vignette sources: if these are also defined in a future version of one
 of the @LaTeX{} packages used there will be a fatal error.  One instance
 in 2021 was package @samp{hyperref} newly defining @samp{\C}, @samp{\F},

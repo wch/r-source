@@ -5136,7 +5136,7 @@ downloading and unpacking components @code{cairo}, @code{fontconfig},
 having @file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH} (or at
 least, not before @file{/usr/local/lib/pkgconfig}).
 
-If you have another build@footnote{For example, some Hombrew
+If you have another build@footnote{For example, some Homebrew
 distributions.} of @code{cairo} with dynamic libraries, you can add
 option @option{--without-static-cairo} to the @command{configure} call
 (it probably would work anyway).
