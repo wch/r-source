@@ -563,10 +563,9 @@
       longer crash \R. This limit has been increased to 100,000 bytes
       (\PR{18001}).
 
-      \item The workaround for FreeType giving incorrect font faces with
-      cairo-based graphics devices on macOS has been repaired:
-      previously italic and bold italic text were frequently rendered as
-      plain text.
+      \item There is a further workaround for FreeType giving
+      incorrect italic font faces with cairo-based graphics devices on
+      macOS.
 
       \item \code{add_datalist(*, force = TRUE)} (from package
       \pkg{tools}) now actually updates an existing \file{data/datalist}

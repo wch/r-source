@@ -3366,30 +3366,34 @@ licensed under GPL (which version(s) of GPL depends on the
 
 The ability to use translated messages makes use of @code{gettext} and
 most likely needs @acronym{GNU} @code{gettext}: you do need this to work
-with new translations, but otherwise the version contained in the R
-sources will be used if no suitable external @code{gettext} is found.
+with new translations, but otherwise the version of the @code{gettext}
+runtime contained in the R sources will be used if no suitable external
+@code{gettext} is found.
 
 The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()}
-and @code{tiff()} graphics devices uses the @code{cairo} and (optionally
-but much preferred) @code{Pango} libraries.  Cairo version 1.2.0 or
-later is required.  Pango needs to be at least version 1.10, and 1.12 is
-the earliest version we have tested.  (For Fedora users we believe the
-@code{pango-devel} RPM and its dependencies suffice.)  @R{} checks for
+and @code{tiff()} graphics devices uses the Cairo and Pango libraries.
+Cairo version 1.2.0 or later and Pango version 1.10 or later are
+required (but much later versions are current).  @R{} checks for
 @command{pkg-config}, and uses that to check first that the
-@samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
-additional flags are needed for the @samp{cairo-xlib} package, then if
-suitable code can be compiled.  These tests will fail if
+@samp{pangocairo} package is installed (and if not, @samp{cairo}) then
+if suitable code can be compiled.  These tests will fail if
 @command{pkg-config} is not installed@footnote{If necessary the path to
 @command{pkg-config} can be specified by setting @env{PKG_CONFIG} in
 @file{config.site}, on the @command{configure} command line or in the
 environment. There is a compatible re-implementation of
 @command{pkg-config} called @command{pkgconf} which can be used in the
 unlikely event that is installed but not linked to
-@command{pkg-config}.}, and are likely to fail if @code{cairo} was built
+@command{pkg-config}.}, and might fail if @code{cairo} was built
 statically unless @command{configure} option
 @option{--with-static-cairo} is used (it is the default on macOS).  Most
 systems with @code{Gtk+} 2.8 or later installed will have suitable
-libraries.
+libraries: for Fedora users the @code{pango-devel} RPM and its
+dependencies suffice.
+@c arm64 Homebrew did in early 2021.
+It is possible (but very unusual on a platform with X11) to build Cairo
+without its @code{cairo-xlib} module in which case @code{X11(type =
+"cairo")} will not be available.  Pango is optional but highly desirable
+as it is likely to give much better text rendering, including kerning.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
@@ -3427,10 +3431,9 @@ such as @code{jpeg}, @code{libz}, @code{lzma}, @code{webp} @code{jbig}
 and @code{jpeg12}, none of which is required for the @code{tiff()}
 devices but may need to be present to link the library (usually only an
 issue for static linking).  @command{pkg-config} can tell you what other
-libraries are required by for example @command{pkg-config
---print-requires libpng} or, for static linking, @command{pkg-config
---print-requires --print-requires-private fontconfig} (these are not
-recursive).
+libraries are required for linking, for example by @code{pkg-config
+libtiff-4 --static --libs}.
+@c --print-requires and --print-requires-private are not recursive.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest sources are in the @command{git} repository
