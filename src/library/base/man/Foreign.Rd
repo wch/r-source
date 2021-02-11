@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Foreign}
@@ -37,7 +37,7 @@
 }
 
 \details{
-  These functions can be used to make calls to compiled C and Fortran 77
+  These functions can be used to make calls to compiled C and Fortran
   code.  Later interfaces are \code{\link{.Call}} and
   \code{\link{.External}} which are more flexible and have better
   performance.
@@ -132,7 +132,7 @@
   Fortran names containing underscores.
 
   Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
-  work if the Fortran 9x compiler used differs from the Fortran 77
+  work if the Fortran 9x compiler used differs from the Fortran
   compiler used when configuring \R, especially if the subroutine name
   is not lower-case or includes an underscore.  It is possible to use
   \code{.C} and do any necessary symbol-name translation yourself.
