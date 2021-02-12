@@ -1115,6 +1115,7 @@ static char * determine_domain_gettext(SEXP domain_, SEXP rho)
 	/* First we try to see if sysparent leads us to a namespace, because gettext
 	   might have a different environment due to being called from (in?) a closure.
 	   If that fails we try cloenv, as the original code did. */
+	/* FIXME: should we only do this search when cptr->callflag & CTXT_FUNCTION? */
 	SEXP ns = R_NilValue;
 	for(size_t attempt = 0; attempt < 2 && isNull(ns); attempt++) {
 	    rho = (cptr == NULL) ?
