@@ -39,7 +39,7 @@ typedef enum {
 #include <stdio.h>
 
 #ifdef HAVE_PANGOCAIRO
-#  include <pango/pango.h>
+#  include <pango/pango.h> //included by pangocairo.h
 #  include <pango/pangocairo.h>
 #else
 #  include <cairo.h>
