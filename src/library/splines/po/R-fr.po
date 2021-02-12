@@ -5,89 +5,84 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2013-03-18 22:10+0100\n"
+"PO-Revision-Date: 2021-02-10 17:51+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "must have at least 'ord' knots"
 msgstr "il faut au moins 'ord' noeuds"
 
-#, fuzzy
 msgid "length of 'derivs' is larger than length of 'x'"
-msgstr "la longueur de 'derivs' doit correspondre ‡ la longueur de 'x'"
+msgstr "la longueur de 'derivs' est plus grande que la longueur de 'x'"
 
 msgid "empty 'derivs'"
-msgstr ""
+msgstr "'derivs' vide"
 
 msgid "'ord' must be positive integer, at most the number of knots"
-msgstr "'ord' doit Ítre un entier positif, au nombre de noeuds au mieux"
+msgstr "'ord' doit √™tre un entier positif, au nombre de noeuds au mieux"
 
 msgid "need at least %s (=%d) knots"
 msgstr "il faut au moins %s (=%d) noeuds"
 
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr ""
-"les donnÈes 'x' doivent Ítre dans la plage %g to %g ‡ moins de spÈcifier '%s'"
+msgstr "les donn√©es 'x' doivent √™tre dans la plage %g to %g √† moins de sp√©cifier '%s'"
 
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr "%s a besoin du package 'Matrix' installÈ correctement"
+msgstr "%s a besoin du package 'Matrix' install√© correctement"
 
 msgid "values of 'x' must be distinct"
-msgstr "les valeurs de 'x' doivent Ítre distinctes"
+msgstr "les valeurs de 'x' doivent √™tre distinctes"
 
-#, fuzzy
 msgid "must have at least 'ord'=%d points"
-msgstr "il faut au moins 'ord' noeuds"
+msgstr "il faut au moins 'ord'=%d points"
 
 msgid "'formula' must be of the form \"y ~ x\""
-msgstr "'formula' doit Ítre de la forme \"y ~ x \""
+msgstr "'formula' doit √™tre de la forme \"y ~ x \""
 
 msgid "lengths of 'x' and 'y' must match"
 msgstr "les longueurs de 'x' et 'y' doivent correspondre"
 
 msgid "values of 'x' must be strictly increasing"
-msgstr "les valeurs de 'x' doivent Ítre strictement croissantes"
+msgstr "les valeurs de 'x' doivent √™tre strictement croissantes"
 
 msgid "'ord' must be >= 2"
-msgstr "'ord' doit Ítre >= 2"
+msgstr "'ord' doit √™tre >= 2"
 
 msgid "the range of 'x' values exceeds one period"
-msgstr "la plage de 'x' est plus large qu'une pÈriode"
+msgstr "la plage de 'x' est plus large qu'une p√©riode"
 
 msgid "knot positions must be non-decreasing"
-msgstr "les positions des noeuds ne peut Ítre dÈcroissante"
+msgstr "les positions des noeuds ne peut √™tre d√©croissante"
 
 msgid "lengths of 'x' and 'y' must be the same"
-msgstr "les longueurs de 'x' et 'y' doivent Ítre les mÍmes"
+msgstr "les longueurs de 'x' et 'y' doivent √™tre les m√™mes"
 
 msgid "'deriv' must be between 0 and %d"
-msgstr "'deriv' doit Ítre compris entre 0 et %d"
+msgstr "'deriv' doit √™tre compris entre 0 et %d"
 
 msgid "knot positions must be strictly increasing"
-msgstr "les positions des noeuds doivent Ítre strictement croissantes"
+msgstr "les positions des noeuds doivent √™tre strictement croissantes"
 
 msgid "currently implemented only for cubic splines"
-msgstr ""
+msgstr "impl√©ment√© uniquement pour les salines cubiques pour l‚Äôinstant"
 
 msgid "spline must be monotone"
-msgstr "la courbe spline doit Ítre monotone"
+msgstr "la courbe spline doit √™tre monotone"
 
 msgid "'degree' must be integer >= 1"
-msgstr "'degree' doit Ítre un entier >= 1"
+msgstr "'degree' doit √™tre un entier >= 1"
 
 msgid "'df' was too small; have used %d"
-msgstr "'df' Ètait trop petit ; nous avons utilisÈ %d"
+msgstr "'df' √©tait trop petit ; nous avons utilis√© %d"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
-msgstr ""
-"quelques valeurs de 'x' au del‡ des limites de noeuds peut causer des bases "
-"mal conditionnÈes"
+msgstr "quelques valeurs de 'x' au del√† des limites de noeuds peut causer des bases mal conditionn√©es"

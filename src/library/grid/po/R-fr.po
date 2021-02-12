@@ -5,54 +5,51 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2020-08-13 10:30\n"
-"PO-Revision-Date: 2014-03-17 10:52+0100\n"
+"PO-Revision-Date: 2021-02-10 17:42+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr "position 'at' incorrecte dans 'axis'"
 
 msgid "invalid to specify axis labels when 'at' is NULL"
-msgstr ""
-"il n'est pas possible de spécifier les étiquettes des axes quand 'at' est "
-"NULL"
+msgstr "il n'est pas possible de spÃ©cifier les Ã©tiquettes des axes quand 'at' est NULL"
 
 msgid "'labels' and 'at' locations must have same length"
-msgstr "'labels' et 'at' doivent être de même longueur"
+msgstr "'labels' et 'at' doivent Ãªtre de mÃªme longueur"
 
 msgid "logical 'label' supplied of length 0"
 msgstr "la valeur logique 'label' est de longueur nulle"
 
 msgid "end points must not be identical"
-msgstr "les points extrêmes ne peuvent être identiques"
+msgstr "les points extrÃªmes ne peuvent Ãªtre identiques"
 
 msgid "'x1', 'y1', 'x2', and 'y2' must be units"
-msgstr "'x1', 'y1', 'x2' et 'y2' doivent être des unités ('units')"
+msgstr "'x1', 'y1', 'x2' et 'y2' doivent Ãªtre des unitÃ©s ('units')"
 
 msgid "'shape' must be between -1 and 1"
-msgstr "'shape' doit être compris entre -1 et 1"
+msgstr "'shape' doit Ãªtre compris entre -1 et 1"
 
 msgid "'squareShape' must be between -1 and 1"
-msgstr "'squareShape' doit être compris entre -1 et 1"
+msgstr "'squareShape' doit Ãªtre compris entre -1 et 1"
 
 msgid "'arrow' must be an arrow object or NULL"
-msgstr "'arrow' doit être un objet 'arrow' ou NULL"
+msgstr "'arrow' doit Ãªtre un objet 'arrow' ou NULL"
 
 msgid "how did we get here?"
-msgstr "comment en sommes-nous arrivés ici ?"
+msgstr "comment en sommes-nous arrivÃ©s ici ?"
 
 msgid "must start new page if showing leaves separately"
-msgstr ""
-"il faut démarrer une nouvelle page pour afficher les feuilles séparément"
+msgstr "il faut dÃ©marrer une nouvelle page pour afficher les feuilles sÃ©parÃ©ment"
 
 msgid "invalid 'edit' information"
 msgstr "information 'edit' incorrecte"
@@ -67,35 +64,25 @@ msgid "invalid 'grob'"
 msgstr "'grob' incorrect"
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr ""
-"'row' et/ou 'col' incorrects (la cellule n'existe pas dans la grille de mise "
-"en page)"
+msgstr "'row' et/ou 'col' incorrects (la cellule n'existe pas dans la grille de mise en page)"
 
 msgid "'col' can only be a range of existing columns"
-msgstr "'col' ne peut qu'être une plage de colonnes existantes"
+msgstr "'col' ne peut qu'Ãªtre une plage de colonnes existantes"
 
 msgid "invalid 'col' specification"
-msgstr "spécification incorrecte de 'col'"
+msgstr "spÃ©cification incorrecte de 'col'"
 
 msgid "'row' can only be a range of existing rows"
-msgstr "'row' ne peut qu'être une plage de lignes existantes"
+msgstr "'row' ne peut qu'Ãªtre une plage de lignes existantes"
 
 msgid "invalid 'row' specification"
 msgstr "specification incorrecte de 'row'"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"il n'est pas possible de spécifier plus d'un 'side=[\"left\", \"right\"]', "
-"'col', 'col.before', ou 'col.after'"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "il n'est pas possible de spÃ©cifier plus d'un 'side=[\"left\", \"right\"]', 'col', 'col.before', ou 'col.after'"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"il faut spécifier un argument parmi 'side=[\"top\", \"bottom\"]', 'row', "
-"'row.before', ou 'row.after'"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "il faut spÃ©cifier un argument parmi 'side=[\"top\", \"bottom\"]', 'row', 'row.before', ou 'row.after'"
 
 msgid "invalid 'n'"
 msgstr "'n' incorrect"
@@ -104,10 +91,10 @@ msgid "invalid 'f'"
 msgstr "'f' incorrect"
 
 msgid "'gpar' element '%s' must not be length 0"
-msgstr "l'élément '%s' de 'gpar' doit être de longueur unitaire"
+msgstr "l'Ã©lÃ©ment '%s' de 'gpar' doit Ãªtre de longueur unitaire"
 
 msgid "mixture of missing and non-missing values for %s"
-msgstr ""
+msgstr "mÃ©lange de valeurs et de valeurs manquantes pour %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' n'existe plus"
@@ -119,51 +106,40 @@ msgid "invalid 'alpha' value"
 msgstr "valeur 'alpha' incorrecte"
 
 msgid "must specify only one of 'font' and 'fontface'"
-msgstr "il faut spécifier soit 'font', soit 'fontface'"
+msgstr "il faut spÃ©cifier soit 'font', soit 'fontface'"
 
 msgid "invalid fontface"
-msgstr "police de caractères incorrecte"
+msgstr "police de caractÃ¨res incorrecte"
 
 msgid "argument must be a 'gpar' object"
-msgstr "l'argument doit être un objet 'gpar'"
+msgstr "l'argument doit Ãªtre un objet 'gpar'"
 
 msgid "must specify only valid 'gpar' names"
-msgstr "Sseuls les noms valides de 'gpar' sont autorisés"
+msgstr "seuls les noms valides de 'gpar' sont autorisÃ©s"
 
 msgid "invalid display list element"
-msgstr "élément de liste d'affichage (display list) incorrect"
+msgstr "Ã©lÃ©ment de liste d'affichage (display list) incorrect"
 
-#, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
-msgstr ""
-"un ou plusieurs grobs sont superposés (grab ne sera PAS fidèle ; essayez "
-"'wrap=TRUE')"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr "un ou plusieurs grobs sont superposÃ©s (grab ne sera PAS fidÃ¨le ; essayez 'wrap.grobs = TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
-msgstr "vue superposée (il se peut que grab ne soit pas fidèle)"
+msgstr "vue superposÃ©e (il se peut que grab ne soit pas fidÃ¨le)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob a switché la vue et ne l'a pas restaurée (il se peut que grab ne soit "
-"pas fidèle)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob a switchÃ© la vue et ne l'a pas restaurÃ©e (il se peut que grab ne soit pas fidÃ¨le)"
 
 msgid "only valid to push viewports"
-msgstr "les vues peuvent seulement être repoussées"
+msgstr "les vues peuvent seulement Ãªtre repoussÃ©es"
 
 msgid "must specify at least one viewport"
-msgstr "il faut sélectionner au moins une vue"
+msgstr "il faut sÃ©lectionner au moins une vue"
 
 msgid "Down viewport failed to record on display list"
-msgstr ""
-"Erruer lors de l'enregistrement de la zone active (down viewport) dans la "
-"liste d'affichage"
+msgstr "Erruer lors de l'enregistrement de la zone active (down viewport) dans la liste d'affichage"
 
 msgid "Down viewport incorrectly recorded on display list"
-msgstr ""
-"zone active (down viewport) incorrecte insérée dans la liste d'affichage"
+msgstr "Zone active (down viewport) incorrecte insÃ©rÃ©e dans la liste d'affichage"
 
 msgid "must pop at least one viewport"
 msgstr "il faut restaurer au moins une vue"
@@ -172,10 +148,10 @@ msgid "must navigate up at least one viewport"
 msgstr "il faut naviguer dans au moins une vue"
 
 msgid "Invalid number of generations"
-msgstr "Nombre de générations incorrect"
+msgstr "Nombre de gÃ©nÃ©rations incorrect"
 
 msgid "invalid object inserted on the display list"
-msgstr "objet incorrect inséré dans la liste d'affichage"
+msgstr "objet incorrect insÃ©rÃ© dans la liste d'affichage"
 
 msgid "invalid modification of the display list"
 msgstr "modification incorrecte dans la liste d'affichage (display list)"
@@ -205,24 +181,22 @@ msgid "only 'grobs' allowed in \"gList\""
 msgstr "seuls des 'grob's sont permis dans \"gList\""
 
 msgid "invalid element to add to \"gList\""
-msgstr "élément incorrect à ajouter à \"gList\""
+msgstr "Ã©lÃ©ment incorrect Ã  ajouter Ã  \"gList\""
 
 msgid "can only set 'children' for a \"gTree\""
-msgstr "il est seulement possible de définir 'children' dans l'objet \"gTree\""
+msgstr "il est seulement possible de dÃ©finir 'children' dans l'objet \"gTree\""
 
 msgid "'children' must be a \"gList\""
-msgstr "'children' doit être une \"gList\""
+msgstr "'children' doit Ãªtre une \"gList\""
 
 msgid "it is only valid to get 'children' from a \"gTree\""
-msgstr ""
-"seule la récupération d'un objet 'children' à partir d'un objet \"gTree\" "
-"est autorisée"
+msgstr "seule la rÃ©cupÃ©ration d'un objet 'children' Ã  partir d'un objet \"gTree\" est autorisÃ©e"
 
 msgid "invalid \"gTree\" class"
 msgstr "classe \"gTree\" incorrecte"
 
 msgid "'allDevices' not yet implemented"
-msgstr "'allDevices' n'est pas encore implémenté"
+msgstr "'allDevices' n'est pas encore implÃ©mentÃ©"
 
 msgid "invalid 'gPath'"
 msgstr "'gPath' incorrect"
@@ -231,51 +205,43 @@ msgid "invalid 'grep' value"
 msgstr "valeur 'grep' incorrecte"
 
 msgid "it is only valid to get a child from a \"gTree\""
-msgstr ""
-"seule la récupération d'un noeud enfant est possible depuis un objet \"gTree"
-"\""
+msgstr "seule la rÃ©cupÃ©ration d'un noeud enfant est possible depuis un objet \"gTree\""
 
 msgid "'gPath' does not specify a valid child"
-msgstr "'gPath' ne spécifie pas un chemin de noeud enfant valide"
+msgstr "'gPath' ne spÃ©cifie pas un chemin de noeud enfant valide"
 
 msgid "it is only valid to set a child of a \"gTree\""
-msgstr "seul l'attribution d'un noeud enfant est permise à un objet \"gTree\""
+msgstr "seul l'attribution d'un noeud enfant est permise Ã  un objet \"gTree\""
 
 msgid "it is only valid to set a 'grob' as child of a \"gTree\""
-msgstr ""
-"il faut utiliser un objet 'grob' pour définir un noeud enfant d'un objet "
-"\"gTree\""
+msgstr "il faut utiliser un objet 'grob' pour dÃ©finir un noeud enfant d'un objet \"gTree\""
 
 msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
 msgstr "Le nouveau nom de 'grob' (%s) n'est pas compatible avec 'gPath' (%s)"
 
 msgid "it is only valid to add a 'grob' to a \"gTree\""
-msgstr "seul un 'grob' peut être ajouté à un objet \"gTree\""
+msgstr "seul un 'grob' peut Ãªtre ajoutÃ© Ã  un objet \"gTree\""
 
 msgid "it is only valid to add a child to a \"gTree\""
-msgstr "seul l'ajout d'un noeud enfant est autorisé pour un objet \"gTree\""
+msgstr "seul l'ajout d'un noeud enfant est autorisÃ© pour un objet \"gTree\""
 
 msgid "'gPath' (%s) not found"
 msgstr "'gPath' (%s) introuvable"
 
 msgid "it is only valid to remove a child from a \"gTree\""
-msgstr ""
-"seule l'élimination d'un noeud enfant est autorisée dans un objet \"gTree\""
+msgstr "seule l'Ã©limination d'un noeud enfant est autorisÃ©e dans un objet \"gTree\""
 
 msgid "it is only valid to edit a child of a \"gTree\""
-msgstr ""
-"seule l'édition d'un noeud enfant est autorisée dans un objet \"gTree\""
+msgstr "seule l'Ã©dition d'un noeud enfant est autorisÃ©e dans un objet \"gTree\""
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr ""
-"il n'est pas permis d'éditer directement les slots 'children' ou "
-"'childrenOrder'"
+msgstr "il n'est pas permis d'Ã©diter directement les slots 'children' ou 'childrenOrder'"
 
 msgid "invalid 'result'"
 msgstr "'result' incorrect"
 
 msgid "the new 'grob' must have the same name as the old 'grob'"
-msgstr "le nouveau 'grob' doit avoir le même nom que l'ancien 'grob'"
+msgstr "le nouveau 'grob' doit avoir le mÃªme nom que l'ancien 'grob'"
 
 msgid "slot '%s' not found"
 msgstr "slot '%s' introuvable"
@@ -293,32 +259,31 @@ msgid "Invalid revert target"
 msgstr "Cible incorrecte pour 'revert'"
 
 msgid "can only reorder 'children' for a \"gTree\""
-msgstr ""
-"il est seulement possible de définir 'children' dans  un objet \"gTree\""
+msgstr "il est seulement possible de dÃ©finir 'children' dans  un objet \"gTree\""
 
 msgid "Invalid 'order'"
 msgstr "'order' incorrect"
 
 msgid "'l' must be a layout"
-msgstr "'l' doit être une mise en page (layout)"
+msgstr "'l' doit Ãªtre une mise en page (layout)"
 
 msgid "'pch' and 'labels' not the same length"
-msgstr "'pch' et 'labels' n'ont pas la même taille"
+msgstr "'pch' et 'labels' n'ont pas la mÃªme taille"
 
 msgid "'hgap' must be single unit"
-msgstr "'hgap' doit contenir une seule unité"
+msgstr "'hgap' doit contenir une seule unitÃ©"
 
 msgid "'vgap' must be single unit"
-msgstr "'vgap' doit contenir une seule unité"
+msgstr "'vgap' doit contenir une seule unitÃ©"
 
 msgid "'nrow' must be >= 1"
-msgstr "'nrow' doit être >= 1"
+msgstr "'nrow' doit Ãªtre >= 1"
 
 msgid "'ncol' must be >= 1"
-msgstr "'ncol' doit être >= 1"
+msgstr "'ncol' doit Ãªtre >= 1"
 
 msgid "nrow * ncol < #{legend labels}"
-msgstr "nrow * ncol < #{libellés de légende}"
+msgstr "nrow * ncol < #{libellÃ©s de lÃ©gende}"
 
 msgid "invalid justification"
 msgstr "justification incorrecte"
@@ -330,8 +295,7 @@ msgid "invalid vertical justification"
 msgstr "justification verticale incorrecte"
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
-msgstr ""
-"'respect' doit être une valeur logique ou une matrice 'nrow' par 'ncol'"
+msgstr "'respect' doit Ãªtre une valeur logique ou une matrice 'nrow' par 'ncol'"
 
 msgid "invalid 'print' argument"
 msgstr "argument 'print' incorrect"
@@ -349,67 +313,64 @@ msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
 
 msgid "Missing pattern fill has been set to transparent"
-msgstr ""
+msgstr "Le pattern de remplissage manquant est remplacÃ© par un remplissage transparent"
 
 msgid "Gradient fill applied to object with no inside"
-msgstr ""
+msgstr "Remplissage en gradient appliquÃ© Ã  un objet qui nâ€™a pas de contenu"
 
 msgid "'length' must be a 'unit' object"
-msgstr "'length' doit être un objet 'unit'"
+msgstr "'length' doit Ãªtre un objet 'unit'"
 
 msgid "invalid 'ends' or 'type' argument"
 msgstr "argument 'ends' ou 'type' incorrect"
 
 msgid "'x' and 'y' must be units"
-msgstr "'x' et 'y' doivent être des unités"
+msgstr "'x' et 'y' doivent Ãªtre des unitÃ©s"
 
 msgid "'x' and 'y' must have length 1"
-msgstr "'x' et 'y' doivent être de longueur unitaire"
+msgstr "'x' et 'y' doivent Ãªtre de longueur unitaire"
 
 msgid "invalid 'arrow' argument"
 msgstr "argument 'arrow' incorrect"
 
 msgid "it is invalid to specify both 'id' and 'id.lengths'"
-msgstr "il n'est pas permis de spécifier simultanément 'id' et 'id.lengths'"
+msgstr "il n'est pas permis de spÃ©cifier simultanÃ©ment 'id' et 'id.lengths'"
 
 msgid "'x' and 'y' must be same length"
-msgstr "'x' et 'y' doivent être de même longueur"
+msgstr "'x' et 'y' doivent Ãªtre de mÃªme longueur"
 
 msgid "'x' and 'y' and 'id' must all be same length"
-msgstr "'x', 'y' et 'id' doivent être de même longueur"
+msgstr "'x', 'y' et 'id' doivent Ãªtre de mÃªme longueur"
 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
-msgstr ""
-"'x', 'y' et 'id.lengths' doivent spécifier les mêmes longueurs globales"
+msgstr "'x', 'y' et 'id.lengths' doivent spÃ©cifier les mÃªmes longueurs globales"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
-msgstr "'x0', 'y0', 'x1' et 'y1' doivent être des unités"
+msgstr "'x0', 'y0', 'x1' et 'y1' doivent Ãªtre des unitÃ©s"
 
 msgid "'x' and 'y' must be units or NULL"
-msgstr "'x' et 'y' doivent être des unités ou NULL"
+msgstr "'x' et 'y' doivent Ãªtre des unitÃ©s ou NULL"
 
 msgid "corrupt 'arrows' object"
 msgstr "objet 'arrows' corrompu"
 
-#, fuzzy
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr ""
-"'x', 'y' et 'id.lengths' doivent spécifier les mêmes longueurs globales"
+msgstr "'x', 'y' et 'pathId.lengths' doivent spÃ©cifier les mÃªmes longueurs globales"
 
 msgid "x and y must be units"
-msgstr "'x' et 'y' doivent être des unités"
+msgstr "'x' et 'y' doivent Ãªtre des unitÃ©s"
 
 msgid "must have exactly 4 control points"
-msgstr "il faut exactement 4 points de contrôle"
+msgstr "il faut exactement 4 points de contrÃ´le"
 
 msgid "must have exactly 4 control points per Bezier curve"
-msgstr "il faut exactement 4 points de contrôle par courbe Bezier"
+msgstr "il faut exactement 4 points de contrÃ´le par courbe Bezier"
 
 msgid "'x', 'y', and 'r' must be units"
-msgstr "'x', 'y' et 'r' doivent être des unités"
+msgstr "'x', 'y' et 'r' doivent Ãªtre des unitÃ©s"
 
 msgid "'x', 'y', 'width', and 'height' must be units"
-msgstr "'x', 'y', 'width' et 'height' doivent être des unités"
+msgstr "'x', 'y', 'width' et 'height' doivent Ãªtre des unitÃ©s"
 
 msgid "invalid 'rot' value"
 msgstr "valeur 'rot' incorrecte"
@@ -418,21 +379,19 @@ msgid "zero-length 'pch'"
 msgstr "'pch' de longueur nulle"
 
 msgid "'x', 'y' and 'size' must be units"
-msgstr "'x', y' et 'size' doivent être des unités"
+msgstr "'x', y' et 'size' doivent Ãªtre des unitÃ©s"
 
 msgid "'x' and 'y' must be 'unit' objects and have the same length"
-msgstr ""
-"'x' et 'y' doivent être des objets 'unit' et doivent avoir la même longueur"
+msgstr "'x' et 'y' doivent Ãªtre des objets 'unit' et doivent avoir la mÃªme longueur"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-"'x', 'y', 'width' et 'height' doivent tous être des unités de longueur 1"
+msgstr "'x', 'y', 'width' et 'height' doivent tous Ãªtre des unitÃ©s de longueur 1"
 
 msgid "'x' and 'y' must all be units of length 1"
-msgstr "'x' et 'y' doivent tous les deux être de longueur unitaire"
+msgstr "'x' et 'y' doivent tous les deux Ãªtre de longueur unitaire"
 
 msgid "'r' must be a 'unit' object"
-msgstr "'r' doit être un objet 'unit'"
+msgstr "'r' doit Ãªtre un objet 'unit'"
 
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
@@ -443,51 +402,47 @@ msgstr "'x' et 'units' doivent avoir une longueur positive"
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' ou 'type' incorrect"
 
-#, fuzzy
 msgid "Not a unit object"
-msgstr "objet 'unit' incorrect"
+msgstr "Ce nâ€™est pas un objet 'unit'"
 
 msgid "'Summary' function '%s' not meaningful for units"
-msgstr "la function 'Summary' '%s' n'est pas applicable pour des unités"
+msgstr "la function 'Summary' '%s' n'est pas applicable pour des unitÃ©s"
 
 msgid "operator '%s' not meaningful for units"
-msgstr "l'opérateur '%s' est inapplicable aux unités"
+msgstr "l'opÃ©rateur '%s' est inapplicable aux unitÃ©s"
 
 msgid "'*' or '/' cannot be used as a unary operator"
-msgstr ""
+msgstr "'*' ou '/' ne peuvent pas Ãªtre utilisÃ©s comme opÃ©rateurs unaires"
 
 msgid "only one operand may be a unit"
-msgstr "seul un opérant peut être une unité"
+msgstr "seul un opÃ©rant peut Ãªtre une unitÃ©"
 
 msgid "non-unit operand must be numeric"
-msgstr "les opérants qui ne sont pas des unités doivent être numériques"
+msgstr "les opÃ©rants qui ne sont pas des unitÃ©s doivent Ãªtre numÃ©riques"
 
 msgid "can't divide with a unit"
-msgstr ""
+msgstr "impossible de diviser avec une unitÃ©"
 
 msgid "both operands must be units"
-msgstr "les deux opérands doivent être des unités"
+msgstr "les deux opÃ©rands doivent Ãªtre des unitÃ©s"
 
-#, fuzzy
 msgid "index out of bounds (\"unit\" subsetting)"
-msgstr "indice hors plage (indiçage d'unités)"
+msgstr "indice hors plage (indiÃ§age d'unitÃ©s)"
 
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
-msgstr ""
+msgstr "Impossible de crÃ©er un vecteur dâ€™unitÃ© de longueur nulle (sous-ensemble dâ€™\"unit\")"
 
-#, fuzzy
 msgid "index must be of length 1"
-msgstr "'x' et 'y' doivent tous les deux être de longueur unitaire"
+msgstr "lâ€™index doit Ãªtre de longueur unitaire"
 
-#, fuzzy
 msgid "replacement must be of length 1"
-msgstr "l'élément '%s' de 'gpar' doit être de longueur unitaire"
+msgstr "le remplacement doit Ãªtre de longueur unitaire"
 
 msgid "invalid 'theta'"
 msgstr "'theta' incorrect"
 
 msgid "'range' must be numeric"
-msgstr "'range' doit être numérique"
+msgstr "'range' doit Ãªtre numÃ©rique"
 
 msgid "invalid 'gp' value"
 msgstr "valeur 'gp' incorrecte"
@@ -495,9 +450,8 @@ msgstr "valeur 'gp' incorrecte"
 msgid "invalid 'clip' value"
 msgstr "valeur 'clip' incorrecte"
 
-#, fuzzy
 msgid "invalid 'mask' value"
-msgstr "Valeur 'ask' incorrecte"
+msgstr "valeur 'mask' incorrecte"
 
 msgid "invalid 'xscale' in viewport"
 msgstr "'xscale' incorrect dans la vue"
@@ -518,29 +472,25 @@ msgid "invalid 'layout.pos.col' in viewport"
 msgstr "'layout.pos.col' incorrect dans la vue"
 
 msgid "only viewports allowed in 'vpList'"
-msgstr "seules des vues sont autorisées dans 'vpList'"
+msgstr "seules des vues sont autorisÃ©es dans 'vpList'"
 
 msgid "only viewports allowed in 'vpStack'"
-msgstr "seules des vues sont autorisées dans 'vpStack'"
+msgstr "seules des vues sont autorisÃ©es dans 'vpStack'"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' doit être une vue et 'children' doit être une 'vpList' dans 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' doit Ãªtre une vue et 'children' doit Ãªtre une 'vpList' dans 'vpTree'"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "un chemin de vue doit contenir au moins un nom de vue"
 
 msgid "must specify at least one of 'x' or 'xscale'"
-msgstr "il faut spécifier au moins 'x' ou 'xscale'"
+msgstr "il faut spÃ©cifier au moins 'x' ou 'xscale'"
 
 msgid "must specify at least one of 'y' or 'yscale'"
-msgstr "il faut spécifier au moins 'y' ou 'yscale'"
+msgstr "il faut spÃ©cifier au moins 'y' ou 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr ""
-"tous les périphériques graphiques sont fermés lorsque l'espace de noms de "
-"'grid' est déchargé"
+msgstr "tous les pÃ©riphÃ©riques graphiques sont fermÃ©s lorsque l'espace de noms de 'grid' est dÃ©chargÃ©"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"
@@ -553,108 +503,88 @@ msgstr[0] "nom de vue incorrect"
 msgstr[1] "noms de vues incorrects"
 
 #~ msgid "'x' argument must be a unit object"
-#~ msgstr "l'argument 'x' doit être un objet unité"
+#~ msgstr "l'argument 'x' doit Ãªtre un objet unitÃ©"
 
 #~ msgid "no string supplied for 'strwidth/height' unit"
-#~ msgstr "pas de chaîne de caractères fournie pour l'unité 'strwidth/height'"
+#~ msgstr "pas de chaÃ®ne de caractÃ¨res fournie pour l'unitÃ© 'strwidth/height'"
 
 #~ msgid "no 'grob' supplied for 'grobwidth/height' unit"
-#~ msgstr "pas de 'grob' fourni pour l'unité 'grobwidth/height'"
+#~ msgstr "pas de 'grob' fourni pour l'unitÃ© 'grobwidth/height'"
 
 #~ msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-#~ msgstr ""
-#~ "'gPath' doit avoir une profondeur de 1 dans les unités 'grobwidth/height'"
+#~ msgstr "'gPath' doit avoir une profondeur de 1 dans les unitÃ©s 'grobwidth/height'"
 
 #~ msgid "non-NULL value supplied for plain unit"
-#~ msgstr "valeur non nulle (NULL) fournie pour les unités"
+#~ msgstr "valeur non nulle (NULL) fournie pour les unitÃ©s"
 
 #~ msgid "no arguments where at least one expected"
-#~ msgstr "aucun argument là où au moins un était attendu"
+#~ msgstr "aucun argument lÃ  oÃ¹ au moins un Ã©tait attendu"
 
 #~ msgid "Zero arguments where at least one expected"
-#~ msgstr "Aucun argument là où au moins un était attendu"
+#~ msgstr "Aucun argument lÃ  oÃ¹ au moins un Ã©tait attendu"
 
 #~ msgid "cannot mix signs of indices"
-#~ msgstr "impossible de mélanger les signes des indices"
+#~ msgstr "impossible de mÃ©langer les signes des indices"
 
 #~ msgid "index out of bounds (unit arithmetic subsetting)"
-#~ msgstr "indice hors plage (indiçage arithmétique d'unités)"
+#~ msgstr "indice hors plage (indiÃ§age arithmÃ©tique d'unitÃ©s)"
 
 #~ msgid "index out of bounds (unit list subsetting)"
-#~ msgstr "indice hors plage (indiçage de liste d'unités)"
+#~ msgstr "indice hors plage (indiÃ§age de liste d'unitÃ©s)"
 
 #, fuzzy
 #~ msgid "Value being assigned must be a unit"
-#~ msgstr "'x' et 'y' doivent être des unités"
+#~ msgstr "'x' et 'y' doivent Ãªtre des unitÃ©s"
 
 #~ msgid "it is invalid to combine 'unit' objects with other types"
-#~ msgstr ""
-#~ "il n'est pas permis de combiner des objets unités avec d'autres types"
+#~ msgstr "il n'est pas permis de combiner des objets unitÃ©s avec d'autres types"
 
 #~ msgid "invalid element in the display list"
-#~ msgstr "élément incorrect dans la liste d'affichage (display list)"
+#~ msgstr "Ã©lÃ©ment incorrect dans la liste d'affichage (display list)"
 
 #~ msgid "Nothing on the display list"
 #~ msgstr "Il n'y a rien dans la liste d'affichage (display list)"
 
 #~ msgid "the 'vp' argument is deprecated"
-#~ msgstr "l'argument 'vp' est obsolète"
+#~ msgstr "l'argument 'vp' est obsolÃ¨te"
 
 #~ msgid "grid.grob() is deprecated; please use grob() instead"
-#~ msgstr "grid.grob() est obsolète ; Veuillez utiliser grob() à la place"
+#~ msgstr "grid.grob() est obsolÃ¨te ; Veuillez utiliser grob() Ã  la place"
 
 #~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-#~ msgstr ""
-#~ "l'argument 'grob' doit être un grob de type 'line.to', 'lines' ou "
-#~ "'segments'"
+#~ msgstr "l'argument 'grob' doit Ãªtre un grob de type 'line.to', 'lines' ou 'segments'"
 
 #~ msgid "Cannot mix signs of indices"
-#~ msgstr "Impossible de mélanger les signes des indices"
+#~ msgstr "Impossible de mÃ©langer les signes des indices"
 
 #, fuzzy
 #~ msgid "It is only valid to remove a child from a \"gTree\""
-#~ msgstr ""
-#~ "Seul l'élimination d'un noeud enfant est autorisée dans un objet 'gTree'"
+#~ msgstr "Seul l'Ã©limination d'un noeud enfant est autorisÃ©e dans un objet 'gTree'"
 
 #~ msgid "This function is redundant and will disappear in future versions."
-#~ msgstr ""
-#~ "Cette fonction est redondante et disparaitra dans les versions "
-#~ "ultérieures."
+#~ msgstr "Cette fonction est redondante et disparaitra dans les versions ultÃ©rieures."
 
-#~ msgid ""
-#~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
-#~ "functions."
-#~ msgstr ""
-#~ "grid.arrows() est obsolète ; utilisez les arguments 'arrow' des fonctions "
-#~ "de traçage de lignes."
+#~ msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
+#~ msgstr "grid.arrows() est obsolÃ¨te ; utilisez les arguments 'arrow' des fonctions de traÃ§age de lignes."
 
 #~ msgid "shape must be between -1 and 1"
-#~ msgstr "'shape' doit être compris entre -1 et 1"
+#~ msgstr "'shape' doit Ãªtre compris entre -1 et 1"
 
 #~ msgid "Non-unit operand must be numeric"
-#~ msgstr "Les opérants qui ne sont pas des unités doivent être numériques"
+#~ msgstr "Les opÃ©rants qui ne sont pas des unitÃ©s doivent Ãªtre numÃ©riques"
 
-#~ msgid ""
-#~ "unit.rep has been deprecated in favour of a unit method for the generic "
-#~ "rep function"
-#~ msgstr ""
-#~ "'unit.rep' est obsolète et est remplacé par une méthode 'unit' pour la "
-#~ "fonction générique 'rep'"
+#~ msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
+#~ msgstr "'unit.rep' est obsolÃ¨te et est remplacÃ© par une mÃ©thode 'unit' pour la fonction gÃ©nÃ©rique 'rep'"
 
-#~ msgid ""
-#~ "unit.length has been deprecated in favour of a unit method for the "
-#~ "generic length function"
-#~ msgstr ""
-#~ "'unit.length' est obsolète et est remplacé par une méthode 'unit' pour la "
-#~ "fonction générique 'length'"
+#~ msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
+#~ msgstr "'unit.length' est obsolÃ¨te et est remplacÃ© par une mÃ©thode 'unit' pour la fonction gÃ©nÃ©rique 'length'"
 
 #, fuzzy
 #~ msgid "invalid graphics parameters"
-#~ msgstr "Paramètres graphiques incorrects"
+#~ msgstr "ParamÃ¨tres graphiques incorrects"
 
 #~ msgid "at least one of 'width' and 'height' must be specified"
-#~ msgstr ""
-#~ "vous devez spécifier au moins l'un des deux arguments 'width' ou 'height'"
+#~ msgstr "vous devez spÃ©cifier au moins l'un des deux arguments 'width' ou 'height'"
 
 #~ msgid "Viewport '%s' was not found"
 #~ msgstr "La vue '%s' est introuvable"
