@@ -81,6 +81,11 @@
       \item \code{checkRdaFiles(ff)$version} is now correct also when
       \code{ff} contains files of different versions, thanks to a report
       and patch from Sebastian Meyer in \PR{18041}.
+
+      \item macOS: Quartz device live drawing could fail (no plot is shown)
+      if the system changes the drawing context after view update (often
+      the case since macOS Big Sur). System log may show
+      "CGContextDelegateCreateForContext: invalid context" error.
     }
   }
 }
