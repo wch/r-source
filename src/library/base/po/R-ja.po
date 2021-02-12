@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1258,7 +1258,7 @@ msgid "--- done caching metadata"
 msgstr ""
 
 #, fuzzy
-msgid "--- procesing classes"
+msgid "--- processing classes"
 msgstr " 間違ったクラスです "
 
 msgid ""

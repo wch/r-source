@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: 2020-08-19 21:47+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1224,7 +1224,7 @@ msgid "--- done caching metadata"
 msgstr ""
 
 #, fuzzy
-msgid "--- procesing classes"
+msgid "--- processing classes"
 msgstr "неправильный класс"
 
 msgid ""

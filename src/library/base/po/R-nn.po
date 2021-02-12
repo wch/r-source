@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1281,7 +1281,7 @@ msgid "--- done caching metadata"
 msgstr ""
 
 #, fuzzy
-msgid "--- procesing classes"
+msgid "--- processing classes"
 msgstr "feil klasse"
 
 #, fuzzy

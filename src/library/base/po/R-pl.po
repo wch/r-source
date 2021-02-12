@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1290,7 +1290,7 @@ msgid "--- done caching metadata"
 msgstr ""
 
 #, fuzzy
-msgid "--- procesing classes"
+msgid "--- processing classes"
 msgstr "błędna klasa"
 
 msgid ""

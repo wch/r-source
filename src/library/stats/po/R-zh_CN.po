@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-02-12 09:26\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1806,9 +1806,6 @@ msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr "'n', 'delta', 'sd', 'power',和'sig.level'之中只能有一个取NULL值"
 
-msgid "'sig.level' must be numeric in [0, 1]"
-msgstr "'sig.level'必需是在[0, 1] 里的数值"
-
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "'n', 'p1', 'p2', 'power',和'sig.level'之中只能有一个取NULL值"
 
@@ -1820,6 +1817,10 @@ msgstr ""
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr ""
+
+#, fuzzy
+msgid "'%s' must be numeric in [0, 1]"
+msgstr "'sig.level'必需是在[0, 1] 里的数值"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."

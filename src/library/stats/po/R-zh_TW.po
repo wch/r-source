@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-02-12 09:26\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1791,9 +1791,6 @@ msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr "'n'，'delta'，'sd'，'power', 和 'sig.level' 之中只能有一個取 NULL 值"
 
-msgid "'sig.level' must be numeric in [0, 1]"
-msgstr "'sig.level' 必須是在[0，1] 裡的數值"
-
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "'n'，'p1'，'p2'，'power', 和 'sig.level' 之中只能有一個取 NULL 值"
 
@@ -1807,6 +1804,10 @@ msgstr "找不到任何在 [p1, 1] 中的 p2 可達到想要的乘冪"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "找不到任何顯著的層級 [0, 1] 可達到想要的乘冪"
+
+#, fuzzy
+msgid "'%s' must be numeric in [0, 1]"
+msgstr "'sig.level' 必須是在[0，1] 裡的數值"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."

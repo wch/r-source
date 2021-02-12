@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-02-12 09:26\n"
 "PO-Revision-Date: 2020-10-26 17:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1812,9 +1812,6 @@ msgid ""
 msgstr ""
 "būtent vienas iš 'n', 'delta', 'sd', 'power', 'sig.level' turi būti NULL"
 
-msgid "'sig.level' must be numeric in [0, 1]"
-msgstr "'sig.level' turi būti skaitinis [0,1]"
-
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "būtent vienas iš 'n', 'p1', 'p2', 'power', 'sig.level' turi būti NULL"
 
@@ -1828,6 +1825,10 @@ msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr ""
 "Negalima rasti reikšmingo lygio [0, 1], kad būtų pasiektas norimas galios "
 "lygis"
+
+#, fuzzy
+msgid "'%s' must be numeric in [0, 1]"
+msgstr "'sig.level' turi būti skaitinis [0,1]"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."

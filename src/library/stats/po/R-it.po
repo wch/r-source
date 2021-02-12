@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-stats 3.6.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-02-12 09:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -1876,9 +1876,6 @@ msgid ""
 msgstr ""
 "solo uno tra 'n', 'delta', 'sd', 'power', e 'sig.level' dev'essere NULL"
 
-msgid "'sig.level' must be numeric in [0, 1]"
-msgstr "'sig.level' dev'essere numerico in [0, 1]"
-
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "solo uno tra 'n', 'p1', 'p2', 'power', e 'sig.level' dev'essere NULL"
 
@@ -1894,6 +1891,10 @@ msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr ""
 "Nessun livello di significatività [0, 1] può essere trovato per ottenere la "
 "potenza desiderata"
+
+#, fuzzy
+msgid "'%s' must be numeric in [0, 1]"
+msgstr "'sig.level' dev'essere numerico in [0, 1]"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
