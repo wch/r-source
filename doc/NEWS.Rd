@@ -661,6 +661,10 @@
       called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
       thanks to a patch from Joris Goosen fixing \PR{17998}.
 
+      \item macOS: Quartz device live drawing could fail (no plot is shown)
+      if the system changes the drawing context after view update (often
+      the case since macOS Big Sur). System log may show
+      "CGContextDelegateCreateForContext: invalid context" error.
     }
   }
 }
