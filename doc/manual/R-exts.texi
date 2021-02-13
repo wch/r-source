@@ -1976,7 +1976,9 @@ options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
 precedence.  @code{PKG_CPPFLAGS} should contain @samp{-I}, @samp{-D},
 @samp{-U} and (where supported) @samp{-include} and @samp{-pthread}
-options: everything else should be a compiler flag.
+options: everything else should be a compiler flag.  The order of flags
+matters, and using @samp{-I} in @code{PKG_CFLAGS} or @code{PKG_CXXFLAGS}
+has led to hard-to-debug platform-specific errors.
 
 @file{Makevars} can also be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
@@ -5415,6 +5417,14 @@ and often @acronym{CRAN} submissions attempt to use @file{endian.h}.
 The latter is a @code{glibc} extension: some OSs have
 @file{machine/endian.h} or @file{sys/endian.h} but some have neither.
 @c macOS has machine/endian.h.  Solaris has none.
+
+@item
+Use @code{#include "my.h"} not @code{#include <my.h>} for headers in
+your package.  The second form is intended for system headers and the
+search order for such headers is platform-dependent (and may not include
+the current directory).  For extra safety, name headers in a way that
+cannot be confused with a system header so not, for example,
+@file{types.h}.
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
