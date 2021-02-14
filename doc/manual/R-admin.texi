@@ -3427,12 +3427,12 @@ Should support for these devices @strong{not} be required or broken
 system libraries need to be avoided there are @command{configure}
 options @option{--without-libpng}, @option{--without-jpeglib} and
 @option{--without-libtiff}.  The TIFF library has many optional features
-such as @code{jpeg}, @code{libz}, @code{lzma}, @code{webp} @code{jbig}
-and @code{jpeg12}, none of which is required for the @code{tiff()}
-devices but may need to be present to link the library (usually only an
-issue for static linking).  @command{pkg-config} can tell you what other
-libraries are required for linking, for example by @code{pkg-config
-libtiff-4 --static --libs}.
+such as @code{jpeg}, @code{libz}, @code{zstd}, @code{lzma}, @code{webp}
+@code{jbig} and @code{jpeg12}, none of which is required for the
+@code{tiff()} devices but may need to be present to link the library
+(usually only an issue for static linking).  @command{pkg-config} can
+tell you what other libraries are required for linking, for example by
+@code{pkg-config libtiff-4 --static --libs}.
 @c --print-requires and --print-requires-private are not recursive.
 
 Option @option{--with-system-tre} is also available: it needs a recent
@@ -3611,13 +3611,13 @@ sudo apt install default-jdk
 Some add-on packages need a C++ compiler.  This is specified by the
 configure variables @code{CXX}, @code{CXXFLAGS} and similar.
 @command{configure} will normally find a suitable compiler.  It is
-possible to specify an alternative C++14 compiler by the configure
-variables @code{CXX14}, @code{CXX14STD}, @code{CXX14FLAGS} and similar
+possible to specify an alternative C++17 compiler by the configure
+variables @code{CXX17}, @code{CXX17STD}, @code{CXX17FLAGS} and similar
 (@pxref{C++ Support}).  Again, @command{configure} will normally find a
-suitable value for @code{CXX14STD} if the compiler given by @code{CXX}
-is capable of compiling C++14 code, but it is possible that a completely
+suitable value for @code{CXX17STD} if the compiler given by @code{CXX}
+is capable of compiling C++17 code, but it is possible that a completely
 different compiler will be needed.  (Similar macros are provided for
-C++17 and C++20.)
+C++20.)
 
 For source files with extension @file{.f90} or @file{.f95} containing
 free-form Fortran, the compiler defined by the macro @code{FC} is used
@@ -4979,6 +4979,7 @@ Sur).
 
 @menu
 * Prerequisites::
+* Cairo graphics::
 * Other C/C++ compilers::
 * Other libraries::
 * Tcl/Tk headers and libraries::
@@ -4989,7 +4990,7 @@ Sur).
 * `Apple Silicon'::
 @end menu
 
-@node Prerequisites, Other C/C++ compilers, macOS, macOS
+@node Prerequisites, Cairo graphics, macOS, macOS
 @subsection Prerequisites
 
 The following are essential to build @R{}:
@@ -5054,7 +5055,8 @@ location of @file{/opt/X11}, e.g.@: by
 although without this linked versions under @file{/usr/X11} will be
 found.  (It seems that for some versions of macOS/XQuartz
 @file{/usr/X11} may exist but be a link to a non-existent directory:
-reinstalling XQuartz might help.)
+reinstalling XQuartz might help.)  Be wary of beta versions of XQuartz,
+which may be offered as an update.
 
 @item
 An Objective-C compiler, as provided by @command{clang} in the Command
@@ -5066,16 +5068,7 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
 @item
-Support for @code{cairo} (without @code{Pango}) will be enabled if
-@code{pkg-config}@footnote{available from
-@uref{https://mac.R-project.org/libs-4/} as @code{pkgconfig}.} and
-XQuartz 2.7.x are available.  Make sure XQuartz's @code{pkg-config}
-files are found first on the configuration path: for example by setting
-@example
-export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-@noindent
-or appending that variable to the @command{configure} command (as below).
+Support of Cairo-based graphics devices. @xref{Cairo graphics}.
 
 @item
 A TeX installation. @xref{Other libraries}.
@@ -5131,14 +5124,6 @@ tar xf subversion-1.14.0-darwin15.6.tar.gz
 sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
 @end example
 
-The instructions above get @code{cairo} from XQuartz.  At the time of
-writing the beta distributions of XQuartz 2.8.0 did not contain
-@code{cairo}, so an alternative is to statically link @code{cairo} by
-downloading and unpacking components @code{cairo}, @code{fontconfig},
-@code{freetype}, @code{pixman} and @code{zlib-system-stub} and not
-having @file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH} (or at
-least, not before @file{/usr/local/lib/pkgconfig}).
-
 If you have another build@footnote{For example, some Homebrew
 distributions.} of @code{cairo} with dynamic libraries, you can add
 option @option{--without-static-cairo} to the @command{configure} call
@@ -5188,7 +5173,63 @@ CXX="clang++ -target x86_64-apple-macos10.15"
 and install the Fortran compiler and external software as described
 above.
 
-@node Other C/C++ compilers, Other libraries, Prerequisites, macOS
+@node Cairo graphics, Other C/C++ compilers, Prerequisites, macOS
+@subsection Cairo graphics
+
+Cairo-based graphics devices such as @code{cairo_ps}, @code{cairo_pdf},
+@code{X11(type = "cairo")} and the Cairo-based types of devices
+@code{bmp} @code{jpeg}, @code{png} and @code{tiff} are not the default
+on macOS, and much less used than the Quartz-based devices.  However,
+the only SVG device in the @R{} distributiion, @code{svg}, is based on
+Cairo.
+
+Support for Cairo is optional and can be added in several ways, all of
+which need @code{pkg-config}. @command{configure} will add Cairo support
+if @code{pkg-config} finds package @code{cairo} unless
+@code{--without-cairo} is used.
+
+A way to statically link Cairo is by downloading and unpacking
+components @code{cairo}, @code{fontconfig}, @code{freetype},
+@code{pixman} and @code{zlib-system-stub} (and do not have
+@file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH}).  Some static
+builds of @code{fontconfig} need @code{libxml2} (from component
+@code{xml2}) and others @code{expat}, supplied by macOS but needing a
+file @file{/usr/local/lib/pkgconfig/expat.pc} along the lines of
+@example
+Name: expat
+Version: 2.2.8
+Description: expat XML parser
+URL: http://www.libexpat.org
+Libs: -lexpat
+Cflags: 
+@end example
+
+If you have XQuartz 2.7.x installed and ensure XQuartz's
+@code{pkg-config} files are found first on its configuration path, Cairo
+will be linked dynamically.  This can be done by setting something like
+@example
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+@noindent
+or by appending that variable to the @command{configure} command.  Note
+that this uses rather old versions of the graphics software and Cairo
+support has been announced as being removed for XQuartz 2.8.0.
+
+@c Homebrew is another with dynamic libraries
+If you use XQuartz or another build of @code{cairo} with dynamic
+libraries, you can add option @option{--without-static-cairo} to the
+@command{configure} call (it probably would work anyway).
+
+The best font experience of Cairo graphics will be to use it in
+combination with Pango which will match that supported on most other
+Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
+if all the external software required by both Pango and Cairo is
+available: running @command{pkg-config pangocairo --libs} should show if
+the installation suffices.
+@c It seems libgraphite2 required by recent harfbuzz is only built
+@c dynamically.
+
+@node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
 @subsection Other C/C++ compilers
 
 Other distributions of @command{clang} are available from
@@ -5289,7 +5330,7 @@ times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 The @TeX{} implementation used by the developers is MacTeX@footnote{An
 essentially equivalent @TeX{} installation can be obtained by the Unix
 TeX Live installation scripts.}  (@uref{https://www.tug.org/mactex/}):
-the full installation is about 8.5GB, but a smaller version (`Basic
+the full installation is about 8.5GB, but a much smaller version (`Basic
 TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
 need to add some packages to build @R{}, e.g.@: for the 2020 version we
@@ -5394,8 +5435,8 @@ Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
 @uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 (but not 9, 10, 12--16 which have/had
-a 6-month lifetime).
+long-term support, e.g.@: 8 or 11 or (when released ca 2020-09) 17 (but
+not 9, 10, 12--16 which have/had a 6-month lifetime).
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 1.8.0_241 or 11.0.6) of Java so @command{sudo R CMD javareconf}
@@ -5649,7 +5690,7 @@ contain @code{cairo}.
 
 A binary package of Aqua Tcl/Tk is supplied rather than the X11-based
 variant of Tk used for Intel builds (and some packages, notably
-@CRANpkg{tkrplot}, do not support that, nor is @code{TkTable}
+@CRANpkg{tkrplot}, do not support that, nor is @code{Tktable}
 available).  If XQuartz is installed it is possible to build the
 X11-based variant of Tk from source.
 
