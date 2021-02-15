@@ -6493,7 +6493,8 @@ entries.
 @item \references@{@dots{}@}
 @findex \references
 A section with references to the literature.  Use @code{\url@{@}} or
-@code{\href@{@}@{@}} for web pointers.
+@code{\href@{@}@{@}} for web pointers, and @code{\doi@{@}} for DOIs
+(this needs @R{} >= 3.3, see @ref{User-defined macros} for more info).
 
 @item \note@{...@}
 @findex \note
