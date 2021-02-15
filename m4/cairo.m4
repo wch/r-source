@@ -63,8 +63,10 @@ else
     fi
     CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
     CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
+    ## Static builds may currently be impossible as harfbuzz
+    ## requires graphite2 and that does not support static building.
     if test "x$use_static_cairo" = xyes; then
-       AC_MSG_NOTICE([using static cairo])
+       AC_MSG_NOTICE([using static pangocairo])
        CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
        CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
     else
