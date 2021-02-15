@@ -2455,7 +2455,7 @@ add_dummies <- function(dir, Log)
                     }
                 }
             }
-            ans <- list_data_in_pkg(dataDir = file.path(pkgdir, "data"))
+            ans <- list_data_in_pkg(dir = pkgdir)
             if (length(ans)) {
                 bad <-
                     names(ans)[sapply(ans, function(x) ".Random.seed" %in% x)]
