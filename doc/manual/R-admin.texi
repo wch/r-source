@@ -5180,7 +5180,7 @@ Cairo-based graphics devices such as @code{cairo_ps}, @code{cairo_pdf},
 @code{X11(type = "cairo")} and the Cairo-based types of devices
 @code{bmp} @code{jpeg}, @code{png} and @code{tiff} are not the default
 on macOS, and much less used than the Quartz-based devices.  However,
-the only SVG device in the @R{} distributiion, @code{svg}, is based on
+the only SVG device in the @R{} distribution, @code{svg}, is based on
 Cairo.
 
 Support for Cairo is optional and can be added in several ways, all of
