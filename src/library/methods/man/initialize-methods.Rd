@@ -97,7 +97,7 @@
   \code{\link{setMethod}} of the form:
 
 \preformatted{    setMethod("initialize", "traceable",
-      function(.Object, def, tracer, exit, at, print) \dots
+      function(.Object, def, tracer, exit, at, print) { .... }
     )
 }
 

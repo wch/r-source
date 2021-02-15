@@ -1,6 +1,6 @@
 % File src/library/base/man/noquote.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{noquote}
@@ -35,7 +35,7 @@ noquote(obj, right = FALSE)
   \code{"noquote"}.  There is a method for \code{c()} and subscript
   method (\code{"[.noquote"}) which ensures that the class is not lost
   by subsetting.  The print method (\code{print.noquote}) prints
-  character strings \emph{without} quotes (\code{"\dots"}).
+  character strings \emph{without} quotes (\code{"...."} is printed as \verb{....}).
 
   If \code{right} is specified in a call \code{print(x, right=*)}, it
   takes precedence over a possible \code{right} setting of \code{x},

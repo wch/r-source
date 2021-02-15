@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2latex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -144,9 +144,6 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 	    # Third, add the terminal braces to the backslash
 	    x <- fsub("\\bsl", "\\bsl{}", x)
 	} else {
-	    x <- psub("\\\\[l]{0,1}dots", "...", as.character(x))
-	    ## unescape (should not be escaped: but see kappa.Rd)
-	    x <- psub("\\\\([$^&~_#])", "\\1", x)
 	    ## inCodeBlock/inPre is in alltt, where only \ { } have their usual meaning
 	    if (inCodeBlock) {
 		## We do want to escape { }, but unmatched braces had
