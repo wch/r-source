@@ -514,11 +514,13 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!tlen) { tlen = 1; SETCADR(args0, tok = mkString("")); }
     PROTECT(tok);
 
+    if (!useBytes)
+	useBytes = only_ascii(tok, tlen) && only_ascii(x, len);
     if (!useBytes) 
 	useBytes = have_bytes(tok, tlen) || have_bytes(x, len);
     if (!useBytes) {
 	// use_UTF8 means use wchar_t* for the TRE engine
-	if (perl_opt && mbcslocale) use_UTF8 = TRUE;
+	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    use_UTF8 = have_utf8(tok, tlen) || have_utf8(x, len);
 	if (!use_UTF8 && !latin1locale)
@@ -1178,7 +1180,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = have_bytes(pat, 1) || have_bytes(text, n);
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
-	if (perl_opt && mbcslocale) use_UTF8 = TRUE;
+	/* if we have non-ASCII text in a DBCS locale, we need to use wchar in TRE */
+	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    use_UTF8 = have_utf8(pat, 1) || have_utf8(text, n);
 	if (!use_UTF8 && !latin1locale)
@@ -1186,8 +1189,6 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (!fixed_opt && !perl_opt) {
-	/* if we have non-ASCII text in a DBCS locale, we need to use wchar */
-	if (!useBytes && mbcslocale && !utf8locale) use_UTF8 =TRUE;
 	use_WC = use_UTF8; use_UTF8 = FALSE;
     }
     if (useBytes)
@@ -1949,19 +1950,17 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = have_bytes(pat, 1) || have_bytes(rep, 1) ||
 	           have_bytes(text, n);
     if (!useBytes) {
+	/* if we have non-ASCII text in a DBCS locale, we need to use wchar in TRE */
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    use_UTF8 = have_utf8(pat, 1) || have_utf8(rep, 1) ||
 	               have_utf8(text, n);
 	if (!use_UTF8 && !latin1locale)
-	    // FIXME: handle Latin-1-marked inputs
-	    use_UTF8 = /* have_latin1(pat, 1) || have_latin1(rep, 1) || */
+	    use_UTF8 = have_latin1(pat, 1) || have_latin1(rep, 1) ||
 	               have_latin1(text, n);
     }
 
     if (!fixed_opt && !perl_opt) {
-	/* if we have non-ASCII text in a DBCS locale, we need to use wchar */
-	if (!useBytes && mbcslocale && !utf8locale) use_UTF8 =TRUE;
 	use_WC = use_UTF8; use_UTF8 = FALSE;
     }
 
@@ -2813,6 +2812,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales,
 	   and as from 2.11.0 in TRE too. */
+	/* if we have non-ASCII text in a DBCS locale, we need to use wchar in TRE */
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    use_UTF8 = have_utf8(pat, 1) || have_utf8(text, n);
@@ -2821,8 +2821,6 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (!fixed_opt && !perl_opt) {
-	/* if we have non-ASCII text in a DBCS locale, we need to use wchar */
-	if (!useBytes && mbcslocale && !utf8locale) use_UTF8 =TRUE;
 	use_WC = use_UTF8; use_UTF8 = FALSE;
     }
 
@@ -3132,10 +3130,14 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!useBytes) 
 	useBytes = only_ascii(pat, 1) && only_ascii(text, n);
-    
-    if(!useBytes)
-	// This gets Latin-1-marked right
-	use_WC = TRUE;
+
+    if(!useBytes) {
+	if (!opt_fixed && mbcslocale) use_WC = TRUE;
+	if (!use_WC)
+	    use_WC = have_utf8(pat, 1) || have_utf8(text, n);
+	if (!use_WC && !latin1locale)
+	    use_WC = have_latin1(pat, 1) || have_latin1(text, n);
+    }
 
     if(useBytes)
 	rc = tre_regcompb(&reg, CHAR(STRING_ELT(pat, 0)), cflags);
