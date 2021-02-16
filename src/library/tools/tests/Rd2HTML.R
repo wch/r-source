@@ -32,3 +32,20 @@ stopifnot(exprs = {
     identical(capture.output(Rd2ex(parse_Rd(Rdsnippet), fragment = TRUE))[5L],
               r"(foo <- function(arg = "\\dots", ...) NULL # \dots)")
 }) # failed in R < 4.1.0
+
+## \usage: keep quoted "\\\\dots", but _do_ translate formal \dots arg
+Rdsnippet <- tempfile()
+writeLines(r"(\name{foo}\title{foo}\usage{
+foo(arg = "\\\\dots", \dots)
+})", Rdsnippet)
+Rdobj <- parse_Rd(Rdsnippet)
+check_dots_usage <- function(FUN) {
+    out <- trimws(grep("foo(", capture.output(FUN(Rdobj)),
+                       value = TRUE, fixed = TRUE))
+    if (!identical(out, r"(foo(arg = "\\dots", ...))"))
+        stop("unexpected output: ", out)
+}
+check_dots_usage(Rd2HTML)
+check_dots_usage(Rd2txt)
+check_dots_usage(Rd2latex)
+## the last two failed in R < 4.1.0; output was foo(arg = "\...", ...)
