@@ -44138,9 +44138,11 @@ $as_echo "$r_cv_has_pangocairo" >&6; }
     fi
     CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
     CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
+    ## Static builds may currently be impossible as harfbuzz
+    ## requires graphite2 and that does not support static building.
     if test "x$use_static_cairo" = xyes; then
-       { $as_echo "$as_me:${as_lineno-$LINENO}: using static cairo" >&5
-$as_echo "$as_me: using static cairo" >&6;}
+       { $as_echo "$as_me:${as_lineno-$LINENO}: using static pangocairo" >&5
+$as_echo "$as_me: using static pangocairo" >&6;}
        CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
        CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
     else
