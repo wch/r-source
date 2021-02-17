@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020 The R Core Team
+ *  Copyright (C) 1998--2021 The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -348,6 +348,8 @@ const char attribute_hidden *R_nativeEncoding(void)
 /* retrieves information about the current locale and
    sets the corresponding variables (known_to_be_utf8,
    known_to_be_latin1, utf8locale, latin1locale and mbcslocale) */
+
+static char* codeset = "";
 void attribute_hidden R_check_locale(void)
 {
     known_to_be_utf8 = utf8locale = FALSE;
@@ -358,6 +360,7 @@ void attribute_hidden R_check_locale(void)
     /* not on Windows */
     {
 	char  *p = nl_langinfo(CODESET);
+	codeset = p;
 	/* more relaxed due to Darwin: CODESET is case-insensitive and
 	   latin1 is ISO8859-1 */
 	if (R_strieql(p, "UTF-8")) known_to_be_utf8 = utf8locale = TRUE;
@@ -2906,7 +2909,7 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
     int len = 5;
 #else
-    int len = 3;
+    int len = 4;
 #endif
     SEXP ans, names;
     checkArity(op, args);
@@ -2918,6 +2921,10 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(ans, 0, ScalarLogical(mbcslocale));
     SET_VECTOR_ELT(ans, 1, ScalarLogical(utf8locale));
     SET_VECTOR_ELT(ans, 2, ScalarLogical(latin1locale));
+#ifndef Win32
+    SET_STRING_ELT(names, 3, mkChar("codeset"));
+    SET_VECTOR_ELT(ans, 3, mkString(codeset));
+#endif
 #ifdef Win32
     SET_STRING_ELT(names, 3, mkChar("codepage"));
     SET_VECTOR_ELT(ans, 3, ScalarInteger(localeCP));

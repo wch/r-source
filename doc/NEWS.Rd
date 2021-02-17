@@ -191,9 +191,9 @@
       \item There is optional support for tracing the progress of
       \code{loadNamespace} --- see its help.
 
-      \item \code{grSoftVersion()} now reports the versions of FreeType
-      and FontConfig if they are used directly (not \emph{via} Pango),
-      as is most commonly done on macOS.
+      \item (Not Windows.)
+      \code{l10n_info()} reports an additional element, the name of the
+      encoding as reported by the OS.
     }
   }
 
@@ -230,6 +230,10 @@
       \code{png()}, \code{jpeg()}, \code{tiff()} or \code{bmp()}
       device but Cairo is unsupported (so \code{type = "Xlib"}
       is tried instead).
+
+      \item \code{grSoftVersion()} now reports the versions of FreeType
+      and FontConfig if they are used directly (not \emph{via} Pango),
+      as is most commonly done on macOS.
     }
   }
 

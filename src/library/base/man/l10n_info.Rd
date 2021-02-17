@@ -1,6 +1,6 @@
 % File src/library/base/man/l10n_info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{l10n_info}
@@ -15,8 +15,12 @@ l10n_info()
 \value{
   A list with three logical components:
   \item{MBCS}{If a multi-byte character set in use?}
-  \item{UTF-8}{Is this a UTF-8 locale?}
-  \item{Latin-1}{Is this a Latin-1 locale?}
+  \item{UTF-8}{Is this known to be a UTF-8 locale?}
+  \item{Latin-1}{Is this known to be a Latin-1 locale?}
+#ifndef windows
+  \item{codeset}{character.  The encoding name as reported by the OS,
+    possibly \code{""}. (Encoding names are OS-specific.)}
+#endif
 #ifdef windows
   \item{codepage}{integer: the Windows codepage corresponding to the
     locale \R is using (and not necessarily that Windows is using).}
@@ -24,16 +28,22 @@ l10n_info()
     (the codepage Windows is using).}
 #endif
 }
-#ifdef windows
 \details{
+  %% on Windows this looks at the codepage as returned by setlocale.
+  %% elsewhere it uses nl_langinfo(CODESET).
+  \sQuote{A Latin-1 locale} includes supersets (for printable
+  characters) such as Windows codepage 1252 but not Latin-9 (ISO 8859-15).
+#ifdef windows
+
   Common codepages are 1252 (Western European), 1250 (Central European),
   1251 (Cyrillic), 1253 (Greek), 1254 (Turkish), 1255 (Hebrew), 1256
   (Arabic), 1257 (Baltic), 1258 (Vietnamese), 874 (Thai), 932
   (Japanese), 936 (Simplified Chinese), 949 (Korean) and 950
-  (Traditional Chinese).  \R does not allow the C locale, and uses 1252
-  as the default codepage.
-}
+  (Traditional Chinese).  Codepage 28605 is Latin-9 and 65001 is UTF-8
+  (where supported).  \R does not allow the C locale, and uses 1252 as
+  the default codepage.
 #endif
+}
 \seealso{
 \code{\link{Sys.getlocale}}, \code{\link{localeconv}}
 }
