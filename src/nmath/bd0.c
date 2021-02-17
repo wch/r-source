@@ -4,7 +4,7 @@
  *	October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000-2014 The R Core Team
+ *	Copyright (C) 2000-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,31 +31,48 @@
  *	for all x and M=np. In particular for x/np close to 1, direct
  *	evaluation fails, and evaluation is based on the Taylor series
  *	of log((1+v)/(1-v)) with v = (x-M)/(x+M) = (x-np)/(x+np).
+ *
+ * Martyn Plummer had the nice idea to use log1p() and Martin Maechler
+ * emphasized the extra need to control cancellation.
+ *
+ * MP:   t := (x-M)/M  ( <==> 1+t = x/M  ==>
+ *
+ * bd0 = M*[ x/M * log(x/M) + 1 - (x/M) ] = M*[ (1+t)*log1p(t) + 1 - (1+t) ]
+ *     = M*[ (1+t)*log1p(t) - t ] =: M * p1log1pm(t) =: M * p1l1(t)
+ * MM: The above is very nice, as the "simple" p1l1() function would be useful
+ *    to have available in a fast numerical stable way more generally.
  */
 #include "nmath.h"
 
 double attribute_hidden bd0(double x, double np)
 {
-    double ej, s, s1, v;
-    int j;
-
     if(!R_FINITE(x) || !R_FINITE(np) || np == 0.0) ML_WARN_return_NAN;
 
     if (fabs(x-np) < 0.1*(x+np)) {
-	v = (x-np)/(x+np);  // might underflow to 0
-	s = (x-np)*v;/* s using v -- change by MM */
+	double
+	    v = (x-np)/(x+np),  // might underflow to 0
+	    s = (x-np)*v;
 	if(fabs(s) < DBL_MIN) return s;
-	ej = 2*x*v;
-	v = v*v;
-	for (j = 1; j < 1000; j++) { /* Taylor series; 1000: no infinite loop
+	double ej = 2*x*v;
+	v *= v; // "v = v^2"
+	for (int j = 1; j < 1000; j++) { /* Taylor series; 1000: no infinite loop
 					as |v| < .1,  v^2000 is "zero" */
-	    ej *= v;// = v^(2j+1)
-	    s1 = s+ej/((j<<1)+1);
-	    if (s1 == s) /* last term was effectively 0 */
-		return s1 ;
-	    s = s1;
+	    ej *= v;// = 2 x v^(2j+1)
+	    double s_ = s;
+	    s += ej/((j<<1)+1);
+	    if (s == s_) { /* last term was effectively 0 */
+#ifdef DEBUG_bd0
+		REprintf("bd0(%g, %g): T.series w/ %d terms -> bd0=%g\n", x, np, j, s);
+#endif
+		return s;
+	    }
 	}
+	MATHLIB_WARNING4("bd0(%g, %g): T.series failed to converge in 1000 it.; s=%g, ej/(2j+1)=%g\n",
+			 x, np, s, ej/((2*1000)+1));
     }
     /* else:  | x - np |  is not too small */
     return(x*log(x/np)+np-x);
 }
+
+
+//- NOTA BENE (R Bugzilla PR#15628) :  Morten Welinder proposed  ebd0()  -- in file ./ebd0.c   as more accurate --------
