@@ -1595,6 +1595,7 @@ Various parts of the build require XQuartz to be installed: see
 and the @code{X11} device: attempting to use these without XQuartz will
 remind you.@footnote{At least if @command{otool} is installed: it is
 part of the macOS Command Line Tools.}  This is also needed for some
+@cindex Cairo
 builds of the cairographics-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")}.
 
@@ -1677,6 +1678,18 @@ and @code{edit()} for data frames and matrices (the latter are the
 default for command-line @R{} but not @Rapp{}) requires
 @uref{https://www.xquartz.org/, XQuartz} to be installed.  So do
 the @pkg{tcltk} package and some third-party packages.
+
+Under some rather nebulous circumstances messages have been seen from
+@code{fontconfig} about missing/unreadable configuration files when
+using cairo-based devices, especially @code{X11(type = "cairo")}.  With
+XQuartz installed there are two @code{fontconfig} areas from different
+versions and it can help to set
+@example
+setenv FONTCONFIG_PATH /opt/X11/lib/X11/fontconfig
+@end example
+@noindent
+Another symptom has been that italic/oblique fonts are replaced by
+upright ones.
 
 @node Uninstalling under macOS, Multiple versions, Running R under macOS, Installing R under macOS
 @section Uninstalling under macOS
@@ -2790,10 +2803,12 @@ It is usually possible to change the language once @R{} is running
 @emph{via} (not Windows) @code{Sys.setlocale("LC_MESSAGES",
 "new_locale")}, or by setting an environment variable such as
 @env{LANGUAGE}, @emph{provided}@footnote{If you try changing from French
-to Russian except in a UTF-8 locale, you will most likely find messages
-change to English.} the language you are changing to can be output in
-the current character set.  But this is OS-specific, and has been known
-to stop working on an OS upgrade.
+to Russian except in a UTF-8 locale, you may find messages change to
+English.} the language you are changing to can be output in the current
+character set.  But this is OS-specific, and has been known to stop
+working on an OS upgrade.  Note that translated messages may be cached,
+so attempting to change the language of an error that has already been
+output in another language may not work.
 
 Messages are divided into @emph{domains}, and translations may be
 available for some or all messages in a domain.  @R{} makes use of the
@@ -3370,6 +3385,8 @@ with new translations, but otherwise the version of the @code{gettext}
 runtime contained in the R sources will be used if no suitable external
 @code{gettext} is found.
 
+@cindex Cairo
+@cindex Pango
 The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()}
 and @code{tiff()} graphics devices uses the Cairo and Pango libraries.
 Cairo version 1.2.0 or later and Pango version 1.10 or later are
@@ -3385,10 +3402,9 @@ environment. There is a compatible re-implementation of
 unlikely event that is installed but not linked to
 @command{pkg-config}.}, and might fail if @code{cairo} was built
 statically unless @command{configure} option
-@option{--with-static-cairo} is used (it is the default on macOS).  Most
-systems with @code{Gtk+} 2.8 or later installed will have suitable
-libraries: for Fedora users the @code{pango-devel} RPM and its
-dependencies suffice.
+@option{--with-static-cairo} is used.  Most systems with @code{Gtk+} 2.8
+or later installed will have suitable libraries: for Fedora users the
+@code{pango-devel} RPM and its dependencies suffice.
 @c arm64 Homebrew did in early 2021.
 It is possible (but very unusual on a platform with X11) to build Cairo
 without its @code{cairo-xlib} module in which case @code{X11(type =
@@ -4614,6 +4630,7 @@ Unix-alikes (except most macOS builds) when plotting.  As its name
 implies, it displays on a (local or remote) X server, and relies on the
 services provided by the X server.
 
+@cindex Cairo
 The `modern' version of the @samp{X11()} device is based on @samp{cairo}
 graphics and (in most implementations) uses @samp{fontconfig} to pick and
 render fonts.  This is done on the server, and although there can be
@@ -5176,6 +5193,7 @@ above.
 @node Cairo graphics, Other C/C++ compilers, Prerequisites, macOS
 @subsection Cairo graphics
 
+@cindex Cairo
 Cairo-based graphics devices such as @code{cairo_ps}, @code{cairo_pdf},
 @code{X11(type = "cairo")} and the Cairo-based types of devices
 @code{bmp} @code{jpeg}, @code{png} and @code{tiff} are not the default
@@ -5203,6 +5221,9 @@ URL: http://www.libexpat.org
 Libs: -lexpat
 Cflags: 
 @end example
+@noindent
+If using a static build of Cairo, configure @R{} with option
+@option{--with-static-cairo}.
 
 If you have XQuartz 2.7.x installed and ensure XQuartz's
 @code{pkg-config} files are found first on its configuration path, Cairo
@@ -5223,6 +5244,7 @@ libraries, you can add option @option{--without-static-cairo} to the
 @c dependencies of fontconfig, usually either xml2 or expat, and a
 @c dynamic installation might not have the pkg-config files for those.
 
+@cindex Pango
 The best font experience of Cairo graphics will be to use it in
 combination with Pango which will match that supported on most other
 Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
