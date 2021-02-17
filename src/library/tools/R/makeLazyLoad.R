@@ -59,6 +59,7 @@ function(package, lib.loc = NULL, dir, use_datalist = TRUE)
             stop("you must specify 'package' or 'dir'")
         if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+        dir <- file_path_as_absolute(dir)
         package <- character(0L)
         lib.loc <- NULL
     }
