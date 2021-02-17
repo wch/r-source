@@ -349,18 +349,19 @@ const char attribute_hidden *R_nativeEncoding(void)
    sets the corresponding variables (known_to_be_utf8,
    known_to_be_latin1, utf8locale, latin1locale and mbcslocale) */
 
-static char* codeset = "";
+static char codeset[R_CODESET_MAX + 1];
 void attribute_hidden R_check_locale(void)
 {
     known_to_be_utf8 = utf8locale = FALSE;
     known_to_be_latin1 = latin1locale = FALSE;
     mbcslocale = FALSE;
     strcpy(native_enc, "ASCII");
+    strcpy(codeset, "");
 #ifdef HAVE_LANGINFO_CODESET
     /* not on Windows */
     {
 	char  *p = nl_langinfo(CODESET);
-	codeset = p;
+	strcpy(codeset, p);  // copy just in case something else calls nl_langinfo.
 	/* more relaxed due to Darwin: CODESET is case-insensitive and
 	   latin1 is ISO8859-1 */
 	if (R_strieql(p, "UTF-8")) known_to_be_utf8 = utf8locale = TRUE;
