@@ -1,3 +1,12 @@
+#### Report locale
+Sys.getlocale()
+
+#### It may be wise to skip locales that do not support French
+## if( !( l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]] ) ) {
+##     warning("The locale encoding does not support French")
+##     q("no")
+## }
+
 #### Checking Translation / domains etc: *NOT* called with LC_*=* or LANGUAGE=* settings
 
 if (!capabilities("NLS")) { ## e.g. when R was configured by  --disable-nls
@@ -21,6 +30,8 @@ oloc <- Sys.getlocale("LC_CTYPE")
 mbyte.lc <- {
     if(.Platform$OS.type == "windows")
 	"English_United States.28605"
+    ## Would be better to use l10n_info()[["UTF-8"]]:
+    ## Older Linuxen used .utf8 and on macOS locales without suffix are UTF-8.
     else if(grepl("[.]UTF-8$", oloc, ignore.case=TRUE)) # typically nowadays
 	oloc
     else
