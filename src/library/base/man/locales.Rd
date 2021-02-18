@@ -134,7 +134,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   \samp{.UTF-8} or \samp{.utf8} (more common on Linux than \samp{UTF-8})
   or none (as on macOS) and Latin-9 locales can have suffix
   \samp{ISO8859-15}, \samp{iso885915}, \samp{iso885915@euro} or
-  \samp{ISO8859-15@euro}.
+  \samp{ISO8859-15@euro}.  Use \code{\link{l10n_info}} instead.
 }
 
 \seealso{

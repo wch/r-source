@@ -19,7 +19,7 @@ l10n_info()
   \item{Latin-1}{Is this known to be a Latin-1 locale?}
 #ifndef windows
   \item{codeset}{character.  The encoding name as reported by the OS,
-    possibly \code{""}. (Encoding names are OS-specific.)}
+    possibly \code{""}. (Added in \R 4.1.0. Encoding names are OS-specific.) }
 #endif
 #ifdef windows
   \item{codepage}{integer: the Windows codepage corresponding to the
