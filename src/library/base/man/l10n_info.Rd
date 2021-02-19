@@ -13,13 +13,14 @@
 l10n_info()
 }
 \value{
-  A list with three logical components:
+  A list with three logical elements and further OS-specific elements:
   \item{MBCS}{If a multi-byte character set in use?}
   \item{UTF-8}{Is this known to be a UTF-8 locale?}
   \item{Latin-1}{Is this known to be a Latin-1 locale?}
 #ifndef windows
-  \item{codeset}{character.  The encoding name as reported by the OS,
-    possibly \code{""}. (Added in \R 4.1.0. Encoding names are OS-specific.) }
+  \item{codeset}{character.  The encoding name as reported by the
+    non-Windows OS, possibly \code{""}. (Added in \R 4.1.0.  Encoding
+    names are OS-specific.)} 
 #endif
 #ifdef windows
   \item{codepage}{integer: the Windows codepage corresponding to the
