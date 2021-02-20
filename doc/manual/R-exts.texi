@@ -10202,7 +10202,7 @@ static const R_CMethodDef cMethods[] = @{
 @c in the registration data.
 
 If registering types, check carefully that the number of types matches
-the number of arguments: as the type array (here @code[myC_type]) is
+the number of arguments: as the type array (here @code{myC_type}) is
 passed as a pointer in C, the registration mechanism cannot check this
 for you.
 
