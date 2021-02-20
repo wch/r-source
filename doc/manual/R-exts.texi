@@ -10181,12 +10181,12 @@ We would register it as
 
 @example
 @group
-static R_NativePrimitiveArgType myC_t[] = @{
+static R_NativePrimitiveArgType myC_type[] = @{
     REALSXP, INTSXP, STRSXP, LGLSXP
 @};
 
 static const R_CMethodDef cMethods[] = @{
-   @{"myC", (DL_FUNC) &myC, 4, myC_t@},
+   @{"myC", (DL_FUNC) &myC, 4, myC_type@},
    @{NULL, NULL, 0, NULL@}
 @};
 @end group
@@ -10200,6 +10200,11 @@ static const R_CMethodDef cMethods[] = @{
 @c more efficiently across the @R{}-C/Fortran interface by avoiding copying
 @c values when it is not necessary. Typically, one omits this information
 @c in the registration data.
+
+If registering types, check carefully that the number of types matches
+the number of arguments: as the type array (here @code[myC_type]) is
+passed as a pointer in C, the registration mechanism cannot check this
+for you.
 
 Note that @code{.Fortran} entry points are mapped to lowercase, so
 registration should use lowercase only.
