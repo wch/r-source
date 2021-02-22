@@ -5160,7 +5160,9 @@ external software.
 
 A more recent Fortran compiler for Catalina and later is available at
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg}.
-(That does not run on High Sierra.)
+(That does not run on High Sierra.)  This supports the option
+@option{-fc-prototypes-external} mentioned in the `Writing R Extensions'
+manual
 
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
