@@ -5058,7 +5058,8 @@ that, configure with @option{--without-readline}.
 @item
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
 @code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
-for the full range of bitmapped graphics devices.
+for the full range of bitmapped graphics devices.  (Some builds of
+@code{tiff} may require @code{libwepb} and/or @code{openjpeg}.)
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -5225,7 +5226,9 @@ Cflags:
 @end example
 @noindent
 If using a static build of Cairo, configure @R{} with option
-@option{--with-static-cairo}.
+@option{--with-static-cairo}.  Note that the list of components is
+liable to change: running @command{pkg-config cairo --exists
+--print-errors} should tell you if any others are required.
 
 If you have XQuartz 2.7.x installed and ensure XQuartz's
 @code{pkg-config} files are found first on its configuration path, Cairo
@@ -5251,8 +5254,12 @@ The best font experience of Cairo graphics will be to use it in
 combination with Pango which will match that supported on most other
 Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
 if all the external software required by both Pango and Cairo is
-available: running @command{pkg-config pangocairo --libs} should show if
-the installation suffices.
+available: running @command{pkg-config pangocairo --exists
+--print-errors} should show if the installation suffices and if not,
+what is missing.  At the time of writing the @cputype{arm64} components
+@code{cairo}, @code{ffi}, @code{fontconfig}, @code{freetype},
+@code{ffi}, @code{glib}, @code{harfbuzz}, @code{pango} and @code{xml2}
+sufficed.
 @c It seems libgraphite2 required by recent harfbuzz is only built
 @c dynamically.
 
