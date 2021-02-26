@@ -1,4 +1,4 @@
-#### Regression test of translation not working outside packages  in R < 4.1.0.
+#### Regression test of translation not working outside packages for R < 4.1.0.
 #### We try French (set in Makefile.common).
 
 ### First off, message translation needs to be supported.
@@ -14,7 +14,7 @@ Sys.getlocale()
 OK <- l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]]
 if (!OK) {
     if(.Platform$OS.type == "windows") {
-        OK <- l10n_info()[[]] == 28605 ## Latin-9
+        OK <- l10n_info()[["codepage"]] == 28605 ## Latin-9
     } else {
         z <- l10n_info()[["codeset"]]
         ## macOS and Solaris have the first, Linux the second.
