@@ -1,77 +1,36 @@
-#### Report locale
-Sys.getlocale()
+#### Regression test of translation not working outside packages  in R < 4.1.0.
+#### We try French (set in Makefile.common).
 
-#### It may be wise to skip locales that do not support French
-## if( !( l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]] ) ) {
-##     warning("The locale encoding does not support French")
-##     q("no")
-## }
-
-#### Checking Translation / domains etc: *NOT* called with LC_*=* or LANGUAGE=* settings
-
-if (!capabilities("NLS")) { ## e.g. when R was configured by  --disable-nls
-    warning("no natural language support")
+### First off, message translation needs to be supported.
+if (!capabilities("NLS")) { ## e.g. when R was configured with --disable-nls
+    message("no natural language support")
     q("no")
 }
 
-.pt <- proc.time()
-tryCid <- function(expr) tryCatch(expr, error = identity)
-tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
-identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
-assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
-onWindows <- .Platform$OS.type == "windows"
-.M <- .Machine
-str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
-b64 <- .M$sizeof.pointer == 8
+#### Report locale
+Sys.getlocale()
 
-Sys.setenv(LANGUAGE = "en")
-##                     ---  only has effect in conjunction with valid LC_*  ( <--> ./reg-tests-3.R )
-oloc <- Sys.getlocale("LC_CTYPE")
-mbyte.lc <- {
-    if(.Platform$OS.type == "windows")
-	"English_United States.28605"
-    ## Would be better to use l10n_info()[["UTF-8"]]:
-    ## Older Linuxen used .utf8 and on macOS locales without suffix are UTF-8.
-    else if(grepl("[.]UTF-8$", oloc, ignore.case=TRUE)) # typically nowadays
-	oloc
-    else
-	"en_US.UTF-8" # or rather "C.UTF-8" or from  system("locale -a | fgrep .utf8")
+#### Skip locales that do not support French (especially C)
+OK <- l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]]
+if (!OK) {
+    if(.Platform$OS.type == "windows") {
+        OK <- l10n_info()[[]] == 28605 ## Latin-9
+    } else {
+        z <- l10n_info()[["codeset"]]
+        ## macOS and Solaris have the first, Linux the second.
+        OK <- tolower(z) %in% c("iso8859-15", "iso-8859-15", "iso885915")
+    }
 }
-identical(Sys.setlocale("LC_CTYPE", mbyte.lc), mbyte.lc) # "ok" if not
-if(.Platform$OS.type != "windows")# <-- check for now
-    Sys.setlocale("LC_MESSAGES", mbyte.lc)
+if( !OK ) {
+    message("The locale encoding is not known to support French")
+    q("no")
+}
 
 ## Translation domain for a function not in a package: PR#17998
+tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage)
 chk0 <- function(x) stopifnot(x == 0)
-LNG <- Sys.getenv("LANGUAGE") ; Sys.setenv(LANGUAGE = "fr")
-(mE <- tryCmsg(chk0( ))) # "l'argument \"x\" est manquant, avec aucune valeur par défaut"
-(m1 <- tryCmsg(chk0(1))) # (*not* translated in R <= 4.0.x)
-               chk0(0)
-grepl4 <- function(pattern, x, ...)
-    c(def = grepl(pattern, x, perl=FALSE, useBytes=FALSE),
-      perl= grepl(pattern, x, perl=TRUE,  useBytes=FALSE),
-      useB= grepl(pattern, x, perl=FALSE, useBytes=TRUE),
-      BOTH= grepl(pattern, x, perl=TRUE,  useBytes=TRUE))
-
-symnum(abbr = FALSE,
-    rbind(
-      aigu = grepl4("manquant\\b.* par défaut",   mE)
-    ,  d   = grepl4("manquant\\b.* par d.faut",   mE)
-    ,  dQ  = grepl4("manquant\\b.* par d.?faut",  mE)
-    , ddQ  = grepl4("manquant\\b.* par d..?faut", mE)
-    )
-)
-## On Windows, using
-##   source("reg-translation.R", echo=TRUE, encoding="UTF-8", max.deparse.length=300)
-## gives an (4 x 4 matrix) of __all__ TRUE  ~~~~~~~~~~~~~~~~
-
-stopifnot(grepl("manquant\\b.* par d..?faut", mE), # using 'é'(e-aigu) fails on Windows
-          grepl("n'est pas", m1))
-Sys.setenv(LANGUAGE = LNG); Sys.getenv("LANGUAGE") # reset to previous
-## Default 'domain' for stop()  was not determined correctly in R <= 4.0.3
-
-
-
-## keep at end
-rbind(last =  proc.time() - .pt,
-      total = proc.time())
+(m1 <- tryCmsg(chk0(1))) # (not translated in R < 4.1.0)
+## switch back to English (if possible) for final report.
+Sys.setenv(LANGUAGE="en")
+m2 <- "x == 0 n'est pas TRUE"
+if(m1 != m2) stop("message was not translated to French")

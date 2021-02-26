@@ -53,7 +53,6 @@ test-src-reg-1 = array-subset.R \
   reg-examples1.R reg-examples2.R reg-packages.R p-qbeta-strict-tst.R d-p-q-r-tst-2.R \
   r-strict-tst.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4-examples.R reg-BLAS.R
- # reg-translation.R # skip for now
 ## added to in Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
@@ -136,7 +135,7 @@ reg-plot.Rout: reg-plot.R
 reg-translation.Rout: reg-translation.R
 	@rm -f $@ $@.fail $@.log
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)" > $@.log
-	@$(R2) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && rm $@.log && exit 1)
+	@LANGUAGE=fr $(R2) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && rm $@.log && exit 1)
 	@$(ECHO) "$(ECHO_T) OK" >> $@.log
 	@cat $@.log; rm $@.log
 
@@ -186,7 +185,7 @@ test-all-basics:
 
 ## if you change this, also edit Makefile.install
 ## The definitions for Standalone are in Makefile.{in,win}.
-all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp \
+all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp Translation \
     Internet2 CRANtools Segfault Standalone Conditions Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
@@ -321,6 +320,11 @@ test-Segfault:
 	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
 	-@rm -Rf data dumpdata.R ./-package.Rd ./-Ex.R .Rd F.Rd [a-z]*0.Rd Rprof.out Rplots* \
 	    PACKAGES PACKAGES.gz [A-Za-z]*-package.Rd FALSE.* mirrors.html
+
+test-Translation:
+	@$(ECHO) "running tests of translation"
+	@rm -f reg-translation.Rout
+	@$(MK) reg-translation.Rout RVAL_IF_DIFF=0
 
 ## Not run by any other target
 test-UTF-8:
