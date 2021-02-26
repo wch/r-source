@@ -7,8 +7,9 @@ if (!capabilities("NLS")) { ## e.g. when R was configured with --disable-nls
     q("no")
 }
 
-#### Report locale
+#### Report locale and charset
 Sys.getlocale()
+l10n_info()
 
 #### Skip locales that do not support French (especially C)
 OK <- l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]]
