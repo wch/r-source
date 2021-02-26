@@ -369,9 +369,14 @@ void attribute_hidden R_check_locale(void)
 	if (R_strieql(p, "ISO8859-1")) known_to_be_latin1 = latin1locale = TRUE;
 # if __APPLE__
 	/* On Darwin 'regular' locales such as 'en_US' are UTF-8 (hence
-	   MB_CUR_MAX == 6), but CODESET is "" */
-	if (*p == 0 && MB_CUR_MAX == 6)
+	   MB_CUR_MAX == 6), but CODESET is "" 
+	   2021: that comment dated from 2008: MB_CUR_MAX is now 4 in 
+	   a UTF-8 locale, even on 10.13. 
+	*/
+	if (*p == 0 && (MB_CUR_MAX == 4 || MB_CUR_MAX == 6)) {
 	    known_to_be_utf8 = utf8locale = TRUE;
+	    strcpy(codeset, "UTF-8");
+	}
 # endif
 	if (utf8locale)
 	    strcpy(native_enc, "UTF-8");

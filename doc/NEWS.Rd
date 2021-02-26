@@ -578,7 +578,12 @@
 
       \item \code{cut.Date()} and \code{cut.POSIXt()} could produce
       an empty last interval for \code{breaks = "months"} or
-      \code{breaks = "years"}.  Reported as \PR{18053} by Christopher Carbone.      
+      \code{breaks = "years"}.  Reported as \PR{18053} by Christopher Carbone.
+
+      \item Detection of the encoding of \sQuote{regular} macOS locales
+      such as \samp{en_US} (which is UTF-8) had been broken by a macOS
+      change: fortunately these are now rarely used with
+      \samp{en_US.UTF-8} being preferred.
     }
   }
 }
