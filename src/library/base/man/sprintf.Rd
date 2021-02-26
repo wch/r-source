@@ -36,8 +36,9 @@ gettextf(fmt, \dots, domain = NULL)
   is done in parallel.  Zero-length arguments are allowed and will give
   a zero-length result.  All arguments are evaluated even if unused, and
   hence some types (e.g., \code{"symbol"} or \code{"language"}, see
-  \code{\link{typeof}}) are not allowed. Arguments unused by format result
-  in a warning, but format \code{\%.0s} skips an argument.
+  \code{\link{typeof}}) are not allowed. Arguments unused by \code{fmt}
+  result in a warning. (The format \code{\%.0s} can be used to
+  \dQuote{skip} an argument.)
 
   The following is abstracted from Kernighan and Ritchie (see
   References): however the actual implementation will follow the C99
