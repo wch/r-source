@@ -1,6 +1,6 @@
 % File src/library/base/man/list.files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{list.files}
@@ -89,6 +89,8 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
   commands and shells) to regular expressions.
 
   \code{\link{Sys.glob}} for wildcard expansion on file paths.
+  \code{\link{basename}} and \code{dirname}, useful for splitting paths
+  into non-directory (aka \sQuote{filename}) and directory parts.
 }
 \examples{
 list.files(R.home())
