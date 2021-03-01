@@ -306,3 +306,14 @@ stopifnot(
     identical(s.2a, c("Test: a100-bc2300 boo", "h\u00e932000+w\u00f64100")),
     identical(s.2b, c("~A#1~BC@23~", "~H\u00e9#320~W\u00d6@41~")))
 
+## Check that the perl switch is working fully (h/t Michael Chirico)
+pat <- "(?<first>\\d+)"
+gregexec(pat, "123 456", perl=TRUE)
+## TRE does not support name capts
+stopifnot(inherits(try(gregexec(pat, "123 456", perl=FALSE)), "try-error"))
+local({
+    old.warn <- options(warn = 2)
+    on.exit(options(old.warn))
+    gregexec("123", "123 456", fixed=TRUE) # No warning with perl=FALSE
+})
+

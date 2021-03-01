@@ -137,8 +137,8 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
 gregexec <- function(pattern, text, ignore.case = FALSE, perl = FALSE,
                      fixed = FALSE, useBytes = FALSE) {
     dat <- gregexpr(pattern = pattern, text=text, ignore.case = ignore.case,
-                    fixed = fixed, useBytes = useBytes, perl = TRUE)
-    if(perl) {
+                    fixed = fixed, useBytes = useBytes, perl = perl)
+    if(perl && !fixed) {
         ## Perl generates match data, so use that
         capt.attr <- c('capture.start', 'capture.length', 'capture.names')
         process <- function(x) {
@@ -156,7 +156,7 @@ gregexec <- function(pattern, text, ignore.case = FALSE, perl = FALSE,
         }
         lapply(dat, process)
     } else {
-        ## For TRE we must compute the match data ourselves
+        ## For TRE or fixed we must compute the match data ourselves
         m1 <- lapply(regmatches(text, dat),
                      regexec, pattern = pattern, ignore.case = ignore.case,
                      perl = perl, fixed = fixed, useBytes = useBytes)
