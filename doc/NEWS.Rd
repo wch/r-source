@@ -194,6 +194,11 @@
       \item (Not Windows.)
       \code{l10n_info()} reports an additional element, the name of the
       encoding as reported by the OS.
+
+      \item New function \code{gregexec()} which generalizes \code{regexec()}
+      to find \emph{all} disjoint matches and well as all substrings
+      corresponding to parenthesized subexpressions of the given regular
+      expression.  Contributed by Brodie Gaslam.
     }
   }
 
