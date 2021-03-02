@@ -20,20 +20,21 @@ l10n_info()
 
   \emph{Not} on Windows:
 
-  \item{codeset}{character.  The encoding name as reported by the
-    non-Windows OS, possibly \code{""}. (Added in \R 4.1.0.  Encoding
-    names are OS-specific.)}
+  \item{codeset}{character.  The encoding name as reported by the OS,
+    possibly \code{""}. (Added in \R 4.1.0.  Encoding names are
+    OS-specific.)}
 
   Only on Windows:
 
   \item{codepage}{integer: the Windows codepage corresponding to the
     locale \R is using (and not necessarily that Windows is using).}
   \item{system.codepage}{integer: the Windows system/ANSI codepage
-    (the codepage Windows is using).}
+    (the codepage Windows is using).  Added in \R 4.1.0.}
 }
 \details{
-  %% on Windows this looks at the codepage as returned by setlocale.
-  %% elsewhere it uses nl_langinfo(CODESET).
+  %% On Windows this looks at the codepages as returned by setlocale(LC_CTYPE)
+  %%  and getACP (for system.codepage).
+  %% Elsewhere it uses nl_langinfo(CODESET).
   \sQuote{A Latin-1 locale} includes supersets (for printable
   characters) such as Windows codepage 1252 but not Latin-9 (ISO 8859-15).
 

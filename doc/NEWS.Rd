@@ -193,12 +193,18 @@
 
       \item (Not Windows.)
       \code{l10n_info()} reports an additional element, the name of the
-      encoding as reported by the OS.
+      encoding as reported by the OS (which may differ from the
+      encodoing part (if any) of the result from
+      \code{Sys.getlocale("LC_CTYPE")}.
 
       \item New function \code{gregexec()} which generalizes \code{regexec()}
       to find \emph{all} disjoint matches and well as all substrings
       corresponding to parenthesized subexpressions of the given regular
       expression.  Contributed by Brodie Gaslam.
+
+      \item New function \code{charClass()} in package \pkg{utils} to
+      query the wide-character classification functiions in use (such as
+      \code{iswprint}).
     }
   }
 
@@ -589,6 +595,16 @@
       such as \samp{en_US} (which is UTF-8) had been broken by a macOS
       change: fortunately these are now rarely used with
       \samp{en_US.UTF-8} being preferred.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.0.4 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The change to the internal table in \R 4.0.4 for
+      \code{iswprint} has been reverted: it contained some errors in
+      printability of \sQuote{East Asian} characters.
     }
   }
 }

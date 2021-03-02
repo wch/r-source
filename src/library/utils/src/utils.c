@@ -50,7 +50,38 @@ SEXP unzip(SEXP args)
     return Runzip(CDR(args));
 }
 
+#include <wctype.h>
+#include "rlocale.h" // may remap iswctype, wctype
 
+#if defined(USE_RI18N_FNS) || (defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE))
+SEXP charClass(SEXP x, SEXP scl)
+{
+    if (!isInteger(x))
+	error(_("argument 'x' must be integer"));
+    R_xlen_t n = XLENGTH(x);
+    int *px = INTEGER(x);
+    if (!isString(scl))
+	error(_("argument 'class' must be a character string"));
+    const char *cl = CHAR(STRING_ELT(scl, 0));
+    wctype_t wcl = wctype(cl);
+    if(wcl == 0) error("character class \"%s\" is invalid", cl);
+    
+    SEXP ans = allocVector(LGLSXP, n);
+    int *pans = LOGICAL(ans);
+    for (R_xlen_t i = 0; i < n; i++) {
+	int this = px[i];
+	if (this < 0) pans[i] = NA_LOGICAL;
+	else pans[i] = iswctype(this, wcl);
+    }
+    return ans;
+}
+#else
+SEXP charClass(SEXP x, SEXP scl)
+{
+    error("'charClass' is not available on this platform");
+    return R_NilValue;
+}
+#endif
 
 
 #include <lzma.h>
