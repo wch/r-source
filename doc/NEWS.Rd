@@ -5,6 +5,16 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.0.4 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The change to the internal table in \R 4.0.4 for
+      \code{iswprint} has been reverted: it contained some errors in
+      printability of \sQuote{East Asian} characters.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.0.4}{
 
   \subsection{NEW FEATURES}{
