@@ -139,7 +139,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
 }
 \section{Encodings}{
   By default the input is read and parsed in  the current encoding of
-  the \R session.  This is usually what it required, but occasionally
+  the \R session.  This is usually what is required, but occasionally
   re-encoding is needed, e.g.\sspace{}if a file from a UTF-8-using system is to
   be read on Windows (or \emph{vice versa}).
 
@@ -190,10 +190,12 @@ if(someCond) withAutoprint({
 ## If you want to source() a bunch of files, something like
 ## the following may be useful:
  sourceDir <- function(path, trace = TRUE, ...) {
+    op <- options(); on.exit(options(op)) # to reset after each 
     for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
        if(trace) cat(nm,":")
        source(file.path(path, nm), ...)
        if(trace) cat("\n")
+       options(op)
     }
  }
 
