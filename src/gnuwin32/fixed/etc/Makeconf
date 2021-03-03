@@ -206,7 +206,8 @@ R_XTRA_CPPFLAGS = -I"$(R_HOME)/include" -DNDEBUG
 R_XTRA_CXXFLAGS = 
 R_XTRA_FFLAGS =  @GF7OPTS@
 
-ifneq "$(LTO)" ""
+ifneq "$(LTO_OPT)" ""
+LTO = $(LTO_OPT)
 AR = $(BINPREF)gcc-ar
 NM = $(BINPREF)gcc-nm
 RANLIB = $(BINPREF)gcc-ranlib
