@@ -1234,7 +1234,6 @@ static void *latin1_wobj = NULL, *utf8_wobj=NULL;
 
 /* This may return a R_alloc-ed result, so the caller has to manage the
    R_alloc stack */
-attribute_hidden /* but not hidden on Windows, where it was used in tcltk.c */
 const wchar_t *wtransChar(SEXP x)
 {
     void * obj;
