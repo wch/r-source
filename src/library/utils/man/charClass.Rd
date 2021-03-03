@@ -32,7 +32,7 @@ charClass(x, class)
       except whitespace).}
     \item{\code{"lower"}}{Lower-case alphabetic.}
     \item{\code{"print"}}{Printable characters.}
-    \item{\code{"punct"}}{Punctuation characters. Some platforms treat all
+    \item{\code{"punct"}}{Punctuation characters.  Some platforms treat all
       non-alphanumeric graphical characters as punctuation.}
     \item{\code{"space"}}{Whitespace, including tabs, form and line
       feeds and carriage returns.  Some OSes include non-breaking
@@ -43,13 +43,16 @@ charClass(x, class)
 
   Alphabetic characters contain all lower- and upper-case ones and some
   others (for example, those in \sQuote{title case}).
+
+  Whether a character is printable is used to decide whether to escape
+  it when printing -- see the help for \code{\link{print.default}}.
 }
 \value{
   A logical vector of the same length as \code{x}.
 }
 \note{
-  Non-ASCII digits are excluded by C99 from the class \code{"digit"}
-  and most platforms will have them as alphabetic.
+  Non-ASCII digits are excluded by the C99 standard from the class
+  \code{"digit"}: most platforms will have them as alphabetic.
   
   It is an assumption that the system's wide character classification
   functions are coded in Unicode points, but this is known to be true
@@ -74,8 +77,8 @@ X
 charClass(0xac, "space")
 charClass(0xac, "punct")
 
-## How many printable characters are there? (ca 250,000, differs by OS)
-## There are 2^21 - 1 possible Unicode points, most not yet assigned.
+## How many printable characters are there? (At least 250,000, differs by OS)
+## There are 2^21 - 1 possible Unicode points (most not yet assigned).
 pr <- charClass(1:0x1fffff, "print") 
 table(pr)
 }
