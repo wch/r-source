@@ -48,8 +48,8 @@
       \item The \code{format()} method for class \code{"ftable"} gets a
       new option \code{justify}.  (Suggested by Thomas Soeiro.)
 
-      \item New \code{...names()} utility, proposed by Neal Fultz in
-      \PR{17705}.
+      \item New \code{...names()} utility.  (Proposed by Neal Fultz in
+      \PR{17705}.)
 
       \item \code{type.convert()} now warns when its \code{as.is} argument
       is not specified, as the help file always said it \emph{should}.  In
@@ -399,9 +399,9 @@
       ~/Library/R/x86_64/x.y/library
       ~/Library/R/arm64/x.y/library
 }
-      This uses the CPU type \R was built for, so when a
-      \cputype{x86_64} build of R is run under Rosetta emulation on an
-      \cputype{arm64} Mac, the first is used.
+      This uses the CPU type \R (and hence the packages) were built for,
+      so when a \samp{x86_64} build of R is run under Rosetta emulation on
+      an \samp{arm64} Mac, the first is used. 
     }
   }
 
