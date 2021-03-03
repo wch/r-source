@@ -25,7 +25,7 @@
  *  It does 2 things:
  * (a) supplies wrapper/substitute wc[s]width functions for use in 
  *    character.c, errors.c, printutils.c, devPS.c, RGui console.
- * (b) Defines a replacment for iswctype to be used on Windows, maxOS and AIX.
+ * (b) Defines a replacement for iswctype to be used on Windows, maxOS and AIX.
  * in gram.c, the TRE engine and elsewhere.
  *
  * It is not an installed header.
