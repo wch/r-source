@@ -417,9 +417,6 @@
  RguiPackageMenu
  Rgui_Edit
  Rgui_configure
- Ri18n_iswctype
- Ri18n_wcswidth
- Ri18n_wctype
  Rm_calloc
  Rm_free
  Rm_malloc
