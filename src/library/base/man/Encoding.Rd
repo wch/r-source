@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -47,7 +47,8 @@ enc2utf8(x)
 
   There are other ways for character strings to acquire a declared
   encoding apart from explicitly setting it (and these have changed as
-  \R has evolved).  Functions \code{\link{scan}},
+  \R has evolved).  The parser marks strings containing \samp{\\u} or
+  \samp{\\U} escapes.  Functions \code{\link{scan}},
   \code{\link{read.table}}, \code{\link{readLines}}, and
   \code{\link{parse}} have an \code{encoding} argument that is used to
   declare encodings, \code{\link{iconv}} declares encodings from its

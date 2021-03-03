@@ -16,4 +16,4 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-charClass <- function(x, class) .Call(C_charClass, as.integer(x), class)
+charClass <- function(x, class) .Call(C_charClass, x, class)

@@ -12,7 +12,9 @@
 charClass(x, class)
 }
 \arguments{
-  \item{x}{An integer vector of Unicode points.}
+  \item{x}{\strong{Either} a UTF-8-encoded length-1 character vector
+    \strong{or} an integer vector of Unicode points (or a vector
+    coercible to integer).}
   \item{class}{A character string, one of those given in the
     \sQuote{Details} section.}
 }
@@ -46,9 +48,19 @@ charClass(x, class)
 
   Whether a character is printable is used to decide whether to escape
   it when printing -- see the help for \code{\link{print.default}}.
+
+  If \code{x} is a character string it should either be ASCII or declared
+  as UTF-8 -- see \code{\link{Encoding}}.
+
+  \code{charClass} was added in \R 4.1.0.  A less direct way to examine
+  character classes which also worked in earlier versions is to use
+  something like \code{grepl("[[:print:]]", intToUtf8(x))} -- however,
+  the regular-expression code might not use the same classification
+  functions as printing and on macOS used not to.
 }
 \value{
-  A logical vector of the same length as \code{x}.
+  A logical vector of the length the number of characters or integers in
+  \code{x}.
 }
 \note{
   Non-ASCII digits are excluded by the C99 standard from the class
@@ -62,23 +74,24 @@ charClass(x, class)
   one platform, but that seems no longer to be seen.
 }
 \seealso{
-  Character classes are used in \link{regular exression}s.
+  Character classes are used in \link{regular expression}s.
   
   The OS's \command{man} pages for \code{iswctype} and \code{wctype}.
 }
 \examples{
-x <- c(32,48:70)
+x <- c(48:70, 32, 0xa0) # Last is non-breaking space
 cl <- c("alnum", "alpha", "blank", "digit", "graph", "punct", "upper", "xdigit")
 X <- lapply(cl, function(y) charClass(x,y)); names(X) <- cl
-X <- as.data.frame(X); row.names(X) <- intToUtf8(x, multiple=TRUE)
+X <- as.data.frame(X); row.names(X) <- sQuote(intToUtf8(x, multiple = TRUE))
 X
 
-## non-breaking space
-charClass(0xac, "space")
-charClass(0xac, "punct")
+charClass("ABC123", "alpha")
+## Some accented capital Greek characters
+(x <- "\u0386\u0388\u0389")
+charClass(x, "upper")
 
-## How many printable characters are there? (At least 250,000, differs by OS)
-## There are 2^21 - 1 possible Unicode points (most not yet assigned).
+## How many printable characters are there? (Around 280,000 in Unicode 13.)
+## There are 2^21-1 possible Unicode points (most not yet assigned).
 pr <- charClass(1:0x1fffff, "print") 
 table(pr)
 }
