@@ -3182,3 +3182,9 @@ a <- 1:12; (z <- a + a*1i); names(z) <- letters[seq_along(z)]; z
 stopifnot( identical(ddd, dd2) )
 ## In R <= 4.0.3,  printed to console (no warning, no message!):
 ## "Unknown Type: ... (11)"
+
+
+## printCoefmat() should keep NaN values (PR#17336)
+##cm <- summary(lm(c(0,0,0) ~ 1))$coefficients
+cm <- cbind(Estimate = 0, SE = 0, t = NaN, "Pr(>|t|)" = NaN)
+printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0

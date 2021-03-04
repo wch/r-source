@@ -8090,3 +8090,11 @@ mean of x
 > ## In R <= 4.0.3,  printed to console (no warning, no message!):
 > ## "Unknown Type: ... (11)"
 > 
+> 
+> ## printCoefmat() should keep NaN values (PR#17336)
+> ##cm <- summary(lm(c(0,0,0) ~ 1))$coefficients
+> cm <- cbind(Estimate = 0, SE = 0, t = NaN, "Pr(>|t|)" = NaN)
+> printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0
+     Estimate SE   t Pr(>|t|)
+[1,]        0  0 NaN      NaN
+> 
