@@ -496,7 +496,8 @@ in a later subsection.
 @c DESCRIPTION field SystemRequirements
 Dependencies external to the @R{} system should be listed in the
 @samp{SystemRequirements} field, possibly amplified in a separate
-@file{README} file.
+@file{README} file.  This includes specifying a non-default C++ standard
+and the need for GNU @command{make}.
 
 @c DESCRIPTION field URL
 The @samp{URL} field may give a list of @acronym{URL}s
@@ -2854,6 +2855,11 @@ feature tests as well as resources such as
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
 @uref{https://libcxx.llvm.org/docs/Cxx1zStatus.html} to see if the
 features you want to use are widely implemented.
+
+A requirement of C++17 or later should always be declared in the
+@samp{SystemRequirements} field (as well as in @file{src/Makevars} or
+@file{src/Makefile}) so this is shown on the package's summary pages on
+@acronym{CRAN} or similar.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
