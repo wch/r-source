@@ -34,7 +34,7 @@
 ## If we want this it would be better to factor out the core of checkConflicts.
 ## searchConflicts <- function(pkg) {
 ##     vars <- getNamespaceExports(pkg)
-##     conflicts <- function(pos) intersect(vars, ls(pos, all = TRUE))
+##     conflicts <- function(pos) intersect(vars, ls(pos, all.names = TRUE))
 ##     val <- Filter(length, sapply(search()[-1], conflicts))
 ##     if (length(val)) val else NULL
 ## }

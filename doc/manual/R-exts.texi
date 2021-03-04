@@ -7738,7 +7738,7 @@ tidy up.  Create a file @file{tidy.R} containing
 @example
 @group
 source("myfuns.R", keep.source = FALSE)
-dump(ls(all = TRUE), file = "new.myfuns.R")
+dump(ls(all.names = TRUE), file = "new.myfuns.R")
 @end group
 @end example
 

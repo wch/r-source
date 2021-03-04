@@ -2498,7 +2498,7 @@ setInlineHandler("is.symbol", function(e, cb, cntxt)
 ##
 
 local({
-    basevars <- ls('package:base', all = TRUE)
+    basevars <- ls('package:base', all.names = TRUE)
     types <- sapply(basevars, function(n) typeof(get(n)))
     for (s in basevars[types == "special"])
         if (! haveInlineHandler(s, "base"))
