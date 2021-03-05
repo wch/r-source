@@ -1561,8 +1561,8 @@ packages.
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
 unsigned/not notarized: to install those Control/right/two-finger click,
-select @samp{Open With} and @samp{Installer}.)  There may be an
-experimental tarball for @cputype{arm64}.
+select @samp{Open With} and @samp{Installer}.)  There may be a
+pre-release package for @cputype{arm64} for testers only (currently).
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -1571,8 +1571,8 @@ It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
 (`Updates' from the `App Store' on Mojave and earlier) to be sure.  (If
 using XQuartz, check that is compatible: at the time of writing the
-latest version was 2.7.11 from October 2016 but betas of 2.8.0 had just
-become available and were being offered as upgrades.)
+latest version was 2.7.11 from October 2016 but pre-releases of 2.8.0
+had just become available and were being offered as upgrades.)
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -1593,7 +1593,7 @@ want this time @dots{}).
 Various parts of the build require XQuartz to be installed: see
 @uref{https://www.xquartz.org/}.  These include the @pkg{tcltk} package
 and the @code{X11} device: attempting to use these without XQuartz will
-remind you.@footnote{At least if @command{otool} is installed: it is
+if possible remind you.@footnote{If @command{otool} is installed: it is
 part of the macOS Command Line Tools.}  This is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
@@ -1618,13 +1618,12 @@ For building @R{} from source, see @ref{macOS}.
 There are two ways to run @R{} on macOS from a @acronym{CRAN} binary
 distribution.
 
-There is a GUI console normally installed@footnote{Not yet available for
-@cputype{arm64}.} with the @R{} icon in @file{/Applications} which you
-can run by double-clicking (e.g.@: from Launchpad or Finder).  (If you
-cannot find it there it was possibly installed elsewhere so try
-searching for it in Spotlight.) This is usually referred to as @Rapp{}
-to distinguish it from command-line @R{}: its user manual is currently
-part of the macOS FAQ at
+There is a GUI console normally installed with the @R{} icon in
+@file{/Applications} which you can run by double-clicking (e.g.@: from
+Launchpad or Finder).  (If you cannot find it there it was possibly
+installed elsewhere so try searching for it in Spotlight.) This is
+usually referred to as @Rapp{} to distinguish it from command-line @R{}:
+its user manual is currently part of the macOS FAQ at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
 can be viewed from @Rapp{}'s `Help' menu.
 
@@ -1634,7 +1633,7 @@ Terminal@footnote{The installer puts links to @command{R} and
 @command{Rscript} in @file{/usr/local/bin}.  If these are missing (as
 they may be under `Big Sur'), you can run directly the copies in
 @file{/Library/Frameworks/R.framework/Resources/} or link those yourself
-to somewhere on your path.} so these can be typed as commands like any
+to somewhere on your path.} so these can be typed as commands as on any
 other Unix-alike: see the next chapter of this manual.  There are some
 small differences which may surprise users of @R{} on other platforms,
 notably the default location of the personal library directory (under
@@ -5073,8 +5072,8 @@ location of @file{/opt/X11}, e.g.@: by
 although without this linked versions under @file{/usr/X11} will be
 found.  (It seems that for some versions of macOS/XQuartz
 @file{/usr/X11} may exist but be a link to a non-existent directory:
-reinstalling XQuartz might help.)  Be wary of beta versions of XQuartz,
-which may be offered as an update.
+reinstalling XQuartz might help.)  Be wary of pre-release versions of
+XQuartz, which may be offered as an update.
 
 @item
 An Objective-C compiler, as provided by @command{clang} in the Command
@@ -5086,7 +5085,7 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
 @item
-Support of Cairo-based graphics devices. @xref{Cairo graphics}.
+Support for Cairo-based graphics devices. @xref{Cairo graphics}.
 
 @item
 A TeX installation. @xref{Other libraries}.
@@ -5142,7 +5141,7 @@ tar xf subversion-1.14.0-darwin15.6.tar.gz
 sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
 @end example
 
-If you have another build@footnote{For example, some Homebrew
+If you have a build@footnote{For example, some Homebrew
 distributions.} of @code{cairo} with dynamic libraries, you can add
 option @option{--without-static-cairo} to the @command{configure} call
 (it probably would work anyway).
@@ -5256,12 +5255,10 @@ Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
 if all the external software required by both Pango and Cairo is
 available: running @command{pkg-config pangocairo --exists
 --print-errors} should show if the installation suffices and if not,
-what is missing.  At the time of writing the @cputype{arm64} components
-@code{cairo}, @code{ffi}, @code{fontconfig}, @code{freetype},
-@code{ffi}, @code{glib}, @code{harfbuzz}, @code{pango} and @code{xml2}
-sufficed.
-@c It seems libgraphite2 required by recent harfbuzz is only built
-@c dynamically.
+what is missing.  At the time of writing components were available only
+for @cputype{arm64}, where components @code{cairo}, @code{ffi},
+@code{fontconfig}, @code{freetype}, @code{ffi}, @code{glib},
+@code{harfbuzz}, @code{pango} and @code{xml2} sufficed.
 
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
 @subsection Other C/C++ compilers
@@ -5331,11 +5328,12 @@ can be used @emph{via} the configuration option
 
 @noindent
 to provide potentially higher-performance versions of the @acronym{BLAS}
-and LAPACK routines.@footnote{It was reported that for some non-Apple
-toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} from @uref{https://releases.llvm.org}
-though.}  This also includes a full LAPACK which can be used @emph{via}
-@option{--with-lapack}: however, the version of LAPACK it contains has
+and LAPACK routines.@footnote{It has been reported that for some
+non-Apple toolchains @code{CPPFLAGS} needed to contain
+@code{-D__ACCELERATE__}: not needed for @command{clang} from
+@uref{https://releases.llvm.org} though.}  This also includes a full
+LAPACK which can be used @emph{via} @option{--with-lapack}: however, the
+version of LAPACK it contains has
 @c 3.2.1 in Big Sur.
 often been seriously old (and is not used unless @option{--with-lapack}
 is specified).
@@ -5469,11 +5467,11 @@ Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
 @uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 or (when released ca 2020-09) 17 (but
-not 9, 10, 12--16 which have/had a 6-month lifetime).
+long-term support, e.g.@: 8 or 11 or (when released ca 2020-09) 17 but
+not 9, 10, 12--16 which have/had a 6-month lifetime.
 
 Binary distributions of @R{} are built against a specific version
-(e.g.@: 1.8.0_241 or 11.0.6) of Java so @command{sudo R CMD javareconf}
+(e.g.@: 11.0.6) of Java so @command{sudo R CMD javareconf}
 will likely be needed to be run before using Java-using packages.
 
 To use Java (specifically, package @CRANpkg{rJava}) with a
@@ -5502,14 +5500,6 @@ JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
-@end example
-@noindent
-or
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home
-JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
-JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
-JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
 @noindent
 in @file{config.site}.
@@ -5655,8 +5645,6 @@ Sierra, which avoids the first two and any issues with C++ libraries.
 @node `Apple Silicon',  , Building binary packages, macOS
 @subsection @samp{arm64} aka `Apple Silicon'
 
-[This is work in progress.]
-
 @menu
 * Native builds::
 @end menu
@@ -5717,7 +5705,7 @@ link: to fix that change the symbolic link
 appropriate path can be found by running @command{xcrun
 -show-sdk-path}).
 
-A beta installation of XQuartz is available @emph{via}
+A pre-release of XQuartz is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
 supports both @cputype{arm64} and @cputype{x86_64} builds.  It does not
 contain @code{cairo}.
@@ -5748,7 +5736,7 @@ tar -C/ -xf jpeg-9d-darwin.20-arm64.tar.gz
 
 @noindent
 using @command{sudo} if necessary (it will be for the @file{tcltk}
-tarball which partially unpacks into @file{/Library/Frameworks}) and
+tarball which partially unpacks into @file{/Library/Frameworks} and
 hence conflicts with Intel versions of Aqua Tcl/Tk, for example from
 ActiveTcl).
 
