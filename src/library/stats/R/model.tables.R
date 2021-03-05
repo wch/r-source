@@ -41,7 +41,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
     m.factors <- m.factors[which]
     ## with cterms, can specify subset of tables by name
     if(!missing(cterms)) {
-	if(any(is.na(match(cterms, names(factors)))))
+	if(anyNA(match(cterms, names(factors))))
 	    stop("'cterms' argument must match terms in model object")
 	dn.proj <- dn.proj[cterms]
 	m.factors <- m.factors[cterms]
@@ -511,5 +511,3 @@ print.mtable <-
     }
     invisible(xxx)
 }
-
-

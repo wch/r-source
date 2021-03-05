@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RClassUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -825,7 +825,7 @@ reconcilePropertiesAndPrototype <-
       if(extends(prototypeClass, "classPrototypeDef")) {
           pnames <- prototype@slots
           prototype <- prototype@object
-          if(length(superClasses) == 0L && any(is.na(match(pnames, slots))))
+          if(length(superClasses) == 0L && anyNA(match(pnames, slots)))
               stop(sprintf(ngettext(sum(is.na(match(pnames, slots))),
                                     "named elements of prototype do not correspond to slot name: %s",
                                     "named elements of prototype do not correspond to slot names: %s"),
@@ -1627,7 +1627,7 @@ setDataPart <- function(object, value, check = TRUE) {
 .simpleCoerceExpr <- function(fromClass, toClass, fromSlots, toDef) {
     toSlots <- names(toDef@slots)
     sameSlots <- (length(fromSlots) == length(toSlots) &&
-		  !any(is.na(match(fromSlots, toSlots))))
+		  !anyNA(match(fromSlots, toSlots)))
     if(is.null(packageSlot(toClass))) {
         toClass <- toDef@className
         if(is.null(packageSlot(toClass))) # is this possible?
@@ -1971,7 +1971,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     supers <- names(def@contains)
     prevSupers <- names(prev@contains)
     if(length(supers) != length(prevSupers) ||
-       any(is.na(match(supers, prevSupers))))
+       anyNA(match(supers, prevSupers)))
         return(FALSE)
     verbose <- getOption("verbose")
     S3 <- "oldClass" %in% supers
@@ -1999,7 +1999,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     slots <- names(def@slots)
     prevSlots <- names(prev@slots)
     if(length(slots) != length(prevSlots) ||
-       any(is.na(match(slots, prevSlots))))
+       anyNA(match(slots, prevSlots)))
         return(FALSE)
     for(what in slots) {
         slotClasses <- def@slots
@@ -2149,7 +2149,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         } else {
             cwhere <- where
         }
-        subDef <- get(cname, envir = cwhere, inherits = FALSE)        
+        subDef <- get(cname, envir = cwhere, inherits = FALSE)
         extension <- extDefs[[what]]
         if(is.null(extension)) # not possible if the setIs behaved?
           warning(gettextf("no definition of inheritance from %s to %s, though the relation was implied by the setIs() from %s",

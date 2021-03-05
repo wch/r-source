@@ -58,7 +58,7 @@ princomp.default <-
     cl[[1L]] <- as.name("princomp")
     z <- if(!missing(x)) as.matrix(x)[subset, , drop = FALSE]
     if (is.list(covmat)) {
-        if(any(is.na(match(c("cov", "n.obs"), names(covmat)))))
+        if(anyNA(match(c("cov", "n.obs"), names(covmat))))
             stop("'covmat' is not a valid covariance list")
         cv <- covmat$cov
         n.obs <- covmat$n.obs

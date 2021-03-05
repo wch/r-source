@@ -254,7 +254,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         } else if (!nzchar(Sys.which(texi2dvi))) { # check provided path
             warning("texi2dvi script/program not available, using emulation")
             texi2dvi <- ""
-        }
+        } # else the provided one should work
     }
 
     envSep <- .Platform$path.sep
@@ -1242,7 +1242,7 @@ function()
         repos <- getOption("repos")
         ## This is set by utils:::.onLoad(), hence may be NULL.
         if(!is.null(repos) &&
-           !any(is.na(repos[nms])) &&
+           !anyNA(repos[nms]) &&
            (repos["CRAN"] != "@CRAN@"))
             repos <- repos[nms]
         else {

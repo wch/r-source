@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseRd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,9 +42,8 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     ## do this in two steps to minimize warnings in MBCS locales
     ## Note this is required to be on a line by itself,
     ## but some people have preceding whitespace
-    enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE)
-    enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", lines[enc],
-                value = TRUE)
+    enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE, value=TRUE)
+    enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", enc, value = TRUE)
     if(length(enc)) {
         if(length(enc) > 1L)
             warning(file0, ": multiple \\encoding lines, using the first",
@@ -65,7 +64,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     srcfile$Enc <- "UTF-8"
 
     if (encoding == "ASCII") {
-        if (any(is.na(iconv(lines, "", "ASCII"))))
+        if (anyNA(iconv(lines, "", "ASCII")))
             stop(file0, ": non-ASCII input and no declared encoding",
                  domain = NA, call. = warningCalls)
     } else {
@@ -84,28 +83,29 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
 
     warndups <- config_val_to_logical(Sys.getenv("_R_WARN_DUPLICATE_RD_MACROS_", "FALSE"))
 
-    if (permissive)
-	# FIXME:  this should test for a special class of warning rather than testing the
-	#         message, but those are currently not easily generated from C code.
-	result <- withCallingHandlers(.External2(C_parseRd, tcon, srcfile, "UTF-8",
+    result <- if(permissive)
+                  ## FIXME:  this should test for a special class of warning rather than testing the
+                  ##         message, but those are currently not easily generated from C code.
+                  withCallingHandlers(.External2(C_parseRd, tcon, srcfile, "UTF-8",
                                                  verbose, basename, fragment,
                                                  warningCalls, macros, warndups),
 		       warning = function(w)
 			    if (grepl("unknown macro", conditionMessage(w)))
 				tryInvokeRestart("muffleWarning"))
-    else
-	result <- .External2(C_parseRd, tcon, srcfile, "UTF-8",
+              else
+                  .External2(C_parseRd, tcon, srcfile, "UTF-8",
                              verbose, basename, fragment, warningCalls,
                              macros, warndups)
     result <- expandDynamicFlags(result)
     if (permissive)
-	result <- permissify(result)
-    result
+	permissify(result)
+    else
+        result
 }
 
 print.Rd <- function(x, deparse = FALSE, ...)
 {
-    cat(as.character.Rd(x, deparse = deparse), sep = "", collapse = "")
+    cat(as.character.Rd(x, deparse = deparse), sep = "")
     invisible(x)
 }
 
