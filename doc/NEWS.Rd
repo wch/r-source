@@ -43,7 +43,7 @@
       with identical levels.
 
       \item \code{apply()} gains a \code{simplify} argument to allow
-      disabling of simplication of results.
+      disabling of simplification of results.
 
       \item The \code{format()} method for class \code{"ftable"} gets a
       new option \code{justify}.  (Suggested by Thomas Soeiro.)
@@ -205,7 +205,7 @@
       \item (Not Windows.)
       \code{l10n_info()} reports an additional element, the name of the
       encoding as reported by the OS (which may differ from the
-      encodoing part (if any) of the result from
+      encoding part (if any) of the result from
       \code{Sys.getlocale("LC_CTYPE")}.
 
       \item New function \code{gregexec()} which generalizes \code{regexec()}
@@ -214,7 +214,7 @@
       expression.  (Contributed by Brodie Gaslam.)
 
       \item New function \code{charClass()} in package \pkg{utils} to
-      query the wide-character classification functiions in use (such as
+      query the wide-character classification functions in use (such as
       \code{iswprint}).
     }
   }

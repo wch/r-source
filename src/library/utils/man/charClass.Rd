@@ -6,7 +6,7 @@
 \alias{charClass}
 \title{Character Classification}
 \description{
-  An interface to the (C99) wide character classsification functions in use.
+  An interface to the (C99) wide character classification functions in use.
 }
 \usage{
 charClass(x, class)
