@@ -237,7 +237,7 @@ packages to @acronym{CRAN}: current instructions are linked from
 @section Package structure
 @cindex Package structure
 
-The sources of an @R{} package consists of a subdirectory containing a
+The sources of an @R{} package consist of a subdirectory containing the
 files @file{DESCRIPTION} and @file{NAMESPACE}, and the subdirectories
 @file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
 @file{man}, @file{po}, @file{src}, @file{tests}, @file{tools} and
