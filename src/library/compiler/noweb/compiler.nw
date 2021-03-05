@@ -2311,7 +2311,7 @@ cmpSpecial <- function(e, cb, cntxt) {
 This handler is installed for all [[SPECIAL]] functions in the base
 package with
 <<install default [[SPECIAL]] handlers>>=
-basevars <- ls('package:base', all = TRUE)
+basevars <- ls('package:base', all.names = TRUE)
 types <- sapply(basevars, function(n) typeof(get(n)))
 for (s in basevars[types == "special"])
     if (! haveInlineHandler(s, "base"))
@@ -3629,7 +3629,7 @@ in test code to check that the assumption made in the compiler is
 valid.  The implementation is
 <<[[simpleInternals]] function>>=
 simpleInternals <- function(pos = "package:base") {
-    names <- ls(pos = pos, all = TRUE)
+    names <- ls(pos = pos, all.names = TRUE)
     if (length(names) == 0)
         character(0)
     else {

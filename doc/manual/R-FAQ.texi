@@ -2174,7 +2174,7 @@ To remove all objects in the currently active environment (typically
 @code{.GlobalEnv}), you can do
 
 @example
-rm(list = ls(all = TRUE))
+rm(list = ls(all.names = TRUE))
 @end example
 
 @noindent

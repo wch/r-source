@@ -288,8 +288,8 @@ as.character(xyzzy)
 tcl("set", as.character(xyzzy))
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
-ls(envir = top$env, all = TRUE)
-ls(envir = .TkRoot$env, all = TRUE) # .Tcl.args put a callback ref in here
+ls(envir = top$env, all.names = TRUE)
+ls(envir = .TkRoot$env, all.names = TRUE) # .Tcl.args put a callback ref in here
 }
 }
 \keyword{ misc }

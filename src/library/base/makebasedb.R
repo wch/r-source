@@ -21,7 +21,7 @@ local({
                                variables) {
 
         envlist <- function(e)
-            .Internal(getVarsFromFrame(ls(e, all = TRUE), e, FALSE))
+            .Internal(getVarsFromFrame(ls(e, all.names = TRUE), e, FALSE))
 
         envtable <- function() {
             idx <- 0
@@ -81,7 +81,7 @@ local({
         if (is.environment(from)) {
             if (! missing(variables))
                 vars <- variables
-            else vars <- ls(from, all = TRUE)
+            else vars <- ls(from, all.names = TRUE)
         }
         else if (is.list(from)) {
             vars <- names(from)
@@ -102,7 +102,7 @@ local({
         vals <- lapply(vars, get, envir = varenv, inherits = FALSE)
         names(vals) <- vars
 
-        rvars <- ls(envenv, all = TRUE)
+        rvars <- ls(envenv, all.names = TRUE)
         rvals <- lapply(rvars, get, envir = envenv, inherits = FALSE)
         names(rvals) <- rvars
 
