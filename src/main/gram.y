@@ -394,15 +394,14 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %right		EQ_ASSIGN
 %left		RIGHT_ASSIGN
 %left		'~' TILDE
-%left		PIPE
-%left		PIPEBIND
 %left		OR OR2
 %left		AND AND2
 %left		UNOT NOT
 %nonassoc   	GT GE LT LE EQ NE
 %left		'+' '-'
 %left		'*' '/'
-%left		SPECIAL
+%left		SPECIAL PIPE
+%left		PIPEBIND
 %left		':'
 %left		UMINUS UPLUS
 %right		'^'
