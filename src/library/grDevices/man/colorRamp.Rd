@@ -100,7 +100,7 @@ filled.contour(volcano,
 jet.colors <-
   colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan",
                      "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
-filled.contour(volcano, color = jet.colors, asp = 1)
+filled.contour(volcano, color.palette = jet.colors, asp = 1)
 
 ## space="Lab" helps when colors don't form a natural sequence
 m <- outer(1:20,1:20,function(x,y) sin(sqrt(x*y)/3))

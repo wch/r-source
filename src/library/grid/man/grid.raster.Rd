@@ -102,6 +102,6 @@ grid.raster(redGradient, interpolate=FALSE, height=unit(1, "npc"))
 
 # The same raster drawn several times
 grid.newpage()
-grid.raster(0, x=1:3/4, y=1:3/4, w=.1, interp=FALSE)
+grid.raster(0, x=1:3/4, y=1:3/4, width=.1, interpolate=FALSE)
 }
 \keyword{ dplot }

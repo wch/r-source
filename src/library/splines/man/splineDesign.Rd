@@ -56,7 +56,7 @@ spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE,
 \examples{
 require(graphics)
 splineDesign(knots = 1:10, x = 4:7)
-splineDesign(knots = 1:10, x = 4:7, deriv = 1)
+splineDesign(knots = 1:10, x = 4:7, derivs = 1)
 ## visualize band structure
 \donttest{Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))}
 

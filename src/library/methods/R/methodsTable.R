@@ -1617,7 +1617,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       ambig_target <<- c(ambig_target, attr(cond, "target"))
       ambig_candidates <<- c(ambig_candidates, list(attr(cond, "candidates")))
       ambig_selected <<- c(ambig_selected, attr(cond, "selected"))
-      ambig_note <<- c(ambig_note, attr(cond, "note"))
+      ambig_note <<- c(ambig_note, attr(cond, "notes"))
     }
     ambigOpt <- options(ambiguousMethodSelection = warninghandler)
     on.exit(options(ambigOpt))

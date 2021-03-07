@@ -87,7 +87,7 @@ grid.grabExpr(expr, warn = 2, wrap = wrap.grobs, wrap.grobs = FALSE,
 \seealso{ \code{\link{gTree}}
 }
 \examples{
-pushViewport(viewport(w=.5, h=.5))
+pushViewport(viewport(width=.5, height=.5))
 grid.rect()
 grid.points(stats::runif(10), stats::runif(10))
 popViewport()

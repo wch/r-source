@@ -100,7 +100,7 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
 require(stats); require(graphics)
 
 deparse(args(lm))
-deparse(args(lm), width = 500)
+deparse(args(lm), width.cutoff = 500)
 
 myplot <- function(x, y) {
     plot(x, y, xlab = deparse1(substitute(x)),

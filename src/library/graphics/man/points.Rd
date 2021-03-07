@@ -174,7 +174,7 @@ points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 op <- par(bg = "light blue")
-x <- seq(0, 2*pi, len = 51)
+x <- seq(0, 2*pi, length.out = 51)
 ## something "between type='b' and type='o'":
 plot(x, sin(x), type = "o", pch = 21, bg = par("bg"), col = "blue", cex = .6,
  main = 'plot(..., type="o", pch=21, bg=par("bg"))')

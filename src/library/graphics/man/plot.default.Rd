@@ -156,7 +156,7 @@ for (tp in c("p","l","b",  "c","o","h",  "s","S","n")) {
 par(op)
 
 ##--- Log-Log Plot  with  custom axes
-lx <- seq(1, 5, length = 41)
+lx <- seq(1, 5, length.out = 41)
 yl <- expression(e^{-frac(1,2) * {log[10](x)}^2})
 y <- exp(-.5*lx^2)
 op <- par(mfrow = c(2,1), mar = par("mar")-c(1,0,2,0), mgp = c(2, .7, 0))

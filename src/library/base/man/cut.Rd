@@ -104,7 +104,7 @@ tx0 <- c(9, 4, 6, 5, 3, 10, 5, 3, 5)
 x <- rep(0:8, tx0)
 stopifnot(table(x) == tx0)
 
-table( cut(x, b = 8))
+table( cut(x, breaks = 8))
 table( cut(x, breaks = 3*(-2:5)))
 table( cut(x, breaks = 3*(-2:5), right = FALSE))
 
@@ -128,7 +128,7 @@ table(cut(y, breaks =  1*(-3:3), right = FALSE))
 ## sometimes the default dig.lab is not enough to be avoid confusion:
 aaa <- c(1,2,3,4,5,2,3,4,5,6,7)
 cut(aaa, 3)
-cut(aaa, 3, dig.lab = 4, ordered = TRUE)
+cut(aaa, 3, dig.lab = 4, ordered_result = TRUE)
 
 ## one way to extract the breakpoints
 labs <- levels(cut(aaa, 3))

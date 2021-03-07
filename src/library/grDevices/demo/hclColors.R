@@ -49,15 +49,15 @@ hcl.wheel <-
 
 hcl.wheel() # and watch it redraw when you fiddle with the graphic window
 hcl.wheel(rev.lum= TRUE) # ditto
-hcl.wheel(do.lab = TRUE) # ditto
+hcl.wheel(do.label = TRUE) # ditto
 
 
 ## Now watch:
-hcl.wheel(ch = c(25,35,45,55))
+hcl.wheel(chroma = c(25,35,45,55))
 
-hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.4)
-hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, fixup = FALSE)
-hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE)
+hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.4)
+hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.3, fixup = FALSE)
+hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE)
 if(dev.interactive()) # new "graphics window" -- to compare with previous :
     dev.new()
-hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE, fixup=FALSE)
+hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE, fixup=FALSE)

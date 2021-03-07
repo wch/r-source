@@ -53,7 +53,7 @@ do.call(what, args, quote = FALSE, envir = parent.frame())
   \code{\link{call}} which creates an unevaluated call.
 }
 \examples{
-do.call("complex", list(imag = 1:3))
+do.call("complex", list(imaginary = 1:3))
 
 ## if we already have a list (e.g., a data frame)
 ## we need c() to add further arguments

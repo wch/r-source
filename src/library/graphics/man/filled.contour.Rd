@@ -116,7 +116,8 @@ filled.contour(volcano, asp = 1) # simple
 
 x <- 10*1:nrow(volcano)
 y <- 10*1:ncol(volcano)
-filled.contour(x, y, volcano, color = function(n) hcl.colors(n, "terrain"),
+filled.contour(x, y, volcano,
+    color.palette = function(n) hcl.colors(n, "terrain"),
     plot.title = title(main = "The Topography of Maunga Whau",
     xlab = "Meters North", ylab = "Meters West"),
     plot.axes = { axis(1, seq(100, 800, by = 100))
@@ -133,7 +134,7 @@ filled.contour(x = 1:20, y = 1:20, z = b,
                plot.axes = { axis(1); axis(2); points(10, 10) })
 
 ## Persian Rug Art:
-x <- y <- seq(-4*pi, 4*pi, len = 27)
+x <- y <- seq(-4*pi, 4*pi, length.out = 27)
 r <- sqrt(outer(x^2, y^2, "+"))
 filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
 ## rather, the key *should* be labeled:

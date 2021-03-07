@@ -32,7 +32,7 @@
 \examples{
 require(graphics)
 
-plot(1:9, type = "n", axes = FALSE, frame = TRUE, ylab = "",
+plot(1:9, type = "n", axes = FALSE, frame.plot = TRUE, ylab = "",
      main = "example(Japanese)", xlab = "using Hershey fonts")
 par(cex = 3)
 Vf <- c("serif", "plain")

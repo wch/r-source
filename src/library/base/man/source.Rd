@@ -205,7 +205,7 @@ withAutoprint({ x <- 1:2; cat("x=",x,"\n"); y <- x^2 })
 stopifnot(identical(x, 1:2), identical(y, x^2))
 
 withAutoprint({ formals(sourceDir); body(sourceDir) },
-              max.dep = 20, verbose = TRUE)
+              max.deparse.length = 20, verbose = TRUE)
 %% --> tests in  ../../../../tests/eval-etc.R
 }
 \keyword{file}

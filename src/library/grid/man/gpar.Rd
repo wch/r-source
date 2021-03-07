@@ -122,7 +122,7 @@ gpar(col = "red")
 gpar(col = "blue", lty = "solid", lwd = 3, fontsize = 16)
 get.gpar(c("col", "lty"))
 grid.newpage()
-vp <- viewport(w = .8, h = .8, gp = gpar(col="blue"))
+vp <- viewport(width = .8, height = .8, gp = gpar(col="blue"))
 grid.draw(gTree(children=gList(rectGrob(gp = gpar(col="red")),
                      textGrob(paste("The rect is its own colour (red)",
                                     "but this text is the colour",

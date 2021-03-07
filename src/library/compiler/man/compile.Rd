@@ -143,7 +143,7 @@ la1 <- function(X, FUN, ...) {
     if (!is.list(X))
 	X <- as.list(X)
     rval <- vector("list", length(X))
-    for(i in seq(along = X))
+    for(i in seq_along(X))
 	rval[i] <- list(FUN(X[[i]], ...))
     names(rval) <- names(X)		  # keep `names' !
     return(rval)
@@ -154,7 +154,7 @@ la2 <- function(X, FUN, ...) {
     if (!is.list(X))
 	X <- as.list(X)
     rval <- vector("list", length(X))
-    for(i in seq(along = X)) {
+    for(i in seq_along(X)) {
         v <- FUN(X[[i]], ...)
         if (is.null(v)) rval[i] <- list(v)
         else rval[[i]] <- v

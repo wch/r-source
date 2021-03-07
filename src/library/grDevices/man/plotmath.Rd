@@ -268,7 +268,7 @@
 \examples{
 require(graphics)
 
-x <- seq(-4, 4, len = 101)
+x <- seq(-4, 4, length.out = 101)
 y <- cbind(sin(x), cos(x))
 matplot(x, y, type = "l", xaxt = "n",
         main = expression(paste(plain(sin) * phi, "  and  ",

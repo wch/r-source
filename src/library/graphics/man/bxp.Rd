@@ -132,8 +132,8 @@ set.seed(753)
 op <- par(mfrow =  c(2, 2))
 bxp(bx.p, xaxt = "n")
 bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4, boxfill = 1:5)
-bxp(bx.p, notch = TRUE, boxfill = "lightblue", frame = FALSE,
-    outl = FALSE, main = "bxp(*, frame= FALSE, outl= FALSE)")
+bxp(bx.p, notch = TRUE, boxfill = "lightblue", frame.plot = FALSE,
+    outline = FALSE, main = "bxp(*, frame.plot= FALSE, outline= FALSE)")
 bxp(bx.p, notch = TRUE, boxfill = "lightblue", border = 2:6,
     ylim = c(-4,4), pch = 22, bg = "green", log = "x",
     main = "... log = 'x', ylim = *")

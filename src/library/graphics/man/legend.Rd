@@ -185,7 +185,7 @@ for (i in seq(cexv)) {
 legend(6,1, leg.txt, pch = "sSvV", col = c(1, 3), cex = 1+(-1:2)/8)
 
 ## 'merge = TRUE' for merging lines & points:
-x <- seq(-pi, pi, len = 65)
+x <- seq(-pi, pi, length.out = 65)
 plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
 points(x, cos(x), pch = 3, col = 4)
 lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
@@ -225,7 +225,7 @@ for(ll in c("","x","y","xy")) {
 par(mfrow = c(1,1))
 
 ##-- Math expressions:  ------------------------------
-x <- seq(-pi, pi, len = 65)
+x <- seq(-pi, pi, length.out = 65)
 plot(x, sin(x), type = "l", col = 2, xlab = expression(phi),
      ylab = expression(f(phi)))
 abline(h = -1:1, v = pi/2*(-6:6), col = "gray90")
