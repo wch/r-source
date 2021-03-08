@@ -13,7 +13,7 @@
       that series continuing until early 2023.
     }
   }
-  
+
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Data set \code{esoph} in package \pkg{datasets} now provides
@@ -216,6 +216,10 @@
       \item New function \code{charClass()} in package \pkg{utils} to
       query the wide-character classification functions in use (such as
       \code{iswprint}).
+
+      \item \code{grep()}, \code{sub()}, \code{regexp} and variants work
+      considerably faster for long factors with few levels.  (Thanks to
+      Michael Chirico's \PR{18063}.)
     }
   }
 
@@ -401,7 +405,7 @@
 }
       This uses the CPU type \R (and hence the packages) were built for,
       so when a \samp{x86_64} build of R is run under Rosetta emulation on
-      an \samp{arm64} Mac, the first is used. 
+      an \samp{arm64} Mac, the first is used.
     }
   }
 

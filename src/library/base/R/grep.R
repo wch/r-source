@@ -1,7 +1,7 @@
 #  File src/library/base/R/grep.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,55 +29,97 @@ grep <-
 function(pattern, x, ignore.case = FALSE, perl = FALSE,
          value = FALSE, fixed = FALSE, useBytes = FALSE, invert = FALSE)
 {
-    ## when value = TRUE we return names
-    if(!is.character(x)) x <- structure(as.character(x), names=names(x))
-    .Internal(grep(as.character(pattern), x, ignore.case, value,
-                   perl, fixed, useBytes, invert))
+    if(is.factor(x)) {
+        idx <- as.integer(x) %in%
+            grep(pattern, levels(x), ignore.case, perl, FALSE, fixed, useBytes, invert)
+        if(value)
+            structure(as.character(x[idx]), names=names(x)[idx])
+        else
+            which(idx)
+    }
+    else {
+        ## when value = TRUE we return names
+        if(!is.character(x)) x <- structure(as.character(x), names=names(x))
+        .Internal(grep(as.character(pattern), x, ignore.case, value,
+                       perl, fixed, useBytes, invert))
+    }
 }
 
 grepl <-
 function(pattern, x, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
-    if(!is.character(x)) x <- as.character(x)
-    .Internal(grepl(as.character(pattern), x, ignore.case, FALSE,
-                    perl, fixed, useBytes, FALSE))
+    if(is.factor(x)) {
+        grepl(pattern, levels(x), ignore.case, perl, fixed, useBytes)[x]
+    } else {
+        if(!is.character(x)) x <- as.character(x)
+        .Internal(grepl(as.character(pattern), x, ignore.case, FALSE,
+                        perl, fixed, useBytes, FALSE))
+    }
 }
 
 sub <-
 function(pattern, replacement, x, ignore.case = FALSE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-    if (!is.character(x)) x <- as.character(x)
-     .Internal(sub(as.character(pattern), as.character(replacement), x,
-                  ignore.case, perl, fixed, useBytes))
+    if(is.factor(x)) {
+        levels(x) <- sub(pattern, replacement, levels(x), ignore.case,
+                         perl, fixed, useBytes)
+        as.character(x)
+    } else {
+        if (!is.character(x)) x <- as.character(x)
+        .Internal(sub(as.character(pattern), as.character(replacement), x,
+                      ignore.case, perl, fixed, useBytes))
+    }
 }
 
 gsub <-
 function(pattern, replacement, x, ignore.case = FALSE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-    if (!is.character(x)) x <- as.character(x)
-    .Internal(gsub(as.character(pattern), as.character(replacement), x,
-                   ignore.case, perl, fixed, useBytes))
+    if(is.factor(x)) {
+        levels(x) <- gsub(pattern, replacement, levels(x), ignore.case,
+                          perl, fixed, useBytes)
+        as.character(x)
+    } else {
+        if (!is.character(x)) x <- as.character(x)
+        .Internal(gsub(as.character(pattern), as.character(replacement), x,
+                       ignore.case, perl, fixed, useBytes))
+    }
 }
 
 regexpr <-
 function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
-    if (!is.character(text)) text <- as.character(text)
-    .Internal(regexpr(as.character(pattern), text,
-                      ignore.case, perl, fixed, useBytes))
+    if (is.factor(text)) {
+        out <- regexpr(pattern, levels(text), ignore.case, perl, fixed, useBytes)
+        structure(out[text],
+            match.length   = attr(out, "match.length")[text],
+            index.type     = attr(out, "index.type"),
+            useBytes       = attr(out, "useBytes"),
+            capture.start  = attr(out, "capture.start")[ text, ],
+            capture.length = attr(out, "capture.length")[text, ],
+            capture.names  = attr(out, "capture.names"))
+    } else {
+        if (!is.character(text)) text <- as.character(text)
+        .Internal(regexpr(as.character(pattern), text,
+                          ignore.case, perl, fixed, useBytes))
+    }
 }
 
 gregexpr <-
 function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
-    if (!is.character(text)) text <- as.character(text)
-    .Internal(gregexpr(as.character(pattern), text,
-                       ignore.case, perl, fixed, useBytes))
+    if (is.factor(text)) {
+        gregexpr(pattern, levels(text),
+                 ignore.case, perl, fixed, useBytes)[text]
+    } else {
+        if (!is.character(text)) text <- as.character(text)
+        .Internal(gregexpr(as.character(pattern), text,
+                           ignore.case, perl, fixed, useBytes))
+    }
 }
 
 grepRaw <-
@@ -93,11 +135,14 @@ regexec <-
 function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
+    if (is.factor(text))
+        return(regexec(pattern, levels(text), ignore.case, perl, fixed, useBytes)[text])
+
     if (!is.character(text)) text <- as.character(text)
     if(!perl || fixed) {
         if(perl) warning(
-              gettextf("argument '%s' will be ignored", "perl = TRUE"),
-              domain = NA)
+                     gettextf("argument '%s' will be ignored", "perl = TRUE"),
+                     domain = NA)
         return(.Internal(regexec(as.character(pattern), text, ignore.case, fixed,
                                  useBytes)))
     }
@@ -135,7 +180,11 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
 }
 
 gregexec <- function(pattern, text, ignore.case = FALSE, perl = FALSE,
-                     fixed = FALSE, useBytes = FALSE) {
+                     fixed = FALSE, useBytes = FALSE)
+{
+    if(is.factor(text))
+        return(gregexec(pattern, levels(text), ignore.case, perl, fixed, useBytes)[text])
+
     dat <- gregexpr(pattern = pattern, text=text, ignore.case = ignore.case,
                     fixed = fixed, useBytes = useBytes, perl = perl)
     if(perl && !fixed) {
@@ -400,7 +449,7 @@ function(x, m, invert = FALSE)
                         return(character())
                 }
                 tmp <- substring(u, so, so + ml - 1L)
-                ## gregexec may produce matrix inputs in which 
+                ## gregexec may produce matrix inputs in which
                 ## case keep dim for outputs (only for !invert).
                 dim(tmp) <- dim(so)
                 tmp
