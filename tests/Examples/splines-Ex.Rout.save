@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-02-13 r79999) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-03-07 r80079) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -485,7 +485,7 @@ attr(,"class")
 [2,] 0.0000000 0.1666667 0.6666667 0.1666667 0.0000000 0.0000000
 [3,] 0.0000000 0.0000000 0.1666667 0.6666667 0.1666667 0.0000000
 [4,] 0.0000000 0.0000000 0.0000000 0.1666667 0.6666667 0.1666667
-> splineDesign(knots = 1:10, x = 4:7, deriv = 1)
+> splineDesign(knots = 1:10, x = 4:7, derivs = 1)
      [,1] [,2] [,3] [,4] [,5] [,6]
 [1,] -0.5  0.0  0.5  0.0  0.0  0.0
 [2,]  0.0 -0.5  0.0  0.5  0.0  0.0
@@ -590,7 +590,7 @@ attr(,"class")
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.445 0.022 0.471 0 0 
+Time elapsed:  0.133 0.025 0.158 0 0 
 > grDevices::dev.off()
 null device 
           1 

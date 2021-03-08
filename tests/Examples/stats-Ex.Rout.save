@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-02-13 r79999) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-03-07 r80079) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -144,7 +144,7 @@ lm2  6 336.3417
 > 
 > ### ** Examples
 > 
-> x <- seq(0, 1, length = 21)
+> x <- seq(0, 1, length.out = 21)
 > dbeta(x, 1, 1)
  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 > pbeta(x, 1, 1)
@@ -157,7 +157,7 @@ lm2  6 336.3417
 +     eps <- 1e-10
 +     x <- c(0, eps, (1:7)/16, 1/2+c(-eps,0,eps), (9:15)/16, 1-eps, 1)
 +   } else {
-+     x <- seq(0, 1, length = 1025)
++     x <- seq(0, 1, length.out = 1025)
 +   }
 +   fx <- cbind(dbeta(x, a,b), pbeta(x, a,b), qbeta(x, a,b))
 +   f <- fx; f[fx == Inf] <- 1e100
@@ -330,12 +330,12 @@ lm2  6 336.3417
 > ### ** Examples
 > 
 > ## Equivalence of pt(.,nu) with pf(.^2, 1,nu):
-> x <- seq(0.001, 5, len = 100)
+> x <- seq(0.001, 5, length.out = 100)
 > nu <- 4
 > stopifnot(all.equal(2*pt(x,nu) - 1, pf(x^2, 1,nu)),
 +           ## upper tails:
-+  	  all.equal(2*pt(x,     nu, lower=FALSE),
-+ 		      pf(x^2, 1,nu, lower=FALSE)))
++  	  all.equal(2*pt(x,     nu, lower.tail=FALSE),
++ 		      pf(x^2, 1,nu, lower.tail=FALSE)))
 > 
 > ## the density of the square of a t_m is 2*dt(x, m)/(2*x)
 > # check this is the same as the density of F_{1,m}
@@ -343,7 +343,7 @@ lm2  6 336.3417
 [1] TRUE
 > 
 > ## Identity:  qf(2*p - 1, 1, df) == qt(p, df)^2  for  p >= 1/2
-> p <- seq(1/2, .99, length = 50); df <- 10
+> p <- seq(1/2, .99, length.out = 50); df <- 10
 > rel.err <- function(x, y) ifelse(x == y, 0, abs(x-y)/mean(abs(c(x,y))))
 > 
 > 
@@ -1008,7 +1008,7 @@ Residual standard error: 0.7493 on 3 degrees of freedom
 > 
 > ## Visualize the SSasymp()  model  parametrization :
 > 
->   xx <- seq(-.3, 5, len = 101)
+>   xx <- seq(-.3, 5, length.out = 101)
 >   ##  Asym + (R0-Asym) * exp(-exp(lrc)* x) :
 >   yy <- 5 - 4 * exp(-xx / exp(3/4))
 >   stopifnot( all.equal(yy, SSasymp(xx, Asym = 5, R0 = 1, lrc = -3/4)) )
@@ -1141,7 +1141,7 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > 
 > ## Visualize the SSasympOrig()  model  parametrization :
 > 
->   xx <- seq(0, 5, len = 101)
+>   xx <- seq(0, 5, length.out = 101)
 >   yy <- 5 * (1- exp(-xx * log(2)))
 >   stopifnot( all.equal(yy, SSasympOrig(xx, Asym = 5, lrc = log(log(2)))) )
 > 
@@ -1228,7 +1228,7 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 > ## Show the model components visually
 >   require(graphics)
 > 
->   xx <- seq(0, 5, len = 101)
+>   xx <- seq(0, 5, length.out = 101)
 >   y1 <- 3.5 * exp(-4*xx)
 >   y2 <- 1.5 * exp(-xx)
 >   plot(xx, y1 + y2, type = "l", lwd=2, ylim = c(-0.2,6), xlim = c(0, 5),
@@ -1259,10 +1259,10 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 +             trace=TRUE, control = list(maxiter = 10)) )
 0.01722077  (5.34e+02): par = (0.6168807 -1.783839 2.050204 0.2004597)
 3.308944e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
-2.571095e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-1.619248e-23 (5.90e+03): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.243570e-28 (8.88e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
-2.599121e-29 (1.38e+01): par = (0.5793887 -1.787785 2.029277 0.1915474)
+2.571093e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+1.633875e-23 (4.26e+03): par = (0.5793887 -1.787785 2.029277 0.1915474)
+5.883240e-29 (1.32e+01): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
 1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
 1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
 1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
@@ -1279,16 +1279,16 @@ Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  :
 3.308942e-06  (9.08e-04): par = (0.5798674 -1.784335 2.028943 0.1920502)
   It.   2, fac=           1, eval (no.,total): ( 1,  2): new dev = 2.57108e-11
 2.571082e-11  (2.53e-06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66996e-23
-1.669964e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.671287e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915474 -1.787785)
-> all.equal(coef(fm1), coef(fmX1), tol=0) # ... rel.diff.: 1.57e-6
-[1] "Mean relative difference: 1.574124e-06"
-> all.equal(coef(fm1), coef(fmX),  tol=0) # ... rel.diff.: 1.03e-12
-[1] "Mean relative difference: 1.032014e-12"
+  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66922e-23
+1.669220e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915474)
+1.670353e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915474 -1.787785)
+> all.equal(coef(fm1), coef(fmX1), tolerance=0) # ... rel.diff.: 1.57e-6
+[1] "Mean relative difference: 1.574125e-06"
+> all.equal(coef(fm1), coef(fmX),  tolerance=0) # ... rel.diff.: 1.03e-12
+[1] "Mean relative difference: 1.031784e-12"
 > ## IGNORE_RDIFF_END
-> stopifnot(all.equal(coef(fm1), coef(fmX1), tol = 6e-6),
-+           all.equal(coef(fm1), coef(fmX ), tol = 1e-11))
+> stopifnot(all.equal(coef(fm1), coef(fmX1), tolerance = 6e-6),
++           all.equal(coef(fm1), coef(fmX ), tolerance = 1e-11))
 > 
 > 
 > 
@@ -1409,7 +1409,7 @@ Residual standard error: 2.351 on 8 degrees of freedom
 
 > 
 > ## Visualizing the  SSfpl()  parametrization
->   xx <- seq(-0.5, 5, len = 101)
+>   xx <- seq(-0.5, 5, length.out = 101)
 >   yy <- 1 + 4 / (1 + exp((2-xx))) # == SSfpl(xx, *) :
 >   stopifnot( all.equal(yy, SSfpl(xx, A = 1, B = 5, xmid = 2, scal = 1)) )
 >   require(graphics)
@@ -1530,7 +1530,7 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > dwlg1 <- data.frame(Prop = c(rep(0,5), 2, 5, rep(9, 9)), end = 1:16)
 > iPar <- getInitial(Prop ~ SSlogis(end, Asym, xmid, scal), data = dwlg1)
 > ## failed in R <= 3.4.2 (because of the '0's in 'Prop')
-> stopifnot(all.equal(tol = 1e-6,
+> stopifnot(all.equal(tolerance = 1e-6,
 +    iPar, c(Asym = 9.0678, xmid = 6.79331, scal = 0.499934)))
 > 
 > ## Visualize the SSlogis()  model  parametrization :
@@ -1637,7 +1637,7 @@ Residual standard error: 10.93 on 10 degrees of freedom
 > 
 > ## Visualize the SSmicmen()  Michaelis-Menton model parametrization :
 > 
->   xx <- seq(0, 5, len = 101)
+>   xx <- seq(0, 5, length.out = 101)
 >   yy <- 5 * xx/(1+xx)
 >   stopifnot(all.equal(yy, SSmicmen(xx, Vm = 5, K = 1)))
 >   require(graphics)
@@ -1744,7 +1744,7 @@ Residual standard error: 2.061 on 7 degrees of freedom
 > 
 > par(mfrow = c(2,2))
 > for(n in c(4:5,10,40)) {
-+   x <- seq(0, n*(n+1)/2, length = 501)
++   x <- seq(0, n*(n+1)/2, length.out = 501)
 +   plot(x, dsignrank(x, n = n), type = "l",
 +        main = paste0("dsignrank(x, n = ", n, ")"))
 + }
@@ -1837,8 +1837,8 @@ Variances:
  [1] 12.706205  4.302653  3.182446  2.776445  2.570582  2.446912  2.364624
  [8]  2.306004  2.262157  2.228139  2.085963  2.008559  1.983972  1.962339
 > 
-> tt <- seq(0, 10, len = 21)
-> ncp <- seq(0, 6, len = 31)
+> tt <- seq(0, 10, length.out = 21)
+> ncp <- seq(0, 6, length.out = 31)
 > ptn <- outer(tt, ncp, function(t, d) pt(t, df = 3, ncp = d))
 > t.tit <- "Non-central t - Probabilities"
 > image(tt, ncp, ptn, zlim = c(0,1), main = t.tit)
@@ -3994,7 +3994,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x116dd30>
+<environment: 0x55676ca40b60>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4295,7 +4295,7 @@ X-squared = 0.0013736, df = 1, p-value = 0.9704
 +                paste("O", x, sep = "."))
 > ww <- rep(1, 20); ww[13] <- 0
 > summary(lmxy <- lm(y ~ x + I(x^2)+I(x^3) + I((x-10)^2), weights = ww),
-+         cor = TRUE)
++         correlation = TRUE)
 
 Call:
 lm(formula = y ~ x + I(x^2) + I(x^3) + I((x - 10)^2), weights = ww)
@@ -5031,7 +5031,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5ebc420>
+<bytecode: 0x55677179f638>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -5044,7 +5044,7 @@ function (V)
 > 
 > ## swM := "swiss" with  3 "missing"s :
 > swM <- swiss
-> colnames(swM) <- abbreviate(colnames(swiss), min=6)
+> colnames(swM) <- abbreviate(colnames(swiss), minlength=6)
 > swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 > 
 > ## Consider all 5 "use" cases :
@@ -5956,7 +5956,7 @@ NULL
                        `--[dendrogram w/ 2 branches and 2 members at h = 2.29]
                           |--leaf "Iowa" 
                           `--leaf "New Hampshire" 
-> str(dend1, max = 2, last.str =  "'") # only the first two sub-levels
+> str(dend1, max.level = 2, last.str =  "'") # only the first two sub-levels
 --[dendrogram w/ 2 branches and 50 members at h = 152]
   |--[dendrogram w/ 2 branches and 16 members at h = 77.6]
   |  |--[dendrogram w/ 2 branches and 2 members at h = 38.5] ..
@@ -5965,7 +5965,7 @@ NULL
      |--[dendrogram w/ 2 branches and 14 members at h = 44.8] ..
      '--[dendrogram w/ 2 branches and 20 members at h = 54.7] ..
 > oo <- options(str.dendrogram.last = "\\") # yet another possibility
-> str(dend1, max = 2) # only the first two sub-levels
+> str(dend1, max.level = 2) # only the first two sub-levels
 --[dendrogram w/ 2 branches and 50 members at h = 152]
   |--[dendrogram w/ 2 branches and 16 members at h = 77.6]
   |  |--[dendrogram w/ 2 branches and 2 members at h = 38.5] ..
@@ -6358,7 +6358,7 @@ attr(,"gradient")
 [1]  0.0000000 -0.7216061 -0.8316919 -0.0774320
 > 
 > ## function returned:
-> deriv((y ~ sin(cos(x) * y)), c("x","y"), func = TRUE)
+> deriv((y ~ sin(cos(x) * y)), c("x","y"), function.arg = TRUE)
 function (x, y) 
 {
     .expr1 <- cos(x)
@@ -6796,7 +6796,7 @@ Empirical CDF:	  10 unique values with summary
 > plot(F10, verticals = TRUE, do.points = FALSE)
 > 
 > plot(Fn12 , lwd = 2) ; mtext("lwd = 2", adj = 1)
-> xx <- unique(sort(c(seq(-3, 2, length = 201), knots(Fn12))))
+> xx <- unique(sort(c(seq(-3, 2, length.out = 201), knots(Fn12))))
 > lines(xx, Fn12(xx), col = "blue")
 > abline(v = knots(Fn12), lty = 2, col = "gray70")
 > 
@@ -7655,7 +7655,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x60e26b8>
+<environment: 0x55677172d2f8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8446,7 +8446,7 @@ Libya          0.53_*
 > ## The 'infl' argument is not needed, but avoids recomputation:
 > rs <- rstandard(lm.SR)
 > iflSR <- influence(lm.SR)
-> all.equal(rs, rstandard(lm.SR, infl = iflSR), tol = 1e-10)
+> all.equal(rs, rstandard(lm.SR, infl = iflSR), tolerance = 1e-10)
 [1] TRUE
 > ## to "see" the larger values:
 > 1000 * round(dfbetas(lm.SR, infl = iflSR), 3)
@@ -8510,7 +8510,7 @@ PRESS :[1] 798.939
 > y <- model.response(model.frame(lm.SR))
 > ## Leave-one-out CV least-squares prediction errors (relatively fast)
 > rCV <- vapply(seq_len(nrow(X)), function(i)
-+               y[i] - X[i,] %*% .lm.fit(X[-i,], y[-i])$coef,
++               y[i] - X[i,] %*% .lm.fit(X[-i,], y[-i])$coefficients,
 +               numeric(1))
 > ## are the same as the *faster* rstandard(*, "pred") :
 > stopifnot(all.equal(rCV, unname(rstandard(lm.SR, type = "predictive"))))
@@ -9127,7 +9127,7 @@ alternative hypothesis: the CDF of x lies below that of y
 > lag.plot(freeny.x, lags = 3)
 > 
 > ## no lines for long series :
-> lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
+> lag.plot(sqrt(sunspots), set.lags = c(1:4, 9:12), pch = ".", col = "gold")
 > 
 > 
 > 
@@ -9233,7 +9233,7 @@ it = 10 -2.083333 -2.083333
 > ## given in Belsley, Kuh and Welsch.
 > summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,
 +                     data = LifeCycleSavings),
-+         corr = TRUE)
++         correlation = TRUE)
 
 Call:
 lm(formula = sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
@@ -9725,7 +9725,7 @@ List of 5
 > ## using poly: this did not work in R < 1.5.0
 > fm <- lm(weight ~ poly(height, 2), data = women)
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
-> ht <- seq(57, 73, len = 200)
+> ht <- seq(57, 73, length.out = 200)
 > nD <- data.frame(height = ht)
 > pfm <- predict(fm, nD)
 > lines(ht, pfm)
@@ -10498,7 +10498,7 @@ attr(,"contrasts")$a
 attr(,"contrasts")$b
 [1] "contr.treatment"
 
-> model.matrix(~ a + b, dd, contrasts = list(a = "contr.sum"))
+> model.matrix(~ a + b, dd, contrasts.arg = list(a = "contr.sum"))
    (Intercept) a1 a2 b2 b3 b4
 1            1  1  0  0  0  0
 2            1  1  0  1  0  0
@@ -10521,7 +10521,7 @@ attr(,"contrasts")$a
 attr(,"contrasts")$b
 [1] "contr.treatment"
 
-> model.matrix(~ a + b, dd, contrasts = list(a = "contr.sum", b = contr.poly))
+> model.matrix(~ a + b, dd, contrasts.arg = list(a = "contr.sum", b = contr.poly))
    (Intercept) a1 a2        b.L  b.Q        b.C
 1            1  1  0 -0.6708204  0.5 -0.2236068
 2            1  1  0 -0.2236068 -0.5  0.6708204
@@ -10548,7 +10548,7 @@ attr(,"contrasts")$b
 3  0.2236068 -0.5 -0.6708204
 4  0.6708204  0.5  0.2236068
 
-> m.orth <- model.matrix(~a+b, dd, contrasts = list(a = "contr.helmert"))
+> m.orth <- model.matrix(~a+b, dd, contrasts.arg = list(a = "contr.helmert"))
 > crossprod(m.orth) # m.orth is  ALMOST  orthogonal
             (Intercept) a1 a2 b2 b3 b4
 (Intercept)          12  0  0  3  3  3
@@ -11152,23 +11152,25 @@ Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
+Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  : 
+  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
 >    (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
 Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
 1017460.306    (4.15e+02): par = (1 1 1)
-758164.7503    (2.34e+02): par = (13.42031396 1.961485 0.05947543746)
-269506.3540    (3.23e+02): par = (51.75719814 -13.09155954 0.8428607699)
-68969.21900    (1.03e+02): par = (76.00069849 -1.93522673 1.019085799)
-633.3672239    (1.29e+00): par = (100.3761515 8.62464841 5.104490279)
-151.4400266    (9.39e+00): par = (100.6344391 4.913490966 0.284920948)
-53.08740235    (7.24e+00): par = (100.6830408 6.899303242 0.4637755057)
-1.344478691    (5.97e-01): par = (100.0368306 9.89771414 0.5169294949)
-0.9908415909   (1.55e-02): par = (100.0300625 9.9144191 0.5023516842)
-0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207337)
+758164.7503    (2.34e+02): par = (13.42031396 1.961485 0.05947543745)
+269506.3537    (3.23e+02): par = (51.75719817 -13.09155958 0.8428607712)
+68969.21891    (1.03e+02): par = (76.0006985 -1.93522675 1.0190858)
+633.3672224    (1.29e+00): par = (100.3761515 8.624648408 5.104490252)
+151.4400170    (9.39e+00): par = (100.6344391 4.913490999 0.2849209664)
+53.08739445    (7.24e+00): par = (100.6830407 6.899303393 0.4637755095)
+1.344478582    (5.97e-01): par = (100.0368306 9.897714144 0.5169294926)
+0.9908415908   (1.55e-02): par = (100.0300625 9.9144191 0.5023516843)
+0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207336)
 0.9906046054   (9.94e-08): par = (100.028875 9.916228366 0.50252165)
-0.9906046054   (5.06e-10): par = (100.028875 9.916228388 0.5025216549)
+0.9906046054   (5.00e-08): par = (100.028875 9.916228377 0.5025216525)
 Nonlinear regression model
   model: y ~ Const + A * exp(B * x)
    data: parent.frame()
@@ -11341,7 +11343,7 @@ $nDcentral
 > myenv <- new.env()
 > myenv$mean <- 0.
 > myenv$sd   <- 1.
-> myenv$x    <- seq(-3., 3., len = 31)
+> myenv$x    <- seq(-3., 3., length.out = 31)
 > nD <- numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
 > str(nD)
  num [1:31] 0.00135 0.00256 0.00466 0.0082 0.0139 ...
@@ -11831,7 +11833,7 @@ Aug 0.00019 0.04987 1.00000 -
 Sep 1.00000 1.00000 0.00488 0.00388
 
 P value adjustment method: holm 
-> pairwise.t.test(Ozone, Month, p.adj = "bonf")
+> pairwise.t.test(Ozone, Month, p.adjust.method = "bonf")
 
 	Pairwise comparisons using t tests with pooled SD 
 
@@ -11910,7 +11912,7 @@ Aug 0.0011 0.1295 1.0000 -
 Sep 0.4744 1.0000 0.0060 0.0227
 
 P value adjustment method: holm 
-> pairwise.wilcox.test(Ozone, Month, p.adj = "bonf")
+> pairwise.wilcox.test(Ozone, Month, p.adjust.method = "bonf")
 Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
   cannot compute exact p-value with ties
 Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
@@ -12063,7 +12065,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
   1 x value <= 0 omitted from logarithmic plot
 > 
 > plot(ir3, plot.type = "row", ylab = "y3")
-> plot(isoreg(y3 - 4), plot.t="r", ylab = "y3 - 4")
+> plot(isoreg(y3 - 4), plot.type = "r", ylab = "y3 - 4")
 > plot(ir4, plot.type = "ro",  ylab = "y4", xlab = "x = 1:n")
 > 
 > ## experiment a bit with these (C-c C-j):
@@ -12169,7 +12171,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > # obtain the fitted object
 > fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 > # get the profile for the fitted model
-> pr1 <- profile(fm1, alpha = 0.05)
+> pr1 <- profile(fm1, alphamax = 0.05)
 > opar <- par(mfrow = c(2,2), oma = c(1.1, 0, 1.1, 0), las = 1)
 > plot(pr1, conf = c(95, 90, 80, 50)/100)
 > plot(pr1, conf = c(95, 90, 80, 50)/100, absVal = FALSE)
@@ -12405,12 +12407,12 @@ attr(,"coefs")[[2]]$norm2
 attr(,"class")
 [1] "poly"   "matrix"
 > ## they are the same :
-> stopifnot(all.equal(zm, z1, tol = 1e-15))
+> stopifnot(all.equal(zm, z1, tolerance = 1e-15))
 > 
 > ## poly(<matrix>, df) --- used to fail till July 14 (vive la France!), 2017:
 > m2 <- cbind(1:4, c(1, 4:6))
 > pm2 <- zapsmall(poly(m2, 3)) # "unnamed degree = 3"
-> stopifnot(all.equal(pm2, zm, tol = 1e-15))
+> stopifnot(all.equal(pm2, zm, tolerance = 1e-15))
 > 
 > options(od)
 > 
@@ -12459,14 +12461,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4e89b80>
-<environment: 0x4e74ec0>
+<bytecode: 0x5567718dc550>
+<environment: 0x55676f428eb0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4e89a30>
-<environment: 0x4e74ec0>
+<bytecode: 0x5567718dc400>
+<environment: 0x55676f428eb0>
 
 > 
 > 
@@ -12937,7 +12939,7 @@ Coefficients of ridge terms ('beta'):
 > set.seed(17)
 > X <- matrix(rnorm(32000), 1000, 32)
 > Z <- X %*% C  ## ==>  cov(Z) ~=  C'C = S
-> all.equal(cov(Z), S, tol = 0.08)
+> all.equal(cov(Z), S, tolerance = 0.08)
 [1] TRUE
 > pZ <- prcomp(Z, tol = 0.1)
 > summary(pZ) # only ~14 PCs (out of 32)
@@ -12959,7 +12961,7 @@ Standard deviation     3.6415 2.7178 1.8447
 Proportion of Variance 0.4173 0.2324 0.1071
 Cumulative Proportion  0.4173 0.6498 0.7569
 > stopifnot(ncol(pZ$rotation) == 14, ncol(pz3$rotation) == 3,
-+           all.equal(pz3$sdev, pZ$sdev, tol = 1e-15)) # exactly equal typically
++           all.equal(pz3$sdev, pZ$sdev, tolerance = 1e-15)) # exactly equal typically
 > 
 > 
 > 
@@ -13487,7 +13489,7 @@ $df
 > plot(demand ~ Time, data = BOD, col = 4,
 +      main = "BOD data and fitted first-order curve",
 +      xlim = c(0,7), ylim = c(0, 20) )
-> tt <- seq(0, 8, length = 101)
+> tt <- seq(0, 8, length.out = 101)
 > lines(tt, predict(fm, list(Time = tt)))
 > par(opar)
 > ## Don't show: 
@@ -14016,7 +14018,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > # obtain the fitted object
 > fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 > # get the profile for the fitted model: default level is too extreme
-> pr1 <- profile(fm1, alpha = 0.05)
+> pr1 <- profile(fm1, alphamax = 0.05)
 > # profiled values for the two parameters
 > ## IGNORE_RDIFF_BEGIN
 > pr1$A
@@ -14558,7 +14560,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > 
 > ### Compare different types
 > quantAll <- function(x, prob, ...)
-+   t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
++   t(vapply(1:9, function(typ) quantile(x, probs = prob, type = typ, ...),
 +            quantile(x, prob, type=1, ...)))
 > p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 > signif(quantAll(x, p), 4)
@@ -14577,7 +14579,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > stopifnot(t(quantAll(x, prob=0:1)) == range(x))
 > 
 > ## for complex numbers:
-> z <- complex(re=x, im = -10*x)
+> z <- complex(real = x, imaginary = -10*x)
 > signif(quantAll(z, p), 4)
               0.1%         0.5%           1%           2%           5%
  [1,] -3.00+29.97i -2.59+25.92i -2.42+24.24i -2.25+22.45i -1.73+17.27i
@@ -15935,14 +15937,14 @@ W = 0.93092, p-value = 5.616e-05
 > lm1 <- lm(Fertility ~ . , data = swiss)
 > sigma(lm1) # ~= 7.165  = "Residual standard error"  printed from summary(lm1)
 [1] 7.165369
-> stopifnot(all.equal(sigma(lm1), summary(lm1)$sigma, tol=1e-15))
+> stopifnot(all.equal(sigma(lm1), summary(lm1)$sigma, tolerance=1e-15))
 > 
 > ## -- nls() -----------------------------
 > DNase1 <- subset(DNase, Run == 1)
 > fm.DN1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
 > sigma(fm.DN1) # ~= 0.01919  as from summary(..)
 [1] 0.01919449
-> stopifnot(all.equal(sigma(fm.DN1), summary(fm.DN1)$sigma, tol=1e-15))
+> stopifnot(all.equal(sigma(fm.DN1), summary(fm.DN1)$sigma, tolerance=1e-15))
 > 
 > ## -- glm() -----------------------------
 > ## -- a) Binomial -- Example from MASS
@@ -16151,7 +16153,7 @@ GCV: 244.1044
 > ## This example has duplicate points, so avoid cv = TRUE
 > ## Don't show: 
 >   stopifnot(cars.spl $ w == table(cars$speed)) # weights = multiplicities
->   utils::str(cars.spl, digits = 5, vec.len = 6)
+>   utils::str(cars.spl, digits.d = 5, vec.len = 6)
 List of 19
  $ x         : num [1:19] 4 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ...
  $ y         : num [1:19] 1.6578 11.6829 15.0644 18.4823 21.9471 25.4656 29.0505 32.7076 ...
@@ -16242,7 +16244,7 @@ attr(,"class")
 > 
 > ##-- artificial example
 > y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
-> xx  <- seq(1, length(y18), len = 201)
+> xx  <- seq(1, length(y18), length.out = 201)
 > (s2   <- smooth.spline(y18)) # GCV
 Call:
 smooth.spline(x = y18)
@@ -16287,9 +16289,9 @@ GCV: 0.7155391
 +     with(cars.spl$fit, min + range * knot[-c(1:3, nk+1+1:3)]) == unique(cars$speed))
 > 
 > nD <- c("spar", "ratio", "iparms", "call"); nn <- setdiff(names(s2), nD)
-> stopifnot(all.equal(s2[nn], s2.[nn], tol = 7e-7), # seen 6.86e-8
+> stopifnot(all.equal(s2[nn], s2.[nn], tolerance = 7e-7), # seen 6.86e-8
 +           all.equal(predict(s02 , xx),
-+ 		    predict(s02., xx), tol = 1e-15))
++ 		    predict(s02., xx), tolerance = 1e-15))
 > ## End(Don't show)
 > 
 > 
@@ -16718,8 +16720,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x4f5d0f0>
-<environment: 0x2ee6080>
+<bytecode: 0x556770810020>
+<environment: 0x5567710169f0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17084,12 +17086,12 @@ Rape      0.54         -0.82
 > ### ** Examples
 > 
 > ii <- setNames(0:8, 0:8)
-> symnum(ii, cut =  2*(0:4), sym = c(".", "-", "+", "$"))
+> symnum(ii, cutpoints =  2*(0:4), symbols = c(".", "-", "+", "$"))
 0 1 2 3 4 5 6 7 8 
 . . . - - + + $ $ 
 attr(,"legend")
 [1] 0 ‘.’ 2 ‘-’ 4 ‘+’ 6 ‘$’ 8
-> symnum(ii, cut =  2*(0:4), sym = c(".", "-", "+", "$"), show.max = TRUE)
+> symnum(ii, cutpoints =  2*(0:4), symbols = c(".", "-", "+", "$"), show.max = TRUE)
 0 1 2 3 4 5 6 7 8 
 . . . - - + + $ 8 
 attr(,"legend")
@@ -17102,7 +17104,7 @@ attr(,"legend")
 > N <- 38
 > pascal <- t(sapply(0:N, function(n) round(choose(n, 0:N - (N-n)%/%2))))
 > rownames(pascal) <- rep("", 1+N) # <-- to improve "graphic"
-> symnum(pascal %% 2, symbols = c(" ", "A"), numeric = FALSE)
+> symnum(pascal %% 2, symbols = c(" ", "A"), numeric.x = FALSE)
                                                                               
                                        A                                      
                                      A A                                      
@@ -17145,7 +17147,7 @@ attr(,"legend")
  A   A   A   A                                                   A   A   A   A
 > 
 > ##-- Symbolic correlation matrices:
-> symnum(cor(attitude), diag = FALSE)
+> symnum(cor(attitude), diag.lower.tri = FALSE)
            rt cm p l rs cr a
 rating                      
 complaints +                
@@ -17156,7 +17158,7 @@ critical             .
 advance          . . .      
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> symnum(cor(attitude), abbr. = NULL)
+> symnum(cor(attitude), abbr.colnames = NULL)
                         
 rating     1            
 complaints + 1          
@@ -17167,7 +17169,7 @@ critical           . 1
 advance        . . .   1
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> symnum(cor(attitude), abbr. = FALSE)
+> symnum(cor(attitude), abbr.colnames = FALSE)
            rating complaints privileges learning raises critical advance
 rating     1                                                            
 complaints +      1                                                     
@@ -17178,7 +17180,7 @@ critical                                         .      1
 advance                      .          .        .               1      
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> symnum(cor(attitude), abbr. = 2)
+> symnum(cor(attitude), abbr.colnames = 2)
            rt cm pr lr rs cr ad
 rating     1                   
 complaints +  1                
@@ -17263,7 +17265,7 @@ attr(,"legend")
 [18,]   . .   * , . . .   , ,     .   . 1
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> symnum(cm1, diag = FALSE)
+> symnum(cm1, diag.lower.tri = FALSE)
                                         
  [1,]                                   
  [2,] .                                 
@@ -17307,7 +17309,7 @@ attr(,"legend")
 [18,]                                   1
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> symnum(cm2, lower = FALSE)
+> symnum(cm2, lower.triangular = FALSE)
                                          
  [1,] 1                                  
  [2,]   1                                
@@ -19146,7 +19148,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.078 0.47 15.659 0 0 
+Time elapsed:  5.382 0.154 5.536 0 0 
 > grDevices::dev.off()
 null device 
           1 
