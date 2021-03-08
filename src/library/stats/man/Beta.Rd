@@ -157,7 +157,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   \code{\link{beta}} for the Beta function.
 }
 \examples{
-x <- seq(0, 1, length = 21)
+x <- seq(0, 1, length.out = 21)
 dbeta(x, 1, 1)
 pbeta(x, 1, 1)
 
@@ -167,7 +167,7 @@ pl.beta <- function(a,b, asp = if(isLim) 1, ylim = if(isLim) c(0,1.1)) {
     eps <- 1e-10
     x <- c(0, eps, (1:7)/16, 1/2+c(-eps,0,eps), (9:15)/16, 1-eps, 1)
   } else {
-    x <- seq(0, 1, length = 1025)
+    x <- seq(0, 1, length.out = 1025)
   }
   fx <- cbind(dbeta(x, a,b), pbeta(x, a,b), qbeta(x, a,b))
   f <- fx; f[fx == Inf] <- 1e100

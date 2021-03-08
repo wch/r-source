@@ -75,7 +75,7 @@ lag.plot(nhtemp, 6, layout = c(2,1), asp = NA,
 lag.plot(freeny.x, lags = 3)
 
 ## no lines for long series :
-lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
+lag.plot(sqrt(sunspots), set.lags = c(1:4, 9:12), pch = ".", col = "gold")
 }
 \keyword{hplot}
 \keyword{ts}

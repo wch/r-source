@@ -274,7 +274,7 @@ cars.spl
 ## This example has duplicate points, so avoid cv = TRUE
 \dontshow{
   stopifnot(cars.spl $ w == table(cars$speed)) # weights = multiplicities
-  utils::str(cars.spl, digits = 5, vec.len = 6)
+  utils::str(cars.spl, digits.d = 5, vec.len = 6)
   cars.spl$fit
 }
 lines(cars.spl, col = "blue")
@@ -311,7 +311,7 @@ axis(4, at=.nknots.smspl(10000), line=-.5, col=c..,col.axis=c.., las=1)
 
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
-xx  <- seq(1, length(y18), len = 201)
+xx  <- seq(1, length(y18), length.out = 201)
 (s2   <- smooth.spline(y18)) # GCV
 (s02  <- smooth.spline(y18, spar = 0.2))
 (s02. <- smooth.spline(y18, spar = 0.2, cv = NA))
@@ -329,9 +329,9 @@ stopifnot(identical(
     with(cars.spl$fit, min + range * knot[-c(1:3, nk+1+1:3)]) == unique(cars$speed))
 
 nD <- c("spar", "ratio", "iparms", "call"); nn <- setdiff(names(s2), nD)
-stopifnot(all.equal(s2[nn], s2.[nn], tol = 7e-7), # seen 6.86e-8
+stopifnot(all.equal(s2[nn], s2.[nn], tolerance = 7e-7), # seen 6.86e-8
           all.equal(predict(s02 , xx),
-		    predict(s02., xx), tol = 1e-15))
+		    predict(s02., xx), tolerance = 1e-15))
 }
 \donttest{
 ## The following shows the problematic behavior of 'spar' searching:

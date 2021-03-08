@@ -228,9 +228,9 @@ require(graphics); require(utils)
 hc <- hclust(dist(USArrests), "ave")
 (dend1 <- as.dendrogram(hc)) # "print()" method
 str(dend1)          # "str()" method
-str(dend1, max = 2, last.str =  "'") # only the first two sub-levels
+str(dend1, max.level = 2, last.str =  "'") # only the first two sub-levels
 oo <- options(str.dendrogram.last = "\\\\") # yet another possibility
-str(dend1, max = 2) # only the first two sub-levels
+str(dend1, max.level = 2) # only the first two sub-levels
 options(oo)  # .. resetting them
 
 op <- par(mfrow =  c(2,2), mar = c(5,2,1,4))

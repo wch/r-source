@@ -46,7 +46,7 @@ summary(fm1)
 
 ## Visualize the SSasympOrig()  model  parametrization :
 
-  xx <- seq(0, 5, len = 101)
+  xx <- seq(0, 5, length.out = 101)
   yy <- 5 * (1- exp(-xx * log(2)))
   stopifnot( all.equal(yy, SSasympOrig(xx, Asym = 5, lrc = log(log(2)))) )
 

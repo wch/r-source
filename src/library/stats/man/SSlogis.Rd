@@ -55,7 +55,7 @@ str(fm2$convInfo) # 3 iterations
 dwlg1 <- data.frame(Prop = c(rep(0,5), 2, 5, rep(9, 9)), end = 1:16)
 iPar <- getInitial(Prop ~ SSlogis(end, Asym, xmid, scal), data = dwlg1)
 ## failed in R <= 3.4.2 (because of the '0's in 'Prop')
-stopifnot(all.equal(tol = 1e-6,
+stopifnot(all.equal(tolerance = 1e-6,
    iPar, c(Asym = 9.0678, xmid = 6.79331, scal = 0.499934)))
 
 ## Visualize the SSlogis()  model  parametrization :

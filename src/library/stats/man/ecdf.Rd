@@ -119,7 +119,7 @@ plot(F10)
 plot(F10, verticals = TRUE, do.points = FALSE)
 
 plot(Fn12 , lwd = 2) ; mtext("lwd = 2", adj = 1)
-xx <- unique(sort(c(seq(-3, 2, length = 201), knots(Fn12))))
+xx <- unique(sort(c(seq(-3, 2, length.out = 201), knots(Fn12))))
 lines(xx, Fn12(xx), col = "blue")
 abline(v = knots(Fn12), lty = 2, col = "gray70")
 

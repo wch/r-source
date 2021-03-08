@@ -204,7 +204,7 @@ plot(lm.SR, which = 5) # an enhanced version of that via plot(<lm>)
 ## The 'infl' argument is not needed, but avoids recomputation:
 rs <- rstandard(lm.SR)
 iflSR <- influence(lm.SR)
-all.equal(rs, rstandard(lm.SR, infl = iflSR), tol = 1e-10)
+all.equal(rs, rstandard(lm.SR, infl = iflSR), tolerance = 1e-10)
 ## to "see" the larger values:
 1000 * round(dfbetas(lm.SR, infl = iflSR), 3)
 cat("PRESS :"); (PRESS <- sum( rstandard(lm.SR, type = "predictive")^2 ))
@@ -215,7 +215,7 @@ X <- model.matrix(lm.SR)
 y <- model.response(model.frame(lm.SR))
 ## Leave-one-out CV least-squares prediction errors (relatively fast)
 rCV <- vapply(seq_len(nrow(X)), function(i)
-              y[i] - X[i,] \%*\% .lm.fit(X[-i,], y[-i])$coef,
+              y[i] - X[i,] \%*\% .lm.fit(X[-i,], y[-i])$coefficients,
               numeric(1))
 ## are the same as the *faster* rstandard(*, "pred") :
 stopifnot(all.equal(rCV, unname(rstandard(lm.SR, type = "predictive"))))

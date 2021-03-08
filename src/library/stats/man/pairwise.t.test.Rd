@@ -48,7 +48,7 @@ pairwise.t.test(x, g, p.adjust.method = p.adjust.methods,
 attach(airquality)
 Month <- factor(Month, labels = month.abb[5:9])
 pairwise.t.test(Ozone, Month)
-pairwise.t.test(Ozone, Month, p.adj = "bonf")
+pairwise.t.test(Ozone, Month, p.adjust.method = "bonf")
 pairwise.t.test(Ozone, Month, pool.sd = FALSE)
 detach()
 }

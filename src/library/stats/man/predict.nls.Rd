@@ -82,7 +82,7 @@ opar <- par(las = 1)
 plot(demand ~ Time, data = BOD, col = 4,
      main = "BOD data and fitted first-order curve",
      xlim = c(0,7), ylim = c(0, 20) )
-tt <- seq(0, 8, length = 101)
+tt <- seq(0, 8, length.out = 101)
 lines(tt, predict(fm, list(Time = tt)))
 par(opar)
 \dontshow{options(od)}

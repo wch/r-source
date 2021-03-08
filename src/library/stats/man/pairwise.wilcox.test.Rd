@@ -40,7 +40,7 @@ attach(airquality)
 Month <- factor(Month, labels = month.abb[5:9])
 ## These give warnings because of ties :
 pairwise.wilcox.test(Ozone, Month)
-pairwise.wilcox.test(Ozone, Month, p.adj = "bonf")
+pairwise.wilcox.test(Ozone, Month, p.adjust.method = "bonf")
 detach()
 }
 \keyword{htest}

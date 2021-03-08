@@ -50,7 +50,7 @@ stopifnot(all.equal(coef(summary(fm1)), coef(summary(fm2))))
 
 ## Visualize the SSmicmen()  Michaelis-Menton model parametrization :
 
-  xx <- seq(0, 5, len = 101)
+  xx <- seq(0, 5, length.out = 101)
   yy <- 5 * xx/(1+xx)
   stopifnot(all.equal(yy, SSmicmen(xx, Vm = 5, K = 1)))
   require(graphics)

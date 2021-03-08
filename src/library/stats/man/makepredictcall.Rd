@@ -53,7 +53,7 @@ require(graphics)
 ## using poly: this did not work in R < 1.5.0
 fm <- lm(weight ~ poly(height, 2), data = women)
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
-ht <- seq(57, 73, len = 200)
+ht <- seq(57, 73, length.out = 200)
 nD <- data.frame(height = ht)
 pfm <- predict(fm, nD)
 lines(ht, pfm)

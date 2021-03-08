@@ -180,7 +180,7 @@ range(eigen(C1, only.values = TRUE)$values) # 6.19        1921
 
 ## swM := "swiss" with  3 "missing"s :
 swM <- swiss
-colnames(swM) <- abbreviate(colnames(swiss), min=6)
+colnames(swM) <- abbreviate(colnames(swiss), minlength=6)
 swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 
 ## Consider all 5 "use" cases :
