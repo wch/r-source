@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25+0000\n"
+"POT-Creation-Date: 2021-03-11 11:35+0000\n"
 "PO-Revision-Date: 2015-03-27 14:41+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -186,36 +186,36 @@ msgstr " '%ls' の表示に問題があります "
 #: src/main/envir.c:2220 src/main/envir.c:2227 src/main/envir.c:2238
 #: src/main/envir.c:2478 src/main/envir.c:2599 src/main/envir.c:2896
 #: src/main/envir.c:3160 src/main/envir.c:3174 src/main/envir.c:3181
-#: src/main/envir.c:3197 src/main/envir.c:3968 src/main/errors.c:1242
+#: src/main/envir.c:3197 src/main/envir.c:3968 src/main/errors.c:1243
 #: src/main/eval.c:488 src/main/eval.c:498 src/main/eval.c:501
-#: src/main/grep.c:1144 src/main/grep.c:1149 src/main/grep.c:1471
-#: src/main/grep.c:1473 src/main/grep.c:1475 src/main/grep.c:1952
-#: src/main/grep.c:1956 src/main/grep.c:1961 src/main/grep.c:2856
-#: src/main/grep.c:2861 src/main/grep.c:3209 src/main/grep.c:3214
-#: src/main/memory.c:4536 src/main/paste.c:124 src/main/paste.c:465
+#: src/main/grep.c:1151 src/main/grep.c:1156 src/main/grep.c:1445
+#: src/main/grep.c:1447 src/main/grep.c:1449 src/main/grep.c:1926
+#: src/main/grep.c:1930 src/main/grep.c:1935 src/main/grep.c:2798
+#: src/main/grep.c:2803 src/main/grep.c:3118 src/main/grep.c:3123
+#: src/main/memory.c:4537 src/main/paste.c:124 src/main/paste.c:465
 #: src/main/paste.c:472 src/main/paste.c:479 src/main/paste.c:484
 #: src/main/paste.c:489 src/main/paste.c:494 src/main/paste.c:497
 #: src/main/paste.c:505 src/main/paste.c:510 src/main/paste.c:692
-#: src/main/paste.c:697 src/main/platform.c:465 src/main/platform.c:467
-#: src/main/platform.c:469 src/main/platform.c:485 src/main/platform.c:496
-#: src/main/platform.c:549 src/main/platform.c:551 src/main/platform.c:848
-#: src/main/platform.c:850 src/main/platform.c:945 src/main/platform.c:1318
-#: src/main/platform.c:1324 src/main/platform.c:1327 src/main/platform.c:1330
+#: src/main/paste.c:697 src/main/platform.c:474 src/main/platform.c:476
+#: src/main/platform.c:478 src/main/platform.c:494 src/main/platform.c:505
+#: src/main/platform.c:558 src/main/platform.c:560 src/main/platform.c:857
+#: src/main/platform.c:859 src/main/platform.c:954 src/main/platform.c:1327
 #: src/main/platform.c:1333 src/main/platform.c:1336 src/main/platform.c:1339
-#: src/main/platform.c:1342 src/main/platform.c:1437 src/main/platform.c:1440
-#: src/main/platform.c:1443 src/main/platform.c:1485 src/main/platform.c:1545
-#: src/main/platform.c:1548 src/main/platform.c:1756 src/main/platform.c:1759
-#: src/main/platform.c:1762 src/main/platform.c:1765 src/main/platform.c:1810
-#: src/main/platform.c:1813 src/main/platform.c:1816 src/main/platform.c:1819
-#: src/main/platform.c:1864 src/main/platform.c:1897 src/main/platform.c:1899
-#: src/main/platform.c:1978 src/main/platform.c:2063 src/main/platform.c:2328
-#: src/main/platform.c:2388 src/main/platform.c:2589 src/main/platform.c:2592
-#: src/main/platform.c:2595 src/main/platform.c:2598 src/main/platform.c:2601
-#: src/main/platform.c:2604 src/main/platform.c:2843 src/main/platform.c:2846
-#: src/main/platform.c:2849 src/main/platform.c:2852 src/main/platform.c:2855
-#: src/main/platform.c:2858 src/main/platform.c:2861 src/main/platform.c:2944
-#: src/main/platform.c:2952 src/main/platform.c:2988 src/main/platform.c:3032
-#: src/main/platform.c:3123 src/main/print.c:246 src/main/print.c:275
+#: src/main/platform.c:1342 src/main/platform.c:1345 src/main/platform.c:1348
+#: src/main/platform.c:1351 src/main/platform.c:1446 src/main/platform.c:1449
+#: src/main/platform.c:1452 src/main/platform.c:1494 src/main/platform.c:1554
+#: src/main/platform.c:1557 src/main/platform.c:1765 src/main/platform.c:1768
+#: src/main/platform.c:1771 src/main/platform.c:1774 src/main/platform.c:1819
+#: src/main/platform.c:1822 src/main/platform.c:1825 src/main/platform.c:1828
+#: src/main/platform.c:1873 src/main/platform.c:1906 src/main/platform.c:1908
+#: src/main/platform.c:1987 src/main/platform.c:2072 src/main/platform.c:2337
+#: src/main/platform.c:2397 src/main/platform.c:2598 src/main/platform.c:2601
+#: src/main/platform.c:2604 src/main/platform.c:2607 src/main/platform.c:2610
+#: src/main/platform.c:2613 src/main/platform.c:2852 src/main/platform.c:2855
+#: src/main/platform.c:2858 src/main/platform.c:2861 src/main/platform.c:2864
+#: src/main/platform.c:2867 src/main/platform.c:2870 src/main/platform.c:2957
+#: src/main/platform.c:2965 src/main/platform.c:3001 src/main/platform.c:3045
+#: src/main/platform.c:3136 src/main/print.c:246 src/main/print.c:275
 #: src/main/print.c:283 src/main/print.c:297 src/main/random.c:470
 #: src/main/random.c:474 src/main/random.c:481 src/main/random.c:509
 #: src/main/saveload.c:2012 src/main/saveload.c:2054 src/main/saveload.c:2057
@@ -229,7 +229,7 @@ msgstr " '%ls' の表示に問題があります "
 #: src/main/seq.c:751 src/main/seq.c:756 src/main/seq.c:763 src/main/seq.c:767
 #: src/main/seq.c:773 src/main/sort.c:262 src/main/sysutils.c:611
 #: src/main/sysutils.c:615 src/main/sysutils.c:619 src/main/sysutils.c:625
-#: src/main/sysutils.c:629 src/main/sysutils.c:2034 src/main/sysutils.c:2038
+#: src/main/sysutils.c:629 src/main/sysutils.c:2033 src/main/sysutils.c:2037
 #: src/main/unique.c:1133 src/main/unique.c:1439 src/main/unique.c:1443
 #: src/main/unique.c:1453 src/main/unique.c:1845 src/main/util.c:662
 #: src/main/util.c:665 src/main/util.c:1605 src/main/util.c:1619
@@ -298,7 +298,7 @@ msgstr " 不正な装置です "
 msgid "invalid input in 'Rmbstowcs'"
 msgstr " 'Rmbstowcs' への入力が不正です "
 
-#: src/gnuwin32/extra.c:1196 src/main/platform.c:1520
+#: src/gnuwin32/extra.c:1196 src/main/platform.c:1529
 msgid "file choice cancelled"
 msgstr " ファイルの選択がキャンセルされました "
 
@@ -768,8 +768,8 @@ msgid "invalid multibyte format string"
 msgstr " マルチバイト文字列が不正です "
 
 #: src/main/agrep.c:133 src/main/agrep.c:778 src/main/character.c:1400
-#: src/main/character.c:1404 src/main/grep.c:1146 src/main/grep.c:1954
-#: src/main/grep.c:1958 src/main/grep.c:2858 src/main/grep.c:3211
+#: src/main/character.c:1404 src/main/grep.c:1153 src/main/grep.c:1928
+#: src/main/grep.c:1932 src/main/grep.c:2800 src/main/grep.c:3120
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr " 引数 '%s' は 1 を超える長さなので、最初の要素だけが使われます "
@@ -778,8 +778,8 @@ msgstr " 引数 '%s' は 1 を超える長さなので、最初の要素だけ�
 msgid "'pattern' must be a non-empty character string"
 msgstr " 'pattern' は空でない文字列でなければなりません "
 
-#: src/main/agrep.c:201 src/main/agrep.c:829 src/main/grep.c:1229
-#: src/main/grep.c:2927 src/main/grep.c:3267
+#: src/main/agrep.c:201 src/main/agrep.c:829 src/main/grep.c:1203
+#: src/main/grep.c:2836 src/main/grep.c:3149
 msgid "regular expression is invalid in this locale"
 msgstr " このロケールでは、正規表現は無効です "
 
@@ -788,18 +788,18 @@ msgstr " このロケールでは、正規表現は無効です "
 msgid "regcomp error:  '%s'"
 msgstr " regcomp のエラー: '%s' "
 
-#: src/main/agrep.c:239 src/main/agrep.c:875 src/main/grep.c:555
-#: src/main/grep.c:645 src/main/grep.c:751 src/main/grep.c:931
-#: src/main/grep.c:1273 src/main/grep.c:2091 src/main/grep.c:3037
-#: src/main/grep.c:3117 src/main/grep.c:3304
+#: src/main/agrep.c:239 src/main/agrep.c:875 src/main/grep.c:562
+#: src/main/grep.c:652 src/main/grep.c:758 src/main/grep.c:938
+#: src/main/grep.c:1247 src/main/grep.c:2033 src/main/grep.c:2946
+#: src/main/grep.c:3026 src/main/grep.c:3186
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr " 入力文字列 %d はこのロケールでは不適切です "
 
-#: src/main/agrep.c:526 src/main/agrep.c:766 src/main/grep.c:466
-#: src/main/grep.c:1137 src/main/grep.c:1139 src/main/grep.c:1457
-#: src/main/grep.c:1465 src/main/grep.c:1945 src/main/grep.c:1947
-#: src/main/grep.c:2848 src/main/grep.c:2850 src/main/grep.c:3199
+#: src/main/agrep.c:526 src/main/agrep.c:766 src/main/grep.c:503
+#: src/main/grep.c:1144 src/main/grep.c:1146 src/main/grep.c:1431
+#: src/main/grep.c:1439 src/main/grep.c:1919 src/main/grep.c:1921
+#: src/main/grep.c:2790 src/main/grep.c:2792 src/main/grep.c:3108
 #, c-format
 msgid "argument '%s' will be ignored"
 msgstr " 引数 '%s' は無視されます "
@@ -814,7 +814,7 @@ msgstr " 入力文字列 x[%d] はこのロケールでは不適切です "
 msgid "input string y[%d] is invalid in this locale"
 msgstr " 入力文字列 y[%d] はこのロケールでは不適切です "
 
-#: src/main/agrep.c:835 src/main/grep.c:3273
+#: src/main/agrep.c:835 src/main/grep.c:3155
 #, c-format
 msgid "regcomp error: '%s'"
 msgstr " regcomp のエラー: '%s' "
@@ -826,11 +826,11 @@ msgstr " 'FUN.VALUE' はベクトルでなければなりません "
 #: src/main/apply.c:101 src/main/array.c:522 src/main/character.c:932
 #: src/main/character.c:1786 src/main/connections.c:3916 src/main/context.c:696
 #: src/main/context.c:710 src/main/datetime.c:680 src/main/datetime.c:782
-#: src/main/datetime.c:1054 src/main/dotcode.c:222 src/main/errors.c:1159
-#: src/main/errors.c:1173 src/main/errors.c:1275 src/main/errors.c:1280
-#: src/main/errors.c:1584 src/main/identical.c:67 src/main/identical.c:68
+#: src/main/datetime.c:1054 src/main/dotcode.c:222 src/main/errors.c:1160
+#: src/main/errors.c:1174 src/main/errors.c:1276 src/main/errors.c:1281
+#: src/main/errors.c:1585 src/main/identical.c:67 src/main/identical.c:68
 #: src/main/identical.c:69 src/main/identical.c:70 src/main/identical.c:71
-#: src/main/identical.c:72 src/main/platform.c:3427 src/main/seq.c:252
+#: src/main/identical.c:72 src/main/platform.c:3440 src/main/seq.c:252
 #: src/main/seq.c:259 src/main/seq.c:263 src/main/seq.c:368 src/main/seq.c:375
 #: src/main/seq.c:378 src/main/seq.c:380 src/main/seq.c:437 src/main/seq.c:441
 #: src/main/seq.c:445 src/main/sort.c:1414 src/main/sort.c:1498
@@ -1610,7 +1610,7 @@ msgstr " 名前が文字列ではありません "
 msgid "invalid multibyte string %d"
 msgstr " %d は不正なマルチバイト文字です "
 
-#: src/main/character.c:1023 src/main/grep.c:470
+#: src/main/character.c:1023 src/main/grep.c:507
 msgid "non-character argument"
 msgstr " 文字列でない引数です "
 
@@ -1661,7 +1661,7 @@ msgstr " 'mode' 引数が不正です "
 msgid "applies only to lists and vectors"
 msgstr " リストとベクトルのみに適用できます "
 
-#: src/main/coerce.c:81 src/main/errors.c:1395
+#: src/main/coerce.c:81 src/main/errors.c:1396
 msgid "NAs introduced by coercion"
 msgstr " 強制変換により NA が生成されました "
 
@@ -1670,7 +1670,7 @@ msgstr " 強制変換により NA が生成されました "
 msgid "NAs introduced by coercion to integer range"
 msgstr " 強制変換により NA が生成されました "
 
-#: src/main/coerce.c:85 src/main/errors.c:1397
+#: src/main/coerce.c:85 src/main/errors.c:1398
 msgid "imaginary parts discarded in coercion"
 msgstr " 複素数の虚部は、コネクションで捨てられました "
 
@@ -1889,8 +1889,8 @@ msgstr " 使われていないコネクション %d (%s) を閉じます \n"
 #: src/main/connections.c:233 src/main/serialize.c:1686
 #: src/main/serialize.c:1709 src/main/sysutils.c:647 src/main/sysutils.c:893
 #: src/main/sysutils.c:908 src/main/sysutils.c:1115 src/main/sysutils.c:1181
-#: src/main/sysutils.c:1263 src/main/sysutils.c:1273 src/main/sysutils.c:1286
-#: src/main/sysutils.c:1702
+#: src/main/sysutils.c:1262 src/main/sysutils.c:1272 src/main/sysutils.c:1285
+#: src/main/sysutils.c:1701
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr " '%s' から '%s' へのサポートされていない変換です "
@@ -1912,7 +1912,7 @@ msgstr " 出力の変換中に不正な char 文字列があります "
 msgid "invalid input found on input connection '%s'"
 msgstr " 入力コネクション '%s' に不正な入力がありました "
 
-#: src/main/connections.c:762 src/main/platform.c:1050
+#: src/main/connections.c:762 src/main/platform.c:1059
 #, c-format
 msgid "cannot open file '%ls': %s"
 msgstr " ファイル '%ls' を開くことができません: %s "
@@ -3561,7 +3561,7 @@ msgstr " %s でエラー: "
 msgid "Error: "
 msgstr " エラー: "
 
-#: src/main/errors.c:877 src/main/errors.c:1504
+#: src/main/errors.c:877 src/main/errors.c:1505
 msgid "In addition: "
 msgstr " 追加情報: "
 
@@ -3569,95 +3569,95 @@ msgstr " 追加情報: "
 msgid "invalid option \"error\"\n"
 msgstr " オプション \"error\" は不正です \n"
 
-#: src/main/errors.c:1244 src/main/errors.c:1246 src/main/options.c:406
+#: src/main/errors.c:1245 src/main/errors.c:1247 src/main/options.c:406
 #: src/main/unique.c:1747
 #, c-format
 msgid "'%s' must be a character string"
 msgstr " '%s' は文字列でなければなりません "
 
-#: src/main/errors.c:1317
+#: src/main/errors.c:1318
 msgid " [invalid string in stop(.)]"
 msgstr " stop() 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1349
+#: src/main/errors.c:1350
 msgid " [invalid string in warning(.)]"
 msgstr " warning() 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1365
+#: src/main/errors.c:1366
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr " \"%s\" への引数の個数が正しくありません "
 
-#: src/main/errors.c:1371 src/main/errors.c:1386
+#: src/main/errors.c:1372 src/main/errors.c:1387
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr " %s 中の未実装の機能です "
 
-#: src/main/errors.c:1380
+#: src/main/errors.c:1381
 msgid "invalid number of arguments"
 msgstr " 引数の個数が不正です "
 
-#: src/main/errors.c:1381 src/main/logic.c:189
+#: src/main/errors.c:1382 src/main/logic.c:189
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
-#: src/main/errors.c:1383
+#: src/main/errors.c:1384
 msgid "time-series/vector length mismatch"
 msgstr " 時系列またはベクトル の長さが合致しません "
 
-#: src/main/errors.c:1384
+#: src/main/errors.c:1385
 msgid "incompatible arguments"
 msgstr " 互換性のない引数です "
 
-#: src/main/errors.c:1387
+#: src/main/errors.c:1388
 msgid "unknown error (report this!)"
 msgstr " 未知のエラーです (報告してください！) "
 
-#: src/main/errors.c:1396
+#: src/main/errors.c:1397
 msgid "inaccurate integer conversion in coercion"
 msgstr " 強制変換中に不正確な整数変換が行われました "
 
-#: src/main/errors.c:1399
+#: src/main/errors.c:1400
 msgid "unknown warning (report this!)"
 msgstr " 未知の警告です (報告してください！) "
 
-#: src/main/errors.c:1474
+#: src/main/errors.c:1475
 msgid "No function to return from, jumping to top level"
 msgstr " 戻るべき関数がないので、トップレベルへジャンプします "
 
-#: src/main/errors.c:1490
+#: src/main/errors.c:1491
 msgid "top level inconsistency?"
 msgstr " トップレベルの不整合？ "
 
-#: src/main/errors.c:1746
+#: src/main/errors.c:1747
 msgid "bad handler data"
 msgstr " ハンドラーデータ (handler data) が不正です "
 
-#: src/main/errors.c:1907
+#: src/main/errors.c:1908
 msgid "error message not a string"
 msgstr " エラーメッセージが文字列ではありません "
 
-#: src/main/errors.c:1989
+#: src/main/errors.c:1990
 msgid "handler or restart stack mismatch in old restart"
 msgstr " handler stack か restart stack が、古い restart と一致しません "
 
-#: src/main/errors.c:2012 src/main/errors.c:2025
+#: src/main/errors.c:2013 src/main/errors.c:2026
 msgid "bad error message"
 msgstr " 不正なエラーメッセージです "
 
-#: src/main/errors.c:2066
+#: src/main/errors.c:2067
 msgid "bad restart"
 msgstr " 不正な再起動です "
 
-#: src/main/errors.c:2098
+#: src/main/errors.c:2099
 msgid "restart not on stack"
 msgstr " スタックからではない再実行です "
 
-#: src/main/errors.c:2114
+#: src/main/errors.c:2115
 msgid "not in a try context"
 msgstr " トライ (try) 文脈ではありません "
 
-#: src/main/errors.c:2127
+#: src/main/errors.c:2128
 msgid "error message must be a character string"
 msgstr " エラーメッセージは文字列であるに違いありません "
 
@@ -3959,168 +3959,168 @@ msgstr " 'getGrapshicsEvent' の再帰的使用はサポートされていませ
 msgid "no graphics event handlers set"
 msgstr " 設定されたグラフィックス event handler がありません "
 
-#: src/main/gram.y:298 src/main/gram.y:314 src/main/gram.y:2566
-#: src/main/gram.y:2581
+#: src/main/gram.y:298 src/main/gram.y:314 src/main/gram.y:2565
+#: src/main/gram.y:2580
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました (%d 行) "
 
-#: src/main/gram.y:303 src/main/gram.y:311 src/main/gram.y:630
-#: src/main/gram.y:637 src/main/gram.y:713 src/main/gram.y:2571
-#: src/main/gram.y:2578
+#: src/main/gram.y:303 src/main/gram.y:311 src/main/gram.y:629
+#: src/main/gram.y:636 src/main/gram.y:712 src/main/gram.y:2570
+#: src/main/gram.y:2577
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr " 構文解析中に不正なマルチバイト文字列がありました (%d 行) "
 
-#: src/main/gram.y:549
+#: src/main/gram.y:548
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr " 入力バッファが溢れました (%d 行) "
 
-#: src/main/gram.y:1180
+#: src/main/gram.y:1179
 msgid "The pipe operator requires a function call as RHS"
 msgstr ""
 
-#: src/main/gram.y:1201
+#: src/main/gram.y:1200
 msgid "no placeholder found on RHS"
 msgstr ""
 
-#: src/main/gram.y:1291
+#: src/main/gram.y:1290
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr " tag の型が正しくありません (%d 行) "
 
-#: src/main/gram.y:1466
+#: src/main/gram.y:1465
 #, fuzzy
 msgid "allocation of source reference state failed"
 msgstr " ソケット接続の割り当てに失敗しました "
 
-#: src/main/gram.y:1957
+#: src/main/gram.y:1956
 msgid "contextstack overflow"
 msgstr " コンテクストスタックが溢れました "
 
-#: src/main/gram.y:2212 src/main/gram.y:2218
+#: src/main/gram.y:2211 src/main/gram.y:2217
 #, c-format
 msgid "unexpected input"
 msgstr " 想定外の入力です "
 
-#: src/main/gram.y:2215 src/main/main.c:317
+#: src/main/gram.y:2214 src/main/main.c:317
 #, c-format
 msgid "unexpected end of input"
 msgstr " 想定外の入力の終端です "
 
-#: src/main/gram.y:2221
+#: src/main/gram.y:2220
 #, c-format
 msgid "unexpected string constant"
 msgstr " 想定外の文字列定数です "
 
-#: src/main/gram.y:2224
+#: src/main/gram.y:2223
 #, c-format
 msgid "unexpected numeric constant"
 msgstr " 想定外の数値定数です "
 
-#: src/main/gram.y:2227
+#: src/main/gram.y:2226
 #, c-format
 msgid "unexpected symbol"
 msgstr " 想定外のシンボルです "
 
-#: src/main/gram.y:2230
+#: src/main/gram.y:2229
 #, c-format
 msgid "unexpected assignment"
 msgstr " 想定外の付値です "
 
-#: src/main/gram.y:2233
+#: src/main/gram.y:2232
 #, c-format
 msgid "unexpected end of line"
 msgstr " 想定外の行末です "
 
-#: src/main/gram.y:2236 src/main/gram.y:2244
+#: src/main/gram.y:2235 src/main/gram.y:2243
 #, c-format
 msgid "unexpected %s"
 msgstr " 予想外の %s です "
 
-#: src/main/gram.y:2256
+#: src/main/gram.y:2255
 #, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr " 形式的引数 '%s' が繰り返されています (%d 行において) "
 
-#: src/main/gram.y:2477
+#: src/main/gram.y:2476
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr " 整数リテラル %s は小数を含んでいます; 実数値を使用します "
 
-#: src/main/gram.y:2480
+#: src/main/gram.y:2479
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr " 非整数値 %s に L がついています; 実数値を使用します "
 
-#: src/main/gram.y:2492
+#: src/main/gram.y:2491
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr " 整数リテラル %s は不要な小数点を含んでいます "
 
-#: src/main/gram.y:2668 src/main/gram.y:2691 src/main/gram.y:2728
-#: src/main/gram.y:2765
+#: src/main/gram.y:2667 src/main/gram.y:2690 src/main/gram.y:2727
+#: src/main/gram.y:2764
 #, c-format
 msgid "nul character not allowed (line %d)"
 msgstr " ヌル文字は許されません (%d 行) "
 
-#: src/main/gram.y:2684
+#: src/main/gram.y:2683
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\x' が使われています "
 
-#: src/main/gram.y:2700
+#: src/main/gram.y:2699
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\uxxxx シーケンスはバックチック内ではサポートされません (%d 行) "
 
-#: src/main/gram.y:2715
+#: src/main/gram.y:2714
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\u' が使われています "
 
-#: src/main/gram.y:2723
+#: src/main/gram.y:2722
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr " 不正な \\u{xxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2737
+#: src/main/gram.y:2736
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\Uxxxxxxxx シーケンスはバックチック内ではサポートされません (%d 行) "
 
-#: src/main/gram.y:2752
+#: src/main/gram.y:2751
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\U' が使われています "
 
-#: src/main/gram.y:2760
+#: src/main/gram.y:2759
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2769
+#: src/main/gram.y:2768
 #, fuzzy, c-format
 msgid "invalid \\U{xxxxxxxx} value %6x (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2772
+#: src/main/gram.y:2771
 #, fuzzy, c-format
 msgid "invalid \\Uxxxxxxxx value %6x (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2820
+#: src/main/gram.y:2819
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 " \"%2$s\" で始まる文字列の中で '\\%1$c' は文字列で認識されないエスケープです "
 
-#: src/main/gram.y:2886 src/main/gram.y:3012
+#: src/main/gram.y:2885 src/main/gram.y:3011
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr " 文字列中にユニコードや 8 進・16 進エスケープ文字は許されません "
 
-#: src/main/gram.y:2890 src/main/gram.y:3016
+#: src/main/gram.y:2889 src/main/gram.y:3015
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -4129,7 +4129,7 @@ msgstr ""
 " このロケールにはない Unicode エスケープを含む %d 行の文字列は \n"
 " 長すぎます (最大 10000 文字です) "
 
-#: src/main/gram.y:2926
+#: src/main/gram.y:2925
 #, c-format
 msgid "malformed raw string literal at line %d"
 msgstr ""
@@ -4185,7 +4185,7 @@ msgid ""
 "\tfor element %d"
 msgstr ""
 
-#: src/main/grep.c:337 src/main/grep.c:409
+#: src/main/grep.c:374 src/main/grep.c:446
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -4196,12 +4196,12 @@ msgstr ""
 " \t'%s' \n"
 " \tat '%s' \n"
 
-#: src/main/grep.c:339 src/main/grep.c:412
+#: src/main/grep.c:376 src/main/grep.c:449
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr " '%s' の正規表現が不正です "
 
-#: src/main/grep.c:351
+#: src/main/grep.c:388
 #, fuzzy, c-format
 msgid ""
 "PCRE JIT compilation error\n"
@@ -4211,7 +4211,7 @@ msgstr ""
 " \t'%s' \n"
 " \tat '%s' \n"
 
-#: src/main/grep.c:420
+#: src/main/grep.c:457
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
@@ -4220,63 +4220,63 @@ msgstr ""
 " PCRE パターンの学習エラー \n"
 " \t'%s' \n"
 
-#: src/main/grep.c:547 src/main/grep.c:637 src/main/grep.c:743
-#: src/main/grep.c:1266 src/main/grep.c:2087 src/main/grep.c:3029
+#: src/main/grep.c:554 src/main/grep.c:644 src/main/grep.c:750
+#: src/main/grep.c:1240 src/main/grep.c:2029 src/main/grep.c:2938
 #, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr " 入力文字列 %d は不正な UTF-8 文字列です "
 
-#: src/main/grep.c:614 src/main/grep.c:707
+#: src/main/grep.c:621 src/main/grep.c:714
 #, c-format
 msgid "'split' string %d is invalid UTF-8"
 msgstr " '分割された' 文字列 %d は不正な UTF-8 文字列です "
 
-#: src/main/grep.c:618 src/main/grep.c:711 src/main/grep.c:912
+#: src/main/grep.c:625 src/main/grep.c:718 src/main/grep.c:919
 #, c-format
 msgid "'split' string %d is invalid in this locale"
 msgstr " '分割された' 文字列 %d はこのロケールでは不適切です "
 
-#: src/main/grep.c:1225 src/main/grep.c:2923
+#: src/main/grep.c:1199 src/main/grep.c:2832
 msgid "regular expression is invalid UTF-8"
 msgstr " 正規表現は不正な UTF-8 文字列です "
 
-#: src/main/grep.c:1676
+#: src/main/grep.c:1650
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
 " パターンは空の文字列に何回でもマッチします、最初にマッチしたものだけを返しま"
 "す "
 
-#: src/main/grep.c:2031
+#: src/main/grep.c:1973
 msgid "'pattern' is invalid UTF-8"
 msgstr " 'pattern' は不正な UTF-8 文字列です "
 
-#: src/main/grep.c:2033
+#: src/main/grep.c:1975
 msgid "'replacement' is invalid UTF-8"
 msgstr " 'replacement' は不正な UTF-8 文字列です "
 
-#: src/main/grep.c:2037
+#: src/main/grep.c:1979
 msgid "'pattern' is invalid in this locale"
 msgstr " 'pattern' は現在のロケールでは不正です "
 
-#: src/main/grep.c:2040
+#: src/main/grep.c:1982
 msgid "'replacement' is invalid in this locale"
 msgstr " 'replacement' は現在のロケールでは不正です "
 
-#: src/main/grep.c:2045
+#: src/main/grep.c:1987
 msgid "zero-length pattern"
 msgstr " 長さゼロのパターン "
 
-#: src/main/grep.c:2198 src/main/grep.c:2219 src/main/grep.c:2268
-#: src/main/grep.c:2289 src/main/grep.c:2336 src/main/grep.c:2352
+#: src/main/grep.c:2140 src/main/grep.c:2161 src/main/grep.c:2210
+#: src/main/grep.c:2231 src/main/grep.c:2278 src/main/grep.c:2294
 msgid "result string is too long"
 msgstr " 結果の文字列が長すぎます "
 
-#: src/main/grep.c:2944
+#: src/main/grep.c:2853
 #, fuzzy, c-format
 msgid "'pcre2_patterninfo' returned '%d' "
 msgstr " 'pcre_fullinfo' が '%d' を返しました "
 
-#: src/main/grep.c:2961
+#: src/main/grep.c:2870
 #, c-format
 msgid "'pcre_fullinfo' returned '%d' "
 msgstr " 'pcre_fullinfo' が '%d' を返しました "
@@ -4604,16 +4604,16 @@ msgstr "SET_VECTOR_ELT中で インデックス %lu/%lu を設定しようとし
 msgid "bad value"
 msgstr " 不適切な値です "
 
-#: src/main/memory.c:4460
+#: src/main/memory.c:4461
 msgid "memory profiling is not available on this system"
 msgstr " メモリプロファリングはこのシステムでは使えません "
 
-#: src/main/memory.c:4523
+#: src/main/memory.c:4524
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr " Rprofmem: ファイル '%s' を開くことができません "
 
-#: src/main/memory.c:4628
+#: src/main/memory.c:4629
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr " 長いベクトルはまだサポートされていません: %s:%d "
@@ -4983,228 +4983,228 @@ msgstr " 不可能なモード (x) です "
 msgid "atomic vector arguments only"
 msgstr " 引数はアトムであるベクトルのみです "
 
-#: src/main/platform.c:463 src/main/platform.c:481
+#: src/main/platform.c:472 src/main/platform.c:490
 msgid "invalid filename specification"
 msgstr " ファイル名の指定が不正です "
 
-#: src/main/platform.c:534 src/main/platform.c:579
+#: src/main/platform.c:543 src/main/platform.c:588
 msgid "write error during file append"
 msgstr " ファイル追加中に書き込みエラーが生じました "
 
-#: src/main/platform.c:554
+#: src/main/platform.c:563
 msgid "nothing to append to"
 msgstr " 付け足す (append) べきものがありません "
 
-#: src/main/platform.c:608 src/main/platform.c:942 src/main/platform.c:1161
+#: src/main/platform.c:617 src/main/platform.c:951 src/main/platform.c:1170
 msgid "invalid filename argument"
 msgstr " ファイル名引数が不正です "
 
-#: src/main/platform.c:621
+#: src/main/platform.c:630
 #, c-format
 msgid "cannot create file '%s', reason '%s'"
 msgstr " fife '%s' を作れません、理由は '%s' です "
 
-#: src/main/platform.c:636 src/main/platform.c:677 src/main/platform.c:765
+#: src/main/platform.c:645 src/main/platform.c:686 src/main/platform.c:774
 msgid "invalid first filename"
 msgstr " 一番目のファイル名が不正です "
 
-#: src/main/platform.c:648
+#: src/main/platform.c:657
 #, c-format
 msgid "cannot remove file '%s', reason '%s'"
 msgstr " ファイル '%s' を削除できません、理由は '%s' です "
 
-#: src/main/platform.c:679 src/main/platform.c:767
+#: src/main/platform.c:688 src/main/platform.c:776
 msgid "invalid second filename"
 msgstr " 二番目のファイル名が不正です "
 
-#: src/main/platform.c:682 src/main/platform.c:770
+#: src/main/platform.c:691 src/main/platform.c:779
 msgid "nothing to link"
 msgstr " リンクすべきものがありません "
 
-#: src/main/platform.c:692
+#: src/main/platform.c:701
 msgid "symbolic links are not supported on this version of Windows"
 msgstr ""
 " この Windows のバージョンではシンボリックリンクはサポートされていません "
 
-#: src/main/platform.c:708 src/main/platform.c:785 src/main/platform.c:2607
-#: src/main/platform.c:2618
+#: src/main/platform.c:717 src/main/platform.c:794 src/main/platform.c:2616
+#: src/main/platform.c:2627
 #, fuzzy, c-format
 msgid "'%s' path too long"
 msgstr " パスが長すぎます "
 
-#: src/main/platform.c:717
+#: src/main/platform.c:726
 #, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
 msgstr ""
 " シンボリックリンク '%ls' ('%ls' に対する) を作成できません、理由は '%s' で"
 "す "
 
-#: src/main/platform.c:739
+#: src/main/platform.c:748
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr ""
 " '%s' に対するシンボリックリンク '%s' を作成できません、理由は '%s' です "
 
-#: src/main/platform.c:747
+#: src/main/platform.c:756
 msgid "symbolic links are not supported on this platform"
 msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
 
-#: src/main/platform.c:790
+#: src/main/platform.c:799
 #, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
 msgstr " '%ls' を '%ls' にリンクできません、理由は '%s' です "
 
-#: src/main/platform.c:812
+#: src/main/platform.c:821
 #, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
 msgstr " '%s' を '%s' にリンクできません、理由は '%s' です "
 
-#: src/main/platform.c:821
+#: src/main/platform.c:830
 msgid "(hard) links are not supported on this platform"
 msgstr " このプラットフォームでは (ハード) リンクはサポートされていません "
 
-#: src/main/platform.c:853
+#: src/main/platform.c:862
 msgid "'from' and 'to' are of different lengths"
 msgstr " 'from' と 'to' は異なった長さです "
 
-#: src/main/platform.c:864 src/main/platform.c:879
+#: src/main/platform.c:873 src/main/platform.c:888
 msgid "expanded 'from' name too long"
 msgstr " 展開された 'from' 名が長すぎます "
 
-#: src/main/platform.c:868 src/main/platform.c:883
+#: src/main/platform.c:877 src/main/platform.c:892
 msgid "expanded 'to' name too long"
 msgstr " 展開された　'to' 名が長すぎます "
 
-#: src/main/platform.c:872
+#: src/main/platform.c:881
 #, fuzzy, c-format
 msgid "cannot rename file '%ls' to '%ls', reason '%s'"
 msgstr " ファイル名を '%s' から '%s' に変更できません、理由は '%s' です "
 
-#: src/main/platform.c:887
+#: src/main/platform.c:896
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr " ファイル名を '%s' から '%s' に変更できません、理由は '%s' です "
 
-#: src/main/platform.c:1348
+#: src/main/platform.c:1357
 msgid "invalid 'pattern' regular expression"
 msgstr " 正規表現の 'pattern' が不正です "
 
-#: src/main/platform.c:1467
+#: src/main/platform.c:1476
 msgid "unable to determine R home location"
 msgstr " R のホームロケーションを決定できません "
 
-#: src/main/platform.c:1522
+#: src/main/platform.c:1531
 msgid "file name too long"
 msgstr " ファイル名が長すぎます "
 
-#: src/main/platform.c:1776 src/main/platform.c:1840 src/main/sysutils.c:2053
-#: src/main/sysutils.c:2067
+#: src/main/platform.c:1785 src/main/platform.c:1849 src/main/sysutils.c:2052
+#: src/main/sysutils.c:2066
 msgid "internal out-of-memory condition"
 msgstr " 内部でアウトオブメモリーが発生しています "
 
-#: src/main/platform.c:1836 src/main/sysutils.c:2063
+#: src/main/platform.c:1845 src/main/sysutils.c:2062
 #, c-format
 msgid "read error on '%s'"
 msgstr " '%s' の読み込みエラーです "
 
-#: src/main/platform.c:1943
+#: src/main/platform.c:1952
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr " 'LC_NUMERIC' をセットすると、R は変に機能するかもしれません "
 
-#: src/main/platform.c:1957
+#: src/main/platform.c:1966
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr " LC_MESSAGES は Windows にも存在しますが、動作しません "
 
-#: src/main/platform.c:1984
+#: src/main/platform.c:1993
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 " ロケールを \"%s\" に設定せよとの OS のレポート要求は受け入れられません "
 
-#: src/main/platform.c:2370
+#: src/main/platform.c:2379
 #, c-format
 msgid "'%s' already exists"
 msgstr " '%s' はすでに存在します "
 
-#: src/main/platform.c:2373
+#: src/main/platform.c:2382
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr " ディレクトリ '%s' を作成できません、理由は '%s' です "
 
-#: src/main/platform.c:2396
+#: src/main/platform.c:2405
 #, fuzzy, c-format
 msgid "'%s' too long"
 msgstr " シンボル '%s' が長すぎます "
 
-#: src/main/platform.c:2427
+#: src/main/platform.c:2436
 #, c-format
 msgid "'%ls' already exists"
 msgstr " '%ls' はすでに存在します "
 
-#: src/main/platform.c:2429 src/main/platform.c:2435
+#: src/main/platform.c:2438 src/main/platform.c:2444
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr " ディレクトリ '%ls' を作成できません、理由は '%s' です "
 
-#: src/main/platform.c:2469 src/main/platform.c:2712
+#: src/main/platform.c:2478 src/main/platform.c:2721
 msgid "too deep nesting"
 msgstr " 入れ子が深すぎます "
 
-#: src/main/platform.c:2477 src/main/platform.c:2489 src/main/platform.c:2518
-#: src/main/platform.c:2540 src/main/platform.c:2728 src/main/platform.c:2741
-#: src/main/platform.c:2772 src/main/platform.c:2794
+#: src/main/platform.c:2486 src/main/platform.c:2498 src/main/platform.c:2527
+#: src/main/platform.c:2549 src/main/platform.c:2737 src/main/platform.c:2750
+#: src/main/platform.c:2781 src/main/platform.c:2803
 msgid "over-long path"
 msgstr " 長すぎるパス長 "
 
-#: src/main/platform.c:2501
+#: src/main/platform.c:2510
 #, c-format
 msgid "cannot overwrite non-directory %ls with directory %ls"
 msgstr ""
 
-#: src/main/platform.c:2506
+#: src/main/platform.c:2515
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr " ディレクトリ %ls の作成に問題があります: %s "
 
-#: src/main/platform.c:2528
+#: src/main/platform.c:2537
 #, fuzzy, c-format
 msgid "problem reading directory %ls: %s"
 msgstr " ディレクトリ %s の作成に問題があります: %s "
 
-#: src/main/platform.c:2548
+#: src/main/platform.c:2557
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr " %ls の %ls へのコピーに問題があります: %s "
 
-#: src/main/platform.c:2755
+#: src/main/platform.c:2764
 #, c-format
 msgid "cannot overwrite non-directory %s with directory %s"
 msgstr ""
 
-#: src/main/platform.c:2760
+#: src/main/platform.c:2769
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr " ディレクトリ %s の作成に問題があります: %s "
 
-#: src/main/platform.c:2782
+#: src/main/platform.c:2791
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr " ディレクトリ %s の作成に問題があります: %s "
 
-#: src/main/platform.c:2803
+#: src/main/platform.c:2812
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr " %s の %s へのコピーに問題があります: %s "
 
-#: src/main/platform.c:2949
+#: src/main/platform.c:2962
 msgid "'mode' must be of length at least one"
 msgstr " 'mode' の長さは 1 以上でなくてはなりません "
 
-#: src/main/platform.c:3017
+#: src/main/platform.c:3030
 msgid "insufficient OS support on this platform"
 msgstr " このプラットフォームでは不十分な OS のサポートです "
 
-#: src/main/platform.c:3127
+#: src/main/platform.c:3140
 #, fuzzy, c-format
 msgid "'%s' must be of length at least one"
 msgstr " 'mode' の長さは 1 以上でなくてはなりません "
@@ -6644,13 +6644,13 @@ msgstr " 'x' は文字ベクトルでなくてはなりません "
 msgid "'x' must be a character vector or a list of NULL or raw vectors"
 msgstr " 'x' は NULL または raw vector からなるリストでなくてはなりません "
 
-#: src/main/sysutils.c:783 src/main/sysutils.c:1079 src/main/sysutils.c:1249
+#: src/main/sysutils.c:783 src/main/sysutils.c:1079 src/main/sysutils.c:1248
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr " '%s' は CHARSXP 上で呼び出されなければなりません "
 
 #: src/main/sysutils.c:857 src/main/sysutils.c:1101 src/main/sysutils.c:1167
-#: src/main/sysutils.c:1252
+#: src/main/sysutils.c:1251
 msgid "translating strings with \"bytes\" encoding is not allowed"
 msgstr " エンコーディングが \"bytes\" の文字列の翻訳は許されません "
 
@@ -6674,41 +6674,41 @@ msgstr " '%s' は CHARSXP 上で呼び出されなければなりません "
 msgid "unable to translate '%s' to UTF-8"
 msgstr " '%s' を解決することができません "
 
-#: src/main/sysutils.c:1283
+#: src/main/sysutils.c:1282
 #, c-format
 msgid "unsupported conversion to '%s' from codepage %d"
 msgstr " '%s' へのサポートされていない変換がコードページ %d にあります "
 
-#: src/main/sysutils.c:1716
+#: src/main/sysutils.c:1715
 #, c-format
 msgid "invalid Unicode point %u"
 msgstr " 不正なユニコードポイント %u "
 
-#: src/main/sysutils.c:1825
+#: src/main/sysutils.c:1824
 msgid "cannot create 'R_TempDir'"
 msgstr " 'R_TempDir' を作成することができません "
 
-#: src/main/sysutils.c:1830 src/main/sysutils.c:1838 src/main/sysutils.c:1841
+#: src/main/sysutils.c:1829 src/main/sysutils.c:1837 src/main/sysutils.c:1840
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr " R_SESSION_TMPDIR を設定することが出来ません "
 
-#: src/main/sysutils.c:1850
+#: src/main/sysutils.c:1849
 msgid "cannot allocate 'R_TempDir'"
 msgstr " 'R_TempDir' を割り当てることができません "
 
-#: src/main/sysutils.c:1891
+#: src/main/sysutils.c:1890
 msgid "temporary name too long"
 msgstr " 一時名が長すぎます "
 
-#: src/main/sysutils.c:1906
+#: src/main/sysutils.c:1905
 msgid "cannot find unused tempfile name"
 msgstr " 未使用の一時ファイル名を探すことができません "
 
-#: src/main/sysutils.c:1909
+#: src/main/sysutils.c:1908
 msgid "allocation failed in R_tmpnam2"
 msgstr " R_tmpnam2 においてメモリ割り当てが失敗しました "
 
-#: src/main/sysutils.c:2041
+#: src/main/sysutils.c:2040
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr " 'dirmark = TRUE' はこのプラットフォームではサポートされていません "
 
