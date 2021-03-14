@@ -7669,8 +7669,9 @@ package (@uref{https://ESS.R-project.org/}: it is often is installed with
 separately).
 
 Another is the Eclipse IDE with the Stat-ET plugin
-(@uref{http://www.walware.de/goto/statet}), and (on Windows only)
-Tinn-R (@uref{https://sourceforge.net/@/projects/@/tinn-r/}).
+(@uref{https://projects.eclipse.org/projects/science.statet}), and (on
+Windows only) Tinn-R
+(@uref{https://sourceforge.net/@/projects/@/tinn-r/}).
 
 People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.

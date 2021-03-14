@@ -6076,7 +6076,7 @@ supports C++17, unlike 5.x).
 @cindex FreeBSD
 
 There have been few recent reports on FreeBSD: there is a `port' at
-@uref{https://www.freebsd.org/@/ports/@/math.html}.  Recent versions of
+@uref{https://svnweb.freebsd.org/@/ports/@/head/@/math.html}.  Recent versions of
 FreeBSD use Clang and the @code{libc++} C++ headers and runtime, but the
 `port' is configured to use GCC.
 
