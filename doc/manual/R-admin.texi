@@ -79,7 +79,7 @@ This is a guide to installation and administration for R.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network'' whose current
-members are listed at @uref{https://CRAN.R-project.org/@/mirrors.html}.
+members are listed at @uref{https://CRAN.R-project.org/mirrors.html}.
 
 @menu
 * Getting and unpacking the sources::
@@ -164,7 +164,7 @@ Sources are also available via @uref{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
 @uref{https://subversion.apache.org/}), you can check out and update the
 current @samp{r-devel} from
-@uref{https://svn.r-project.org/@/R/@/trunk/} and the current
+@uref{https://svn.r-project.org/R/trunk/} and the current
 @samp{r-patched} from
 @samp{https://svn.r-project.org/@/R/@/branches/@/R-@var{x}-@var{y}-branch/}
 (where @var{x} and @var{y} are the major and minor number of the current
@@ -390,7 +390,7 @@ newly-created file @file{config.site} in the build directory.
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @file{doc/manual/R-FAQ.html}, or
-@uref{https://CRAN.R-project.org/@/doc/@/FAQ/@/R-FAQ.html} which always
+@uref{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html} which always
 has the version for the latest release of @R{}).
 
 Note: if you already have @R{} installed, check that where you installed
@@ -505,7 +505,7 @@ monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need a recent version of the appropriate @LaTeX{} package
 @pkg{inconsolata}@footnote{Instructions on how to install the latest
 version are at
-@uref{https://www.ctan.org/@/tex-archive/@/fonts/@/inconsolata/}.} or
+@uref{https://www.ctan.org/tex-archive/fonts/inconsolata/}.} or
 @pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
@@ -518,14 +518,14 @@ This needs @LaTeX{} packages @pkg{times}, @pkg{helvetic} and (if used)
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
 part of a @TeX{} distribution, but can obtained from
-@uref{https://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/lm/} and
+@uref{https://www.ctan.org/tex-archive/fonts/ps-type1/lm/} and
 mirrors.  This uses fonts rather similar to Computer Modern, but is not
 so good on-screen as @code{times}.
 
 @item cm-super
 Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
 This is a large installation, obtainable from
-@uref{https://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/cm-super/}
+@uref{https://www.ctan.org/tex-archive/fonts/ps-type1/cm-super/}
 and its mirrors.  These type-1 fonts have poor hinting and so are
 nowhere near as readable on-screen as the other three options.
 
@@ -578,7 +578,7 @@ make mobi
 
 @noindent
 This requires @command{ebook-convert} from
-@uref{https://calibre-ebook.com/@/download, @command{Calibre}}, or from
+@uref{https://calibre-ebook.com/download, @command{Calibre}}, or from
 most Linux distributions.  If necessary the path to
 @command{ebook-convert} can be set as make macro @env{EBOOK} to by
 editing @file{doc/manual/Makefile} (which contains a commented value
@@ -753,7 +753,7 @@ temporary directory in order to move the installed tree to its final
 destination.  In this case @code{prefix} (and so on) should reflect the
 @enindex DESTDIR
 final destination, and @env{DESTDIR} should be used: see
-@uref{https://www.gnu.org/@/prep/@/standards/@/html_node/@/DESTDIR.html}.
+@uref{https://www.gnu.org/prep/standards/html_node/DESTDIR.html}.
 
 You can optionally install the run-time tests that are part of
 @command{make check-all} by
@@ -1111,7 +1111,7 @@ Solaris: c++11 c++14 (from 12.5)
 
 @c c++1y does not pass the configure test in 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
-@c @uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx14} for which
+@c @uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14} for which
 @c C++14 features it supported.} in version 4.9.x) remaining as a deprecated
 @c synonym.
 
@@ -1123,7 +1123,7 @@ Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
 that of the compiler used: currently it is C++14 (if available): this
 can be overridden by setting @samp{CXXSTD} when @R{} is configured.
 
-@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support} indicates
+@uref{https://en.cppreference.com/w/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
 standards.
 
@@ -1231,7 +1231,7 @@ confused compiler messages.
 
 LLVM supports another type of LTO called `Thin LTO' as well as a similar
 implementation to GCC, sometimes called `Full LTO'.  (See
-@uref{https://clang.llvm.org/@/docs/@/ThinLTO.html}.)  Currently the only
+@uref{https://clang.llvm.org/docs/ThinLTO.html}.)  Currently the only
 LLVM compiler relevant to @R{} is @command{clang} for which this can be
 selected by setting macro @samp{LTO=-flto=thin}.  LLVM has
 @example
@@ -1400,7 +1400,7 @@ You will be asked to choose a language for installation: that choice
 applies to both installation and un-installation but not to running @R{}
 itself.
 
-See the @uref{https://CRAN.R-project.org/@/bin/@/windows/@/base/@/rw-FAQ.html, R
+See the @uref{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R
 Windows @acronym{FAQ}} for more details on the binary installer.
 
 @menu
@@ -1426,7 +1426,7 @@ manual only documents that used for binary distributions of @R{} 4.0.x.
 
 The binary distribution of @R{} is currently built with tools
 distributed in @file{rtools40-x86_64.exe}. The webpage
-@uref{https://cran.r-project.org/@/bin/@/windows/@/Rtools/} describes how to
+@uref{https://cran.r-project.org/bin/windows/Rtools/} describes how to
 install the toolset and has links to example scripts to build and
 package @R{}.
 
@@ -1554,7 +1554,7 @@ and later on @cputype{x86_64} (Intel) CPU (High Sierra, Mojave,
 Catalina, Big Sur, @dots{}).  It can also be installed on
 @cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs running Big Sur
 using `Rosetta' emulation@footnote{You may be asked to install Rosetta
-at first use -- @url{https://support.apple.com/@/en-us/@/HT211861} --
+at first use -- @url{https://support.apple.com/en-us/HT211861} --
 which may need administrator privileges.}, as can @acronym{CRAN} binary
 packages.
 
@@ -1624,7 +1624,7 @@ Launchpad or Finder).  (If you cannot find it there it was possibly
 installed elsewhere so try searching for it in Spotlight.) This is
 usually referred to as @Rapp{} to distinguish it from command-line @R{}:
 its user manual is currently part of the macOS FAQ at
-@uref{https://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
+@uref{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html} and
 can be viewed from @Rapp{}'s `Help' menu.
 
 
@@ -1653,7 +1653,7 @@ stored, so if it fails when launched for the very first time, try it
 again (the first attempt will store some preferences).
 
 Users of @Rapp{} need to be aware of the `App Nap' feature
-(@uref{https://developer.apple.com/@/library/@/archive/@/releasenotes/@/MacOSX/@/WhatsNewInOSX/@/Articles/MacOSX10_9.html})
+(@uref{https://developer.apple.com/library/archive/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
 which can cause @R{} tasks to appear to run very slowly when not
 producing output in the console.  Here are ways to avoid it:
 
@@ -1669,7 +1669,7 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 @end example
 
 @noindent
-(see @uref{https://developer.apple.com/@/library/@/archive/@/releasenotes/@/MacOSX/@/WhatsNewInOSX/@/Articles/MacOSX10_9.html}).
+(see @uref{https://developer.apple.com/library/archive/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html}).
 @end itemize
 
 Using the @code{X11} device or the X11-based versions of @code{View()}
@@ -2080,8 +2080,8 @@ containing either or both architectures (32- and 64-bit).
 @c Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @c @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 @c directory of a bundled distribution of Gtk2 from
-@c @uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win32/@/gtk+} or
-@c @uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win64/@/gtk+} in
+@c @uref{http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+} or
+@c @uref{http://ftp.gnome.org/pub/gnome/binaries/win64/gtk+} in
 @c the path: it should work to have both 32- and 64-bit Gtk+ @file{bin}
 @c directories in the path on a 64-bit version of @R{}.
 
@@ -2160,7 +2160,7 @@ installed and several packages need X11 installed, including those using
 Tk.  See @ref{macOS} and @ref{Java (macOS)}.  Package @CRANpkg{rjags}
 needs a build of JAGS installed under @file{/usr/local}, such as those
 at
-@uref{https://sourceforge.net/@/projects/@/mcmc-jags/@/files/@/JAGS/@/4.x/@/Mac%20OS%20X/}.
+@uref{https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/}.
 
 Tcl/Tk extension @code{BWidget} used to be
 distributed with @R{} but no longer is; @code{Tktable} has been
@@ -2171,7 +2171,7 @@ system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the GTK
 framework installed from @uref{https://mac.R-project.org/libs/}: the
 appropriate version at the time of writing was
-@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}.
+@uref{https://mac.R-project.org/libs/GTK_2.24.17-X11.pkg}.
 
 The same instructions apply when installing binary packages into the
 @acronym{CRAN} distribution of @R{} running on an @cputype{arm64} (aka
@@ -2696,12 +2696,12 @@ locale needs to specify
 @item
 A human language.  These are generally specified by a lower-case
 two-character abbreviation following ISO 639 (see e.g.@:
-@uref{https://en.wikipedia.org/@/wiki/@/ISO_639-1}).
+@uref{https://en.wikipedia.org/wiki/ISO_639-1}).
 
 @item
 A `territory', used mainly to specify the currency. These are generally
 specified by an upper-case two-character abbreviation following ISO 3166
-(see e.g.@: @uref{https://@/en.wikipedia.org/@/wiki/@/ISO_3166}).
+(see e.g.@: @uref{https://en.wikipedia.org/wiki/ISO_3166}).
 
 @item
 A charset encoding, which determines both how a byte stream should be
@@ -2763,7 +2763,7 @@ in most of the Chinese-speaking world.
 
 macOS supports locales in its own particular way, but the @R{} GUI tries to
 make this easier for users. See
-@uref{https://developer.apple.com/@/library/@/archive/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
+@uref{https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/}
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
@@ -2869,7 +2869,7 @@ If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, `English'@footnote{with
 Americanisms.} is used.
 
-See @uref{https://developer.r-project.org/@/Translations30.html} for how to
+See @uref{https://developer.r-project.org/Translations30.html} for how to
 prepare and install translation catalogues.
 
 @node Choosing between 32- and 64-bit builds, The standalone Rmath library, Internationalization, Top
@@ -3227,7 +3227,7 @@ by default for @code{glibc}@footnote{However, it is possible to break
 the default behaviour of @code{glibc} by re-specifying the @code{gconv}
 modules to be loaded.} but not of most commercial Unixes.  However, you
 can make use of @acronym{GNU} @code{libiconv} (as used on macOS: see
-@uref{https://www.gnu.org/@/software/@/libiconv/}).
+@uref{https://www.gnu.org/software/libiconv/}).
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
@@ -3300,10 +3300,10 @@ do so described in file @file{config.site}.
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{https://github.com/@/libarchive/@/libarchive/}, used as
+@uref{https://github.com/libarchive/libarchive/}, used as
 @command{tar} by FreeBSD and macOS 10.6 and later) or @command{tar} from
 the Heirloom Toolchest
-(@uref{http://heirloom.sourceforge.net/@/tools.html}), although the
+(@uref{http://heirloom.sourceforge.net/tools.html}), although the
 latter does not support @command{xz} compression.} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
@@ -3415,7 +3415,7 @@ installed: Linux users will want the @code{urw-fonts} package.  On
 platforms which have it available, the @code{msttcorefonts}
 package@footnote{also known as @code{ttf-mscorefonts-installer} in the
 Debian/Ubuntu world: see also
-@uref{https://en.wikipedia.org/@/wiki/@/Core_fonts_for_the_Web}.} provides
+@uref{https://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.} provides
 TrueType versions of Monotype fonts such as Arial and Times New Roman.
 Another useful set of fonts is the `liberation' TrueType fonts available
 at
@@ -3423,9 +3423,9 @@ at
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
 plus a fair range of signs.  These share metrics with Arial, Times New
 Roman and Courier New, and contain fonts rather similar to the first two
-(@uref{https://en.wikipedia.org/@/wiki/@/Liberation_fonts}).  Then there
+(@uref{https://en.wikipedia.org/wiki/Liberation_fonts}).  Then there
 is the `Free UCS Outline Fonts' project
-(@uref{https://www.gnu.org/@/software/@/freefont/}) which are
+(@uref{https://www.gnu.org/software/freefont/}) which are
 OpenType/TrueType fonts based on the URW fonts but with extended Unicode
 coverage.  See the @R{} help on @code{X11} on selecting such fonts.
 
@@ -3452,7 +3452,7 @@ tell you what other libraries are required for linking, for example by
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest sources are in the @command{git} repository
-at @url{https://github.com/@/laurikari/@/tre/}, but at the time of writing
+at @url{https://github.com/laurikari/tre/}, but at the time of writing
 (2016) the resulting build did not pass its checks.).
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
@@ -3660,7 +3660,7 @@ these variables.
 
 The linear algebra routines in @R{} can make use of enhanced
 @acronym{BLAS} (Basic Linear Algebra Subprograms,
-@uref{https://www.netlib.org/@/blas/@/faq.html}) routines.  However,
+@uref{https://www.netlib.org/blas/faq.html}) routines.  However,
 these have to be explicitly requested at configure time: @R{} provides
 an internal @acronym{BLAS} which is well-tested and will be adequate for
 most uses of @R{}.
@@ -3736,7 +3736,7 @@ Debian/Ubuntu systems provide a system-specific way to switch the BLAS
 in use.  Build @R{} with @option{-with-blas} to select the OS version
 of the reference BLAS, and then use @command{update-alternatives} to
 switch between the available BLAS libraries.  See
-@uref{https://wiki.debian.org/@/DebianScience/@/LinearAlgebraLibraries}.
+@uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
 
 The URIs for several of these BLAS have been subject to frequent
 gratuitous changes, so you will need to search for their current
@@ -3812,12 +3812,12 @@ Linking against multiple static libraries requires one of
 @end example
 
 Consult its installation
-guide@footnote{@uref{http://math-atlas.sourceforge.net/@/atlas_install/}}
+guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
 for how to build ATLAS as a shared library or as a static library with
 position-independent code (on platforms where that matters).
 
 According to the ATLAS
-FAQ@footnote{@uref{http://math-atlas.sourceforge.net/@/faq.html#tnum}} the
+FAQ@footnote{@uref{http://math-atlas.sourceforge.net/faq.html#tnum}} the
 maximum number of threads used by multi-threaded ATLAS is set at compile
 time.  Also, the author advises against using multi-threaded ATLAS on
 hyperthreaded CPUs without restricting affinities at compile-time to one
@@ -4350,7 +4350,7 @@ computations have been seen).  On systems using the @acronym{GNU} linker
 (especially those using @R{} as a shared library), it is likely that
 including @samp{-Wl,-O1} in @code{LDFLAGS} is worthwhile, and
 @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
-@uref{https://lwn.net/@/Articles/@/192624/}.  Tuning compilation to a
+@uref{https://lwn.net/Articles/192624/}.  Tuning compilation to a
 specific @acronym{CPU} family (e.g.@: @samp{-mtune=native} for
 @command{gcc}) can give worthwhile performance gains, especially on
 older architectures such as @cputype{ix86}.
@@ -4443,7 +4443,7 @@ well as its equivalence to the @code{Rcomplex} C structure defined in
 @command{gfortran}@tie{}10 by default gives a compilation error for the
 previously widespread practice of passing a Fortran array element where
 an array is expected, or a scalar instead of a length-one array.  See
-@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.
+@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.
 
 @node Compile and load flags, Maintainer mode, Using Fortran, Configuration on a Unix-alike
 @section Compile and load flags
@@ -4562,7 +4562,7 @@ directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
 @command{notangle} is required.  Some Linux distributions include this
 command in package @pkg{noweb}.  It can also be installed from the
-sources at @url{https://www.cs.tufts.edu/@/~nr/@/noweb/}@footnote{The links
+sources at @url{https://www.cs.tufts.edu/~nr/noweb/}@footnote{The links
 there have proved difficult to access, in which case grab the copy
 made available at
 @uref{https://developer.r-project.org/noweb-2.11b.tgz}.}.  The package
@@ -4593,7 +4593,7 @@ recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
-(currently) at @uref{https://sourceforge.net/@/p/@/predef/@/wiki/@/Home/}
+(currently) at @uref{https://sourceforge.net/p/predef/wiki/Home/}
 can be helpful.  The @R{} sources have used (often in included software
 under @file{src/extra})
 @example
@@ -4894,7 +4894,7 @@ also needs the OpenMP runtime which has sometimes been distributed
 separately.}
 
 There is a project called @command{flang}
-(@uref{https://github.com/@/flang-compiler/@/flang})) to develop a
+(@uref{https://github.com/flang-compiler/flang})) to develop a
 Fortran compiler similar to clang but based on the Portland Group's front
 end.  This needs something like
 @example
@@ -4990,7 +4990,7 @@ Sur).
 @c @R{} can in principle be built for 10.6--10.12, although this is little
 @c tested and it may be necessary to install later versions of software
 @c such as @code{libcurl} and an older version@footnote{For example, from
-@c @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/releases}.} of
+@c @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}.} of
 @c @command{gfortran}.
 
 @menu
@@ -5027,7 +5027,7 @@ The Command Line Tools provide C and C++ compilers derived from LLVM's
 
 @item
 A Fortran compiler. An installer for @command{gfortran} is available at
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.@footnote{This
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/8.2/gfortran-8.2-Mojave.dmg}.@footnote{This
 is said to be for Mojave and later but works well enough on High
 Sierra.}  This installs into @file{/usr/local/gfortran}.
 
@@ -5159,7 +5159,7 @@ external software.
 @subsubsection Note for Catalina and Big Sur users
 
 A more recent Fortran compiler for Catalina and later is available at
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/10.2/@/gfortran-10.2-Catalina.dmg}.
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg}.
 (That does not run on High Sierra.)  This supports the option
 @option{-fc-prototypes-external} mentioned in the `Writing R Extensions'
 manual
@@ -5167,7 +5167,7 @@ manual
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
 `notarized'@footnote{See
-@uref{https://developer.apple.com/@/documentation/@/xcode/@/notarizing_macos_software_before_distribution}.}
+@uref{https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/zipfiles (for example, for @command{pandoc}).
 Usually one can use @samp{Open With} (Control/right/two-finger-click in
@@ -5319,7 +5319,7 @@ are available from @uref{https://mac.R-project.org/libs-4/} or
 @cindex BLAS library
 @cindex LAPACK library
 The @code{Accelerate}
-library@footnote{@uref{https://developer.apple.com/@/documentation/@/accelerate}.}
+library@footnote{@uref{https://developer.apple.com/documentation/accelerate}.}
 can be used @emph{via} the configuration option
 
 @example
@@ -5428,7 +5428,7 @@ that series). (Catalina included a partial distribution which lacks the
 files needed to compile against Tcl/Tk.) It is better to install Tcl/Tk
 8.6.x from the sources@footnote{Configure Tk with
 @option{--enable-aqua}.} or a binary distribution from
-@uref{https://www.activestate.com/@/activetcl/@/downloads}.  For the
+@uref{https://www.activestate.com/activetcl/downloads}.  For the
 latter, configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
@@ -5450,7 +5450,7 @@ includes @code{Tktable} and the @acronym{CRAN} package
 @subsection Java
 
 @c The situation with Java support on macOS is messy,@footnote{For more
-@c details see @uref{https://www.macstrategy.com/@/article.php?3}.} and
+@c details see @uref{https://www.macstrategy.com/article.php?3}.} and
 @c distribution of Java for all platforms changed in 2018.
 
 macOS does not comes with an installed Java runtime (JRE) and a macOS
@@ -5462,10 +5462,10 @@ not start with @code{1.8.0}, @code{11} or higher you need to update your
 Java.} this should prompt you to install it.@footnote{Not at the time of
 writing for @cputype{arm64}.} You can also install directly a recent
 Java from
-@uref{https://www.oracle.com/@/java/technologies/@/javase-downloads.html,
+@uref{https://www.oracle.com/java/technologies/javase-downloads.html,
 Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
-@uref{https://www.azul.com/@/downloads/@/zulu-community/, Azul} or
+@uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
 long-term support, e.g.@: 8 or 11 or (when released ca 2020-09) 17 but
 not 9, 10, 12--16 which have/had a 6-month lifetime.
@@ -5567,7 +5567,7 @@ by e.g.@:
 xcodebuild -target R -configuration Release
 @end example
 See also the @file{INSTALL} file in the checkout or directly at
-@uref{https://svn.r-project.org/@/R-packages/@/trunk/@/Mac-GUI/@/INSTALL}.
+@uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
 
 @Rapp{} does not need to be installed in any specific way. Building
 @Rapp{} results in the @Rapp{} bundle which appears as one @R{} icon. This
@@ -5692,10 +5692,10 @@ still search @file{/usr/local/include} and @file{/usr/local/lib}).
 No Fortran compiler has been released for this architecture although
 there are ports under development.  We used the preliminary fork of
 @command{gfortran} from
-@url{https://github.com/@/iains/@/gcc-darwin-arm64} of which there are
-binary distributions at @uref{https://mac.r-project.org/@/libs-arm64/}
+@url{https://github.com/iains/gcc-darwin-arm64} of which there are
+binary distributions at @uref{https://mac.r-project.org/libs-arm64/}
 and
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/}.
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/}.
 It seems these have been built using the SDK path for Xcode and not that
 for the Command Line Tools which causes some problems@footnote{such as
 being unable to find @code{-lm}.} when using the Fortran compiler to
@@ -5774,7 +5774,7 @@ configure @R{} using something like
 @end example
 
 Updating a build may fail because of the bug
-described at @uref{https://openradar.appspot.com/@/FB8914243} but
+described at @uref{https://openradar.appspot.com/FB8914243} but
 @emph{ab initio} builds work.
 
 Native Java builds are becoming available, for example
@@ -6076,7 +6076,7 @@ supports C++17, unlike 5.x).
 @cindex FreeBSD
 
 There have been few recent reports on FreeBSD: there is a `port' at
-@uref{https://svnweb.freebsd.org/@/ports/@/head/@/math.html}.  Recent versions of
+@uref{https://svnweb.freebsd.org/ports/head/math.html}.  Recent versions of
 FreeBSD use Clang and the @code{libc++} C++ headers and runtime, but the
 `port' is configured to use GCC.
 
@@ -6090,7 +6090,7 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{https://cvsweb.openbsd.org/@/cgi-bin/@/cvsweb/@/ports/@/math/@/R/}. (Downgrading
+@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}. (Downgrading
 the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
 developers.)
 

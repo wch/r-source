@@ -1506,7 +1506,7 @@ only the visible methods will be cached.
 @subsection Mechanics of S4 dispatch
 
 This subsection does not discuss how S4 methods are chosen: see
-@uref{https://@/developer.@/r-project.org/howMethodsWork.pdf}.
+@uref{https://developer.@/r-project.org/howMethodsWork.pdf}.
 
 For all but primitive functions, setting a method on an existing
 function that is not itself S4 generic creates a new object in the
@@ -2737,8 +2737,8 @@ that in S and whose @R{} code@footnote{The C code is in files
 @pkg{graphics}) and one implemented in package @pkg{grid}.
 
 Some notes on the historical changes can be found at
-@uref{https://www.stat.auckland.ac.nz/@/~paul/@/R/basegraph.html} and
-@uref{https://www.stat.auckland.ac.nz/@/~paul/R/@/graphicsChanges.html}.
+@uref{https://www.stat.auckland.ac.nz/~paul/R/basegraph.html} and
+@uref{https://www.stat.auckland.ac.nz/~paul/R/graphicsChanges.html}.
 
 At the lowest level is a graphics device, which manages a plotting
 surface (a screen window or a representation to be written to a file).
@@ -4349,7 +4349,7 @@ Perl script @command{checkbashisms} if available.  This includes
 reporting scripts using the non-portable @code{#! /bin/bash}.
 (Script @command{checkbashisms} is available in most Linux distributions
 in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}
-and from @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}.)
+and from @uref{https://sourceforge.net/projects/checkbaskisms/files}.)
 Default: false (but true for CRAN submission checks except on Windows).
 
 @item _R_CHECK_ORPHANED_

@@ -216,7 +216,7 @@ use less (virtual) memory.
 and contributed code, especially @R{} packages.  Users of @R{} are
 encouraged to join in the collaborative project and to submit their own
 packages to @acronym{CRAN}: current instructions are linked from
-@uref{https://CRAN.R-project.org/@/banner.shtml#submitting}.
+@uref{https://CRAN.R-project.org/banner.shtml#submitting}.
 
 
 @menu
@@ -277,7 +277,7 @@ shell scripts which are, respectively, executed before and (if option
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
-@uref{https://www.gnu.org/@/prep/@/standards/@/standards.html#Documentation}.
+@uref{https://www.gnu.org/prep/standards/standards.html#Documentation}.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows and by default on
@@ -368,7 +368,7 @@ BugReports: https://pkgname.bugtracker.url
 @noindent
 The format is that of a version of a `Debian Control File' (see the help
 for @samp{read.dcf} and
-@uref{https://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
+@uref{https://www.debian.org/doc/debian-policy/ch-controlfields.html}:
 @R{} does not require encoding in UTF-8 and does not support comments
 starting with @samp{#}).  Fields start with an @acronym{ASCII} name
 immediately followed by a colon: the value starts after the colon and a
@@ -648,7 +648,7 @@ the fields @samp{Classification/ACM} or @samp{Classification/ACM-2012}
 Computing Machinery, @uref{https://www.acm.org/publications/class-2012}; the former refers
 to the 1998 version), @samp{Classification/JEL} (the Journal of Economic
 Literature Classification System,
-@uref{https://www.aeaweb.org/@/econlit/@/jelCodes.php}, or
+@uref{https://www.aeaweb.org/econlit/jelCodes.php}, or
 @samp{Classification/MSC} or @samp{Classification/MSC-2010} (the
 Mathematics Subject Classification of the American Mathematical Society,
 @uref{https://mathscinet.ams.org/msc/msc2010.html}; the former refers to the 2000 version).
@@ -661,11 +661,11 @@ A @samp{Language} field can be used to indicate if the package
 documentation is not in English: this should be a comma-separated list
 of standard (not private use or grandfathered) IETF language tags as
 currently defined by RFC 5646
-(@uref{https://tools.ietf.org/@/html/@/rfc5646}, see also
-@uref{https://en.wikipedia.org/@/wiki/@/IETF_language_tag}), i.e., use
+(@uref{https://tools.ietf.org/html/rfc5646}, see also
+@uref{https://en.wikipedia.org/wiki/IETF_language_tag}), i.e., use
 language subtags which in essence are 2-letter ISO 639-1
-(@uref{https://en.wikipedia.@/org/@/wiki/@/ISO_639-1}) or 3-letter ISO
-639-3 (@uref{https://en.wikipedia.@/org/@/wiki/@/ISO_639-3}) language
+(@uref{https://en.wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
+639-3 (@uref{https://en.wikipedia.@/org/wiki/ISO_639-3}) language
 codes.
 
 @c DESCRIPTION field RdMacros
@@ -719,7 +719,7 @@ the package, let alone use it.
 
 The package management tools use the concept of
 `free or open source software'
-(FOSS, e.g., @uref{https://en.wikipedia.org/@/wiki/@/FOSS})
+(FOSS, e.g., @uref{https://en.wikipedia.org/wiki/FOSS})
 licenses: the idea being that some users of @R{} and its packages want
 to restrict themselves to such software.  Others need to ensure that
 there are no restrictions stopping them using a package, e.g.@:
@@ -744,7 +744,7 @@ GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-2.0
 BSD_2_clause BSD_3_clause MIT
 @end example
 @noindent
-as made available @emph{via} @uref{https://www.R-project.org/@/Licenses/} and
+as made available @emph{via} @uref{https://www.R-project.org/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
 @item
@@ -819,7 +819,7 @@ Whereas you should feel free to include a license file in your
 @emph{source} distribution, please do not arrange to @emph{install} yet
 another copy of the @acronym{GNU} @file{COPYING} or @file{COPYING.LIB}
 files but refer to the copies on
-@uref{https://www.R-project.org/@/Licenses/} and included in the @R{}
+@uref{https://www.R-project.org/Licenses/} and included in the @R{}
 distribution (in directory @file{share/licenses}).  Since files named
 @file{LICENSE} or @file{LICENCE} @emph{will} be installed, do not use
 these names for standard license files.  To include comments about the
@@ -1427,7 +1427,7 @@ Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab},
 @file{.txt}, or @file{.csv}, see @code{?data} for the file formats, and
 note that @file{.csv} is @strong{not} the standard@footnote{e.g.@:
-@uref{https://tools.ietf.org/@/html/@/rfc4180}.} CSV format), or
+@uref{https://tools.ietf.org/html/rfc4180}.} CSV format), or
 @code{save()} images (@file{.RData} or @file{.rda}).  The files should
 not be hidden (have names starting with a dot).  Note that @R{} code
 should be if possible ``self-sufficient'' and not make use of extra
@@ -1561,7 +1561,7 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 
 @noindent
 then download the sources from
-@uref{https://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/}
+@uref{https://sourceforge.net/projects/tcllib/files/BWidget/}
 and in a terminal run something like
 
 @example
@@ -1617,7 +1617,7 @@ comments later on about the Windows port of @R{}.
 If your package needs some system-dependent configuration before
 installation you can include an executable (Bourne@footnote{The script
 should only assume a POSIX-compliant @command{/bin/sh} -- see
-@uref{https://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/V3_chap02.html}.
+@uref{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html}.
 In particular @command{bash} extensions must not be used, and not all
 @R{} platforms have a @command{bash} command, let alone one at
 @file{/bin/bash}.  All known shells used with @R{} support the use of
@@ -1625,15 +1625,16 @@ backticks, but not all support @samp{$(@var{cmd})}.  However, real-world
 shells are not fully POSIX-compliant and omissions and idiosyncrasies
 need to be worked around---which Autoconf will do for you.  Arithmetic
 expansion is a known issue: see
-@uref{https://www.gnu.org/@/software/@/autoconf/@/manual/autoconf.html#Portable-Shell}
+@uref{https://www.gnu.org/software/autoconf/manual/autoconf.html#Portable-Shell}
 for this and others.  Some checks can be done by the
 @code{checkbashisms} Perl script at
 @c 'checkbaskisms' really is the correct path
-@uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}, also
+@uref{https://sourceforge.net/projects/checkbaskisms/files}, also
 available in most Linux distributions in a package named either
 @samp{devscripts} or @samp{devscripts-checkbashisms}: a possibly later
-version can be extracted from Debian sources such as
-@uref{http://deb.debian.org/@/debian/@/pool/@/main/@/d/@/devscripts/@/devscripts_2.20.5.tar.xz}.}
+version can be extracted from Debian sources such as the most recent
+@file{tar.xz} in 
+@uref{https://deb.debian.org/debian/pool/main/d/devscripts/}.}
 shell script @file{configure} in your package which (if present) is
 executed by @code{R CMD INSTALL} before any other action is performed.
 This can be a script created by the Autoconf mechanism, but may also be
@@ -1933,7 +1934,7 @@ m4_include([tools/ax_pthread.m4])
 @end example
 @noindent
 One source of such extensions is the `Autoconf Archive'
-(@uref{https://www.gnu.org/@/software/@/autoconf-archive/}.  It is not
+(@uref{https://www.gnu.org/software/autoconf-archive/}.  It is not
 safe to assume this is installed on users' machines, so the extension
 should be shipped with the package (taking care to comply with its
 licence).
@@ -2216,7 +2217,7 @@ xxx.dll
 where the first and second are conventionally import libraries, the
 third and fourth often static libraries (with @code{.lib} intended for
 Visual C++), but might be import libraries.  See for example
-@uref{https://sourceware.org/@/binutils/@/docs-2.20/@/ld/@/WIN32.html#WIN32}.
+@uref{https://sourceware.org/binutils/docs-2.20/ld/WIN32.html#WIN32}.
 
 The fly in the ointment is that the DLL might not be named
 @file{libxxx.dll}, and in fact on 32-bit Windows there is a
@@ -2238,8 +2239,8 @@ DLL.
 
 There is some support for packages which wish to use
 OpenMP@footnote{@uref{https://www.openmp.org/},
-@uref{https://en.wikipedia.org/@/wiki/@/OpenMP},
-@uref{https://computing.llnl.gov/@/tutorials/@/openMP/}}.  The
+@uref{https://en.wikipedia.org/wiki/OpenMP},
+@uref{https://computing.llnl.gov/tutorials/openMP/}}.  The
 @command{make} macros
 
 @example
@@ -2335,7 +2336,7 @@ supported by recent versions of the Linux (GCC >= 4.9.1), Windows and
 Solaris platforms, but portable packages cannot assume that end users
 have recent versions.  Apple builds of @command{clang} on macOS have no
 OpenMP support.
-@uref{https://www.openmp.org/@/resources/@/openmp-compilers-tools/}
+@uref{https://www.openmp.org/resources/openmp-compilers-tools/}
 gives some idea of what compilers support what versions.
 
 Rarely, using OpenMP with @command{clang} on Linux generates calls in
@@ -2430,7 +2431,7 @@ PKG_LIBS = -lpthread
 versions of OpenBSD used a different library name).
 
 For a tutorial see
-@uref{https://computing.llnl.gov/@/tutorials/@/pthreads/}.
+@uref{https://computing.llnl.gov/tutorials/pthreads/}.
 
 POSIX threads are not normally used on Windows, which has its own native
 concepts of threads.  However, there are two projects implementing
@@ -2450,7 +2451,7 @@ typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
 Note that not all @code{pthreads} implementations are equivalent as parts
 are optional (see
-@uref{https://pubs.opengroup.org/@/onlinepubs/@/009695399/@/basedefs/@/pthread.h.html}):
+@uref{https://pubs.opengroup.org/onlinepubs/009695399/basedefs/pthread.h.html}):
 for example, macOS lacks the `Barriers' option.
 
 See also the comments on thread-safety and performance under OpenMP: on
@@ -2714,7 +2715,7 @@ not necessarily installed) on all known @R{} platforms.  As from @R{}
 4.0.0 a C++ compiler will be selected only if it conforms to the 2011
 standard (`C++11').  A minor update@footnote{Some changes are linked
 from
-@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}:
+@uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
 there were also additional deprecations.} (`C++14') was published in
 December 2014 and will be used by default as from @R{} 4.1.0 if
 supported.  Further revisions `C++17' (in December 2017), and `C++20'
@@ -2731,7 +2732,7 @@ supported and some the latest standard which is (almost) fully
 supported.
 
 The webpage
-@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
+@uref{https://en.cppreference.com/w/cpp/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.
 
@@ -2808,9 +2809,9 @@ Essentially complete C++14 support is available from GCC 5, LLVM
 
 Code needing C++14 features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
-@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
+@uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}
 or
-@uref{https://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
+@uref{https://en.cppreference.com/w/cpp/experimental/feature_test}.
 It seems a reasonable assumption that any compiler promising some C++14
 conformance will provide these---e.g.@: @command{g++} 4.9.x did but
 4.8.5 did not.}.  Such a check could be
@@ -2851,7 +2852,7 @@ Solaris.
 
 Note that C++17 or C++20 `support' does not mean complete support: use
 feature tests as well as resources such as
-@uref{https://en.cppreference.com/@/w/@/cpp/@/compiler_support},
+@uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
 @uref{https://libcxx.llvm.org/docs/Cxx1zStatus.html} to see if the
 features you want to use are widely implemented.
@@ -4378,10 +4379,10 @@ CRLF-terminated Makefiles; Solaris warns about and some other
 @command{make}s ignore incomplete final lines.} (including the final
 line of the file) and not make use of GNU extensions.  (The POSIX
 specification is available at
-@uref{https://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/make.html};
+@uref{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html};
 anything not documented there should be regarded as an extension to be
 avoided.  Further advice can be found at
-@uref{https://www.gnu.org/@/software/@/autoconf/@/manual/@/autoconf.html#Portable-Make}.                                )
+@uref{https://www.gnu.org/software/autoconf/manual/autoconf.html#Portable-Make}.                                )
 Commonly misused GNU extensions are conditional inclusions (@code{ifeq}
 and the like), @code{$@{shell ...@}}, @code{$@{wildcard ...@}} and
 similar, and the use of @code{+=}@footnote{This was apparently
@@ -4483,14 +4484,14 @@ in the AT&T Bourne shell used on Solaris 10/11, even though they are in
 the POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.}
 Bourne shells: the previous @R{} toolset on Windows@footnote{as from
 @R{} 4.0.0 the default is @command{bash}.} and some Unix-alike OSes use
-@command{ash} (@uref{https://en.wikipedia.org/@/wiki/@/Almquist_shell}),
+@command{ash} (@uref{https://en.wikipedia.org/wiki/Almquist_shell}),
 a `slim' shell with few builtins or variants such as @command{dash}.
 Beware of assuming that all the POSIX command-line utilities are
 available, especially on Windows where only a subset (which has changed
 by version of @file{Rtools}) is provided for use with @R{}.  One
 particular issue is the use of @command{echo}, for which two behaviours
 are allowed
-(@uref{https://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
+(@uref{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html})
 and both have occurred as defaults on @R{} platforms: portable
 applications should use neither @option{-n} (as the first argument) nor
 escape sequences.  The recommended replacement for @command{echo -n} is
@@ -4532,7 +4533,7 @@ for accounts ported from an earlier version it is usually
 @item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc} and
-@command{gfortran}@footnote{@uref{http://fortranwiki.org/@/fortran/@/show/Modernizing+Old+Fortran}
+@command{gfortran}@footnote{@uref{http://fortranwiki.org/fortran/show/Modernizing+Old+Fortran}
 may help explain some of the warnings from @command{gfortran -Wall
 -pedantic}.}  can be used with options @option{-Wall -pedantic} to alert
 you to potential problems.  This is particularly important for C++,
@@ -4891,7 +4892,7 @@ Java version, often resulting in an arcane message like
 java.lang.UnsupportedClassVersionError: ... Unsupported major.minor version 52.0
 @end example
 @noindent
-(Where @uref{https://en.wikipedia.org/@/wiki/@/Java_class_file} maps
+(Where @uref{https://en.wikipedia.org/wiki/Java_class_file} maps
 class-file version numbers to Java versions.)  Compile with something
 like @command{javac -target 1.6} to ensure this is avoided. (As from
 Java 8, @command{javac} defaults to compiling for Java 8.  Versions as
@@ -5091,7 +5092,7 @@ macOS).  It seems MiKTeX does not use PDF object compression and so
 @command{qpdf} can reduce considerably the files it outputs: MiKTeX's
 defaults can be overridden by code in the preamble of an Sweave or
 @LaTeX{} file --- see how this is done for the @R{} reference manual at
-@uref{https://svn.r-project.org/@/R/@/trunk/@/doc/@/manual/@/refman.top}.
+@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 (Although earlier versions of @command{qpdf} are supported, versions
 6.0.0 and later in some cases achieve considerably better compression.)
 
@@ -5117,7 +5118,7 @@ and suitable options might be
 @end example
 
 @noindent
-See @uref{https://www.ghostscript.com/@/doc/@/current/@/VectorDevices.htm} for
+See @uref{https://www.ghostscript.com/doc/current/VectorDevices.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
@@ -5366,8 +5367,8 @@ in C99 and C++11), for which @R{} provides the portable double value
 intended, but @code{R_NaN} is also available.
 
 Some (but not all) extensions are listed at
-@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
-@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C_002b_002b-Extensions.html}.
+@uref{https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html} and
+@uref{https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Extensions.html}.
 
 Other GNU extensions which have bitten package writers is the use of
 non-portable characters such as @samp{$} in identifiers and use of C++
@@ -5380,7 +5381,7 @@ extensions, the most commonly encountered one being
 that is not supported in the versions 4.x of GNU Fortran.  A pretty
 robust alternative is to test @code{if(my_var /= my_var)}.}.  Some are
 listed at
-@uref{https://gcc.gnu.org/@/onlinedocs/@/gfortran/@/Extensions-implemented-in-GNU-Fortran.html}.
+@uref{https://gcc.gnu.org/onlinedocs/gfortran/Extensions-implemented-in-GNU-Fortran.html}.
 One that frequently catches package writers is that it allows
 out-of-order declarations: in standard-conformant Fortran variables must
 be declared (explicitly or implicitly) before use in other declarations
@@ -5389,7 +5390,7 @@ such as dimensions.
 GNU Fortran 10 and later give a compilation error for the previously
 widespread practice of passing a Fortran array element where an array is
 expected, or a scalar instead of a length-one array.  See
-@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.
+@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.
 
 @item
 Including C-style headers in C++ code is not portable.  Including the
@@ -5659,7 +5660,7 @@ include it.
 @end itemize
 
 Some additional information for C++ is available at
-@uref{https://journal.r-project.org/@/archive/@/2011-2/@/RJournal_2011-2_Plummer.pdf}
+@uref{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Plummer.pdf}
 by Martyn Plummer.
 
 @node Common symbols,  , Portable C and C++ code, Portable C and C++ code
@@ -5671,9 +5672,9 @@ an initializer.  Traditionally the linker resolves all tentative
 definitions of the same variable in different object files to the same
 object, or to a non-tentative definition.  However,
 @command{gcc}@tie{}10@footnote{see
-@uref{https://gcc.gnu.org/@/gcc-10/@/porting_to.html}.} and
+@uref{https://gcc.gnu.org/gcc-10/porting_to.html}.} and
 @command{clang}@tie{}11@footnote{See
-@uref{https://prereleases.llvm.org/@/11.0.0/@/rc2/@/tools/@/clang/@/docs/@/ReleaseNotes.html#modified-compiler-flags}.}
+@uref{https://prereleases.llvm.org/11.0.0/rc2/tools/clang/docs/ReleaseNotes.html#modified-compiler-flags}.}
 have changed their default so that tentative definitions cannot be
 merged and the linker will give an error if the same variable is defined
 in more than one object file.  To avoid this, all but one of the C
@@ -5870,7 +5871,7 @@ the default).
 The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
 Windows users can find pre-compiled binaries at
-@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies/@/gettext-tools.zip}.
+@uref{https://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
 
 @menu
 * C-level messages::
@@ -7671,7 +7672,7 @@ separately).
 Another is the Eclipse IDE with the Stat-ET plugin
 (@uref{https://projects.eclipse.org/projects/science.statet}), and (on
 Windows only) Tinn-R
-(@uref{https://sourceforge.net/@/projects/@/tinn-r/}).
+(@uref{https://sourceforge.net/projects/tinn-r/}).
 
 People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
@@ -8057,7 +8058,7 @@ be current.
 Options include using @command{sprof} for a shared object, and
 @command{oprofile} (see @uref{https://oprofile.sourceforge.io/news/}) and
 @command{perf} (see
-@uref{https://perf.wiki.kernel.org/@/index.php/@/Tutorial}) for any
+@uref{https://perf.wiki.kernel.org/index.php/Tutorial}) for any
 executable or shared object.
 
 @subsubsection sprof
@@ -8923,8 +8924,8 @@ Xcode 7 and later), with some support for Solaris.  On some platforms
 the runtime library, @pkg{libasan}, needs to be installed separately,
 and for checking C++ you may also need @pkg{libubsan}.} of @command{gcc}
 and @command{clang} on common Linux and macOS platforms.  See
-@uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
-@uref{https://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
+@uref{https://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
+@uref{https://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://github.com/google/sanitizers}.
 
 More thorough checks of C++ code are done if the C++ library has been
@@ -9018,7 +9019,7 @@ More recent versions@footnote{including @command{gcc} 7.1 and
 @command{clang} 4.0.0: for @command{gcc} it is implied by
 @option{-fsanitize=address}.}  added the flag
 @option{-fsanitize-address-use-after-scope}: see
-@uref{https://github.com/@/google/@/sanitizers/@/wiki/@/AddressSanitizerUseAfterScope}.
+@uref{https://github.com/google/sanitizers/wiki/AddressSanitizerUseAfterScope}.
 
 One of the checks done by ASan is that @code{malloc/free} and in C++
 @code{new/delete} and @code{new[]/delete[]} are used consistently
@@ -9102,7 +9103,7 @@ This sanitizer can be combined with the Address Sanitizer by
 Finer control of what is checked can be achieved by other options.
 
 For @command{clang} see
-@uref{https://clang.llvm.org/@/docs/@/UndefinedBehaviorSanitizer.html#ubsan-checks}.
+@uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#ubsan-checks}.
 The current set is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,builtin,enum,float-cast-overflow,
@@ -9137,9 +9138,9 @@ arithmetic, and in versions of @command{clang} since June 2019 it is no
 longer part of @option{-fsanitize=undefined}.
 
 For GCC see
-@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Instrumentation-Options.html}
+@uref{https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html}
 (or the manual for your version of GCC, installed or @emph{via}
-@uref{https://gcc.gnu.org/@/onlinedocs/}: look for `Program
+@uref{https://gcc.gnu.org/onlinedocs/}: look for `Program
 Instrumentation Options') for the options supported by GCC: 10 supported
 @example
 -fsanitize=alignment,bool,bounds,builtin,enum,integer-divide-by-zero,
@@ -9186,7 +9187,7 @@ and @option{-ftrapv}, said to be more reliable in @command{clang} than
 
 For more details on the topic see
 @uref{https://blog.regehr.org/archives/213} and
-@uref{https://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
+@uref{https://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}
 (which has 3 parts).
 
 It may or may not be possible to build @R{} itself with
@@ -9200,7 +9201,7 @@ code with @command{gcc} but there has been success with @command{clang}.
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
 `ThreadSanitizer' (@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
-(@uref{https://clang.llvm.org/@/docs/@/MemorySanitizer.html},
+(@uref{https://clang.llvm.org/docs/MemorySanitizer.html},
 @uref{https://github.com/google/sanitizers})
 for the detection of uninitialized memory.  Both are based on and
 provide similar functionality to tools in @command{valgrind}.
@@ -9220,9 +9221,9 @@ some issues are only reported by this tool and as it is a static
 analysis, it does not rely on code paths being exercised.
 
 See
-@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc-10.1.0/@/gcc/@/Static-Analyzer-Options.html}
+@uref{https://gcc.gnu.org/onlinedocs/gcc-10.1.0/gcc/Static-Analyzer-Options.html}
 (or the documentation for your version of @command{gcc} if later) and
-@uref{https://developers.redhat.com/@/blog/2020/03/26/@/static-analysis-in-gcc-10/}
+@uref{https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10/}
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
@@ -10253,7 +10254,7 @@ Examples of registering routines can be found in the different packages
 in the @R{} source tree (e.g., @pkg{stats} and @pkg{graphics}).  Also,
 there is a brief, high-level introduction in @emph{R News} (volume 1/3,
 September 2001, pages 20--23,
-@uref{https://www.r-project.org/@/doc/@/Rnews/Rnews_2001-3.pdf}).
+@uref{https://www.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).
 
 Once routines are registered, they can be referred to as @R{} objects if
 this is arranged in the @code{useDynLib} call in the package's
@@ -11009,7 +11010,7 @@ A small number of external libraries used in @R{} packages have a C++
 interface to a library of compiled code, e.g.@: packages @CRANpkg{rgdal}
 and @CRANpkg{rjags}.  This raises many more problems!  The C++ interface
 uses name-mangling and the
-ABI@footnote{@uref{https://en.wikipedia.org/@/wiki/@/Application_binary_interface}.}
+ABI@footnote{@uref{https://en.wikipedia.org/wiki/Application_binary_interface}.}
 may depend on the compiler, version and even C++ defines@footnote{For
 example, @samp{_GLIBCXX_USE_CXX11_ABI} in @command{g++} 5.1 and later:
 @uref{https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html}.},
@@ -13902,7 +13903,7 @@ void cmsg(const char *msg)
 @end example
 
 Passing a variable-length string from C to Fortran is trickier, but
-@uref{https://software.intel.com/@/content/@/www/@/us/@/en/@/develop/@/documentation/@/fortran-compiler-oneapi-dev-guide-and-reference/@/top/@/compiler-reference/@/mixed-language-programming/@/standard-tools-for-interoperability/@/bind.html}
+@uref{https://software.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/mixed-language-programming/standard-tools-for-interoperability/bind.html}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
 single character, and for these we can write a wrapper in Fortran
 along the lines of
@@ -14881,7 +14882,7 @@ the code is indeed being used with @R{}.
 Header file @file{Rconfig.h} (included by @file{R.h}) is used to define
 platform-specific macros that are mainly for use in other header files.
 The macro @code{WORDS_BIGENDIAN} is defined on
-big-endian@footnote{@uref{https://en.wikipedia.org/@/wiki/@/Endianness}.}
+big-endian@footnote{@uref{https://en.wikipedia.org/wiki/Endianness}.}
 systems (e.g.@: most OSes on Sparc and PowerPC hardware) and not on
 little-endian systems (nowadays all the commoner @R{} platforms).  It
 can be useful when manipulating binary files.  NB: these macros apply
@@ -14951,7 +14952,7 @@ static R_INLINE int ind_2(int l, int j)
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably, see
-@uref{https://www.greenend.org.uk/@/rjk/@/tech/@/inline.html}, so this usage
+@uref{https://www.greenend.org.uk/rjk/tech/inline.html}, so this usage
 is for @code{static} functions as in the example.  All the @R{}
 configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
@@ -15344,7 +15345,7 @@ mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
 example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
-@uref{https://www.rforge.net/@/Rserve/}) and connections to Java in
+@uref{https://www.rforge.net/Rserve/}) and connections to Java in
 @samp{JRI} (part of the @CRANpkg{rJava} package on @acronym{CRAN}).
 
 Note that the APIs described in this chapter are only intended to be
@@ -15988,7 +15989,7 @@ Recent versions have usage restrictions.
 @c @item
 @c Another (D)COM server, @code{RDCOMServer}, may be available from Omegahat,
 @c @uref{http://www.omegahat.net/}.  Its philosophy is discussed in
-@c @uref{http://www.omegahat.net/@/RDCOMServer/@/Docs/@/Paradigm.html} and is
+@c @uref{http://www.omegahat.net/RDCOMServer/Docs/Paradigm.html} and is
 @c very different from the purpose of this section.
 @end itemize
 @node Calling R.dll directly, Finding R_HOME, Using (D)COM, Embedding R under Windows

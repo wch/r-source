@@ -266,7 +266,7 @@ Modern Unix-alike systems, including macOS, are likely to produce
 UTF-8 files.  Windows may produce what it calls `Unicode' files
 (@code{UCS-2LE} or just possibly @code{UTF-16LE}@footnote{the
 distinction is subtle,
-@uref{https://en.wikipedia.org/@/wiki/@/UTF-16/UCS-2}, and the use of
+@uref{https://en.wikipedia.org/wiki/UTF-16/UCS-2}, and the use of
 surrogate pairs is very rare.}).  Otherwise most files will be in a
 8-bit encoding unless from a Chinese/Japanese/Korean locale (which have
 a wide range of encodings in common use).  It is not possible to
@@ -1522,7 +1522,7 @@ Windows provides drivers not just for DBMSs but also for Excel
 files.  (The named applications do @emph{not} need to be
 installed. Which file formats are supported depends on the versions of
 the drivers.)  There are versions for Excel and Access 2007/2010 (go to
-@uref{https://www.microsoft.com/@/en-us/@/download/@/default.aspx}, and
+@uref{https://www.microsoft.com/en-us/download/default.aspx}, and
 search for `Office ODBC', which will lead to
 @file{AccessDatabaseEngine.exe}), the `2007 Office System Driver' (the
 latter has a version for 64-bit Windows, and that will also read earlier

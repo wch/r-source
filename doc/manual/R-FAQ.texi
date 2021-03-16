@@ -472,7 +472,7 @@ other members of the R Core team.
 The same directory has links to snapshots of the r-patched and r-devel
 versions of R.
 
-See the @url{https://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
+See the @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html,
 ``R for Windows @acronym{FAQ}''} for more details.
 
 @node How can R be installed (Mac),  , How can R be installed (Windows), How can R be installed?
@@ -768,7 +768,7 @@ the R mailing lists.
 @c Many of the R project's mailing lists are also available via
 @c @url{http://gmane.org, Gmane}, from which they can be read with a web
 @c browser, using an NNTP news reader, or via RSS feeds.  See
-@c @uref{http://dir.gmane.org/@/index.php?prefix=gmane.comp.lang.r.}@: for
+@c @uref{http://dir.gmane.org/index.php?prefix=gmane.comp.lang.r.}@: for
 @c the available mailing lists, and @uref{http://www.gmane.org/rss.php} for
 @c details on RSS feeds.
 @c </FIXME>
@@ -3167,7 +3167,7 @@ for constructing such graphs is to use @code{par(new=TRUE)} (see
 package) and @code{doubleYScale()} (in the @CRANpkg{latticeExtra}
 package) automate the process somewhat.
 @c See
-@c @url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
+@c @url{http://rwiki.sciviews.org/doku.php?id=tips:graphics-base:2yaxes}
 @c for more information, including strong arguments against this sort of
 @c graph.
 
@@ -3536,7 +3536,7 @@ Before you actually submit a bug report, you should check whether the
 bug has already been reported and/or fixed.  First, try the ``Show open
 bugs new-to-old'' or the search facility on
 @url{https://bugs.R-project.org/}.  Second, consult
-@url{https://svn.R-project.org/@/R/@/trunk/@/doc/@/NEWS.Rd}, which
+@url{https://svn.R-project.org/R/trunk/doc/NEWS.Rd}, which
 records changes that will appear in the @emph{next} release of R,
 including bug fixes that do not appear on the Bug Tracker.  
 Third, if possible try the current r-patched or r-devel version of R.
