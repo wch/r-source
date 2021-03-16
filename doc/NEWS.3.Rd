@@ -3824,7 +3824,7 @@
       Haverty and Suharto Anggono.  (\PR{16640})
 
       \item \code{match.arg(arg)} (the one-argument case) is faster; so
-      is \code{sort.int()}.  (\PR{16640})
+      is \code{sort.int()}.  (\PR{16652})
 
       \item The \code{format} method for \code{object_size} objects now
       also accepts \dQuote{binary} units such as \code{"KiB"} and e.g.,
