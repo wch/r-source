@@ -4785,10 +4785,20 @@ save(pi, file = rda3 <- tempfile(fileext = ".rda"), version = 3)
 stopifnot(identical(2:3, tools::checkRdaFiles(c(rda2, rda3))$version))
 ## gave '3 3' in R <= 4.0.3
 
+
 if (l10n_info()$"UTF-8") {
   x <- "d\xc3\xa9faut" # "défaut" flagged as native
   stopifnot(grepl("d.faut", x)) # incorrectly FALSE in in R < 4.1
 }
+
+
+## constructing the names() of quantile():
+str(L <- lapply(c(2,3,5,7), function(dig) { options(digits = dig)
+    names(quantile(lynx, probs = 1 - 10^(-1:-5))) }))
+stopifnot(length(unique(L)) == 1)
+## in R <= 4.0.x,  L contained 3 different results
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

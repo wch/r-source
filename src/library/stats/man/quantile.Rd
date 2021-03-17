@@ -17,7 +17,7 @@
 quantile(x, \dots)
 
 \method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, type = 7, \dots)
+         names = TRUE, type = 7, digits = 7, \dots)
 }
 \arguments{
   \item{x}{numeric vector whose sample quantiles are wanted, or an
@@ -33,6 +33,9 @@ quantile(x, \dots)
     attribute.  Set to \code{FALSE} for speedup with many \code{probs}.}
   \item{type}{an integer between 1 and 9 selecting one of the
     nine quantile algorithms detailed below to be used.}
+  \item{digits}{used only when \code{names} is true: the precision to use
+    when formatting the percentages.  In \R versions up to 4.0.x, this had
+    been set to \code{max(2, getOption("digits"))}, internally.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
