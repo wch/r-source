@@ -1392,7 +1392,7 @@ function(pattern, replacement, x, trafo, count, ...)
     replace <- function(yi) {
         do.call(sprintf,
                 c(list(replacement),
-                  Map(function(tr, co) tr(yi[co]),
+                  Map(function(tr, co) fsub("\\", "\\\\", tr(yi[co])),
                       trafo, count + 1L)))
     }
 
