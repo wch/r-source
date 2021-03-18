@@ -102,7 +102,7 @@ drop_first <- function(x) {
     if(!anyNA(x) && all(x > 0)) {
         ml <- attr(x, 'match.length')
         if(is.matrix(x)) x <- x[-1,] else x <- x[-1]
-        attr(x, 'match.length') <- if(is.matrix(x)) ml[-1,] else ml[-1]
+        attr(x, 'match.length') <- if(is.matrix(ml)) ml[-1,] else ml[-1]
     }
     x
 }
