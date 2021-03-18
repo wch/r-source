@@ -623,6 +623,11 @@
       \item The change to the internal table in \R 4.0.4 for
       \code{iswprint} has been reverted: it contained some errors in
       printability of \sQuote{East Asian} characters.
+
+      \item For packages using \samp{LazyData}, \command{R CMD build}
+      ignored the \option{--resave-data} option and the
+      \samp{BuildResaveData} field of the \file{DESCRIPTION} file (in \R
+      versions 4.0.0 to 4.0.4). 
     }
   }
 }
