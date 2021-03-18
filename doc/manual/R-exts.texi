@@ -6952,7 +6952,7 @@ second argument of @LaTeX{}-like text displayed to the user.  Linefeeds
 are removed from the first argument, and leading and trailing whitespace
 is removed.
 
-Note that RFC3986-encoded URLs (e.g.@: using @samp{\%28VS.85\%29} in
+Note that RFC3986-encoded URLs (e.g.@: using @samp{%28VS.85%29} in
 place of @samp{(VS.85)}) may not work correctly in versions of @R{}
 before 3.1.3 and are best avoided---use @code{URLdecode()} to decode
 them.
