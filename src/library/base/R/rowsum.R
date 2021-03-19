@@ -16,9 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-rowsum <- function(x, group, reorder = TRUE, ...) UseMethod("rowsum")
+rowsum <- function(x, group, reorder = FALSE, ...) UseMethod("rowsum")
 
-rowsum.default <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
+rowsum.default <- function(x, group, reorder = FALSE, na.rm = FALSE, ...)
 {
     if (!is.numeric(x)) stop("'x' must be numeric")
     if (length(group) != NROW(x)) stop("incorrect length for 'group'")
@@ -29,7 +29,7 @@ rowsum.default <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
     .Internal(rowsum_matrix(x, group, ugroup, na.rm, as.character(ugroup)))
 }
 
-rowsum.data.frame <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
+rowsum.data.frame <- function(x, group, reorder = FALSE, na.rm = FALSE, ...)
 {
     if (!is.data.frame(x)) stop("not a data frame") ## make MM happy
     if (length(group) != NROW(x)) stop("incorrect length for 'group'")
