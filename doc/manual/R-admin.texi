@@ -1570,7 +1570,7 @@ tested) install @R{} from the sources (see @ref{macOS}).
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
 (`Updates' from the `App Store' on Mojave and earlier) to be sure.  (If
-using XQuartz, check that is compatible: at the time of writing the
+using XQuartz, check that it is compatible: at the time of writing the
 latest version was 2.7.11 from October 2016 but pre-releases of 2.8.0
 had just become available and were being offered as upgrades.)
 
@@ -5229,24 +5229,25 @@ If using a static build of Cairo, configure @R{} with option
 liable to change: running @command{pkg-config cairo --exists
 --print-errors} should tell you if any others are required.
 
-If you have XQuartz 2.7.x installed and ensure XQuartz's
-@code{pkg-config} files are found first on its configuration path, Cairo
-will be linked dynamically.  This can be done by setting something like
+If you have XQuartz 2.7.x installed and ensure XQuartz's @code{pkg-config}
+files are found first on its configuration path, Cairo will be linked
+dynamically.  This can be done by setting something like
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 @noindent
-or by appending that variable to the @command{configure} command.  Note
-that this uses rather old versions of the graphics software and Cairo
-support has been announced as being removed for XQuartz 2.8.0.
+or by appending that variable to the @command{configure} command.  (Note
+that this uses rather old versions of the graphics software.)
 
 @c Homebrew is another with dynamic libraries
 If you use XQuartz or another build of @code{cairo} with dynamic
 libraries, you can add option @option{--without-static-cairo} to the
-@command{configure} call (it probably would work anyway).
+@command{configure} call (it may work without).
 @c A possible issue is that --static will require the private
 @c dependencies of fontconfig, usually either xml2 or expat, and a
 @c dynamic installation might not have the pkg-config files for those.
+@c Another issue seen in XQuartz 2.8.0rc4 is that pkg-config requires
+@c the private dependencies of cairo of which xproto is not included.
 
 @cindex Pango
 The best font experience of Cairo graphics will be to use it in
