@@ -1546,9 +1546,9 @@ tested) install @R{} from the sources (see @ref{macOS}).
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
 (`Updates' from the `App Store' on Mojave and earlier) to be sure.  (If
-using XQuartz, check that is compatible: at the time of writing the
-latest version was 2.7.11 from October 2016 but betas of 2.8.0 had just
-become available and were being offered as upgrades.)
+using XQuartz, check that it is compatible: at the time of writing the
+latest version was 2.7.11 from October 2016 but pre-releases of 2.8.0
+had just become available and were being offered as upgrades.)
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -3325,8 +3325,9 @@ licensed under GPL (which version(s) of GPL depends on the
 
 The ability to use translated messages makes use of @code{gettext} and
 most likely needs @acronym{GNU} @code{gettext}: you do need this to work
-with new translations, but otherwise the version contained in the R
-sources will be used if no suitable external @code{gettext} is found.
+with new translations, but otherwise the version of the @code{gettext}
+runtime contained in the R sources will be used if no suitable external
+@code{gettext} is found.
 
 The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()}
 and @code{tiff()} graphics devices uses the @code{cairo} and
@@ -4984,7 +4985,8 @@ that, configure with @option{--without-readline}.
 @item
 Components @code{jpeg}, @code{libpng}, @code{pkgconfig}, @code{tiff} and
 @code{zlib-system-stub} from @uref{https://mac.R-project.org/libs-4/},
-for the full range of bitmapped graphics devices.
+for the full range of bitmapped graphics devices.  (Some builds of
+@code{tiff} may require @code{libwepb} and/or @code{openjpeg}.)
 
 @item
 An X sub-system unless configuring using @option{--without-x}: see
@@ -4998,7 +5000,8 @@ location of @file{/opt/X11}, e.g.@: by
 although without this linked versions under @file{/usr/X11} will be
 found.  (It seems that for some versions of macOS/XQuartz
 @file{/usr/X11} may exist but be a link to a non-existent directory:
-reinstalling XQuartz might help.)
+reinstalling XQuartz might help.)  Be wary of pre-release versions of
+XQuartz, which may be offered as an update.
 
 @item
 An Objective-C compiler, as provided by @command{clang} in the Command
@@ -5076,13 +5079,14 @@ tar xf subversion-1.14.0-darwin15.6.tar.gz
 sudo cp subversion-1.14.0-darwin15.6/svn /usr/local/bin
 @end example
 
-The instructions above get @code{cairo} from XQuartz.  At the time of
-writing the beta distributions of XQuartz 2.8.0 did not contain
-@code{cairo}, so an alternative is to statically link @code{cairo} by
-downloding and unpacking components @code{cairo}, @code{fontconfig},
-@code{freetype}, @code{pixman} and @code{zlib-system-stub} and not
-having @file{/opt/X11/lib/pkgconfig} in @env{PKG_CONFIG_PATH} (or at
-least, not before @file{/usr/local/lib/pkgconfig}).
+The instructions above get @code{cairo} from XQuartz: however, at the
+time of writing some pre-release distributions of XQuartz 2.8.0 did not
+contain all the libraries required for @code{cairo}.  An alternative is
+to statically link @code{cairo} by downloding and unpacking components
+@code{cairo}, @code{fontconfig}, @code{freetype}, @code{pixman} and
+@code{zlib-system-stub} and not having @file{/opt/X11/lib/pkgconfig} in
+@env{PKG_CONFIG_PATH} (or at least, not before
+@file{/usr/local/lib/pkgconfig}).
 
 As from Command Line Tools version 12,
 @option{-Wno-implicit-function-declaration} needs to be included in
