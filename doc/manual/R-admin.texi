@@ -5016,7 +5016,7 @@ library (see @code{?.libPaths}).
 Support for @code{cairo} (without @code{Pango}) will be enabled if
 @code{pkg-config}@footnote{available from
 @uref{https://mac.R-project.org/libs-4/} as @code{pkgconfig}.} and
-XQuartz are available.  Make sure XQuartz's @code{pkg-config} files are
+XQuartz 2.7.x are available.  Make sure XQuartz's @code{pkg-config} files are
 found first on the configuration path: for example by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
