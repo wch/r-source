@@ -26,11 +26,6 @@
   inserted as the first argument in the call. So \code{x |> f(y)} is
   interpreted as \code{f(x, y)}.
 
-  The \code{rhs} form \code{symbol => call} can be used to pass the
-  \code{lhs} as an argument other than the first in the call \code{call}.
-  \code{call} must contain one, and only one, occurrence of the placeholder
-  \code{symbol} at top level, which is replaced by \code{lhs}.
-
   To avoid ambiguities, functions in \code{rhs} calls may not be
   syntactically special, such as \code{+} or \code{if}.
   
@@ -61,14 +56,10 @@ mtcars |> head(2)                     # same as head(mtcars, 2)
 mtcars |> subset(cyl == 4) |> nrow()  # same as nrow(subset(mtcars, cyl == 4))
 
 # passing the lhs into an argument other than the first:
-mtcars |> subset(cyl == 4) |> d => lm(mpg ~ disp, data = d)
-
-# another approach:
 mtcars |> subset(cyl == 4) |> (function(d) lm(mpg ~ disp, data = d))()
 
 # the pipe operator is implemented as a syntax transformation:
 quote(mtcars |> subset(cyl == 4) |> nrow())
-quote(x |> y => log(y))
 
 # regular R evaluation semantics apply
 stop() |> (function(...) {})() # stop() is not used on RHS so is not evaluated

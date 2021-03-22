@@ -354,6 +354,7 @@ static SEXP	xxnxtbrk(SEXP);
 static SEXP	xxfuncall(SEXP, SEXP);
 static SEXP	xxdefun(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxpipe(SEXP, SEXP);
+static SEXP	xxpipebind(SEXP, SEXP, SEXP);
 static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
@@ -460,7 +461,7 @@ expr	: 	NUM_CONST			{ $$ = $1;	setId(@$); }
 	|	expr AND2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr OR2 expr			{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr PIPE expr			{ $$ = xxpipe($1,$3);  setId(@$); }
-	|	expr PIPEBIND expr		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
+	|	expr PIPEBIND expr		{ $$ = xxpipebind($2,$1,$3);	setId(@$); }
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3);	setId(@$); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1);	setId(@$); }
 	|	FUNCTION '(' formlist ')' cr expr_or_assign_or_help %prec LOW
@@ -1214,6 +1215,20 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
     RELEASE_SV(lhs);
     RELEASE_SV(rhs);
     return ans;
+}
+
+static SEXP xxpipebind(SEXP fn, SEXP lhs, SEXP rhs)
+{
+    static int use_pipebind = 0;
+    if (use_pipebind != 1) {
+	char *lookup = getenv("_R_USE_PIPEBIND_");
+	use_pipebind = ((lookup != NULL) && StringTrue(lookup)) ? 1 : 0;
+    }
+
+    if (use_pipebind)
+	return xxbinary(fn, lhs, rhs);
+    else
+	error("'=>' is disabled; set '_R_USE_PIPEBIND_' envvar to a true value to enable it");
 }
 
 static SEXP xxparen(SEXP n1, SEXP n2)

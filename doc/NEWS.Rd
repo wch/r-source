@@ -167,11 +167,9 @@
       \item \R{} now provides a simple native forward pipe syntax
       \code{|>}.  The simple form of the forward pipe inserts the
       left-hand side as the first argument in the right-hand side call.
-      A syntax is also provided for passing the left-hand side as an
-      argument other than the first.  The pipe implementation as a
-      syntax transformation was motivated by suggestions from Jim Hester
-      and Lionel Henry.  This feature is experimental and may change
-      prior to release.
+      The pipe implementation as a syntax transformation was motivated
+      by suggestions from Jim Hester and Lionel Henry.  This feature is
+      experimental and may change prior to release.
 
       \item \code{all.equal(f, g)} for \code{function}s now by default also
       compares their \code{environment(.)}s, notably via new
