@@ -4799,6 +4799,90 @@ stopifnot(length(unique(L)) == 1)
 ## in R <= 4.0.x,  L contained 3 different results
 
 
+## svn c80082's change to grep() broke several of these:
+check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
+    stopifnot(is.character(txt))
+    chkString <- function(ch) {
+        if(!is.character(ch)) { str(ch); stop("is not a character") }
+        if(length(ch) != 1)   { str(ch); stop("is not of length 1") }
+    }
+    chkString(fx.ptn)
+    chkString( s.ptn)
+    chkString(gr.ptn)
+
+    a2_fns <- expression(grep, grepl,  regexpr, gregexpr,  regexec) # plus possibly:
+    if(getRversion() >= "4.1") a2_fns <- c(a2_fns, expression(gregexec))
+
+    exclude <- NA # (the default, used in  factor(.., exclude=*)
+    ##
+    for (txt_i in 1:3) {
+        if (txt_i == 2) { # txt_i  \in {2, 3}  will have  NA in 'txt'
+            txt <- c(NA_character_, txt, NA_character_)
+        } else if (txt_i == 3) {
+            exclude <- NULL
+        }
+        txt_fkt <- factor(txt, exclude = exclude)
+        cat("txt_i = ", txt_i,"; str(<factor>):\n", sep="") ; str(txt_fkt)
+
+        for (ptn in c(fx.ptn, s.ptn, gr.ptn, NA_character_)) {
+            fixed <- (!is.na(ptn) && ptn == fx.ptn)
+            perl  <- (!is.na(ptn) && ptn == gr.ptn)
+            cat(sprintf(" pattern=%16s, fixed=%s, perl=%s:  ",
+                        dQuote(ptn, q=NULL), fixed, perl))
+            for (e_2 in a2_fns) {
+                f_2 <- eval(e_2)
+                f_2s <- as.character(e_2)
+                ## when ptn ==  NA_character_  only test grep() & grepl() :
+                if(is.na(ptn) && !(f_2s %in% c("grep", "grepl"))) next
+                cat(f_2s,"")
+                if(!identical(
+                    f_2(ptn, txt_fkt, fixed = fixed, perl = perl),
+                    f_2(ptn, txt,     fixed = fixed, perl = perl)
+                    )) msg(sprintf(
+                           "not identical: %s(%s, txt*, fixed=%s, perl=%s)",
+                           f_2s, ptn, fixed, perl))
+            }
+
+            cat("grep(*, value = TRUE): ")
+            if(!identical(
+                grep(ptn, txt_fkt, fixed = fixed, perl = perl, value = TRUE),
+                grep(ptn, txt,     fixed = fixed, perl = perl, value = TRUE)
+            )) msg(sprintf(
+                    "not identical: grep(%s, txt*, fixed=%s, perl=%s, value=TRUE)",
+                    ptn, fixed, perl))
+            cat("f_3, i.e. *sub() :")
+            for (e_3 in expression(sub, gsub)) {
+                ##                 ---  -----
+                f_3 <- eval(e_3)
+                f_3s <- as.character(e_3)
+                cat(f_3s,"")
+                if(!identical(
+                    f_3(ptn, "@@", txt_fkt, fixed = fixed, perl = perl),
+                    f_3(ptn, "@@", txt,     fixed = fixed, perl = perl)
+                )) msg(sprintf(
+                    "not identical: %s(%s, \"@@\", txt*, fixed=%s, perl=%s)",
+                    f_3s, ptn, fixed, perl))
+            }
+            cat("\n")
+        }
+        cat("--------- finished  txt_i = ", txt_i,"\n")
+    }
+} ## end{ check_regexetc }
+
+codetools::findGlobals(check_regexetc,merge=FALSE)
+## "default check"
+txt_str <- c(
+    "The", "licenses", "for", "most", "software", "are",  "designed", "to",
+    "take", "away", "your", "freedom",  "to", "share", "and", "change", "it.",
+    "", "By", "contrast,", "the", "GNU", "General", "Public", "License",
+    "is", "intended", "to", "guarantee", "your", "freedom", "to", "share",
+    "and", "change", "free", "software", "--", "to", "make", "sure", "the",
+    "software", "is", "free", "for", "all", "its", "users")
+if(FALSE)
+ system.time(check_regexetc(txt_str, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)", msg=warning))
+check_regexetc(txt_str, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)")
+##
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

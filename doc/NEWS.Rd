@@ -218,6 +218,10 @@
       \item The names of \code{quantile()}'s result no longer depend on the
       global \code{getOption("digits")}, but \code{quantile()} gets a new
       optional argument \code{digits = 7} instead.
+
+      \item \code{grep()}, \code{sub()}, \code{regexp} and variants work
+      considerably faster for long factors with few levels.  (Thanks to
+      Michael Chirico's \PR{18063}.)
     }
   }
 
