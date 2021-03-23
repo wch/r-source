@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 4.0.4 patched}{
+\section{\Rlogo CHANGES IN R 4.0.5}{
   \subsection{BUG FIXES}{
     \itemize{
       \item The change to the internal table in \R 4.0.4 for
