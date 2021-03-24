@@ -105,7 +105,7 @@ static Cursor cross_cursor = (Cursor) 0 ;
 static Display *display;			/* Display */
 static char dspname[101]="";
 static int screen;				/* Screen */
-static Window rootwin;				/* Root Window */
+static Window rootwin, group_leader;		/* Root Window, Group leader */
 static Visual *visual;				/* Visual */
 static int depth;				/* Pixmap depth */
 static int Vclass;				/* Visual class */
@@ -1617,6 +1617,16 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
                             PropModeReplace,
                             (const unsigned char*) rlogo_icon, 2 + 99*77);
 
+	    /* set the window group leader */
+	    XWMHints * hints;
+	    hints = XAllocWMHints();
+	    if (hints) {
+		hints->window_group = group_leader;
+		hints->flags |= WindowGroupHint;
+		XSetWMHints(display, xd->window, hints);
+		XFree(hints);
+	    }
+
 	    /* set up protocols so that window manager sends */
 	    /* me an event when user "destroys" window */
 	    _XA_WM_PROTOCOLS = XInternAtom(display, "WM_PROTOCOLS", 0);
@@ -2109,6 +2119,7 @@ static void X11_Close(pDevDesc dd)
     if (numX11Devices == 0)  {
 	int fd = ConnectionNumber(display);
 	/* Free Resources Here */
+	XDestroyWindow(display, group_leader);
 	while (nfonts--)
 	      R_XFreeFont(display, fontcache[nfonts].font);
 	nfonts = 0;
@@ -3133,6 +3144,9 @@ Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
 #endif
     screen = DefaultScreen(display);
     rootwin = DefaultRootWindow(display);
+    group_leader = XCreateSimpleWindow( /* never mapped or visible */
+	display, rootwin, 0, 0, 1, 1, 0, 0, 0
+    );
     depth = DefaultDepth(display, screen);
     visual = DefaultVisual(display, screen);
     colormap = DefaultColormap(display, screen);

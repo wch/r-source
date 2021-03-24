@@ -222,6 +222,10 @@
       \item \code{grep()}, \code{sub()}, \code{regexp} and variants work
       considerably faster for long factors with few levels.  (Thanks to
       Michael Chirico's \PR{18063}.)
+
+      \item Provide grouping of \code{x11()} graphics windows within
+      a window manager such as \code{Gnome} or \code{Unity}; thanks to a
+      patch by Ivan Krylov posted to R-devel.
     }
   }
 
@@ -629,7 +633,7 @@
       \item For packages using \samp{LazyData}, \command{R CMD build}
       ignored the \option{--resave-data} option and the
       \samp{BuildResaveData} field of the \file{DESCRIPTION} file (in \R
-      versions 4.0.0 to 4.0.4). 
+      versions 4.0.0 to 4.0.4).
     }
   }
 }
