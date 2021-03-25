@@ -2549,7 +2549,7 @@ add_dummies <- function(dir, Log)
         if(!is_base_pkg) {
             desc <- .read_description("DESCRIPTION")
             thislazy <- parse_description_field(desc, "LazyData", default = FALSE)
-            lazyz <- desc[["LazyDataCompression"]]
+            lazyz <- desc["LazyDataCompression"]
             lazyz0 <- !is.na(lazyz)
             if(thislazy || lazyz0) {
                 checkingLog(Log, "LazyData")
@@ -2568,6 +2568,15 @@ add_dummies <- function(dir, Log)
                     noteLog(Log)
                     printLog0(Log,
                               "  'LazyDataCompression' has its default value so would better be omitted\n")
+                } else if (thislazy && !lazyz0 && do_install) {
+                    f <- file.path(libdir, pkgname, "data", "Rdata.rdb")
+                    if (file.exists(f) &&
+                        (fs <- file.size(f)) > 5*1024^2) {
+                        noteLog(Log)
+                        printLog0(Log,
+                                  sprintf("  LazyLoad DB of %.1fMB\n", fs/1024^2),
+                                  "  See \u{00a7}1.1.6 of 'Writing R Extensions'\n")
+                    } else resultLog(Log, "OK")
                 } else resultLog(Log, "OK")
             }
         }
