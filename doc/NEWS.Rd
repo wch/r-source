@@ -426,6 +426,16 @@
       \item \command{R CMD build} now omits tarballs and binaries of
       previous builds from the top-level package directory.  (\PR{17828},
       patch by Sebastian Meyer.)
+
+      \item \command{R CMD check} now runs sanity checks on the use of
+      \samp{LazyData}, for example that a \file{data} directory is
+      present, that \samp{LazyDataCompression} is not specified without
+      \samp{LazyData} or that \samp{LazyDataCompression} is specified
+      with a default value.  For packages with large LazyData databases
+      without specifying \samp{LazyDataCompression}, there is a
+      reference to the code given in \sQuote{Writing R Extensions}
+      §1.1.6 to test the choice of compression (in all \acronym{CRAN}
+      packages tested a non-default method was optimal).      
     }
   }
 
