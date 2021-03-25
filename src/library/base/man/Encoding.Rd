@@ -79,7 +79,7 @@ enc2utf8(x)
 
   \code{\link{paste}} and \code{\link{sprintf}} return elements marked
   as bytes if any of the corresponding inputs is marked as bytes, and
-  otherwise marked as UTF-8 of any of the inputs is marked as UTF-8.
+  otherwise marked as UTF-8 if any of the inputs is marked as UTF-8.
 
   \code{\link{match}}, \code{\link{pmatch}}, \code{\link{charmatch}},
   \code{\link{duplicated}} and \code{\link{unique}} all match in UTF-8
@@ -102,7 +102,7 @@ enc2utf8(x)
 \examples{
 ## x is intended to be in latin1
 x. <- x <- "fa\xE7ile"
-Encoding(x.) # "unknown" (Linux) | "latin-1" (Win 32 server) | ....
+Encoding(x.) # "unknown" (Linux) | "latin1" (Win 32 server) | ....
 Encoding(x) <- "latin1"
 x
 xx <- iconv(x, "latin1", "UTF-8")
