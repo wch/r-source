@@ -2549,9 +2549,8 @@ add_dummies <- function(dir, Log)
         if(!is_base_pkg) {
             desc <- .read_description("DESCRIPTION")
             thislazy <- parse_description_field(desc, "LazyData", default = FALSE)
-            lazyz <- parse_description_field(desc, "LazyDataCompression",
-                                             default = "unknown")
-            lazyz0 <- !identical(lazyz, "unknown")
+            lazyz <- desc[["LazyDataCompression"]]
+            lazyz0 <- !is.na(lazyz)
             if(thislazy || lazyz0) {
                 checkingLog(Log, "LazyData")
                 if (thislazy && !dir.exists("data")) {
@@ -2561,15 +2560,15 @@ add_dummies <- function(dir, Log)
                     if(lazyz0)
                         printLog0(Log,
                                   "  'LazyDataCompression' is specified without a 'data' directory\n")
-                } else if (!thislazy && lazy0) {
+                } else if (!thislazy && lazyz0) {
                     noteLog(Log)
                     printLog0(Log,
                               "  'LazyDataCompression' is specified without 'LazyData'\n")
                 } else if (lazyz %in% c("gzip", "yes")) {
                     noteLog(Log)
                     printLog0(Log,
-                              "  'LazyDataCompression' has its default value so would better be omitted'\n")
-                }
+                              "  'LazyDataCompression' has its default value so would better be omitted\n")
+                } else resultLog(Log, "OK")
             }
         }
 
