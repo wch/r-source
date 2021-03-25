@@ -2546,6 +2546,29 @@ add_dummies <- function(dir, Log)
             } else resultLog(Log, "OK")
         }
 
+        if(!is_base_pkg) {
+            desc <- .read_description("DESCRIPTION")
+            thislazy <- parse_description_field(desc, "LazyData", default = FALSE)
+            lazyz <- parse_description_field(desc, "LazyDataCompression",
+                                             default = "unknown")
+            lazyz <- !identical(lazyz, "unknown")
+            if(thislazy || lazyz) {
+                checkingLog(Log, "LazyData")
+                if (thislazy && !dir.exists("data")) {
+                    noteLog(Log)
+                    printLog0(Log,
+                              "  'LazyData' is specified without a 'data' directory\n")
+                    if(lazyz)
+                        printLog0(Log,
+                                  "  'LazyDataCompression' is specified without a 'data' directory\n")
+                } else if (!thislazy && lazyz != "unknown") {
+                    noteLog(Log)
+                    printLog0(Log,
+                              "  'LazyDataCompression' is specified without 'LazyData'\n")
+                }
+            }
+        }
+
         ## Check for ASCII and uncompressed/unoptimized saves in 'data'
         if (!is_base_pkg && R_check_compact_data && dir.exists("data")) {
             checkingLog(Log, "data for ASCII and uncompressed saves")
@@ -2570,7 +2593,7 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
-   }
+    }
 
     check_doc_contents <- function()
     {
