@@ -1499,7 +1499,7 @@ field in the @file{DESCRIPTION} file.  Useful values are @code{bzip2},
 @code{xz} and the default, @code{gzip}.  The only way to discover which
 is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.  A function to do that
-(on POSIX-compliant OSes quoting sizes in KB) is
+(quoting sizes in KB) is
 @example
 CheckLazyDataCompression <- function(pkg)
 @{
@@ -1509,15 +1509,16 @@ CheckLazyDataCompression <- function(pkg)
     res <- integer(3); names(res) <- zs
     for (z in zs) @{
         opts <- c(paste0("--data-compress=", z),
-                  "--no-help", "--no-demo", "--no-exec", "--no-test-load")
+                  "--no-libs", "--no-help", "--no-demo", "--no-exec", "--no-test-load")
         install.packages(pkg, lib, INSTALL_opts = opts, repos = NULL, quiet = TRUE)
-        x <- system2("du", c("-k", file.path(lib, pkg_name, "data")),
-                     stdout = TRUE, stderr = TRUE)
-        res[z] <- as.numeric(sub("\t.*", "", x))
+        res[z] <- file.size(file.path(lib, pkg_name, "data", "Rdata.rdb"))
     @}
-    res
+    ceiling(res/1024)
 @}
 @end example
+
+@noindent
+(applied to a source package without any @samp{LazyDataCompression} field).
 
 @c DESCRIPTION field SysDataCompression
 The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
