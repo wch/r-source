@@ -120,6 +120,18 @@ y
 regmatches(z, lapply(m, drop_first), invert=TRUE) <-
     list(sprintf("<\%d>", 1:5))
 z
+
+## With `perl = TRUE` and `invert = FALSE` capture group names
+## are preserved.  Collect functions and arguments in calls:
+NEWS <- head(readLines(file.path(R.home(), 'doc', 'NEWS.2')), 100)
+m <- gregexec("(?<fun>\\\\w+)\\\\((?<args>[^)]*)\\\\)", NEWS, perl = TRUE)
+y <- regmatches(NEWS, m)
+y[[16]]
+## Make tabular, adding original line numbers
+mdat <- as.data.frame(t(do.call(cbind, y)))
+mdat <- cbind(mdat, line=rep(seq_along(y), lengths(y) / ncol(mdat)))
+head(mdat)
+NEWS[head(mdat[['line']])]
 }
 \keyword{character}
 \keyword{utilities}

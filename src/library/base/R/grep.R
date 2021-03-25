@@ -169,14 +169,16 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
     ## For perl = TRUE, re-use regexpr(perl = TRUE) which always
     ## captures subexpressions.
 
-    match_data_from_pos_and_len <- function(pos, len) {
-        attr(pos, "match.length") <- len
-        pos
-    }
-
     m <- regexpr(pattern, text,
                  ignore.case = ignore.case, useBytes = useBytes,
                  perl = TRUE)
+    nm <- attr(m, 'capture.names')
+    nm <- if(any(nzchar(nm))) c("", nm)
+    match_data_from_pos_and_len <- function(pos, len, nm=NULL) {
+        attr(pos, "match.length") <- len
+        names(pos) <- nm
+        pos
+    }
     y <- vector("list", length(text))
     y[is.na(m)] <- list(match_data_from_pos_and_len(NA_integer_, NA_integer_))
     ind <- !is.na(m) & (m == -1L)
@@ -191,7 +193,8 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
                      attr(m, "capture.length")[ind, , drop = FALSE])
         y[ind] <- Map(match_data_from_pos_and_len,
                       split(pos, row(pos)),
-                      split(len, row(len)))
+                      split(len, row(len)),
+                      list(nm))
     }
     if(identical(attr(m, "useBytes"), TRUE))
         y <- lapply(y, `attr<-`, "useBytes", TRUE)
@@ -217,11 +220,15 @@ gregexec <- function(pattern, text, ignore.case = FALSE, perl = FALSE,
             if(anyNA(x) || any(x < 0)) y <- x
             else {
                 ## Interleave matches with captures
-                y <- t(cbind(x, attr(x, "capture.start"), deparse.level=0L))
+                y <- t(cbind(x, attr(x, "capture.start")))
                 attributes(y)[names(attributes(x))] <- attributes(x)
-                attr(y, "match.length") <-
-                    t(cbind(attr(x, "match.length"), attr(x, "capture.length"),
-                            deparse.level=0L))
+                ml <- t(cbind(attr(x, "match.length"), attr(x, "capture.length")))
+                nm <- attr(x, 'capture.names')
+                ## Remove empty names that `gregexpr` returns
+                dimnames(ml) <- dimnames(y) <-
+                    if(any(nzchar(nm))) list(c("", nm), NULL)
+                attr(y, "match.length") <- ml
+                y
             }
             attributes(y)[capt.attr] <- NULL
             y
@@ -472,9 +479,11 @@ function(x, m, invert = FALSE)
                         return(character())
                 }
                 tmp <- substring(u, so, so + ml - 1L)
-                ## gregexec may produce matrix inputs in which 
-                ## case keep dim for outputs (only for !invert).
+                ## Copy dims and dimnames from gregexec, and names 
+                ## from regexec.  These may appear with perl=TRUE.
                 dim(tmp) <- dim(so)
+                dimnames(tmp) <- dimnames(so)
+                names(tmp) <- names(so)
                 tmp
             },
             x, m,

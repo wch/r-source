@@ -214,7 +214,6 @@ stopifnot(identical(regmatches(y, regexpr("a", x)), res),
 
 ## This is an adapted `gregexec` implementation from the example of `?grep`.
 ## We will use it to test `gregexec`.
-
 ex_fn <- function(pattern, text, useBytes = FALSE, perl = FALSE) {
     lapply(
         regmatches(
@@ -254,6 +253,10 @@ Encoding(m.gr.ub[[5L]]) <- "UTF-8"
 m.gr.ub.ex <- ex_fn(p.1, s.1, perl=FALSE, useBytes=TRUE)
 Encoding(m.gr.ub.ex[[5L]]) <- "UTF-8"
 
+## Named captures
+m.by.name <- do.call(cbind, regmatches(s.1, gr.perl))
+m.by.name.1 <- do.call(cbind, regmatches(s.1, regexec(p.1n, s.1, perl=TRUE)))
+
 stopifnot(
     ## Compare to ?grep example function
     identical(m.gr, ex_fn(p.1, s.1, perl=FALSE)),
@@ -265,7 +268,7 @@ stopifnot(
     all(gr.ub[[5L]] - gr[[5L]] == c(0L, 0L, 1L, 1L, 1L, 2L)),
     identical(m.gr, m.gr.ub),
     ## Perl and non-Perl match the same (in this case)
-    identical(m.gr, regmatches(s.1, gr.perl)),
+    identical(m.gr, regmatches(s.1, gregexec(p.1, s.1, perl=TRUE))),
     ## Check perl actually using TRE (no named capture support)
     inherits(try(gregexec(p.1n, s.1), silent=TRUE), "try-error"),
     ## Named groups work
@@ -274,7 +277,13 @@ stopifnot(
     identical(gregexec(p.1, character()), list()),
     identical(gregexec(p.1n, character(), perl=TRUE), list()),
     identical(gregexec(p.1, NULL), list()),
-    identical(gregexec(p.1n, NULL, perl=TRUE), list()))
+    identical(gregexec(p.1n, NULL, perl=TRUE), list()),
+    ## Named capture carry over to matches
+    identical(m.by.name["a",], c("A", "BC", "DE", "H\u00e9", "W\u00d6")),
+    identical(m.by.name["b",], c("1", "23", "35", "320", "41")),
+    identical(m.by.name.1["a",], c("A", "DE", "H\u00e9")),
+    identical(m.by.name.1["b",], c("1", "35", "320"))
+)
 
 ## Invert and `regmatches<-` do not work with overlapping captures,
 ## but should work if we drop the full match from our data.
