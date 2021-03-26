@@ -633,6 +633,10 @@
       such as \samp{en_US} (which is UTF-8) had been broken by a macOS
       change: fortunately these are now rarely used with
       \samp{en_US.UTF-8} being preferred.
+
+      \item \code{sub()} and \code{gsub(pattern, repl, x, *)} now keep
+      attributes of \code{x} such as \code{names()} also when
+      \code{pattern} is \code{NA} (\PR{18079}).
     }
   }
 }
