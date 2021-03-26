@@ -34,11 +34,13 @@ function(pattern, x, ignore.case = FALSE, perl = FALSE,
             if (length(pattern) > 1L) {
                 warning("argument 'pattern' has length > 1 and only the first element will be used")
             }
-            return(rep(if (value) NA_character_ else NA_integer_, length(x)))
+            return(if(value) structure(rep(NA_character_, length(x)), names=names(x))
+                   else rep(NA_integer_, length(x)))
         }
         idx <- as.integer(x) %in%
-            .Internal(grep(as.character(pattern), levels(x), ignore.case, # value=
-                           FALSE, perl, fixed, useBytes, invert))
+            c(.Internal(grep(as.character(pattern), levels(x), ignore.case, # value=
+                             FALSE, perl, fixed, useBytes, invert)),
+              if(invert && anyNA(x)) NA_integer_)
         if(value)
             structure(as.character(x[idx]), names=names(x)[idx])
         else
@@ -76,7 +78,7 @@ function(pattern, replacement, x, ignore.case = FALSE,
     if(is.factor(x)) {
         levels(x) <- .Internal(sub(as.character(pattern), as.character(replacement),
                                    levels(x), ignore.case, perl, fixed, useBytes))
-        as.character(x)
+        `names<-`(as.character(x), names(x))
     } else {
         if (!is.character(x)) x <- as.character(x)
         .Internal(sub(as.character(pattern), as.character(replacement), x,
@@ -91,7 +93,7 @@ function(pattern, replacement, x, ignore.case = FALSE,
     if(is.factor(x)) {
         levels(x) <- .Internal(gsub(as.character(pattern), as.character(replacement),
                                     levels(x), ignore.case, perl, fixed, useBytes))
-        as.character(x)
+        `names<-`(as.character(x), names(x))
     } else {
         if (!is.character(x)) x <- as.character(x)
         .Internal(gsub(as.character(pattern), as.character(replacement), x,

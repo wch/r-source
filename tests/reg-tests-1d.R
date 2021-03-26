@@ -4799,18 +4799,7 @@ stopifnot(length(unique(L)) == 1)
 ## in R <= 4.0.x,  L contained 3 different results
 
 
-## PR#18079:  sub() & gsub(patt, repl, x) -- when patt is NA
-(x <- c(a="abc", b="bd", d=NA, foo="babar"))
-stopifnot(exprs = {
-    identical(names(x1  <-  sub("a", "_", x)), names(x)) ; x1[["foo"]] == "b_bar"
-    identical(names(x2  <- gsub("a", "_", x)), names(x)) ; x2[["foo"]] == "b_b_r"
-    identical(names(xN2 <- gsub(NA , "_", x)), names(x)) ; is.na(xN2)
-    identical(names(xN1 <-  sub(NA , "_", x)), names(x)) ; is.na(xN1)
-})
-## NA-pattern did not keep any attributes in R <= 4.0
-
-
-## svn c80082's change to grep() broke several of these:
+## svn c80082's change to grep() broke several of these -- the PR#18063 saga
 check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
     stopifnot(is.character(txt))
     chkString <- function(ch) {
@@ -4838,8 +4827,8 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
         for (ptn in c(fx.ptn, s.ptn, gr.ptn, NA_character_)) {
             fixed <- (!is.na(ptn) && ptn == fx.ptn)
             perl  <- (!is.na(ptn) && ptn == gr.ptn)
-            cat(sprintf(" pattern=%16s, fixed=%s, perl=%s:  ",
-                        dQuote(ptn, q=NULL), fixed, perl))
+            ptn_ch <- if(is.na(ptn)) ptn else dQuote(ptn, q=NULL)
+            cat(sprintf(" pattern=%16s, fixed=%s, perl=%s:  ", ptn_ch, fixed, perl))
             for (e_2 in a2_fns) {
                 f_2 <- eval(e_2)
                 f_2s <- as.character(e_2)
@@ -4851,16 +4840,17 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
                     f_2(ptn, txt,     fixed = fixed, perl = perl)
                     )) msg(sprintf(
                            "not identical: %s(%s, txt*, fixed=%s, perl=%s)",
-                           f_2s, ptn, fixed, perl))
+                           f_2s, ptn_ch, fixed, perl))
             }
 
-            cat("grep(*, value = TRUE): ")
-            if(!identical(
-                grep(ptn, txt_fkt, fixed = fixed, perl = perl, value = TRUE),
-                grep(ptn, txt,     fixed = fixed, perl = perl, value = TRUE)
-            )) msg(sprintf(
-                    "not identical: grep(%s, txt*, fixed=%s, perl=%s, value=TRUE)",
-                    ptn, fixed, perl))
+            cat("grep(*, invert=FALSE/TRUE, value = FALSE/TRUE): ")
+            for(iv in list(c(TRUE,FALSE), c(FALSE,TRUE), c(TRUE,TRUE)))
+              if(!identical(
+                grep(ptn, txt_fkt, fixed = fixed, perl = perl, invert=iv[1], value = iv[2]),
+                grep(ptn, txt,     fixed = fixed, perl = perl, invert=iv[1], value = iv[2])
+              )) msg(sprintf(
+                    "not identical: grep(%s, txt*, fixed=%s, perl=%s, invert=%s, value=%s)",
+                    ptn_ch, fixed, perl, iv[1], iv[2]))
             cat("f_3, i.e. *sub() :")
             for (e_3 in expression(sub, gsub)) {
                 ##                 ---  -----
@@ -4872,7 +4862,7 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
                     f_3(ptn, "@@", txt,     fixed = fixed, perl = perl)
                 )) msg(sprintf(
                     "not identical: %s(%s, \"@@\", txt*, fixed=%s, perl=%s)",
-                    f_3s, ptn, fixed, perl))
+                    f_3s, ptn_ch, fixed, perl))
             }
             cat("\n")
         }
@@ -4882,17 +4872,18 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
 
 codetools::findGlobals(check_regexetc,merge=FALSE)
 ## "default check"
-txt_str <- c(
+txt <- c(
     "The", "licenses", "for", "most", "software", "are",  "designed", "to",
     "take", "away", "your", "freedom",  "to", "share", "and", "change", "it.",
     "", "By", "contrast,", "the", "GNU", "General", "Public", "License",
     "is", "intended", "to", "guarantee", "your", "freedom", "to", "share",
     "and", "change", "free", "software", "--", "to", "make", "sure", "the",
     "software", "is", "free", "for", "all", "its", "users")
+names(txt) <- paste0("c", seq_along(txt))
 if(FALSE)
- system.time(check_regexetc(txt_str, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)", msg=warning))
-check_regexetc(txt_str, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)")
-##
+ system.time(check_regexetc(txt, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)", msg=warning))
+check_regexetc(txt, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)")
+##============
 
 
 
