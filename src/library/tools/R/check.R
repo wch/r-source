@@ -2574,7 +2574,7 @@ add_dummies <- function(dir, Log)
                         (fs <- file.size(f)) > 5*1024^2) {
                         noteLog(Log)
                         printLog0(Log,
-                                  sprintf("  LazyLoad DB of %.1fMB\n", fs/1024^2),
+                                  sprintf("  LazyData DB of %.1f MB without LazyDataCompression set\n", fs/1024^2),
                                   "  See \u{00a7}1.1.6 of 'Writing R Extensions'\n")
                     } else resultLog(Log, "OK")
                 } else resultLog(Log, "OK")
