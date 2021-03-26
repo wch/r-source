@@ -2564,15 +2564,16 @@ add_dummies <- function(dir, Log)
                     noteLog(Log)
                     printLog0(Log,
                               "  'LazyDataCompression' is specified without 'LazyData'\n")
-                } else if (lazyz %in% c("gzip", "yes")) {
-                    noteLog(Log)
-                    printLog0(Log,
-                              "  'LazyDataCompression' has its default value so would better be omitted\n")
+                ## Allow "gzip" to indicate that the issue has been considered.
+                ## } else if (lazyz %in% c("gzip", "yes")) {
+                ##     noteLog(Log)
+                ##     printLog0(Log,
+                ##               "  'LazyDataCompression' has its default value so would better be omitted\n")
                 } else if (thislazy && !lazyz0 && do_install) {
                     f <- file.path(libdir, pkgname, "data", "Rdata.rdb")
                     if (file.exists(f) &&
                         (fs <- file.size(f)) > 5*1024^2) {
-                        noteLog(Log)
+                        warningLog(Log)
                         printLog0(Log,
                                   sprintf("  LazyData DB of %.1f MB without LazyDataCompression set\n", fs/1024^2),
                                   "  See \u{00a7}1.1.6 of 'Writing R Extensions'\n")
