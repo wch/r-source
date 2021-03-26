@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1112,6 +1112,23 @@ inRbuildignore <- function(files, pkgdir) {
                                                     resave_data, logical=FALSE)
             resave_data_others(pkgname, resave_data1)
             resave_data_rda(pkgname, resave_data1)
+        }
+
+        ## clean up DESCRIPTION file if there is (now) no data directory.
+        if (!dir.exists(file.path(pkgname, "data"))) {
+            desc <- file.path(pkgname, "DESCRIPTION")
+            db <- .read_description(desc)
+            ndb <- names(db)
+            omit <- character()
+            for (x in c("LazyData", "LazyDataCompression"))
+                if (x %in% ndb) omit <- c(omit, x)
+            if (length(omit)) {
+                printLog(Log,
+                         sprintf("Omitted %s from DESCRIPTION\n",
+                                 paste(sQuote(omit), collapse = " and ")))
+                db <- db[!(names(db) %in% omit)]
+                .write_description(db, desc)
+            }
         }
 
         ## add dependency on R >= 3.5.0 to DESCRIPTION if there are files in

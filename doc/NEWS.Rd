@@ -423,9 +423,9 @@
       Meyer). This check can be activated via the new environment
       variable \env{_R_CHECK_BOGUS_RETURN_}, true for \code{--as-cran}.
 
-      \item \command{R CMD build} now omits tarballs and binaries of
-      previous builds from the top-level package directory.  (\PR{17828},
-      patch by Sebastian Meyer.)
+      \item \command{R CMD build} omits tarballs and binaries of
+      previous builds from the top-level package directory.
+      (\PR{17828}, patch by Sebastian Meyer.)
 
       \item \command{R CMD check} now runs sanity checks on the use of
       \samp{LazyData}, for example that a \file{data} directory is
@@ -435,7 +435,11 @@
       without specifying \samp{LazyDataCompression}, there is a
       reference to the code given in \sQuote{Writing R Extensions}
       §1.1.6 to test the choice of compression (in all \acronym{CRAN}
-      packages tested a non-default method was optimal).      
+      packages tested a non-default method was optimal).
+
+      \item \command{R CMD build} removes \samp{LazyData} and
+      \samp{LazyDataCompression} fields from the \file{DESCRIPTION} file
+      of packages without a \file{data} directory.
     }
   }
 
