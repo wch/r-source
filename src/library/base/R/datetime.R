@@ -1483,5 +1483,13 @@ as.list.POSIXlt <- function(x, ...)
 as.list.difftime <- function(x, ...)
     lapply(unclass(x), .difftime, attr(x, "units"), oldClass(x))
 
+## Added in 4.1.0.
 
+rep.difftime <- function(x, ...)
+    .difftime(NextMethod("rep"), attr(x, "units"), oldClass(x))
 
+`[<-.difftime` <- function(x, i, value) {
+    if(inherits(value, "difftime") && !identical(units(x), units(value)))
+        units(value) <- units(x)
+    NextMethod("[<-")
+}

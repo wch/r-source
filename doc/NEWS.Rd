@@ -637,6 +637,10 @@
       \item \code{sub()} and \code{gsub(pattern, repl, x, *)} now keep
       attributes of \code{x} such as \code{names()} also when
       \code{pattern} is \code{NA} (\PR{18079}).
+
+      \item Time differences (\code{"difftime"} objects) get a replacement
+      and a \code{rep()} method to keep "units" consistent.
+      (Thanks to a report and patch by Nicolas Bennett in \PR{18066}.)
     }
   }
 }
