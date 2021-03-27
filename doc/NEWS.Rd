@@ -429,13 +429,13 @@
 
       \item \command{R CMD check} now runs sanity checks on the use of
       \samp{LazyData}, for example that a \file{data} directory is
-      present, that \samp{LazyDataCompression} is not specified without
-      \samp{LazyData} or that \samp{LazyDataCompression} is specified
-      with a default value.  For packages with large LazyData databases
-      without specifying \samp{LazyDataCompression}, there is a
-      reference to the code given in \sQuote{Writing R Extensions}
-      §1.1.6 to test the choice of compression (in all \acronym{CRAN}
-      packages tested a non-default method was optimal).
+      present and that \samp{LazyDataCompression} is not specified
+      without \samp{LazyData}.  For packages with large LazyData
+      databases without specifying \samp{LazyDataCompression}, there is
+      a reference to the code given in \sQuote{Writing R Extensions}
+      §1.1.6 to test the choice of compression (as in all the
+      \acronym{CRAN} packages tested a non-default method was
+      preferred).
 
       \item \command{R CMD build} removes \samp{LazyData} and
       \samp{LazyDataCompression} fields from the \file{DESCRIPTION} file
@@ -639,7 +639,7 @@
       \code{pattern} is \code{NA} (\PR{18079}).
 
       \item Time differences (\code{"difftime"} objects) get a replacement
-      and a \code{rep()} method to keep "units" consistent.
+      and a \code{rep()} method to keep \code{"units"} consistent.
       (Thanks to a report and patch by Nicolas Bennett in \PR{18066}.)
     }
   }

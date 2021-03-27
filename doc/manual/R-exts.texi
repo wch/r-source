@@ -1491,7 +1491,7 @@ Package @pkg{tools} has a couple of functions to help with data images:
 including choosing the best type for that particular image.
 
 @c DESCRIPTION field LazyDataCompression
-Some packages using @samp{LazyData} will benefit from using a form of
+Many packages using @samp{LazyData} will benefit from using a form of
 compression other than @command{gzip} in the installed lazy-loading
 database.  This can be selected by the @option{--data-compress} option
 to @command{R CMD INSTALL} or by using the @samp{LazyDataCompression}
@@ -1518,7 +1518,14 @@ CheckLazyDataCompression <- function(pkg)
 @end example
 
 @noindent
-(applied to a source package without any @samp{LazyDataCompression} field).
+(applied to a source package without any @samp{LazyDataCompression}
+field).  @command{R CMD check} will warn if it finds a
+@file{@var{pkgname}/data/Rdata.rdb} file of more than 5MB without
+@samp{LazyDataCompression} being set.  If you sett that, run
+@code{CheckLazyDataCompression()} and set the field -- to @code{gzip} in
+the unlikely event@footnote{For all the @acronym{CRAN} packages tested,
+either @code{gz} or @code{bzip2} provided a very substantial reduction
+in installed size.} that is the best choice.
 
 @c DESCRIPTION field SysDataCompression
 The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
