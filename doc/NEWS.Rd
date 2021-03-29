@@ -641,6 +641,11 @@
       \item Time differences (\code{"difftime"} objects) get a replacement
       and a \code{rep()} method to keep \code{"units"} consistent.
       (Thanks to a report and patch by Nicolas Bennett in \PR{18066}.)
+
+      \item The \verb{\RdOpts} macro, setting defaults for \verb{\Sexpr}
+      options in an Rd file, had been ineffective since \R 2.12.0: it
+      now works again.
+      (Thanks to a report and patch by Sebastian Meyer in \PR{18073}.)
     }
   }
 }
