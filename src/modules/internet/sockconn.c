@@ -105,6 +105,9 @@ static Rboolean sock_open(Rconnection con)
     }
     this->fd = sock;
 
+    if (this->options & RSC_SET_TCP_NODELAY)
+	R_set_nodelay(sock);
+
     mlen = (int) strlen(con->mode);
     con->isopen = TRUE;
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
@@ -199,7 +202,7 @@ static size_t sock_write(const void *ptr, size_t size, size_t nitems,
 }
 
 Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
-			 const char * const mode, int timeout)
+			 const char * const mode, int timeout, int options)
 {
     Rconnection new;
 
@@ -236,6 +239,7 @@ Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
     ((Rsockconn)new->private)-> server = server;
     ((Rsockconn)new->private)-> timeout = timeout;
     ((Rsockconn)new->private)-> serverfd = serverfd;
+    ((Rsockconn)new->private)-> options = options;
     return new;
 }
 

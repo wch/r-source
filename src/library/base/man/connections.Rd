@@ -71,13 +71,15 @@ fifo(description, open = "", blocking = FALSE,
 socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
                  encoding = getOption("encoding"),
-                 timeout = getOption("timeout"))
+                 timeout = getOption("timeout"),
+                 options = getOption("socketOptions"))
 
 serverSocket(port)
 
 socketAccept(socket, blocking = FALSE, open = "a+",
              encoding = getOption("encoding"),
-             timeout = getOption("timeout"))
+             timeout = getOption("timeout"),
+             options = getOption("socketOptions"))
 
 open(con, \dots)
 \method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
@@ -122,6 +124,8 @@ socketTimeout(socket, timeout = -1)
     connection.  Beware that some OSes may treat very large values as
     zero: however the POSIX standard requires values up to 31 days to be
     supported.}
+  \item{options}{optional character vector with options. Currently only
+    \code{"no-delay"} is supported on TCP sockets.}
   \item{filename}{a filename within a zip file.}
   \item{host}{character string.  Host name for the port.}
   \item{port}{integer.  The TCP port number.}
@@ -225,6 +229,13 @@ socketTimeout(socket, timeout = -1)
   for accepting multiple socket connections by \code{socketAccept}.  To stop
   listening for new connections, a server socket needs to be closed
   explicitly by \code{close}.
+
+  \code{socketConnection} and \code{socketAccept} support setting of
+  socket-specific options. Currently only \code{"no-delay"} is
+  implemented which enables the \code{TCP_NODELAY} socket option, causing
+  the socket to flush send buffers immediately (instead of waiting to
+  collect all output before sending). This option is useful for
+  protocols that need fast request/response turn-around times.
 
   \code{socketTimeout} sets connection timeout of a socket connection.  A
   negative \code{timeout} can be given to query the old value.

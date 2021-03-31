@@ -35,7 +35,7 @@ static R_InternetRoutines routines, *ptr = &routines;
 /*
 SEXP Rdownload(SEXP args);
 Rconnection R_newurl(char *description, char *mode);
-Rconnection R_newsock(char *host, int port, int server, int serverfd, char *mode, int timeout);
+Rconnection R_newsock(char *host, int port, int server, int serverfd, char *mode, int timeout, int options);
 Rconnection R_newservsock(int port);
 
 
@@ -104,11 +104,11 @@ R_newurl(const char *description, const char * const mode, SEXP headers, int typ
 
 Rconnection attribute_hidden
 R_newsock(const char *host, int port, int server, int serverfd,
-          const char * const mode, int timeout)
+          const char * const mode, int timeout, int options)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)
-	return (*ptr->newsock)(host, port, server, serverfd, mode, timeout);
+	return (*ptr->newsock)(host, port, server, serverfd, mode, timeout, options);
     else {
 	error(_("internet routines cannot be loaded"));
 	return (Rconnection)0;

@@ -29,7 +29,7 @@ typedef Rconnection (*R_NewUrlRoutine)(const char *description, const char * con
 				       SEXP headers, int method);
 typedef Rconnection (*R_NewSockRoutine)(const char *host, int port, int server,
                                         int serverfd, const char * const mode,
-                                        int timeout);
+                                        int timeout, int options);
 typedef Rconnection (*R_NewServSockRoutine)(int port);
 
 typedef void * (*R_HTTPOpenRoutine)(const char *url, const char *agent,
