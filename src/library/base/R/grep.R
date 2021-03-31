@@ -29,27 +29,31 @@ grep <-
 function(pattern, x, ignore.case = FALSE, perl = FALSE,
          value = FALSE, fixed = FALSE, useBytes = FALSE, invert = FALSE)
 {
-    if(is.factor(x)) {
-        if (is.na(pattern[1L])) {
-            if (length(pattern) > 1L) {
-                warning("argument 'pattern' has length > 1 and only the first element will be used")
-            }
-            return(if(value) structure(rep(NA_character_, length(x)), names=names(x))
-                   else rep(NA_integer_, length(x)))
-        }
-        idx <- as.integer(x) %in%
-            c(.Internal(grep(as.character(pattern), levels(x), ignore.case, # value=
-                             FALSE, perl, fixed, useBytes, invert)),
-              if(invert && anyNA(x)) NA_integer_)
-        if(value)
-            structure(as.character(x[idx]), names=names(x)[idx])
-        else
-            which(idx)
+    pattern <- as.character(pattern)
+    if(is.factor(x) && length(levx <- levels(x)) < length(x) &&
+       !is.na(pattern[1L]))
+    {
+        value <- is.character(idxna <-
+            .Internal(grep(pattern, NA_character_, ignore.case, value,
+                           perl, fixed, useBytes, invert)))
+        idx <- rep(FALSE, length(levx))
+        idx[suppressWarnings(  # not repeat warning
+            .Internal(grep(pattern, levx, ignore.case, # value=
+                           FALSE, perl, fixed, useBytes, invert))
+            )] <- TRUE
+        idx <- idx[x]
+        if(length(idxna)) idx[is.na(x)] <- TRUE
+        idx <- which(idx)
+        if(value) {
+            idx <- x[idx]
+            structure(as.character(idx), names=names(idx))
+        } else
+            idx
     }
     else {
         ## when value = TRUE we return names
         if(!is.character(x)) x <- structure(as.character(x), names=names(x))
-        .Internal(grep(as.character(pattern), x, ignore.case, value,
+        .Internal(grep(pattern, x, ignore.case, value,
                        perl, fixed, useBytes, invert))
     }
 }
@@ -58,11 +62,12 @@ grepl <-
 function(pattern, x, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
-    if(is.factor(x)) {
-        out <- .Internal(grepl(as.character(pattern), levels(x), ignore.case, FALSE,
-                               perl, fixed, useBytes, FALSE))[x]
-        if(!is.na(pattern[1L]))
-            out[is.na(x)] <- FALSE
+    if(is.factor(x) && length(levels(x)) < length(x)) {
+        out <- .Internal(grepl(as.character(pattern), c(levels(x), NA_character_),
+                               ignore.case, FALSE, perl, fixed, useBytes, FALSE))
+        outna <- out[length(out)]
+        out <- out[x]
+        out[is.na(x)] <- outna
         out
     } else {
         if(!is.character(x)) x <- as.character(x)
@@ -75,10 +80,9 @@ sub <-
 function(pattern, replacement, x, ignore.case = FALSE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-    if(is.factor(x)) {
-        levels(x) <- .Internal(sub(as.character(pattern), as.character(replacement),
-                                   levels(x), ignore.case, perl, fixed, useBytes))
-        `names<-`(as.character(x), names(x))
+    if(is.factor(x) && length(levels(x)) < length(x)) {
+        .Internal(sub(as.character(pattern), as.character(replacement),
+                      levels(x), ignore.case, perl, fixed, useBytes))[x]
     } else {
         if (!is.character(x)) x <- as.character(x)
         .Internal(sub(as.character(pattern), as.character(replacement), x,
@@ -90,10 +94,9 @@ gsub <-
 function(pattern, replacement, x, ignore.case = FALSE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-    if(is.factor(x)) {
-        levels(x) <- .Internal(gsub(as.character(pattern), as.character(replacement),
-                                    levels(x), ignore.case, perl, fixed, useBytes))
-        `names<-`(as.character(x), names(x))
+    if(is.factor(x) && length(length(levels(x)) < length(x))) {
+        .Internal(gsub(as.character(pattern), as.character(replacement),
+                       levels(x), ignore.case, perl, fixed, useBytes))[x]
     } else {
         if (!is.character(x)) x <- as.character(x)
         .Internal(gsub(as.character(pattern), as.character(replacement), x,
@@ -105,7 +108,7 @@ regexpr <-
 function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
-    if (is.factor(text)) {
+    if (is.factor(text) && length(levels(text)) < length(text)) {
         out <-
             .Internal(regexpr(as.character(pattern), levels(text),
                               ignore.case, perl, fixed, useBytes))
@@ -126,10 +129,12 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
 gregexpr <-
 function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE) {
-    if (is.factor(text)) {
-        out <- .Internal(gregexpr(as.character(pattern), levels(text),
-                                  ignore.case, perl, fixed, useBytes))[text]
-        out[is.na(text)] = list(structure(NA_integer_, match.length = NA_integer_))
+    if (is.factor(text) && length(levels(text)) < length(text)) {
+        out <- .Internal(gregexpr(as.character(pattern), c(levels(text), NA_character_),
+                                  ignore.case, perl, fixed, useBytes))
+        outna <- out[length(out)]
+        out <- out[text]
+        out[is.na(text)] <- outna
         out
     } else {
         if (!is.character(text)) text <- as.character(text)
@@ -151,11 +156,12 @@ regexec <-
 function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
-    if (is.factor(text)) {
-        pattern <- as.character(pattern)
-        out <- regexec(pattern, levels(text), ignore.case, perl, fixed, useBytes)[text]
-        if(any(ina <- is.na(text)))
-            out[ina] <- regexec(pattern, NA_character_, ignore.case, perl, fixed, useBytes)
+    if (is.factor(text) && length(levels(text)) < length(text)) {
+        out <- regexec(pattern, c(levels(text), NA_character_),
+                       ignore.case, perl, fixed, useBytes)
+        outna <- out[length(out)]
+        out <- out[text]
+        out[is.na(text)] <- outna
         return(out)
     }
 
@@ -205,11 +211,12 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
 
 gregexec <- function(pattern, text, ignore.case = FALSE, perl = FALSE,
                      fixed = FALSE, useBytes = FALSE) {
-    if(is.factor(text)) {
-        out <- gregexec(as.character(pattern), levels(text),
-                        ignore.case, perl, fixed, useBytes)[text]
-        out[is.na(text)] <-
-            list(structure(NA_integer_, match.length = NA_integer_))
+    if(is.factor(text) && length(levels(text)) < length(text)) {
+        out <- gregexec(pattern, c(levels(text), NA_character_),
+                        ignore.case, perl, fixed, useBytes)
+        outna <- out[length(out)]
+        out <- out[text]
+        out[is.na(text)] <- outna
         return(out)
     }
 
