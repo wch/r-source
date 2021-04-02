@@ -4799,6 +4799,17 @@ stopifnot(length(unique(L)) == 1)
 ## in R <= 4.0.x,  L contained 3 different results
 
 
+## PR#18079:  sub() & gsub(patt, repl, x) -- when patt is NA
+(x <- c(a="abc", b="bd", d=NA, foo="babar"))
+stopifnot(exprs = {
+    identical(names(x1  <-  sub("a", "_", x)), names(x)) ; x1[["foo"]] == "b_bar"
+    identical(names(x2  <- gsub("a", "_", x)), names(x)) ; x2[["foo"]] == "b_b_r"
+    identical(names(xN2 <- gsub(NA , "_", x)), names(x)) ; is.na(xN2)
+    identical(names(xN1 <-  sub(NA , "_", x)), names(x)) ; is.na(xN1)
+})
+## NA-pattern did not keep any attributes in R <= 4.0
+
+
 ## svn c80082's change to grep() broke several of these -- the PR#18063 saga
 check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
     stopifnot(is.character(txt))
@@ -4822,7 +4833,6 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
             exclude <- NULL
         }
         txt_fkt <- factor(txt, exclude = exclude)
-        txt_fkt_ch <- as.character(txt_fkt) # is not identical to 'txt'
         cat("txt_i = ", txt_i,"; str(<factor>):\n", sep="") ; str(txt_fkt)
 
         for (ptn in c(fx.ptn, s.ptn, gr.ptn, NA_character_)) {
@@ -4837,8 +4847,8 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
                 if(is.na(ptn) && !(f_2s %in% c("grep", "grepl"))) next
                 cat(f_2s,"")
                 if(!identical(
-                    f_2(ptn, txt_fkt,    fixed = fixed, perl = perl),
-                    f_2(ptn, txt_fkt_ch, fixed = fixed, perl = perl)
+                    f_2(ptn, txt_fkt, fixed = fixed, perl = perl),
+                    f_2(ptn, txt,     fixed = fixed, perl = perl)
                     )) msg(sprintf(
                            "not identical: %s(%s, txt*, fixed=%s, perl=%s)",
                            f_2s, ptn_ch, fixed, perl))
@@ -4859,8 +4869,8 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
                 f_3s <- as.character(e_3)
                 cat(f_3s,"")
                 if(!identical(
-                    f_3(ptn, "@@", txt_fkt,    fixed = fixed, perl = perl),
-                    f_3(ptn, "@@", txt_fkt_ch, fixed = fixed, perl = perl)
+                    f_3(ptn, "@@", txt_fkt, fixed = fixed, perl = perl),
+                    f_3(ptn, "@@", txt,     fixed = fixed, perl = perl)
                 )) msg(sprintf(
                     "not identical: %s(%s, \"@@\", txt*, fixed=%s, perl=%s)",
                     f_3s, ptn_ch, fixed, perl))

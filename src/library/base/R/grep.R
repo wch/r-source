@@ -81,8 +81,9 @@ function(pattern, replacement, x, ignore.case = FALSE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
     if(is.factor(x) && length(levels(x)) < length(x)) {
-        .Internal(sub(as.character(pattern), as.character(replacement),
+        r <- .Internal(sub(as.character(pattern), as.character(replacement),
                       levels(x), ignore.case, perl, fixed, useBytes))[x]
+        if(is.null(nx <- names(x))) r else `names<-`(r, nx)
     } else {
         if (!is.character(x)) x <- as.character(x)
         .Internal(sub(as.character(pattern), as.character(replacement), x,
@@ -95,8 +96,9 @@ function(pattern, replacement, x, ignore.case = FALSE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
     if(is.factor(x) && length(levels(x)) < length(x)) {
-        .Internal(gsub(as.character(pattern), as.character(replacement),
+        r <- .Internal(gsub(as.character(pattern), as.character(replacement),
                        levels(x), ignore.case, perl, fixed, useBytes))[x]
+        if(is.null(nx <- names(x))) r else `names<-`(r, nx)
     } else {
         if (!is.character(x)) x <- as.character(x)
         .Internal(gsub(as.character(pattern), as.character(replacement), x,
