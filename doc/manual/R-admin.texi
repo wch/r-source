@@ -1571,7 +1571,7 @@ It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
 (`Updates' from the `App Store' on Mojave and earlier) to be sure.  (If
 using XQuartz, check that it is compatible: at the time of writing the
-latest version was 2.7.11 from October 2016 but pre-releases of 2.8.0
+latest version was 2.7.11 from October 2016 but releases of 2.8.0
 had just become available and were being offered as upgrades.)
 
 To install, just double-click on the icon of the file you downloaded.
@@ -5366,15 +5366,17 @@ TeX Live installation scripts.}  (@uref{https://www.tug.org/mactex/}):
 the full installation is about 7.3GB, but a much smaller version (`Basic
 TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
-need to add some packages to build @R{}, e.g.@: for the 2020 version we
+need to add some packages to build @R{}, e.g.@: for the 2021 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super
 helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about
-380MB.@footnote{Adding all the packages needed to check @acronym{CRAN}
-increased this to about 560MB.}  @samp{TeX Live Utility} (available
+370MB.@footnote{Adding all the packages needed to check @acronym{CRAN}
+increased this to about 550MB.}  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
-@TeX{} packages.  This is documented to require High Sierra or later:
-for earlier versions see the instructions on the MacTeX front page.
+@TeX{} packages.  MacTeX 2021 is documented to require Mojave or later:
+for earlier macOS versions see the instructions on the MacTeX front
+page.  It containes exexutables which run natively on both
+@cputype{x86_64} and @cputype{arm64}.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
@@ -5706,10 +5708,9 @@ link: to fix that change the symbolic link
 appropriate path can be found by running @command{xcrun
 -show-sdk-path}).
 
-A pre-release of XQuartz is available @emph{via}
+A release of XQuartz 2.8.0 is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
-supports both @cputype{arm64} and @cputype{x86_64} builds.  It does not
-contain @code{cairo}.
+supports both @cputype{arm64} and @cputype{x86_64} builds.
 
 A binary package of Aqua Tcl/Tk is supplied rather than the X11-based
 variant of Tk used for Intel builds (and some packages, notably
