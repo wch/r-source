@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -297,6 +297,7 @@ matrix(c("!", "hexmode",
          "[<-", "POSIXct",
          "[<-", "POSIXlt",
          "[<-", "data.frame",
+         "[<-", "difftime",
          "[<-", "factor",
          "[<-", "numeric_version",
          "[[", "Date",
@@ -564,6 +565,7 @@ matrix(c("!", "hexmode",
          "rep", "Date",
          "rep", "POSIXct",
          "rep", "POSIXlt",
+         "rep", "difftime",
          "rep", "factor",
          "rep", "numeric_version",
          "rev", "default",
@@ -633,7 +635,7 @@ matrix(c("!", "hexmode",
          "xtfrm", "Date",
          "xtfrm", "POSIXct",
          "xtfrm", "POSIXlt",
-         "xtfrm", "data.frame",         
+         "xtfrm", "data.frame",
          "xtfrm", "default",
          "xtfrm", "difftime",
          "xtfrm", "factor",
