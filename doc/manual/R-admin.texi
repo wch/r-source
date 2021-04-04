@@ -5375,7 +5375,7 @@ increased this to about 550MB.}  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
 @TeX{} packages.  MacTeX 2021 is documented to require Mojave or later:
 for earlier macOS versions see the instructions on the MacTeX front
-page.  It containes exexutables which run natively on both
+page.  It contains executables which run natively on both
 @cputype{x86_64} and @cputype{arm64}.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
