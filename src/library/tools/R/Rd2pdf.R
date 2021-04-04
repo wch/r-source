@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,6 @@
 
 #### R based engine for  R CMD Rdconv|Rd2pdf
 ####
-
-##' @param args
-
-##' @return ...
 
 ## base packages do not have versions and this is called on
 ## DESCRIPTION.in
@@ -101,18 +97,14 @@
                            list(texify, texify),
                            c(1L, 2L))
         if(f %in% c("URL", "BugReports", "Additional_repositories"))
-            text <- mygsub("(http://|ftp://|https://)([^[:space:],]+)",
-                           "}\\\\url{\\1%s}\\\\AsIs{",
-                           text,
-                           pctesc,
-                           2L)
+            text <- gsub("(http://|ftp://|https://)([^[:space:],]+)",
+                         "}\\\\url{\\1\\2}\\\\AsIs{",
+                         text, useBytes = TRUE)
         if(f %in% c("Author",       # possibly with ORCID URLs inside <>
                     "Description")) {
-            text <- mygsub("<(http://|ftp://|https://)([^[:space:],>]+)>",
-                           "<}\\\\url{\\1%s}\\\\AsIs{>",
-                           text,
-                           pctesc,
-                           2L)
+            text <- gsub("<(http://|ftp://|https://)([^[:space:],>]+)>",
+                         "<}\\\\url{\\1\\2}\\\\AsIs{>",
+                         text, useBytes = TRUE)
         }
         if(f == "Description") {   # DOI and arXiv identifiers inside <>
             text <- mygsub("<(DOI:|doi:)([[:space:]]*)([^[:space:]]+)>",
