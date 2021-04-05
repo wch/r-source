@@ -4004,6 +4004,12 @@ stopifnot(identical(getParseData(p)$text, c("r\"-(hello)-\"", "")))
 rm(p)
 # (wrong in R 4.0.0; reported by Gabor Csardi)
 
+## check 0x...L parse data
+p <- parse(text = '0x2L', keep.source = TRUE)
+stopifnot(identical(getParseData(p)$text, c("0x2L", "")))
+rm(p)
+# (wrong in R 4.0.0; reported by Gabor Csardi)
+
 
 ## make sure there is n aliasing in assignments with partial matching
 v <- list(misc = c(1))
