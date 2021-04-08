@@ -226,6 +226,9 @@
       \item Provide grouping of \code{x11()} graphics windows within
       a window manager such as \code{Gnome} or \code{Unity}; thanks to a
       patch by Ivan Krylov posted to R-devel.
+
+      \item The \code{split()} method for class \code{data.frame} now
+      allows the \code{f} argument to be specified as a formula.
     }
   }
 
