@@ -7,7 +7,7 @@
 \alias{seq.Date}
 \title{Generate Regular Sequences of Dates}
 \description{
-  The method for \code{\link{seq}} for objects of class class
+  The method for \code{\link{seq}} for objects of class
   \code{"\link{Date}"} representing calendar dates.
 }
 \usage{
