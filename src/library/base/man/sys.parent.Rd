@@ -96,12 +96,13 @@ parent.frame(n = 1)
   As an effect of lazy evaluation, these functions look at the call stack at
   the time they are evaluated, not at the time they are called.  Passing
   calls to them as function arguments is unlikely to be a good idea, but
-  they will still count frames as if evaluated in the evaluation in which
-  they were called.
+  these functions still look at the call stack and count frames from the
+  frame of the function evaluation from which they were called.
 
-  Beware that when these functions are called from default values of
+  Hence, when these functions are called to provide default values for
   function arguments, they are evaluated in the evaluation of the called
-  function and they count frames accordingly.
+  function and they count frames accordingly (see e.g. the \code{envir}
+  argument of \code{\link{eval}}).
 }
 \value{
   \code{sys.call} returns a call, \code{sys.function} a function
