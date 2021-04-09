@@ -152,7 +152,7 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
      semi-internal buffer cbuff is freed if over default size
 
    when msg_name is NULL, (for use where performance matters)
-     error handling is via negative return value:
+     error handling is via negative return value (other than NA_INTEGER):
        -1 ... invalid multi-byte string
        -2 ... the quantity is not computable (bytes encoding)
      semi-internal buffer cbuff is never freed, should be freed by caller
