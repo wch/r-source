@@ -489,6 +489,11 @@
       work with Unicode characters beyond the Basic Multilingual Plane
       where not supported by system functions (e.g. on Solaris where it
       is the new default).
+
+      \item R is more careful when truncating UTF-8 and other multi-byte
+      strings that are too long to be printed, passed to the system or
+      libraries or placed into an internal buffer.  Truncation will no
+      longer produce incomplete multibyte characters.
     }
   }
 
