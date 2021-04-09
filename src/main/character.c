@@ -146,6 +146,17 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* R strings are limited to 2^31 - 1 bytes on all platforms */
+
+/* when msg_name is not NULL,
+     error handling is via error() with a message including msg_name
+     semi-internal buffer cbuff is freed if over default size
+
+   when msg_name is NULL, (for use where performance matters)
+     error handling is via negative return value:
+       -1 ... invalid multi-byte string
+       -2 ... the quantity is not computable (bytes encoding)
+     semi-internal buffer cbuff is never freed, should be freed by caller
+*/
 int R_nchar(SEXP string, nchar_type type_,
 	    Rboolean allowNA, Rboolean keepNA, const char* msg_name)
 {
@@ -160,8 +171,12 @@ int R_nchar(SEXP string, nchar_type type_,
 	if (IS_UTF8(string)) {
 	    const char *p = CHAR(string);
 	    if (!utf8Valid(p)) {
-		if (!allowNA)
-		    error(_("invalid multibyte string, %s"), msg_name);
+		if (!allowNA) {
+		    if (msg_name)
+			error(_("invalid multibyte string, %s"), msg_name);
+		    else
+			return -1;
+		}
 		return NA_INTEGER;
 	    } else {
 		int nc = 0;
@@ -172,14 +187,22 @@ int R_nchar(SEXP string, nchar_type type_,
 	    // just count bytes
 	    return (int) strlen(CHAR(string));
 	} else if (IS_BYTES(string)) {
-	    if (!allowNA) /* could do chars 0 */
-		error(_("number of characters is not computable in \"bytes\" encoding, %s"),
-		      msg_name);
+	    if (!allowNA) /* could do chars 0 */ {
+		if (msg_name)
+		    error(_("number of characters is not computable in \"bytes\" encoding, %s"),
+		          msg_name);
+		else
+		    return -2;
+	    }
 	    return NA_INTEGER;
 	} else if (mbcslocale) {
 	    int nc = (int) mbstowcs(NULL, translateChar(string), 0);
-	    if (!allowNA && nc < 0)
-		error(_("invalid multibyte string, %s"), msg_name);
+	    if (!allowNA && nc < 0) {
+		if (msg_name)
+		    error(_("invalid multibyte string, %s"), msg_name);
+		else
+		    return -1;
+	    }
 	    return (nc >= 0 ? nc : NA_INTEGER);
 	} else
 	    return ((int) strlen(translateChar(string)));
@@ -188,8 +211,12 @@ int R_nchar(SEXP string, nchar_type type_,
 	if (IS_UTF8(string)) {
 	    const char *p = CHAR(string);
 	    if (!utf8Valid(p)) {
-		if (!allowNA)
-		    error(_("invalid multibyte string, %s"), msg_name);
+		if (!allowNA) {
+		    if (msg_name)
+			error(_("invalid multibyte string, %s"), msg_name);
+		    else
+			return -1;
+		}
 		return NA_INTEGER;
 	    } else {
 		int nc = 0;
@@ -213,9 +240,13 @@ int R_nchar(SEXP string, nchar_type type_,
 		return nc;
 	    }
 	} else if (IS_BYTES(string)) {
-	    if (!allowNA) /* could do width 0 */
-		error(_("width is not computable for %s in \"bytes\" encoding"),
-		      msg_name);
+	    if (!allowNA) { /* could do width 0 */
+		if (msg_name)
+		    error(_("width is not computable for %s in \"bytes\" encoding"),
+		          msg_name);
+		else
+		    return -2;
+	    }
 	    return NA_INTEGER;
 	} else if (IS_LATIN1(string)) {
 	    // just count bytes as they are all width-1 chars
@@ -241,10 +272,16 @@ int R_nchar(SEXP string, nchar_type type_,
 		// then this is ignored
 		int nci18n = wcswidth(wc, 2147483647);
 #endif
+		if (msg_name)
+		    R_FreeStringBufferL(&cbuff);
 		vmaxset(vmax);
 		return (nci18n < 1) ? nc : nci18n;
-	    } else if (allowNA)
-		error(_("invalid multibyte string, %s"), msg_name);
+	    } else if (allowNA) {
+		if (msg_name)
+		    error(_("invalid multibyte string, %s"), msg_name);
+		else
+		    return -1;
+	    }
 	    else
 		return NA_INTEGER;
 	} else
@@ -302,8 +339,21 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     int *s_ = INTEGER(s);
     for (R_xlen_t i = 0; i < len; i++) {
 	SEXP sxi = STRING_ELT(x, i);
-	char msg_i[30]; sprintf(msg_i, "element %ld", (long)i+1);
-	s_[i] = R_nchar(sxi, type_, allowNA, keepNA, msg_i);
+	int res = R_nchar(sxi, type_, allowNA, keepNA, NULL);
+	switch(res) {
+	case -1:
+	    error(_("invalid multibyte string, element %ld"), (long)i+1);
+	case -2: 
+	    if (type_ == Chars)
+		error(_("number of characters is not computable in \"bytes\" encoding, element %ld"),
+		      (long)i+1);
+	    else /* type_ == Width */
+		error(_("width is not computable in \"bytes\" encoding, element %ld"),
+		      (long)i+1);
+	default:
+	    s_[i] = res;
+	    break;
+	}
     }
     R_FreeStringBufferL(&cbuff);
     if ((d = getAttrib(x, R_NamesSymbol)) != R_NilValue)
