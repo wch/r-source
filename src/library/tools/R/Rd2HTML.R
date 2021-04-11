@@ -178,7 +178,8 @@ createRedirects <- function(file, Rdobj)
         if (file.exists(afile))
             warning("Previous alias or file overwritten by alias: ", aname)
         try(cat(redirHTML, file = afile), silent = TRUE) # Fails for \alias{%/%}
-        redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
+        ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
+        if (!file.exists(afile)) redirMsg("topic", aname, basename(file), "FAIL")
     }
     ## Also add .../pkg/help/file.html -> ../pkg/html/file.html as fallback
     ## when topic is not found (but do not overwrite)
