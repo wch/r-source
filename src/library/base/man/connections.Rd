@@ -549,7 +549,7 @@ socketTimeout(socket, timeout = -1)
 #ifdef unix
   Unix users wishing to \emph{write} to one of the X11 selections may be
   able to do so via \command{xclip}
-  (\url{https://sourceforge.net/projects/xclip/}) or \command{xsel}
+  (\url{https://github.com/astrand/xclip}) or \command{xsel}
   (\url{http://www.vergenet.net/~conrad/software/xsel/}), for example by
   \code{pipe("xclip -i", "w")} for the primary selection.
 

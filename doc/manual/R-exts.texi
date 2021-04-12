@@ -2267,7 +2267,7 @@ DLL.
 There is some support for packages which wish to use
 OpenMP@footnote{@uref{https://www.openmp.org/},
 @uref{https://en.wikipedia.org/wiki/OpenMP},
-@uref{https://computing.llnl.gov/tutorials/openMP/}}.  The
+@uref{https://hpc.llnl.gov/openmp-tutorial}}.  The
 @command{make} macros
 
 @example
@@ -2458,7 +2458,7 @@ PKG_LIBS = -lpthread
 versions of OpenBSD used a different library name).
 
 For a tutorial see
-@uref{https://computing.llnl.gov/tutorials/pthreads/}.
+@uref{https://hpc-tutorials.llnl.gov/posix/}.
 
 POSIX threads are not normally used on Windows, which has its own native
 concepts of threads.  However, there are two projects implementing
@@ -7705,7 +7705,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@uref{https://rstudio.com/}).
+example RStudio (@uref{https://www.rstudio.com/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
@@ -9255,7 +9255,7 @@ See
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
 
-`Dr. Memory' from @uref{https://www.drmemory.org/} is a memory checker
+`Dr. Memory' from @uref{https://drmemory.org/} is a memory checker
 for (currently) 32-bit Windows, Linux and macOS with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
 works better if inlining and frame pointer optimizations are disabled.}
