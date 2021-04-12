@@ -28,7 +28,6 @@
     mygsub <- function(...) {
         .gsub_with_transformed_matches(..., useBytes = TRUE)
     }
-    pctesc <- function(x) fsub("%", "\\%", x)
     texify <- function(x, one = TRUE, two = FALSE) {
         ## Handle LaTeX special characters.
         ## one: handle # $ % & _ ^ ~
@@ -55,8 +54,8 @@
         }
         x
     }
-    
-    
+
+
     desc <- read.dcf(descfile)[1L, ]
     ## Using
     ##   desc <- .read_description(descfile)
@@ -110,7 +109,7 @@
             text <- mygsub("<(DOI:|doi:)([[:space:]]*)([^[:space:]]+)>",
                            "<}\\\\Rhref{https://doi.org/%s}{\\1%s}\\\\AsIs{>",
                            text,
-                           list(pctesc, texify),
+                           list(identity, texify),
                            c(3L, 3L))
             ## Fancy escaping should not be needed for arXiv ids.
             text <- gsub("<(arXiv:|arxiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>",
