@@ -41,7 +41,11 @@ Sys.timezone <- function(location = TRUE)
                          inherits = FALSE, ifnotfound = NA_character_)))
         return(tz)
 
-    cacheIt <- function(tz) assign(".sys.timezone", tz, baseenv())
+    cacheIt <- function(tz) {
+        unlockBinding(".sys.timezone", baseenv())
+        assign(".sys.timezone", tz, baseenv())
+        lockBinding(".sys.timezone", baseenv())
+    }
 
     ## Many Unix set TZ, e.g. Solaris and AIX.
     ## For Solaris the system setting is a line in /etc/TIMEZONE
