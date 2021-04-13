@@ -961,7 +961,7 @@ void setup_Rmainloop(void)
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
     /* These are the same bindings, so only lock them once */
     R_LockEnvironment(R_BaseNamespace, TRUE);
-#ifdef NOTYET
+#ifndef NOTYET
     /* methods package needs to trample here */
     R_LockEnvironment(R_BaseEnv, TRUE);
 #endif
