@@ -407,9 +407,9 @@ setAs <-
                              dQuote(to)),
                     domain = NA)
         if(prevCoerce)
-            setMethod(cdef, sig, NULL, where = baseenv())
+            setMethod(cdef, sig, NULL, where = where)
         if(prevRepl)
-            setMethod(rdef, sig, NULL, where = baseenv())
+            setMethod(rdef, sig, NULL, where = where)
         TRUE
     }
     else
