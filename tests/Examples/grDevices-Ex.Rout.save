@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-03-10 r80084) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-04-14 r80164) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2782,17 +2782,18 @@ Sturges   Scott      FD
 [13] "Red-Purple"    "Red-Blue"      "Purple-Orange" "Purple-Yellow"
 [17] "Blue-Yellow"   "Green-Yellow"  "Red-Yellow"    "Heat"         
 [21] "Heat 2"        "Terrain"       "Terrain 2"     "Viridis"      
-[25] "Plasma"        "Inferno"       "Dark Mint"     "Mint"         
-[29] "BluGrn"        "Teal"          "TealGrn"       "Emrld"        
-[33] "BluYl"         "ag_GrnYl"      "Peach"         "PinkYl"       
-[37] "Burg"          "BurgYl"        "RedOr"         "OrYel"        
-[41] "Purp"          "PurpOr"        "Sunset"        "Magenta"      
-[45] "SunsetDark"    "ag_Sunset"     "BrwnYl"        "YlOrRd"       
-[49] "YlOrBr"        "OrRd"          "Oranges"       "YlGn"         
-[53] "YlGnBu"        "Reds"          "RdPu"          "PuRd"         
-[57] "Purples"       "PuBuGn"        "PuBu"          "Greens"       
-[61] "BuGn"          "GnBu"          "BuPu"          "Blues"        
-[65] "Lajolla"       "Turku"         "Hawaii"        "Batlow"       
+[25] "Plasma"        "Inferno"       "Rocket"        "Mako"         
+[29] "Dark Mint"     "Mint"          "BluGrn"        "Teal"         
+[33] "TealGrn"       "Emrld"         "BluYl"         "ag_GrnYl"     
+[37] "Peach"         "PinkYl"        "Burg"          "BurgYl"       
+[41] "RedOr"         "OrYel"         "Purp"          "PurpOr"       
+[45] "Sunset"        "Magenta"       "SunsetDark"    "ag_Sunset"    
+[49] "BrwnYl"        "YlOrRd"        "YlOrBr"        "OrRd"         
+[53] "Oranges"       "YlGn"          "YlGnBu"        "Reds"         
+[57] "RdPu"          "PuRd"          "Purples"       "PuBuGn"       
+[61] "PuBu"          "Greens"        "BuGn"          "GnBu"         
+[65] "BuPu"          "Blues"         "Lajolla"       "Turku"        
+[69] "Hawaii"        "Batlow"       
 > hcl.pals("diverging")
  [1] "Blue-Red"      "Blue-Red 2"    "Blue-Red 3"    "Red-Green"    
  [5] "Purple-Green"  "Purple-Brown"  "Green-Brown"   "Blue-Yellow 2"
@@ -4009,6 +4010,40 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 + X11Fonts(utopia = utopia)
 + })
+> X11Fonts()
+$serif
+[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$sans
+[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Times
+[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Helvetica
+[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrTimes
+[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrHelvetica
+[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Arial
+[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Mincho
+[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> X11Fonts("mono")
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
+> X11Fonts(utopia = utopia)
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -4268,7 +4303,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  51.037 0.793 52.013 0 0 
+Time elapsed:  42.36 0.42 42.844 0 0 
 > grDevices::dev.off()
 null device 
           1 

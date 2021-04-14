@@ -232,6 +232,12 @@
 
       \item \code{sprintf} now warns on arguments unused by the format
       string.
+
+      \item New palettes \code{"Rocket"} and \code{"Mako"} for
+      \code{hcl.colors()} (approximating palettes of the same name
+      from the 'viridisLite' package).
+
+      Contributed by Achim Zeileis.
     }
   }
 
