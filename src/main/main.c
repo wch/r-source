@@ -799,32 +799,39 @@ void setup_Rmainloop(void)
 #ifdef HAVE_LOCALE_H
 #ifdef Win32
     {
-	char *p, Rlocale[1000]; /* Windows' locales can be very long */
+	char allbuf[1000]; /* Windows' locales can be very long */ 
+	char *p, *lcall; 
+    
 	p = getenv("LC_ALL");
-	strncpy(Rlocale, p ? p : "", 1000);
-	Rlocale[1000 - 1] = '\0';
-	if(!(p = getenv("LC_CTYPE"))) p = Rlocale;
+	if(p) {
+	    strncpy(allbuf, p, sizeof(allbuf));
+	    allbuf[1000 - 1] = '\0';
+	    lcall = allbuf;
+	} else
+	    lcall = NULL;
+	
 	/* We'd like to use warning, but need to defer.
 	   Also cannot translate. */
-	if(!setlocale(LC_CTYPE, p))
+
+	p = lcall ? lcall : getenv("LC_COLLATE");
+	if(!setlocale(LC_COLLATE, p ? p : ""))
 	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
-		     "Setting LC_CTYPE=%s failed\n", p);
-	if((p = getenv("LC_COLLATE"))) {
-	    if(!setlocale(LC_COLLATE, p))
-		snprintf(deferred_warnings[ndeferred_warnings++], 250,
-			 "Setting LC_COLLATE=%s failed\n", p);
-	} else setlocale(LC_COLLATE, Rlocale);
-	if((p = getenv("LC_TIME"))) {
-	    if(!setlocale(LC_TIME, p))
-		snprintf(deferred_warnings[ndeferred_warnings++], 250,
-			 "Setting LC_TIME=%s failed\n", p);
-	} else setlocale(LC_TIME, Rlocale);
-	if((p = getenv("LC_MONETARY"))) {
-	    if(!setlocale(LC_MONETARY, p))
-		snprintf(deferred_warnings[ndeferred_warnings++], 250,
-			 "Setting LC_MONETARY=%s failed\n", p);
-	} else setlocale(LC_MONETARY, Rlocale);
-	/* Windows does not have LC_MESSAGES */
+		     "Setting LC_COLLATE=%.200s failed\n", p);
+
+	p = lcall ? lcall : getenv("LC_CTYPE");
+	if(!setlocale(LC_CTYPE, p ? p : ""))
+	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		     "Setting LC_CTYPE=%.200s failed\n", p);
+	
+	p = lcall ? lcall : getenv("LC_MONETARY");
+	if(!setlocale(LC_MONETARY, p ? p : ""))
+	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		     "Setting LC_MONETARY=%.200s failed\n", p);
+
+	p = lcall ? lcall : getenv("LC_TIME");
+	if(!setlocale(LC_TIME, p ? p : ""))
+	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		     "Setting LC_TIME=%.200s failed\n", p);
 
 	/* We set R_ARCH here: Unix does it in the shell front-end */
 	char Rarch[30];
