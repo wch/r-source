@@ -60,6 +60,7 @@
 /* #define GSS_ASK 14 unused in R >= 2.7.0 */
 #define GSS_SCALE 15
 #define GSS_RESOLVINGCLIP 16
+#define GSS_GROUPS 17
 
 /*
  * Structure of a viewport
@@ -293,6 +294,7 @@ SEXP L_getDLon();
 SEXP L_setDLon(SEXP value);
 SEXP L_getEngineDLon();
 SEXP L_setEngineDLon(SEXP value);
+SEXP L_setGridState(SEXP elementIndex, SEXP value);
 SEXP L_getCurrentGrob();
 SEXP L_setCurrentGrob(SEXP value);
 SEXP L_getEngineRecording();

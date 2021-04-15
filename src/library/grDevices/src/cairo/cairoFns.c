@@ -599,6 +599,205 @@ static void CairoReleaseMask(int index, pX11Desc xd)
 
 /*
  ***************************
+ * Groups
+ ***************************
+ */
+static void CairoInitGroups(pX11Desc xd)
+{
+    int i;
+    xd->numGroups = 20;
+    xd->groups = malloc(sizeof(cairo_pattern_t*) * xd->numGroups);
+    for (i = 0; i < xd->numGroups; i++) {
+        xd->groups[i] = NULL;
+    }
+}
+
+static void CairoCleanGroups(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numGroups; i++) {
+        if (xd->groups[i] != NULL) {
+            cairo_pattern_destroy(xd->groups[i]);
+            xd->groups[i] = NULL;
+        }
+    }    
+}
+
+static void CairoDestroyGroups(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numGroups; i++) {
+        if (xd->groups[i] != NULL) {
+            cairo_pattern_destroy(xd->groups[i]);
+            xd->groups[i] = NULL;
+        }
+    }    
+    free(xd->groups);
+}
+
+static int CairoNewGroupIndex(pX11Desc xd)
+{
+    int i;
+    for (i = 0; i < xd->numGroups; i++) {
+        if (xd->groups[i] == NULL) {
+            return i;
+        }
+    }    
+    warning(_("Cairo groups exhausted (try opening device with more groups)"));
+    return -1;
+}
+
+
+static cairo_operator_t CairoOperator(int op) 
+{
+    cairo_operator_t cairo_op = CAIRO_OPERATOR_OVER;
+    switch(op) {
+    case R_GE_compositeClear: cairo_op = CAIRO_OPERATOR_CLEAR; break;
+    case R_GE_compositeSource: cairo_op = CAIRO_OPERATOR_SOURCE; break;
+    case R_GE_compositeOver: cairo_op = CAIRO_OPERATOR_OVER; break;
+    case R_GE_compositeIn: cairo_op = CAIRO_OPERATOR_IN; break;
+    case R_GE_compositeOut: cairo_op = CAIRO_OPERATOR_OUT; break;
+    case R_GE_compositeAtop: cairo_op = CAIRO_OPERATOR_ATOP; break;
+    case R_GE_compositeDest: cairo_op = CAIRO_OPERATOR_DEST; break;
+    case R_GE_compositeDestOver: cairo_op = CAIRO_OPERATOR_DEST_OVER; break;
+    case R_GE_compositeDestIn: cairo_op = CAIRO_OPERATOR_DEST_IN; break;
+    case R_GE_compositeDestOut: cairo_op = CAIRO_OPERATOR_DEST_OUT; break;
+    case R_GE_compositeDestAtop: cairo_op = CAIRO_OPERATOR_DEST_ATOP; break;
+    case R_GE_compositeXor: cairo_op = CAIRO_OPERATOR_XOR; break;
+    case R_GE_compositeAdd: cairo_op = CAIRO_OPERATOR_ADD; break;
+    case R_GE_compositeSaturate: cairo_op = CAIRO_OPERATOR_SATURATE; break;
+    case R_GE_compositeMultiply: cairo_op = CAIRO_OPERATOR_MULTIPLY; break;
+    case R_GE_compositeScreen: cairo_op = CAIRO_OPERATOR_SCREEN; break;
+    case R_GE_compositeOverlay: cairo_op = CAIRO_OPERATOR_OVERLAY; break;
+    case R_GE_compositeDarken: cairo_op = CAIRO_OPERATOR_DARKEN; break;
+    case R_GE_compositeLighten: cairo_op = CAIRO_OPERATOR_LIGHTEN; break;
+    case R_GE_compositeColorDodge: cairo_op = CAIRO_OPERATOR_COLOR_DODGE; break;
+    case R_GE_compositeColorBurn: cairo_op = CAIRO_OPERATOR_COLOR_BURN; break;
+    case R_GE_compositeHardLight: cairo_op = CAIRO_OPERATOR_HARD_LIGHT; break;
+    case R_GE_compositeSoftLight: cairo_op = CAIRO_OPERATOR_SOFT_LIGHT; break;
+    case R_GE_compositeDifference: cairo_op = CAIRO_OPERATOR_DIFFERENCE; break;
+    case R_GE_compositeExclusion: cairo_op = CAIRO_OPERATOR_EXCLUSION; break;
+    }
+    return cairo_op;
+}
+
+static cairo_pattern_t *CairoCreateGroup(SEXP src, int op, SEXP dst, 
+                                         pX11Desc xd)
+{
+    cairo_t *cc = xd->cc;
+    cairo_pattern_t *cairo_group;
+    SEXP R_fcall;
+
+    /* Start new group - drawing is redirected to this group */
+    cairo_push_group(cc);
+
+    if (dst != R_NilValue) {
+        /* Play the destination function to draw the destination */
+        R_fcall = PROTECT(lang1(dst));
+        eval(R_fcall, R_GlobalEnv);
+        UNPROTECT(1);
+    }
+    /* Set the group operator */
+    cairo_set_operator(cc, CairoOperator(op));
+    /* Play the source function to draw the source */
+    R_fcall = PROTECT(lang1(src));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+
+    /* Close group and return the resulting pattern */
+    cairo_group = cairo_pop_group(cc);
+
+    return cairo_group;
+}
+
+static SEXP CairoDefineGroup(SEXP src, int op, SEXP dst, pX11Desc xd)
+{
+    cairo_pattern_t *cairo_group;
+    SEXP ref;
+    int index;
+
+    /* Create a new mask */
+    index = CairoNewGroupIndex(xd);
+    if (index >= 0) {
+        cairo_group = CairoCreateGroup(src, op, dst, xd);
+        xd->groups[index] = cairo_group;
+    }
+
+    ref = PROTECT(allocVector(INTSXP, 1));
+    INTEGER(ref)[0] = index;
+    UNPROTECT(1);
+
+    return ref;
+}
+
+static void CairoUseGroup(SEXP ref, SEXP trans, pX11Desc xd)
+{
+    cairo_t *cc = xd->cc;
+    int index;
+    cairo_matrix_t transform;
+
+    index = INTEGER(ref)[0];
+    if (index < 0) {
+        warning(_("Groups exhausted"));
+        return;
+    }
+
+    if (index >= 0 && !xd->groups[index]) {
+        warning("Unknown group ");
+        return;
+    } 
+
+    if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, draw temporary pattern */
+            cairo_push_group(cc);
+        }
+    }
+
+    /* Draw the group */
+    cairo_save(cc);
+    
+    if (trans != R_NilValue) {
+        transform.xx = REAL(trans)[0];
+        transform.yx = REAL(trans)[3];
+        transform.xy = REAL(trans)[1];
+        transform.yy = REAL(trans)[4];
+        transform.x0 = REAL(trans)[2];
+        transform.y0 = REAL(trans)[5];
+        
+        cairo_transform(cc, &transform);
+    } 
+
+    cairo_set_source(cc, xd->groups[index]);
+    cairo_paint(cc);
+
+    cairo_restore(cc);
+
+    if (!xd->appending) {
+        if (xd->currentMask >= 0) {
+            /* If masking, use temporary pattern as source and mask that */
+            cairo_pattern_t *source = cairo_pop_group(xd->cc);
+            cairo_pattern_t *mask = xd->masks[xd->currentMask];
+            cairo_set_source(xd->cc, source);
+            cairo_mask(xd->cc, mask);
+            /* Release temporary pattern */
+            cairo_pattern_destroy(source);
+        }
+    }
+}
+
+static void CairoReleaseGroup(int index, pX11Desc xd)
+{
+    if (xd->groups[index]) {
+        cairo_pattern_destroy(xd->groups[index]);
+        xd->groups[index] = NULL;
+    } else {
+        warning(_("Attempt to release non-existent group"));
+    }
+}
+
+/*
+ ***************************
  * Rendering
  ***************************
  */
@@ -1732,3 +1931,29 @@ static void Cairo_ReleaseMask(SEXP ref, pDevDesc dd)
     }
 }
 
+static SEXP Cairo_DefineGroup(SEXP source, int op, SEXP destination, 
+                              pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    return CairoDefineGroup(source, op, destination, xd);
+}
+
+static void Cairo_UseGroup(SEXP ref, SEXP trans, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    CairoUseGroup(ref, trans, xd);
+}
+
+static void Cairo_ReleaseGroup(SEXP ref, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    /* NULL means release all groups */
+    if (isNull(ref)) {
+        CairoCleanGroups(xd);
+    } else {
+        int i;
+        for (i = 0; i < LENGTH(ref); i++) {
+            CairoReleaseGroup(INTEGER(ref)[i], xd);
+        }
+    }
+}

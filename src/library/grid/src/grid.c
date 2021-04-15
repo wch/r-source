@@ -1300,6 +1300,8 @@ SEXP L_newpage()
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
     /* Clear all masks */
     dd->dev->releaseMask(R_NilValue, dd->dev);
+    /* Clear all groups */
+    dd->dev->releaseGroup(R_NilValue, dd->dev);
 
     return R_NilValue;
 }

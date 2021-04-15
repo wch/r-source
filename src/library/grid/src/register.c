@@ -46,6 +46,7 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(setDLon, 1),
     LCALLDEF(getEngineDLon, 0),
     LCALLDEF(setEngineDLon, 1),
+    LCALLDEF(setGridState, 2),
     LCALLDEF(getCurrentGrob, 0),
     LCALLDEF(setCurrentGrob, 1),
     LCALLDEF(getEngineRecording, 0),

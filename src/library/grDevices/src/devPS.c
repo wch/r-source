@@ -5479,6 +5479,33 @@ typedef struct {
 #define PDFclipPath 5
 #define PDFcontent 6
 #define PDFtilingPattern 7
+#define PDFgroup 8
+
+/* PDF Blend Modes */
+#define PDFnormal 0
+/* NOTE that the *order* from here on matches the order of R_GE_composite<*>
+ * in GraphicsEngine.h (so we can get one from the other via simple offset)
+ */
+#define PDFmultiply 1
+#define PDFscreen 2
+#define PDFoverlay 3
+#define PDFdarken 4
+#define PDFlighten 5
+#define PDFcolorDodge 6
+#define PDFcolorBurn 7
+#define PDFhardLight 8
+#define PDFsoftLight 9
+#define PDFdifference 10
+#define PDFexclusion 11
+
+#define PDFnumBlendModes 12
+
+const char* PDFblendModes[] = { "Normal",
+                                "Multiply", "Screen", "Overlay", "Darken",
+                                "Lighten", "ColorDodge", "ColorBurn",
+                                "HardLight", "SoftLight", "Difference",
+                                "Exclusion", "Hue", "Saturation", "Color",
+                                "Luminosity" };
 
 typedef struct {
     int type;
@@ -5593,6 +5620,8 @@ typedef struct {
     int appendingMask; /* Are we defining a mask ? */
     int currentMask;
     int appendingPattern; /* Are we defining a (tiling) pattern ? */
+    int blendModes[PDFnumBlendModes];
+    int appendingGroup; /* Are we defining a transparency group ? */
 
     /* Is the device "offline" (does not write out to a file) */
     Rboolean offline;
@@ -5679,6 +5708,10 @@ static SEXP     PDF_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
 static void     PDF_releaseClipPath(SEXP ref, pDevDesc dd);
 static SEXP     PDF_setMask(SEXP path, SEXP ref, pDevDesc dd);
 static void     PDF_releaseMask(SEXP ref, pDevDesc dd);
+static SEXP     PDF_defineGroup(SEXP source, int op, SEXP destination, 
+                                pDevDesc dd);
+static void     PDF_useGroup(SEXP ref, SEXP trans, pDevDesc dd);
+static void     PDF_releaseGroup(SEXP ref, pDevDesc dd);
 
 
 /***********************************************************************
@@ -6480,7 +6513,7 @@ static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd)
                 UNPROTECT(1);
             }
         } else {
-            /* Reuse existing clipping path */
+            /* Reuse existing mask */
             index = INTEGER(ref)[0];
             newref = ref;
         }
@@ -6488,6 +6521,147 @@ static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd)
     pd->currentMask = index;
 
     return newref;
+}
+
+/***********************************************************************
+ * Stuff for compositing groups
+ */
+
+static void initBlendModes(PDFDesc *pd)
+{
+    int i;
+    for (i=0; i<PDFnumBlendModes; i++) {
+        pd->blendModes[i] = 0;
+    }
+}
+
+static void blendModeFromCompositingOperator(int op, char* mode, int size,
+                                             PDFDesc *pd)
+{
+    int blendMode;
+    switch(op) {
+    case R_GE_compositeClear: 
+    case R_GE_compositeSource: 
+    case R_GE_compositeIn: 
+    case R_GE_compositeOut: 
+    case R_GE_compositeAtop: 
+    case R_GE_compositeDest: 
+    case R_GE_compositeDestOver: 
+    case R_GE_compositeDestIn: 
+    case R_GE_compositeDestOut: 
+    case R_GE_compositeDestAtop: 
+    case R_GE_compositeXor: 
+    case R_GE_compositeAdd:
+    case R_GE_compositeSaturate:
+        warning(_("Compositing operator has no corresponding blend mode; defaulting to Normal"));
+        blendMode = PDFnormal;
+        break;
+    case R_GE_compositeOver:
+        blendMode = PDFnormal;
+        break;
+    default:
+        blendMode = op - 14;
+    }
+    /* Record that blend mode has been used */
+    pd->blendModes[blendMode] = 1;
+    /* Enforce graphics state defined elsewhere via ExtGState */
+    snprintf(mode, size, "/bm%d gs\n", blendMode);
+}
+
+static void addToGroup(char* str, PDFDesc *pd)
+{
+    /* append to a composite content definition */
+    catDefn(str, pd->appendingGroup, pd);
+}
+
+static int newGroup(SEXP source, int op, SEXP destination, PDFDesc *pd)
+{
+    SEXP R_fcall;
+    int mainGroup;
+    char buf[100];
+    int defNum = growDefinitions(pd);
+    initDefn(defNum, PDFgroup, pd);
+    
+    /* Use temporary definition to store the mask content
+     * so we can determine length of the content
+     */
+    int tempDefn = growDefinitions(pd);
+    initDefn(tempDefn, PDFcontent, pd);
+    /* Some initialisation that newpage does
+     * (expected by other captured output)
+     */
+    catDefn("1 J 1 j q\n", tempDefn, pd);
+
+    mainGroup = pd->appendingGroup;
+    pd->appendingGroup = tempDefn;
+
+    if (destination != R_NilValue) {
+        /* Evaluate the destination function to generate the destination */
+        R_fcall = PROTECT(lang1(destination));
+        eval(R_fcall, R_GlobalEnv);
+        UNPROTECT(1);
+    }
+
+    /* Set the blend mode */
+    blendModeFromCompositingOperator(op, buf, 100, pd);
+    catDefn(buf, tempDefn, pd);
+
+    /* Evaluate the source function to generate the source */
+    R_fcall = PROTECT(lang1(source));
+    eval(R_fcall, R_GlobalEnv);
+    UNPROTECT(1);
+
+    /* Some finalisation that endpage does
+     * (to match the newpage initilisation)
+     */
+    catDefn("Q\n", tempDefn, pd);
+    /* Cannot discard temporary definition because there may have been
+     * other definitions created during its creation (so it may no
+     * longer be the topmost definition)
+     */
+    trimDefn(tempDefn, pd);
+
+    pd->appendingGroup = mainGroup;
+
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    catDefn(" 0 obj\n<<\n",
+            defNum, pd);
+    catDefn("/Type /XObject\n/Subtype /Form\n/FormType 1\n/Group\n<<\n",
+            defNum, pd);
+    char colorspace[12];
+    if (streql(pd->colormodel, "gray"))
+        strcpy(colorspace, "/DeviceGray");
+    else if (streql(pd->colormodel, "srgb"))
+        strcpy(colorspace, "5 0 R");
+    else
+        strcpy(colorspace, "/DeviceRGB");
+    snprintf(buf,
+             100,
+             "/Type /Group\n/CS %s\n/I true\n/S /Transparency\n",
+             colorspace);
+    catDefn(buf, defNum, pd);
+    snprintf(buf, 
+             100,
+             ">>\n/BBox [0 0 %d %d]\n",
+             (int) (0.5 + pd->paperwidth), (int) (0.5 + pd->paperheight));
+    catDefn(buf, defNum, pd);
+
+    /* Note the spaces before the >> just after the endstream;
+     * ghostscript seems to need those to avoid error (!?) */
+    snprintf(buf,
+             100,
+             "/Length %d\n",
+             (int) strlen(pd->definitions[tempDefn].str));
+    catDefn(buf, defNum, pd);
+    catDefn(">>\nstream\n", defNum, pd);
+    /* Copy composite content */
+    copyDefn(tempDefn, defNum, pd);
+    catDefn("endstream\nendobj\n", defNum, pd);
+
+    trimDefn(defNum, pd);
+    return defNum;
 }
 
 /***********************************************************************
@@ -6501,8 +6675,8 @@ static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd)
  * (because clippaths cannot be nested and 
  *  because patterns and masks cannot be used in clippaths)
  *
- * Check for mask next 
- * (and capture all output to mask in that case)
+ * Check for mask or pattern or group next 
+ * (and capture all output to highest of those in that case)
  *
  * Otherwise, write directly to the PDF file
  */
@@ -6518,10 +6692,15 @@ static int PDFwrite(char *buf, size_t size, const char *fmt, PDFDesc *pd, ...)
     if (pd->appendingClipPath) {
         addToClipPath(buf, pd);
     } else if (pd->appendingPattern >= 0 && 
-               (pd->appendingPattern > pd->appendingMask)) {
+               (pd->appendingPattern > pd->appendingMask) &&
+               (pd->appendingPattern > pd->appendingGroup)) {
         addToPattern(buf, pd);
-    } else if (pd->appendingMask >= 0) {
+    } else if (pd->appendingMask >= 0 &&
+               (pd->appendingMask > pd->appendingPattern) &&
+               (pd->appendingMask > pd->appendingGroup)) {
         addToMask(buf, pd);
+    } else if (pd->appendingGroup >= 0) {
+        addToGroup(buf, pd);
     } else {
         fputs(buf, pd->pdffp);
     }
@@ -6557,6 +6736,20 @@ static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
     }
 }
 
+static void PDFwriteGroupDefs(int objoffset, PDFDesc *pd)
+{
+    int i;
+    char buf[100];
+    PDFwrite(buf, 100, "/XObject <<\n", pd);
+    for (i = 0; i < pd->numDefns; i++) {
+        if (pd->definitions[i].type == PDFgroup) {
+            PDFwrite(buf, 100, "/Def%d %d 0 R\n", pd,
+                     i, i + objoffset);
+        }
+    }
+    PDFwrite(buf, 100, ">>\n", pd);
+}
+
 static void PDFwriteClipPath(int i, PDFDesc *pd)
 {
     char* buf1;
@@ -6583,6 +6776,19 @@ static void PDFwriteMask(int i, PDFDesc *pd)
     }
 }
 
+static void PDFwriteGroup(int i, PDFDesc *pd)
+{
+    char* buf1;
+    char buf2[20];
+    size_t len = strlen(pd->definitions[i].str);
+    buf1 = malloc((len + 1)*sizeof(char));
+
+    /* Draw the transparency group */
+    PDFwrite(buf2, 20, "/Def%d Do\n", pd, i);
+
+    free(buf1);
+}
+
 static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
 {
     for (int i = 0; i < pd->numDefns; i++) {
@@ -6597,7 +6803,7 @@ static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
         fprintf(pd->pdffp, "%d", pd->nobjs);
         if (pd->definitions[i].type == PDFclipPath ||
             pd->definitions[i].type == PDFcontent) {
-            fprintf(pd->pdffp, " 0 obj << >>\n");
+            fprintf(pd->pdffp, " 0 obj << >> endobj\n");
         } else if (pd->definitions[i].type == PDFtilingPattern) {
             /* Need to complete tiling pattern at end of file
              * to get its Resource Dictionary right
@@ -7163,6 +7369,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     pd->numDefns = 0;
     pd->maxDefns = 64;
+    initBlendModes(pd);
     initDefinitions(pd);
     if (!pd->definitions) {
         PDFcleanup(6, pd);
@@ -7173,6 +7380,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->appendingMask = -1;
     pd->currentMask = -1;
     pd->appendingPattern = -1;
+    pd->appendingGroup = -1;
 
     setbg = R_GE_str2col(bg);
     setfg = R_GE_str2col(fg);
@@ -7344,10 +7552,13 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->releaseClipPath = PDF_releaseClipPath;
     dd->setMask         = PDF_setMask;
     dd->releaseMask     = PDF_releaseMask;
+    dd->defineGroup     = PDF_defineGroup;
+    dd->useGroup        = PDF_useGroup;
+    dd->releaseGroup    = PDF_releaseGroup;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
-    dd->deviceVersion = R_GE_definitions;
+    dd->deviceVersion = R_GE_group;
     return TRUE;
 }
 
@@ -7924,6 +8135,9 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
 	PDFwrite(buf, 100, "/GS%i %d 0 R ", pd, i + 1, ++objCount);
     for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++)
 	PDFwrite(buf, 100, "/GS%i %d 0 R ", pd, i + 257, ++objCount);
+    for (i = 0; i < PDFnumBlendModes; i++)
+        if (pd->blendModes[i])
+            PDFwrite(buf, 100, "/bm%i %d 0 R ", pd, i, ++objCount);
     /* Special state to set AIS if we have soft masks */
     if (nmask > 0)
 	PDFwrite(buf, 100, "/GSais %d 0 R ", pd, ++objCount);
@@ -7934,10 +8148,16 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
     }    
     PDFwrite(buf, 100, ">>\n", pd);
 
+    /* Compositing groups XObjects */
+    if (pd->numDefns > 0) {
+        PDFwriteGroupDefs(defnOffset, pd);
+    }    
+
     /* patterns */
     if (pd->numDefns > 0) {
         PDFwritePatternDefs(defnOffset, excludeDef, pd);
     }
+
 
     if (streql(pd->colormodel, "srgb")) {
 	/* Ojects 5 and 6 are the sRGB color space, if required */
@@ -8185,6 +8405,15 @@ static void PDF_endfile(PDFDesc *pd)
 	fprintf(pd->pdffp,
 		"%d 0 obj\n<<\n/Type /ExtGState\n/ca %1.3f\n>>\nendobj\n",
 		pd->nobjs, pd->fillAlpha[i]/255.0);
+    }
+    /* graphics state parameter dictionaries for (used) blend modes */
+    for (i = 0; i < PDFnumBlendModes; i++) {
+        if (pd->blendModes[i]) {
+            pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+            fprintf(pd->pdffp,
+                    "%d 0 obj\n<<\n/Type /ExtGState\n/BM /%s\n>>\nendobj\n",
+                    pd->nobjs, PDFblendModes[i]);
+        }
     }
 
     if (nmask > 0) {
@@ -9543,6 +9772,61 @@ static SEXP PDF_setMask(SEXP path, SEXP ref, pDevDesc dd) {
 
 static void PDF_releaseMask(SEXP ref, pDevDesc dd) {}
 
+static SEXP PDF_defineGroup(SEXP source, int op, SEXP destination, 
+                            pDevDesc dd) {
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    SEXP ref = R_NilValue;
+
+    int index = newGroup(source, op, destination, pd);
+    if (index >= 0) {
+        PROTECT(ref = allocVector(INTSXP, 1));
+        INTEGER(ref)[0] = index;
+        UNPROTECT(1);
+    }
+
+    return ref;
+}
+
+static void PDF_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    int index;
+
+    if(pd->inText) textoff(pd);
+
+    /* Compositing groups do not contribute to a clipping path */
+    if (!pd->appendingClipPath) {
+
+        if (pd->currentMask >= 0) {
+            PDFwriteMask(pd->currentMask, pd);
+        }
+        index = INTEGER(ref)[0];
+        /* Draw the transparency group */
+        if (index >= 0) {
+            if (trans != R_NilValue) {
+                char buf[100];
+                PDFwrite(buf, 4, "q\n", pd);
+                /* Apply the transform */
+                PDFwrite(buf, 100, "%f %f %f %f %f %f cm\n", pd,
+                         REAL(trans)[0],
+                         REAL(trans)[3],
+                         REAL(trans)[1],
+                         REAL(trans)[4],
+                         REAL(trans)[2],
+                         REAL(trans)[5]);
+            }
+
+            PDFwriteGroup(index, pd);
+
+            if (trans != R_NilValue) {
+                char buf[4];
+                PDFwrite(buf, 4, "Q\n", pd);
+            }
+        }
+
+    }
+}
+
+static void PDF_releaseGroup(SEXP ref, pDevDesc dd) {}
 
 /*  PostScript Device Driver Parameters:
  *  ------------------------

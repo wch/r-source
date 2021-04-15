@@ -81,6 +81,16 @@ export(
        "setChildren",
        "showGrob",
 
+       # Groups
+       "groupGrob", "grid.group",
+       "defineGrob", "grid.define",
+       "useGrob", "grid.use",
+       "groupTranslate", "groupRotate", "groupScale", "groupShear",
+       "defnTranslate", "defnRotate", "defnScale",
+       "useTranslate", "useRotate", "useScale",
+       "viewportTranslate", "viewportRotate", "viewportScale",
+       "viewportTransform",
+    
        # Listing grobs and viewports
        "grid.ls",
        "nestedListing", "pathListing", "grobPathListing",

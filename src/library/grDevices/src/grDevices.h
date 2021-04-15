@@ -118,3 +118,6 @@ SEXP bmVersion(void);
 SEXP setPattern(SEXP args);
 SEXP setClipPath(SEXP args);
 SEXP setMask(SEXP args);
+SEXP defineGroup(SEXP args);
+SEXP useGroup(SEXP args);
+SEXP devUp();
