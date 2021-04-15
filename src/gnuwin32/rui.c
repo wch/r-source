@@ -1028,7 +1028,7 @@ int setupui(void)
 				a valid locale */
     if((p = getenv("LC_ALL")))
 	strncpy(Rlocale, p, sizeof(Rlocale)-1);
-    else if((p = getenv("LC_CTYPE"))
+    else if((p = getenv("LC_CTYPE")))
 	strncpy(Rlocale, p, sizeof(Rlocale)-1);
     if (strcmp(Rlocale, "C") == 0) strcpy(Rlocale, "en");
     setlocale(LC_CTYPE, Rlocale);
