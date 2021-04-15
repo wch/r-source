@@ -238,6 +238,9 @@
       from the 'viridisLite' package).
 
       Contributed by Achim Zeileis.
+
+      \item The base environment and its namespace are now locked (so
+      one can no longer add bindings to these or remove from these).
     }
   }
 
