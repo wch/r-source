@@ -38,9 +38,8 @@ activeBindingFunction(sym, env)
   a variable to a function.
 }
 \details{
-  The function \code{lockEnvironment} locks its environment argument,
-  which must be a normal environment (not base).  (Locking the base
-  environment and namespace may be supported later.)  Locking the
+  The function \code{lockEnvironment} locks its environment argument.
+  Locking the
   environment prevents adding or removing variable bindings from the
   environment.  Changing the value of a variable is still possible unless
   the binding has been locked.  The namespace environments of packages
