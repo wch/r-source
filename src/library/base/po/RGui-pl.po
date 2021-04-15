@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-04-15 19:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -289,7 +289,7 @@ msgstr "Zapisz skrypt jako"
 # src/gnuwin32/pager.c: 431
 # G_("Open script")
 #: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:431
-#: src/gnuwin32/rui.c:1076
+#: src/gnuwin32/rui.c:1078
 msgid "Open script"
 msgstr "Otwórz skrypt"
 
@@ -392,8 +392,8 @@ msgstr "Wytnij"
 # src/gnuwin32/pager.c: 478
 # G_("Copy")
 #: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:305
-#: src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
-#: src/gnuwin32/rui.c:1144
+#: src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1090
+#: src/gnuwin32/rui.c:1146
 msgid "Copy"
 msgstr "Kopiuj"
 
@@ -408,7 +408,7 @@ msgstr "Kopiuj"
 # src/gnuwin32/editor.c: 753
 # G_("Paste")
 #: src/gnuwin32/editor.c:633 src/gnuwin32/editor.c:754 src/gnuwin32/rui.c:860
-#: src/gnuwin32/rui.c:1092 src/gnuwin32/rui.c:1145
+#: src/gnuwin32/rui.c:1094 src/gnuwin32/rui.c:1147
 msgid "Paste"
 msgstr "Wklej"
 
@@ -433,7 +433,7 @@ msgstr "Usuń"
 # src/gnuwin32/pager.c: 484
 # G_("Select all")
 #: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:308
-#: src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
+#: src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1151
 msgid "Select all"
 msgstr "Zaznacz wszystko"
 
@@ -468,7 +468,7 @@ msgstr "Drukuj skrypt"
 # G_("Print")
 # src/library/grDevices/src/devWindows.c: 1587
 # G_("Print")
-#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1104
+#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1106
 #: src/library/grDevices/src/devWindows.c:1613
 msgid "Print"
 msgstr "Drukuj"
@@ -489,7 +489,7 @@ msgstr "Drukuj"
 # stop("File", file, "does not exist in", getwd())
 # src/library/utils/tests/Sweave-tst.R: 30
 # stop("File", texF, "does not exist in", getwd())
-#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
 #: src/library/utils/src/windows/dataentry.c:1791
 #: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
@@ -501,7 +501,7 @@ msgstr "Plik"
 # G_("New script")
 # src/gnuwin32/pager.c: 468
 # G_("New script")
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1126
 msgid "New script"
 msgstr "Nowy skrypt"
 
@@ -511,7 +511,7 @@ msgstr "Nowy skrypt"
 # G_("Open script...")
 # src/gnuwin32/pager.c: 469
 # G_("Open script...")
-#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1127
 msgid "Open script..."
 msgstr "Otwórz skrypt..."
 
@@ -535,7 +535,7 @@ msgstr "Zapisz jako..."
 # G_("Print...")
 # src/library/grDevices/src/devWindows.c: 1688
 # G_("Print...")
-#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1138
+#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1140
 #: src/library/grDevices/src/devWindows.c:1672
 #: src/library/grDevices/src/devWindows.c:1714
 msgid "Print..."
@@ -555,7 +555,7 @@ msgstr "Zamknij skrypt"
 # G_("Edit")
 # src/library/utils/src/windows/dataentry.c: 1796
 # G_("Edit")
-#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1145
 #: src/library/utils/src/windows/dataentry.c:1797
 msgid "Edit"
 msgstr "Edytuj"
@@ -564,7 +564,7 @@ msgstr "Edytuj"
 # G_("Clear console")
 # src/gnuwin32/editor.c: 759
 # G_("Clear console")
-#: src/gnuwin32/editor.c:760 src/gnuwin32/rui.c:1150
+#: src/gnuwin32/editor.c:760 src/gnuwin32/rui.c:1152
 msgid "Clear console"
 msgstr "Wyczyść konsolę"
 
@@ -590,7 +590,7 @@ msgstr "Zamień..."
 # G_("GUI preferences...")
 # src/gnuwin32/editor.c: 771
 # G_("GUI preferences...")
-#: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1154
+#: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1156
 msgid "GUI preferences..."
 msgstr "Preferencje GUI..."
 
@@ -604,7 +604,7 @@ msgstr "Preferencje GUI..."
 # GN_("Help")
 # src/library/utils/src/windows/dataentry.c: 1807
 # G_("Help")
-#: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1186
+#: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
 #: src/library/utils/src/windows/dataentry.c:1698
 #: src/library/utils/src/windows/dataentry.c:1808
 msgid "Help"
@@ -721,7 +721,7 @@ msgstr "Zamknij"
 # G_("Save to File...")
 # src/gnuwin32/pager.c: 472
 # G_("Save to File...")
-#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1141
 msgid "Save to File..."
 msgstr "Zapisz do pliku..."
 
@@ -729,7 +729,7 @@ msgstr "Zapisz do pliku..."
 # G_("View")
 # src/gnuwin32/pager.c: 487
 # G_("View")
-#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1158
 msgid "View"
 msgstr "Widok"
 
@@ -901,7 +901,7 @@ msgstr "Można przeciągać jedynie pliki .R, .RData oraz .rda"
 # GN_("Paste commands only")
 # src/gnuwin32/rui.c: 1144
 # G_("Paste commands only")
-#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1146
+#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1148
 msgid "Paste commands only"
 msgstr "Wklej tylko polecenia"
 
@@ -909,7 +909,7 @@ msgstr "Wklej tylko polecenia"
 # GN_("Copy and paste")
 # src/gnuwin32/rui.c: 1094
 # G_("Copy and paste")
-#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1096
+#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1098
 msgid "Copy and paste"
 msgstr "Kopiuj i wklej"
 
@@ -923,7 +923,7 @@ msgstr "Wyczyść okno"
 # GN_("Buffered output")
 # src/gnuwin32/rui.c: 1167
 # G_("Buffered output")
-#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1169
+#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1171
 msgid "Buffered output"
 msgstr "Buforowanie wyjścia"
 
@@ -1079,7 +1079,7 @@ msgstr "Przywróć grupę"
 
 # src/gnuwin32/rui.c: 1078
 # G_("Load workspace")
-#: src/gnuwin32/rui.c:1080
+#: src/gnuwin32/rui.c:1082
 msgid "Load workspace"
 msgstr "Załaduj obszar roboczy"
 
@@ -1087,55 +1087,55 @@ msgstr "Załaduj obszar roboczy"
 # G_("Save workspace")
 # src/library/tcltk/R/tkGUI.R: 50
 # gettext("Save workspace")
-#: src/gnuwin32/rui.c:1084
+#: src/gnuwin32/rui.c:1086
 msgid "Save workspace"
 msgstr "Zapisz obszar roboczy"
 
 # src/gnuwin32/rui.c: 1098
 # G_("Stop current computation")
-#: src/gnuwin32/rui.c:1100
+#: src/gnuwin32/rui.c:1102
 msgid "Stop current computation"
 msgstr "Przerwij bieżące obliczenia"
 
 # src/gnuwin32/rui.c: 1121
 # G_("Source R code...")
-#: src/gnuwin32/rui.c:1123
+#: src/gnuwin32/rui.c:1125
 msgid "Source R code..."
 msgstr "Źródłowy kod R..."
 
 # src/gnuwin32/rui.c: 1124
 # G_("Display file(s)...")
-#: src/gnuwin32/rui.c:1126
+#: src/gnuwin32/rui.c:1128
 msgid "Display file(s)..."
 msgstr "Wyświetl plik(i)"
 
 # src/gnuwin32/rui.c: 1126
 # G_("Load Workspace...")
-#: src/gnuwin32/rui.c:1128
+#: src/gnuwin32/rui.c:1130
 msgid "Load Workspace..."
 msgstr "Załaduj obszar roboczy..."
 
 # src/gnuwin32/rui.c: 1127
 # G_("Save Workspace...")
-#: src/gnuwin32/rui.c:1129
+#: src/gnuwin32/rui.c:1131
 msgid "Save Workspace..."
 msgstr "Zapisz obszar roboczy..."
 
 # src/gnuwin32/rui.c: 1129
 # G_("Load History...")
-#: src/gnuwin32/rui.c:1131
+#: src/gnuwin32/rui.c:1133
 msgid "Load History..."
 msgstr "Załaduj historię..."
 
 # src/gnuwin32/rui.c: 1131
 # G_("Save History...")
-#: src/gnuwin32/rui.c:1133
+#: src/gnuwin32/rui.c:1135
 msgid "Save History..."
 msgstr "Zapisz historię..."
 
 # src/gnuwin32/rui.c: 1134
 # G_("Change dir...")
-#: src/gnuwin32/rui.c:1136
+#: src/gnuwin32/rui.c:1138
 msgid "Change dir..."
 msgstr "Zmień katalog..."
 
@@ -1143,116 +1143,116 @@ msgstr "Zmień katalog..."
 # G_("Exit")
 # src/gnuwin32/editor.c: 743
 # G_("Exit")
-#: src/gnuwin32/rui.c:1141
+#: src/gnuwin32/rui.c:1143
 msgid "Exit"
 msgstr "Wyjście"
 
 # src/gnuwin32/rui.c: 1146
 # G_("Copy and Paste")
-#: src/gnuwin32/rui.c:1148
+#: src/gnuwin32/rui.c:1150
 msgid "Copy and Paste"
 msgstr "Kopiuj i wklej"
 
 # src/gnuwin32/rui.c: 1150
 # G_("Data editor...")
-#: src/gnuwin32/rui.c:1152
+#: src/gnuwin32/rui.c:1154
 msgid "Data editor..."
 msgstr "Edytor danych..."
 
 # src/gnuwin32/rui.c: 1155
 # G_("Toolbar")
-#: src/gnuwin32/rui.c:1157
+#: src/gnuwin32/rui.c:1159
 msgid "Toolbar"
 msgstr "Pasek narzędzi"
 
 # src/gnuwin32/rui.c: 1156
 # G_("Statusbar")
-#: src/gnuwin32/rui.c:1158
+#: src/gnuwin32/rui.c:1160
 msgid "Statusbar"
 msgstr "Pasek stanu"
 
 # src/gnuwin32/rui.c: 1160
 # G_("Misc")
-#: src/gnuwin32/rui.c:1162
+#: src/gnuwin32/rui.c:1164
 msgid "Misc"
 msgstr "Różne"
 
 # src/gnuwin32/rui.c: 1161
 # G_("Stop current computation           \tESC")
-#: src/gnuwin32/rui.c:1163
+#: src/gnuwin32/rui.c:1165
 msgid "Stop current computation           \tESC"
 msgstr "Przerwij bieżące obliczenia           \tESC"
 
 # src/gnuwin32/rui.c: 1163
 # G_("Stop all computations")
-#: src/gnuwin32/rui.c:1165
+#: src/gnuwin32/rui.c:1167
 msgid "Stop all computations"
 msgstr "Zatrzymaj wszystkie obliczenia"
 
 # src/gnuwin32/rui.c: 1165
 # G_("Break to debugger")
-#: src/gnuwin32/rui.c:1167
+#: src/gnuwin32/rui.c:1169
 msgid "Break to debugger"
 msgstr "Przerwij by przejść do debuggera"
 
 # src/gnuwin32/rui.c: 1168
 # G_("Word completion")
-#: src/gnuwin32/rui.c:1170
+#: src/gnuwin32/rui.c:1172
 msgid "Word completion"
 msgstr "Uzupełnianie słów"
 
 # src/gnuwin32/rui.c: 1170
 # G_("Filename completion")
-#: src/gnuwin32/rui.c:1172
+#: src/gnuwin32/rui.c:1174
 msgid "Filename completion"
 msgstr "Uzupełnianie nazw plików"
 
 # src/gnuwin32/rui.c: 1177
 # G_("List objects")
-#: src/gnuwin32/rui.c:1179
+#: src/gnuwin32/rui.c:1181
 msgid "List objects"
 msgstr "Wylistuj obiekty"
 
 # src/gnuwin32/rui.c: 1178
 # G_("Remove all objects")
-#: src/gnuwin32/rui.c:1180
+#: src/gnuwin32/rui.c:1182
 msgid "Remove all objects"
 msgstr "Usuń wszystkie obiekty"
 
 # src/gnuwin32/rui.c: 1179
 # G_("List search &path")
-#: src/gnuwin32/rui.c:1181
+#: src/gnuwin32/rui.c:1183
 msgid "List search &path"
 msgstr "Ścieżka &przeszukiwania listy"
 
 # src/gnuwin32/rui.c: 1185
 # G_("Console")
-#: src/gnuwin32/rui.c:1187
+#: src/gnuwin32/rui.c:1189
 msgid "Console"
 msgstr "Konsola"
 
 # src/gnuwin32/rui.c: 1361
 # G_("'menu' is limited to 500 bytes")
-#: src/gnuwin32/rui.c:1248
+#: src/gnuwin32/rui.c:1250
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname' jest ograniczone do 1000 bajtów"
 
 # src/gnuwin32/rui.c: 1371
 # G_("base menu does not exist")
-#: src/gnuwin32/rui.c:1293
+#: src/gnuwin32/rui.c:1295
 #, c-format
 msgid "menu %s does not exist"
 msgstr "menu %s nie istnieje"
 
 # src/gnuwin32/rui.c: 1361
 # G_("'menu' is limited to 500 bytes")
-#: src/gnuwin32/rui.c:1346
+#: src/gnuwin32/rui.c:1348
 msgid "'menu' is limited to 500 bytes"
 msgstr "'menu' jest ograniczone do 500 bajtów"
 
 # src/gnuwin32/rui.c: 1371
 # G_("base menu does not exist")
-#: src/gnuwin32/rui.c:1356
+#: src/gnuwin32/rui.c:1358
 msgid "base menu does not exist"
 msgstr "bazowe menu nie istnieje"
 
@@ -1262,7 +1262,7 @@ msgstr "bazowe menu nie istnieje"
 # G_("failed to allocate char storage")
 # src/gnuwin32/rui.c: 1457
 # G_("failed to allocate char storage")
-#: src/gnuwin32/rui.c:1371
+#: src/gnuwin32/rui.c:1373
 msgid "failed to allocate menu"
 msgstr "nie można przydzielić pamięci dla menu"
 
@@ -1270,13 +1270,13 @@ msgstr "nie można przydzielić pamięci dla menu"
 # G_("menu + item is limited to 1000 bytes")
 # src/gnuwin32/rui.c: 1527
 # G_("menu + item is limited to 1000 bytes")
-#: src/gnuwin32/rui.c:1388 src/gnuwin32/rui.c:1512
+#: src/gnuwin32/rui.c:1390 src/gnuwin32/rui.c:1514
 msgid "menu + item is limited to 1000 bytes"
 msgstr "menu + pozycja są łącznie ograniczone do 1000 bajtów"
 
 # src/gnuwin32/rui.c: 1371
 # G_("base menu does not exist")
-#: src/gnuwin32/rui.c:1396 src/gnuwin32/rui.c:1479
+#: src/gnuwin32/rui.c:1398 src/gnuwin32/rui.c:1481
 msgid "menu does not exist"
 msgstr "menu nie istnieje"
 
@@ -1286,7 +1286,7 @@ msgstr "menu nie istnieje"
 # G_("failed to allocate char storage")
 # src/gnuwin32/rui.c: 1457
 # G_("failed to allocate char storage")
-#: src/gnuwin32/rui.c:1414 src/gnuwin32/rui.c:1437 src/gnuwin32/rui.c:1442
+#: src/gnuwin32/rui.c:1416 src/gnuwin32/rui.c:1439 src/gnuwin32/rui.c:1444
 msgid "failed to allocate char storage"
 msgstr "nie można przydzielić pamięci dla znaku"
 
@@ -1296,7 +1296,7 @@ msgstr "nie można przydzielić pamięci dla znaku"
 # G_("failed to allocate char storage")
 # src/gnuwin32/rui.c: 1457
 # G_("failed to allocate char storage")
-#: src/gnuwin32/rui.c:1450
+#: src/gnuwin32/rui.c:1452
 msgid "failed to allocate menuitem"
 msgstr "nie można przydzielić pamięci dla pozycji menu"
 
@@ -1304,13 +1304,13 @@ msgstr "nie można przydzielić pamięci dla pozycji menu"
 # G_("\"%s\" not found")
 # src/extra/graphapp/dialogs.c: 906
 # G_("\"%s\" not found")
-#: src/gnuwin32/rui.c:1502
+#: src/gnuwin32/rui.c:1504
 msgid "menu not found"
 msgstr "menu nie zostało znalezione"
 
 # src/gnuwin32/rui.c: 1371
 # G_("base menu does not exist")
-#: src/gnuwin32/rui.c:1520
+#: src/gnuwin32/rui.c:1522
 msgid "menu or item does not exist"
 msgstr "menu lub pozycja nie istnieje"
 
