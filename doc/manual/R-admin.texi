@@ -5371,7 +5371,7 @@ needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super
 helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about
 370MB.@footnote{Adding all the packages needed to check @acronym{CRAN}
-increased this to about 550MB.}  @samp{TeX Live Utility} (available
+increased this to about 600MB.}  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
 @TeX{} packages.  MacTeX 2021 is documented to require Mojave or later:
 for earlier macOS versions see the instructions on the MacTeX front

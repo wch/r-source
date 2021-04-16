@@ -1521,7 +1521,7 @@ CheckLazyDataCompression <- function(pkg)
 (applied to a source package without any @samp{LazyDataCompression}
 field).  @command{R CMD check} will warn if it finds a
 @file{@var{pkgname}/data/Rdata.rdb} file of more than 5MB without
-@samp{LazyDataCompression} being set.  If you sett that, run
+@samp{LazyDataCompression} being set.  If you see that, run
 @code{CheckLazyDataCompression()} and set the field -- to @code{gzip} in
 the unlikely event@footnote{For all the @acronym{CRAN} packages tested,
 either @code{gz} or @code{bzip2} provided a very substantial reduction
