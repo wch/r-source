@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-03-10 r80084) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-04-16 r80178) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -111,10 +111,10 @@ Time    user  system elapsed
 Time   0.004   0.000   0.004 
 m= 15 ; n= 0 :
 Time    user  system elapsed 
-Time   0.002   0.000   0.002 
+Time   0.001   0.000   0.002 
 m= 999 ; n= 0 :
 Time    user  system elapsed 
-Time   0.112   0.000   0.112 
+Time    0.11    0.00    0.11 
 > 
 > ##__ 4. Negative Binomial __
 > 
@@ -889,5 +889,5 @@ Time   0.112   0.000   0.112
 > ## ==        ~~~                    ~~~~  ~~~               ~~~~~~~~~~~~~~~
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.078 0.022 1.105 0 0 
+Time elapsed:  1.052 0.022 1.084 0 0 
 > 

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-03-10 r80084) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-04-16 r80178) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6363,7 +6363,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x263ab98>
+<bytecode: 0x2177a80>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6374,7 +6374,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x263ab98>
+<bytecode: 0x2177a80>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6386,7 +6386,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x263ab98>
+<bytecode: 0x2177a80>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
