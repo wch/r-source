@@ -241,6 +241,17 @@
 
       \item The base environment and its namespace are now locked (so
       one can no longer add bindings to these or remove from these).
+
+      \item \command{Rterm} handling of multi-byte characters has been
+      improved, allowing use of such characters when supported by the
+      current locale.
+
+      \item \command{Rterm} now accepts \code{ALT+ +xxxxxxxx} sequences to
+      enter Unicode characters as hex digits.
+
+      \item Environment variable \env{LC_ALL} on Windows now takes
+      precedence over \env{LC_CTYPE} and variables for other supported
+      categories, matching the POSIX behaviour.
     }
   }
 
