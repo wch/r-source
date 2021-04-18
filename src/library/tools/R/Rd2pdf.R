@@ -122,6 +122,26 @@
                    con = out, useBytes = TRUE)
     }
     cat("\\end{description}\n", file = out)
+    ## Also try adding PDF title and author metadata.
+    tit <- desc["Title"]
+    tit <- paste0(desc["Package"], ": ",
+                  texify(gsub("[[:space:]]+", " ", tit), two = TRUE))
+    cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+               "{\\hypersetup{pdftitle = {", tit, "}}}{}"),
+        file = out)
+    ## Only try author from Authors@R.
+    if(!is.na(aar <- desc["Authors@R"])) {
+        aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
+                        error = identity)
+        if(!inherits(aar, "error")) {
+            aut <- paste(format(aar, include = c("given", "family")),
+                         collapse = "; ")
+            aut <- texify(gsub("[[:space:]]+", " ", aut), two = TRUE)
+            cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+                       "{\\hypersetup{pdfauthor = {", aut, "}}}{}"),
+                file = out)
+        }
+    }
 }
 
 ## workhorse of .Rd2pdf
