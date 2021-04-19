@@ -4494,63 +4494,45 @@ fi
 
 ## R_CSTACK_DIRECTION
 ## -----------------
-## Moved to configure as LTO may defeat runtime strategy.
 AC_DEFUN([R_CSTACK_DIRECTION],
 [AC_MSG_CHECKING([for C stack direction])
 AC_CACHE_VAL([r_cv_cstack_direction],
-[cat > conftest1.c <<EOF
-#include <stdint.h>
-uintptr_t dummy_ii(void)
-{
-    int ii;
-
-    /* This is intended to return a local address. We could just return
-       (uintptr_t) &ii, but doing it indirectly through ii_addr avoids
-       a compiler warning (-Wno-return-local-addr would do as well).
-    */
-    volatile uintptr_t ii_addr = (uintptr_t) &ii;
-    return ii_addr;
+[cat > conftest.c <<EOF
+/* based on gnulib, alloca.c */
+int find_stack_direction(int *addr, int depth) {
+  int dir, dummy = 0;
+  if (! addr)
+    addr = &dummy;
+  *addr = addr < &dummy ? 1 : addr == &dummy ? 0 : -1;
+  dir = depth ? find_stack_direction (addr, depth - 1) : 0;
+  return dir + dummy;
 }
-EOF
-cat > conftest.c <<EOF
-#include <stdio.h>
-#include <stdint.h>
-extern uintptr_t dummy_ii(void);
 
-typedef uintptr_t (*dptr_type)(void);
-volatile dptr_type dummy_ii_ptr;
-
-int main(int ac, char **av)
-{
-    int i;
-    dummy_ii_ptr = dummy_ii;
-        
-    /* call dummy_ii via a volatile function pointer to prevent inlinining in
-       case the tests are accidentally built with LTO */
-    uintptr_t ii = dummy_ii_ptr();
-    /* 1 is downwards */
-    return ((uintptr_t)&i > ii) ? 1 : -1;
+int main(int ac, char **av) {
+  /* find_stack_direction: -1 is downwards, 1 is upwards, 0 is unknown */
+  /* test: 1 is downwards, -1 is upwards, 0 is unknown */
+  return -find_stack_direction (0, 20);
 }
 EOF
 dnl Allow this to be overruled in config.site
 if test "x${R_C_STACK_DIRECTION}" != "x"; then
- r_cv_cstack_direction=${R_C_STACK_DIRECTION}
+  r_cv_cstack_direction=${R_C_STACK_DIRECTION}
 else
 if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
-      conftest.c conftest1.c \
-      1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+      conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   then
     ## redirect error messages to config.log
     output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
-    if test ${?} = 1; then
+    _cstack_direction_result=${?}
+    if test "${_cstack_direction_result}" = 1; then
       r_cv_cstack_direction=down
-    elif test ${?} = 1; then
+    elif test "${_cstack_direction_result}" = 255; then
       r_cv_cstack_direction=up
     fi
 fi
 fi
 ])
-rm -Rf conftest conftest?.* core
+rm -Rf conftest conftest.* core
 if test -n "${r_cv_cstack_direction}"; then
   AC_MSG_RESULT(${r_cv_cstack_direction})
 else
