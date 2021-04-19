@@ -6591,6 +6591,10 @@ static int newGroup(SEXP source, int op, SEXP destination, PDFDesc *pd)
      * (expected by other captured output)
      */
     catDefn("1 J 1 j q\n", tempDefn, pd);
+    /* Ensure that current graphical parameter settings are recorded
+     * with the group definition.
+     */
+    PDF_Invalidate(pd);
 
     mainGroup = pd->appendingGroup;
     pd->appendingGroup = tempDefn;
