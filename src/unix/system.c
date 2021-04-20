@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2021  The R Core Team
+ *  Copyright (C) 1997--2020  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -170,9 +170,6 @@ static char* unescape_arg(char *p, char* avp) {
 	} else if(*q == '~' && *(q+1) == 'n' && *(q+2) == '~') {
 	    q += 2;
 	    *p++ = '\n';
-	} else if(*q == '~' && *(q+1) == 't' && *(q+2) == '~') {
-	    q += 2;
-	    *p++ = '\t';
 	} else *p++ = *q;
     }
     return p;
@@ -432,7 +429,7 @@ int Rf_initialize_R(int ac, char **av)
 	    } else if(!strcmp(*av, "-e")) {
 		ac--; av++;
 		Rp->R_Interactive = FALSE;
-		if(strlen(cmdlines) + strlen(*av) + 2 <= sizeof(cmdlines)) {
+		if(strlen(cmdlines) + strlen(*av) + 2 <= 10000) {
 		    char *p = cmdlines+strlen(cmdlines);
 		    p = unescape_arg(p, *av);
 		    *p++ = '\n'; *p = '\0';
