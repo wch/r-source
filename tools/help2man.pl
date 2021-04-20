@@ -16,7 +16,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
 
 # Written by Brendan O'Dea <bod@compusol.com.au>
-# Available from ftp://ftp.gnu.org/gnu/help2man/
+# Available from 
 
 use 5.004;
 use strict;

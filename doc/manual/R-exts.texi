@@ -2971,7 +2971,7 @@ of @command{file} if available@footnote{A suitable @command{file.exe} is
 part of the Windows toolset: it checks for @command{gfile} if a suitable
 @command{file} is not found: the latter is available in the OpenCSW
 collection for Solaris at @uref{https://www.opencsw.org/}.  The source
-repository is @uref{ftp://ftp.astron.com/pub/file/}.}.  (There may be
+repository is @uref{http://ftp.astron.com/pub/file/}.}.  (There may be
 rare false positives.)
 
 @item
