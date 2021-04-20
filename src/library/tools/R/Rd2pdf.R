@@ -64,12 +64,35 @@
         out <- file(outfile, "a")
         on.exit(close(out))
     } else out <- outfile
-    cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     fields <- names(desc)
     fields <- fields %w/o% c("Package", "Packaged", "Built")
     if ("Encoding" %in% fields)
         cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
             "}\n", sep = "", file = out)
+    ## Also try adding PDF title and author metadata.
+    tit <- desc["Title"]
+    tit <- paste0(desc["Package"], ": ",
+                  texify(gsub("[[:space:]]+", " ", tit), two = TRUE))
+    cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+               "{\\hypersetup{pdftitle = {", tit, "}}}{}"),
+        file = out)
+    ## Only try author from Authors@R.
+    if(!is.na(aar <- desc["Authors@R"])) {
+        aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
+                        error = identity)
+        if(!inherits(aar, "error")) {
+            aar <- Filter(utils:::.person_has_author_role, aar)
+            aut <- paste(format(aar, include = c("given", "family")),
+                         collapse = "; ")
+            aut <- texify(gsub("[[:space:]]+", " ", aut), two = TRUE)
+            if(nzchar(aut))
+                cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+                           "{\\hypersetup{pdfauthor = {", aut, "}}}{}"),
+                    file = out)
+        }
+    }
+    ## And now the actual content.
+    cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)    
     for (f in fields) {
         ## Drop 'Authors@R' for now: this is formatted badly by \AsIs,
         ## and ideally was used for auto-generating the Author and
@@ -122,26 +145,6 @@
                    con = out, useBytes = TRUE)
     }
     cat("\\end{description}\n", file = out)
-    ## Also try adding PDF title and author metadata.
-    tit <- desc["Title"]
-    tit <- paste0(desc["Package"], ": ",
-                  texify(gsub("[[:space:]]+", " ", tit), two = TRUE))
-    cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
-               "{\\hypersetup{pdftitle = {", tit, "}}}{}"),
-        file = out)
-    ## Only try author from Authors@R.
-    if(!is.na(aar <- desc["Authors@R"])) {
-        aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
-                        error = identity)
-        if(!inherits(aar, "error")) {
-            aut <- paste(format(aar, include = c("given", "family")),
-                         collapse = "; ")
-            aut <- texify(gsub("[[:space:]]+", " ", aut), two = TRUE)
-            cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
-                       "{\\hypersetup{pdfauthor = {", aut, "}}}{}"),
-                file = out)
-        }
-    }
 }
 
 ## workhorse of .Rd2pdf
