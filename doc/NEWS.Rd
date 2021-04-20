@@ -6,6 +6,20 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Facilities for accessing \samp{ftp://} sites are no longer
+      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as
+      browsers are increasing removing support.
+      %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
+
+      It is planned to reduce \samp{ftp://} support in future versions
+      of \R to the provided by \samp{libcurl}.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.1.0}{
   \subsection{FUTURE DIRECTIONS}{
     \itemize{
       \item It is planned that the 4.1.x series will be the last to
@@ -27,6 +41,7 @@
       \item \samp{www.omegahat.net} is no longer one of the repositories
       known by default to \code{setRepositories()}.  (Nowadays it only
       provides source packages and is often unavailable.)
+      %% it had one Windows binary package for 4.0, none for 3.6.
 
       \item Function \code{package_dependencies()} (in package
       \pkg{tools}) can now use different dependency types for direct and
