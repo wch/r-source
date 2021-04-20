@@ -73,7 +73,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Mexico (Texcoco)",Mexico,Texcoco,http://www.est.colpos.mx/R-mirror/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx
 "Morocco [https]",Morocco,Rabat,https://mirror.marwan.ma/cran/,"MARWAN","noc # marwan.ma",1,ma,"secure_mirror_from_master"
 "Netherlands [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
-"New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
+"New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz,"secure_mirror_from_master"
 "Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
 "Philippines [https]",Philippines,"Quezon City",https://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Bert Mendoza <bert # asti.dost.gov.ph>, ops # pregi.net",1,ph,"secure_mirror_from_master"
 "Portugal (Lisbon) [https]",Portugal,Lisbon,https://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
