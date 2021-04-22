@@ -34,7 +34,8 @@ isNamespaceLoaded(name)
   \item{depends}{\code{NULL} or a character vector of dependencies to be
     recorded in object \code{.Depends} in the package.}
   \item{package}{string naming the package/name space to load.}
-  \item{lib.loc}{character vector specifying library search path.}
+  \item{lib.loc}{character vector specifying library search path (the location
+    of \R library trees to search through.}
   \item{keep.source}{Now ignored except during package installation.}
   \item{keep.parse.data}{Ignored except during package installation.}
   \item{partial}{logical; if true, stop just after loading code.}
