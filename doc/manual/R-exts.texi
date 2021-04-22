@@ -1496,10 +1496,10 @@ compression other than @command{gzip} in the installed lazy-loading
 database.  This can be selected by the @option{--data-compress} option
 to @command{R CMD INSTALL} or by using the @samp{LazyDataCompression}
 field in the @file{DESCRIPTION} file.  Useful values are @code{bzip2},
-@code{xz} and the default, @code{gzip}.  The only way to discover which
-is best is to try them all and look at the size of the
-@file{@var{pkgname}/data/Rdata.rdb} file.  A function to do that
-(quoting sizes in KB) is
+@code{xz} and the default, @code{gzip}: value @code{none} is also
+accepted.  The only way to discover which is best is to try them all and
+look at the size of the @file{@var{pkgname}/data/Rdata.rdb} file.  A
+function to do that (quoting sizes in KB) is
 @example
 CheckLazyDataCompression <- function(pkg)
 @{
