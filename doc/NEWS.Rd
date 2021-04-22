@@ -459,12 +459,12 @@
       \item \command{R CMD check} now runs sanity checks on the use of
       \samp{LazyData}, for example that a \file{data} directory is
       present and that \samp{LazyDataCompression} is not specified
-      without \samp{LazyData}.  For packages with large LazyData
-      databases without specifying \samp{LazyDataCompression}, there is
-      a reference to the code given in \sQuote{Writing R Extensions}
-      §1.1.6 to test the choice of compression (as in all the
-      \acronym{CRAN} packages tested a non-default method was
-      preferred).
+      without \samp{LazyData} and has a documented value.  For packages
+      with large LazyData databases without specifying
+      \samp{LazyDataCompression}, there is a reference to the code given
+      in \sQuote{Writing R Extensions} §1.1.6 to test the choice of
+      compression (as in all the \acronym{CRAN} packages tested a
+      non-default method was preferred).
 
       \item \command{R CMD build} removes \samp{LazyData} and
       \samp{LazyDataCompression} fields from the \file{DESCRIPTION} file
