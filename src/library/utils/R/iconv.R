@@ -1,7 +1,7 @@
 #  File src/library/utils/R/iconv.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 
 ## If you were wondering what these language codes stand for, see
-## ftp://ftp.ilog.fr/pub/Users/haible/utf8/ISO_639
+## https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
 {
     guess <- function(en)

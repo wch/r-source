@@ -5162,7 +5162,7 @@ A more recent Fortran compiler for Catalina and later is available at
 @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg}.
 (That does not run on High Sierra.)  This supports the option
 @option{-fc-prototypes-external} mentioned in the `Writing R Extensions'
-manual
+manual.
 
 The default security settings for Catalina and later can make it
 difficult to install recently-built Apple packages which have not been
@@ -5360,23 +5360,25 @@ Configure option @option{--with-internal-tzcode} is the default on macOS,
 as the system implementation of time zones does not work correctly for
 times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
-The @TeX{} implementation used by the developers is MacTeX@footnote{An
-essentially equivalent @TeX{} installation can be obtained by the Unix
-TeX Live installation scripts.}  (@uref{https://www.tug.org/mactex/}):
-the full installation is about 7.3GB, but a much smaller version (`Basic
-TeX') is available at
+The main @TeX{} implementation used by the developers is
+MacTeX@footnote{An essentially equivalent @TeX{} installation can be
+obtained by the Unix TeX Live installation scripts.}
+(@uref{https://www.tug.org/mactex/}): the full installation is about
+7GB, but a much smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
 need to add some packages to build @R{}, e.g.@: for the 2021 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super
 helvetic inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about
 370MB.@footnote{Adding all the packages needed to check @acronym{CRAN}
-increased this to about 550MB.}  @samp{TeX Live Utility} (available
+increased this to about 600MB.}  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
-@TeX{} packages.  MacTeX 2021 is documented to require Mojave or later:
-for earlier macOS versions see the instructions on the MacTeX front
-page.  It contains executables which run natively on both
-@cputype{x86_64} and @cputype{arm64}.
+@TeX{} packages.  MacTeX 2021 requires Mojave or later: for earlier
+macOS versions see the instructions@footnote{which amount to installing
+MacTeX 2020 (whose LaTeX packages are frozen) or TeXLive 2021 (which has
+been tried and has current updates).} on the MacTeX front page.  It
+contains executables which run natively on both @cputype{x86_64} and
+@cputype{arm64}.
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from

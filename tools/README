@@ -44,7 +44,7 @@ The files are as follows.
 
   help2man.pl
 	generate simple manual pages from program output.  Taken from
-	the GNU help2man package (ftp://ftp.gnu.org/gnu/help2man/).
+	the GNU help2man package (https://ftp.gnu.org/gnu/help2man/).
 	Used for a maintainer-mode build only: requires Perl.
 	
   ldAIX4

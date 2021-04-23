@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2020   The R Core Team.
+ *  Copyright (C) 2001-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -301,7 +301,9 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 	    /* not observed during tests, but promises in principle could come
 	       from DispatchOrEval/R_possible_dispatch */
 	    object = eval(object, Methods_Namespace);
+	PROTECT(object);
 	class = CHAR(STRING_ELT(R_data_class(object, TRUE), 0));
+	UNPROTECT(1); /* object */
 	value = R_element_named(methods, class);
 	if(isNull(value) || isFunction(value)){
 	    retValue = value;
@@ -365,8 +367,11 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
 	    object = eval(object, Methods_Namespace);
 	if(object == R_MissingArg)
 	    class = "missing";
-	else
+	else {
+	    PROTECT(object);
 	    class = CHAR(STRING_ELT(R_data_class(object, TRUE), 0));
+	    UNPROTECT(1); /* object */
+	}
 	if(ptr - buf + strlen(class) + 2 > NBUF) {
 	    UNPROTECT(1); /* mtable */
 	    return R_NilValue;

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscriptFonts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscriptFonts}
@@ -110,11 +110,11 @@ pdfFonts(\dots)
     CNS1 (PS) \tab \code{MOESung-Regular}\cr \tab Ken Lunde's CJKV resources\cr
     CNS1 (PDF) \tab \code{MSungStd-Light-Acro}\cr  \tab from Adobe Reader 7.0 Traditional Chinese Font Pack\cr
   }
-%  \code{Baekmuk-Batang} Can be found at \url{ftp://ftp.mizi.com/pub/baekmuk/}.
+%  \code{Baekmuk-Batang} was found at \url{ftp://ftp.mizi.com/pub/baekmuk/}.
   \code{BousungEG-Light-GB} can be found at
-  \url{ftp://ftp.gnu.org/pub/non-gnu/chinese-fonts-truetype/}.
-  Ken Lunde's CJKV resources are at
-  \url{ftp://ftp.oreilly.com/pub/examples/nutshell/cjkv/adobe/samples/}.
+  \url{https://ftp.gnu.org/pub/non-gnu/chinese-fonts-truetype/}.
+  %% Ken Lunde's CJKV resources are at
+  %% \url{ftp://ftp.oreilly.com/pub/examples/nutshell/cjkv/adobe/samples/}.
   These will need to be installed or otherwise made available to the
   postscript/PDF interpreter such as ghostscript (and not all
   interpreters can handle TrueType fonts).

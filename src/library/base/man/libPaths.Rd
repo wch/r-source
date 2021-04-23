@@ -38,10 +38,11 @@
 
   \code{.Library.site} is a (possibly empty) character vector giving the
   locations of the site libraries, by default the \file{site-library}
-  subdirectory of \env{R_HOME} (which may not exist).
+  subdirectory of \env{R_HOME} (if this exists).
 
   \code{.libPaths} is used for getting or setting the library trees that
-  \R knows about (and hence uses when looking for packages).  If called
+  \R knows about and hence uses when looking for packages (library search
+  path).  If called
   with argument \code{new}, by default, the library search path is set to
   the existing directories in \code{unique(c(new, .Library.site, .Library))}
   and this is returned.  If \code{include.site} is \code{FALSE} when the
@@ -49,7 +50,7 @@
   new library search path.  If called without the \code{new} argument, a
   character vector with the currently active library trees is returned.
 
-  How paths \code{new} with a trailing slash are treated is
+  How paths in \code{new} with a trailing slash are treated is
   OS-dependent.  On a POSIX filesystem existing directories can usually
   be specified with a trailing slash: on Windows filepaths with a
   trailing slash (or backslash) are invalid and so will never be added
@@ -59,8 +60,9 @@
   The library search path is initialized at startup from the environment
   variable \env{R_LIBS} (which should be a colon-separated list of
   directories at which \R library trees are rooted) followed by those in
-  environment variable \env{R_LIBS_USER}.  Only directories which exist
-  at the time will be included.
+  environment variable \env{R_LIBS_USER}, in \code{.Library.site} and in
+  \code{.Library}.  Only directories which exist at the time and are not
+  yet in the search path will be included.
 
   By default \env{R_LIBS} is unset, and \env{R_LIBS_USER} is set to
   directory \file{R/\var{R.version$platform}-library/\var{x.y}}
@@ -74,8 +76,9 @@
   The library search path is initialized at startup from the environment
   variable \env{R_LIBS} (which should be a semicolon-separated list of
   directories at which \R library trees are rooted) followed by those in
-  environment variable \env{R_LIBS_USER}.  Only directories which exist
-  at the time will be included.
+  environment variable \env{R_LIBS_USER}, in \code{.Library.site} and in
+  \code{.Library}.  Only directories which exist at the time and are not
+  yet in the search path will be included.
 
   By default \env{R_LIBS} is unset, and \env{R_LIBS_USER} is set to
   subdirectory \file{R/win-library/\var{x.y}} of the home directory,

@@ -2564,6 +2564,11 @@ add_dummies <- function(dir, Log)
                     noteLog(Log)
                     printLog0(Log,
                               "  'LazyDataCompression' is specified without 'LazyData'\n")
+                } else if (thislazy && lazyz0 &&
+                           !(lazyz %in% c("gzip", "bzip2", "xz", "none"))) {
+                    warningLog(Log)
+                    printLog0(Log,
+                              sprintf("  undocumented value %s of field 'LazyDataCompression'\n", sQuote(lazyz)))
                 ## Allow "gzip" to indicate that the issue has been considered.
                 ## } else if (lazyz %in% c("gzip", "yes")) {
                 ##     noteLog(Log)

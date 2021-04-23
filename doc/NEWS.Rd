@@ -6,6 +6,20 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Facilities for accessing \samp{ftp://} sites are no longer
+      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as
+      browsers are increasing removing support.
+      %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
+
+      It is planned to reduce \samp{ftp://} support in future versions
+      of \R to the provided by \samp{libcurl}.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.1.0}{
   \subsection{FUTURE DIRECTIONS}{
     \itemize{
       \item It is planned that the 4.1.x series will be the last to
@@ -27,6 +41,7 @@
       \item \samp{www.omegahat.net} is no longer one of the repositories
       known by default to \code{setRepositories()}.  (Nowadays it only
       provides source packages and is often unavailable.)
+      %% it had one Windows binary package for 4.0, none for 3.6.
 
       \item Function \code{package_dependencies()} (in package
       \pkg{tools}) can now use different dependency types for direct and
@@ -238,6 +253,20 @@
       from the 'viridisLite' package).
 
       Contributed by Achim Zeileis.
+
+      \item The base environment and its namespace are now locked (so
+      one can no longer add bindings to these or remove from these).
+
+      \item \command{Rterm} handling of multi-byte characters has been
+      improved, allowing use of such characters when supported by the
+      current locale.
+
+      \item \command{Rterm} now accepts \code{ALT+ +xxxxxxxx} sequences to
+      enter Unicode characters as hex digits.
+
+      \item Environment variable \env{LC_ALL} on Windows now takes
+      precedence over \env{LC_CTYPE} and variables for other supported
+      categories, matching the POSIX behaviour.
     }
   }
 
@@ -445,12 +474,12 @@
       \item \command{R CMD check} now runs sanity checks on the use of
       \samp{LazyData}, for example that a \file{data} directory is
       present and that \samp{LazyDataCompression} is not specified
-      without \samp{LazyData}.  For packages with large LazyData
-      databases without specifying \samp{LazyDataCompression}, there is
-      a reference to the code given in \sQuote{Writing R Extensions}
-      §1.1.6 to test the choice of compression (as in all the
-      \acronym{CRAN} packages tested a non-default method was
-      preferred).
+      without \samp{LazyData} and has a documented value.  For packages
+      with large LazyData databases without specifying
+      \samp{LazyDataCompression}, there is a reference to the code given
+      in \sQuote{Writing R Extensions} §1.1.6 to test the choice of
+      compression (as in all the \acronym{CRAN} packages tested a
+      non-default method was preferred).
 
       \item \command{R CMD build} removes \samp{LazyData} and
       \samp{LazyDataCompression} fields from the \file{DESCRIPTION} file

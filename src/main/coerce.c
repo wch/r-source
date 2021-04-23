@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2020  The R Core Team
+ *  Copyright (C) 1997-2021  The R Core Team
  *  Copyright (C) 2003-2019  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
@@ -1180,6 +1180,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
     SEXP ans = R_NilValue;	/* -Wall */
     if (ALTREP(v)) {
 	PROTECT(v); /* the methods should protect, but ... */
+	            /* also "v" is protected by caller */
 	ans = ALTREP_COERCE(v, type);
 	if (ans) {
 	    /* attribute copying could be handled by a Coerce_Ex
@@ -1201,6 +1202,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	  return vv;
 	v = vv;
     }
+    PROTECT(v);
 
     switch (TYPEOF(v)) {
 #ifdef NOTYET
@@ -1213,7 +1215,10 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	break;
     case NILSXP:
     case LISTSXP:
-	if(type == LISTSXP) return v; // as coercePairList() is also used for LANGSXP
+	if(type == LISTSXP) {
+	    UNPROTECT(1); /* v */
+	    return v; // as coercePairList() is also used for LANGSXP
+	}
 	ans = coercePairList(v, type);
 	break;
     case LANGSXP: {
@@ -1229,7 +1234,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	PROTECT(ans = allocVector(type, n));
 	if (n == 0) {
 	    /* Can this actually happen? */
-	    UNPROTECT(1);
+	    UNPROTECT(1); /* ans */
 	    break;
 	}
 	int i = 0;
@@ -1253,7 +1258,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	    else
 		SET_STRING_ELT(ans, i, STRING_ELT(deparse1line(CAR(vp), 0), 0));
 	}
-	UNPROTECT(1);
+	UNPROTECT(1); /* ans */
 	break;
     }
     case VECSXP:
@@ -1293,7 +1298,9 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 		switch(TYPEOF(v)) {
 		case INTSXP:
 		case REALSXP:
-		    return R_deferred_coerceToString(v, NULL);
+		    ans = R_deferred_coerceToString(v, NULL);
+		    UNPROTECT(1); /* v */
+		    return ans;
 		}
 	    ans = coerceToString(v);	    break;
 	case EXPRSXP:
@@ -1309,6 +1316,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
     default:
 	COERCE_ERROR;
     }
+    UNPROTECT(1); /* v */
     return ans;
 }
 #undef COERCE_ERROR

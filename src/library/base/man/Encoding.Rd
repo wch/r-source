@@ -102,7 +102,7 @@ enc2utf8(x)
 \examples{
 ## x is intended to be in latin1
 x. <- x <- "fa\xE7ile"
-Encoding(x.) # "unknown" (Linux) | "latin1" (Win 32 server) | ....
+Encoding(x.) # "unknown" (UTF-8 loc.) | "latin1" (8859-1/CP-1252 loc.) | ....
 Encoding(x) <- "latin1"
 x
 xx <- iconv(x, "latin1", "UTF-8")

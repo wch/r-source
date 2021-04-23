@@ -1496,10 +1496,10 @@ compression other than @command{gzip} in the installed lazy-loading
 database.  This can be selected by the @option{--data-compress} option
 to @command{R CMD INSTALL} or by using the @samp{LazyDataCompression}
 field in the @file{DESCRIPTION} file.  Useful values are @code{bzip2},
-@code{xz} and the default, @code{gzip}.  The only way to discover which
-is best is to try them all and look at the size of the
-@file{@var{pkgname}/data/Rdata.rdb} file.  A function to do that
-(quoting sizes in KB) is
+@code{xz} and the default, @code{gzip}: value @code{none} is also
+accepted.  The only way to discover which is best is to try them all and
+look at the size of the @file{@var{pkgname}/data/Rdata.rdb} file.  A
+function to do that (quoting sizes in KB) is
 @example
 CheckLazyDataCompression <- function(pkg)
 @{
@@ -1521,7 +1521,7 @@ CheckLazyDataCompression <- function(pkg)
 (applied to a source package without any @samp{LazyDataCompression}
 field).  @command{R CMD check} will warn if it finds a
 @file{@var{pkgname}/data/Rdata.rdb} file of more than 5MB without
-@samp{LazyDataCompression} being set.  If you sett that, run
+@samp{LazyDataCompression} being set.  If you see that, run
 @code{CheckLazyDataCompression()} and set the field -- to @code{gzip} in
 the unlikely event@footnote{For all the @acronym{CRAN} packages tested,
 either @code{gz} or @code{bzip2} provided a very substantial reduction
@@ -2971,7 +2971,7 @@ of @command{file} if available@footnote{A suitable @command{file.exe} is
 part of the Windows toolset: it checks for @command{gfile} if a suitable
 @command{file} is not found: the latter is available in the OpenCSW
 collection for Solaris at @uref{https://www.opencsw.org/}.  The source
-repository is @uref{ftp://ftp.astron.com/pub/file/}.}.  (There may be
+repository is @uref{http://ftp.astron.com/pub/file/}.}.  (There may be
 rare false positives.)
 
 @item

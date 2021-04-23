@@ -4917,6 +4917,12 @@ stopifnot(exprs = { ## these all are FALSE in R <= 4.0.*
 })
 ## objects became wrong without warning in R <= 4.0.x
 
+## Bytes Enc may be unset directly to unknown (impossible R <= 4.0.x)
+x <- "fa\xE7ile"
+Encoding(x) <- "bytes"
+xu <- x
+Encoding(xu) <- "unknown"
+stopifnot(identical(Encoding(c(x, xu)), c("bytes", "unknown")))
 
 
 ## keep at end

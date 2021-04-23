@@ -203,8 +203,6 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         }
         ## cleanup URL
         url <- lines2str(url)
-        ## escape % for LaTeX
-        url <- fsub("%", "\\%",  url)
     	of0(tag, "{", url, "}")
         if (tag == "\\Rhref") {
             of1("{")
