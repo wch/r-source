@@ -6780,17 +6780,62 @@ static void PDFwriteMask(int i, PDFDesc *pd)
     }
 }
 
+/*
+ * Search through the alphas used so far and return
+ * existing index if there is one.
+ * Otherwise, add alpha to the list and return new index
+ */
+static int alphaIndex(int alpha, short *alphas) {
+    int i, found = 0;
+    for (i = 0; i < 256 && !found; i++) {
+	if (alphas[i] < 0) {
+	    alphas[i] = (short) alpha;
+	    found = 1;
+	}
+	else if (alpha == alphas[i])
+	    found = 1;
+    }
+    if (!found)
+	error(_("invalid 'alpha' value in PDF"));
+    return i;
+}
+
+/*
+ * colAlpha graphics state parameter dictionaries are named
+ * /GS1 to /GS256
+ * fillAlpha graphics state parameter dictionaries are named
+ * /GS257 to /GS512
+ */
+static int colAlphaIndex(int alpha, PDFDesc *pd) {
+    return alphaIndex(alpha, pd->colAlpha);
+}
+
+static int fillAlphaIndex(int alpha, PDFDesc *pd) {
+    return alphaIndex(alpha, pd->fillAlpha) + 256;
+}
+
 static void PDFwriteGroup(int i, PDFDesc *pd)
 {
-    char* buf1;
-    char buf2[20];
+    char buf[20];
     size_t len = strlen(pd->definitions[i].str);
-    buf1 = malloc((len + 1)*sizeof(char));
 
+    /* Ensure stroke and fill alpha are 1 when group is used
+     * (because group definition will have recorded any pre-existing alpha
+     *  at definition time, and the current stroke and fill alpha
+     *  may have been set to non-opaque due to previous drawing,
+     *  and we do not want to double-up the alpha level).
+     *
+     * https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/pdf_reference_archives/PDFReference.pdf
+     * 
+     * "Before execution of the transparency group XObject's content
+     *  stream, the current blend mode in the graphics state is
+     *  initialized to Normal, the current stroking and nonstroking alpha
+     *  constants to 1.0, and the current soft mask to None."
+     */
+    PDFwrite(buf, 20, "/GS%i gs\n", pd, colAlphaIndex(255, pd));
+    PDFwrite(buf, 20, "/GS%i gs\n", pd, fillAlphaIndex(255, pd));    
     /* Draw the transparency group */
-    PDFwrite(buf2, 20, "/Def%d Do\n", pd, i);
-
-    free(buf1);
+    PDFwrite(buf, 20, "/Def%d Do\n", pd, i);
 }
 
 static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
@@ -7566,40 +7611,6 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     return TRUE;
 }
 
-
-/*
- * Search through the alphas used so far and return
- * existing index if there is one.
- * Otherwise, add alpha to the list and return new index
- */
-static int alphaIndex(int alpha, short *alphas) {
-    int i, found = 0;
-    for (i = 0; i < 256 && !found; i++) {
-	if (alphas[i] < 0) {
-	    alphas[i] = (short) alpha;
-	    found = 1;
-	}
-	else if (alpha == alphas[i])
-	    found = 1;
-    }
-    if (!found)
-	error(_("invalid 'alpha' value in PDF"));
-    return i;
-}
-
-/*
- * colAlpha graphics state parameter dictionaries are named
- * /GS1 to /GS256
- * fillAlpha graphics state parameter dictionaries are named
- * /GS257 to /GS512
- */
-static int colAlphaIndex(int alpha, PDFDesc *pd) {
-    return alphaIndex(alpha, pd->colAlpha);
-}
-
-static int fillAlphaIndex(int alpha, PDFDesc *pd) {
-    return alphaIndex(alpha, pd->fillAlpha) + 256;
-}
 
 /*
  * Does the version support alpha transparency?
