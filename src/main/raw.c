@@ -137,23 +137,14 @@ SEXP attribute_hidden do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
-/* copied from arithmetic.c - how reliable are compile-time endianess tests? */
-#ifdef _AIX
-#define CONST
-#elif defined(sparc) && defined (__GNUC__) && __GNUC__ == 3
-#define CONST
-#else
-#define CONST const
-#endif
 
 #ifdef WORDS_BIGENDIAN
-static CONST int hw = 0;
-static CONST int lw = 1;
+#define WORDORDER_HIGH 0
+#define WORDORDER_LOW  1
 #else  /* !WORDS_BIGENDIAN */
-static CONST int hw = 1;
-static CONST int lw = 0;
+#define WORDORDER_HIGH 1
+#define WORDORDER_LOW  0
 #endif /* WORDS_BIGENDIAN */
-static CONST int wo[2] = {lw, hw};
 
 // split "real" (double = 64-bit) into two 32-bit parts (which the user can split to bits):
 SEXP attribute_hidden do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -172,8 +163,8 @@ SEXP attribute_hidden do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int i[2];
 	} tmp;
 	tmp.d = x_[i];
-	INTEGER(ans)[j++] = tmp.i[lw];
-	INTEGER(ans)[j++] = tmp.i[hw];
+	INTEGER(ans)[j++] = tmp.i[WORDORDER_LOW];
+	INTEGER(ans)[j++] = tmp.i[WORDORDER_HIGH];
     }
     UNPROTECT(2);
     return ans;
@@ -275,7 +266,7 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    w = w | (bit << b);
 		}
-		u.ui[wo[k]] = w; /* wo for endianess */
+		u.ui[k ? WORDORDER_HIGH : WORDORDER_LOW] = w;
 	    }
 	    REAL(ans)[i] = u.d;
 	}
