@@ -149,11 +149,12 @@ SEXP attribute_hidden do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WORDS_BIGENDIAN
 static CONST int hw = 0;
 static CONST int lw = 1;
+static CONST int wo[2] = {1, 0};
 #else  /* !WORDS_BIGENDIAN */
 static CONST int hw = 1;
 static CONST int lw = 0;
+static CONST int wo[2] = {0, 1};
 #endif /* WORDS_BIGENDIAN */
-static CONST int wo[2] = {lw, hw};
 
 // split "real" (double = 64-bit) into two 32-bit parts (which the user can split to bits):
 SEXP attribute_hidden do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
