@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020  The R Core Team.
+ *  Copyright (C) 1998--2021  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -4137,19 +4137,25 @@ attribute_hidden void R_expand_binding_value(SEXP b)
 	vv.sxpval = CAR0(b);
 	switch (typetag) {
 	case REALSXP:
+	    PROTECT(b);
 	    val = ScalarReal(vv.dval);
 	    SET_BNDCELL(b, val);
 	    INCREMENT_NAMED(val);
+	    UNPROTECT(1);
 	    break;
 	case INTSXP:
+	    PROTECT(b);
 	    val = ScalarInteger(vv.ival);
 	    SET_BNDCELL(b, val);
 	    INCREMENT_NAMED(val);
+	    UNPROTECT(1);
 	    break;
 	case LGLSXP:
+	    PROTECT(b);
 	    val = ScalarLogical(vv.ival);
 	    SET_BNDCELL(b, val);
 	    INCREMENT_NAMED(val);
+	    UNPROTECT(1);
 	    break;
 	}
     }
