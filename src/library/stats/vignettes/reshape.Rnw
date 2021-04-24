@@ -1,0 +1,368 @@
+% File src/library/stats/vignettes/reshape.Rnw
+% Part of the R package, https://www.R-project.org
+% Copyright 2021 The R Core Team
+% Distributed under GPL 2 or later
+
+\documentclass[a4paper]{article}
+
+\usepackage{Rd}
+
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
+
+\title{Using the reshape function}
+\author{The R Core Team}
+% \VignetteIndexEntry{Using the reshape function}
+% \VignettePackage{stats}
+
+\begin{document}
+\maketitle
+
+<<echo=FALSE, results=hide>>=
+library(stats)
+options(width = 80, continue = "  ",
+        try.outFile = stdout())
+@
+
+
+\section{Introduction}
+
+The \code{reshape()} function reshapes datasets in the so-called
+\sQuote{wide} format (with repeated measurements in separate columns
+of the same row) to the \sQuote{long} format (with the repeated
+measurements in separate rows), and vice versa.
+
+\code{reshape()} is a somewhat complicated function, and this vignette
+gives a few examples of how it can be used.  Although \code{reshape()}
+can be used in a variety of contexts, the motivating application is
+data from longitudinal studies, and the arguments of this function are
+named and described in those terms. See the documentation
+(\code{help(reshape)}) for background and detailed usage.
+
+For our examples, we will simulate data from a study where individuals
+are measured at two time points. Two of the measurements are
+time-varying: height and weight, and one of the measurements is
+time-constant: sex.
+
+
+\section{Conversion from wide to long format}
+
+We first simulate data in the wide format. Data from each individual
+is contained in one row, with one column for time-constant variables
+and multiple columns for time-varying variables. Here there are two
+time points (before and after), so there are two columns for each
+time-varying variable.
+
+<<>>=
+set.seed(12345)
+n <- 5
+d1 <- data.frame(sex = sample(c("M", "F"), n, rep = TRUE),
+                 ht.before = round(rnorm(n, 165, 6), 1),
+                 ht.after = round(rnorm(n, 165, 6), 1),
+                 wt.before = round(rnorm(n, 80, 6)),
+                 wt.after = round(rnorm(n, 80, 6)))
+d1
+@
+
+Suppose we want to convert this dataset into the long format, with two
+rows for each individual, and one column for each variable (both
+time-constant and time-varying). Such a representation will need two
+additional variables to distinguish between multiple rows
+corresponding to the same individual (corresponding to one row in the
+wide format): a time-variable and an id-variable. These will be
+automatically created when converting from wide to long format.
+
+However, we do need to specify which columns in the wide format
+correspond to the same time-varying variable(s). This is easiest to do
+when we have only one time-varying variable. Although we have two such
+in our example, let us pretend that only height is time-varying. The
+corresponding columns can be specified as the \code{varying} argument.
+The two weight variables will then be assumed to be different
+time-constant variables, similar to sex.
+
+%% specify only ht variables as time-variables (wt variables assumed
+%% to be separate time constant variables)
+
+<<>>=
+reshape(d1, direction = "long",
+        varying = c("ht.before", "ht.after"))
+@
+
+It is equivalent to specify the variables as column indices.
+
+<<>>=
+reshape(d1, direction = "long",
+        varying = c(2, 3))
+@
+
+Note that the names of the combined variable, as well as the values of
+the time variable, are automatically detected because the names happen
+to be \dQuote{nicely} formatted.  Suppose we instead had
+
+<<>>=
+n <- 5
+d2 <- data.frame(sex = sample(c("M", "F"), n, rep = TRUE),
+                 ht_before = round(rnorm(n, 165, 6), 1),
+                 ht_after = round(rnorm(n, 165, 6), 1),
+                 wt_before = round(rnorm(n, 80, 6)),
+                 wt_after = round(rnorm(n, 80, 6)))
+@
+
+Modifying the previous call gives:
+
+%% Error: Fails to guess
+
+<<>>=
+try(
+reshape(d2, direction = "long",
+        varying = c("wt_before", "wt_after")),
+)
+@
+
+This is easy to \dQuote{fix} in this case because the names are still
+nicely formatted, just not using the separator that \code{reshape()}
+expects by default. 
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = c("wt_before", "wt_after"), sep = "_")
+@
+
+A more general solution is to specify the name of the new combined
+column explicitly as the \code{v.names} argument.
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = c("wt_before", "wt_after"),
+        v.names = "weight") 
+@
+
+We can additionally specify the names and values of the id / time
+variables as well.
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = c("wt_before", "wt_after"),
+        v.names = "weight", 
+        timevar = "when", times = c("pre", "post"),
+        idvar = "subject", ids = letters[1:n])
+@
+
+Note that the \code{times} argument is ignored when automatic guessing
+is performed, i.e., when \code{v.names} is not explicitly specified.
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = c("wt_before", "wt_after"), sep = "_",
+        ## v.names = "wt", # without this, 'times' is unused 
+        timevar = "when", times = c("pre", "post"))
+@
+
+So far, we have only specified one time-varying variable, but our data
+actually has two. How do we specify multiple time-varying variables?
+This depends on whether the variable names are in a guessable format.
+
+
+\subsection{Explicitly specifying variables names}
+
+The general approach is to explicitly specify both \code{varying} and
+\code{v.names} as before. \code{v.names} should be a vector of new
+variable names in the long format, and \code{varying} should either be
+a list, with each component giving the corresponding wide format
+variable names, or a matrix, with each row giving the corresponding
+wide format variable names.
+
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = list(c("ht_before", "ht_after"),
+                       c("wt_before", "wt_after")), # list form
+        v.names = c("height", "weight"),
+        times = c("pre", "post"))
+
+reshape(d2, direction = "long",
+        varying = rbind(c("ht_before", "ht_after"),
+                        c("wt_before", "wt_after")), # matrix form
+        v.names = c("height", "weight"))
+@
+
+The \code{times} argument has been omitted in the second example
+above, and the default is to use sequential times. The \code{v.names}
+argument can be omitted as well, but the default is not generally
+sensible.
+
+Of course, the time and id variables can also be controlled in the
+usual way as long as \code{v.names} is specified.
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = rbind(c("ht_before", "ht_after"),
+                        c("wt_before", "wt_after")),
+        v.names = c("height", "weight"),
+        timevar = "when",
+        times = c("pre", "post"),
+        idvar = "subject",
+        ids = letters[1:n])
+@
+
+
+
+\subsection{Variables names in a guessable format}
+
+
+Even when variable names are in a guessable format, \code{reshape()}
+will not try to guess if multiple time-varying variables are provided
+as a list or matrix.  However, when the wide format variable names are
+suitably formatted in the same manner for all time-varying variables,
+it is still possible to take advantage of automatic guessing by
+specifying the \code{varying} argument as an atomic vector (of either
+names or indices) containing all time-varying columns.
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = c("ht_before", "ht_after",
+                    "wt_before", "wt_after"), sep = "_")
+@
+
+
+The atomic vector form of \code{varying} can be combined with explicit
+(non-guessed) specification of \code{v.names} as well, but in that
+case, one needs to pay careful attention to the order of variable
+names in \code{varying}. The following gives wrong results:
+
+<<>>=
+reshape(d2, direction = "long",
+        varying = c("ht_before", "ht_after",
+                    "wt_before", "wt_after"),
+        v.names = c("height", "weight"))
+@
+
+The correct order requires all columns corresponding to the same time
+to be contiguous; this is the same intrinsic column-major ordering in
+the matrix form above. It is best to avoid the atomic vector form of
+\code{varying} unless \code{v.names} is being omitted.
+
+<<echo=FALSE,eval=FALSE>>=
+reshape(d2, direction = "long",
+        varying = c("ht_before", "wt_before",
+                    "ht_after", "wt_after"),
+        v.names = c("height", "weight"))
+@
+
+
+\subsection{Repeated application of reshape}
+
+
+Just as an illustration, let us try to create an even longer dataset
+that combines height and weight together in a single column.
+
+<<>>=
+dlong <- 
+    reshape(d2, direction = "long",
+            varying = c("ht_before", "wt_before",
+                        "ht_after", "wt_after"),
+            v.names = c("height", "weight"),
+            timevar = "when", times = c("pre", "post"),
+            idvar = "subject", ids = letters[1:n])
+reshape(dlong, direction = "long",
+        varying = c("height", "weight"),
+        v.names = "combined",
+        timevar = "what", times = c("height", "weight"))
+@
+
+Can we get this directly from \code{d2} using a single
+\code{reshape()} call?  We can, except that we will get a composite
+time variable (which can be easily split if needed).
+
+<<>>=
+reshape(d2, direction = "long",
+        v.names = "combined",
+        varying = c("ht_before", "ht_after", "wt_before", "wt_after"),
+        timevar = "when_what",
+        times = c("pre_height", "post_height", "pre_weight", "post_weight"),
+        idvar = "subject", ids = letters[1:n])
+@
+
+
+\section{Conversion from wide to long format}
+
+Conversion from long to wide format is generally simpler. Let us
+simulate long format data from the same hypothetical setup.
+
+<<>>=
+d3 <- data.frame(sex = sample(c("M", "F"), 2 * n, rep = TRUE),
+                 ht = round(rnorm(2 * n, 165, 6), 1),
+                 wt = round(rnorm(2 * n, 80, 6)),
+                 subject = rep(1:n, 2),
+                 when = rep(c("pre", "post"), each = n))
+d3
+@
+
+To convert this to the wide format, the arguments \code{idvar} and
+\code{timevar} to \code{reshape()} are mandatory, and all other
+variables are assumed to be time-varying.  This is what we do in the
+next example, where even \code{sex} is erroneously treated as
+time-varying.
+
+<<>>=
+reshape(d3, direction = "wide",
+        idvar = "subject", timevar = "when")
+@
+
+To specify some variables as time-constant, the time-varying variables
+must be explicitly specified through \code{v.names}.
+
+<<eval=FALSE>>=
+reshape(d3, direction = "wide",
+        idvar = "subject", timevar = "when",
+        v.names = c("ht", "wt"))
+@
+
+This gives a warning because \code{sex} is not really time-constant
+in the dataset we have created. Let us fix that:
+
+<<>>=
+n <- 10
+d4 <- data.frame(sex = rep(sample(c("M", "F"), n, rep = TRUE), 2),
+                 ht = round(rnorm(2 * n, 165, 6), 1),
+                 wt = round(rnorm(2 * n, 80, 6)),
+                 subject = rep(1:n, 2),
+                 when = rep(c("pre", "post"), each = n))
+reshape(d4, direction = "wide",
+        idvar = "subject", timevar = "when",
+        v.names = c("ht", "wt"), sep = "_")
+@
+
+To specify the resulting wide format variable names explicitly instead
+of using the automatically constructed defaults, we may use the
+\code{varying} argument as in wide-to-long conversion. As in that
+case, \code{varying} can be a vector of variable names, where the same
+caveats apply regarding order.
+
+<<>>=
+reshape(d4, direction = "wide",
+        idvar = "subject", timevar = "when",
+        v.names = c("ht", "wt"),
+        varying = c("h_before", "w_before", "h_after", "w_after"))
+@
+
+%% Pre 4.1.0: Error in varying[, i] : incorrect number of dimensions
+
+For more than one time-varying variable, it is safer to avoid the
+vector form and instead specify \code{varying} as a list or matrix.
+
+<<>>=
+reshape(d4, direction = "wide",
+        idvar = "subject", timevar = "when",
+        v.names = c("ht", "wt"),
+        varying = list(c("h_before", "h_after"),
+                       c("w_before", "w_after")))
+@
+
+
+\end{document}
+
+
+
