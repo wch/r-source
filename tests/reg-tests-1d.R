@@ -4816,7 +4816,7 @@ stopifnot(exprs = {
 ## NA-pattern did not keep any attributes in R <= 4.0
 
 
-## svn c80082's change to grep() broke several of these -- the PR#18063 saga
+## svn c80082/80141's change to grep.R broke several of these -- the PR#18063 saga
 check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
     stopifnot(is.character(txt))
     chkString <- function(ch) {
@@ -4826,6 +4826,12 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
     chkString(fx.ptn)
     chkString( s.ptn)
     chkString(gr.ptn)
+    ## ref: result using "character";
+    ## x  : from as.character(.) w/ "lost" attributes
+    identC <- function(x, ref) {
+        attributes(ref) <- attributes(ref)[names(attributes(x))]
+        identical(x, ref)
+    }
 
     a2_fns <- expression(grepl,  regexpr, gregexpr,  regexec) # plus possibly:
     if(getRversion() >= "4.1") a2_fns <- c(a2_fns, expression(gregexec))
@@ -4840,6 +4846,10 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
         }
         txt_fkt <- factor(txt, exclude = exclude)
         cat("txt_i = ", txt_i,"; str(<factor>):\n", sep="") ; str(txt_fkt)
+        if(chkpre <- !is.null(names(txt_fkt)) && length(levels(txt_fkt)) < length(txt_fkt)) {
+            txt_fkt_pre <- txt_fkt[seq(levels(txt_fkt))]
+            cat("str(txt_fkt_pre):\n") ; str(txt_fkt_pre)
+        }
 
         for (ptn in c(fx.ptn, s.ptn, gr.ptn, NA_character_)) {
             fixed <- (!is.na(ptn) && ptn == fx.ptn)
@@ -4874,11 +4884,18 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
                 f_3 <- eval(e_3)
                 f_3s <- as.character(e_3)
                 cat(f_3s,"")
-                if(!identical(
+                if(!identC(##identical(
+                    res <-
                     f_3(ptn, "@@", txt_fkt, fixed = fixed, perl = perl),
                     f_3(ptn, "@@", txt,     fixed = fixed, perl = perl)
                 )) msg(sprintf(
                     "not identical: %s(%s, \"@@\", txt*, fixed=%s, perl=%s)",
+                    f_3s, ptn_ch, fixed, perl))
+                if(chkpre &&
+                   is.null(names(f_3(ptn, "@@", txt_fkt_pre, fixed = fixed, perl = perl))) !=
+                   is.null(names(res))
+                ) msg(sprintf(
+                    "not identical pre: names(%s(%s, \"@@\", txt_fkt*, fixed=%s, perl=%s))",
                     f_3s, ptn_ch, fixed, perl))
             }
             cat("\n")
@@ -4901,6 +4918,13 @@ if(FALSE)
  system.time(check_regexetc(txt, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)", msg=warning))
 check_regexetc(txt, fx.ptn = "e", s.ptn = "e.", gr.ptn = "(?<a>e)(?<b>.)")
 ##============
+
+
+x <- c("e", "\xe7")
+Encoding(x) <- "UTF-8"
+x <- factor(c(1, 1, 2), c(1, 2), x)
+tools::assertWarning(grep("e", x, fixed = TRUE))
+## broken by svn c80136
 
 
 ## "difftime" objects pmin() .. & modifications when "units" differ -- PR#18066
