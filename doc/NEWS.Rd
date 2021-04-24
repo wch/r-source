@@ -14,7 +14,7 @@
       %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
 
       It is planned to reduce \samp{ftp://} support in future versions
-      of \R to the provided by \samp{libcurl}.
+      of \R to that provided by \samp{libcurl}.
     }
   }
 }
