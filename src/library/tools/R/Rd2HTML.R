@@ -177,7 +177,7 @@ createRedirects <- function(file, Rdobj)
         afile <- aliasFile(i)
         if (file.exists(afile))
             warning("Previous alias or file overwritten by alias: ", aname)
-        try(cat(redirHTML, file = afile), silent = TRUE) # Fails for \alias{%/%}
+        try(suppressWarnings(cat(redirHTML, file = afile)), silent = TRUE) # Fails for \alias{%/%}
         ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
         if (!file.exists(afile)) redirMsg("topic", aname, basename(file), "FAIL")
     }
@@ -186,7 +186,8 @@ createRedirects <- function(file, Rdobj)
     file.fallback <- file.path(helpdir, basename(file))
     if (!file.exists(file.fallback)) {
         try(cat(redirHTML, file = file.fallback), silent = TRUE)
-        redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAIL")
+        ## redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAIL")
+        if (!file.exists(file.fallback)) redirMsg("file", basename(file), basename(file),  "FAIL")
     }
 }
 
