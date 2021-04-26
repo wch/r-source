@@ -111,7 +111,7 @@ capabilities(what = NULL,
     Although not guaranteed, it is a reasonable assumption that if
     present long doubles will have at least as much range and accuracy
     as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.  Since
-    \R{}\sspace{} 4.0.0 \code{\link{.Machine}} gives information on the
+    \R{}\sspace{}4.0.0 \code{\link{.Machine}} gives information on the
     long-double type (if present).
   }
 
