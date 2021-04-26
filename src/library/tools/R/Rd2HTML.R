@@ -172,11 +172,17 @@ createRedirects <- function(file, Rdobj)
         msg <- sprintf("\nREDIRECT:%s\t %s -> %s [ %s ]", type, src, dest, status)
         message(msg, appendLF = FALSE)
     }
+    ## remove duplicate aliases, if any
+    aliasesToProcess <- sapply(toProcess, aliasName)
+    toProcess <- toProcess[!duplicated(aliasesToProcess)]
     for (i in toProcess) {
         aname <- aliasName(i)
         afile <- aliasFile(i)
-        if (file.exists(afile))
-            warning("Previous alias or file overwritten by alias: ", aname)
+        if (file.exists(afile)) {
+            ## warning("Previous alias or file overwritten by alias: ", aname)
+            msg <- sprintf("\nREDIRECT:topic\t Previous alias or file overwritten by alias: %s",
+                           afile)
+        }
         try(suppressWarnings(cat(redirHTML, file = afile)), silent = TRUE) # Fails for \alias{%/%}
         ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
         if (!file.exists(afile)) redirMsg("topic", aname, basename(file), "FAIL")
