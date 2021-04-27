@@ -5382,9 +5382,10 @@ contains executables which run natively on both @cputype{x86_64} and
 
 Checking packages thoroughly requires @command{ghostscript} (part of the
 full MacTeX distribution or separately from
-@uref{https://www.tug.org/mactex/morepackages.html}) and @command{qpdf}
-(from @uref{https://mac.R-project.org/libs-4/}, a version of which is in
-the @file{bin} directory of a binary installation of @R{}, usually
+@uref{https://www.tug.org/mactex/morepackages.html}, including for High
+Sierra) and @command{qpdf} (from
+@uref{https://mac.R-project.org/libs-4/}, a version of which is in the
+@file{bin} directory of a binary installation of @R{}, usually
 @file{/Library/@/Frameworks/@/R.framework/@/Resources/@/bin/@/qpdf}).
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
