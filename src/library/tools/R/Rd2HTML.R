@@ -182,6 +182,7 @@ createRedirects <- function(file, Rdobj)
             ## warning("Previous alias or file overwritten by alias: ", aname)
             msg <- sprintf("\nREDIRECT:topic\t Previous alias or file overwritten by alias: %s",
                            afile)
+            message(msg, appendLF = FALSE)
         }
         try(suppressWarnings(cat(redirHTML, file = afile)), silent = TRUE) # Fails for \alias{%/%}
         ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
