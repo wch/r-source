@@ -105,7 +105,7 @@ vignettes-lattice:
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "'pdflatex' is needed to make vignettes but is missing on your system."; \
 	else \
-	  for pkg in grid parallel utils; do \
+	  for pkg in grid parallel utils stats; do \
 	    $(ECHO) "building/updating vignettes for package '$${pkg}' ..."; \
 	    ($(ECHO) "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
 	        R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \
@@ -120,7 +120,7 @@ vignettes-no-lattice:
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "'pdflatex' is needed to make vignettes but is missing on your system."; \
 	else \
-	  for pkg in grid parallel utils; do \
+	  for pkg in grid parallel utils stats; do \
 	    $(ECHO) "building/updating vignettes for package '$${pkg}' ..."; \
 	    ($(ECHO) "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
 	        R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \
