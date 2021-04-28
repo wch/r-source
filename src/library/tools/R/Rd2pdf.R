@@ -82,8 +82,8 @@
                         error = identity)
         if(!inherits(aar, "error")) {
             aar <- Filter(utils:::.person_has_author_role, aar)
-            aut <- paste(format(aar, include = c("given", "family")),
-                         collapse = "; ")
+            aut <- format(aar, include = c("given", "family"))
+            aut <- paste(aut[nzchar(aut)], collapse = "; ")
             aut <- texify(gsub("[[:space:]]+", " ", aut), two = TRUE)
             if(nzchar(aut))
                 cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
