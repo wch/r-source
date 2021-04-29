@@ -384,8 +384,13 @@ Rd2HTML <-
                 writeHref()
                 return()
             }
-            else if (linksToTopics && !is.null(Links) && !is.na(Links[topic])) {
-                ## only if the topic exists in the package (else look harder below)
+            else if (linksToTopics && !is.null(Links) && !is.na(Links[topic]) &&
+                     startsWith(Links[topic], paste0("../../", urlify(package)))) {
+                ## only if the topic exists in the package (else look
+                ## harder below). 'Links' contains all topics in the
+                ## package, but also those in base+recommended
+                ## packages. We do this branch only if this is a
+                ## within-package link
                 htmlfile <- paste0("../../", urlify(package), "/help/", urlify(topic), ".html")
                 writeHref()
                 return()
