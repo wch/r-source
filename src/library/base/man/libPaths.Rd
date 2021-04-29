@@ -37,11 +37,7 @@
   default library, the \file{library} subdirectory of \env{R_HOME}.
 
   \code{.Library.site} is a (possibly empty) character vector giving the
-  locations of the site libraries.  It can be set via the environment
-  variable \env{R_LIBS_SITE} giving a non-empty list of library trees,
-  colon-separated on Unix-alike systems and semicolon-separated on Windows. 
-  It defaults to the \file{site-library} subdirectory of \env{R_HOME} (if
-  this exists).
+  locations of the site libraries.
 
   \code{.libPaths} is used for getting or setting the library trees that \R
   knows about and hence uses when looking for packages (library search
@@ -59,16 +55,20 @@
   trailing slash (or backslash) are invalid and so will never be added
   to the library search path.
 
-  The library search path is initialized at startup from the environment
-  variable \env{R_LIBS} (which should be a list of directories at which \R
-  library trees are rooted, colon-separated on Unix-alike systems and
-  semicolon-separated on Windows), followed by those in environment variable
-  \env{R_LIBS_USER}, \env{R_LIBS_SITE} (if empty, by \file{site-library}
-  subdirectory of \env{R_HOME}), and by the \file{library} subdirectory of
-  \env{R_HOME}).  Only directories which exist at the time of initialization
-  and are not yet in the search path will be included.
+  At startup, the library search path is initialized from the
+  environment variables \env{R_LIBS}, \env{R_LIBS_USER} and
+  \env{R_LIBS_SITE}, which if set should give lists of directories where
+  \R library trees are rooted, colon-separated on Unix-alike systems and
+  semicolon-separated on Windows.
 
-  By default \env{R_LIBS} and \env{R_LIBS_SITE} are unset.
+  First, \code{.Library.site} is initialized from \env{R_LIBS_SITE}.  If
+  this is unset or empty, the \file{site-library} subdirectory of
+  \env{R_HOME} is used.  Only directories which exist at the time of
+  initialization are retained.
+  Then, \code{.libPaths()} is called with the combination of the
+  directories given by \env{R_LIBS} and those given by
+  \env{R_LIBS_USER}.
+  By default \env{R_LIBS} is unset, and
   \env{R_LIBS_USER} is set to directory
   \file{R/\var{R.version$platform}-library/\var{x.y}} of the home directory
   on Unix-alike systems (or \file{Library/R/\var{arch}/\var{x.y}/library} for CRAN macOS
