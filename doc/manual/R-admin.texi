@@ -1903,8 +1903,7 @@ read, so users cannot easily change it.} @samp{.Library.site} in
 @file{@var{R_HOME}/etc/Rprofile.site}, or (not recommended) by setting
 the
 @enindex R_LIBS_SITE
-environment variable @env{R_LIBS_SITE}.  Like @samp{.Library}, the
-site libraries are always included by @samp{.libPaths()}.
+environment variable @env{R_LIBS_SITE}.
 
 @cindex Libraries, user
 @cindex User libraries
