@@ -66,8 +66,7 @@
   \env{R_HOME} is used.  Only directories which exist at the time of
   initialization are retained.
   Then, \code{.libPaths()} is called with the combination of the
-  directories given by \env{R_LIBS} and those given by
-  \env{R_LIBS_USER}.
+  directories given by \env{R_LIBS} and \env{R_LIBS_USER}.
   By default \env{R_LIBS} is unset, and
   \env{R_LIBS_USER} is set to directory
   \file{R/\var{R.version$platform}-library/\var{x.y}} of the home directory
