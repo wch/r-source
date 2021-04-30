@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016--2020   The R Core Team
+ *  Copyright (C) 2016--2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1291,7 +1291,6 @@ static void mmap_finalize(SEXP eptr)
     DEBUG_PRINT("finalizing ... ");
     void *p = R_ExternalPtrAddr(eptr);
     size_t size = MMAP_STATE_SIZE(MMAP_EPTR_STATE(eptr));
-    R_SetExternalPtrAddr(eptr, NULL);
 
     if (p != NULL) {
 	munmap(p, size); /* don't check for errors */

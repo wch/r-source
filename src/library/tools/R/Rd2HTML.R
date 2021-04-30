@@ -172,12 +172,19 @@ createRedirects <- function(file, Rdobj)
         msg <- sprintf("\nREDIRECT:%s\t %s -> %s [ %s ]", type, src, dest, status)
         message(msg, appendLF = FALSE)
     }
+    ## remove duplicate aliases, if any
+    aliasesToProcess <- sapply(toProcess, aliasName)
+    toProcess <- toProcess[!duplicated(aliasesToProcess)]
     for (i in toProcess) {
         aname <- aliasName(i)
         afile <- aliasFile(i)
-        if (file.exists(afile))
-            warning("Previous alias or file overwritten by alias: ", aname)
-        try(cat(redirHTML, file = afile), silent = TRUE) # Fails for \alias{%/%}
+        if (file.exists(afile)) {
+            ## warning("Previous alias or file overwritten by alias: ", aname)
+            msg <- sprintf("\nREDIRECT:topic\t Previous alias or file overwritten by alias: %s",
+                           afile)
+            message(msg, appendLF = FALSE)
+        }
+        try(suppressWarnings(cat(redirHTML, file = afile)), silent = TRUE) # Fails for \alias{%/%}
         ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
         if (!file.exists(afile)) redirMsg("topic", aname, basename(file), "FAIL")
     }
@@ -186,7 +193,8 @@ createRedirects <- function(file, Rdobj)
     file.fallback <- file.path(helpdir, basename(file))
     if (!file.exists(file.fallback)) {
         try(cat(redirHTML, file = file.fallback), silent = TRUE)
-        redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAIL")
+        ## redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAIL")
+        if (!file.exists(file.fallback)) redirMsg("file", basename(file), basename(file),  "FAIL")
     }
 }
 
@@ -376,8 +384,13 @@ Rd2HTML <-
                 writeHref()
                 return()
             }
-            else if (linksToTopics && !is.null(Links) && !is.na(Links[topic])) {
-                ## only if the topic exists in the package (else look harder below)
+            else if (linksToTopics && !is.null(Links) && !is.na(Links[topic]) &&
+                     startsWith(Links[topic], paste0("../../", urlify(package)))) {
+                ## only if the topic exists in the package (else look
+                ## harder below). 'Links' contains all topics in the
+                ## package, but also those in base+recommended
+                ## packages. We do this branch only if this is a
+                ## within-package link
                 htmlfile <- paste0("../../", urlify(package), "/help/", urlify(topic), ".html")
                 writeHref()
                 return()
