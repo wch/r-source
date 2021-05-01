@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readRDS}
@@ -89,6 +89,14 @@ infoRDS(file)
   for ASCII representation (produced via \code{ascii = TRUE} or \code{ascii
   = NA}) or \code{"binary"} (binary representation with native
   \sQuote{endianness} which can be produced by \code{\link{serialize}}).
+}
+
+\section{Warning}{
+  Files produced by \code{saveRDS} (or \code{serialize} to a file
+  connection) are not suitable as an interchange format between
+  machines, for example to download from a website. The
+  files produced by \code[\link{save}} have a header identifying the
+  file type and so are better protected against erroneous use.
 }
 
 \seealso{
