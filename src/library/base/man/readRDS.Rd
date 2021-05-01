@@ -95,7 +95,7 @@ infoRDS(file)
   Files produced by \code{saveRDS} (or \code{serialize} to a file
   connection) are not suitable as an interchange format between
   machines, for example to download from a website. The
-  files produced by \code[\link{save}} have a header identifying the
+  files produced by \code{\link{save}} have a header identifying the
   file type and so are better protected against erroneous use.
 }
 
