@@ -5263,11 +5263,11 @@ for @cputype{arm64}, where components @code{cairo}, @code{ffi},
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
 @subsection Other C/C++ compilers
 
-Other distributions of @command{clang} are available from
-@uref{https://releases.llvm.org/}.  In particular, these include support
-for OpenMP which Apple builds of @command{clang} do not, and may contain
-more bugfixes and new features (such as better diagnostics) than that in
-Command Line Tools / Xcode.
+Other distributions of @command{clang} may be available from
+@uref{https://releases.llvm.org/}.@footnote{At the time of writing there
+was one for @command{clang} 12.0.0 but not for several other recent
+versions.} In particular, these include support for OpenMP which Apple
+builds of @command{clang} do not.
 
 Suppose one of these distributions is installed under
 @file{/usr/local/clang}. Use a file @file{config.site} containing
@@ -5472,7 +5472,7 @@ Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 or (when released ca 2020-09) 17 but
+long-term support, e.g.@: 8 or 11 or (when released ca 2021-09) 17 but
 not 9, 10, 12--16 which have/had a 6-month lifetime.
 
 Binary distributions of @R{} are built against a specific version
