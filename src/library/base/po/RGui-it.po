@@ -1,11 +1,11 @@
 # R Italian translation 
 # This file is distributed under the same license as the R package.
 # Copyright (C) The R Foundation.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: RGui 3.6.3\n"
+"Project-Id-Version: RGui 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-04-15 19:37+0100\n"
 "PO-Revision-Date: \n"
@@ -1155,7 +1155,7 @@ msgstr "Ottieni da variabile..."
 
 #: src/library/grDevices/src/devWindows.c:1688
 msgid "Clear history"
-msgstr "Cancella cronologia"
+msgstr "Pulisci cronologia"
 
 #: src/library/grDevices/src/devWindows.c:1689
 msgid "Resize"
@@ -1199,4 +1199,4 @@ msgstr "Aspetto per confermare cambio pagina..."
 
 #: src/library/grDevices/src/devWindows.c:3825
 msgid "Click or hit ENTER for next page"
-msgstr "Click o premi ENTER per pagina successiva"
+msgstr "Fai clic o premi INVIO per la pagina seguente"

@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-grDevices 3.6.3\n"
+"Project-Id-Version: R-grDevices 4.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: \n"
@@ -23,12 +23,18 @@ msgstr "'filename' non valido"
 
 msgid "svg: Cairo-based devices are not available for this platform"
 msgstr ""
+"svg: i dispositivi basati su Cairo non sono disponibili per questa "
+"piattaforma"
 
 msgid "cairo_pdf: Cairo-based devices are not available for this platform"
 msgstr ""
+"cairo_pdf: i dispositivi basati su Cairo non sono disponibili per questa "
+"piattaforma"
 
 msgid "cairo_ps: Cairo-based devices are not available for this platform"
 msgstr ""
+"cairo_ps: i dispositivi basati su Cairo non sono disponibili per questa "
+"piattaforma"
 
 msgid "'coef' must not be negative"
 msgstr "'coef' dev'essere non negativo"
@@ -76,7 +82,7 @@ msgid "'palette' is ambiguous"
 msgstr "'palette' è ambiguo"
 
 msgid "'n' set to %s, the maximum available for %s palette"
-msgstr ""
+msgstr "'n' impostato a %s, il massimo disponibile per la palette %s"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' dev'essere uno scalare o 'sRGB'"
@@ -139,7 +145,7 @@ msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 
 msgid "argument is missing with no default"
-msgstr "argomento mancante senza valore di default"
+msgstr "argomento assente senza valore predefinito"
 
 msgid "dev.displaylist() called without an open graphics device"
 msgstr "dev.displaylist() chiamata senza un dispositivo grafico aperto"
@@ -163,15 +169,13 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): si utilizza postscript(file=\"%s\")"
 
 msgid "wrong 'type'; should never happen, please report!"
-msgstr ""
+msgstr "'type' errato; non dovrebbe accadere, per piacere riportalo!"
 
-#, fuzzy
 msgid "Invalid pattern type"
-msgstr "Tipo di carattere non valido"
+msgstr "Tipo di pattern non valido"
 
-#, fuzzy
 msgid "Invalid 'extend' value"
-msgstr "'filename' non valido"
+msgstr "Valore 'extend' non valido"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti nominati)"
@@ -199,7 +203,7 @@ msgid "invalid 'family' argument"
 msgstr "argomento 'family' non valido"
 
 msgid "'title' argument \"%s\" contains invalid characters"
-msgstr ""
+msgstr "l'argomento 'title' \"%s\" contiene caratteri non validi"
 
 msgid "invalid 'file' argument '%s'"
 msgstr "argomento 'file' non valido '%s'"
@@ -314,6 +318,7 @@ msgstr "'bandwidth' dev'essere positivo"
 
 msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
 msgstr ""
+"Dovresti avere installato il pacchetto \"KernSmooth\" (nei 'Recommended')"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' dev'essere un \"intervallo\", quindi di lunghezza 2"
@@ -359,13 +364,13 @@ msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' dev'essere specificato finché 'units = \"px\"'"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"quartz\" non disponibile. Si usa \"Xlib\""
 
 msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"cairo\" non disponibile. Si usa \"Xlib\""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "type = \"cairo-png\" non disponibile. Si usa \"Xlib\""
 
 msgid "invalid 'title'"
 msgstr "'title' non valido"

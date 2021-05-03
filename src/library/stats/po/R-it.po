@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-stats 3.6.3\n"
+"Project-Id-Version: R-stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:26\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -71,7 +71,7 @@ msgid "'x' must be numeric"
 msgstr "'x' dev'essere numerico"
 
 msgid "the first value of the time series must not be missing"
-msgstr "il primo valore della serie storica non dev'essere mancante"
+msgstr "il primo valore della serie storica non dev'essere assente"
 
 msgid "all parameters were fixed"
 msgstr "specificati tutti i parametri"
@@ -170,7 +170,7 @@ msgid "arguments must have same length"
 msgstr "gli argomenti devono avere la stessa lunghezza"
 
 msgid "'formula' missing or incorrect"
-msgstr "'formula' mancante o sbagliata"
+msgstr "'formula' assente o sbagliata"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'formula' deve avere sia il membro di destra che quello di sinistra"
@@ -337,7 +337,7 @@ msgid "some AR parameters were fixed: setting transform.pars = FALSE"
 msgstr "alcuni parametri AR sono stati fissati: imposto transform.pars = FALSE"
 
 msgid "too few non-missing observations"
-msgstr "troppo poche osservazioni non-mancanti"
+msgstr "numero limitato di osservazioni non-mancanti"
 
 msgid "'init' is of the wrong length"
 msgstr "'init' ha lunghezza sbagliata"
@@ -545,7 +545,7 @@ msgid "'degree' must be at least 1"
 msgstr "'degree' dev'essere almeno 1"
 
 msgid "missing values are not allowed in 'poly'"
-msgstr "valori mancanti non ammessi in 'poly'"
+msgstr "non sono ammessi valori mancanti in 'poly'"
 
 msgid "'degree' must be less than number of unique points"
 msgstr "'degree' dev'essere inferiore al numero di punti unici"
@@ -621,7 +621,7 @@ msgid "Cannot compute exact p-value with ties"
 msgstr "Impossibile calcolare p-value esatti in presenza di ties"
 
 msgid "'formula' missing or invalid"
-msgstr "'formula' mancante o non valida"
+msgstr "'formula' assente o non valida"
 
 msgid "invalid formula"
 msgstr "formula non valida"
@@ -803,10 +803,10 @@ msgstr "alcuni termini saranno NA a causa della limitazione del metodo"
 
 msgid "multivariate case with missing coefficients is not yet implemented"
 msgstr ""
-"il caso multivariato con coefficienti mancanti non è ancora implementato"
+"il caso multivariato con coefficienti assenti non è ancora implementato"
 
 msgid "'x' must have 1 or more non-missing values"
-msgstr "'x' deve avere 1 o più valori non mancanti"
+msgstr "'x' deve avere 1 o più valori non-mancanti"
 
 msgid "wrong embedding dimension"
 msgstr "dimensioni di immersione sbagliata"
@@ -841,11 +841,10 @@ msgstr "argomento 'lambda' non valido"
 msgid "%s link not recognised"
 msgstr "%s link non riconosciuto"
 
-#, fuzzy
 msgid "link \"%s\" not available for %s family; available links are %s"
 msgstr ""
-"il link \"%s\" non è disponibile per la famiglia poisson; quelli disponibili "
-"sono %s"
+"il link \"%s\" non è disponibile per la famiglia %s; quelli disponibili sono "
+"%s"
 
 msgid "negative values not allowed for the 'Poisson' family"
 msgstr "i valori negativi non sono ammessi per la famiglia 'Poisson'"
@@ -863,29 +862,25 @@ msgstr ""
 msgid "y values must be 0 <= y <= 1"
 msgstr "i valori di y devono essere 0 <= y <= 1"
 
-#, fuzzy
 msgid "non-integer #successes in a %s glm!"
-msgstr "#successi non interi nel modello glm binomiale!"
+msgstr "#successi non interi in un %s glm!"
 
-#, fuzzy
 msgid "non-integer counts in a %s glm!"
-msgstr "frequenze non intere nel modello glm binomiale!"
+msgstr "frequenze non intere in un %s glm!"
 
-#, fuzzy
 msgid ""
 "for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
-"per la famiglia 'binomial', y dev'essere un vettore di 0 e 1\n"
+"per la famiglia '%s', y dev'essere un vettore di 0 e 1\n"
 "o una matrice con 2 colonne dove la prima raccoglie il numero di successi, "
 "la seconda i fallimenti"
 
 msgid "cannot simulate from non-integer prior.weights"
 msgstr "non è possibile simulare da prior.weights non-interi"
 
-#, fuzzy
 msgid "non-positive values not allowed for the 'Gamma' family"
-msgstr "i valori non-positivi non sono ammessi per la famiglia 'gamma'"
+msgstr "i valori non-positivi non sono ammessi per la famiglia 'Gamma'"
 
 msgid "using weights as shape parameters"
 msgstr "si utilizzano pesi coma parametri di forma"
@@ -977,7 +972,7 @@ msgid "not an unreplicated complete block design"
 msgstr "non è un disegno completo a blocchi non replicati"
 
 msgid "formula missing"
-msgstr "formula mancante"
+msgstr "formula assente"
 
 msgid "incorrect specification for 'formula'"
 msgstr "specificazione di 'formula' non valida"
@@ -1016,10 +1011,10 @@ msgid "'file' must be a character string or connection"
 msgstr "'file' dev'essere una stringa di caratteri o una connessione"
 
 msgid "'row.var.names' missing"
-msgstr "'row.var.names' mancante"
+msgstr "'row.var.names' assente"
 
 msgid "'col.vars' missing or incorrect"
-msgstr "'col.var' mancante o non corretto"
+msgstr "'col.var' assente o non corretto"
 
 msgid "'family' not recognized"
 msgstr "'family' non riconosciuta"
@@ -1192,7 +1187,7 @@ msgid "a limit is NA or NaN"
 msgstr "un limite è NA o NaN"
 
 msgid "missing values not allowed"
-msgstr "valori mancanti non ammessi"
+msgstr "non sono ammessi valori mancanti"
 
 msgid "'r' is less than 1"
 msgstr "'r' è minori di 1"
@@ -1315,7 +1310,7 @@ msgid "incompatible dimensions"
 msgstr "dimensioni incompatibili"
 
 msgid "missing or negative weights not allowed"
-msgstr "non sono ammessi pesi negativi o mancanti"
+msgstr "non sono ammessi pesi negativi o assenti"
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "oggetto 'lm' non valido:  nessuna componente 'terms'"
@@ -1477,7 +1472,7 @@ msgid "'X' matrix was collinear"
 msgstr "la matrice 'X' è collineare"
 
 msgid "missing observations deleted"
-msgstr "osservazioni mancanti eliminate"
+msgstr "osservazioni assenti eliminate"
 
 msgid "observations with 0 weight not used in calculating standard deviation"
 msgstr ""
@@ -1579,24 +1574,20 @@ msgstr "eff.aovlist: contrasti non ortogonali forniranno una risposta errata"
 msgid "cannot create a formula from a zero-column data frame"
 msgstr "non è possibile creare una formula da una colonna-zero del data frame"
 
-#, fuzzy
 msgid "invalid formula: %s"
-msgstr "formula non valida"
+msgstr "formula non valida: %s"
 
-#, fuzzy
 msgid "invalid formula %s: not a call"
-msgstr "formula non valida in deriv"
+msgstr "formula %s non valida: non è una chiamata"
 
-#, fuzzy
 msgid "invalid formula %s: assignment is deprecated"
-msgstr "formula non valida in deriv"
+msgstr "formula %s non valida: l'assegnamento è deprecato"
 
 msgid "invalid formula %s: extraneous call to `%s` is deprecated"
-msgstr ""
+msgstr "formula %s non valida: la chiamata estranea a `%s` è deprecata"
 
-#, fuzzy
 msgid "invalid formula %s"
-msgstr "formula non valida"
+msgstr "formula %s non valida"
 
 msgid "no terms component nor attribute"
 msgstr "nessuna componente termini o attributo"
@@ -1631,9 +1622,8 @@ msgstr ""
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' dev'essere un data.frame, non una matrice o un array"
 
-#, fuzzy
 msgid "'data' must be a data.frame, environment, or list"
-msgstr "'data' dev'essere una lista o un ambiente"
+msgstr "'data' dev'essere un data.frame, un ambiente o una lista"
 
 msgid "variable '%s' is not a factor"
 msgstr "la variabile '%s' non è un fattore"
@@ -1667,7 +1657,7 @@ msgid "all times contain an NA"
 msgstr "tutti i 'times' contengono NA"
 
 msgid "missing values in object"
-msgstr "valore mancante nell'oggetto"
+msgstr "valori mancanti nell'oggetto"
 
 msgid "invalid argument 'omit'"
 msgstr "argomento 'omit' non valido"
@@ -1733,7 +1723,7 @@ msgid "levels truncated to positive values only"
 msgstr "livelli limitati ai solo valori positivi"
 
 msgid "invalid  'attr(rhs, \"gradient\")'"
-msgstr ""
+msgstr "'attr(rhs, \"gradient\")' non valido"
 
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr ""
@@ -1892,9 +1882,8 @@ msgstr ""
 "Nessun livello di significatività [0, 1] può essere trovato per ottenere la "
 "potenza desiderata"
 
-#, fuzzy
 msgid "'%s' must be numeric in [0, 1]"
-msgstr "'sig.level' dev'essere numerico in [0, 1]"
+msgstr "'%s' dev'essere numerico in [0, 1]"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
@@ -1910,7 +1899,7 @@ msgid "number of observations in each group must be at least 2"
 msgstr "numero di osservazioni in ciascun gruppo dev'essere almeno 2"
 
 msgid "'nterms' is missing with no default"
-msgstr "'nterms' mancante senza valore di default"
+msgstr "'nterms' assente senza valore di default"
 
 msgid "'ppr' applies only to numerical variables"
 msgstr "'ppr' si applica solo a variabili numeriche"
@@ -1975,7 +1964,7 @@ msgid "elements of 'x' must be nonnegative"
 msgstr "gli elementi di 'x' devono essere nonnegativi"
 
 msgid "elements of 'x' must not be greater than those of 'n'"
-msgstr "gli elementi di 'x' non possono essere più grandi di quelli di 'n'"
+msgstr "gli elementi di 'x' non devono essere più grandi di quelli di 'n'"
 
 msgid "'p' must have the same length as 'x' and 'n'"
 msgstr "'p' deve avere la stessa lunghezza di 'x' e 'n'"
@@ -1987,17 +1976,16 @@ msgid "y is empty or has only NAs"
 msgstr "y è vuota o contiene sonlo NA"
 
 msgid "'formula' missing"
-msgstr "'formula' mancante"
+msgstr "'formula' assente"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' dev'essere 1 o 3 per fattori ordinati"
 
-#, fuzzy
 msgid "(unordered) factors are not allowed"
-msgstr "i fattori non sono ammessi"
+msgstr "i fattori (non ordinati) non sono ammessi"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
-msgstr "valori mancanti e NaN non ammessi se 'na.rm' è FALSE"
+msgstr "non sono ammessi valori mancanti e NaN se 'na.rm' è FALSE"
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' oltre [0,1]"
@@ -2044,10 +2032,10 @@ msgid "'lengths(varying)' must all match 'length(times)'"
 msgstr "'lengths(varying)' devono corrispondere tutte a 'length(times)'"
 
 msgid "'idvar' must uniquely identify records"
-msgstr ""
+msgstr "'idvar' deve identificare univocamente dei record"
 
 msgid "there are records with missing times, which will be dropped."
-msgstr "ci sono record con 'times' mancanti, i quali saranno ignorati."
+msgstr "ci sono record con 'times' assenti, i quali saranno ignorati."
 
 msgid "some constant variables (%s) are really varying"
 msgstr "alcune variabili 'constant' (%s) sono in realtà 'varying'"
@@ -2109,7 +2097,7 @@ msgid "invalid 'control.spar'"
 msgstr "'control.spar' non valido"
 
 msgid "missing or infinite values in inputs are not allowed"
-msgstr "non sono ammessi valori mancanti o infiniti nell'input"
+msgstr "non sono ammessi valori mancanti o infiniti in ingresso"
 
 msgid "invalid number of points"
 msgstr "numero di punti non valido"
@@ -2133,7 +2121,7 @@ msgid "need at least four unique 'x' values"
 msgstr "necessari almeno quattro valori distinti 'x'"
 
 msgid "'cv' must not be NA when 'df' is specified"
-msgstr "'cv' dev'essere NA quando 'df' è specificato"
+msgstr "'cv' non dev'essere NA quando 'df' è specificato"
 
 msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr "cross-validation con valori di 'x' non-unici sembra dubbia"
@@ -2163,7 +2151,7 @@ msgid "cannot use more inner knots than unique 'x' values"
 msgstr "non posso usare più nodi interni che valori unici di 'x'"
 
 msgid "must not specify both 'spar' and 'lambda'"
-msgstr "non bisogna specifica 'spar' e 'lambda'"
+msgstr "non deve specificare 'spar' e 'lambda'"
 
 msgid "'spar' must be of length 1"
 msgstr "'spar' dev'essere di lunghezza 1"
@@ -2300,7 +2288,7 @@ msgid "'mu' must be a single number"
 msgstr "'mu' dev'essere un solo numero"
 
 msgid "'y' is missing for paired test"
-msgstr "'y' mancante nel test per dati appaiati"
+msgstr "'y' assente nel test per dati appaiati"
 
 msgid "data are essentially constant"
 msgstr "i dati sono praticamente costanti"
@@ -2320,9 +2308,8 @@ msgstr "l'oggetto 'ts' deve avere una o più osservazioni"
 msgid "'start' cannot be after 'end'"
 msgstr "'start' no può essere dopo 'end'"
 
-#, fuzzy
 msgid "'end' must be a whole number of cycles after 'start'"
-msgstr "'centers' dev'essere un numero o una matrice"
+msgstr "'end' dev'essere un numero intero di cicli dopo 'start'"
 
 msgid "no time series supplied"
 msgstr "nessuna serie storica passata"
@@ -2330,9 +2317,8 @@ msgstr "nessuna serie storica passata"
 msgid "not all series have the same frequency"
 msgstr "non tutte le serie hanno la stessa frequenza"
 
-#, fuzzy
 msgid "not all series have the same phase"
-msgstr "non tutte le serie hanno la stessa frequenza"
+msgstr "non tutte le serie hanno la stessa fase"
 
 msgid "non-intersecting series"
 msgstr "serie non intersecantesi"
@@ -2358,9 +2344,8 @@ msgstr "diagrammi di dispersione solo per serie unidimensionali"
 msgid "'xy.labels' must be logical or character"
 msgstr "'xy.labels' devono essere logical o character"
 
-#, fuzzy
 msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
-msgstr "'frequency' e 'deltat' sono stati passati entrambi ma non consistenti"
+msgstr "'frequency' e 'deltat' sono entrambi non NULL e sono inconsistenti"
 
 msgid "'frequency' not changed"
 msgstr "'frequency' non cambiata"
@@ -2435,9 +2420,8 @@ msgstr "'ratio' dev'essere un numero positivo"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' e 'w' devono avere la stessa lunghezza"
 
-#, fuzzy
 msgid "not enough (non-missing) 'x' observations"
-msgstr "osservazioni 'x' (finite) insufficienti"
+msgstr "osservazioni 'x' (non-mancanti) insufficienti"
 
 msgid "requested conf.level not achievable"
 msgstr "livello di conf.level richiesto non raggiungibile"
@@ -2638,7 +2622,7 @@ msgstr[1] "il fattore %s ha %s nuovi livelli"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
-msgstr[0] "%d osservazione eliminata a causa di valori mancanti"
+msgstr[0] "%d osservazione eliminata a causa di un valore mancante"
 msgstr[1] "%d osservazioni eliminate a causa di valori mancanti"
 
 msgid "_NOT_ converged in %d iteration"
@@ -2670,48 +2654,3 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' è troppo corto: richiesto %d punto"
 msgstr[1] "'start.innov' è troppo corto: richiesti %d punti"
-
-#~ msgid ""
-#~ "link \"%s\" not available for quasipoisson family; available links are %s"
-#~ msgstr ""
-#~ "il link \"%s\" non è disponibile per la famiglia quasipoisson; quelli "
-#~ "disponibili sono %s"
-
-#~ msgid ""
-#~ "link \"%s\" not available for gaussian family; available links are %s"
-#~ msgstr ""
-#~ "il link \"%s\" non è disponibile per la famiglia gaussian; quelli "
-#~ "disponibili sono %s"
-
-#~ msgid ""
-#~ "link \"%s\" not available for binomial family; available links are %s"
-#~ msgstr ""
-#~ "il link \"%s\" non è disponibile per la famiglia binomial; quelli "
-#~ "disponibili sono %s"
-
-#~ msgid ""
-#~ "link \"%s\" not available for quasibinomial family; available links are %s"
-#~ msgstr ""
-#~ "il link \"%s\" non è disponibile per la famiglia quasibinomial; quelli "
-#~ "disponibili sono %s"
-
-#~ msgid ""
-#~ "for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
-#~ "or a 2 column matrix where col 1 is no. successes and col 2 is no. "
-#~ "failures"
-#~ msgstr ""
-#~ "per la famiglia 'quasibinomial', y dev'essere un vettore di 0 e 1\n"
-#~ "o una matrice con 2 colonne dove la prima raccoglie il numero di "
-#~ "successi, la seconda i fallimenti"
-
-#~ msgid "link \"%s\" not available for gamma family; available links are %s"
-#~ msgstr ""
-#~ "il link \"%s\" non è disponibile per la famiglia gamma; quelli "
-#~ "disponibili sono %s"
-
-#~ msgid ""
-#~ "link \"%s\" not available for inverse.gaussian family; available links "
-#~ "are %s"
-#~ msgstr ""
-#~ "il link \"%s\" non è disponibile per la famiglia gaussian; quelli "
-#~ "disponibili sono %s"

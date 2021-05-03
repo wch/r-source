@@ -1,0 +1,60 @@
+# R Italian translation
+# Copyright (C) The R Foundation
+# This file is distributed under the same license as the R package.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tcltk 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
+"Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: tcltk.c:70
+msgid "parse error in R expression"
+msgstr "errore di elaborazione nell'espressione R"
+
+#: tcltk.c:179 tcltk.c:257
+msgid "tcl error.\n"
+msgstr "errore tcl.\n"
+
+#: tcltk.c:208 tcltk.c:283 tcltk.c:300 tcltk.c:320 tcltk.c:340 tcltk.c:415
+#: tcltk.c:480 tcltk.c:534 tcltk.c:773
+msgid "invalid argument"
+msgstr "argomento non valido"
+
+#: tcltk.c:290
+msgid "no such variable"
+msgstr "nessuna variabile"
+
+#: tcltk.c:322 tcltk.c:342 tcltk.c:417 tcltk.c:482 tcltk.c:536
+msgid "invalid tclObj -- perhaps saved from another session?"
+msgstr "tclObj non valido -- salvato forse da un'altra sessione?"
+
+#: tcltk.c:646
+msgid "argument list is too long in tcltk internal function 'callback_closure'"
+msgstr "lista argomento troppo grande nella funzione interna tcltk 'callback_closure'"
+
+#: tcltk.c:679
+msgid "argument is not of correct type"
+msgstr "l'argomento non è del tipo corretto"
+
+#: tcltk.c:731
+msgid "no DISPLAY variable so Tk is not available"
+msgstr "nessuna variabile DISPLAY perciò Tk non è disponibile"
+
+#: tcltk_unix.c:94
+msgid "Tcl is not loaded"
+msgstr "Tcl non è caricato"
+
+#: tcltk_unix.c:98
+msgid "Tcl is not last loaded handler"
+msgstr "Tcl non è l'ultimo gestore caricato"
