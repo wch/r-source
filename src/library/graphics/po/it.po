@@ -1,13 +1,13 @@
 # R Italian translation
 # This file is distributed under the same license as the R package.
 # Copyright (C) The R Foundation.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: graphics 3.6.3\n"
+"Project-Id-Version: graphics 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58+0000\n"
+"POT-Creation-Date: 2021-05-03 09:56+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -273,13 +273,12 @@ msgid "zero-length '%s' specified"
 msgstr "specificato '%s' di lunghezza zero"
 
 #: plot.c:862
-#, fuzzy
 msgid "'gap.axis' must be of length one"
-msgstr "'hadj' dev'essere di lunghezza 1"
+msgstr "'gap.axis' dev'essere di lunghezza uno"
 
 #: plot.c:892
 msgid "'gap.axis' must be NA or a finite number"
-msgstr ""
+msgstr "'gap.axis' dev'essere NA o un numero finito"
 
 #: plot.c:944
 msgid "'labels' is supplied and not 'at'"
@@ -543,11 +542,11 @@ msgstr "contour(): circular/long seglist -- impostare %s > %d?"
 
 #: plot3d.c:1935
 msgid "no 'levels'"
-msgstr ""
+msgstr "nulla in 'levels'"
 
 #: plot3d.c:1939
 msgid "missing 'x' values"
-msgstr "valore 'x' mancante"
+msgstr "valore 'x' assente"
 
 #: plot3d.c:1941
 msgid "increasing 'x' values expected"
@@ -555,7 +554,7 @@ msgstr "necessari valori di 'x' crescenti"
 
 #: plot3d.c:1946
 msgid "missing 'y' values"
-msgstr "valore 'y' mancante"
+msgstr "valore 'y' assente"
 
 #: plot3d.c:1948
 msgid "increasing 'y' values expected"
@@ -564,7 +563,7 @@ msgstr "necessari valori di 'y' crescenti"
 #: plot3d.c:1953
 #, c-format
 msgid "non-finite level values: levels[%d] = %g"
-msgstr ""
+msgstr "valori livello non finiti: levels[%d] = %g"
 
 #: plot3d.c:1966
 msgid "all z values are equal"
@@ -579,7 +578,6 @@ msgstr "tutti i valori di z sono NA"
 msgid "long vector '%s' is not supported"
 msgstr "il vettore long '%s' non è supportato"
 
-#, c-format
 #~ msgid "plot type '%s' will be truncated to first character"
 #~ msgstr "tipo lpot '%s' verrà troncato al primo carattere"
 

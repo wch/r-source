@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: grid 3.6.3\n"
+"Project-Id-Version: grid 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58+0000\n"
+"POT-Creation-Date: 2021-05-03 09:56+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: gpar.c:523
 msgid "updateGContext must only be called after initGContext"
-msgstr ""
+msgstr "updateGContext dev'essere unicamente chiamato dopo initGContext"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a clipping path is no honoured"
-msgstr ""
+msgstr "On/off del clipping all'interno di un clipping path non onorato"
 
 #: grid.c:241
 msgid "cannot clip to rotated viewport"
@@ -32,11 +32,11 @@ msgstr "non è possibile tagliare su una viewport ruotata"
 
 #: grid.c:455
 msgid "Clipping paths within a clipping path are not honoured"
-msgstr ""
+msgstr "Clipping path interno ad altri non onorato"
 
 #: grid.c:474
 msgid "Masks within a clipping path are not honoured"
-msgstr ""
+msgstr "Maschere interne a un clipping path non onorate"
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
@@ -104,6 +104,7 @@ msgstr ""
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr ""
+"Non è possibile creare un'unità scalare da un vettore unità di lunghezza zero"
 
 #: unit.c:799 unit.c:1298
 msgid "invalid unit or unit not yet implemented"
@@ -134,42 +135,44 @@ msgid ""
 "data must be either NULL, have length 1, or match the length of the final "
 "unit vector"
 msgstr ""
+"i dati devono essere NULL, avere lunghezza 1 o corrispondere alla lunghezza "
+"del vettore dell'unità finale"
 
 #: unit.c:1596
 msgid "no string supplied for 'strwidth/height' unit"
-msgstr ""
+msgstr "nessuna stringa passata per unità 'strwidth/height'"
 
 #: unit.c:1600
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr ""
+msgstr "nessun 'grob' passato per unità 'grobwidth/height'"
 
 #: unit.c:1618
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
+msgstr "'gPath' deve avere profondità 1 nelle unità 'grobwidth/height'"
 
 #: unit.c:1623
 msgid "non-NULL value supplied for plain unit"
-msgstr ""
+msgstr "valore non-NULL passato per unità normale"
 
 #: unit.c:1676 unit.c:1710 unit.c:1759
 msgid "old version of unit class is no longer allowed"
-msgstr ""
+msgstr "la vecchia versione della classe unità non è più ammessa"
 
 #: unit.c:1682
 msgid "object is not coercible to a unit"
-msgstr ""
+msgstr "l'oggetto non è convertibile in una unità"
 
 #: unit.c:1708
 msgid "object is not a unit"
-msgstr ""
+msgstr "l'oggetto non è un'unità"
 
 #: unit.c:1840
 msgid "units can only be multiplied with numerics and integers"
-msgstr ""
+msgstr "le unità possono unicamente essere moltiplicate con numerici e interi"
 
 #: viewport.c:56
 msgid "Mask is not logical value ('none' or 'inherit')"
-msgstr ""
+msgstr "Mask non è un valore logico ('none' o 'inherit')"
 
 #: viewport.c:330
 msgid "non-finite location and/or size for viewport"
