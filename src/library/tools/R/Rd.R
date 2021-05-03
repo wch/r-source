@@ -52,7 +52,7 @@ function(file, encoding = "unknown")
     }
 
     Rd_title <- .Rd_get_title(Rd)
-    if(!nchar(Rd_title)) {
+    if(!nzchar(Rd_title)) {
         msg <-
             c(gettextf("missing/empty \\title field in '%s'",
                        description),
