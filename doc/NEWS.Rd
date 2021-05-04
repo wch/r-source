@@ -267,6 +267,10 @@
       \item Environment variable \env{LC_ALL} on Windows now takes
       precedence over \env{LC_CTYPE} and variables for other supported
       categories, matching the POSIX behaviour.
+
+      \item \code{duplicated()} and \code{anyDuplicated()} are now
+      optimized for integer and real vectors that are known to be sorted
+      via the ALTREP framework. Contributed by Gabriel Becker via \PR{17993}.
     }
   }
 
