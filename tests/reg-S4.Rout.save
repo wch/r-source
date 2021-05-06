@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-04-16 r80178) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-04 r80263) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1318,13 +1318,14 @@ value <- new("A")
 > ## failed in R <= 3.6.1
 > 
 > if(require("Matrix")) withAutoprint({
-+     (sci <- names(getClass("integer")@contains))
++     sci <- names(getClass("integer")@contains)
 +     # These 2 classes have *nothing* to do with Matrix:
 +     setClass("MyClass")
-+     setClassUnion("NumOrMyClass", c("numeric", "MyClass"))
-+     (nsci <- names(getClass("integer")@contains))
++     ncl <- "NumOrMyClass"
++     setClassUnion(ncl, c("numeric", "MyClass"))
++     nsci <- names(getClass("integer")@contains)
 +     ## failed in R <= 3.6.2
-+     stopifnot(sci %in% nsci)
++     stopifnot(sci %in% nsci, identical(setdiff(nsci, sci), ncl))
 + 
 +     setClassUnion('dMatrixOrMatrix', members = c('dMatrix', 'matrix'))
 +     ## failed in R <= 3.6.2
@@ -1333,20 +1334,12 @@ value <- new("A")
 +     invisible(lapply(c("NumOrMyClass", "MyClass", "dMatrixOrMatrix"),
 +                      removeClass))
 + })
-> (sci <- names(getClass("integer")@contains))
- [1] "double"              "numeric"             "vector"             
- [4] "data.frameRowLabels" "atomicVector"        "numericVector"      
- [7] "index"               "replValue"           "numLike"            
-[10] "number"              "Mnumeric"            "replValueSp"        
+> sci <- names(getClass("integer")@contains)
 > setClass("MyClass")
-> setClassUnion("NumOrMyClass", c("numeric", "MyClass"))
-> (nsci <- names(getClass("integer")@contains))
- [1] "double"              "numeric"             "vector"             
- [4] "data.frameRowLabels" "atomicVector"        "numericVector"      
- [7] "index"               "replValue"           "numLike"            
-[10] "number"              "Mnumeric"            "NumOrMyClass"       
-[13] "replValueSp"        
-> stopifnot(sci %in% nsci)
+> ncl <- "NumOrMyClass"
+> setClassUnion(ncl, c("numeric", "MyClass"))
+> nsci <- names(getClass("integer")@contains)
+> stopifnot(sci %in% nsci, identical(setdiff(nsci, sci), ncl))
 > setClassUnion("dMatrixOrMatrix", members = c("dMatrix", "matrix"))
 > stopifnot("dMatrixOrMatrix" %in% names(getClass("dgCMatrix")@contains))
 > invisible(lapply(c("NumOrMyClass", "MyClass", "dMatrixOrMatrix"), removeClass))
