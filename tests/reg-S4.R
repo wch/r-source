@@ -992,13 +992,14 @@ stopifnot( canCoerce(o3, "A") )
 ## failed in R <= 3.6.1
 
 if(require("Matrix")) withAutoprint({
-    (sci <- names(getClass("integer")@contains))
+    sci <- names(getClass("integer")@contains)
     # These 2 classes have *nothing* to do with Matrix:
     setClass("MyClass")
-    setClassUnion("NumOrMyClass", c("numeric", "MyClass"))
-    (nsci <- names(getClass("integer")@contains))
+    ncl <- "NumOrMyClass"
+    setClassUnion(ncl, c("numeric", "MyClass"))
+    nsci <- names(getClass("integer")@contains)
     ## failed in R <= 3.6.2
-    stopifnot(sci %in% nsci)
+    stopifnot(sci %in% nsci, identical(setdiff(nsci, sci), ncl))
 
     setClassUnion('dMatrixOrMatrix', members = c('dMatrix', 'matrix'))
     ## failed in R <= 3.6.2
