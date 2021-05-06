@@ -686,4 +686,9 @@ stopifnot(exprs = {
 ## all these where -Inf  in R <= 4.0.x
 
 
+## Should be *temporary* as we should fix it (PR#18095):
+assertWarning(qnbinom(1e-4, size=1e16, mu=1, lower.tail=FALSE))
+
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
