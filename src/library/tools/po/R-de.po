@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2018-04-16 10:34+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -578,9 +578,6 @@ msgstr "Das Rd Makro-Paket '%s' ist nicht installiert"
 
 msgid "No Rd macros in package '%s'."
 msgstr "Keine Rd Makros in Paket '%s'"
-
-msgid "Previous alias or file overwritten by alias:"
-msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr "mehr als eine \\examples section, benutze die erste"

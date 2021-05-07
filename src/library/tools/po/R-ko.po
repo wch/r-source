@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -594,9 +594,6 @@ msgstr ""
 
 msgid "No Rd macros in package '%s'."
 msgstr "패키지 %s로부터 Rd macro를 찾을 수 없습니다."
-
-msgid "Previous alias or file overwritten by alias:"
-msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr ""

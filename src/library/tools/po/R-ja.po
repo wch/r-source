@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -604,9 +604,6 @@ msgstr " パッケージ '%s' にRdマクロは見つけられませんでした
 
 msgid "No Rd macros in package '%s'."
 msgstr " パッケージ '%s' にRdマクロは見つけられませんでした "
-
-msgid "Previous alias or file overwritten by alias:"
-msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr " 2 つ以上の \\examples 節があります、1 番目を用います "

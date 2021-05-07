@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-base 3.6.3\n"
+"Project-Id-Version: R-base 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -49,14 +49,13 @@ msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "l'argomento di 'La.svd' dev'essere numerico o complesso"
 
 msgid "infinite or missing values in 'x'"
-msgstr "valori infiniti o mancanti in 'x'"
+msgstr "valori infiniti o assenti in 'x'"
 
 msgid "a dimension is zero"
 msgstr "una dimensione è zero"
 
-#, fuzzy
 msgid "\"all\" and \"exact\" are mutually exclusive"
-msgstr "\"hexNumeric\" e \"digits17\" sono mutuamente esclusivi"
+msgstr "\"all\" e \"exact\" sono mutuamente esclusivi"
 
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr "\"hexNumeric\" e \"digits17\" sono mutuamente esclusivi"
@@ -172,14 +171,13 @@ msgid "autoloader did not find '%s' in '%s'"
 msgstr "l'autocaricatore non trova '%s' in '%s'"
 
 msgid "can only splice inside a call"
-msgstr ""
+msgstr "si può unire solo dentro una chiamata"
 
-#, fuzzy
 msgid "can only splice vectors"
-msgstr "si possono scrivere solo oggetti di tipo vector"
+msgstr "si possono unire solo vettori"
 
 msgid "the LINPACK argument has been defunct since R 3.1.0"
-msgstr ""
+msgstr "l'argomento LINPACK è rimosso da R 3.1.0"
 
 msgid "complex matrices not permitted at present"
 msgstr "matrici complesse non ammesse al momento"
@@ -192,6 +190,7 @@ msgstr "'dims' non valido"
 
 msgid "condition handlers must be specified with a condition class"
 msgstr ""
+"i gestori di condizione devono essere specificati con una classe condizione"
 
 msgid "no 'restart' '%s' found"
 msgstr "nessun 'riavvio' '%s' trovato"
@@ -202,12 +201,11 @@ msgstr "sessione non interattiva"
 msgid "not a valid restart specification"
 msgstr "specificazione di riavvio non valida"
 
-#, fuzzy
 msgid "condition handlers must be functions"
-msgstr "il gestore dev'essere una funzione"
+msgstr "i gestori di condizione devono essere funzioni"
 
 msgid "pushing duplicate `%s` handler on top of the stack"
-msgstr ""
+msgstr "si spingono i gestori duplicati `%s` in cima allo stack"
 
 msgid "argument 'where' of length 0"
 msgstr "l'argomento 'where' lunghezza 0"
@@ -223,11 +221,8 @@ msgstr ""
 "l'argomento 'object' dev'essere ritrattato in una singola stringa di "
 "caratteri"
 
-#, fuzzy
 msgid "'name' must be a single character string"
-msgstr ""
-"l'argomento 'object' dev'essere ritrattato in una singola stringa di "
-"caratteri"
+msgstr "'name' dev'essere una stringa con un singolo carattere"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' dev'essere uno tra 'start', 'current' o 'end'"
@@ -235,9 +230,8 @@ msgstr "'origin' dev'essere uno tra 'start', 'current' o 'end'"
 msgid "can only truncate an open connection"
 msgstr "si può troncare solo una connessione aperta"
 
-#, fuzzy
 msgid "invalid 'endian' argument"
-msgstr "argomento 'name' non valido"
+msgstr "argomento 'endian' non valido"
 
 msgid "can only write vector objects"
 msgstr "si possono scrivere solo oggetti di tipo vector"
@@ -387,7 +381,6 @@ msgstr "<0 righe> (o 0-length row.names)"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr "'max' / getOption(\"max.print\") non valido:"
 
-#, fuzzy
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variabili non numeriche nel data frame:"
 
@@ -400,19 +393,17 @@ msgstr "%s è definito solo per data frame di dimensioni identiche"
 msgid "list of length %d not meaningful"
 msgstr "lista di lunghezza %d non significativa"
 
-#, fuzzy
 msgid "only defined on a data frame with all numeric-alike variables"
-msgstr "è definito solo per data frame con sole variabili numeriche"
+msgstr "definito unicamente per un data frame con tutte variabili numeriche"
 
-#, fuzzy
 msgid "cannot xtfrm data frames"
-msgstr "non è un data frame"
+msgstr "non è possibile xtfrm i data frame"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "la stringa di caratteri non è in un formato standard"
 
 msgid "'origin' must be supplied"
-msgstr "'origin' dev'essere passato"
+msgstr "'origin' dev'essere indicato"
 
 msgid "do not know how to convert '%s' to class %s"
 msgstr "conversione incerta di '%s' nella classe %s"
@@ -520,7 +511,7 @@ msgid "need explicit units for numeric conversion"
 msgstr "bisogna indicare le unità per una conversione nel tipo numeric"
 
 msgid "invalid units specified"
-msgstr "unità specificata non valida"
+msgstr "unità specificate non valide"
 
 msgid "unary '%s' not defined for \"difftime\" objects"
 msgstr "l'operatore unario '%s' non è definito per gli oggetti \"difftime\""
@@ -768,9 +759,8 @@ msgstr "valore per %s non trovato"
 msgid "all arguments must be named"
 msgstr "tutti gli argomenti devono essere nominati"
 
-#, fuzzy
 msgid "argument '%s' will be ignored"
-msgstr "argomento 'drop' sarà ignorato"
+msgstr "l'argomento '%s' sarà ignorato"
 
 msgid "match distance components must be non-negative"
 msgstr ""
@@ -792,7 +782,7 @@ msgid "need non-overlapping matches for %s"
 msgstr "sono richieste corrispondenze non sovrapposte per %s"
 
 msgid "missing replacement values are not allowed"
-msgstr "i valori di sostituzione mancanti non sono ammessi"
+msgstr "i valori in sostituzione di quelli assenti non sono ammessi"
 
 msgid "must have replacement values for matches"
 msgstr "deve avere valori di sostituzione per le corrispondenze"
@@ -1138,7 +1128,7 @@ msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "namespace %s %s già caricato, ma %s %s è richiesto"
 
 msgid "- loading"
-msgstr ""
+msgstr "- caricamento"
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "il namespace %s è già protetto in 'loadNamespace'"
@@ -1167,18 +1157,15 @@ msgstr ""
 msgid "package %s does not have a namespace"
 msgstr "il pacchetto %s non ha un namespace"
 
-#, fuzzy
 msgid "package %s was installed before R 4.0.0: please re-install it"
 msgstr ""
-"il pacchetto %s è stato creato prima di R 3.0.0: per piacere, va re-"
-"installato"
+"il pacchetto %s è stato creato prima di R 4.0.0: per piacere, re-installatelo"
 
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "namespace %s %s già caricato, ma %s %s è richiesto"
 
-#, fuzzy
 msgid "package %s has no 'package.rds' in Meta/"
-msgstr "il pacchetto %s non ha il file 'NAMESPACE'"
+msgstr "il pacchetto %s non ha 'package.rds' in Meta/"
 
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
@@ -1212,53 +1199,50 @@ msgstr ""
 "versione di R"
 
 msgid "-- processing imports for"
-msgstr ""
+msgstr "-- importazione per"
 
 msgid "-- done processing imports for"
-msgstr ""
+msgstr "-- importazione finita per"
 
 msgid "-- loading code for"
-msgstr ""
+msgstr "-- caricamento codice per"
 
 msgid "unable to load R code in package %s"
 msgstr "non è possibile caricare il codice R nel pacchetto %s"
 
 msgid "-- loading sysdata for"
-msgstr ""
+msgstr "-- caricamento sysdata per"
 
 msgid "-- loading lazydata for"
-msgstr ""
+msgstr "-- caricamento lazydata per"
 
 msgid "-- registerS3methods for"
-msgstr ""
+msgstr "-- registerS3methods per"
 
 msgid "-- done registerS3methods for"
-msgstr ""
+msgstr "-- registerS3methods finito per"
 
 msgid "-- running .onLoad for"
-msgstr ""
+msgstr "-- esecuzione di .onLoad per"
 
 msgid "-- done running .onLoad for"
-msgstr ""
+msgstr "-- esecuzione finita di .onLoad per"
 
-#, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
-"'exportClassPattern' specificato in 'NAMESPACE' ma non corrispondono le "
-"classi nel pacchetto %s"
+"specificate esportazioni S4 nel 'NAMESPACE' ma non definite nel pacchetto %s"
 
 msgid "-- processing S4 stuff for"
-msgstr ""
+msgstr "-- elaborazione di aspetti S4 per"
 
 msgid "--- caching metadata"
-msgstr ""
+msgstr "--- caching dei metadati"
 
 msgid "--- done caching metadata"
-msgstr ""
+msgstr "--- caching dei metadati finito"
 
-#, fuzzy
 msgid "--- processing classes"
-msgstr "classe sbagliata"
+msgstr "--- elaborazioni classi"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1281,7 +1265,7 @@ msgid "in %s methods for export not found: %s"
 msgstr "in%s metodi per l'esportazione non trovati: %s"
 
 msgid "---- export method"
-msgstr ""
+msgstr "---- metodo di esportazione"
 
 msgid "multiple methods tables found for %s"
 msgstr "trovate tabelle metodi multiple per %s"
@@ -1295,16 +1279,16 @@ msgstr ""
 "non definiti"
 
 msgid "-- done processing S4 stuff for"
-msgstr ""
+msgstr "-- elaborazione di aspetti S4 finita per"
 
 msgid "--- processing exports for"
-msgstr ""
+msgstr "--- esportazioni per"
 
 msgid "--- sealing exports for"
-msgstr ""
+msgstr "--- chiusura esportazioni per"
 
 msgid "- done loading"
-msgstr ""
+msgstr "- caricamento finito"
 
 msgid "Loading required namespace: %s"
 msgstr "Caricamento dei namespace richiesti: %s"
@@ -1479,7 +1463,7 @@ msgid "incorrect length for 'group'"
 msgstr "lunghezza per 'group' non corretta"
 
 msgid "missing values for 'group'"
-msgstr "valori mancanti in 'group'"
+msgstr "valori mancanti per 'group'"
 
 msgid "not a data frame"
 msgstr "non è un data frame"
@@ -1584,16 +1568,15 @@ msgstr "argomenti di lunghezza differente"
 msgid "method = \"quick\" is only for numeric 'x'"
 msgstr "method = \"quick\" è solo per 'x' di tipo numeric"
 
-#, fuzzy
 msgid ""
 "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
-"'x' dev'essere atomico per 'sort.list'\n"
+"'x' dev'essere atomico per 'sort.list', metodo \"shell\" e \"quick\"\n"
 "Si è chiamato 'sort' su una lista?"
 
 msgid "cannot xtfrm 'x'"
-msgstr ""
+msgstr "non è possibile xtfrm 'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' dev'essere TRUE, FALSE o un ambiente"
@@ -1635,7 +1618,7 @@ msgid "additional arguments ignored in stop()"
 msgstr "ignorati gli argomenti aggiuntivi in stop()"
 
 msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
-msgstr ""
+msgstr "Solo uno di 'exprs', 'exprObject' o espressioni, non più"
 
 msgid ""
 "%s and %s are not equal:\n"
@@ -2056,10 +2039,3 @@ msgstr[1] ""
 
 #~ msgid "'%s' is not an exported object from 'namespace:%s'"
 #~ msgstr "'%s' non è un oggetto esportato dal 'namespace:%s'"
-
-#~ msgid "bad handler specification"
-#~ msgstr "specificazione dell'handler non valida"
-
-#~ msgid "Must use 'exprs' or unnamed expressions, but not both"
-#~ msgstr ""
-#~ "Si deve utilizzare 'exprs' o espressioni non nominate, ma non entrambi"

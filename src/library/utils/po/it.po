@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: utils 3.6.3\n"
+"Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-03-11 11:36+0000\n"
+"POT-Creation-Date: 2021-05-03 09:57+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -99,7 +99,7 @@ msgid "'dec' must be a single character"
 msgstr "'dec' dev'essere un singolo carattere"
 
 #: io.c:1130
-#, fuzzy, c-format
+#, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr ""
 "data frame corrotto -- la lunghezza della colonna %d non corrisponde con "
@@ -111,7 +111,6 @@ msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr "la colonna %s si presenta come un factor ma non ha codici numerici"
 
 #: io.c:1179
-#, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "matrice corrotta -- le dimensioni non corrispondono con la lunghezza"
 
@@ -143,21 +142,19 @@ msgstr "specificazione '%s' non valida"
 #: stubs.c:254
 #, c-format
 msgid "'%s' contains missing values"
-msgstr ""
+msgstr "'%s' contiene valori mancanti"
 
 #: utils.c:68
-#, fuzzy
 msgid "argument 'x' must be a length-1 character vector"
-msgstr "l'argomento dev'essere un vettore di caratteri o un vettore raw"
+msgstr "l'argomento 'x' dev'essere un vettore carattere di lunghezza 1"
 
 #: utils.c:70
 msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr ""
+msgstr "l'argomento 'x' dev'essere codificato UTF-8 (incluso ASCII)"
 
 #: utils.c:83
-#, fuzzy
 msgid "argument 'class' must be a character string"
-msgstr "'text' dev'essere una stringa di caratteri"
+msgstr "l'argomento 'class' dev'essere una stringa character"
 
 #: utils.c:136
 msgid "'hostname' must be a character vector of length 1"

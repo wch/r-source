@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com, 2005-2020.
+# Daniele Medri <dmedri@gmail.com, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: grDevices 3.6.3\n"
+"Project-Id-Version: grDevices 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58+0000\n"
+"POT-Creation-Date: 2021-05-03 09:56+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -442,11 +442,11 @@ msgstr "non è possibile utilizzare la codifica '%s'"
 #: devPS.c:5706
 msgid "failed to increase definition string (shut down PDF device)"
 msgstr ""
+"incremento fallito per la stringa di definizione (chiusura dispositivo PDF)"
 
 #: devPS.c:5748
-#, fuzzy
 msgid "failed to increase 'maxDefns'"
-msgstr "incremento di 'maxRaster' fallito"
+msgstr "incremento fallito per 'maxDefns'"
 
 #: devPS.c:6645 devPS.c:6648
 msgid "failed to increase 'maxRaster'"
@@ -491,9 +491,8 @@ msgid "failed to allocate masks"
 msgstr "allocazione delle maschere fallita"
 
 #: devPS.c:7170
-#, fuzzy
 msgid "failed to allocate definitions"
-msgstr "allocazione lista font fallita"
+msgstr "allocazione fallita per le definizioni"
 
 #: devPS.c:7239
 #, c-format

@@ -267,6 +267,10 @@
       \item Environment variable \env{LC_ALL} on Windows now takes
       precedence over \env{LC_CTYPE} and variables for other supported
       categories, matching the POSIX behaviour.
+
+      \item \code{duplicated()} and \code{anyDuplicated()} are now
+      optimized for integer and real vectors that are known to be sorted
+      via the ALTREP framework. Contributed by Gabriel Becker via \PR{17993}.
     }
   }
 
@@ -709,6 +713,9 @@
 
       \item Binary mode in \code{fifo} on Windows is now properly detected
       from argument \code{open} (\PR{15600}, \PR{18031}).
+
+      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} now warns
+      when it loses accuracy.  We plan to improve it instead (\PR{18095}).
     }
   }
 }

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2020-12-08 12:22+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -567,9 +567,6 @@ msgstr "Nėra Rd makrokomandų pakete '%s'."
 
 msgid "No Rd macros in package '%s'."
 msgstr "Nėra Rd makrokomandų pakete '%s'."
-
-msgid "Previous alias or file overwritten by alias:"
-msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr "daugiau nei viena pavyzdžių sekcija, naudokite pirmą"

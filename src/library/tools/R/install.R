@@ -2235,7 +2235,8 @@ if(FALSE) {
 
     if (fake) {
         use_configure <- FALSE
-        build_html <- FALSE
+        if("--html" %notin% args0)
+            build_html <- FALSE
         build_latex <- FALSE
         build_example <- FALSE
 	install_libs <- FALSE

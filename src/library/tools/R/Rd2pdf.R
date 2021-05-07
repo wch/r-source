@@ -55,8 +55,9 @@
         x
     }
 
-
-    desc <- read.dcf(descfile)[1L, ]
+    ## <FIXME>
+    ##   desc <- read.dcf(descfile)[1L, ]
+    desc <- .read_description(descfile)
     ## Using
     ##   desc <- .read_description(descfile)
     ## would preserve leading white space in Description and Author ...
@@ -66,16 +67,19 @@
     } else out <- outfile
     fields <- names(desc)
     fields <- fields %w/o% c("Package", "Packaged", "Built")
-    if ("Encoding" %in% fields)
-        cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
+    enc <- desc["Encoding"]
+    if(!is.na(enc))
+        cat("\\inputencoding{", latex_canonical_encoding(enc),
             "}\n", sep = "", file = out)
     ## Also try adding PDF title and author metadata.
     tit <- desc["Title"]
     tit <- paste0(desc["Package"], ": ",
                   texify(gsub("[[:space:]]+", " ", tit), two = TRUE))
-    cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
-               "{\\hypersetup{pdftitle = {", tit, "}}}{}"),
-        file = out)
+    tit <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+                  "{\\hypersetup{pdftitle = {", tit, "}}}{}")
+    if(!is.na(enc))
+        tit <- iconv(tit, to = enc)
+    writeLines(tit, con = out, useBytes = TRUE)
     ## Only try author from Authors@R.
     if(!is.na(aar <- desc["Authors@R"])) {
         aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
@@ -85,14 +89,17 @@
             aut <- format(aar, include = c("given", "family"))
             aut <- paste(aut[nzchar(aut)], collapse = "; ")
             aut <- texify(gsub("[[:space:]]+", " ", aut), two = TRUE)
-            if(nzchar(aut))
-                cat(paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
-                           "{\\hypersetup{pdfauthor = {", aut, "}}}{}"),
-                    file = out)
+            if(nzchar(aut)) {
+                aut <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+                              "{\\hypersetup{pdfauthor = {", aut, "}}}{}")
+                if(!is.na(enc))
+                    aut <- iconv(aut, to = enc)
+                writeLines(aut, con = out, useBytes = TRUE)
+            }
         }
     }
     ## And now the actual content.
-    cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)    
+    cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     for (f in fields) {
         ## Drop 'Authors@R' for now: this is formatted badly by \AsIs,
         ## and ideally was used for auto-generating the Author and

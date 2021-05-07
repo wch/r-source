@@ -4949,6 +4949,115 @@ Encoding(xu) <- "unknown"
 stopifnot(identical(Encoding(c(x, xu)), c("bytes", "unknown")))
 
 
+## Correctness tests for sorted ALTREP handling of unique/duplicated (PR#17993)
+
+
+altrep_dup_test <- function(vec, nalast, fromlast, s3class) {
+    svec_ar <- sort(vec, na.last = nalast)
+    svec_std <- svec_ar
+    svec_std[1] <- svec_std[1] ## this clobbers ALTREP-ness
+    if(!is.null(s3class)) {
+        class(svec_ar) <- s3class
+        class(svec_std) <- s3class
+    }
+    stopifnot(identical(duplicated(svec_ar, fromLast = fromlast),
+                        duplicated(svec_std, fromLast = fromlast)),
+              identical(unique(svec_ar, fromLast = fromlast),
+                        unique(svec_std, fromLast = fromlast)),
+              identical(anyDuplicated(svec_ar, fromLast = fromlast),
+                        anyDuplicated(svec_std, fromLast = fromlast))
+              )
+}
+
+altint_dup_check <- function(vec, numna, nalast, fromlast, s3class = NULL) {
+     if(length(vec) > 0 && numna > 0) {
+         vec[1:numna] = NA_integer_
+     }
+     altrep_dup_test(vec, nalast = nalast, fromlast = fromlast, s3class = s3class)
+}
+
+altint_dup_multicheck <- function(vec, numna, s3class = NULL) {
+    altint_dup_check(ivec, numna, FALSE, FALSE, s3class = s3class)
+    altint_dup_check(ivec, numna, FALSE, TRUE, s3class = s3class)
+    altint_dup_check(ivec, numna, TRUE, FALSE, s3class = s3class)
+    altint_dup_check(ivec, numna, TRUE, TRUE, s3class = s3class)
+}
+
+altreal_dup_check <- function(vec, numna, numnan, numinf, nalast, fromlast, s3class = NULL) {
+    if(length(vec) > 0) {
+        if(numna > 0) {
+            vec[1:numna] <- NA_real_
+        }
+        if(numnan > 0) {
+            vec[seq(1+numna, 1+numnan)] <- NaN
+        }
+        if(numinf > 0) {
+            infstrt <- 1 + numna + numnan
+            vec[seq(infstrt, infstrt + numinf - 1)] <- rep(c(Inf, -Inf), length.out = numinf)
+        }
+    } ## end length(vec) > 0
+    altrep_dup_test(vec, nalast = nalast, fromlast = fromlast, s3class = s3class)
+}
+
+altreal_dup_multicheck <- function(vec, numna, numnan, numinf, s3class = NULL) {
+    altreal_dup_check(ivec, numna, numnan, numinf, FALSE, FALSE, s3class = s3class)
+    altreal_dup_check(ivec, numna, numnan, numinf, FALSE, TRUE, s3class = s3class)
+    altreal_dup_check(ivec, numna, numnan, numinf, TRUE, FALSE, s3class = s3class)
+    altreal_dup_check(ivec, numna, numnan, numinf, TRUE, TRUE, s3class = s3class)
+}
+
+## NB buffer size used by ITERATE_BY_REGION macros is 512, so we need to test
+## handling of NAs, NaNs, and Infs around/past that barrier.
+
+set.seed(83); dvec <- round(runif(2000, 1, 20), 1)
+ivec <- ceiling(dvec)
+
+altint_dup_multicheck(ivec, 0)
+## just before buffer break
+altint_dup_multicheck(ivec, 512)
+## just after buffer break
+altint_dup_multicheck(ivec, 513)
+## all nas
+altint_dup_multicheck(ivec, 2000)
+
+altreal_dup_multicheck(dvec, 0, 0, 0)
+## NA/NaN up to edge of 1 buffer
+altreal_dup_multicheck(dvec, 256, 256, 0)
+## NA/NaN  crossing buffer barrier
+altreal_dup_multicheck(dvec, 256, 257, 0)
+## all NA/NaN
+altreal_dup_multicheck(dvec, 1000, 1000, 0)
+## non-finite filling exactly one buffer on each side
+altreal_dup_multicheck(dvec, 0, 0, 1024)
+## non-finite  across more than one buffer on both sides
+altreal_dup_multicheck(dvec, 0, 0, 1026)
+## all non-finite
+altreal_dup_multicheck(dvec, 0, 0, 2000)
+
+## sanity checks
+## no breakage on length 0 vectors
+altint_dup_multicheck(integer(0), 0)
+altreal_dup_multicheck(numeric(0), 0, 0, 0)
+## works on on length 1 vectors
+altint_dup_multicheck(1L, 0)
+altreal_dup_multicheck(1.0, 0, 0, 0)
+
+
+## s3 methods take precedence over altrep methods
+## these methods are (very) wrong on purpose so there can be
+## no doubt they are hit rather than the altrep code even in the sorted case
+duplicated.fake_class <-  function(x, incomparables = FALSE, ...) {
+    rep(c(TRUE, FALSE), length.out = length(x))
+}
+
+unique.fake_class <- function(x, incomparables = FALSE, ...) {
+    x[c(1, 5, length(x))]
+}
+
+altint_dup_multicheck(ivec, 0, s3class = "fake_class")
+altreal_dup_multicheck(dvec, 0, 0, 0, s3class = "fake_class")
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

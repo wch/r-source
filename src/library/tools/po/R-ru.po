@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2020-08-28 16:44+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -568,9 +568,6 @@ msgstr "Rd макропакет '%s' не инсталлирован."
 
 msgid "No Rd macros in package '%s'."
 msgstr "У пакета '%s' нет Rd макроса."
-
-msgid "Previous alias or file overwritten by alias:"
-msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr "более чем одна \\секция примеров, использую первую"

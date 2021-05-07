@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-methods 3.6.3\n"
+"Project-Id-Version: R-methods 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -535,7 +535,7 @@ msgstr "oggetto non valido per la definizione formale del metodo: tipo %s"
 
 msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr ""
-"slot del pacchetto mancante (%s) nell'oggetto della classe %s (aggiunte "
+"slot del pacchetto assente (%s) nell'oggetto della classe %s (aggiunte "
 "informazioni sul pacchetto)"
 
 msgid ""
@@ -901,19 +901,19 @@ msgid "Empty function name in .getGeneric"
 msgstr "Nome funzione vuoto in .getGeneric"
 
 msgid "--- caching class"
-msgstr ""
+msgstr "--- caching class"
 
 msgid "--- done caching class"
-msgstr ""
+msgstr "--- caching class finito"
 
 msgid "--- getting generic"
-msgstr ""
+msgstr "--- trasformazione in generic"
 
 msgid "(and methods)"
-msgstr ""
+msgstr "(e metodi)"
 
 msgid "--- done getting generic"
-msgstr ""
+msgstr "--- trasformazione in generic finita"
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -1013,7 +1013,7 @@ msgid "no definition found for class %s"
 msgstr "nessuna definizione trovata per la classe %s"
 
 msgid "missing function for load action: %s"
-msgstr "funzione mancante per l'azione di caricamento: %s"
+msgstr "funzione assente per l'azione di caricamento: %s"
 
 msgid "error in load action %s for package %s: %s: %s"
 msgstr "errore nell'azione di caricamento %s per il pacchetto %s: %s: %s"
@@ -1025,7 +1025,7 @@ msgid "action function %s has no arguments, should have at least 1"
 msgstr "funzione azione %s senza argomenti, dovrebbe averne almeno 1"
 
 msgid "some actions are missing: %s"
-msgstr "alcune funzioni sono mancanti: %s"
+msgstr "alcune azioni sono assenti: %s"
 
 msgid "%s has a sealed class definition and cannot be redefined"
 msgstr "%s ha una definizione di classe protetta e non può essere ridefinita"
@@ -1309,14 +1309,13 @@ msgstr ""
 "la classe %s è protetta; nuove superclassi non possono essere definite, "
 "tranne che da 'setClassUnion'"
 
-#, fuzzy
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
 "revise %s information---not imported?  Making a copy in package %s"
 msgstr ""
-"la classe %s è definita (con lo slot del pacchetto %s), ma non è stato "
+"la classe %s è definita (con lo slot del pacchetto %s) ma non è stato "
 "trovato alcun oggetto metadati per rivedere le informazioni %s --- non "
-"esportato? Si fa una copia nel pacchetto %s"
+"inportato?  Si fa una copia nel pacchetto %s"
 
 msgid "class %s cannot extend class %s"
 msgstr "la classe %s non può estendere la classe %s"

@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 2000-2021 The R Core Team
+ *  Copyright (C) 2005-2021 The R Foundation
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2016 The R Core Team
- *  Copyright (C) 2005-2016 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,6 +44,17 @@
 #include "nmath.h"
 #include "dpq.h"
 
+/**
+   For P(x) := pnbinom(x, n, pr),  find p-quantile  y(p)   :<==>   P(y) < p <= P(y)
+
+   @param y    current guess
+   @param *z   == pnbinom(y, ..)
+   @param p    target probability
+   @param n, pr  parameters of the negative binomial
+   @param incr increment, integer valued >= 1.
+
+   @return  root 'y'  and  z[0] = pnbinom(y, ..)
+ */
 static double
 do_search(double y, double *z, double p, double n, double pr, double incr)
 {
@@ -128,6 +139,11 @@ double qnbinom_mu(double p, double size, double mu, int lower_tail, int log_p)
 {
     if (size == ML_POSINF) // limit case: Poisson
 	return(qpois(p, mu, lower_tail, log_p));
-/* FIXME!  Implement properly!! (not losing accuracy for very large size (prob ~= 1)*/
-    return qnbinom(p, size, /* prob = */ size/(size+mu), lower_tail, log_p);
+    /* FIXME!  Implement properly!! (not losing accuracy for very large size (prob ~= 1)
+       ------  --> rather invert pnbinom_mu()  */
+    double pr = size/(size+mu);
+    if(pr == 1. && mu > 0.)
+	MATHLIB_WARNING3(_("qnbinom_mu(%g, size=%g, mu=%g) --> prob=1: precision lost in result\n"),
+			 p, size, mu);
+    return qnbinom(p, size, /* prob = */ pr, lower_tail, log_p);
 }
