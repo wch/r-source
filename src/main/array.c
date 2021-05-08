@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2020   The R Core Team
+ *  Copyright (C) 1998-2021   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -63,6 +63,7 @@ SEXP GetColNames(SEXP dimnames)
 	return R_NilValue;
 }
 
+// .Internal(matrix(data, nrow, ncol, byrow, dimnames, missing(nrow), missing(ncol)))
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, snr, snc, dimnames;
@@ -116,36 +117,33 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (lendat > INT_MAX) error("data is too long");
 	nr = (int) lendat;
     } else if (miss_nr) {
-	if (lendat > (double) nc * INT_MAX) error("data is too long");
-	// avoid division by zero
-	if (nc == 0) {
-	    if (lendat) error(_("nc = 0 for non-null data"));
-	    else nr = 0;
-	} else
+	if (lendat > (double) nc * INT_MAX) error("data is too long"); // incl lendat > nc == 0
+	if (nc == 0) // as lendat <= nc, have lendat == 0
+	    nr = 0;
+	else
 	    nr = (int) ceil((double) lendat / (double) nc);
     } else if (miss_nc) {
-	if (lendat > (double) nr * INT_MAX) error("data is too long");
-	// avoid division by zero
-	if (nr == 0) {
-	    if (lendat) error(_("nr = 0 for non-null data"));
-	    else nc = 0;
-	} else
+	if (lendat > (double) nr * INT_MAX) error("data is too long"); // incl lendat > nr == 0
+	if (nr == 0) // then lendat == 0
+	    nc = 0;
+	else
 	    nc = (int) ceil((double) lendat / (double) nr);
     }
 
-    if(lendat > 0) {
+    if (lendat > 0) {
 	R_xlen_t nrc = (R_xlen_t) nr * nc;
-	if (lendat > 1 && nrc % lendat != 0) {
+	if (lendat > 1 && (nrc % lendat) != 0) { // ==> nrc > 0
 	    if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
 		((lendat < nr) && (nr / lendat) * lendat != nr))
 		warning(_("data length [%d] is not a sub-multiple or multiple of the number of rows [%d]"), lendat, nr);
 	    else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
 		     ((lendat < nc) && (nc / lendat) * lendat != nc))
 		warning(_("data length [%d] is not a sub-multiple or multiple of the number of columns [%d]"), lendat, nc);
+	    else if (nrc != lendat)
+		warning(_("data length differs from size of matrix: [%d != %d x %d]"), lendat, nr, nc);
 	}
-	else if ((lendat > 1) && (nrc == 0)){
-	    warning(_("data length exceeds size of matrix"));
-	}
+	else if (lendat > 1 && nrc == 0) // for now *not* warning for e.g., matrix(NA, 0, 4)
+	    warning(_("non-empty data for zero-extent matrix"));
     }
 
 #ifndef LONG_VECTOR_SUPPORT
@@ -289,11 +287,8 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 
 SEXP DropDims(SEXP x)
 {
-    SEXP dims, dimnames, newnames = R_NilValue;
-    int i, n, ndims;
-
     PROTECT(x);
-    dims = getAttrib(x, R_DimSymbol);
+    SEXP dims = getAttrib(x, R_DimSymbol);
 
     /* Check that dropping will actually do something. */
     /* (1) Check that there is a "dim" attribute. */
@@ -302,11 +297,12 @@ SEXP DropDims(SEXP x)
 	UNPROTECT(1); /* x */
 	return x;
     }
-    ndims = LENGTH(dims);
+
+    int ndims = LENGTH(dims);
     int *dim = INTEGER(dims); // used several times
 
     /* (2) Check whether there are redundant extents */
-    n = 0;
+    int i, n = 0;
     for (i = 0; i < ndims; i++)
 	if (dim[i] != 1) n++;
     if (n == ndims) {
@@ -314,7 +310,8 @@ SEXP DropDims(SEXP x)
 	return x;
     }
 
-    PROTECT(dimnames = getAttrib(x, R_DimNamesSymbol));
+    SEXP dimnames = PROTECT(getAttrib(x, R_DimNamesSymbol)),
+	newnames = R_NilValue;
     if (n <= 1) {
 	/* We have reduced to a vector result.
 	   If that has length one, it is ambiguous which dimnames to use,
@@ -811,7 +808,7 @@ static void matprod(double *x, int nrx, int ncx,
 	F77_CALL(dgemv)(transT, &nry, &ncy, &one, y,
 			&nry, x, &ione, &zero, z, &ione FCONE);
     else /* matrix-matrix or outer product */
-	F77_CALL(dgemm)(transN, transN, &nrx, &ncy, &ncx, &one, x, 
+	F77_CALL(dgemm)(transN, transN, &nrx, &ncy, &ncx, &one, x,
 			&nrx, y, &nry, &zero, z, &nrx FCONE FCONE);
 }
 

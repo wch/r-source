@@ -17,6 +17,15 @@
       of \R to that provided by \samp{libcurl}.
     }
   }
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{matrix(x, n,m)} now warns in more cases where
+      \code{length(x)} is larger than \code{n * m}; suggested by Abby
+      Spurdle and Wolfgang Huber in Feb.2021 on R-devel (mailing list).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is correct
