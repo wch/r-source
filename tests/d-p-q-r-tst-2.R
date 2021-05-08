@@ -218,10 +218,22 @@ stopifnot(All.eq(pt(2^-30, df=10),
 
 ## rbinom(*, size) gave NaN for large size up to R <= 2.6.1
 M <- .Machine$integer.max
-set.seed(7)
-tt <- table(rbinom(100,    M, pr = 1e-9)) # had values in {0,2} only
-t2 <- table(rbinom(100, 10*M, pr = 1e-10))
-stopifnot(names(tt) == 0:6, sum(tt) == 100, sum(t2) == 100) ## no NaN there
+set.seed(7) # as M is large, now "basically" rbinom(n, *) := qbinom(runif(n), *) :
+(tt <- table(rbinom(100,    M, pr = 1e-9 )) ) # had values in {0,2} only
+(t2 <- table(rbinom(100, 10*M, pr = 1e-10)) )
+stopifnot(0:6 %in% names(tt), sum(tt) == 100, sum(t2) == 100) ## no NaN there
+## related qbinom() tests:
+k <- 0:32
+for(n in c((M+1)/2, M, 2*M, 10*M)) {
+    for(pr in c(1e-8, 1e-9, 1e-10)) {
+        nDup <- !duplicated( pb <- pbinom(k, n, pr) )
+        qb <- qbinom(pb[nDup], n, pr)
+        pn1 <- pb[nDup] < if(b64) 1 else 1 - 3*.Machine$double.eps
+        stopifnot(k[nDup][pn1] == qb[pn1]) ##^^^^^ fudge needed (Linux 32-b)
+    }
+}
+## qbinom()  gave  NaN in R 4.0.2
+
 
 ## qf() with large df1, df2  and/or  small p:
 x <- 0.01; f1 <- 1e60; f2 <- 1e90
@@ -531,17 +543,32 @@ stopifnot(is.nan(p) || p == 1)
 ## gave infinite loop on some 64b platforms in R <= 3.2.3
 
 ## [dpqr]nbinom(*, mu, size=Inf) -- PR#16727
-L <- 1e308; mu <- 5; pp <- (0:16)/16
+## (extended wrt changes for PR#15628 )
+L <- 1e308; mu <- 5
 x <- c(0:3, 1e10, 1e100, L, Inf)
-d <- dnbinom(x,  mu = mu, size = Inf) # gave NaN (for 0 and L)
-p <- pnbinom(x,  mu = mu, size = Inf) # gave all NaN
+MxM <- .Machine$double.xmax
+xL <- c(2^(1000+ c(1:23, 23.5, 23.9, 24-1e-13)), MxM, Inf)
+(dP <- dpois(xL, mu)) # all 0
+(pP <- ppois(xL, mu)) # all 1
+stopifnot(dP == 0, pP == 1, identical(pP, pgamma(mu, xL + 1, 1., lower.tail=FALSE)))
+## cbind(xL, dP, pP)
+
+(dLmI <- dnbinom(xL, mu = 1, size = Inf))  # all ==  0
+## FIXME ?!:  MxM/2 seems +- ok ??
+(dLmM <- dnbinom(xL, mu = 1, size = MxM))  # all NaN but the last
+(dLpI <- dnbinom(xL, prob=1/2, size = Inf))#  ditto
+(dLpM <- dnbinom(xL, prob=1/2, size = MxM))#  ditto
+
+d <- dnbinom(x,  mu = mu, size = Inf) # gave NaN (for 0 and L), now all 0
+p <- pnbinom(x,  mu = mu, size = Inf) # gave all NaN, now uses ppois(x, mu)
+pp <- (0:16)/16
 q <- qnbinom(pp, mu = mu, size = Inf) # gave all NaN
 set.seed(1); NI <- rnbinom(32, mu = mu, size = Inf)# gave all NaN
 set.seed(1); N2 <- rnbinom(32, mu = mu, size = L  )
 stopifnot(exprs = {
-    all.equal(d, c(0.006737947, 0.033689735, 0.084224337, 0.140373896, 0,0,0,0), tol = 1e-8)
-    all.equal(p, c(0.006737947, 0.040427682, 0.124652019, 0.265025915, 1,1,1,1), tol = 9e-9)
-    all.equal(d, dpois(x, mu))
+    all.equal(d, c(0.006737947, 0.033689735, 0.0842243375, 0.140373896, 0,0,0,0), tol = 9e-9)# 7.6e-10
+    all.equal(p, c(0.006737947, 0.040427682, 0.1246520195, 0.265025915, 1,1,1,1), tol = 9e-9)# 7.3e-10
+    all.equal(d, dpois(x, mu))# current implementation: even identical()
     all.equal(p, ppois(x, mu))
     q == c(0, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 6, 7, 8, 9, Inf)
     q == qpois(pp, mu)
@@ -686,9 +713,48 @@ stopifnot(exprs = {
 ## all these where -Inf  in R <= 4.0.x
 
 
-## Should be *temporary* as we should fix it (PR#18095):
-assertWarning(qnbinom(1e-4, size=1e16, mu=1, lower.tail=FALSE))
+## qnbinom(*, size=<large>, mu=<small>) -- PR#18095:
+qi  <- 0:16
+qiL <- c(0:99, 10L*(10:20), 50L*(5:20))
+verbose <- interactive()
+for(N in c(10^c(-300, -100, -20, -9:-7, -2, 2, 7:9), 9.1e15, 10^c(20,30,50, 100, 300))) {
+    if(verbose) cat("N =", N,": ")
+    pbi  <- pnbinom(qi,  size=N, mu=1)
+    pbiU <- pnbinom(qiL, size=N, mu=1, lower.tail=FALSE, log.p=TRUE)
+    stopifnot(exprs = { ## whne pbinom(.) gave 1, quntile is Inf
+        pbi == 1 | qi  == qnbinom(pbi,  size=N, mu=1)
+        qiL == qnbinom(pbiU, size=N, mu=1, lower.tail=FALSE, log.p=TRUE)
+    })
+    if(verbose) cat("[Ok]\n")
+}
 
+## qnbinom(*) gave all 0 in R <= 4.1.0
+##
+##
+## Fix qnbinom(*, scale = <<small>>), partly reported to R-devel, Aug.7, 2020
+## by Constantin Ahlmann-Eltze: size=1e-10 already took 30 sec on his computer:
+st <- system.time(qn <- qnbinom(0.5, mu = 3, size = 2^-(10:59)))[[1]]
+stopifnot(exprs = {
+    st < .5 # = 500 ms; observed 0 sec, i.e., '< 1 ms'
+    qn == 0
+    print(qnbinom(.9999, mu=3,   size=1e-4)) == 7942 # was 8044 (MM on R-devel)
+    print(qnbinom(.9999, mu=1e5, size=1e10)) == 101178 # was off by 1
+    { ## Even larger:                 ^^^^ large size
+        size <- 1e13; mu <- size/4; k <- 2500002265485 + (-100:100)
+        pnb <- pnbinom( k , mu=mu, size=size) # around 0.9
+        qnb <- qnbinom(pnb, mu=mu, size=size)
+        qnb == k ## in R <= 4.0.2, qnb == k+23  wrongly
+    }
+    { ## small size, large k : needs "p fuzz factor 16 instead of 64 :
+        k <- 75000 + -1000:1000; size <- 1e-9; mu <- 30
+        pnb <- pnbinom( k , mu=mu, size=size) # = 0.999999987678 (for k=75'000)
+        qnb <- qnbinom(pnb, mu=mu, size=size)
+        qnb == k ## in R <= 4.0.2, qnb == k-1  wrongly
+    }
+})
+## For log.p=TRUE  and or lower.tail=FALSE
+##
+## all three  qpois(), qbinom() & qnbinom() were *far* from good in R <= 4.1.0
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

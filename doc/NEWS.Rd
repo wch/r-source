@@ -17,6 +17,16 @@
       of \R to that provided by \samp{libcurl}.
     }
   }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is correct
+      now in a range of cases (\PR{18095}); similarly for the \code{(size,
+      prob)} parametrization of the negative binomial.  Also \code{qpois()}
+      and \code{qbinom()} are better and or faster for extreme cases.  The
+      underlying C code has been modularized and common to all four cases
+      of discrete distributions.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 4.1.0}{
@@ -713,9 +723,6 @@
 
       \item Binary mode in \code{fifo} on Windows is now properly detected
       from argument \code{open} (\PR{15600}, \PR{18031}).
-
-      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} now warns
-      when it loses accuracy.  We plan to improve it instead (\PR{18095}).
     }
   }
 }
