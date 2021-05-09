@@ -1588,10 +1588,12 @@ of the application where you installed it (which may not be where you
 want this time @dots{}).
 
 Various parts of the build require XQuartz to be installed: see
-@uref{https://www.xquartz.org/}.  These include the @pkg{tcltk} package
-and the @code{X11} device: attempting to use these without XQuartz will
-if possible remind you.@footnote{If @command{otool} is installed: it is
-part of the macOS Command Line Tools.}  This is also needed for some
+@uref{https://www.xquartz.org/releases}.@footnote{At the time of writing
+the distribution was built/tested against 2.7.11 for compatibility with
+@R{} 4.0.0.}  These include the @pkg{tcltk} package and the @code{X11}
+device: attempting to use these without XQuartz will if possible remind
+you.@footnote{If @command{otool} is installed: it is part of the macOS
+Command Line Tools.}  This is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")}.
@@ -5419,7 +5421,8 @@ or
 --with-tcl-config=/usr/local/lib/tclConfig.sh
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-Note that this requires a matching XQuartz installation.
+Note that this requires a matching@footnote{At the time of writing the
+Intel distribution used 2.7.11.} XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native macOS style: this will not work with @Rapp{} because of
