@@ -52,9 +52,14 @@
 
 #define P_DIST(Y_, ...) _pDIST_(Y_, __VA_ARGS__, lower_tail, log_p)
 
+#ifdef MATHLIB_STANDALONE
+# define MAYBE_R_CheckUserInterrupt()
+#else
+# define MAYBE_R_CheckUserInterrupt() R_CheckUserInterrupt()
+#endif
+
 static double DO_SEARCH_FUN(_dist_PARS_DECL_)
 {
-    int iter = 0;
     Rboolean left = (lower_tail ? (*z >= p) : (*z < p));
     R_DBG_printf(" do_search(y=%g, z=%15.10g %s p = %15.10g) --> search to %s",
 		 y, *z, (lower_tail ? ">=" : "<"), p, (left ? "left" : "right"));
@@ -63,9 +68,11 @@ static double DO_SEARCH_FUN(_dist_PARS_DECL_)
     else R_DBG_printf("\n");
 
     if(left) {	// (lower_tail, *z >= p)  or  (upper tail, *z < p): search to the __left__
-	for(;;) {
+	for(int iter = 0; ; iter++) {
 	    double newz = -1.; // -Wall
-	    if(++iter % 10000 == 0) R_CheckUserInterrupt();// have seen inf.loops
+#ifndef MATHLIB_STANDALONE
+	    if(iter % 10000 == 0) R_CheckUserInterrupt();// have seen inf.loops
+#endif
 	    if(y > 0)
 		newz = P_DIST(y - incr, _dist_PARS_);
 	    else if(y < 0)
@@ -82,8 +89,10 @@ static double DO_SEARCH_FUN(_dist_PARS_DECL_)
 	}
     }
     else { // (lower_tail, *z < p)  or  (upper tail, *z >= p): search to the __right__
-	for(;;) {
-	    if(++iter % 10000 == 0) R_CheckUserInterrupt();
+	for(int iter = 0; ; iter++) {
+#ifndef MATHLIB_STANDALONE
+	    if(iter % 10000 == 0) R_CheckUserInterrupt();
+#endif
 	    y += incr;
 #ifdef _dist_MAX_y
 	    if(y < _dist_MAX_y)
@@ -202,7 +211,7 @@ static double DO_SEARCH_FUN(_dist_PARS_DECL_)
 	do {								\
 	    oldincr = incr;						\
 	    y = DO_SEARCH_(y, incr, _dist_PARS_); /* also updating *z */ \
-	    if(++qIt % 10000 == 0) R_CheckUserInterrupt();		\
+	    if(++qIt % 10000 == 0) MAYBE_R_CheckUserInterrupt();	\
 	    incr = fmax2(1, floor(incr / _iShrink_));			\
 	} while(oldincr > 1 && incr > y * _relTol_);			\
 	R_DBG_printf("  \\--> oldincr=%.0f, after %d \"outer\" search() iterations\n", \
