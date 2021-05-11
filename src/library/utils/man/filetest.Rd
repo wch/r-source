@@ -16,12 +16,17 @@ file_test(op, x, y)
 }
 \arguments{
   \item{op}{a character string specifying the test to be performed.
-    Unary tests (only \code{x} is used) are \code{"-f"} (existence and
-    not being a directory), \code{"-d"} (existence and directory) and
-    \code{"-x"} (executable as a file or searchable as a directory).
-    Binary tests are \code{"-nt"} (strictly newer than, using the modification
-    dates) and \code{"-ot"} (strictly older than): in both cases the
-    test is false unless both files exist.}
+    Unary tests (only \code{x} is used) are
+    \code{"-f"} (existence and not being a directory),
+    \code{"-d"} (existence and directory),
+    \code{"-L"} or \code{"-h"} (existence and symbolic link),
+    \code{"-x"} (executable as a file or searchable as a directory),
+    \code{"-w"} (writable) and
+    \code{"-r"} (readable).
+    Binary tests are
+    \code{"-nt"} (strictly newer than, using the modification dates) and
+    \code{"-ot"} (strictly older than):
+    in both cases the test is false unless both files exist.}
   \item{x, y}{character vectors giving file paths.}
 }
 \details{
