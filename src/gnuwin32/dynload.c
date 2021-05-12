@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014 The R Core Team
+ *  Copyright (C) 1997-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -89,9 +89,6 @@ static void fixPath(char *path)
 static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now,
 			       const char *search);
 static DL_FUNC getRoutine(DllInfo *info, char const *name);
-#ifdef CACHE_DLL_SYM
-static void R_deleteCachedSymbols(DllInfo *dll);
-#endif
 
 static void R_getDLLError(char *buf, int len);
 static void GetFullDLLPath(SEXP call, char *buf, const char *path);
@@ -109,28 +106,13 @@ void InitFunctionHashing()
     R_osDynSymbol->getError = R_getDLLError;
 
 #ifdef CACHE_DLL_SYM
-    R_osDynSymbol->deleteCachedSymbols = R_deleteCachedSymbols;
+    R_osDynSymbol->deleteCachedSymbols = Rf_deleteCachedSymbols;
     R_osDynSymbol->lookupCachedSymbol = Rf_lookupCachedSymbol;
 #endif
 
     R_osDynSymbol->fixPath = fixPath;
     R_osDynSymbol->getFullDLLPath = GetFullDLLPath;
 }
-
-#ifdef CACHE_DLL_SYM
-static void R_deleteCachedSymbols(DllInfo *dll)
-{
-    int i;
-    for(i = nCPFun - 1; i >= 0; i--)
-	if(!strcmp(CPFun[i].pkg, dll->name)) {
-	    if(i < nCPFun - 1) {
-		strcpy(CPFun[i].name, CPFun[--nCPFun].name);
-		strcpy(CPFun[i].pkg, CPFun[nCPFun].pkg);
-		CPFun[i].func = CPFun[nCPFun].func;
-	    } else nCPFun--;
-	}
-}
-#endif
 
 #ifndef _MCW_EM
 _CRTIMP unsigned int __cdecl

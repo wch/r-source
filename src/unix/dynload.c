@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2018 The R Core Team
+ *  Copyright (C) 1997-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,7 +47,6 @@
 static void *loadLibrary(const char *path, int asLocal, int now,
 			 const char *search);
 static void closeLibrary(void *handle);
-static void deleteCachedSymbols(DllInfo *);
 static DL_FUNC R_local_dlsym(DllInfo *info, char const *name);
 static void getFullDLLPath(SEXP call, char *buf, const char *path);
 static void getSystemError(char *buf, int len);
@@ -61,7 +60,7 @@ void attribute_hidden InitFunctionHashing()
     R_osDynSymbol->closeLibrary = closeLibrary;
     R_osDynSymbol->getError = getSystemError;
 
-    R_osDynSymbol->deleteCachedSymbols = deleteCachedSymbols;
+    R_osDynSymbol->deleteCachedSymbols = Rf_deleteCachedSymbols;
     R_osDynSymbol->lookupCachedSymbol = Rf_lookupCachedSymbol;
 
     R_osDynSymbol->getFullDLLPath = getFullDLLPath;
@@ -88,30 +87,6 @@ static void closeLibrary(HINSTANCE handle)
 {
     dlclose(handle);
 }
-
- /*
-   If we are caching the native level symbols, this routine
-   discards the ones from the DLL identified by loc.
-   This is called as the initial action of DeleteDLL().
-  */
-static void deleteCachedSymbols(DllInfo *dll)
-{
-#ifdef CACHE_DLL_SYM
-    int i;
-    /* Wouldn't a linked list be easier here?
-       Potentially ruin the contiguity of the memory.
-    */
-    for(i = nCPFun - 1; i >= 0; i--)
-	if(!strcmp(CPFun[i].pkg, dll->name)) {
-	    if(i < nCPFun - 1) {
-		strcpy(CPFun[i].name, CPFun[--nCPFun].name);
-		strcpy(CPFun[i].pkg, CPFun[nCPFun].pkg);
-		CPFun[i].func = CPFun[nCPFun].func;
-	    } else nCPFun--;
-	}
-#endif /* CACHE_DLL_SYM */
-}
-
 
  /*
     Computes the flag to be passed as the second argument to dlopen(),
