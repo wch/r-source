@@ -332,9 +332,9 @@
     \else
       \@restonecolfalse
     \fi
-    \chapter*{\contentsname
+    \@ifundefined{chapter*}{}{\chapter*{\contentsname
         \@mkboth{%
-           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}}%
     \pdfbookmark{Contents}{contents}
     \@starttoc{toc}%
     \if@restonecol\twocolumn\fi
