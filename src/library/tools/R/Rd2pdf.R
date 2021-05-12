@@ -57,7 +57,7 @@
 
     ## <FIXME>
     ##   desc <- read.dcf(descfile)[1L, ]
-    desc <- .read_description(descfile)
+    desc <- .read_description(descfile, keep.white = character())
     ## Using
     ##   desc <- .read_description(descfile)
     ## would preserve leading white space in Description and Author ...

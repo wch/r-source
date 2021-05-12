@@ -1937,7 +1937,7 @@ function(txt)
     c("Description", "Authors@R", "Author", "Built", "Packaged")
 
 .read_description <-
-function(dfile)
+function(dfile, keep.white = .keep_white_description_fields)
 {
     ## Try reading in package metadata from a DESCRIPTION file.
     ## (Never clear whether this should work on the path of the file
@@ -1948,16 +1948,14 @@ function(dfile)
     ## </NOTE>
     if(!file_test("-f", dfile))
         stop(gettextf("file '%s' does not exist", dfile), domain = NA)
-    out <- tryCatch(read.dcf(dfile,
-                             keep.white =
-                             .keep_white_description_fields),
+    out <- tryCatch(read.dcf(dfile, keep.white = keep.white),
                     error = function(e)
                     stop(gettextf("file '%s' is not in valid DCF format",
                                   dfile),
                          domain = NA, call. = FALSE))
-    if (nrow(out) != 1)
+    if (nrow(out) != 1L)
         stop("contains a blank line", call. = FALSE)
-    out <- out[1,]
+    out <- out[1L, ]
     if(!is.na(encoding <- out["Encoding"])) {
         ## could convert everything (valid) to UTF-8
         if(encoding == "UTF-8") {
