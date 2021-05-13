@@ -1569,10 +1569,7 @@ tested) install @R{} from the sources (see @ref{macOS}).
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
-(`Updates' from the `App Store' on Mojave and earlier) to be sure.  (If
-using XQuartz, check that it is compatible: at the time of writing the
-latest version was 2.7.11 from October 2016 but releases of 2.8.0
-had just become available and were being offered as upgrades.)
+(`Updates' from the `App Store' on Mojave and earlier) to be sure.
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -1591,10 +1588,12 @@ of the application where you installed it (which may not be where you
 want this time @dots{}).
 
 Various parts of the build require XQuartz to be installed: see
-@uref{https://www.xquartz.org/}.  These include the @pkg{tcltk} package
-and the @code{X11} device: attempting to use these without XQuartz will
-if possible remind you.@footnote{If @command{otool} is installed: it is
-part of the macOS Command Line Tools.}  This is also needed for some
+@uref{https://www.xquartz.org/releases}.@footnote{At the time of writing
+the distribution was built/tested against 2.7.11 for compatibility with
+@R{} 4.0.0.}  These include the @pkg{tcltk} package and the @code{X11}
+device: attempting to use these without XQuartz will if possible remind
+you.@footnote{If @command{otool} is installed: it is part of the macOS
+Command Line Tools.}  This is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
 macOS) such as @code{png(type = "cairo")}.
@@ -2227,18 +2226,20 @@ for the @code{libomp.dylib} library to be found at both install time and run
 time, for example by copying/linking it somewhere that is searched such
 as @file{/usr/local/lib}.
 
-Installing a source package containing C/C++ code into @acronym{CRAN}
-distribution of @R{} running on an @cputype{arm64} Mac requires telling
-the compiler(s) to generate Intel code.  For example, for Command Line
-Tools / Xcode 12.x one could have in @file{~/.R/Makevars}
+@c Seems unneeded as running from the R executable forces x86_64 compiles.
+@c
+@c Installing a source package containing C/C++ code into @acronym{CRAN}
+@c distribution of @R{} running on an @cputype{arm64} Mac requires telling
+@c the compiler(s) to generate Intel code.  For example, for Command Line
+@c Tools / Xcode 12.x one could have in @file{~/.R/Makevars}
 
-@example
-CC = clang -target x86_64-apple-macos10.15
-CXX = clang++ -target x86_64-apple-macos10.15
-@end example
+@c @example
+@c CC = clang -target x86_64-apple-macos10.15
+@c CXX = clang++ -target x86_64-apple-macos10.15
+@c @end example
 
-@noindent
-(Using @code{-arch x86_64} also works.)
+@c @noindent
+@c (Using @code{-arch x86_64} also works.)
 
 Apple includes many Open Source libraries in macOS but increasingly
 without the corresponding headers (not even in Xcode nor the Command
@@ -2289,7 +2290,7 @@ put the @file{/usr/local/gfortran/bin} directory on your path as that
 contains (real) @command{gcc} and @command{g++} which may be found
 rather the Apple-provided commands, and may not be able to find the
 headers and libraries@footnote{From Big Sur those libraries are not
-publicly visible: rather the system compiler link to `text-based
+publicly visible: rather the system compilers link to `text-based
 definition' (@file{.tbd}) files.} of the SDK.
 
 For @cputype{arm64}, not all configure scripts have been updated to
@@ -2297,15 +2298,15 @@ recognize the platform and so might need the flag
 @option{--build=aarch64-apple-darwin20.1.0}.  Also, be aware that
 running the compilers from a @cputype{x86_64} application switches them
 to generating code for that CPU: this applies to a Terminal, a shell,
-@command{cmake} or (non-system) @command{make}.  One can use
+older @command{cmake} or (non-system) @command{make}, and from
+@command{R CMD INSTALL} or @code{install.packages()}.  One can use
 
 @example
-./configure CC="clang -target arm64-apple-macos11" CFLAGS=-O2 \
-CXX="clang++ -target arm64-apple-macos11" CXXFLAGS=-O2
+./configure CC="clang -arch arm64" CFLAGS=-O2 CXX="clang++ -arch arm64" CXXFLAGS=-O2
 @end example
 
 @noindent
-to force @cputype{arm64} code.  (Using @code{-arch arm64} also works.)
+to force @cputype{arm64} code.
 
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
@@ -5182,9 +5183,9 @@ Should one want to build @R{} for Intel on an @cputype{arm64} Big Sur
 Mac, add the target for the C and C++ compilers:
 
 @example
-CC="clang -target x86_64-apple-macos10.15"
+CC="clang -arch x86_64
 OBJC=$CC
-CXX="clang++ -target x86_64-apple-macos10.15"
+CXX="clang++ -arch x86_64"
 @end example
 
 @noindent
@@ -5223,14 +5224,13 @@ Libs: -lexpat
 Cflags: 
 @end example
 @noindent
-If using a static build of Cairo, configure @R{} with option
-@option{--with-static-cairo}.  Note that the list of components is
-liable to change: running @command{pkg-config cairo --exists
---print-errors} should tell you if any others are required.
+Note that the list of components is liable to change: running
+@command{pkg-config cairo --exists --print-errors} should tell you if
+any others are required.
 
-If you have XQuartz 2.7.x installed and ensure XQuartz's @code{pkg-config}
-files are found first on its configuration path, Cairo will be linked
-dynamically.  This can be done by setting something like
+If you have XQuartz 2.7.x installed (not 2.8.x) and ensure XQuartz's
+@code{pkg-config} files are found first on its configuration path, Cairo
+will be linked dynamically.  This can be done by setting something like
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
@@ -5245,7 +5245,7 @@ libraries, you can add option @option{--without-static-cairo} to the
 @c A possible issue is that --static will require the private
 @c dependencies of fontconfig, usually either xml2 or expat, and a
 @c dynamic installation might not have the pkg-config files for those.
-@c Another issue seen in XQuartz 2.8.0rc4 is that pkg-config requires
+@c Another issue seen in XQuartz 2.8.0 is that pkg-config requires
 @c the private dependencies of cairo of which xproto is not included.
 
 @cindex Pango
@@ -5255,9 +5255,9 @@ Unix-alikes.  @command{configure} uses @command{pkg-config} to determine
 if all the external software required by both Pango and Cairo is
 available: running @command{pkg-config pangocairo --exists
 --print-errors} should show if the installation suffices and if not,
-what is missing.  At the time of writing components were available only
-for @cputype{arm64}, where components @code{cairo}, @code{ffi},
-@code{fontconfig}, @code{freetype}, @code{ffi}, @code{glib},
+what is missing.  At the time of writing pre-built components were
+available only for @cputype{arm64}, where components @code{cairo},
+@code{ffi}, @code{fontconfig}, @code{freetype}, @code{ffi}, @code{glib},
 @code{harfbuzz}, @code{pango} and @code{xml2} sufficed.
 
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
@@ -5420,7 +5420,8 @@ or
 --with-tcl-config=/usr/local/lib/tclConfig.sh
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-Note that this requires a matching XQuartz installation.
+Note that this requires a matching@footnote{At the time of writing the
+Intel distribution used 2.7.11.} XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native macOS style: this will not work with @Rapp{} because of
@@ -5662,20 +5663,15 @@ known as `M1', Apple's name for their (first-generation) CPU.
 It is possible to build and run @R{} and almost all packages for
 @cputype{x86_64} using `Rosetta' emulation.  To do so, install all the
 prerequisites and other software described above, but include the flag
-@option{-target x86_64-apple-macos10.13} for @command{clang} and
-@command{clang++}, for example with a @file{config.site} file containing
+@option{-arch x86_64} for @command{clang} and @command{clang++}, for
+example with a @file{config.site} file containing
 
 @example
-CC="clang -target x86_64-apple-macos10.13"
+CC="clang -arch x86_64"
 OBJC=$CC
-CXX="clang++ -target x86_64-apple-macos10.13"
+CXX="clang++ -arch x86_64"
 FC="/usr/local/gfortran/bin/gfortran -mtune=native -mmacosx-version-min=10.13"
 @end example
-
-@noindent
-(This may give warnings, in particular for the @command{gfortran} 8.2
-distribution that @code{libgfortran} was built for 10.14 --- but these
-seem harmless.)
 
 To correctly set the architecture (which will be auto-detected as
 @code{aarch64}), use something like
@@ -5710,7 +5706,7 @@ link: to fix that change the symbolic link
 appropriate path can be found by running @command{xcrun
 -show-sdk-path}).
 
-A release of XQuartz 2.8.0 is available @emph{via}
+A release of XQuartz 2.8.1 is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
 supports both @cputype{arm64} and @cputype{x86_64} builds.
 

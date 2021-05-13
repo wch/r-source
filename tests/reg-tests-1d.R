@@ -4904,7 +4904,9 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
     }
 } ## end{ check_regexetc }
 
-codetools::findGlobals(check_regexetc,merge=FALSE)
+if(requireNamespace("codetools", quietly = TRUE))
+    codetools::findGlobals(check_regexetc, merge=FALSE)
+
 ## "default check"
 txt <- c(
     "The", "licenses", "for", "most", "software", "are",  "designed", "to",

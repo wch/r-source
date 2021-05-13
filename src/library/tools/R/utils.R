@@ -63,7 +63,8 @@ function(x, compression = FALSE)
 file_test <-
 function(op, x, y)
 {
-    ## Provide shell-style '-f', '-d', '-x', '-nt' and '-ot' tests.
+    ## Provide shell-style '-f', '-d', '-h'/'-L', '-x', '-w', '-r',
+    ## '-nt' and '-ot' tests.
     ## Note that file.exists() only tests existence ('test -e' on some
     ## systems), and that our '-f' tests for existence and not being a
     ## directory (the GNU variant tests for being a regular file).
@@ -71,6 +72,8 @@ function(op, x, y)
     switch(op,
            "-f" = !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & !isdir,
            "-d" = dir.exists(x),
+           "-h" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),
+           "-L" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),           
            "-nt" = (!is.na(mt.x <- file.mtime(x))
                     & !is.na(mt.y <- file.mtime(y))
                     & (mt.x > mt.y)),
@@ -78,6 +81,8 @@ function(op, x, y)
                     & !is.na(mt.y <- file.mtime(y))
                     & (mt.x < mt.y)),
            "-x" = (file.access(x, 1L) == 0L),
+           "-w" = (file.access(x, 2L) == 0L),
+           "-r" = (file.access(x, 4L) == 0L),           
            stop(gettextf("test '%s' is not available", op),
                 domain = NA))
 }
@@ -1932,7 +1937,7 @@ function(txt)
     c("Description", "Authors@R", "Author", "Built", "Packaged")
 
 .read_description <-
-function(dfile)
+function(dfile, keep.white = .keep_white_description_fields)
 {
     ## Try reading in package metadata from a DESCRIPTION file.
     ## (Never clear whether this should work on the path of the file
@@ -1943,16 +1948,14 @@ function(dfile)
     ## </NOTE>
     if(!file_test("-f", dfile))
         stop(gettextf("file '%s' does not exist", dfile), domain = NA)
-    out <- tryCatch(read.dcf(dfile,
-                             keep.white =
-                             .keep_white_description_fields),
+    out <- tryCatch(read.dcf(dfile, keep.white = keep.white),
                     error = function(e)
                     stop(gettextf("file '%s' is not in valid DCF format",
                                   dfile),
                          domain = NA, call. = FALSE))
-    if (nrow(out) != 1)
+    if (nrow(out) != 1L)
         stop("contains a blank line", call. = FALSE)
-    out <- out[1,]
+    out <- out[1L, ]
     if(!is.na(encoding <- out["Encoding"])) {
         ## could convert everything (valid) to UTF-8
         if(encoding == "UTF-8") {

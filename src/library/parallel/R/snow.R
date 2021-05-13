@@ -108,7 +108,7 @@ initDefaultClusterOptions <- function(libname)
                     outfile = "/dev/null",
                     rscript = rscript,
                     rscript_args = character(),
-                    user = Sys.i[["user"]],
+                    user = NULL,
                     rshcmd = "ssh",
                     manual = FALSE,
                     methods = TRUE,

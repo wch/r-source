@@ -872,11 +872,12 @@ Rd2HTML <-
 	    '<meta http-equiv="Content-Type" content="text/html; charset=',
 	    mime_canonical_encoding(outputEncoding),
 	    '" />\n')
+        of1('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
 
 	of0('<link rel="stylesheet" type="text/css" href="',
 	    urlify(stylesheet),
 	    '" />\n',
-	    '</head><body>\n\n',
+	    '</head><body><div class="container">\n\n',
 	    '<table width="100%" summary="page for ', htmlify(name))
 	if (nchar(package))
 	    of0(' {', package, '}"><tr><td>',name,' {', package,'}')
@@ -902,7 +903,7 @@ Rd2HTML <-
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
 	of0('\n',
-	    '</body></html>\n')
+	    '</div></body></html>\n')
     }
     invisible(out)
 } ## Rd2HTML()

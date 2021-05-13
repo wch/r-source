@@ -2796,7 +2796,7 @@ if(FALSE) {
     } else { # no rows
          writeLines("There are no help pages in this package", outcon)
     }
-    writeLines('</body></html>', outcon)
+    writeLines('</div></body></html>', outcon)
     file.copy(file.path(R.home("doc"), "html", "R.css"), outman)
     invisible(NULL)
 }

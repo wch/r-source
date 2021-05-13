@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1999-2021 The R Core Team
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,31 +33,22 @@
 #include "nmath.h"
 #include "dpq.h"
 
-static double
-do_search(double y, double *z, double p, double lambda, double incr)
-{
-    if(*z >= p) {
-			/* search to the left */
-	for(;;) {
-	    if(y == 0 ||
-	       (*z = ppois(y - incr, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
-		return y;
-	    y = fmax2(0, y - incr);
-	}
-    }
-    else {		/* search to the right */
+#ifdef DEBUG_qpois
+# define R_DBG_printf(...) REprintf(__VA_ARGS__)
+#else
+# define R_DBG_printf(...)
+#endif
 
-	for(;;) {
-	    y = y + incr;
-	    if((*z = ppois(y, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
-		return y;
-	}
-    }
-}
+
+#define _thisDIST_ pois
+#define _dist_PARS_DECL_ double lambda
+#define _dist_PARS_      lambda
+
+#include "qDiscrete_search.h"
+//        ------------------>  do_search() and all called by q_DISCRETE_*() below
 
 double qpois(double p, double lambda, int lower_tail, int log_p)
 {
-    double mu, sigma, gamma, z, y;
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(lambda))
 	return p + lambda;
@@ -70,40 +61,16 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     if(p == R_DT_0) return 0;
     if(p == R_DT_1) return ML_POSINF;
 
-    mu = lambda;
-    sigma = sqrt(lambda);
-    /* gamma = sigma; PR#8058 should be kurtosis which is mu^-0.5 */
-    gamma = 1.0/sigma;
+    double
+	mu = lambda,
+	sigma = sqrt(lambda),
+	// had gamma = sigma; PR#8058 should be kurtosis which is mu^-0.5 = 1/sigma
+	gamma = 1.0/sigma;
 
-    /* Note : "same" code in qpois.c, qbinom.c, qnbinom.c --
-     * FIXME: This is far from optimal [cancellation for p ~= 1, etc]: */
-    if(!lower_tail || log_p) {
-	p = R_DT_qIv(p); /* need check again (cancellation!): */
-	if (p == 0.) return 0;
-	if (p == 1.) return ML_POSINF;
-    }
-    /* temporary hack --- FIXME --- */
-    if (p + 1.01*DBL_EPSILON >= 1.) return ML_POSINF;
+     R_DBG_printf("qpois(p=%.12g, lambda=%.15g, l.t.=%d, log=%d):"
+		  " mu=%g, sigma=%g, gamma=%g;\n",
+		  p, lambda, lower_tail, log_p, mu, sigma, gamma);
 
-    /* y := approx.value (Cornish-Fisher expansion) :  */
-    z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
-    y = nearbyint(mu + sigma * (z + gamma * (z*z - 1) / 6));
-
-    z = ppois(y, lambda, /*lower_tail*/TRUE, /*log_p*/FALSE);
-
-    /* fuzz to ensure left continuity; 1 - 1e-7 may lose too much : */
-    p *= 1 - 64*DBL_EPSILON;
-
-    /* If the mean is not too large a simple search is OK */
-    if(lambda < 1e5) return do_search(y, &z, p, lambda, 1);
-    /* Otherwise be a bit cleverer in the search */
-    {
-	double incr = floor(y * 0.001), oldincr;
-	do {
-	    oldincr = incr;
-	    y = do_search(y, &z, p, lambda, incr);
-	    incr = fmax2(1, floor(incr/100));
-	} while(oldincr > 1 && incr > lambda*1e-15);
-	return y;
-    }
+     // never "needed" here (FIXME?):   q_DISCRETE_01_CHECKS();
+     q_DISCRETE_BODY();
 }

@@ -1095,7 +1095,7 @@ function(pkg, con, vignetteIndex = NULL)
                          iconv(urls, "", "UTF-8"), "</span></td></tr>"),
                   "</table>")
     }
-    html <- c(html, "</body></html>")
+    html <- c(html, "</div></body></html>")
     writeLines(html, con=con)
 }
 

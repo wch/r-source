@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-04-16 r80178) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-13 r80290) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -812,6 +812,9 @@ attr(,"scaled:scale")
 > ## ts
 > # Ensure working arithmetic for 'ts' objects :
 > z <- ts(matrix(1:900, 100, 3), start = c(1961, 1), frequency = 12)
+Warning message:
+In matrix(1:900, 100, 3) :
+  data length differs from size of matrix: [900 != 100 x 3]
 > stopifnot(z == z)
 > stopifnot(z-z == 0)
 > 
@@ -6363,7 +6366,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2177a80>
+<bytecode: 0x32c7f48>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6374,7 +6377,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2177a80>
+<bytecode: 0x32c7f48>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6386,7 +6389,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2177a80>
+<bytecode: 0x32c7f48>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
