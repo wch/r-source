@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-04-16 r80178) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-13 r80290) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -941,8 +941,8 @@ standardGeneric for "chol2inv" defined from package "base"
 
 function (x, ...) 
 standardGeneric("chol2inv")
-<bytecode: 0x5b44dc0>
-<environment: 0x4410398>
+<bytecode: 0x4cae6b0>
+<environment: 0x4d14190>
 Methods may be defined for arguments: x
 Use  showMethods(chol2inv)  for currently available ones.
 > 
