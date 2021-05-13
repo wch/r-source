@@ -1,6 +1,6 @@
 % File src/library/utils/man/data.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data}
@@ -182,7 +182,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
 \examples{
 require(utils)
 data()                         # list all available data sets
-try(data(package = "rpart") )  # list the data sets in the rpart package
+try(data(package = "rpart"), silent = TRUE) # list the data sets in the rpart package
 data(USArrests, "VADeaths")    # load the data sets 'USArrests' and 'VADeaths'
 \dontrun{## Alternatively
 ds <- c("USArrests", "VADeaths"); data(list = ds)}

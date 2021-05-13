@@ -1,6 +1,6 @@
 % File src/library/stats/man/nls.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nls}
@@ -295,21 +295,19 @@ try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. wor
 ## contraction on 21 animals.  The observed variables are Strip
 ## (identifier of muscle), Conc (Cacl concentration) and Length
 ## (resulting length of muscle section).
-utils::data(muscle, package = "MASS")
-
+## IGNORE_RDIFF_BEGIN
+if(requireNamespace("MASS", quietly = TRUE)) withAutoprint({
 ## The non linear model considered is
 ##       Length = alpha + beta*exp(-Conc/theta) + error
 ## where theta is constant but alpha and beta may vary with Strip.
 
-with(muscle, table(Strip)) # 2, 3 or 4 obs per strip
+with(MASS::muscle, table(Strip)) # 2, 3 or 4 obs per strip
 
 ## We first use the plinear algorithm to fit an overall model,
 ## ignoring that alpha and beta might vary with Strip.
-musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
+musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), MASS::muscle,
               start = list(th = 1), algorithm = "plinear")
-## IGNORE_RDIFF_BEGIN
 summary(musc.1)
-## IGNORE_RDIFF_END
 
 ## Then we use nls' indexing feature for parameters in non-linear
 ## models to use the conventional algorithm to fit a model in which
@@ -318,10 +316,10 @@ summary(musc.1)
 ## Note that with indexed parameters, the starting values must be
 ## given in a list (with names):
 b <- coef(musc.1)
-musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
+musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), MASS::muscle,
               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
-## IGNORE_RDIFF_BEGIN
 summary(musc.2)
+})
 ## IGNORE_RDIFF_END
 \dontshow{options(od)}
 }
