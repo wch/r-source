@@ -239,10 +239,10 @@ static void initLoadedDLL()
     R_PreserveObject(SymbolEptrs);
 }
 
+#define MAXCOUNT 10
 static void
 R_registerSymbolEptr(SEXP eptr, SEXP einfo)
 {
-    const int MAXCOUNT = 10;
     static int cleancount = MAXCOUNT;
 
     /* remove unneeded entries from the list */
