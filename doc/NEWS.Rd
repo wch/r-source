@@ -23,6 +23,9 @@
       \item \code{matrix(x, n,m)} now warns in more cases where
       \code{length(x)} is larger than \code{n * m}; suggested by Abby
       Spurdle and Wolfgang Huber in Feb.2021 on R-devel (mailing list).
+
+      \item \code{require(\var{pkg}, quietly = TRUE)} is quieter and in
+      particular does not warn if the package is not found.
     }
   }
 
