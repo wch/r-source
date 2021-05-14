@@ -7,7 +7,7 @@ srcdir <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
 source(if(file.exists(srcdir)) srcdir else "./eval-fns.R", echo = TRUE)
 rm("srcdir")
 
-if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
+if(require("Matrix", quietly = TRUE)) withAutoprint({ cat("Trying some Matrix objects, too\n")
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
     ## a subset/version of example(Matrix) : --------------------------------

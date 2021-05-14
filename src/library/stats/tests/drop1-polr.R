@@ -2,7 +2,7 @@
 ### correct formula environment
 
 library(stats)
-if(!require(MASS)) q()
+if(!require(MASS, quietly = TRUE)) q()
 
 regr <- function(formula, data, ...)
 {

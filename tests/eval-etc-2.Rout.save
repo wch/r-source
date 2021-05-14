@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-05-13 r80290) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-13 r80293) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin20.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -53,7 +53,7 @@ Type 'q()' to quit R.
 +         cat(nm, ": ", sep = .... [TRUNCATED] 
 > rm("srcdir")
 > 
-> if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
+> if(require("Matrix", quietly = TRUE)) withAutoprint({ cat("Trying some Matrix objects, too\n")
 +     D5. <- Diagonal(x = 5:1)
 +     D5N <- D5.; D5N[5,5] <- NA
 +     ## a subset/version of example(Matrix) : --------------------------------
@@ -113,7 +113,6 @@ Type 'q()' to quit R.
 +     sy <- sparseMatrix(i= c(2,4,3:5), j= c(4,7:5,5), x = 1:5,
 +                        dims = c(7,7), symmetric=TRUE)
 + })
-Loading required package: Matrix
 > cat("Trying some Matrix objects, too\n")
 Trying some Matrix objects, too
 > D5. <- Diagonal(x = 5:1)
@@ -619,5 +618,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.504 0.118 1.624 0.003 0.003 
+Time elapsed:  1.371 0.122 1.505 0.003 0.004 
 > 
