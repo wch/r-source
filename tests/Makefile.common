@@ -17,14 +17,16 @@ test-src-strict-1 = \
 	$(test-src-gct) \
 	d-p-q-r-tests.R
 test-src-strict-auto =
-test-src-sloppy-1 = \
+test-src-sloppy-a = \
 	complex.R \
-	eval-etc-2.R \
 	print-tests.R \
 	lapack.R \
 	datasets.R \
 	datetime.R \
 	iec60559.R
+## set in Makefile.{in,win}
+##test-src-sloppy-b = eval-etc-2.R
+test-src-sloppy-1 = $(test-src-sloppy-a) $(test-src-sloppy-b)
 test-src-sloppy-auto =
 
 test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
