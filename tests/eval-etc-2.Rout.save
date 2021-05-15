@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-05-13 r80293) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-14 r80296) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin20.4.0 (64-bit)
 
@@ -19,6 +19,8 @@ Type 'q()' to quit R.
 > 
 > ####  Part 2
 > ####  ======  Recommended packages allowed  .. output tests *sloppily*
+> 
+> #### This file is skipped without recommended packages.
 > 
 > srcdir <- file.path(Sys.getenv("SRCDIR"), "eval-fns.R")
 > source(if(file.exists(srcdir)) srcdir else "./eval-fns.R", echo = TRUE)
@@ -53,178 +55,133 @@ Type 'q()' to quit R.
 +         cat(nm, ": ", sep = .... [TRUNCATED] 
 > rm("srcdir")
 > 
-> if(require("Matrix", quietly = TRUE)) withAutoprint({ cat("Trying some Matrix objects, too\n")
-+     D5. <- Diagonal(x = 5:1)
-+     D5N <- D5.; D5N[5,5] <- NA
-+     ## a subset/version of example(Matrix) : --------------------------------
-+ 
-+     (Z32 <- Matrix(0, 3, 2))              # 3 by 2 matrix of zeros -> sparse
-+     (z32 <- Matrix(0, 3, 2, sparse=FALSE))# -> 'dense'
-+ 
-+     ## 4 cases - 3 different results :
-+     ## TODO (Z22  <- Matrix(0, 2, 2))              # diagonal from Matrix 1.3.* on
-+     (Z22. <- Matrix(0, 2, 2, sparse=FALSE))# (ditto)
-+     (Z22s <- Matrix(0, 2, 2,               doDiag=FALSE))# -> sparse symm. "dsCMatrix"
-+     (Z22d <- Matrix(0, 2, 2, sparse=FALSE, doDiag=FALSE))# -> dense  symm. "dsyMatrix"
-+ 
-+     ## logical ones:
-+     (L4  <- Matrix(diag(4) >  0)) # -> "ldiMatrix" with diag = "U"
-+     ## TODO (L4. <- Matrix(diag(4) >  0, sparse=TRUE)) #  ditto, from Matrix 1.3.* on
-+     (L4d <- Matrix(diag(4) >= 0)) # -> "lsyMatrix" (of all 'TRUE')
-+     ## triangular
-+     l3 <- upper.tri(matrix(,3,3))
-+     (M <- Matrix(l3))               # "ltCMatrix"
-+     (Nl3 <- Matrix(! l3))           # "ltrMatrix"
-+     (l3s <- as(l3, "CsparseMatrix"))# "lgCMatrix"
-+ 
-+     (I3 <- Matrix(diag(3)))# identity, i.e., unit "diagonalMatrix"
-+ 
-+     (ad <- cbind(a=c(2,1), b=1:2))# symmetric *apart* from dimnames
-+     (As <- Matrix(ad, dimnames = list(NULL,NULL)))# -> symmetric
-+     forceSymmetric(ad) # also symmetric, w/ symm. dimnames
-+     stopifnot(is(As, "symmetricMatrix"),
-+               is(Matrix(0, 3,3), "sparseMatrix"),
-+               is(Matrix(FALSE, 1,1), "sparseMatrix"))
-+ 
-+     ## a subset from  example(sparseMatrix) : -------------------------------
-+     i <- c(1,3:8); j <- c(2,9,6:10); x <- 7 * (1:7)
-+     A <- sparseMatrix(i, j, x = x)
-+     sA <- sparseMatrix(i, j, x = x, symmetric = TRUE)
-+     tA <- sparseMatrix(i, j, x = x, triangular= TRUE)
-+     ## dims can be larger than the maximum row or column indices
-+     AA <- sparseMatrix(c(1,3:8), c(2,9,6:10), x = 7 * (1:7), dims = c(10,20))
-+     ## i, j and x can be in an arbitrary order, as long as they are consistent
-+     set.seed(1); (perm <- sample(1:7))
-+     A1 <- sparseMatrix(i[perm], j[perm], x = x[perm])
-+     ## the (i,j) pairs can be repeated, in which case the x's are summed
-+     args <- data.frame(i = c(i, 1), j = c(j, 2), x = c(x, 2))
-+     Aa <- do.call(sparseMatrix, args)
-+     A. <- do.call(sparseMatrix, c(args, list(use.last.ij = TRUE)))
-+     ## for a pattern matrix, of course there is no "summing":
-+     nA <- do.call(sparseMatrix, args[c("i","j")])
-+     dn <- list(LETTERS[1:3], letters[1:5])
-+     ## pointer vectors can be used, and the (i,x) slots are sorted if necessary:
-+     m <- sparseMatrix(i = c(3,1, 3:2, 2:1), p= c(0:2, 4,4,6), x = 1:6, dimnames = dn)
-+     ## no 'x' --> patter*n* matrix:
-+     n <- sparseMatrix(i=1:6, j=rev(2:7))
-+     ## an empty sparse matrix:
-+     e <- sparseMatrix(dims = c(4,6), i={}, j={})
-+     ## a symmetric one:
-+     sy <- sparseMatrix(i= c(2,4,3:5), j= c(4,7:5,5), x = 1:5,
-+                        dims = c(7,7), symmetric=TRUE)
-+ })
-> cat("Trying some Matrix objects, too\n")
-Trying some Matrix objects, too
+> require("Matrix")
+Loading required package: Matrix
 > D5. <- Diagonal(x = 5:1)
-> D5N <- D5.
-> D5N[5, 5] <- NA
-> (Z32 <- Matrix(0, 3, 2))
+> D5N <- D5.; D5N[5,5] <- NA
+> ## a subset/version of example(Matrix) : --------------------------------
+> 
+> (Z32 <- Matrix(0, 3, 2))              # 3 by 2 matrix of zeros -> sparse
 3 x 2 sparse Matrix of class "dgCMatrix"
         
 [1,] . .
 [2,] . .
 [3,] . .
-> (z32 <- Matrix(0, 3, 2, sparse = FALSE))
+> (z32 <- Matrix(0, 3, 2, sparse=FALSE))# -> 'dense'
 3 x 2 Matrix of class "dgeMatrix"
      [,1] [,2]
 [1,]    0    0
 [2,]    0    0
 [3,]    0    0
-> (Z22. <- Matrix(0, 2, 2, sparse = FALSE))
+> 
+> ## 4 cases - 3 different results :
+> ## TODO (Z22  <- Matrix(0, 2, 2))              # diagonal from Matrix 1.3.* on
+> (Z22. <- Matrix(0, 2, 2, sparse=FALSE))# (ditto)
 2 x 2 diagonal matrix of class "ddiMatrix"
      [,1] [,2]
 [1,]    0    .
 [2,]    .    0
-> (Z22s <- Matrix(0, 2, 2, doDiag = FALSE))
+> (Z22s <- Matrix(0, 2, 2,               doDiag=FALSE))# -> sparse symm. "dsCMatrix"
 2 x 2 sparse Matrix of class "dsCMatrix"
         
 [1,] . .
 [2,] . .
-> (Z22d <- Matrix(0, 2, 2, sparse = FALSE, doDiag = FALSE))
+> (Z22d <- Matrix(0, 2, 2, sparse=FALSE, doDiag=FALSE))# -> dense  symm. "dsyMatrix"
 2 x 2 Matrix of class "dsyMatrix"
      [,1] [,2]
 [1,]    0    0
 [2,]    0    0
-> (L4 <- Matrix(diag(4) > 0))
+> 
+> ## logical ones:
+> (L4  <- Matrix(diag(4) >  0)) # -> "ldiMatrix" with diag = "U"
 4 x 4 diagonal matrix of class "ldiMatrix"
      [,1] [,2] [,3] [,4]
 [1,] TRUE    .    .    .
 [2,]    . TRUE    .    .
 [3,]    .    . TRUE    .
 [4,]    .    .    . TRUE
-> (L4d <- Matrix(diag(4) >= 0))
+> ## TODO (L4. <- Matrix(diag(4) >  0, sparse=TRUE)) #  ditto, from Matrix 1.3.* on
+> (L4d <- Matrix(diag(4) >= 0)) # -> "lsyMatrix" (of all 'TRUE')
 4 x 4 Matrix of class "lsyMatrix"
      [,1] [,2] [,3] [,4]
 [1,] TRUE TRUE TRUE TRUE
 [2,] TRUE TRUE TRUE TRUE
 [3,] TRUE TRUE TRUE TRUE
 [4,] TRUE TRUE TRUE TRUE
-> l3 <- upper.tri(matrix(, 3, 3))
-> (M <- Matrix(l3))
+> ## triangular
+> l3 <- upper.tri(matrix(,3,3))
+> (M <- Matrix(l3))               # "ltCMatrix"
 3 x 3 sparse Matrix of class "ltCMatrix"
           
 [1,] . | |
 [2,] . . |
 [3,] . . .
-> (Nl3 <- Matrix(!l3))
+> (Nl3 <- Matrix(! l3))           # "ltrMatrix"
 3 x 3 Matrix of class "ltrMatrix"
      [,1]  [,2]  [,3] 
 [1,]  TRUE     .     .
 [2,]  TRUE  TRUE     .
 [3,]  TRUE  TRUE  TRUE
-> (l3s <- as(l3, "CsparseMatrix"))
+> (l3s <- as(l3, "CsparseMatrix"))# "lgCMatrix"
 3 x 3 sparse Matrix of class "lgCMatrix"
           
 [1,] . | |
 [2,] . . |
 [3,] . . .
-> (I3 <- Matrix(diag(3)))
+> 
+> (I3 <- Matrix(diag(3)))# identity, i.e., unit "diagonalMatrix"
 3 x 3 diagonal matrix of class "ddiMatrix"
      [,1] [,2] [,3]
 [1,]    1    .    .
 [2,]    .    1    .
 [3,]    .    .    1
-> (ad <- cbind(a = c(2, 1), b = 1:2))
+> 
+> (ad <- cbind(a=c(2,1), b=1:2))# symmetric *apart* from dimnames
      a b
 [1,] 2 1
 [2,] 1 2
-> (As <- Matrix(ad, dimnames = list(NULL, NULL)))
+> (As <- Matrix(ad, dimnames = list(NULL,NULL)))# -> symmetric
 2 x 2 Matrix of class "dsyMatrix"
      [,1] [,2]
 [1,]    2    1
 [2,]    1    2
-> forceSymmetric(ad)
+> forceSymmetric(ad) # also symmetric, w/ symm. dimnames
 2 x 2 Matrix of class "dsyMatrix"
   a b
 a 2 1
 b 1 2
-> stopifnot(is(As, "symmetricMatrix"), is(Matrix(0, 3, 3), "sparseMatrix"), 
-+     is(Matrix(FALSE, 1, 1), "sparseMatrix"))
-> i <- c(1, 3:8)
-> j <- c(2, 9, 6:10)
-> x <- 7 * (1:7)
+> stopifnot(is(As, "symmetricMatrix"),
++           is(Matrix(0, 3,3), "sparseMatrix"),
++           is(Matrix(FALSE, 1,1), "sparseMatrix"))
+> 
+> ## a subset from  example(sparseMatrix) : -------------------------------
+> i <- c(1,3:8); j <- c(2,9,6:10); x <- 7 * (1:7)
 > A <- sparseMatrix(i, j, x = x)
 > sA <- sparseMatrix(i, j, x = x, symmetric = TRUE)
-> tA <- sparseMatrix(i, j, x = x, triangular = TRUE)
-> AA <- sparseMatrix(c(1, 3:8), c(2, 9, 6:10), x = 7 * (1:7), dims = c(10, 
-+     20))
-> set.seed(1)
-> (perm <- sample(1:7))
+> tA <- sparseMatrix(i, j, x = x, triangular= TRUE)
+> ## dims can be larger than the maximum row or column indices
+> AA <- sparseMatrix(c(1,3:8), c(2,9,6:10), x = 7 * (1:7), dims = c(10,20))
+> ## i, j and x can be in an arbitrary order, as long as they are consistent
+> set.seed(1); (perm <- sample(1:7))
 [1] 1 4 7 2 5 3 6
 > A1 <- sparseMatrix(i[perm], j[perm], x = x[perm])
+> ## the (i,j) pairs can be repeated, in which case the x's are summed
 > args <- data.frame(i = c(i, 1), j = c(j, 2), x = c(x, 2))
 > Aa <- do.call(sparseMatrix, args)
 > A. <- do.call(sparseMatrix, c(args, list(use.last.ij = TRUE)))
-> nA <- do.call(sparseMatrix, args[c("i", "j")])
+> ## for a pattern matrix, of course there is no "summing":
+> nA <- do.call(sparseMatrix, args[c("i","j")])
 > dn <- list(LETTERS[1:3], letters[1:5])
-> m <- sparseMatrix(i = c(3, 1, 3:2, 2:1), p = c(0:2, 4, 4, 6), x = 1:6, 
-+     dimnames = dn)
-> n <- sparseMatrix(i = 1:6, j = rev(2:7))
-> e <- sparseMatrix(dims = c(4, 6), i = {
-+ }, j = {
-+ })
-> sy <- sparseMatrix(i = c(2, 4, 3:5), j = c(4, 7:5, 5), x = 1:5, dims = c(7, 
-+     7), symmetric = TRUE)
+> ## pointer vectors can be used, and the (i,x) slots are sorted if necessary:
+> m <- sparseMatrix(i = c(3,1, 3:2, 2:1), p= c(0:2, 4,4,6), x = 1:6, dimnames = dn)
+> ## no 'x' --> patter*n* matrix:
+> n <- sparseMatrix(i=1:6, j=rev(2:7))
+> ## an empty sparse matrix:
+> e <- sparseMatrix(dims = c(4,6), i={}, j={})
+> ## a symmetric one:
+> sy <- sparseMatrix(i= c(2,4,3:5), j= c(4,7:5,5), x = 1:5,
++                    dims = c(7,7), symmetric=TRUE)
+> 
 > 
 > runEPD_checks() # Action!
 A: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
@@ -618,5 +575,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.371 0.122 1.505 0.003 0.004 
+Time elapsed:  1.389 0.132 1.599 0.003 0.004 
 > 
