@@ -22,14 +22,15 @@
     \itemize{
       \item \code{matrix(x, n,m)} now warns in more cases where
       \code{length(x)} is larger than \code{n * m}; suggested by Abby
-      Spurdle and Wolfgang Huber in Feb.2021 on R-devel (mailing list).
+      Spurdle and Wolfgang Huber in Feb. 2021 on the R-devel mailing
+      list.
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is
-      corrected now for a range of cases (\PR{18095}); similarly for the
+      corrected for a range of cases (\PR{18095}); similarly for the
       \code{(size, prob)} parametrization of the negative binomial.
 
       \code{qpois()} and \code{qbinom()} are better and/or faster for
