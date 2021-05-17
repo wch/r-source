@@ -251,7 +251,7 @@ socketTimeout(socket, timeout = -1)
   will support \samp{ftps://}.
 
   Support for the \samp{ftp://} scheme by the \code{"internal"} method was
-  deprecated for \R 4.1.1.
+  deprecated in \R 4.1.1 and removed in \R 4.2.0.
 
   Most methods do not percent-encode special characters such as spaces
   in \samp{http://} URLs (see \code{\link{URLencode}}), but it seems the

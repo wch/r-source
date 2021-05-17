@@ -22,8 +22,16 @@
     \itemize{
       \item \code{matrix(x, n,m)} now warns in more cases where
       \code{length(x)} is larger than \code{n * m}; suggested by Abby
-      Spurdle and Wolfgang Huber in Feb. 2021 on the R-devel mailing
+      Spurdle and Wolfgang Huber in Feb 2021 on the R-devel mailing
       list.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The (non-default) \code{method = "internal"} for
+      \code{download.file} and \code{url} no longer supports \samp{ftp://}
+      URIs. 
     }
   }
 

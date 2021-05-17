@@ -115,7 +115,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   method and the \code{"wininet"} method on Windows.
 
   Support for \samp{ftp://} URLs in the \code{"internal"} method was
-  deprecated in \R 4.1.1.
+  deprecated in \R 4.1.1 and removed in \R 4.2.0.
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}

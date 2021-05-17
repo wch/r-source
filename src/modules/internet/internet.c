@@ -142,15 +142,8 @@ static Rboolean url_open(Rconnection con)
     }
 	break;
     case FTPsh:
-	warning(_("using the 'internal' method for ftp:// is deprecated"));
-	ctxt = in_R_FTPOpen(url);
-	if(ctxt == NULL) {
-	  /* if we call error() we get a connection leak*/
-	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL '%s'", url); */
-	    return FALSE;
-	}
-	((Rurlconn)(con->private))->ctxt = ctxt;
+	warning(_("the 'internal' method for ftp:// is defunct"));
+	return FALSE;
 	break;
 
     default:
@@ -675,117 +668,8 @@ static SEXP in_do_download(SEXP args)
 	if (status == 1) error(_("cannot open URL '%s'"), url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
-	warning(_("using the 'internal' method for ftp:// is deprecated"));
-	FILE *out;
-	void *ctxt;
-	DLsize_t len, total, guess, nbytes = 0;
-	char buf[IBUFSIZE];
-	int ndashes = 0;
-	DLsize_t ndots = 0;
-#ifdef Win32
-	int factor = 1;
-#endif
-
-	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) {
-	    error(_("cannot open destfile '%s', reason '%s'"),
-		  file, strerror(errno));
-	}
-
-	R_Busy(1);
-	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
-#ifdef Win32
-	R_FlushConsole();
-#endif
-	ctxt = Ri_FTPOpen(url);
-	if(ctxt == NULL) status = 1;
-	else {
-//	    if(!quiet) REprintf(_("opened URL\n"), url);
-	    guess = total = ((inetconn *)ctxt)->length;
-#ifdef Win32
-	    if(R_Interactive && !quiet) {
-		if (guess <= 0) guess = 100 * 1024;
-		if (guess > 1e9) factor = guess/1e6;
-		R_FlushConsole();
-		strcpy(buf, "URL: ");
-		if(strlen(url) > 60) {
-		    strcat(buf, "... ");
-		    strcat(buf, url + (strlen(url) - 60));
-		} else strcat(buf, url);
-		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess/factor);
-		setprogressbar(pbar.pb, 0);
-		settext(pbar.wprog, "Download progress");
-		show(pbar.wprog);
-
-		/* set up a context which will close progressbar on error. */
-		begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
-			     R_NilValue, R_NilValue, R_NilValue);
-		pbar.cntxt.cend = &doneprogressbar;
-		pbar.cntxt.cenddata = &pbar;
-		pbar.pc = 0;
-	    }
-#endif
-	    while ((len = Ri_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
-		size_t res = fwrite(buf, 1, len, out);
-		if(res != len) error(_("write failed"));
-		nbytes += len;
-		if(!quiet) {
-#ifdef Win32
-		    if(R_Interactive) {
-			if(nbytes > guess) {
-			    guess *= 2;
-			    if (guess > 1e9) factor = guess/1e6;
-			    setprogressbarrange(pbar.pb, 0, guess/factor);
-			}
-			setprogressbar(pbar.pb, nbytes/factor);
-			if (total > 0) {
-			    pc = 0.499 + 100.0*nbytes/total;
-			if (pc > pbar.pc) {
-			    snprintf(pbuf, 30, "%d%% downloaded", pc);
-			    settext(pbar.wprog, pbuf);
-			    pbar.pc = pc;
-			}
-			}
-		    } else
-#endif
-		    {
-			if(guess <= 0) putdots(&ndots, nbytes/1024);
-			else putdashes(&ndashes, (int)(50*nbytes/guess));
-		    }
-		}
-	    }
-	    Ri_FTPClose(ctxt);
-	    if(!quiet) {
-#ifdef Win32
-		if(!R_Interactive) REprintf("\n");
-#else
-		REprintf("\n");
-#endif
-		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f MB\n\n",
-			     (double)nbytes/1024/1024);
-		else if(nbytes > 10240)
-		    REprintf("downloaded %d KB\n\n", (int) nbytes/1024);
-		else
-		    REprintf("downloaded %d bytes\n\n", (int) nbytes);
-	    }
-#ifdef Win32
-	    R_FlushConsole();
-	    if(R_Interactive && !quiet) {
-		endcontext(&(pbar.cntxt));
-		doneprogressbar(&pbar);
-	    }
-#endif
-	    if (total > 0 && total != nbytes)
-		warning(_("downloaded length %0.f != reported length %0.f"),
-			(double)nbytes, (double)total);
-	}
-	R_Busy(0);
-	fclose(out);
-	if (status == 1 && strchr(mode, 'w')) unlink(R_ExpandFileName(file));
-	if (status == 1) error(_("cannot open URL '%s'"), url);
-    } else
+	error(_("the 'internal' method for ftp:// is defunct"));
+   } else
 	error(_("scheme not supported in URL '%s'"), url);
 
     return ScalarInteger(status);
