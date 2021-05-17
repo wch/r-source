@@ -21,7 +21,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Advertized entry points, for that part of libxml included in
+/* Non-API entry points, for that part of libxml included in
  * the internet module.
  */
 
@@ -31,7 +31,7 @@
 /*
   allow for 'large' files (>= 2GB) on 32-bit systems, where supported.
 */
-/* required by C99/C11 */
+/* Type is required by C99/C11 */
 #ifdef __cplusplus
 # include <cstdint>
 #else

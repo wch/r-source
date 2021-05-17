@@ -5360,7 +5360,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     char *class2 = "url";
     const char *url, *open;
     int ncon, block, raw = 0, defmeth,
-	meth = 0, // 0: "default" | "internal" | "wininet", 1: "libcurl"
+	meth = 0, // 0: "internal" | "wininet", 1: "libcurl"
 	winmeth;  // 0: "internal", 1: "wininet" (Windows only)
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
@@ -5426,7 +5426,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     meth = streql(cmeth, "libcurl"); // 1 if "libcurl", else 0
     defmeth = streql(cmeth, "default");
 #ifndef Win32
-    if(defmeth) meth = 1;
+    if(defmeth) meth = 1; // default to libcurl except on Windows.
 #endif
     if (streql(cmeth, "wininet")) {
 #ifdef Win32
