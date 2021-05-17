@@ -24,6 +24,9 @@
       \code{length(x)} is larger than \code{n * m}; suggested by Abby
       Spurdle and Wolfgang Huber in Feb 2021 on the R-devel mailing
       list.
+
+      \item Function \code{file_test()} in package \pkg{utils} gains
+      tests for symlinks, reability and writability.
     }
   }
 
