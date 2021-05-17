@@ -1,7 +1,7 @@
 #  File src/library/base/R/sapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,23 +24,28 @@
 ##'  should be returned when appropriate, namely when all elements of
 ##' \code{x} have the same \code{\link{dim}()}ension.
 ##' @return x itself, or an array if the simplification "is sensible"
-simplify2array <- function(x, higher = TRUE)
+simplify2array <- function(x, higher = TRUE, except = c(0L, 1L))
 {
     if(!length(x)) return(x)
     if(length(common.len <- unique(lengths(x))) > 1L)
         return(x)
-    if(common.len == 1L) {
+    except <- as.integer(except)
+    ## For now, only allow historical exceptions for common length 0 or 1:
+    except <- except[except <= 1L]
+    if((common.len == 1L) && (1L %in% except)) {
         n <- length(x)
         r <- unlist(x, recursive = FALSE)
         if(length(r) == n) r else x
     }
-    else if(common.len > 1L) {
+    else if(!(common.len %in% except)) {
         n <- length(x)
         ## make sure that array(*) will not call rep() {e.g. for 'call's}:
 	r <- unlist(x, recursive = FALSE, use.names = FALSE)
-        if(higher && length(c.dim <- unique(lapply(x, dim))) == 1 &&
-           is.numeric(c.dim <- c.dim[[1L]]) &&
-           prod(d <- c(c.dim, n)) == length(r)) {
+        if(is.null(r))
+            x
+        else if(higher && length(c.dim <- unique(lapply(x, dim))) == 1 &&
+                is.numeric(c.dim <- c.dim[[1L]]) &&
+                prod(d <- c(c.dim, n)) == length(r)) {
 
             iN1 <- is.null(n1 <- dimnames(x[[1L]]))
             n2 <- names(x)
