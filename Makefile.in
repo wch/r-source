@@ -76,8 +76,7 @@ FORCE:
 stamp-recommended: R docs
 	@(cd src/library/Recommended && $(MAKE))
 
-## One of the grid vignettes requires lattice
-vignettes: stamp-recommended
+vignettes: R
 	@(cd src/library && $(MAKE) $@)
 
 ## This needs packages built, hence 'R' dependence on 'javaconf'
