@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2020   The R Core Team.
+ *  Copyright (C) 2000-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -142,6 +142,7 @@ static Rboolean url_open(Rconnection con)
     }
 	break;
     case FTPsh:
+	warning(_("using the 'internal' method for ftp:// is deprecated"));
 	ctxt = in_R_FTPOpen(url);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
@@ -674,7 +675,7 @@ static SEXP in_do_download(SEXP args)
 	if (status == 1) error(_("cannot open URL '%s'"), url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
-
+	warning(_("using the 'internal' method for ftp:// is deprecated"));
 	FILE *out;
 	void *ctxt;
 	DLsize_t len, total, guess, nbytes = 0;

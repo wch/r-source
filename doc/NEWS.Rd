@@ -50,6 +50,14 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Using the non-default \code{method = "internal"} for
+      \samp{ftp://} URIs is deprecated for \code{download.file} and
+      \code{url}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{make check-devel} works again in an \R build

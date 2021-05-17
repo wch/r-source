@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -110,8 +110,8 @@ socketTimeout(socket, timeout = -1)
     \sQuote{file} may not be seekable.}
   \item{method}{character string, partially matched to
     \code{c("default", "internal", "wininet", "libcurl")}:
-%% FIXME:  Consider  "auto", as in download.file()
     see \sQuote{Details}.}
+%% FIXME:  Consider  "auto", as in download.file()
   \item{headers}{named character vector of HTTP headers to use in HTTP
     requests.  It is ignored for non-HTTP URLs.  The \code{User-Agent}
     header, coming from the \code{HTTPUserAgent} option (see
@@ -158,9 +158,9 @@ socketTimeout(socket, timeout = -1)
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
   \samp{file://}).  Method \code{"internal"} is that available since
-  connections were introduced, method \code{"wininet"} is only available
-  on Windows (it uses the WinINet functions of that OS) and method
-  \code{"libcurl"} (using the library of that name:
+  connections were introduced..  Method \code{"wininet"} is only
+  available on Windows (it uses the WinINet functions of that OS) and
+  method \code{"libcurl"} (using the library of that name:
   \url{https://curl.se/libcurl/}) is required on a Unix-alike but
   optional on Windows.  Method \code{"default"} uses method
   \code{"internal"} for \samp{file:} URLs and \code{"libcurl"} for
@@ -249,6 +249,9 @@ socketTimeout(socket, timeout = -1)
   is platform-dependent (see \code{\link{libcurlVersion}}), but all
   Unix-alike platforms will support \samp{https://} and most platforms
   will support \samp{ftps://}.
+
+  Support for the \samp{ftp://} scheme by the \code{"internal"} method was
+  deprecated for \R 4.1.1.
 
   Most methods do not percent-encode special characters such as spaces
   in \samp{http://} URLs (see \code{\link{URLencode}}), but it seems the

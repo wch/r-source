@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -114,11 +114,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"internal"} method but are supported by the \code{"libcurl"}
   method and the \code{"wininet"} method on Windows.
 
+  Support for \samp{ftp://} URLs in the \code{"internal"} method was
+  deprecated in \R 4.1.1.
+
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
-  methods do not percent-decode \samp{file://} URLs, but the
-  \code{"libcurl"} and \code{"curl"} methods do: method \code{"wget"}
-  does not support them.
+  methods do not percent-decode, but the \code{"libcurl"} and
+  \code{"curl"} methods do: method \code{"wget"} does not support them.
 
   Most methods do not percent-encode special characters such as spaces
   in URLs (see \code{\link{URLencode}}), but it seems the
