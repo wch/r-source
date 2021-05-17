@@ -133,7 +133,7 @@
       and also \code{checkDocFiles()} have a new option \code{chkInternal}
       allowing to check Rd files marked with keyword \code{"internal"} as
       well.  The latter can be activated for \command{R CMD check} via
-      experimental environment variable \env{_R_CHECK_RD_INTERNAL_TOO_}.
+      environment variable \env{_R_CHECK_RD_INTERNAL_TOO_}.
 
       \item New functions \code{numToBits()} and \code{numToInts()}
       extend the \code{raw} conversion utilities to (double precision)
@@ -216,15 +216,13 @@
       by Antoine Fabri on R-devel.)
 
       \item \R{} now provides a shorthand notation for creating functions,
-      e.g. \code{\(x) x + 1} is parsed as \code{function(x) x + 1}.  This
-      feature is experimental and may change prior to release.
+      e.g. \code{\(x) x + 1} is parsed as \code{function(x) x + 1}.
 
       \item \R{} now provides a simple native forward pipe syntax
       \code{|>}.  The simple form of the forward pipe inserts the
       left-hand side as the first argument in the right-hand side call.
       The pipe implementation as a syntax transformation was motivated
-      by suggestions from Jim Hester and Lionel Henry.  This feature is
-      experimental and may change prior to release.
+      by suggestions from Jim Hester and Lionel Henry.
 
       \item \code{all.equal(f, g)} for \code{function}s now by default also
       compares their \code{environment(.)}s, notably via new
