@@ -42,7 +42,6 @@
 \value{
   Returns the result of evaluating the transformed expression.
 }
-\note{ \bold{Pipe support is experimental and may change prior to release.} }
 \section{Background}{
   The forward pipe operator is motivated by the pipe introduced in the
   \CRANpkg{magrittr} package, but is more streamlined. It is similar to
