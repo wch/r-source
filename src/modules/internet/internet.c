@@ -28,7 +28,7 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
-#include <R_ext/R-ftp-http.h>
+#include <R-ftp-http.h>
 #include <errno.h>
 #include <R_ext/Print.h>
 

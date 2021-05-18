@@ -30,6 +30,14 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The non-API header \file{R_ext/R-ftp-http.h} is no longer
+      provided.  The entry points it included are either deprecated or
+      defunct.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The (non-default) \code{method = "internal"} for

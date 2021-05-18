@@ -75,8 +75,7 @@ extern void R_FlushConsole(void);
 #define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)
 #endif
 
-// ../../include/R_ext/R-ftp-http.h :
-#include <R_ext/R-ftp-http.h>
+#include <R-ftp-http.h>
 #ifdef Win32
 # include <R_ext/Print.h>
 #endif

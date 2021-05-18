@@ -57,8 +57,7 @@ extern void R_ProcessEvents(void);
   #include <strings.h>
 #endif
 
-// ../../include/R_ext/R-ftp-http.h :
-#include <R_ext/R-ftp-http.h>
+#include <R-ftp-http.h>
 /* #define DEBUG_FTP */
 
 #include <stdio.h>
