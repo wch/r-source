@@ -17,10 +17,8 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-## nanoftp.c will be removed in due course.
 DISTFILES = \
 	README Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
-	nanoftp.c \
 	dllversion.rc
 
 internet_la = internet$(SHLIB_EXT)
