@@ -1,6 +1,6 @@
 % File src/library/stats/man/mad.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mad}
@@ -32,6 +32,9 @@ mad(x, center = median(x), constant = 1.4826, na.rm = FALSE,
   with the default value of \code{center} being \code{median(x)}, and
   \code{cMedian} being the usual, the \sQuote{low} or \sQuote{high} median, see
   the arguments description for \code{low} and \code{high} above.
+
+  In the case of \eqn{n = 1} non-missing values and default \code{center}, the
+  result is \code{0}, consistent with \dQuote{no deviation from the center}.
 
   The default \code{constant = 1.4826} (approximately
   \eqn{1/\Phi^{-1}(\frac 3 4)}{1/ \Phi^(-1)(3/4)} = \code{1/qnorm(3/4)})
