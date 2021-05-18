@@ -938,10 +938,6 @@ R_init_internet(DllInfo *info)
     tmp->newsock = in_R_newsock;
     tmp->newservsock = in_R_newservsock;
 
-    tmp->HTTPOpen = in_R_HTTPOpen;
-    tmp->HTTPRead = in_R_HTTPRead;
-    tmp->HTTPClose = in_R_HTTPClose;
-
     tmp->sockopen = in_Rsockopen;
     tmp->socklisten = in_Rsocklisten;
     tmp->sockconnect = in_Rsockconnect;

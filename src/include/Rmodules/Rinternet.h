@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2020 The R Core Team
+ *  Copyright (C) 2004-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,12 +32,6 @@ typedef Rconnection (*R_NewSockRoutine)(const char *host, int port, int server,
                                         int timeout, int options);
 typedef Rconnection (*R_NewServSockRoutine)(int port);
 
-typedef void * (*R_HTTPOpenRoutine)(const char *url, const char *agent,
-				    const char *headers, const int cacheOK);
-typedef int    (*R_HTTPReadRoutine)(void *ctx, char *dest, int len);
-typedef void   (*R_HTTPCloseRoutine)(void *ctx);
-
-
 typedef void   (*R_SockOpenRoutine)(int *port);
 typedef void   (*R_SockListenRoutine)(int *sockp, char **buf, int *len);
 typedef void   (*R_SockConnectRoutine)(int *port, char **host);
@@ -57,10 +51,6 @@ typedef struct {
     R_NewUrlRoutine   newurl;
     R_NewSockRoutine  newsock;
     R_NewServSockRoutine newservsock;
-
-    R_HTTPOpenRoutine  HTTPOpen;
-    R_HTTPReadRoutine  HTTPRead;
-    R_HTTPCloseRoutine HTTPClose;
 
     R_SockOpenRoutine     sockopen;
     R_SockListenRoutine   socklisten;
