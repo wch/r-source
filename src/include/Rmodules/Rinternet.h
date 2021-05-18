@@ -37,9 +37,6 @@ typedef void * (*R_HTTPOpenRoutine)(const char *url, const char *agent,
 typedef int    (*R_HTTPReadRoutine)(void *ctx, char *dest, int len);
 typedef void   (*R_HTTPCloseRoutine)(void *ctx);
 
-typedef void * (*R_FTPOpenRoutine)(const char *url);
-typedef int    (*R_FTPReadRoutine)(void *ctx, char *dest, int len);
-typedef void   (*R_FTPCloseRoutine)(void *ctx);
 
 typedef void   (*R_SockOpenRoutine)(int *port);
 typedef void   (*R_SockListenRoutine)(int *sockp, char **buf, int *len);
@@ -64,10 +61,6 @@ typedef struct {
     R_HTTPOpenRoutine  HTTPOpen;
     R_HTTPReadRoutine  HTTPRead;
     R_HTTPCloseRoutine HTTPClose;
-
-    R_FTPOpenRoutine   FTPOpen;
-    R_FTPReadRoutine   FTPRead;
-    R_FTPCloseRoutine  FTPClose;
 
     R_SockOpenRoutine     sockopen;
     R_SockListenRoutine   socklisten;

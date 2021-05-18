@@ -37,10 +37,6 @@ static void *in_R_HTTPOpen(const char *url, const char *agent, const char *heade
 static int   in_R_HTTPRead(void *ctx, char *dest, int len);
 static void  in_R_HTTPClose(void *ctx);
 
-static void *in_R_FTPOpen(const char *url);
-static int   in_R_FTPRead(void *ctx, char *dest, int len);
-static void  in_R_FTPClose(void *ctx);
-
 SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho);
@@ -63,22 +59,10 @@ static void *in_R_FTPOpen2(const char *url);
 #define Ri_HTTPClose(ctx) \
     if(meth) in_R_HTTPClose2(ctx); else in_R_HTTPClose(ctx);
 
-#define Ri_FTPOpen(url) \
-    (meth ? in_R_FTPOpen2(url) : in_R_FTPOpen(url));
-
-#define Ri_FTPRead(ctx, dest, len) \
-    (meth ? in_R_HTTPRead2(ctx, dest, len) : in_R_FTPRead(ctx, dest, len))
-
-#define Ri_FTPClose(ctx) \
-    if(meth) in_R_HTTPClose2(ctx); else in_R_FTPClose(ctx);
-
 #else
 #define Ri_HTTPOpen in_R_HTTPOpen
 #define Ri_HTTPRead in_R_HTTPRead
 #define Ri_HTTPClose in_R_HTTPClose
-#define Ri_FTPOpen in_R_FTPOpen
-#define Ri_FTPRead in_R_FTPRead
-#define Ri_FTPClose in_R_FTPClose
 #endif
 
 #include <Rmodules/Rinternet.h>
@@ -172,9 +156,6 @@ static void url_close(Rconnection con)
 	if (uc && uc->headers) free(uc->headers);
 	in_R_HTTPClose(uc->ctxt);
 	break;
-    case FTPsh:
-	in_R_FTPClose(uc->ctxt);
-	break;
     default:
 	break;
     }
@@ -193,9 +174,6 @@ static int url_fgetc_internal(Rconnection con)
     case HTTPSsh:
 	n = in_R_HTTPRead(ctxt, (char *)&c, 1);
 	break;
-    case FTPsh:
-	n = in_R_FTPRead(ctxt, (char *)&c, 1);
-	break;
     default:
 	break;
     }
@@ -213,9 +191,6 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     case HTTPsh:
     case HTTPSsh:
 	n = in_R_HTTPRead(ctxt, ptr, (int)(size*nitems));
-	break;
-    case FTPsh:
-	n = in_R_FTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     default:
 	break;
@@ -752,50 +727,6 @@ static void in_R_HTTPClose(void *ctx)
     }
 }
 
-static void *in_R_FTPOpen(const char *url)
-{
-    inetconn *con;
-    void *ctxt;
-    int timeout = asInteger(GetOption1(install("timeout")));
-    DLsize_t len = 0;
-
-    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
-    RxmlNanoFTPTimeout(timeout);
-    ctxt = RxmlNanoFTPOpen(url);
-    if(!ctxt) return NULL;
-    if(!IDquiet) {
-	len = RxmlNanoFTPContentLength(ctxt);
-	if(len >= 0)
-	    REprintf("ftp data connection made, file length %ld bytes\n", len);
-	else
-	    REprintf("ftp data connection made, file length unknown\n");
-#ifdef Win32
-	R_FlushConsole();
-#endif
-    }
-    con = (inetconn *) malloc(sizeof(inetconn));
-    if(con) {
-	con->length = len;
-	con->type = NULL;
-	con->ctxt = ctxt;
-    }
-    return con;
-}
-
-static int in_R_FTPRead(void *ctx, char *dest, int len)
-{
-    return RxmlNanoFTPRead(((inetconn *)ctx)->ctxt, dest, len);
-}
-
-static void in_R_FTPClose(void *ctx)
-{
-    if(ctx) {
-	RxmlNanoFTPClose(((inetconn *)ctx)->ctxt);
-	free(ctx);
-    }
-}
-
-
 #ifdef Win32
 
 #define WIN32_LEAN_AND_MEAN 1
@@ -1010,10 +941,6 @@ R_init_internet(DllInfo *info)
     tmp->HTTPOpen = in_R_HTTPOpen;
     tmp->HTTPRead = in_R_HTTPRead;
     tmp->HTTPClose = in_R_HTTPClose;
-
-    tmp->FTPOpen = in_R_FTPOpen;
-    tmp->FTPRead = in_R_FTPRead;
-    tmp->FTPClose = in_R_FTPClose;
 
     tmp->sockopen = in_Rsockopen;
     tmp->socklisten = in_Rsocklisten;

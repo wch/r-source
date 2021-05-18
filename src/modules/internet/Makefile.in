@@ -11,14 +11,16 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-SOURCES = Rhttpd.c Rsock.c internet.c libcurl.c nanoftp.c nanohttp.c sock.c sockconn.c
+SOURCES = Rhttpd.c Rsock.c internet.c libcurl.c nanohttp.c sock.c sockconn.c
 HEADERS = sock.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+## nanoftp.c will be removed in due course.
 DISTFILES = \
 	README Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
+	nanoftp.c \
 	dllversion.rc
 
 internet_la = internet$(SHLIB_EXT)
