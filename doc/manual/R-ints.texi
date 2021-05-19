@@ -4394,9 +4394,9 @@ Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_MATRIX_DATA_
 By default, the check for a mismatch between the data length and the
-size of a matrix gives a warning: setting this to @samp{TRUE} gives an
+size of a matrix gives a warning: setting this to a true value gives an
 error with a compact traceback.
-Default: unset (but @samp{TRUE} for CRAN submission checks).
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
