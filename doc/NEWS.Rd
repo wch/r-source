@@ -21,8 +21,7 @@
       tests for symlinks, reability and writability.
  
       \item On Windows, \code{download.file(method = "auto")} uses
-      \code{"libcurl"} for \samp{ftp://} sites provided \R was built
-      with \code{libcurl} support.
+      \code{"libcurl"} for \samp{ftp://} URIs.
     }
   }
 
@@ -56,6 +55,10 @@
       URIs.
 
       Similarly on Windows for \code{download.file(method = "wininet")}.
+
+      \item Use of the (non-default) \code{method = "internal"} for
+      \code{download.file} and \code{url} is deprecated for
+      \samp{http://} URIs.
     }
   }
 

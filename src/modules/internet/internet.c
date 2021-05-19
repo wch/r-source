@@ -109,7 +109,7 @@ static Rboolean url_open(Rconnection con)
 	SEXP utilsNS = PROTECT(R_FindNamespace(mkString("utils")));
 	struct urlconn *uc = con->private;
 
-	//warning(_("the 'internal' method for http:// is deprecated"));
+	warning(_("the 'internal' method of url() is deprecated for http:// URLs"));
 	sagent = eval(agentFun, utilsNS);
 	UNPROTECT(1); /* utilsNS */
 	PROTECT(sagent);
@@ -531,7 +531,8 @@ static SEXP in_do_download(SEXP args)
 		  file, strerror(errno));
 	}
 
-	// warning(_("the 'internal' method for http:// is deprecated"));
+	if(!meth)
+	    warning(_("the 'internal' method is deprecated for http:// URLs"));
 	R_Busy(1);
 	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
 	SEXP agentFun, sagent;
