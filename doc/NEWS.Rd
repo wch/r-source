@@ -12,21 +12,26 @@
       tested (except \emph{pro tem} for \code{curlGetHeaders()}) as
       browsers are increasing removing support.
       %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
-
-      It is planned to reduce \samp{ftp://} support in future versions
-      of \R to that provided by \samp{libcurl}.
     }
   }
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{matrix(x, n,m)} now warns in more cases where
-      \code{length(x)} is larger than \code{n * m}; suggested by Abby
+      \item \code{matrix(x, n, m)} now warns in more cases where
+      \code{length(x)} differs from than \code{n * m}; suggested by Abby
       Spurdle and Wolfgang Huber in Feb 2021 on the R-devel mailing
       list.
 
+      This warning can be turned into an error by setting environment
+      variable \env{_R_CHECK_MATRIX_DATA_} to \samp{TRUE}: \command{R
+	CMD check --as-cran} does so unless it is already set.
+
       \item Function \code{file_test()} in package \pkg{utils} gains
       tests for symlinks, reability and writability.
+ 
+      \item On Windows, \code{download.file(method = "auto")} uses
+      \code{"libcurl"} for \samp{ftp://} sites provided \R was built
+      with \code{libcurl} support.
     }
   }
 
@@ -42,7 +47,9 @@
     \itemize{
       \item The (non-default) \code{method = "internal"} for
       \code{download.file} and \code{url} no longer supports \samp{ftp://}
-      URIs. 
+      URIs.
+
+      Similarly on Windows for \code{download.file(method = "wininet")}.
     }
   }
 
