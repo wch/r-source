@@ -2,7 +2,12 @@
 include ../../gnuwin32/MkRules
 
 MODULE = internet
+ifdef USE_LIBCURL
 all: makeMakedeps ../../../modules$(R_ARCH)/internet.dll
+else
+all:
+	@echo "*** libcurl is required ***" && exit 1
+endif
 
 CSOURCES = internet.c libcurl.c nanohttp.c sockconn.c Rsock.c sock.c Rhttpd.c
 
