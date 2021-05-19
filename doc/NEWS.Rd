@@ -18,7 +18,7 @@
 	CMD check --as-cran} does so unless it is already set.
 
       \item Function \code{file_test()} in package \pkg{utils} gains
-      tests for symlinks, reability and writability.
+      tests for symlinks, readability and writability.
  
       \item On Windows, \code{download.file(method = "auto")} uses
       \code{"libcurl"} for \samp{ftp://} URIs.
