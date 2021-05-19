@@ -55,11 +55,7 @@
       URIs.
 
       Similarly on Windows for \code{download.file(method = "wininet")}.
-
-      \item Use of the (non-default) \code{method = "internal"} for
-      \code{download.file} and \code{url} is deprecated for
-      \samp{http://} URIs.
-    }
+   }
   }
 
   \subsection{BUG FIXES}{
@@ -74,7 +70,7 @@
       The underlying C code has been modularized and is common to all
       four cases of discrete distributions.
 
-      \item Setting \code{digits=0} in \code{format()} or \code{options()}
+      \item Setting \code{digits = 0} in \code{format()} or \code{options()}
       is now invalid (again).  The behaviour was platform dependent, and it 
       is unclear what \dQuote{zero significant digits} should mean
       (\PR{18098}).
@@ -93,8 +89,8 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Using the non-default \code{method = "internal"} for
-      \samp{ftp://} URIs is deprecated for \code{download.file} and
-      \code{url}.
+      \samp{http://} and \samp{ftp://} URIs is deprecated for
+      \code{download.file} and \code{url}.
     }
   }
 
