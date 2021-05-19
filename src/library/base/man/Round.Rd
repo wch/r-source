@@ -1,6 +1,6 @@
 % File src/library/base/man/Round.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Round}
@@ -36,7 +36,7 @@ signif(x, digits = 6)
   \dQuote{round to even} when rounding off a 5.
 
   \code{signif} rounds the values in its first argument to the specified
-  number of significant digits.   Hence, for \code{numeric} \code{x},
+  number of \emph{significant} digits.   Hence, for \code{numeric} \code{x},
   \code{signif(x, dig)} is the same as \code{round(x, dig - ceiling(log10(abs(x))))}.
   For \code{\link{complex}} \code{x}, this is not the case, % currently (?)
   see the \sQuote{Details}.
@@ -47,7 +47,7 @@ signif(x, digits = 6)
 
   \item{digits}{integer indicating the number of decimal places
     (\code{round}) or significant digits (\code{signif}) to be used.
-    Negative values are allowed (see \sQuote{Details}).}
+    For \code{round}, negative values are allowed (see \sQuote{Details}).}
 
   \item{\dots}{arguments to be passed to methods.}
 }

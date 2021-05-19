@@ -2766,12 +2766,15 @@ all.equal(x, y, check.names = FALSE)
 ## failed on mismatched attributes
 
 
-## PR#15411, plus digits change
+## PR#15411; PR#18098 ==> digits=0 not ok:
 format(9992, digits = 3)
 format(9996, digits = 3)
-format(0.0002, digits = 0, nsmall = 2)
-format(pi*10, digits = 0, nsmall = 1)
-## second added an extra space; 3rd and 4th were not allowed.
+format(0.0002, digits = 1, nsmall = 2, scientific = FALSE)
+assertErrorV(
+format(pi*10,  digits = 0))
+format(pi*10,  digits = 1)
+format(pi*10,  digits = 1, nsmall = 1)
+## second added an extra space.
 
 ## and one branch of this was wrong:
 xx <- c(-86870268, 107833358, 302536985, 481015309, 675718935, 854197259,

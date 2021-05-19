@@ -70,6 +70,11 @@
 
       The underlying C code has been modularized and is common to all
       four cases of discrete distributions.
+
+      \item Setting \code{digits=0} in \code{format()} or \code{options()}
+      is now invalid (again).  The behaviour was platform dependent, and it 
+      is unclear what \dQuote{zero significant digits} should mean
+      (\PR{18098}).
     }
   }
 }

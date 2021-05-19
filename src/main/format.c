@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 2003--2016  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -285,8 +285,7 @@ static void format_via_sprintf(double r, int d, int *kpower, int *nsig)
 #if defined(HAVE_LONG_DOUBLE) && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 static const long double tbl[] =
 {
-    /* Powers exactly representable with 64 bit mantissa (except the first, which is only used with digits=0) */
-    1e-1,
+    /* Powers exactly representable with 64 bit mantissa */
     1e00, 1e01, 1e02, 1e03, 1e04, 1e05, 1e06, 1e07, 1e08, 1e09,
     1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19,
     1e20, 1e21, 1e22, 1e23, 1e24, 1e25, 1e26, 1e27
@@ -295,7 +294,6 @@ static const long double tbl[] =
 #else
 static const double tbl[] =
 {
-    1e-1,
     1e00, 1e01, 1e02, 1e03, 1e04, 1e05, 1e06, 1e07, 1e08, 1e09,
     1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19,
     1e20, 1e21, 1e22
@@ -340,7 +338,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
         long double r_prec = r;
         /* use exact scaling factor in long double precision, if possible */
         if (abs(kp) <= KP_MAX) {
-            if (kp > 0) r_prec /= tbl[kp+1]; else if (kp < 0) r_prec *= tbl[ -kp+1];
+            if (kp > 0) r_prec /= tbl[kp]; else if (kp < 0) r_prec *= tbl[ -kp];
         }
 #ifdef HAVE_POWL
 	// powl is C99 but only added to FreeBSD in 2017.
@@ -352,7 +350,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
         else
             r_prec /= Rexp10((double) kp);
 #endif
-        if (r_prec < tbl[R_print.digits]) {
+        if (r_prec < tbl[R_print.digits - 1]) {
             r_prec *= 10.0;
             kp--;
         }
@@ -364,7 +362,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 	double r_prec = r;
         /* use exact scaling factor in double precision, if possible */
         if (abs(kp) <= KP_MAX) {
-            if (kp >= 0) r_prec /= tbl[kp+1]; else r_prec *= tbl[ -kp+1];
+            if (kp >= 0) r_prec /= tbl[kp]; else r_prec *= tbl[ -kp];
         }
         /* For IEC60559 1e-308 is not representable except by gradual underflow.
            Shifting by 303 allows for any potential denormalized numbers x,
@@ -375,7 +373,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
             r_prec = (r_prec * 1e+303)/Rexp10((double)(kp+303));
         else
             r_prec /= Rexp10((double)kp);
-        if (r_prec < tbl[R_print.digits]) {
+        if (r_prec < tbl[R_print.digits - 1]) {
             r_prec *= 10.0;
             kp--;
         }
@@ -408,9 +406,9 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 	int rgt = R_print.digits - *kpower;
 	/* bound rgt by 0 and KP_MAX */
 	rgt = rgt < 0 ? 0 : rgt > KP_MAX ? KP_MAX : rgt;
-	double fuzz = 0.5/(double)tbl[1 + rgt];
+	double fuzz = 0.5/(double)tbl[rgt];
 	// kpower can be bigger than the table.
-	*roundingwidens = *kpower > 0 && *kpower <= KP_MAX && r < tbl[*kpower + 1] - fuzz;
+	*roundingwidens = *kpower > 0 && *kpower <= KP_MAX && r < tbl[*kpower] - fuzz;
     }
 }
 
