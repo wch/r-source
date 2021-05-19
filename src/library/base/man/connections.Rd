@@ -158,16 +158,17 @@ socketTimeout(socket, timeout = -1)
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
   \samp{file://}).  Method \code{"internal"} is that available since
-  connections were introduced..  Method \code{"wininet"} is only
+  connections were introduced.  Method \code{"wininet"} is only
   available on Windows (it uses the WinINet functions of that OS) and
   method \code{"libcurl"} (using the library of that name:
-  \url{https://curl.se/libcurl/}) is required on a Unix-alike but
-  optional on Windows.  Method \code{"default"} uses method
-  \code{"internal"} for \samp{file:} URLs and \code{"libcurl"} for
-  \code{ftps:} URLs.  On a Unix-alike it uses \code{"libcurl"} for
-  \samp{http:}, \samp{https:} and \samp{ftp:} URLs; on Windows
-  \code{"wininet"} for \samp{http:}, \samp{ftp:} and \samp{https:} URLs.
-  Proxies can be specified: see \code{\link{download.file}}.
+  \url{https://curl.se/libcurl/}) is required on a Unix-alike but was
+  optional on Windows before \R 4.2.0.  Method \code{"default"}
+  currently uses method \code{"internal"} for \samp{file://} URLs and
+  \code{"libcurl"} for all others.  Which methods support which schemes
+  has varied by \R version -- currently \code{"internal"} supports only
+  \samp{file://} and \code{"wininet"} supports \samp{file://},
+  \samp{http://} and \samp{https://}.  Proxies can be specified: see
+  \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and

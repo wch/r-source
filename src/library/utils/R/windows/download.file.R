@@ -34,10 +34,8 @@ download.file <-
     if(method == "auto") {
         if(length(url) != 1L || typeof(url) != "character")
             stop("'url' must be a length-one character vector");
-	method <-
-            if(capabilities("libcurl") &&
-               (startsWith(url, "ftp") || startsWith(url, "ftps:"))) "libcurl"
-            else "wininet"
+        ## as from 4.2.0 always have libcurl
+	method <- if(startsWith(url, "file:") "wininet" else "libcurl"
     }
 
     nh <- names(headers)

@@ -20,8 +20,9 @@
       \item Function \code{file_test()} in package \pkg{utils} gains
       tests for symlinks, readability and writability.
  
-      \item On Windows, \code{download.file(method = "auto")} uses
-      \code{"libcurl"} for \samp{ftp://} URIs.
+      \item On Windows, \code{download.file(method = "auto")} and
+      \code{url(method = "default")} now follow Unix in using
+      \code{"libcurl"} for all except \samp{file://} URIs.
     }
   }
 
@@ -55,7 +56,7 @@
       URIs.
 
       Similarly on Windows for \code{download.file(method = "wininet")}.
-   }
+    }
   }
 
   \subsection{BUG FIXES}{
@@ -70,10 +71,10 @@
       The underlying C code has been modularized and is common to all
       four cases of discrete distributions.
 
-      \item Setting \code{digits = 0} in \code{format()} or \code{options()}
-      is now invalid (again).  The behaviour was platform dependent, and it 
-      is unclear what \dQuote{zero significant digits} should mean
-      (\PR{18098}).
+      \item Setting \code{digits = 0} in \code{format()} or
+      \code{options()} is again invalid.  Its behaviour was
+      platform-dependent, and it is unclear what \dQuote{zero
+	significant digits} should mean (\PR{18098}).
     }
   }
 }

@@ -63,13 +63,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The \code{url} must start with a scheme such as
   \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
 
-  If \code{method = "auto"} is chosen (the default), the behavior
-  depends on the platform.  On all platforms the \code{"internal"}
-  method is used for \samp{file://} URLs, and \code{"libcurl"} is used
-  for \samp{ftp://} and \samp{ftps://} URLs.  On a Unix-alike
-  \code{"libcurl"} is also used for \samp{http://} and \samp{https://}
-  URLs, whereas on Windows the \code{"wininet"} method is used.  (This
-  uses the WinINet functions, part of the OS).
+  For \code{method = "auto"} (the default) the \code{"internal"} method
+  is used for \samp{file://} URLs, and \code{"libcurl"} for all others.
 
   Support for method \code{"libcurl"} was optional on Windows prior to
   \R 4.2.0: use \code{\link{capabilities}("libcurl")} to see if it is
