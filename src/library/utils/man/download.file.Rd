@@ -64,22 +64,17 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
 
   If \code{method = "auto"} is chosen (the default), the behavior
-  depends on the platform:
-  \itemize{
-    \item On a Unix-alike method \code{"libcurl"} is used except
-    \code{"internal"} for \samp{file://} URLs, where \code{"libcurl"}
-    uses the library of that name (\url{https://curl.se/libcurl/}).
+  depends on the platform.  On all platforms the \code{"internal"}
+  method is used for \samp{file://} URLs, and \code{"libcurl"} is tried
+  for \samp{ftp://} and \samp{ftps://} URLs.  On a Unix-alike
+  \code{"libcurl"} is also used for \samp{http://} and \samp{https://}
+  URLs, whereas on Windows the \code{"wininet"} method is used.  (This
+  uses the WinINet functions, part of the OS).
 
-    \item On Windows the \code{"wininet"} method is used apart from for
-    \samp{ftps://} URLs where \code{"libcurl"} is tried.  The
-    \code{"wininet"} method uses the WinINet functions (part of the OS).
-    % https://msdn.microsoft.com/en-us/library/windows/desktop/aa383630%28v=vs.85%29.aspx
-
-    Support for method \code{"libcurl"} is optional on Windows: use
-    \code{\link{capabilities}("libcurl")} to see if it is supported on
-    your build.  It uses an external library of that name
-    (\url{https://curl.se/libcurl/}) against which \R can be compiled.
-  }
+  Support for method \code{"libcurl"} is optional on Windows: use
+  \code{\link{capabilities}("libcurl")} to see if it is supported on
+  your build.  It uses an external library of that name
+  (\url{https://curl.se/libcurl/}) against which \R can be compiled.
 
   When method \code{"libcurl"} is used, it provides
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
@@ -151,7 +146,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"libcurl"} method values of the option less than 2 give verbose
   output.
 
-  A progress bar tracks the transfer platform specifically:
+  A progress bar tracks the transfer platform-specifically:
   \describe{
     \item{On Windows}{If the file length is known, the
       full width of the bar is the known length.  Otherwise the initial
