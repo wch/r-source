@@ -6,15 +6,6 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  \subsection{INSTALLATION}{
-    \itemize{
-      \item Facilities for accessing \samp{ftp://} sites are no longer
-      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as
-      browsers are increasing removing support.
-      %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
-    }
-  }
-
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{matrix(x, n, m)} now warns in more cases where
@@ -32,6 +23,21 @@
       \item On Windows, \code{download.file(method = "auto")} uses
       \code{"libcurl"} for \samp{ftp://} sites provided \R was built
       with \code{libcurl} support.
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Facilities for accessing \samp{ftp://} sites are no longer
+      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as
+      browsers are increasing removing support.
+      %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
+    }
+  }
+
+  \subsection{INSTALLATION ON WINDOWS}{
+    \itemize{
+      \item \code{libcurl} is now required.
     }
   }
 

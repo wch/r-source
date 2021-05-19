@@ -65,7 +65,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   If \code{method = "auto"} is chosen (the default), the behavior
   depends on the platform.  On all platforms the \code{"internal"}
-  method is used for \samp{file://} URLs, and \code{"libcurl"} is tried
+  method is used for \samp{file://} URLs, and \code{"libcurl"} is used
   for \samp{ftp://} and \samp{ftps://} URLs.  On a Unix-alike
   \code{"libcurl"} is also used for \samp{http://} and \samp{https://}
   URLs, whereas on Windows the \code{"wininet"} method is used.  (This

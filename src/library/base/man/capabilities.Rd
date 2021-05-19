@@ -118,7 +118,7 @@ capabilities(what = NULL,
   \item{libcurl}{is \code{libcurl} available in this build?  Used by
     function \code{\link{curlGetHeaders}} and optionally by
     \code{\link{download.file}} and \code{\link{url}}.   As from \R
-    3.3.0 always true for Unix-alikes, and true for CRAN Windows builds.}
+    3.3.0 always true for Unix-alikes, and as from \R 4.2.0 true on Windows.}
 }
 \seealso{
   \code{\link{.Platform}}, \code{\link{extSoftVersion}}, and
