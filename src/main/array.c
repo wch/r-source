@@ -97,6 +97,11 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     miss_nr = asLogical(CAR(args)); args = CDR(args);
     miss_nc = asLogical(CAR(args));
 
+    static int nowarn = -1;
+    if (nowarn == -1) {
+	char *p = getenv("_R_CHECK_MATRIX_DATA_");
+	nowarn = (p && StringTrue(p)) ? 1 : 0;
+    }
     if (!miss_nr) {
 	if (!isNumeric(snr)) error(_("non-numeric matrix extent"));
 	nr = asInteger(snr);
@@ -139,8 +144,12 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
 		     ((lendat < nc) && (nc / lendat) * lendat != nc))
 		warning(_("data length [%d] is not a sub-multiple or multiple of the number of columns [%d]"), lendat, nc);
-	    else if (nrc != lendat)
-		warning(_("data length differs from size of matrix: [%d != %d x %d]"), lendat, nr, nc);
+	    else if (nrc != lendat) {
+		if(nowarn)
+		    error(_("data length differs from size of matrix: [%d != %d x %d]"), lendat, nr, nc);
+		else
+		    warning(_("data length differs from size of matrix: [%d != %d x %d]"), lendat, nr, nc);
+	    }
 	}
 	else if (lendat > 1 && nrc == 0) // for now *not* warning for e.g., matrix(NA, 0, 4)
 	    warning(_("non-empty data for zero-extent matrix"));

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -469,7 +469,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	digits = asInteger(CAR(args));
 	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT
 	    || digits > R_MAX_DIGITS_OPT)
-	    error(_("invalid '%s' argument"), "digits");
+	    error(_("invalid value %d for '%s' argument"), digits, "digits");
 	R_print.digits = digits;
     }
     args = CDR(args);

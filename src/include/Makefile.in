@@ -18,7 +18,7 @@ SRC_HEADERS = R.h S.h Rdefines.h Rembedded.h Rinternals.h Rinterface.h
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 ## Non-API internal ones:
 INT_HEADERS = Defn.h Errormsg.h Fileio.h Graphics.h GraphicsBase.h \
-   IOStuff.h Internal.h Parse.h Print.h Rconnections.h \
+   IOStuff.h Internal.h Parse.h Print.h R-ftp-http.h Rconnections.h \
    Rdynpriv.h Rgraphics.h Rinlinedfuns.h Startup.h rlocale.h
 
 DISTFILES = Makefile.in Makefile.win $(INT_HEADERS) $(SRC_HEADERS) \

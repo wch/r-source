@@ -272,7 +272,7 @@ merge(women, women[FALSE, ])
 
 
 ## influence.measures() for lm and glm, and its constituents
-if(require(MASS)) {
+if(require(MASS, quietly = TRUE)) {
     fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
     gf <- glm(formula(fit), data=Cars93) # should be "identical"
     im1 <- influence.measures(fit)

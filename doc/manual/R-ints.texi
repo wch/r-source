@@ -4391,6 +4391,12 @@ Default: false.
 If true and @env{_R_CHECK_USE_CODETOOLS_} is also true, functions are
 scanned for use of @code{return} rather than @code{return()}.
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_MATRIX_DATA_
+By default, the check for a mismatch between the data length and the
+size of a matrix gives a warning: setting this to a true value gives an
+error with a compact traceback.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
@@ -4435,6 +4441,7 @@ _R_CHECK_BASHISMS_=true
 _R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
 _R_CHECK_BOGUS_RETURN_=true
+_R_CHECK_MATRIX_DATA_=TRUE
 @end example
 
 @noindent

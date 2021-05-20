@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2020   The R Core Team.
+ *  Copyright (C) 2001-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 #include <Rconnections.h>
 #include <Rdynpriv.h>
-#include <R_ext/R-ftp-http.h>
+//#include <R-ftp-http.h>
 #include <Rmodules/Rinternet.h>
 
 static R_InternetRoutines routines, *ptr = &routines;
@@ -38,22 +38,13 @@ Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, int serverfd, char *mode, int timeout, int options);
 Rconnection R_newservsock(int port);
 
-
-Next 6 are for use by libxml, only
-
-void *R_HTTPOpen(const char *url);
-int   R_HTTPRead(void *ctx, char *dest, int len);
-void  R_HTTPClose(void *ctx);
-
-void *R_FTPOpen(const char *url);
-int   R_FTPRead(void *ctx, char *dest, int len);
-void  R_FTPClose(void *ctx);
-
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 		double timeout)
 
-int R_HTTPDCreate(const char *ip, int port);
-void R_HTTPDStop(void);
+int extR_HTTPDCreate(const char *ip, int port);
+void extR_HTTPDStop(void);
+
+and more
  */
 
 static int initialized = 0;
@@ -124,69 +115,6 @@ Rconnection attribute_hidden R_newservsock(int port)
 	error(_("internet routines cannot be loaded"));
 	return (Rconnection)0;
     }
-}
-
-
-void *R_HTTPOpen(const char *url)
-{
-    if(!initialized) internet_Init();
-    if(initialized > 0)
-	return (*ptr->HTTPOpen)(url, NULL, NULL, 0);
-    else {
-	error(_("internet routines cannot be loaded"));
-	return NULL;
-    }
-}
-
-int   R_HTTPRead(void *ctx, char *dest, int len)
-{
-    if(!initialized) internet_Init();
-    if(initialized > 0)
-	return (*ptr->HTTPRead)(ctx, dest, len);
-    else {
-	error(_("internet routines cannot be loaded"));
-	return 0;
-    }
-}
-
-void  R_HTTPClose(void *ctx)
-{
-    if(!initialized) internet_Init();
-    if(initialized > 0)
-	(*ptr->HTTPClose)(ctx);
-    else
-	error(_("internet routines cannot be loaded"));
-}
-
-void *R_FTPOpen(const char *url)
-{
-    if(!initialized) internet_Init();
-    if(initialized > 0)
-	return (*ptr->FTPOpen)(url);
-    else {
-	error(_("internet routines cannot be loaded"));
-	return NULL;
-    }
-}
-
-int   R_FTPRead(void *ctx, char *dest, int len)
-{
-    if(!initialized) internet_Init();
-    if(initialized > 0)
-	return (*ptr->FTPRead)(ctx, dest, len);
-    else {
-	error(_("internet routines cannot be loaded"));
-	return 0;
-    }
-}
-
-void  R_FTPClose(void *ctx)
-{
-    if(!initialized) internet_Init();
-    if(initialized > 0)
-	(*ptr->FTPClose)(ctx);
-    else
-	error(_("internet routines cannot be loaded"));
 }
 
 int extR_HTTPDCreate(const char *ip, int port)

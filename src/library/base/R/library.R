@@ -307,7 +307,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 else
                     gettext("no library trees found in 'lib.loc'")
                 if(logical.return) {
-                    warning(txt, domain = NA)
+                    if(!quietly) warning(txt, domain = NA)
 		    return(FALSE)
 		} else stop(txt, domain = NA)
             }
@@ -387,7 +387,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 			     paste(" in", deparse(cc)[1L]) else ""
 		    msg <- gettextf("package or namespace load failed for %s%s:\n %s",
 				    sQuote(package), P, conditionMessage(e))
-		    if(logical.return)
+		    if(logical.return && !quietly)
 			message(paste("Error:", msg), domain = NA) # returns NULL
 		    else stop(msg, call. = FALSE, domain = NA)
 		})

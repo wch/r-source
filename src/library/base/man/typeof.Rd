@@ -1,6 +1,6 @@
 % File src/library/base/man/typeof.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{typeof}
@@ -39,5 +39,6 @@ typeof(x)
 \examples{
 typeof(2)
 mode(2)
+## for a table of examples, see  ?mode  /  examples(mode)
 }
 \keyword{attribute}

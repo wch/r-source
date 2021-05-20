@@ -4420,6 +4420,10 @@ As is the use of  @code{.PHONY} (some other makes ignore it).
 Unfortunately makefiles which use GNU extensions often run on other
 platforms but do not have the intended results.
 
+Note that the @option{-C} flag for @command{make} is not included in the
+POSIX specification and is not implemented by some of the
+@command{make}s used with @R{}.
+
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 
 @example

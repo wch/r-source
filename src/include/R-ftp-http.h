@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2016 The R Core Team.
+ *  Copyright (C) 2001-2021 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,37 +21,18 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Advertized entry points, for that part of libxml included in
- * the internet module.
+/* Non-API entry points, for that part of libxml included in
+ * the internet module.  Could be moved to that module.
  */
 
 #ifndef R_FTP_HTTP_H_
 #define R_FTP_HTTP_H_
 
-/*
-  allow for 'large' files (>= 2GB) on 32-bit systems, where supported.
-*/
-/* required by C99/C11 */
-#ifdef __cplusplus
-# include <cstdint>
-#else
-# include <stdint.h>
-#endif
+#include <stdint.h>
 
 typedef int_fast64_t DLsize_t; // used for download lengths and sizes
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void *R_HTTPOpen(const char *url);
-int   R_HTTPRead(void *ctx, char *dest, int len);
-void  R_HTTPClose(void *ctx);
-
-void *R_FTPOpen(const char *url);
-int   R_FTPRead(void *ctx, char *dest, int len);
-void  R_FTPClose(void *ctx);
-
+// used in src/modules/internet/internet.c
 void *	RxmlNanoHTTPOpen(const char *URL, char **contentType, const char *headers, int cacheOK);
 int	RxmlNanoHTTPRead(void *ctx, void *dest, int len);
 void	RxmlNanoHTTPClose(void *ctx);
@@ -61,21 +42,7 @@ DLsize_t RxmlNanoHTTPContentLength(void *ctx);
 char *	RxmlNanoHTTPContentType(void *ctx);
 void	RxmlNanoHTTPTimeout(int delay);
 
-void *	RxmlNanoFTPOpen(const char *URL);
-int	RxmlNanoFTPRead(void *ctx, void *dest, int len);
-int	RxmlNanoFTPClose(void *ctx);
-void	RxmlNanoFTPTimeout(int delay);
-DLsize_t RxmlNanoFTPContentLength(void *ctx);
-
+// used in nanohttp.c, provided by internet.c
 void    RxmlMessage(int level, const char *format, ...);
-
-/* not currently used */
-
-void RxmlNanoFTPCleanup(void);
-void RxmlNanoHTTPCleanup(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* R_FTP_HTTP_H_ */

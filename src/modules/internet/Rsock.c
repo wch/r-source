@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2020   The R Core Team
+ *  Copyright (C) 1998-2021   The R Core Team
  *  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -160,7 +160,7 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 /* --------- for use in socket connections ---------- */
 
-#include <R_ext/R-ftp-http.h>
+#include <R-ftp-http.h>
 
 #ifdef Win32
 #include <io.h>
