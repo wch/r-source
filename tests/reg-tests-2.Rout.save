@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-05-17 r80307) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-19 r80339) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin20.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6366,7 +6366,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x32c7f48>
+<bytecode: 0x7ff4b5dba1a0>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6377,7 +6377,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x32c7f48>
+<bytecode: 0x7ff4b5dba1a0>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6389,7 +6389,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x32c7f48>
+<bytecode: 0x7ff4b5dba1a0>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -7249,7 +7249,7 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
 [1] "0.0002"
 > assertErrorV(
 + format(pi*10,  digits = 0))
-Asserted error: invalid 'digits' argument
+Asserted error: invalid value 0 for 'digits' argument
 > format(pi*10,  digits = 1)
 [1] "31"
 > format(pi*10,  digits = 1, nsmall = 1)
