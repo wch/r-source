@@ -5,6 +5,40 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.1.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{require(\var{pkg}, quietly = TRUE)} is quieter and in
+      particular does not warn if the package is not found.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Using the non-default \code{method = "internal"} for
+      \samp{http://} and \samp{ftp://} URIs is deprecated for
+      \code{download.file} and \code{url}.
+
+      \item On Windows download.file(method = "internal") is deprecated
+      for \samp{ftp://} URIs and will be removed in \R 4.2.0.  It
+      remains the default but if \code{libcurl} is available, use
+      \code{method = "libcurl"}.
+
+      \item Use of \samp{ftp://} URIs should be regarded as
+      deprecated, with on-going support confined to \code{method =
+	"libcurl"} and not routinely tested.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \command{make check-devel} works again in an \R build
+      configured with \option{--without-recommended-packages}.
+    }
+  }
+}
+
+
 \section{\Rlogo CHANGES IN R 4.1.0}{
   \subsection{FUTURE DIRECTIONS}{
     \itemize{
