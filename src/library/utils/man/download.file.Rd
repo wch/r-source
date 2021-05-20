@@ -60,16 +60,20 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The function \code{download.file} can be used to download a single
   file as described by \code{url} from the internet and store it in
   \code{destfile}.
-  The \code{url} must start with a scheme such as
-  \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
+
+  The \code{url} must start with a scheme such as \samp{http://},
+  \samp{https://}, \samp{ftp://} or \samp{file://}.  Which methods
+  support which schemes varies by \R version, but \code{method = "auto"}
+  will try to find a method which supports the scheme.
 
   For \code{method = "auto"} (the default) the \code{"internal"} method
   is used for \samp{file://} URLs, and \code{"libcurl"} for all others.
 
   Support for method \code{"libcurl"} was optional on Windows prior to
   \R 4.2.0: use \code{\link{capabilities}("libcurl")} to see if it is
-  supported on your build.  It uses an external library of that name
-  (\url{https://curl.se/libcurl/}) against which \R can be compiled.
+  supported on an earlier version.  It uses an external library of that
+  name (\url{https://curl.se/libcurl/}) against which \R can be
+  compiled.
 
   When method \code{"libcurl"} is used, it provides
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
@@ -104,8 +108,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"internal"} method but are supported by the \code{"libcurl"}
   method and the \code{"wininet"} method on Windows.
 
-  Support for \samp{ftp://} URLs in the \code{"internal"} method was
-  deprecated in \R 4.1.1 and removed in \R 4.2.0.
+  Support for \samp{ftp://} URLs in the \code{"internal"} and
+  \code{"wininet"} methods was deprecated in \R 4.1.1 and removed in \R
+  4.2.0.
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
