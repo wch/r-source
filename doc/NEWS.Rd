@@ -15,18 +15,19 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
+      \item Use of \samp{ftp://} URIs should be regarded as
+      deprecated, with on-going support confined to \code{method =
+	"libcurl"} and not routinely tested.  (Nowadays no major browser
+      supports them.)
+
       \item Using the non-default \code{method = "internal"} for
       \samp{http://} and \samp{ftp://} URIs is deprecated for
       \code{download.file} and \code{url}.
 
-      \item On Windows download.file(method = "internal") is deprecated
-      for \samp{ftp://} URIs and will be removed in \R 4.2.0.  It
-      remains the default but if \code{libcurl} is available, use
+      \item On Windows, \code{download.file(method = "wininet") }is
+      deprecated for \samp{ftp://} URIs and will be removed in \R 4.2.0.
+      It remains the default but if \code{libcurl} is available, use
       \code{method = "libcurl"}.
-
-      \item Use of \samp{ftp://} URIs should be regarded as
-      deprecated, with on-going support confined to \code{method =
-	"libcurl"} and not routinely tested.
     }
   }
 
