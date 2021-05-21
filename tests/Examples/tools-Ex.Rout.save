@@ -1,7 +1,7 @@
 
-R version 4.1.0 RC (2021-05-16 r80307) -- "Camp Pontanezen"
+R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin20.4.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -203,7 +203,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x7fb82bd314f8>
+<environment: 0x23b52f8>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -952,7 +952,7 @@ An illustration of lexical scoping.
 > 
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
+[1] "/data/gannet/ripley/.cache/R/FOO"
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -1002,7 +1002,7 @@ List of 6
 List of 5
  $ file    : chr "grid.Rnw"
  $ title   : chr "Introduction to grid"
- $ depends : chr "lattice"
+ $ depends : chr(0) 
  $ keywords: chr(0) 
  $ engine  : chr "utils::Sweave"
 > 
@@ -1051,7 +1051,7 @@ List of 5
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.289 0.03 0.323 0 0 
+Time elapsed:  0.388 0.023 0.413 0 0 
 > grDevices::dev.off()
 null device 
           1 

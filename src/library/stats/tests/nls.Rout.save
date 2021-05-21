@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-05-14 r80295) -- "Unsuffered Consequences"
+R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin20.4.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -795,4 +795,4 @@ List of 2
 > 
 > proc.time()
    user  system elapsed 
-  1.370   0.123   1.481 
+  1.728   0.088   1.810 

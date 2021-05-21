@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-04-16 r80178) -- "Unsuffered Consequences"
+R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.226   0.030   0.238 
+  0.207   0.038   0.227 
