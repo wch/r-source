@@ -70,7 +70,10 @@ for(i in seq_len(3))
     print(coef(summary(update(fit6, ys[, i] ~ .))))
 
 ## This requires MASS::gamma.shape
-if(!require("MASS")) q()
+if(!require("MASS", quietly = TRUE)) {
+    message("skipping tests requiring the MASS package")
+    q()
+}
 
 ## gamma fit, from example(glm)
 clotting <- data.frame(u = c(5,10,15,20,30,40,60,80,100),

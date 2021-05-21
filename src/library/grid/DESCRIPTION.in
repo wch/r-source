@@ -8,6 +8,5 @@ Contact: R-help mailing list <r-help@r-project.org>
 Description: A rewrite of the graphics layout capabilities, plus some
   support for interaction.
 Imports: grDevices, utils
-Suggests: lattice
 License: Part of R @VERSION@
 NeedsCompilation: yes

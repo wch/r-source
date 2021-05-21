@@ -60,8 +60,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The function \code{download.file} can be used to download a single
   file as described by \code{url} from the internet and store it in
   \code{destfile}.
-  The \code{url} must start with a scheme such as
-  \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
+
+  The \code{url} must start with a scheme such as \samp{http://},
+  \samp{https://}, \samp{ftp://} or \samp{file://}.  Which methods
+  support which schemes varies by \R version.
 
   If \code{method = "auto"} is chosen (the default), the behavior
   depends on the platform:

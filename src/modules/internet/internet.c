@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2020   The R Core Team.
+ *  Copyright (C) 2000-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ static int   in_R_HTTPRead2(void *ctx, char *dest, int len);
 static void  in_R_HTTPClose2(void *ctx);
 static void *in_R_FTPOpen2(const char *url);
 
+// Wrappers for switching between "internal" and "wininet"
 #define Ri_HTTPOpen(url, agent, headers, cacheOK)	   \
     (meth ? in_R_HTTPOpen2(url, agent, headers, cacheOK) : \
        in_R_HTTPOpen(url, agent, headers, cacheOK));
@@ -112,7 +113,7 @@ static Rboolean url_open(Rconnection con)
     switch(type) {
 #ifdef Win32
     case HTTPSsh:
-	    warning(_("for https:// URLs use method = \"wininet\""));
+	    warning(_("for https:// URLs use method = \"libcurl\" or \"wininet\""));
 	    return FALSE;
 #endif
     case HTTPsh:
@@ -123,6 +124,8 @@ static Rboolean url_open(Rconnection con)
 	agentFun = PROTECT(lang1(s_makeUserAgent)); // defaults to ,TRUE
 	SEXP utilsNS = PROTECT(R_FindNamespace(mkString("utils")));
 	struct urlconn *uc = con->private;
+
+	warning(_("the 'internal' method of url() is deprecated for http:// URLs"));
 	sagent = eval(agentFun, utilsNS);
 	UNPROTECT(1); /* utilsNS */
 	PROTECT(sagent);
@@ -142,6 +145,7 @@ static Rboolean url_open(Rconnection con)
     }
 	break;
     case FTPsh:
+	warning(_("the 'internal' method of url() is deprecated for ftp:// URLs"));
 	ctxt = in_R_FTPOpen(url);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
@@ -261,7 +265,6 @@ static Rboolean url_open2(Rconnection con)
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL '%s'", url); */
 	    return FALSE;
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
@@ -272,7 +275,6 @@ static Rboolean url_open2(Rconnection con)
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL '%s'", url); */
 	    return FALSE;
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
@@ -462,7 +464,7 @@ static SEXP in_do_download(SEXP args)
 {
     SEXP scmd, sfile, smode, sheaders;
     const char *url, *file, *mode;
-    int quiet, status = 0, cacheOK;
+    int quiet, status = 0, cacheOK, meth = 0;
 #ifdef Win32
     char pbuf[30];
     int pc;
@@ -495,10 +497,9 @@ static SEXP in_do_download(SEXP args)
     if(TYPEOF(sheaders) != NILSXP && !isString(sheaders))
         error(_("invalid '%s' argument"), "headers");
 #ifdef Win32
-    int meth = asLogical(CADR(args));
+    meth = asLogical(CADR(args));
     if(meth == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "method");
-//    if(meth == 0) meth = UseInternet2;
     if (!file_URL && R_Interactive && !quiet && !pbar.wprog) {
 	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
 			       Titlebar | Centered);
@@ -562,6 +563,8 @@ static SEXP in_do_download(SEXP args)
 		  file, strerror(errno));
 	}
 
+	if(!meth)
+	    warning(_("the 'internal' method is deprecated for http:// URLs"));
 	R_Busy(1);
 	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
 	SEXP agentFun, sagent;
@@ -674,7 +677,8 @@ static SEXP in_do_download(SEXP args)
 	if (status == 1) error(_("cannot open URL '%s'"), url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
-
+	if(!meth)
+	    warning(_("the 'internal' method is deprecated for ftp:// URLs"));
 	FILE *out;
 	void *ctxt;
 	DLsize_t len, total, guess, nbytes = 0;

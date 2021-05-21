@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-04-16 r80178) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-14 r80295) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin20.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -93,7 +93,9 @@ Nonlinear regression model
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
 > ## IGNORE_RDIFF_END
-> if(have_MASS) print(confint(fm))
+> if(have_MASS) {
++     print(confint(fm))
++ } else message("skipping tests requiring the MASS package")
 Waiting for profiling to be done...
      2.5%    97.5%
 a 1.00875 1.037847
@@ -793,4 +795,4 @@ List of 2
 > 
 > proc.time()
    user  system elapsed 
-  1.702   0.078   1.767 
+  1.370   0.123   1.481 

@@ -708,7 +708,7 @@ stopifnot(exprs = {
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 })
 ## 'sparse = TRUE requires recommended package Matrix
-if(requireNamespace('Matrix', lib.loc=.Library)) {
+if(requireNamespace('Matrix', lib.loc=.Library, quietly = TRUE)) {
     xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass, sparse = TRUE)# error in R <= 3.3.2
     xtNS <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, sparse = TRUE)
     stopifnot(
@@ -1678,7 +1678,7 @@ stopifnot(exprs = {
 
 
 ## scale(*, <non-numeric>)
-if(requireNamespace('Matrix', lib.loc=.Library)) {
+if(requireNamespace('Matrix', lib.loc=.Library, quietly = TRUE)) {
     de <- data.frame(Type = structure(c(1L, 1L, 4L, 1L, 4L, 2L, 2L, 2L, 4L, 1L),
 				      .Label = paste0("T", 1:4), class = "factor"),
 		     Subj = structure(c(9L, 5L, 8L, 3L, 3L, 4L, 3L, 6L, 6L, 1L),
@@ -2292,7 +2292,7 @@ stopifnot(exprs = {
 
 ## str() now even works with invalid S4  objects:
 ## this needs Matrix loaded to be an S4 generic
-if(requireNamespace('Matrix', lib.loc = .Library)) {
+if(requireNamespace('Matrix', lib.loc = .Library, quietly = TRUE)) {
 moS <- mo <- findMethods("isSymmetric")
 attr(mo, "arguments") <- NULL
 print(validObject(mo, TRUE)) # shows what's wrong
@@ -4904,7 +4904,9 @@ check_regexetc <- function(txt, fx.ptn, s.ptn, gr.ptn, msg = stop) {
     }
 } ## end{ check_regexetc }
 
-codetools::findGlobals(check_regexetc,merge=FALSE)
+if(requireNamespace("codetools", quietly = TRUE))
+    codetools::findGlobals(check_regexetc, merge=FALSE)
+
 ## "default check"
 txt <- c(
     "The", "licenses", "for", "most", "software", "are",  "designed", "to",
