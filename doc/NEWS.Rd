@@ -71,7 +71,8 @@
       The underlying C code has been modularized and is common to all
       four cases of discrete distributions.
 
-      \item Setting \code{digits = 0} in \code{format()} or
+      \item Setting \code{digits = 0} in \code{format()},
+      \code{print.default()} (and hence typically \code{print()} or
       \code{options()} is again invalid.  Its behaviour was
       platform-dependent, and it is unclear what \dQuote{zero
 	significant digits} should mean (\PR{18098}).
