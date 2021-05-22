@@ -271,6 +271,7 @@ static Rboolean url_open2(Rconnection con)
     }
 	break;
     case FTPsh:
+	warning(_("the 'wininet' method of url() is deprecated for ftp:// URLs"));
 	ctxt = in_R_FTPOpen2(url);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
@@ -679,6 +680,8 @@ static SEXP in_do_download(SEXP args)
     } else if (strncmp(url, "ftp://", 6) == 0) {
 	if(!meth)
 	    warning(_("the 'internal' method is deprecated for ftp:// URLs"));
+	else
+	    warning(_("the 'wininet' method is deprecated for ftp:// URLs"));
 	FILE *out;
 	void *ctxt;
 	DLsize_t len, total, guess, nbytes = 0;
