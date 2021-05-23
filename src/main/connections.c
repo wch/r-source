@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2020   The R Core Team.
+ *  Copyright (C) 2000-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -5462,6 +5462,11 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		error("ftps:// URLs are not supported by this method");
 	}
+
+#if defined(Win32) && defined(HAVE_LIBCURL)
+	if (strncmp(url, "ftp://", 8) == 0 && defmeth) meth = 1;
+#endif
+
 #ifdef Win32
 	if (!winmeth && strncmp(url, "https://", 8) == 0) {
 # ifdef HAVE_LIBCURL

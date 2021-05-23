@@ -20,14 +20,21 @@
 	"libcurl"} and not routinely tested.  (Nowadays no major browser
       supports them.)
 
-      \item Using the non-default \code{method = "internal"} for
-      \samp{http://} and \samp{ftp://} URIs is deprecated for
+      \item The non-default \code{method = "internal"} is deprecated for
+      \samp{http://} and \samp{ftp://} URIs for both
       \code{download.file} and \code{url}.
 
-      \item On Windows, \code{method = "wininet"} for \samp{http://} and
-      \samp{ftp://} URIs is deprecated for \code{download.file} and
-      \code{url}.  It remains the default but if \code{libcurl} is
-      available, use \code{method = "libcurl"}.
+      \item On Windows, \code{method = "wininet"} is deprecated for
+      \samp{http://}, \samp{https://} and \samp{ftp://} URIs for both
+      \code{download.file} and \code{url}.
+      % It currently only gives a warning for ftp://
+
+      For \samp{ftp://} URIs the default method is now \code{"libcurl"}
+      if available (which it is on \acronym{CRAN builds}).
+
+      \code{method = "wininet"} remains the default for \samp{http://}
+      and \samp{https://} URIs but if \code{libcurl} is available, using
+      \code{method = "libcurl"} is preferred.
     }
   }
 
@@ -537,7 +544,7 @@
 
       The character-width tables have been updated to include new
       assignments in Unicode 13.0.0.  This included treating all control
-      characters as having zero-width.
+      characters as having zero width.
 
       \item The code for evaluating default (extended) regular
       expressions now uses the same character-classification functions

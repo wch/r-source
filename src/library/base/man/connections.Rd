@@ -163,15 +163,17 @@ socketTimeout(socket, timeout = -1)
   method \code{"libcurl"} (using the library of that name:
   \url{https://curl.se/libcurl/}) is required on a Unix-alike but
   optional on Windows.  Method \code{"default"} uses method
-  \code{"internal"} for \samp{file:} URLs and \code{"libcurl"} for
-  \code{ftps:} URLs.  On a Unix-alike it uses \code{"libcurl"} for
-  \samp{http:}, \samp{https:} and \samp{ftp:} URLs; on Windows
-  \code{"wininet"} for \samp{http:}, \samp{ftp:} and \samp{https:} URLs.
-  Which methods support which schemes has varied by \R version --
-  currently \code{"internal"} supports \samp{file://}, \samp{http://}
-  (deprecated) and \samp{ftp://} (deprecated); \code{"wininet"} supports
-  \samp{file://}, \samp{http://}, \samp{https://} and \samp{ftp://}
-  (deprecated).  Proxies can be specified: see \code{\link{download.file}}.
+  \code{"internal"} for \samp{file://} URLs and uses \code{"libcurl"}
+  (if available) for \samp{ftp://} and \samp{ftps://} URLs.  On a
+  Unix-alike it uses \code{"libcurl"} for \samp{http://} and
+  \samp{https://} URLs; on Windows \code{"wininet"} for \samp{http://}
+  and \samp{https://} URLs (and for \samp{ftp://} if \code{"libcurl"} is
+  unavailable).  Which methods support which schemes has varied by \R
+  version -- currently \code{"internal"} supports \samp{file://},
+  \samp{http://} (deprecated) and \samp{ftp://} (deprecated);
+  \code{"wininet"} supports \samp{file://}, \samp{http://},
+  \samp{https://} and \samp{ftp://} (deprecated).  Proxies can be
+  specified: see \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and

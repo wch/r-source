@@ -73,14 +73,15 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     uses the library of that name (\url{https://curl.se/libcurl/}).
 
     \item On Windows the \code{"wininet"} method is used apart from for
-    \samp{ftps://} URLs where \code{"libcurl"} is tried.  The
-    \code{"wininet"} method uses the WinINet functions (part of the OS).
+    \samp{ftp://} and \samp{ftps://} URLs where \code{"libcurl"} is
+    tried.  The \code{"wininet"} method uses the WinINet functions (part
+    of the OS).  However, it is deprecated for \samp{http://} and
+    \samp{https://} URLs in favour of \code{"libcurl"}.
     % https://msdn.microsoft.com/en-us/library/windows/desktop/aa383630%28v=vs.85%29.aspx
 
     Support for method \code{"libcurl"} is optional on Windows: use
     \code{\link{capabilities}("libcurl")} to see if it is supported on
-    your build.  It uses an external library of that name
-    (\url{https://curl.se/libcurl/}) against which \R can be compiled.
+    your build (it is on \acronym{CRAN} builds).
   }
 
   When method \code{"libcurl"} is used, it provides
@@ -161,7 +162,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
       is exceeded.  (In non-interactive use this uses a text version.  If the
       file length is known, an equals sign represents 2\% of the transfer
       completed: otherwise a dot represents 10Kb.)}
-    \item{On a unix-alike}{If the file length is known, an
+    \item{On a Unix-alike}{If the file length is known, an
       equals sign represents 2\% of the transfer completed: otherwise a dot
       represents 10Kb.}
   }
