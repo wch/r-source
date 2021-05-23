@@ -129,7 +129,7 @@ static Rboolean url_open(Rconnection con)
     }
 	break;
     case FTPsh:
-	warning(_("the 'internal' method for ftp:// is defunct"));
+	warning(_("the 'internal' method for ftp:// URLs is defunct"));
 	return FALSE;
 	break;
 
@@ -239,6 +239,7 @@ static Rboolean url_open2(Rconnection con)
     }
 	break;
     case FTPsh:
+	warning(_("the 'wininet' method of url() is deprecated for ftp:// URLs"));
 	ctxt = in_R_FTPOpen2(url);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
@@ -646,9 +647,9 @@ static SEXP in_do_download(SEXP args)
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
 	if(meth)
-	    error(_("the 'wininet' method for ftp:// is defunct"));
+	    error(_("the 'wininet' method for ftp:// URLs is defunct"));
 	else
-	    error(_("the 'internal' method for ftp:// is defunct"));
+	    error(_("the 'internal' method for ftp:// URLs is defunct"));
    } else
 	error(_("scheme not supported in URL '%s'"), url);
 

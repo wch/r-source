@@ -51,9 +51,9 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item The (non-default) \code{method = "internal"} for
-      \code{download.file} and \code{url} no longer supports \samp{ftp://}
-      URIs.
+      \item The (non-default and deprecated) \code{method = "internal"}
+      for \code{download.file} and \code{url} no longer supports
+      \samp{ftp://} URIs.
 
       Similarly on Windows for \code{download.file(method = "wininet")}.
     }
@@ -612,7 +612,8 @@
       AIX have been updated to Unicode 13.0.0.
 
       The character-width tables have been updated to include new
-      assignments in Unicode 13.0.0.
+      assignments in Unicode 13.0.0.  This included treating all control
+      characters as having zero width.
 
       \item The code for evaluating default (extended) regular
       expressions now uses the same character-classification functions
