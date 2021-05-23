@@ -23,14 +23,19 @@
       \item On Windows, \code{download.file(method = "auto")} and
       \code{url(method = "default")} now follow Unix in using
       \code{"libcurl"} for all except \samp{file://} URIs.
+
+      \item \code{capabilities("libxml")} is now false.
+
+      The description of \code{capabilities("http/ftp")} now reflects
+      that it refers to the default method, no longer the internal one.
     }
   }
 
   \subsection{INSTALLATION}{
     \itemize{
       \item Facilities for accessing \samp{ftp://} sites are no longer
-      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as
-      browsers are increasing removing support.
+      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as modern
+      browsers have removed support.
       %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
     }
   }
@@ -95,14 +100,20 @@
 	"libcurl"} and not routinely tested.  (Nowadays no major browser
       supports them.)
 
-      \item Using the non-default \code{method = "internal"} for
-      \samp{http://} and \samp{ftp://} URIs is deprecated for
+      \item The non-default \code{method = "internal"} is deprecated for
+      \samp{http://} and \samp{ftp://} URIs for both
       \code{download.file} and \code{url}.
 
-      \item On Windows, \code{method = "wininet"} for \samp{http://} and
-      \samp{ftp://} URIs is deprecated for \code{download.file} and
-      \code{url}.  It remains the default but if \code{libcurl} is
-      available, use \code{method = "libcurl"}.
+      \item On Windows, \code{method = "wininet"} is deprecated for
+      \samp{http://}, \samp{https://} and \samp{ftp://} URIs for both
+      \code{download.file} and \code{url}.
+
+      For \samp{ftp://} URIs the default method is now \code{"libcurl"}
+      if available (which it is on \acronym{CRAN builds}).
+
+      \code{method = "wininet"} remains the default for \samp{http://}
+      and \samp{https://} URIs but if \code{libcurl} is available, using
+      \code{method = "libcurl"} is preferred.
     }
   }
 

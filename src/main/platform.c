@@ -2217,7 +2217,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = TRUE;
 
     SET_STRING_ELT(ansnames, i, mkChar("libxml"));
-    LOGICAL(ans)[i++] = TRUE;
+    LOGICAL(ans)[i++] = FALSE;
 
     SET_STRING_ELT(ansnames, i, mkChar("fifo"));
 #if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(_WIN32)

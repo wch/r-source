@@ -61,13 +61,14 @@ capabilities(what = NULL,
   \item{X11}{always \code{FALSE} on Windows.}
   \item{aqua}{\code{FALSE} except on macOS.}
 #endif
-  \item{http/ftp}{does the internal method for \code{\link{url}} and
+  \item{http/ftp}{does the default method for \code{\link{url}} and
     \code{\link{download.file}} support \samp{http://} and \samp{ftp://}
     URLs?  Always \code{TRUE} as from \R 3.3.0.}
   \item{sockets}{are  \code{\link{make.socket}} and related functions
     available?  Always \code{TRUE} as from \R 3.3.0.}
   \item{libxml}{is there support for integrating \code{libxml} with
-    the \R event loop?  Always \code{TRUE} as from \R 3.3.0.}
+    the \R event loop?  \code{TRUE} as from \R 3.3.0, \code{FALSE} as
+    from \R 4.2.0.}
   \item{fifo}{are FIFO \link{connections} supported?}
   \item{cledit}{is command-line editing available in the current \R
     session?  This is false in non-interactive sessions.
