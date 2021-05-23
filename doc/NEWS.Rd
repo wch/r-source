@@ -9,7 +9,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{matrix(x, n, m)} now warns in more cases where
-      \code{length(x)} differs from than \code{n * m}; suggested by Abby
+      \code{length(x)} differs from \code{n * m}, as suggested by Abby
       Spurdle and Wolfgang Huber in Feb 2021 on the R-devel mailing
       list.
 
@@ -72,7 +72,7 @@
       four cases of discrete distributions.
 
       \item Setting \code{digits = 0} in \code{format()},
-      \code{print.default()} (and hence typically \code{print()} or
+      \code{print.default()} (and hence typically \code{print()}) or
       \code{options()} is again invalid.  Its behaviour was
       platform-dependent, and it is unclear what \dQuote{zero
 	significant digits} should mean (\PR{18098}).
@@ -99,10 +99,10 @@
       \samp{http://} and \samp{ftp://} URIs is deprecated for
       \code{download.file} and \code{url}.
 
-      \item On Windows, \code{download.file(method = "wininet") }is
-      deprecated for \samp{ftp://} URIs and will be removed in \R 4.2.0.
-      It remains the default but if \code{libcurl} is available, use
-      \code{method = "libcurl"}.
+      \item On Windows, \code{method = "wininet"} for \samp{http://} and
+      \samp{ftp://} URIs is deprecated for \code{download.file} and
+      \code{url}.  It remains the default but if \code{libcurl} is
+      available, use \code{method = "libcurl"}.
     }
   }
 
