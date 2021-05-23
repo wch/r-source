@@ -24,10 +24,10 @@
       \samp{http://} and \samp{ftp://} URIs is deprecated for
       \code{download.file} and \code{url}.
 
-      \item On Windows, \code{download.file(method = "wininet") }is
-      deprecated for \samp{ftp://} URIs and will be removed in \R 4.2.0.
-      It remains the default but if \code{libcurl} is available, use
-      \code{method = "libcurl"}.
+      \item On Windows, \code{method = "wininet"} for \samp{http://} and
+      \samp{ftp://} URIs is deprecated for \code{download.file} and
+      \code{url}.  It remains the default but if \code{libcurl} is
+      available, use \code{method = "libcurl"}.
     }
   }
 
@@ -536,7 +536,8 @@
       AIX have been updated to Unicode 13.0.0.
 
       The character-width tables have been updated to include new
-      assignments in Unicode 13.0.0.
+      assignments in Unicode 13.0.0.  This included treating all control
+      characters as having zero-width.
 
       \item The code for evaluating default (extended) regular
       expressions now uses the same character-classification functions
