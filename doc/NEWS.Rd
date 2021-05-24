@@ -28,6 +28,9 @@
 
       The description of \code{capabilities("http/ftp")} now reflects
       that it refers to the default method, no longer the internal one.
+
+      \item \code{simplify2array()} gains an \code{except} argument for
+      controlling the exceptions used by \code{sapply()}.
     }
   }
 
