@@ -19,7 +19,7 @@
 
       \item Function \code{file_test()} in package \pkg{utils} gains
       tests for symlinks, readability and writability.
- 
+
       \item On Windows, \code{download.file(method = "auto")} and
       \code{url(method = "default")} now follow Unix in using
       \code{"libcurl"} for all except \samp{file://} URIs.
@@ -121,6 +121,13 @@
     \itemize{
       \item \command{make check-devel} works again in an \R build
       configured with \option{--without-recommended-packages}.
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item \command{make check} now works also without a latex
+      installation. (Thanks to Sebastian Meyer's \PR{18103}.)
     }
   }
 }
