@@ -82,134 +82,14 @@ static void *in_R_FTPOpen2(const char *url);
 
 static Rboolean IDquiet = TRUE;
 
-#if 0
-static Rboolean url_open(Rconnection con)
-{
-//    void *ctxt;
-    char *url = con->description;
-    UrlScheme type = ((Rurlconn)(con->private))->type;
-//    int mlen;
+/* 
+   Support for url().
+   As from R 4.2.0, this only provides method = "wininet" on Windows.
+   file:// URLs are handled in connections.c and method = "libcurl" 
+   in R_newCurlUrl.
 
-    if(con->mode[0] != 'r') {
-	REprintf("can only open URLs for reading");
-	return FALSE;
-    }
-
-    switch(type) {
-#ifdef Win32
-    case HTTPSsh:
-	    warning(_("for https:// URLs use method = \"libcurl\" or \"wininet\""));
-	    return FALSE;
-#endif
-    case HTTPsh:
-	warning(_("the 'internal' method for ftp:// URLs is defunct"));
-	return FALSE;
-#if 0
-    {
-	warning(_("the 'internal' method for ftp:// URLs is defunct"));
-	return FALSE;
-	SEXP sagent, agentFun;
-	const char *agent;
-	SEXP s_makeUserAgent = install("makeUserAgent");
-	agentFun = PROTECT(lang1(s_makeUserAgent)); // defaults to ,TRUE
-	SEXP utilsNS = PROTECT(R_FindNamespace(mkString("utils")));
-	struct urlconn *uc = con->private;
-
-	warning(_("the 'internal' method of url() is deprecated for http:// URLs"));
-	sagent = eval(agentFun, utilsNS);
-	UNPROTECT(1); /* utilsNS */
-	PROTECT(sagent);
-	if(TYPEOF(sagent) == NILSXP)
-	    agent = NULL;
-	else
-	    agent = CHAR(STRING_ELT(sagent, 0));
-	ctxt = in_R_HTTPOpen(url, agent, uc->headers, 0);
-	UNPROTECT(2);
-	if(ctxt == NULL) {
-	  /* if we call error() we get a connection leak*/
-	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL '%s'", url); */
-	    return FALSE;
-	}
-	((Rurlconn)(con->private))->ctxt = ctxt;
-    }
-#endif
-	break;
-    case FTPsh:
-	warning(_("the 'internal' method for ftp:// URLs is defunct"));
-	return FALSE;
-	break;
-
-    default:
-	warning(_("scheme not supported in URL '%s'"), url);
-	return FALSE;
-    }
-
-#if 0
-    con->isopen = TRUE;
-    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
-    con->canread = !con->canwrite;
-    mlen = (int) strlen(con->mode);
-    if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
-    else con->text = TRUE;
-    con->save = -1000;
-    set_iconv(con);
-    return TRUE;
-#endif
-}
-
-static void url_close(Rconnection con)
-{
-    UrlScheme type = ((Rurlconn)(con->private))->type;
-    struct urlconn *uc = con->private;
-    switch(type) {
-    case HTTPsh:
-    case HTTPSsh:
-	if (uc && uc->headers) free(uc->headers);
-	in_R_HTTPClose(uc->ctxt);
-	break;
-    default:
-	break;
-    }
-    con->isopen = FALSE;
-}
-
-static int url_fgetc_internal(Rconnection con)
-{
-    UrlScheme type = ((Rurlconn)(con->private))->type;
-    void * ctxt = ((Rurlconn)(con->private))->ctxt;
-    unsigned char c;
-    size_t n = 0; /* -Wall */
-
-    switch(type) {
-    case HTTPsh:
-    case HTTPSsh:
-	n = in_R_HTTPRead(ctxt, (char *)&c, 1);
-	break;
-    default:
-	break;
-    }
-    return (n == 1) ? c : R_EOF;
-}
-
-static size_t url_read(void *ptr, size_t size, size_t nitems,
-		       Rconnection con)
-{
-    UrlScheme type = ((Rurlconn)(con->private))->type;
-    void * ctxt = ((Rurlconn)(con->private))->ctxt;
-    size_t n = 0; /* -Wall */
-
-    switch(type) {
-    case HTTPsh:
-    case HTTPSsh:
-	n = in_R_HTTPRead(ctxt, ptr, (int)(size*nitems));
-	break;
-    default:
-	break;
-    }
-    return n/size;
-}
-#endif
+   method = "internal" is defunct for http:// and ftp:// URLs.
+ */
 
 #ifdef Win32
 static Rboolean url_open2(Rconnection con)
@@ -329,6 +209,7 @@ static size_t url_read2(void *ptr, size_t size, size_t nitems,
 }
 #endif
 
+#ifdef Win32
 static Rconnection
 in_R_newurl(const char *description, const char * const mode, SEXP headers, int type)
 {
@@ -349,26 +230,16 @@ in_R_newurl(const char *description, const char * const mode, SEXP headers, int 
     }
     init_con(new, description, CE_NATIVE, mode);
     new->canwrite = FALSE;
-#ifdef Win32
     if (type) {
 	new->open = &url_open2;
 	new->read = &url_read2;
 	new->close = &url_close2;
 	new->fgetc_internal = &url_fgetc_internal2;
 	strcpy(new->class, "url-wininet");
-   } else
-#endif
-    {
+   } else {
 	free(new->description); free(new->class); free(new);
 	error(_("the 'internal' method of url() is defunct for http:// and ftp:// URLs"));
 	/* for Solaris 12.5 */ new = NULL;
-#if 0	
-	new->open = &url_open;
-	new->read = &url_read;
-	new->close = &url_close;
-	new->fgetc_internal = &url_fgetc_internal;
-	strcpy(new->class, "url");
-#endif
     }
     new->fgetc = &dummy_fgetc;
     struct urlconn *uc = new->private = (void *) malloc(sizeof(struct urlconn));
@@ -390,7 +261,7 @@ in_R_newurl(const char *description, const char * const mode, SEXP headers, int 
     IDquiet = TRUE;
     return new;
 }
-
+#endif
 
 
 static void putdots(DLsize_t *pold, DLsize_t new)
@@ -441,6 +312,12 @@ static void doneprogressbar(void *data)
 #endif
 
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
+
+/* As from R 4.2.0 this only supports
+
+   file:// URLs
+   http:// and https:// URLs for method = "wininet" on Windows
+*/
 
 #define CPBUFSIZE 65536
 #define IBUFSIZE 4096
@@ -548,8 +425,6 @@ static SEXP in_do_download(SEXP args)
 		  file, strerror(errno));
 	}
 
-	if(!meth)
-	    warning(_("the 'internal' method is deprecated for http:// URLs"));
 	R_Busy(1);
 	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
 	SEXP agentFun, sagent;
@@ -956,7 +831,9 @@ R_init_internet(DllInfo *info)
     tmp = R_Calloc(1, R_InternetRoutines);
 
     tmp->download = in_do_download;
+#ifdef Win32
     tmp->newurl =  in_R_newurl;
+#endif
     tmp->newsock = in_R_newsock;
     tmp->newservsock = in_R_newservsock;
 

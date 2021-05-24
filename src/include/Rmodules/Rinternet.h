@@ -48,7 +48,7 @@ typedef SEXP (*R_CurlRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 typedef struct {
     R_DownloadRoutine download;
-    R_NewUrlRoutine   newurl;
+    R_NewUrlRoutine   newurl; // as from R 4.2.0, only used on Windows
     R_NewSockRoutine  newsock;
     R_NewServSockRoutine newservsock;
 

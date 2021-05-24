@@ -65,7 +65,8 @@
       \samp{file://} URIs.)
 
       On Windows, \code{download.file(method = "wininet")} no longer
-      supports \samp{ftp://} URIs. 
+      supports \samp{ftp://} URIs.  (It is no longer the default method,
+      which is \code{"libcurl"} and does.)
     }
   }
 
