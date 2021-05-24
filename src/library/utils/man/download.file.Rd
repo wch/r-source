@@ -95,22 +95,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{\link{available.packages}}.
 
   The \code{"libcurl"} and \code{"wget"} methods follow \samp{http://}
-  and \samp{https://} redirections to any scheme they support: the
-  \code{"internal"} method follows \samp{http://} to \samp{http://}
-  redirections only.  (For method \code{"curl"} use argument
-  \code{extra = "-L"}.  To disable redirection in \command{wget}, use
-  \code{extra = "--max-redirect=0"}.)
-  The \code{"wininet"} method supports some
-  redirections but not all.  (For method \code{"libcurl"}, messages will
-  quote the endpoint of redirections.)
+  and \samp{https://} redirections to any scheme they support.  (For
+  method \code{"curl"} use argument \code{extra = "-L"}.  To disable
+  redirection in \command{wget}, use \code{extra = "--max-redirect=0"}.)
+  The \code{"wininet"} method supports some redirections but not all.
+  (For method \code{"libcurl"}, messages will quote the endpoint of
+  redirections.)
 
-  Note that \samp{https://} URLs are not supported by the
-  \code{"internal"} method but are supported by the \code{"libcurl"}
-  method and the \code{"wininet"} method on Windows.
-
-  Support for \samp{ftp://} URLs in the \code{"internal"} and
-  \code{"wininet"} methods was deprecated in \R 4.1.1 and removed in \R
-  4.2.0.
+  Support for \samp{http://} URLs in the \code{"internal"} method and
+  \samp{ftp://} URLs in the \code{"internal"} and \code{"wininet"}
+  methods was deprecated in \R 4.1.1 and removed in \R 4.2.0.
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
@@ -121,8 +115,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   in URLs (see \code{\link{URLencode}}), but it seems the
   \code{"wininet"} method does.
 
-  The remaining details apply to the \code{"internal"}, \code{"wininet"}
-  and \code{"libcurl"} methods only.
+  The remaining details apply to the \code{"wininet"} and
+  \code{"libcurl"} methods only.
 
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.  This is often
@@ -199,37 +193,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Options} of the system are used to choose proxies and so on; these are
   set in the Control Panel and are those used for system browsers.
 
-  The next two paragraphs apply to the internal code only.
-
-  Proxies can be specified via environment variables.  Setting
-  \env{no_proxy} to \code{*} stops any proxy being tried.  Otherwise the
-  setting of \env{http_proxy} or \env{ftp_proxy} (or failing that, the
-  all upper-case version) is consulted and if non-empty used as a proxy
-  site.  The form of \env{http_proxy} should be
-  \code{http://proxy.dom.com/} or \code{http://proxy.dom.com:8080/}
-  where the port defaults to \code{80} and the trailing slash may be
-  omitted.  These environment variables must be set before the download
-  code is first used: they cannot be altered later by calling
-  \code{\link{Sys.setenv}}.
-
-  Usernames and passwords can be set for HTTP proxy transfers via
-  environment variable \env{http_proxy_user} in the form
-  \code{user:passwd}.  Alternatively, \env{http_proxy} can be of the
-  form \code{http://user:pass@proxy.dom.com:8080/} for compatibility
-  with \code{wget}.  Only the HTTP/1.0 basic authentication scheme is
-  supported.
-  \cr
-  Under Windows, if \env{http_proxy_user} is set to \code{ask} then
-  a dialog box will come up for the user to enter the username and
-  password.  \bold{NB:} you will be given only one opportunity to enter this,
-  but if proxy authentication is required and fails there will be one
-  further prompt per download.
-
-  Much the same scheme is supported by \code{method = "libcurl"}, including
-  \env{no_proxy}, \env{http_proxy} and \env{ftp_proxy}, and for the last
-  two a contents of \code{[user:password@]machine[:port]} where the
-  parts in brackets are optional.  See
-  \url{https://curl.se/libcurl/c/libcurl-tutorial.html} for details.
+  For the \code{"libcurl"} and \code{"curl"} methods, proxies can be set
+  \emph{via} the environment variables \env{http_proxy} or
+  \env{ftp_proxy}.  See
+  \url{https://curl.se/libcurl/c/libcurl-tutorial.html} for further
+  details.
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs should

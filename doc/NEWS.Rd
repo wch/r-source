@@ -58,9 +58,11 @@
     \itemize{
       \item The (non-default and deprecated) \code{method = "internal"}
       for \code{download.file} and \code{url} no longer supports
-      \samp{ftp://} URIs.
+      \samp{http://} nor \samp{ftp://} URIs.  (It is used only for
+      \samp{file://} URIs.)
 
-      Similarly on Windows for \code{download.file(method = "wininet")}.
+      On Windows, \code{download.file(method = "wininet")} no longer
+      supports \samp{ftp://} URIs. 
     }
   }
 

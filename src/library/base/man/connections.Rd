@@ -158,17 +158,17 @@ socketTimeout(socket, timeout = -1)
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
   \samp{file://}).  Method \code{"internal"} is that available since
-  connections were introduced.  Method \code{"wininet"} is only
-  available on Windows (it uses the WinINet functions of that OS) and
-  method \code{"libcurl"} (using the library of that name:
-  \url{https://curl.se/libcurl/}) is required on a Unix-alike but was
-  optional on Windows before \R 4.2.0.  Method \code{"default"}
-  currently uses method \code{"internal"} for \samp{file://} URLs and
-  \code{"libcurl"} for all others.  Which methods support which schemes
-  has varied by \R version -- currently \code{"internal"} supports only
-  \samp{file://} and \code{"wininet"} supports \samp{file://},
-  \samp{http://} and \samp{https://}.  Proxies can be specified: see
-  \code{\link{download.file}}.
+  connections were introduced but now mainly defunct.  Method
+  \code{"wininet"} is only available on Windows (it uses the WinINet
+  functions of that OS) and method \code{"libcurl"} (using the library
+  of that name: \url{https://curl.se/libcurl/}) is required on a
+  Unix-alike but was optional on Windows before \R 4.2.0.  Method
+  \code{"default"} currently uses method \code{"internal"} for
+  \samp{file://} URLs and \code{"libcurl"} for all others.  Which
+  methods support which schemes has varied by \R version -- currently
+  \code{"internal"} supports only \samp{file://}; \code{"wininet"}
+  supports \samp{file://}, \samp{http://} and \samp{https://}.  Proxies
+  can be specified: see \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
@@ -258,9 +258,11 @@ socketTimeout(socket, timeout = -1)
   in \samp{http://} URLs (see \code{\link{URLencode}}), but it seems the
   \code{"wininet"} method does.
 
-  A note on \samp{file://} URLs.  The most general form (from RFC1738) is
-  \samp{file://host/path/to/file}, but \R only accepts the form with an
-  empty \code{host} field referring to the local machine.
+  A note on \samp{file://} URLs (which are handled by the same internal
+  code irrespective of argument \code{method}).  The most general form
+  (from RFC1738) is \samp{file://host/path/to/file}, but \R only accepts
+  the form with an empty \code{host} field referring to the local
+  machine.
 
   On a Unix-alike, this is then \samp{file:///path/to/file}, where
   \samp{path/to/file} is relative to \file{/}.  So although the third

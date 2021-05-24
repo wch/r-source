@@ -82,12 +82,13 @@ static void *in_R_FTPOpen2(const char *url);
 
 static Rboolean IDquiet = TRUE;
 
+#if 0
 static Rboolean url_open(Rconnection con)
 {
-    void *ctxt;
+//    void *ctxt;
     char *url = con->description;
     UrlScheme type = ((Rurlconn)(con->private))->type;
-    int mlen;
+//    int mlen;
 
     if(con->mode[0] != 'r') {
 	REprintf("can only open URLs for reading");
@@ -101,7 +102,12 @@ static Rboolean url_open(Rconnection con)
 	    return FALSE;
 #endif
     case HTTPsh:
+	warning(_("the 'internal' method for ftp:// URLs is defunct"));
+	return FALSE;
+#if 0
     {
+	warning(_("the 'internal' method for ftp:// URLs is defunct"));
+	return FALSE;
 	SEXP sagent, agentFun;
 	const char *agent;
 	SEXP s_makeUserAgent = install("makeUserAgent");
@@ -127,6 +133,7 @@ static Rboolean url_open(Rconnection con)
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
     }
+#endif
 	break;
     case FTPsh:
 	warning(_("the 'internal' method for ftp:// URLs is defunct"));
@@ -138,6 +145,7 @@ static Rboolean url_open(Rconnection con)
 	return FALSE;
     }
 
+#if 0
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
@@ -147,6 +155,7 @@ static Rboolean url_open(Rconnection con)
     con->save = -1000;
     set_iconv(con);
     return TRUE;
+#endif
 }
 
 static void url_close(Rconnection con)
@@ -200,6 +209,7 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     }
     return n/size;
 }
+#endif
 
 #ifdef Win32
 static Rboolean url_open2(Rconnection con)
@@ -349,11 +359,16 @@ in_R_newurl(const char *description, const char * const mode, SEXP headers, int 
    } else
 #endif
     {
+	free(new->description); free(new->class); free(new);
+	error(_("the 'internal' method of url() is defunct for http:// and ftp:// URLs"));
+	/* for Solaris 12.5 */ new = NULL;
+#if 0	
 	new->open = &url_open;
 	new->read = &url_read;
 	new->close = &url_close;
 	new->fgetc_internal = &url_fgetc_internal;
 	strcpy(new->class, "url");
+#endif
     }
     new->fgetc = &dummy_fgetc;
     struct urlconn *uc = new->private = (void *) malloc(sizeof(struct urlconn));
@@ -510,10 +525,11 @@ static SEXP in_do_download(SEXP args)
 	}
 	fclose(out); fclose(in);
 
-    } else if (strncmp(url, "http://", 7) == 0
-#ifdef Win32
-	       || ((strncmp(url, "https://", 8) == 0) && meth)
-#endif
+    } else if(!meth && strncmp(url, "http://", 7) == 0) {
+	error(_("the 'internal' method for http:// URLs is defunct"));
+    } else if (meth &&
+	       (strncmp(url, "http://", 7) == 0
+		|| (strncmp(url, "https://", 8) == 0))
 	) {
 
 	FILE *out;
