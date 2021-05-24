@@ -117,6 +117,13 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item \command{make check} now works also without a LaTeX
+      installation.  (Thanks to Sebastian Meyer's \PR{18103}.)
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{make check-devel} works again in an \R build
@@ -124,12 +131,6 @@
     }
   }
 
-  \subsection{INSTALLATION}{
-    \itemize{
-      \item \command{make check} now works also without a latex
-      installation. (Thanks to Sebastian Meyer's \PR{18103}.)
-    }
-  }
 }
 
 
