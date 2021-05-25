@@ -28,9 +28,14 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
-#include <R-ftp-http.h> // for DLsize_t
+//#include <R-ftp-http.h> // for DLsize_t
 #include <errno.h>
 #include <R_ext/Print.h>
+
+// formerly in R-ftp-http.h
+#include <stdint.h>
+typedef int_fast64_t DLsize_t; // used for download lengths and sizes
+
 
 SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho);

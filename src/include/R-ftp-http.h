@@ -21,10 +21,6 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Non-API entry points, for that part of libxml included in
- * the internet module.  Could be moved to that module.
- */
-
 #ifndef R_FTP_HTTP_H_
 #define R_FTP_HTTP_H_
 
