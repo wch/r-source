@@ -461,7 +461,7 @@ pSummary <- function(..., op) {
 }
 `[[.unit` <- function(x, index, ...) {
     if (length(index) != 1) {
-        stop("index must be of length 1", call = FALSE)
+        stop("index must be of length 1", call. = FALSE)
     }
     x[index]
 }
@@ -490,10 +490,10 @@ pSummary <- function(..., op) {
 }
 `[[<-.unit` <- function(x, i, value) {
     if (length(i) != 1) {
-        stop("index must be of length 1", call = FALSE)
+        stop("index must be of length 1", call. = FALSE)
     }
     if (length(value) != 1) {
-        stop("replacement must be of length 1", call = FALSE)
+        stop("replacement must be of length 1", call. = FALSE)
     }
     x[i] <- value
     x
