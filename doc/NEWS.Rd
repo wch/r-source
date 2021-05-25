@@ -72,16 +72,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is
-      corrected for a range of cases (\PR{18095}); similarly for the
-      \code{(size, prob)} parametrization of the negative binomial.
-
-      \code{qpois()} and \code{qbinom()} are better and/or faster for
-      extreme cases.
-
-      The underlying C code has been modularized and is common to all
-      four cases of discrete distributions.
-
       \item Setting \code{digits = 0} in \code{format()},
       \code{print.default()} (and hence typically \code{print()}) or
       \code{options()} is again invalid.  Its behaviour was
@@ -135,12 +125,18 @@
       \item \command{make check-devel} works again in an \R build
       configured with \option{--without-recommended-packages}.
 
+      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is correct
+      now in a range of cases (\PR{18095}); similarly for the \code{(size,
+      prob)} parametrization of the negative binomial.  Also \code{qpois()}
+      and \code{qbinom()} are better and or faster for extreme cases.  The
+      underlying C code has been modularized and common to all four cases
+      of discrete distributions.
+
       \item \code{gap.axis} is now part of the \code{axis()} arguments which
       are passed from \code{bxp()}, and hence \code{boxplot()}.  (Thanks to
       Martin Smith' report and suggestions in \PR{18109}.)
     }
   }
-
 }
 
 
