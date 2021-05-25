@@ -1,16 +1,17 @@
 % File src/library/base/man/mode.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mode}
+\title{The (Storage) Mode of an Object}
 \alias{mode}
 \alias{mode<-}
 \alias{storage.mode}
 \alias{storage.mode<-}
-\title{The (Storage) Mode of an Object}
 \description{
-  Get or set the type or storage mode of an object.
+  Get or set the \sQuote{mode} (a kind of \sQuote{type}), or the storage
+  mode of an \R object.
 }
 \usage{
 mode(x)
@@ -59,7 +60,7 @@ storage.mode(x) <- value
   \itemize{
     \item types \code{"integer"} and \code{"double"} are
     returned as \code{"numeric"}.
-    \item types \code{"special"} and \code{"builtin"} are returned as
+    \item types \code{"special"}, \code{"builtin"} and \code{"closure"} are returned as
     \code{"function"}.
     \item type \code{"symbol"} is called mode \code{"name"}.
     \item type \code{"language"} is returned as \code{"("} or \code{"call"}.
@@ -71,7 +72,7 @@ storage.mode(x) <- value
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{typeof}} for the R-internal \sQuote{mode},
+  \code{\link{typeof}} for the R-internal \sQuote{mode} or \sQuote{type},
   \code{\link[utils]{type.convert}}, \code{\link{attributes}}.
 }
 \examples{
