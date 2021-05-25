@@ -42,10 +42,16 @@
     \itemize{
       \item \command{make check-devel} works again in an \R build
       configured with \option{--without-recommended-packages}.
+
+      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is correct
+      now in a range of cases (\PR{18095}); similarly for the \code{(size,
+      prob)} parametrization of the negative binomial.  Also \code{qpois()}
+      and \code{qbinom()} are better and or faster for extreme cases.  The
+      underlying C code has been modularized and common to all four cases
+      of discrete distributions.
     }
   }
 }
-
 
 \section{\Rlogo CHANGES IN R 4.1.0}{
   \subsection{FUTURE DIRECTIONS}{
@@ -69,6 +75,7 @@
       \item \samp{www.omegahat.net} is no longer one of the repositories
       known by default to \code{setRepositories()}.  (Nowadays it only
       provides source packages and is often unavailable.)
+      %% it had one Windows binary package for 4.0, none for 3.6.
 
       \item Function \code{package_dependencies()} (in package
       \pkg{tools}) can now use different dependency types for direct and

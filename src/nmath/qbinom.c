@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1999-2021 The R Core Team
+ *  Copyright (C) 2003-2021 The R Foundation
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2009 The R Core Team
- *  Copyright (C) 2003-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,41 +33,24 @@
 #include "nmath.h"
 #include "dpq.h"
 
-static double
-do_search(double y, double *z, double p, double n, double pr, double incr)
-{
-    if(*z >= p) {
-			/* search to the left */
 #ifdef DEBUG_qbinom
-	REprintf("\tnew z=%7g >= p = %7g  --> search to left (y--) ..\n", z,p);
+# define R_DBG_printf(...) REprintf(__VA_ARGS__)
+#else
+# define R_DBG_printf(...)
 #endif
-	for(;;) {
-	    double newz;
-	    if(y == 0 ||
-	       (newz = pbinom(y - incr, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
-		return y;
-	    y = fmax2(0, y - incr);
-	    *z = newz;
-	}
-    }
-    else {		/* search to the right */
-#ifdef DEBUG_qbinom
-	REprintf("\tnew z=%7g < p = %7g  --> search to right (y++) ..\n", z,p);
-#endif
-	for(;;) {
-	    y = fmin2(y + incr, n);
-	    if(y == n ||
-	       (*z = pbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
-		return y;
-	}
-    }
-}
 
+
+#define _thisDIST_ binom
+#define _dist_PARS_DECL_ double n, double pr
+#define _dist_PARS_      n, pr
+#define _dist_MAX_y  n
+//                  ===  Binomial  Y <= n
+
+#include "qDiscrete_search.h"
+//        ------------------>  do_search() and all called by q_DISCRETE_*() below
 
 double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
-    double q, mu, sigma, gamma, z, y;
-
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(n) || ISNAN(pr))
 	return p + n + pr;
@@ -78,57 +61,26 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     if(!R_FINITE(p) && !log_p)
 	ML_WARN_return_NAN;
 
-    if(n != floor(n + 0.5)) ML_WARN_return_NAN;
+    n = R_forceint(n);
+
     if (pr < 0 || pr > 1 || n < 0)
 	ML_WARN_return_NAN;
 
     R_Q_P01_boundaries(p, 0, n);
 
     if (pr == 0. || n == 0) return 0.;
+    if (pr == 1.)           return n; /* covers the full range of the distribution */
 
-    q = 1 - pr;
-    if(q == 0.) return n; /* covers the full range of the distribution */
-    mu = n * pr;
-    sigma = sqrt(n * pr * q);
-    gamma = (q - pr) / sigma;
+    // (NB: unavoidable cancellation for pr ~= 1)
+    double
+	q = 1 - pr,
+	mu = n * pr,
+	sigma = sqrt(n * pr * q),
+	gamma = (q - pr) / sigma;
 
-#ifdef DEBUG_qbinom
-    REprintf("qbinom(p=%7g, n=%g, pr=%7g, l.t.=%d, log=%d): sigm=%g, gam=%g\n",
-	     p,n,pr, lower_tail, log_p, sigma, gamma);
-#endif
-    /* Note : "same" code in qpois.c, qbinom.c, qnbinom.c --
-     * FIXME: This is far from optimal [cancellation for p ~= 1, etc]: */
-    if(!lower_tail || log_p) {
-	p = R_DT_qIv(p); /* need check again (cancellation!): */
-	if (p == 0.) return 0.;
-	if (p == 1.) return n;
-    }
-    /* temporary hack --- FIXME --- */
-    if (p + 1.01*DBL_EPSILON >= 1.) return n;
+    R_DBG_printf("qbinom(p=%.12g, n=%.15g, pr=%.7g, l.t.=%d, log=%d): sigma=%g, gamma=%g;\n",
+		 p, n,pr, lower_tail, log_p, sigma, gamma);
 
-    /* y := approx.value (Cornish-Fisher expansion) :  */
-    z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
-    y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
-
-    if(y > n) /* way off */ y = n;
-
-#ifdef DEBUG_qbinom
-    REprintf("  new (p,1-p)=(%7g,%7g), z=qnorm(..)=%7g, y=%5g\n", p, 1-p, z, y);
-#endif
-    z = pbinom(y, n, pr, /*lower_tail*/TRUE, /*log_p*/FALSE);
-
-    /* fuzz to ensure left continuity: */
-    p *= 1 - 64*DBL_EPSILON;
-
-    if(n < 1e5) return do_search(y, &z, p, n, pr, 1);
-    /* Otherwise be a bit cleverer in the search */
-    {
-	double incr = floor(n * 0.001), oldincr;
-	do {
-	    oldincr = incr;
-	    y = do_search(y, &z, p, n, pr, incr);
-	    incr = fmax2(1, floor(incr/100));
-	} while(oldincr > 1 && incr > n*1e-15);
-	return y;
-    }
+    q_DISCRETE_01_CHECKS();
+    q_DISCRETE_BODY();
 }
