@@ -52,8 +52,7 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The non-API header \file{R_ext/R-ftp-http.h} is no longer
-      provided.  The entry points it included are either deprecated or
-      defunct.
+      provided, as the entry points it covered are now all defunct.
     }
   }
 
@@ -67,6 +66,11 @@
       On Windows, \code{download.file(method = "wininet")} no longer
       supports \samp{ftp://} URIs.  (It is no longer the default method,
       which is \code{"libcurl"} and does.)
+
+      On Windows, the deprecated \code{method = "wininet"} now gives a
+      warning for \samp{http://} and \samp{https://} URIs for both
+      \code{download.file} and \code{url}. (It is no longer the default
+      method.)
     }
   }
 
@@ -102,7 +106,8 @@
 
       \item On Windows, \code{method = "wininet"} is deprecated for
       \samp{http://}, \samp{https://} and \samp{ftp://} URIs for both
-      \code{download.file} and \code{url}.
+      \code{download.file} and \code{url}.  (A warning is only given for
+      \samp{ftp://}.)
 
       For \samp{ftp://} URIs the default method is now \code{"libcurl"}
       if available (which it is on \acronym{CRAN builds}).
@@ -129,12 +134,12 @@
       now in a range of cases (\PR{18095}); similarly for the \code{(size,
       prob)} parametrization of the negative binomial.  Also \code{qpois()}
       and \code{qbinom()} are better and or faster for extreme cases.  The
-      underlying C code has been modularized and common to all four cases
+      underlying C code has been modularized and is common to all four cases
       of discrete distributions.
 
       \item \code{gap.axis} is now part of the \code{axis()} arguments which
       are passed from \code{bxp()}, and hence \code{boxplot()}.  (Thanks to
-      Martin Smith' report and suggestions in \PR{18109}.)
+      Martin Smith's report and suggestions in \PR{18109}.)
     }
   }
 }

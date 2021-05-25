@@ -165,6 +165,7 @@ main <- function() {
     }
 
     if (.Platform$OS.type == "windows")  {
+        ## This is deprecated and will give warnings.
         cat("\nwininet method\n")
         with_options(c(download.file.method = "wininet"), tests())
     }
