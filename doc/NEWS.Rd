@@ -26,8 +26,8 @@
 
       \item On Windows, \code{method = "wininet"} is deprecated for
       \samp{http://}, \samp{https://} and \samp{ftp://} URIs for both
-      \code{download.file} and \code{url}.
-      % It currently only gives a warning for ftp://
+      \code{download.file} and \code{url}.  (A warning is only given for
+      \samp{ftp://}.)
 
       For \samp{ftp://} URIs the default method is now \code{"libcurl"}
       if available (which it is on \acronym{CRAN builds}).
@@ -47,11 +47,12 @@
       now in a range of cases (\PR{18095}); similarly for the \code{(size,
       prob)} parametrization of the negative binomial.  Also \code{qpois()}
       and \code{qbinom()} are better and or faster for extreme cases.  The
-      underlying C code has been modularized and common to all four cases
+      underlying C code has been modularized and is common to all four cases
       of discrete distributions.
     }
   }
 }
+
 
 \section{\Rlogo CHANGES IN R 4.1.0}{
   \subsection{FUTURE DIRECTIONS}{

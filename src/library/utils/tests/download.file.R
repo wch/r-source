@@ -156,6 +156,7 @@ tests <- function() {
 }
 
 main <- function() {
+  ## This is deprecated and will give warnings.
   cat("internal method\n")
   with_options(c(download.file.method = "internal"), tests())
 
