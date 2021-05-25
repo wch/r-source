@@ -32,17 +32,4 @@
 
 typedef int_fast64_t DLsize_t; // used for download lengths and sizes
 
-// used in src/modules/internet/internet.c
-void *	RxmlNanoHTTPOpen(const char *URL, char **contentType, const char *headers, int cacheOK);
-int	RxmlNanoHTTPRead(void *ctx, void *dest, int len);
-void	RxmlNanoHTTPClose(void *ctx);
-int 	RxmlNanoHTTPReturnCode(void *ctx);
-char * 	RxmlNanoHTTPStatusMsg(void *ctx);
-DLsize_t RxmlNanoHTTPContentLength(void *ctx);
-char *	RxmlNanoHTTPContentType(void *ctx);
-void	RxmlNanoHTTPTimeout(int delay);
-
-// used in nanohttp.c, provided by internet.c
-void    RxmlMessage(int level, const char *format, ...);
-
 #endif /* R_FTP_HTTP_H_ */
