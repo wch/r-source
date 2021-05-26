@@ -160,12 +160,13 @@
              append = FALSE, extraDirs = NULL, internals = FALSE,
              silent = FALSE, pkglist = NULL)
 {
-    if (dir.exists(files))
+    if (dir.exists(files)) {
+        ## FIXME: outputEncoding
         .pkg2tex(files, outfile, encoding = encoding, append = append,
                  asChapter = FALSE, extraDirs = extraDirs,
                  internals = internals, silent = silent,
                  pkglist = pkglist)
-    else {
+    } else {
         files <- strsplit(files, "[[:space:]]+")[[1L]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
@@ -647,6 +648,7 @@ function(pkgdir, outfile, title, batch = FALSE,
           dir.exists(file.path(pkgdir, "latex")))) only_meta <- TRUE
     if (!only_meta) {
         if (nzchar(toc)) writeLines(toc, out)
+        ## FIXME: outputEncoding
         res <- .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                          extraDirs = OSdir, internals = internals,
                          silent = batch, pkglist = pkglist)
@@ -712,23 +714,18 @@ function(pkgdir, outfile, title, batch = FALSE,
     ## 'success'), and 1 otherwise, so that the return value can be used
     ## for shell 'if' tests.
 
-    ## <NOTE>
-    ## For now only used for the R sources (/doc/manual/Makefile.in)
-    ## hence no need to also look for Rd files with '.rd' extension.
-    ## </NOTE>
-
     if (!file.exists(file)) return(0L)
     age <- file.mtime(file)
 
     if (any(file.mtime(c(Sys.glob(file.path(dir, "man", "*.Rd")),
-                        Sys.glob(file.path(dir, "man", "*.rd"))))
-                       > age))
+                         Sys.glob(file.path(dir, "man", "*.rd"))))
+            > age))
         return(0L)
 
     if (dir.exists(file.path(dir, OS))) {
         if (any(file.mtime(c(Sys.glob(file.path(dir, "man", OS, "*.Rd")),
-                            Sys.glob(file.path(dir, "man", OS, "*.rd"))))
-                           > age))
+                             Sys.glob(file.path(dir, "man", OS, "*.rd"))))
+                > age))
             return(0L)
     }
 
@@ -817,6 +814,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     out_ext <- "pdf"
     output <- ""
     enc <- "unknown"
+    ## FIXME: outputEncoding
     outenc <- "latin1"
     index <- TRUE
     description <- TRUE
