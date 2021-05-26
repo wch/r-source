@@ -5882,7 +5882,8 @@ in Europe (when daylight-savings time was first introduced): most often
 reporting in the non-existent DST variant.  Using @command{configure}
 option @option{--with-internal-tzcode} is recommended, and required if
 you find time-zone abbreviations being given odd values (as has been
-seen on 64-bit builds without it).
+seen on 64-bit builds without it). It is also required for 
+@command{make check} to pass on Solaris 10.
 
 Using configure options @option{--with-internal-iswxxxxx} and
 @option{--with-internal-towlower} is recommended for those working with
