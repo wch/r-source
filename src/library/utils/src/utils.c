@@ -56,13 +56,15 @@ SEXP unzip(SEXP args)
 /* Declarations from Defn.h */
 int IS_ASCII(SEXP x);
 int IS_UTF8(SEXP x);
+int ENC_KNOWN(SEXP x);
+extern Rboolean utf8locale;
 const wchar_t *Rf_wtransChar(SEXP x);
 
 #if defined(USE_RI18N_FNS) || (defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE))
 SEXP charClass(SEXP x, SEXP scl)
 {
     int nProtect = 0;
-    if (!isString(scl))
+    if (!isString(scl) || length(scl) != 1)
 	error(_("argument 'class' must be a character string"));
     const char *cl = CHAR(STRING_ELT(scl, 0));
     wctype_t wcl = wctype(cl);
@@ -74,9 +76,9 @@ SEXP charClass(SEXP x, SEXP scl)
     if (isString(x)) {
 	if (XLENGTH(x) != 1)
 	    error(_("argument 'x' must be a length-1 character vector"));
-	if (IS_ASCII(x) || IS_UTF8(x))
-	    error(_("argument 'x' must be UTF-8 encoded (including ASCII)"));
 	SEXP sx = STRING_ELT(x, 0);
+	if (!(IS_ASCII(sx) || IS_UTF8(sx) || (utf8locale && !ENC_KNOWN(sx))))
+	    error(_("argument 'x' must be UTF-8 encoded (including ASCII)"));
 	const wchar_t *wx = Rf_wtransChar(sx);
 	n = wcslen(wx);;
 	PROTECT(ans = allocVector(LGLSXP, n));
