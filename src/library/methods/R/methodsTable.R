@@ -469,7 +469,7 @@
     ## signature, with "missing" for missing args
     if(!is.environment(table)) {
         if(is(fdef, "standardGeneric"))
-          stop(gettextf("invalid or unset methods table in generic function %s", sQuote(fdef@generic)), damain = NA)
+          stop(gettextf("invalid or unset methods table in generic function %s", sQuote(fdef@generic)), domain = NA)
         else
           stop("trying to find a methods table in a non-generic function")
     }
