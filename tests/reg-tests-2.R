@@ -226,9 +226,11 @@ tabulate(numeric(0))
 
 ## ts
 # Ensure working arithmetic for 'ts' objects :
-z <- ts(matrix(1:900, 100, 3), start = c(1961, 1), frequency = 12)
+z <- ts(matrix(1:300, 100, 3), start = c(1961, 1), frequency = 12)
 stopifnot(z == z)
 stopifnot(z-z == 0)
+if(FALSE) ## <<-- not currently: _R_CHECK_MATRIX_DATA_ \\ related to earlier code:
+tools::assertWarning(matrix(1:90, 10, 3), verbose=TRUE)
 
 ts(1:5, start=2, end=4) # truncate
 ts(1:5, start=3, end=17)# repeat

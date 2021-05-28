@@ -811,12 +811,11 @@ attr(,"scaled:scale")
 > 
 > ## ts
 > # Ensure working arithmetic for 'ts' objects :
-> z <- ts(matrix(1:900, 100, 3), start = c(1961, 1), frequency = 12)
-Warning message:
-In matrix(1:900, 100, 3) :
-  data length differs from size of matrix: [900 != 100 x 3]
+> z <- ts(matrix(1:300, 100, 3), start = c(1961, 1), frequency = 12)
 > stopifnot(z == z)
 > stopifnot(z-z == 0)
+> if(FALSE) ## <<-- not currently: _R_CHECK_MATRIX_DATA_ \\ related to earlier code:
++ tools::assertWarning(matrix(1:90, 10, 3), verbose=TRUE)
 > 
 > ts(1:5, start=2, end=4) # truncate
 Time Series:
