@@ -26,7 +26,6 @@
 
 #include <Rconnections.h>
 #include <Rdynpriv.h>
-//#include <R-ftp-http.h>
 #include <Rmodules/Rinternet.h>
 
 static R_InternetRoutines routines, *ptr = &routines;
@@ -81,6 +80,7 @@ SEXP Rdownload(SEXP args)
     }
 }
 
+// As from R 4.2.0 this is only used on Windows
 Rconnection attribute_hidden 
 R_newurl(const char *description, const char * const mode, SEXP headers, int type)
 {

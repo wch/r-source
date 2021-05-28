@@ -9,7 +9,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{matrix(x, n, m)} now warns in more cases where
-      \code{length(x)} differs from than \code{n * m}; suggested by Abby
+      \code{length(x)} differs from \code{n * m}, as suggested by Abby
       Spurdle and Wolfgang Huber in Feb 2021 on the R-devel mailing
       list.
 
@@ -19,18 +19,26 @@
 
       \item Function \code{file_test()} in package \pkg{utils} gains
       tests for symlinks, readability and writability.
- 
+
       \item On Windows, \code{download.file(method = "auto")} and
       \code{url(method = "default")} now follow Unix in using
       \code{"libcurl"} for all except \samp{file://} URIs.
+
+      \item \code{capabilities("libxml")} is now false.
+
+      The description of \code{capabilities("http/ftp")} now reflects
+      that it refers to the default method, no longer the internal one.
+
+      \item \code{simplify2array()} gains an \code{except} argument for
+      controlling the exceptions used by \code{sapply()}.
     }
   }
 
   \subsection{INSTALLATION}{
     \itemize{
       \item Facilities for accessing \samp{ftp://} sites are no longer
-      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as
-      browsers are increasing removing support.
+      tested (except \emph{pro tem} for \code{curlGetHeaders()}) as modern
+      browsers have removed support.
       %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
     }
   }
@@ -44,34 +52,32 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The non-API header \file{R_ext/R-ftp-http.h} is no longer
-      provided.  The entry points it included are either deprecated or
-      defunct.
+      provided, as the entry points it covered are now all defunct.
     }
   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item The (non-default) \code{method = "internal"} for
-      \code{download.file} and \code{url} no longer supports \samp{ftp://}
-      URIs.
+      \item The (non-default and deprecated) \code{method = "internal"}
+      for \code{download.file} and \code{url} no longer supports
+      \samp{http://} nor \samp{ftp://} URIs.  (It is used only for
+      \samp{file://} URIs.)
 
-      Similarly on Windows for \code{download.file(method = "wininet")}.
+      On Windows, \code{download.file(method = "wininet")} no longer
+      supports \samp{ftp://} URIs.  (It is no longer the default method,
+      which is \code{"libcurl"} and does.)
+
+      On Windows, the deprecated \code{method = "wininet"} now gives a
+      warning for \samp{http://} and \samp{https://} URIs for both
+      \code{download.file} and \code{url}. (It is no longer the default
+      method.)
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is
-      corrected for a range of cases (\PR{18095}); similarly for the
-      \code{(size, prob)} parametrization of the negative binomial.
-
-      \code{qpois()} and \code{qbinom()} are better and/or faster for
-      extreme cases.
-
-      The underlying C code has been modularized and is common to all
-      four cases of discrete distributions.
-
-      \item Setting \code{digits = 0} in \code{format()} or
+      \item Setting \code{digits = 0} in \code{format()},
+      \code{print.default()} (and hence typically \code{print()}) or
       \code{options()} is again invalid.  Its behaviour was
       platform-dependent, and it is unclear what \dQuote{zero
 	significant digits} should mean (\PR{18098}).
@@ -89,18 +95,33 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item Using the non-default \code{method = "internal"} for
-      \samp{http://} and \samp{ftp://} URIs is deprecated for
-      \code{download.file} and \code{url}.
-
-      \item On Windows download.file(method = "internal") is deprecated
-      for \samp{ftp://} URIs and will be removed in \R 4.2.0.  It
-      remains the default but if \code{libcurl} is available, use
-      \code{method = "libcurl"}.
-
       \item Use of \samp{ftp://} URIs should be regarded as
       deprecated, with on-going support confined to \code{method =
-	"libcurl"} and not routinely tested.
+	"libcurl"} and not routinely tested.  (Nowadays no major browser
+      supports them.)
+
+      \item The non-default \code{method = "internal"} is deprecated for
+      \samp{http://} and \samp{ftp://} URIs for both
+      \code{download.file} and \code{url}.
+
+      \item On Windows, \code{method = "wininet"} is deprecated for
+      \samp{http://}, \samp{https://} and \samp{ftp://} URIs for both
+      \code{download.file} and \code{url}.  (A warning is only given for
+      \samp{ftp://}.)
+
+      For \samp{ftp://} URIs the default method is now \code{"libcurl"}
+      if available (which it is on \acronym{CRAN builds}).
+
+      \code{method = "wininet"} remains the default for \samp{http://}
+      and \samp{https://} URIs but if \code{libcurl} is available, using
+      \code{method = "libcurl"} is preferred.
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item \command{make check} now works also without a LaTeX
+      installation.  (Thanks to Sebastian Meyer's \PR{18103}.)
     }
   }
 
@@ -108,6 +129,17 @@
     \itemize{
       \item \command{make check-devel} works again in an \R build
       configured with \option{--without-recommended-packages}.
+
+      \item \code{qnbinom(p, size, mu)} for large \code{size/mu} is correct
+      now in a range of cases (\PR{18095}); similarly for the \code{(size,
+      prob)} parametrization of the negative binomial.  Also \code{qpois()}
+      and \code{qbinom()} are better and or faster for extreme cases.  The
+      underlying C code has been modularized and is common to all four cases
+      of discrete distributions.
+
+      \item \code{gap.axis} is now part of the \code{axis()} arguments which
+      are passed from \code{bxp()}, and hence \code{boxplot()}.  (Thanks to
+      Martin Smith's report and suggestions in \PR{18109}.)
     }
   }
 }
@@ -610,7 +642,8 @@
       AIX have been updated to Unicode 13.0.0.
 
       The character-width tables have been updated to include new
-      assignments in Unicode 13.0.0.
+      assignments in Unicode 13.0.0.  This included treating all control
+      characters as having zero width.
 
       \item The code for evaluating default (extended) regular
       expressions now uses the same character-classification functions

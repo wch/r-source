@@ -260,7 +260,7 @@ src/main/xspline.c
  * notice remain intact.
 
 
-src/modules/nano{ftp,http}.c
+src/modules/nanohttp.c
 
  Copyright (C) 1998-2001 Daniel Veillard.  All Rights Reserved.
 

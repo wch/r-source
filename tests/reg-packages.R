@@ -57,17 +57,19 @@ stopifnot(1 == grep("setClass",
 ## failed for several reasons in R < 2.7.0
 ##
 ## Part 2: -- build, install, load and "inspect" the package:
-build.pkg <- function(dir, destdir = NULL, ignore.stderr = FALSE) {
+build.pkg <- function(dir, destdir = NULL, ignore.stderr = FALSE, no.latex=TRUE) {
     dir <- normalizePath(dir)
     if(length(dir) > 1)
-        return(lapply(dir, build.pkg, destdir = destdir))
+        return(lapply(dir, build.pkg, destdir=destdir,
+                      ignore.stderr=ignore.stderr, no.latex=no.latex))
     ## else one 'dir':
     stopifnot(dir.exists(dir), file.exists(DESC <- file.path(dir, "DESCRIPTION")))
     pkgName <- sub("^[A-Za-z]+: ", "", grep("^Package: ", readLines(DESC), value=TRUE))
     patt <- paste(pkgName, ".*tar\\.gz$", sep="_")
     unlink(dir('.', pattern = patt))
     Rcmd <- paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
-    r <- system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
+    r <- system(paste(Rcmd, "build --keep-empty-dirs",
+                      if(no.latex) "--no-manual", shQuote(dir)),
                 ignore.stderr=ignore.stderr, intern = TRUE)
     ## return name of tar file built {plus the build log} :
     tball <- structure(dir('.', pattern = patt), log3 = r)

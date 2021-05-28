@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-05-13 r80290) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-21 r80350) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.224   0.034   0.238 
+  0.213   0.037   0.231 

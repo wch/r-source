@@ -69,7 +69,9 @@
 /* At times we want to convert marked UTF-8 strings to wchar_t*. We
  * can use our facilities to do so in a UTF-8 locale or system
  * facilities if the platform tells us that wchar_t is UCS-4 or we
- * know that about the platform. */
+ * know that about the platform. 
+ * Add __OpenBSD__ and  __NetBSD__ ?
+ */
 #if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun))
 /* This may not be 100% true (see the comment in rlocales.h),
    but it seems true in normal locales */
@@ -752,7 +754,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 			for(int j = 0; j < res; j++) *q++ = *p++;
 		    } else {
 # if !defined (__STDC_ISO_10646__) && !defined (Win32)
-			if(!use_ucs) Unicode_warning = TRUE;
+			Unicode_warning = TRUE;
 # endif
 			if(k > 0xffff)
 			    snprintf(buf, 13, "\\U{%06x}", k);

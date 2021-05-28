@@ -1780,10 +1780,10 @@ jk
 
 ## eigenvectors got irrelevant names (PR#2116)
 set.seed(1)
-A <- matrix(rnorm(20), 5, 5)
+A <- matrix(rnorm(20), 5, 4); A <- A[,c(1:4,1)] # rank 4!
 dimnames(A) <- list(LETTERS[1:5], letters[1:5])
 (ev <- eigen(A)$vectors)
-stopifnot(is.null(colnames(ev)))
+stopifnot(is.null(dimnames(ev)))
 ## had colnames in 1.6.0
 
 

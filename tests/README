@@ -2,7 +2,8 @@ There is a hierarchy of check targets:
 
      make check
 
-for all builders.  If this works one can be reasonably happy R is working
+for all builders.  It should not need a working latex installation.
+If this works one can be reasonably happy R is working
 and do `make install' (or the equivalent).
 
     make check-devel
@@ -10,7 +11,7 @@ and do `make install' (or the equivalent).
 for people changing the code: this runs things like the demos and
 no-segfault which might be broken by code changes, and checks on the
 documentation (effectively R CMD check on each of the base packages).
-This needs recommended packages installed.
+It should not need recommended packages installed.
 
     make check-all
 
@@ -86,7 +87,7 @@ demo(lm.glm) which is run by example(demo) and so not run again.
 	make test-Random
 
 runs a series of tests on the distribution of random variates generated
-by the rxxxx() functions.  The test is a large deviation bound on the 
+by the rxxxx() functions.  The test is a large deviation bound on the
 Kolmogorov statistic, so also provides a test of the cumulative distribution
 functions pxxxx().  Because rare events do happen, this test suite
 will be failed in about 1 in 50 runs.

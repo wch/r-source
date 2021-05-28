@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-05-17 r80305) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-05-21 r80350) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin20.4.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -204,7 +204,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x7fc221157a98>
+<environment: 0x2dccd90>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -954,7 +954,7 @@ An illustration of lexical scoping.
 > 
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
+[1] "/data/gannet/ripley/.cache/R/FOO"
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -1053,7 +1053,7 @@ List of 5
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.32 0.039 0.375 0 0 
+Time elapsed:  0.32 0.018 0.339 0 0 
 > grDevices::dev.off()
 null device 
           1 
