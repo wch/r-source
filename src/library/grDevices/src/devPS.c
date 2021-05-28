@@ -6817,7 +6817,6 @@ static int fillAlphaIndex(int alpha, PDFDesc *pd) {
 static void PDFwriteGroup(int i, PDFDesc *pd)
 {
     char buf[20];
-    size_t len = strlen(pd->definitions[i].str);
 
     /* Ensure stroke and fill alpha are 1 when group is used
      * (because group definition will have recorded any pre-existing alpha
