@@ -843,10 +843,10 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	Rvsnprintf_mbcs(p, max(msg_len - strlen(errbuf), 0), format, ap);
     }
     /* Approximate truncation detection, may produce false positives.  Assumes
-       MB_CUR_MAX > 0. Note: approximation is fine, as the string may include
+       R_MB_CUR_MAX > 0. Note: approximation is fine, as the string may include
        dots, anyway */
     size_t nc = strlen(errbuf); // > 0, ignoring possibility of failure
-    if (nc > BUFSIZE - 1 - (MB_CUR_MAX - 1)) {
+    if (nc > BUFSIZE - 1 - (R_MB_CUR_MAX - 1)) {
 	size_t end = min(nc + 1, (BUFSIZE + 1) - 4); // room for "...\n\0"
 	for(size_t i = end; i <= BUFSIZE + 1; ++i) errbuf[i - 1] = '\0';
 	mbcsTruncateToValid(errbuf);
