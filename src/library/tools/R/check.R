@@ -433,6 +433,46 @@ add_dummies <- function(dir, Log)
         td2
     }
 
+    snapshot <- function()
+    {
+        snap1 <- function(dir, recursive = TRUE, user, notemp = FALSE)
+        {
+            foo <- list.files(dir, recursive = recursive, full.names = TRUE,
+                              include.dirs = TRUE, no.. = TRUE)
+            if (notemp) {
+                isdir <- file.info(foo)$isdir
+                poss <- grepl("^/tmp/Rtmp[A-Za-z0-9.]{6}$", foo,
+                              useBytes = TRUE)
+                foo <- foo[!(poss & isdir)]
+            }
+            owner <- file.info(foo)[, "uname"]
+            foo[owner == user]
+        }
+        user <- if (.Platform$OS.type != "windows") Sys.getenv("LOGNAME")
+                else Sys.info()[["login"]]
+        home <- normalizePath("~")
+        dirs <- c(home, "/tmp",
+                  ## taken from R_user_dir, but rappdirs is the similar
+                  ## with other possibilities on Windows.
+                  if (.Platform$OS.type == "windows")
+                      file.path(Sys.getenv("LOCALAPPDATA"), "R", "cache")
+                  else if (Sys.info()["sysname"] == "Darwin")
+                      file.path(home, "Library", "Caches", "org.R-project.R")
+                  else file.path(home, ".cache"),
+                  if (.Platform$OS.type == "windows")
+                      file.path(Sys.getenv("APPDATA"), "R", "data")
+                  else if (Sys.info()["sysname"] == "Darwin")
+                      file.path(home, "Library", "Application Support", "org.R-project.R")
+                  else file.path(home, ".local", "share"))
+                  ## "~/.cache", "~/.local/share")
+        x <- vector("list", 4); names(x) <- dirs
+        x[[1]] <- snap1(dirs[1], FALSE, user)
+        x[[2]] <- snap1(dirs[2], FALSE, user, TRUE)
+        x[[3]] <- snap1(dirs[3], TRUE, user)
+        x[[4]] <- snap1(dirs[4], TRUE, user)
+        x
+    }
+
     parse_description_field <- function(desc, field, default)
         str_parse_logic(desc[field], default=default)
 
@@ -6176,6 +6216,9 @@ add_dummies <- function(dir, Log)
     R_check_things_in_temp_dir <-
         config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_",
                                          "FALSE"))
+    R_check_things_in_others <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_",
+                                         "FALSE"))
     R_check_vignette_titles <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTE_TITLES_",
                                          "FALSE"))
@@ -6287,6 +6330,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv(TMPDIR = sessdir)
     }
 
+    snap <- if (R_check_things_in_others) snapshot() else NULL
     R_LIBS <- Sys.getenv("R_LIBS")
     arg_libdir <- libdir
     if (nzchar(libdir)) {
@@ -6714,6 +6758,23 @@ add_dummies <- function(dir, Log)
             unlink(sessdir, recursive = TRUE)
         }
 
+        if (R_check_things_in_others) {
+            checkingLog(Log, "for new files in some other directories")
+            snap2 <- snapshot()
+            ff <- character()
+            for(i in seq_along(snap))
+                ff <- c(ff, setdiff(snap2[[i]], snap[[i]]))
+            if (length(ff)) {
+                ff <- sub(paste0("^", normalizePath("~")), "~" , ff)
+                noteLog(Log)
+                msg <- c("Found the following files/directories:",
+                         strwrap(paste(sQuote(ff), collapse = " "),
+                                 indent = 2L, exdent = 2L))
+                printLog0(Log, paste(msg, collapse = "\n"), "\n")
+            } else
+                 resultLog(Log, "OK")
+        }
+
         summaryLog(Log)
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
@@ -6731,7 +6792,6 @@ add_dummies <- function(dir, Log)
         message("")
 
     } ## end for (pkg in pkgs)
-
 }
 ###--- end{ .check_packages }
 
