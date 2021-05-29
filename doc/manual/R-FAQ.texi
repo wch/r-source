@@ -306,7 +306,7 @@ alpha, arm, arm64, hppa, mips/mipsel, powerpc, s390x and sparc
 @c mips-sgi-irix,
 @c </FIXME>
 i386-pc-solaris, rs6000-ibm-aix, sparc-sun-solaris, x86_64-apple-darwin,
-x86_64-unknown-freebsd and x86_64-unknown-openbsd.
+aarch64-apple-darwin, x86_64-unknown-freebsd and x86_64-unknown-openbsd.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
@@ -479,16 +479,19 @@ See the @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html,
 @subsection How can R be installed (Mac)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer package to run on macOS 10.9 (`Mavericks') and later.
+Apple installer package to run on macOS 10.13 (`High Sierra') and later.
 Once downloaded and executed, the installer will install the current
 release of R and R.app, the macOS @acronym{GUI}.  This port of R for macOS
 is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
 (and previously by Stefano Iacus).  The
-@url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
-macOS @acronym{FAQ}} has more details.
+@url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+macOS @acronym{FAQ}''} has more details.
 
 Snapshots of the r-patched and r-devel versions of R are available as
 Apple installer packages at @uref{https://mac.R-project.org}.
+
+As from R 4.1.0 there are separate builds for ARM-based Macs (also
+known as `M1' or `Apple Silicon') runnind macOS 11 (`Big Sur') or later.
 
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
