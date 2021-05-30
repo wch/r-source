@@ -451,9 +451,12 @@ add_dummies <- function(dir, Log)
         user <- if (.Platform$OS.type != "windows") Sys.getenv("LOGNAME")
                 else Sys.info()[["login"]]
         home <- normalizePath("~")
+        xtra <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_", "")
+        xtra <- if (nzchar(xtra)) strsplit(xtra, ";", fixed = TRUE)[[1L]]
+                else character()
         dirs <- c(home, "/tmp",
-                  ## taken from R_user_dir, but rappdirs is the similar
-                  ## with other possibilities on Windows.
+                  ## taken from tools::R_user_dir, but package rappdirs
+                  ## is similar with other possibilities on Windows.
                   if (.Platform$OS.type == "windows")
                       file.path(Sys.getenv("LOCALAPPDATA"), "R", "cache")
                   else if (Sys.info()["sysname"] == "Darwin")
@@ -463,13 +466,14 @@ add_dummies <- function(dir, Log)
                       file.path(Sys.getenv("APPDATA"), "R", "data")
                   else if (Sys.info()["sysname"] == "Darwin")
                       file.path(home, "Library", "Application Support", "org.R-project.R")
-                  else file.path(home, ".local", "share"))
-                  ## "~/.cache", "~/.local/share")
-        x <- vector("list", 4); names(x) <- dirs
+                  else file.path(home, ".local", "share"),
+                  xtra)
+        x <- vector("list", length(dirs)); names(x) <- dirs
         x[[1]] <- snap1(dirs[1], FALSE, user)
         x[[2]] <- snap1(dirs[2], FALSE, user, TRUE)
         x[[3]] <- snap1(dirs[3], TRUE, user)
         x[[4]] <- snap1(dirs[4], TRUE, user)
+        for (i in seq_along(xtra)) x[[4+i]] <- snap1(dirs[4+i], FALSE, user)
         x
     }
 
@@ -6744,7 +6748,7 @@ add_dummies <- function(dir, Log)
             poss <- grepl("^Rtmp[A-Za-z0-9.]{6}$", ff, useBytes = TRUE)
             ff <- ff[!(poss & dir)]
             patt <- Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_")
-            if (length(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
+            if (nzchar(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
 	    ff <- ff[!is.na(ff)]
             if (length(ff)) {
                 noteLog(Log)
@@ -6769,6 +6773,10 @@ add_dummies <- function(dir, Log)
                 isdir <- file.info(ff)$isdir
                 ff[isdir] <- paste0(ff[isdir], "/")
                 ff <- sub(paste0("^", normalizePath("~")), "~" , ff)
+                patt <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_EXCLUDE_")
+                if (nzchar(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
+            }
+            if (length(ff)) {
                 noteLog(Log)
                 msg <- c("Found the following files/directories:",
                          strwrap(paste(sQuote(ff), collapse = " "),

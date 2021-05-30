@@ -49,6 +49,15 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} can optionally report
+      files/directories left behind in home, \file{/tmp} (even though
+      \env{TMPDIR} is set) and other directories.  See the \dQuote{R
+	Internals} manual for details.
+    }
+  }
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The non-API header \file{R_ext/R-ftp-http.h} is no longer
