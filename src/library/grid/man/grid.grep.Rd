@@ -2,20 +2,21 @@
 \alias{grid.grep}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Search for grobs
+  Search for Grobs and/or Viewports
 }
 \description{
-  Given a gPath, find all matching grobs on the display list
+  Given a path, find all matching grobs and/or viewports on the display list
   or within a given grob.
 }
 \usage{
 grid.grep(path, x = NULL, grobs = TRUE, viewports = FALSE,
           strict = FALSE, grep = FALSE, global = FALSE,
-          no.match = character())
+          no.match = character(), vpPath = viewports)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{path}{ a gPath. }
+  \item{path}{ a gPath or a vpPath or a character value that could be
+    interpreted as either. }
   \item{x}{ a grob or \code{NULL}.  If \code{NULL}, the display list
     is searched.
   }
@@ -37,9 +38,18 @@ grid.grep(path, x = NULL, grobs = TRUE, viewports = FALSE,
   \item{no.match}{
     The value to return if no matches are found.
   }
+  \item{vpPath}{
+    A logical value indicating whether to return the vpPath for each
+    grob as an attribute of the result.
+  }
 }
 \value{
-  Either a gPath or, if \code{global} is \code{TRUE} a list of gPaths.
+  Either a gPath or a vpPath or,
+  if \code{global} is \code{TRUE} a list of gPaths and/or vpPaths.
+
+  If \code{vpPath} is \code{TRUE}, each gPath result will have an
+  attribute \code{"vpPath"}.
+  
   If there are no matches, \code{no.match} is returned.
 }
 
