@@ -6765,6 +6765,9 @@ add_dummies <- function(dir, Log)
             for(i in seq_along(snap))
                 ff <- c(ff, setdiff(snap2[[i]], snap[[i]]))
             if (length(ff)) {
+                ## add trailing / to indicate a directory
+                isdir <- file.info(ff)$isdir
+                ff[isdir] <- paste0(ff[isdir], "/")
                 ff <- sub(paste0("^", normalizePath("~")), "~" , ff)
                 noteLog(Log)
                 msg <- c("Found the following files/directories:",
