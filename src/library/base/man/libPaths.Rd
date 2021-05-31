@@ -92,6 +92,8 @@
       value of \code{\link{R.version}$arch}.}
   }
   (See \code{\link{version}} for details on R version information.)
+  In addition, \samp{\%U} and \samp{\%S} expand to the \R defaults for,
+  respectively, \env{R_LIBS_USER} and \env{R_LIBS_SITE}.
 
   Function \code{.libPaths} always uses the values of \code{.Library}
   and \code{.Library.site} in the base namespace.  \code{.Library.site}
