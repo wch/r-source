@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.1.0 patched}{
+\section{\Rlogo CHANGES IN R 4.1.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{require(\var{pkg}, quietly = TRUE)} is quieter and in
@@ -49,6 +50,13 @@
       and \code{qbinom()} are better and or faster for extreme cases.  The
       underlying C code has been modularized and is common to all four cases
       of discrete distributions.
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item \command{make check} now works also without a latex
+      installation. (Thanks to Sebastian Meyer's \PR{18103}.)
     }
   }
 }
