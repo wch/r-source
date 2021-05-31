@@ -29,7 +29,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Rconnections.h>
-#include <R-ftp-http.h>
+//#include <R-ftp-http.h>
 #include "sock.h"
 #include <errno.h>
 
