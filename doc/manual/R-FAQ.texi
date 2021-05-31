@@ -491,7 +491,7 @@ Snapshots of the r-patched and r-devel versions of R are available as
 Apple installer packages at @uref{https://mac.R-project.org}.
 
 As from R 4.1.0 there are separate builds for ARM-based Macs (also
-known as `M1' or `Apple Silicon') runnind macOS 11 (`Big Sur') or later.
+known as `M1' or `Apple Silicon') running macOS 11 (`Big Sur') or later.
 
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?

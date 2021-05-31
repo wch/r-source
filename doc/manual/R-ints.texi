@@ -4350,7 +4350,7 @@ are created in a selected set of directories during the check run.
 (This is confined to files owned by the user running the check process.)
 Currently the directories monitored are the home directory, @file{/tmp}
 (excluding @file{RtmpXXXXXX} dirs), @file{~/.cache} (recursively) and
-@file{~/.local/share} (recursively) or their equivalants on Windows and
+@file{~/.local/share} (recursively) or their equivalents on Windows and
 macOS (the directories in which the default settings for
 @code{tools::R_user_dir()} use a @file{R} subdirectory).  Additional
 directories can be specified in environment variable
@@ -4369,7 +4369,7 @@ matches cache directories used by Firefox and OpenGL.
 Note that other processes (include check runs in parallel) may create
 new files in these directories which will get reported.  However, this
 optional check is very useful for narrowing down possible packages which
-are leaving behing unexpected files.
+are leaving behind unexpected files.
 @c
 Default: false
 
