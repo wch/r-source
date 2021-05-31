@@ -1003,9 +1003,10 @@ function(x)
 
     R_LIBS_SITE_default <- file.path(R.home(), "site-library")
 
-    expand <- function(x, spec, expansion)
-        gsub(paste0("(^|[^%])(%%)*%", spec),
-             sprintf("\\1\\2%s", expansion), x)
+    expand <- function(x, spec, expansion) {
+        replace <- sprintf("\\1\\2%s", gsub("([\\])", "\\\\\\1", expansion))
+        gsub(paste0("(^|[^%])(%%)*%", spec), replace, x)
+    }
 
     ## %V => version x.y.z
     x <- expand(x, "V", v)
