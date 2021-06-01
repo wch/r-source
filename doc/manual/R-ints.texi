@@ -4186,7 +4186,7 @@ DLL.  (@strong{NB:} this requires system command @command{nm} to be on the
 compiler toolchain specified via @code{Makeconf} (can be customized by
 environment variable @env{BINPREF}). If not found there, it must be on the
 @env{PATH}. On Unix this would be normal when using a package with compiled
-code (which are the only ones this checks), but Windows' users should check.)
+code (which are the only ones this checks), but Windows' users should check.
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_NO_STOP_ON_TEST_ERROR_
@@ -4213,11 +4213,13 @@ See
 `Writing R Extensions'
 @end ifclear
 for the rationale of this check (and why even @option{-Werror} is
-unsafe).  Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_}
-can be set to a space-separated set of flags which come from the @R{}
-build used for testing (flags such as @option{-Wall} and
-@option{-Wextra} are already known).  For example, for  CRAN build of 
-@R{} >= 4.0.0 on macOS one could use
+unsafe).
+
+Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_} can be set
+to a space-separated set of flags which come from the @R{} build used
+for testing (flags such as @option{-Wall} and @option{-Wextra} are
+already known).  For example, for CRAN build of @R{} >= 4.0.0 on macOS
+one could use
 @example
 _R_CHECK_COMPILATION_FLAGS_KNOWN_="-mmacosx-version-min=10.13" 
 @end example
