@@ -271,9 +271,9 @@ setRlibs <-
     rlibs <- paste(rlibs, collapse = .Platform$path.sep)
     if(quote) rlibs <- shQuote(rlibs)
     c(paste0("R_LIBS=", rlibs),
-      if(WINDOWS) " R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''",
-      if(WINDOWS) " R_LIBS_USER='no_such_dir'" else "R_LIBS_USER=''",
-      " R_LIBS_SITE='no_such_dir'")
+      if(WINDOWS) "R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''",
+      "R_LIBS_USER='NULL'",
+      "R_LIBS_SITE='NULL'")
 }
 
 add_dummies <- function(dir, Log)
