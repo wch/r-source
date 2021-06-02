@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2021-02-10 17:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -57,12 +57,15 @@ msgstr "spécification de format inconnu '%s'"
 
 #: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr "une seule astérisque '*' est supportée au maximum dans chaque spécification de conversion"
+msgstr ""
+"une seule astérisque '*' est supportée au maximum dans chaque spécification "
+"de conversion"
 
 #: gramLatex.c:2390 gramRd.c:3976
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr "impossibilité d'allouer une zone tampon pour une chaîne longue à la ligne %d"
+msgstr ""
+"impossibilité d'allouer une zone tampon pour une chaîne longue à la ligne %d"
 
 #: gramLatex.c:2627 gramRd.c:4522 gramRd.c:4528
 #, c-format
@@ -82,7 +85,9 @@ msgstr "La macro '%s' est déjà précédemment définie."
 #: gramRd.c:3135
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr "Un maximum de 4 arguments est autorisé pour les macros définies par l'utilisateur."
+msgstr ""
+"Un maximum de 4 arguments est autorisé pour les macros définies par "
+"l'utilisateur."
 
 #: gramRd.c:3177
 #, c-format
@@ -97,12 +102,15 @@ msgstr "Pas assez d’arguments passés à la macro '%s'"
 #: gramRd.c:3379 gramRd.c:3383
 #, c-format
 msgid "newline within quoted string at %s:%d"
-msgstr "retour de ligne à l'intérieur d'une chaîne de caractères entre guillemets à %s:%d"
+msgstr ""
+"retour de ligne à l'intérieur d'une chaîne de caractères entre guillemets à "
+"%s:%d"
 
 #: gramRd.c:3402
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr "impossible d'allouer de la mémoire tampon pour une longue macro à la lign %d"
+msgstr ""
+"impossible d'allouer de la mémoire tampon pour une longue macro à la lign %d"
 
 #: gramRd.c:3432
 msgid "macros nested too deeply: infinite recursion?"
@@ -116,7 +124,9 @@ msgstr "Macro %s introuvable"
 #: gramRd.c:4036
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr "Fin d'entrée inattendue (dans la chaîne entre guillements %c ouvertes à %s:%d:%d)"
+msgstr ""
+"Fin d'entrée inattendue (dans la chaîne entre guillements %c ouvertes à %s:"
+"%d:%d)"
 
 #: gramRd.c:4535
 msgid "cannot open the connection"
@@ -172,10 +182,10 @@ msgstr "pskill() n'est pas supporté sur cette plateforme"
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() n'est pas supporté sur cette plateforme"
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr "type d'argument incorrect"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr "plus de mémoire disponible"

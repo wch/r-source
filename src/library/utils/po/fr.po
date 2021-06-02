@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-03-11 11:36+0000\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2021-02-10 17:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -146,32 +146,32 @@ msgstr "'%s' contient des valeurs manquantes"
 
 #: utils.c:68
 #, fuzzy
-msgid "argument 'x' must be a length-1 character vector"
-msgstr "l’argument doit être une chaîne de caractères ou un vecteur raw"
-
-#: utils.c:70
-msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr ""
-
-#: utils.c:83
-#, fuzzy
 msgid "argument 'class' must be a character string"
 msgstr "'text' doit être une chaîne de caractères"
 
-#: utils.c:136
+#: utils.c:78
+#, fuzzy
+msgid "argument 'x' must be a length-1 character vector"
+msgstr "l’argument doit être une chaîne de caractères ou un vecteur raw"
+
+#: utils.c:81
+msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
+msgstr ""
+
+#: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' doit être une chaîne de caractères de longueur 1"
 
-#: utils.c:142
+#: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() était incapable de résoudre l’hôte '%s'"
 
-#: utils.c:149
+#: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr "format inconnu renvoyé par 'gethostbyname'"
 
-#: utils.c:158
+#: utils.c:169
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() n’est pas supporté sous cette architecture"
 

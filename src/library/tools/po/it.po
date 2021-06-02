@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -57,7 +57,8 @@ msgstr "specificazione formato '%s' non riconosciuto"
 
 #: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr "almeno un asterisco '*' è supportato in ogni specificazione di conversione"
+msgstr ""
+"almeno un asterisco '*' è supportato in ogni specificazione di conversione"
 
 #: gramLatex.c:2390 gramRd.c:3976
 #, c-format
@@ -116,7 +117,8 @@ msgstr "Non è possibile trovare la macro %s"
 #: gramRd.c:4036
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr "Fine inattesa dell'input (nella %c stringa virgolettata aperta in %s:%d:%d)"
+msgstr ""
+"Fine inattesa dell'input (nella %c stringa virgolettata aperta in %s:%d:%d)"
 
 #: gramRd.c:4535
 msgid "cannot open the connection"
@@ -172,10 +174,10 @@ msgstr "pskill() non è supportata su questa piattaforma"
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() non è supportata su questa piattaforma"
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr "tipo argomento non valido"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr "memoria esausta"

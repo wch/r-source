@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -172,10 +172,10 @@ msgstr "이 플랫폼에서 pskill()은 지원되지 않습니다"
 msgid "psnice() is not supported on this platform"
 msgstr "이 플랫폼에서 psnice()은 지원되지 않습니다"
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr "유효하지 않은 인자 타입입니다"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr "메모리가 부족합니다"

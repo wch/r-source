@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:57+0200\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -145,31 +145,31 @@ msgid "'%s' contains missing values"
 msgstr "'%s' contiene valori mancanti"
 
 #: utils.c:68
-msgid "argument 'x' must be a length-1 character vector"
-msgstr "l'argomento 'x' dev'essere un vettore carattere di lunghezza 1"
-
-#: utils.c:70
-msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr "l'argomento 'x' dev'essere codificato UTF-8 (incluso ASCII)"
-
-#: utils.c:83
 msgid "argument 'class' must be a character string"
 msgstr "l'argomento 'class' dev'essere una stringa character"
 
-#: utils.c:136
+#: utils.c:78
+msgid "argument 'x' must be a length-1 character vector"
+msgstr "l'argomento 'x' dev'essere un vettore carattere di lunghezza 1"
+
+#: utils.c:81
+msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
+msgstr "l'argomento 'x' dev'essere codificato UTF-8 (incluso ASCII)"
+
+#: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' dev'essere un vettore di caratteri di lunghezza 1"
 
-#: utils.c:142
+#: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nls() non è stato in grado di risolvere il nome host '%s'"
 
-#: utils.c:149
+#: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr "'gethostbyname' ha restituito un formato sconosciuto"
 
-#: utils.c:158
+#: utils.c:169
 msgid "nsl() is not supported on this platform"
 msgstr "nls() non è supportata su questa piattaforma"
 
