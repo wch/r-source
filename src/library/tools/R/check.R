@@ -6774,7 +6774,13 @@ add_dummies <- function(dir, Log)
                 ff[isdir] <- paste0(ff[isdir], "/")
                 ff <- sub(paste0("^", normalizePath("~")), "~" , ff)
                 patt <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_EXCLUDE_")
-                if (nzchar(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
+                if (nzchar(patt)) {
+                    if (startsWith(patt, "@")) {
+                        patt <- readLines(substring(patt, 2L))
+                        patt <- paste(patt, collapse = "|")
+                    }
+                    ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
+                }
             }
             if (length(ff)) {
                 noteLog(Log)

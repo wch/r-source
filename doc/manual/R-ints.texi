@@ -4354,7 +4354,9 @@ Currently the directories monitored are the home directory, @file{/tmp}
 macOS (the directories in which the default settings for
 @code{tools::R_user_dir()} use a @file{R} subdirectory).  Additional
 directories can be specified in environment variable
-@env{_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_}, separated by semicolons.
+@env{_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_}, separated by
+semicolons.  Directories are reported with a trailing @samp{/} on all
+platforms.
 
 Environment variable @env{_R_CHECK_THINGS_IN_OTHER_DIRS_EXCLUDE_} can
 specify an (extended regex) pattern of file paths not to be reported --
@@ -4364,7 +4366,10 @@ this should match absolute file paths with home represented by
 '^~/.cache/(mozilla/firefox|mesa_shader_cache)/'
 @end example
 @noindent
-matches cache directories used by Firefox and OpenGL.
+matches cache directories used by Firefox and OpenGL (and their
+content).  If the value starts with @samp{@@} it is considered as a
+filepath which is read with each line treated as a pattern to be
+matched.
 
 Note that other processes (include check runs in parallel) may create
 new files in these directories which will get reported.  However, this
