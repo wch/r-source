@@ -15894,12 +15894,10 @@ Preparing input at the console command-line, in file
 @file{src/unix/sys-unix.c}.
 
 @item
-Waiting for a response from a socket in the internal functions
-underlying FTP and HTTP transfers in @code{download.file()} and for
-direct socket access, in files
-@file{src/@/modules/@/internet/@/nanoftp.c},
-@file{src/@/modules/@/internet/@/nanohttp.c} and
+Waiting for a response from a socket in the internal functions for
+direct socket access in file
 @file{src/@/modules/@/internet/@/Rsock.c}
+and for the interface to @code{libcurl}.
 
 @item
 Mouse and window events when displaying the X11-based dataentry window,
