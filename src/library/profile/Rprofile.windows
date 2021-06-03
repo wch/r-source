@@ -2,22 +2,26 @@
 
 ## this will break if R is on a network share
 .Library <- file.path(chartr("\\", "/", R.home()), "library")
+
 .Library.site <- Sys.getenv("R_LIBS_SITE")
-.Library.site <- if(!nzchar(.Library.site)) file.path(R.home(), "site-library") else unlist(strsplit(.Library.site, ";"))
-.Library.site <- .Library.site[file.exists(.Library.site)]
-
-if(!nzchar(Sys.getenv("R_LIBS_USER")))
-    Sys.setenv(R_LIBS_USER=
-               file.path(Sys.getenv("R_USER"), "R",
-                         "win-library",
-                         paste(R.version$major,
-                               sub("\\..*$", "", R.version$minor),
-                               sep=".")
-                         ))
-
-invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
-                      unlist(strsplit(Sys.getenv("R_LIBS_USER"), ";"))
-                      )))
+if (!nzchar(.Library.site)) {
+    .Library.site <- .expand_R_libs_env_var('%S')
+    Sys.setenv(R_LIBS_SITE = .Library.site)
+}
+.Library.site <-
+    if(.Library.site == "NULL") character() else unlist(strsplit(.Library.site, ";"))
+.Library.site <- .Library.site[file.exists(.Library.site)]    
+    
+local({
+    libs <- Sys.getenv("R_LIBS_USER")
+    if (!nzchar(libs)) {
+        libs <- .expand_R_libs_env_var('%U')
+        Sys.setenv(R_LIBS_USER = libs)
+    }
+    libs <- if(libs == "NULL") character() else unlist(strsplit(libs, ";"))
+    invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
+                          libs)))
+})
 
 local({
     popath <- Sys.getenv("R_TRANSLATIONS", "")

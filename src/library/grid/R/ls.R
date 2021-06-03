@@ -772,7 +772,7 @@ clean <- function(paths) {
 # Given a gPath, return complete grob paths that match from the display list
 grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
                       strict = FALSE, grep = FALSE, global = FALSE,
-                      no.match = character()) {
+                      no.match = character(), vpPath = viewports) {
     if (!inherits(path, "gPath"))
         path <- gPath(path)
     depth <- depth(path)
@@ -782,9 +782,14 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
     pathPieces <- explode(path)
 
     if (is.null(x)) {
-        dl <- grid.ls(   grobs=grobs, viewports=viewports, print = FALSE)
+        dl <- grid.ls(grobs=grobs,
+                      viewports=viewports || vpPath,
+                      print = FALSE)
     } else {
-        dl <- grid.ls(x, grobs=grobs, viewports=viewports, print = FALSE)
+        dl <- grid.ls(x,
+                      grobs=grobs,
+                      viewports=viewports || vpPath,
+                      print = FALSE)
     }
     if (!length(dl$name))
         return(no.match)
@@ -792,8 +797,15 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
     names <- names(dl)
     dl <- lapply(dl,
                  function(x) {
-                     x[dl$type == "vpListing" | dl$type == "grobListing" |
-                       dl$type == "gTreeListing"]
+                     if (viewports) {
+                         keep <- dl$type == "vpListing" |
+                             dl$type == "grobListing" |
+                             dl$type == "gTreeListing"
+                     } else {
+                         keep <- dl$type == "grobListing" |
+                             dl$type == "gTreeListing"                         
+                     }
+                     x[keep]
                  })
     names(dl) <- names
     # "depth" is vpDepth for vpListing and gDepth for grobListing
@@ -858,7 +870,11 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
                     result <- do.call("vpPath", list(dlPathPieces))
                 } else {
                     result <- do.call("gPath", list(dlPathPieces))
-                    attr(result, "vpPath") <- clean(dl$vpPath[i])
+                    if (vpPath) {
+                        attr(result, "vpPath") <- clean(dl$vpPath[i])
+                    } else {
+                        attr(result, "vpPath") <- ""
+                    }
                 }
                 return(result)
             } else {
@@ -869,7 +885,11 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
                 } else {
                     result <- do.call("gPath",
                                       list(dlPathPieces))
-                    attr(result, "vpPath") <- clean(dl$vpPath[i])
+                    if (vpPath) {
+                        attr(result, "vpPath") <- clean(dl$vpPath[i])
+                    } else {
+                        attr(result, "vpPath") <- ""
+                    }
                 }
                 searchMatches[[nMatches]] <- result
             }

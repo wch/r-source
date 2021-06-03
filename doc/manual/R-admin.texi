@@ -5710,16 +5710,11 @@ A release of XQuartz 2.8.1 is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
 supports both @cputype{arm64} and @cputype{x86_64} builds.
 
-A binary package of Aqua Tcl/Tk is supplied rather than the X11-based
-variant of Tk used for Intel builds (and some packages, notably
-@CRANpkg{tkrplot}, do not support that, nor is @code{Tktable}
-available).  If XQuartz is installed it is possible to build the
-X11-based variant of Tk from source.
-
-Binary builds of the prerequisites are available at
-@uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
-into @file{/opt/R/arm64}: it is simplest to first create that directory
-and adjust its ownership if desired:
+Binary builds of the prerequisites@footnote{At the time of writing this
+had Aauq-based Tcl/Tk not the X11-based variant in the CRAN distibution
+of @R{}.} are available at @uref{https://mac.r-project.org/libs-arm64/}.
+These (largely) unpack into @file{/opt/R/arm64}: it is simplest to first
+create that directory and adjust its ownership if desired:
 
 @example
 sudo mkdir -p /opt/R/arm64

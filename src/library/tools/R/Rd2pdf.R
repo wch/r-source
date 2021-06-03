@@ -25,9 +25,11 @@
 ## (e.g., Latin-1 in UTF-8)
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
 {
-    mygsub <- function(...) {
-        .gsub_with_transformed_matches(..., useBytes = TRUE)
-    }
+    ## FIXME: enc2utf8
+    ## mygsub <- function(...) {
+    ##     .gsub_with_transformed_matches(..., useBytes = TRUE)
+    ## }
+    mygsub <- .gsub_with_transformed_matches
     texify <- function(x, one = TRUE, two = FALSE) {
         ## Handle LaTeX special characters.
         ## one: handle # $ % & _ ^ ~
@@ -57,7 +59,8 @@
 
     ## <FIXME>
     ##   desc <- read.dcf(descfile)[1L, ]
-    desc <- .read_description(descfile, keep.white = character())
+    ## FIXME: enc2utf8
+    desc <- enc2utf8(.read_description(descfile, keep.white = character()))
     ## Using
     ##   desc <- .read_description(descfile)
     ## would preserve leading white space in Description and Author ...
@@ -68,17 +71,21 @@
     fields <- names(desc)
     fields <- fields %w/o% c("Package", "Packaged", "Built")
     enc <- desc["Encoding"]
-    if(!is.na(enc))
-        cat("\\inputencoding{", latex_canonical_encoding(enc),
-            "}\n", sep = "", file = out)
+    if(!is.na(enc)) {
+        ## FIXME: enc2utf8
+        ## cat("\\inputencoding{", latex_canonical_encoding(enc),
+        ##     "}\n", sep = "", file = out)
+        cat("\\inputencoding{utf8}\n", file = out)
+    }
     ## Also try adding PDF title and author metadata.
     tit <- desc["Title"]
     tit <- paste0(desc["Package"], ": ",
                   texify(gsub("[[:space:]]+", " ", tit), two = TRUE))
     tit <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
                   "{\\hypersetup{pdftitle = {", tit, "}}}{}")
-    if(!is.na(enc))
-        tit <- iconv(tit, to = enc)
+    ## FIXME: enc2utf8
+    ## if(!is.na(enc))
+    ##     tit <- iconv(tit, to = enc)
     writeLines(tit, con = out, useBytes = TRUE)
     ## Only try author from Authors@R.
     if(!is.na(aar <- desc["Authors@R"])) {
@@ -92,8 +99,9 @@
             if(nzchar(aut)) {
                 aut <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
                               "{\\hypersetup{pdfauthor = {", aut, "}}}{}")
-                if(!is.na(enc))
-                    aut <- iconv(aut, to = enc)
+                ## FIXME: enc2utf8
+                ## if(!is.na(enc))
+                ##     aut <- iconv(aut, to = enc)
                 writeLines(aut, con = out, useBytes = TRUE)
             }
         }
@@ -117,8 +125,10 @@
         text <- fsub("@VERSION@", version, text)
         ## text can have paras, and digest/DESCRIPTION does.
         ## \AsIs is per-para.
-        text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
-        Encoding(text) <- "unknown"
+        ## FIXME: enc2utf8        
+        ## text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
+        ## Encoding(text) <- "unknown"
+        text <- strsplit(text, "\n\n", fixed = TRUE)[[1L]]
         if(f %in% c("Author", "Maintainer", "Contact"))
             text <- mygsub("<([^@ ]+)@([^> ]+)>",
                            "}\\\\email{%s@%s}\\\\AsIs{",
@@ -639,7 +649,7 @@ function(pkgdir, outfile, title, batch = FALSE,
         "\\Rdcontents{\\R{} topics documented:}"
     } else ""
 
-    latexEncodings <- character()
+    latexEncodings <- if(description) "utf8" else character()
     hasFigures <- FALSE
     ## if this looks like a package with no man pages, skip body
     if (file.exists(file.path(pkgdir, "DESCRIPTION")) &&
@@ -653,11 +663,8 @@ function(pkgdir, outfile, title, batch = FALSE,
                          extraDirs = OSdir, internals = internals,
                          silent = batch, pkglist = pkglist)
         if(length(res)) {
-            latexEncodings <- res$latexEncodings
+            latexEncodings <- c(latexEncodings, res$latexEncodings)
             hasFigures <- res$hasFigures
-        } else {
-            latexEncodings <- character()
-            hasFigures <- FALSE
         }
     }
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -417,7 +417,7 @@ Rboolean isBlankString(const char *s)
 	wchar_t wc; size_t used; mbstate_t mb_st;
 	mbs_init(&mb_st);
 	// This does not allow for surrogate pairs, but all blanks are in BMP
-	while( (used = Mbrtowc(&wc, s, MB_CUR_MAX, &mb_st)) ) {
+	while( (used = Mbrtowc(&wc, s, R_MB_CUR_MAX, &mb_st)) ) {
 	    if(!iswspace((wint_t) wc)) return FALSE;
 	    s += used;
 	}
@@ -1304,9 +1304,11 @@ utf8toucs(wchar_t *wc, const char *s)
     if (byte == 0) {
 	*w = (wchar_t) 0;
 	return 0;
-    } else if (byte < 0xC0) {
+    } else if (byte < 0x80) {
 	*w = (wchar_t) byte;
 	return 1;
+    } else if (byte < 0xC0) {
+	return (size_t)-1;
     } else if (byte < 0xE0) {
 	if(strlen(s) < 2) return (size_t)-2;
 	if ((s[1] & 0xC0) == 0x80) {
@@ -1643,7 +1645,7 @@ char *Rf_strchr(const char *s, int c)
 
     if(!mbcslocale || utf8locale) return strchr(s, c);
     mbs_init(&mb_st);
-    while( (used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) ) {
+    while( (used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st)) ) {
 	if(*p == c) return p;
 	p += used;
     }
@@ -1658,7 +1660,7 @@ char *Rf_strrchr(const char *s, int c)
 
     if(!mbcslocale || utf8locale) return strrchr(s, c);
     mbs_init(&mb_st);
-    while( (used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) ) {
+    while( (used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st)) ) {
 	if(*p == c) plast = p;
 	p += used;
     }
@@ -1673,7 +1675,7 @@ void R_fixslash(char *s)
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
 	mbs_init(&mb_st);
-	while((used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st))) {
+	while((used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st))) {
 	    if(*p == '\\') *p = '/';
 	    p += used;
 	}
@@ -1709,7 +1711,7 @@ void R_fixbackslash(char *s)
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
 	mbs_init(&mb_st);
-	while((used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st))) {
+	while((used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st))) {
 	    if(*p == '/') *p = '\\';
 	    p += used;
 	}

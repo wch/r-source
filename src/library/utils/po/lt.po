@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-03-11 11:36+0000\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2020-12-08 12:22+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -145,32 +145,32 @@ msgstr "'%s' yra trūkstamų reikšmių"
 
 #: utils.c:68
 #, fuzzy
-msgid "argument 'x' must be a length-1 character vector"
-msgstr "argumentas turi būti simbolių vektorius arba neapdorotas vektorius"
-
-#: utils.c:70
-msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr ""
-
-#: utils.c:83
-#, fuzzy
 msgid "argument 'class' must be a character string"
 msgstr "'text' turi būti simbolių eilutė"
 
-#: utils.c:136
+#: utils.c:78
+#, fuzzy
+msgid "argument 'x' must be a length-1 character vector"
+msgstr "argumentas turi būti simbolių vektorius arba neapdorotas vektorius"
+
+#: utils.c:81
+msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
+msgstr ""
+
+#: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' turi būti 1 ilgio simbolių vektorius"
 
-#: utils.c:142
+#: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() nepavyko išspręsti pagrindinio kompiuterio '%s'"
 
-#: utils.c:149
+#: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr "nežinomas formatas, kurį grąžino 'gethostbyname'"
 
-#: utils.c:158
+#: utils.c:169
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() šioje platformoje nepalaikomas"
 

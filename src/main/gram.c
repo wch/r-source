@@ -67,7 +67,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -368,7 +368,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
-	while(clen <= MB_CUR_MAX) {
+	while(clen <= R_MB_CUR_MAX) {
 	    mbs_init(&mb_st);
 	    res = (int) mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
@@ -2912,7 +2912,7 @@ static void finish_mbcs_in_parse_context()
 	return;
 
     /* copy the context to a linear buffer */
-    char buf[nbytes + MB_CUR_MAX];
+    char buf[nbytes + R_MB_CUR_MAX];
 
     for(i = 0; i < nbytes; i++)
 	buf[i] = R_ParseContext[(first + i) % PARSE_CONTEXT_SIZE];
@@ -4812,7 +4812,7 @@ static int mbcs_get_next2(int c, ucs_t *wc)
 	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
-	while(clen <= MB_CUR_MAX) {
+	while(clen <= R_MB_CUR_MAX) {
 	    res = mbtoucs(wc, s, clen);
 	    if(res >= 0) break;
 	    if(res == -1)

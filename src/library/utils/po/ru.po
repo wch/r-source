@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-03-11 11:36+0000\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2020-08-28 17:09+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -148,32 +148,32 @@ msgstr "'%s' содержит пропущенные значения"
 
 #: utils.c:68
 #, fuzzy
-msgid "argument 'x' must be a length-1 character vector"
-msgstr "аргумент должен быть текстовым вектором или простым вектором"
-
-#: utils.c:70
-msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr ""
-
-#: utils.c:83
-#, fuzzy
 msgid "argument 'class' must be a character string"
 msgstr "'text' должен быть текстовой строкой"
 
-#: utils.c:136
+#: utils.c:78
+#, fuzzy
+msgid "argument 'x' must be a length-1 character vector"
+msgstr "аргумент должен быть текстовым вектором или простым вектором"
+
+#: utils.c:81
+msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
+msgstr ""
+
+#: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должно быть текстовым вектором длиной 1"
 
-#: utils.c:142
+#: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не смог разрешить хост '%s'"
 
-#: utils.c:149
+#: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr "'gethostbyname' вернула неправильный формат"
 
-#: utils.c:158
+#: utils.c:169
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 

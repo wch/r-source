@@ -97,6 +97,9 @@ esac
 R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
 
+dnl config.guess deliberately overrides the cpu/arch as repoorted by
+dnl uname -m (or -p) to use one almost unknown to Mac users. So
+dnl we need a macro for a more familiar name.
 MAC_CPU=
 case "${host_os}" in
   darwin*)

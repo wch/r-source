@@ -19,7 +19,7 @@ OBJECTS = $(SOURCES:.c=.o)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
-	dllversion.rc nanohttp.c
+	dllversion.rc
 
 internet_la = internet$(SHLIB_EXT)
 internet_la_LIBADD = $(CURL_LIBS) $(LIBR1) @INTERNET_LIBS@ @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)

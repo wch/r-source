@@ -144,16 +144,16 @@ socketTimeout(socket, timeout = -1)
   connection created by \code{serverSocket}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
-  For \code{file} the description is a path to the file to be opened or
-  a complete URL (when it is the same as calling \code{url}), or
-  \code{""} (the default) or \code{"clipboard"} (see the
-  \sQuote{Clipboard} section).  Use \code{"stdin"} to refer to the
-  C-level \sQuote{standard input} of the process (which need not be
-  connected to anything in a console or embedded version of \R, and is
-  not in \code{RGui} on Windows).  See also \code{\link{stdin}()} for
-  the subtly different R-level concept of \code{stdin}. See
-  \code{\link{nullfile}()} for a platform-independent way to get
-  filename of the null device.
+  For \code{file} the description is a path to the file to be opened
+  (when \link{tilde expansion} is done) or a complete URL (when it is
+  the same as calling \code{url}), or \code{""} (the default) or
+  \code{"clipboard"} (see the \sQuote{Clipboard} section).  Use
+  \code{"stdin"} to refer to the C-level \sQuote{standard input} of the
+  process (which need not be connected to anything in a console or
+  embedded version of \R, and is not in \code{RGui} on Windows).  See
+  also \code{\link{stdin}()} for the subtly different R-level concept of
+  \code{stdin}. See \code{\link{nullfile}()} for a platform-independent
+  way to get filename of the null device.
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or

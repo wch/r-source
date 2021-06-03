@@ -63,8 +63,11 @@ capabilities(what = NULL,
 #endif
   \item{http/ftp}{does the default method for \code{\link{url}} and
     \code{\link{download.file}} support \samp{http://} and \samp{ftp://}
-    URLs?  Always \code{TRUE} as from \R 3.3.0.}
-  \item{sockets}{are  \code{\link{make.socket}} and related functions
+    URLs?  Always \code{TRUE} as from \R 3.3.0.  However, in recent
+    versions the default method is \code{"libcurl"} which depends on an
+    external library and it is conceivable that library might not
+    support \samp{ftp://} in future.}
+  \item{sockets}{are \code{\link{make.socket}} and related functions
     available?  Always \code{TRUE} as from \R 3.3.0.}
   \item{libxml}{is there support for integrating \code{libxml} with
     the \R event loop?  \code{TRUE} as from \R 3.3.0, \code{FALSE} as

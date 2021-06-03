@@ -1,6 +1,6 @@
 % File src/library/base/man/writeLines.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{writeLines}
@@ -23,6 +23,7 @@ writeLines(text, con = stdout(), sep = "\n", useBytes = FALSE)
   If the \code{con} is a character string, the function calls
   \code{\link{file}} to obtain a file connection which is opened for
   the duration of the function call.
+  (\link{tilde expansion} of the file path is done by \code{file}.)
 
   If the connection is open it is written from its current position.
   If it is not open, it is opened for the duration of the call in

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2014-03-26 13:56+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -172,10 +172,10 @@ msgstr " pskill() はこのプラットホームではサポートされてい�
 msgid "psnice() is not supported on this platform"
 msgstr " psnice() はこのプラットホームではサポートされていません "
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr " 不正な引数の型です "
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr " メモリが足りません "

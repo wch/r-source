@@ -18,7 +18,7 @@ ECHO = echo
 ## is done in C order in massageExamples(), but we want to test the
 ## orderings users use.
 R_EXE = $(R_HOME)/$(BINDIR)/Rterm --vanilla --no-echo \
-  LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE=nothing
+  LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER=NULL R_LIBS_SITE=NULL
 
 all: test-Examples-Base
 

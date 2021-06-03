@@ -59,7 +59,8 @@
   environment variables \env{R_LIBS}, \env{R_LIBS_USER} and
   \env{R_LIBS_SITE}, which if set should give lists of directories where
   \R library trees are rooted, colon-separated on Unix-alike systems and
-  semicolon-separated on Windows.
+  semicolon-separated on Windows.  For the latter two, a value of
+  \code{NULL} indicates an empty list of directories,
 
   First, \code{.Library.site} is initialized from \env{R_LIBS_SITE}.  If
   this is unset or empty, the \file{site-library} subdirectory of
@@ -68,7 +69,7 @@
   Then, \code{.libPaths()} is called with the combination of the
   directories given by \env{R_LIBS} and \env{R_LIBS_USER}.
   By default \env{R_LIBS} is unset, and
-  \env{R_LIBS_USER} is set to directory
+  if \env{R_LIBS_USER} is unset or empty, it is set to directory
   \file{R/\var{R.version$platform}-library/\var{x.y}} of the home directory
   on Unix-alike systems (or \file{Library/R/\var{arch}/\var{x.y}/library} for CRAN macOS
   builds) and \file{R/win-library/\var{x.y}} on Windows, for \R \var{x.y.z}.
@@ -92,6 +93,8 @@
       value of \code{\link{R.version}$arch}.}
   }
   (See \code{\link{version}} for details on R version information.)
+  In addition, \samp{\%U} and \samp{\%S} expand to the \R defaults for,
+  respectively, \env{R_LIBS_USER} and \env{R_LIBS_SITE}.
 
   Function \code{.libPaths} always uses the values of \code{.Library}
   and \code{.Library.site} in the base namespace.  \code{.Library.site}

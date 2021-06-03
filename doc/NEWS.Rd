@@ -31,6 +31,11 @@
 
       \item \code{simplify2array()} gains an \code{except} argument for
       controlling the exceptions used by \code{sapply()}.
+
+      \item Environment variables \env{R_LIBS_USER} and
+      \env{R_LIBS_SITE} are now consistently replaced by the \R system
+      default if unset or empty, and can be set to \code{NULL} to
+      indicate an empty list of user or site library directories.
     }
   }
 
@@ -46,6 +51,15 @@
   \subsection{INSTALLATION ON WINDOWS}{
     \itemize{
       \item \code{libcurl} is now required.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} can optionally report
+      files/directories left behind in home, \file{/tmp} (even though
+      \env{TMPDIR} is set) and other directories.  See the \dQuote{R
+	Internals} manual for details.
     }
   }
 

@@ -4690,8 +4690,8 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
 	int i, clen;
 	char *p, *q;
 
-	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
-	memset(buf, 0, MB_CUR_MAX*len+1);
+	p = buf = (char *) R_alloc(R_MB_CUR_MAX*len+1, sizeof(char));
+	memset(buf, 0, R_MB_CUR_MAX*len+1);
 	for(i = 0; i < len; i++) {
 	    q = p;
 	    m = (int) con->read(p, sizeof(char), 1, con);
@@ -4744,7 +4744,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 	char *p;
 	Rbyte *q;
 
-	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
+	p = buf = (char *) R_alloc(R_MB_CUR_MAX*len+1, sizeof(char));
 	for(i = 0; i < len; i++, p += clen, iread += clen) {
 	    if (iread >= nbytes) break;
 	    q = bytes + iread;
@@ -4987,7 +4987,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 		    const char *p = s;
 		    mbs_init(&mb_st);
 		    for(i = 0, lenb = 0; i < len; i++) {
-			used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
+			used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st);
 			p += used;
 			lenb += used;
 		    }

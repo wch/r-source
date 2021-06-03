@@ -2352,19 +2352,17 @@ when OpenMP mode is switched on (e.g.@: @emph{via} flag
 @c http://openmp.org/wp/openmp-compilers-tools/
 @c clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
 @c clang 3.9.x reports 201111 but has all but offloading support of 4.0.
-@c Debian Wheezy was on ELTS until 2019-05-31
 There is nothing@footnote{In most implementations the @code{_OPENMP}
 macro has value a date which can be mapped to an OpenMP version: for
 example, value @code{201307} is the date of version 4.0 (July
 2013). However this may be used to denote the latest version which is
 partially supported, not that which is fully implemented.} to say what
 version of OpenMP is supported: version 4.0 (and much of 4.5 or 5.0) is
-supported by recent versions of the Linux (GCC >= 4.9.1), Windows and
-Solaris platforms, but portable packages cannot assume that end users
-have recent versions.  Apple builds of @command{clang} on macOS have no
-OpenMP support.
-@uref{https://www.openmp.org/resources/openmp-compilers-tools/}
-gives some idea of what compilers support what versions.
+supported by recent versions of the Linux, Windows and Solaris
+platforms, but portable packages cannot assume that end users have
+recent versions.  Apple @command{clang} on macOS has no OpenMP support.
+@uref{https://www.openmp.org/resources/openmp-compilers-tools/} gives
+some idea of what compilers support what versions.
 
 Rarely, using OpenMP with @command{clang} on Linux generates calls in
 @code{libatomic}, resulting in loading messages like
@@ -15293,7 +15291,7 @@ scale(x, scale = TRUE)
 @end example
 
 @noindent
-would do most likely do different things, to the justifiable
+would most likely do different things, to the justifiable
 consternation of the end user.
 
 To add a further twist, which default is used when a user calls
@@ -15894,12 +15892,10 @@ Preparing input at the console command-line, in file
 @file{src/unix/sys-unix.c}.
 
 @item
-Waiting for a response from a socket in the internal functions
-underlying FTP and HTTP transfers in @code{download.file()} and for
-direct socket access, in files
-@file{src/@/modules/@/internet/@/nanoftp.c},
-@file{src/@/modules/@/internet/@/nanohttp.c} and
+Waiting for a response from a socket in the internal functions for
+direct socket access in file
 @file{src/@/modules/@/internet/@/Rsock.c}
+and for the interface to @code{libcurl}.
 
 @item
 Mouse and window events when displaying the X11-based dataentry window,

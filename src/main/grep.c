@@ -566,7 +566,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (!useBytes && (use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
 		/* split into individual characters (not bytes) */
-		    char bf[20 /* > MB_CUR_MAX */];
+		    char bf[20 /* > R_MB_CUR_MAX */];
 		    const char *p = buf;
 		    size_t used;
 		    mbstate_t mb_st;
@@ -590,7 +590,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			PROTECT(t = allocVector(STRSXP, ntok));
 			for (j = 0; j < ntok; j++, p += used) {
 			    /* This is valid as we have already checked */
-			    used = mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
+			    used = mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st);
 			    memcpy(bf, p, used); bf[used] = '\0';
 			    SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
 			}
@@ -1047,7 +1047,7 @@ static int fgrep_one(const char *pat, const char *target,
 		if (next != NULL) *next = ib + plen;
 		return i;
 	    }
-	    used = (int) Mbrtowc(NULL,  target+ib, MB_CUR_MAX, &mb_st);
+	    used = (int) Mbrtowc(NULL,  target+ib, R_MB_CUR_MAX, &mb_st);
 	    if (used <= 0) break;
 	    ib += used;
 	}
@@ -1091,7 +1091,7 @@ static int fgrep_one_bytes(const char *pat, const char *target, int len,
 	mbs_init(&mb_st);
 	for (ib = 0, i = 0; ib <= len-plen; i++) {
 	    if (strncmp(pat, target+ib, plen) == 0) return ib;
-	    used = (int) Mbrtowc(NULL, target+ib, MB_CUR_MAX, &mb_st);
+	    used = (int) Mbrtowc(NULL, target+ib, R_MB_CUR_MAX, &mb_st);
 	    if (used <= 0) break;
 	    ib += used;
 	}
