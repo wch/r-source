@@ -5711,7 +5711,7 @@ A release of XQuartz 2.8.1 is available @emph{via}
 supports both @cputype{arm64} and @cputype{x86_64} builds.
 
 Binary builds of the prerequisites@footnote{At the time of writing this
-had Aauq-based Tcl/Tk not the X11-based variant in the CRAN distibution
+had Aqua-based Tcl/Tk not the X11-based variant in the CRAN distribution
 of @R{}.} are available at @uref{https://mac.r-project.org/libs-arm64/}.
 These (largely) unpack into @file{/opt/R/arm64}: it is simplest to first
 create that directory and adjust its ownership if desired:
