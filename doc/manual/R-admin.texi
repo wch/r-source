@@ -1588,7 +1588,7 @@ of the application where you installed it (which may not be where you
 want this time @dots{}).
 
 Various parts of the build require XQuartz to be installed: see
-@uref{https://www.xquartz.org/releases}.@footnote{At the time of writing
+@uref{https://www.xquartz.org/releases/}.@footnote{At the time of writing
 the distribution was built/tested against 2.7.11 for compatibility with
 @R{} 4.0.0.}  These include the @pkg{tcltk} package and the @code{X11}
 device: attempting to use these without XQuartz will if possible remind
