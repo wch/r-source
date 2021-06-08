@@ -56,6 +56,9 @@
       and \code{qbinom()} are better and or faster for extreme cases.  The
       underlying C code has been modularized and is common to all four cases
       of discrete distributions.
+
+      \item \code{.First} and \code{.Last} can again be set from the site
+      profile.
     }
   }
 }

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2020   The R Core Team
+ *  Copyright (C) 1998-2021   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -973,6 +973,8 @@ void setup_Rmainloop(void)
     R_unLockBinding(R_DeviceSymbol, R_BaseEnv);
     R_unLockBinding(R_DevicesSymbol, R_BaseEnv);
     R_unLockBinding(install(".Library.site"), R_BaseEnv);
+    R_unLockBinding(install(".First"), R_BaseEnv);
+    R_unLockBinding(install(".Last"), R_BaseEnv);    
 
     /* require(methods) if it is in the default packages */
     doneit = 0;
@@ -1006,6 +1008,8 @@ void setup_Rmainloop(void)
 
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
     R_LockBinding(install(".Library.site"), R_BaseEnv);
+    R_LockBinding(install(".First"), R_BaseEnv);
+    R_LockBinding(install(".Last"), R_BaseEnv);    
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.

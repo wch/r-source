@@ -112,3 +112,5 @@ local({
 })
 
 .sys.timezone <- NA_character_
+.First <- NULL
+.Last <- NULL
