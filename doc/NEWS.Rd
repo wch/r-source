@@ -154,6 +154,9 @@
       \item \code{gap.axis} is now part of the \code{axis()} arguments which
       are passed from \code{bxp()}, and hence \code{boxplot()}.  (Thanks to
       Martin Smith's report and suggestions in \PR{18109}.)
+
+      \item \code{.First} and \code{.Last} can again be set from the site
+      profile.
     }
   }
 }
