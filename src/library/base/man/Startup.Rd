@@ -49,9 +49,9 @@
   (it contains settings from the installer in a \sQuote{factory-fresh}
   installation).
 #endif
-  This code is sourced into the \pkg{base} package.  Users need to be
-  careful not to unintentionally overwrite objects in \pkg{base}, and it
-  is normally advisable to use \code{\link{local}} if code needs to be
+  This code is sourced into the workspace (global environment).  Users need
+  to be careful not to unintentionally create objects in the workspace, and
+  it is normally advisable to use \code{\link{local}} if code needs to be
   executed: see the examples.
 
   Then, unless \option{--no-init-file} was given, \R searches for a user

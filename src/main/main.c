@@ -972,9 +972,6 @@ void setup_Rmainloop(void)
     /* At least temporarily unlock some bindings used in graphics */
     R_unLockBinding(R_DeviceSymbol, R_BaseEnv);
     R_unLockBinding(R_DevicesSymbol, R_BaseEnv);
-    R_unLockBinding(install(".Library.site"), R_BaseEnv);
-    R_unLockBinding(install(".First"), R_BaseEnv);
-    R_unLockBinding(install(".Last"), R_BaseEnv);    
 
     /* require(methods) if it is in the default packages */
     doneit = 0;
@@ -1006,10 +1003,7 @@ void setup_Rmainloop(void)
      */
     if(!R_Quiet) PrintGreeting();
 
-    R_LoadProfile(R_OpenSiteFile(), baseEnv);
-    R_LockBinding(install(".Library.site"), R_BaseEnv);
-    R_LockBinding(install(".First"), R_BaseEnv);
-    R_LockBinding(install(".Last"), R_BaseEnv);    
+    R_LoadProfile(R_OpenSiteFile(), R_GlobalEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.

@@ -3578,7 +3578,7 @@ SEXP attribute_hidden do_activeBndFun(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_ActiveBindingFunction(sym, env);
 }
 
-/* This is a .Internal with no wrapper, currently unused in base R */
+/* This is a .Internal with no wrapper */
 SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sym;
@@ -3588,6 +3588,8 @@ SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(sym) != SYMSXP) error(_("not a symbol"));
     /* This is not quite the same as SET_SYMBOL_BINDING_VALUE as it
        does not allow active bindings to be unbound */
+    if (FRAME_IS_LOCKED(R_BaseEnv))
+	error(_("cannot remove bindings from a locked environment"));
     if (R_BindingIsLocked(sym, R_BaseEnv))
 	error(_("cannot unbind a locked binding"));
     if (R_BindingIsActive(sym, R_BaseEnv))
