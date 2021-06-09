@@ -1004,6 +1004,12 @@ void setup_Rmainloop(void)
     if(!R_Quiet) PrintGreeting();
 
     R_LoadProfile(R_OpenSiteFile(), R_GlobalEnv);
+    /* The system profile creates an active binding in global environment
+       to capture writes to .Library.site executed in the site profile. This
+       effectively modifies .Library.site in the base environment to mimick
+       previous behavior when the site profile was run in the base
+       environment. */
+    R_removeVarFromFrame(install(".Library.site"), R_GlobalEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.
