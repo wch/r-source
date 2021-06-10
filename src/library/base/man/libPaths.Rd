@@ -71,8 +71,10 @@
   By default \env{R_LIBS} is unset, and
   if \env{R_LIBS_USER} is unset or empty, it is set to directory
   \file{R/\var{R.version$platform}-library/\var{x.y}} of the home directory
-  on Unix-alike systems (or \file{Library/R/\var{arch}/\var{x.y}/library} for CRAN macOS
-  builds) and \file{R/win-library/\var{x.y}} on Windows, for \R \var{x.y.z}.
+  on Unix-alike systems
+  (or \file{Library/R/\var{m}/\var{x.y}/library} for CRAN macOS
+  builds, with \var{m} \code{\link{Sys.info}()["machine"]})
+  and \file{R/win-library/\var{x.y}} on Windows, for \R \var{x.y.z}.
 
   Both \env{R_LIBS_USER} and \env{R_LIBS_SITE} feature possible
   expansion of specifiers for \R version specific information as part of
