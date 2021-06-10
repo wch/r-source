@@ -56,11 +56,20 @@
         }
         x
     }
+    mytrim <- function(x) {
+        y <- unlist(strsplit(x, "\n", fixed = TRUE))
+        if(length(y) <= 1L)
+            x
+        else
+            paste(c(y[1L],
+                    .trim_common_leading_whitespace(y[-1L])),
+                  collapse = "\n")
+    }
 
     ## <FIXME>
     ##   desc <- read.dcf(descfile)[1L, ]
     ## FIXME: enc2utf8
-    desc <- enc2utf8(.read_description(descfile, keep.white = character()))
+    desc <- enc2utf8(.read_description(descfile))
     ## Using
     ##   desc <- .read_description(descfile)
     ## would preserve leading white space in Description and Author ...
@@ -114,6 +123,8 @@
         ## Maintainer fields anyways ...
         if(f == "Authors@R") next
         text <- desc[f]
+        if(f %in% c("Author", "Description"))
+            text <- mytrim(text)
         ## munge 'text' appropriately (\\, {, }, "...")
         ## not sure why just these: copied from Perl Rd2dvi, then added to.
         ## KH: the LaTeX special characters are

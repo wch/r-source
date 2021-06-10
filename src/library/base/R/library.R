@@ -988,6 +988,8 @@ function(x)
 {
     v <- paste(R.version[c("major", "minor")], collapse = ".")
 
+    s <- Sys.info()
+
     R_LIBS_USER_default <- function() {
         home <- normalizePath("~")
         ## FIXME: could re-use v from "above".
@@ -995,8 +997,8 @@ function(x)
                       sub("[.].*", "", R.version$minor))
         if(.Platform$OS.type == "windows")
             file.path(home, "R", "win-library", x.y)
-        else if(Sys.info()["sysname"] == "Darwin")
-            file.path(home, "Library", "R", R.version$arch, x.y, "library")
+        else if(s["sysname"] == "Darwin")
+            file.path(home, "Library", "R", s["machine"], x.y, "library")
         else
             file.path(home, "R", paste0(R.version$platform, "-library"), x.y)
     }

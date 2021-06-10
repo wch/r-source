@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2021   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -342,7 +342,6 @@ static void check_session_exit()
 	    REprintf(_("Execution halted\n"));
 	    R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
 	}
-	
     }
 }
 
@@ -749,7 +748,7 @@ static uintptr_t almostFillStack() {
 void setup_Rmainloop(void)
 {
     volatile int doneit;
-    volatile SEXP baseEnv;
+    volatile SEXP baseNSenv;
     SEXP cmd;
     char deferred_warnings[11][250];
     volatile int ndeferred_warnings = 0;
@@ -929,10 +928,10 @@ void setup_Rmainloop(void)
 
     /* This is the same as R_BaseEnv, but this marks the environment
        of functions as the namespace and not the package. */
-    baseEnv = R_BaseNamespace;
+    baseNSenv = R_BaseNamespace;
 
     /* Set up some global variables */
-    Init_R_Variables(baseEnv);
+    Init_R_Variables(baseNSenv);
 
     /* On initial entry we open the base language package and begin by
        running the repl on it.
@@ -955,7 +954,7 @@ void setup_Rmainloop(void)
     if (R_SignalHandlers) init_signal_handlers();
     if (!doneit) {
 	doneit = 1;
-	R_ReplFile(fp, baseEnv);
+	R_ReplFile(fp, baseNSenv);
     }
     fclose(fp);
 #endif
@@ -965,16 +964,13 @@ void setup_Rmainloop(void)
        drop through to further processing.
     */
     R_IoBufferInit(&R_ConsoleIob);
-    R_LoadProfile(R_OpenSysInitFile(), baseEnv);
+    R_LoadProfile(R_OpenSysInitFile(), baseNSenv);
     /* These are the same bindings, so only lock them once */
     R_LockEnvironment(R_BaseNamespace, TRUE);
     R_LockEnvironment(R_BaseEnv, FALSE);
     /* At least temporarily unlock some bindings used in graphics */
     R_unLockBinding(R_DeviceSymbol, R_BaseEnv);
     R_unLockBinding(R_DevicesSymbol, R_BaseEnv);
-    R_unLockBinding(install(".Library.site"), R_BaseEnv);
-    R_unLockBinding(install(".First"), R_BaseEnv);
-    R_unLockBinding(install(".Last"), R_BaseEnv);    
 
     /* require(methods) if it is in the default packages */
     doneit = 0;
@@ -1006,10 +1002,13 @@ void setup_Rmainloop(void)
      */
     if(!R_Quiet) PrintGreeting();
 
-    R_LoadProfile(R_OpenSiteFile(), baseEnv);
-    R_LockBinding(install(".Library.site"), R_BaseEnv);
-    R_LockBinding(install(".First"), R_BaseEnv);
-    R_LockBinding(install(".Last"), R_BaseEnv);    
+    R_LoadProfile(R_OpenSiteFile(), R_GlobalEnv);
+    /* The system profile creates an active binding in global environment
+       to capture writes to .Library.site executed in the site profile. This
+       effectively modifies .Library.site in the base environment to mimick
+       previous behavior when the site profile was run in the base
+       environment. */
+    R_removeVarFromFrame(install(".Library.site"), R_GlobalEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.
@@ -1064,7 +1063,7 @@ void setup_Rmainloop(void)
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First.sys"));
-	R_CurrentExpr = findVar(cmd, baseEnv);
+	R_CurrentExpr = findVar(cmd, baseNSenv);
 	if (R_CurrentExpr != R_UnboundValue &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
 		PROTECT(R_CurrentExpr = lang1(cmd));

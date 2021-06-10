@@ -906,8 +906,8 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	    R_ProcessEvents();
 	    /* re-set tv as it may get updated by select */
 	    if (R_wait_usec > 0) {
-		tv.tv_sec = 0;
-		tv.tv_usec = R_wait_usec;
+		tv.tv_sec = R_wait_usec / 1000000;
+		tv.tv_usec = R_wait_usec - tv.tv_sec * 1000000;
 		/* FIXME: ?Rg_wait_usec */
 	    } else if (timeout > 0) {
 		tv.tv_sec = (int) remains;

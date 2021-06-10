@@ -2267,7 +2267,7 @@ DLL.
 There is some support for packages which wish to use
 OpenMP@footnote{@uref{https://www.openmp.org/},
 @uref{https://en.wikipedia.org/wiki/OpenMP},
-@uref{https://hpc.llnl.gov/openmp-tutorial}}.  The
+@uref{https://hpc.llnl.gov/training/tutorials/openmp-tutorial}}.  The
 @command{make} macros
 
 @example
@@ -8308,7 +8308,7 @@ Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version), @command{Shark} (in version of @code{Xcode}
 up to those for Snow Leopard), and @command{Instruments} (part of
 @code{Xcode}, see
-@uref{https://help.apple.com/instruments/mac/current}).
+@uref{https://help.apple.com/instruments/mac/current/}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
@@ -9252,7 +9252,7 @@ analysis, it does not rely on code paths being exercised.
 See
 @uref{https://gcc.gnu.org/onlinedocs/gcc-10.1.0/gcc/Static-Analyzer-Options.html}
 (or the documentation for your version of @command{gcc} if later) and
-@uref{https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10/}
+@uref{https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10}
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'

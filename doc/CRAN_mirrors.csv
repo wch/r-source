@@ -34,7 +34,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Shenzhen) [https]",China,Shenzhen,https://mirrors.sustech.edu.cn/CRAN/,"Southern University of Science and Technology (SUSTech)","cra # sustech.edu.cn",1,cn,"secure_mirror_from_master"
 "Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,
 "Costa Rica [https]","Costa Rica","San José",https://mirror.uned.ac.cr/cran/,"Distance State University (UNED)","rherrerav # uned.ac.cr",1,cr,"secure_mirror_from_master"
-"Czech Republic [https]","Czech Republic","Prague",https://mirrors.nic.cz/R/,"CZ.NIC, Prague","mirrors # nic.cz",1,cz,"maintainer_address_bounces"
+"Czech Republic [https]","Czech Republic","Prague",https://mirrors.nic.cz/R/,"CZ.NIC, Prague","mirrors # nic.cz",1,cz,"secure_mirror_from_master"
 "Denmark [https]",Denmark,Aalborg,https://mirrors.dotsrc.org/cran/,"Aalborg University","staff # dotsrc.org",1,dk,"secure_mirror_from_master"
 "East Asia [https]",0-Cloud-East-Asia,0-Cloud-East-Asia,"https://cran.asia/","Personnel Psychology Laboratory, Kwangwoon University (sites: Seoul, Tokyo, Singapore, Manila, Bangalore)","admin # cran.asia",1,asia,"secure_mirror_from_master"
 "Ecuador (Cuenca) [https]",Ecuador,Cuenca,https://mirror.cedia.org.ec/CRAN/,CEDIA,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
@@ -70,7 +70,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Korea (Ulsan) [https]",Korea,Ulsan,https://cran.biodisk.org/,"The Genome Institute of UNIST (Ulsan National Institute of Science and Technology)","ldsrman # gmail.com",1,kr,"secure_mirror_from_master"
 "Malaysia [https]",Malaysia,Serdang,https://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my,"secure_mirror_from_master"
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
-"Mexico (Texcoco) [https]",Mexico,Texcoco,https://www.est.colpos.mx/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx
+"Mexico (Texcoco) [https]",Mexico,Texcoco,https://www.est.colpos.mx/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx,"secure_mirror_from_master"
 "Morocco [https]",Morocco,Rabat,https://mirror.marwan.ma/cran/,"MARWAN","noc # marwan.ma",1,ma,"secure_mirror_from_master"
 "Netherlands [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz,"secure_mirror_from_master"
