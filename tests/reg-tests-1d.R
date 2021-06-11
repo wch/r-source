@@ -5111,6 +5111,13 @@ stopifnot(exprs = {
 })
 
 
+## cosmetic: suppress warning that was never intended (from *this* call):
+op <- options(warn = 2)# no warnings
+aP <- .axisPars((1:2)* 777, log=TRUE)
+stopifnot(identical(aP, list(axp = c(Inf, Inf), n = 1L)))
+## gave warning (turned into error) in R <= 4.1.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

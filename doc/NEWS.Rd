@@ -36,6 +36,11 @@
       \env{R_LIBS_SITE} are now consistently replaced by the \R system
       default if unset or empty, and can be set to \code{NULL} to
       indicate an empty list of user or site library directories.
+
+      \item The warning for \code{axis()}(-like) calls in cases of relatively
+      small ranges (typically in log-scale situations) is slightly improved
+      \emph{and} suppressed from explicit calls to \code{.axisPars()} as
+      has always been the intention.
     }
   }
 
