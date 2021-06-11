@@ -1,6 +1,6 @@
 % File src/library/graphics/man/bxp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bxp}
@@ -63,7 +63,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     Currently, \code{yaxs} and \code{ylim} are used \sQuote{along the
       boxplot}, i.e., vertically, when \code{horizontal} is
     false, and \code{xlim} horizontally.
-    \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis}, and
+    \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis},
+    \code{gap.axis}, and
     \code{col.axis} are passed to \code{\link{axis}}, and \code{main},
     \code{cex.main}, \code{col.main}, \code{sub}, \code{cex.sub},
     \code{col.sub}, \code{xlab}, \code{ylab}, \code{cex.lab}, and
@@ -147,6 +148,10 @@ bx <- boxplot(weight ~ group, data = PlantGrowth,
               subset = group == "ctrl", plot = FALSE)
 bxp(bx, show.names=TRUE)
 par(op)
+
+## passing gap.axis=* to axis(), PR#18109:
+boxplot(matrix(100*rnorm(1e3), 50, 20),
+        cex.axis = 1.5, gap.axis = -1)# showing *all* labels
 
 %% examples for new (S+ like) features
 z <- split(rnorm(1000), rpois(1000, 2.2))

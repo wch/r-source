@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/boxplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -327,6 +327,7 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
 	ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "xaxp", "yaxp",
+					   "gap.axis",
                                            "las",
 					   "cex.axis", "col.axis", "format")]
 	if (is.null(show.names)) show.names <- n > 1

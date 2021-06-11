@@ -41,7 +41,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item \command{make check} now works also without a LaTeX
-      installation. (Thanks to Sebastian Meyer's \PR{18103}.)
+      installation.  (Thanks to Sebastian Meyer's \PR{18103}.)
     }
   }
 
@@ -56,6 +56,10 @@
       and \code{qbinom()} are better and or faster for extreme cases.  The
       underlying C code has been modularized and is common to all four cases
       of discrete distributions.
+
+      \item \code{gap.axis} is now part of the \code{axis()} arguments which
+      are passed from \code{bxp()}, and hence \code{boxplot()}.  (Thanks to
+      Martin Smith's report and suggestions in \PR{18109}.)
 
       \item \code{.First} and \code{.Last} can again be set from the site
       profile.
