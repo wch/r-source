@@ -70,6 +70,7 @@ s4.group.generics <- c("Arith", "Compare", "Ops", "Logic", "Math", "Math2", "Sum
 stop.list[["methods"]] <- c("browseAll", "recover", s4.group.generics)
 stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
                           "update_PACKAGES",
+                          "dependsOnPkgs", # call to installed.packages() slow w/ large library
                           "testInstalledBasic",
                           "testInstalledPackages", # runs whole suite
                           "readNEWS",              # slow, pure R code
