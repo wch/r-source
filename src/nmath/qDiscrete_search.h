@@ -165,8 +165,6 @@ static double DO_SEARCH_FUN(_dist_PARS_DECL_)
 									\
     q_DISCR_CHECK_BOUNDARY(y);						\
 									\
-    if(y < 0) y = 0.;/* e.g., for qnbinom(0.5, mu = 3, size = 1e-10) */	\
-									\
     z = P_DIST(y, _dist_PARS_);						\
 									\
     /* Algorithmic "tuning parameters", used to be hardwired; changed for speed &| precision */	\
