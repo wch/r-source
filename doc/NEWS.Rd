@@ -157,6 +157,10 @@
 
       \item \code{.First} and \code{.Last} can again be set from the site
       profile.
+
+      \item \code{seq.int(from, to, *)} and \code{seq.default(..)} now work
+      better in large range cases where \code{from-to} is infinite where
+      the two boundaries are finite.
     }
   }
 }
