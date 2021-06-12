@@ -33,9 +33,9 @@
       controlling the exceptions used by \code{sapply()}.
 
       \item Environment variables \env{R_LIBS_USER} and
-      \env{R_LIBS_SITE} are now consistently replaced by the \R system
-      default if unset or empty, and can be set to \code{NULL} to
-      indicate an empty list of user or site library directories.
+      \env{R_LIBS_SITE} are both now set to the \R system default if
+      unset or empty, and can be set to \code{NULL} to indicate an empty
+      list of user or site library directories.
 
       \item The warning for \code{axis()}(-like) calls in cases of relatively
       small ranges (typically in log-scale situations) is slightly improved
