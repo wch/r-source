@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
+R version 4.1.0 Patched (2021-06-11 r80488) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -572,6 +572,10 @@ Warning in bxp(bx.p, notch = TRUE, boxfill = "lightblue", border = 2:6,  :
 +               subset = group == "ctrl", plot = FALSE)
 > bxp(bx, show.names=TRUE)
 > par(op)
+> 
+> ## passing gap.axis=* to axis(), PR#18109:
+> boxplot(matrix(100*rnorm(1e3), 50, 20),
++         cex.axis = 1.5, gap.axis = -1)# showing *all* labels
 > 
 > z <- split(rnorm(1000), rpois(1000, 2.2))
 > boxplot(z, whisklty = 3, main = "boxplot(z, whisklty = 3)")
