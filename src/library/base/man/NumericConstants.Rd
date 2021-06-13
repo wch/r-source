@@ -47,7 +47,7 @@
   A numeric constant immediately followed by \code{i} is regarded as an
   imaginary \link{complex} number.
 
-  An numeric constant immediately followed by \code{L} is regarded as an
+  A numeric constant immediately followed by \code{L} is regarded as an
   \code{\link{integer}} number when possible (and with a warning if it
   contains a \code{"."}).
 
