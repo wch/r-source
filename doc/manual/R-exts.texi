@@ -4856,8 +4856,8 @@ However, some Linux distributions micro-package, so locales defined by
 @item
 Avoid spaces in file names, not least as they can cause difficulties for
 external tools.  An example was a package with a @CRANpkg{knitr}
-vignette that used spaces in plot names: this caused some versions of
-@command{pandoc} to fail with a baffling error message.
+vignette that used spaces in plot names: this caused some older versions
+of @command{pandoc} to fail with a baffling error message.
 @c msmtools in June 2016 failed with pandoc 1.12 but not 1.16.
 
 Non-ASCII filenames can also cause problems (particularly in non-UTF-8
@@ -4950,12 +4950,12 @@ portable, annoyingly so if this is not declared in the
 @command{pandoc}, which is only available for a very limited range of
 platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
-URLs, which even the build in some major Linux distributions in 2020 did
-not possess (and some of those builds were of far-from-current
-versions).} that vary by build but are not documented.  Some recent
-versions of @command{pandoc} for macOS do not work on @R{}'s target of
-High Sierra (and this too was undocumented): at the time of writing the
-latest that did was @samp{2.7.3}.
+URLs.} that vary by build but are not documented.  Several recent
+versions of @command{pandoc} for macOS did not work on @R{}'s target of
+High Sierra (and this too was undocumented): at the time of writing both
+@samp{2.7.3} and @samp{2.14.0.1} did.  (Currently @command{pandoc} is
+only available for Intel macOS but that build works well enough on
+@cputype{arm64} machines.)
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
