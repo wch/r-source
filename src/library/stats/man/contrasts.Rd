@@ -1,6 +1,6 @@
 % File src/library/stats/man/contrasts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{contrasts}
@@ -12,7 +12,7 @@
 }
 \usage{
 contrasts(x, contrasts = TRUE, sparse = FALSE)
-contrasts(x, how.many) <- value
+contrasts(x, how.many = NULL) <- value
 }
 \arguments{
   \item{x}{a factor or a logical variable.}
@@ -20,7 +20,8 @@ contrasts(x, how.many) <- value
   \item{sparse}{logical indicating if the result should be sparse
     (of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}), using
     package \CRANpkg{Matrix}.}
-  \item{how.many}{How many contrasts should be made. Defaults to one
+  \item{how.many}{integer number indicating how many contrasts should be
+    made.  Defaults to one
     less than the number of levels of \code{x}.  This need not be the
     same as the number of columns of \code{value}.}
   \item{value}{either a numeric matrix (or a sparse or dense matrix of a

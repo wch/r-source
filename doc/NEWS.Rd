@@ -41,6 +41,9 @@
       small ranges (typically in log-scale situations) is slightly improved
       \emph{and} suppressed from explicit calls to \code{.axisPars()} as
       has always been the intention.
+
+      \item The \code{contrasts} setter \code{`contrasts<-`} gets explicit
+      default \code{how.many = NULL} rather than just using \code{missing(how.many)}.
     }
   }
 
