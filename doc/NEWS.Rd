@@ -169,6 +169,10 @@
       \item \code{seq.int(from, to, *)} and \code{seq.default(..)} now work
       better in large range cases where \code{from-to} is infinite where
       the two boundaries are finite.
+
+      \item \code{all.equal(x,y)} now returns \code{TRUE} correctly also
+      when several entries of \code{abs(x)} and \code{abs(y)} are close to
+      \code{.Machine$double.xmax}, the largest finite \code{numeric}.
     }
   }
 }

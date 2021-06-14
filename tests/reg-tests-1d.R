@@ -5118,6 +5118,14 @@ stopifnot(identical(aP, list(axp = c(Inf, Inf), n = 1L)))
 ## gave warning (turned into error) in R <= 4.1.0
 
 
+## all.equal(x,y) when 'x' or 'y' are close to overflowing to +/- Inf:
+set.seed(7); x <- c(outer(pi^(-4*(-3:4)), 1:7)); y <- x*(1+rt(x, 3)/1e9)
+stopifnot(all.equal(x,y, tol=8e-8))
+for(f in c(10^c(-308:-300, 300:308), rlnorm(2^9, 3, 4)))
+    stopifnot(all.equal(f*x, f*y, tol=8e-8))
+## failed for 1e301 (and larger) in R <= 4.1.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

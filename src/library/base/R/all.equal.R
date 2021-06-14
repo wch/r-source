@@ -140,17 +140,17 @@ all.equal.numeric <-
     if(all(out)) return(if(is.null(msg)) TRUE else msg)
     if(countEQ) {
         N <- length(out)
-        sabst0 <- sum(abs(target[out]))
+        sabst0 <- sum(abs(target[out])/N)
     } else
         sabst0 <- 0
     target  <- target [!out]
     current <- current[!out]
     if(!countEQ) N <- length(target)
     if(is.integer(target) && is.integer(current)) target <- as.double(target)
-    xy <- sum(abs(target - current))/N ## abs(z) == Mod(z) for complex
+    xy <- sum(abs(target - current)/N) ## abs(z) == Mod(z) for complex
     what <-
 	if(is.null(scale)) {
-	    xn <- (sabst0 + sum(abs(target)))/N
+	    xn <- (sabst0 + sum(abs(target)/N))
 	    if(is.finite(xn) && xn > tolerance) {
 		xy <- xy/xn
 		"relative"
