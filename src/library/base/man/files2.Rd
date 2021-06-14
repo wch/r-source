@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files2}
@@ -37,6 +37,9 @@ Sys.umask(mode = NA)
     \code{umask} setting?}
 }
 \details{
+  \code{dir.exists} checks that the paths exist (in the same sense as
+  \code{\link{file.exists}}) and are directories.
+
   \code{dir.create} creates the last element of the path, unless
   \code{recursive = TRUE}.  Trailing path separators are discarded.
 #ifdef windows
