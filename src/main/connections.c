@@ -79,7 +79,6 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 #include <R_ext/Complex.h>
-//#include <R-ftp-http.h>
 #include <R_ext/RS.h>		/* R_chk_calloc and Free */
 #include <R_ext/Riconv.h>
 #include <R_ext/Print.h> // REprintf, REvprintf

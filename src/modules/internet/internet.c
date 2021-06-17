@@ -28,7 +28,6 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
-//#include <R-ftp-http.h> // for DLsize_t
 #include <errno.h>
 #include <R_ext/Print.h>
 
