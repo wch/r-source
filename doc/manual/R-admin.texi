@@ -5685,11 +5685,11 @@ To correctly set the architecture (which will be auto-detected as
 @subsubsection Native builds
 
 This section is experimental, and everything said should be prefixed by
-`at the time of writing'.  It follows the planned @acronym{CRAN}
-distribution in using @file{/opt/R/arm64} rather than @file{/usr/local}:
-this largely allows natively-compiled software to co-exist with
-Intel-compiled software (although the C/C++ compilers and linker will
-still search @file{/usr/local/include} and @file{/usr/local/lib}).
+`at the time of writing'.  It follows the @acronym{CRAN} distribution in
+using @file{/opt/R/arm64} rather than @file{/usr/local}: this largely
+allows natively-compiled software to co-exist with Intel-compiled
+software (although the C/C++ compilers and linker will still search
+@file{/usr/local/include} and @file{/usr/local/lib}).
 
 No Fortran compiler has been released for this architecture although
 there are ports under development.  We used the preliminary fork of
@@ -5711,11 +5711,13 @@ A release of XQuartz 2.8.1 is available @emph{via}
 @uref{https://www.xquartz.org/releases/}: this is dual-architecture so
 supports both @cputype{arm64} and @cputype{x86_64} builds.
 
-A binary package of Aqua Tcl/Tk is supplied rather than the X11-based
-variant of Tk used for Intel builds (and some packages, notably
-@CRANpkg{tkrplot}, do not support that, nor is @code{Tktable}
-available).  If XQuartz is installed it is possible to build the
-X11-based variant of Tk from source.
+Binary builds of the prerequisites@footnote{At the time of writing this
+had Aqua-based Tcl/Tk not the X11-based variant in the CRAN distribution
+of @R{}.  Also, no @code{readline}: the @acronym{CRAN} distribution uses
+@code{libedit} emulation.} are available at
+@uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
+into @file{/opt/R/arm64}: it is simplest to first create that directory
+and adjust its ownership if desired:
 
 Binary builds of the prerequisites are available at
 @uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
@@ -5743,9 +5745,9 @@ ActiveTcl).
 
 Prerequisite @code{readline} can easily be built from source, although
 @code{libedit} emulation can also be used.  If compiling from source,
-@code{pcre2} (at least up to version 10.36) needs to be built without JIT
-support as the build segfaults if that is enabled, so do run @code{make
-check} on your build.
+@code{pcre2} (at least up to version 10.37) needs to be built without
+JIT support (the default) as the build segfaults if that is enabled, so
+do run @code{make check} on your build.
 
 Add @file{/opt/R/arm64/bin} to the @env{PATH}, create a file
 @file{config.site} something like
