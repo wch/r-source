@@ -33,9 +33,17 @@
       controlling the exceptions used by \code{sapply()}.
 
       \item Environment variables \env{R_LIBS_USER} and
-      \env{R_LIBS_SITE} are now consistently replaced by the \R system
-      default if unset or empty, and can be set to \code{NULL} to
-      indicate an empty list of user or site library directories.
+      \env{R_LIBS_SITE} are both now set to the \R system default if
+      unset or empty, and can be set to \code{NULL} to indicate an empty
+      list of user or site library directories.
+
+      \item The warning for \code{axis()}(-like) calls in cases of relatively
+      small ranges (typically in log-scale situations) is slightly improved
+      \emph{and} suppressed from explicit calls to \code{.axisPars()} as
+      has always been the intention.
+
+      \item The \code{contrasts} setter \code{`contrasts<-`} gets explicit
+      default \code{how.many = NULL} rather than just using \code{missing(how.many)}.
     }
   }
 
@@ -157,6 +165,14 @@
 
       \item \code{.First} and \code{.Last} can again be set from the site
       profile.
+
+      \item \code{seq.int(from, to, *)} and \code{seq.default(..)} now work
+      better in large range cases where \code{from-to} is infinite where
+      the two boundaries are finite.
+
+      \item \code{all.equal(x,y)} now returns \code{TRUE} correctly also
+      when several entries of \code{abs(x)} and \code{abs(y)} are close to
+      \code{.Machine$double.xmax}, the largest finite \code{numeric}.
     }
   }
 }

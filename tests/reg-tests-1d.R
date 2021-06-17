@@ -5071,7 +5071,71 @@ if (l10n_info()$"Latin-1" && localeToCharset()=="ISO8859-1") {
   # l10n_info() would report Latin-1 when that is the code page
   y <- "\xfc"
   stopifnot(y == encodeString(y))
-} 
+}
+
+
+## seq(from, to, *) i.e. seq.default()  *and* seq.int(..)  in case of large
+## from & to, notably *infinite (to - from) :
+seq    (-1.5e308, 1e308, by=1e307)  # gave error in R <= 4.1.0
+seq    (-1.5e308, 1.6e308, length.out=33)# all Inf apart from first & last
+## and these two where identical to seq(), aka seq.default()
+seq.int(-1.5e308, 1e308, by=1e307)
+seq.int(-1.5e308, 1.6e308, length.out=33)
+## more systematically: ------------------------------------------------------
+## test a series
+B <- .Machine$double.xmax; B. <- 1.79769e308
+Lby  <- lapply(1:25, function(N)     seq.int(-.99*B, B ,   by = N*2e306) / B)
+LbyR <- lapply(1:25, function(N) seq.default(-.99*B, B ,   by = N*2e306) / B)
+Llen <- lapply(2:26, function(N)     seq.int(- B,    B., length.out = N) / B)
+LleR <- lapply(2:26, function(N) seq.default(- B,    B., length.out = N) / B)
+## first diff  should be constant
+relEdiff <- function(L)
+    vapply(lapply(L, diff), function(x) {m <- mean(x); max(abs(x - m) / m) }, 1.23)
+by <- 1e307
+stopifnot(exprs = {
+    ## C = R :  seq.int() <==> seq.default :
+    all.equal(Lby , LbyR, tol=1e-15)
+    all.equal(Llen, LleR, tol=1e-15)
+    ## by :
+    abs(diff(s <- seq.int(-1.5e308, 1e308, by=by))/by - 1) < 1e-14
+    is.matrix(rng <- vapply(Lby, range, numeric(2)))
+    all.equal(rep(-.99, 25), rng[1,])
+    0.79 <= rng[2,] ; rng[2,] <= 0.991
+    ## length.out
+    is.matrix(rng <- vapply(Llen, range, numeric(2)))
+    all.equal(rep( -1,  25), rng[1,])
+    all.equal(rep(B./B, 25), rng[2,])
+    ## first diff s:
+    abs(relEdiff(Llen) / lengths(Llen)^1.5) < 2e-16 # see max ~3e-17
+    abs(relEdiff(Llen) / lengths(Llen)^1.5) < 2e-16 #   (ditto)
+})
+
+
+## cosmetic: suppress warning that was never intended (from *this* call):
+op <- options(warn = 2)# no warnings
+aP <- .axisPars((1:2)* 777, log=TRUE)
+stopifnot(identical(aP, list(axp = c(Inf, Inf), n = 1L)))
+## gave warning (turned into error) in R <= 4.1.0
+
+
+## all.equal(x,y) when 'x' or 'y' are close to overflowing to +/- Inf:
+set.seed(7); x <- c(outer(pi^(-4*(-3:4)), 1:7)); y <- x*(1+rt(x, 3)/1e9)
+stopifnot(all.equal(x,y, tol=8e-8))
+for(f in c(10^c(-308:-300, 300:308), rlnorm(2^9, 3, 4)))
+    stopifnot(all.equal(f*x, f*y, tol=8e-8))
+## failed for 1e301 (and larger) in R <= 4.1.0
+
+
+## check that some primitives don't increment reference counts
+x <- c(1); old_xr <- .Internal(refcnt(x))
+sum(x)
+range(x)
+round(x)
+stopifnot(.Internal(refcnt(x)) == old_xr)
+x <- logical(1); old_xr <- .Internal(refcnt(x))
+all(x)
+stopifnot(.Internal(refcnt(x)) == old_xr)
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

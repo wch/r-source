@@ -40,10 +40,8 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
     ## If formula, maybe should check that there is no LHS?
     if (inherits(f, "formula"))
         f <- eval(attr(stats::terms(f), "variables"), x, environment(f))
-    s <- seq_len(nrow(x))
-    if(!identical(f, s))
-        s <- split(x = s, f = f, drop = drop, ...)
-    lapply(s, function(ind) x[ind, , drop = FALSE])
+    lapply(split(x = seq_len(nrow(x)), f = f, drop = drop, ...),
+           function(ind) x[ind, , drop = FALSE])
 }
 
 `split<-` <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")

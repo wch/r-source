@@ -1684,6 +1684,8 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	res = do_math2(call, op, args, env);
     }
     UNPROTECT(nprotect);
+    SETCDR(call2, R_NilValue); /* clear refcnt on args */
+    R_try_clear_args_refcnt(args);
     return res;
 }
 

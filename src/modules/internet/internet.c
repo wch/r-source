@@ -28,7 +28,6 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
-//#include <R-ftp-http.h> // for DLsize_t
 #include <errno.h>
 #include <R_ext/Print.h>
 
@@ -92,7 +91,7 @@ static Rboolean url_open2(Rconnection con)
     case HTTPSsh:
     case HTTPsh:
     {
-	warning(_("the 'wininet' method of url() is deprecated for htto:// and https:// URLs"));
+	warning(_("the 'wininet' method of url() is deprecated for http:// and https:// URLs"));
 	SEXP sagent, agentFun;
 	const char *agent;
 	SEXP s_makeUserAgent = install("makeUserAgent");

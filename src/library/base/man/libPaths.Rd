@@ -40,7 +40,7 @@
   locations of the site libraries.
 
   \code{.libPaths} is used for getting or setting the library trees that \R
-  knows about and hence uses when looking for packages (library search
+  knows about and hence uses when looking for packages (the library search
   path).  If called with argument \code{new}, by default, the library search
   path is set to the existing directories in \code{unique(c(new,
   .Library.site, .Library))} and this is returned.  If \code{include.site}
@@ -60,7 +60,10 @@
   \env{R_LIBS_SITE}, which if set should give lists of directories where
   \R library trees are rooted, colon-separated on Unix-alike systems and
   semicolon-separated on Windows.  For the latter two, a value of
-  \code{NULL} indicates an empty list of directories,
+  \code{NULL} indicates an empty list of directories. (Note that as from
+  \R 4.2.0, both are set by \R start-up code if not already set or empty
+  so can be interrogated from an \R session to find the their defaults:
+  in earlier versions this was true only for \env{R_LIBS_USER}.)
 
   First, \code{.Library.site} is initialized from \env{R_LIBS_SITE}.  If
   this is unset or empty, the \file{site-library} subdirectory of
@@ -77,7 +80,7 @@
   and \file{R/win-library/\var{x.y}} on Windows, for \R \var{x.y.z}.
 
   Both \env{R_LIBS_USER} and \env{R_LIBS_SITE} feature possible
-  expansion of specifiers for \R version specific information as part of
+  expansion of specifiers for \R-version-specific information as part of
   the startup process.  The possible conversion specifiers all start
   with a \samp{\%} and are followed by a single letter (use \samp{\%\%}
   to obtain \samp{\%}), with currently available conversion

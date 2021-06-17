@@ -6770,7 +6770,7 @@ add_dummies <- function(dir, Log)
                 ff <- c(ff, setdiff(snap2[[i]], snap[[i]]))
             if (length(ff)) {
                 ## add trailing / to indicate a directory
-                isdir <- file.info(ff)$isdir
+                isdir <- isTRUE(file.info(ff)$isdir)
                 ff[isdir] <- paste0(ff[isdir], "/")
                 ff <- sub(paste0("^", normalizePath("~")), "~" , ff)
                 patt <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_EXCLUDE_")

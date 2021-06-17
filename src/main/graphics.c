@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 2002--2011  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -38,18 +38,21 @@ static void GLPretty(double *ul, double *uh, int *n);
 
 /* used in GScale() (../library/graphics/src/graphics.c), but also in
                      ../library/grDevices/src/axis_scales.c : */
-// (usr, log, n_inp) |--> (axp = (min, max), n_out) :
-void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
+// (usr = (min,max), n_inp, log) |--> (axp = (min, max), n_out) :
+void GAxisPars(double *min, double *max, int *n, Rboolean log,
+	       int axis) // <- needed for warning() only
 {
 #define EPS_FAC_2 100
     Rboolean swap = *min > *max;
-    double t_, min_o, max_o;
+    /* Feature: in R, something like  xlim = c(100,0)  just works */
+#define MAYBE_SWAP(_U,_V) do		\
+    if(swap) {				\
+	double t = _U; _U = _V; _V = t;	\
+    } while(0)
 
-    if(swap) { /* Feature: in R, something like  xlim = c(100,0)  just works */
-	t_ = *min; *min = *max; *max = t_;
-    }
+    MAYBE_SWAP(*min, *max);
     /* save only for the extreme case (EPS_FAC_2): */
-    min_o = *min; max_o = *max;
+    double min_o = *min, max_o = *max;
 
     if(log) {
 	/* Avoid infinities */
@@ -61,18 +64,20 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
     }
     else GEPretty(min, max, n);
 
-    double tmp2 = EPS_FAC_2 * DBL_EPSILON;/* << prevent overflow in product below */
-    if(fabs(*max - *min) < (t_ = fmax2(fabs(*max), fabs(*min)))* tmp2) {
+    const double eps_2 = EPS_FAC_2 * DBL_EPSILON; /* << prevent overflow in product below */
+    double t_ = fmax2(fabs(*max), fabs(*min));
+    if(fabs(*max - *min) < t_ * eps_2) {
 	/* Treat this case somewhat similar to the (min ~= max) case above */
 	/* Too much accuracy here just shows machine differences */
-	warning(_("relative range of values (%4.0f * EPS) is small (axis %d)")
+	if(axis) // no warning with (axis = 0)
+	warning(_("axis(%d, *): range of values (%5.2g) is small wrt |M| = %7.2g --> not pretty()")
 		/*"to compute accurately"*/,
-		fabs(*max - *min) / (t_*DBL_EPSILON), axis);
+		axis, fabs(*max - *min), t_);
 
 	/* No pretty()ing anymore */
 	*min = min_o;
 	*max = max_o;
-	double eps = .005 * fabs(*max - *min);/* .005: not to go to DBL_MIN/MAX */
+	double eps = .005 * (*max - *min);/* .005: not to go to DBL_MIN/MAX */
 	*min += eps;
 	*max -= eps;
 	if(log) {
@@ -81,9 +86,7 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 	}
 	*n = 1;
     }
-    if(swap) {
-	t_ = *min; *min = *max; *max = t_;
-    }
+    MAYBE_SWAP(*min, *max);
 }
 
 #define LPR_SMALL  2
@@ -115,7 +118,7 @@ static void GLPretty(double *ul, double *uh, int *n)
 	/* round to nice "1e<N>" */
 	*ul = Rexp10((double)p1);
 	*uh = Rexp10((double)p2);
-	// have p2-p1 >= 1 
+	// have p2-p1 >= 1
 	if (p2 - p1 <= LPR_SMALL)
 	    *n = 3; /* Small range :	Use 1,2,5,10 times 10^k tickmarks */
 	else if (p2 - p1 <= LPR_MEDIUM)
