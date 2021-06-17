@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
+R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -414,4 +414,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.324   0.045   0.357 
+  0.304   0.056   0.341 

@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
+R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -122,7 +122,7 @@ List of 2
 +     "\n\t starting with 'is.' :\t  ",
 +     sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 
-Number of all base objects:	1367
+Number of all base objects:	1369
 Number of functions from these:	1324
 	 starting with 'is.' :	  50
 
@@ -1527,5 +1527,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.807 0.059 1.874 0 0 
+Time elapsed:  1.761 0.058 1.828 0 0 
 > 

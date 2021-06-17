@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-06-11 r80488) -- "Camp Pontanezen"
+R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2149,7 +2149,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x516fd08>
+<bytecode: 0x38aa230>
 <environment: namespace:graphics>
 > 
 > 
@@ -3019,7 +3019,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x452e768>
+<bytecode: 0x2c68040>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3100,7 +3100,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.274 0.082 4.379 0 0 
+Time elapsed:  3.993 0.061 4.072 0 0 
 > grDevices::dev.off()
 null device 
           1 

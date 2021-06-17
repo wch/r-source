@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
+R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -321,6 +321,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.505 0.04 1.553 0 0 
+Time elapsed:  1.459 0.03 1.493 0 0 
 > 
 > 

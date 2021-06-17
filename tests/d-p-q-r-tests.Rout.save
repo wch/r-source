@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-05-21 r80348) -- "Camp Pontanezen"
+R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -108,13 +108,13 @@ Type 'q()' to quit R.
 + }
 m= 10 ; n= 7 :
 Time    user  system elapsed 
-Time   0.004   0.000   0.004 
+Time   0.004   0.000   0.005 
 m= 15 ; n= 0 :
 Time    user  system elapsed 
-Time   0.001   0.000   0.002 
+Time   0.002   0.000   0.001 
 m= 999 ; n= 0 :
 Time    user  system elapsed 
-Time   0.111   0.000   0.112 
+Time   0.106   0.000   0.107 
 > 
 > ##__ 4. Negative Binomial __
 > 
@@ -889,5 +889,5 @@ Time   0.111   0.000   0.112
 > ## ==        ~~~                    ~~~~  ~~~               ~~~~~~~~~~~~~~~
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.114 0.02 1.14 0 0 
+Time elapsed:  1.031 0.023 1.06 0 0 
 > 
