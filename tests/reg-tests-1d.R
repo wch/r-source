@@ -5126,6 +5126,16 @@ for(f in c(10^c(-308:-300, 300:308), rlnorm(2^9, 3, 4)))
 ## failed for 1e301 (and larger) in R <= 4.1.0
 
 
+## check that some primitives don't increment reference counts
+x <- c(1); old_xr <- .Internal(refcnt(x))
+sum(x)
+range(x)
+round(x)
+stopifnot(.Internal(refcnt(x)) == old_xr)
+x <- logical(1); old_xr <- .Internal(refcnt(x))
+all(x)
+stopifnot(.Internal(refcnt(x)) == old_xr)
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

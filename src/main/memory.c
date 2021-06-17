@@ -4182,6 +4182,23 @@ void attribute_hidden R_args_enable_refcnt(SEXP args)
 #endif
 }
 
+void attribute_hidden R_try_clear_args_refcnt(SEXP args)
+{
+#ifdef SWITCH_TO_REFCNT
+    /* If args excapes properly its reference count will have been
+       incremented. If it has no references, then it can be reverted
+       to NR and the reference counts on its CAR and CDR can be
+       decremented. */
+    while (args != R_NilValue && NO_REFERENCES(args)) {
+	SEXP next = CDR(args);
+	DISABLE_REFCNT(args);
+	DECREMENT_REFCNT(CAR(args));
+	DECREMENT_REFCNT(CDR(args));
+	args = next;
+    }
+#endif
+}
+
 /* List Accessors */
 SEXP (TAG)(SEXP e) { return CHK(TAG(CHKCONS(e))); }
 SEXP (CAR0)(SEXP e) { return CHK(CAR0(CHKCONS(e))); }

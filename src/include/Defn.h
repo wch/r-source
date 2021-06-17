@@ -1333,6 +1333,7 @@ void R_SetPPSize(R_size_t);
 void R_expand_binding_value(SEXP);
 
 void R_args_enable_refcnt(SEXP);
+void R_try_clear_args_refcnt(SEXP);
 
 /* ../main/devices.c, used in memory.c, gnuwin32/extra.c */
 #define R_MaxDevices 64

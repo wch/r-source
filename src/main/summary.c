@@ -542,9 +542,13 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
 	UNPROTECT(2); /* call2, args */
+	SETCDR(call2, R_NilValue); /* clear refcnt on args */
+	R_try_clear_args_refcnt(args);
 	return(ans);
     }
     UNPROTECT(1); /* call2 */
+    SETCDR(call2, R_NilValue); /* clear refcnt on args */
+    R_try_clear_args_refcnt(args);
 
 #ifdef DEBUG_Summary
     REprintf("C do_summary(op%s, *): did NOT dispatch\n", PRIMNAME(op));
@@ -977,16 +981,23 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
     SETCDR(call2, args);
 
     if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
+	SETCDR(call2, R_NilValue); /* clear refcnt on args */
+	R_try_clear_args_refcnt(args);
 	UNPROTECT(2);
 	return(ans);
     }
     UNPROTECT(1);
+    SETCDR(call2, R_NilValue); /* clear refcnt on args */
+    R_try_clear_args_refcnt(args);
 
     PROTECT(op = findFun(install("range.default"), env));
     PROTECT(prargs = promiseArgs(args, R_GlobalEnv));
     for (a = args, b = prargs; a != R_NilValue; a = CDR(a), b = CDR(b))
 	SET_PRVALUE(CAR(b), CAR(a));
     ans = applyClosure(call, op, prargs, env, R_NilValue);
+#ifdef ADJUST_ENVIR_REFCNTS
+    unpromiseArgs(prargs);
+#endif
     UNPROTECT(3);
     return(ans);
 }
