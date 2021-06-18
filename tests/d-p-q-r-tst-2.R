@@ -695,10 +695,11 @@ qp. <- qnorm(lp, log.p=TRUE)
 ## Show the (mostly) small differences :
 all.equal( qs, qpU, tol=0)
 all.equal(-qs, qp., tol=0)
+all.equal(-qp.,qpU, tol=0) # typically TRUE (<==> exact equality)
 stopifnot(exprs = {
     all.equal( qs,  qpU, tol=1e-15)
     all.equal(-qs,  qp., tol=1e-15)
-    all.equal(-qp., qpU, tol=2e-16)# actually exact via code-identity
+    all.equal(-qp., qpU, tol=1e-15)# diff of 4.71e-16 in 4.1.0 w/icc (Eric Weese)
 })
 ## both failed very badly in  R <= 4.0.x
 
