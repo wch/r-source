@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020	The R Core Team.
+ *  Copyright (C) 1998--2021	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -460,10 +460,12 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 
     signal(SIGPROF, doprof);
 
-    itv.it_interval.tv_sec = 0;
-    itv.it_interval.tv_usec = interval;
-    itv.it_value.tv_sec = 0;
-    itv.it_value.tv_usec = interval;
+    itv.it_interval.tv_sec = interval / 1000000;
+    itv.it_interval.tv_usec =
+	(suseconds_t)(interval - itv.it_interval.tv_sec * 10000000);
+    itv.it_value.tv_sec = interval / 1000000;
+    itv.it_value.tv_usec =
+	(suseconds_t)(interval - itv.it_value.tv_sec * 1000000);
     if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
 	R_Suicide("setting profile timer failed");
 #endif /* not Win32 */
@@ -753,7 +755,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    else tmp = PRVALUE(tmp);
 	    ENSURE_NAMEDMAX(tmp);
 	}
-	else ENSURE_NAMED(tmp); /* should not really be needed - LT */
+	else ENSURE_NAMED(tmp); /* needed for .Last.value - LT */
 	break;
     case PROMSXP:
 	if (PRVALUE(e) == R_UnboundValue)
@@ -5181,7 +5183,7 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 	        ENSURE_NAMEDMAX(pv);
 		value = pv;
 	}
-    } else ENSURE_NAMED(value); /* should not really be needed - LT */
+    } else ENSURE_NAMED(value); /* needed for .Last.value - LT */
     return value;
 }
 
@@ -8292,10 +8294,12 @@ SEXP do_bcprofstart(SEXP call, SEXP op, SEXP args, SEXP env)
 
     signal(SIGPROF, dobcprof);
 
-    itv.it_interval.tv_sec = 0;
-    itv.it_interval.tv_usec = interval;
-    itv.it_value.tv_sec = 0;
-    itv.it_value.tv_usec = interval;
+    itv.it_interval.tv_sec = interval / 1000000;
+    itv.it_interval.tv_usec =
+	(suseconds_t) (interval - itv.it_interval.tv_sec * 1000000);
+    itv.it_value.tv_sec = interval / 1000000;
+    itv.it_value.tv_usec =
+	(suseconds_t) (interval - itv.it_value.tv_sec * 1000000);
     if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
 	error(_("setting profile timer failed"));
 
