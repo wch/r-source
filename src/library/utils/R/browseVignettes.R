@@ -78,9 +78,9 @@ print.browseVignettes <- function(x, ...)
 <head>
 <title>R Vignettes</title>
 <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes' />
 <link rel='stylesheet' type='text/css' href='%s'>
-</head>
-<body>\n", css_file))
+</head><body><div class='container'>\n", css_file))
     cat(sprintf("<h2>Vignettes found by <code><q>%s</q></code></h2>",
                 deparse1(attr(x, "call"))))
     cat("<div class=\"vignettes\">")
@@ -94,7 +94,7 @@ print.browseVignettes <- function(x, ...)
     }
     cat("</div>")
     cat(sprintf("<hr/><p>%s</p>", attr(x, "footer")))
-    cat("</body></html>\n")
+    cat("</div></body></html>\n")
     sink()
     ## the first two don't work on Windows with browser=NULL.
     ## browseURL(URLencode(sprintf("file://%s", file)))

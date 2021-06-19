@@ -42,7 +42,7 @@ httpd <- function(path, query, ...)
                      paste0("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>"),
                      "</dl>")
         }
-        out <- c(out, "<hr/>\n</body></html>")
+        out <- c(out, "<hr/>\n</div></body></html>")
         list(payload = paste(out, collapse="\n"))
     }
 
@@ -56,7 +56,7 @@ httpd <- function(path, query, ...)
          	out <- c(out, paste0('<h2>Manuals in package', sQuote(pkg),'</h2>'),
          		 makeVignetteTable(cbind(Package=pkg, vinfo[,c("File", "Title", "PDF", "R"), drop = FALSE])))
      	}
-        out <- c(out, "<hr/>\n</body></html>")
+        out <- c(out, "<hr/>\n</div></body></html>")
         list(payload = paste(out, collapse="\n"))
     }
 
@@ -157,7 +157,7 @@ httpd <- function(path, query, ...)
                 }
 	    }
         }
-        out <- c(out, "<hr/>\n</body></html>")
+        out <- c(out, "<hr/>\n</div></body></html>")
         list(payload = paste(out, collapse="\n"))
     }
 
@@ -181,7 +181,7 @@ httpd <- function(path, query, ...)
                        concepts$Packages,
                        "</td></tr>"),
                 "</table>",
-                "</body>",
+                "</div></body>",
                 "</html>"))
         list(payload = paste(out, collapse = "\n"))
     }
@@ -207,7 +207,7 @@ httpd <- function(path, query, ...)
                        keywords$Packages,
                        "</td></tr>"),
                 "</table>",
-                "</body>",
+                "</div></body>",
                 "</html>"))
         list(payload = paste(out, collapse = "\n"))
     }
@@ -262,7 +262,7 @@ httpd <- function(path, query, ...)
 
     error_page <- function(msg)
         list(payload =
-             paste0(HTMLheader("httpd error"), msg, "\n</body></html>"))
+             paste0(HTMLheader("httpd error"), msg, "\n</div></body></html>"))
 
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))

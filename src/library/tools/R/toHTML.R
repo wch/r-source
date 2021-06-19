@@ -1,7 +1,7 @@
 toHTML <- function(x, ...) UseMethod("toHTML")
 
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 
 HTMLheader <-
 function(title="R", logo=TRUE,
@@ -17,8 +17,9 @@ function(title="R", logo=TRUE,
 	paste0('<head><title>', headerTitle, '</title>'),
 	paste0('<meta http-equiv="Content-Type" content="text/html; charset=',
 	       mime_canonical_encoding(outputEncoding), '" />'),
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />',
 	paste0('<link rel="stylesheet" type="text/css" href="', css, '" />'),
-	'</head><body>',
+	'</head><body><div class="container">',
 	paste('<h1>', title))
     if (logo)
     	result <- c(result,
@@ -80,7 +81,7 @@ function(x, ...)
     	result <- c(result, '<p>',
     	                    htmlify(x$footer),
     	                    '</p>')
-    result <- c(result, '</body></html>')
+    result <- c(result, '</div></body></html>')
     result
 }
 
@@ -144,7 +145,7 @@ function(x, ...)
                         }
                     })
              ),
-      "</body></html>")
+      "</div></body></html>")
 }
 
 toHTML.news_db_from_md <-
@@ -173,7 +174,7 @@ function(x, ...)
 
     c(HTMLheader(...),
       unlist(Map(c, vheaders, lapply(vchunks, do_vchunk))),
-      "</body></html>")
+      "</div></body></html>")
 }
 
 # To support static linking, URLs should be relative.
@@ -359,7 +360,7 @@ function(x, header = TRUE, ...)
     }
     if (identical(header, "R")) {
         header <- HTMLheader(...)
-	footer <- c("</body>", "</html>")
+	footer <- c("</div></body>", "</html>")
     } else if (isFALSE(header)) {
         header <- character(0L)
 	footer <- character(0L)
@@ -373,12 +374,13 @@ function(x, header = TRUE, ...)
                       sprintf("<title>%s citation information</title>",
                               package),
                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
+                  '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />',
                   "</head>")
         header <- c("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">",
                   "<html xmlns=\"http://www.w3.org/1999/xhtml\">",
                   header,
-		  "<body>")
-	footer <- c("</body>", "</html>")
+		  '<body><div class="container">')
+	footer <- c("</div></body>", "</html>")
     }
 
     c(header,
