@@ -5137,6 +5137,11 @@ all(x)
 stopifnot(.Internal(refcnt(x)) == old_xr)
 
 
+## Value stored in .Last.value needs to count at least one reference
+c(1)
+stopifnot(1 + .Last.value + .Last.value == 3)
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

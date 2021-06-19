@@ -263,6 +263,8 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	R_Busy(1);
 	PROTECT(value = eval(thisExpr, rho));
 	SET_SYMVALUE(R_LastvalueSymbol, value);
+	if (NO_REFERENCES(value))
+	    INCREMENT_REFCNT(value);
 	wasDisplayed = R_Visible;
 	if (R_Visible)
 	    PrintValueEnv(value, rho);
