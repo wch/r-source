@@ -461,9 +461,11 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
     signal(SIGPROF, doprof);
 
     itv.it_interval.tv_sec = interval / 1000000;
-    itv.it_interval.tv_usec = interval - itv.it_interval.tv_sec * 1000000;
+    itv.it_interval.tv_usec =
+	(suseconds_t)(interval - itv.it_interval.tv_sec * 10000000);
     itv.it_value.tv_sec = interval / 1000000;
-    itv.it_value.tv_usec = interval - itv.it_value.tv_sec * 1000000;
+    itv.it_value.tv_usec =
+	(suseconds_t)(interval - itv.it_value.tv_sec * 1000000);
     if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
 	R_Suicide("setting profile timer failed");
 #endif /* not Win32 */
@@ -8293,9 +8295,11 @@ SEXP do_bcprofstart(SEXP call, SEXP op, SEXP args, SEXP env)
     signal(SIGPROF, dobcprof);
 
     itv.it_interval.tv_sec = interval / 1000000;
-    itv.it_interval.tv_usec = interval - itv.it_interval.tv_sec * 1000000;
+    itv.it_interval.tv_usec =
+	(suseconds_t) (interval - itv.it_interval.tv_sec * 1000000);
     itv.it_value.tv_sec = interval / 1000000;
-    itv.it_value.tv_usec = interval - itv.it_value.tv_sec * 1000000;
+    itv.it_value.tv_usec =
+	(suseconds_t) (interval - itv.it_value.tv_sec * 1000000);
     if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
 	error(_("setting profile timer failed"));
 
