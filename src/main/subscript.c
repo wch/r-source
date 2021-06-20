@@ -216,15 +216,15 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 		if(R_FINITE(dblind)) indx = (R_xlen_t)(dblind - 1);
 	    } else if (dblind == 0 || len < 2) {
 		ECALL3(call,
-		       _((dblind < 0) ? "invalid negative subscript in %s"
-			 : "attempt to select less than one element in %s"),
+		       (dblind < 0) ? _("invalid negative subscript in %s")
+		       : _("attempt to select less than one element in %s"),
 		       "get1index <real>");
 	    } else if (len == 2 && dblind > -3) // dblind = -2 or -1 {why exception ?}
 		indx = (R_xlen_t)(2 + dblind);
 	    else {
 		ECALL3(call,
-		       _((dblind < 0) ? "invalid negative subscript in %s"
-			 : "attempt to select more than one element in %s"),
+		       (dblind < 0) ? _("invalid negative subscript in %s")
+		       : _("attempt to select more than one element in %s"),
 		       "get1index <real>");
 	    }
 	}
