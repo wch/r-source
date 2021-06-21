@@ -103,6 +103,10 @@
       \code{options()} is again invalid.  Its behaviour was
       platform-dependent, and it is unclear what \dQuote{zero
 	significant digits} should mean (\PR{18098}).
+
+      \item Messages from C code in the \file{cairo} section of package
+      \pkg{grDevices} are now also up for translation, thanks to Michael
+      Chirico's \PR{18123}.
     }
   }
 }
