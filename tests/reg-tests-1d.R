@@ -5142,6 +5142,10 @@ c(1)
 stopifnot(1 + .Last.value + .Last.value == 3)
 
 
+## c79505 made match() possibly convert NA_character_ to "NA" (PR#18126).
+stopifnot(all(is.na(match(c("NA", "\u{e0}"), NA))))
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
