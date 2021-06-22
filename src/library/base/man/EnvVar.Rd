@@ -145,6 +145,8 @@
     \item{\env{TZ}:}{Optional.  The current time zone.  See
       \code{\link{Sys.timezone}} for the system-specific
       formats.  Consulted as needed.}
+    \item{\env{TZDIR}:}{Optional.  The top-level directory of the
+      time-zone database.  See \code{\link{Sys.timezone}}.}
     \item{\env{no_proxy}, \env{http_proxy}, \env{ftp_proxy}:}{
       (and more).  Optional.  Settings for \code{\link{download.file}}:
       see its help for further details.}
@@ -180,8 +182,6 @@
       \env{R_GSCMD} is not set.}
     \item{\env{R_USER}:}{The user's \sQuote{home} directory.  Set by
       \R.  (\env{HOME} will be set to the same value if not already set.)}
-    \item{\env{TZDIR}:}{Optional.  The top-level directory of the
-      time-zone database.  See \code{\link{Sys.timezone}}.}
   }
 }
 
