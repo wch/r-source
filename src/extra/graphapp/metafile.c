@@ -52,7 +52,7 @@ static void private_delmetafile(metafile obj)
 	CloseClipboard())
 	return;
     else {
-	R_ShowMessage(_("Unable to save metafile to the clipboard"));
+	R_ShowMessage(G_("Unable to save metafile to the clipboard"));
 	DeleteEnhMetaFile(hm);
 	return;
     }
@@ -105,12 +105,12 @@ metafile newmetafile(const char *name, double width, double height)
     hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr,
 			    "GraphApp\0\0");
     if ( !hDC ) {
-	R_ShowMessage(_("Unable to create metafile"));
+	R_ShowMessage(G_("Unable to create metafile"));
 	return NULL;
     }
     obj = new_object(MetafileObject, (HANDLE) hDC, get_metafile_base());
     if ( !obj ) {
-	R_ShowMessage(_("Insufficient memory to create metafile"));
+	R_ShowMessage(G_("Insufficient memory to create metafile"));
 	DeleteEnhMetaFile(CloseEnhMetaFile(hDC));
 	return NULL;
     }
