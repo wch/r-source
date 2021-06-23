@@ -20,7 +20,7 @@ parSapply(cl, 1:20, get("+"), 3)
 ## PR14898
 parSapply(cl, 1, identity)
 
-if(require(boot)) {
+if(require(boot, quietly = TRUE)) {
     set.seed(11)
     ## A bootstrapping example, which can be done in many ways:
     clusterEvalQ(cl, {

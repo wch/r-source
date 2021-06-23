@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C)  2001-2020   The R Core Team.
+ *  Copyright (C)  2001-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,18 +29,8 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Rconnections.h>
-#include <R_ext/R-ftp-http.h>
 #include "sock.h"
 #include <errno.h>
-
-#ifdef Win32
-# ifndef EINTR
-#  define EINTR                   WSAEINTR
-# endif
-# ifndef EWOULDBLOCK
-#  define EWOULDBLOCK             WSAEWOULDBLOCK
-# endif
-#endif
 
 static void listencleanup(void *data)
 {
@@ -105,6 +95,9 @@ static Rboolean sock_open(Rconnection con)
     }
     this->fd = sock;
 
+    if (this->options & RSC_SET_TCP_NODELAY)
+	R_set_nodelay(sock);
+
     mlen = (int) strlen(con->mode);
     con->isopen = TRUE;
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
@@ -142,10 +135,11 @@ static ssize_t sock_read_helper(Rconnection con, void *ptr, size_t size)
 	    do
 		res = R_SockRead(this->fd, this->inbuf, 4096, 
 				 con->blocking, this->timeout);
-	    while (-res == EINTR);
 #ifdef Win32
-	    if (! con->blocking && -res == EAGAIN) {
+	    while (-res == WSAEINTR);
+	    if (! con->blocking && -res == WSAEWOULDBLOCK) {
 #else
+	    while (-res == EINTR);
 	    if (! con->blocking && (-res == EAGAIN || -res == EWOULDBLOCK)) {
 #endif
 		con->incomplete = TRUE;
@@ -199,7 +193,7 @@ static size_t sock_write(const void *ptr, size_t size, size_t nitems,
 }
 
 Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
-			 const char * const mode, int timeout)
+			 const char * const mode, int timeout, int options)
 {
     Rconnection new;
 
@@ -236,6 +230,7 @@ Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
     ((Rsockconn)new->private)-> server = server;
     ((Rsockconn)new->private)-> timeout = timeout;
     ((Rsockconn)new->private)-> serverfd = serverfd;
+    ((Rsockconn)new->private)-> options = options;
     return new;
 }
 

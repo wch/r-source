@@ -37,7 +37,7 @@ ACINCLUDE_DEPENDENCIES = \
 	m4/cairo.m4 \
 	m4/clibs.m4 \
 	m4/codeset.m4 \
-	m4/cxx_11.m4 \
+	m4/cxx.m4 \
 	m4/gettext.m4 m4/gettext-lib.m4 \
 	m4/libtool.m4 m4/ltoptions.m4 m4/ltversion.m4 m4/ltsugar.m4 m4/lt~obsolete.m4 \
 	m4/openmp.m4 \
@@ -76,8 +76,7 @@ FORCE:
 stamp-recommended: R docs
 	@(cd src/library/Recommended && $(MAKE))
 
-## One of the grid vignettes requires lattice
-vignettes: stamp-recommended
+vignettes: R
 	@(cd src/library && $(MAKE) $@)
 
 ## This needs packages built, hence 'R' dependence on 'javaconf'
@@ -108,7 +107,7 @@ svnonly:
 	@if test ! -f "$(srcdir)/doc/FAQ" || test -f non-tarball ; then \
 	  (cd doc/manual && $(MAKE) front-matter html-non-svn) ; \
 	  touch non-tarball ; \
-	  (cd $(srcdir); LC_ALL=C TZ=GMT $(GIT) svn info || $(ECHO) "Revision: -99") 2> /dev/null \
+	  (cd $(srcdir); LC_ALL=C TZ=GMT $(GIT) svn info || cat SVNINFO || $(ECHO) "Revision: -99") 2> /dev/null \
 	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
 	    | cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
 	  if test "`cat SVN-REVISION-tmp`" = "Revision: -99"; then \

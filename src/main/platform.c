@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020 The R Core Team
+ *  Copyright (C) 1998--2021 The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -348,16 +348,20 @@ const char attribute_hidden *R_nativeEncoding(void)
 /* retrieves information about the current locale and
    sets the corresponding variables (known_to_be_utf8,
    known_to_be_latin1, utf8locale, latin1locale and mbcslocale) */
+
+static char codeset[R_CODESET_MAX + 1];
 void attribute_hidden R_check_locale(void)
 {
     known_to_be_utf8 = utf8locale = FALSE;
     known_to_be_latin1 = latin1locale = FALSE;
     mbcslocale = FALSE;
     strcpy(native_enc, "ASCII");
+    strcpy(codeset, "");
 #ifdef HAVE_LANGINFO_CODESET
     /* not on Windows */
     {
 	char  *p = nl_langinfo(CODESET);
+	strcpy(codeset, p);  // copy just in case something else calls nl_langinfo.
 	/* more relaxed due to Darwin: CODESET is case-insensitive and
 	   latin1 is ISO8859-1 */
 	if (R_strieql(p, "UTF-8")) known_to_be_utf8 = utf8locale = TRUE;
@@ -365,9 +369,14 @@ void attribute_hidden R_check_locale(void)
 	if (R_strieql(p, "ISO8859-1")) known_to_be_latin1 = latin1locale = TRUE;
 # if __APPLE__
 	/* On Darwin 'regular' locales such as 'en_US' are UTF-8 (hence
-	   MB_CUR_MAX == 6), but CODESET is "" */
-	if (*p == 0 && MB_CUR_MAX == 6)
+	   MB_CUR_MAX == 6), but CODESET is "" 
+	   2021: that comment dated from 2008: MB_CUR_MAX is now 4 in 
+	   a UTF-8 locale, even on 10.13. 
+	*/
+	if (*p == 0 && (MB_CUR_MAX == 4 || MB_CUR_MAX == 6)) {
 	    known_to_be_utf8 = utf8locale = TRUE;
+	    strcpy(codeset, "UTF-8");
+	}
 # endif
 	if (utf8locale)
 	    strcpy(native_enc, "UTF-8");
@@ -380,6 +389,15 @@ void attribute_hidden R_check_locale(void)
     }
 #endif
     mbcslocale = MB_CUR_MAX > 1;
+    R_MB_CUR_MAX = MB_CUR_MAX;
+#ifdef __sun
+    /* Solaris 10 (at least) has MB_CUR_MAX == 3 in some, but ==4
+       in other UTF-8 locales. The former does not allow working
+       with non-BMP characters using mbrtowc(). Work-around by
+       allowing to use more. */
+    if (utf8locale && R_MB_CUR_MAX < 4)
+	R_MB_CUR_MAX = 4;
+#endif
 #ifdef Win32
     {
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;
@@ -2208,7 +2226,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = TRUE;
 
     SET_STRING_ELT(ansnames, i, mkChar("libxml"));
-    LOGICAL(ans)[i++] = TRUE;
+    LOGICAL(ans)[i++] = FALSE;
 
     SET_STRING_ELT(ansnames, i, mkChar("fifo"));
 #if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(_WIN32)
@@ -2906,7 +2924,7 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
     int len = 5;
 #else
-    int len = 3;
+    int len = 4;
 #endif
     SEXP ans, names;
     checkArity(op, args);
@@ -2918,6 +2936,10 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(ans, 0, ScalarLogical(mbcslocale));
     SET_VECTOR_ELT(ans, 1, ScalarLogical(utf8locale));
     SET_VECTOR_ELT(ans, 2, ScalarLogical(latin1locale));
+#ifndef Win32
+    SET_STRING_ELT(names, 3, mkChar("codeset"));
+    SET_VECTOR_ELT(ans, 3, mkString(codeset));
+#endif
 #ifdef Win32
     SET_STRING_ELT(names, 3, mkChar("codepage"));
     SET_VECTOR_ELT(ans, 3, ScalarInteger(localeCP));

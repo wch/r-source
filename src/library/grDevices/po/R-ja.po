@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2015-03-27 14:17+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -16,6 +16,15 @@ msgstr ""
 
 msgid "invalid 'filename'"
 msgstr " 不正な 'filename' 引数です "
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
 
 msgid "'coef' must not be negative"
 msgstr " 'coef' は負にはなれません "
@@ -351,6 +360,15 @@ msgstr ""
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があります "
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
 
 msgid "invalid 'title'"
 msgstr " 不正な 'title' です "

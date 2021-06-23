@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima}
@@ -30,10 +30,10 @@ arima(x, order = c(0L, 0L, 0L),
 
   \item{seasonal}{A specification of the seasonal part of the ARIMA
     model, plus the period (which defaults to \code{frequency(x)}).
-    This should be a list with components \code{order} and
-    \code{period}, but a specification of just a numeric vector of
-    length 3 will be turned into a suitable list with the specification
-    as the \code{order}.}
+    This may be a list with components \code{order} and
+    \code{period}, or just a numeric vector of length 3 which
+    specifies the seasonal \code{order}.  In the latter case the
+    default period is used.}
 
   \item{xreg}{Optionally, a vector or matrix of external regressors,
     which must have the same number of rows as \code{x}.}
@@ -49,11 +49,29 @@ arima(x, order = c(0L, 0L, 0L),
     \code{transform.pars = FALSE} in some cases, see also \code{fixed}.}
 
   \item{fixed}{optional numeric vector of the same length as the total
-    number of parameters.  If supplied, only \code{NA} entries in
-    \code{fixed} will be varied.  \code{transform.pars = TRUE}
-    will be overridden (with a warning) if any AR parameters are fixed.
-    It may be wise to set \code{transform.pars = FALSE} when fixing
-    MA parameters, especially near non-invertibility.
+    number of coefficients to be estimated.  It should be of the form
+    \deqn{(\phi_1, \ldots, \phi_p, \theta_1, \ldots, \theta_q,
+      \Phi_1, \ldots, \Phi_P, \Theta_1, \ldots, \Theta_Q, \mu),
+    }{(phi_1, ..., phi_p, theta_1, ..., theta_p,Phi_1,..., Phi_P, Theta_1,...,Theta_Q, mu),}
+    where \eqn{\phi_i}{phi_i} are the AR coefficients,
+    \eqn{\theta_i}{theta_i} are the MA coefficients,
+    \eqn{\Phi_i}{Phi_i} are the seasonal AR coefficients,
+    \eqn{\Theta_i}{Theta_i} are the seasonal MA coefficients and
+    \eqn{\mu}{mu} is the intercept term.  Note that the \eqn{\mu}{mu}
+    entry is required if and only if \code{include.mean} is \code{TRUE}.
+    In particular it should not be present if the model is an ARIMA
+    model with differencing.
+
+    The entries of the \code{fixed} vector should consist of the
+    values at which the user wishes to \dQuote{fix} the corresponding
+    coefficient, or \code{NA} if that coefficient should \emph{not} be
+    fixed, but estimated.
+
+    The argument \code{transform.pars} will be set to \code{FALSE} if any
+    AR parameters are fixed.  A warning will be given if \code{transform.pars}
+    is set to (or left at its default) \code{TRUE}.  It may be wise to set
+    \code{transform.pars = FALSE} even when fixing MA parameters,
+    especially at values that cause the model to be nearly non-invertible.
   }
 
   \item{init}{optional numeric vector of initial parameter
@@ -87,14 +105,14 @@ arima(x, order = c(0L, 0L, 0L),
   Different definitions of ARMA models have different signs for the
   AR and/or MA coefficients.  The definition used here has
 
-  \deqn{X_t= a_1X_{t-1}+ \cdots+ a_pX_{t-p} + e_t + b_1e_{t-1}+\cdots+ b_qe_{t-q}
+  \deqn{X_t= a_1 X_{t-1}+\cdots+ a_p X_{t-p} + e_t + b_1 e_{t-1}+\cdots+b_q e_{t-q}
   }{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}
 
   and so the MA coefficients differ in sign from those of S-PLUS.
   Further, if \code{include.mean} is true (the default for an ARMA
   model), this formula applies to \eqn{X - m} rather than \eqn{X}.  For
   ARIMA models with differencing, the differenced series follows a
-  zero-mean ARMA model. If am \code{xreg} term is included, a linear
+  zero-mean ARMA model. If an \code{xreg} term is included, a linear
   regression (with a constant term if \code{include.mean} is true and
   there is no differencing) is fitted with an ARMA model for the error
   term.
@@ -261,6 +279,14 @@ BIC(fit1, fit3)
 AIC(fit1, arima(presidents, c(2,0,0)),
           arima(presidents, c(2,0,1)), # <- chosen (barely) by AIC
     fit3, arima(presidents, c(3,0,1)))
+
+## An example of using the  'fixed'  argument:
+## Note that the period of the seasonal component is taken to be
+## frequency(presidents), i.e. 4.
+(fitSfx <- arima(presidents, order=c(2,0,1), seasonal=c(1,0,0),
+                 fixed=c(NA, NA, 0.5, -0.1, 50), transform.pars=FALSE))
+## The partly-fixed & smaller model seems better (as we "knew too much"):
+AIC(fitSfx, arima(presidents, order=c(2,0,1), seasonal=c(1,0,0)))
 
 ## An example of ARIMA forecasting:
 predict(fit3, 3)

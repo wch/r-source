@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -469,7 +469,7 @@
     ## signature, with "missing" for missing args
     if(!is.environment(table)) {
         if(is(fdef, "standardGeneric"))
-          stop(gettextf("invalid or unset methods table in generic function %s", sQuote(fdef@generic)), damain = NA)
+          stop(gettextf("invalid or unset methods table in generic function %s", sQuote(fdef@generic)), domain = NA)
         else
           stop("trying to find a methods table in a non-generic function")
     }
@@ -1035,7 +1035,7 @@
         assign(".AllMTable", allTable, envir = fenv)
     }
     ## check for missing direct objects; usually a non-existent AllMTable?
-    if(any(is.na(match(direct, allObjects)))) {
+    if(anyNA(match(direct, allObjects))) {
         list2env(as.list(mtable, all.names=TRUE), allTable)
     }
     for (d in direct) {
@@ -1531,8 +1531,8 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
     else
       allSubs <- character()
     ## prepend the classes themselves, as appropriate
-    iAny <- match( "ANY", classes, 0)
-    if(iAny > 0) {
+    iAny <- match( "ANY", classes, 0L)
+    if(iAny > 0L) {
       classes[[iAny]] <- ".Other" # non-virtual placeholder for ANY
       classDefs[[iAny]] <- getClassDef(".Other")
     }
@@ -1566,7 +1566,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       return(new("MethodSelectionReport", generic = fname))
     ## possible selection of which args to include with inheritance
     ok <- if(fname %in% c("coerce", "coerce<-"))
-	match(colnames(sigs), "from", 0) > 0 else rep.int(TRUE, ncol(sigs))
+	match(colnames(sigs), "from", 0L) > 0L else rep.int(TRUE, ncol(sigs))
     for(j in seq_len(ncol(sigs))) {
       classesj <- unique(sigs[,j])
       .undefClasses <- character()
@@ -1617,7 +1617,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       ambig_target <<- c(ambig_target, attr(cond, "target"))
       ambig_candidates <<- c(ambig_candidates, list(attr(cond, "candidates")))
       ambig_selected <<- c(ambig_selected, attr(cond, "selected"))
-      ambig_note <<- c(ambig_note, attr(cond, "note"))
+      ambig_note <<- c(ambig_note, attr(cond, "notes"))
     }
     ambigOpt <- options(ambiguousMethodSelection = warninghandler)
     on.exit(options(ambigOpt))
@@ -1649,8 +1649,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
   def <- getClass(what)
   if(excludeVirtual && def@virtual)
     return("")
-  matches <- match(names(def@contains), matchto, 0)
-  matches <- matches[matches>0]
+  matches <- match(names(def@contains), matchto, 0L)
+  matches <- matches[matches > 0L]
   paste(matches, collapse=".")
 }
-

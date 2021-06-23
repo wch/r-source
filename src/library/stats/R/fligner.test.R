@@ -55,8 +55,6 @@ function(x, g, ...)
 
     ## Careful. This assumes that g is a factor:
     x <- x - tapply(x,g,median)[g]
-    if (all(x == 0))
-        stop("data are essentially constant")
 
     a <- qnorm((1 + rank(abs(x)) / (n + 1)) / 2)
     a <- a - mean(a)

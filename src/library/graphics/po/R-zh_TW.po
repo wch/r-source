@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -362,6 +362,17 @@ msgstr "不能處理多個 'x' 座標"
 
 msgid "must have a response variable"
 msgstr "必須有回應變數"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "boxplot 寬度無效"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "boxplot 寬度無效"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' 不能用在非資料框上"

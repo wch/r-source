@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,17 +19,58 @@
 #### R based engine for  R CMD Rdconv|Rd2pdf
 ####
 
-##' @param args
-
-##' @return ...
-
 ## base packages do not have versions and this is called on
 ## DESCRIPTION.in
 ## encodings are tricky: this may be done in a foreign encoding
 ## (e.g., Latin-1 in UTF-8)
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
 {
-    desc <- read.dcf(descfile)[1, ]
+    ## FIXME: enc2utf8
+    ## mygsub <- function(...) {
+    ##     .gsub_with_transformed_matches(..., useBytes = TRUE)
+    ## }
+    mygsub <- .gsub_with_transformed_matches
+    texify <- function(x, one = TRUE, two = FALSE) {
+        ## Handle LaTeX special characters.
+        ## one: handle # $ % & _ ^ ~
+        ##      backslash escape the first five
+        ##      replace ^ by \textasciicircum{}
+        ##      replace ~ by \textasciitilde{}
+        ## two: handle { } \
+        ##      backslash escape the first two
+        ##      replace \ by \textbackslash{}
+        if(two)
+            x <- fsub("\\", "\\textbackslash", x)
+        if(one) {
+            x <- psub("([#$%&_])", "\\\\\\1", x)
+            x <- fsub("^", "\\textasciicircum", x)
+            x <- fsub("~", "\\textasciitilde", x)
+        }
+        if(two) {
+            x <- psub("([{}])", "\\\\\\1", x)
+            x <- fsub("\\textbackslash", "\\textbackslash{}", x)
+        }
+        if(one) {
+            x <- fsub("\\textasciicircum", "\\textasciicircum{}", x)
+            x <- fsub("\\textasciitilde", "\\textasciitilde{}", x)
+        }
+        x
+    }
+    mytrim <- function(x) {
+        y <- unlist(strsplit(x, "\n", fixed = TRUE))
+        lines2trim <- setdiff(which(nzchar(y)), 1L)
+        if(!length(lines2trim))
+            x
+        else
+            paste(replace(y, lines2trim,
+                          .trim_common_leading_whitespace(y[lines2trim])),
+                  collapse = "\n")
+    }
+
+    ## <FIXME>
+    ##   desc <- read.dcf(descfile)[1L, ]
+    ## FIXME: enc2utf8
+    desc <- enc2utf8(.read_description(descfile))
     ## Using
     ##   desc <- .read_description(descfile)
     ## would preserve leading white space in Description and Author ...
@@ -37,18 +78,54 @@
         out <- file(outfile, "a")
         on.exit(close(out))
     } else out <- outfile
-    cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     fields <- names(desc)
     fields <- fields %w/o% c("Package", "Packaged", "Built")
-    if ("Encoding" %in% fields)
-        cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
-            "}\n", sep = "", file = out)
+    enc <- desc["Encoding"]
+    if(!is.na(enc)) {
+        ## FIXME: enc2utf8
+        ## cat("\\inputencoding{", latex_canonical_encoding(enc),
+        ##     "}\n", sep = "", file = out)
+        cat("\\inputencoding{utf8}\n", file = out)
+    }
+    ## Also try adding PDF title and author metadata.
+    tit <- desc["Title"]
+    tit <- paste0(desc["Package"], ": ",
+                  texify(gsub("[[:space:]]+", " ", tit), two = TRUE))
+    tit <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+                  "{\\hypersetup{pdftitle = {", tit, "}}}{}")
+    ## FIXME: enc2utf8
+    ## if(!is.na(enc))
+    ##     tit <- iconv(tit, to = enc)
+    writeLines(tit, con = out, useBytes = TRUE)
+    ## Only try author from Authors@R.
+    if(!is.na(aar <- desc["Authors@R"])) {
+        aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
+                        error = identity)
+        if(!inherits(aar, "error")) {
+            aar <- Filter(utils:::.person_has_author_role, aar)
+            aut <- format(aar, include = c("given", "family"))
+            aut <- paste(aut[nzchar(aut)], collapse = "; ")
+            aut <- texify(gsub("[[:space:]]+", " ", aut), two = TRUE)
+            if(nzchar(aut)) {
+                aut <- paste0("\\ifthenelse{\\boolean{Rd@use@hyper}}",
+                              "{\\hypersetup{pdfauthor = {", aut, "}}}{}")
+                ## FIXME: enc2utf8
+                ## if(!is.na(enc))
+                ##     aut <- iconv(aut, to = enc)
+                writeLines(aut, con = out, useBytes = TRUE)
+            }
+        }
+    }
+    ## And now the actual content.
+    cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     for (f in fields) {
         ## Drop 'Authors@R' for now: this is formatted badly by \AsIs,
         ## and ideally was used for auto-generating the Author and
         ## Maintainer fields anyways ...
         if(f == "Authors@R") next
         text <- desc[f]
+        if(f %in% c("Author", "Description"))
+            text <- mytrim(text)
         ## munge 'text' appropriately (\\, {, }, "...")
         ## not sure why just these: copied from Perl Rd2dvi, then added to.
         ## KH: the LaTeX special characters are
@@ -56,25 +133,41 @@
         ## \Rd@AsIs@dospecials in Rd.sty handles the first seven, so
         ## braces and backslashes need explicit handling.
         text <- gsub('"([^"]*)"', "\\`\\`\\1''", text, useBytes = TRUE)
-        text <- fsub("\\", "\\textbackslash{}", text)
-        text <- gsub("([{}$#_])", "\\\\\\1", text, useBytes = TRUE)
+        text <- texify(text, one = FALSE, two = TRUE)
         text <- fsub("@VERSION@", version, text)
-        ## text can have paras, and digest/DESCRIPTION does.
-        ## \AsIs is per-para.
-        text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
-        Encoding(text) <- "unknown"
+        ## FIXME: enc2utf8
+        ## Encoding(text) <- "unknown"
         if(f %in% c("Author", "Maintainer", "Contact"))
-            text <- gsub("<([^@ ]+)@([^> ]+)>",
-                         "}\\\\email{\\1@\\2}\\\\AsIs{",
-                         text, useBytes = TRUE)
-        if(f %in% c("URL", "BugReports", "Contact"))
+            text <- mygsub("<([^@ ]+)@([^> ]+)>",
+                           "}\\\\email{%s@%s}\\\\AsIs{",
+                           text,
+                           list(texify, texify),
+                           c(1L, 2L))
+        if(f %in% c("URL", "BugReports", "Additional_repositories"))
             text <- gsub("(http://|ftp://|https://)([^[:space:],]+)",
                          "}\\\\url{\\1\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
+        if(f %in% c("Author",       # possibly with ORCID URLs inside <>
+                    "Description")) {
+            text <- gsub("<(http://|ftp://|https://)([^[:space:],>]+)>",
+                         "<}\\\\url{\\1\\2}\\\\AsIs{>",
+                         text, useBytes = TRUE)
+        }
+        if(f == "Description") {   # DOI and arXiv identifiers inside <>
+            text <- mygsub("<(DOI:|doi:)([[:space:]]*)([^[:space:]]+)>",
+                           "<}\\\\Rhref{https://doi.org/%s}{\\1%s}\\\\AsIs{>",
+                           text,
+                           list(identity, texify),
+                           c(3L, 3L))
+            ## Fancy escaping should not be needed for arXiv ids.
+            text <- gsub("<(arXiv:|arxiv:)([[:alnum:]/.-]+)([[:space:]]*\\[[^]]+\\])?>",
+                         "<}\\\\Rhref{https://arxiv.org/abs/\\2}{\\1\\2}\\\\AsIs{\\3>",
+                         text, useBytes = TRUE)
+        }
         text <- paste0("\\AsIs{", text, "}")
-        ## Not entirely safe: in theory, tags could contain \ ~ ^.
-        cat("\\item[", gsub("([#$%&_{}])", "\\\\\\1", f),
-            "]", paste(text, collapse = "\n\n"),  "\n", sep = "", file=out)
+        writeLines(paste0("\\item[", texify(f, TRUE, TRUE), "]",
+                          text),
+                   con = out, useBytes = TRUE)
     }
     cat("\\end{description}\n", file = out)
 }
@@ -85,12 +178,13 @@
              append = FALSE, extraDirs = NULL, internals = FALSE,
              silent = FALSE, pkglist = NULL)
 {
-    if (dir.exists(files))
+    if (dir.exists(files)) {
+        ## FIXME: outputEncoding
         .pkg2tex(files, outfile, encoding = encoding, append = append,
                  asChapter = FALSE, extraDirs = extraDirs,
                  internals = internals, silent = silent,
                  pkglist = pkglist)
-    else {
+    } else {
         files <- strsplit(files, "[[:space:]]+")[[1L]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
@@ -563,7 +657,7 @@ function(pkgdir, outfile, title, batch = FALSE,
         "\\Rdcontents{\\R{} topics documented:}"
     } else ""
 
-    latexEncodings <- character()
+    latexEncodings <- if(description) "utf8" else character()
     hasFigures <- FALSE
     ## if this looks like a package with no man pages, skip body
     if (file.exists(file.path(pkgdir, "DESCRIPTION")) &&
@@ -572,15 +666,13 @@ function(pkgdir, outfile, title, batch = FALSE,
           dir.exists(file.path(pkgdir, "latex")))) only_meta <- TRUE
     if (!only_meta) {
         if (nzchar(toc)) writeLines(toc, out)
+        ## FIXME: outputEncoding
         res <- .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                          extraDirs = OSdir, internals = internals,
                          silent = batch, pkglist = pkglist)
         if(length(res)) {
-            latexEncodings <- res$latexEncodings
+            latexEncodings <- c(latexEncodings, res$latexEncodings)
             hasFigures <- res$hasFigures
-        } else {
-            latexEncodings <- character()
-            hasFigures <- FALSE
         }
     }
 
@@ -637,23 +729,18 @@ function(pkgdir, outfile, title, batch = FALSE,
     ## 'success'), and 1 otherwise, so that the return value can be used
     ## for shell 'if' tests.
 
-    ## <NOTE>
-    ## For now only used for the R sources (/doc/manual/Makefile.in)
-    ## hence no need to also look for Rd files with '.rd' extension.
-    ## </NOTE>
-
     if (!file.exists(file)) return(0L)
     age <- file.mtime(file)
 
     if (any(file.mtime(c(Sys.glob(file.path(dir, "man", "*.Rd")),
-                        Sys.glob(file.path(dir, "man", "*.rd"))))
-                       > age))
+                         Sys.glob(file.path(dir, "man", "*.rd"))))
+            > age))
         return(0L)
 
     if (dir.exists(file.path(dir, OS))) {
         if (any(file.mtime(c(Sys.glob(file.path(dir, "man", OS, "*.Rd")),
-                            Sys.glob(file.path(dir, "man", OS, "*.rd"))))
-                           > age))
+                             Sys.glob(file.path(dir, "man", OS, "*.rd"))))
+                > age))
             return(0L)
     }
 
@@ -712,7 +799,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             "      --no-index	do not index output",
             "      --no-description	do not typeset the description of a package",
             "      --internals	typeset 'internal' documentation (usually skipped)",
-            "      --build_dir=DIR	use DIR as the working directory",
+            "      --build-dir=DIR	use DIR as the working directory",
             "      --RdMacros=pkglist",
             "             		packages from which to get Rd macros",
             "",
@@ -742,6 +829,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     out_ext <- "pdf"
     output <- ""
     enc <- "unknown"
+    ## FIXME: outputEncoding
     outenc <- "latin1"
     index <- TRUE
     description <- TRUE

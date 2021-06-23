@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tools 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -290,9 +291,6 @@ msgid "Variables overriding user/site settings:"
 msgstr ""
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "Missing link or links in documentation object '%s':"
@@ -718,6 +716,9 @@ msgstr ""
 msgid "inst/doc"
 msgstr ""
 
+msgid ","
+msgstr ""
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr ""
 
@@ -758,6 +759,9 @@ msgid "package directory %s does not exist"
 msgstr ""
 
 msgid "no packages to check"
+msgstr ""
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr ""
 
 msgid "downloading reverse dependencies ..."
@@ -1228,6 +1232,11 @@ msgstr[1]    ""
 
 msgid        "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
 msgid_plural "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
 msgstr[0]    ""
 msgstr[1]    ""
 

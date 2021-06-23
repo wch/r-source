@@ -17,7 +17,7 @@
 quantile(x, \dots)
 
 \method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, type = 7, \dots)
+         names = TRUE, type = 7, digits = 7, \dots)
 }
 \arguments{
   \item{x}{numeric vector whose sample quantiles are wanted, or an
@@ -33,6 +33,9 @@ quantile(x, \dots)
     attribute.  Set to \code{FALSE} for speedup with many \code{probs}.}
   \item{type}{an integer between 1 and 9 selecting one of the
     nine quantile algorithms detailed below to be used.}
+  \item{digits}{used only when \code{names} is true: the precision to use
+    when formatting the percentages.  In \R versions up to 4.0.x, this had
+    been set to \code{max(2, getOption("digits"))}, internally.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -174,7 +177,7 @@ quantile(x,  probs = c(0.1, 0.5, 1, 2, 5, 10, 50, NA)/100)
 
 ### Compare different types
 quantAll <- function(x, prob, ...)
-  t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...),
+  t(vapply(1:9, function(typ) quantile(x, probs = prob, type = typ, ...),
            quantile(x, prob, type=1, ...)))
 p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
 signif(quantAll(x, p), 4)
@@ -183,7 +186,7 @@ signif(quantAll(x, p), 4)
 stopifnot(t(quantAll(x, prob=0:1)) == range(x))
 
 ## for complex numbers:
-z <- complex(re=x, im = -10*x)
+z <- complex(real = x, imaginary = -10*x)
 signif(quantAll(z, p), 4)
 }
 \keyword{univar}

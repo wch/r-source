@@ -1,6 +1,6 @@
 % File src/library/base/man/validUTF8.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015-2020 R Core Team
+% Copyright 2015-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{validUTF8}
@@ -62,8 +62,8 @@ validEnc(x) # typically the last, x[10], is invalid
 
 ## Maybe advantageous to declare it "unknown":
 G <- x ; Encoding(G[!validEnc(G)]) <- "unknown"
-try( substr(x, 1,1) ) # gives 'invalid multibyte string' error
-try( substr(G, 1,1) ) # works
+try( substr(x, 1,1) ) # gives 'invalid multibyte string' error in a UTF-8 locale
+try( substr(G, 1,1) ) # works in a UTF-8 locale
 nchar(G) # fine, too
 ## but it is not "more valid" typically:
 all.equal(validEnc(x),

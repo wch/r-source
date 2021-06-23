@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-2011 Simon Urbanek
- *      Copyright 2011-2019 R Core Team.
+ *      Copyright 2011-2021 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -347,11 +347,15 @@ SEXP mc_prepare_cleanup()
                      wait until they all terminate, unregister signal handler
              FALSE - none of the above
 
+   The cleanup mark itself is removed when terminating processes or when
+   shutting down. It is kept in the list when only compacting children via
+   sKill = FALSE, sDetach = FALSE, sShutdown = FALSE.
+
    Typical use:
      sKill = TRUE, sDetach = TRUE, sShutdown = FALSE
        (mclapply, pvec)
      sKill = FALSE, sDetach = FALSE, sShutdown = FALSE
-       (mccollect - only compact children)
+       (mccollect - only compact children, keep the cleanup mark)
      sKill = tools:SIGKILL, sDetach = TRUE, sShutdown = TRUE
        (clean_pids - finalizer on a private object in the package namespace)
 */
@@ -387,10 +391,12 @@ SEXP mc_cleanup(SEXP sKill, SEXP sDetach, SEXP sShutdown)
     while(ci) {
 	if (ci->detached && ci->waitedfor && ci->pid == -1) {
 	    /* cleanup mark */
-	    /* set pid to a nonzero number so that the child will be removed
-	       from the list by compact_children; as it is waitedfor, it will
-	       not be sent any signal */
-	    ci->pid = INT_MAX;
+	    if (sig || shutdown) {
+		/* set pid to a nonzero number so that the child will be
+		   removed from the list by compact_children; as it is
+		   waitedfor, it will not be sent any signal */
+		ci->pid = INT_MAX;
+	    }
 	    if (!shutdown) break;
 	}
 	if (ci->detached && sig)
@@ -900,12 +906,12 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	    R_ProcessEvents();
 	    /* re-set tv as it may get updated by select */
 	    if (R_wait_usec > 0) {
-		tv.tv_sec = 0;
-		tv.tv_usec = R_wait_usec;
+		tv.tv_sec = R_wait_usec / 1000000;
+		tv.tv_usec = (suseconds_t) (R_wait_usec - tv.tv_sec * 1000000);
 		/* FIXME: ?Rg_wait_usec */
 	    } else if (timeout > 0) {
 		tv.tv_sec = (int) remains;
-		tv.tv_usec = (int) ((remains - ((double) tv.tv_sec)) * 1e6);
+		tv.tv_usec = (suseconds_t) ((remains - ((double) tv.tv_sec)) * 1e6);
 	    } else {
 		/* Note: I'm not sure we really should allow this .. */
 		tv.tv_sec = 1; /* still allow to process events */
@@ -1025,7 +1031,7 @@ SEXP mc_read_children(SEXP sTimeout)
 	if (tov < 0.0) tvp = 0; /* Note: I'm not sure we really should allow this .. */
 	else {
 	    tv.tv_sec = (int) tov;
-	    tv.tv_usec = (int) ((tov - ((double) tv.tv_sec)) * 1000000.0);
+	    tv.tv_usec = (suseconds_t) ((tov - ((double) tv.tv_sec)) * 1000000.0);
 	}
     }
     { 

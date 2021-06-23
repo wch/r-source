@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2015   The R Core Team.
+ *  Copyright (C) 2012-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,7 +50,69 @@ SEXP unzip(SEXP args)
     return Runzip(CDR(args));
 }
 
+#include <wctype.h>
+#include "rlocale.h" // may remap iswctype, wctype
 
+/* Declarations from Defn.h */
+int IS_ASCII(SEXP x);
+int IS_UTF8(SEXP x);
+int ENC_KNOWN(SEXP x);
+extern Rboolean utf8locale;
+const wchar_t *Rf_wtransChar(SEXP x);
+
+#if defined(USE_RI18N_FNS) || (defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE))
+SEXP charClass(SEXP x, SEXP scl)
+{
+    int nProtect = 0;
+    if (!isString(scl) || length(scl) != 1)
+	error(_("argument 'class' must be a character string"));
+    const char *cl = CHAR(STRING_ELT(scl, 0));
+    wctype_t wcl = wctype(cl);
+    if(wcl == 0)
+	error("character class \"%s\" is invalid", cl);
+
+    R_xlen_t n;
+    SEXP ans;
+    if (isString(x)) {
+	if (XLENGTH(x) != 1)
+	    error(_("argument 'x' must be a length-1 character vector"));
+	SEXP sx = STRING_ELT(x, 0);
+	if (!(IS_ASCII(sx) || IS_UTF8(sx) || (utf8locale && !ENC_KNOWN(sx))))
+	    error(_("argument 'x' must be UTF-8 encoded (including ASCII)"));
+	const wchar_t *wx = Rf_wtransChar(sx);
+	n = wcslen(wx);;
+	PROTECT(ans = allocVector(LGLSXP, n));
+	nProtect++;
+	int *pans = LOGICAL(ans);
+	for (R_xlen_t i = 0; i < n; i++) {
+	    // casting in case wchar_t is signed short: avoid sign extension
+	    int this = (int)(unsigned int)wx[i];
+	    pans[i] = iswctype(this, wcl);
+	}
+    } else {
+	PROTECT(x = coerceVector(x, INTSXP));
+	nProtect++;
+	n = XLENGTH(x);
+	const int* px = INTEGER(x);
+	PROTECT(ans = allocVector(LGLSXP, n));
+	nProtect++;
+	int *pans = LOGICAL(ans);
+	for (R_xlen_t i = 0; i < n; i++) {
+	    int this = px[i];
+	    if (this < 0) pans[i] = NA_LOGICAL;
+	    else pans[i] = iswctype(this, wcl);
+	}
+    }
+    UNPROTECT(nProtect);
+    return ans;
+}
+#else
+SEXP charClass(SEXP x, SEXP scl)
+{
+    error("'charClass' is not available on this platform");
+    return R_NilValue;
+}
+#endif
 
 
 #include <lzma.h>
@@ -108,4 +170,3 @@ SEXP nsl(SEXP hostname)
     return R_NilValue;
 }
 #endif
-

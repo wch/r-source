@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 2003--2018  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -888,8 +888,8 @@ FUNTAB R_FunTab[] =
 {"rawConnectionValue",do_rawconvalue,0, 11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"textConnection",do_textconnection,0,	11,     5,      {PP_FUNCALL, PREC_FN,	0}},
 {"textConnectionValue",do_textconvalue,0,11,    1,      {PP_FUNCALL, PREC_FN,	0}},
-{"socketConnection",do_sockconn,0,	11,     7,      {PP_FUNCALL, PREC_FN,	0}},
-{"socketAccept",do_sockconn,	1,	11,     5,      {PP_FUNCALL, PREC_FN,	0}},
+{"socketConnection",do_sockconn,0,	11,     8,      {PP_FUNCALL, PREC_FN,	0}},
+{"socketAccept",do_sockconn,	1,	11,     6,      {PP_FUNCALL, PREC_FN,	0}},
 {"sockSelect",do_sockselect,	0,	11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"serverSocket",do_serversocket,0,	11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"socketTimeout",do_socktimeout,0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
@@ -912,7 +912,6 @@ FUNTAB R_FunTab[] =
 {"makeActiveBinding", do_mkActiveBnd,	0, 111,	3,      {PP_FUNCALL, PREC_FN,	0}},
 {"bindingIsActive", do_bndIsActive,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"activeBindingFunction", do_activeBndFun,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
-/* looks like mkUnbound is unused in base R */
 {"mkUnbound",	do_mkUnbound,		0, 111,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"isNamespaceEnv",do_isNSEnv,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"registerNamespace",do_regNS,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
@@ -1024,7 +1023,7 @@ static char *Spec_name[] = {
     "if", "while", "repeat", "for", "break", "next", "return", "function",
     "(", "{",
     "+", "-", "*", "/", "^", "%%", "%/%", "%*%", ":", "::", ":::", "?", "|>",
-    "~", "@",
+    "~", "@", "=>",
     "==", "!=", "<", ">", "<=", ">=",
     "&", "|", "&&", "||", "!",
     "<-", "<<-", "=",

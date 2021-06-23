@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2020-12-30 r79727) -- "Unsuffered Consequences"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -56,8 +56,9 @@ Type 'q()' to quit R.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>R: This is a sample header</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
-</head><body>
+</head><body><div class="container">
 <h1> This is a sample header
 <img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]" />
 </h1>
@@ -203,7 +204,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x2c8ad50>
+<environment: 0x2fceeb0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -844,8 +845,9 @@ function (x, ...)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>R: R</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
-</head><body>
+</head><body><div class="container">
 <h1> R
 <img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]" />
 </h1>
@@ -894,7 +896,7 @@ An illustration of lexical scoping.
 </table>
 <p>
 </p>
-</body></html>
+</div></body></html>
 > 
 > 
 > 
@@ -996,6 +998,17 @@ List of 6
 > 
 > ### ** Examples
 > 
+>   gridEx <- system.file("doc", "grid.Rnw", package = "grid")
+>   vi <- vignetteInfo(gridEx)
+>   str(vi)
+List of 5
+ $ file    : chr "grid.Rnw"
+ $ title   : chr "Introduction to grid"
+ $ depends : chr(0) 
+ $ keywords: chr(0) 
+ $ engine  : chr "utils::Sweave"
+> 
+> 
 > 
 > cleanEx()
 > nameEx("writePACKAGES")
@@ -1040,7 +1053,7 @@ List of 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.308 0.02 0.329 0 0 
+Time elapsed:  0.314 0.026 0.343 0 0 
 > grDevices::dev.off()
 null device 
           1 

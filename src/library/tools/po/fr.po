@@ -5,41 +5,41 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
-"PO-Revision-Date: 2013-03-19 20:34+0100\n"
+"Project-Id-Version: R 4.0.4\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"PO-Revision-Date: 2021-02-10 17:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: Rmd5.c:47
 msgid "argument 'files' must be character"
-msgstr "l'argument 'files' doit être une chaîne de caractères"
+msgstr "l'argument 'files' doit Ãªtre une chaÃ®ne de caractÃ¨res"
 
 #: Rmd5.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "md5 failed on file '%ls'"
-msgstr "md5 a échoué sur le fichier '%s'"
+msgstr "md5 a Ã©chouÃ© sur le fichier â€˜%ls'"
 
 #: Rmd5.c:65
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr "md5 a échoué sur le fichier '%s'"
+msgstr "md5 a Ã©chouÃ© sur le fichier '%s'"
 
 #: getfmts.c:61
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr "seuls %d arguments sont autorisés"
+msgstr "seuls %d arguments sont autorisÃ©s"
 
 #: getfmts.c:66
 msgid "'fmt' is not a character vector"
-msgstr "'fmt' n'est pas un vecteur de chaînes de caractères"
+msgstr "'fmt' n'est pas un vecteur de chaÃ®nes de caractÃ¨res"
 
 #: getfmts.c:69
 msgid "'fmt' must be length 1"
@@ -48,24 +48,24 @@ msgstr "'fmt' doit avoir une longueur 1"
 #: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr "la longueur de 'fmt' dépasse le format maximal de longueur %d"
+msgstr "la longueur de 'fmt' dÃ©passe le format maximal de longueur %d"
 
 #: getfmts.c:96
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr "spécification de format inconnu '%s'"
+msgstr "spÃ©cification de format inconnu '%s'"
 
 #: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
-"une seule astérisque '*' est supportée au maximum dans chaque spécification "
-"de conversion "
+"une seule astÃ©risque '*' est supportÃ©e au maximum dans chaque spÃ©cification "
+"de conversion"
 
 #: gramLatex.c:2390 gramRd.c:3976
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
-"impossibilité d'allouer une zone tampon pour une chaîne longue à la ligne %d"
+"impossibilitÃ© d'allouer une zone tampon pour une chaÃ®ne longue Ã  la ligne %d"
 
 #: gramLatex.c:2627 gramRd.c:4522 gramRd.c:4528
 #, c-format
@@ -75,48 +75,46 @@ msgstr "valeur '%s' incorrecte"
 #: gramRd.c:2547 gramRd.c:2550
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr "marque erronée (espace additionel ?) à %s:%d:%d"
+msgstr "marque erronÃ©e (espace additionel ?) Ã  %s:%d:%d"
 
 #: gramRd.c:3125
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr "La macro '%s' est déjà précédemment définie."
+msgstr "La macro '%s' est dÃ©jÃ  prÃ©cÃ©demment dÃ©finie."
 
 #: gramRd.c:3135
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
-"Un maximum de 4 arguments est autorisé pour les macros définies par "
+"Un maximum de 4 arguments est autorisÃ© pour les macros dÃ©finies par "
 "l'utilisateur."
 
 #: gramRd.c:3177
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr "Pas de définition de macro pour '%s'."
+msgstr "Pas de dÃ©finition de macro pour '%s'."
 
 #: gramRd.c:3239
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough arguments passed to user macro '%s'"
-msgstr ""
-"Un maximum de 4 arguments est autorisé pour les macros définies par "
-"l'utilisateur."
+msgstr "Pas assez dâ€™arguments passÃ©s Ã  la macro '%s'"
 
 #: gramRd.c:3379 gramRd.c:3383
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr ""
-"retour de ligne à l'intérieur d'une chaîne de caractères entre guillemets à "
+"retour de ligne Ã  l'intÃ©rieur d'une chaÃ®ne de caractÃ¨res entre guillemets Ã  "
 "%s:%d"
 
 #: gramRd.c:3402
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr ""
-"impossible d'allouer de la mémoire tampon pour une longue macro à la lign %d"
+"impossible d'allouer de la mÃ©moire tampon pour une longue macro Ã  la lign %d"
 
 #: gramRd.c:3432
 msgid "macros nested too deeply: infinite recursion?"
-msgstr "macros imbriquées trop profondément : récursion infinie ?"
+msgstr "macros imbriquÃ©es trop profondÃ©ment : rÃ©cursion infinie ?"
 
 #: gramRd.c:3838
 #, c-format
@@ -127,7 +125,7 @@ msgstr "Macro %s introuvable"
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
-"Fin d'entrée inattendue (dans la chaîne entre guillements %c ouvertes à %s:"
+"Fin d'entrÃ©e inattendue (dans la chaÃ®ne entre guillements %c ouvertes Ã  %s:"
 "%d:%d)"
 
 #: gramRd.c:4535
@@ -144,20 +142,20 @@ msgstr "fichier Rd incorrect"
 
 #: gramRd.c:4569
 msgid "'deparseRd' only supports deparsing character elements"
-msgstr "'deparseRd' ne peut décoder que des éléments textuels"
+msgstr "'deparseRd' ne peut dÃ©coder que des Ã©lÃ©ments textuels"
 
 #: gramRd.c:4572
 msgid "bad state"
-msgstr "état incorrect"
+msgstr "Ã©tat incorrect"
 
 #: gramRd.c:4585
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr "mode de texte %d erroné dans 'deparseRd'"
+msgstr "mode de texte %d erronÃ© dans 'deparseRd'"
 
 #: http.c:32
 msgid "invalid bind address specification"
-msgstr "spécification d'adresse de lien incorrecte"
+msgstr "spÃ©cification d'adresse de lien incorrecte"
 
 #: install.c:112 install.c:131 install.c:133
 #, c-format
@@ -166,28 +164,28 @@ msgstr "argument '%s' incorrect"
 
 #: install.c:162
 msgid "write error during file append"
-msgstr "erreur en écriture lors du rajout dans un fichier"
+msgstr "erreur en Ã©criture lors du rajout dans un fichier"
 
 #: pdscan.c:67
 msgid "too many items"
-msgstr ""
+msgstr "trop dâ€™Ã©lÃ©ments"
 
 #: pdscan.c:115
 msgid "non-character argument"
-msgstr ""
+msgstr "argument qui nâ€™est pas une chaÃ®ne de caractÃ¨res"
 
 #: signals.c:42
 msgid "pskill() is not supported on this platform"
-msgstr "pskill() n'est pas supporté sur cette plateforme"
+msgstr "pskill() n'est pas supportÃ© sur cette plateforme"
 
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
-msgstr "psnice() n'est pas supporté sur cette plateforme"
+msgstr "psnice() n'est pas supportÃ© sur cette plateforme"
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr "type d'argument incorrect"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
-msgstr "plus de mémoire disponible"
+msgstr "plus de mÃ©moire disponible"

@@ -45,6 +45,7 @@
 #  include <netdb.h>
 #  include <sys/socket.h>
 #  include <netinet/in.h>
+#  include <netinet/tcp.h>
 #  ifdef HAVE_FCNTL_H
 #    include <fcntl.h>
 #  endif
@@ -160,6 +161,12 @@ int R_set_nonblocking(SOCKET s)
     /* Will return 0 (success) when running on Unix without the necessary
        fcntl support, which is unlikely. */
     return status; /* 0 */
+}
+
+int R_set_nodelay(SOCKET s)
+{
+    int val = 1;
+    return setsockopt(s, IPPROTO_TCP, TCP_NODELAY, (char *) &val, sizeof(val));
 }
 
 #if defined(__hpux)

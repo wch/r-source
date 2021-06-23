@@ -156,18 +156,21 @@ tests <- function() {
 }
 
 main <- function() {
-  cat("internal method\n")
-  with_options(c(download.file.method = "internal"), tests())
+##  cat("internal method\n")
+##  with_options(c(download.file.method = "internal"), tests())
 
-  if (.Platform$OS.type == "windows")  {
-    cat("\nwininet method\n")
-    with_options(c(download.file.method = "wininet"), tests())
-  }
+    if (capabilities("libcurl")) {
+        cat("\nlibcurl method\n")
+        with_options(c(download.file.method = "libcurl"), tests())
+    }
 
-  if (isTRUE(capabilities()[["libcurl"]])) {
-    cat("\nlibcurl method\n")
-    with_options(c(download.file.method = "libcurl"), tests())
-  }
+    if (.Platform$OS.type == "windows")  {
+        ## This is deprecated and will give warnings.
+        cat("\nwininet method\n")
+        with_options(c(download.file.method = "wininet"), tests())
+    }
 }
+
+options(warn = 1)
 
 if (is_online()) main()

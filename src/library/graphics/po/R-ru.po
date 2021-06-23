@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2020-08-27 19:05+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -381,6 +381,17 @@ msgstr "не могу взять больше чем одну координату 'x'"
 
 msgid "must have a response variable"
 msgstr "нужна зависимая переменная"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "неправильные ширины у ящиков-с-усами"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "неправильные ширины у ящиков-с-усами"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' применена не к таблице данных"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -232,6 +232,10 @@ msgstr "'X' skal have navngivne dimnavne"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "argument 'object' skal deparse til en enkel tegnstreng"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "argument 'object' skal deparse til en enkel tegnstreng"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' skal være en af 'start', 'current' eller 'end'"
 
@@ -384,7 +388,7 @@ msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
 #, fuzzy
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variabel der ikke er numerisk i dataramme:"
 
 msgid ","
@@ -396,8 +400,13 @@ msgstr "%s kun defineret for lige store datarammer"
 msgid "list of length %d not meaningful"
 msgstr "liste på længde %d er ikke meningsfuld"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "definerede kun en dataramme med alle numeriske variabler"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "ikke en dataramme"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "tegnstreng er ikke i et utvetydigt standardformat"
@@ -760,6 +769,10 @@ msgstr "værdi for %s blev ikke fundet"
 msgid "all arguments must be named"
 msgstr "alle argumenter skal være navngivet"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "'drop'-argument vil blive ignoreret"
+
 msgid "match distance components must be non-negative"
 msgstr "matchdistancekomponenter skal være ikke-negative"
 
@@ -1101,9 +1114,6 @@ msgstr ""
 "navnerum %s er ikke tilgængelig og er blevet erstattet\n"
 "af .GlobalEnv når objekt %s behandles"
 
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' er ikke et eksporteret objekt fra 'namespace:%s'"
-
 msgid "namespace is already attached"
 msgstr "navnerum er allerede vedhæftet"
 
@@ -1119,6 +1129,9 @@ msgstr "%s blev ikke fundet"
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "navnerum %s %s er indlæst, men %s %s er krævet"
+
+msgid "- loading"
+msgstr ""
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "navnerum %s er allerede forseglet i 'loadNamespace'"
@@ -1186,14 +1199,54 @@ msgid ""
 "to be reinstalled for use with this R version"
 msgstr ""
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "kan ikke indlæse R-kode i pakke %s"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "'exportClassPattern' specificeret i 'NAMESPACE' men ingen matchende klasser "
 "i pakke %s"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "forkert klasse"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1211,6 +1264,9 @@ msgstr "ingen funktion fundet der svarer til metodeeksport fra %s for: %s"
 msgid "in %s methods for export not found: %s"
 msgstr "i %s blev metoder for eksport ikke fundet: %s"
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "flere metodetabeller fundet for %s"
 
@@ -1219,6 +1275,18 @@ msgstr "kunne ikke finde metadataobjekt for %s"
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "i pakke %s blev metoderne %s angivet for eksport men ikke defineret"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "Indlæser krævet navnerum: %s"
@@ -1506,6 +1574,9 @@ msgid ""
 msgstr ""
 "'x' skal være atomisk for 'sort.list'\n"
 "Har du kaldt 'sort' på en liste?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' skal være TRUE, FALSE eller et miljø"
@@ -1960,6 +2031,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstra argument %s vil blive ignoreret"
 msgstr[1] "ekstra argumentet %s vil blive ignoreret"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' er ikke et eksporteret objekt fra 'namespace:%s'"
 
 #~ msgid "bad handler specification"
 #~ msgstr "ugyldig håndteringsspecifikation"

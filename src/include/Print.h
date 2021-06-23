@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2021  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2019   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ void R_PV(SEXP s);
 
 #define R_MIN_WIDTH_OPT		10
 #define R_MAX_WIDTH_OPT		10000
-#define R_MIN_DIGITS_OPT	0
+#define R_MIN_DIGITS_OPT	1
 #define R_MAX_DIGITS_OPT	22
 
 #endif

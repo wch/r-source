@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -477,7 +477,7 @@ function(dir, outDir)
 
     }
     if(dir.exists(dataDir))
-        saveRDS(.build_data_index(dataDir, contents),
+        saveRDS(.build_data_index(outDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     invisible()
 }
@@ -972,7 +972,7 @@ checkRdaFiles <- function(paths)
         if (grepl("RD[ABX][1-9]", magic, useBytes = TRUE)) {
             res[p, "ASCII"]  <- substr(magic, 3, 3) == "A"
             ver <- sub("(RD[ABX])([1-9])", "\\2", magic, useBytes = TRUE)
-            res$version <- as.integer(ver)
+            res[p, "version"] <- as.integer(ver)
         }
     }
     res
@@ -1132,8 +1132,7 @@ add_datalist <- function(pkgpath, force = FALSE, small.size = 1024^2)
     if (!force && file.exists(dlist)) return()
     size <- sum(file.size(Sys.glob(file.path(pkgpath, "data", "*"))))
     if(size <= small.size) return()
-    z <- suppressPackageStartupMessages(
-        list_data_in_pkg(dataDir = file.path(pkgpath, "data"))) # for BARD
+    z <- list_data_in_pkg(dir = pkgpath, use_datalist = FALSE)
     if(!length(z)) return()
     con <- file(dlist, "w")
     for (nm in names(z)) {

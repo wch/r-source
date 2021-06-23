@@ -111,7 +111,7 @@ function(file)
         if(!is.na(encoding))
             lines[ind] <- iconv(lines[ind], encoding, "")
         ## Last resort.
-        if(any(is.na(nchar(lines[ind], allowNA = TRUE))))
+        if(anyNA(nchar(lines[ind], allowNA = TRUE)))
             lines[ind] <- iconv(lines[ind], "", "", sub = "byte")
     }
 

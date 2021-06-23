@@ -8,7 +8,7 @@ include $(top_builddir)/Makeconf
 
 install install-strip: install-R-framework
 		@(sed 's|^LIBR =.*|LIBR = -F$(R_FRAMEWORK_DIR)/.. -framework R|' \
-		  $(top_builddir)/etc/Makeconf > "$(rhome)/etc${R_ARCH}/Makeconf")
+		  $(top_builddir)/etc/Makeconf > "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/etc${R_ARCH}/Makeconf")
 		@(sed 's/Versions\/$(FW_VERSION)\/Resources/Resources/' \
 		  "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/bin/R" > \
 		  "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/bin/RR")
@@ -37,7 +37,7 @@ install-R-framework:
 	  ln -f -s -n Versions/Current/Resources Resources)
 	@## the resulting libR will point dyld to the fat libR regardless of its origin
 	@(cd "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources/lib" && \
-	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" $(Rexeclibdir)/libR.dylib)
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" "$(DESTDIR)$(Rexeclibdir)/libR.dylib")
 	@( otool=otool ; if otool -D "$(DESTDIR)$(Rexeclibdir)/libR.dylib"|grep 'not an object'>/dev/null; then otool=otool64; fi; \
 	   for lib in Rlapack Rblas R; do \
 	   if test -e "$(DESTDIR)$(Rexeclibdir)/lib$${lib}.dylib"; then $(ECHO) "  lib$${lib}"; \

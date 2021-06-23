@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2020-08-28 16:44+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -340,9 +340,6 @@ msgstr "Переменные переписывают пользовательские установки:"
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "неправильный 'OS.type' \"%s\".  Такого быть не должно"
-
-msgid ","
-msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Пропущенная связь или связи с объектом документации '%s':"
@@ -827,6 +824,9 @@ msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 msgid "inst/doc"
 msgstr "inst/doc"
 
+msgid ","
+msgstr ","
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr "проигнорировано, потому что очерки будут сделаны заново."
 
@@ -870,6 +870,9 @@ msgstr "папка пакета %s не существует"
 
 msgid "no packages to check"
 msgstr "нет пакетов для проверки"
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
 
 msgid "downloading reverse dependencies ..."
 msgstr "скачиваю обратные зависимости ..."
@@ -1421,6 +1424,13 @@ msgstr[1] ""
 "Найдены возможные глобальные 'T' или 'F' в следующих Rd-файлах примеров:"
 msgstr[2] ""
 "Найдены возможные глобальные 'T' или 'F' в следующих Rd-файлах примеров:"
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] "Найдены возможные глобальные T или F в следующей функциии:"
+msgstr[1] "Найдены возможные глобальные T или F в следующих функциях:"
+msgstr[2] "Найдены возможные глобальные T или F в следующих функциях:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"

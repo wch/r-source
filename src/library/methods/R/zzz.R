@@ -116,8 +116,6 @@
     ## initialize generics cache more thoroughly:
     setPrimitiveMethods("$", `$`, code="reset", generic = getGeneric("$"), mlist = NULL)
     assign(".methodsNamespace", where, where)
-    ## assign to baseenv also, signalling methods loaded
-    assign(".methodsNamespace", where, baseenv())
     ## if(Sys.getenv("R_S4_BIND") == "active")
     ##     bind_activation(TRUE)
 }

@@ -1326,7 +1326,7 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = whe
     else if(f %in% .subsetFuns)
         ## primitive dispatch requires some argument to be an S4 object.
         ## This does not quite guarantee an S4 object; e.g., a class union might have only basic types in it.
-        !any(is.na(match(signature, .BasicClasses)))
+        !anyNA(match(signature, .BasicClasses))
     else {
         sealed <- !is.na(match(signature[[1L]], .BasicClasses))
         if(sealed &&

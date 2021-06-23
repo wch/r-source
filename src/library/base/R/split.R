@@ -36,8 +36,13 @@ split.default <- function(x, f, drop = FALSE, sep = ".", lex.order = FALSE, ...)
 
 ## This is documented to work for matrices too
 split.data.frame <- function(x, f, drop = FALSE, ...)
+{
+    ## If formula, maybe should check that there is no LHS?
+    if (inherits(f, "formula"))
+        f <- eval(attr(stats::terms(f), "variables"), x, environment(f))
     lapply(split(x = seq_len(nrow(x)), f = f, drop = drop, ...),
            function(ind) x[ind, , drop = FALSE])
+}
 
 `split<-` <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
 
@@ -56,6 +61,7 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 ## This is documented to work for matrices too
 `split<-.data.frame` <- function(x, f, drop = FALSE, ..., value)
 {
+    if (inherits(f, "formula")) f <- eval(attr(stats::terms(f), "variables"), x, environment(f))
     ix <- split(seq_len(nrow(x)), f, drop = drop, ...)
     n <- length(value)
     j <- 0

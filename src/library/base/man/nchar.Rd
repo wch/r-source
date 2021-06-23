@@ -1,6 +1,6 @@
 % File src/library/base/man/nchar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nchar}
@@ -47,7 +47,7 @@ nzchar(x, keepNA = FALSE)
       print the string in a monospaced font.  The same as \code{chars}
       if this cannot be calculated.}
   }
-  These will often be the same, and almost always will be in single-byte
+  These will often be the same, and usually will be in single-byte
   locales (but note how \code{type} determines the default for
   \code{keepNA}).  There will be differences between the first two with
   multibyte character sequences, e.g.\sspace{}in UTF-8 locales.
@@ -128,9 +128,9 @@ nzchar(x, keepNA = FALSE)
   the locale, being one except in some East Asian locales on some OSes
   (notably Windows).
 
-  Control characters are given width zero in multi-byte locales, but are
-  usually given width one in single-byte ones (as their positions are
-  often undefined and maybe re-used as in CP1252 \emph{vs} Latin-1).
+  Control characters are usually given width zero: this includes CR and
+  LF.  Computing the width of a string containing control characters
+  should be avoided (and may depend on the OS and \R version).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

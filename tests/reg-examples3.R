@@ -177,19 +177,3 @@ example(packageDescription)
 ## From splines
 library(splines)
 Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))
-
-
-## From tools
-
-library(tools)
-## there are few dependencies in a vanilla R installation:
-## lattice may not be installed
-## Avoid possibly large list from R_HOME/site-library, which --vanilla includes.
-stopifnot(identical(
-    sort(dependsOnPkgs("lattice", lib.loc = .Library)),
-    c("Matrix", "mgcv", "nlme", "survival")))
-
-## Vignettes may not yet be installed
-gridEx <- system.file("doc", "grid.Rnw", package = "grid")
-if(nzchar(gridEx)) # was installed
-    stopifnot(identical(vignetteInfo(gridEx)$depends, "lattice"))

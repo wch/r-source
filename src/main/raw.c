@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2020 The R Core Team
+ *  Copyright (C) 2001--2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -138,6 +138,14 @@ SEXP attribute_hidden do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+#ifdef WORDS_BIGENDIAN
+#define WORDORDER_HIGH 0
+#define WORDORDER_LOW  1
+#else  /* !WORDS_BIGENDIAN */
+#define WORDORDER_HIGH 1
+#define WORDORDER_LOW  0
+#endif /* WORDS_BIGENDIAN */
+
 // split "real" (double = 64-bit) into two 32-bit parts (which the user can split to bits):
 SEXP attribute_hidden do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -149,9 +157,14 @@ SEXP attribute_hidden do_numToInts(SEXP call, SEXP op, SEXP args, SEXP env)
     R_xlen_t i, j = 0;
     double *x_ = REAL(x);
     for (i = 0; i < XLENGTH(x); i++) {
-	int *tmp = (int*) &(x_[i]);
-	INTEGER(ans)[j++] = tmp[0];
-	INTEGER(ans)[j++] = tmp[1];
+	// Assume sizeof(double) == 2 * sizeof(int) and int has no trap rep.
+	union {
+	    double d;
+	    int i[2];
+	} tmp;
+	tmp.d = x_[i];
+	INTEGER(ans)[j++] = tmp.i[WORDORDER_LOW];
+	INTEGER(ans)[j++] = tmp.i[WORDORDER_HIGH];
     }
     UNPROTECT(2);
     return ans;
@@ -167,7 +180,13 @@ SEXP attribute_hidden do_numToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     R_xlen_t i, j = 0;
     double *x_ = REAL(x);
     for (i = 0; i < XLENGTH(x); i++) {
-	uint64_t *x_i = (uint64_t*) &(x_[i]), tmp = *x_i;
+	// Assume double and uint64_t are both 64 bits.
+	union {
+	    double d;
+	    uint64_t ui64;
+	} u;
+	u.d = x_[i];
+	uint64_t tmp = u.ui64;
 	for (int k = 0; k < 64; k++, tmp >>= 1)
 	    RAW(ans)[j++] = tmp & 0x1;
     }
@@ -226,25 +245,28 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    INTEGER(ans)[i] = (int) itmp;
 	} else { // 'useDouble'
-	    union {
+	    // Assume sizeof(double) == 2 * sizeof(unsigned int) and
+	    // unsigned int has no trap rep.
+	    union
+	    {
 		double d;
-		int i[2];
+		unsigned int ui[2];
 	    } u;
 	    for(int k = 0 ; k < 2 ; k++) {
-		int w = 0;
+		unsigned int w = 0;
 		for(int b = 0 ; b < 32 ; b++) {
-		    int bit /* -Wall */ = 0;
+		    unsigned int bit /* -Wall */ = 0;
 		    if (isRaw(x))
 			bit = RAW(x)[64*i + 32*k + b] & 0x1;
 		    else if (isLogical(x) || isInteger(x)) {
 			int j = INTEGER(x)[64*i + 32*k + b];
 			if (j == NA_INTEGER)
 			    error(_("argument 'x' must not contain NAs"));
-			bit = j & 0x1;
+			bit = (unsigned int) (j & 0x1);
 		    }
 		    w = w | (bit << b);
 		}
-		u.i[k] = w;
+		u.ui[k ? WORDORDER_HIGH : WORDORDER_LOW] = w;
 	    }
 	    REAL(ans)[i] = u.d;
 	}

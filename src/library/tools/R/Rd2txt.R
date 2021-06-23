@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -495,8 +495,6 @@ Rd2txt <-
         txt <- as.character(x)
         if(inEqn) txt <- txt_eqn(txt)
         txt <- fsub('"\\{"', '"{"', txt)
-        ## \dots gets left in noquote.Rd
-        txt <- fsub("\\dots",  "...", txt)
         put(txt)
     }
 

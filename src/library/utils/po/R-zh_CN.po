@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -153,9 +153,6 @@ msgstr "程序包%s: 找不到DESCRIPTION这个文件"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file'的值必需是NULL，字符串或联结"
-
-msgid "bad argument"
-msgstr "参数不对"
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr ""
@@ -1193,8 +1190,13 @@ msgstr "不能修改'%s'"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip'必需是单字符串"
 
-msgid "'files' must a character vector specifying one or more filepaths"
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files'必须指定一个或多个文件路径的字符向量"
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "url必需的非空字符串"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1349,14 +1351,24 @@ msgstr[0] ""
 "(因为没有指定%s)"
 
 #, fuzzy
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "没有%s这个程序包(给%s用)"
-
-#, fuzzy
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "没有%s这个程序包(给%s用)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1428,6 +1440,9 @@ msgstr[0] "最后一个记录不完全，%d行略过不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "罗马数字不对：%s"
+
+#~ msgid "bad argument"
+#~ msgstr "参数不对"
 
 #~ msgid "package %s not found"
 #~ msgstr "没有%s这一个程序包"

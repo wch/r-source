@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2020
-@set FAQ_DATE @value{FAQ_YEAR}-08-03
+@set FAQ_YEAR 2021
+@set FAQ_DATE @value{FAQ_YEAR}-05-29
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -306,7 +306,7 @@ alpha, arm, arm64, hppa, mips/mipsel, powerpc, s390x and sparc
 @c mips-sgi-irix,
 @c </FIXME>
 i386-pc-solaris, rs6000-ibm-aix, sparc-sun-solaris, x86_64-apple-darwin,
-x86_64-unknown-freebsd and x86_64-unknown-openbsd.
+aarch64-apple-darwin, x86_64-unknown-freebsd and x86_64-unknown-openbsd.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
@@ -472,23 +472,26 @@ other members of the R Core team.
 The same directory has links to snapshots of the r-patched and r-devel
 versions of R.
 
-See the @url{https://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
+See the @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html,
 ``R for Windows @acronym{FAQ}''} for more details.
 
 @node How can R be installed (Mac),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Mac)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer package to run on macOS 10.9 (`Mavericks') and later.
+Apple installer package to run on macOS 10.13 (`High Sierra') and later.
 Once downloaded and executed, the installer will install the current
 release of R and R.app, the macOS @acronym{GUI}.  This port of R for macOS
 is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
 (and previously by Stefano Iacus).  The
-@url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
-macOS @acronym{FAQ}} has more details.
+@url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+macOS @acronym{FAQ}''} has more details.
 
 Snapshots of the r-patched and r-devel versions of R are available as
 Apple installer packages at @uref{https://mac.R-project.org}.
+
+As from R 4.1.0 there are separate builds for ARM-based Macs (also
+known as `M1' or `Apple Silicon') running macOS 11 (`Big Sur') or later.
 
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
@@ -768,7 +771,7 @@ the R mailing lists.
 @c Many of the R project's mailing lists are also available via
 @c @url{http://gmane.org, Gmane}, from which they can be read with a web
 @c browser, using an NNTP news reader, or via RSS feeds.  See
-@c @uref{http://dir.gmane.org/@/index.php?prefix=gmane.comp.lang.r.}@: for
+@c @uref{http://dir.gmane.org/index.php?prefix=gmane.comp.lang.r.}@: for
 @c the available mailing lists, and @uref{http://www.gmane.org/rss.php} for
 @c details on RSS feeds.
 @c </FIXME>
@@ -2174,7 +2177,7 @@ To remove all objects in the currently active environment (typically
 @code{.GlobalEnv}), you can do
 
 @example
-rm(list = ls(all = TRUE))
+rm(list = ls(all.names = TRUE))
 @end example
 
 @noindent
@@ -3167,7 +3170,7 @@ for constructing such graphs is to use @code{par(new=TRUE)} (see
 package) and @code{doubleYScale()} (in the @CRANpkg{latticeExtra}
 package) automate the process somewhat.
 @c See
-@c @url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
+@c @url{http://rwiki.sciviews.org/doku.php?id=tips:graphics-base:2yaxes}
 @c for more information, including strong arguments against this sort of
 @c graph.
 
@@ -3536,7 +3539,7 @@ Before you actually submit a bug report, you should check whether the
 bug has already been reported and/or fixed.  First, try the ``Show open
 bugs new-to-old'' or the search facility on
 @url{https://bugs.R-project.org/}.  Second, consult
-@url{https://svn.R-project.org/@/R/@/trunk/@/doc/@/NEWS.Rd}, which
+@url{https://svn.R-project.org/R/trunk/doc/NEWS.Rd}, which
 records changes that will appear in the @emph{next} release of R,
 including bug fixes that do not appear on the Bug Tracker.  
 Third, if possible try the current r-patched or r-devel version of R.

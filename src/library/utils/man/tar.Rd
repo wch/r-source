@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2018 R Core Team
+% Copyright 2009-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -91,13 +91,13 @@ tar(tarfile, files = NULL,
   Many \R platforms use a version of GNU \command{tar} (including
   \command{Rtools} on Windows), but the behaviour seems to be changed
   with each version.  macOS >= 10.6 and FreeBSD use \command{bsdtar}
-  from the libarchive project (but for macOS, a version from 2010), and
-  commercial Unixes will have their own versions.  \command{bsdtar} is
-  available for many other platforms: macOS up to at least 10.9 had GNU
-  \command{tar} as \command{gnutar} and other platforms,
-  e.g.\sspace{}Solaris, have it as \command{gtar}: on a Unix-alike
-  \command{configure} will try \command{gnutar} and \command{gtar}
-  before \code{tar}.
+  from the libarchive project (but for macOS a version from 2017 or
+  earlier, 2010 for High Sierra), and commercial Unixes will have their
+  own versions.  \command{bsdtar} is available for many other platforms:
+  macOS up to at least 10.9 had GNU \command{tar} as \command{gnutar}
+  and other platforms, e.g.\sspace{}Solaris, have it as \command{gtar}:
+  on a Unix-alike \command{configure} will try \command{gnutar} and
+  \command{gtar} before \code{tar}.
 
   %% Heirloom Toolchest (http://heirloom.sourceforge.net/) is
   %% another implementation available on NetBSD, but probably not the default.
@@ -177,13 +177,12 @@ tar(tarfile, files = NULL,
 }
 
 \note{
-  For users of macOS (formerly OS X).  Apple's HFS and HFS+ file systems
-  have a legacy concept of \sQuote{resource forks} dating from classic
-  Mac OS and rarely used nowadays.  Apple's version of \command{tar}
-  stores these as separate files in the tarball with names prefixed by
-  \file{._}, and unpacks such files into resource forks (if possible):
-  other ways of unpacking (including \code{\link{untar}} in \R) unpack
-  them as separate files.
+  For users of macOS.  Apple's file systems have a legacy concept of
+  \sQuote{resource forks} dating from classic Mac OS and rarely used
+  nowadays.  Apple's version of \command{tar} stores these as separate
+  files in the tarball with names prefixed by \file{._}, and unpacks
+  such files into resource forks (if possible): other ways of unpacking
+  (including \code{\link{untar}} in \R) unpack them as separate files.
 
   When argument \code{tar} is set to the command \command{tar} on macOS,
   environment variable \env{COPYFILE_DISABLE=1} is set, which for the

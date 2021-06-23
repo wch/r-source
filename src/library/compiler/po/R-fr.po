@@ -5,61 +5,54 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2013-03-18 22:00+0100\n"
+"PO-Revision-Date: 2021-02-10 17:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "namespace found within local environments"
-msgstr ""
+msgstr "espace de nom trouvÃ© parmi des environnements locaux"
 
 msgid "not a proper evaluation environment"
-msgstr "ceci n'est pas un environnement adéquat pour l'évaluation"
+msgstr "ceci n'est pas un environnement adÃ©quat pour l'Ã©valuation"
 
-#, fuzzy
 msgid "non-namespace found within namespace environments"
-msgstr ""
-"'ns' doit être être un espace de noms (namespace) ou un environnement "
-"d'importation d'espace de noms"
+msgstr "autre chose quâ€™un espace de noms trouvÃ© parmi des environnements dâ€™espaces de noms"
 
 msgid "namespace found within global environments"
-msgstr ""
+msgstr "espace de nom trouvÃ© Ã  lâ€™intÃ©rieur dâ€™environnements globaux"
 
 msgid "bad assignment: %s"
 msgstr "affectation incorrecte: %s"
 
 msgid "cannot constant fold literal promises"
-msgstr ""
-"les promesses littérales ne peuvent repliées de manière constante (?constant "
-"fold)"
+msgstr "les promesses littÃ©rales ne peuvent repliÃ©es de maniÃ¨re constante (?constant fold)"
 
 msgid "cannot constant fold literal bytecode objects"
-msgstr ""
-"les objects 'bytecode' littéraux ne peuvent repliés de manière constante (?"
-"constant fold)"
+msgstr "les objects 'bytecode' littÃ©raux ne peuvent repliÃ©s de maniÃ¨re constante (?constant fold)"
 
 msgid "no offset recorded for label \"%s\""
-msgstr "aucun décallage enregistré pour le libellé \"%s\""
+msgstr "aucun dÃ©callage enregistrÃ© pour le libellÃ© \"%s\""
 
 msgid "cannot compile byte code literals in code"
-msgstr "impossible de compiler des littéraux en byte code dans le code"
+msgstr "impossible de compiler des littÃ©raux en byte code dans le code"
 
 msgid "cannot compile promise literals in code"
-msgstr "impossible de compiler des promesses littérales dans le code"
+msgstr "impossible de compiler des promesses littÃ©rales dans le code"
 
 msgid "possible error in '%s': %s"
 msgstr "erreur possible dans '%s' : %s"
 
 msgid "bad namespace import frame"
-msgstr "cadre d'importation erroné pour l'espace de noms"
+msgstr "cadre d'importation erronÃ© pour l'espace de noms"
 
 msgid "bad assignment 1"
 msgstr "mauvaise affectation 1"
@@ -71,31 +64,31 @@ msgid "invalid function in complex assignment"
 msgstr "function incorrecte dans une affectation complexe"
 
 msgid "missing arguments are not allowed"
-msgstr "les arguments manquants ne sont pas autorisés"
+msgstr "les arguments manquants ne sont pas autorisÃ©s"
 
 msgid "empty alternative in numeric switch"
-msgstr "alternative vide dans une construction 'switch' numérique"
+msgstr "alternative vide dans une construction 'switch' numÃ©rique"
 
 msgid "no visible global function definition for '%s'"
-msgstr "pas de définition globale de fonction visible pour '%s'"
+msgstr "pas de dÃ©finition globale de fonction visible pour '%s'"
 
 msgid "no visible binding for global variable '%s'"
 msgstr "pas de lien pour la variable globale '%s'"
 
 msgid "no visible binding for '<<-' assignment to '%s'"
-msgstr "pas de lien visible pour l'affectation '<<-' à '%s'"
+msgstr "pas de lien visible pour l'affectation '<<-' Ã  '%s'"
 
 msgid "wrong number of arguments to '%s'"
 msgstr "nombre incorrect d'arguments pour '%s'"
 
 msgid "more than one default provided in switch() call"
-msgstr "plus d'une valeur par défaut fournie dans une construction switch()"
+msgstr "plus d'une valeur par dÃ©faut fournie dans une construction switch()"
 
 msgid "'switch' with no alternatives"
-msgstr ""
+msgstr "'switch' sans alternatives"
 
 msgid "Error: compilation failed -"
-msgstr ""
+msgstr "Erreur : la compilation a Ã©chouÃ© -"
 
 msgid "cannot compile a non-function"
 msgstr "impossible de compiler autre chose qu'une fonction"
@@ -110,13 +103,13 @@ msgid "done"
 msgstr "fini"
 
 msgid "'env' must be a top level environment"
-msgstr "'env' doit être un environnement de premier niveau"
+msgstr "'env' doit Ãªtre un environnement de premier niveau"
 
 msgid "input and output file names are the same"
-msgstr "les noms de fichier d'entrée et de sortie sont les mêmes"
+msgstr "les noms de fichier d'entrÃ©e et de sortie sont les mÃªmes"
 
 msgid "empty input file; no output written"
-msgstr "fichier d'entrée vide ; rien n'est écrit en sortie"
+msgstr "fichier d'entrÃ©e vide ; rien n'est Ã©crit en sortie"
 
 msgid "file '%s' does not exist"
 msgstr "le fichier '%s' n'existe pas"
@@ -125,29 +118,24 @@ msgid "'%s' is not a valid compiler option"
 msgstr "'%s' n'est pas une option de compilation reconnue"
 
 msgid "invalid environment variable value: %s==%s"
-msgstr ""
+msgstr "valeur de la variable dâ€™environnement incorrecte : %s==%s"
 
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
-msgstr ""
+msgstr "option de compilation incorrecte : optimize(==%d)<2 et jitEnabled(==%d)>2"
 
 msgid "function is not compiled"
-msgstr "la fonction n'est pas compilée"
+msgstr "la fonction n'est pas compilÃ©e"
 
-#, fuzzy
 msgid "cannot compile this expression"
-msgstr "impossible de compiler des promesses littérales dans le code"
+msgstr "impossible de compiler cette expression"
 
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
-msgstr[0] "affectation locale vers une fonction syntaxique :"
-msgstr[1] "affectations locales vers des fonctions syntaxiques :"
+msgstr[0] "affectation locale vers une fonction syntaxique : "
+msgstr[1] "affectations locales vers des fonctions syntaxiques : "
 
 #~ msgid "'ns' must be a namespace or a namespace imports environment"
-#~ msgstr ""
-#~ "'ns' doit être être un espace de noms (namespace) ou un environnement "
-#~ "d'importation d'espace de noms"
+#~ msgstr "'ns' doit Ãªtre Ãªtre un espace de noms (namespace) ou un environnement d'importation d'espace de noms"
 
 #~ msgid "expected a single logical value for the S4 state flag"
-#~ msgstr ""
-#~ "une valeur booléenne unique (logical) est attendue pour le drapeau d'état "
-#~ "S4"
+#~ msgstr "une valeur boolÃ©enne unique (logical) est attendue pour le drapeau d'Ã©tat S4"

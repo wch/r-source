@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -161,7 +161,7 @@ function(package, dir, lib.loc = NULL)
     ## Find the data sets to work on.
     data_dir <- file.path(dir, "data")
     data_objs <- if(dir.exists(data_dir))
-	unlist(.try_quietly(list_data_in_pkg(pkgname, dataDir = data_dir)),
+	unlist(.try_quietly(list_data_in_pkg(dir = dir)),
 	       use.names = FALSE)
     else
         character()
@@ -425,8 +425,7 @@ function(package, dir, lib.loc = NULL,
     data_dir <- file.path(dir, "data")
     if(dir.exists(data_dir)) {
         data_sets_in_code_variables <-
-            .try_quietly(list_data_in_pkg(package_name,
-                                          dataDir = data_dir))
+            .try_quietly(list_data_in_pkg(dir = dir))
         data_sets_in_code <- names(data_sets_in_code_variables)
     } else
         data_sets_in_code <- data_sets_in_code_variables <- character()

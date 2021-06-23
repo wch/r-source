@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"POT-Creation-Date: 2021-04-15 19:37+0100\n"
 "PO-Revision-Date: 2018-09-16 23:33+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -222,12 +222,12 @@ msgstr "無法儲存檔案 '%s'"
 msgid "Save script as"
 msgstr "命令稿另存為"
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
-#: src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:431
+#: src/gnuwin32/rui.c:1078
 msgid "Open script"
 msgstr "開啟命令稿"
 
-#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:184 src/gnuwin32/pager.c:204
+#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
 msgid "No RGui console to paste to"
 msgstr "沒有可以貼上的 RGui 主控臺"
 
@@ -286,14 +286,14 @@ msgstr "復原"
 msgid "Cut"
 msgstr "剪下"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
-#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
-#: src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:305
+#: src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1090
+#: src/gnuwin32/rui.c:1146
 msgid "Copy"
 msgstr "複製"
 
 #: src/gnuwin32/editor.c:633 src/gnuwin32/editor.c:754 src/gnuwin32/rui.c:860
-#: src/gnuwin32/rui.c:1092 src/gnuwin32/rui.c:1145
+#: src/gnuwin32/rui.c:1094 src/gnuwin32/rui.c:1147
 msgid "Paste"
 msgstr "貼上"
 
@@ -301,8 +301,8 @@ msgstr "貼上"
 msgid "Delete"
 msgstr "刪除"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
-#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:308
+#: src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1151
 msgid "Select all"
 msgstr "全部選取"
 
@@ -310,7 +310,7 @@ msgstr "全部選取"
 msgid "Save script"
 msgstr "儲存命令稿"
 
-#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
+#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:451
 #: src/library/grDevices/src/devWindows.c:1619
 msgid "Return focus to Console"
 msgstr "回復焦點到主控臺"
@@ -319,22 +319,22 @@ msgstr "回復焦點到主控臺"
 msgid "Print script"
 msgstr "列印命令稿"
 
-#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
+#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1106
 #: src/library/grDevices/src/devWindows.c:1613
 msgid "Print"
 msgstr "列印"
 
-#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
 #: src/library/utils/src/windows/dataentry.c:1791
 #: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
 msgstr "檔案"
 
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1126
 msgid "New script"
 msgstr "建立新的命令稿"
 
-#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1127
 msgid "Open script..."
 msgstr "開啟命令稿…"
 
@@ -346,7 +346,7 @@ msgstr "儲存"
 msgid "Save as..."
 msgstr "另存為…"
 
-#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
+#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1140
 #: src/library/grDevices/src/devWindows.c:1672
 #: src/library/grDevices/src/devWindows.c:1714
 msgid "Print..."
@@ -356,12 +356,12 @@ msgstr "列印…"
 msgid "Close script"
 msgstr "關閉命令稿"
 
-#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:476 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1145
 #: src/library/utils/src/windows/dataentry.c:1797
 msgid "Edit"
 msgstr "編輯"
 
-#: src/gnuwin32/editor.c:760 src/gnuwin32/rui.c:1150
+#: src/gnuwin32/editor.c:760 src/gnuwin32/rui.c:1152
 msgid "Clear console"
 msgstr "清空主控臺"
 
@@ -377,11 +377,11 @@ msgstr "尋找…"
 msgid "Replace..."
 msgstr "替換…"
 
-#: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1154
+#: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1156
 msgid "GUI preferences..."
 msgstr "GUI 偏好設定…"
 
-#: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1186
+#: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
 #: src/library/utils/src/windows/dataentry.c:1698
 #: src/library/utils/src/windows/dataentry.c:1808
 msgid "Help"
@@ -407,48 +407,48 @@ msgstr "未命名"
 msgid "Select file"
 msgstr "選擇檔案"
 
-#: src/gnuwin32/pager.c:88
+#: src/gnuwin32/pager.c:89
 msgid "Error opening file"
 msgstr "開啟檔案時發生錯誤"
 
-#: src/gnuwin32/pager.c:95
+#: src/gnuwin32/pager.c:96
 msgid "Insufficient memory to display file in internal pager"
 msgstr "用內部頁面切換程式來顯示檔案時記憶體不足"
 
-#: src/gnuwin32/pager.c:176 src/gnuwin32/pager.c:188 src/gnuwin32/pager.c:208
+#: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
 #: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "沒有選擇"
 
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:435 src/gnuwin32/pager.c:479
+#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:436 src/gnuwin32/pager.c:480
 msgid "Paste to console"
 msgstr "貼到主控臺"
 
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:440 src/gnuwin32/pager.c:481
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:441 src/gnuwin32/pager.c:482
 msgid "Paste commands to console"
 msgstr "貼上命令到主控臺"
 
-#: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
 #: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
 msgstr "視窗保持在最上層"
 
-#: src/gnuwin32/pager.c:311 src/gnuwin32/pager.c:474
+#: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
 #: src/library/utils/src/windows/dataentry.c:1706
 #: src/library/utils/src/windows/dataentry.c:1793
 msgid "Close"
 msgstr "關閉"
 
-#: src/gnuwin32/pager.c:471 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1141
 msgid "Save to File..."
 msgstr "儲存到檔案…"
 
-#: src/gnuwin32/pager.c:486 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1158
 msgid "View"
 msgstr "看"
 
-#: src/gnuwin32/pager.c:518
+#: src/gnuwin32/pager.c:519
 msgid "Unable to create pager window"
 msgstr "無法建立頁面切換程式視窗"
 
@@ -561,11 +561,11 @@ msgstr "關於"
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "滑鼠拖放只適用於 .R、.RData 和 .rda 字尾的檔案"
 
-#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1146
+#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1148
 msgid "Paste commands only"
 msgstr "只能用貼上命令"
 
-#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1096
+#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1098
 msgid "Copy and paste"
 msgstr "複製和貼上"
 
@@ -573,7 +573,7 @@ msgstr "複製和貼上"
 msgid "Clear window"
 msgstr "清除視窗"
 
-#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1169
+#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1171
 msgid "Buffered output"
 msgstr "緩衝區輸出"
 
@@ -669,149 +669,149 @@ msgstr "群組縮到最小"
 msgid "Restore group"
 msgstr "還原群組"
 
-#: src/gnuwin32/rui.c:1080
+#: src/gnuwin32/rui.c:1082
 msgid "Load workspace"
 msgstr "載入工作區"
 
-#: src/gnuwin32/rui.c:1084
+#: src/gnuwin32/rui.c:1086
 msgid "Save workspace"
 msgstr "儲存工作區"
 
-#: src/gnuwin32/rui.c:1100
+#: src/gnuwin32/rui.c:1102
 msgid "Stop current computation"
 msgstr "停止目前的計算"
 
-#: src/gnuwin32/rui.c:1123
+#: src/gnuwin32/rui.c:1125
 msgid "Source R code..."
 msgstr "輸入 R 程式碼…"
 
-#: src/gnuwin32/rui.c:1126
+#: src/gnuwin32/rui.c:1128
 msgid "Display file(s)..."
 msgstr "顯示檔案…"
 
-#: src/gnuwin32/rui.c:1128
+#: src/gnuwin32/rui.c:1130
 msgid "Load Workspace..."
 msgstr "載入工作空間…"
 
-#: src/gnuwin32/rui.c:1129
+#: src/gnuwin32/rui.c:1131
 msgid "Save Workspace..."
 msgstr "儲存工作空間…"
 
-#: src/gnuwin32/rui.c:1131
+#: src/gnuwin32/rui.c:1133
 msgid "Load History..."
 msgstr "載入命令歷程…"
 
-#: src/gnuwin32/rui.c:1133
+#: src/gnuwin32/rui.c:1135
 msgid "Save History..."
 msgstr "儲存命令歷程…"
 
-#: src/gnuwin32/rui.c:1136
+#: src/gnuwin32/rui.c:1138
 msgid "Change dir..."
 msgstr "變更現行目錄…"
 
-#: src/gnuwin32/rui.c:1141
+#: src/gnuwin32/rui.c:1143
 msgid "Exit"
 msgstr "離開"
 
-#: src/gnuwin32/rui.c:1148
+#: src/gnuwin32/rui.c:1150
 msgid "Copy and Paste"
 msgstr "複製和貼上"
 
-#: src/gnuwin32/rui.c:1152
+#: src/gnuwin32/rui.c:1154
 msgid "Data editor..."
 msgstr "資料編輯器…"
 
-#: src/gnuwin32/rui.c:1157
+#: src/gnuwin32/rui.c:1159
 msgid "Toolbar"
 msgstr "工具列"
 
-#: src/gnuwin32/rui.c:1158
+#: src/gnuwin32/rui.c:1160
 msgid "Statusbar"
 msgstr "狀態列"
 
-#: src/gnuwin32/rui.c:1162
+#: src/gnuwin32/rui.c:1164
 msgid "Misc"
 msgstr "其他"
 
-#: src/gnuwin32/rui.c:1163
+#: src/gnuwin32/rui.c:1165
 msgid "Stop current computation           \tESC"
 msgstr "停止目前的計算           \tESC"
 
-#: src/gnuwin32/rui.c:1165
+#: src/gnuwin32/rui.c:1167
 msgid "Stop all computations"
 msgstr "停止所有計算"
 
 # "停止目前的計算"
-#: src/gnuwin32/rui.c:1167
+#: src/gnuwin32/rui.c:1169
 msgid "Break to debugger"
 msgstr "暫停進入偵錯器"
 
-#: src/gnuwin32/rui.c:1170
+#: src/gnuwin32/rui.c:1172
 msgid "Word completion"
 msgstr "自動完成字詞"
 
-#: src/gnuwin32/rui.c:1172
+#: src/gnuwin32/rui.c:1174
 msgid "Filename completion"
 msgstr "檔名補完"
 
-#: src/gnuwin32/rui.c:1179
+#: src/gnuwin32/rui.c:1181
 msgid "List objects"
 msgstr "列出目的物件"
 
-#: src/gnuwin32/rui.c:1180
+#: src/gnuwin32/rui.c:1182
 msgid "Remove all objects"
 msgstr "刪除所有目的物件"
 
-#: src/gnuwin32/rui.c:1181
+#: src/gnuwin32/rui.c:1183
 msgid "List search &path"
 msgstr "列出搜尋路徑(&P)"
 
-#: src/gnuwin32/rui.c:1187
+#: src/gnuwin32/rui.c:1189
 msgid "Console"
 msgstr "主控臺"
 
-#: src/gnuwin32/rui.c:1248
+#: src/gnuwin32/rui.c:1250
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname' 的長度最多只能有 1000 個字元"
 
-#: src/gnuwin32/rui.c:1293
+#: src/gnuwin32/rui.c:1295
 #, c-format
 msgid "menu %s does not exist"
 msgstr "%s 選單不存在"
 
-#: src/gnuwin32/rui.c:1346
+#: src/gnuwin32/rui.c:1348
 msgid "'menu' is limited to 500 bytes"
 msgstr "'menu' 的長度最多只能有 500 個字元"
 
-#: src/gnuwin32/rui.c:1356
+#: src/gnuwin32/rui.c:1358
 msgid "base menu does not exist"
 msgstr "基本選單不存在"
 
-#: src/gnuwin32/rui.c:1371
+#: src/gnuwin32/rui.c:1373
 msgid "failed to allocate menu"
 msgstr "無法配置選單"
 
-#: src/gnuwin32/rui.c:1388 src/gnuwin32/rui.c:1512
+#: src/gnuwin32/rui.c:1390 src/gnuwin32/rui.c:1514
 msgid "menu + item is limited to 1000 bytes"
 msgstr "菜單＋項目的長度只能在 1000 個字元內"
 
-#: src/gnuwin32/rui.c:1396 src/gnuwin32/rui.c:1479
+#: src/gnuwin32/rui.c:1398 src/gnuwin32/rui.c:1481
 msgid "menu does not exist"
 msgstr "沒有此一選單"
 
-#: src/gnuwin32/rui.c:1414 src/gnuwin32/rui.c:1437 src/gnuwin32/rui.c:1442
+#: src/gnuwin32/rui.c:1416 src/gnuwin32/rui.c:1439 src/gnuwin32/rui.c:1444
 msgid "failed to allocate char storage"
 msgstr "配置字元儲存器失敗"
 
-#: src/gnuwin32/rui.c:1450
+#: src/gnuwin32/rui.c:1452
 msgid "failed to allocate menuitem"
 msgstr "配置選單項失敗"
 
-#: src/gnuwin32/rui.c:1502
+#: src/gnuwin32/rui.c:1504
 msgid "menu not found"
 msgstr "找不到選單"
 
-#: src/gnuwin32/rui.c:1520
+#: src/gnuwin32/rui.c:1522
 msgid "menu or item does not exist"
 msgstr "選單或是項目不存在"
 
@@ -840,12 +840,12 @@ msgstr "無法將 '%s' 設成現行目錄"
 #: src/extra/graphapp/dialogs.c:604 src/extra/graphapp/dialogs.c:622
 #: src/extra/graphapp/dialogs.c:628 src/extra/graphapp/dialogs.c:729
 #: src/extra/graphapp/dialogs.c:743 src/extra/graphapp/dialogs.c:749
-#: src/library/utils/src/windows/widgets.c:126
+#: src/library/utils/src/windows/widgets.c:122
 msgid "Cancel"
 msgstr "取消"
 
 #: src/extra/graphapp/dialogs.c:624 src/extra/graphapp/dialogs.c:745
-#: src/library/utils/src/windows/widgets.c:125
+#: src/library/utils/src/windows/widgets.c:121
 msgid "OK"
 msgstr "確定"
 

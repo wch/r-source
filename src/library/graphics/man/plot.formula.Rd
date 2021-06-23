@@ -90,7 +90,7 @@ par(op)
 wb <- within(warpbreaks, {
     time <- seq_along(breaks); W.T <- wool:tension })
 plot(breaks ~ time, data = wb, type = "b")
-text(breaks ~ time, data = wb, label = W.T, col = 1+as.integer(wool))
+text(breaks ~ time, data = wb, labels = W.T, col = 1+as.integer(wool))
 }
 \keyword{hplot}% plot
 \keyword{aplot}% points, etc

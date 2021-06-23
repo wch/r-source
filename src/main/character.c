@@ -35,7 +35,7 @@ here prior to 2.10.0 are now in grep.c and agrep.c
 make.unique, duplicated, unique, match, pmatch, charmatch are in unique.c
 iconv is in sysutils.c
 
-Character strings in R are less than 2^31-1 bytes, so we use int not size_t.
+Character strings in R are at most 2^31-1 bytes, so we use int not size_t.
 
 Support for UTF-8-encoded strings in non-UTF-8 locales
 ======================================================
@@ -146,6 +146,17 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* R strings are limited to 2^31 - 1 bytes on all platforms */
+
+/* when msg_name is not NULL,
+     error handling is via error() with a message including msg_name
+     semi-internal buffer cbuff is freed if over default size
+
+   when msg_name is NULL, (for use where performance matters)
+     error handling is via negative return value (other than NA_INTEGER):
+       -1 ... invalid multi-byte string
+       -2 ... the quantity is not computable (bytes encoding)
+     semi-internal buffer cbuff is never freed, should be freed by caller
+*/
 int R_nchar(SEXP string, nchar_type type_,
 	    Rboolean allowNA, Rboolean keepNA, const char* msg_name)
 {
@@ -160,8 +171,12 @@ int R_nchar(SEXP string, nchar_type type_,
 	if (IS_UTF8(string)) {
 	    const char *p = CHAR(string);
 	    if (!utf8Valid(p)) {
-		if (!allowNA)
-		    error(_("invalid multibyte string, %s"), msg_name);
+		if (!allowNA) {
+		    if (msg_name)
+			error(_("invalid multibyte string, %s"), msg_name);
+		    else
+			return -1;
+		}
 		return NA_INTEGER;
 	    } else {
 		int nc = 0;
@@ -172,14 +187,22 @@ int R_nchar(SEXP string, nchar_type type_,
 	    // just count bytes
 	    return (int) strlen(CHAR(string));
 	} else if (IS_BYTES(string)) {
-	    if (!allowNA) /* could do chars 0 */
-		error(_("number of characters is not computable in \"bytes\" encoding, %s"),
-		      msg_name);
+	    if (!allowNA) /* could do chars 0 */ {
+		if (msg_name)
+		    error(_("number of characters is not computable in \"bytes\" encoding, %s"),
+		          msg_name);
+		else
+		    return -2;
+	    }
 	    return NA_INTEGER;
 	} else if (mbcslocale) {
 	    int nc = (int) mbstowcs(NULL, translateChar(string), 0);
-	    if (!allowNA && nc < 0)
-		error(_("invalid multibyte string, %s"), msg_name);
+	    if (!allowNA && nc < 0) {
+		if (msg_name)
+		    error(_("invalid multibyte string, %s"), msg_name);
+		else
+		    return -1;
+	    }
 	    return (nc >= 0 ? nc : NA_INTEGER);
 	} else
 	    return ((int) strlen(translateChar(string)));
@@ -188,8 +211,12 @@ int R_nchar(SEXP string, nchar_type type_,
 	if (IS_UTF8(string)) {
 	    const char *p = CHAR(string);
 	    if (!utf8Valid(p)) {
-		if (!allowNA)
-		    error(_("invalid multibyte string, %s"), msg_name);
+		if (!allowNA) {
+		    if (msg_name)
+			error(_("invalid multibyte string, %s"), msg_name);
+		    else
+			return -1;
+		}
 		return NA_INTEGER;
 	    } else {
 		int nc = 0;
@@ -213,9 +240,13 @@ int R_nchar(SEXP string, nchar_type type_,
 		return nc;
 	    }
 	} else if (IS_BYTES(string)) {
-	    if (!allowNA) /* could do width 0 */
-		error(_("width is not computable for %s in \"bytes\" encoding"),
-		      msg_name);
+	    if (!allowNA) { /* could do width 0 */
+		if (msg_name)
+		    error(_("width is not computable for %s in \"bytes\" encoding"),
+		          msg_name);
+		else
+		    return -2;
+	    }
 	    return NA_INTEGER;
 	} else if (IS_LATIN1(string)) {
 	    // just count bytes as they are all width-1 chars
@@ -241,10 +272,16 @@ int R_nchar(SEXP string, nchar_type type_,
 		// then this is ignored
 		int nci18n = wcswidth(wc, 2147483647);
 #endif
+		if (msg_name)
+		    R_FreeStringBufferL(&cbuff);
 		vmaxset(vmax);
 		return (nci18n < 1) ? nc : nci18n;
-	    } else if (allowNA)
-		error(_("invalid multibyte string, %s"), msg_name);
+	    } else if (allowNA) {
+		if (msg_name)
+		    error(_("invalid multibyte string, %s"), msg_name);
+		else
+		    return -1;
+	    }
 	    else
 		return NA_INTEGER;
 	} else
@@ -302,8 +339,21 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     int *s_ = INTEGER(s);
     for (R_xlen_t i = 0; i < len; i++) {
 	SEXP sxi = STRING_ELT(x, i);
-	char msg_i[30]; sprintf(msg_i, "element %ld", (long)i+1);
-	s_[i] = R_nchar(sxi, type_, allowNA, keepNA, msg_i);
+	int res = R_nchar(sxi, type_, allowNA, keepNA, NULL);
+	switch(res) {
+	case -1:
+	    error(_("invalid multibyte string, element %ld"), (long)i+1);
+	case -2: 
+	    if (type_ == Chars)
+		error(_("number of characters is not computable in \"bytes\" encoding, element %ld"),
+		      (long)i+1);
+	    else /* type_ == Width */
+		error(_("width is not computable in \"bytes\" encoding, element %ld"),
+		      (long)i+1);
+	default:
+	    s_[i] = res;
+	    break;
+	}
     }
     R_FreeStringBufferL(&cbuff);
     if ((d = getAttrib(x, R_NamesSymbol)) != R_NilValue)
@@ -349,11 +399,11 @@ static void substr(const char *str, int len, int ienc, int sa, int so,
 	mbs_init(&mb_st);
 	for (i = 0; i < sa - 1 && str < end; i++)
 	    /* throws error on invalid multi-byte string */
-	    str += Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
+	    str += Mbrtowc(NULL, str, R_MB_CUR_MAX, &mb_st);
 	*rfrom = str;
 	for (; i < so && str < end; i++)
 	    /* throws error on invalid multi-byte string */
-	    str += (int) Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
+	    str += (int) Mbrtowc(NULL, str, R_MB_CUR_MAX, &mb_st);
 	*rlen = (int) (str - *rfrom);
     } else {
 	if (so - 1 < len) {
@@ -562,11 +612,11 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so,
     } else {
 	/* This cannot work for stateful encodings */
 	if (mbcslocale) {
-	    for (i = 1; i < sa; i++) buf += Mbrtowc(NULL, buf, MB_CUR_MAX, NULL);
+	    for (i = 1; i < sa; i++) buf += Mbrtowc(NULL, buf, R_MB_CUR_MAX, NULL);
 	    /* now work out how many bytes to replace by how many */
 	    for (i = sa; i <= so && in < strlen(str); i++) {
-		in += (int) Mbrtowc(NULL, str+in, MB_CUR_MAX, NULL);
-		out += (int) Mbrtowc(NULL, buf+out, MB_CUR_MAX, NULL);
+		in += (int) Mbrtowc(NULL, str+in, R_MB_CUR_MAX, NULL);
+		out += (int) Mbrtowc(NULL, buf+out, R_MB_CUR_MAX, NULL);
 		if (!str[in]) break;
 	    }
 	    if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
@@ -944,11 +994,11 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    mbstate_t mb_st;
 	    const char *pp = This;
 	    mbs_init(&mb_st);
-	    used = (int) Mbrtowc(&wc, pp, MB_CUR_MAX, &mb_st);
+	    used = (int) Mbrtowc(&wc, pp, R_MB_CUR_MAX, &mb_st);
 	    pp += used; nc -= used;
 	    if (wc == L'.') {
 		if (nc > 0) {
-		    Mbrtowc(&wc, pp, MB_CUR_MAX, &mb_st);
+		    Mbrtowc(&wc, pp, R_MB_CUR_MAX, &mb_st);
 		    if (iswdigit(wc))  need_prefix = TRUE;
 		}
 	    } else if (!iswalpha(wc)) need_prefix = TRUE;
@@ -1669,7 +1719,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 	    mbs_init(&mb_st);
 	    for (p = This, w0 = 0, q = buf; *p ;) {
 		wchar_t wc;
-		nb =  (int) Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
+		nb =  (int) Mbrtowc(&wc, p, R_MB_CUR_MAX, &mb_st);
 #ifdef USE_RI18N_WIDTH
 		w0 = Ri18n_wcwidth((R_wchar_t) wc);
 #else

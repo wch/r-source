@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2018-09-16 23:21+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -22,8 +22,8 @@ msgstr ""
 #: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:79
-#: windows/widgets.c:82 windows/widgets.c:87
+#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
+#: windows/widgets.c:78 windows/widgets.c:83
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "無效的 %s 引數"
@@ -142,20 +142,34 @@ msgstr "無效的 '%s' 規格"
 msgid "'%s' contains missing values"
 msgstr ""
 
-#: utils.c:85
+#: utils.c:68
+#, fuzzy
+msgid "argument 'class' must be a character string"
+msgstr "'text' 必須是字串"
+
+#: utils.c:78
+#, fuzzy
+msgid "argument 'x' must be a length-1 character vector"
+msgstr "引數必須是字元向量或純量向量"
+
+#: utils.c:81
+msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
+msgstr ""
+
+#: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' 必須是長度 1 的字元向量"
 
-#: utils.c:91
+#: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() 無法解析主機 %s"
 
-#: utils.c:98
+#: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr "由 'gethostbyname' 回傳的未知格式"
 
-#: utils.c:107
+#: utils.c:169
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() 於這個平臺未被支援"
 
@@ -242,30 +256,30 @@ msgstr "'%s' 必須是串列"
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' 元件 %d 並非視窗控柄"
 
-#: windows/widgets.c:109
+#: windows/widgets.c:105
 msgid "Select one or more"
 msgstr "選取一或多個"
 
-#: windows/widgets.c:109
+#: windows/widgets.c:105
 msgid "Select one"
 msgstr "選取一個"
 
-#: windows/widgets.c:183 windows/widgets.c:251
+#: windows/widgets.c:188 windows/widgets.c:256
 msgid "'default' must be a character string"
 msgstr "'default' 必須是字串"
 
-#: windows/widgets.c:185 windows/widgets.c:253
+#: windows/widgets.c:190 windows/widgets.c:258
 msgid "'default' is overlong"
 msgstr "'default' 過長"
 
-#: windows/widgets.c:189 windows/widgets.c:257
+#: windows/widgets.c:194 windows/widgets.c:262
 msgid "'caption' must be a character string"
 msgstr "'caption' 必須是字串"
 
-#: windows/widgets.c:191
+#: windows/widgets.c:196
 msgid "'multi' must be a logical value"
 msgstr "'multi' 必須是邏輯值"
 
-#: windows/widgets.c:193
+#: windows/widgets.c:198
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' 必須是整數值"

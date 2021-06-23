@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,12 +198,12 @@ msgid ""
 "Try increasing the size of the workspace and possibly 'mult'"
 msgstr ""
 
-#: fexact.c:1035
+#: fexact.c:1037
 #, c-format
 msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
 msgstr ""
 
-#: fexact.c:1064
+#: fexact.c:1069
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -211,14 +211,14 @@ msgid ""
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
 
-#: fexact.c:1399
+#: fexact.c:1404
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
 
-#: fexact.c:1412
+#: fexact.c:1417
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -226,7 +226,7 @@ msgid ""
 "Increase workspace or consider using 'simulate.p.value=TRUE'."
 msgstr ""
 
-#: fexact.c:1449
+#: fexact.c:1454
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -533,21 +533,21 @@ msgstr "length(m) skal være mindst to"
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "Argument Sx skal være en numerisk vektor en kortere end m[]"
 
-#: nls.c:99
+#: nls.c:95
 msgid "'control' must be a list"
 msgstr "'control' skal være en liste"
 
-#: nls.c:101
+#: nls.c:97
 msgid "'m' must be a list"
 msgstr "'m' skal være en liste"
 
-#: nls.c:107 nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:168 nls.c:173
-#: nls.c:178 nls.c:183 nls.c:188 nls.c:193
+#: nls.c:104 nls.c:109 nls.c:114 nls.c:119 nls.c:124 nls.c:132 nls.c:137
+#: nls.c:142 nls.c:147 nls.c:152 nls.c:157
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' mangler"
 
-#: nls.c:234
+#: nls.c:233
 msgid "singular gradient"
 msgstr "entalsgradient"
 
@@ -556,41 +556,45 @@ msgstr "entalsgradient"
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "trinfaktor %g reduceret under 'minFactor' af %g"
 
-#: nls.c:264
+#: nls.c:263
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "antal iterationer overskred maksimum på %d"
 
-#: nls.c:269
+#: nls.c:267
 msgid "converged"
 msgstr "begrænset"
 
-#: nls.c:290
+#: nls.c:284
 msgid "'theta' should be of type character"
 msgstr "'theta' skal være type-tegn"
 
-#: nls.c:292 port.c:382
+#: nls.c:286 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr "brug af NULL-miljø er ude af drift"
 
-#: nls.c:296
+#: nls.c:290
 msgid "'rho' should be an environment"
 msgstr "'rho' skal være et miljø"
 
-#: nls.c:299
+#: nls.c:296
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' er ikke en numerisk vektor med korrekt længde"
 
-#: nls.c:313 nls.c:347
+#: nls.c:299
+msgid "'central' is NA, but must be TRUE or FALSE"
+msgstr ""
+
+#: nls.c:315
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Manglende værdi eller en uendelig lavet under evaluering af modellen"
 
-#: nls.c:321
+#: nls.c:328
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "variable '%s' er et heltal, ikke numerisk"
 
-#: nls.c:323
+#: nls.c:330
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "variabel '%s' er ikke numerisk"

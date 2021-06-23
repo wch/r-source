@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: graphics 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -347,6 +348,15 @@ msgid "cannot handle more than one 'x' coordinate"
 msgstr ""
 
 msgid "must have a response variable"
+msgstr ""
+
+msgid "invalid plot type"
+msgstr ""
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+msgid "invalid plot type '%s'"
 msgstr ""
 
 msgid "'plot.data.frame' applied to non data frame"

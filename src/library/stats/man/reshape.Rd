@@ -7,10 +7,10 @@
 \alias{reshape}
 \title{Reshape Grouped Data}
 \description{
-  This function reshapes a data frame between \sQuote{wide} format with
-  repeated measurements in separate columns of the same record and
-  \sQuote{long} format with the repeated measurements in separate
-  records.
+  This function reshapes a data frame between \sQuote{wide} format (with
+  repeated measurements in separate columns of the same row) and
+  \sQuote{long} format (with the repeated measurements in separate
+  rows).
 }
 \usage{
 reshape(data, varying = NULL, v.names = NULL, timevar = "time",
@@ -24,6 +24,29 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
             list(regexp = sep, include = FALSE, fixed = TRUE)}
         )
 
+### Typical usage for converting from long to wide format:
+
+# reshape(data, direction = "wide",
+#         idvar = "___", timevar = "___", # mandatory
+#         v.names = c(___),    # time-varying variables
+#         varying = list(___)) # auto-generated if missing
+
+### Typical usage for converting from wide to long format:
+
+### If names of wide-format variables are in a 'nice' format
+
+# reshape(data, direction = "long",
+#         varying = c(___), # vector 
+#         sep)              # to help guess 'v.names' and 'times'
+
+### To specify long-format variable names explicitly
+
+# reshape(data, direction = "long",
+#         varying = ___,  # list / matrix / vector (use with care)
+#         v.names = ___,  # vector of variable names in long format
+#         timevar, times, # name / values of constructed time variable
+#         idvar, ids)     # name / values of constructed id variable
+
 }
 \arguments{
   \item{data}{a data frame}
@@ -31,9 +54,10 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     correspond to single variables in long format
     (\sQuote{time-varying}).  This is canonically a list of vectors of
     variable names, but it can optionally be a matrix of names, or a
-    single vector of names.  In each case, the names can be replaced by
-    indices which are interpreted as referring to \code{names(data)}.
-    See \sQuote{Details} for more details and options.}
+    single vector of names.  In each case, when \code{direction =
+    "long"}, the names can be replaced by indices which are interpreted
+    as referring to \code{names(data)}.  See \sQuote{Details} for more
+    details and options.}
   \item{v.names}{names of variables in the long format that correspond
     to multiple variables in the wide format.  See \sQuote{Details}.}
   \item{timevar}{the variable in long format that differentiates multiple
@@ -63,44 +87,102 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     extended interface to variable name splitting.  See \sQuote{Details}.}
 }
 \details{
-  The arguments to this function are described in terms of longitudinal
-  data, as that is the application motivating the functions.  A
-  \sQuote{wide} longitudinal dataset will have one record for each
-  individual with some time-constant variables that occupy single
-  columns and some time-varying variables that occupy a column for each
-  time point.  In \sQuote{long} format there will be multiple records
-  for each individual, with some variables being constant across these
-  records and others varying across the records.  A \sQuote{long} format
-  dataset also needs a \sQuote{time} variable identifying which time
-  point each record comes from and an \sQuote{id} variable showing which
-  records refer to the same person.
+  Although \code{reshape()} can be used in a variety of contexts, the
+  motivating application is data from longitudinal studies, and the
+  arguments of this function are named and described in those terms. A
+  longitudinal study is characterized by repeated measurements of the
+  same variable(s), e.g., height and weight, on each unit being studied
+  (e.g., individual persons) at different time points (which are assumed
+  to be the same for all units). These variables are called time-varying
+  variables. The study may include other variables that are measured
+  only once for each unit and do not vary with time (e.g., gender and
+  race); these are called time-constant variables.
 
-  If the data frame resulted from a previous \code{reshape} then the
-  operation can be reversed simply by \code{reshape(a)}.  The
-  \code{direction} argument is optional and the other arguments are
-  stored as attributes on the data frame.
+  A \sQuote{wide} format representation of a longitudinal dataset will
+  have one record (row) for each unit, typically with some time-constant
+  variables that occupy single columns, and some time-varying variables
+  that occupy multiple columns (one column for each time point).  A
+  \sQuote{long} format representation of the same dataset will have
+  multiple records (rows) for each individual, with the time-constant
+  variables being constant across these records and the time-varying
+  variables varying across the records.  The \sQuote{long} format
+  dataset will have two additional variables: a \sQuote{time} variable
+  identifying which time point each record comes from, and an
+  \sQuote{id} variable showing which records refer to the same unit.
 
-  If \code{direction = "wide"} and no \code{varying} or \code{v.names}
-  arguments are supplied it is assumed that all variables except
-  \code{idvar} and \code{timevar} are time-varying.  They are all
-  expanded into multiple variables in wide format.
+  The type of conversion (long to wide or wide to long) is determined by
+  the \code{direction} argument, which is mandatory unless the
+  \code{data} argument is the result of a previous call to
+  \code{reshape}.  In that case, the operation can be reversed simply
+  using \code{reshape(data)} (the other arguments are stored as
+  attributes on the data frame).
 
-  If \code{direction = "long"} the \code{varying} argument can be a vector
-  of column names (or a corresponding index).  The function will attempt
-  to guess the \code{v.names} and \code{times} from these names.  The
-  default is variable names like \code{x.1}, \code{x.2}, where
-  \code{sep = "."} specifies to split at the dot and drop it from the
-  name.  To have alphabetic followed by numeric times use \code{sep = ""}.
+  Conversion from long to wide format with \code{direction = "wide"} is
+  the simpler operation, and is mainly useful in the context of
+  multivariate analysis where data is often expected as a wide-format
+  matrix. In this case, the time variable \code{timevar} and id variable
+  \code{idvar} must be specified. All other variables are assumed to be
+  time-varying, unless the time-varying variables are explicitly
+  specified via the \code{v.names} argument.  A warning is issued if
+  time-constant variables are not actually constant.
 
-  Variable name splitting as described above is only attempted in the
-  case where \code{varying} is an atomic vector, if it is a list or a
-  matrix, \code{v.names} and \code{times} will generally need to be
-  specified, although they will default to, respectively, the first
-  variable name in each set, and sequential times.
+  Each time-varying variable is expanded into multiple variables in the
+  wide format.  The names of these expanded variables are generated
+  automatically, unless they are specified as the \code{varying}
+  argument in the form of a list (or matrix) with one component (or row)
+  for each time-varying variable. If \code{varying} is a vector of
+  names, it is implicitly converted into a matrix, with one row for each
+  time-varying variable. Use this option with care if there are multiple
+  time-varying variables, as the ordering (by column, the default in the
+  \code{\link{matrix}} constructor) may be unintuitive, whereas the
+  explicit list or matrix form is unambiguous.
 
-  Also, guessing is not attempted if \code{v.names} is given
-  explicitly.  Notice that the order of variables in \code{varying} is
-  like \code{x.1},\code{y.1},\code{x.2},\code{y.2}.
+  %% (FIXME: delete?) If 'direction = "wide"' and no \code{varying} or
+  %% \code{v.names} arguments are supplied it is assumed that all variables
+  %% except \code{idvar} and \code{timevar} are time-varying.
+
+  Conversion from wide to long with \code{direction = "long"} is the
+  more common operation as most (univariate) statistical modeling
+  functions expect data in the long format. In the simpler case where
+  there is only one time-varying variable, the corresponding columns in
+  the wide format input can be specified as the \code{varying} argument,
+  which can be either a vector of column names or the corresponding
+  column indices. The name of the corresponding variable in the long
+  format output combining these columns can be optionally specified as
+  the \code{v.names} argument, and the name of the time variables as the
+  \code{timevar} argument. The values to use as the time values
+  corresponding to the different columns in the wide format can be
+  specified as the \code{times} argument.  If \code{v.names} is
+  unspecified, the function will attempt to guess \code{v.names} and
+  \code{times} from \code{varying} (an explicitly specified \code{times}
+  argument is unused in that case).  The default expects variable names
+  like \code{x.1}, \code{x.2}, where \code{sep = "."}  specifies to
+  split at the dot and drop it from the name.  To have alphabetic
+  followed by numeric times use \code{sep = ""}.
+
+  Multiple time-varying variables can be specified in two ways, either
+  with \code{varying} as an atomic vector as above, or as a list (or a
+  matrix). The first form is useful (and mandatory) if the automatic
+  variable name splitting as described above is used; this requires the
+  names of all time-varying variables to be suitably formatted in the
+  same manner, and \code{v.names} to be unspecified. If \code{varying}
+  is a list (with one component for each time-varying variable) or a
+  matrix (one row for each time-varying variable), variable name
+  splitting is not attempted, and \code{v.names} and \code{times} will
+  generally need to be specified, although they will default to,
+  respectively, the first variable name in each set, and sequential
+  times.
+
+  Also, guessing is not attempted if \code{v.names} is given explicitly,
+  even if \code{varying} is an atomic vector. In that case, the number
+  of time-varying variables is taken to be the length of \code{v.names},
+  and \code{varying} is implicitly converted into a matrix, with one row
+  for each time-varying variable. As in the case of long to wide
+  conversion, the matrix is filled up by column, so careful attention needs
+  to be paid to the order of variable names (or indices) in
+  \code{varying}, which is taken to be like \code{x.1}, \code{y.1},
+  \code{x.2}, \code{y.2} (i.e., variables corresponding to the same time
+  point need to be grouped together).
 
   The \code{split} argument should not usually be necessary.  The
   \code{split$regexp} component is passed to either
@@ -116,14 +198,23 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   back to the original form.
 }
 \seealso{\code{\link{stack}}, \code{\link{aperm}};
-  \code{\link{relist}} for reshaping the result of \code{\link{unlist}}.
+  \code{\link{relist}} for reshaping the result of
+  \code{\link{unlist}}. \code{\link{xtabs}} and
+  \code{\link{as.data.frame.table}} for creating contingency tables and
+  converting them back to data frames.
 }
 \examples{
-summary(Indometh)
-wide <- reshape(Indometh, v.names = "conc", idvar = "Subject",
-                timevar = "time", direction = "wide")
+summary(Indometh) # data in long format
+
+## long to wide (direction = "wide") requires idvar and timevar at a minimum
+reshape(Indometh, direction = "wide", idvar = "Subject", timevar = "time")
+
+## can also explicitly specify name of combined variable
+wide <- reshape(Indometh, direction = "wide", idvar = "Subject",
+                timevar = "time", v.names = "conc", sep= "_")
 wide
 
+## reverse transformation
 reshape(wide, direction = "long")
 reshape(wide, idvar = "Subject", varying = list(2:12),
         v.names = "conc", direction = "long")
@@ -162,7 +253,7 @@ reshape(long, direction = "wide", new.row.names = unique(long$state))
 ## multiple id variables
 df3 <- data.frame(school = rep(1:3, each = 4), class = rep(9:10, 6),
                   time = rep(c(1,1,2,2), 3), score = rnorm(12))
-wide <- reshape(df3, idvar = c("school","class"), direction = "wide")
+wide <- reshape(df3, idvar = c("school", "class"), direction = "wide")
 wide
 ## transform back
 reshape(wide)

@@ -42,7 +42,7 @@ s.m <- window(sm, start=t1, end=t2)
 s.y <- window(sy, start=t1, end=t2[1]) # {irrelevant warning}
 stopifnot(length(s.y) * 12 == length(s.m),
           ## The yearly series *is* close to the averages of the monthly one:
-          all.equal(s.y, aggregate(s.m, FUN = mean), tol = 0.0020))
+          all.equal(s.y, aggregate(s.m, FUN = mean), tolerance = 0.0020))
 ## NOTE: Strangely, correctly weighting the number of days per month
 ##       (using 28.25 for February) is *not* closer than the simple mean:
 ndays <- c(31, 28.25, rep(c(31,30, 31,30, 31), 2))

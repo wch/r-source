@@ -89,8 +89,8 @@ symnum(x, cutpoints = c(0.3, 0.6, 0.8, 0.9, 0.95),
 }
 \examples{
 ii <- setNames(0:8, 0:8)
-symnum(ii, cut =  2*(0:4), sym = c(".", "-", "+", "$"))
-symnum(ii, cut =  2*(0:4), sym = c(".", "-", "+", "$"), show.max = TRUE)
+symnum(ii, cutpoints =  2*(0:4), symbols = c(".", "-", "+", "$"))
+symnum(ii, cutpoints =  2*(0:4), symbols = c(".", "-", "+", "$"), show.max = TRUE)
 
 symnum(1:12 \%\% 3 == 0)  # --> "|" = TRUE, "." = FALSE  for logical
 
@@ -98,20 +98,20 @@ symnum(1:12 \%\% 3 == 0)  # --> "|" = TRUE, "." = FALSE  for logical
 N <- 38
 pascal <- t(sapply(0:N, function(n) round(choose(n, 0:N - (N-n)\%/\%2))))
 rownames(pascal) <- rep("", 1+N) # <-- to improve "graphic"
-symnum(pascal \%\% 2, symbols = c(" ", "A"), numeric = FALSE)
+symnum(pascal \%\% 2, symbols = c(" ", "A"), numeric.x = FALSE)
 
 ##-- Symbolic correlation matrices:
-symnum(cor(attitude), diag = FALSE)
-symnum(cor(attitude), abbr. = NULL)
-symnum(cor(attitude), abbr. = FALSE)
-symnum(cor(attitude), abbr. = 2)
+symnum(cor(attitude), diag.lower.tri = FALSE)
+symnum(cor(attitude), abbr.colnames = NULL)
+symnum(cor(attitude), abbr.colnames = FALSE)
+symnum(cor(attitude), abbr.colnames = 2)
 
 symnum(cor(rbind(1, rnorm(25), rnorm(25)^2)))
 symnum(cor(matrix(rexp(30, 1), 5, 18))) # <<-- PATTERN ! --
 symnum(cm1 <- cor(matrix(rnorm(90) ,  5, 18))) # < White Noise SMALL n
-symnum(cm1, diag = FALSE)
+symnum(cm1, diag.lower.tri = FALSE)
 symnum(cm2 <- cor(matrix(rnorm(900), 50, 18))) # < White Noise "BIG" n
-symnum(cm2, lower = FALSE)
+symnum(cm2, lower.triangular = FALSE)
 
 ## NA's:
 Cm <- cor(matrix(rnorm(60),  10, 6)); Cm[c(3,6), 2] <- NA

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2011-11-28 22:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,10 +171,10 @@ msgstr "pskill() er ikke understøttet på denne platform"
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() er ikke understøttet på denne platform"
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr "ugyldig argumenttype"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr "ikke nok hukommelse"

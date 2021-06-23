@@ -19,7 +19,7 @@ vapply(X, FUN, FUN.VALUE, \dots, USE.NAMES = TRUE)
 
 replicate(n, expr, simplify = "array")
 
-simplify2array(x, higher = TRUE)
+simplify2array(x, higher = TRUE, except = c(0L, 1L))
 }
 \arguments{
   \item{X}{a vector (atomic or list) or an \code{\link{expression}}
@@ -53,6 +53,14 @@ simplify2array(x, higher = TRUE)
     \code{higher = FALSE} would return a matrix (or vector) only.
     These two cases correspond to \code{sapply(*, simplify = "array")} or
     \code{simplify = TRUE}, respectively.}
+  \item{except}{integer vector or \code{NULL}; the default \code{c(0L,
+      1L)} corresponds to the exceptions used by \code{sapply}: a list
+    with elements of common length 0 or 1 is not simplified to an array
+    but is returned, respectively, as is or unlisted.
+    These exceptions can be disabled by specifying only a subset of
+    \code{0:1}, or \code{NULL} to always simplify to an array (if
+    possible).
+  }
 }
 \description{
   \code{lapply} returns a list of the same length as \code{X}, each

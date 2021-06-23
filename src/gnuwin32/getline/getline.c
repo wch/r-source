@@ -17,7 +17,7 @@
  *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
  */
 
- /* Copyright (C) 2018-2020 The R Core Team */
+ /* Copyright (C) 2018-2021 The R Core Team */
 
 #include       "getline.h"
 
@@ -25,6 +25,10 @@ static int      gl_tab();  /* forward reference needed for gl_tab_hook */
 int 		(*gl_in_hook)() = 0;
 int 		(*gl_out_hook)() = 0;
 int 		(*gl_tab_hook)() = gl_tab;
+
+#include <Rconfig.h>
+#include <R_ext/Riconv.h>
+#include <errno.h>
 
 #include <rlocale.h>
 extern Rboolean mbcslocale;
@@ -42,17 +46,29 @@ extern Rboolean mbcslocale;
 
 /******************** internal interface *********************************/
 
+/* Note for multi-byte support. The original getline only worked on single-byte
+   characters all of print width 1, such as ASCII. This R version has been
+   extended by R Core to support multi-byte characters of varying print widths,
+   with some preparation for edit units composed of multiple (Unicode)
+   characters. The present code uses an approximation where an edit unit is
+   a sequence of a printable character of width greater than one, followed
+   by a sequence of printable characters of width zero.
 
+   Symbols starting with "w_" return/hold offsets in "widths" relative to the
+   edit buffer gl_buf. As in the original version, symbols not starting with
+   "w_" hold offsets in bytes.
+ */
 static int      BUF_SIZE;               /* dimension of the buffer received*/
 static int      gl_init_done = -1;	/* terminal mode flag  */
-static int      gl_termw = 80;		/* actual terminal width */
-static int      gl_scroll = 27;		/* width of EOL scrolling region */
-static int      gl_width = 0;		/* net size available for input */
+static int      gl_w_termw = 80;	/* actual terminal width */
+static int      gl_w_width = 0;		/* net size available for input */
 static int      gl_extent = 0;		/* how far to redraw, 0 means all */
 static int      gl_overwrite = 0;	/* overwrite mode */
 static int      gl_pos, gl_cnt = 0;     /* position and size of input */
+static int      gl_w_pos;
+static int      gl_w_cnt = 0;
 static char    *gl_buf;                 /* input buffer */
-static char    *gl_killbuf;             /* killed text */
+static char    *gl_killbuf = NULL;      /* killed text */
 static const char    *gl_prompt;	/* to save the prompt string */
 static int      gl_search_mode = 0;	/* search mode flag */
 
@@ -62,7 +78,9 @@ static void     gl_init(void);		/* prepare to edit a line */
 static void     gl_cleanup(void);	/* to undo gl_init */
 static void     gl_char_init(void);	/* get ready for no echo input */
 static void     gl_char_cleanup(void);	/* undo gl_char_init */
-static size_t 	(*gl_strlen)() = (size_t(*)())strlen; 
+static size_t   gl_w_strlen(const char *); /* width of a string */
+static size_t   gl_e_strlen(const char *); /* edit units in a string */
+static size_t 	(*gl_w_promptlen)() = (size_t(*)())gl_w_strlen; 
 					/* returns printable prompt width */
 
 static void     gl_addchar(int);	/* install specified char */
@@ -91,10 +109,20 @@ static void     search_back(int);	/* look back for current string */
 static void     search_forw(int);	/* look forw for current string */
 static void     gl_beep(void);          /* try to play a system beep sound */
 
-/************************ nonportable part *********************************/
+static size_t   gl_w_from_b(size_t);    /* translate gl_buff offset from bytes to widths */
+static size_t   gl_b_from_w(size_t);    /* translate gl_buff offset from widths to bytes */
+static size_t   gl_w_align_left(size_t);   /* reduce width offset looking for start of edit unit */
+static size_t   gl_w_align_right(size_t);  /* increase width offset looking of start of edit unit */
 
-/*extern int      write();
- extern void     exit();*/
+static void    *gl_nat_to_ucs = NULL;   /* iconv conversion descriptor to UCS-4 */
+static void    *gl_nat_to_utf16 = NULL; /* iconv conversion descriptor for UTF-16 */
+static void    *gl_ucs_to_nat = NULL;   /* iconv conversion descriptor from UCS-4 */
+static void    *gl_oem_to_ucs = NULL;   /* iconv conversion descriptor OEM CP -> UCS-4 */
+static size_t  *gl_b2w_map = NULL;      /* map gl_buff offset from bytes to widths */
+static size_t  *gl_w2b_map = NULL;      /* map gl_buff offset from widths to bytes */
+static size_t  *gl_w2e_map = NULL;      /* map gl_buff offset from widths to edit units */
+
+/************************ nonportable part *********************************/
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
@@ -114,146 +142,212 @@ gl_char_init()			/* turn off input echo */
 }
 
 static void
-gl_char_cleanup(void)		/* undo effects of gl_char_init */
+gl_char_cleanup(void)		/* undo effects of w_gl_char_init */
 {
    SetConsoleMode(Win32InputStream,OldWin32Mode);
    AltIsDown = 0;
 }
 
+/* Convert the number (xxx) entered via ALT+xxx to UCS-4. */
+static int
+gl_alt_to_ucs(int alt)
+{
+    if (alt <= 0 || alt > 255)
+	return 0;
+
+    /* TODO: this is how it worked before, but it would be better to treat
+       the input as (decoded) index of the character and to support more
+       than a single byte. */
+    R_wchar_t uc = 0;
+    const char *inbuf = (char *)&alt;
+    char *outbuf = (char *)&uc;
+    size_t inbytesleft = sizeof(int);  /* the ALT code only uses 1 byte */
+    size_t outbytesleft = 4;
+    size_t status;
+
+    Riconv(gl_oem_to_ucs, NULL, NULL, NULL, NULL);
+    status = Riconv(gl_oem_to_ucs, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    if (status == (size_t)-1 && errno != E2BIG) {
+	gl_putc('\a');
+	return 0;
+    }
+    return uc;
+}
+
+/* Get a UCS-4 character without echoing it to screen. */
 static int
 gl_getc(void)
-/* get a character without echoing it to screen */
 {
     int             c;
-    static char buf[9] = "";
-    static int bufavail = 0;
-    static int bufpos = 0;
 
-    if (bufavail > 0) {
-	bufavail--;
-	return buf[bufpos++];
-    }
-    bufpos = 0;
-
-/* guido masarotto (3/12/98)
- * get Ansi char code from a Win32 console
- */
+    /* Initial version by Guido Masarotto (3/12/98):
+         "get Ansi char code from a Win32 console" */
     DWORD a;
     INPUT_RECORD r;
     DWORD st;
     WORD vk;
     CONSOLE_SCREEN_BUFFER_INFO csb;
-    int bbb = 0, nAlt=0, n;
+    wchar_t high = 0;
+    int bbb = 0, nAlt=0, n, hex = 0;
+    static int debug_codes = 0;
 
     c = 0; 
     while (!c) {
-      /* 
-	   Following two lines seem to be needed under Win2k 
-	   to reshow the cursor 
-      */
+      /* Following two lines seem to be needed under Win2k to reshow the
+         cursor. */
       GetConsoleScreenBufferInfo(Win32OutputStream, &csb);
       SetConsoleCursorPosition(Win32OutputStream, csb.dwCursorPosition);
+      /* Originally uChar.AsciiChar was used and for MBCS characters
+         ReadConsoleInput returned as many events as bytes in the character.
+         As of Windows 8 this reportedly no longer works, ReadConsoleInput
+         would only generate one event with the first byte in AsciiChar.
+         The bug still exists in Windows 10, and thus we now call
+         GetConsoleInputW to get uchar.UnicodeChar. */
       ReadConsoleInputW(Win32InputStream, &r, 1, &a);
       if (!(r.EventType == KEY_EVENT)) break;
       st = r.Event.KeyEvent.dwControlKeyState;
       vk = r.Event.KeyEvent.wVirtualKeyCode;
+      if (debug_codes)
+        fprintf(stderr, "st %x vk %x down %x char %x\n",
+                        (unsigned int)st, (unsigned int)vk,
+                        (unsigned int)r.Event.KeyEvent.bKeyDown,
+                        (unsigned int)r.Event.KeyEvent.uChar.UnicodeChar);
       if (r.Event.KeyEvent.bKeyDown) {
         AltIsDown = (st & LEFT_ALT_PRESSED);
-	if (vk == VK_MENU && AltIsDown) { /* VK_MENU is
-							   Alt or AltGr */
+	if (vk == VK_MENU && AltIsDown) { /* VK_MENU is Alt or AltGr */
 	  nAlt = 0;
 	  bbb  = 0;
-	} 
-	else if (st & ENHANCED_KEY) {
-	  /* FIXME: remove this eventually as these keys are already
-	     accepted below without ENHANCED_KEY flag, but check it
-	     does not change any expected behavior wrt to other enhanced keys
-	  */
-	  switch(vk) {
-	  case VK_LEFT: c=2 ;break;
-	  case VK_RIGHT: c=6;break;
-	  case VK_HOME:  c='\001';break;
-	  case VK_END: c='\005';break;
-	  case VK_UP:  c=16;break;
-	  case VK_DOWN: c=14;break;		
-	  case VK_DELETE:  c='\004';break;
-	  }
+          hex  = 0;
 	}
+        else if (AltIsDown && vk == 0x49)  /* Alt+I */
+          debug_codes = !debug_codes;
 	else if (AltIsDown) { /* Interpret Alt+xxx entries */
-	    /* Alt+xxx entries may be given directly by user or may
-	       result from pasting a character that does not map to
-	       a key on the current keyboard (in that case the numbers
-	       are with numlock on at least on Windows 10), which has
-	       been observed with tilde on Italian keyboard (PR17679). */
+	  /* Alt+xxx entries may be given directly by user or may
+	     result from pasting a character that does not map to
+	     a key on the current keyboard (in that case the numbers
+	     are with numlock on at least on Windows 10), which has
+	     been observed with tilde on Italian keyboard (PR17679). */
 	  switch (vk) {
-	  case VK_NUMPAD0: case VK_INSERT: n = 0; break;
-	  case VK_NUMPAD1: case VK_END: n = 1; break;
-	  case VK_NUMPAD2: case VK_DOWN: n = 2; break;
-	  case VK_NUMPAD3: case VK_NEXT: n = 3;break;
-	  case VK_NUMPAD4: case VK_LEFT: n = 4; break;
-	  case VK_NUMPAD5: case VK_CLEAR:  n = 5; break;
-	  case VK_NUMPAD6: case VK_RIGHT: n = 6; break;
-	  case VK_NUMPAD7: case VK_HOME: n = 7; break;
-	  case VK_NUMPAD8: case VK_UP: n = 8; break;
-	  case VK_NUMPAD9: case VK_PRIOR: n = 9; break;	 
+	  case VK_NUMPAD0: case VK_INSERT: case 0x30: n = 0; break;
+	  case VK_NUMPAD1: case VK_END: case 0x31: n = 1; break;
+	  case VK_NUMPAD2: case 0x32: n = 2; break;
+	  case VK_NUMPAD3: case VK_NEXT: case 0x33: n = 3;break;
+	  case VK_NUMPAD4: case 0x34: n = 4; break;
+	  case VK_NUMPAD5: case VK_CLEAR: case 0x35: n = 5; break;
+	  case VK_NUMPAD6: case 0x36: n = 6; break;
+	  case VK_NUMPAD7: case VK_HOME: case 0x37: n = 7; break;
+	  case VK_NUMPAD8: case 0x38: n = 8; break;
+	  case VK_NUMPAD9: case VK_PRIOR: case 0x39: n = 9; break;
+          case VK_ADD: /* + on NumPad */ case VK_OEM_PLUS:
+            if (nAlt == 0)
+              hex = 1;
+            n = -1;
+            break;
+          case 0x41: case 0x42: case 0x43: case 0x44: case 0x45: case 0x46:
+            if (hex)
+              n = vk - 0x41 + 10; /* A B C D E F */
+            else
+              n = -1;
+            break;
 	  default: n = -1;
 	  }
-	  if (n >= 0) bbb = 10 * bbb + n;
-	  nAlt += 1;
-	  if (nAlt==3) { 
-	    c = (bbb < 256) && (bbb > 0) ? bbb : 0;
+	  if (n >= 0) {
+            if (hex)
+              bbb = 16 * bbb + n;
+            else
+              bbb = 10 * bbb + n;
+	    nAlt += 1;
+            if (debug_codes)
+	      fprintf(stderr, "Alt+ [%d] down: %x\n", nAlt, bbb);
+          }
+	  if (!hex && nAlt==3) {
+	    c = gl_alt_to_ucs(bbb);
 	    bbb = 0;
 	    nAlt = 0;
-	  } 
+	  } else if (hex && nAlt==8) {
+            c = bbb;
+            bbb = 0;
+            nAlt = 0;
+            hex = 0;
+          }
 	}
-	/* with conPTY on Windows 10, the ENHANCED_KEY state is not set */
+	/* Originally, these (LEFT, RIGHT, HOME, END, UP, DOWN, DELETE) were
+	   accepted only with ENHANCED_KEY state and other keys with that state
+	   were ignored, but with conPTY on Windows 10, the ENHANCED_KEY state is
+	   not set. */
 	else if (vk == VK_LEFT)
-	    c = 2;
+	    c = '\002';
 	else if (vk == VK_RIGHT)
-	    c = 6;
+	    c = '\006';
 	else if (vk == VK_HOME)
 	    c = '\001';
 	else if (vk == VK_END)
 	    c = '\005';
 	else if (vk == VK_UP)
-	    c = 16;
+	    c = '\020';
 	else if (vk == VK_DOWN)
-	    c = 14;
+	    c = '\016';
 	else if (vk == VK_DELETE)
 	    c = '\004';
-	else {
-	  /* Originally uChar.AsciiChar was used here and for MBCS characters
-	     GetConsoleInput returned as many events as bytes in the character.
-	     As of Windows 8 this reportedly no longer works, GetConsoleInput
-	     would only generate one event with the first byte in AsciiChar.
-	     The bug still exists in Windows 10, and thus we now call
-	     GetConsoleInputW to get uchar.UnicodeChar. Ideally (at least for
-	     Windows) all of getline code would be refactored to work with wide
-	     characters, but for now we just convert the character back to bytes
-	     in current native locale to recover the old behavior of gl_getc. */
-	  wchar_t wc = r.Event.KeyEvent.uChar.UnicodeChar;
-	  mbstate_t mb_st;
-	  mbs_init(&mb_st);
-	  if (wc != L'\0') {
-	    size_t cres = wcrtomb(buf, wc, &mb_st);
-	    if (cres != (size_t)-1) {
-	      bufavail = (int) cres - 1;
-	      bufpos = 1;
-	      c = buf[0];
-	    }
-	  }
-	}
+	else 
+            /* Only characters from BMP obtained this way. */
+            c = r.Event.KeyEvent.uChar.UnicodeChar;
       }
       else if (vk == VK_MENU && AltIsDown) { 
-           /* Alt key up event: could be AltGr, but let's hope users 
-	      only press one of them at a time. */
+       /* Alt key up event: could be AltGr, but let's hope users 
+	  only press one of them at a time. */
+
+	wchar_t wc = r.Event.KeyEvent.uChar.UnicodeChar;
+	if (IS_HIGH_SURROGATE(wc))
+	    high = wc;
+	else if (IS_LOW_SURROGATE(wc)) {
+	    /* Only supplementary characters obtained this way. */
+	    c = 0x10000 + ((int) (high & 0x3FF) << 10 ) + 
+                           (int) (wc & 0x3FF);
+	    high = 0;
+	} else if (hex && wc==0) {
+	    c = bbb;
+	} else if (wc == 0) {
+	    /* Handle Alt+xxx */
+	    c = gl_alt_to_ucs(bbb);
+	} else 
+	    /* E.g. combining diacritical marks appear to arrive this way. */
+	    c = wc;
 	AltIsDown = 0;
-	c = (bbb < 256) && (bbb > 0) ? bbb : 0;
-	bbb = 0;
 	nAlt = 0;
+	bbb = 0;
+        hex = 0;
       }
-      if ((c < -127) || (c > 255)) c = 0; 
-      if (c < 0) c = 256 + c;    
+      else if (AltIsDown) {
+	/* NumPad cursor keys now come without the key-down event, so
+	   handle Alt+xxx for them here (when NumLock is disabled) */
+        switch (vk) {
+        case VK_DOWN: n = 2; break;
+        case VK_LEFT: n = 4; break;
+        case VK_RIGHT: n = 6; break;
+        case VK_UP: n = 8; break;
+        default: n = -1;
+        }
+        if (n >= 0) {
+  	  if (hex)
+	    bbb = 16 * bbb + n;
+	  else
+	    bbb = 10 * bbb + n;
+          nAlt += 1;
+          if (debug_codes)
+	    fprintf(stderr, "Alt+ [%d] up: %x\n", nAlt, bbb);
+        }
+        if (!hex && nAlt==3) {
+	  c = gl_alt_to_ucs(bbb);
+	  bbb = 0;
+	  nAlt = 0;
+        } else if (hex && nAlt==8) {
+	  c = bbb;
+	  bbb = 0;
+	  nAlt = 0;
+	  hex = 0;
+        }
+      } 
     }
     return c;
 }
@@ -270,7 +364,37 @@ gl_putc(int c)
     }
 }
 
-/******************** fairly portable part *********************************/
+/* Print bytes to console (via wchar_t API). On Windows 10 running in a DBCS
+   locale (not UTF-8), printing using write() is not reliable, sometimes
+   there are extra spaces in the output, depending on timing (probably a race
+   condition in the console host). Printing via wchar_t interface seems to be
+   more reliable. */
+static void gl_write(char *s, int len)
+{
+    wchar_t buf[len + 1]; /* bigger than needed */
+    size_t status, inbytesleft, outbytesleft, wchars;
+    const char *inbuf;
+    char *outbuf;
+    static HANDLE Win32OutputStream;
+
+    if (len == 0)
+	return;
+
+    Riconv(gl_nat_to_utf16, NULL, NULL, NULL, NULL);
+    inbuf = s;
+    inbytesleft = len;
+    outbuf = (char *)buf;
+    outbytesleft = sizeof(buf);
+    status = Riconv(gl_nat_to_utf16, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    if (status == (size_t)-1) 
+	gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+
+    Win32OutputStream = GetStdHandle(STD_OUTPUT_HANDLE);
+    wchars = (sizeof(buf) - outbytesleft)/sizeof(wchar_t);
+    WriteConsoleW(Win32OutputStream, buf, wchars, NULL, NULL);
+}
+
+/********************* fairly portable part *********************************/
 
 static void
 gl_puts(const char *const buf)
@@ -296,13 +420,36 @@ static void
 gl_init(void)
 /* set up variables and terminal */
 {
+    char oemname[256];
+
     if (gl_init_done < 0) {		/* -1 only on startup */
         gl_hist_init(512, 1);
     }
     if (isatty(0) == 0 || isatty(1) == 0)
 	gl_error("\n*** Error: getline(): not interactive, use stdio.\n");
     if (!(gl_killbuf=calloc(BUF_SIZE,sizeof(char))))
-        gl_error("\n*** Error: getline(): no enough memory.\n");
+        gl_error("\n*** Error: getline(): not enough memory.\n");
+
+    gl_nat_to_ucs = Riconv_open("UCS-4LE", "");
+    if (gl_nat_to_ucs == (void *)-1) 
+	gl_error("\n*** Error: getline(): unable to convert to UCS-4.\n");
+    gl_nat_to_utf16 = Riconv_open("UTF-16LE", "");
+    if (gl_nat_to_utf16 == (void *)-1) 
+	gl_error("\n*** Error: getline(): unable to convert to UTF-16.\n");
+    gl_ucs_to_nat = Riconv_open("", "UCS-4LE");
+    if (gl_ucs_to_nat == (void *)-1)
+	gl_error("\n*** Error: getline(): unable to convert to UCS-4.\n");
+    snprintf(oemname, sizeof(oemname), "CP%d", (int)GetOEMCP());
+    gl_oem_to_ucs = Riconv_open(oemname, "UCS-4LE");
+    if (gl_oem_to_ucs == (void *)-1)
+	gl_error("\n*** Error: getline(): unable to convert from OEM CP.\n"); 
+    if (!(gl_b2w_map = calloc(BUF_SIZE, sizeof(size_t))))
+	gl_error("\n*** Error: getline(): not enough memory.\n");
+    if (!(gl_w2b_map = calloc(BUF_SIZE, sizeof(size_t))))
+	gl_error("\n*** Error: getline(): not enough memory.\n");
+    if (!(gl_w2e_map = calloc(BUF_SIZE, sizeof(size_t))))
+	gl_error("\n*** Error: getline(): not enough memory.\n");
+
     gl_char_init();
     gl_init_done = 1;
 }
@@ -313,47 +460,220 @@ gl_cleanup(void)
 {
     if (gl_init_done > 0)
         gl_char_cleanup();
-    free(gl_killbuf);
+    if (gl_killbuf)
+	free(gl_killbuf);
+    if (gl_nat_to_ucs && (gl_nat_to_ucs != (void *)-1))
+        Riconv_close(gl_nat_to_ucs);
+    if (gl_nat_to_utf16 && (gl_nat_to_utf16 != (void *)-1))
+        Riconv_close(gl_nat_to_utf16);
+    if (gl_ucs_to_nat && (gl_ucs_to_nat != (void *)-1))
+        Riconv_close(gl_ucs_to_nat);
+    if (gl_oem_to_ucs && (gl_oem_to_ucs != (void *)-1))
+        Riconv_close(gl_oem_to_ucs);
+    if (gl_b2w_map)
+	free(gl_b2w_map);
+    if (gl_w2b_map)
+        free(gl_w2b_map);
+    if (gl_w2e_map)
+        free(gl_w2e_map);
     gl_init_done = 0;
 }
 
 void
 gl_setwidth(int w)
 {
-    if (w > 20) {
-	gl_termw = w;
-	gl_scroll = w / 3;
-    } else {
+    /* not used in R; should arrange for redraw */
+    if (w > 20) 
+	gl_w_termw = w;
+    else 
 	gl_error("\n*** Error: minimum screen width is 21\n");
+}
+
+/* Number of bytes of the edit unit left of the cursor (loc = -1) or
+   right of the cursor (loc=0). */
+static int
+gl_edit_unit_size(int loc, int cursor)
+{
+    size_t w = gl_w_from_b(cursor);
+
+    if (loc == -1) {
+	/* left */
+	if (w == 0)
+	    return 0;
+	return gl_b_from_w(w) - gl_b_from_w(gl_w_align_left(w-1));
+    } else {
+	/* right */
+	if (w == gl_w_cnt)
+	    return 0;
+	return gl_b_from_w(gl_w_align_right(w+1)) - gl_b_from_w(w);
     }
 }
 
+static int
+gl_edit_unit_size_left()
+{
+    return gl_edit_unit_size(-1 /* left */, gl_pos);
+}
+
+static int
+gl_edit_unit_size_right()
+{
+    return gl_edit_unit_size(0 /* right */, gl_pos);
+}
+
+static size_t
+gl_w_from_b(size_t b)
+{
+    if (b >= gl_cnt)
+	return gl_w_cnt;
+    return gl_b2w_map[b];
+}
+
+static size_t
+gl_b_from_w(size_t w)
+{
+    if (w >= gl_w_cnt)
+	return gl_cnt;
+    return gl_w2b_map[w];
+}
+
+static size_t
+gl_w_align_left(size_t w)
+{
+    size_t e;
+    
+    if (w >= gl_w_cnt)
+	return w;
+    for(e = gl_w2e_map[w]; (w>0) && (gl_w2e_map[w-1] == e); w--);
+    return w;
+}
+
+static size_t
+gl_w_align_right(size_t w)
+{
+    if (w == 0)
+	return w;
+
+    size_t e;
+    for(e = gl_w2e_map[w-1]; (w < gl_w_cnt) && (gl_w2e_map[w] == e); w++);
+    return w;
+}
+
+/* Update map of characters, widths and edit units to reflect changes in gl_buf,
+   given changes in the interval [change, change+gl_extent>. Returns true when
+   the (print) width of this interval remains unchanged, false otherwise.
+
+   This also updates gl_cnt and gl_w_cnt. */
+static int
+update_map(size_t change)
+{
+    int consider_extent = 1;
+    size_t w_old_extent;
+
+    if (gl_extent == 0)
+	consider_extent = 0;
+
+    if (gl_extent && consider_extent)
+	w_old_extent = gl_w_from_b(change + gl_extent);
+
+    gl_cnt = strlen(gl_buf);
+    if (gl_cnt == 0) {
+	gl_w_cnt = 0;
+	return 0;
+    }
+
+    size_t w, b, e, iw, ib, width;
+    size_t last_w, last_b, last_e;
+    R_wchar_t uc;
+    size_t inbytesleft, last_inbytesleft, outbytesleft, status;
+    const char *inbuf;
+    char *outbuf;
+
+    inbytesleft = gl_cnt - change;
+    inbuf = gl_buf + change;
+    Riconv(gl_nat_to_ucs, NULL, NULL, NULL, NULL);
+
+    if (change == 0) {
+	gl_b2w_map[0] = 0;
+	gl_w2b_map[0] = 0;
+	gl_w2e_map[0] = 0;
+	w = b = e = 0;
+    } else {
+	b = change;
+	w = gl_b2w_map[b];
+	e = gl_w2e_map[w];
+    }
+    ib = b + 1; 
+    iw = w + 1;
+
+    while(inbytesleft > 0) {
+	outbytesleft = 4;
+	outbuf = (char *)&uc;
+	last_inbytesleft = inbytesleft;
+	status = Riconv(gl_nat_to_ucs, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+	if (status == (size_t)-1 && errno != E2BIG)
+	    gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+
+	width = iswprint(uc) ? Ri18n_wcwidth(uc) : 0;
+
+	last_b = b;
+	last_w = w;
+	last_e = e;
+	/* tab should not appear here */
+	w += width;
+	b += last_inbytesleft - inbytesleft;
+	if (width > 0)
+	    /* this is an approximation, ideally use complete grapheme here */
+	    e++;
+
+	for(; ib < b; ib++)
+	    gl_b2w_map[ib] = last_w;
+	gl_b2w_map[ib] = w;
+	for(; iw < w; iw++) {
+	    gl_w2b_map[iw] = last_b;
+	    gl_w2e_map[iw] = last_e;
+	}
+	gl_w2b_map[iw] = b;
+	gl_w2e_map[iw] = e;
+
+	if (consider_extent && (b == change + gl_extent) && (w == w_old_extent))
+	    /* gl_w_cnt is unchanged */
+	    return 1;
+    }
+    gl_w_cnt = w;
+    return 0;
+}
+
+/* Returns 1 on EOF */
 int
 getline(const char *prompt, char *buf, int buflen)
 {
-    int             c, loc, tmp;
-    int mb_len;
-    mbstate_t mb_st;
-    int i;
-    wchar_t wc;
+    int c, loc, tmp;
 
     BUF_SIZE = buflen;
     gl_buf = buf;
     gl_buf[0] = '\0';
     if (setjmp(gl_jmp)) {
-       gl_newline();
-       gl_cleanup(); 
-       return 0;
+	if (gl_init_done > 0) {
+	    gl_newline();
+	    gl_cleanup();
+	    return 0;
+	}
+	/* predictable error in gl_cleanup() leads to infinite loop when R asks
+	   whether the image should be saved */
+	gl_cleanup();
+	return 1;
     }
     gl_init();	
     gl_pos = 0;
+    gl_w_pos = 0;
     gl_prompt = (prompt)? prompt : "";
     if (gl_in_hook)
 	gl_in_hook(gl_buf);
     gl_fixup(gl_prompt, -2, BUF_SIZE);
     while ((c = gl_getc()) >= 0) {
 	gl_extent = 0;  	/* reset to full extent */
-	if (!iscntrl(c)) {
+	if (!iswcntrl(c)) {
 	    if (gl_search_mode)
 	       search_addchar(c);
 	    else
@@ -375,22 +695,10 @@ getline(const char *prompt, char *buf, int buflen)
 		gl_newline();
 		gl_cleanup();
 		return 0;
-		/*NOTREACHED*/
-		break; 
-	      case '\001': gl_fixup(gl_prompt, -1, 0);		/* ^A */
+	      case '\001': gl_fixup(gl_prompt, -1, 0);		/* ^A, VK_HOME */
 		break;
-	      case '\002': 	/* ^B */
-		if(mbcslocale) {
-		    mb_len = 0;
-		    mbs_init(&mb_st);
-		    for(i = 0; i < gl_pos ;) {
-			mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-			mb_len = Ri18n_wcwidth(wc);
-			i += (wc==0) ? 0 : mb_len;
-		    }
-		    gl_fixup(gl_prompt, -1, gl_pos - mb_len);
-		} else
-		    gl_fixup(gl_prompt, -1, gl_pos-1);
+	      case '\002': 	/* ^B, VK_LEFT */
+		gl_fixup(gl_prompt, -1, gl_pos - gl_edit_unit_size_left());
 		break;
 	      case '\003':                                      /* ^C */
 		  gl_fixup(gl_prompt, -1, gl_cnt);
@@ -398,7 +706,7 @@ getline(const char *prompt, char *buf, int buflen)
 		  gl_kill(0);
 		  gl_fixup(gl_prompt, -2, BUF_SIZE);
 		break;
-	      case '\004':					/* ^D */
+	      case '\004':					/* ^D, VK_DELETE */
 		if (gl_cnt == 0) {
 		    gl_buf[0] = 0;
 		    gl_cleanup();
@@ -408,29 +716,17 @@ getline(const char *prompt, char *buf, int buflen)
 		    gl_del(0);
 		}
 		break;
-	      case '\005': gl_fixup(gl_prompt, -1, gl_cnt);	/* ^E */
+	      case '\005': gl_fixup(gl_prompt, -1, gl_cnt);	/* ^E, VK_END */
 		break;
 		case '\006': /* ^F */
-		  if(mbcslocale) { 
-		      if(gl_pos >= gl_cnt) break;
-		      mb_len = 0;
-		      mbs_init(&mb_st);
-		      for(i = 0; i<= gl_pos ;){
-			  mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-			  mb_len = Ri18n_wcwidth(wc);
-			  i += (wc==0) ? 0 : mb_len;
-		      }
-		      gl_fixup(gl_prompt, -1, gl_pos + mb_len);
-		  }
-		else
-		  gl_fixup(gl_prompt, -1, gl_pos+1);
+		gl_fixup(gl_prompt, -1, gl_pos + gl_edit_unit_size_right());
 		break;
 	      case '\010': case '\177': gl_del(-1);	/* ^H and DEL */
 		break;
 	      case '\t':        				/* TAB */
                 if (gl_tab_hook) {
 		    tmp = gl_pos;
-	            loc = gl_tab_hook(gl_buf, gl_strlen(gl_prompt), &tmp);
+	            loc = gl_tab_hook(gl_buf, gl_w_promptlen(gl_prompt), &tmp);
 	            if (loc != -1 || tmp != gl_pos)
 	                gl_fixup(gl_prompt, loc, tmp);
                 }
@@ -439,7 +735,7 @@ getline(const char *prompt, char *buf, int buflen)
 		break;
 	      case '\014': gl_redraw();				/* ^L */
 		break;
-	      case '\016': 					/* ^N */
+	      case '\016': 					/* ^N, VK_DOWN */
 		strncpy(gl_buf, gl_hist_next(), BUF_SIZE-2);
 		gl_buf[BUF_SIZE-2] = '\0';
                 if (gl_in_hook)
@@ -448,7 +744,7 @@ getline(const char *prompt, char *buf, int buflen)
 		break;
 	      case '\017': gl_overwrite = !gl_overwrite;       	/* ^O */
 		break;
-	      case '\020': 					/* ^P */
+	      case '\020': 					/* ^P, VK_UP */
 		strncpy(gl_buf, gl_hist_prev(),BUF_SIZE-2);
 		gl_buf[BUF_SIZE-2] = '\0';
                 if (gl_in_hook)
@@ -471,8 +767,6 @@ getline(const char *prompt, char *buf, int buflen)
 		gl_newline();
 		gl_cleanup();
 		return 1;
-		/*NOTREACHED*/
-		break;
 	      case '\033':				/* ansi arrow keys */
 		c = gl_getc();
 		if (c == '[') {
@@ -491,33 +785,13 @@ getline(const char *prompt, char *buf, int buflen)
 	                    gl_in_hook(gl_buf);
 		        gl_fixup(gl_prompt, 0, BUF_SIZE);
 		        break;
-		    case 'C': /* right */
-			if(mbcslocale) { 
-			    mb_len = 0;
-			    mbs_init(&mb_st);
-			    for(i = 0; i <= gl_pos ;) {
-				mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-				mb_len = Ri18n_wcwidth(wc);
-				i += (wc==0) ? 0 : mb_len;
-			    }
-			    gl_fixup(gl_prompt, -1, gl_pos + mb_len);
-			} else
-			    gl_fixup(gl_prompt, -1, gl_pos+1);
+		    case 'C':                                  /* right */
+			gl_fixup(gl_prompt, -1, gl_pos + gl_edit_unit_size_right());
 		        break;
-		    case 'D': /* left */
-		       if(mbcslocale) {
-			   mb_len = 0;
-			   mbs_init(&mb_st);
-			   for(i = 0; i <= gl_pos ;) {
-			       mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-			       mb_len = Ri18n_wcwidth(wc);
-			       i += (wc==0) ? 0 :mb_len;
-			   }
-			   gl_fixup(gl_prompt, -1, gl_pos - mb_len);
-		       } else
-			 gl_fixup(gl_prompt, -1, gl_pos-1);
+		    case 'D':                                  /* left */
+			gl_fixup(gl_prompt, -1, gl_pos - gl_edit_unit_size_left());
 			break;
-		      default: gl_putc('\007');         /* who knows */
+		    default: gl_putc('\007');                  /* who knows */
 		        break;
 		    }
 		} else if (c == 'f' || c == 'F') {
@@ -539,95 +813,106 @@ getline(const char *prompt, char *buf, int buflen)
     return 0;
 }
 
+/* Adds bytes from s to the current position of the buffer. The input
+   needs to only include complete edit units. */
 static void
-gl_addchar(int c)
-      
-/* adds the character c to the input buffer at current location */
+gl_addbytes(const char *s)
 {
-    int  i;
+    int e, del = 0, size, len, i;
 
-    if (gl_cnt >= BUF_SIZE - 2) {
-            gl_putc('\a');
-            return; 
+    len = strlen(s);
+    if (gl_overwrite == 1) {
+	e = gl_e_strlen(s);
+	for(i = 0; i < e; i++) {
+	    size = gl_edit_unit_size(0 /* right */, gl_pos + del);
+	    if (size == 0)
+		/* no more edit units */
+		break;
+	    del += size;
+	}
     }
-    if(mbcslocale) {
-	mbstate_t mb_st;
-	wchar_t wc;
-	char s[9]; /* only 3 needed */
-	int res;
-	int clen ;
-      
-	s[0] = c;
-	clen = 1;
-	res = 0;
-	/* This is a DBCS locale, so input is 1 or 2 bytes.
-	   This loop should not be necessary.
-	 */
-	if((unsigned int) c >= (unsigned int) 0x80) {
-            while(clen <= MB_CUR_MAX) {
-	        mbs_init(&mb_st);
-	        res = mbrtowc(&wc, s, clen, &mb_st);
-	        if(res >= 0) break;
-	        if(res == -1) 
-		    gl_error("invalid multibyte character in mbcs_get_next");
-  	        /* so res == -2 */
-	        c = gl_getc();
-	        if(c == EOF) 
-		    gl_error("EOF whilst reading MBCS char");
-	        s[clen++] = c;
-	    } /* we've tried enough, so must be complete or invalid by now */
+    if (len > del) {
+	/* expanding buffer */
+	if (gl_cnt + len - del >= BUF_SIZE - 1) 
+	    gl_error("\n*** Error: getline(): input buffer overflow\n");
+	for (i = gl_cnt; i >= gl_pos + del; i--)
+	    gl_buf[i + len - del] = gl_buf[i];
+    } else if (len < del) {
+	/* reducing buffer */
+	for (i = gl_pos + del; i <= gl_cnt; i++)
+	    gl_buf[i - (del - len)] = gl_buf[i];
+    } else {
+	/*  clen == del */
+	gl_extent = len;
+    }
+    for (i=0; i < len; i++)
+	gl_buf[gl_pos + i] = s[i];
+    gl_fixup(gl_prompt, gl_pos, gl_pos+len);
+}
+
+/* Adds character c (UCS-4) to the current position. Normally it would add
+   a new edit unit, but eventually this may append to the current edit unit. */
+static void
+gl_addchar(int c)  
+{
+    char buf[MB_CUR_MAX + 1];
+    size_t status, inbytesleft, outbytesleft, clen, left;
+    const char *inbuf;
+    char *outbuf;
+    int i;
+
+    if (gl_cnt >= BUF_SIZE - 2)
+	gl_putc('\a');
+    else if (iswprint(c)) {
+	Riconv(gl_ucs_to_nat, NULL, NULL, NULL, NULL);
+	inbuf = (char *)&c;
+	inbytesleft = 4;
+	outbuf = buf;
+	outbytesleft = MB_CUR_MAX;
+	status = Riconv(gl_ucs_to_nat, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+	if (status == (size_t)-1)
+	    gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+	clen = MB_CUR_MAX - outbytesleft;
+	buf[clen] = '\0';
+	
+	if (Ri18n_wcwidth(c) > 0) {
+	    gl_addbytes(buf);
+	    return;
+	} else if (GetACP() == 65001 && gl_pos > 0) {
+	    /* This is an approximation, ideally we would allow building of
+	       arbitrary Unicode sequences (graphemes), including ZWJ. Also,
+	       this is experimental and little tested: it seems that currently
+	       neither RTerm nor Windows Terminal properly support character
+	       composition. */
+	    left = gl_edit_unit_size_left();
+	  
+	    if (left > 0) { 
+		if (gl_cnt + clen >= BUF_SIZE - 1)
+		    gl_error("\n*** Error: getline(): input buffer overflow\n");
+
+		for (i = gl_cnt; i >= gl_pos; i--)
+		    gl_buf[i + clen] = gl_buf[i];
+		for (i = 0; i < clen; i++)
+		    gl_buf[gl_pos + i] = buf[i];
+
+		gl_fixup(gl_prompt, gl_pos - left, gl_pos + clen);
+		return;
+	    }
 	}
-	if( res >= 0 ) {
-	    if (!(gl_overwrite == 0 || gl_pos == gl_cnt))  
-		gl_del(0); 
-	    for (i = gl_cnt; i >= gl_pos; i--)
-                gl_buf[i+clen] = gl_buf[i];
-	    for (i = 0; i < clen; i++)
-                gl_buf[gl_pos + i] = s[i];
-	    gl_fixup(gl_prompt, gl_pos, gl_pos+clen);
-	}
-       
-    } else
-	if (gl_overwrite == 0 || gl_pos == gl_cnt) {
-	    for (i = gl_cnt; i >= gl_pos; i--)
-		gl_buf[i+1] = gl_buf[i];
-	    gl_buf[gl_pos] = (char) c;
-	    gl_fixup(gl_prompt, gl_pos, gl_pos+1);
-	} else {
-	    gl_buf[gl_pos] = (char) c;
-	    gl_extent = 1;
-	    gl_fixup(gl_prompt, gl_pos, gl_pos+1);
-	}
+    }
+    gl_putc('\a');
 }
 
 static void
 gl_yank(void)
 /* adds the kill buffer to the input buffer at current location */
 {
-    int  i, len;
+    int  len;
 
     len = strlen(gl_killbuf);
-    if (len > 0) {
-	if (gl_overwrite == 0) {
-            if (gl_cnt + len >= BUF_SIZE - 1) 
-	        gl_error("\n*** Error: getline(): input buffer overflow\n");
-            for (i=gl_cnt; i >= gl_pos; i--)
-                gl_buf[i+len] = gl_buf[i];
-	    for (i=0; i < len; i++)
-                gl_buf[gl_pos+i] = gl_killbuf[i];
-            gl_fixup(gl_prompt, gl_pos, gl_pos+len);
-	} else {
-	    if (gl_pos + len > gl_cnt) {
-                if (gl_pos + len >= BUF_SIZE - 1) 
-	            gl_error("\n*** Error: getline(): input buffer overflow\n");
-		gl_buf[gl_pos + len] = 0;
-            }
-	    for (i=0; i < len; i++)
-                gl_buf[gl_pos+i] = gl_killbuf[i];
-	    gl_extent = len;
-            gl_fixup(gl_prompt, gl_pos, gl_pos+len);
-	}
-    } else
+    if (len > 0)
+	gl_addbytes(gl_killbuf);
+    else
 	gl_beep();
 }
 
@@ -681,7 +966,9 @@ gl_newline(void)
 {
     int change = gl_cnt;
     int len = gl_cnt;
-    int loc = gl_width - 5;	/* shifts line back to start position */
+    /* shifts line back to start position */
+    int loc = gl_b_from_w(gl_w_align_left(gl_w_width - 5));
+
     if (gl_cnt >= BUF_SIZE - 1) { 
         gl_error("\n*** Error: getline(): input buffer overflow\n");
     }
@@ -705,34 +992,15 @@ gl_del(int loc)
  *     0 : delete character under cursor
  */
 {
-   int i;
+   int i, len;
 
-   if(mbcslocale) {
-       int mb_len;
-       mbstate_t mb_st;
-       wchar_t wc;
-
-       mb_len=0;
-       mbs_init(&mb_st);
-   
-       if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
-	   for(i = 0; i<= gl_pos + loc;) {
-	       mbrtowc(&wc,gl_buf+i, MB_CUR_MAX, &mb_st);
-	       mb_len = Ri18n_wcwidth(wc);
-	       i += (wc==0) ? 0 : mb_len;
-	   }
-	   for (i = gl_pos+(loc*mb_len); i <= gl_cnt - mb_len; i++)
-	       gl_buf[i] = gl_buf[i + mb_len];
-	   gl_fixup(gl_prompt,gl_pos+(loc * mb_len) , gl_pos+(loc * mb_len));
-       } else
-	   gl_beep();
-   } else   
-       if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
-	   for (i = gl_pos+loc; i < gl_cnt; i++)
-	       gl_buf[i] = gl_buf[i+1];
-	   gl_fixup(gl_prompt, gl_pos+loc, gl_pos+loc);
-       } else
-	   gl_beep();
+   if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
+       len = gl_edit_unit_size(loc, gl_pos);
+       for (i = gl_pos+(loc*len); i <= gl_cnt - len; i++)
+	   gl_buf[i] = gl_buf[i + len];
+       gl_fixup(gl_prompt,gl_pos+(loc * len) , gl_pos+(loc * len));
+   } else
+       gl_beep();
 }
 
 static void
@@ -830,50 +1098,76 @@ gl_fixup(const char *prompt, int change, int cursor)
  *   prompt:  compared to last_prompt[] for changes;
  *   change : the index of the start of changes in the input buffer,
  *            with -1 indicating no changes, -2 indicating we're on
- *            a new line, redraw everything.
+ *            a new line, redraw everything assuming clean line.
  *   cursor : the desired location of the cursor after the call.
  *            A value of BUF_SIZE can be used  to indicate the cursor should
  *            move just past the end of the input line.
  */
-{
-    static int   gl_shift;	/* index of first on screen character */
-    static int   off_right;	/* true if more text right of screen */
-    static int   off_left;	/* true if more text left of screen */
-    static char  last_prompt[CONSOLE_PROMPT_SIZE] = "";
-    int          left = 0, right = -1;		/* bounds for redraw */
-    int          pad;		/* how much to erase at end of line */
-    int          backup;        /* how far to backup before fixing */
-    int          new_shift;     /* value of shift based on cursor */
-    int          extra;         /* adjusts when shift (scroll) happens */
-    int          i;
-    int          new_right = -1; /* alternate right bound, using gl_extent */
-    int          l1, l2, ll;
 
-    if (change == -2) {   /* reset */
-	while (gl_pos--) gl_putc('\b');
+/* when change >= 0, change must be aligned to edit units and
+                     change+gl_extent must be as well */
+/* when cursor != BUF_SIZE, it must be aligned to edit units */
+
+{
+    static int   gl_shift;	 /* index of first on screen byte */
+    static int   gl_w_shift;
+    static int   off_right;	 /* true if more text right of screen */
+    static int   off_left;	 /* true if more text left of screen */
+    static char  last_prompt[CONSOLE_PROMPT_SIZE] = "";
+    int          w_change = -1;
+    int          w_cursor;                            
+    int          left = 0;     /* index of first byte to print */
+    int          right = -1;   /* index of first byte not to print */
+    int          w_right;
+    int          w_rightmost_printable;
+    int          w_pad;        /* how much to erase at end of line */
+    int          w_dollar_pad = 0;
+    int          w_backup;       /* how far to backup before fixing */
+    int          new_shift = 0;  /* value of shift based on cursor */
+    int          w_new_shift;
+    int          consider_extent = 1;
+    int          print_left_dollar = 0;
+    int          print_right_dollar = 0;
+    int          i;
+    int          gl_w_scroll;    /* width of EOL scrolling region */
+
+    gl_w_scroll = gl_w_termw / 3;
+
+    if (change == -2) {   /* reset, initialization, redraw */
+	gl_putc('\r');
         gl_pos = gl_cnt = gl_shift = off_right = off_left = 0;
+	gl_w_pos = gl_w_cnt = gl_w_shift = 0;
+
 	gl_puts(prompt);
 	strncpy(last_prompt, prompt, CONSOLE_PROMPT_SIZE-1);
+        gl_w_width = gl_w_termw - gl_w_promptlen(prompt);
 	change = 0;
-        gl_width = gl_termw - gl_strlen(prompt);
+	consider_extent = 0;
     } else if (strcmp(prompt, last_prompt) != 0) {
-	l1 = gl_strlen(last_prompt);
-	l2 = gl_strlen(prompt);
-        ll = gl_pos + l1;
-	gl_cnt = gl_cnt + l1 - l2;
-	strncpy(last_prompt, prompt, CONSOLE_PROMPT_SIZE-1);
-	while (ll--) gl_putc('\b');	
-	gl_puts(prompt);
+	gl_putc('\r');
+	gl_w_pos = gl_w_shift;
 	gl_pos = gl_shift;
-        gl_width = gl_termw - l2;
+	/* temporarily updated gl_w_cnt is only used to include the change in prompt
+	   width into calculation of pad, right after that the gl_*cnt values are
+	   recomputed (the prompt is never included otherwise into gl_*cnt) */
+	gl_w_cnt = gl_w_cnt + gl_w_promptlen(last_prompt) - gl_w_promptlen(prompt);
+
+	gl_puts(prompt);
+	strncpy(last_prompt, prompt, CONSOLE_PROMPT_SIZE-1);
+        gl_w_width = gl_w_termw - gl_w_promptlen(prompt);
 	change = 0;
+	consider_extent = 0;
     }
-    pad = (off_right)? gl_width - 1 : gl_cnt - gl_shift;   /* old length */
-    backup = gl_pos - gl_shift;
+
+    w_pad = (off_right)? gl_w_width - 1 : gl_w_cnt - gl_w_shift + off_left;   /* old width */
     if (change >= 0) {
-        gl_cnt = strlen(gl_buf);
-        if (change > gl_cnt)
+	w_change = gl_w_from_b(change);  /* old map or initialization */
+	consider_extent = update_map(change) && consider_extent;
+	                  /* map_update updates also gl_cnt, gl_w_cnt */
+	if (change > gl_cnt) {
 	    change = gl_cnt;
+	    w_change = gl_w_cnt;
+	}
     }
     if (cursor > gl_cnt) {
 	if (cursor != BUF_SIZE)		/* BUF_SIZE means end of line */
@@ -884,63 +1178,95 @@ gl_fixup(const char *prompt, int change, int cursor)
 	gl_putc('\007');
 	cursor = 0;
     }
-    if (off_right || (off_left && cursor < gl_shift + gl_width - gl_scroll / 2))
-	extra = 2;			/* shift the scrolling boundary */
-    else 
-	extra = 0;
-    new_shift = cursor + extra + gl_scroll - gl_width;
-    if (new_shift > 0) {
-	new_shift /= gl_scroll;
-	new_shift *= gl_scroll;
+    w_cursor = gl_w_from_b(cursor);
+    w_new_shift = w_cursor - (gl_w_width - 1 - gl_w_scroll);
+    if (w_new_shift > 0)
+	w_new_shift++; /* adjust if newly off left */
+    if (w_new_shift > 0 && gl_w_cnt > w_new_shift  + gl_w_width - 2)
+	w_new_shift++; /* adjust if newly off right */
+    if (w_new_shift > 0) {
+	w_new_shift /= gl_w_scroll;
+	w_new_shift *= gl_w_scroll;
+	w_new_shift = gl_w_align_right(w_new_shift); 
+	new_shift = gl_b_from_w(w_new_shift);
     } else
-	new_shift = 0;
-    if (new_shift != gl_shift) {	/* scroll occurs */
+	w_new_shift = 0;
+    w_backup = gl_w_pos - gl_w_shift + off_left;
+
+    if (new_shift != gl_shift) {	/* scroll or redraw/init occurs */
 	gl_shift = new_shift;
-	off_left = (gl_shift)? 1 : 0;
-	off_right = (gl_cnt > gl_shift + gl_width - 1)? 1 : 0;
+	gl_w_shift = w_new_shift;
+	off_left = print_left_dollar = (gl_shift)? 1 : 0;
         left = gl_shift;
-	new_right = right = (off_right)? gl_shift + gl_width - 2 : gl_cnt;
+	w_rightmost_printable = gl_w_shift + gl_w_width - 2 - off_left;
+	off_right = (gl_w_cnt > w_rightmost_printable + 1)? 1 : 0;
+
+	if (off_right) {
+	    /* right needs to account for right-$, but, right is the
+	       first byte _not_ to print, while w_rightmost_printable
+	       is the last width to print */
+	    print_right_dollar = 1;
+	    w_right = gl_w_align_left(w_rightmost_printable);
+	    right = gl_b_from_w(w_right); 
+	    /* there may be something right off the right-$ */
+	    w_dollar_pad = w_rightmost_printable - w_right; 
+	} else
+	    right = gl_cnt;
+
     } else if (change >= 0) {		/* no scroll, but text changed */
-	if (change < gl_shift + off_left) {
+	if (off_left && (change <= gl_shift)) {
 	    left = gl_shift;
+	    w_backup ++;  /* left-$ present */
 	} else {
 	    left = change;
-	    backup = gl_pos - change;
+	    w_backup = gl_w_pos - w_change;
 	}
-	off_right = (gl_cnt > gl_shift + gl_width - 1)? 1 : 0;
-	right = (off_right)? gl_shift + gl_width - 2 : gl_cnt;
-	new_right = (gl_extent && (right > left + gl_extent))? 
-	             left + gl_extent : right;
+	w_rightmost_printable = gl_w_shift + gl_w_width - 2 - off_left;
+	off_right = (gl_w_cnt > w_rightmost_printable + 1)? 1 : 0;
+
+	if (off_right) {
+	    w_right = gl_w_align_left(w_rightmost_printable);
+	    right = gl_b_from_w(w_right);
+	    if (consider_extent && (left + gl_extent < right))
+		right = left + gl_extent;
+	    else {
+		print_right_dollar = 1;
+		/* there may be something right off the right-$ */
+		w_dollar_pad = w_rightmost_printable - w_right;
+	    }
+	} else if (consider_extent && (left + gl_extent < gl_cnt))
+	    right = left + gl_extent; 
+	else
+	    right = gl_cnt;
     }
-    pad -= (off_right)? gl_width - 1 : gl_cnt - gl_shift;
-    pad = (pad < 0)? 0 : pad;
-    if (left <= right) {		/* clean up screen */
-	for (i=0; i < backup; i++)
+    w_pad -= (off_right)? gl_w_width - 1 : gl_w_cnt - gl_w_shift + off_left; /* new width */
+    w_pad = (w_pad < 0)? 0 : w_pad;
+
+    if (left <= right) {               /* clean up screen */
+	for (i=0; i < w_backup; i++) 
 	    gl_putc('\b');
-	if (left == gl_shift && off_left) {
+	if (print_left_dollar)
 	    gl_putc('$');
-	    left++;
-        }
-	for (i=left; i < new_right; i++)
-	    gl_putc(gl_buf[i]);
-	gl_pos = new_right;
-	if (off_right && new_right == right) {
+	if (right > left)
+	    gl_write(gl_buf + left, right - left); /* print changed characters */
+	gl_pos = right;
+	gl_w_pos = gl_w_from_b(gl_pos); 
+	if (print_right_dollar)
 	    gl_putc('$');
-	    gl_pos++;
-	} else { 
-	    for (i=0; i < pad; i++)	/* erase remains of prev line */
-		gl_putc(' ');
-	    gl_pos += pad;
-	}
+	for(i = 0; i < w_pad + w_dollar_pad; i++)
+	    /* erase remains of prev line or right-$ */
+	    gl_putc(' ');
+	gl_w_pos += print_right_dollar + w_pad + w_dollar_pad;
     }
-    i = gl_pos - cursor;		/* move to final cursor location */
+    i = gl_w_pos - w_cursor;		/* move to final cursor location */
     if (i > 0) {
-	while (i--)
+	while (i--) 
 	   gl_putc('\b');
     } else {
-	for (i=gl_pos; i < cursor; i++)
-	    gl_putc(gl_buf[i]);
+	    if (gl_pos < cursor)        /* only to move the cursor on terminal */
+		gl_write(gl_buf + gl_pos, cursor - gl_pos);
     }
+    gl_w_pos = w_cursor;
     gl_pos = cursor;
 }
 
@@ -950,7 +1276,7 @@ gl_tab(char *buf, int offset, int *loc)
 {
     int i, count, len;
 
-    len = strlen(buf);
+    len = gl_w_strlen(buf);
     count = 8 - (offset + *loc) % 8;
     for (i=len; i >= *loc; i--)
         buf[i+count] = buf[i];
@@ -963,13 +1289,62 @@ gl_tab(char *buf, int offset, int *loc)
 
 /******************* strlen stuff **************************************/
 
+/* hook to install a custom gl_w_promptlen, used _only_ for the prompt  */
 void gl_strwidth(func)
 size_t (*func)();
 {
     if (func != 0) {
-	gl_strlen = func;
+	gl_w_promptlen = func;
     }
 }
+
+/* lenght of string in widths */
+static size_t
+gl_w_strlen(const char *s)
+{
+    size_t inbytesleft, outbytesleft, width = 0, status;
+    R_wchar_t uc;
+    char *outbuf;
+
+    inbytesleft = strlen(s);
+    Riconv(gl_nat_to_ucs, NULL, NULL, NULL, NULL);
+    while(inbytesleft) {
+	outbytesleft = 4;
+	outbuf = (char *)&uc;
+	status = Riconv(gl_nat_to_ucs, &s, &inbytesleft, &outbuf, &outbytesleft);
+	if (status == (size_t)-1 && errno != E2BIG)
+	    gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+
+	if (iswprint(uc))
+	    width += Ri18n_wcwidth(uc);
+    }
+    return width;
+}
+
+/* length of string in edit units */
+static size_t
+gl_e_strlen(const char *s)
+{
+    size_t inbytesleft, outbytesleft, status, e = 0;
+    R_wchar_t uc;
+    char *outbuf;
+
+    inbytesleft = strlen(s);
+    Riconv(gl_nat_to_ucs, NULL, NULL, NULL, NULL);
+    while(inbytesleft) {
+	outbytesleft = 4;
+	outbuf = (char *)&uc;
+	status = Riconv(gl_nat_to_ucs, &s, &inbytesleft, &outbuf, &outbytesleft);
+	if (status == (size_t)-1 && errno != E2BIG)
+	    gl_error("\n*** Error: getline(): invalid multi-byte character.\n");
+
+	if (iswprint(uc) && Ri18n_wcwidth(uc) > 0)
+	    /* this is an approximation, ideally use complete grapheme here */
+	    e++;
+    }
+    return e;
+}
+
 
 /******************* History stuff **************************************/
 
@@ -1273,3 +1648,4 @@ gl_beep(void)
 {
 	if(gl_beep_on) MessageBeep(MB_OK);
 }	/* gl_beep */
+

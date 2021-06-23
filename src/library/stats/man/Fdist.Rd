@@ -112,19 +112,19 @@ rf(n, df1, df2, ncp)
 }
 \examples{
 ## Equivalence of pt(.,nu) with pf(.^2, 1,nu):
-x <- seq(0.001, 5, len = 100)
+x <- seq(0.001, 5, length.out = 100)
 nu <- 4
 stopifnot(all.equal(2*pt(x,nu) - 1, pf(x^2, 1,nu)),
           ## upper tails:
- 	  all.equal(2*pt(x,     nu, lower=FALSE),
-		      pf(x^2, 1,nu, lower=FALSE)))
+ 	  all.equal(2*pt(x,     nu, lower.tail=FALSE),
+		      pf(x^2, 1,nu, lower.tail=FALSE)))
 
 ## the density of the square of a t_m is 2*dt(x, m)/(2*x)
 # check this is the same as the density of F_{1,m}
 all.equal(df(x^2, 1, 5), dt(x, 5)/x)
 
 ## Identity:  qf(2*p - 1, 1, df) == qt(p, df)^2  for  p >= 1/2
-p <- seq(1/2, .99, length = 50); df <- 10
+p <- seq(1/2, .99, length.out = 50); df <- 10
 rel.err <- function(x, y) ifelse(x == y, 0, abs(x-y)/mean(abs(c(x,y))))
 \donttest{quantile(rel.err(qf(2*p - 1, df1 = 1, df2 = df), qt(p, df)^2), .90)  # ~= 7e-9}
 }

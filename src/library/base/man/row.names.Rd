@@ -1,6 +1,6 @@
 % File src/library/base/man/row.names.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{row.names}
@@ -94,13 +94,14 @@ row.names(x) <- value
 ## To illustrate the note:
 df <- data.frame(x = c(TRUE, FALSE, NA, NA), y = c(12, 34, 56, 78))
 row.names(df) <- 1 : 4
-attr(df, "row.names")
-deparse(df)
-## (Compact storage, not regarded as automatic.)
+attr(df, "row.names") #> 1:4
+deparse(df) # or dput(df)
+##--> c(NA, 4L) : Compact storage, *not* regarded as automatic.
+
 row.names(df) <- NULL
-attr(df, "row.names")
-deparse(df)
-## (Compact storage, regarded as automatic.)
+attr(df, "row.names") #> 1:4
+deparse(df) # or dput(df) -- shows
+##--> c(NA, -4L) : Compact storage, regarded as automatic.
 }
 \keyword{classes}
 \keyword{methods}

@@ -15,6 +15,8 @@ check-all: check-devel check-recommended
 @USE_RECOMMENDED_PACKAGES_FALSE@check-recommended:
 @USE_RECOMMENDED_PACKAGES_FALSE@	@$(ECHO) "Recommended packages are not installed so cannot be tested"
 
+@USE_RECOMMENDED_PACKAGES_TRUE@test-src-sloppy-b = eval-etc-2.R
+@USE_RECOMMENDED_PACKAGES_FALSE@test-src-sloppy-b =
 
 include $(top_builddir)/Makeconf
 include $(srcdir)/Makefile.common
@@ -31,7 +33,7 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save \
 	test-system.R test-system.Rout.save test-system2.c \
-	reg-large.R utf8.R
+	reg-large.R utf8.R reg-translation.R
 
 SUBDIRS = Embedding Examples
 SUBDIRS_WITH_NO_BUILD = Pkgs

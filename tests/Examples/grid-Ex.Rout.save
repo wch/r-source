@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2020-12-30 r79727) -- "Unsuffered Consequences"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -44,7 +44,7 @@ Type 'q()' to quit R.
 +                      widths=unit(c(1, 1), "inches")))
 > ## Diagram of a sample viewport
 > grid.show.viewport(viewport(x=0.6, y=0.6,
-+                             w=unit(1, "inches"), h=unit(1, "inches")))
++                             width=unit(1, "inches"), height=unit(1, "inches")))
 > ## A flash plotting example
 > grid.multipanel(vp=viewport(0.5, 0.5, 0.8, 0.8))
 > 
@@ -420,7 +420,7 @@ $lty
 [1] "solid"
 
 > grid.newpage()
-> vp <- viewport(w = .8, h = .8, gp = gpar(col="blue"))
+> vp <- viewport(width = .8, height = .8, gp = gpar(col="blue"))
 > grid.draw(gTree(children=gList(rectGrob(gp = gpar(col="red")),
 +                      textGrob(paste("The rect is its own colour (red)",
 +                                     "but this text is the colour",
@@ -920,7 +920,7 @@ NULL
 > 
 > ### ** Examples
 > 
-> pushViewport(viewport(w=.5, h=.5))
+> pushViewport(viewport(width=.5, height=.5))
 > grid.rect()
 > grid.points(stats::runif(10), stats::runif(10))
 > popViewport()
@@ -937,7 +937,7 @@ NULL
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: grid.grep
-> ### Title: Search for grobs
+> ### Title: Search for Grobs and/or Viewports
 > ### Aliases: grid.grep
 > ### Keywords: dplot
 > 
@@ -1143,7 +1143,7 @@ grandparent::parent::child
 parent
   child
 > # Show viewports too
-> grid.ls(sampleGTree, view=TRUE)
+> grid.ls(sampleGTree, viewports=TRUE)
 parent
   vp1
     vp2
@@ -1153,7 +1153,7 @@ parent
       child
       2
 > # Only show viewports
-> grid.ls(sampleGTree, view=TRUE, grob=FALSE)
+> grid.ls(sampleGTree, viewports=TRUE, grobs=FALSE)
 vp1
   vp2
     2
@@ -1162,7 +1162,7 @@ vp1
     2
 > # Alternate displays
 > # nested listing, custom indent
-> grid.ls(sampleGTree, view=TRUE, print=nestedListing, gindent="--")
+> grid.ls(sampleGTree, viewports=TRUE, print=nestedListing, gindent="--")
 parent
 --vp1
 ----vp2
@@ -1172,7 +1172,7 @@ parent
 ------child
 ------2
 > # path listing
-> grid.ls(sampleGTree, view=TRUE, print=pathListing)
+> grid.ls(sampleGTree, viewports=TRUE, print=pathListing)
             | parent
 vp1
 vp1::vp2
@@ -1182,7 +1182,7 @@ vp1::vp2
 vp1::vp2    | parent::child
 vp1::vp2::2
 > # path listing, without grobs aligned
-> grid.ls(sampleGTree, view=TRUE, print=pathListing, gAlign=FALSE)
+> grid.ls(sampleGTree, viewports=TRUE, print=pathListing, gAlign=FALSE)
  | parent
 vp1
 vp1::vp2
@@ -1192,7 +1192,7 @@ vp1::vp2
 vp1::vp2 | parent::child
 vp1::vp2::2
 > # grob path listing
-> grid.ls(sampleGTree, view=TRUE, print=grobPathListing)
+> grid.ls(sampleGTree, viewports=TRUE, print=grobPathListing)
          | parent
 vp1::vp2 | parent::child
 > # path listing, grobs only
@@ -1200,7 +1200,7 @@ vp1::vp2 | parent::child
  | parent
  | parent::child
 > # path listing, viewports only
-> grid.ls(sampleGTree, view=TRUE, grob=FALSE, print=pathListing)
+> grid.ls(sampleGTree, viewports=TRUE, grobs=FALSE, print=pathListing)
 vp1
 vp1::vp2
 vp1::vp2::2
@@ -1208,7 +1208,7 @@ vp1
 vp1::vp2
 vp1::vp2::2
 > # raw flat listing
-> str(grid.ls(sampleGTree, view=TRUE, print=FALSE))
+> str(grid.ls(sampleGTree, viewports=TRUE, print=FALSE))
 List of 6
  $ name   : chr [1:8] "parent" "vp1" "vp2" "2" ...
  $ gDepth : num [1:8] 0 1 1 1 1 1 1 1
@@ -1237,7 +1237,7 @@ List of 6
 > grid.move.to(0.5, 0.5)
 > grid.line.to(1, 1)
 > grid.line.to(0.5, 0)
-> pushViewport(viewport(x=0, y=0, w=0.25, h=0.25, just=c("left", "bottom")))
+> pushViewport(viewport(x=0, y=0, width=0.25, height=0.25, just=c("left", "bottom")))
 > grid.rect()
 > grid.grill()
 > grid.line.to(0.5, 0.5)
@@ -1437,7 +1437,7 @@ List of 6
 > 
 > # The same raster drawn several times
 > grid.newpage()
-> grid.raster(0, x=1:3/4, y=1:3/4, w=.1, interp=FALSE)
+> grid.raster(0, x=1:3/4, y=1:3/4, width=.1, interpolate=FALSE)
 > 
 > 
 > 
@@ -1509,7 +1509,7 @@ List of 6
 > ### ** Examples
 > 
 > grid.roundrect(width=.5, height=.5, name="rr")
-> theta <- seq(0, 360, length=50)
+> theta <- seq(0, 360, length.out=50)
 > for (i in 1:50)
 +     grid.circle(x=grobX("rr", theta[i]),
 +                 y=grobY("rr", theta[i]),
@@ -1554,7 +1554,7 @@ List of 6
 > 
 > ## Diagram of a sample viewport
 > grid.show.viewport(viewport(x=0.6, y=0.6,
-+                             w=unit(1, "inches"), h=unit(1, "inches")))
++                             width=unit(1, "inches"), height=unit(1, "inches")))
 > grid.show.viewport(viewport(layout.pos.row=2, layout.pos.col=2:3),
 +                    grid.layout(3, 4))
 > 
@@ -1580,7 +1580,7 @@ List of 6
 > grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
 +           gp=gpar(fontsize=20, col="grey"))
 > grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
-+           gp=gpar(fontsize=20), check=TRUE)
++           gp=gpar(fontsize=20), check.overlap=TRUE)
 > grid.newpage()
 > draw.text <- function(just, i, j) {
 +   grid.text("ABCD", x=x[j], y=y[i], just=just)
@@ -2106,7 +2106,7 @@ $min$sum$mm
 > 
 > # Diagram of a sample viewport
 > grid.show.viewport(viewport(x=0.6, y=0.6,
-+                    w=unit(1, "inches"), h=unit(1, "inches")))
++                    width=unit(1, "inches"), height=unit(1, "inches")))
 > # Demonstrate viewport clipping
 > clip.demo <- function(i, j, clip1, clip2) {
 +   pushViewport(viewport(layout.pos.col=i,
@@ -2132,7 +2132,7 @@ $min$sum$mm
 > popViewport()
 > # Demonstrate turning clipping off
 > grid.newpage()
-> pushViewport(viewport(w=.5, h=.5, clip="on"))
+> pushViewport(viewport(width=.5, height=.5, clip="on"))
 > grid.rect()
 > grid.circle(r=.6, gp=gpar(lwd=10))
 > pushViewport(viewport(clip="inherit"))
@@ -2142,14 +2142,14 @@ $min$sum$mm
 > popViewport(3)
 > # Demonstrate vpList, vpStack, and vpTree
 > grid.newpage()
-> tree <- vpTree(viewport(w=0.8, h=0.8, name="A"),
-+                vpList(vpStack(viewport(x=0.1, y=0.1, w=0.5, h=0.5,
+> tree <- vpTree(viewport(width=0.8, height=0.8, name="A"),
++                vpList(vpStack(viewport(x=0.1, y=0.1, width=0.5, height=0.5,
 +                                        just=c("left", "bottom"), name="B"),
-+                               viewport(x=0.1, y=0.1, w=0.5, h=0.5,
++                               viewport(x=0.1, y=0.1, width=0.5, height=0.5,
 +                                        just=c("left", "bottom"), name="C"),
-+                               viewport(x=0.1, y=0.1, w=0.5, h=0.5,
++                               viewport(x=0.1, y=0.1, width=0.5, height=0.5,
 +                                        just=c("left", "bottom"), name="D")),
-+                       viewport(x=0.5, w=0.4, h=0.9,
++                       viewport(x=0.5, width=0.4, height=0.9,
 +                                just="left", name="E")))
 > pushViewport(tree)
 > for (i in LETTERS[1:5]) {
@@ -2310,7 +2310,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.521 0.019 1.55 0 0 
+Time elapsed:  1.522 0.033 1.564 0 0 
 > grDevices::dev.off()
 null device 
           1 

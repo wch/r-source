@@ -38,7 +38,7 @@ SOURCES_NMATH = \
 	dexp.c pexp.c qexp.c rexp.c \
 	dgeom.c pgeom.c qgeom.c rgeom.c \
 	dhyper.c phyper.c qhyper.c rhyper.c \
-	dnbinom.c pnbinom.c qnbinom.c rnbinom.c \
+	dnbinom.c pnbinom.c qnbinom.c qnbinom_mu.c rnbinom.c \
 	dpois.c ppois.c qpois.c rpois.c \
 	dweibull.c pweibull.c qweibull.c rweibull.c \
 	dlogis.c plogis.c qlogis.c rlogis.c \

@@ -240,6 +240,7 @@ str.default <-
 				   control = dCtrl, nlines = nlines)
     n.of. <- function(n, singl, plural) paste(n, ngettext(n, singl, plural))
     n.of <- function(n, noun) n.of.(n, noun, paste0(noun,"s"))
+    l.i <- function(i) paste0("[[",i,"]]")
     arrLenstr <- function(obj) {
 	rnk <- length(di. <- dim(obj))
 	di <- paste0(ifelse(di. > 1, "1:",""), di.,
@@ -336,8 +337,14 @@ str.default <-
 	    else cat(" ", if(!is.null(names(object))) "Named ",
 		     if(i.pl)"pair", "list()\n", sep = "")
 	} else { # list, length >= 1 :
-	    if(irregCl <- has.class && identical(object[[1L]], object)) {
-		le <- length(object <- unclass(object))
+	    if(irregCl <- has.class &&
+		   ## vapply(), lapply .. typically use length(unclass(object))
+		   (length(uncObj <- unclass(object)) != le # << igraph communities
+		    || identical(object[[1L]], object)
+		    || inherits(tryCatch(object[[le]], error=identity), "error")# igraph
+		   )
+	       ) {
+		le <- length(object <- uncObj)
 		std.attr <- c(std.attr, "class")
 	    }
 	    if(no.list || (has.class &&
@@ -354,6 +361,12 @@ str.default <-
 	    }
 	    if (is.na(max.level) || nest.lev < max.level) {
 		nms <- names(object)
+		if("promise" %in% (oTypes <- vapply(object, typeof, ""))) {
+		    envP <- object # a list; ensure all promises are named
+		    if(is.null(nms)) names(envP) <- rep.int("", le)
+		    if(any(zch <- !nzchar(names(envP)["promise" == oTypes]))) ## name them
+			names(envP)[zch] <- l.i(which(zch))
+		}
 		nam.ob <-
 		    if(is.null(nms)) rep.int("", le)
 		    else { ncn <- nchar.w(nms)
@@ -364,8 +377,8 @@ str.default <-
 		for (i in seq_len(min(list.len,le) ) ) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep = "")
 		    envir <- # pass envir for 'promise' components:
-			if(typeof(object[[i]]) == "promise") {
-			    structure(object, nam = as.name(nms[i]))
+			if(oTypes[[i]] == "promise") {
+			    structure(envP, nam = as.name(names(envP)[i]))
 			} # else NULL
 		    strSub(object[[i]], give.length=give.length,
                            nest.lev = nest.lev + 1,
@@ -496,16 +509,16 @@ str.default <-
 		str1 <- paste(" atomic", le.str)
 	    }
 	} else if(typeof(object) == "promise") {
-	    cat(" promise ")
-	    if (!is.null(envir)) {
-		objExp <- eval(bquote(substitute(.(attr(envir, "nam")), envir)))
-		cat("to ")
-		strSub(objExp)
-	    } else cat(" <?>\n")
+	    cat(" promise to ")
+	    objExp <-
+		if (is.null(envir) || is.null(nam <- attr(envir, "nam")))
+		    substitute(.x., as.environment(list(.x. = object)))
+		else
+		    eval(bquote(substitute(.(nam), envir)))
+	    strSub(objExp)
 	    return(invisible())
 	} else {
 	    ##-- NOT-atomic / not-vector  "unclassified object" ---
-	    ##str1 <- paste(" ??? of length", le, ":")
 	    str1 <- paste("length", le)
 	}
 	##-- end  if else..if else...  {still non-list case}
@@ -543,6 +556,15 @@ str.default <-
 	    } else if (mod == "argument"){
 		format.fun <- deParse
 	    } else {
+		if(mod == "...") { # DOTSXP
+		    format.fun <- function(x) { # use le := length(x)
+			le <- length(x) ## for testing <<<<< FIXME DROP!! <<<<<<<<<<
+			hasNm <- nzchar(nm <- names(x) %||% rep.int("", le))
+			nm[hasNm] <- paste0(nm[hasNm], "=")
+			paste0("(", paste(paste0(nm,"*"), collapse=", "),
+			       ")")
+		    }
+		}
 		give.mode <- TRUE
 	    }
 	    if(give.mode) str1 <- paste0(str1, ', mode "', mod,'":')
@@ -620,7 +642,8 @@ str.default <-
 	}
 
 	cat(if(give.head) paste0(str1, " "),
-	    formObj(if(ile >= 1) object[seq_len(ile)] else if(v.len > 0) object),
+	    formObj(if(ile >= 1 && mod != "...") object[seq_len(ile)]
+		    else if(v.len > 0) object),
 	    if(le > v.len) " ...", "\n", sep = "")
 
     } ## else (not function nor list)----------------------------------------

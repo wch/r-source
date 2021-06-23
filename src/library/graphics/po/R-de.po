@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2018-04-16 10:30+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -376,6 +376,17 @@ msgstr "kann nicht mehr als eine 'x' Koordinate behandeln"
 
 msgid "must have a response variable"
 msgstr "muss eine Antwortvariable besitzen"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "unzulässige Boxplot-Breite"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "unzulässige Boxplot-Breite"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' auf etwas anderes als einen Dataframe angewendet"

@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkRdaFiles.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2017 R Core Team
+% Copyright 2009-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkRdaFiles}
@@ -30,7 +30,7 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz"),
 
   \item{compress, compression_level}{Type and level of compression: see
     \code{\link{save}}.  Values of \code{compress} can be abbreviated.}
-  
+
   \item{version}{The format to be used when re-saving: see
     \code{\link{save}}.}
 }
@@ -57,9 +57,9 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz"),
     \code{"bzip2"}, \code{"xz"}, \code{"none"} or \code{"unknown"} (which
     means that if this is an \R save file it is from a later version of
     \R).}
-  \item{version}{integer: the version of the save -- usually \code{2}
-    but \code{1} for very old files, and \code{NA} for other files.
-    Unfortunately \code{2} means \sQuote{version 2 or later}.}
+  \item{version}{integer: positive with the version(s) of the
+    \code{\link{save}()}, see there on which versions have been default in
+    which versions of \R, and \code{NA} for non-Rda files.}
 }
 \examples{\dontrun{
 ## from a package top-level source directory

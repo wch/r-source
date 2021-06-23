@@ -203,12 +203,12 @@ nchar(x, "w", allowNA = TRUE)
 ## str() on large strings (in multibyte locales; changing locale may not work everywhere
 oloc <- Sys.getlocale("LC_CTYPE")
 mbyte.lc <- {
-    if(.Platform$OS.type == "windows")
+    if(.Platform$OS.type == "windows") # Windows Latin-9, but why not 1252?
 	"English_United States.28605"
-    else if(grepl("[.]UTF-8$", oloc, ignore.case=TRUE)) # typically nowadays
+    else if(l10n_info()[["UTF-8"]])
 	oloc
     else
-	"en_US.UTF-8" # or rather "C.UTF-8" or from  system("locale -a | fgrep .utf8")
+	"en_US.UTF-8"
 }
 identical(Sys.setlocale("LC_CTYPE", mbyte.lc), mbyte.lc) # "ok" if not
 cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
@@ -216,7 +216,8 @@ cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
 str(cc) # failed in some R-devel versions
 )
 stopifnot(grepl("chr \"J.*reskog\"", .tmp))
-nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")# 5.1 M
+
+nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b") # 5.1 M
 stopifnot(system.time( str(L) )[[1L]] < 0.10) # Sparc Solaris needed 0.052
 if(mbyte.lc != oloc) Sys.setlocale("LC_CTYPE", oloc)
 ## needed 1.6 sec in (some) R <= 3.3.0 in a multibyte locale

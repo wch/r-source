@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -226,6 +226,10 @@ msgstr "'X'必需有带名字的维名"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "参数'object'必需解析成单一个字符串"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "参数'object'必需解析成单一个字符串"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin'参数的值必需是'start'，'current'或'end'中的一个"
 
@@ -377,7 +381,7 @@ msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
 #, fuzzy
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "数据框里有非数值的参数"
 
 msgid ","
@@ -390,8 +394,13 @@ msgstr "只适用于大小相同的数据框"
 msgid "list of length %d not meaningful"
 msgstr "%d长度的串列没有意义"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "只适用于全数值数据框"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "不是数据框"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
@@ -750,6 +759,10 @@ msgstr "%s的值没有"
 msgid "all arguments must be named"
 msgstr "所有参数都必需有名字"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "忽略'drop'参数"
+
 msgid "match distance components must be non-negative"
 msgstr "匹配距离组件不能有负值"
 
@@ -1085,9 +1098,6 @@ msgid ""
 "by .GlobalEnv when processing object %s"
 msgstr ""
 
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s'不是'namespace:%s'内的出口对象："
-
 msgid "namespace is already attached"
 msgstr "已经连接上名字空间了"
 
@@ -1103,6 +1113,9 @@ msgstr "%s不存在"
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "载入了名字空间%1$s %2$s，但需要的是%3$s %4$s"
+
+msgid "- loading"
+msgstr ""
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "名字空间%s已经在'loadNamespace'封條了"
@@ -1165,13 +1178,53 @@ msgid ""
 "to be reinstalled for use with this R version"
 msgstr ""
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "程辑包%s里的R写碼载入失败"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "类别不对"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1188,6 +1241,9 @@ msgstr "从%s导出功能里找不到适用于%s的相应方法"
 msgid "in %s methods for export not found: %s"
 msgstr "用于出口的%s方法不存在：%s "
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "%s存在多个方法表"
 
@@ -1196,6 +1252,18 @@ msgstr "找不到关于%s的隐喻数据对象"
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "在%s程辑包中%s方法指定被用于出口，但它的定义并不存在"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "载入需要的名字空间：%s"
@@ -1483,6 +1551,9 @@ msgid ""
 msgstr ""
 "'sort.list'的'x'必需为原子值\n"
 "你是不是在串列上调用了'sort'函数？"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local'的值必需是'TRUE'，或是'FALSE'，或是环境"
@@ -1898,6 +1969,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s'不是'namespace:%s'内的出口对象："
 
 #~ msgid "bad handler specification"
 #~ msgstr "处置器柄规格不对"

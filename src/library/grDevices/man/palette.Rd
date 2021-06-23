@@ -91,7 +91,7 @@ palette()
 
 palette(hcl.colors(8, "viridis"))
 
-(palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
+(palette(gray(seq(0,.9,length.out = 25)))) # gray scales; print old palette
 matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
         main = "Gray Scales Palette",
         sub = "palette(gray(seq(0, .9, len=25)))")

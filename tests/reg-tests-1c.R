@@ -1604,6 +1604,8 @@ stopifnot(identical(w8, 141:142),# exactly 1941:1942 had CEST on Jan.1
 ## for R-devel Jan.2016 to Mar.14 -- *AND* for R 3.2.4 -- the above gave
 ## integer(0)  and  c(41:42, 99:100, ..., 389:390)  respectively
 
+## the above gives 1:142 and 1:42 respectively on Solaris 10 when not using
+## --with-internal-tzcode; R-Admin recommends --with-internal-tzcode.
 
 ## tsp<- did not remove mts class
 z <- ts(cbind(1:5,1:5))

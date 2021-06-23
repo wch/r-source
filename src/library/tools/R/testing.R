@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -607,12 +607,17 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
     ## We need to force C collation: might not work
     oLCcoll <- Sys.getlocale("LC_COLLATE") ; on.exit(Sys.setlocale("LC_COLLATE", oLCcoll))
     Sys.setlocale("LC_COLLATE", "C")
+    ## "strict specific":
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "array-subset",
+                "p-r-random-tests", "d-p-q-r-tst-2",
                 "any-all", "d-p-q-r-tests")
+    ## "sloppy specific":
     tests2 <- c("complex", "print-tests", "lapack", "datasets", "datetime",
                 "iec60559")
+    ## regression tests (strict specific, too)
     tests3 <- c("reg-tests-1a", "reg-tests-1b", "reg-tests-1c", "reg-tests-2",
+                "reg-tests-1d",
                 "reg-examples1", "reg-examples2", "reg-packages",
                 "p-qbeta-strict-tst",
                 "reg-IO", "reg-IO2", "reg-plot", "reg-S4", "reg-BLAS")
@@ -645,7 +650,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
             Sys.setenv(R_DEFAULT_PACKAGES="")
             Sys.setenv(LC_COLLATE="C")
             Sys.setenv(SRCDIR=".")
-            ## ignore inC and hope
+            ## ignore all 'extra' (incl. 'inC')  and hope
         } else cmd <- paste(extra, cmd)
         res <- system(cmd)
         if (res) {
@@ -683,12 +688,13 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
                 if(res != 0L) message("DIFFERED") else message("OK")
             }
         }
+        runone("reg-translation", inC=FALSE)
         runone("reg-tests-3", TRUE)
         runone("reg-examples3", TRUE)
         message("running tests of plotting Latin-1", domain = NA)
         message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
-        runone("reg-plot-latin1", TRUE, FALSE)
+        runone("reg-plot-latin1", TRUE, inC=FALSE)
         message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
                 appendLF = FALSE, domain = NA)
         res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")

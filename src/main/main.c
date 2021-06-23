@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2020   The R Core Team
+ *  Copyright (C) 1998-2021   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -263,6 +263,8 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	R_Busy(1);
 	PROTECT(value = eval(thisExpr, rho));
 	SET_SYMVALUE(R_LastvalueSymbol, value);
+	if (NO_REFERENCES(value))
+	    INCREMENT_REFCNT(value);
 	wasDisplayed = R_Visible;
 	if (R_Visible)
 	    PrintValueEnv(value, rho);
@@ -342,7 +344,6 @@ static void check_session_exit()
 	    REprintf(_("Execution halted\n"));
 	    R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
 	}
-	
     }
 }
 
@@ -749,7 +750,7 @@ static uintptr_t almostFillStack() {
 void setup_Rmainloop(void)
 {
     volatile int doneit;
-    volatile SEXP baseEnv;
+    volatile SEXP baseNSenv;
     SEXP cmd;
     char deferred_warnings[11][250];
     volatile int ndeferred_warnings = 0;
@@ -799,32 +800,39 @@ void setup_Rmainloop(void)
 #ifdef HAVE_LOCALE_H
 #ifdef Win32
     {
-	char *p, Rlocale[1000]; /* Windows' locales can be very long */
+	char allbuf[1000]; /* Windows' locales can be very long */ 
+	char *p, *lcall; 
+    
 	p = getenv("LC_ALL");
-	strncpy(Rlocale, p ? p : "", 1000);
-	Rlocale[1000 - 1] = '\0';
-	if(!(p = getenv("LC_CTYPE"))) p = Rlocale;
+	if(p) {
+	    strncpy(allbuf, p, sizeof(allbuf));
+	    allbuf[1000 - 1] = '\0';
+	    lcall = allbuf;
+	} else
+	    lcall = NULL;
+	
 	/* We'd like to use warning, but need to defer.
 	   Also cannot translate. */
-	if(!setlocale(LC_CTYPE, p))
+
+	p = lcall ? lcall : getenv("LC_COLLATE");
+	if(!setlocale(LC_COLLATE, p ? p : ""))
 	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
-		     "Setting LC_CTYPE=%s failed\n", p);
-	if((p = getenv("LC_COLLATE"))) {
-	    if(!setlocale(LC_COLLATE, p))
-		snprintf(deferred_warnings[ndeferred_warnings++], 250,
-			 "Setting LC_COLLATE=%s failed\n", p);
-	} else setlocale(LC_COLLATE, Rlocale);
-	if((p = getenv("LC_TIME"))) {
-	    if(!setlocale(LC_TIME, p))
-		snprintf(deferred_warnings[ndeferred_warnings++], 250,
-			 "Setting LC_TIME=%s failed\n", p);
-	} else setlocale(LC_TIME, Rlocale);
-	if((p = getenv("LC_MONETARY"))) {
-	    if(!setlocale(LC_MONETARY, p))
-		snprintf(deferred_warnings[ndeferred_warnings++], 250,
-			 "Setting LC_MONETARY=%s failed\n", p);
-	} else setlocale(LC_MONETARY, Rlocale);
-	/* Windows does not have LC_MESSAGES */
+		     "Setting LC_COLLATE=%.200s failed\n", p);
+
+	p = lcall ? lcall : getenv("LC_CTYPE");
+	if(!setlocale(LC_CTYPE, p ? p : ""))
+	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		     "Setting LC_CTYPE=%.200s failed\n", p);
+	
+	p = lcall ? lcall : getenv("LC_MONETARY");
+	if(!setlocale(LC_MONETARY, p ? p : ""))
+	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		     "Setting LC_MONETARY=%.200s failed\n", p);
+
+	p = lcall ? lcall : getenv("LC_TIME");
+	if(!setlocale(LC_TIME, p ? p : ""))
+	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
+		     "Setting LC_TIME=%.200s failed\n", p);
 
 	/* We set R_ARCH here: Unix does it in the shell front-end */
 	char Rarch[30];
@@ -922,10 +930,10 @@ void setup_Rmainloop(void)
 
     /* This is the same as R_BaseEnv, but this marks the environment
        of functions as the namespace and not the package. */
-    baseEnv = R_BaseNamespace;
+    baseNSenv = R_BaseNamespace;
 
     /* Set up some global variables */
-    Init_R_Variables(baseEnv);
+    Init_R_Variables(baseNSenv);
 
     /* On initial entry we open the base language package and begin by
        running the repl on it.
@@ -948,7 +956,7 @@ void setup_Rmainloop(void)
     if (R_SignalHandlers) init_signal_handlers();
     if (!doneit) {
 	doneit = 1;
-	R_ReplFile(fp, baseEnv);
+	R_ReplFile(fp, baseNSenv);
     }
     fclose(fp);
 #endif
@@ -958,17 +966,13 @@ void setup_Rmainloop(void)
        drop through to further processing.
     */
     R_IoBufferInit(&R_ConsoleIob);
-    R_LoadProfile(R_OpenSysInitFile(), baseEnv);
+    R_LoadProfile(R_OpenSysInitFile(), baseNSenv);
     /* These are the same bindings, so only lock them once */
     R_LockEnvironment(R_BaseNamespace, TRUE);
-#ifdef NOTYET
-    /* methods package needs to trample here */
-    R_LockEnvironment(R_BaseEnv, TRUE);
-#endif
+    R_LockEnvironment(R_BaseEnv, FALSE);
     /* At least temporarily unlock some bindings used in graphics */
     R_unLockBinding(R_DeviceSymbol, R_BaseEnv);
     R_unLockBinding(R_DevicesSymbol, R_BaseEnv);
-    R_unLockBinding(install(".Library.site"), R_BaseEnv);
 
     /* require(methods) if it is in the default packages */
     doneit = 0;
@@ -1000,8 +1004,13 @@ void setup_Rmainloop(void)
      */
     if(!R_Quiet) PrintGreeting();
 
-    R_LoadProfile(R_OpenSiteFile(), baseEnv);
-    R_LockBinding(install(".Library.site"), R_BaseEnv);
+    R_LoadProfile(R_OpenSiteFile(), R_GlobalEnv);
+    /* The system profile creates an active binding in global environment
+       to capture writes to .Library.site executed in the site profile. This
+       effectively modifies .Library.site in the base environment to mimick
+       previous behavior when the site profile was run in the base
+       environment. */
+    R_removeVarFromFrame(install(".Library.site"), R_GlobalEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.
@@ -1056,7 +1065,7 @@ void setup_Rmainloop(void)
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First.sys"));
-	R_CurrentExpr = findVar(cmd, baseEnv);
+	R_CurrentExpr = findVar(cmd, baseNSenv);
 	if (R_CurrentExpr != R_UnboundValue &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
 		PROTECT(R_CurrentExpr = lang1(cmd));

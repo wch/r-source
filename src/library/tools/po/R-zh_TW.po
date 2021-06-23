@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -324,9 +324,6 @@ msgstr "變數覆寫使用者/場所設定："
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "使用手冊物件 '%s' 缺少聯結："
@@ -801,6 +798,9 @@ msgstr "不能對預設 JSS 式樣進行修改"
 msgid "inst/doc"
 msgstr "inst/doc"
 
+msgid ","
+msgstr ","
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr "由於簡介已經重新組建因而忽略。"
 
@@ -842,6 +842,9 @@ msgstr "不存在 %s 這個檔案目錄"
 
 msgid "no packages to check"
 msgstr "沒有可以查檢的東西"
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
 
 msgid "downloading reverse dependencies ..."
 msgstr "下載扭轉的依存性"
@@ -1365,6 +1368,11 @@ msgid ""
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
 msgstr[0] "在以下的 Rd 例子檔案中遇到了有可能是全域的 T 或 F 值:"
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] "在下面的函式裡遇到了有可能是全域的 T 或 F 值:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"

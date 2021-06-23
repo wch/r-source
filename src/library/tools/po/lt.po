@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2020-12-08 12:22+0200\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.4.1\n"
 
 #: Rmd5.c:47
@@ -57,7 +58,9 @@ msgstr "neatpažinto formato specifikacija '%s'"
 
 #: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr "ne daugiau kaip viena žvaigždutė '*' yra palaikoma kiekvienoje konvertavimo specifikacijoje"
+msgstr ""
+"ne daugiau kaip viena žvaigždutė '*' yra palaikoma kiekvienoje konvertavimo "
+"specifikacijoje"
 
 #: gramLatex.c:2390 gramRd.c:3976
 #, c-format
@@ -82,7 +85,8 @@ msgstr "Anksčiau apibrėžta makrokomanda '%s'."
 #: gramRd.c:3135
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr "Vartotojo apibrėžtoms makrokomandoms leidžiami ne daugiau kaip 4 argumentai."
+msgstr ""
+"Vartotojo apibrėžtoms makrokomandoms leidžiami ne daugiau kaip 4 argumentai."
 
 #: gramRd.c:3177
 #, c-format
@@ -116,7 +120,8 @@ msgstr "Nepavyko rasti makrokomandos %s"
 #: gramRd.c:4036
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr "Netikėta įvesties pabaiga (%c cituojama eilutė atidaryta ties %s:%d:%d)"
+msgstr ""
+"Netikėta įvesties pabaiga (%c cituojama eilutė atidaryta ties %s:%d:%d)"
 
 #: gramRd.c:4535
 msgid "cannot open the connection"
@@ -172,11 +177,10 @@ msgstr "pskill() nepalaikomas šioje platformoje"
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() nepalaikomas šioje platformoje"
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr "neleistinas argumento tipas"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr "trūksta atminties"
-

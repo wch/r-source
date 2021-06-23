@@ -1,6 +1,6 @@
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -102,7 +102,7 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
     ## http://htmlhelp.com/reference/html40/entities/symbols.html
     if(inEqn) {
         x <- psub("\\\\(Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|le|ge|sum|prod)", "&\\1;", x)
-        x <- psub("\\\\(dots|ldots)", "&\\hellip;", x)
+        x <- psub("\\\\(dots|ldots)", "&hellip;", x)
         x <- fsub("\\infty", "&infin;", x)
         x <- fsub("\\sqrt", "&radic;", x)
     }
@@ -154,8 +154,16 @@ invalid_HTML_chars_re <-
     "[\u0001-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]"
 
 
+topic2filename <- function(x) gsub("%", "+", utils::URLencode(x, reserved=TRUE))
+
+
 ## Create HTTP redirect files for aliases; called only during package
-## installation if static help files are enabled.
+## installation if static help files are enabled. Files are named
+## after aliases, which may contain 'undesirable' characters. These
+## are escaped using topic2filename(). Analogous escaping needs to be
+## done when creating links in HTML output as well, but ONLY for
+## static HTML (dynamic help is already capable of handling such
+## links)
 createRedirects <- function(file, Rdobj)
 {
     linksToTopics <-
@@ -166,26 +174,35 @@ createRedirects <- function(file, Rdobj)
     toProcess <- which(RdTags(Rdobj) == "\\alias")
     helpdir <- paste0(dirname(dirname(file)), "/help") # .../pkg/help/
     aliasName <- function(i) Rdobj[[i]][[1]]
-    aliasFile <- function(i) file.path(helpdir, sprintf("%s.html", aliasName(i)))
+    aliasFile <- function(i) file.path(helpdir, sprintf("%s.html", topic2filename(aliasName(i))))
     redirMsg <- function(type, src, dest, status) {
         ## change sprintf to gettextf to make translatable, but seems unnecessary
         msg <- sprintf("\nREDIRECT:%s\t %s -> %s [ %s ]", type, src, dest, status)
         message(msg, appendLF = FALSE)
     }
+    ## remove duplicate aliases, if any
+    aliasesToProcess <- sapply(toProcess, aliasName)
+    toProcess <- toProcess[!duplicated(aliasesToProcess)]
     for (i in toProcess) {
         aname <- aliasName(i)
         afile <- aliasFile(i)
-        if (file.exists(afile))
-            warning("Previous alias or file overwritten by alias: ", aname)
-        try(cat(redirHTML, file = afile), silent = TRUE) # Fails for \alias{%/%}
-        redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
+        if (file.exists(afile)) {
+            ## warning("Previous alias or file overwritten by alias: ", aname)
+            msg <- sprintf("\nREDIRECT:topic\t Previous alias or file overwritten by alias: %s",
+                           afile)
+            message(msg, appendLF = FALSE)
+        }
+        try(suppressWarnings(cat(redirHTML, file = afile)), silent = TRUE) # Fails for \alias{%/%}
+        ## redirMsg("topic", aname, basename(file), if (file.exists(afile)) "SUCCESS" else "FAIL")
+        if (!file.exists(afile)) redirMsg("topic", aname, basename(file), "FAIL")
     }
     ## Also add .../pkg/help/file.html -> ../pkg/html/file.html as fallback
     ## when topic is not found (but do not overwrite)
     file.fallback <- file.path(helpdir, basename(file))
     if (!file.exists(file.fallback)) {
         try(cat(redirHTML, file = file.fallback), silent = TRUE)
-        redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAIL")
+        ## redirMsg("file", basename(file), basename(file), if (file.exists(file.fallback)) "SUCCESS" else "FAIL")
+        if (!file.exists(file.fallback)) redirMsg("file", basename(file), basename(file),  "FAIL")
     }
 }
 
@@ -375,9 +392,14 @@ Rd2HTML <-
                 writeHref()
                 return()
             }
-            else if (linksToTopics && !is.null(Links) && !is.na(Links[topic])) {
-                ## only if the topic exists in the package (else look harder below)
-                htmlfile <- paste0("../../", urlify(package), "/help/", urlify(topic), ".html")
+            else if (linksToTopics && !is.null(Links) && !is.na(Links[topic]) &&
+                     startsWith(Links[topic], paste0("../../", urlify(package)))) {
+                ## only if the topic exists in the package (else look
+                ## harder below). 'Links' contains all topics in the
+                ## package, but also those in base+recommended
+                ## packages. We do this branch only if this is a
+                ## within-package link
+                htmlfile <- paste0("../../", urlify(package), "/help/", topic2filename(topic), ".html")
                 writeHref()
                 return()
 
@@ -408,9 +430,12 @@ Rd2HTML <-
             }
     	} else {
             ## ----------------- \link[pkg]{file} and \link[pkg:file]{bar}
-            htmlfile <- paste0(urlify(parts$targetfile), ".html")
             if (!dynamic && !linksToTopics && !no_links &&
-               nzchar(pkgpath <- system.file(package = parts$pkg))) {
+                nzchar(pkgpath <- system.file(package = parts$pkg))) {
+                ## old-style static HTML: prefer filename over topic,
+                ## so treat as filename and urlify() instead of
+                ## topic2filename()
+                htmlfile <- paste0(urlify(parts$targetfile), ".html")
                 ## check the link, only if the package is found
                 OK <- FALSE
                 if (!file.exists(file.path(pkgpath, "html", htmlfile))) {
@@ -438,20 +463,24 @@ Rd2HTML <-
             }
             if (parts$pkg == package) { # within same package
                 if (linksToTopics)
-                    htmlfile <- paste0("../help/", urlify(parts$targetfile),
-                                       if (!dynamic) ".html" else "")
-                ## else # not needed as htmlfile already defined
-                ## ## use href = "file.html"
-                ##     htmlfile <- paste0(urlify(parts$targetfile), ".html")
+                    htmlfile <-
+                        if (dynamic) paste0("../help/", urlify(parts$targetfile))
+                        else paste0("../help/", topic2filename(parts$targetfile), ".html")
+                else # use href = "file.html"
+                    htmlfile <- paste0(urlify(parts$targetfile), ".html")
                 writeHref()
             } else {  # link to different package
                 ## href = "../../pkg/html/file.html"
                 if (linksToTopics)
-                    htmlfile <- paste0("../../", urlify(parts$pkg), "/help/",
-                                       urlify(parts$targetfile),
-                                       if (!dynamic) ".html" else "")
+                    htmlfile <-
+                        if (dynamic) paste0("../../", urlify(parts$pkg), "/help/",
+                                            urlify(parts$targetfile))
+                        else paste0("../../", urlify(parts$pkg), "/help/",
+                                    topic2filename(parts$targetfile), ".html")
+
                 else
-                    htmlfile <- paste0("../../", urlify(parts$pkg), "/html/", htmlfile)    
+                    htmlfile <- paste0("../../", urlify(parts$pkg), "/html/",
+                                       urlify(parts$targetfile), ".html")
                 writeHref()
             }
         }
@@ -858,11 +887,12 @@ Rd2HTML <-
 	    '<meta http-equiv="Content-Type" content="text/html; charset=',
 	    mime_canonical_encoding(outputEncoding),
 	    '" />\n')
+        of1('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n')
 
 	of0('<link rel="stylesheet" type="text/css" href="',
 	    urlify(stylesheet),
 	    '" />\n',
-	    '</head><body>\n\n',
+	    '</head><body><div class="container">\n\n',
 	    '<table width="100%" summary="page for ', htmlify(name))
 	if (nchar(package))
 	    of0(' {', package, '}"><tr><td>',name,' {', package,'}')
@@ -888,7 +918,7 @@ Rd2HTML <-
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
 	of0('\n',
-	    '</body></html>\n')
+	    '</div></body></html>\n')
     }
     invisible(out)
 } ## Rd2HTML()

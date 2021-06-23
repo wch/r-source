@@ -60,8 +60,8 @@ setClass("C", contains = c("A", "B"))
 
 extends("C")   #-->  "C"  "A" "B"  "Base" "Root"
 selectSuperClasses("C") # "A" "B"
-selectSuperClasses("C", direct=FALSE) # "A" "B"  "Base"  "Root"
-selectSuperClasses("C", dropVirt = TRUE, direct=FALSE)# ditto w/o "Root"
+selectSuperClasses("C", directOnly=FALSE) # "A" "B"  "Base"  "Root"
+selectSuperClasses("C", dropVirtual=TRUE, directOnly=FALSE)# ditto w/o "Root"
 }
 \keyword{programming}
 \keyword{classes}

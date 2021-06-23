@@ -290,11 +290,11 @@ tcl("set", as.character(xyzzy))
 ## These cannot be run by example() but should be OK when pasted
 ## into an interactive R session with the tcltk package loaded
 top <- tktoplevel() # a Tk widget, see Tk-widgets
-ls(envir = top$env, all = TRUE)
+ls(envir = top$env, all.names = TRUE)
 }
 
 ## IGNORE_RDIFF_BEGIN
-ls(envir = .TkRoot$env, all = TRUE) # .Tcl.args put a callback ref in here
+ls(envir = .TkRoot$env, all.names = TRUE) # .Tcl.args put a callback ref in here
 ## IGNORE_RDIFF_END
 }
 \keyword{ misc }

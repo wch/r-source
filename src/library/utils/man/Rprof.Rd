@@ -199,7 +199,7 @@ Rprof(NULL)
 Rprof(append = TRUE)
 ## some code to be profiled
 Rprof(NULL)
-\dots
+## ...
 ## Now post-process the output as described in Details
 }}
 \keyword{utilities}

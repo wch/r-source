@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -230,6 +230,10 @@ msgstr "'X'는 반드시 named dimnames를 가져야 합니다"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "'object'인자는 반드시 하나의 문자열로 만들어져야 합니다."
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "'object'인자는 반드시 하나의 문자열로 만들어져야 합니다."
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin'은 반드시 'start', 'current' 또는 'end' 중 하나이어야 합니다"
 
@@ -382,7 +386,8 @@ msgstr "<0 행> <또는 row.names의 길이가 0입니다>"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
-msgid "non-numeric variable(s) in data frame:"
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "데이터 프레임에 수치형이 아닌 변수가 있습니다."
 
 msgid ","
@@ -394,8 +399,13 @@ msgstr "동일한 사이즈의 데이터 프레임들의 경우에만 정의된 
 msgid "list of length %d not meaningful"
 msgstr "의미가 없는 길이 %d인 리스트입니다"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "모든 변수가 숫자형인 데이터 프레임에 대해서만 정의되어 집니다"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "데이터 프레임이 아닙니다"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "문자열이 표준서식을 따르지 않습니다"
@@ -750,6 +760,10 @@ msgstr "%s에 대한 찾을 찾을 수 없습니다"
 msgid "all arguments must be named"
 msgstr "모든 인자들에 반드시 이름이 주어져야 합니다"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "인자 'drop'은 무시되어질 것입니다"
+
 msgid "match distance components must be non-negative"
 msgstr ""
 
@@ -1095,9 +1109,6 @@ msgstr ""
 "네임스페이스 %s를 사용할 수 없으며\n"
 "객체 %s를 프로세싱할 때 .GlobalEnv에 의하여 대체되었습니다."
 
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s'는 'namespace:%s'로부터 내보내어진 객체가 아닙니다"
-
 msgid "namespace is already attached"
 msgstr "네임스페이스가 이미 연결되어 있습니다."
 
@@ -1113,6 +1124,9 @@ msgstr "%s를 찾을 수 없습니다"
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "네임스페이스 %s %s는 이미 로드되었으나 %s %s가 필요합니다"
+
+msgid "- loading"
+msgstr ""
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr ""
@@ -1179,14 +1193,54 @@ msgid ""
 "to be reinstalled for use with this R version"
 msgstr ""
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "패키지 %s내에서 R 코드를 로드할 수 없습니다"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "'NAMESPACE'내에 지정되어 있는 'exportClassPattern'이지만,패키지 %s내에 일치하"
 "는 클래스들은 없습니다"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "잘못된 클래스입니다"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1206,6 +1260,9 @@ msgstr ""
 msgid "in %s methods for export not found: %s"
 msgstr "%s에서 export를 위한 메소드들을 찾을 수 없습니다: %s"
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "%s에 대한 여러개의 메소드 테이블들을 찾았습니다"
 
@@ -1216,6 +1273,18 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "패키지 %s내에 메소드 %s가 export를 위해 지정되어 있으나, 정의되어 있지는 않습"
 "니다"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "필요한 네임스페이스를 로딩합니다: %s"
@@ -1489,6 +1558,9 @@ msgstr ""
 msgid ""
 "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
+msgstr ""
+
+msgid "cannot xtfrm 'x'"
 msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1891,6 +1963,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] ""
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s'는 'namespace:%s'로부터 내보내어진 객체가 아닙니다"
 
 #~ msgid "bad handler specification"
 #~ msgstr "잘못된 핸들러 지정입니다"

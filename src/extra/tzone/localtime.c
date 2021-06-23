@@ -414,6 +414,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    char buf[1000];
 	    p = getenv("TZDIR");
 #ifdef __APPLE__
+	    // As from R 4.0.4 this mapping is done in R code
 	    if (p && !strcmp(p, "macOS"))
 		p = "/var/db/timezone/zoneinfo";
 #endif

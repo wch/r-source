@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -1413,9 +1413,6 @@ if(FALSE) {
 		if (!thislazy && resave_data) {
 		    paths <- Sys.glob(c(file.path(is, "*.rda"),
 					file.path(is, "*.RData")))
-		    if (pkg_name == "cyclones")
-			paths <-
-			    c(paths, Sys.glob(file.path(is, "*.Rdata")))
 		    if (length(paths)) {
 			starsmsg(paste0(stars, "*"), "resaving rda files")
 			resaveRdaFiles(paths, compress = "auto")
@@ -1437,6 +1434,7 @@ if(FALSE) {
                                                 "gzip" = TRUE,
                                                 "bzip2" = 2L,
                                                 "xz" = 3L,
+                                                ## perhaps error?
                                                 TRUE)  # default to gzip
 		    res <- try(data2LazyLoadDB(pkg_name, lib,
 					       compress = data_compress))
@@ -2237,7 +2235,8 @@ if(FALSE) {
 
     if (fake) {
         use_configure <- FALSE
-        build_html <- FALSE
+        if("--html" %notin% args0)
+            build_html <- FALSE
         build_latex <- FALSE
         build_example <- FALSE
 	install_libs <- FALSE
@@ -2797,7 +2796,7 @@ if(FALSE) {
     } else { # no rows
          writeLines("There are no help pages in this package", outcon)
     }
-    writeLines('</body></html>', outcon)
+    writeLines('</div></body></html>', outcon)
     file.copy(file.path(R.home("doc"), "html", "R.css"), outman)
     invisible(NULL)
 }

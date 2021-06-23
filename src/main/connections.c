@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2020   The R Core Team.
+ *  Copyright (C) 2000-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -79,7 +79,6 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 #include <R_ext/Complex.h>
-#include <R_ext/R-ftp-http.h>
 #include <R_ext/RS.h>		/* R_chk_calloc and Free */
 #include <R_ext/Riconv.h>
 #include <R_ext/Print.h> // REprintf, REvprintf
@@ -1202,31 +1201,30 @@ static char* win_getlasterror_str(void)
 static Rboolean	fifo_open(Rconnection con)
 {
     Rfifoconn this = con->private;
-    unsigned int uin_pipname_len = strlen(con->description);
     unsigned int uin_mode_len = strlen(con->mode);
     char *hch_pipename = NULL;
-    const char *hch_tempname = NULL;
     Rboolean boo_retvalue = TRUE;
+    const char *pipe_prefix = "\\\\.\\pipe\\";
 
     /* Prepare FIFO filename */
-    if (!uin_pipname_len) {
-	hch_pipename = R_tmpnam("fifo", "\\\\.\\pipe\\");
-    } else {
-	if (strncmp("\\\\.\\pipe\\", con->description, 9) != 0) {
-	    uin_pipname_len += strlen("\\\\.\\pipe\\") + 1;
-	    hch_pipename = (char*) malloc(uin_pipname_len);
-	    if (!hch_pipename) error(_("allocation of fifo name failed"));
-	    ZeroMemory(hch_pipename, uin_pipname_len);
-/*	    strcpy_s(hch_pipename, uin_pipname_len, "\\\\.\\pipe\\");  Win XP doesn't support this */
-	    strcpy(hch_pipename, "\\\\.\\pipe\\");
-	} else {
-	    hch_pipename = (char*)malloc(uin_pipname_len);
-	    if (!hch_pipename) error(_("allocation of fifo name failed"));
-	    ZeroMemory(hch_pipename, uin_pipname_len);
-	}
-	hch_tempname = R_ExpandFileName(con->description);
-/*	strcat_s(hch_pipename, uin_pipname_len, hch_tempname);  Win XP doesn't support this */
-	strcat(hch_pipename, hch_tempname);
+    if (strlen(con->description) == 0) 
+	hch_pipename = R_tmpnam("fifo", pipe_prefix); /* malloc */
+    else {
+	const char* hch_tempname = R_ExpandFileName(con->description);
+	size_t len = strlen(hch_tempname);
+	Rboolean add_prefix = FALSE;
+	if (strncmp(pipe_prefix, con->description, strlen(pipe_prefix)) != 0) {
+	    len += strlen(pipe_prefix);
+	    add_prefix = TRUE;
+	}	
+	hch_pipename = (char*) malloc(len+1);
+	if (!hch_pipename)
+	    error(_("allocation of fifo name failed"));
+	if (add_prefix) {
+	    strcpy(hch_pipename, pipe_prefix);
+	    strcat(hch_pipename, hch_tempname);
+	} else
+	    strcpy(hch_pipename, hch_tempname);
     }
 
     /* Prepare FIFO open mode */
@@ -1291,12 +1289,11 @@ static Rboolean	fifo_open(Rconnection con)
 
     /* Free malloc-ed variables */
     free(hch_pipename);
-    if (hch_tempname) free((void*) hch_tempname);
 
     /* Finalize FIFO configuration (only if FIFO is opened/created) */
     if (boo_retvalue && this->hdl_namedpipe) {
 	con->isopen = TRUE;
-	con->text = uin_mode_len >= 2 && con->mode[uin_mode_len - 1] == 'b';
+	con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
 	set_iconv(con);
 	con->save = -1000;
     }
@@ -3424,13 +3421,13 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- socket connections  --------------------- */
 
 
-/* socketConnection(host, port, server, blocking, open, encoding, timeout) */
-/* socketAccept(socket, blocking, open, encoding, timeout) */
+/* socketConnection(host, port, server, blocking, open, encoding, timeout, options) */
+/* socketAccept(socket, blocking, open, encoding, timeout, options) */
 SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     const char *host, *open;
-    int ncon, port, server, blocking, timeout, serverfd;
+    int ncon, port, server, blocking, timeout, serverfd, options = 0;
     Rconnection con = NULL;
     Rservsockconn scon = NULL;
 
@@ -3472,9 +3469,22 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "encoding");
     args = CDR(args);
     timeout = asInteger(CAR(args));
+    args = CDR(args);
+    /* we don't issue errors/warnings on unknown options to allow for
+       future extensions */
+    if (isString(CAR(args))) {
+	SEXP sOpts = CAR(args);
+	int i = 0, n = LENGTH(sOpts);
+	while (i < n) {
+	    const char *opt = CHAR(STRING_ELT(sOpts, i));
+	    if (!strcmp("no-delay", opt))
+		options |= RSC_SET_TCP_NODELAY;
+	    i++;
+	}
+    }
 
     ncon = NextConnection();
-    con = R_newsock(host, port, server, serverfd, open, timeout);
+    con = R_newsock(host, port, server, serverfd, open, timeout, options);
     Connections[ncon] = con;
     con->blocking = blocking;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
@@ -4679,8 +4689,8 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
 	int i, clen;
 	char *p, *q;
 
-	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
-	memset(buf, 0, MB_CUR_MAX*len+1);
+	p = buf = (char *) R_alloc(R_MB_CUR_MAX*len+1, sizeof(char));
+	memset(buf, 0, R_MB_CUR_MAX*len+1);
 	for(i = 0; i < len; i++) {
 	    q = p;
 	    m = (int) con->read(p, sizeof(char), 1, con);
@@ -4733,7 +4743,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 	char *p;
 	Rbyte *q;
 
-	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
+	p = buf = (char *) R_alloc(R_MB_CUR_MAX*len+1, sizeof(char));
 	for(i = 0; i < len; i++, p += clen, iread += clen) {
 	    if (iread >= nbytes) break;
 	    q = bytes + iread;
@@ -4976,7 +4986,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 		    const char *p = s;
 		    mbs_init(&mb_st);
 		    for(i = 0, lenb = 0; i < len; i++) {
-			used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
+			used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st);
 			p += used;
 			lenb += used;
 		    }
@@ -5344,13 +5354,15 @@ R_newCurlUrl(const char *description, const char * const mode, SEXP headers, int
 */
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP scmd, sopen, ans, class, enc, headers = R_NilValue,
-	headers_flat = R_NilValue;
+    SEXP scmd, sopen, ans, class, enc, headers = R_NilValue;
+#ifdef Win32
+    SEXP headers_flat = R_NilValue;
+#endif
     char *class2 = "url";
     const char *url, *open;
     int ncon, block, raw = 0, defmeth,
-	meth = 0, // 0: "default" | "internal" | "wininet", 1: "libcurl"
-	winmeth;  // 0: "internal", 1: "wininet" (Windows only)
+	meth = 0, // 0: "internal" | "wininet", 1: "libcurl"
+	winmeth = 0;  // 0: "internal", 1: "wininet" (Windows only)
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
 
@@ -5379,20 +5391,30 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     url = translateCharFP(STRING_ELT(scmd, 0));
 #endif
 
+    // curl-based url() does not need to know the type. so
+    // only set for use by the wininet method.
+#ifdef Win32
     UrlScheme type = HTTPsh;	/* -Wall */
+#endif
     Rboolean inet = TRUE;
-    if (strncmp(url, "http://", 7) == 0)
+    if (strncmp(url, "http://", 7) == 0) {
+#ifdef Win32
 	type = HTTPsh;
-    else if (strncmp(url, "ftp://", 6) == 0)
+#endif
+    } else if (strncmp(url, "ftp://", 6) == 0) {
+#ifdef Win32
 	type = FTPsh;
-    else if (strncmp(url, "https://", 8) == 0)
+#endif
+    } else if (strncmp(url, "https://", 8) == 0) {
+#ifdef Win32
 	type = HTTPSsh;
+ #endif
     // ftps:// is available via most libcurl, only
-    // The internal and wininet methods will create a connection
-    // but refuse to open it so as from R 3.2.0 we switch to libcurl
-    else if (strncmp(url, "ftps://", 7) == 0)
+    } else if (strncmp(url, "ftps://", 7) == 0) {
+#ifdef Win32
 	type = FTPSsh;
-    else
+#endif
+    } else
 	inet = FALSE; // file:// URL or a file path
 
     // --------- open
@@ -5414,12 +5436,12 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *cmeth = CHAR(asChar(CAD4R(args)));
     meth = streql(cmeth, "libcurl"); // 1 if "libcurl", else 0
     defmeth = streql(cmeth, "default");
-#ifndef Win32
-    if(defmeth) meth = 1;
-#endif
+//#ifndef Win32
+    if(defmeth) meth = 1; // default to libcurl
+//#endif
     if (streql(cmeth, "wininet")) {
 #ifdef Win32
-	winmeth = 1;  // it already was as this is the default
+	winmeth = 1;
 #else
 	error(_("method = \"wininet\" is only supported on Windows"));
 #endif
@@ -5440,7 +5462,9 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP lheaders = CAD4R(CDR(args));
 	if (!isNull(lheaders)) {
 	    headers = VECTOR_ELT(lheaders, 0);
+#ifdef Win32
 	    headers_flat = VECTOR_ELT(lheaders, 1);
+#endif
 	}
     }
 
@@ -5485,8 +5509,13 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error("url(method = \"libcurl\") is not supported on this platform");
 # endif
 	} else {
+	    if(!winmeth)
+		error(_("the 'internal' method of url() is defunct for http:// and ftp:// URLs"));
+#ifdef Win32
+	    // so for "wininet' only
 	    con = R_newurl(url, strlen(open) ? open : "r", headers_flat, winmeth);
 	    ((Rurlconn)con->private)->type = type;
+#endif
 	}
     } else {
 	if(PRIMVAL(op) == 1) { /* call to file() */

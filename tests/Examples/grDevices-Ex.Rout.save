@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2020-12-30 r79727) -- "Unsuffered Consequences"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -112,7 +112,7 @@ $allowed
 > 
 > require(graphics)
 > 
-> plot(1:9, type = "n", axes = FALSE, frame = TRUE, ylab = "",
+> plot(1:9, type = "n", axes = FALSE, frame.plot = TRUE, ylab = "",
 +      main = "example(Japanese)", xlab = "using Hershey fonts")
 > par(cex = 3)
 > Vf <- c("serif", "plain")
@@ -385,7 +385,7 @@ $allowed
 > aX(2, print(ya <- axisTicks(pu[3:4], log = FALSE)))  # y axis
 [1]   0  20  40  60  80 100
 > 
-> axisTicks(pu[3:4], log = FALSE, n = 10)
+> axisTicks(pu[3:4], log = FALSE, nint = 10)
  [1]   0  10  20  30  40  50  60  70  80  90 100
 > 
 > plot(10*(0:10), log = "y"); (pu <- par("usr"))
@@ -1581,7 +1581,7 @@ List of 150
 > jet.colors <-
 +   colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan",
 +                      "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
-> filled.contour(volcano, color = jet.colors, asp = 1)
+> filled.contour(volcano, color.palette = jet.colors, asp = 1)
 > 
 > ## space="Lab" helps when colors don't form a natural sequence
 > m <- outer(1:20,1:20,function(x,y) sin(sqrt(x*y)/3))
@@ -1648,7 +1648,7 @@ List of 150
 +     length(cl) <- m*m; cm <- matrix(cl, m)
 +     ##
 +     require("grid")
-+     grid.newpage(); vp <- viewport(w = .92, h = .92)
++     grid.newpage(); vp <- viewport(width = .92, height = .92)
 +     grid.rect(gp=gpar(fill=bg))
 +     grid.text(cm, x = col(cm)/m, y = rev(row(cm))/m, rot = rot,
 +               vp=vp, gp=gpar(cex = cex, col = cm))
@@ -2271,8 +2271,8 @@ character(0)
 > 
 > csphd <- function(colors)
 +   barplot(csd, col = colors, ylim = c(0,30),
-+           names = 72:85, xlab = "Year", ylab = "Students",
-+           legend = c("Winter", "Spring", "Summer", "Fall"),
++           names.arg = 72:85, xlab = "Year", ylab = "Students",
++           legend.text = c("Winter", "Spring", "Summer", "Fall"),
 +           main = "Computer Science PhD Graduates", las = 1)
 > 
 > # The Original (Metaphorical) Colors (Ouch!)
@@ -2292,13 +2292,13 @@ character(0)
 > csphd(hcl(h = seq(60, 240, by = 60)))
 > 
 > # Metaphorical Colors
-> csphd(hcl(h = seq(210, 60, length = 4)))
+> csphd(hcl(h = seq(210, 60, length.out = 4)))
 > 
 > # Cool Colors
-> csphd(hcl(h = seq(120, 0, length = 4) + 150))
+> csphd(hcl(h = seq(120, 0, length.out = 4) + 150))
 > 
 > # Warm Colors
-> csphd(hcl(h = seq(120, 0, length = 4) - 30))
+> csphd(hcl(h = seq(120, 0, length.out = 4) - 30))
 > 
 > # Single Color
 > hist(stats::rnorm(1000), col = hcl(240))
@@ -2363,21 +2363,21 @@ character(0)
 
 > hcl.wheel(rev.lum= TRUE) # ditto
 
-> hcl.wheel(do.lab = TRUE) # ditto
+> hcl.wheel(do.label = TRUE) # ditto
 
 > ## Now watch:
-> hcl.wheel(ch = c(25,35,45,55))
+> hcl.wheel(chroma = c(25,35,45,55))
 
-> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.4)
+> hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.4)
 
-> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, fixup = FALSE)
+> hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.3, fixup = FALSE)
 
-> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE)
+> hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE)
 
 > if(dev.interactive()) # new "graphics window" -- to compare with previous :
 +     dev.new()
 
-> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE, fixup=FALSE)
+> hcl.wheel(chroma = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE, fixup=FALSE)
 > 
 > 
 > 
@@ -2539,7 +2539,7 @@ display gamma = 2.2
 > n2mfrow(8) # 3 x 3
 [1] 3 3
 > 
-> n <- 5 ; x <- seq(-2, 2, len = 51)
+> n <- 5 ; x <- seq(-2, 2, length.out = 51)
 > ## suppose now that 'n' is not known {inside function}
 > op <- par(mfrow = n2mfrow(n))
 > for (j in 1:n)
@@ -2617,7 +2617,7 @@ Sturges   Scott      FD
 > 
 > palette(hcl.colors(8, "viridis"))
 > 
-> (palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
+> (palette(gray(seq(0,.9,length.out = 25)))) # gray scales; print old palette
 [1] "#4B0055" "#3C3777" "#006290" "#008A98" "#00AC8E" "#25C771" "#A6DA42"
 [8] "#FDE333"
 > matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
@@ -2782,17 +2782,18 @@ Sturges   Scott      FD
 [13] "Red-Purple"    "Red-Blue"      "Purple-Orange" "Purple-Yellow"
 [17] "Blue-Yellow"   "Green-Yellow"  "Red-Yellow"    "Heat"         
 [21] "Heat 2"        "Terrain"       "Terrain 2"     "Viridis"      
-[25] "Plasma"        "Inferno"       "Dark Mint"     "Mint"         
-[29] "BluGrn"        "Teal"          "TealGrn"       "Emrld"        
-[33] "BluYl"         "ag_GrnYl"      "Peach"         "PinkYl"       
-[37] "Burg"          "BurgYl"        "RedOr"         "OrYel"        
-[41] "Purp"          "PurpOr"        "Sunset"        "Magenta"      
-[45] "SunsetDark"    "ag_Sunset"     "BrwnYl"        "YlOrRd"       
-[49] "YlOrBr"        "OrRd"          "Oranges"       "YlGn"         
-[53] "YlGnBu"        "Reds"          "RdPu"          "PuRd"         
-[57] "Purples"       "PuBuGn"        "PuBu"          "Greens"       
-[61] "BuGn"          "GnBu"          "BuPu"          "Blues"        
-[65] "Lajolla"       "Turku"         "Hawaii"        "Batlow"       
+[25] "Plasma"        "Inferno"       "Rocket"        "Mako"         
+[29] "Dark Mint"     "Mint"          "BluGrn"        "Teal"         
+[33] "TealGrn"       "Emrld"         "BluYl"         "ag_GrnYl"     
+[37] "Peach"         "PinkYl"        "Burg"          "BurgYl"       
+[41] "RedOr"         "OrYel"         "Purp"          "PurpOr"       
+[45] "Sunset"        "Magenta"       "SunsetDark"    "ag_Sunset"    
+[49] "BrwnYl"        "YlOrRd"        "YlOrBr"        "OrRd"         
+[53] "Oranges"       "YlGn"          "YlGnBu"        "Reds"         
+[57] "RdPu"          "PuRd"          "Purples"       "PuBuGn"       
+[61] "PuBu"          "Greens"        "BuGn"          "GnBu"         
+[65] "BuPu"          "Blues"         "Lajolla"       "Turku"        
+[69] "Hawaii"        "Batlow"       
 > hcl.pals("diverging")
  [1] "Blue-Red"      "Blue-Red 2"    "Blue-Red 3"    "Red-Green"    
  [5] "Purple-Green"  "Purple-Brown"  "Green-Brown"   "Blue-Yellow 2"
@@ -2924,7 +2925,7 @@ pdf
 > 
 > require(graphics)
 > 
-> x <- seq(-4, 4, len = 101)
+> x <- seq(-4, 4, length.out = 101)
 > y <- cbind(sin(x), cos(x))
 > matplot(x, y, type = "l", xaxt = "n",
 +         main = expression(paste(plain(sin) * phi, "  and  ",
@@ -3538,7 +3539,7 @@ attr(,"class")
 > x <- as.POSIXct("2002-02-02 02:02")
 > lapply(steps,
 +        function(s) {
-+            at <- pretty(seq(x, by = s, length = 2), n = 5)
++            at <- pretty(seq(x, by = s, length.out = 2), n = 5)
 +            attr(at, "labels")
 +        })
 $`10 secs`
@@ -3764,12 +3765,12 @@ $mono
     red.8     red.9    red.10    red.11    red.12    red.13    red.14    red.15 
 "#880000" "#990000" "#AA0000" "#BB0000" "#CC0000" "#DD0000" "#EE0000" "#FF0000" 
 > 
-> rgb(0, 0:12, 0, max = 255) # integer input
+> rgb(0, 0:12, 0, maxColorValue = 255) # integer input
  [1] "#000000" "#000100" "#000200" "#000300" "#000400" "#000500" "#000600"
  [8] "#000700" "#000800" "#000900" "#000A00" "#000B00" "#000C00"
 > 
 > ramp <- colorRamp(c("red", "white"))
-> rgb( ramp(seq(0, 1, length = 5)), max = 255)
+> rgb( ramp(seq(0, 1, length.out = 5)), maxColorValue = 255)
 [1] "#FF0000" "#FF3F3F" "#FF7F7F" "#FFBFBF" "#FFFFFF"
 > 
 > 
@@ -4268,7 +4269,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  49.567 0.609 50.334 0 0 
+Time elapsed:  49.641 0.634 50.437 0 0 
 > grDevices::dev.off()
 null device 
           1 

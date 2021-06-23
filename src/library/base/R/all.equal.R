@@ -19,7 +19,7 @@
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
 ## not really: do this inside all.equal.default() :
-## all.equal.... <- function(target, current, ...) TRUE
+## all.equal.... <- function(target, current, ...) . . . .
 
 all.equal.default <- function(target, current, ...)
 {
@@ -34,8 +34,31 @@ all.equal.default <- function(target, current, ...)
     if(is.environment(target) || is.environment(current))# both: unclass() fails on env.
 	return(all.equal.environment(target, current, ...))
     if(is.recursive(target)) {
-        ## FIXME: "..." is recursive but not a list
-        return(all.equal.list(target, current, ...))
+        ## NB: "..." is recursive but not a list
+	return(if(typeof(target) == "..." && typeof(current) == "...") {
+		   ## <DOTSXP> ... may change .. *NOT* part of long-term API
+		   if(identical(target, current))
+		       TRUE
+		   else if((lt <- length(target)) != (lc <- length(current)))
+		       paste0('"..."-typed": lengths (', lt, ", ", lc, ") differ")
+		   else if(xor(is.null(nt <- names(target)),
+			       is.null(nc <- names(current)))) {
+		       paste0('"..."-typed: names in ',
+			      if(length(nt))
+				  "target but not in current"
+			      else ## length(nc)
+				  "current but not in target")
+		   } else if(!is.null(nt)) { # and !is.null(nc)
+			   nt <- sort(nt)
+			   nc <- sort(nc)
+			   if(identical(nt, nc)) TRUE
+			   else c('"..."-typed": sorted names differ',
+				  all.equal.character(nt, nc, ...))
+		   }
+		   else ## names both NULL
+		       "\"...\"-types of the same length, no names, but not identical"
+	       }
+	       else all.equal.list(target, current, ...))
     }
     msg <- switch (mode(target),
                    integer   = ,
@@ -117,17 +140,17 @@ all.equal.numeric <-
     if(all(out)) return(if(is.null(msg)) TRUE else msg)
     if(countEQ) {
         N <- length(out)
-        sabst0 <- sum(abs(target[out]))
+        sabst0 <- sum(abs(target[out])/N)
     } else
         sabst0 <- 0
     target  <- target [!out]
     current <- current[!out]
     if(!countEQ) N <- length(target)
     if(is.integer(target) && is.integer(current)) target <- as.double(target)
-    xy <- sum(abs(target - current))/N ## abs(z) == Mod(z) for complex
+    xy <- sum(abs(target - current)/N) ## abs(z) == Mod(z) for complex
     what <-
 	if(is.null(scale)) {
-	    xn <- (sabst0 + sum(abs(target)))/N
+	    xn <- (sabst0 + sum(abs(target)/N))
 	    if(is.finite(xn) && xn > tolerance) {
 		xy <- xy/xn
 		"relative"

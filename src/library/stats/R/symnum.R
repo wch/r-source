@@ -85,9 +85,9 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     } else ans <- symbols[iS]
     if(numeric.x) {
 	if(!is.null(show.max)) ans[x >= maxc - eps] <-
-	    if(is.character(show.max)) show.max else format(maxc, dig=1)
+	    if(is.character(show.max)) show.max else format(maxc, digits=1)
 	if(!is.null(show.min)) ans[x <= minc + eps] <-
-	    if(is.character(show.min)) show.min else format(minc, dig=1)
+	    if(is.character(show.min)) show.min else format(minc, digits=1)
     }
     if(lower.triangular && is.matrix(x))
 	ans[!lower.tri(x, diag = diag.lower.tri)] <- ""

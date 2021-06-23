@@ -1,13 +1,18 @@
 ###-*- R -*- Unix Specific ----
 
 .Library <- file.path(R.home(), "library")
-.Library.site <- Sys.getenv("R_LIBS_SITE")
-.Library.site <- if(!nchar(.Library.site)) file.path(R.home(), "site-library") else unlist(strsplit(.Library.site, ":"))
-.Library.site <- .Library.site[file.exists(.Library.site)]
+.Library.site <- Sys.getenv("R_LIBS_SITE") # This is set in Renviron.
+.Library.site <-
+    if(.Library.site == "NULL") character() else unlist(strsplit(.Library.site, ":"))
+.Library.site <- .Library.site[dir.exists(.Library.site)]
 
-invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ":")),
-                      unlist(strsplit(Sys.getenv("R_LIBS_USER"), ":")
-                      ))))
+local({
+    libs <- Sys.getenv("R_LIBS_USER") # This is set in Renviron.
+    libs <- if(libs == "NULL") character() else unlist(strsplit(libs, ":"))
+    ## .libPaths filters on existence.
+    invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ":")),
+                          libs)))
+})
 local({
     popath <- Sys.getenv("R_TRANSLATIONS", "")
     if(!nzchar(popath)) {

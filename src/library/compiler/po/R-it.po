@@ -1,12 +1,13 @@
 # R Italian translation
 # # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-compiler 3.6.3\n"
-"POT-Creation-Date: 2020-03-07 10:18\n"
+"Project-Id-Version: R-compiler 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -63,7 +64,7 @@ msgid "invalid function in complex assignment"
 msgstr "funzione non valida in un assegnamento complesso"
 
 msgid "missing arguments are not allowed"
-msgstr "gli argomenti mancanti non sono ammessi"
+msgstr "non è ammessa l'assenza di argomenti"
 
 msgid "empty alternative in numeric switch"
 msgstr "alternativa vuota nello switch numerico"
@@ -120,7 +121,8 @@ msgid "invalid environment variable value: %s==%s"
 msgstr "valore variabile di ambiente non valido: %s==%s"
 
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
-msgstr "opzioni del compilatore non valide: optimize(==%d)<2 e jitEnabled(==%d)>2"
+msgstr ""
+"opzioni del compilatore non valide: optimize(==%d)<2 e jitEnabled(==%d)>2"
 
 msgid "function is not compiled"
 msgstr "la funzione non è compilata"

@@ -1,6 +1,6 @@
 % File src/library/base/man/print.dataframe.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print.data.frame}
@@ -15,7 +15,7 @@
 }
 \arguments{
   \item{x}{object of class \code{data.frame}.}
-  \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
+  \item{\dots}{optional arguments to \code{print} methods.}
   \item{digits}{the minimum number of significant digits to be used: see
     \code{\link{print.default}}.}
   \item{quote}{logical, indicating whether or not entries should be

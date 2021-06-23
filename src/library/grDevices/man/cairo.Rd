@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/cairo.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cairo}
@@ -79,7 +79,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
   \R can be compiled without support for any of these devices: this will
   be reported if you attempt to use them on a system where they are not
-  supported.  They all require cairo version 1.2 (from 2006) or later.
+  supported.  They all require cairo version 1.2 or later.
 
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
@@ -92,24 +92,14 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 }
 
 \note{
-  Cairo 1.2.4 (seen in Centos/RHEL 5) is known to give incorrect SVG output.
-
   In principle these devices are independent of X11 (as is seen by their
   presence on Windows).  But on a Unix-alike the cairo libraries may be
-  distributed as part of the X11 system and hence that (on macOS,
-  XQuartz) may need to be installed.
+  distributed as part of the X11 system and hence that (for example, on
+  \code{x86_64} macOS, XQuartz) may need to be installed.
 }
 
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
-}
-
-
-\seealso{
-  \code{\link{Devices}}, \code{\link{dev.print}}, \code{\link{pdf}},
-  \code{\link{postscript}}
-
-  \code{\link{capabilities}} to see if cairo is supported.
 }
 
 \section{Anti-aliasing}{
@@ -134,6 +124,18 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     \item Circle radii have a minimum of 1/72 inch.
     \item Colours are interpreted by the viewing application.
   }
+}
+
+\section{Warning}{
+  Support for all these devices are optional, so in packages they should
+  be used conditionally after checking \code{\link{capabilities}("cairo")}.
+}
+
+\seealso{
+  \code{\link{Devices}}, \code{\link{dev.print}}, \code{\link{pdf}},
+  \code{\link{postscript}}
+
+  \code{\link{capabilities}} to see if cairo is supported.
 }
 
 \keyword{device}

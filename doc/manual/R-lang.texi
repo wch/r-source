@@ -421,10 +421,10 @@ environment.  The argument list is a comma-separated list of
 arguments.  An
 @cindex argument
 argument can be a symbol, or a @samp{@var{symbol} =
-@var{default}} construct, or the special argument @samp{...}.  The
+@var{default}} construct, or the special argument @code{...}.  The
 second form of argument is used to specify a default value for an
 argument.  This value will be used if the function is called without any
-value specified for that argument.  The @samp{...}  argument is special
+value specified for that argument.  The @code{...}  argument is special
 and can contain any number of arguments.  It is generally used if the
 number of arguments is unknown or in cases where the arguments will be
 passed on to another function.
@@ -536,10 +536,13 @@ determine the environment of a promise.
 @node Dot-dot-dot, Environment objects, Promise objects, Basic types
 @subsection Dot-dot-dot
 
-The @samp{...} object type is stored as a type of pairlist.  The
-components of @samp{...} can be accessed in the usual pairlist manner
-from C code, but is not easily accessed as an object in interpreted
-code.  The object can be captured as a list, so for example in
+The @code{...} object type is stored as a type of pairlist.  The
+components of @code{...} can be accessed in the usual pairlist manner
+from C code, but @code{...} is not easily accessed as an object in
+interpreted code, and even the existence of such an object should typically
+not be assumed, as that may change in the future.
+
+The object can be captured (with promises being forced!) as a list, so for example in
 @code{table} one sees
 
 @example
@@ -549,11 +552,19 @@ code.  The object can be captured as a list, so for example in
 ## ....
 @end example
 
+Note that the implementation of @code{...} as a pairlist object is
+@emph{not} to be considered part of the R API, and code outside base @R{}
+should not rely on this current description of @code{...}.
+On the other hand, the above @code{list(...)} access, and the other
+``dot-access'' functions @code{...length()}, @code{...elt()}, @code{...names()},
+and ``reserved words'' @code{..1}, @code{..2}, etc, see also help page @code{?dots},
+are part of the stable R API.
+
 @cindex function
 @cindex function argument
-If a function has @samp{...} as a formal argument then any actual
+If a function has @code{...} as a formal argument then any actual
 arguments that do not match a formal argument are matched with
-@samp{...}.
+@code{...}.
 
 @node Environment objects, Pairlist objects, Dot-dot-dot, Basic types
 @subsection Environments
@@ -571,9 +582,9 @@ role of parents.  The tree of environments is rooted in an empty
 environment, available through @code{emptyenv()}, which has no parent.
 It is the direct parent of the environment of the base package
 @findex baseenv 
-(available through the @code{baseenv()} function). Formerly
-@code{baseenv()} had the special value @code{NULL}, but as from
-version 2.4.0, the use of @code{NULL} as an environment is defunct.
+(available through the @code{baseenv()} function).
+@c Formerly @code{baseenv()} had the special value @code{NULL}, but as from
+@c version 2.4.0, the use of @code{NULL} as an environment is defunct.
 
 Environments are created implicitly by function calls, as described in
 @ref{Function objects} and @ref{Lexical environment}.  In this case the
@@ -581,9 +592,14 @@ environment contains the variables local to the function (including the
 arguments), and its enclosure is the environment of the currently called
 function.  Environments may also be created directly by @code{new.env}.
 @findex new.env
-The frame content of an environment can be accessed and manipulated by
-use of @code{ls}, @code{get} and @code{assign} as well as @code{eval} and
-@code{evalq}.
+The frame content of an environment can be accessed by use of @code{ls},
+@code{names}, @code{$}, @code{[}, @code{[[}, @code{get}, and @code{get0},
+@findex get
+@findex get0
+and manipulated by @code{$<-}, @code{[[<-}, and @code{assign}
+@findex assign
+as well as @code{eval} and @code{evalq}.
+
 
 The @code{parent.env} function may be used to access the enclosure of
 an environment.
@@ -597,6 +613,7 @@ surprises.
 @node Pairlist objects, Any-type, Environment objects, Basic types
 @subsection Pairlist objects
 
+@cindex pairlist
 Pairlist objects are similar to Lisp's dotted-pair lists.  They are used
 extensively in the internals of @R{}, but are rarely visible in
 interpreted code, although they are returned by @code{formals}, and can
@@ -1462,7 +1479,7 @@ is too large or too small @code{NULL} is returned.
 NULL
 @end example
 
-If @var{value} is a character vector then the element of @samp{...} with
+If @var{value} is a character vector then the element of @code{...} with
 a name that exactly matches @var{value} is evaluated.  If there is no
 match a single unnamed argument will be used as a default.  If no
 default is specified, @code{NULL} is returned.
@@ -2228,7 +2245,7 @@ An
 argument list is a comma separated list of formal arguments.  A
 formal argument can be a symbol, a statement of the form
 @samp{@var{symbol} = @var{expression}}, or the special formal argument
-@samp{...}.
+@code{...}.
 
 The @emph{body} can be any valid @R{} expression.  Generally, the body
 is a group of expressions contained in curly braces (@samp{@{} and
@@ -2276,7 +2293,7 @@ body of the function.  An argument that is @code{missing} will thus
 have its default value, if any. The @code{missing} function does not
 force evaluation of the argument.
 
-The special type of argument @samp{...} can contain any number of
+The special type of argument @code{...} can contain any number of
 supplied arguments.  It is used for a variety of purposes.  It allows
 you to write a
 @cindex function
@@ -2355,12 +2372,12 @@ fooey) fbody}, then @code{f(f = 1, fo = 2)} is illegal, even though the
 2nd actual argument only matches @code{fooey}.  @code{f(f = 1, fooey =
 2)} @emph{is} legal though since the second argument matches exactly and
 is removed from consideration for partial matching.  If the formal
-arguments contain @samp{...} then partial matching is only applied to
+arguments contain @code{...} then partial matching is only applied to
 arguments that precede it.
 
 @item @strong{Positional matching}.
 Any unmatched formal arguments are bound to @emph{unnamed} supplied
-arguments, in order.  If there is a @samp{...} argument, it will take up
+arguments, in order.  If there is a @code{...} argument, it will take up
 the remaining arguments, tagged or not.
 
 @end enumerate
@@ -2578,7 +2595,7 @@ indicating that @code{y} is not found, unless there is a variable
 @c @R{} functions are bound to environments they are often referred to as
 @c closures.
 
-@c FIXME dot-dot-dot semantics definitely needs somewhere to go
+@c See also 'dot-dot-dot' above
 
 @c  @node Miscellanea,  , Closures, Functions
 @c  @section Miscellanea
@@ -2974,7 +2991,7 @@ The syntax for a call to @code{NextMethod} is @code{NextMethod(generic,
 object, ...)}.  If the @code{generic} is not supplied the value of
 @code{.Generic} is used.  If the @code{object} is not supplied the first
 argument in the call to the current method is used.  Values in the
-@samp{...} argument are used to modify the arguments of the next method.
+@code{...} argument are used to modify the arguments of the next method.
 
 It is important to realize that the choice of the next method depends on
 the current values of @code{.Generic} and @code{.Class} and not on the
@@ -2993,7 +3010,7 @@ depending on whether it is called directly or via a call to a generic.
 
 @c FIXME
 
-An issue for discussion is the behaviour of the @samp{...} argument to
+An issue for discussion is the behaviour of the @code{...} argument to
 @code{NextMethod}.  The White Book describes the behaviour as follows:
 
 @cindex name
@@ -3607,9 +3624,9 @@ first element of the list and make sure that the value is a name, either
 using the @code{as.name("model.frame")} construction here or
 @code{quote(model.frame)}.
 
-The @code{match.call} function has an @code{expand.dots} argument which
-is a switch which if set to @code{FALSE} lets all @samp{...} arguments
-be collected as a single argument with the tag @samp{...}.
+The @code{match.call} function has an @code{expand.dots} argument,
+a switch which if set to @code{FALSE} lets all @code{...} arguments
+be collected as a single argument with the tag @code{...}.
 @findex match.call
 
 @example
@@ -3618,7 +3635,7 @@ be collected as a single argument with the tag @samp{...}.
 f(x = 2, y = 1, ... = list(z = 3, 4))
 @end example
 
-The @samp{...} argument is a list (a pairlist to be precise), not a call
+The @code{...} argument is a list (a pairlist to be precise), not a call
 to @code{list} like it is in @Sl{}:
 
 @example
@@ -3632,7 +3649,7 @@ $z
 @end example
 
 One reason for using this form of @code{match.call} is simply to get rid
-of any @samp{...} arguments in order not to be passing unspecified
+of any @code{...} arguments in order not to be passing unspecified
 arguments on to functions that may not know them.  Here's an example
 paraphrased from @code{plot.formula}:
 
@@ -4408,8 +4425,8 @@ set of characters allowed is given by the C expression @code{(isalnum(c)
 Western European locales.
 
 Notice that identifiers starting with a period are not by default listed
-by the @code{ls} function and that @samp{...} and @samp{..1},
-@samp{..2}, etc.@: are special.
+by the @code{ls} function and that @code{...} and @code{..1},
+@code{..2}, etc.@: are special.
 
 Notice also that objects can have names that are not identifiers.  These
 are generally accessed via @code{get} and @code{assign}, although they
@@ -4580,7 +4597,7 @@ an expression (which should evaluate to a function object)
 
 Each argument can be tagged (@code{@var{tag}=@var{expr}}), or just be a
 simple expression.  It can also be empty or it can be one of the special
-tokens @samp{...}, @samp{..2}, etc.
+tokens @code{...}, @code{..2}, etc.
 
 A tag can be an identifier or a text string.
 
@@ -4604,7 +4621,7 @@ $ @@
 ^
 - +                @r{(unary)}
 :
-%@var{xyz}%
+%@var{xyz}% |>
 * /
 + -                @r{(binary)}
 > >= < <= == !=
@@ -4754,7 +4771,7 @@ function ( @var{arglist} ) @var{body}
 The function body is an expression, often a compound expression.  The
 @var{arglist} is a comma-separated list of items each of which can be an
 identifier, or of the form @samp{@var{identifier} = @var{default}}, or
-the special token @samp{...}.  The @var{default} can be any valid
+the special token @code{...}.  The @var{default} can be any valid
 expression.
 
 Notice that function arguments unlike list tags, etc., cannot have

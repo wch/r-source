@@ -11,7 +11,8 @@
 #   Check for baseline language coverage in the compiler for the specified
 #   version of the C++ standard.  If necessary, add switches to CXX and
 #   CXXCPP to enable support.  VERSION may be '11' (for the C++11 standard),
-#   '14' (for the C++14 standard) or '17' (for the C++17 standard)
+#   '14' (for the C++14 standard), '17' (for the C++17 standard) or
+#   '20' (for the C++20 standard) 
 #
 #   The second argument, if specified, indicates whether you insist on an
 #   extended mode (e.g. -std=gnu++11) or a strict conformance mode (e.g.
@@ -32,15 +33,16 @@
 #   Copyright (c) 2013 Roy Stogner <roystgnr@ices.utexas.edu>
 #   Copyright (c) 2014, 2015 Google Inc.; contributed by Alexey Sokolov <sokolov@google.com>
 #   Copyright (c) 2015 Paul Norman <penorman@mac.com>
-#   Copyright (c) 2015 Moritz Klammler <moriClinicalTrialSummarytz@klammler.eu>
-#   Copyright (c) 2016 Krzesimir Nowak <qdlacz@gmail.com>
+#   Copyright (c) 2015 Moritz Klammler <moritz@klammler.eu>
+#   Copyright (c) 2016, 2018 Krzesimir Nowak <qdlacz@gmail.com>
+#   Copyright (c) 2019 Enji Cooper <yaneurabeya@gmail.com>
 #
 #   Copying and distribution of this file, with or without modification, are
 #   permitted in any medium without royalty provided the copyright notice
 #   and this notice are preserved.  This file is offered as-is, without any
 #   warranty.
 
-# cxx_compile_stdcxx serial 8
+# cxx_compile_stdcxx serial 11
 
 dnl  This macro is based on the code from the AX_CXX_COMPILE_STDCXX_11 macro
 dnl  (serial version number 13).
@@ -48,8 +50,9 @@ dnl  (serial version number 13).
 dnl  Modifications for R:
 dnl  For C++11 we check that the date on the
 dnl  __cplusplus macro is not too recent so that a C++14 compiler does not
-dnl  pass as a C++11, for example. The tests for C++17 have been
-dnl  modified and are not conditional on the compiler.
+dnl  pass as a C++11, for example.
+dnl  If e.g. CXX11STD is set, test it first not last.
+dnl  Add support for C++20, with no new tests
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   m4_if([$1], [11], [ax_cxx_compile_alternatives="11 0x"],
@@ -167,9 +170,12 @@ dnl              [define if the compiler supports basic C++$1 syntax])
   AC_SUBST(HAVE_CXX$1)
 ])
 
+
 dnl  Test body for checking C++11 support
 
+
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_11],
+dnl R modification to exclude C++14 compilers
 #ifndef __cplusplus
 # error "This is not a C++ compiler"
 #elif __cplusplus < 201103L
@@ -181,9 +187,11 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_11],
 #endif
 )
 
+
 dnl  Test body for checking C++14 support
 
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_14],
+dnl R modification to exclude C++17 compilers
 #ifndef __cplusplus
 # error "This is not a C++ compiler"
 #elif __cplusplus < 201402L
@@ -196,8 +204,8 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_14],
 #endif
 )
 
-dnl Test body for checking C++17 support
 
+dnl Test body for checking C++17 support
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
@@ -210,8 +218,8 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
 #endif  
 )
 
-dnl Test body for checking C++20 support
 
+dnl Test body for checking C++20 support: R modification
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_20],
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
@@ -232,6 +240,7 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_11], [[
 
 namespace cxx11
 {
+
   namespace test_static_assert
   {
 
@@ -248,11 +257,13 @@ namespace cxx11
 
     struct Base
     {
+      virtual ~Base() {}
       virtual void f() {}
     };
 
     struct Derived : public Base
     {
+      virtual ~Derived() override {}
       virtual void f() override {}
     };
 
@@ -618,23 +629,6 @@ dnl  Tests for new features in C++17
 
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_17], [[
 
-/* We don't want compiler-specific tests for R so these conditional
-   tests are commented out.
-
-   For C++17 features supported by compiler see
-   https://gcc.gnu.org/projects/cxx-status.html#cxx1z  for gcc
-   http://clang.llvm.org/cxx_status.html               for clang
-   http://en.cppreference.com/w/cpp/compiler_support   for an overview
-
-#if defined(__clang__)
-  #define REALLY_CLANG
-#else
-  #if defined(__GNUC__)
-    #define REALLY_GCC
-  #endif
-#endif
-*/
-
 #include <initializer_list>
 #include <utility>
 #include <type_traits>
@@ -642,18 +636,12 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_17], [[
 namespace cxx17
 {
 
-/* Not listed as supported by clang 4 - MTP
-#if !defined(REALLY_CLANG)
   namespace test_constexpr_lambdas
   {
-
-    // TODO: test it with clang++ from git
 
     constexpr int foo = [](){return 42;}();
 
   }
-#endif // !defined(REALLY_CLANG)
-*/
 
   namespace test::nested_namespace::definitions
   {
@@ -888,12 +876,8 @@ namespace cxx17
 
   }
 
-/* P0091R3 not supported by clang 4.0.0 - MTP
-#if !defined(REALLY_CLANG)
   namespace test_template_argument_deduction_for_class_templates
   {
-
-    // TODO: test it with clang++ from git
 
     template <typename T1, typename T2>
     struct pair
@@ -913,8 +897,6 @@ namespace cxx17
     }
 
   }
-#endif // !defined(REALLY_CLANG)
-*/
 
   namespace test_non_type_auto_template_parameters
   {
@@ -928,13 +910,8 @@ namespace cxx17
 
   }
 
-/* P0217R3 should be supported in clang 4.0.0, but test code dumps core
-   In addition, gcc 7.0.1 fails on the last test - MTP
-#if !defined(REALLY_CLANG)
   namespace test_structured_bindings
   {
-
-    // TODO: test it with clang++ from git
 
     int arr[2] = { 1, 2 };
     std::pair<int, int> pr = { 1, 2 };
@@ -967,14 +944,9 @@ namespace cxx17
     const auto [ x3, y3 ] = f3();
 
   }
-#endif // !defined(REALLY_CLANG)
-*/
 
-  // P0012R1: clang >= 4
   namespace test_exception_spec_type_system
   {
-
-    // TODO: test it with clang++ from git
 
     struct Good {};
     struct Bad {};

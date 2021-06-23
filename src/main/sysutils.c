@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2020   The R Core Team
+ *  Copyright (C) 1997-2021   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1234,7 +1234,6 @@ static void *latin1_wobj = NULL, *utf8_wobj=NULL;
 
 /* This may return a R_alloc-ed result, so the caller has to manage the
    R_alloc stack */
-attribute_hidden /* but not hidden on Windows, where it was used in tcltk.c */
 const wchar_t *wtransChar(SEXP x)
 {
     void * obj;
@@ -1590,7 +1589,7 @@ static const char UNICODE[] = "UCS-4LE";
 /* used in gram.c and devX11.c */
 size_t ucstomb(char *s, const unsigned int wc)
 {
-    char     buf[MB_CUR_MAX+1];
+    char     buf[R_MB_CUR_MAX+1];
     void    *cd = NULL ;
     unsigned int  wcs[2];
     const char *inbuf = (const char *) wcs;
@@ -1636,7 +1635,7 @@ size_t ucstomb(char *s, const unsigned int wc)
 	    return (size_t) -1;
 	}
     }
-    buf[MB_CUR_MAX] = '\0'; /* safety measure */
+    buf[R_MB_CUR_MAX] = '\0'; /* safety measure */
     strcpy(s, buf);
     return strlen(buf);
 }

@@ -382,7 +382,7 @@ this should never happen in end-user code.
 @node The 'data', Allocation classes, Rest of header, SEXPs
 @subsection The `data'
 
-A @code{SEXPREC} is a C structure containing the 32-bit header as
+A @code{SEXPREC} is a C structure containing the 64-bit header as
 described above, three pointers (to the attributes, previous and next
 node) and the node data, a union
 
@@ -1506,7 +1506,7 @@ only the visible methods will be cached.
 @subsection Mechanics of S4 dispatch
 
 This subsection does not discuss how S4 methods are chosen: see
-@uref{https://@/developer.@/r-project.org/howMethodsWork.pdf}.
+@uref{https://developer.@/r-project.org/howMethodsWork.pdf}.
 
 For all but primitive functions, setting a method on an existing
 function that is not itself S4 generic creates a new object in the
@@ -2737,8 +2737,8 @@ that in S and whose @R{} code@footnote{The C code is in files
 @pkg{graphics}) and one implemented in package @pkg{grid}.
 
 Some notes on the historical changes can be found at
-@uref{https://www.stat.auckland.ac.nz/@/~paul/@/R/basegraph.html} and
-@uref{https://www.stat.auckland.ac.nz/@/~paul/R/@/graphicsChanges.html}.
+@uref{https://www.stat.auckland.ac.nz/~paul/R/basegraph.html} and
+@uref{https://www.stat.auckland.ac.nz/~paul/R/graphicsChanges.html}.
 
 At the lowest level is a graphics device, which manages a plotting
 surface (a screen window or a representation to be written to a file).
@@ -3701,7 +3701,7 @@ interface pointer for the @code{quartz()} device(s).
 
 @item
 The default path for a personal library directory is set as
-@file{~/Library/R/x.y/library}.
+@file{~/Library/R/arch/x.y/library}.
 @c This is done in @file{etc/Renviron}.
 
 @item
@@ -4186,7 +4186,7 @@ DLL.  (@strong{NB:} this requires system command @command{nm} to be on the
 compiler toolchain specified via @code{Makeconf} (can be customized by
 environment variable @env{BINPREF}). If not found there, it must be on the
 @env{PATH}. On Unix this would be normal when using a package with compiled
-code (which are the only ones this checks), but Windows' users should check.)
+code (which are the only ones this checks), but Windows' users should check.
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_NO_STOP_ON_TEST_ERROR_
@@ -4213,11 +4213,13 @@ See
 `Writing R Extensions'
 @end ifclear
 for the rationale of this check (and why even @option{-Werror} is
-unsafe).  Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_}
-can be set to a space-separated set of flags which come from the @R{}
-build used for testing (flags such as @option{-Wall} and
-@option{-Wextra} are already known).  For example, for  CRAN build of 
-@R{} >= 4.0.0 on macOS one could use
+unsafe).
+
+Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_} can be set
+to a space-separated set of flags which come from the @R{} build used
+for testing (flags such as @option{-Wall} and @option{-Wextra} are
+already known).  For example, for CRAN build of @R{} >= 4.0.0 on macOS
+one could use
 @example
 _R_CHECK_COMPILATION_FLAGS_KNOWN_="-mmacosx-version-min=10.13" 
 @end example
@@ -4334,13 +4336,47 @@ subdirectory of the @R{} session directory for the @code{check} process:
 if any files or directories are left there they are removed.  Since some
 of these might be out of the user's control, environment variable
 @env{_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_} can specify an (extended
-regex) pattern of file names not to be reported -- CRAN uses
+regex) pattern of file paths not to be reported -- CRAN uses
 @samp{^ompi.} for directories left behind by OpenMPI.  There are rare
 instances where @env{TEMPDIR} is not respected and so files are left in
-@file{/tmp} (and not reported): one example is
+@file{/tmp} (and not reported, but see the nest item): one example is
 @file{/tmp/boost_interprocess} on some OSes.
 @c macOS is one.
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_THINGS_IN_OTHER_DIRS_
+Check and report at the end of the check run if new files or directories
+are created in a selected set of directories during the check run.
+(This is confined to files owned by the user running the check process.)
+Currently the directories monitored are the home directory, @file{/tmp}
+(excluding @file{RtmpXXXXXX} dirs), @file{~/.cache} (recursively) and
+@file{~/.local/share} (recursively) or their equivalents on Windows and
+macOS (the directories in which the default settings for
+@code{tools::R_user_dir()} use a @file{R} subdirectory).  Additional
+directories can be specified in environment variable
+@env{_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_}, separated by
+semicolons.  Directories are reported with a trailing @samp{/} on all
+platforms.
+
+Environment variable @env{_R_CHECK_THINGS_IN_OTHER_DIRS_EXCLUDE_} can
+specify an (extended regex) pattern of file paths not to be reported --
+this should match absolute file paths with home represented by
+@file{~}.  For example, on a Linux system
+@example
+'^~/.cache/(mozilla/firefox|mesa_shader_cache)/'
+@end example
+@noindent
+matches cache directories used by Firefox and OpenGL (and their
+content).  If the value starts with @samp{@@} it is considered as a
+filepath which is read with each line treated as a pattern to be
+matched.
+
+Note that other processes (include check runs in parallel) may create
+new files in these directories which will get reported.  However, this
+optional check is very useful for narrowing down possible packages which
+are leaving behind unexpected files.
+@c
+Default: false
 
 @item _R_CHECK_BASHISMS_
 Check the top-level scripts @file{configure} (unless generated by
@@ -4349,7 +4385,7 @@ Perl script @command{checkbashisms} if available.  This includes
 reporting scripts using the non-portable @code{#! /bin/bash}.
 (Script @command{checkbashisms} is available in most Linux distributions
 in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}
-and from @uref{https://sourceforge.net/@/projects/@/checkbaskisms/@/files}.)
+and from @uref{https://sourceforge.net/projects/checkbaskisms/files}.)
 Default: false (but true for CRAN submission checks except on Windows).
 
 @item _R_CHECK_ORPHANED_
@@ -4390,6 +4426,13 @@ Default: false.
 @item _R_CHECK_BOGUS_RETURN_
 If true and @env{_R_CHECK_USE_CODETOOLS_} is also true, functions are
 scanned for use of @code{return} rather than @code{return()}.
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_MATRIX_DATA_
+By default, the check for a mismatch between the data length and the
+dimensions in a call to @code{matrix} gives a warning: setting this to a
+true value gives an error with a compact traceback.
+@c
 Default: false (but true for CRAN submission checks).
 @end vtable
 
@@ -4435,6 +4478,7 @@ _R_CHECK_BASHISMS_=true
 _R_CLASS_MATRIX_ARRARY_=true
 _R_CHECK_ORPHANED_=true
 _R_CHECK_BOGUS_RETURN_=true
+_R_CHECK_MATRIX_DATA_=TRUE
 @end example
 
 @noindent

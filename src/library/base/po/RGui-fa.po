@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"POT-Creation-Date: 2021-04-15 19:37+0100\n"
 "PO-Revision-Date: 2012-10-26 22:30+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -225,12 +225,12 @@ msgstr "را ذخیره کرد '%s' نمی‌توان فایل"
 msgid "Save script as"
 msgstr "ذخیره دست‌نوشته به عنوان"
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
-#: src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:431
+#: src/gnuwin32/rui.c:1078
 msgid "Open script"
 msgstr "باز کردن دست‌نوشته"
 
-#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:184 src/gnuwin32/pager.c:204
+#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
 msgid "No RGui console to paste to"
 msgstr "نیست تا در آن جای‌گذاری شود RGui کنسول"
 
@@ -291,14 +291,14 @@ msgstr "واگرد"
 msgid "Cut"
 msgstr "برش"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
-#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
-#: src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:305
+#: src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1090
+#: src/gnuwin32/rui.c:1146
 msgid "Copy"
 msgstr "کپی"
 
 #: src/gnuwin32/editor.c:633 src/gnuwin32/editor.c:754 src/gnuwin32/rui.c:860
-#: src/gnuwin32/rui.c:1092 src/gnuwin32/rui.c:1145
+#: src/gnuwin32/rui.c:1094 src/gnuwin32/rui.c:1147
 msgid "Paste"
 msgstr "جای گذاری"
 
@@ -306,8 +306,8 @@ msgstr "جای گذاری"
 msgid "Delete"
 msgstr "حذف"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
-#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:308
+#: src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1151
 msgid "Select all"
 msgstr "انتخاب همه"
 
@@ -315,7 +315,7 @@ msgstr "انتخاب همه"
 msgid "Save script"
 msgstr "ذخیره دست‌نوشته"
 
-#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
+#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:451
 #: src/library/grDevices/src/devWindows.c:1619
 msgid "Return focus to Console"
 msgstr "بازگشت به کنسول"
@@ -324,22 +324,22 @@ msgstr "بازگشت به کنسول"
 msgid "Print script"
 msgstr "چاپ دست‌نوشته"
 
-#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
+#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1106
 #: src/library/grDevices/src/devWindows.c:1613
 msgid "Print"
 msgstr "چاپ"
 
-#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
 #: src/library/utils/src/windows/dataentry.c:1791
 #: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
 msgstr "پرونده"
 
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1126
 msgid "New script"
 msgstr "دست‌نوشته جدید"
 
-#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1127
 msgid "Open script..."
 msgstr "باز کردن دست‌نوشته ..."
 
@@ -351,7 +351,7 @@ msgstr "ذخیره دست‌نوشته"
 msgid "Save as..."
 msgstr "ذخیره دست‌نوشته به عنوان ..."
 
-#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
+#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1140
 #: src/library/grDevices/src/devWindows.c:1672
 #: src/library/grDevices/src/devWindows.c:1714
 msgid "Print..."
@@ -361,12 +361,12 @@ msgstr "چاپ ..."
 msgid "Close script"
 msgstr "بستن دست‌نوشته"
 
-#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:476 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1145
 #: src/library/utils/src/windows/dataentry.c:1797
 msgid "Edit"
 msgstr "ویرایش"
 
-#: src/gnuwin32/editor.c:760 src/gnuwin32/rui.c:1150
+#: src/gnuwin32/editor.c:760 src/gnuwin32/rui.c:1152
 msgid "Clear console"
 msgstr "پاک کردن متن کنسول"
 
@@ -382,11 +382,11 @@ msgstr "یافتن متن ..."
 msgid "Replace..."
 msgstr "جایگزینی متن ..."
 
-#: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1154
+#: src/gnuwin32/editor.c:772 src/gnuwin32/rui.c:1156
 msgid "GUI preferences..."
 msgstr "تنظیمات ظاهری ..."
 
-#: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1186
+#: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
 #: src/library/utils/src/windows/dataentry.c:1698
 #: src/library/utils/src/windows/dataentry.c:1808
 msgid "Help"
@@ -412,48 +412,48 @@ msgstr "بدون عنوان"
 msgid "Select file"
 msgstr "انتخاب پرونده"
 
-#: src/gnuwin32/pager.c:88
+#: src/gnuwin32/pager.c:89
 msgid "Error opening file"
 msgstr "خطا در باز کردن فایل"
 
-#: src/gnuwin32/pager.c:95
+#: src/gnuwin32/pager.c:96
 msgid "Insufficient memory to display file in internal pager"
 msgstr "حافظه برای نمایش پرونده در پیجر داخلی کافی نمی‌باشد"
 
-#: src/gnuwin32/pager.c:176 src/gnuwin32/pager.c:188 src/gnuwin32/pager.c:208
+#: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
 #: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "انتخابی صورت نگرفته است"
 
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:435 src/gnuwin32/pager.c:479
+#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:436 src/gnuwin32/pager.c:480
 msgid "Paste to console"
 msgstr "جای گذاری در کنسول"
 
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:440 src/gnuwin32/pager.c:481
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:441 src/gnuwin32/pager.c:482
 msgid "Paste commands to console"
 msgstr "جای گذاری فقط دستورات در کنسول"
 
-#: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
 #: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
 msgstr "همیشه رو ماندن"
 
-#: src/gnuwin32/pager.c:311 src/gnuwin32/pager.c:474
+#: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
 #: src/library/utils/src/windows/dataentry.c:1706
 #: src/library/utils/src/windows/dataentry.c:1793
 msgid "Close"
 msgstr "بستن"
 
-#: src/gnuwin32/pager.c:471 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1141
 msgid "Save to File..."
 msgstr "ذخیره متن منتخب ..."
 
-#: src/gnuwin32/pager.c:486 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1158
 msgid "View"
 msgstr "نما"
 
-#: src/gnuwin32/pager.c:518
+#: src/gnuwin32/pager.c:519
 msgid "Unable to create pager window"
 msgstr "ناتوان در ایجاد پنجره پیجر"
 
@@ -567,11 +567,11 @@ msgstr ":قسمتی از نام را بنویسید"
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "را بکشید و رها کنید .rda و .RData و .R شما می‌توانید فقط فایل‌های"
 
-#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1146
+#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1148
 msgid "Paste commands only"
 msgstr "جای گذاری فقط دستورات"
 
-#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1096
+#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1098
 msgid "Copy and paste"
 msgstr "کپی و جای گذاری"
 
@@ -579,7 +579,7 @@ msgstr "کپی و جای گذاری"
 msgid "Clear window"
 msgstr "پاک کردن متن پنجره"
 
-#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1169
+#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1171
 msgid "Buffered output"
 msgstr "خروجی غیر لحظه‌ای"
 
@@ -676,148 +676,148 @@ msgstr "کوچک کردن پنجره‌ها"
 msgid "Restore group"
 msgstr "‌بازگردانی پنجره‌ها"
 
-#: src/gnuwin32/rui.c:1080
+#: src/gnuwin32/rui.c:1082
 msgid "Load workspace"
 msgstr "فراخوانی فضای کار"
 
-#: src/gnuwin32/rui.c:1084
+#: src/gnuwin32/rui.c:1086
 msgid "Save workspace"
 msgstr "ذخیره فضای کار"
 
-#: src/gnuwin32/rui.c:1100
+#: src/gnuwin32/rui.c:1102
 msgid "Stop current computation"
 msgstr "توقف محاسبات جاری"
 
-#: src/gnuwin32/rui.c:1123
+#: src/gnuwin32/rui.c:1125
 msgid "Source R code..."
 msgstr "اجرای یکباره پرونده ..."
 
-#: src/gnuwin32/rui.c:1126
+#: src/gnuwin32/rui.c:1128
 msgid "Display file(s)..."
 msgstr "نمایش متن پرونده‌ها ..."
 
-#: src/gnuwin32/rui.c:1128
+#: src/gnuwin32/rui.c:1130
 msgid "Load Workspace..."
 msgstr "فراخوانی فضای کار ..."
 
-#: src/gnuwin32/rui.c:1129
+#: src/gnuwin32/rui.c:1131
 msgid "Save Workspace..."
 msgstr "ذخیره فضای کار ..."
 
-#: src/gnuwin32/rui.c:1131
+#: src/gnuwin32/rui.c:1133
 msgid "Load History..."
 msgstr "فراخوانی تاریخچه ..."
 
-#: src/gnuwin32/rui.c:1133
+#: src/gnuwin32/rui.c:1135
 msgid "Save History..."
 msgstr "ذخیره تاریخچه ..."
 
-#: src/gnuwin32/rui.c:1136
+#: src/gnuwin32/rui.c:1138
 msgid "Change dir..."
 msgstr "تغییر پوشه کاری ..."
 
-#: src/gnuwin32/rui.c:1141
+#: src/gnuwin32/rui.c:1143
 msgid "Exit"
 msgstr "خروج از نرم‌افزار"
 
-#: src/gnuwin32/rui.c:1148
+#: src/gnuwin32/rui.c:1150
 msgid "Copy and Paste"
 msgstr "کپی و جای گذاری"
 
-#: src/gnuwin32/rui.c:1152
+#: src/gnuwin32/rui.c:1154
 msgid "Data editor..."
 msgstr "ویرایشگر داده‌ ..."
 
-#: src/gnuwin32/rui.c:1157
+#: src/gnuwin32/rui.c:1159
 msgid "Toolbar"
 msgstr "نوار ابزار"
 
-#: src/gnuwin32/rui.c:1158
+#: src/gnuwin32/rui.c:1160
 msgid "Statusbar"
 msgstr "نوار وضعیت"
 
-#: src/gnuwin32/rui.c:1162
+#: src/gnuwin32/rui.c:1164
 msgid "Misc"
 msgstr "گوناگون"
 
-#: src/gnuwin32/rui.c:1163
+#: src/gnuwin32/rui.c:1165
 msgid "Stop current computation           \tESC"
 msgstr "توقف محاسبات جاری \tESC"
 
-#: src/gnuwin32/rui.c:1165
+#: src/gnuwin32/rui.c:1167
 msgid "Stop all computations"
 msgstr "توقف همه محاسبات"
 
-#: src/gnuwin32/rui.c:1167
+#: src/gnuwin32/rui.c:1169
 msgid "Break to debugger"
 msgstr "انتقال شکست به اشکال‌زدا"
 
-#: src/gnuwin32/rui.c:1170
+#: src/gnuwin32/rui.c:1172
 msgid "Word completion"
 msgstr "کامل نمودن کلمات"
 
-#: src/gnuwin32/rui.c:1172
+#: src/gnuwin32/rui.c:1174
 msgid "Filename completion"
 msgstr "کامل نمودن نام پرونده"
 
-#: src/gnuwin32/rui.c:1179
+#: src/gnuwin32/rui.c:1181
 msgid "List objects"
 msgstr "نمایش نام اشیاء"
 
-#: src/gnuwin32/rui.c:1180
+#: src/gnuwin32/rui.c:1182
 msgid "Remove all objects"
 msgstr "حذف همه اشیاء"
 
-#: src/gnuwin32/rui.c:1181
+#: src/gnuwin32/rui.c:1183
 msgid "List search &path"
 msgstr "نمایش مسیرهای در دسترس"
 
-#: src/gnuwin32/rui.c:1187
+#: src/gnuwin32/rui.c:1189
 msgid "Console"
 msgstr "راهنمای کنسول"
 
-#: src/gnuwin32/rui.c:1248
+#: src/gnuwin32/rui.c:1250
 msgid "'mname' is limited to 1000 bytes"
 msgstr "به 1000 بایت محدود می‌باشد 'mname'"
 
-#: src/gnuwin32/rui.c:1293
+#: src/gnuwin32/rui.c:1295
 #, c-format
 msgid "menu %s does not exist"
 msgstr "موجود نمی‌باشد %s منوی"
 
-#: src/gnuwin32/rui.c:1346
+#: src/gnuwin32/rui.c:1348
 msgid "'menu' is limited to 500 bytes"
 msgstr "به 500 بایت محدود می‌باشد 'menu'"
 
-#: src/gnuwin32/rui.c:1356
+#: src/gnuwin32/rui.c:1358
 msgid "base menu does not exist"
 msgstr "منوی پایه موجود نمی‌باشد"
 
-#: src/gnuwin32/rui.c:1371
+#: src/gnuwin32/rui.c:1373
 msgid "failed to allocate menu"
 msgstr "موفق نشدن در تخصیص منو"
 
-#: src/gnuwin32/rui.c:1388 src/gnuwin32/rui.c:1512
+#: src/gnuwin32/rui.c:1390 src/gnuwin32/rui.c:1514
 msgid "menu + item is limited to 1000 bytes"
 msgstr "منو و گزینه‌های آن به 1000 بایت محدود می‌باشد"
 
-#: src/gnuwin32/rui.c:1396 src/gnuwin32/rui.c:1479
+#: src/gnuwin32/rui.c:1398 src/gnuwin32/rui.c:1481
 msgid "menu does not exist"
 msgstr "منو موجود نمی‌باشد"
 
-#: src/gnuwin32/rui.c:1414 src/gnuwin32/rui.c:1437 src/gnuwin32/rui.c:1442
+#: src/gnuwin32/rui.c:1416 src/gnuwin32/rui.c:1439 src/gnuwin32/rui.c:1444
 msgid "failed to allocate char storage"
 msgstr "موفق نشدن در تخصیص انباره کارکتر"
 
-#: src/gnuwin32/rui.c:1450
+#: src/gnuwin32/rui.c:1452
 msgid "failed to allocate menuitem"
 msgstr "موفق نشدن در تخصیص گزینه منو"
 
-#: src/gnuwin32/rui.c:1502
+#: src/gnuwin32/rui.c:1504
 msgid "menu not found"
 msgstr "منو پیدا نشد"
 
-#: src/gnuwin32/rui.c:1520
+#: src/gnuwin32/rui.c:1522
 msgid "menu or item does not exist"
 msgstr "منو یا گزینه موجود نیست"
 
@@ -846,12 +846,12 @@ msgstr "به عنوان پوشه‌کاری '%s' ناتوان در تنظیم"
 #: src/extra/graphapp/dialogs.c:604 src/extra/graphapp/dialogs.c:622
 #: src/extra/graphapp/dialogs.c:628 src/extra/graphapp/dialogs.c:729
 #: src/extra/graphapp/dialogs.c:743 src/extra/graphapp/dialogs.c:749
-#: src/library/utils/src/windows/widgets.c:126
+#: src/library/utils/src/windows/widgets.c:122
 msgid "Cancel"
 msgstr " لغو "
 
 #: src/extra/graphapp/dialogs.c:624 src/extra/graphapp/dialogs.c:745
-#: src/library/utils/src/windows/widgets.c:125
+#: src/library/utils/src/windows/widgets.c:121
 msgid "OK"
 msgstr "تایید"
 

@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: base 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,6 +203,9 @@ msgstr ""
 msgid "argument 'object' must deparse to a single character string"
 msgstr ""
 
+msgid "'name' must be a single character string"
+msgstr ""
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr ""
 
@@ -346,7 +350,7 @@ msgstr ""
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
-msgid "non-numeric variable(s) in data frame:"
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr ""
 
 msgid ","
@@ -358,7 +362,10 @@ msgstr ""
 msgid "list of length %d not meaningful"
 msgstr ""
 
-msgid "only defined on a data frame with all numeric variables"
+msgid "only defined on a data frame with all numeric-alike variables"
+msgstr ""
+
+msgid "cannot xtfrm data frames"
 msgstr ""
 
 msgid "character string is not in a standard unambiguous format"
@@ -685,6 +692,9 @@ msgstr ""
 msgid "all arguments must be named"
 msgstr ""
 
+msgid "argument '%s' will be ignored"
+msgstr ""
+
 msgid "match distance components must be non-negative"
 msgstr ""
 
@@ -1000,9 +1010,6 @@ msgstr ""
 msgid "namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s"
 msgstr ""
 
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr ""
-
 msgid "namespace is already attached"
 msgstr ""
 
@@ -1013,6 +1020,9 @@ msgid "%s not found"
 msgstr ""
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr ""
+
+msgid "- loading"
 msgstr ""
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
@@ -1060,10 +1070,49 @@ msgstr ""
 msgid "package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version"
 msgstr ""
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr ""
 
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
+
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
+msgstr ""
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+msgid "--- processing classes"
 msgstr ""
 
 msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
@@ -1078,6 +1127,9 @@ msgstr ""
 msgid "in %s methods for export not found: %s"
 msgstr ""
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr ""
 
@@ -1085,6 +1137,18 @@ msgid "failed to find metadata object for %s"
 msgstr ""
 
 msgid "in package %s methods %s were specified for export but not defined"
+msgstr ""
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
 msgstr ""
 
 msgid "Loading required namespace: %s"
@@ -1349,6 +1413,9 @@ msgid "method = \"quick\" is only for numeric 'x'"
 msgstr ""
 
 msgid "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\nHave you called 'sort' on a list?"
+msgstr ""
+
+msgid "cannot xtfrm 'x'"
 msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"

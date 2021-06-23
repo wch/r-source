@@ -290,7 +290,7 @@ f3(x); f3(y) # now both choose "classA" method
 ## or if called from a package without the S4 generic
 
 MathFun <- function(x) { # a smarter "data.frame" method for Math group
-  for (i in seq(length = ncol(x))[sapply(x, is.numeric)])
+  for (i in seq_len(ncol(x))[sapply(x, is.numeric)])
     x[, i] <- (getFunction(.Generic))(x[, i])
   x
 }

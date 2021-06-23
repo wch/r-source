@@ -1,4 +1,4 @@
-require(tools)
+require("tools")
 
 # -------------------------------------------------------------------
 # prepare_Rd() is OK with a top level \Sexpr that is yet to be rendered
@@ -10,7 +10,7 @@ txt <- "
 \\Sexpr[stage=render,results=rd]{\"\\\\\\details{This is dynamic.}\"}
 "
 
-rd <- tools::parse_Rd(con <- textConnection(txt)); close(con)
+rd <- parse_Rd(con <- textConnection(txt)); close(con)
 
 warn <- NULL
 withCallingHandlers(

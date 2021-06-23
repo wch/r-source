@@ -144,8 +144,8 @@ require(graphics)
 1 - pt(1:5, df = 1)
 qt(.975, df = c(1:10,20,50,100,1000))
 
-tt <- seq(0, 10, len = 21)
-ncp <- seq(0, 6, len = 31)
+tt <- seq(0, 10, length.out = 21)
+ncp <- seq(0, 6, length.out = 31)
 ptn <- outer(tt, ncp, function(t, d) pt(t, df = 3, ncp = d))
 t.tit <- "Non-central t - Probabilities"
 image(tt, ncp, ptn, zlim = c(0,1), main = t.tit)

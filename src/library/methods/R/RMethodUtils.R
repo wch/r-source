@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RMethodUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -492,7 +492,7 @@ getGeneric <-
     }
 }
 
-## low-level version
+## low-level version (called from high level)
 .getGeneric <- function(f, where = .GlobalEnv, # default only for C search
                         package = "")
 {
@@ -505,19 +505,13 @@ getGeneric <-
             message("Empty function name in .getGeneric")
             dput(sys.calls())
         }
+        ## ../src/methods_list_dispatch.c -- R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package) :
         value <- .Call(C_R_getGeneric, f, FALSE, as.environment(where), package)
         ## cache public generics (usually these will have been cached already
         ## and we get to this code for non-exported generics)
-        if(!is.null(value) && !is.null(vv <- .GlobalEnv[[f]]) &&
-           identical(vv, value))
+        if(!is.null(value) && !is.null(vv <- .GlobalEnv[[f]]) && identical(vv, value))
             .cacheGeneric(f, value)
     }
-    ##     if(is.null(value) && nzchar(package) && !identical(package, "base")) {
-    ##         env <- .requirePackage(package, FALSE)
-    ##         if(is.environment(env))
-    ##           value <- .Call("R_getGeneric", f, FALSE, env, package,
-    ##                      PACKAGE = "methods")
-    ##     }
     value
 }
 
@@ -824,13 +818,27 @@ cacheMetaData <-
     ## to update class and method information.
     pkg <- getPackageName(where)
     classes <- getClasses(where)
+    lev <- 0L
     if (attach) {
+        msg <- Sys.getenv("_R_TRACE_LOADNAMESPACE_", "")
+        if (nzchar(msg)) {
+            if(pkg %in%
+               c("base", "tools", "utils", "grDevices", "graphics",
+                 "stats", "datasets", "methods", "grid", "splines", "stats4",
+                 "tcltk", "compiler", "parallel")) lev <- 0L
+            else {
+                lev <- as.integer(msg)
+                if(is.na(lev)) lev <- 0L
+            }
+        }
         for(cl in classes) {
+            if(lev > 2L) message("--- caching class ", sQuote(cl))
             ## NOT getClassDef, it will use cache
             cldef <- get(classMetaName(cl), where)
             if(is(cldef, "classRepresentation"))
                 .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"),
                             where)
+            if(lev > 2L) message("--- done caching class ", sQuote(cl))
         }
     } else {
         for(cl in classes) {
@@ -862,7 +870,9 @@ cacheMetaData <-
     for(i in seq_along(generics)) {
         f <- generics[[i]]
         fpkg <- packages[[i]]
+        .tr <- attach && (lev > 2L || lev == -5L)
         if(!identical(fpkg, pkg) && doCheck) {
+            if(.tr) message("--- getting generic ", sQuote(f), " (and methods)")
             if(attach) {
                 env <- as.environment(where)
                 ## All instances of this generic in different attached packages must
@@ -890,12 +900,13 @@ cacheMetaData <-
             fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
         if(!is(fdef, "genericFunction"))
             next ## silently ignores all generics not visible from searchWhere
-        if(attach)
+        if(attach) {
             .cacheGeneric(f, fdef)
-        else
+        } else
             .uncacheGeneric(f, fdef)
         methods <- .updateMethodsInTable(fdef, where, attach)
         cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
+        if(.tr) message("--- done getting generic ", sQuote(f))
     }
     .doLoadActions(where, attach)
     invisible(NULL) ## as some people call this at the end of functions

@@ -1,20 +1,21 @@
 # Translation of src/library/base/R-base.pot to German
-# Copyright (C) 2005-2014 The R Foundation
+# Copyright (C) 2005-2021 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2014.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.5.0\n"
+"Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
-"PO-Revision-Date: 2018-04-16 10:24+0200\n"
-"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
+"PO-Revision-Date: 2021-01-27 10:19+0100\n"
+"Last-Translator: Martin.Maechler@r-project.org\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Regular-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 msgid "'%s' is defunct."
@@ -224,6 +225,10 @@ msgstr "'X' muss benannte Dimensionen besitzten"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "Argument 'object' muss zu einer einzelnen Zeichenkette deparsen"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "Argument 'object' muss zu einer einzelnen Zeichenkette deparsen"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' muss entweder 'start', 'current' oder 'end' sein"
 
@@ -378,7 +383,8 @@ msgstr "<0 Zeilen> (oder row.names mit Länge 0)"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
-msgid "non-numeric variable(s) in data frame:"
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "nicht numerische Variable(n) in Dataframe:"
 
 msgid ","
@@ -390,8 +396,13 @@ msgstr "%s ist nur für Dataframes gleicher Größe definiert"
 msgid "list of length %d not meaningful"
 msgstr "Liste der Länge %d nicht sinnvoll"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "nur für einen Dataframe mit nur numerischen Variablen definiert"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "kein Dataframe"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "Zeichenkette ist nicht in einem eindeutigen Standardformat"
@@ -757,6 +768,10 @@ msgstr "Wert für '%s' nicht gefunden"
 msgid "all arguments must be named"
 msgstr "alle Argumente müssen Namen haben"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "'drop' Argument wird ignoriert"
+
 msgid "match distance components must be non-negative"
 msgstr "match distance Komponenten dürfen nicht negativ sein"
 
@@ -859,8 +874,8 @@ msgid ""
 "Package %s version %s cannot be unloaded:\n"
 " %s"
 msgstr ""
-"Paket %s Version %s kann nicht entladen werden\n"
-"%s%"
+"Paket %s Version %s kann nicht entladen werden:\n"
+" %s"
 
 msgid ""
 "package or namespace load failed for %s%s:\n"
@@ -1106,9 +1121,6 @@ msgstr ""
 "Namensraum %s ist nicht verfügar und ist durch.GlobalEnv ersetzt worden "
 "während Objekt %s verarbeitet wurde"
 
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
-
 msgid "namespace is already attached"
 msgstr "Namensraum ist bereits angehängt"
 
@@ -1124,6 +1136,9 @@ msgstr "%s nicht gefunden"
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "Namensraum %s %s ist bereits geladen, aber %s %s wird gefordert"
+
+msgid "- loading"
+msgstr ""
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "Namensraum %s ist bereits in 'loadNamespace' versiegelt"
@@ -1192,14 +1207,54 @@ msgstr ""
 "Paket %s wurde mit einer R-Version mit anderen Internals installiert; um es "
 "zu nutzen, muss es mit dieser R-Version reinstalliert werden"
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "kann R Programmkode in Paket %s nicht laden"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "'exportClassPattern' im 'NAMESPACE' angegeben, aber keine passenden Klassen "
 "in Paket %s"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "falsche Klasse"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1219,6 +1274,9 @@ msgstr ""
 msgid "in %s methods for export not found: %s"
 msgstr "in %s Methoden für den Export nicht gefunden: %s"
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "Multiple Methodentabellen gefunden für %s"
 
@@ -1229,6 +1287,18 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "in Paket '%s' sind Methoden %s für den Export vorgesehen, aber nicht "
 "definiert"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "Lade nötigen Namensraum: %s"
@@ -1273,8 +1343,9 @@ msgid ""
 "No generic function %s found corresponding to requested imported methods "
 "from package %s when loading %s (malformed exports?)"
 msgstr ""
-"Keine generische Funktion, die mit der angeforderten Importmethode für\n"
-"%s aus Paket %s korrespondiert, gefunden (Fehler in Exports?)"
+"Keine generische Funktion %s gefunden, die mit den angeforderten\n"
+"Importmethoden aus Paket %s korrespondiert, beim Laden von %s (Fehler in "
+"Exports?)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "kann keine Exporte zu versiegeltem Namensraum hinzufügen"
@@ -1282,9 +1353,8 @@ msgstr "kann keine Exporte zu versiegeltem Namensraum hinzufügen"
 msgid "undefined exports: %s"
 msgstr "nicht definierte Exporte: %s"
 
-#, fuzzy
 msgid "unable to re-encode some lines in NAMESPACE file"
-msgstr "leerer Name in der Direktive '%s' in der 'NAMESPACE' Datei"
+msgstr "kann gewisse Zeilen nicht re-kodieren in der 'NAMESPACE' Datei"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "Paket %s hat keine 'NAMESPACE' Datei"
@@ -1511,6 +1581,9 @@ msgid ""
 msgstr ""
 "'x' muss atomar sein für 'sort.list'\n"
 "Haben Sie 'sort' für eine Liste aufgerufen?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' muss TRUE, FALSE oder eine Umgebung sein"
@@ -1972,6 +2045,9 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 "zusätzliche Argumente %s werden verworfen"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
 
 #~ msgid "bad handler specification"
 #~ msgstr "schlechte handler Spezifikation"

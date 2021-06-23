@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -152,9 +152,6 @@ msgstr "程式套件 %s: 找不到 DESCRIPTION 這個檔案"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' 的值必須是 NULL，字串或聯結"
-
-msgid "bad argument"
-msgstr "引數無效"
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr "'full.names' 必須是 TRUE 才有多重路徑。"
@@ -1180,8 +1177,13 @@ msgstr "不能修改 '%s'"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' 必須是單字串"
 
-msgid "'files' must a character vector specifying one or more filepaths"
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr "'files' 必須指定一個或多個檔案路徑的字元向量"
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "url 必須的非空字串"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1329,13 +1331,24 @@ msgstr[0] ""
 "從 %s 中刪除程式套件\n"
 "(因為沒有指定 %s)"
 
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "沒有 %s 這個程式套件 (給 %s 用)"
-
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] "%s 是基本程式套件，因此不應被更新"
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "沒有 %s 這個程式套件 (給 %s 用)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1405,6 +1418,9 @@ msgstr[0] "最後一個記錄不完全，%d 列忽略不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "羅馬數字不對：%s"
+
+#~ msgid "bad argument"
+#~ msgstr "引數無效"
 
 #~ msgid "package %s not found"
 #~ msgstr "沒有 %s 此一個程式套件"

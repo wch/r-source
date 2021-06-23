@@ -359,7 +359,7 @@ function(package = NULL, lib.loc = NULL,
 	## library path is different from the one used when building the
 	## hsearch db (stored as its "LibPaths" attribute).
 	if(!identical(lib.loc, attr(db, "LibPaths")) ||
-	   any(is.na(match(types, attr(db, "Types")))) ||
+	   anyNA(match(types, attr(db, "Types"))) ||
 	   ## We also need to rebuild the hsearch db in case an existing
 	   ## dir in the library path was modified more recently than
 	   ## the db, as packages might have been installed or removed.

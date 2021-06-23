@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2020-12-30 r79727) -- "Unsuffered Consequences"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -17,7 +17,7 @@ Type 'q()' to quit R.
 
 > library(parallel)
 > 
-> if(require(boot)) {
+> if(require(boot, quietly = TRUE)) {
 +     cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
 +     cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
 +     mc <- getOption("mc.cores", 2)
@@ -30,7 +30,6 @@ Type 'q()' to quit R.
 +     boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
 +             conf = 0.9, h = atanh, hinv = tanh)
 + }
-Loading required package: boot
 BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 Based on 1000 bootstrap replicates
 
@@ -45,4 +44,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.395   0.110   0.352 
+  0.417   0.104   0.356 

@@ -172,7 +172,7 @@ op <- par(mfrow = 2:1, mgp = c(3,1,0)/2, mar = .1+c(3,3:1))
 summary(d.Titanic <- as.data.frame(Titanic))
 barplot(Freq ~ Class + Survived, data = d.Titanic,
         subset = Age == "Adult" & Sex == "Male",
-        main = "barplot(Freq ~ Class + Survived, *)", ylab = "# {passengers}", legend = TRUE)
+        main = "barplot(Freq ~ Class + Survived, *)", ylab = "# {passengers}", legend.text = TRUE)
 # Corresponding table :
 (xt <- xtabs(Freq ~ Survived + Class + Sex, d.Titanic, subset = Age=="Adult"))
 # Alternatively, a mosaic plot :
@@ -199,7 +199,7 @@ text(mp, tot + 3, format(tot), xpd = TRUE, col = "blue")
 barplot(VADeaths, beside = TRUE,
         col = c("lightblue", "mistyrose", "lightcyan",
                 "lavender", "cornsilk"),
-        legend = rownames(VADeaths), ylim = c(0, 100))
+        legend.text = rownames(VADeaths), ylim = c(0, 100))
 title(main = "Death Rates in Virginia", font.main = 4)
 
 hh <- t(VADeaths)[, 5:1]
@@ -207,7 +207,7 @@ mybarcol <- "gray20"
 mp <- barplot(hh, beside = TRUE,
         col = c("lightblue", "mistyrose",
                 "lightcyan", "lavender"),
-        legend = colnames(VADeaths), ylim = c(0,100),
+        legend.text = colnames(VADeaths), ylim = c(0,100),
         main = "Death Rates in Virginia", font.main = 4,
         sub = "Faked upper 2*sigma error bars", col.sub = mybarcol,
         cex.names = 1.5)
@@ -218,7 +218,7 @@ mtext(side = 1, at = colMeans(mp), line = -2,
 
 # Bar shading example
 barplot(VADeaths, angle = 15+10*1:5, density = 20, col = "black",
-        legend = rownames(VADeaths))
+        legend.text = rownames(VADeaths))
 title(main = list("Death Rates in Virginia", font = 4))
 
 # Border color

@@ -1,6 +1,6 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Copyright 2003-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -38,12 +38,14 @@ format(x, \dots)
     values are right-justified to a common width: if \code{TRUE} the
     leading blanks for justification are suppressed.}
 
-  \item{digits}{how many significant digits are to be used for
+  \item{digits}{a positive integer indicating how many significant digits
+    are to be used for
     numeric and complex \code{x}.  The default, \code{NULL}, uses
     \code{\link{getOption}("digits")}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits, and also to satisfy \code{nsmall}.
-    (For the interpretation for complex numbers see \code{\link{signif}}.)}
+    (For more, notably the interpretation for complex numbers see
+    \code{\link{signif}}.)}
 
   \item{nsmall}{the minimum number of digits to the right of the decimal
     point in formatting real/complex numbers in non-scientific formats.
@@ -114,8 +116,7 @@ format(x, \dots)
   Numeric vectors are encoded with the minimum number of decimal places
   needed to display all the elements to at least the \code{digits}
   significant digits.  However, if all the elements then have trailing
-  zeroes, the number of decimal places is reduced until
-  \code{nsmall} is reached or at least one
+  zeroes, the number of decimal places is reduced until at least one
   element has a non-zero final digit; see also the argument
   documentation for \code{big.*}, \code{small.*} etc, above.  See the
   note in \code{\link{print.default}} about \code{digits >= 16}.

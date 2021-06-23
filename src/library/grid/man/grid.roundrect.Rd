@@ -36,7 +36,7 @@ location.}
 }
 \examples{
 grid.roundrect(width=.5, height=.5, name="rr")
-theta <- seq(0, 360, length=50)
+theta <- seq(0, 360, length.out=50)
 for (i in 1:50)
     grid.circle(x=grobX("rr", theta[i]),
                 y=grobY("rr", theta[i]),

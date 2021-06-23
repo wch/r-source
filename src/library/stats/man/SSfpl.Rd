@@ -51,7 +51,7 @@ fm1 <- nls(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1)
 summary(fm1)
 
 ## Visualizing the  SSfpl()  parametrization
-  xx <- seq(-0.5, 5, len = 101)
+  xx <- seq(-0.5, 5, length.out = 101)
   yy <- 1 + 4 / (1 + exp((2-xx))) # == SSfpl(xx, *) :
   stopifnot( all.equal(yy, SSfpl(xx, A = 1, B = 5, xmid = 2, scal = 1)) )
   require(graphics)

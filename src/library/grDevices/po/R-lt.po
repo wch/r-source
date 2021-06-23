@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2020-11-29 17:27+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -14,6 +15,15 @@ msgstr ""
 
 msgid "invalid 'filename'"
 msgstr "neteisingas 'filename'"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
 
 msgid "'coef' must not be negative"
 msgstr "'coef' turi neturi būti neigiamas"
@@ -339,6 +349,15 @@ msgstr ""
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' turi nurodytas nebent 'units = \"px\"'"
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
 
 msgid "invalid 'title'"
 msgstr "neteisingas 'title'"

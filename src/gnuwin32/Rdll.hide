@@ -44,11 +44,9 @@
  EncodeReal2
  HASHASH
  IS_ACTIVE_BINDING
- IS_ASCII
  IS_BYTES
  IS_LATIN1
  IS_SPECIAL_SYMBOL
- IS_UTF8
  InitDynload
  InitParser
  Init_R_Variables
@@ -417,9 +415,6 @@
  RguiPackageMenu
  Rgui_Edit
  Rgui_configure
- Ri18n_iswctype
- Ri18n_wcswidth
- Ri18n_wctype
  Rm_calloc
  Rm_free
  Rm_malloc

@@ -23,7 +23,7 @@
                     ".genericArgsEnv", ".TAOCP1997init", ".gt",
                     ".gtn", ".primTrace", ".primUntrace",
                     ".POSIXct", ".POSIXlt", ".cache_class",
-                    ".Firstlib_as_onload", ".methodsNamespace",
+                    ".Firstlib_as_onload",
                     ".popath", ".mapply", ".detach", ".maskedMsg")
 
 

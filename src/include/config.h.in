@@ -970,6 +970,9 @@
 /* Define if sigaction() is complete enough for R's usage */
 #undef HAVE_WORKING_SIGACTION
 
+/* Define to 1 if you have cairo including Xlib. */
+#undef HAVE_WORKING_X11_CAIRO
+
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
 #undef HAVE_X11

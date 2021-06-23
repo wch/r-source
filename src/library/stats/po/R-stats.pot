@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stats 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -898,9 +899,6 @@ msgstr ""
 msgid "not enough observations"
 msgstr ""
 
-msgid "data are essentially constant"
-msgstr ""
-
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr ""
 
@@ -1498,6 +1496,9 @@ msgstr ""
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr ""
 
+msgid "'data' must be a data.frame, environment, or list"
+msgstr ""
+
 msgid "variable '%s' is not a factor"
 msgstr ""
 
@@ -1589,6 +1590,9 @@ msgid "cannot recognize parameter name"
 msgstr ""
 
 msgid "levels truncated to positive values only"
+msgstr ""
+
+msgid "invalid  'attr(rhs, \"gradient\")'"
 msgstr ""
 
 msgid "setVarying : 'vary' length must match length of parameters"
@@ -1711,9 +1715,6 @@ msgstr ""
 msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
-msgid "'sig.level' must be numeric in [0, 1]"
-msgstr ""
-
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
@@ -1724,6 +1725,9 @@ msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr ""
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+
+msgid "'%s' must be numeric in [0, 1]"
 msgstr ""
 
 msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
@@ -1813,7 +1817,7 @@ msgstr ""
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr ""
 
-msgid "factors are not allowed"
+msgid "(unordered) factors are not allowed"
 msgstr ""
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
@@ -1859,6 +1863,9 @@ msgid "'varying' arguments must be the same length"
 msgstr ""
 
 msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
+
+msgid "'idvar' must uniquely identify records"
 msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
@@ -2102,6 +2109,9 @@ msgid "'mu' must be a single number"
 msgstr ""
 
 msgid "'y' is missing for paired test"
+msgstr ""
+
+msgid "data are essentially constant"
 msgstr ""
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."

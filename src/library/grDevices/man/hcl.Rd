@@ -92,8 +92,8 @@ csd <- matrix(c( 4,2,4,6, 4,3,1,4, 4,7,7,1,
 
 csphd <- function(colors)
   barplot(csd, col = colors, ylim = c(0,30),
-          names = 72:85, xlab = "Year", ylab = "Students",
-          legend = c("Winter", "Spring", "Summer", "Fall"),
+          names.arg = 72:85, xlab = "Year", ylab = "Students",
+          legend.text = c("Winter", "Spring", "Summer", "Fall"),
           main = "Computer Science PhD Graduates", las = 1)
 
 # The Original (Metaphorical) Colors (Ouch!)
@@ -113,13 +113,13 @@ csphd(hcl(h = c(30, 120, 210, 300),
 csphd(hcl(h = seq(60, 240, by = 60)))
 
 # Metaphorical Colors
-csphd(hcl(h = seq(210, 60, length = 4)))
+csphd(hcl(h = seq(210, 60, length.out = 4)))
 
 # Cool Colors
-csphd(hcl(h = seq(120, 0, length = 4) + 150))
+csphd(hcl(h = seq(120, 0, length.out = 4) + 150))
 
 # Warm Colors
-csphd(hcl(h = seq(120, 0, length = 4) - 30))
+csphd(hcl(h = seq(120, 0, length.out = 4) - 30))
 
 # Single Color
 hist(stats::rnorm(1000), col = hcl(240))

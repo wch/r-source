@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004--2020  The R Foundation
+ *  Copyright (C) 2004--2021  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1026,8 +1026,10 @@ int setupui(void)
     /* set locale before doing anything with menus */
     setlocale(LC_CTYPE, ""); /* necessary in case next fails to set
 				a valid locale */
-    if((p = getenv("LC_ALL"))) strncpy(Rlocale, p, sizeof(Rlocale)-1);
-    if((p = getenv("LC_CTYPE"))) strncpy(Rlocale, p, sizeof(Rlocale)-1);
+    if((p = getenv("LC_ALL")))
+	strncpy(Rlocale, p, sizeof(Rlocale)-1);
+    else if((p = getenv("LC_CTYPE")))
+	strncpy(Rlocale, p, sizeof(Rlocale)-1);
     if (strcmp(Rlocale, "C") == 0) strcpy(Rlocale, "en");
     setlocale(LC_CTYPE, Rlocale);
     mbcslocale = MB_CUR_MAX > 1;

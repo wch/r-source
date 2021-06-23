@@ -1214,8 +1214,8 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     ## auto-generated package citation.
     if(!is.null(auto) &&
        !is.logical(auto) &&
-       !any(is.na(match(c("Package", "Version", "Title"),
-                        names(meta <- as.list(auto))))) &&
+       !anyNA(match(c("Package", "Version", "Title"),
+                    names(meta <- as.list(auto)))) &&
        !all(is.na(match(c("Authors@R", "Author"),
                         names(meta))))
        ) {

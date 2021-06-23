@@ -152,7 +152,7 @@ The viewports in a \code{vpList} are pushed in parallel.  The
 \examples{
 # Diagram of a sample viewport
 grid.show.viewport(viewport(x=0.6, y=0.6,
-                   w=unit(1, "inches"), h=unit(1, "inches")))
+                   width=unit(1, "inches"), height=unit(1, "inches")))
 # Demonstrate viewport clipping
 clip.demo <- function(i, j, clip1, clip2) {
   pushViewport(viewport(layout.pos.col=i,
@@ -178,7 +178,7 @@ clip.demo(2, 2, TRUE, TRUE)
 popViewport()
 # Demonstrate turning clipping off
 grid.newpage()
-pushViewport(viewport(w=.5, h=.5, clip="on"))
+pushViewport(viewport(width=.5, height=.5, clip="on"))
 grid.rect()
 grid.circle(r=.6, gp=gpar(lwd=10))
 pushViewport(viewport(clip="inherit"))
@@ -188,14 +188,14 @@ grid.circle(r=.6)
 popViewport(3)
 # Demonstrate vpList, vpStack, and vpTree
 grid.newpage()
-tree <- vpTree(viewport(w=0.8, h=0.8, name="A"),
-               vpList(vpStack(viewport(x=0.1, y=0.1, w=0.5, h=0.5,
+tree <- vpTree(viewport(width=0.8, height=0.8, name="A"),
+               vpList(vpStack(viewport(x=0.1, y=0.1, width=0.5, height=0.5,
                                        just=c("left", "bottom"), name="B"),
-                              viewport(x=0.1, y=0.1, w=0.5, h=0.5,
+                              viewport(x=0.1, y=0.1, width=0.5, height=0.5,
                                        just=c("left", "bottom"), name="C"),
-                              viewport(x=0.1, y=0.1, w=0.5, h=0.5,
+                              viewport(x=0.1, y=0.1, width=0.5, height=0.5,
                                        just=c("left", "bottom"), name="D")),
-                      viewport(x=0.5, w=0.4, h=0.9,
+                      viewport(x=0.5, width=0.4, height=0.9,
                                just="left", name="E")))
 pushViewport(tree)
 for (i in LETTERS[1:5]) {

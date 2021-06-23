@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -128,6 +128,13 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   Changing the values of locale categories whilst \R is running ought
   to be noticed by the OS services, and usually is but exceptions have
   been seen (usually in collation services).
+
+  Do not use the value of \code{Sys.getlocale("LC_CTYPE")} to attempt to
+  find the character set -- for example UTF-8 locales can have suffix
+  \samp{.UTF-8} or \samp{.utf8} (more common on Linux than \samp{UTF-8})
+  or none (as on macOS) and Latin-9 locales can have suffix
+  \samp{ISO8859-15}, \samp{iso885915}, \samp{iso885915@euro} or
+  \samp{ISO8859-15@euro}.  Use \code{\link{l10n_info}} instead.
 }
 
 \seealso{
@@ -136,7 +143,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   representations.
 
   \code{\link{l10n_info}} gives some summary facts about the locale and
-  its encoding.
+  its encoding (including if it is UTF-8).
 
   The \sQuote{R Installation and Administration} manual for background
   on locales and how to find out locale names on your system.

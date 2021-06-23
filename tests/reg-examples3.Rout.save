@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2020-12-30 r79727) -- "Unsuffered Consequences"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -573,20 +573,4 @@ pckgDs>
 [32,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1 . .
 [33,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1 .
 [34,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1
-> 
-> 
-> ## From tools
-> 
-> library(tools)
-> ## there are few dependencies in a vanilla R installation:
-> ## lattice may not be installed
-> ## Avoid possibly large list from R_HOME/site-library, which --vanilla includes.
-> stopifnot(identical(
-+     sort(dependsOnPkgs("lattice", lib.loc = .Library)),
-+     c("Matrix", "mgcv", "nlme", "survival")))
-> 
-> ## Vignettes may not yet be installed
-> gridEx <- system.file("doc", "grid.Rnw", package = "grid")
-> if(nzchar(gridEx)) # was installed
-+     stopifnot(identical(vignetteInfo(gridEx)$depends, "lattice"))
 > 

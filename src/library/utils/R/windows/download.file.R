@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,9 +34,8 @@ download.file <-
     if(method == "auto") {
         if(length(url) != 1L || typeof(url) != "character")
             stop("'url' must be a length-one character vector");
-	method <-
-            if(startsWith(url, "ftps:") && capabilities("libcurl")) "libcurl"
-            else "wininet"
+        ## as from 4.2.0 always have libcurl
+	method <- if(startsWith(url, "file:")) "wininet" else "libcurl"
     }
 
     nh <- names(headers)

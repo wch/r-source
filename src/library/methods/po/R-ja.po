@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2015-03-27 14:52+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -879,6 +879,22 @@ msgstr " %s に対する総称的関数は見付かりません "
 
 msgid "Empty function name in .getGeneric"
 msgstr " .getGeneric の中に空の関数名 "
+
+msgid "--- caching class"
+msgstr ""
+
+msgid "--- done caching class"
+msgstr ""
+
+msgid "--- getting generic"
+msgstr ""
+
+#, fuzzy
+msgid "(and methods)"
+msgstr " メソッド %s()　用 "
+
+msgid "--- done getting generic"
+msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -2164,9 +2180,6 @@ msgstr[0] ""
 #~ msgstr ""
 #~ " メソッド %s (クラス %s からの)はインストールされるまでクラスメソッドとし"
 #~ "て処理されません． このクラス中のメソッドに混乱がある可能性があります． "
-
-#~ msgid "for method %s()"
-#~ msgstr " メソッド %s()　用 "
 
 #~ msgid ".TraceWithMethods: after computing what, whereF"
 #~ msgstr " .TraceWithMethods: what, whereF の計算後に "

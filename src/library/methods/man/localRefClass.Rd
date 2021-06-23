@@ -80,7 +80,7 @@ x1 <- myIter(BigData = rnorm(1000), twiddle = tw) # OK, not REALLY big
 
 twiddler <- function(x, n) {
   x$ensureLocal() # see the Details.  Not really needed in this example
-  for(i in seq(length = n)) {
+  for(i in seq_len(n)) {
       x$twiddle <- x$twiddle + rnorm(length(x$twiddle))
       ## then do something ....
       ## Snooping in gdb, etc will show that x$BigData is not copied

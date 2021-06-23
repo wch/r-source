@@ -1,6 +1,6 @@
 % File src/library/base/man/Startup.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Startup}
@@ -49,10 +49,15 @@
   (it contains settings from the installer in a \sQuote{factory-fresh}
   installation).
 #endif
-  This code is sourced into the \pkg{base} package.  Users need to be
-  careful not to unintentionally overwrite objects in \pkg{base}, and it
-  is normally advisable to use \code{\link{local}} if code needs to be
-  executed: see the examples.
+  This code is sourced into the workspace (global environment).  Users need
+  to be careful not to unintentionally create objects in the workspace, and
+  it is normally advisable to use \code{\link{local}} if code needs to be
+  executed: see the examples.  \code{.Library.site} may be assigned to and
+  the assignment will effectively modify the value of the variable in the
+  base namespace where \code{\link{.libPaths}()} finds it.  One may also
+  assign to \code{.First} and \code{.Last}, but assigning to other variables
+  in the execution environment is not recommended and does not work in
+  some older versions of \R.
 
   Then, unless \option{--no-init-file} was given, \R searches for a user
   profile, a file of \R code.  The path of this file can be specified by
@@ -136,6 +141,9 @@
   e.g.\sspace{}\file{\var{\link{R_HOME}}/etc/i386/Renviron.site}.
   And e.g.\sspace{}\file{.Renviron.i386} will be used in preference
   to \file{.Renviron}.
+
+  There is a 100,000 byte limit on the length of a line (after expansions)
+  in environment files (prior to \R 4.1 it was 10,000).
 }
 \note{
   It is not intended that there be interaction with the user during

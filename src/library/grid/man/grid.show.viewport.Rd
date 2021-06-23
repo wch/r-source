@@ -55,7 +55,7 @@ grid.show.viewport(v, parent.layout = NULL, newpage = TRUE,
 \examples{
 ## Diagram of a sample viewport
 grid.show.viewport(viewport(x=0.6, y=0.6,
-                            w=unit(1, "inches"), h=unit(1, "inches")))
+                            width=unit(1, "inches"), height=unit(1, "inches")))
 grid.show.viewport(viewport(layout.pos.row=2, layout.pos.col=2:3),
                    grid.layout(3, 4))
 }

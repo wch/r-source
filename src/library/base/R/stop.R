@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,8 @@
 
 stop <- function(..., call. = TRUE, domain = NULL)
 {
-    args <- list(...)
-    if (length(args) == 1L && inherits(args[[1L]], "condition")) {
-        cond <- args[[1L]]
+    if (...length() == 1L && inherits(..1, "condition")) {
+        cond <- ..1
         if(nargs() > 1L)
             warning("additional arguments ignored in stop()")
         message <- conditionMessage(cond)
@@ -93,9 +92,8 @@ stopifnot <- function(..., exprs, exprObject, local = TRUE)
 warning <- function(..., call. = TRUE, immediate. = FALSE,
                     noBreaks. = FALSE, domain = NULL)
 {
-    args <- list(...)
-    if (length(args) == 1L && inherits(args[[1L]], "condition")) {
-        cond <- args[[1L]]
+    if (...length() == 1L && inherits(..1, "condition")) {
+        cond <- ..1
         if(nargs() > 1L)
             cat(gettext("additional arguments ignored in warning()"),
                 "\n", sep = "", file = stderr())

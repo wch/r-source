@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -67,16 +67,16 @@
                                       "13" = "High Sierra",
                                       "14" = "Mojave",
                                       "15" = "Catalina",
-                                      "16" = "Big Sur", # early pre-releases
+                                      ## used for early pre-releases
+                                      ## and still reported by Xcode 10's SDK
+                                      "16" = "Big Sur",
                                       ""),
                                ver)
-                   else if(ver1[1L] == "11")
-                       ## it looks like 11.1 is also Big Sur, with the
-                       # next major change (Autumn 2021?) to 12
-                       sprintf("macOS %s %s",
-                               switch(ver2,
-                                      "0" = "Big Sur",
-                                      "Big Sur"),
+                   else if(ver1[1L] <= "12")
+                        sprintf("macOS %s %s",
+                               switch(ver1[1L],
+                                      "11" = "Big Sur",
+                                      "12" = "Monterey"),
                                ver)
                    else
                        sprintf("macOS %s", ver)

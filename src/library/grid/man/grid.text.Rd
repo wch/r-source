@@ -78,7 +78,7 @@ rot <- stats::runif(20, 0, 360)
 grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
           gp=gpar(fontsize=20, col="grey"))
 grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
-          gp=gpar(fontsize=20), check=TRUE)
+          gp=gpar(fontsize=20), check.overlap=TRUE)
 grid.newpage()
 draw.text <- function(just, i, j) {
   grid.text("ABCD", x=x[j], y=y[i], just=just)

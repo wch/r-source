@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2020  The R Core Team.
+ *  Copyright (C) 1995--2021  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -843,10 +843,10 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	Rvsnprintf_mbcs(p, max(msg_len - strlen(errbuf), 0), format, ap);
     }
     /* Approximate truncation detection, may produce false positives.  Assumes
-       MB_CUR_MAX > 0. Note: approximation is fine, as the string may include
+       R_MB_CUR_MAX > 0. Note: approximation is fine, as the string may include
        dots, anyway */
     size_t nc = strlen(errbuf); // > 0, ignoring possibility of failure
-    if (nc > BUFSIZE - 1 - (MB_CUR_MAX - 1)) {
+    if (nc > BUFSIZE - 1 - (R_MB_CUR_MAX - 1)) {
 	size_t end = min(nc + 1, (BUFSIZE + 1) - 4); // room for "...\n\0"
 	for(size_t i = end; i <= BUFSIZE + 1; ++i) errbuf[i - 1] = '\0';
 	mbcsTruncateToValid(errbuf);
@@ -1089,60 +1089,99 @@ void NORET jump_to_toplevel()
 
 /* #define DEBUG_GETTEXT 1 */
 
+
+/* Called from do_gettext() and do_ngettext() */
+static char * determine_domain_gettext(SEXP domain_, SEXP rho)
+{
+    const char *domain = "";
+    char *buf; // will be returned
+
+    /* The passed rho is ignored because (n)gettext is called through a
+     * helper function in stop.R. And the context is more useful anyhow */
+    if(isNull(domain_)) {
+	RCNTXT *cptr;
+	for (cptr = R_GlobalContext; cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	     cptr = cptr->nextcontext)
+	    if (cptr->callflag & CTXT_FUNCTION) {
+		/* stop() etc have internal call to .makeMessage */
+		const char *cfn = CHAR(STRING_ELT(deparse1s(CAR(cptr->call)), 0));
+
+		if(streql(cfn, "stop") || streql(cfn, "warning") || streql(cfn, "message"))
+		    continue;
+		else
+		    break;
+	    }
+
+	/* First we try to see if sysparent leads us to a namespace, because gettext
+	   might have a different environment due to being called from (in?) a closure.
+	   If that fails we try cloenv, as the original code did. */
+	/* FIXME: should we only do this search when cptr->callflag & CTXT_FUNCTION? */
+	SEXP ns = R_NilValue;
+	for(size_t attempt = 0; attempt < 2 && isNull(ns); attempt++) {
+	    rho = (cptr == NULL) ?
+		R_EmptyEnv :
+		attempt == 0 ? cptr->sysparent : cptr->cloenv;
+	    while(rho != R_EmptyEnv) {
+		if (rho == R_GlobalEnv) break;
+		else if (R_IsNamespaceEnv(rho)) {
+		    ns = R_NamespaceEnvSpec(rho);
+		    break;
+		}
+		rho = ENCLOS(rho);
+	    }
+	}
+	if (!isNull(ns)) {
+	    PROTECT(ns);
+	    domain = translateChar(STRING_ELT(ns, 0));
+	    if (strlen(domain)) {
+		size_t len = strlen(domain)+3;
+		buf = R_alloc(len, sizeof(char));
+		Rsnprintf_mbcs(buf, len, "R-%s", domain);
+		UNPROTECT(1); /* ns */
+#ifdef DEBUG_GETTEXT
+		REprintf("Managed to determine 'domain' from environment as: '%s'\n", buf);
+#endif
+		return buf;
+	    }
+	    UNPROTECT(1); /* ns */ 
+	}
+	return NULL;
+
+    } else if(isString(domain_)) {
+	domain = translateChar(STRING_ELT(domain_, 0));
+	if (!strlen(domain))
+	    return NULL;
+	buf = R_alloc(strlen(domain) + 1, sizeof(char));
+	strcpy(buf, domain);
+	return buf;
+	
+    } else if(isLogical(domain_) && LENGTH(domain_) == 1 && LOGICAL(domain_)[0] == NA_LOGICAL)
+	return NULL;
+    else error(_("invalid '%s' value"), "domain");
+}
+
+
 /* gettext(domain, string) */
 SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 #ifdef ENABLE_NLS
-    const char *domain = "", *cfn;
-    char *buf;
-    SEXP ans, string = CADR(args);
-    int i, n = LENGTH(string);
+    SEXP string = CADR(args);
+    int n = LENGTH(string);
 
-    checkArity(op, args);
     if(isNull(string) || !n) return string;
 
     if(!isString(string)) error(_("invalid '%s' value"), "string");
 
-    if(isNull(CAR(args))) {
-	RCNTXT *cptr;
-	SEXP rho = R_BaseEnv;
-	for (cptr = R_GlobalContext->nextcontext;
-	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
-	     cptr = cptr->nextcontext)
-	    if (cptr->callflag & CTXT_FUNCTION) {
-		/* stop() etc have internal call to .makeMessage */
-		cfn = CHAR(STRING_ELT(deparse1s(CAR(cptr->call)), 0));
-		if(streql(cfn, "stop") || streql(cfn, "warning")
-		   || streql(cfn, "message")) continue;
-		rho = cptr->cloenv;
-	    }
-	while(rho != R_EmptyEnv) {
-	    if (rho == R_GlobalEnv) break;
-	    else if (R_IsNamespaceEnv(rho)) {
-		domain = translateChar(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
-		break;
-	    }
-	    rho = CDR(rho);
-	}
-	if(strlen(domain)) {
-	    size_t len = strlen(domain)+3;
-	    R_CheckStack2(len);
-	    buf = (char *) alloca(len);
-	    Rsnprintf_mbcs(buf, len, "R-%s", domain);
-	    domain = buf;
-	}
-    } else if(isString(CAR(args)))
-	domain = translateChar(STRING_ELT(CAR(args),0));
-    else if(isLogical(CAR(args)) && LENGTH(CAR(args)) == 1 && LOGICAL(CAR(args))[0] == NA_LOGICAL) ;
-    else error(_("invalid '%s' value"), "domain");
+    char * domain = determine_domain_gettext(CAR(args), rho);
 
-    if(strlen(domain)) {
-	PROTECT(ans = allocVector(STRSXP, n));
-	for(i = 0; i < n; i++) {
+    if(domain && strlen(domain)) {
+	SEXP ans = PROTECT(allocVector(STRSXP, n));
+	for(int i = 0; i < n; i++) {
 	    int ihead = 0, itail = 0;
 	    const char * This = translateChar(STRING_ELT(string, i));
 	    char *tmp, *head = NULL, *tail = NULL, *p, *tr;
+
 	    R_CheckStack2(strlen(This) + 1);
 	    tmp = (char *) alloca(strlen(This) + 1);
 	    strcpy(tmp, This);
@@ -1151,28 +1190,32 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for(p = tmp;
 		*p && (*p == ' ' || *p == '\t' || *p == '\n');
 		p++, ihead++) ;
+
 	    if(ihead > 0) {
 		R_CheckStack2(ihead + 1);
 		head = (char *) alloca(ihead + 1);
 		Rstrncpy(head, tmp, ihead + 1);
 		tmp += ihead;
-		}
+	    }
+
 	    if(strlen(tmp))
 		for(p = tmp+strlen(tmp)-1;
 		    p >= tmp && (*p == ' ' || *p == '\t' || *p == '\n');
 		    p--, itail++) ;
+
 	    if(itail > 0) {
 		R_CheckStack2(itail + 1);
 		tail = (char *) alloca(itail + 1);
 		strcpy(tail, tmp+strlen(tmp)-itail);
 		tmp[strlen(tmp)-itail] = '\0';
 	    }
+
 	    if(strlen(tmp)) {
 #ifdef DEBUG_GETTEXT
 		REprintf("translating '%s' in domain '%s'\n", tmp, domain);
 #endif
 		tr = dgettext(domain, tmp);
-		R_CheckStack2(strlen(tr) + ihead + itail + 1);
+ 		R_CheckStack2(        strlen(tr) + ihead + itail + 1);
 		tmp = (char *) alloca(strlen(tr) + ihead + itail + 1);
 		tmp[0] ='\0';
 		if(ihead > 0) strcat(tmp, head);
@@ -1184,20 +1227,15 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	UNPROTECT(1);
 	return ans;
-    } else return CADR(args);
-#else
-    return CADR(args);
+    } else
 #endif
+	// no NLS or no domain :
+	return CADR(args);
 }
 
 /* ngettext(n, msg1, msg2, domain) */
 SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-#ifdef ENABLE_NLS
-    const char *domain = "", *cfn;;
-    char *buf;
-    SEXP ans, sdom = CADDDR(args);
-#endif
     SEXP msg1 = CADR(args), msg2 = CADDR(args);
     int n = asInteger(CAR(args));
 
@@ -1209,51 +1247,21 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'%s' must be a character string"), "msg2");
 
 #ifdef ENABLE_NLS
-    if(isNull(sdom)) {
-	RCNTXT *cptr;
-	SEXP rho = R_BaseEnv;
-	for (cptr = R_GlobalContext->nextcontext;
-	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
-	     cptr = cptr->nextcontext)
-	    if (cptr->callflag & CTXT_FUNCTION) {
-		/* stop() etc have internal call to .makeMessage */
-		cfn = CHAR(STRING_ELT(deparse1s(CAR(cptr->call)), 0));
-		if(streql(cfn, "stop") || streql(cfn, "warning")
-		   || streql(cfn, "message")) continue;
-		rho = cptr->cloenv;
-	    }
-	while(rho != R_EmptyEnv) {
-	    if (rho == R_GlobalEnv) break;
-	    else if (R_IsNamespaceEnv(rho)) {
-		domain = translateChar(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
-		break;
-	    }
-	    rho = CDR(rho);
-	}
-	if(strlen(domain)) {
-	    size_t len = strlen(domain)+3;
-	    R_CheckStack2(len);
-	    buf = (char *) alloca(len);
-	    Rsnprintf_mbcs(buf, len, "R-%s", domain);
-	    domain = buf;
-	}
-    } else if(isString(sdom))
-	domain = CHAR(STRING_ELT(sdom,0));
-    else if(isLogical(sdom) && LENGTH(sdom) == 1 && LOGICAL(sdom)[0] == NA_LOGICAL) ;
-    else error(_("invalid '%s' value"), "domain");
+    SEXP sdom = CADDDR(args);
+    char * domain = determine_domain_gettext(sdom, rho);
 
-    /* libintl seems to malfunction if given a message of "" */
-    if(strlen(domain) && length(STRING_ELT(msg1, 0))) {
-	char *fmt = dngettext(domain,
-			      translateChar(STRING_ELT(msg1, 0)),
-			      translateChar(STRING_ELT(msg2, 0)),
-			      n);
-	PROTECT(ans = mkString(fmt));
-	UNPROTECT(1);
-	return ans;
-    } else
+    if(domain && strlen(domain)) {
+	/* libintl seems to malfunction if given a message of "" */
+	if(length(STRING_ELT(msg1, 0))) {
+	    char *fmt = dngettext(domain,
+		      translateChar(STRING_ELT(msg1, 0)),
+		      translateChar(STRING_ELT(msg2, 0)),
+		      n);
+	    return mkString(fmt);
+	}
+    }
 #endif
-	return n == 1 ? msg1 : msg2;
+    return n == 1 ? msg1 : msg2;
 }
 
 
@@ -1999,15 +2007,12 @@ R_InsertRestartHandlers(RCNTXT *cptr, const char *cname)
 
 SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    const char *msg;
-    SEXP ecall;
-
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
 	error(_("bad error message"));
-    msg = translateChar(STRING_ELT(CAR(args), 0));
-    ecall = CADR(args);
+    const char *msg = translateChar(STRING_ELT(CAR(args), 0));
+    SEXP ecall = CADR(args);
 
     warningcall_dflt(ecall, "%s", msg);
     return R_NilValue;
@@ -2015,15 +2020,12 @@ SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden NORET do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    const char *msg;
-    SEXP ecall;
-
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
 	error(_("bad error message"));
-    msg = translateChar(STRING_ELT(CAR(args), 0));
-    ecall = CADR(args);
+    const char *msg = translateChar(STRING_ELT(CAR(args), 0));
+    SEXP ecall = CADR(args);
 
     errorcall_dflt(ecall, "%s", msg);
 }

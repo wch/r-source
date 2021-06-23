@@ -54,6 +54,7 @@ int R_socket_error_eintr(int s);
 int R_socket_errno(void);
 char *R_socket_strerror(int errnum);
 int R_set_nonblocking(SOCKET s);
+int R_set_nodelay(SOCKET s);
 
 /* R interface (Rsock.c) :*/
 void in_Rsockopen(int *port);

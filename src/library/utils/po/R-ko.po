@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -154,9 +154,6 @@ msgstr "패키지 %s: DESCRIPTION 파일을 찾을 수 없습니다."
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file'은 반드시 NULL, 문자열, 또는 커넥션이어야 합니다."
-
-msgid "bad argument"
-msgstr "잘못된 인자입니다."
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr "'full.names'은 다중 경로에 대해서 반드시 TRUE이어야 합니다."
@@ -1210,9 +1207,14 @@ msgstr "'%s'로 설정하고자 하는 시도가 무시되었습니다"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip'은 반드시 단일 문자열이어야 합니다"
 
-msgid "'files' must a character vector specifying one or more filepaths"
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr ""
 "'files'은 반드시 한개 이상의 파일패스들을 지정하는 문자형 벡터이어야 합니다"
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "'url'은 반드시 비어있지 않은 문자열이어야 합니다"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1358,13 +1360,24 @@ msgstr[0] ""
 "패키지(들)을 %s으로부터 제거합니다\n"
 "(왜냐하면 %s가 지정되지 않았기 때문입니다)"
 
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "패키지 %s(들)이 사용가능하지 않습니다 (그 이유는 %s 입니다)"
-
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] ""
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "패키지 %s(들)이 사용가능하지 않습니다 (그 이유는 %s 입니다)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1442,6 +1455,9 @@ msgstr[0] "마지막 레코드가 완성되지 않아 %d 번째 라인은 삭제
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
+
+#~ msgid "bad argument"
+#~ msgstr "잘못된 인자입니다."
 
 #~ msgid "package %s not found"
 #~ msgstr "패키지 %s를 찾을 수 없습니다"

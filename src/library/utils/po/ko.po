@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -23,8 +23,8 @@ msgstr ""
 #: io.c:1096 io.c:1097 io.c:1098 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
-#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:79
-#: windows/widgets.c:82 windows/widgets.c:87
+#: windows/dialogs.c:321 windows/util.c:121 windows/widgets.c:75
+#: windows/widgets.c:78 windows/widgets.c:83
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "인자 '%s'의 값이 올바르지 않습니다."
@@ -146,20 +146,34 @@ msgstr "유효하지 않은 '%s' 지정입니다"
 msgid "'%s' contains missing values"
 msgstr ""
 
-#: utils.c:85
+#: utils.c:68
+#, fuzzy
+msgid "argument 'class' must be a character string"
+msgstr "'text'는 반드시 문자열이어야 합니다"
+
+#: utils.c:78
+#, fuzzy
+msgid "argument 'x' must be a length-1 character vector"
+msgstr "인자는 반드시 문자형 벡터 또는  raw 벡터이어야 합니다"
+
+#: utils.c:81
+msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
+msgstr ""
+
+#: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'은 반드시 길이가 1인 문자형 벡터이어야 합니다"
 
-#: utils.c:91
+#: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: utils.c:98
+#: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr "알수없는 형식이 'gethostbyname'에 의해서 반환되었습니다"
 
-#: utils.c:107
+#: utils.c:169
 msgid "nsl() is not supported on this platform"
 msgstr "이 플랫폼에서는 nsl()를 사용할 수 없습니다."
 
@@ -246,30 +260,30 @@ msgstr "'%s'은 반드시 리스트 형이어야 합니다"
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s'의 구성요소 %d는 윈도우 핸들이 아닙니다"
 
-#: windows/widgets.c:109
+#: windows/widgets.c:105
 msgid "Select one or more"
 msgstr "하나 이상을 선택해 주세요"
 
-#: windows/widgets.c:109
+#: windows/widgets.c:105
 msgid "Select one"
 msgstr "하나를 선택해주세요"
 
-#: windows/widgets.c:183 windows/widgets.c:251
+#: windows/widgets.c:188 windows/widgets.c:256
 msgid "'default' must be a character string"
 msgstr "'default'는 반드시 문자열이어야 합니다"
 
-#: windows/widgets.c:185 windows/widgets.c:253
+#: windows/widgets.c:190 windows/widgets.c:258
 msgid "'default' is overlong"
 msgstr "'default'가 너무 깁니다"
 
-#: windows/widgets.c:189 windows/widgets.c:257
+#: windows/widgets.c:194 windows/widgets.c:262
 msgid "'caption' must be a character string"
 msgstr "'caption'은 반드시 문자열이어야 합니다"
 
-#: windows/widgets.c:191
+#: windows/widgets.c:196
 msgid "'multi' must be a logical value"
 msgstr "'multi'는 반드시 논리값이어야 합니다"
 
-#: windows/widgets.c:193
+#: windows/widgets.c:198
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'의 값은 반드시 정수이어야 합니다."

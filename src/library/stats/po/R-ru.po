@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-12 09:26\n"
 "PO-Revision-Date: 2020-08-28 15:57+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -957,9 +957,6 @@ msgstr "все группы должны содержать данные"
 msgid "not enough observations"
 msgstr "недостаточно наблюдений"
 
-msgid "data are essentially constant"
-msgstr "данные абсолютно константны"
-
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr "NAs не разрешены в 'groups' и 'blocks'"
 
@@ -1600,6 +1597,10 @@ msgstr "переменные %s указаны с другими типами, чем в подгонке"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' должна быть таблицей данных, а не матрицей"
 
+#, fuzzy
+msgid "'data' must be a data.frame, environment, or list"
+msgstr "'data' должны быть списком либо окружением"
+
 msgid "variable '%s' is not a factor"
 msgstr "переменная '%s' -- не фактор"
 
@@ -1696,6 +1697,9 @@ msgstr "не могу распознать имя параметра"
 
 msgid "levels truncated to positive values only"
 msgstr "уровни укорочены до только положительных значений"
+
+msgid "invalid  'attr(rhs, \"gradient\")'"
+msgstr ""
 
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr "setVarying : длина 'vary' должна соответствовать длине параметров"
@@ -1834,9 +1838,6 @@ msgid ""
 msgstr ""
 "в точности один из 'n', 'delta', 'sd', 'power', 'sig.level' должен быть NULL"
 
-msgid "'sig.level' must be numeric in [0, 1]"
-msgstr "'sig.level' должен быть числом в [0, 1]"
-
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 "в точности один из of 'n', 'p1', 'p2', 'power', 'sig.level' должен быть NULL"
@@ -1849,6 +1850,10 @@ msgstr "Не найдены p2 в [p1, 1], нужные для достижения желаемой мощности"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "Не найден уровень значимости [0, 1], чтобы достичь желаемой мощности"
+
+#, fuzzy
+msgid "'%s' must be numeric in [0, 1]"
+msgstr "'sig.level' должен быть числом в [0, 1]"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
@@ -1948,7 +1953,8 @@ msgstr "'formula' пропущена"
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' должен быть 1 или 3 для упорядоченных факторов"
 
-msgid "factors are not allowed"
+#, fuzzy
+msgid "(unordered) factors are not allowed"
 msgstr "факторы не разрешены"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
@@ -1995,6 +2001,9 @@ msgstr "аргументы 'varying' должны быть одной длины"
 
 msgid "'lengths(varying)' must all match 'length(times)'"
 msgstr "'lengths(varying)' все должны соответствовать 'length(times)'"
+
+msgid "'idvar' must uniquely identify records"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "здесь есть записи с пропущенными временами, они будут сброшены."
@@ -2249,6 +2258,9 @@ msgstr "'mu' должен быть единичным числом"
 
 msgid "'y' is missing for paired test"
 msgstr "'y' пропущено для парного теста"
+
+msgid "data are essentially constant"
+msgstr "данные абсолютно константны"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' должен быть TRUE, FALSE, NULL или текст (вектор)."

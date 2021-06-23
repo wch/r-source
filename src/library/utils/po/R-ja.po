@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:59\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -150,9 +150,6 @@ msgstr " パッケージ %s: DESCRIPTION ファイルが見つかりません "
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr " 'file' は connection か文字列か NULL でなければなりません "
-
-msgid "bad argument"
-msgstr " 誤った引数 "
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr " 複数のパスを指定するときはfull.namesがTRUEでなければなりません "
@@ -1242,9 +1239,14 @@ msgstr " '%s' への変更の試みは無視されました "
 msgid "'unzip' must be a single character string"
 msgstr " 'unzip' は単一の文字列でなければなりません "
 
-msgid "'files' must a character vector specifying one or more filepaths"
+#, fuzzy
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr ""
 " 'files' は 1 つ以上のファイルパスを指定する文字ベクトルでなければなりません "
+
+#, fuzzy
+msgid "argument 'zip' must be a non-empty character string"
+msgstr " 'url' は空でない文字列でなければなりません "
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1398,14 +1400,25 @@ msgstr[0] ""
 " パッケージを %s から取り除きます \n"
 " (%s が指定されていないため) "
 
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] " パッケージ %s が利用できません (%s) "
-
 #, fuzzy
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+
+#, fuzzy
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] " パッケージ %s が利用できません (%s) "
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1479,6 +1492,9 @@ msgstr[0] " 最後の記録が不完全で、%d 行が捨て去られました "
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] " 不正なローマ数字です: %s "
+
+#~ msgid "bad argument"
+#~ msgstr " 誤った引数 "
 
 #~ msgid "package %s not found"
 #~ msgstr " パッケージ %s が見付かりません "

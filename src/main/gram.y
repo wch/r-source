@@ -2569,6 +2569,12 @@ static int NumericValue(int c)
 		if (nd == 0) return ERROR;
 	    }
             if (seendot && !seenexp) return ERROR;
+	    if (c == 'L') /* for getParseData */
+	    {
+		// seenexp will be checked later
+		YYTEXT_PUSH(c, yyp);
+		break;
+	    }
 	    break;
 	}
 	if (c == 'E' || c == 'e') {

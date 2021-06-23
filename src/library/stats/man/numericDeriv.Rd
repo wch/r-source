@@ -49,7 +49,7 @@ numericDeriv(expr, theta, rho = parent.frame(), dir = 1,
 myenv <- new.env()
 myenv$mean <- 0.
 myenv$sd   <- 1.
-myenv$x    <- seq(-3., 3., len = 31)
+myenv$x    <- seq(-3., 3., length.out = 31)
 nD <- numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
 str(nD)
 

@@ -146,7 +146,8 @@ reshape <-
             v.names <- names(data)[!(names(data) %in% c(timevar, idvar, orig.idvar))]
 
         if (is.null(varying)) varying <- outer(v.names, times, paste, sep = sep)
-        if (is.list(varying)) varying <- do.call("rbind", varying)
+        else if (is.list(varying)) varying <- do.call("rbind", varying)
+        else if (is.vector(varying)) varying <- matrix(varying, nrow = length(v.names))
 
         undoInfo$varying <- varying
 

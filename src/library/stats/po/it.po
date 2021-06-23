@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: stats 3.6.3\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Project-Id-Version: stats 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -25,16 +25,16 @@ msgstr "ampiezza/copertura mediane più grande di n"
 #: Srunmed.c:262
 #, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%ld]"
-msgstr ""
+msgstr "runmed(x, .., na.action=\"na.fail\"): ha NA iniziando da x[%ld]"
 
 #: Srunmed.c:265
 msgid "runmed(): invalid 'na.action'"
-msgstr ""
+msgstr "runmed(): 'na.action' non valido"
 
 #: Srunmed.c:315
 #, c-format
 msgid "na_action logic error (%d), please report!"
-msgstr ""
+msgstr "errore logico na_action (%d), per piacere riportatelo!"
 
 #: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
@@ -54,7 +54,7 @@ msgstr "approx(): tentata interpolazione di valori NA"
 
 #: approx.c:128
 msgid "approx(x,y, .., na.rm=FALSE): NA values in x are not allowed"
-msgstr ""
+msgstr "approx(x,y, .., na.rm=FALSE): i valori NA in x non sono ammessi"
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:39
 msgid "invalid argument type"
@@ -88,7 +88,7 @@ msgstr "non tutti gli argomenti hanno la stessa lunghezza"
 
 #: cov.c:569
 msgid "missing observations in cov/cor"
-msgstr "osservazioni mancanti in cov/cor"
+msgstr "osservazioni assenti in cov/cor"
 
 #: cov.c:650
 msgid "'x' is NULL"
@@ -202,12 +202,12 @@ msgstr ""
 "Prova ad incrementare la dimensione dell'area di lavoro e possibilmente "
 "'mult'"
 
-#: fexact.c:1035
+#: fexact.c:1037
 #, c-format
 msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
 msgstr "Bug in fexact3, it[i=%d]=%d: chiave negativa %d (kyy=%d)\n"
 
-#: fexact.c:1064
+#: fexact.c:1069
 #, c-format
 msgid ""
 "FEXACT error 30.  Stack length exceeded in f3xact,\n"
@@ -219,7 +219,7 @@ msgstr ""
 "Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p."
 "value=TRUE'"
 
-#: fexact.c:1399
+#: fexact.c:1404
 #, c-format
 msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
@@ -229,7 +229,7 @@ msgstr ""
 "kval=%d.\n"
 "Prova ad incrementare la dimensione dell'area di lavoro."
 
-#: fexact.c:1412
+#: fexact.c:1417
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -241,7 +241,7 @@ msgstr ""
 "Si incrementi l'area di lavoro o si consideri l'utilizzo di 'simulate.p."
 "value=TRUE'."
 
-#: fexact.c:1449
+#: fexact.c:1454
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -271,20 +271,23 @@ msgid ""
 "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
 "instead of 'n'"
 msgstr ""
+"nextn() non ha trovato alcuna soluzione < %d = INT_MAX (il massimo intero); "
+"passate '0+ n' come alternativa a 'n'"
 
 #: fourier.c:233
 #, c-format
 msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
 msgstr ""
+"nextn<64>() non ha trovato alcuna soluzione < %ld = UINT64_MAX (il massimo "
+"intero)"
 
 #: fourier.c:249
 msgid "no factors"
 msgstr "nessuna variabile di tipo factor"
 
 #: fourier.c:250
-#, fuzzy
 msgid "too many factors"
-msgstr "nessuna variabile di tipo factor"
+msgstr "troppi fattori"
 
 #: fourier.c:253
 msgid "invalid factors"
@@ -292,7 +295,7 @@ msgstr "fattori non validi"
 
 #: fourier.c:257
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
-msgstr ""
+msgstr "'n' deve avere typeof(.) \"integer\" o \"double\""
 
 #: fourier.c:298
 #, c-format
@@ -300,6 +303,8 @@ msgid ""
 "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
 "\")"
 msgstr ""
+"nextn() = %<PRIu64> > 2^53 potrebbe non essere esattamente rappresentabile "
+"in R (come \"double\")"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, c-format
@@ -331,11 +336,11 @@ msgstr "ampiezza troppo piccola"
 #: loessc.c:257
 #, c-format
 msgid "workspace required (%.0f) is too large%s."
-msgstr ""
+msgstr "il workspace richiesto (%.0f) è troppo grande %s."
 
 #: loessc.c:258
 msgid " probably because of setting 'se = TRUE'"
-msgstr ""
+msgstr " probabilmente per l'impostazione 'se = TRUE'"
 
 #: loglin.c:371
 msgid "this should not happen"
@@ -363,7 +368,7 @@ msgstr "'delta' dev'essere finito e > 0"
 
 #: mAR.c:83
 msgid "assert failed in src/library/ts/src/carray.c"
-msgstr ""
+msgstr "assert fallito in src/library/ts/src/carray.c"
 
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
@@ -524,6 +529,8 @@ msgid ""
 "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
 "no longer happen!"
 msgstr ""
+"'varlist' è cambiato (da nvar=%d) al nuovo %d dopo EncodeVars() -- non "
+"dovrebbe accadere più!"
 
 #: model.c:2157
 msgid "'.' in formula and no 'data' argument"
@@ -545,21 +552,21 @@ msgstr "length(m) dev'essere almeno due"
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "L'argomento Sx dev'essere un vettore numerico di uno più corto di m[]"
 
-#: nls.c:99
+#: nls.c:95
 msgid "'control' must be a list"
 msgstr "'control' dev'essere una lista"
 
-#: nls.c:101
+#: nls.c:97
 msgid "'m' must be a list"
 msgstr "'m' dev'essere una lista"
 
-#: nls.c:107 nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:168 nls.c:173
-#: nls.c:178 nls.c:183 nls.c:188 nls.c:193
+#: nls.c:104 nls.c:109 nls.c:114 nls.c:119 nls.c:124 nls.c:132 nls.c:137
+#: nls.c:142 nls.c:147 nls.c:152 nls.c:157
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' assente"
 
-#: nls.c:234
+#: nls.c:233
 msgid "singular gradient"
 msgstr "gradiente singolare"
 
@@ -568,41 +575,45 @@ msgstr "gradiente singolare"
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "fattore di incremento %g sotto 'minFactor' %g"
 
-#: nls.c:264
+#: nls.c:263
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "il numero di iterazioni ha superato il massimo di %d"
 
-#: nls.c:269
+#: nls.c:267
 msgid "converged"
 msgstr "convergente"
 
-#: nls.c:290
+#: nls.c:284
 msgid "'theta' should be of type character"
 msgstr "'theta' dev'essere di tipo character"
 
-#: nls.c:292 port.c:382
+#: nls.c:286 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr "l'utilizzo dell'ambiente NULL è rimosso"
 
-#: nls.c:296
+#: nls.c:290
 msgid "'rho' should be an environment"
 msgstr "'rho' dev'essere un environment"
 
-#: nls.c:299
+#: nls.c:296
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' non è un vettore numerico della lunghezza giusta"
 
-#: nls.c:313 nls.c:347
-msgid "Missing value or an infinity produced when evaluating the model"
-msgstr "Valore mancante o infinito generato durante il calcolo del modello"
+#: nls.c:299
+msgid "'central' is NA, but must be TRUE or FALSE"
+msgstr "'central' è NA, ma dev'essere TRUE o FALSE"
 
-#: nls.c:321
+#: nls.c:315
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr "Valore assente o infinito generato nella valutazione del modello"
+
+#: nls.c:328
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "la variabile '%s' è di tipo integer, non numeric"
 
-#: nls.c:323
+#: nls.c:330
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "la variabile '%s' non è numeric"
@@ -625,7 +636,7 @@ msgstr "il gradiente in optim restituisce valori di lunghezza %d e non %d"
 #: optim.c:152 optim.c:191
 #, c-format
 msgid "non-finite finite-difference value [%d]"
-msgstr ""
+msgstr "valore finite-difference non finito [%d]"
 
 #: optim.c:223 optim.c:429
 msgid "'fn' is not a function"

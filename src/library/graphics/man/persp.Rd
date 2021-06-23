@@ -149,7 +149,7 @@ require(grDevices) # for trans3d
 # (1) The Obligatory Mathematical surface.
 #     Rotated sinc function.
 
-x <- seq(-10, 10, length= 30)
+x <- seq(-10, 10, length.out = 30)
 y <- x
 f <- function(x, y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
 z <- outer(x, y, f)
@@ -168,7 +168,7 @@ xE <- c(-10,10); xy <- expand.grid(xE, xE)
 points(trans3d(xy[,1], xy[,2], 6, pmat = res), col = 2, pch = 16)
 lines (trans3d(x, y = 10, z = 6 + sin(x), pmat = res), col = 3)
 
-phi <- seq(0, 2*pi, len = 201)
+phi <- seq(0, 2*pi, length.out = 201)
 r1 <- 7.725 # radius of 2nd maximum
 xr <- r1 * cos(phi)
 yr <- r1 * sin(phi)
@@ -188,8 +188,8 @@ persp(x, y, z, theta = 135, phi = 30, col = "green3", scale = FALSE,
 # (4) Surface colours corresponding to z-values
 
 par(bg = "white")
-x <- seq(-1.95, 1.95, length = 30)
-y <- seq(-1.95, 1.95, length = 35)
+x <- seq(-1.95, 1.95, length.out = 30)
+y <- seq(-1.95, 1.95, length.out = 35)
 z <- outer(x, y, function(a, b) a*b^2)
 nrz <- nrow(z)
 ncz <- ncol(z)

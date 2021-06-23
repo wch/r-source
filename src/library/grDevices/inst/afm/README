@@ -1,6 +1,7 @@
 The *___.afm files were downloaded from 
 ftp://ftp.adobe.com/pub/adobe/type/win/all/afmfiles/base35
-and coverted to LF line endings (from CRLF)
+and coverted to LF line endings (from CRLF).
+(Ths URI seems no longer available.)
 
 The Courier*, Helvetica*, Times*, Symbol.afm and ZapfDingbats.afm files
 were downloaded from 

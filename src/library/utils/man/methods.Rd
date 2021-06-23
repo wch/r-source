@@ -1,6 +1,6 @@
 % File src/library/utils/man/methods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methods}
@@ -128,7 +128,7 @@ methods(axis)             # looks like a generic, but is not
 mf <- methods(format)     # quite a few; ... the last few :
 tail(cbind(meth = format(mf)))
 
-if(require(Matrix)) {
+if(require(Matrix, quietly = TRUE)) {
 print(methods(class = "Matrix"))  # S4 class
 m <- methods(dim)         # S3 and S4 methods
 print(m)

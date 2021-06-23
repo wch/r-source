@@ -515,9 +515,10 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x2f00,0x2fd5,{2,2,2,2,2,2,2}},
     {0x2ff0,0x2ffb,{2,2,2,2,2,2,2}},
     {0x3000,0x3000,{2,2,2,2,2,2,2}}, // IDEOGRAPHIC SPACE
-    {0x3001,0x303e,{2,2,2,2,2,2,2}},
+    {0x3001,0x3029,{2,2,2,2,2,2,2}},
+    {0x302e,0x303e,{2,2,2,2,2,2,2}},
     {0x3041,0x3096,{2,2,2,2,2,2,2}},
-    {0x3099,0x30ff,{2,2,2,2,2,2,2}},
+    {0x309b,0x30ff,{2,2,2,2,2,2,2}},
     {0x3105,0x312f,{2,2,2,2,2,2,2}},
     {0x3131,0x318e,{2,2,2,2,2,2,2}},
     {0x3190,0x31e3,{2,2,2,2,2,2,2}},
@@ -527,7 +528,6 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x4e00,0xa48c,{2,2,2,2,2,2,2}}, // CJK UNIFIED IDEOGRAPH and Yi
     {0xa490,0xa4c6,{2,2,2,2,2,2,2}}, // Yi
     {0xa960,0xa97c,{2,2,2,2,2,2,2}}, // HANGUL
-    {0xf900,0xfaff,{2,2,2,2,2,2,2}}, // CJK COMPATIBILITY IDEOGRAPH
     {0xac00,0xd7a3,{2,2,2,2,2,2,2}}, // Hangul
     {0xe000,0xe002,{1,1,1,1,2,1,1}}, // EA ambiguous to f8ff
     {0xe003,0xe003,{1,1,1,1,2,2,1}},
@@ -1344,7 +1344,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0xff64,0xff64,{1,1,1,1,1,2,1}},
     {0xffe0,0xffe6,{2,2,2,2,2,2,2}}, // fullwidth
     {0xfffd,0xfffd,{1,1,1,1,2,1,1}}, // EA ambiguous
-    {0x16fe0,0x16fe4,{2,2,2,2,2,2,2}},
+    {0x16fe0,0x16fe3,{2,2,2,2,2,2,2}},
     {0x16ff0,0x16ff1,{2,2,2,2,2,2,2}},
     {0x17000,0x187f7,{2,2,2,2,2,2,2}},
     {0x18800,0x18cd5,{2,2,2,2,2,2,2}},

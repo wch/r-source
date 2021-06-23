@@ -1,6 +1,6 @@
 % File src/library/base/man/NA.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NA}
@@ -67,7 +67,9 @@ is.na(x) <- value
   \code{NA}: a possible exception is where \code{\link{NaN}} is also
   involved, in which case either might result (which may depend on
   the \R platform).  However, this is not guaranteed and future CPUs
-  and/or compilers may behave differently. 
+  and/or compilers may behave differently. Dynamic binary translation may
+  also impact this behavior (with valgrind, computations using \code{NA}
+  may result in \code{NaN} even when no \code{NaN} is involved).
 
   Logical computations treat \code{NA} as a missing \code{TRUE/FALSE}
   value, and so may return \code{TRUE} or \code{FALSE} if the expression

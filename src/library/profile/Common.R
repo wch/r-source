@@ -110,3 +110,27 @@ local({
     if(nzchar(rv <- Sys.getenv("_R_RNG_VERSION_")))
         suppressWarnings(RNGversion(rv))
 })
+
+.sys.timezone <- NA_character_
+
+local({
+    ## create an active binding for .Library.site, so that it can be
+    ## modified after the base environment is locked
+
+    ## remove the binding in the lazyload data base 
+    .Internal(mkUnbound(as.name(".Library.site")))
+    siteLibrary <- character()
+    slfun <- function(v) {
+        if (!missing(v))
+            siteLibrary <<- v
+        siteLibrary
+    }
+
+    makeActiveBinding(".Library.site", slfun, baseenv())
+
+    ## make .Library.site accessible also from global environment to
+    ## preserve functionality of site profiles assigning to it directly
+    ## (originally, site profiles were run in base environment)
+
+    makeActiveBinding(".Library.site", slfun, globalenv())
+})

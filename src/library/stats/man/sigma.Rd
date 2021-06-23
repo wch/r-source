@@ -68,13 +68,13 @@ sigma(object, ...)
 ## -- lm() ------------------------------
 lm1 <- lm(Fertility ~ . , data = swiss)
 sigma(lm1) # ~= 7.165  = "Residual standard error"  printed from summary(lm1)
-stopifnot(all.equal(sigma(lm1), summary(lm1)$sigma, tol=1e-15))
+stopifnot(all.equal(sigma(lm1), summary(lm1)$sigma, tolerance=1e-15))
 
 ## -- nls() -----------------------------
 DNase1 <- subset(DNase, Run == 1)
 fm.DN1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
 sigma(fm.DN1) # ~= 0.01919  as from summary(..)
-stopifnot(all.equal(sigma(fm.DN1), summary(fm.DN1)$sigma, tol=1e-15))
+stopifnot(all.equal(sigma(fm.DN1), summary(fm.DN1)$sigma, tolerance=1e-15))
 
 % example from ./predict.glm.R
 ## -- glm() -----------------------------

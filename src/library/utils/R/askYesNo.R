@@ -38,7 +38,7 @@ askYesNo <- function(msg, default = TRUE,
     	msg <- paste0(msg, " ", msg1)
     ans <- readline(msg)
     match <- pmatch(tolower(ans), tolower(choices))
-    if (!nchar(ans)) default
+    if (!nzchar(ans)) default
     else if (is.na(match)) stop("Unrecognized response ", dQuote(ans))
     else c(TRUE, FALSE, NA)[match]
 }

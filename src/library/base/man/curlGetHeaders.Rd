@@ -1,6 +1,6 @@
 % File src/library/base/man/curlGetHeaders.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015-2020 R Core Team
+% Copyright 2015-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{curlGetHeaders}
@@ -11,7 +11,7 @@
 \description{
   Retrieve the headers for a URL for a supported protocol such as
   \code{http://}, \code{ftp://}, \code{https://} and \code{ftps://}.
-  An optional function not supported on all platforms.
+  Prior to \R 4.2.0, an optional function not supported on all platforms.
 }
 \usage{
 curlGetHeaders(url, redirect = TRUE, verify = TRUE,
@@ -33,7 +33,7 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE,
     7.34.0 and later)  and \code{"1.3"} (7.52.0 and later), if supported
     by the underlying version of \code{libcurl} and the SSL library it uses.}
   %% 1.0 and 1.1 were deprecated in 2020.
-  %% e.g. libcurl in macOS 10.15 supports 1.3 but its LibreSSL does not.
+  %% e.g. libcurl in macOS 10.15 supported 1.3 but its LibreSSL does not.
 }
 
 \details{

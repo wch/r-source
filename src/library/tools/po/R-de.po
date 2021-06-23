@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2018-04-16 10:34+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -344,9 +344,6 @@ msgstr "Variablen überschreiben Nutzer- bzw. Rechnereinstellungen:"
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Fehlende(r) Link(s) im Dokumentations-Objekt '%s':"
@@ -843,6 +840,9 @@ msgstr "Der Standard JSS style darf nicht geändert werden"
 msgid "inst/doc"
 msgstr "inst/doc"
 
+msgid ","
+msgstr ","
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr "ignoriert, da Vignetten neu erzeugt wurden."
 
@@ -886,6 +886,9 @@ msgstr "Paketverzeichnis '%s' existiert nicht"
 
 msgid "no packages to check"
 msgstr "keine Pakete zu überprüfen"
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
 
 msgid "downloading reverse dependencies ..."
 msgstr "lade umgekehrte Abhängikeiten herunter ..."
@@ -1430,6 +1433,12 @@ msgid_plural ""
 msgstr[0] "Evtl. globales 'T' oder 'F' in folgender Rd Beispieldatei gefunden:"
 msgstr[1] ""
 "Evtl. globales 'T' oder 'F' in folgenden Rd Beispieldateien gefunden:"
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] "Evtl. globales 'T' oder 'F' in der folgenden Funktion gefunden:"
+msgstr[1] "Evtl. globales 'T' oder 'F' in den folgenden Funktionen gefunden:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"

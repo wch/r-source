@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-12 09:26\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -929,9 +929,6 @@ msgstr "所有的組都必須包含資料"
 msgid "not enough observations"
 msgstr "觀察量不夠"
 
-msgid "data are essentially constant"
-msgstr "資料是恆量"
-
 msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr "'groups' 或 'blocks' 裡不能有 NA"
 
@@ -1557,6 +1554,10 @@ msgstr "設定的變數 %s 的類別同擬合的類別不相符"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' 必須是資料框，不能是矩陣或陣列"
 
+#, fuzzy
+msgid "'data' must be a data.frame, environment, or list"
+msgstr "'data' 必須是串列或是環境"
+
 msgid "variable '%s' is not a factor"
 msgstr "變數 '%s' 不是因子"
 
@@ -1652,6 +1653,9 @@ msgstr "不明的參數名稱"
 
 msgid "levels truncated to positive values only"
 msgstr "層次被縮短成正值"
+
+msgid "invalid  'attr(rhs, \"gradient\")'"
+msgstr ""
 
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr "setVarying : 'vary' 的長度必須同參數的長度相符"
@@ -1787,9 +1791,6 @@ msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr "'n'，'delta'，'sd'，'power', 和 'sig.level' 之中只能有一個取 NULL 值"
 
-msgid "'sig.level' must be numeric in [0, 1]"
-msgstr "'sig.level' 必須是在[0，1] 裡的數值"
-
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "'n'，'p1'，'p2'，'power', 和 'sig.level' 之中只能有一個取 NULL 值"
 
@@ -1803,6 +1804,10 @@ msgstr "找不到任何在 [p1, 1] 中的 p2 可達到想要的乘冪"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "找不到任何顯著的層級 [0, 1] 可達到想要的乘冪"
+
+#, fuzzy
+msgid "'%s' must be numeric in [0, 1]"
+msgstr "'sig.level' 必須是在[0，1] 裡的數值"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
@@ -1897,7 +1902,8 @@ msgstr "沒有 'formula'"
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' 必須為 1 或 3 以做為有序因子"
 
-msgid "factors are not allowed"
+#, fuzzy
+msgid "(unordered) factors are not allowed"
 msgstr "因子不適用於此"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
@@ -1944,6 +1950,9 @@ msgstr "'varying' 引數的長度必須相同"
 
 msgid "'lengths(varying)' must all match 'length(times)'"
 msgstr "'lengths(varying)' 必須全部符合 'length(times)'"
+
+msgid "'idvar' must uniquely identify records"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "含遺漏時間的記錄忽略不用。"
@@ -2189,6 +2198,9 @@ msgstr "'mu' 必須是單一數字"
 
 msgid "'y' is missing for paired test"
 msgstr "配對檢驗時沒有設定 'y'"
+
+msgid "data are essentially constant"
+msgstr "資料是恆量"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' 必須是 TRUE，FALSE，NULL 或字元(向量) 。"

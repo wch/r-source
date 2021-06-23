@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -34,7 +34,8 @@ isNamespaceLoaded(name)
   \item{depends}{\code{NULL} or a character vector of dependencies to be
     recorded in object \code{.Depends} in the package.}
   \item{package}{string naming the package/name space to load.}
-  \item{lib.loc}{character vector specifying library search path.}
+  \item{lib.loc}{character vector specifying library search path (the location
+    of \R library trees to search through.}
   \item{keep.source}{Now ignored except during package installation.}
   \item{keep.parse.data}{Ignored except during package installation.}
   \item{partial}{logical; if true, stop just after loading code.}
@@ -106,6 +107,21 @@ isNamespaceLoaded(name)
   \code{loadedNamespaces} returns a \code{\link{character}} vector.
 
   \code{unloadNamespace} returns \code{NULL}, invisibly.
+}
+\section{Tracing}{
+  As from \R 4.1.0 the operation of \code{loadNamespace} can be traced,
+  which can help track down the causes of unexpected messages (including
+  which package(s) they come from since \code{loadNamespace} is called in
+  many ways including from itself and by \code{::} and can be called by
+  \code{load}). Setting the environment variable
+  \env{_R_TRACE_LOADNAMESPACE_} to a numerical value will generate
+  additional messages on progress.  Non-zero values,
+  e.g.\sspace{}\code{1}, report which namespace is being loaded and when
+  loading completes: values \code{2} to \code{4} report in increasing
+  detail.  Negative values are reserved for tracing specific features and
+  their current meanings are documented in source-code comments.
+
+  Loading standard packages is never traced.
 }
 \seealso{
   \code{\link{getNamespace}}, \code{\link{asNamespace}},

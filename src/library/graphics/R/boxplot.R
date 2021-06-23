@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/boxplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -43,8 +43,17 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	    attr(groups, "names") <- 1L:n
 	names <- attr(groups, "names")
     }
-    cls <- vapply(groups, function(x) class(x)[1L], "")
-    cl <- if(all(cls == cls[1L])) cls[1L] # else NULL
+    cls <- lapply(groups, class)    
+    cl <- NULL
+    ## Check for simple numeric structures with only a common class attribute
+    if(all(vapply(groups,
+                  function(e) {
+                      is.numeric(unclass(e)) &&
+                          identical(names(attributes(e)), "class")
+                  },
+                  NA)) &&
+       (length(unique(cls)) == 1L))
+        cl <- cls[[1L]]
     for(i in 1L:n)
 	groups[i] <- list(boxplot.stats(unclass(groups[[i]]), range)) # do.conf=notch)
     stats <- matrix(0, nrow = 5L, ncol = n)
@@ -61,7 +70,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	}
 	ct <- ct+1
     }
-    if(length(cl) && cl != "numeric") oldClass(stats) <- cl
+    if(length(cl) && cl != "numeric")
+        oldClass(stats) <- oldClass(conf) <- oldClass(out) <- cl
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
 	      names = names)
     if(plot) {
@@ -317,6 +327,7 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
 	ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "xaxp", "yaxp",
+					   "gap.axis",
                                            "las",
 					   "cex.axis", "col.axis", "format")]
 	if (is.null(show.names)) show.names <- n > 1

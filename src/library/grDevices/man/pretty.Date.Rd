@@ -54,7 +54,7 @@ steps <- setNames(,
 x <- as.POSIXct("2002-02-02 02:02")
 lapply(steps,
        function(s) {
-           at <- pretty(seq(x, by = s, length = 2), n = 5)
+           at <- pretty(seq(x, by = s, length.out = 2), n = 5)
            attr(at, "labels")
        })
 }

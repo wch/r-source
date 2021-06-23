@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -342,9 +342,6 @@ msgstr "Zmienne omijające ustawienia użytkownika/strony:"
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
@@ -851,6 +848,9 @@ msgstr "Domyślny styl JSS nie może być zmieniony."
 msgid "inst/doc"
 msgstr "inst/doc"
 
+msgid ","
+msgstr ","
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr "zostały zignorowane ponieważ ilustracje zostały odtworzone."
 
@@ -894,6 +894,9 @@ msgstr "katalog pakietu %s nie istnieje"
 
 msgid "no packages to check"
 msgstr "brak pakietów do sprawdzenia"
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
 
 msgid "downloading reverse dependencies ..."
 msgstr "pobieranie wstecznych zależności ..."
@@ -1463,6 +1466,19 @@ msgstr[1] ""
 msgstr[2] ""
 "Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w przykładach "
 "następujących plików Rd:"
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] ""
+"Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w następującej "
+"funkcji:"
+msgstr[1] ""
+"Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w następujących "
+"funkcjach:"
+msgstr[2] ""
+"Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w następujących "
+"funkcjach:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"

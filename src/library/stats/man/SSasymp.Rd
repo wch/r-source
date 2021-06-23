@@ -54,7 +54,7 @@ summary(fm1)
 
 ## Visualize the SSasymp()  model  parametrization :
 
-  xx <- seq(-.3, 5, len = 101)
+  xx <- seq(-.3, 5, length.out = 101)
   ##  Asym + (R0-Asym) * exp(-exp(lrc)* x) :
   yy <- 5 - 4 * exp(-xx / exp(3/4))
   stopifnot( all.equal(yy, SSasymp(xx, Asym = 5, R0 = 1, lrc = -3/4)) )

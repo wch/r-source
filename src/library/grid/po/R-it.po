@@ -1,12 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-grid 3.6.3\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Project-Id-Version: R-grid 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -102,7 +103,7 @@ msgid "'gpar' element '%s' must not be length 0"
 msgstr "l'elemento 'gpar' '%s' dev'essere di lunghezza 0"
 
 msgid "mixture of missing and non-missing values for %s"
-msgstr "miscela di valori mancanti e non per %s"
+msgstr "mistura di valori mancanti e non-mancanti per %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "l'elemento 'gamma' 'gpar' è rimosso"
@@ -329,10 +330,10 @@ msgid "invalid 'origin'"
 msgstr "'origin' non valido"
 
 msgid "Missing pattern fill has been set to transparent"
-msgstr ""
+msgstr "Il pattern di riempimento mancante è stato impostato a trasparente"
 
 msgid "Gradient fill applied to object with no inside"
-msgstr ""
+msgstr "Riempimento a gradiente applicato all'oggetto senza interno"
 
 msgid "'length' must be a 'unit' object"
 msgstr "'length' dev'essere un oggetto 'unit'"
@@ -421,9 +422,8 @@ msgstr "'x' e 'units' devono avere lunghezza > 0"
 msgid "invalid 'axis' or 'type'"
 msgstr "'axis' o 'type' non valido"
 
-#, fuzzy
 msgid "Not a unit object"
-msgstr "oggetto 'unit' non valido"
+msgstr "Non è un oggetto unità"
 
 msgid "'Summary' function '%s' not meaningful for units"
 msgstr "La funzione 'Summary' '%s' non è significativa per le unità"
@@ -432,7 +432,7 @@ msgid "operator '%s' not meaningful for units"
 msgstr "l'operatore '%s' non è significativo per le unità"
 
 msgid "'*' or '/' cannot be used as a unary operator"
-msgstr ""
+msgstr "'*' o '/' non possono essere utilizzati come un operatore unario"
 
 msgid "only one operand may be a unit"
 msgstr "solo un operando potrebbe essere una unità"
@@ -441,25 +441,24 @@ msgid "non-unit operand must be numeric"
 msgstr "l'operando non-unità dev'essere numerico"
 
 msgid "can't divide with a unit"
-msgstr ""
+msgstr "non è possibile dividere con una unità"
 
 msgid "both operands must be units"
 msgstr "entrambi gli operandi devono essere unità"
 
-#, fuzzy
 msgid "index out of bounds (\"unit\" subsetting)"
-msgstr "indice fuori limite (subsetting 'unit')"
+msgstr "indice fuori limite (sottodivisione \"unit\")"
 
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
 msgstr ""
+"Non è possibile creare un vettore unità di lunghezza zero (sottodivisione "
+"\"unit\")"
 
-#, fuzzy
 msgid "index must be of length 1"
-msgstr "'x' e 'y' devono essere unità di lunghezza 1"
+msgstr "index dev'essere di lunghezza 1"
 
-#, fuzzy
 msgid "replacement must be of length 1"
-msgstr "l'elemento 'gpar' '%s' dev'essere di lunghezza 0"
+msgstr "la sostituzione dev'essere di lunghezza 1"
 
 msgid "invalid 'theta'"
 msgstr "'theta' non valido"
@@ -473,9 +472,8 @@ msgstr "valore 'gp' non valido"
 msgid "invalid 'clip' value"
 msgstr "valore 'clip' non valido"
 
-#, fuzzy
 msgid "invalid 'mask' value"
-msgstr "valore 'gp' non valido"
+msgstr "valore 'mask' non valido"
 
 msgid "invalid 'xscale' in viewport"
 msgstr "'xscale' non valido nel viewport"

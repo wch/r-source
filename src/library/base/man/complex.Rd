@@ -132,7 +132,7 @@ z <- complex(real = stats::rnorm(100), imaginary = stats::rnorm(100))
 z2 <- 1:2 + 1i*(8:9)
 
 ## The Arg(.) is an angle:
-zz <- (rep(1:4, len = 9) + 1i*(9:1))/10
+zz <- (rep(1:4, length.out = 9) + 1i*(9:1))/10
 zz.shift <- complex(modulus = Mod(zz), argument = Arg(zz) + pi)
 plot(zz, xlim = c(-1,1), ylim = c(-1,1), col = "red", asp = 1,
      main = expression(paste("Rotation by "," ", pi == 180^o)))

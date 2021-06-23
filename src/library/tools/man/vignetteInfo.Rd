@@ -1,3 +1,8 @@
+% File src/library/tools/man/vignetteInfo.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 2018-2021 R Core Team
+% Distributed under GPL 2 or later
+
 \name{vignetteInfo}
 \alias{vignetteInfo}
 \title{Basic Information about a Vignette}
@@ -28,9 +33,9 @@ vignetteInfo(file)
 \seealso{
   \code{\link{package_dependencies}}
 }
-\examples{\donttest{## This may not be installed, as it requires lattice
+\examples{
   gridEx <- system.file("doc", "grid.Rnw", package = "grid")
   vi <- vignetteInfo(gridEx)
   str(vi)
-}}
+}
 \keyword{utilities}

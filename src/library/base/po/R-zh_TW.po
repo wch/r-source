@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
-"PO-Revision-Date: 2018-09-16 23:38+0800\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
+"PO-Revision-Date: 2021-01-27 10:34+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
@@ -224,6 +224,10 @@ msgstr "'X' 必須有帶名稱的維名稱"
 msgid "argument 'object' must deparse to a single character string"
 msgstr "引數 'object' 必須解析成單一個字串"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr "引數 'object' 必須解析成單一個字串"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' 引數的值必須是 'start'，'current' 或 'end' 中的一個"
 
@@ -372,7 +376,8 @@ msgstr "<0 列> (或零長度的 row.names)"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
-msgid "non-numeric variable(s) in data frame:"
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "資料框裡有非數值的變數："
 
 msgid ","
@@ -384,8 +389,13 @@ msgstr "%s 只適用於大小相同的資料框"
 msgid "list of length %d not meaningful"
 msgstr "%d 長度的串列沒有意義"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr "只適用於全數值資料框"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "不是資料框"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "字串的格式不夠標準明確"
@@ -738,6 +748,10 @@ msgstr "%s 的值沒有"
 msgid "all arguments must be named"
 msgstr "所有引數都必須具名字"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "忽略 'drop' 引數"
+
 msgid "match distance components must be non-negative"
 msgstr "匹配距離元件不能有負值"
 
@@ -1075,9 +1089,6 @@ msgstr ""
 "當處理物件 %s 時，\n"
 "無法使用命名空間 %s 且被 .GlobalEnv 取代"
 
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' 不是 'namespace:%s' 內的匯出物件："
-
 msgid "namespace is already attached"
 msgstr "已經連接上命名空間了"
 
@@ -1093,6 +1104,9 @@ msgstr "%s 不存在"
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "載入了命名空間 %1$s %2$s，但需要的是 %3$s %4$s"
+
+msgid "- loading"
+msgstr ""
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "命名空間 %s 已經在 'loadNamespace' 封條了"
@@ -1157,14 +1171,54 @@ msgstr ""
 "套件 %s 被之前某個具有不同內部結構的 R 版本所安裝；它需要重新安裝以用於目前"
 "的 R 版本"
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "套件 %s 裡的 R 寫碼載入失敗"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "雖然 'exportClassPattern' 在 'NAMESPACE' 有設定但它在 %s 套件中沒有相對應的類"
 "別"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "類別無效"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1182,6 +1236,9 @@ msgstr "從 %s 匯出功能裡找不到適用於 %s 的相應方法"
 msgid "in %s methods for export not found: %s"
 msgstr "用於匯出的 %s 方法不存在：%s "
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "%s 存在多個方法表"
 
@@ -1190,6 +1247,18 @@ msgstr "找不到關於 %s 的隱喻資料物件"
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "在 %s 套件中 %s 方法指定被用於匯出，但它的定義並不存在"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "載入需要的命名空間：%s"
@@ -1225,14 +1294,14 @@ msgid "found methods to import for function %s but not the generic itself"
 msgstr "%s 函式有可匯入的方法，但找不到它的同屬方法"
 
 msgid "replacing previous import %s by %s when loading %s"
-msgstr "載入 %2$s 將代替前次匯入 %1$s"
+msgstr "載入 %2$s 將代替前次匯入 %1$s ..?.. %3$s"
 
 msgid ""
 "No generic function %s found corresponding to requested imported methods "
 "from package %s when loading %s (malformed exports?)"
 msgstr ""
-"程式套件 \"%2$s\" 裡沒有相應於為 \"%1$s\" 所要求的匯入方法的泛型函式(是不是匯"
-"出的格式不對？)"
+"程式套件 \"%2$s\" 裡沒有相應於為 \"%1$s\" 所要求的匯入方法的泛型函式 \"%3$s"
+"\" (是不是匯出的格式不對？)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "不能在封閉命名空間裡進行匯出加入"
@@ -1468,6 +1537,9 @@ msgstr ""
 "'sort.list' 的 'x' 必須為原子值\n"
 "您是不是在串列上呼叫了 'sort' 函式？"
 
+msgid "cannot xtfrm 'x'"
+msgstr ""
+
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local' 的值必須是 'TRUE'，或是 'FALSE'，或是環境"
 
@@ -1573,7 +1645,7 @@ msgid "'bin' must be numeric or a factor"
 msgstr "'bin' 必須是數值或是因子"
 
 msgid "invalid value of %s"
-msgstr "'nbins' 的值無效"
+msgstr "'%s' 的值無效"
 
 msgid "'INDEX' is of length zero"
 msgstr "'INDEX' 的長度必須為一"
@@ -1877,6 +1949,9 @@ msgid_plural ""
 msgstr[0] ""
 "於 %s：\n"
 " 額外引數 %s 忽略不用"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' 不是 'namespace:%s' 內的匯出物件："
 
 #~ msgid "bad handler specification"
 #~ msgstr "處置器柄規格無效"

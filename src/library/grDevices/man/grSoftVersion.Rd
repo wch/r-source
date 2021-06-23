@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/grSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2018 R Core Team
+% Copyright 2014-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grSoftVersion}
@@ -18,8 +18,10 @@ grSoftVersion()
 
   \item{cairo}{the version of cairographics in use, or \code{""} if
     cairographics is not available.}
-  \item{cairoFT}{\code{"yes"} if cairographics is using the FreeType
-    library (and FontConfig); otherwise, \code{""}.}
+  \item{cairoFT}{the FreeType/FontConfig versions if cairographics is
+    using those libraries directly (not \emph{via} pango); otherwise,
+    \code{""}.  Earlier versions of \R returned \code{"yes"} rather than
+    the versions.  The FontConfig version is determined when \R is built.}
   \item{pango}{the version of pango in use, or \code{""} if
     pango is not available.}
 

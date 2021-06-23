@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,11 @@ Sys.timezone <- function(location = TRUE)
                          inherits = FALSE, ifnotfound = NA_character_)))
         return(tz)
 
-    cacheIt <- function(tz) assign(".sys.timezone", tz, baseenv())
+    cacheIt <- function(tz) {
+        unlockBinding(".sys.timezone", baseenv())
+        assign(".sys.timezone", tz, baseenv())
+        lockBinding(".sys.timezone", baseenv())
+    }
 
     ## Many Unix set TZ, e.g. Solaris and AIX.
     ## For Solaris the system setting is a line in /etc/TIMEZONE
@@ -64,6 +68,9 @@ Sys.timezone <- function(location = TRUE)
                 Sys.setenv(TZDIR = "macOS")
         }
     }
+    if(Sys.getenv("TZDIR") == "macOS" && grepl("darwin", R.Version()$os))
+        Sys.setenv(TZDIR = "/var/db/timezone/zoneinfo")
+
 
     ## At least tzcode and glibc respect TZDIR.
     ## glibc uses $(datadir)/zoneinfo
@@ -1014,22 +1021,30 @@ cut.POSIXt <-
         if(valid == 8L) incr <- 25*3600 # DSTdays
         if(valid == 6L) {               # months
             start$mday <- 1L
-            end <- as.POSIXlt(max(x, na.rm = TRUE))
+            maxx <- max(x, na.rm = TRUE)
+            end <- as.POSIXlt(maxx)
             step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
             end <- as.POSIXlt(end + (31 * step * 86400))
             end$mday <- 1L
             end$isdst <- -1L
             breaks <- seq(start, end, breaks)
+            ## 31 days ahead could give an empty level, so
+	    lb <- length(breaks)
+	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
         } else if(valid == 7L) {        # years
             start$mon <- 0L
             start$mday <- 1L
-            end <- as.POSIXlt(max(x, na.rm = TRUE))
+            maxx <- max(x, na.rm = TRUE)
+            end <- as.POSIXlt(maxx)
             step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
             end <- as.POSIXlt(end + (366 * step* 86400))
             end$mon <- 0L
             end$mday <- 1L
             end$isdst <- -1L
             breaks <- seq(start, end, breaks)
+            ## 366 days ahead could give an empty level, so
+	    lb <- length(breaks)
+	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
         } else if(valid == 9L) {        # quarters
             qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
             start$mon <- qtr[start$mon + 1L]
@@ -1380,25 +1395,32 @@ OlsonNames <- function(tzdir = NULL)
         if(.Platform$OS.type == "windows")
             tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
         else {
-            ## Try known locations in turn.
-            ## The list is not exhaustive (mac OS 10.13's
-            ## /usr/share/zoneinfo is a symlink) and there is a risk that
-            ## the wrong one is found.
-            ## We assume that if the second exists that the system was
-            ## configured with --with-internal-tzcode
-            tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
-                        file.path(R.home("share"), "zoneinfo"),
-                        "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
-                        "/share/zoneinfo", # in musl's search
-                        "/usr/share/lib/zoneinfo", # Solaris, AIX
-                        "/usr/lib/zoneinfo",   # early glibc
-                        "/usr/local/etc/zoneinfo", # tzcode default
-                        "/etc/zoneinfo", "/usr/etc/zoneinfo")
-            tzdirs <- tzdirs[file.exists(tzdirs)]
-            if (!length(tzdirs)) {
-                warning("no Olson database found")
-                return(character())
-            } else tzdir <- tzdirs[1L]
+            if(Sys.getenv("TZDIR") == "internal")
+                tzdir <- file.path(R.home("share"), "zoneinfo")
+            else if (grepl("darwin", R.Version()$os) &&
+                     Sys.getenv("TZDIR") == "macOS") {
+                tzdir <- "/var/db/timezone/zoneinfo"
+            } else {
+                ## Try known locations in turn.
+                ## The list is not exhaustive (mac OS 10.13's
+                ## /usr/share/zoneinfo is a symlink) and there is a risk that
+                ## the wrong one is found.
+                ## We assume that if the second exists that the system was
+                ## configured with --with-internal-tzcode
+                tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
+                            file.path(R.home("share"), "zoneinfo"),
+                            "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
+                            "/share/zoneinfo", # in musl's search
+                            "/usr/share/lib/zoneinfo", # Solaris, AIX
+                            "/usr/lib/zoneinfo",   # early glibc
+                            "/usr/local/etc/zoneinfo", # tzcode default
+                            "/etc/zoneinfo", "/usr/etc/zoneinfo")
+                tzdirs <- tzdirs[file.exists(tzdirs)]
+                if (!length(tzdirs)) {
+                    warning("no Olson database found")
+                    return(character())
+                } else tzdir <- tzdirs[1L]
+            }
         }
     } else if(!dir.exists(tzdir))
         stop(sprintf("%s is not a directory", sQuote(tzdir)), domain = NA)
@@ -1465,5 +1487,13 @@ as.list.POSIXlt <- function(x, ...)
 as.list.difftime <- function(x, ...)
     lapply(unclass(x), .difftime, attr(x, "units"), oldClass(x))
 
+## Added in 4.1.0.
 
+rep.difftime <- function(x, ...)
+    .difftime(NextMethod("rep"), attr(x, "units"), oldClass(x))
 
+`[<-.difftime` <- function(x, i, value) {
+    if(inherits(value, "difftime") && !identical(units(x), units(value)))
+        units(value) <- units(x)
+    NextMethod("[<-")
+}

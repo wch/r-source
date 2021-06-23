@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -61,13 +61,17 @@ capabilities(what = NULL,
   \item{X11}{always \code{FALSE} on Windows.}
   \item{aqua}{\code{FALSE} except on macOS.}
 #endif
-  \item{http/ftp}{does the internal method for \code{\link{url}} and
+  \item{http/ftp}{does the default method for \code{\link{url}} and
     \code{\link{download.file}} support \samp{http://} and \samp{ftp://}
-    URLs?  Always \code{TRUE} as from \R 3.3.0.}
-  \item{sockets}{are  \code{\link{make.socket}} and related functions
+    URLs?  Always \code{TRUE} as from \R 3.3.0.  However, in recent
+    versions the default method is \code{"libcurl"} which depends on an
+    external library and it is conceivable that library might not
+    support \samp{ftp://} in future.}
+  \item{sockets}{are \code{\link{make.socket}} and related functions
     available?  Always \code{TRUE} as from \R 3.3.0.}
   \item{libxml}{is there support for integrating \code{libxml} with
-    the \R event loop?  Always \code{TRUE} as from \R 3.3.0.}
+    the \R event loop?  \code{TRUE} as from \R 3.3.0, \code{FALSE} as
+    from \R 4.2.0.}
   \item{fifo}{are FIFO \link{connections} supported?}
   \item{cledit}{is command-line editing available in the current \R
     session?  This is false in non-interactive sessions.
@@ -88,12 +92,16 @@ capabilities(what = NULL,
     \code{\link{tracemem}}.}
   \item{cairo}{is there support for the \code{\link{svg}},
     \code{\link{cairo_pdf}} and \code{\link{cairo_ps}} devices, and
-    for \code{type = "cairo"} in the
+    for \code{type = "cairo"} in the \code{\link{bmp}},
+    \code{\link{jpeg}}, \code{\link{png}} and \code{\link{tiff}}
+    devices?
 #ifdef unix
-    \code{\link{X11}},
+    Prior to \R 4.1.0 this also indicated Cairo support in the
+    \code{\link{X11}} device, but it is now possible to build \R with
+    Cairo support for the bitmap devices without support for the
+    \code{X11} device (usually when that is not supported at all).
 #endif
-    \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
-    and \code{\link{tiff}} devices?}
+  }
 
   \item{ICU}{is ICU available for collation?  See the help on
     \link{Comparison} and \code{\link{icuSetCollate}}: it is never
@@ -106,18 +114,22 @@ capabilities(what = NULL,
 
     Although not guaranteed, it is a reasonable assumption that if
     present long doubles will have at least as much range and accuracy
-    as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.
+    as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.  Since
+    \R{}\sspace{}4.0.0 \code{\link{.Machine}} gives information on the
+    long-double type (if present).
   }
 
   \item{libcurl}{is \code{libcurl} available in this build?  Used by
     function \code{\link{curlGetHeaders}} and optionally by
     \code{\link{download.file}} and \code{\link{url}}.   As from \R
-    3.3.0 always true for Unix-alikes, and true for CRAN Windows builds.}
+    3.3.0 always true for Unix-alikes, and as from \R 4.2.0 true on Windows.}
 }
-\seealso{\code{\link{.Platform}} and \code{\link{extSoftVersion}} (and
-    links there) for availability capabilities \emph{external} to \R but
-    used from \R functions.
-  }
+\seealso{
+  \code{\link{.Platform}}, \code{\link{extSoftVersion}}, and
+  \code{\link{grSoftVersion}} (and links there)
+  for availability of capabilities \emph{external} to \R but
+  used from \R functions.
+}
 \examples{
 capabilities()
 

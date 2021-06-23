@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-utils 3.6.3\n"
+"Project-Id-Version: R-utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -39,7 +39,7 @@ msgid "The results page should open in your browser shortly"
 msgstr "La pagina dei risultati si dovrebbe aprire a breve nel browser"
 
 msgid "reference to unknown chunk %s"
-msgstr "riferimento al pezzo %s mancante"
+msgstr "riferimento al pezzo %s sconosciuto"
 
 msgid "no Sweave file with name %s found"
 msgstr "non è stato trovato alcun file Sweave con nome %s"
@@ -156,9 +156,6 @@ msgstr "Pacchetto %s: file DESCRIPTION non trovato"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' dev'essere NULL, una stringa di caratteri o una connessione"
-
-msgid "bad argument"
-msgstr "argomento errato"
 
 msgid "'full.names' must be TRUE for multiple paths."
 msgstr "'full.names' dev'essere TRUE per percorsi multipli."
@@ -366,13 +363,13 @@ msgid "cannot edit NULL row names"
 msgstr "non è possibile modificare nomi riga NULL"
 
 msgid "no help found for %s"
-msgstr "nessun aiuto trovato per %s"
+msgstr "nessun aiuto per %s"
 
 msgid "%s has a help file but no examples"
 msgstr "%s ha un file guida ma nessun esempio"
 
 msgid "Line number missing"
-msgstr "Numero di linea mancante"
+msgstr "Numero di linea assente"
 
 msgid "'fix' requires a name"
 msgstr "'fix' richiede un nome"
@@ -400,35 +397,44 @@ msgstr "'form' dev'essere una formula su due lati con un termine per ogni lato"
 
 msgid "invalid 'n' -  must contain at least one non-missing element, got none."
 msgstr ""
+"'n' non valido -  deve contenere almeno un elemento non-mancante, ma non ne "
+"ha."
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
 msgstr ""
+"'n' non valido - deve avere lunghezza uno quando dim(x) è NULL, si è "
+"ottenuto %d"
 
 msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
 msgstr ""
+"'n' non valido - length(n) dev'essere <= length(dim(x)), si è ottenuto %d > "
+"%d"
 
-#, fuzzy
 msgid "no method found for %s(., n=%s) and class %s"
-msgstr "nessun metodo definito per la funzione %s e firma %s"
+msgstr "nessun metodo trovato per %s(., n=%s) e classe %s"
 
 msgid ""
 "tail(., addrownums = V) is deprecated.\n"
 "Use"
 msgstr ""
+"tail(., addrownums = V) è deprecato.\n"
+"Utilizzare"
 
 msgid "tail(., keepnums = V) instead."
-msgstr ""
+msgstr "tail(., keepnums = V) come alternativa."
 
 msgid "tail(., addrownums=.) is"
-msgstr ""
+msgstr "tail(., addrownums=.) è"
 
 msgid ""
 "deprecated.\n"
 "Use"
 msgstr ""
+"deprecato.\n"
+"Utilizzare"
 
 msgid "tail(., keepnums=.) instead."
-msgstr ""
+msgstr "tail(., keepnums=.) come alternativa."
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
@@ -539,11 +545,11 @@ msgid ""
 "If the browser launched by '%s' is already running, it is *not* restarted, "
 "and you must switch to its window."
 msgstr ""
-"Se il browser eseguito da '%s' è già in esecuzione, *non* è riavviato e ti "
-"basterà passare alla sua finestra."
+"Se il browser '%s' è già in esecuzione, *non* sarà riavviato e basterà "
+"passare alla sua finestra."
 
 msgid "Otherwise, be patient ..."
-msgstr "Altrimenti, siate pazienti..."
+msgstr "In caso contrario, siate pazienti..."
 
 msgid "'url' must be a non-empty character string"
 msgstr "'url' dev'essere una stringa di caratteri non-vuota"
@@ -566,7 +572,7 @@ msgstr ""
 "Il file 'DESCRIPTION' ha un campo 'Encoding' e la ricodifica non è possibili"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr "Il file DESCRIPTION del pacchetto '%s' è mancante o non valido"
+msgstr "Il file DESCRIPTION del pacchetto '%s' è assente o non valido"
 
 msgid "Invalid \"Built\":"
 msgstr "\"Built\" non valida:"
@@ -616,7 +622,7 @@ msgstr ""
 "sembrano come metodi S3"
 
 msgid "'class' is of length > 1; only the first element will be used"
-msgstr ""
+msgstr "'class' è di lunghezza > 1; solo il primo elemento sarà utilizzato"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "bisogna fornire 'generic.function' o 'class'"
@@ -643,7 +649,7 @@ msgid "only numeric indices can be used"
 msgstr "solo gli indici numerici possono essere utilizzati"
 
 msgid "Malformed package name."
-msgstr ""
+msgstr "Nome pacchetto malformato."
 
 msgid "cannot create directory '%s'"
 msgstr "non è possibile creare la directory '%s'"
@@ -667,9 +673,8 @@ msgstr ""
 "funzioni generice e altri oggetti S4 (es. '%s') non possono essere "
 "scaricati; utilizza l'argomento 'code_files'"
 
-#, fuzzy
 msgid "invalid 'type'; must be a character string"
-msgstr "'unzip' dev'essere una stringa di caratteri singola"
+msgstr "'type' non valido; dev'essere una stringa character"
 
 msgid "unable to access index for repository %s"
 msgstr "non è possibile accedere all'indice per il repository %s"
@@ -717,9 +722,8 @@ msgstr "'destdir' non è una directory"
 msgid "no package %s at the repositories"
 msgstr "nessun pacchetto %s nei repository"
 
-#, fuzzy
 msgid "invalid 'type'"
-msgstr "interrogazione non valida"
+msgstr "'type' non valido"
 
 msgid "package %s does not exist on the local repository"
 msgstr "il pacchetto %s non esiste nei repository locali"
@@ -749,9 +753,8 @@ msgstr "mirror non-interattivo"
 msgid "cannot set repositories non-interactively"
 msgstr "non è possibile impostare repository in maniera non-interattiva"
 
-#, fuzzy
 msgid "invalid options(\"pkgType\"); must be a character string"
-msgstr "'package' dev'essere una stringa a caratteri o NULL"
+msgstr "options(\"pkgType\") non valido; dev'essere una stringa character"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Per piacere, seleziona i repository per la sessione ---"
@@ -859,7 +862,7 @@ msgid ""
 "The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
-"I pacchetti sorgenti scaricati sono in\n"
+"I pacchetti scaricati con il codice sorgente sono in\n"
 "\t%s"
 
 msgid ""
@@ -982,7 +985,7 @@ msgid "missing values in 'row.names' are not allowed"
 msgstr "non sono ammessi valori mancanti in 'row.names'"
 
 msgid "missing lengths for some fields"
-msgstr "lunghezze mancanti per alcuni campi"
+msgstr "lunghezze assenti per alcuni campi"
 
 msgid "invalid format"
 msgstr "formato non valido"
@@ -997,7 +1000,7 @@ msgid "'file' must be a character string or connection"
 msgstr "'file' dev'essere una stringa di caratteri o una connessione"
 
 msgid "'as.is' should be specified by the caller; using TRUE"
-msgstr ""
+msgstr "'as.is' dovrebbe essere specificato dal chiamante; si usa TRUE"
 
 msgid "empty beginning of file"
 msgstr "inizio vuoto di file"
@@ -1081,9 +1084,8 @@ msgstr "Il numero di token != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "Il numero di token non è consistente attraverso 'x'"
 
-#, fuzzy
 msgid "cannot coerce %s to logical"
-msgstr "non è possibile la coercizione di 'x' in numeri roman"
+msgstr "non è possibile la coercizione di %s in logica"
 
 msgid "no lines found in %s"
 msgstr "nessuna linea trovata in %s"
@@ -1125,21 +1127,19 @@ msgid "invalid octal digit"
 msgstr "cifre ottali non valide"
 
 msgid "removing drive '%s'"
-msgstr ""
+msgstr "rimozione del drive '%s'"
 
 msgid "removing leading '/'"
-msgstr ""
+msgstr "rimozione di '/'"
 
 msgid "path starts with '~'"
-msgstr ""
+msgstr "path inizia con '~'"
 
-#, fuzzy
 msgid "path contains '..'"
-msgstr "il percorso %s contiene spazi,"
+msgstr "path contiene '..'"
 
-#, fuzzy
 msgid "path is empty"
-msgstr "'dump' è vuoto"
+msgstr "path è vuoto"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' dev'essere una stringa di caratteri o una connessione"
@@ -1203,11 +1203,11 @@ msgstr "select.list() non può essere utilizzata in maniera non-interattiva"
 msgid "'title' must be NULL or a length-1 character vector"
 msgstr "'title' dev'essere NULL o un vettore di caratteri di lunghezza 1"
 
-#, fuzzy
 msgid ""
 "Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
 msgstr ""
-"Immetti uno o più numeri separati da spazio, o una linea vuota per annullare"
+"Immetti uno o più numeri separati da spazio e poi premi INVIO, o 0 per "
+"annullare"
 
 msgid "Invalid input, please try again"
 msgstr "Valore in ingresso non valido, riprovare per piacere"
@@ -1236,10 +1236,12 @@ msgstr "tentata impostazione di '%s' ignorata"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' dev'essere una stringa di caratteri singola"
 
-msgid "'files' must a character vector specifying one or more filepaths"
+msgid "'files' must be a character vector specifying one or more filepaths"
 msgstr ""
-"'files' dev'essere un vettore di caratteri che specifica uno o più "
-"riferimenti"
+"'files' dev'essere un vettore character che specifica uno o più percorsi file"
+
+msgid "argument 'zip' must be a non-empty character string"
+msgstr "l'argomento 'zip' dev'essere una stringa character non vuota"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
@@ -1251,7 +1253,7 @@ msgid "Using the browser to open a mailto: URI"
 msgstr "Utilizzo del browser per aprire un mailto: URI"
 
 msgid "must specify 'address'"
-msgstr "bisogna specificare 'address'"
+msgstr "è necessario specificare 'address'"
 
 msgid "'subject' is missing"
 msgstr "'subject' assente"
@@ -1260,13 +1262,13 @@ msgid "'ccaddress' must be of length 1"
 msgstr "'ccaddress' dev'essere di lunghezza 1"
 
 msgid "'url' must be a length-one character vector"
-msgstr "'url' dev'essere un vettore di caratteri di lunghezza uno"
+msgstr "'url' dev'essere un vettore a caratteri di lunghezza 1"
 
 msgid "'headers' must have names and must not be NA"
 msgstr "'headers' deve avere nomi e non dev'essere NA"
 
 msgid "'destfile' must be a length-one character vector"
-msgstr "'destfile' dev'essere un vettore di caratteri di lunghezza uno"
+msgstr "'destfile' dev'essere un vettore a caratteri di lunghezza 1"
 
 msgid "'wget' call had nonzero exit status"
 msgstr "chiamata 'wget' con status di uscita diverso da zero"
@@ -1331,13 +1333,13 @@ msgstr "non è possibile creare %s"
 msgid "there is no 'libs' directory in package %s"
 msgstr "non c'è alcune directory 'libs' nel pacchetto %s"
 
-#, fuzzy
 msgid "unable to move temporary installation %s to %s, copying instead"
-msgstr "non è possibile muovere l'installazione temporanea %s in %s"
+msgstr ""
+"non è possibile muovere l'installazione temporanea %s in %s, come "
+"alternativa si faccia una copia"
 
-#, fuzzy
 msgid "unable to copy temporary installation %s to %s"
-msgstr "non è possibile muovere l'installazione temporanea %s in %s"
+msgstr "non è possibile copiare l'installazione temporanea %s in %s"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Solo i file '*.zip' e '*.tar.gz' sono installabili."
@@ -1401,17 +1403,34 @@ msgstr[1] ""
 "Rimozione pacchetti da %s\n"
 "(come %s non è specificato)"
 
-msgid "package %s is not available (%s)"
-msgid_plural "packages %s are not available (%s)"
-msgstr[0] "il pacchetto %s non è disponibile (%s)"
-msgstr[1] "i pacchetti %s non sono disponibili (%s)"
-
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] ""
 "il pacchetto %s è un pacchetto base e non dovrebbe essere aggiornato"
 msgstr[1] ""
 "i pacchetti %s sono pacchetti base e non dovrebbero essere aggiornati"
+
+msgid ""
+"A version of this package for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgid_plural ""
+"Versions of these packages for your version of R might be available "
+"elsewhere,\n"
+"see the ideas at\n"
+msgstr[0] ""
+"Una versione di questo pacchetto per la tua versione di R potrebbe essere "
+"disponibile altrove,\n"
+"si veda su\n"
+msgstr[1] ""
+"Le versioni di questi pacchetti per la tua versione di R potrebbero essere "
+"disponibili altrove,\n"
+"si veda su\n"
+
+msgid "package %s is not available %s"
+msgid_plural "packages %s are not available %s"
+msgstr[0] "il pacchetto %s non è disponibile %s"
+msgstr[1] "i pacchetti %s non sono disponibili %s"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1513,3 +1532,6 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "numero romano non valido: %s"
 msgstr[1] "numeri romani non validi: %s"
+
+#~ msgid "bad argument"
+#~ msgstr "argomento errato"

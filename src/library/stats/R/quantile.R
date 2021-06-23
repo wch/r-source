@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quantile.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ quantile.POSIXt <- function(x, ...)
 
 quantile.default <-
     function(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE,
-             type = 7, ...)
+             type = 7, digits = 7, ...)
 {
     if(is.factor(x)) {
 	if(is.ordered(x)) {
@@ -103,7 +103,8 @@ quantile.default <-
     if(is.character(lx))
         qs <- factor(qs, levels = seq_along(lx), labels = lx, ordered = TRUE)
     if(names && np > 0L) {
-	names(qs) <- format_perc(probs)
+	stopifnot(is.numeric(digits), digits >= 1)
+	names(qs) <- format_perc(probs, digits=digits)
     }
     qs
 }

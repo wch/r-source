@@ -132,7 +132,7 @@ eval(dxy)
 eval(D.sc)
 
 ## function returned:
-deriv((y ~ sin(cos(x) * y)), c("x","y"), func = TRUE)
+deriv((y ~ sin(cos(x) * y)), c("x","y"), function.arg = TRUE)
 
 ## function with defaulted arguments:
 (fx <- deriv(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),

@@ -14,7 +14,7 @@ rd <- sprintf("
   # %s
 }", strrep("123456789 ", 10))
 
-rd <- tools::parse_Rd(con <- textConnection(rd)); close(con)
+rd <- parse_Rd(con <- textConnection(rd)); close(con)
 
 # does not error, but finds long lines, dynamic ones as well
 bad <- tools:::find_wide_Rd_lines_in_Rd_object(rd, installed = TRUE)

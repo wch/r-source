@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -48,27 +48,22 @@ sysdata2LazyLoadDB <- function(srcFile, destDir, compress = TRUE)
 }
 
 list_data_in_pkg <-
-function(package, lib.loc = NULL, dataDir = NULL, use_datalist = TRUE)
+function(package, lib.loc = NULL, dir, use_datalist = TRUE)
 {
-    if(is.null(dataDir)) {
-        pkgpath <- find.package(package, lib.loc, quiet = TRUE)
-        if(!length(pkgpath))
+    if(!missing(package)) { # installed package
+        dir <- find.package(package, lib.loc, quiet = TRUE)
+        if(!length(dir))
             stop(packageNotFoundError(package, lib.loc, sys.call()))
-        dataDir <- file.path(pkgpath, "data")
-    } else {
-	if(has.pkg <- !missing(package)) ## try with default lib.loc
-	    pkgpath <- find.package(package, lib.loc, quiet = TRUE)
-	if(!has.pkg || !length(pkgpath)) {
-	   ## <FIXME> making assumptions about dataDir (e.g., pkgpath *NOT* from R-forge symlink)
-	    pkgpath <- sub("/data$", "", dataDir)
-	    ## avoid builddir != srcdir problems -- assume package has been installed
-	    ## making use of the fact that utils::data() works with *source* package:
-	    lib.loc <- c(dirname(pkgpath), .libPaths())
-	    if(!has.pkg)
-		package <- basename(pkgpath)
-	}
+    } else { # the dir case (source or installed pkgpath)
+        if(missing(dir))
+            stop("you must specify 'package' or 'dir'")
+        if(!dir.exists(dir))
+            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+        dir <- file_path_as_absolute(dir)
+        package <- character(0L)
+        lib.loc <- NULL
     }
-    if(dir.exists(dataDir)) {
+    if(dir.exists(dataDir <- file.path(dir, "data"))) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- readRDS(sv)
         } else if(file.exists(sv <- file.path(dataDir, "datalist"))
@@ -82,6 +77,11 @@ function(package, lib.loc = NULL, dataDir = NULL, use_datalist = TRUE)
                           strsplit(x[2L], " +")[[1L]][-1L])
             names(ans) <- nms
         } else {
+            if (!length(package)) { # the dir case
+                ## data(package=character(0L)) will look in getwd()/data
+                owd <- setwd(dir)
+                on.exit(setwd(owd))
+            }
             files <- list_files_with_type(dataDir, "data")
             ## omit compression extensions
             files <- unique(basename(file_path_sans_ext(files, TRUE)))

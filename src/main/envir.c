@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2020  The R Core Team.
+ *  Copyright (C) 1999--2021  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1211,6 +1211,7 @@ static R_INLINE SEXP findGlobalVar(SEXP symbol)
     case NILSXP: return R_UnboundValue;
     case SYMSXP: return SYMBOL_BINDING_VALUE(symbol);
     default: return BINDING_VALUE(loc);
+                    /* loc is protected by callee when needed */
     }
 }
 #endif
@@ -1465,6 +1466,7 @@ SEXP attribute_hidden do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP vl = findVar(R_DotsSymbol, env);
+    PROTECT(vl);
     if (vl == R_UnboundValue)
 	error(_("incorrect context: the current call has no '...' to look in"));
     // else
@@ -1475,7 +1477,7 @@ SEXP attribute_hidden do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
         vl = CDR(vl);
     }
 
-    UNPROTECT(1);
+    UNPROTECT(2); /* ans, vl */
     return out;
 }
 
@@ -3289,10 +3291,7 @@ void R_LockEnvironment(SEXP env, Rboolean bindings)
 		    if(SYMVALUE(CAR(s)) != R_UnboundValue)
 			LOCK_BINDING(CAR(s));
 	}
-#ifdef NOT_YET
-	/* causes problems with Matrix */
 	LOCK_FRAME(env);
-#endif
 	return;
     }
 
@@ -3579,7 +3578,7 @@ SEXP attribute_hidden do_activeBndFun(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_ActiveBindingFunction(sym, env);
 }
 
-/* This is a .Internal with no wrapper, currently unused in base R */
+/* This is a .Internal with no wrapper */
 SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sym;
@@ -3589,6 +3588,8 @@ SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(sym) != SYMSXP) error(_("not a symbol"));
     /* This is not quite the same as SET_SYMBOL_BINDING_VALUE as it
        does not allow active bindings to be unbound */
+    if (FRAME_IS_LOCKED(R_BaseEnv))
+	error(_("cannot remove bindings from a locked environment"));
     if (R_BindingIsLocked(sym, R_BaseEnv))
 	error(_("cannot unbind a locked binding"));
     if (R_BindingIsActive(sym, R_BaseEnv))

@@ -627,7 +627,7 @@ static void InFormat(R_inpstream_t stream)
  *
  * Hashing functions for hashing reference objects during writing.
  * Objects are entered, and the order in which they are encountered is
- * recorded.  GashGet returns this number, a positive integer, if the
+ * recorded.  HashGet returns this number, a positive integer, if the
  * object was seen before, and zero if not.  A fixed hash table size
  * is used; this is not ideal but seems adequate for now.  The hash
  * table representation consists of a (R_NilValue . vector) pair.  The
@@ -680,7 +680,7 @@ static int HashGet(SEXP item, SEXP ht)
 /*
  * Administrative SXP values
  *
- * These macros defind SXP "type" for specifying special object, such
+ * These macros define SXP "type" for specifying special object, such
  * as R_NilValue, or control information, like REFSXP or NAMESPACESXP.
  * The range of SXP types is limited to 5 bit by the current sxpinfo
  * layout, but just in case these values are placed at the top of the
@@ -770,7 +770,7 @@ static void UnpackFlags(int flags, SEXPTYPE *ptype, int *plevs,
  *
  * Code will contain many references to symbols. As long as there are
  * not too many references, the index ant the REFSXP flag indicating a
- * reference can be packed in a single integeger.  Since the index is
+ * reference can be packed in a single integer.  Since the index is
  * 1-based, a 0 is used to indicate an index that doesn't fit and
  * therefore follows.
  */

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-01-03 r79774) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -811,9 +811,11 @@ attr(,"scaled:scale")
 > 
 > ## ts
 > # Ensure working arithmetic for 'ts' objects :
-> z <- ts(matrix(1:900, 100, 3), start = c(1961, 1), frequency = 12)
+> z <- ts(matrix(1:300, 100, 3), start = c(1961, 1), frequency = 12)
 > stopifnot(z == z)
 > stopifnot(z-z == 0)
+> if(FALSE) ## <<-- not currently: _R_CHECK_MATRIX_DATA_ \\ related to earlier code:
++ tools::assertWarning(matrix(1:90, 10, 3), verbose=TRUE)
 > 
 > ts(1:5, start=2, end=4) # truncate
 Time Series:
@@ -2293,11 +2295,11 @@ par("yaxp") :            2         4         4
 
 Warning messages:
 1: In plot.window(...) :
-  relative range of values (  43 * EPS) is small (axis 2)
+  axis(2, *): range of values (3e-14) is small wrt |M| =     3.1 --> not pretty()
 2: In plot.window(...) :
-  relative range of values (  36 * EPS) is small (axis 2)
+  axis(2, *): range of values (2.5e-14) is small wrt |M| =     3.1 --> not pretty()
 3: In plot.window(...) :
-  relative range of values (   0 * EPS) is small (axis 2)
+  axis(2, *): range of values (    0) is small wrt |M| =       4 --> not pretty()
 > par(mfrow = c(1,1))
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing
@@ -6363,7 +6365,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5571311fa770>
+<bytecode: 0x22b3320>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6374,7 +6376,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5571311fa770>
+<bytecode: 0x22b3320>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6386,7 +6388,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5571311fa770>
+<bytecode: 0x22b3320>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -7237,16 +7239,21 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
 > ## failed on mismatched attributes
 > 
 > 
-> ## PR#15411, plus digits change
+> ## PR#15411; PR#18098 ==> digits=0 not ok:
 > format(9992, digits = 3)
 [1] "9992"
 > format(9996, digits = 3)
 [1] "9996"
-> format(0.0002, digits = 0, nsmall = 2)
-[1] "0.00"
-> format(pi*10, digits = 0, nsmall = 1)
+> format(0.0002, digits = 1, nsmall = 2, scientific = FALSE)
+[1] "0.0002"
+> assertErrorV(
++ format(pi*10,  digits = 0))
+Asserted error: invalid value 0 for 'digits' argument
+> format(pi*10,  digits = 1)
+[1] "31"
+> format(pi*10,  digits = 1, nsmall = 1)
 [1] "31.4"
-> ## second added an extra space; 3rd and 4th were not allowed.
+> ## second added an extra space.
 > 
 > ## and one branch of this was wrong:
 > xx <- c(-86870268, 107833358, 302536985, 481015309, 675718935, 854197259,
@@ -8087,4 +8094,12 @@ mean of x
 > stopifnot( identical(ddd, dd2) )
 > ## In R <= 4.0.3,  printed to console (no warning, no message!):
 > ## "Unknown Type: ... (11)"
+> 
+> 
+> ## printCoefmat() should keep NaN values (PR#17336)
+> ##cm <- summary(lm(c(0,0,0) ~ 1))$coefficients
+> cm <- cbind(Estimate = 0, SE = 0, t = NaN, "Pr(>|t|)" = NaN)
+> printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0
+     Estimate SE   t Pr(>|t|)
+[1,]        0  0 NaN      NaN
 > 

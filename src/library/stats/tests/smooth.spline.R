@@ -70,7 +70,7 @@ lines(predict(s2.7,  xx), lwd = 3, col = adjustcolor("red", 1/4))
 lines(predict(s2.11, xx), lwd = 2, col = adjustcolor("forestgreen", 1/4))
 ## s2.11 is very close to 's2'
 
-if(!requireNamespace("Matrix") && !interactive())
+if(!requireNamespace("Matrix", quietly = TRUE) && !interactive())
     q("no")
 
 if(Lb.64 && interactive()) ## extra checks (from above), but _not_ part of R checks

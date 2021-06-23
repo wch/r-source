@@ -2,6 +2,20 @@
 Changes from grid_4.0.* to grid_4.1.0:
 -------------------------------------
 
+1.  New 'vpPath' argument to grid.grep() so that we can ask for
+    matching grobs WITH vpPaths WITHOUT having to ask for matching
+    viewports, e.g., grid.grep("path", vpPath=TRUE).
+
+    The value of 'vpPath' defaults to the value of 'viewports', so ...
+
+    grid.grep("path", viewports=TRUE)
+
+    ... behaves as before.
+
+
+Changes from grid_4.0.* to grid_4.1.0:
+-------------------------------------
+
 1.  Bug fix for grid.curve() with vertical or horizontal "curve".
     Thanks to Patrick Breheney for the report.
 

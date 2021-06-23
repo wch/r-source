@@ -125,14 +125,16 @@ xzfile <- function(description, open = "", encoding = getOption("encoding"),
 socketConnection <- function(host = "localhost", port, server = FALSE,
                              blocking = FALSE, open = "a+",
                              encoding = getOption("encoding"),
-                             timeout = getOption("timeout"))
+                             timeout = getOption("timeout"),
+                             options = getOption("socketOptions"))
     .Internal(socketConnection(host, port, server, blocking, open, encoding,
-                               timeout))
+                               timeout, options))
 
 socketAccept <- function(socket, blocking = FALSE, open = "a+",
                          encoding = getOption("encoding"),
-                         timeout = getOption("timeout"))
-    .Internal(socketAccept(socket, blocking, open, encoding, timeout))
+                         timeout = getOption("timeout"),
+                         options = getOption("socketOptions"))
+    .Internal(socketAccept(socket, blocking, open, encoding, timeout, options))
 
 serverSocket <- function(port)
     .Internal(serverSocket(port))

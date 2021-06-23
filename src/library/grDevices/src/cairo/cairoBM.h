@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  R Core Team
+ *  Copyright (C) 1997--2021  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ typedef enum {
 #include <stdio.h>
 
 #ifdef HAVE_PANGOCAIRO
-#  include <pango/pango.h>
+#  include <pango/pango.h> //included by pangocairo.h
 #  include <pango/pangocairo.h>
 #else
 #  include <cairo.h>
@@ -67,6 +67,11 @@ typedef enum {
 #  define R_CAIRO_FN(x) ((x)->filename)
 #endif
 
+/* 
+   Despite its historical name, this structure does not use X11.
+   It allows the code in cairoFns.h to be shared with src/modules/X11
+   whose structure of the same name is similar enough.
+*/
 typedef struct {
     /* Graphics Parameters */
     /* Local device copy so that we can detect */

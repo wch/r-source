@@ -43,6 +43,9 @@ Thanks to the following people who have provided enhancements and fixes:
 
 PS: I don't have, and don't want to add, a vi mode, sorry.
 
+This version is with modifications by R Core, including a Windows port, support
+for multi-byte characters and partial support for Unicode sequences.
+
 ************************** End-User Interface ***************************
 
 Entering printable keys generally inserts new text into the buffer (unless
@@ -58,7 +61,7 @@ ESC-B   : Move cursor backward one word.
 ^D	: Delete the character under the cursor.
 ^H, DEL : Delete the character to the left of the cursor.
 ^K	: Kill from the cursor to the end of line.
-^L	: Redraw current line.
+^L	: Redraw current line (after a line feed).
 ^O	: Toggle overwrite/insert mode. Initially in insert mode. Text
 	  added in overwrite mode (including yanks) overwrite
 	  existing text, while insert mode does not overwrite.
@@ -91,31 +94,49 @@ DOS and ANSI terminal arrow key sequences are recognized, and act like:
   left  : same as ^B
   right : same as ^F
 
+Debugging of keyboard input on Windows:
+
+  Alt+I : Toggle debug mode.
+
+Entering characters by code:
+
+  Alt+ xxx           : hold Alt, type up to 3 digits, release Alt
+                       produces byte (0-255) in the current OEM code page
+                       
+  Alt+ +xxxxxxxx     : hold Alt, press + on numpad, type up to 8 digits and hex
+                       letters; produces Unicode character of the given number
+
+  Note: Windows automatically interprets Alt+xxx when "xxx" are digits on the
+  numpad when NumLock is on. It is therefore advisable to have NumLock off to
+  avoid interference with the Windows processing, and it is necessary for
+  entering the hex codes on the numpad. A similar interference would exist when
+  Windows support for Alt+ +xxxx (hex codes) are enabled. Note that R/getline
+  support even Unicode supplementary characters.
+
 ************************** Programmer Interface ***************************
 
 The programmer accesses input-edit through these functions, and optionally
 through three additional function pointer hooks.  The four functions are:
 
-char *getline(char *prompt)
+int getline(char *prompt, char *buf, int buflen)
 
-	Prints the prompt and allows the user to edit the current line. A
-	pointer to the line is returned when the user finishes by
-	typing a newline or a return.  Unlike GNU readline, the returned
-	pointer points to a static buffer, so it should not be free'd, and
-	the buffer contains the newline character.  The user enters an
-	end-of-file by typing ^D on an empty line, in which case the
-	first character of the returned buffer is '\0'.  Getline never
-	returns a NULL pointer.  The getline functions sets terminal modes
-	needed to make it work, and resets them before returning to the
-	caller.  The getline function also looks for characters that would
-	generate a signal, and resets the terminal modes before raising the
-	signal condition.  If the signal handler returns to getline, 
-	the screen is automatically redrawn and editing can continue.
-	Getline now requires both the input and output stream be connected
-	to the terminal (not redirected) so the main program should check
-	to make sure this is true.  If input or output have been redirected
-	the main program should use buffered IO (stdio) rather than
-	the slow 1 character read()s that getline uses.
+	Prints the prompt and allows the user to edit the current line.  A
+        pointer to a buffer to store the line is passed in "buf" with the
+        length of "buflen".  The user finishes exiting by typing a newline
+        or a return.  The buffer contains the newline character.  The user
+        enters an end-of-file by typing ^D on an empty line, in which case
+        the first character of the returned buffer is '\0'.  The getline
+        functions sets terminal modes needed to make it work, and resets
+        them before returning to the caller.  The getline function also
+        looks for characters that would generate a signal, and resets the
+        terminal modes before raising the signal condition.  If the signal
+        handler returns to getline, the screen is automatically redrawn and
+        editing can continue.  Getline now requires both the input and
+        output stream be connected to the terminal (not redirected) so the
+        main program should check to make sure this is true.  If input or
+        output have been redirected the main program should use buffered IO
+        (stdio) rather than the slow 1 character read()s that getline uses. 
+        Returns non-zero on EOF.
 
 void gl_setwidth(int width)
 
@@ -124,7 +145,7 @@ void gl_setwidth(int width)
 	width of the terminal is not 80.  Since horizontal scrolling is
 	controlled by this parameter it is important to get it right.
 
-void gl_histadd(char *buf)
+void gl_histadd(const char *buf)
 
 	The gl_histadd function checks to see if the buf is not empty or
 	whitespace, and also checks to make sure it is different than
@@ -134,12 +155,15 @@ void gl_histadd(char *buf)
 
 void gl_strwidth(size_t (*func)())
 	The gl_strwidth function allows the caller to supply a pointer to 
-	a prompt width calculation function (strlen by default). This
-	allows the caller to embed escape sequences in the prompt and then
-	tell getline how many screen spaces the prompt will take up.
+	a prompt width calculation function (the default one does not support
+        escape sequences). This allows the caller to embed escape sequences
+        in the prompt and then tell getline how many screen spaces the prompt
+        will take up. The width returned needs to be in screen positions, so it
+        needs to take the print width of Unicode characters into account.
 
 The main loop in testgl.c, included in this directory, shows how the
-input-edit package can be used:
+input-edit package can be used (this is for the original version of getline
+only, not updated for the updated R version):
 
 extern char *getline();
 extern void  gl_histadd();
@@ -186,8 +210,10 @@ int (*gl_tab_hook)(char *buf, int prompt_width, int *cursor_loc)
 
 	If gl_tab_hook is non-NULL, it is called whenever a tab is typed.
 	In addition to receiving the buffer, the current prompt width is
-	given (needed to do tabbing right) and a pointer to the cursor
-	offset is given, where a 0 offset means the first character in the
-	line.  Not only does the cursor_loc tell the programmer where the
-	TAB was received, but it can be reset so that the cursor will end
+	given (in screen positions, so taking the print width of Unicode
+        characters in account) needed to do tabbing right) and a pointer to
+        the cursor offset is given, where a 0 offset means the first character
+        in the line.  Not only does the cursor_loc tell the programmer where
+        the TAB was received, but it can be reset so that the cursor will end
 	up at the specified location after the screen is redrawn.
+

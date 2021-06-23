@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2020   The R Core Team
+ *   Copyright (C) 1997-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,10 @@
 #include <Rinterface.h>
 #include <Fileio.h>
 #include <ctype.h>		/* for isspace */
+
+#ifdef Win32
+#include <trioremap.h> /* to ensure snprintf result is null terminated */
+#endif
 
 /* remove leading and trailing space */
 static char *rmspace(char *s)
@@ -95,7 +99,7 @@ static char *findRbrace(char *s)
     return pr;
 }
 
-#define BUF_SIZE 10000
+#define BUF_SIZE 100000
 static char *findterm(char *s)
 {
     char *p, *q, *r2, *ss=s;
@@ -178,37 +182,71 @@ static void Putenv(char *a, char *b)
 }
 
 
-#define MSG_SIZE 2000
+#define MSG_SIZE 2048
 static int process_Renviron(const char *filename)
 {
     FILE *fp;
-    char *s, *p, sm[BUF_SIZE], *lhs, *rhs, msg[MSG_SIZE+50];
-    int errs = 0;
-
     if (!filename || !(fp = R_fopen(filename, "r"))) return 0;
-    snprintf(msg, MSG_SIZE+50,
-	     "\n   File %s contains invalid line(s)", filename);
+
+    char sm[BUF_SIZE], msg[MSG_SIZE];
+    const char *line_prefix = "\n      ";
+    const char *ignored_msg = "\n   They were ignored\n";
+    const char *truncated_msg = "[... truncated]";
+    const char *too_long = " (too long)";
+    Rboolean errs = FALSE;
 
     while(fgets(sm, BUF_SIZE, fp)) {
-	sm[BUF_SIZE-1] = '\0';
-	s = rmspace(sm);
+	sm[BUF_SIZE-1] = '\0'; /* should not be needed */
+	/* embedded nulls are not supported */
+	Rboolean complete_line = feof(fp) || Rf_strchr(sm, '\n');
+	char *s = rmspace(sm), *p;
 	if(strlen(s) == 0 || s[0] == '#') continue;
-	if(!(p = Rf_strchr(s, '='))) {
-	    errs++;
-	    if(strlen(msg) < MSG_SIZE) {
-		strcat(msg, "\n      "); strcat(msg, s);
+	if(!(p = Rf_strchr(s, '=')) || !complete_line) {
+	    if(!errs) {
+		errs = TRUE;
+		Rsnprintf_mbcs(msg, MSG_SIZE,
+			       "\n   File %s contains invalid line(s)",
+		               filename);
+	    }
+	    if (strlen(msg) + strlen(line_prefix) + strlen(s) +
+	        strlen(ignored_msg) < MSG_SIZE) {
+
+		strcat(msg, line_prefix);
+		strcat(msg, s);
+	    } else if (strlen(msg) + strlen(line_prefix) +
+		                45 + strlen(truncated_msg) +
+                                     strlen(ignored_msg) < MSG_SIZE) {
+		strcat(msg, line_prefix);
+		strncat(msg, s, 45);
+		mbcsTruncateToValid(msg);
+		strcat(msg, truncated_msg);
+	    }
+	    if (!complete_line) {
+		if (strlen(msg) + strlen(too_long) +
+		    strlen(ignored_msg) < MSG_SIZE) {
+
+		    strcat(msg, too_long);
+		}
+		/* skip the rest of the line */
+		while(!complete_line && fgets(sm, BUF_SIZE, fp)) {
+		    sm[BUF_SIZE-1] = '\0'; /* should not be needed */
+		    complete_line = feof(fp) || Rf_strchr(sm, '\n');
+		}
+		if (!complete_line)
+		    break; /* error or EOF at line start */
 	    }
 	    continue;
 	}
 	*p = '\0';
-	lhs = rmspace(s);
-	rhs = findterm(rmspace(p+1));
+	char* lhs = rmspace(s),
+	    * rhs = findterm(rmspace(p+1));
 	/* set lhs = rhs */
 	if(strlen(lhs) && strlen(rhs)) Putenv(lhs, rhs);
     }
     fclose(fp);
     if (errs) {
-	strcat(msg, "\n   They were ignored\n");
+	if (strlen(msg) + strlen(ignored_msg) < MSG_SIZE)
+	   strcat(msg, ignored_msg);
 	R_ShowMessage(msg);
     }
     return 1;

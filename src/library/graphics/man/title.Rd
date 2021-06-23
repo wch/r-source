@@ -84,7 +84,7 @@ title("Main Title", sub = "sub title",
       cex.sub = 0.75, font.sub = 3, col.sub = "red")
 
 
-x <- seq(-4, 4, len = 101)
+x <- seq(-4, 4, length.out = 101)
 y <- cbind(sin(x), cos(x))
 matplot(x, y, type = "l", xaxt = "n",
         main = expression(paste(plain(sin) * phi, "  and  ",

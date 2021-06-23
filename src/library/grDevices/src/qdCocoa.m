@@ -335,6 +335,13 @@ static QuartzFunctions_t *qf;
 {
     CGRect rect;
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+    /* we have to retain our copy, beause we may need to create a layer
+       based on the context in NewPage outside of drawRect: */
+    if (ci->context != ctx) {
+        if (ci->context)
+            CGContextRelease(ci->context);
+        CGContextRetain(ctx);
+    }
     ci->context = ctx;
     ci->bounds = [self bounds];        
     rect = CGRectMake(0.0, 0.0, ci->bounds.size.width, ci->bounds.size.height);
@@ -501,8 +508,10 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification {
-    ci->closing = YES;
-    qf->Kill(ci->qd);
+    if (ci) {
+        ci->closing = YES;
+        qf->Kill(ci->qd);
+    }
 }
 
 - (void)resetCursorRects
@@ -701,6 +710,15 @@ static void QuartzCocoa_Close(QuartzDesc_t dev,void *userInfo) {
     if (ci->pars.family) free((void*)ci->pars.family);
     if (ci->pars.title) free((void*)ci->pars.title);
     if (ci->pars.file) free((void*)ci->pars.file);
+
+    if (ci->layer)
+        CGLayerRelease(ci->layer);
+
+    /* release context (if we had one) */
+    if (ci->context) {
+        CGContextRelease(ci->context);
+        ci->context = 0;
+    }
 
     /* close the window (if it's not already closing) */
     if (ci && ci->view && !ci->closing)

@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: grDevices 4.1.0\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,6 +12,15 @@ msgstr ""
 
 
 msgid "invalid 'filename'"
+msgstr ""
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
 msgstr ""
 
 msgid "'coef' must not be negative"
@@ -332,6 +342,15 @@ msgid "Available devices are:\n%s"
 msgstr ""
 
 msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
 msgstr ""
 
 msgid "invalid 'title'"

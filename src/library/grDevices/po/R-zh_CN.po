@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -19,6 +19,15 @@ msgstr ""
 
 msgid "invalid 'filename'"
 msgstr "'filename'不对"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr ""
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr ""
 
 msgid "'coef' must not be negative"
 msgstr "'coef'的值不能是负的"
@@ -349,6 +358,15 @@ msgstr "可用的装置是%s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "除非'units = \"px\"'，否则必需设定'res'"
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr ""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr ""
 
 msgid "invalid 'title'"
 msgstr "'title'不对"

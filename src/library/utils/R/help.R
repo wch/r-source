@@ -116,8 +116,9 @@ print.help_files_with_topic <- function(x, ...)
             out <- paste0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
                           '<html><head><title>R: help</title>\n',
                           '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
+                          '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n',
                           '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
-                          '</head><body>\n\n<hr>\n')
+                          '</head><body><div class="container">\n\n<hr>\n')
             out <- c(out, '<p>', msg, '</p><br>')
             out <- c(out, '<table width="100%" summary="R Package list">\n',
                      '<tr align="left" valign="top">\n',
@@ -129,7 +130,7 @@ print.help_files_with_topic <- function(x, ...)
             out <- c(out, paste0('<tr align="left" valign="top">\n',
                                 '<td>', links, '</td><td>',
                                 dirname(paths), '</td></tr>\n'))
-            out <- c(out, "</table>\n</p>\n<hr>\n</body></html>")
+            out <- c(out, "</table>\n</p>\n<hr>\n</div></body></html>")
             writeLines(out, file.path(path, "all.available.html"))
             browseURL(paste0("http://127.0.0.1:", port,
                              "/doc/html/all.available.html"),

@@ -79,7 +79,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 ## exclude some unsupported OSes
 case "${host_os}" in
    ## Darwin 1.3.1 was macOS 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
-   ## with 19 being 10.15 (Catalina) and 20 11.0 (Big Sur)
+   ## with 19 being 10.15 (Catalina) and 20 being 11 (Big Sur)
    ## We no longer support < 10.6 (Snow Leopard, Darwin 10)
    ## https://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
@@ -96,6 +96,25 @@ esac
 
 R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
+
+dnl config.guess deliberately overrides the cpu/arch as repoorted by
+dnl uname -m (or -p) to use one almost unknown to Mac users. So
+dnl we need a macro for a more familiar name.
+MAC_CPU=
+case "${host_os}" in
+  darwin*)
+    case "${host_cpu}" in
+       aarch64)
+       MAC_CPU="arm64"
+       ;;
+       *)
+       MAC_CPU="${host_cpu}"
+       ;;
+    esac
+    AC_SUBST(MAC_CPU)
+    ;;
+esac
+
 R_OS="${host_os}"
 AC_SUBST(R_OS)
 
@@ -510,6 +529,10 @@ AC_ARG_WITH([internal-wcwidth],
 [use_internal_wcwidth=${withval}],
 [use_internal_wcwidth=yes])
 
+AC_ARG_WITH([internal-tzcode],
+[AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no, yes on macOS@:>@])],
+[use_internal_tzcode=${withval}],
+[use_internal_tzcode=default])
 
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
@@ -541,6 +564,21 @@ AC_ARG_ENABLE([byte-compiled-packages],
 [want_byte_compiled_packages=yes])
 AM_CONDITIONAL(BYTE_COMPILE_PACKAGES,
                [test "x${want_byte_compiled_packages}" = xyes])
+
+AC_ARG_WITH([static-cairo],
+[AS_HELP_STRING([--with-static-cairo],[allow for the use of static cairo libraries @<:@no, yes on macOS@:>@])],
+[use_static_cairo=${withval}],
+[use_static_cairo=default])
+if test "x$use_static_cairo" = xdefault; then
+  case "${host_os}" in
+    darwin*)
+      use_static_cairo=yes
+      ;;
+    *)
+      use_static_cairo=no
+      ;;
+  esac
+fi
 
 ### ** Precious variables.
 
@@ -1757,13 +1795,22 @@ R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 R_STDCXX([20], [CXX20], [CXX17])
 
-## Set default compiler to C++11 if available
+## Set default C++ compiler to C++14 if available, otherwise C++11
+## Do not set if neither is available.
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
-  if test -n "${CXX11}"; then
+  if test -n "${CXX14}"; then
+    CXX=${CXX14}
+    CXXSTD=${CXX14STD}
+    CXXFLAGS=${CXX14FLAGS}
+    CXXPICFLAGS=${CXX14PICFLAGS}
+  elif test -n "${CXX11}"; then
+    AC_MSG_WARN([C++14 is not available so the default C++ standard is C++11])
     CXX=${CXX11}
     CXXSTD=${CXX11STD}
     CXXFLAGS=${CXX11FLAGS}
     CXXPICFLAGS=${CXX11PICFLAGS}
+  else
+    AC_MSG_WARN([Neither C++14 nor C++11 is available so no default C++ compiler is set])
   fi
 fi
 
@@ -2990,6 +3037,7 @@ R is now configured for ${host}
   Fortran fixed-form compiler: ${r_f77_compiler}
 
   Default C++ compiler:        ${r_cxx_compiler}
+  C++11 compiler:              ${r_cxx11_compiler}
   C++14 compiler:              ${r_cxx14_compiler}
   C++17 compiler:              ${r_cxx17_compiler}
   C++20 compiler:              ${r_cxx20_compiler}

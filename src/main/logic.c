@@ -456,8 +456,12 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
 	UNPROTECT(2);
+	SETCDR(call2, R_NilValue); /* clear refcnt on args */
+	R_try_clear_args_refcnt(args);
 	return(ans);
     }
+    SETCDR(call2, R_NilValue); /* clear refcnt on args */
+    R_try_clear_args_refcnt(args);
 
     ans = matchArgExact(R_NaRmSymbol, &args);
     narm = asLogical2(ans, /*warn_level*/ 1, call, env);

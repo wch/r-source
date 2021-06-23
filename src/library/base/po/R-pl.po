@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-02-12 09:25\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -227,6 +227,11 @@ msgid "argument 'object' must deparse to a single character string"
 msgstr ""
 "argument 'object' musi być konwertowalny do pojedynczego łańcucha tekstowego"
 
+#, fuzzy
+msgid "'name' must be a single character string"
+msgstr ""
+"argument 'object' musi być konwertowalny do pojedynczego łańcucha tekstowego"
+
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "argument 'origin' musi być jednym ze 'start', 'current' lub 'end'"
 
@@ -388,7 +393,8 @@ msgstr "<0 wierszy> (lub 'row.names' o zerowej długości)"
 msgid "invalid 'max' / getOption(\"max.print\"):"
 msgstr ""
 
-msgid "non-numeric variable(s) in data frame:"
+#, fuzzy
+msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "zmienna nieliczbowa w ramce danych:"
 
 msgid ","
@@ -400,10 +406,15 @@ msgstr "%s jest zdefiniowane jedynie dla ramek danych o równych rozmiarach"
 msgid "list of length %d not meaningful"
 msgstr "lista o długości %d nie ma sensu"
 
-msgid "only defined on a data frame with all numeric variables"
+#, fuzzy
+msgid "only defined on a data frame with all numeric-alike variables"
 msgstr ""
 "funkcja 'summary()' zdefiniowana jest jedynie na ramce danych ze wszystkimi "
 "zmiennymi będącymi liczbami"
+
+#, fuzzy
+msgid "cannot xtfrm data frames"
+msgstr "argument nie jest ramką danych"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "łańcuch tekstowy nie jest w standardowym jednoznacznym formacie"
@@ -791,6 +802,10 @@ msgstr "wartość dla %s nie została znaleziona"
 msgid "all arguments must be named"
 msgstr "wszystkie argumenty muszą być nazwane"
 
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "argument 'drop' zostanie zignorowany"
+
 msgid "match distance components must be non-negative"
 msgstr "komponenty o dopasowanej odległości muszą być nieujemne"
 
@@ -1144,9 +1159,6 @@ msgstr ""
 "przestrzeń nazw %s nie jest dostępna, więc została zastąpiona przez '."
 "GlobalEnv' podczas przetwarzania obiektu %s"
 
-msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' nie jest eksportowanym obiektem z 'namespace:%s'"
-
 msgid "namespace is already attached"
 msgstr "przestrzeń nazw jest już dołączona"
 
@@ -1162,6 +1174,9 @@ msgstr "wartość %s nie została znaleziona"
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "przestrzeń nazw %s %s jest już załadowana, ale %s %s jest wymagana"
+
+msgid "- loading"
+msgstr ""
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "przestrzeń nazw %s jest już zamknięta w 'loadNamespace()'"
@@ -1229,14 +1244,54 @@ msgstr ""
 "pakiet %s był zainstalowany przez wersję R z innymi metodami wewnętrznymi; "
 "musi być przeinstalowany aby móc użyć go z tą wersją R"
 
+msgid "-- processing imports for"
+msgstr ""
+
+msgid "-- done processing imports for"
+msgstr ""
+
+msgid "-- loading code for"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "nie można załadować kodu R w pakiecie %s"
+
+msgid "-- loading sysdata for"
+msgstr ""
+
+msgid "-- loading lazydata for"
+msgstr ""
+
+msgid "-- registerS3methods for"
+msgstr ""
+
+msgid "-- done registerS3methods for"
+msgstr ""
+
+msgid "-- running .onLoad for"
+msgstr ""
+
+msgid "-- done running .onLoad for"
+msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
 msgstr ""
 "'exportClassPattern' określono w pliku 'NAMESPACE', ale brak pasujących klas "
 "w pakiecie %s"
+
+msgid "-- processing S4 stuff for"
+msgstr ""
+
+msgid "--- caching metadata"
+msgstr ""
+
+msgid "--- done caching metadata"
+msgstr ""
+
+#, fuzzy
+msgid "--- processing classes"
+msgstr "błędna klasa"
 
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
@@ -1258,6 +1313,9 @@ msgstr ""
 msgid "in %s methods for export not found: %s"
 msgstr "w pakiecie %s metody do eksportu nie zostały znalezione: %s"
 
+msgid "---- export method"
+msgstr ""
+
 msgid "multiple methods tables found for %s"
 msgstr "wiele tablic metod znaleziono dla %s"
 
@@ -1268,6 +1326,18 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "w pakiecie %s metody %s zostały określone do eksportu, ale nie zostały "
 "zdefiniowane"
+
+msgid "-- done processing S4 stuff for"
+msgstr ""
+
+msgid "--- processing exports for"
+msgstr ""
+
+msgid "--- sealing exports for"
+msgstr ""
+
+msgid "- done loading"
+msgstr ""
 
 msgid "Loading required namespace: %s"
 msgstr "Ładowanie wymaganej przestrzeni nazw: %s"
@@ -1561,6 +1631,9 @@ msgid ""
 msgstr ""
 "'x' musi być typem atomowym dla 'sort.list'\n"
 "Czy wywołano 'sort' na liście?"
+
+msgid "cannot xtfrm 'x'"
+msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "argument 'local' musi być TRUE, FALSE lub musi być środowiskiem"
@@ -2078,6 +2151,9 @@ msgstr[1] ""
 msgstr[2] ""
 "W poleceniu '%s':\n"
 " dodatkowe argumenty %s zostaną odrzucone"
+
+#~ msgid "'%s' is not an exported object from 'namespace:%s'"
+#~ msgstr "'%s' nie jest eksportowanym obiektem z 'namespace:%s'"
 
 #~ msgid "bad handler specification"
 #~ msgstr "niepoprawne określenie obsługi"

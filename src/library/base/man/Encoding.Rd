@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -47,7 +47,8 @@ enc2utf8(x)
 
   There are other ways for character strings to acquire a declared
   encoding apart from explicitly setting it (and these have changed as
-  \R has evolved).  Functions \code{\link{scan}},
+  \R has evolved).  The parser marks strings containing \samp{\\u} or
+  \samp{\\U} escapes.  Functions \code{\link{scan}},
   \code{\link{read.table}}, \code{\link{readLines}}, and
   \code{\link{parse}} have an \code{encoding} argument that is used to
   declare encodings, \code{\link{iconv}} declares encodings from its
@@ -78,7 +79,7 @@ enc2utf8(x)
 
   \code{\link{paste}} and \code{\link{sprintf}} return elements marked
   as bytes if any of the corresponding inputs is marked as bytes, and
-  otherwise marked as UTF-8 of any of the inputs is marked as UTF-8.
+  otherwise marked as UTF-8 if any of the inputs is marked as UTF-8.
 
   \code{\link{match}}, \code{\link{pmatch}}, \code{\link{charmatch}},
   \code{\link{duplicated}} and \code{\link{unique}} all match in UTF-8
@@ -101,7 +102,7 @@ enc2utf8(x)
 \examples{
 ## x is intended to be in latin1
 x. <- x <- "fa\xE7ile"
-Encoding(x.) # "unknown" (Linux) | "latin-1" (Win 32 server) | ....
+Encoding(x.) # "unknown" (UTF-8 loc.) | "latin1" (8859-1/CP-1252 loc.) | ....
 Encoding(x) <- "latin1"
 x
 xx <- iconv(x, "latin1", "UTF-8")

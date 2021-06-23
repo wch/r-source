@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -683,6 +683,7 @@ static R_INLINE R_xlen_t scalarIndex(SEXP s)
     else return -1;
 }
 
+// called from (R `[` => ) do_subset, but also from R .subset() :
 SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ax, px, x, subs;
@@ -798,7 +799,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     ax = x;
     if (isVector(x))
 	PROTECT(ax);
-    else if (isPairList(x)) {
+    else if (type == LISTSXP || type == LANGSXP) { // *not* <DOTSXP>[]  :
 	SEXP dim = getAttrib(x, R_DimSymbol);
 	int ndim = length(dim);
 	if (ndim > 1) {
@@ -1079,7 +1080,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	RAISE_NAMED(ans, named_x);
 #endif
     } else {
-	ans = allocVector(TYPEOF(x), 1);
+	ans = PROTECT(allocVector(TYPEOF(x), 1));
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    LOGICAL0(ans)[0] = LOGICAL_ELT(x, offset);
@@ -1102,6 +1103,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	default:
 	    UNIMPLEMENTED_TYPE("do_subset2", x);
 	}
+	UNPROTECT(1); /* ans */
     }
     UNPROTECT(2); /* args, x */
     return ans;
@@ -1229,7 +1231,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* used in eval.c */
+/* also used in eval.c */
 SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 {
     SEXP y, nlist;
@@ -1245,13 +1247,13 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
 	    errorcall(call, "$ operator not defined for this S4 class");
+
+	UNPROTECT(1); /* x */
+	PROTECT(x);
     }
-    UNPROTECT(1); /* x */
-    PROTECT(x);
 
-    /* If this is not a list object we return NULL. */
-
-    if (isPairList(x)) {
+    // isPairList(x)  but *not* <DOTSXP> :
+    if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP || TYPEOF(x) == NILSXP) {
 	SEXP xmatch = R_NilValue;
 	int havematch;
 	havematch = 0;

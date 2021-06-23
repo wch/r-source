@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2020  The R Core Team.
+ *  Copyright (C) 1998--2021  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -4137,19 +4137,25 @@ attribute_hidden void R_expand_binding_value(SEXP b)
 	vv.sxpval = CAR0(b);
 	switch (typetag) {
 	case REALSXP:
+	    PROTECT(b);
 	    val = ScalarReal(vv.dval);
 	    SET_BNDCELL(b, val);
 	    INCREMENT_NAMED(val);
+	    UNPROTECT(1);
 	    break;
 	case INTSXP:
+	    PROTECT(b);
 	    val = ScalarInteger(vv.ival);
 	    SET_BNDCELL(b, val);
 	    INCREMENT_NAMED(val);
+	    UNPROTECT(1);
 	    break;
 	case LGLSXP:
+	    PROTECT(b);
 	    val = ScalarLogical(vv.ival);
 	    SET_BNDCELL(b, val);
 	    INCREMENT_NAMED(val);
+	    UNPROTECT(1);
 	    break;
 	}
     }
@@ -4173,6 +4179,23 @@ void attribute_hidden R_args_enable_refcnt(SEXP args)
 		error("argument not tracking references");
 #endif
 	}
+#endif
+}
+
+void attribute_hidden R_try_clear_args_refcnt(SEXP args)
+{
+#ifdef SWITCH_TO_REFCNT
+    /* If args excapes properly its reference count will have been
+       incremented. If it has no references, then it can be reverted
+       to NR and the reference counts on its CAR and CDR can be
+       decremented. */
+    while (args != R_NilValue && NO_REFERENCES(args)) {
+	SEXP next = CDR(args);
+	DISABLE_REFCNT(args);
+	DECREMENT_REFCNT(CAR(args));
+	DECREMENT_REFCNT(CDR(args));
+	args = next;
+    }
 #endif
 }
 
@@ -4437,8 +4460,9 @@ void (SET_PRIMFUN)(SEXP x, CCODE f) { PRIMFUN(CHK(x)) = f; }
 /* for use when testing the write barrier */
 int  attribute_hidden (IS_BYTES)(SEXP x) { return IS_BYTES(CHK(x)); }
 int  attribute_hidden (IS_LATIN1)(SEXP x) { return IS_LATIN1(CHK(x)); }
-int  attribute_hidden (IS_ASCII)(SEXP x) { return IS_ASCII(CHK(x)); }
-int  attribute_hidden (IS_UTF8)(SEXP x) { return IS_UTF8(CHK(x)); }
+/* Next two are used in package utils */
+int  (IS_ASCII)(SEXP x) { return IS_ASCII(CHK(x)); }
+int  (IS_UTF8)(SEXP x) { return IS_UTF8(CHK(x)); }
 void attribute_hidden (SET_BYTES)(SEXP x) { SET_BYTES(CHK(x)); }
 void attribute_hidden (SET_LATIN1)(SEXP x) { SET_LATIN1(CHK(x)); }
 void attribute_hidden (SET_UTF8)(SEXP x) { SET_UTF8(CHK(x)); }

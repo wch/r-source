@@ -21,7 +21,7 @@ DISTFILES = Makefile.in  Makefile.win $(INSTFILES)
 ## Note that this does not set LC_COLLATE.  The collation of examples
 ## is done in C order in massageExamples(), but we want to test the
 ## orderings users use.
-R_EXE = LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE='nothing' \
+R_EXE = LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER=NULL R_LIBS_SITE=NULL \
   $(top_builddir)/bin/R --vanilla --no-echo
 
 all: Makefile test-Examples-Base

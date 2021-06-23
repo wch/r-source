@@ -9,8 +9,8 @@
 \title{Extract or Replace Matched Substrings}
 \description{
   Extract or replace matched substrings from match data obtained by
-  \code{\link{regexpr}}, \code{\link{gregexpr}} or
-  \code{\link{regexec}}.
+  \code{\link{regexpr}}, \code{\link{gregexpr}},
+  \code{\link{regexec}} or \code{\link{gregexec}}.
 }
 \usage{
 regmatches(x, m, invert = FALSE)
@@ -93,6 +93,45 @@ s
 m <- gregexpr(", *", s)
 ## And finally extract the non-matched parts.
 regmatches(x, m, invert = TRUE)
+
+## regexec() and gregexec() return overlapping ranges because the
+## first match is the full match.  This conflicts with regmatches()<-
+## and regmatches(..., invert=TRUE).  We can work-around by dropping
+## the first match.
+drop_first <- function(x) {
+    if(!anyNA(x) && all(x > 0)) {
+        ml <- attr(x, 'match.length')
+        if(is.matrix(x)) x <- x[-1,] else x <- x[-1]
+        attr(x, 'match.length') <- if(is.matrix(ml)) ml[-1,] else ml[-1]
+    }
+    x
+}
+m <- gregexec("(\\\\w+) \\\\(((?:\\\\w+(?:, )?)+)\\\\)", x)
+regmatches(x, m)
+try(regmatches(x, m, invert=TRUE))
+regmatches(x, lapply(m, drop_first))
+## invert=TRUE loses matrix structure because we are retrieving what
+## is in between every sub-match
+regmatches(x, lapply(m, drop_first), invert=TRUE)
+y <- z <- x
+## Notice **list**(...) on the RHS
+regmatches(y, lapply(m, drop_first)) <- list(c("<NAME>", "<HOBBY-LIST>"))
+y
+regmatches(z, lapply(m, drop_first), invert=TRUE) <-
+    list(sprintf("<\%d>", 1:5))
+z
+
+## With `perl = TRUE` and `invert = FALSE` capture group names
+## are preserved.  Collect functions and arguments in calls:
+NEWS <- head(readLines(file.path(R.home(), 'doc', 'NEWS.2')), 100)
+m <- gregexec("(?<fun>\\\\w+)\\\\((?<args>[^)]*)\\\\)", NEWS, perl = TRUE)
+y <- regmatches(NEWS, m)
+y[[16]]
+## Make tabular, adding original line numbers
+mdat <- as.data.frame(t(do.call(cbind, y)))
+mdat <- cbind(mdat, line=rep(seq_along(y), lengths(y) / ncol(mdat)))
+head(mdat)
+NEWS[head(mdat[['line']])]
 }
 \keyword{character}
 \keyword{utilities}

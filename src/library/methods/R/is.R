@@ -1,7 +1,7 @@
 #  File src/library/methods/R/is.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -266,7 +266,7 @@ setIs <-
             n2 <- names(slots2)
             slots1 <- classDef1@slots
             n1 <- names(slots1)
-            if(any(is.na(match(n2, n1))))
+            if(anyNA(match(n2, n1)))
                 return(c(.msg(class1, class2), ": ",
                          sprintf(ngettext(sum(is.na(match(n2, n1))),
                                           "class %s is missing slot from class %s (%s), and no coerce method was supplied",
@@ -298,11 +298,10 @@ setIs <-
       contains[[class2]] <- value
     else {
         sq <- seq_along(superclasses)
-        before <- (sq[match(superclasses, superclasses2,0)>0])[[1]]
+        before <- (sq[match(superclasses, superclasses2, 0L) > 0L])[[1]]
         contains <- c(contains[sq < before], value, contains[sq >= before])
         superclasses <- c(superclasses[sq < before], class2, superclasses[sq >= before])
         names(contains) <- superclasses
     }
     contains
 }
-

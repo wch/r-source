@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-05-03 09:56+0200\n"
 "PO-Revision-Date: 2020-08-27 19:43+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
@@ -56,7 +56,7 @@ msgstr ""
 "не найден \"allMethods\" слот в объекте класса \"%s\", использовавшийся как "
 "список методов для функции '%s'"
 
-#: methods_list_dispatch.c:402
+#: methods_list_dispatch.c:407
 #, c-format
 msgid ""
 "S language method selection did not return normally when called from "
@@ -65,23 +65,23 @@ msgstr ""
 "выбор метода языка S не закончился нормально, когда был вызван из внутренней "
 "отправки для функции '%s'"
 
-#: methods_list_dispatch.c:404
+#: methods_list_dispatch.c:409
 msgid "Function name for method selection called internally"
 msgstr "Имя функции для выбора метода вызвано изнутри"
 
-#: methods_list_dispatch.c:498
+#: methods_list_dispatch.c:503
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "не найдено определения общей функции для '%s'"
 
-#: methods_list_dispatch.c:501
+#: methods_list_dispatch.c:506
 #, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
 msgstr ""
 "не найдено определения общей функции для '%s' в предоставленном окружении"
 
-#: methods_list_dispatch.c:536
+#: methods_list_dispatch.c:541
 #, c-format
 msgid ""
 "invalid generic function object for method selection for function '%s': "
@@ -90,22 +90,22 @@ msgstr ""
 "не верный объект общей функции для выбора метода для функции '%s': ожидалась "
 "функция или примитив, получен объект класса \"%s\""
 
-#: methods_list_dispatch.c:551
+#: methods_list_dispatch.c:556
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "нет прямого или наследованного метода для функции '%s' для данного вызова"
 
-#: methods_list_dispatch.c:581 methods_list_dispatch.c:1146
+#: methods_list_dispatch.c:586 methods_list_dispatch.c:1157
 msgid "invalid object (non-function) used as method"
 msgstr "не верный объект (не функция) использован как метод"
 
-#: methods_list_dispatch.c:602
+#: methods_list_dispatch.c:607
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "не найден символ '%s' в структуре вызова"
 
-#: methods_list_dispatch.c:610
+#: methods_list_dispatch.c:615
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
@@ -114,11 +114,11 @@ msgstr ""
 "при проверки отсутствующего аргумента в отправке метода найден недопустимый "
 "символ: ожидалось имя, получен объект класса \"%s\""
 
-#: methods_list_dispatch.c:613
+#: methods_list_dispatch.c:618
 msgid "use of NULL environment is defunct"
 msgstr "использование NULL окружения более не поддерживается"
 
-#: methods_list_dispatch.c:617
+#: methods_list_dispatch.c:622
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
@@ -127,7 +127,7 @@ msgstr ""
 "при проверке отсутствующего аргумента обнаружено неверное окружение, '%s', в "
 "методах отправки: получен объект класса \"%s\""
 
-#: methods_list_dispatch.c:640
+#: methods_list_dispatch.c:645
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -135,7 +135,7 @@ msgid ""
 msgstr ""
 "ошибка при оценке аргумента '%s' при выборе метода для функции '%s': %s"
 
-#: methods_list_dispatch.c:657
+#: methods_list_dispatch.c:662
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
@@ -144,7 +144,7 @@ msgstr ""
 "объект класса \"%s\" использован как список методов для функции '%s' ( нет "
 "слота 'argument' )"
 
-#: methods_list_dispatch.c:668
+#: methods_list_dispatch.c:673
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
@@ -153,7 +153,7 @@ msgstr ""
 "(при выборе метода для функции '%s') '...' и родственные переменные не могут "
 "быть использованы для отправки методов"
 
-#: methods_list_dispatch.c:671
+#: methods_list_dispatch.c:676
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
@@ -162,14 +162,14 @@ msgstr ""
 "(при выборе метода для функции '%s') аргумент 'environment' для отправки "
 "должен быть R окружением; получен объект класса \"%s\""
 
-#: methods_list_dispatch.c:702
+#: methods_list_dispatch.c:707
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
 "нет соответствующего метода для функции '%s' (аргумент '%s', с классом \"%s"
 "\")"
 
-#: methods_list_dispatch.c:709
+#: methods_list_dispatch.c:714
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
@@ -177,38 +177,38 @@ msgstr ""
 "рекурсивное использование функции '%s' в выборе метода, с отсутствием метода "
 "по-умолчанию"
 
-#: methods_list_dispatch.c:734
+#: methods_list_dispatch.c:739
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "ошибка при оценке 'primitive' следующего метода: %s"
 
-#: methods_list_dispatch.c:890
+#: methods_list_dispatch.c:895
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' должна быть одиночной строкой (получен символьный вектор длины %d)"
 
-#: methods_list_dispatch.c:894
+#: methods_list_dispatch.c:899
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' должна быть не пустой строкой; получена пустая строка"
 
-#: methods_list_dispatch.c:898
+#: methods_list_dispatch.c:903
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' должна быть одиночной строкой (получен объект класса \"%s\")"
 
-#: methods_list_dispatch.c:975
+#: methods_list_dispatch.c:980
 msgid "class should be either a character-string name or a class definition"
 msgstr ""
 "класс должен быть либо именем-текстовой строкой либо определением класса"
 
-#: methods_list_dispatch.c:1055
+#: methods_list_dispatch.c:1066
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "не могу найти общую функцию для примитива \"%s\""
 
-#: methods_list_dispatch.c:1062
+#: methods_list_dispatch.c:1073
 #, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

@@ -1,7 +1,7 @@
 #  File src/library/base/R/message.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,11 +31,10 @@ function(expr, classes = "message")
 message <-
 function(..., domain = NULL, appendLF = TRUE)
 {
-    args <- list(...)
-    cond <- if (length(args) == 1L && inherits(args[[1L]], "condition")) {
+    cond <- if(...length() == 1L && inherits(..1, "condition")) {
         if(nargs() > 1L)
             warning("additional arguments ignored in message()")
-        args[[1L]]
+        ..1
     } else {
         msg <- .makeMessage(..., domain=domain, appendLF = appendLF)
         call <- sys.call()
@@ -58,8 +57,7 @@ function(..., domain = NULL, appendLF = TRUE)
 ## also used by warning() and stop()
 .makeMessage <- function(..., domain = NULL, appendLF = FALSE)
  {
-    args <- list(...)
-    msg <- if(length(args)) {
+    msg <- if(...length()) {
         args <- lapply(list(...), as.character)
         if(is.null(domain) || !is.na(domain))
             args <- .Internal(gettext(domain, unlist(args)))

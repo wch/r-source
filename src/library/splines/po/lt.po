@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: splines 4.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-02-01 13:59+0000\n"
 "PO-Revision-Date: 2020-11-29 14:40+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -31,4 +31,3 @@ msgstr "derivs = %d >= ord = %d, bet turėtų būti {0,..,ord-1}"
 #, c-format
 msgid "derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"
 msgstr "derivs[%d] = %d >= ord = %d, bet turėtų būti {0,..,ord-1}"
-

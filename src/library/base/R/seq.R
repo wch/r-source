@@ -1,7 +1,7 @@
 #  File src/library/base/R/seq.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,7 +66,10 @@ seq.default <-
 		int <- FALSE
 	    else if(!int)
 		storage.mode(by) <- "double"
-	    n <- del/by # of length 1, as {from, to, by} are
+	    n <- if(finite.del <- is.finite(del))
+                     del/by # of length 1, as {from, to, by} are
+                 else
+                     to/by - from/by
 	    if(!is.finite(n)) {
 		if(!is.na(by) && by == 0 && del == 0)
 		    return(from)
@@ -77,15 +80,18 @@ seq.default <-
 	    if(n > .Machine$integer.max)
 		stop("'by' argument is much too small")
 
-	    dd <- abs(del)/max(abs(to), abs(from))
-	    if (dd < 100*.Machine$double.eps) return(from)
+            if (finite.del && abs(del)/max(abs(to), abs(from)) < 100*.Machine$double.eps)
+                return(from) ## 100 is a fudge factor
             if (int) {
                 n <- as.integer(n) # truncates
                 if (n >= 2L) cumsum(rep.int(c(from, by), c(1L, n))) else
                 from + (0L:n) * by
             } else {
                 n <- as.integer(n + 1e-10)
-                x <- from + (0L:n) * by
+                x <- if(finite.del)
+                         from + (0L:n) * by
+                     else
+                         (from/4 + (0L:n) * (by/4))*4
                 ## correct for possible overshot because of fuzz
                 if(by > 0) pmin(x, to) else pmax(x, to)
             }
@@ -119,8 +125,17 @@ seq.default <-
 		}
 		else {
 		    if (intdel) storage.mode(from) <- "double"
-		    by <- (to - from) / n1
-		as.vector(c(from, from + seq_len(length.out - 2L) * by, to))
+		    del <- to - from
+		    if(is.finite(del)) {
+			## by = del/n1
+			as.vector(c(from, from + seq_len(length.out - 2L) * (del/n1), to))
+		    } else { # |del| = Inf, when from,to are ok (and large!)
+			from <- from/4 # and by = (to/n1 - from/n1) / 4
+			to   <- to / 4
+			as.vector(c(from,
+				    from + seq_len(length.out - 2L) * ((to-from)/n1),
+				    to)) * 4
+		    }
 		}
 	    }
 	else as.vector(c(from, to))[seq_len(length.out)]

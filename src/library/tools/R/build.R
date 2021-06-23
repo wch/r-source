@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -193,10 +193,7 @@ inRbuildignore <- function(files, pkgdir) {
 
     temp_install_pkg <- function(pkgdir, libdir) {
 	dir.create(libdir, mode = "0755", showWarnings = FALSE)
-        install_missing_dependencies <-
-            config_val_to_logical(Sys.getenv("_R_BUILD_INSTALL_MISSING_DEPENDENCIES_",
-                                             "no"))
-        if(install_missing_dependencies &&
+        if(nzchar(install_dependencies) &&
            all((repos <- getOption("repos")) != "@CRAN@")) {
             ## try installing missing dependencies too
             available <- utils::available.packages(repos = repos)
@@ -207,7 +204,7 @@ inRbuildignore <- function(files, pkgdir) {
                                 drop = FALSE],
                       db[colnames(available)])
             depends <- package_dependencies(package, available,
-                                            which = "most")
+                                            which = install_dependencies)
             depends <- setdiff(unlist(depends),
                                utils::installed.packages())
             if(length(depends)) {
@@ -853,6 +850,12 @@ inRbuildignore <- function(files, pkgdir) {
     keep_empty <-
         config_val_to_logical(Sys.getenv("_R_BUILD_KEEP_EMPTY_DIRS_", "FALSE"))
 
+    install_dependencies <- Sys.getenv("_R_BUILD_INSTALL_DEPENDENCIES_")
+    if(nzchar(install_dependencies) &&
+       (install_dependencies %notin% c("strong", "most", "all")))
+        install_dependencies <-
+            if(config_val_to_logical(install_dependencies)) "most" else ""
+
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
@@ -902,6 +905,10 @@ inRbuildignore <- function(files, pkgdir) {
             with_md5 <- TRUE
         } else if (a == "--log") {
             with_log <- TRUE
+        } else if (substr(a, 1, 23) == "--install-dependencies=") {
+            install_dependencies <- substr(a, 24, 1000)
+        } else if (a == "--install-dependencies") {
+            install_dependencies <- "most"
         } else if (substr(a, 1, 14) == "--compression=") {
             compression <- match.arg(substr(a, 15, 1000),
                                      c("none", "gzip", "bzip2", "xz"))
@@ -972,7 +979,7 @@ inRbuildignore <- function(files, pkgdir) {
             do_exit(1L)
         }
 	if(is.na(intname <- desc["Package"]) || !length(intname) ||
-	   !nchar(intname)) {
+	   !nzchar(intname)) {
 	    errorLog(Log, "invalid 'Package' field"); do_exit(1L)
 	}
         ## make a copy, cd to parent of copy
@@ -1112,6 +1119,23 @@ inRbuildignore <- function(files, pkgdir) {
                                                     resave_data, logical=FALSE)
             resave_data_others(pkgname, resave_data1)
             resave_data_rda(pkgname, resave_data1)
+        }
+
+        ## clean up DESCRIPTION file if there is (now) no data directory.
+        if (!dir.exists(file.path(pkgname, "data"))) {
+            desc <- file.path(pkgname, "DESCRIPTION")
+            db <- .read_description(desc)
+            ndb <- names(db)
+            omit <- character()
+            for (x in c("LazyData", "LazyDataCompression"))
+                if (x %in% ndb) omit <- c(omit, x)
+            if (length(omit)) {
+                printLog(Log,
+                         sprintf("Omitted %s from DESCRIPTION\n",
+                                 paste(sQuote(omit), collapse = " and ")))
+                db <- db[!(names(db) %in% omit)]
+                .write_description(db, desc)
+            }
         }
 
         ## add dependency on R >= 3.5.0 to DESCRIPTION if there are files in

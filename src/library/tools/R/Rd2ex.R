@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2ex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,6 @@ Rd2ex <-
         ## not valid in perl: use lookbehind instead.
         ## x <- gsub("(^|[^\\])\\\\([%{])", "\\1\\2", x)
         x <- psub("(?<!\\\\)\\\\([%{])", "\\1", x)
-        x <- psub("\\\\(l|)dots", "...", x)
         ## FIXME:  Previously said "Want to leave file bytes unchanged"
         x
     }

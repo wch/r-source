@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2018-04-09 12:09-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -861,6 +861,21 @@ msgstr "%s에 대한 제네릭 함수를 찾을 수 없습니다"
 
 msgid "Empty function name in .getGeneric"
 msgstr ".getGeneric내에 이름이 없는 함수가 있습니다"
+
+msgid "--- caching class"
+msgstr ""
+
+msgid "--- done caching class"
+msgstr ""
+
+msgid "--- getting generic"
+msgstr ""
+
+msgid "(and methods)"
+msgstr ""
+
+msgid "--- done getting generic"
+msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""

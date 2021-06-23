@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -351,9 +351,6 @@ msgstr " ユーザまたはサイトの設定を上書きしている変数で�
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr ""
-
-msgid ","
-msgstr " , "
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
@@ -885,6 +882,9 @@ msgstr " 既定の JSS スタイルは変更できないかもしれません "
 msgid "inst/doc"
 msgstr ""
 
+msgid ","
+msgstr " , "
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr ""
 
@@ -927,6 +927,9 @@ msgstr " パッケージディレクトリ %s が存在しません "
 
 msgid "no packages to check"
 msgstr " チェックするパッケージがありません "
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
+msgstr ""
 
 msgid "downloading reverse dependencies ..."
 msgstr " 逆向き依存するものをダウンロードしています... "
@@ -1466,6 +1469,11 @@ msgid_plural ""
 msgstr[0] ""
 " 以下の Rd ファイルの例示中に大局的かもしれない 'T' もしくは 'F' がありまし"
 "た: "
+
+#, fuzzy
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
+msgstr[0] " 以下の関数中に大局的かもしれない 'T' もしくは 'F' がありました: "
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"

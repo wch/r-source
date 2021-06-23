@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/x11.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{x11}
@@ -13,8 +13,8 @@
   \describe{
     \item{on Windows,}{the \code{X11()} and \code{x11()} functions are
       simple wrappers to \code{\link{windows}()} for historical
-      compatibility convenience: Calling \code{x11()} or \code{X11()} would work in most
-      cases to open an interactive graphics device.
+      compatibility convenience: Calling \code{x11()} or \code{X11()}
+      would work in most cases to open an interactive graphics device.
 
       In \R versions before 3.6.0, the Windows version had a shorter
       list of formal arguments.  Consequently, calls to \code{X11(*)}
@@ -93,8 +93,9 @@ X11.options(\dots, reset = FALSE)
   \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"},
     \code{"nbcairo"} or \code{"dbcairo"}.  Only the first will be
     available if the system was compiled without support for
-    cairographics.  The default is \code{"cairo"} where available except
-    on macOS, otherwise \code{"Xlib"}.}
+    cairographics.  The default is \code{"cairo"} where \R was built
+    using \code{pangocairo} (so not usually on macOS), otherwise
+    \code{"Xlib"}.}
 
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
@@ -150,9 +151,10 @@ X11.options(\dots, reset = FALSE)
   Which version will be fastest depends on the X11 connection and the
   type of plotting.  You will probably want to use a buffered type
   unless backing store is in use on the X server (which for example it
-  always is on macOS displays), as otherwise repainting when the
-  window is exposed will be slow.  On slow connections \code{type =
-    "dbcairo"} will probably give the best performance.
+  always is on the \code{x86_64} macOS XQuartz server), as otherwise
+  repainting when the window is exposed will be slow.  On slow
+  connections \code{type = "dbcairo"} will probably give the best
+  performance.
 
   Because of known problems with font selection on macOS without
   Pango (for example, the CRAN distribution), \code{type = "cairo"} is
@@ -354,6 +356,12 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
     \item Colours are interpreted by the X11 server, which is
     \emph{assumed} to conform to sRGB.
   }
+}
+
+\section{Warning}{
+  Support for all the Unix devices is optional, so in packages
+  \code{X11()}  should be used conditionally after checking
+  \code{\link{capabilities}("X11")}.
 }
 
 \seealso{

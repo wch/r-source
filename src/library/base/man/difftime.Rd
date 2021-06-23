@@ -1,29 +1,31 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
 \title{Time Intervals / Differences}
 \alias{difftime}
 \alias{as.difftime}
-\alias{as.double.difftime}
-\alias{is.numeric.difftime}
-\alias{print.difftime}
-\alias{format.difftime}
-\alias{units.difftime}
-\alias{units<-.difftime}
-\alias{Ops.difftime}
 \alias{*.difftime}
 \alias{/.difftime}
 \alias{Math.difftime}
+\alias{Ops.difftime}
 \alias{Summary.difftime}
 \alias{[.difftime}
-\alias{mean.difftime}
-\alias{diff.difftime}
-\alias{c.difftime}
-\alias{length<-.difftime}
+\alias{[<-.difftime}
+\alias{as.double.difftime}
 \alias{as.list.difftime}
+\alias{c.difftime}
+\alias{diff.difftime}
+\alias{format.difftime}
+\alias{is.numeric.difftime}
+\alias{length<-.difftime}
+\alias{mean.difftime}
+\alias{print.difftime}
+\alias{rep.difftime}
+\alias{units.difftime}
+\alias{units<-.difftime}
 \alias{units}
 \alias{units<-}
 \alias{time interval} % used by mean.Rd

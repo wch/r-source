@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-03-24 10:13\n"
+"POT-Creation-Date: 2021-02-01 13:58\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -384,6 +384,17 @@ msgstr "não é possível lidar com mais de uma coordenada 'x'"
 
 msgid "must have a response variable"
 msgstr "deve ter uma variável resposta"
+
+#, fuzzy
+msgid "invalid plot type"
+msgstr "larguras de boxplots inválidas"
+
+msgid "plot type '%s' will be truncated to first character"
+msgstr ""
+
+#, fuzzy
+msgid "invalid plot type '%s'"
+msgstr "larguras de boxplots inválidas"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' aplicado a algo diferente de data.frame"

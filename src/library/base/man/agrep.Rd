@@ -110,9 +110,9 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
 }
 \examples{
 agrep("lasy", "1 lazy 2")
-agrep("lasy", c(" 1 lazy 2", "1 lasy 2"), max = list(sub = 0))
-agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 2)
-agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 2, value = TRUE)
-agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 2, ignore.case = TRUE)
+agrep("lasy", c(" 1 lazy 2", "1 lasy 2"), max.distance = list(sub = 0))
+agrep("laysy", c("1 lazy", "1", "1 LAZY"), max.distance = 2)
+agrep("laysy", c("1 lazy", "1", "1 LAZY"), max.distance = 2, value = TRUE)
+agrep("laysy", c("1 lazy", "1", "1 LAZY"), max.distance = 2, ignore.case = TRUE)
 }
 \keyword{character}

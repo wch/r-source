@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-05-03 09:57\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -320,9 +320,6 @@ msgid "Variables overriding user/site settings:"
 msgstr ""
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 #, fuzzy
@@ -778,6 +775,9 @@ msgstr ""
 msgid "inst/doc"
 msgstr ""
 
+msgid ","
+msgstr ""
+
 msgid "ignored as vignettes have been rebuilt."
 msgstr ""
 
@@ -819,6 +819,9 @@ msgid "package directory %s does not exist"
 msgstr "diretório '%s' não existe"
 
 msgid "no packages to check"
+msgstr ""
+
+msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr ""
 
 msgid "downloading reverse dependencies ..."
@@ -1323,6 +1326,11 @@ msgid ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Possibly missing '()' after 'return' in the following function:"
+msgid_plural "Possibly missing '()' after 'return' in the following functions:"
 msgstr[0] ""
 msgstr[1] ""
 

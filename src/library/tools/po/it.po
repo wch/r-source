@@ -1,13 +1,13 @@
 # R Italian translation
 # Copyright (C) The R Foundation
 # This file is distributed under the same license as the R package.
-# Daniele Medri <dmedri@gmail.com>, 2005-2020.
+# Daniele Medri <dmedri@gmail.com>, 2005-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tools 3.6.3\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Project-Id-Version: tools 4.1.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-06-02 06:08+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -23,9 +23,9 @@ msgid "argument 'files' must be character"
 msgstr "l'argomento 'files' dev'essere di tipo character"
 
 #: Rmd5.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "md5 failed on file '%ls'"
-msgstr "md5 fallito sul file '%s'"
+msgstr "md5 fallito sul file '%ls'"
 
 #: Rmd5.c:65
 #, c-format
@@ -91,9 +91,9 @@ msgid "No macro definition for '%s'."
 msgstr "Nessuna definizione macro per '%s'."
 
 #: gramRd.c:3239
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough arguments passed to user macro '%s'"
-msgstr "Almeno 4 argomenti sono ammessi per le macro definite dall'utente."
+msgstr "Gli argomenti passati alla macro utente '%s' non sono abbastanza"
 
 #: gramRd.c:3379 gramRd.c:3383
 #, c-format
@@ -160,11 +160,11 @@ msgstr "errore di scrittura durante file append"
 
 #: pdscan.c:67
 msgid "too many items"
-msgstr ""
+msgstr "troppi elementi"
 
 #: pdscan.c:115
 msgid "non-character argument"
-msgstr ""
+msgstr "argomento non-character"
 
 #: signals.c:42
 msgid "pskill() is not supported on this platform"
@@ -174,10 +174,10 @@ msgstr "pskill() non è supportata su questa piattaforma"
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() non è supportata su questa piattaforma"
 
-#: text.c:67
+#: text.c:69
 msgid "invalid argument type"
 msgstr "tipo argomento non valido"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr "memoria esausta"

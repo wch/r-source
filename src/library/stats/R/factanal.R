@@ -45,7 +45,7 @@ factanal <-
     cl <- match.call()
     na.act <- NULL
     if (is.list(covmat)) {
-        if (any(is.na(match(c("cov", "n.obs"), names(covmat)))))
+        if (anyNA(match(c("cov", "n.obs"), names(covmat))))
             stop("'covmat' is not a valid covariance list")
         cv <- covmat$cov
         n.obs <- covmat$n.obs

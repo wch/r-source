@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-08-03 12:17\n"
-"PO-Revision-Date: 2013-03-18 22:15+0100\n"
+"PO-Revision-Date: 2021-02-10 17:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "cannot handle object of mode '%s'"
 msgstr "impossible de manipuler un objet de mode '%s'"
@@ -28,7 +28,7 @@ msgid "cannot set length of Tcl array"
 msgstr "impossible d'imposer la taille d'un tableau Tcl"
 
 msgid "Tcl package '%s' not found"
-msgstr "le package Tcl '%s' est introuvable"
+msgstr "Le package Tcl '%s' est introuvable"
 
 msgid "The tkGUI is not available under Windows"
 msgstr "L'interface utilisateur tkGUI n'est pas disponible sous Windows"
@@ -37,7 +37,7 @@ msgid "File"
 msgstr "Fichier"
 
 msgid "Demos"
-msgstr "Démos"
+msgstr "Dï¿½mos"
 
 msgid "Packages"
 msgstr "Packages"
@@ -58,13 +58,13 @@ msgid "Don't save workspace"
 msgstr "Ne pas sauver l'environnement"
 
 msgid "t test"
-msgstr "Test t"
+msgstr "test t"
 
 msgid "Density"
-msgstr "Densité"
+msgstr "Densitï¿½"
 
 msgid "Interactive linear fitting"
-msgstr "Ajustement linéaire interactif"
+msgstr "Ajustement linï¿½aire interactif"
 
 msgid "R FAQ"
 msgstr "FAQ R"
@@ -73,7 +73,7 @@ msgid "Load"
 msgstr "Charger"
 
 msgid "Go get them!"
-msgstr "Les récupérer !"
+msgstr "Les rï¿½cupï¿½rer !"
 
 msgid "Load packages"
 msgstr "Charger des packages"
@@ -97,16 +97,16 @@ msgid "'pb' is not from class %s"
 msgstr "'pb' n'est pas un objet de classe %s"
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr "'filters' doit être une matrice de chaînes de caractères à 2 colonnes"
+msgstr "'filters' doit ï¿½tre une matrice de chaï¿½nes de caractï¿½res ï¿½ 2 colonnes"
 
 msgid "Tcl/Tk support is not available on this system"
-msgstr "Tcl/Tk n'est pas supporté sur ce système"
+msgstr "Tcl/Tk n'est pas supportï¿½ sur ce systï¿½me"
 
 msgid "Tcl/Tk support files were not installed"
-msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
+msgstr "Les fichiers Tcl/Tk nï¿½cessaires n'ont pas ï¿½tï¿½ installï¿½s"
 
 #~ msgid "Loading Tcl/Tk interface ..."
 #~ msgstr "Chargement de Tcl/Tk..."
 
 #~ msgid "done"
-#~ msgstr "terminé"
+#~ msgstr "terminï¿½"

@@ -299,7 +299,7 @@
             newFun <- NULL
         ## arrange for setMethod to put the new method in the generic
         ## but NOT to assign the methods list object (binding is ignored)
-        setMethod(fdef, signature, newFun, where = baseenv())
+        setMethod(fdef, signature, newFun, where = new.env())
     }
     if(!global) {
         action <- if(untrace)"Untracing" else "Tracing"

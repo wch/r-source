@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -23,9 +23,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     for the \code{"libcurl"} method) naming the URL of a resource to be
     downloaded.}
 
-  \item{destfile}{a character string (or vector, see \code{url}) with
-    the name where the downloaded file is saved.  Tilde-expansion is
-    performed.}
+  \item{destfile}{a character string (or vector, see the \code{url}
+    argument) with the file path where the downloaded file is to be
+    saved.  Tilde-expansion is performed.}
 
   \item{method}{Method to be used for downloading files.  Current
     download methods are \code{"internal"}, \code{"wininet"} (Windows
@@ -60,26 +60,20 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The function \code{download.file} can be used to download a single
   file as described by \code{url} from the internet and store it in
   \code{destfile}.
-  The \code{url} must start with a scheme such as
-  \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
 
-  If \code{method = "auto"} is chosen (the default), the behavior
-  depends on the platform:
-  \itemize{
-    \item On a Unix-alike method \code{"libcurl"} is used except
-    \code{"internal"} for \samp{file://} URLs, where \code{"libcurl"}
-    uses the library of that name (\url{https://curl.se/libcurl/}).
+  The \code{url} must start with a scheme such as \samp{http://},
+  \samp{https://}, \samp{ftp://} or \samp{file://}.  Which methods
+  support which schemes varies by \R version, but \code{method = "auto"}
+  will try to find a method which supports the scheme.
 
-    \item On Windows the \code{"wininet"} method is used apart from for
-    \samp{ftps://} URLs where \code{"libcurl"} is tried.  The
-    \code{"wininet"} method uses the WinINet functions (part of the OS).
-    % https://msdn.microsoft.com/en-us/library/windows/desktop/aa383630%28v=vs.85%29.aspx
+  For \code{method = "auto"} (the default) the \code{"internal"} method
+  is used for \samp{file://} URLs, and \code{"libcurl"} for all others.
 
-    Support for method \code{"libcurl"} is optional on Windows: use
-    \code{\link{capabilities}("libcurl")} to see if it is supported on
-    your build.  It uses an external library of that name
-    (\url{https://curl.se/libcurl/}) against which \R can be compiled.
-  }
+  Support for method \code{"libcurl"} was optional on Windows prior to
+  \R 4.2.0: use \code{\link{capabilities}("libcurl")} to see if it is
+  supported on an earlier version.  It uses an external library of that
+  name (\url{https://curl.se/libcurl/}) against which \R can be
+  compiled.
 
   When method \code{"libcurl"} is used, it provides
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
@@ -101,31 +95,28 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{\link{available.packages}}.
 
   The \code{"libcurl"} and \code{"wget"} methods follow \samp{http://}
-  and \samp{https://} redirections to any scheme they support: the
-  \code{"internal"} method follows \samp{http://} to \samp{http://}
-  redirections only.  (For method \code{"curl"} use argument
-  \code{extra = "-L"}.  To disable redirection in \command{wget}, use
-  \code{extra = "--max-redirect=0"}.)
-  The \code{"wininet"} method supports some
-  redirections but not all.  (For method \code{"libcurl"}, messages will
-  quote the endpoint of redirections.)
+  and \samp{https://} redirections to any scheme they support.  (For
+  method \code{"curl"} use argument \code{extra = "-L"}.  To disable
+  redirection in \command{wget}, use \code{extra = "--max-redirect=0"}.)
+  The \code{"wininet"} method supports some redirections but not all.
+  (For method \code{"libcurl"}, messages will quote the endpoint of
+  redirections.)
 
-  Note that \samp{https://} URLs are not supported by the
-  \code{"internal"} method but are supported by the \code{"libcurl"}
-  method and the \code{"wininet"} method on Windows.
+  Support for \samp{http://} URLs in the \code{"internal"} method and
+  \samp{ftp://} URLs in the \code{"internal"} and \code{"wininet"}
+  methods was deprecated in \R 4.1.1 and removed in \R 4.2.0.
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
-  methods do not percent-decode \samp{file://} URLs, but the
-  \code{"libcurl"} and \code{"curl"} methods do: method \code{"wget"}
-  does not support them.
+  methods do not percent-decode, but the \code{"libcurl"} and
+  \code{"curl"} methods do: method \code{"wget"} does not support them.
 
   Most methods do not percent-encode special characters such as spaces
   in URLs (see \code{\link{URLencode}}), but it seems the
   \code{"wininet"} method does.
 
-  The remaining details apply to the \code{"internal"}, \code{"wininet"}
-  and \code{"libcurl"} methods only.
+  The remaining details apply to the \code{"wininet"} and
+  \code{"libcurl"} methods only.
 
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.  This is often
@@ -149,7 +140,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"libcurl"} method values of the option less than 2 give verbose
   output.
 
-  A progress bar tracks the transfer platform specifically:
+  A progress bar tracks the transfer platform-specifically:
   \describe{
     \item{On Windows}{If the file length is known, the
       full width of the bar is the known length.  Otherwise the initial
@@ -202,42 +193,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Options} of the system are used to choose proxies and so on; these are
   set in the Control Panel and are those used for system browsers.
 
-  The next two paragraphs apply to the internal code only.
-
-  Proxies can be specified via environment variables.
-  Setting \env{no_proxy} to \code{*} stops any proxy being tried.
-  Otherwise the setting of \env{http_proxy} or \env{ftp_proxy}
-  (or failing that, the all upper-case version) is consulted and if
-  non-empty used as a proxy site.  For FTP transfers, the username
-  and password on the proxy can be specified by \env{ftp_proxy_user}
-  and \env{ftp_proxy_password}.  The form of \env{http_proxy}
-  should be \code{http://proxy.dom.com/} or
-  \code{http://proxy.dom.com:8080/} where the port defaults to
-  \code{80} and the trailing slash may be omitted.  For
-  \env{ftp_proxy} use the form \code{ftp://proxy.dom.com:3128/}
-  where the default port is \code{21}.  These environment variables
-  must be set before the download code is first used: they cannot be
-  altered later by calling \code{\link{Sys.setenv}}.
-
-  Usernames and passwords can be set for HTTP proxy transfers via
-  environment variable \env{http_proxy_user} in the form
-  \code{user:passwd}.  Alternatively, \env{http_proxy} can be of the
-  form \code{http://user:pass@proxy.dom.com:8080/} for compatibility
-  with \code{wget}.  Only the HTTP/1.0 basic authentication scheme is
-  supported.
-  \cr
-  Under Windows, if \env{http_proxy_user} is set to \code{ask} then
-  a dialog box will come up for the user to enter the username and
-  password.  \bold{NB:} you will be given only one opportunity to enter this,
-  but if proxy authentication is required and fails there will be one
-  further prompt per download.
-
-
-  Much the same scheme is supported by \code{method = "libcurl"}, including
-  \env{no_proxy}, \env{http_proxy} and \env{ftp_proxy}, and for the last
-  two a contents of \code{[user:password@]machine[:port]} where the
-  parts in brackets are optional.  See
-  \url{https://curl.se/libcurl/c/libcurl-tutorial.html} for details.
+  For the \code{"libcurl"} and \code{"curl"} methods, proxies can be set
+  \emph{via} the environment variables \env{http_proxy} or
+  \env{ftp_proxy}.  See
+  \url{https://curl.se/libcurl/c/libcurl-tutorial.html} for further
+  details.
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs should
@@ -270,9 +230,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \samp{ftp:} URLs are accessed using the FTP protocol which has a
   number of variants.  One distinction is between \sQuote{active} and
   \sQuote{(extended) passive} modes: which is used is chosen by the
-  client.  The \code{"internal"} and \code{"libcurl"} methods use passive
-  mode, and that is almost universally used by browsers.  The
-  \code{"wininet"} method first tries passive and then active.
+  client.  The  \code{"libcurl"} methods uses passive
+  mode, and that is almost universally used by browsers.
 }
 \section{Good practice}{
   Setting the \code{method} should be left to the end user.  Neither of
@@ -285,8 +244,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   with a non-zero status but not an \R error.
 
   The supported \code{method}s do change: method \code{libcurl} was
-  introduced in \R 3.2.0 and is still optional on Windows -- use
-  \code{\link{capabilities}("libcurl")} in a program to see if it is
+  introduced in \R 3.2.0 and was optional on Windows until \R 4.2.0 --
+  use \code{\link{capabilities}("libcurl")} in a program to see if it is
   available.
 }
 \value{

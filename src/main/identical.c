@@ -296,11 +296,17 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)RAW(x), (void *)RAW(y),
 		      XLENGTH(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
-    case PROMSXP: // args are evaluated -- but can be seen from DOTSXP dissection
+    case PROMSXP:
+    {
+	// args are evaluated -- but can be seen from DOTSXP dissection
 	/* test for equality of the substituted expression -- or should
 	   we require both expression and environment to be identical? */
-	return(R_compute_identical(substitute(PREXPR(x), PRENV(x)),
-				   substitute(PREXPR(y), PRENV(y)), flags));
+	SEXP sy = PROTECT(substitute(PREXPR(y), PRENV(y)));
+	SEXP sx = PROTECT(substitute(PREXPR(x), PRENV(x)));
+	Rboolean ans = R_compute_identical(sx, sy, flags);
+	UNPROTECT(2); /* sx, sy */
+	return ans;
+    }
     case S4SXP:
 	/* attributes already tested, so all slots identical */
 	return TRUE;

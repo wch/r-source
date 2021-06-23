@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:30-0700\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2021-04-15 19:36+0100\n"
 "PO-Revision-Date: 2020-08-27 19:52+0900\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -30,16 +30,16 @@ msgstr "не могу завершить дочерний процесс: %s"
 msgid "unable to terminate child: %s"
 msgstr "не могу завершить дочерний процесс: %s"
 
-#: fork.c:321 fork.c:602 ncpus.c:90 ncpus.c:126 ncpus.c:191
+#: fork.c:321 fork.c:608 ncpus.c:90 ncpus.c:126 ncpus.c:191
 msgid "memory allocation error"
 msgstr "ошибка распределения памяти"
 
-#: fork.c:373 fork.c:377 fork.c:381
+#: fork.c:377 fork.c:381 fork.c:385
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
 
-#: fork.c:437
+#: fork.c:443
 msgid ""
 "Error while shutting down parallel: unable to terminate some child "
 "processes\n"
@@ -47,74 +47,74 @@ msgstr ""
 "Ошибка при завершении parallel: не могу завершить некоторые дочерние "
 "процессы\n"
 
-#: fork.c:526 fork.c:529
+#: fork.c:532 fork.c:535
 msgid "unable to create a pipe"
 msgstr "не могу создать трубу"
 
-#: fork.c:551
+#: fork.c:557
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "не могу разветвить, возможная причина: %s"
 
-#: fork.c:743
+#: fork.c:749
 msgid "only children can send data to the master process"
 msgstr "только дочерние процессы могут посылать данные мастер-процессу"
 
-#: fork.c:745
+#: fork.c:751
 msgid "there is no pipe to the master process"
 msgstr "нет трубы к мастер-процессу"
 
-#: fork.c:747
+#: fork.c:753
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "посылаемый контент должен быть RAW, используйте serialize(), если надо"
 
-#: fork.c:756 fork.c:764 fork.c:1174
+#: fork.c:762 fork.c:770 fork.c:1180
 msgid "write error, closing pipe to the master"
 msgstr "ошибка записи, закрываю трубу к мастеру"
 
-#: fork.c:774
+#: fork.c:780
 msgid "only the master process can send data to a child process"
 msgstr "только мастер-процесс может посылать данные дочернему процессу"
 
-#: fork.c:782
+#: fork.c:788
 #, c-format
 msgid "child %d does not exist"
 msgstr "дочерний процесс %d не существует"
 
-#: fork.c:788
+#: fork.c:794
 msgid "write error"
 msgstr "ошибка записи"
 
-#: fork.c:874
+#: fork.c:880
 #, c-format
 msgid "cannot wait for child %d as it does not exist"
 msgstr "не могу дождаться дочернего процесса %d , потому что его нет"
 
-#: fork.c:933 fork.c:1053
+#: fork.c:939 fork.c:1059
 #, c-format
 msgid "error '%s' in select"
 msgstr "ошибка '%s' в выборе"
 
-#: fork.c:1143
+#: fork.c:1149
 msgid "'mckill' failed"
 msgstr "'mckill' не удался"
 
-#: fork.c:1156
+#: fork.c:1162
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' может быть использован только в дочернем процессе"
 
-#: fork.c:1188
+#: fork.c:1194
 msgid "'mcexit' failed"
 msgstr "'mcexit' не удался"
 
-#: fork.c:1217 fork.c:1226
+#: fork.c:1223 fork.c:1232
 msgid "invalid CPU affinity specification"
 msgstr "неправильное описание привязки CPU"
 
-#: fork.c:1237
+#: fork.c:1243
 msgid "requested CPU set is too large for this system"
 msgstr "запрошенная установка CPU слишком велика для этой системы"
 
-#: fork.c:1260
+#: fork.c:1266
 msgid "retrieving CPU affinity set failed"
 msgstr "загрузка привязки установки CPU не удалась"

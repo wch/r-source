@@ -422,7 +422,7 @@
         if(length(formalNames) > 0) {
             if(is.null(sigArgs))
               names(signature) <- formalNames[seq_along(classes)]
-            else if(length(sigArgs) && any(is.na(match(sigArgs, formalNames))))
+            else if(length(sigArgs) && anyNA(match(sigArgs, formalNames)))
                 if(is(fdef, "genericFunction"))
                       stop(sprintf(gettext("the names in signature for method (%s) do not match %s's arguments (%s)", domain = "R-methods"),
                             paste(sigArgs, collapse = ", "),

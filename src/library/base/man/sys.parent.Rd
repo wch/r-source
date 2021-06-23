@@ -1,6 +1,6 @@
 % File src/library/base/man/sys.parent.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sys.parent}
@@ -43,15 +43,16 @@ parent.frame(n = 1)
 }
 \details{
   \code{\link{.GlobalEnv}} is given number 0 in the list of frames.
-  Each subsequent function evaluation increases the frame stack by 1
-  and the call, function definition and the environment for evaluation
+  Each subsequent function evaluation increases the frame stack by 1.
+  The call, function definition and the environment for evaluation
   of that function are returned by \code{sys.call}, \code{sys.function}
   and \code{sys.frame} with the appropriate index.
 
-  \code{sys.call}, \code{sys.frame} and \code{sys.function} accept
+  \code{sys.call}, \code{sys.function} and \code{sys.frame} accept
   integer values for the argument \code{which}.  Non-negative values of
-  \code{which} are frame numbers whereas negative values are
-  counted back from the frame number of the current evaluation.
+  \code{which} are frame numbers starting from \code{\link{.GlobalEnv}}
+  whereas negative values are counted back from the frame number of the
+  current evaluation.
 
   The parent frame of a function evaluation is the environment in which
   the function was called.  It is not necessarily numbered one less than
@@ -74,7 +75,7 @@ parent.frame(n = 1)
 
   \code{sys.status()} returns a list with components \code{sys.calls},
   \code{sys.parents} and \code{sys.frames}, the results of calls to
-  those three functions (which this will include the call to
+  those three functions (which will include the call to
   \code{sys.status}: see the first example).
 
   \code{sys.on.exit()} returns the expression stored for use by
@@ -92,10 +93,16 @@ parent.frame(n = 1)
   appear on the call stack) may not be counted, and S3 methods can also do
   surprising things.
 
-  Beware of the effect of lazy evaluation: these two functions look at
-  the call stack at the time they are evaluated, not at the time they
-  are called.  Passing calls to them as function arguments is unlikely to
-  be a good idea.
+  As an effect of lazy evaluation, these functions look at the call stack at
+  the time they are evaluated, not at the time they are called.  Passing
+  calls to them as function arguments is unlikely to be a good idea, but
+  these functions still look at the call stack and count frames from the
+  frame of the function evaluation from which they were called.
+
+  Hence, when these functions are called to provide default values for
+  function arguments, they are evaluated in the evaluation of the called
+  function and they count frames accordingly (see e.g. the \code{envir}
+  argument of \code{\link{eval}}).
 }
 \value{
   \code{sys.call} returns a call, \code{sys.function} a function

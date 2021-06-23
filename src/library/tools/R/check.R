@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ setRlibs <-
             sug
         }
         if(tests) ## we need the test-suite package available
-            c(sug, intersect(names(pi$Suggests), c("RUnit", "testthat")))
+            c(sug, intersect(names(pi$Suggests), c("RUnit", "testthat", "tinytest")))
         else sug
     }
     deps <- unique(c(names(pi$Depends), names(pi$Imports),
@@ -271,9 +271,9 @@ setRlibs <-
     rlibs <- paste(rlibs, collapse = .Platform$path.sep)
     if(quote) rlibs <- shQuote(rlibs)
     c(paste0("R_LIBS=", rlibs),
-      if(WINDOWS) " R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''",
-      if(WINDOWS) " R_LIBS_USER='no_such_dir'" else "R_LIBS_USER=''",
-      " R_LIBS_SITE='no_such_dir'")
+      if(WINDOWS) "R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''",
+      "R_LIBS_USER='NULL'",
+      "R_LIBS_SITE='NULL'")
 }
 
 add_dummies <- function(dir, Log)
@@ -431,6 +431,50 @@ add_dummies <- function(dir, Log)
             else sprintf(" [%ds/%ds]", round(sum(td[-3L])), round(td[3L]))
         }
         td2
+    }
+
+    snapshot <- function()
+    {
+        snap1 <- function(dir, recursive = TRUE, user, notemp = FALSE)
+        {
+            foo <- list.files(dir, recursive = recursive, full.names = TRUE,
+                              include.dirs = TRUE, no.. = TRUE)
+            if (notemp) {
+                isdir <- file.info(foo)$isdir
+                poss <- grepl("^/tmp/Rtmp[A-Za-z0-9.]{6}$", foo,
+                              useBytes = TRUE)
+                foo <- foo[!(poss & isdir)]
+            }
+            owner <- file.info(foo)[, "uname"]
+            foo[owner == user]
+        }
+        user <- if (.Platform$OS.type != "windows") Sys.getenv("LOGNAME")
+                else Sys.info()[["login"]]
+        home <- normalizePath("~")
+        xtra <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_", "")
+        xtra <- if (nzchar(xtra)) strsplit(xtra, ";", fixed = TRUE)[[1L]]
+                else character()
+        dirs <- c(home, "/tmp",
+                  ## taken from tools::R_user_dir, but package rappdirs
+                  ## is similar with other possibilities on Windows.
+                  if (.Platform$OS.type == "windows")
+                      file.path(Sys.getenv("LOCALAPPDATA"), "R", "cache")
+                  else if (Sys.info()["sysname"] == "Darwin")
+                      file.path(home, "Library", "Caches", "org.R-project.R")
+                  else file.path(home, ".cache"),
+                  if (.Platform$OS.type == "windows")
+                      file.path(Sys.getenv("APPDATA"), "R", "data")
+                  else if (Sys.info()["sysname"] == "Darwin")
+                      file.path(home, "Library", "Application Support", "org.R-project.R")
+                  else file.path(home, ".local", "share"),
+                  xtra)
+        x <- vector("list", length(dirs)); names(x) <- dirs
+        x[[1]] <- snap1(dirs[1], FALSE, user)
+        x[[2]] <- snap1(dirs[2], FALSE, user, TRUE)
+        x[[3]] <- snap1(dirs[3], TRUE, user)
+        x[[4]] <- snap1(dirs[4], TRUE, user)
+        for (i in seq_along(xtra)) x[[4+i]] <- snap1(dirs[4+i], FALSE, user)
+        x
     }
 
     parse_description_field <- function(desc, field, default)
@@ -1790,7 +1834,9 @@ add_dummies <- function(dir, Log)
     {
         checkingLog(Log, "R files for non-ASCII characters")
         out <- R_runR0("tools:::.check_package_ASCII_code('.')",
-                       R_opts2, "R_DEFAULT_PACKAGES=NULL")
+                       R_opts2,
+                       c("R_DEFAULT_PACKAGES=NULL",
+                         "_R_NO_REPORT_MISSING_NAMESPACES_=true"))
         if (length(out)) {
             warningLog(Log)
             msg <- ngettext(length(out),
@@ -2159,7 +2205,8 @@ add_dummies <- function(dir, Log)
             Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
             ## This now evaluates \Sexpr, so run with usual packages.
-            out <- R_runR0(Rcmd, R_opts2, elibs)
+            out <- R_runR0(Rcmd, R_opts2,
+                           c(elibs, "_R_NO_REPORT_MISSING_NAMESPACES_=true"))
             t2 <- proc.time()
             print_time(t1, t2, Log)
             if (length(out)) {
@@ -2452,7 +2499,7 @@ add_dummies <- function(dir, Log)
                     }
                 }
             }
-            ans <- list_data_in_pkg(dataDir = file.path(pkgdir, "data"))
+            ans <- list_data_in_pkg(dir = pkgdir)
             if (length(ans)) {
                 bad <-
                     names(ans)[sapply(ans, function(x) ".Random.seed" %in% x)]
@@ -2543,6 +2590,47 @@ add_dummies <- function(dir, Log)
             } else resultLog(Log, "OK")
         }
 
+        if(!is_base_pkg) {
+            desc <- .read_description("DESCRIPTION")
+            thislazy <- parse_description_field(desc, "LazyData", default = FALSE)
+            lazyz <- desc["LazyDataCompression"]
+            lazyz0 <- !is.na(lazyz)
+            if(thislazy || lazyz0) {
+                checkingLog(Log, "LazyData")
+                if (thislazy && !dir.exists("data")) {
+                    noteLog(Log)
+                    printLog0(Log,
+                              "  'LazyData' is specified without a 'data' directory\n")
+                    if(lazyz0)
+                        printLog0(Log,
+                                  "  'LazyDataCompression' is specified without a 'data' directory\n")
+                } else if (!thislazy && lazyz0) {
+                    noteLog(Log)
+                    printLog0(Log,
+                              "  'LazyDataCompression' is specified without 'LazyData'\n")
+                } else if (thislazy && lazyz0 &&
+                           !(lazyz %in% c("gzip", "bzip2", "xz", "none"))) {
+                    warningLog(Log)
+                    printLog0(Log,
+                              sprintf("  undocumented value %s of field 'LazyDataCompression'\n", sQuote(lazyz)))
+                ## Allow "gzip" to indicate that the issue has been considered.
+                ## } else if (lazyz %in% c("gzip", "yes")) {
+                ##     noteLog(Log)
+                ##     printLog0(Log,
+                ##               "  'LazyDataCompression' has its default value so would better be omitted\n")
+                } else if (thislazy && !lazyz0 && do_install) {
+                    f <- file.path(libdir, pkgname, "data", "Rdata.rdb")
+                    if (file.exists(f) &&
+                        (fs <- file.size(f)) > 5*1024^2) {
+                        warningLog(Log)
+                        printLog0(Log,
+                                  sprintf("  LazyData DB of %.1f MB without LazyDataCompression set\n", fs/1024^2),
+                                  "  See \u{00a7}1.1.6 of 'Writing R Extensions'\n")
+                    } else resultLog(Log, "OK")
+                } else resultLog(Log, "OK")
+            }
+        }
+
         ## Check for ASCII and uncompressed/unoptimized saves in 'data'
         if (!is_base_pkg && R_check_compact_data && dir.exists("data")) {
             checkingLog(Log, "data for ASCII and uncompressed saves")
@@ -2567,7 +2655,7 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
-   }
+    }
 
     check_doc_contents <- function()
     {
@@ -6132,6 +6220,9 @@ add_dummies <- function(dir, Log)
     R_check_things_in_temp_dir <-
         config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_",
                                          "FALSE"))
+    R_check_things_in_others <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_",
+                                         "FALSE"))
     R_check_vignette_titles <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTE_TITLES_",
                                          "FALSE"))
@@ -6182,6 +6273,9 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_OPTIONS_STRINGS_AS_FACTORS_" = "FALSE")
 ##        Sys.setenv("_R_CHECK_XREFS_PKGS_ARE_DECLARED_" = "TRUE")
 ##        Sys.setenv("_R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_" = "TRUE")
+        ## allow this to be overridden if there is a problem elsewhere
+        prev <- Sys.getenv("_R_CHECK_MATRIX_DATA_",  NA_character_)
+        if(is.na(prev)) Sys.setenv("_R_CHECK_MATRIX_DATA_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -6240,6 +6334,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv(TMPDIR = sessdir)
     }
 
+    snap <- if (R_check_things_in_others) snapshot() else NULL
     R_LIBS <- Sys.getenv("R_LIBS")
     arg_libdir <- libdir
     if (nzchar(libdir)) {
@@ -6653,7 +6748,7 @@ add_dummies <- function(dir, Log)
             poss <- grepl("^Rtmp[A-Za-z0-9.]{6}$", ff, useBytes = TRUE)
             ff <- ff[!(poss & dir)]
             patt <- Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_")
-            if (length(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
+            if (nzchar(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
 	    ff <- ff[!is.na(ff)]
             if (length(ff)) {
                 noteLog(Log)
@@ -6665,6 +6760,36 @@ add_dummies <- function(dir, Log)
                 resultLog(Log, "OK")
             ## clean up of this process would also do this
             unlink(sessdir, recursive = TRUE)
+        }
+
+        if (R_check_things_in_others) {
+            checkingLog(Log, "for new files in some other directories")
+            snap2 <- snapshot()
+            ff <- character()
+            for(i in seq_along(snap))
+                ff <- c(ff, setdiff(snap2[[i]], snap[[i]]))
+            if (length(ff)) {
+                ## add trailing / to indicate a directory
+                isdir <- isTRUE(file.info(ff)$isdir)
+                ff[isdir] <- paste0(ff[isdir], "/")
+                ff <- sub(paste0("^", normalizePath("~")), "~" , ff)
+                patt <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_EXCLUDE_")
+                if (nzchar(patt)) {
+                    if (startsWith(patt, "@")) {
+                        patt <- readLines(substring(patt, 2L))
+                        patt <- paste(patt, collapse = "|")
+                    }
+                    ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
+                }
+            }
+            if (length(ff)) {
+                noteLog(Log)
+                msg <- c("Found the following files/directories:",
+                         strwrap(paste(sQuote(ff), collapse = " "),
+                                 indent = 2L, exdent = 2L))
+                printLog0(Log, paste(msg, collapse = "\n"), "\n")
+            } else
+                 resultLog(Log, "OK")
         }
 
         summaryLog(Log)
@@ -6684,7 +6809,6 @@ add_dummies <- function(dir, Log)
         message("")
 
     } ## end for (pkg in pkgs)
-
 }
 ###--- end{ .check_packages }
 

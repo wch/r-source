@@ -65,7 +65,7 @@ check_for_XQuartz <- function()
         if(length(ind)) {
             this <- sub(" .*", "", sub("^\t", "", out[ind]))
             if(!file.exists(this))
-                stop("X11 library is missing: install XQuartz from xquartz.macosforge.org", domain = NA)
+                stop("X11 library is missing: install XQuartz from www.xquartz.org", domain = NA)
         }
     }
 }

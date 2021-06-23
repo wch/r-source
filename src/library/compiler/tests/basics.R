@@ -87,7 +87,7 @@ stopifnot(sfc(x) == sf(x))
 
 
 ## Check that the handlers have been associated with the correct package
-h <- ls(compiler:::inlineHandlers, all = TRUE)
+h <- ls(compiler:::inlineHandlers, all.names = TRUE)
 p <- sub("package:", "", sapply(h, find))
 pp <- sapply(h, function(n) get(n, compiler:::inlineHandlers)$package)
 stopifnot(identical(p, pp))

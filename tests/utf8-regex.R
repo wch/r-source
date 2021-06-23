@@ -212,3 +212,117 @@ stopifnot(identical(regmatches(y, regexpr("a", x)), res),
           identical(unlist(regmatches(y, gregexpr("a", x, fixed=TRUE))), res),
           identical(unlist(regmatches(y, regexec("a", x, fixed=TRUE))), res))
 
+## This is an adapted `gregexec` implementation from the example of `?grep`.
+## We will use it to test `gregexec`.
+ex_fn <- function(pattern, text, useBytes = FALSE, perl = FALSE) {
+    lapply(
+        regmatches(
+            text,
+            gregexpr(pattern, text, useBytes = useBytes, perl = perl)
+        ),
+        function(e) {
+            pos <- regexec(pattern, e, useBytes = useBytes, perl = perl)
+            res <- regmatches(e, pos)
+            if(length(res)) do.call(cbind, res) else character()
+        }
+    )
+}
+
+## Captures patterns like LETTERS123 (plus a couple of Unicode chars). 
+p.1.raw <- "(?:.* )?(%s[[:alpha:]\u00e9\u00d6]+)(%s[[:digit:]]+)(?: .*)?"
+p.1 <- sprintf(p.1.raw, "", "")
+p.1n <- sprintf(p.1.raw, "?<a>", "?<b>")   ## named capture groups
+s.utf8 <-  "H\u00e9320+W\u00d641"
+s.1 <- c(
+    "Test: A1-BC23 boo", ## matches and extra
+    "DE35",              ## one full match
+    "boo",               ## nomatch
+    NA,                  ## NA
+    s.utf8               ## UTF8 string
+)
+gr         <- gregexec(p.1, s.1, perl=FALSE)
+gr.ub      <- gregexec(p.1, s.1, perl=FALSE, useBytes=TRUE)
+gr.perl    <- gregexec(p.1n, s.1, perl=TRUE) 
+gr.perl.ub <- gregexec(p.1n, s.1, perl=TRUE, useBytes=TRUE) 
+
+m.gr       <- regmatches(s.1, gr)
+m.gr       # inspect visually
+
+m.gr.ub    <- regmatches(s.1, gr.ub)
+Encoding(m.gr.ub[[5L]]) <- "UTF-8"
+m.gr.ub.ex <- ex_fn(p.1, s.1, perl=FALSE, useBytes=TRUE)
+Encoding(m.gr.ub.ex[[5L]]) <- "UTF-8"
+
+## Named captures
+m.by.name <- do.call(cbind, regmatches(s.1, gr.perl))
+m.by.name.1 <- do.call(cbind, regmatches(s.1, regexec(p.1n, s.1, perl=TRUE)))
+
+stopifnot(
+    ## Compare to ?grep example function
+    identical(m.gr, ex_fn(p.1, s.1, perl=FALSE)),
+    identical(m.gr.ub, m.gr.ub.ex),
+    identical(regmatches(s.1, gr.perl), ex_fn(p.1n, s.1, perl=TRUE)),
+    identical(regmatches(s.1, gr.perl.ub),
+              ex_fn(p.1n, s.1, perl=TRUE, useBytes=TRUE)),
+    ## Byte matching increments faster, but matches the same
+    all(gr.ub[[5L]] - gr[[5L]] == c(0L, 0L, 1L, 1L, 1L, 2L)),
+    identical(m.gr, m.gr.ub),
+    ## Perl and non-Perl match the same (in this case)
+    identical(m.gr, regmatches(s.1, gregexec(p.1, s.1, perl=TRUE))),
+    ## Check perl actually using TRE (no named capture support)
+    inherits(try(gregexec(p.1n, s.1), silent=TRUE), "try-error"),
+    ## Named groups work
+    identical(gr.perl[[1]]["b",], c(8L, 12L)),
+    ## Corner cases
+    identical(gregexec(p.1, character()), list()),
+    identical(gregexec(p.1n, character(), perl=TRUE), list()),
+    identical(gregexec(p.1, NULL), list()),
+    identical(gregexec(p.1n, NULL, perl=TRUE), list()),
+    ## Named capture carry over to matches
+    identical(m.by.name["a",], c("A", "BC", "DE", "H\u00e9", "W\u00d6")),
+    identical(m.by.name["b",], c("1", "23", "35", "320", "41")),
+    identical(m.by.name.1["a",], c("A", "DE", "H\u00e9")),
+    identical(m.by.name.1["b",], c("1", "35", "320"))
+)
+
+## Invert and `regmatches<-` do not work with overlapping captures,
+## but should work if we drop the full match from our data.
+drop_first_capt <- function(x) {
+    ml <- attr(x, 'match.length')[-1L,]
+    x <- x[-1L,]
+    attr(x, 'match.length') <- ml
+    x
+}
+
+## Replace with lower case and multiply nums by 100
+s.2 <- s.2a <- s.1[c(1L,5L)]
+gr.2 <- lapply(gregexec(p.1, s.2), drop_first_capt)
+m.gr.2 <- regmatches(s.2, gr.2)
+replacement <- lapply(m.gr.2, tolower)
+replacement[[1]][2,] <- as.numeric(replacement[[1]][2,]) * 100
+replacement[[2]][2,] <- as.numeric(replacement[[2]][2,]) * 100
+s.2a <- s.2
+regmatches(s.2a, gr.2) <- replacement
+
+## Replace with `invert=TRUE`
+s.2b <- s.2
+regmatches(s.2b, gr.2, invert=TRUE) <- 
+    replicate(2L, c("~", "#", "~", "@", "~"), simplify=FALSE)
+
+stopifnot(
+    identical(regmatches(s.2, gr.2, invert=TRUE), 
+              list(c("Test: ", "", "-", "", " boo"), c("", "", "+", "", ""))),
+    identical(s.2a, c("Test: a100-bc2300 boo", "h\u00e932000+w\u00f64100")),
+    identical(s.2b, c("~A#1~BC@23~", "~H\u00e9#320~W\u00d6@41~")))
+
+## Check that the perl switch is working fully (h/t Michael Chirico)
+pat <- "(?<first>\\d+)"
+gregexec(pat, "123 456", perl=TRUE)
+## TRE does not support name capts
+stopifnot(inherits(try(gregexec(pat, "123 456", perl=FALSE)), "try-error"))
+local({
+    old.warn <- options(warn = 2)
+    on.exit(options(old.warn))
+    gregexec("123", "123 456", fixed=TRUE) # No warning with perl=FALSE
+})
+

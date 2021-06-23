@@ -37,6 +37,8 @@
     "Viridis"       = c(     2,  300,   75,   NA,   40,   95,   NA,   15,   90,   NA,    1,  1.1,   NA,   NA,      NA,      NA),
     "Plasma"        = c(     2, -100,  100,   NA,   60,  100,   NA,   15,   95,   NA,    2,  0.9,   NA,   NA,      NA,      NA),
     "Inferno"       = c(     2, -100,   85,   NA,    0,   65,   NA,    1,   98,   NA,  1.1,  0.9,   NA,   NA,     120,      NA),
+    "Rocket"        = c(     2,  -70,   60,   NA,    0,   10,   NA,    2,   97,   NA,  0.8,  0.8,   NA,   NA,     130,      NA),
+    "Mako"          = c(     2,  325,  130,   NA,    0,   18,   NA,    2,   95,   NA,  1.0,  1.0,   NA,   NA,      70,      NA),
     "Dark Mint"     = c(     2,  240,  130,   NA,   30,   33,   NA,   25,   95,   NA,    1,   NA,   NA,   NA,      NA,      NA),
     "Mint"          = c(     2,  205,  140,   NA,   40,   12,   NA,   34,   94,   NA,  0.5,    1,   NA,   NA,      NA,      NA),
     "BluGrn"        = c(     2,  215,  120,   NA,   25,   30,   NA,   31,   88,   NA,  0.7,  1.1,   NA,   NA,      45,      NA),
