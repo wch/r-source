@@ -107,6 +107,10 @@
       \item Messages from C code in the \file{cairo} section of package
       \pkg{grDevices} are now also up for translation, thanks to Michael
       Chirico's \PR{18123}.
+
+      \item \code{pretty(x)} with finite \code{x} now returns finite values
+      also in the case where the extreme \code{x} values are close in size
+      to the maximal representable number \code{.Machine$double.xmax}.
     }
   }
 }
