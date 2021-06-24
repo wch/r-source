@@ -5089,8 +5089,8 @@ LbyR <- lapply(1:25, function(N) seq.default(-.99*B, B ,   by = N*2e306) / B)
 Llen <- lapply(2:26, function(N)     seq.int(- B,    B., length.out = N) / B)
 LleR <- lapply(2:26, function(N) seq.default(- B,    B., length.out = N) / B)
 ## first diff  should be constant
-relEdiff <- function(L)
-    vapply(lapply(L, diff), function(x) {m <- mean(x); max(abs(x - m) / m) }, 1.23)
+relE <- function(x) { m <- mean(x); max(abs(x - m) / m) }
+relEdiff <- function(L) vapply(lapply(L, diff), relE, 1.23)
 by <- 1e307
 stopifnot(exprs = {
     ## C = R :  seq.int() <==> seq.default :
@@ -5131,10 +5131,62 @@ x <- c(1); old_xr <- .Internal(refcnt(x))
 sum(x)
 range(x)
 round(x)
-stopifnot(.Internal(refcnt(x)) == old_xr)
+(nxr <- .Internal(refcnt(x)))
+stopifnot(nxr == old_xr)
 x <- logical(1); old_xr <- .Internal(refcnt(x))
 all(x)
 stopifnot(.Internal(refcnt(x)) == old_xr)
+## the counts were 6 and 2 instead of 1 in R <= 4.1.0
+
+
+## Value stored in .Last.value needs to count at least one reference
+c(1)
+stopifnot(1 + .Last.value + .Last.value == 3)
+
+
+## c79505 made match() possibly convert NA_character_ to "NA" (PR#18126).
+stopifnot(is.na(match(c("NA", "\u{e0}"), NA)))
+
+
+
+## pretty(x) when range(x) is finite but diff(range(x)) is +/- Inf:
+B <- 1e308; 2*B; (s <- seq(-B,B,length.out = 3))
+options(warn=1) # allow warnings *as they happen*
+(ps <- pretty(c(-B,B)))
+## Warning in pretty.default(c(-B, B)) :
+##   Internal(pretty()): very large range 4e+307, corrected to 2.24712e+307
+nps <- length(ps)
+dd <- mean(dps <- diff(ps))
+epsC <- .Machine$double.eps
+relD <- (dps/dd - 1)/epsC
+relEr <- function(f, y) abs((f-y)/(f+y)*2) # cheap relative error, |f| > 0 !
+stopifnot(relEr(c(-B,B), ps[c(1L,nps)]) <= 4*epsC,
+          -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]
+## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0
+f. <- c(-1.797, -1.79, -1.75, seq(-1.7, -1, by=.1))
+stopifnot(!is.unsorted(f.))
+fmtRng <- function(x) paste(format(range(x)), collapse=", ")
+for(n in c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)) {
+    cat("n = ", n,":\n--------\n")
+    pBL <- lapply(f., function(f) structure(pretty(c(f*1e308, 2^1023.9), n), f=f))
+    ## -> a warning per f
+    n.s <- lengths(pBL) # how close to target 'n' ??
+    cat("lengths(.) in [", fmtRng(n.s), "]\n")
+    if(n <= 15) stopifnot(n.s <= 20)# seen {14,..,17}
+    else stopifnot(abs(n.s/n - 1) <= 1/2)
+    if(n) cat("length(.) <> n relative err in [", fmtRng(n.s/n - 1), "]\n")
+    lapply(pBL, function(ps) {
+        mdB <- mean(dB <- diff(ps))
+        rd <- dB/mdB - 1 # relative differences
+        ## print(range(rd))
+        x <- c(attr(ps,"f")*1e308, 2^1023.9)
+        stopifnot(if(n >= 1) abs(rd) <= n * 3e-15 else TRUE,
+                  ps[1] <= x[1] , x[2] <= ps[length(ps)])
+    }) -> .tmp
+}
+## many of these pretty() calls errored (because internally gave Inf) in R <= 4.1.0
+
+
 
 
 ## keep at end

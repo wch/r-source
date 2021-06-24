@@ -1,7 +1,7 @@
 #  File src/library/tools/R/translations.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -169,9 +169,11 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         od <- setwd("src")
         exts <- "[.](c|cc|cpp|m|mm)$"
         cfiles <- dir(".", pattern = exts)
-        if (file.exists("windows"))
+        for (subdir in c("windows", "cairo")) { # only grDevices/src/cairo
+          if(dir.exists(subdir))
             cfiles <- c(cfiles,
-                        dir("windows", pattern = exts, full.names = TRUE))
+                        dir(subdir, pattern = exts, full.names = TRUE))
+        }
     } else {
         dom <- "R"
         od <- setwd("../../..")

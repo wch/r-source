@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -72,13 +72,13 @@ iconvlist()
 }
 
 \section{Implementation Details}{
-  There are three main implementations of \code{iconv} in use.
-  Linux's C runtime \samp{glibc} contains one.  Several platforms
+  There are three main implementations of \code{iconv} in use.  Linux's
+  most common C runtime, \samp{glibc}, contains one.  Several platforms
   supply GNU \samp{libiconv}, including macOS, FreeBSD and Cygwin, in
   some cases with additional encodings.  On Windows we use a version of
   Yukihiro Nakadaira's \samp{win_iconv}, which is based on Windows'
-  codepages.  (We have added many encoding names for compatibility
-  with other systems.)  All three have \code{iconvlist}, ignore case in
+  codepages.  (We have added many encoding names for compatibility with
+  other systems.)  All three have \code{iconvlist}, ignore case in
   encoding names and support \samp{//TRANSLIT} (but with different
   results, and for \samp{win_iconv} currently a \sQuote{best fit}
   strategy is used except for \code{to = "ASCII"}).
@@ -88,6 +88,13 @@ iconvlist()
   the \sQuote{R Installation and Administration} manual recommends
   installing GNU \samp{libiconv} on Solaris and AIX, for example.
 
+  %% https://wiki.musl-libc.org/functional-differences-from-glibc.html
+  %% https://wiki.musl-libc.org/projects-using-musl.html
+  Some Linux distributions use \samp{musl} as their C runtime.  This is
+  less comprehensive than \samp{glibc}: it does not support
+  \samp{//TRANSLIT} but does inexact conversions (currently using
+  \samp{*}).
+
   There are other implementations, e.g.\sspace{} NetBSD has used one from the
   Citrus project (which does not support \samp{//TRANSLIT}) and there is
   an older FreeBSD port (\samp{libiconv} is usually used there): it has
@@ -95,7 +102,8 @@ iconvlist()
 
   Note that you cannot rely on invalid inputs being detected, especially
   for \code{to = "ASCII"} where some implementations allow 8-bit
-  characters and pass them through unchanged or with transliteration.
+  characters and pass them through unchanged or with transliteration or
+  substitution.
 
   Some of the implementations have interesting extra encodings: for
   example GNU \samp{libiconv} allows \code{to = "C99"} to use

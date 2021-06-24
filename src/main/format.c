@@ -187,11 +187,12 @@ void formatIntegerS(SEXP x, R_xlen_t n, int *fieldwidth)
        ALTINTEGER_MIN/MAX will give us the wrong thing
        anyway */
     if(n == XLENGTH(x) && KNOWN_SORTED(sorted)) {
-	tmpmin = ALTINTEGER_MIN(x, TRUE);
-	tmpmax = ALTINTEGER_MAX(x, TRUE);
+	tmpmin = PROTECT(ALTINTEGER_MIN(x, TRUE));
+	tmpmax = PROTECT(ALTINTEGER_MAX(x, TRUE));
 	naflag = KNOWN_NA_1ST(sorted) ?
 	    INTEGER_ELT(x, 0) == NA_INTEGER :
 	    INTEGER_ELT(x, XLENGTH(x) - 1) == NA_INTEGER;
+	UNPROTECT(2); /* tmpmin, tmpmax */
     }
 
     /*
@@ -208,8 +209,11 @@ void formatIntegerS(SEXP x, R_xlen_t n, int *fieldwidth)
     if(tmpmin != NULL && tmpmax != NULL &&
        TYPEOF(tmpmin) == INTSXP && TYPEOF(tmpmax) == INTSXP) {
 	int l; /* only needed here so defined locally */
+	PROTECT(tmpmin);
+	PROTECT(tmpmax);
 	xmin = INTEGER_ELT(tmpmin, 0);
 	xmax = INTEGER_ELT(tmpmax, 0);
+	UNPROTECT(2); /* tmpmin, tmpmax */
 	/* naflag set above */
 
 	/* this is identical logic to what formatInteger

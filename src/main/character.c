@@ -35,7 +35,7 @@ here prior to 2.10.0 are now in grep.c and agrep.c
 make.unique, duplicated, unique, match, pmatch, charmatch are in unique.c
 iconv is in sysutils.c
 
-Character strings in R are less than 2^31-1 bytes, so we use int not size_t.
+Character strings in R are at most 2^31-1 bytes, so we use int not size_t.
 
 Support for UTF-8-encoded strings in non-UTF-8 locales
 ======================================================

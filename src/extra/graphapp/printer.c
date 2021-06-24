@@ -87,7 +87,7 @@ static HDC chooseprinter(void)
     SetCurrentDirectory(cwd);
     if (!dc) {
 	rc = CommDlgExtendedError(); /* 0 means user cancelled */
-	if (rc) R_ShowMessage(_("Unable to choose printer"));
+	if (rc) R_ShowMessage(G_("Unable to choose printer"));
     }
     return dc;
 }
@@ -115,7 +115,7 @@ printer newprinter(double width, double height, const char *name)
     if ( !hDC ) return NULL;
     obj = new_object(PrinterObject, (HANDLE) hDC, get_printer_base());
     if ( !obj ) {
-	R_ShowMessage(_("Insufficient memory for new printer"));
+	R_ShowMessage(G_("Insufficient memory for new printer"));
 	DeleteDC(hDC);
 	return NULL;
     }
@@ -148,7 +148,7 @@ printer newprinter(double width, double height, const char *name)
     docinfo.fwType = 0;
 
     if (StartDoc(hDC, &docinfo) <= 0) {
-	R_ShowMessage(_("Unable to start the print job"));
+	R_ShowMessage(G_("Unable to start the print job"));
 	del(obj);
 	return NULL;
     }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2018  The R Core Team
+ *  Copyright (C) 1995-2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,10 +52,13 @@
 #endif
 
 #include <math.h>
-#include <float.h>
-#include <R_ext/Applic.h>
+#include <float.h> /* DBL_MAX */
+#include <R_ext/Arith.h>	/* NA handling */
 #include <Rmath.h>
 #include <R_ext/Error.h>
+
+#include <R_ext/Applic.h>
+
 #ifdef DEBUGpr
 # include <R_ext/Print.h>
 #endif
@@ -82,7 +85,6 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 #define h5 high_u_fact[1]
 
     double dx, cell, unit, base, U;
-    double ns, nu;
     int k;
     Rboolean i_small;
 
@@ -100,6 +102,13 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 	i_small = dx < cell * U * 3;
     }
 
+#ifdef DEBUGpr
+    REprintf("pretty(lo=%g,up=%g,ndiv=%d,min_n=%d,shrink=%g,high_u=(%g,%g),eps=%d)"
+	     "\n\t => dx=%g; i_small:%d. ==> first cell=%g\n",
+	     *lo, *up, *ndiv, min_n, shrink_sml, h, h5, eps_correction,
+	     dx, (int)i_small, cell);
+#endif
+
     /*OLD: cell = FLT_EPSILON+ dx / *ndiv; FLT_EPSILON = 1.192e-07 */
     if(i_small) {
 	if(cell > 10)
@@ -108,16 +117,29 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 	if(min_n > 1) cell /= min_n;
     } else {
 	cell = dx;
-	if(*ndiv > 1) cell /= *ndiv;
+	if(R_FINITE(dx)) {
+	    if(*ndiv > 1) cell /= *ndiv;
+	} else { // up - lo = +Inf (overflow; both are finite)
+	    if(*ndiv < 2) {
+		warning(_(
+	"Internal(pretty()): infinite range; *ndiv=%d, should have ndiv >= 2"),
+			*ndiv);
+	    } else {
+		cell = (*up)/(*ndiv) - (*lo)/(*ndiv);
+	    }
+	}
     }
 
-    if(cell < 20*DBL_MIN) {
-      warning(_("Internal(pretty()): very small range.. corrected"));
-      cell = 20*DBL_MIN;
-    } else if(cell * 10 > DBL_MAX) {
-      warning(_("Internal(pretty()): very large range.. corrected"));
-      cell = .1*DBL_MAX;
+    if(cell < 2*DBL_MIN) {
+	warning(_("Internal(pretty()): very small range 'cell'=%g, corrected to %g"),
+		cell, 2*DBL_MIN);
+	cell = 2*DBL_MIN;
+    } else if(cell > DBL_MAX/8) {
+	warning(_("Internal(pretty()): very large range 'cell'=%g, corrected to %g"),
+		cell, DBL_MAX/8);
+	cell = DBL_MAX/8.;
     }
+
     /* NB: the power can be negative and this relies on exact
        calculation, which glibc's exp10 does not achieve */
     base = pow(10.0, floor(log10(cell))); /* base <= cell < 10*base */
@@ -138,13 +160,12 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
      *
      *	===>	2/5 *(2+h)/(1+h)  <=  c/u  <=  (2+h)/(1+h)	*/
 
-    ns = floor(*lo/unit+rounding_eps);
-    nu = ceil (*up/unit-rounding_eps);
+    double
+	ns = floor(*lo/unit+rounding_eps),
+	nu = ceil (*up/unit-rounding_eps);
 #ifdef DEBUGpr
-    REprintf("pretty(lo=%g,up=%g,ndiv=%d,min_n=%d,shrink=%g,high_u=(%g,%g),"
-	     "eps=%d)\n\t dx=%g; is.small:%d. ==> cell=%g; unit=%g\n",
-	     *lo, *up, *ndiv, min_n, shrink_sml, h, h5,
-	      eps_correction,	dx, (int)i_small, cell, unit);
+    REprintf("\t => final cell=%g; base=%g unit=%g; (ns,nu) = (%g,%g)\n",
+	     cell, base, unit, ns, nu);
 #endif
     if(eps_correction && (eps_correction > 1 || !i_small)) {
 	if(*lo != 0.) *lo *= (1- DBL_EPSILON); else *lo = -DBL_MIN;
@@ -152,18 +173,34 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
     }
 
 #ifdef DEBUGpr
-    if(ns*unit > *lo)
-	REprintf("\t ns= %.0f -- while(ns*unit > *lo) ns--;\n", ns);
+    if(ns*unit > *lo + rounding_eps*unit)
+	REprintf("\t ns= %.0f -- while(ns*unit > *lo + e*u) ns--;\n", ns);
 #endif
     while(ns*unit > *lo + rounding_eps*unit) ns--;
 
 #ifdef DEBUGpr
-    if(nu*unit < *up)
-	REprintf("\t nu= %.0f -- while(nu*unit < *up) nu++;\n", nu);
+    if(!R_FINITE(ns*unit))
+	REprintf("\t infinite (ns=%d)*unit=%g  ==> ns++\n", ns, unit);
+#endif
+    while(!R_FINITE(ns*unit)) ns++;
+
+
+#ifdef DEBUGpr
+    if(nu*unit < *up - rounding_eps*unit)
+	REprintf("\t nu= %.0f -- while(nu*unit < *up - e*u) nu++;\n", nu);
 #endif
     while(nu*unit < *up - rounding_eps*unit) nu++;
 
+#ifdef DEBUGpr
+    if(!R_FINITE(nu*unit))
+	REprintf("\t infinite (nu=%d)*unit=%g  ==> nu--\n", nu, unit);
+#endif
+    while(!R_FINITE(nu*unit)) nu--;
+
     k = (int)(0.5 + nu - ns);
+#ifdef DEBUGpr
+    REprintf(" possibly adjusted  (ns,nu) = (%g,%g) ==> k=%d\n", ns, nu, k);
+#endif
     if(k < min_n) {
 	/* ensure that	nu - ns	 == min_n */
 #ifdef DEBUGpr
@@ -191,8 +228,8 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 	*up = nu;
     }
 #ifdef DEBUGpr
-    REprintf("\t ns=%.0f ==> lo=%g\n", ns, *lo);
-    REprintf("\t nu=%.0f ==> up=%g  ==> ndiv = %d\n", nu, *up, *ndiv);
+    REprintf("\t ns=%5.0g ==> lo=%g\n", ns, *lo);
+    REprintf("\t nu=%5.0g ==> up=%g  ==> ndiv = %d\n", nu, *up, *ndiv);
 #endif
     return unit;
 #undef h
