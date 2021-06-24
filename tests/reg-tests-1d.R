@@ -5159,8 +5159,8 @@ nps <- length(ps)
 dd <- mean(dps <- diff(ps))
 epsC <- .Machine$double.eps
 relD <- (dps/dd - 1)/epsC
-stopifnot(relE(ps[1]  / -B) <= 4*epsC,
-          relE(ps[nps] / B) <= 4*epsC,
+relEr <- function(f, y) abs((f-y)/(f+y)*2) # cheap relative error, |f| > 0 !
+stopifnot(relEr(c(-B,B), ps[c(1L,nps)]) <= 4*epsC,
           -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]
 ## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0
 f. <- c(-1.797, -1.79, -1.75, seq(-1.7, -1, by=.1))
