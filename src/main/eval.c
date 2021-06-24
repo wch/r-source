@@ -468,6 +468,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 
        Recent Linux has CLOCK_PROCESS_CPUTIME_ID
        Solaris has CLOCK_PROF, in -lrt.
+       FreeBSD only supports CLOCK_{REALTIME,MONOTONIC}
        Seems not to be supported at all on macOS.
     */ 
     itv.it_interval.tv_sec = interval / 1000000;
