@@ -5089,8 +5089,8 @@ LbyR <- lapply(1:25, function(N) seq.default(-.99*B, B ,   by = N*2e306) / B)
 Llen <- lapply(2:26, function(N)     seq.int(- B,    B., length.out = N) / B)
 LleR <- lapply(2:26, function(N) seq.default(- B,    B., length.out = N) / B)
 ## first diff  should be constant
-relEdiff <- function(L)
-    vapply(lapply(L, diff), function(x) {m <- mean(x); max(abs(x - m) / m) }, 1.23)
+relE <- function(x) { m <- mean(x); max(abs(x - m) / m) }
+relEdiff <- function(L) vapply(lapply(L, diff), relE, 1.23)
 by <- 1e307
 stopifnot(exprs = {
     ## C = R :  seq.int() <==> seq.default :
@@ -5157,8 +5157,10 @@ options(warn=1) # allow warnings *as they happen*
 ##   Internal(pretty()): very large range 4e+307, corrected to 2.24712e+307
 nps <- length(ps)
 dd <- mean(dps <- diff(ps))
-relD <- (dps/dd - 1)/.Machine$double.eps
-stopifnot(ps[1] == -B, ps[nps] == B,
+epsC <- .Machine$double.eps
+relD <- (dps/dd - 1)/epsC
+stopifnot(relE(ps[1]  / -B) <= 4*epsC,
+          relE(ps[nps] / B) <= 4*epsC,
           -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]
 ## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0
 f. <- c(-1.797, -1.79, -1.75, seq(-1.7, -1, by=.1))
