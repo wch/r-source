@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2021  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,6 @@
 #endif
 
 #include <Defn.h>
-#include <Rmath.h>
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
 
 #include "graphics.h"
@@ -51,7 +50,7 @@
 typedef struct {
     char *name;
     int code; /* 0 normal, 1 not inline, 2 read-only
-		 -1 unknown, -2 obselete, -3 graphical args
+		-1 unknown, -2 obsolete, -3 graphical args
 	       */
 } ParTab;
 
@@ -252,9 +251,6 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
  *	"xlog", "ylog"
  *	"ylbias",
  */
-    double x;
-    int ix = 0;
-    char cx = '\0';
 
     /* If we get here, Query has already checked that 'what' is valid */
 
@@ -641,8 +637,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 
 /* Specify2 -- parameters as arguments from higher-level graphics functions
  * --------
- * Many things in PARALLEL to Specify(.)
- * for par()s not valid here, see comment there.
+ * Many things are identical to Specify(.) via ---->> ./par-common.c << see comments there
  */
 #undef R_DEV_2
 #undef R_DEV__
@@ -651,10 +646,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 
 static void Specify2(const char *what, SEXP value, pGEDevDesc dd)
 {
-    double x;
-    int ix = 0, ptype = ParCode(what);
-    char cx = '\0';
-
+    int ptype = ParCode(what);
     if (ptype == 1 || ptype == -3) {
 	/* 1: these are valid, but not settable inline
 	   3: arguments, not pars
@@ -675,6 +667,7 @@ static void Specify2(const char *what, SEXP value, pGEDevDesc dd)
     }
 
 #include "par-common.c"
+
 } /* Specify2 */
 
 
@@ -924,10 +917,10 @@ static SEXP Query(const char *what, pGEDevDesc dd)
         value = allocVector(LGLSXP, 1);
         LOGICAL(value)[0] = 0;
         if (dpptr(dd)->new) {
-            if (!dpptr(dd)->state) 
+            if (!dpptr(dd)->state)
                 LOGICAL(value)[0] = 1;
         } else {
-            if (dpptr(dd)->currentFigure + 1 > dpptr(dd)->lastFigure) 
+            if (dpptr(dd)->currentFigure + 1 > dpptr(dd)->lastFigure)
                 LOGICAL(value)[0] = 1;
         }
     }
@@ -1121,17 +1114,17 @@ SEXP C_par(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue/* -Wall */;
     }
     /* should really only do this if specifying new pars ?  yes! [MM] */
-    
+
     if (new_spec && GRecording(call, dd))
 	GErecordGraphicOperation(op, originalArgs, dd);
-    
+
     UNPROTECT(2);
     return value;
 }
 
 /*
  *  Layout was written by Paul Murrell during 1997-1998 as a partial
- *  implementation of ideas in his PhD thesis.	The orginal was
+ *  implementation of ideas in his PhD thesis.	The orginal
  *  written in common lisp provides rather more general capabilities.
  *
  *  layout(

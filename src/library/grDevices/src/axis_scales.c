@@ -46,21 +46,19 @@ SEXP R_CreateAtVector(SEXP axp, SEXP usr, SEXP nint, SEXP is_log)
 // R's  .axisPars(usr, log, nintLog)
 SEXP R_GAxisPars(SEXP usr, SEXP is_log, SEXP nintLog)
 {
-    Rboolean logflag = asLogical(is_log);
-    int n = asInteger(nintLog);// will be changed on output ..
-    double min, max;
-    const char *nms[] = {"axp", "n", ""};
-    SEXP axp, ans;
-
     usr = coerceVector(usr, REALSXP);
     if(LENGTH(usr) != 2) error(_("'%s' must be numeric of length %d"), "usr", 2);
-    min = REAL(usr)[0];
-    max = REAL(usr)[1];
+    double
+	min = REAL(usr)[0],
+	max = REAL(usr)[1];
+    Rboolean logflag = asLogical(is_log);
+    int n = asInteger(nintLog);// will be changed on output ..
 
     GAxisPars(&min, &max, &n, logflag, 0);// axis = 0 :<==> do not warn
     // -> ../../../main/graphics.c
 
-    PROTECT(ans = mkNamed(VECSXP, nms));
+    const char *nms[] = {"axp", "n", ""};
+    SEXP axp, ans = PROTECT(mkNamed(VECSXP, nms));
     SET_VECTOR_ELT(ans, 0, (axp = allocVector(REALSXP, 2)));// protected
     SET_VECTOR_ELT(ans, 1, ScalarInteger(n));
     REAL(axp)[0] = min;

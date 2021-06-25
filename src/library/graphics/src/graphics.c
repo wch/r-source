@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2002--2011  The R Foundation
  *
@@ -1904,24 +1904,24 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 /* GScale: used to default axis information
  *	   i.e., if user has NOT specified par(usr=...)
  * NB: can have min > max !
- */
+ *              =========
+*/
 #define EPS_FAC_1  16
 
     Rboolean is_xaxis = (axis == 1 || axis == 3);
     int log, n, style;
-    double temp, min_o = 0., max_o = 0., tmp2 = 0.;/*-Wall*/
-
     if(is_xaxis) {
-	n = gpptr(dd)->lab[0];
+	n     = gpptr(dd)->lab[0];
 	style = gpptr(dd)->xaxs;
-	log = gpptr(dd)->xlog;
+	log   = gpptr(dd)->xlog;
     }
     else {
-	n = gpptr(dd)->lab[1];
+	n     = gpptr(dd)->lab[1];
 	style = gpptr(dd)->yaxs;
-	log = gpptr(dd)->ylog;
+	log   = gpptr(dd)->ylog;
     }
 
+    double min_o = 0., max_o = 0.;/*-Wall*/
     if (log) {
 	/*  keep original  min, max - to use in extremis */
 	min_o = min; max_o = max;
@@ -1937,7 +1937,7 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
     }
     /* Version <= 1.2.0 had
        if (min == max)	 -- exact equality for real numbers */
-    temp = fmax2(fabs(max), fabs(min));
+    double temp = fmax2(fabs(max), fabs(min));
     if(temp == 0) {/* min = max = 0 */
 	min = -1;
 	max =  1;
@@ -1962,6 +1962,7 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	error(_("axis style \"%c\" unimplemented"), style);
     }
 
+    double tmp2 = 0.;
     if (log) { /* 10^max may have gotten +Inf ; or  10^min has become 0 */
 	if((temp = Rexp10(min)) == 0.) {/* or < 1.01*DBL_MIN */
 	    temp = fmin2(min_o, 1.01* DBL_MIN); /* allow smaller non 0 */
@@ -2003,13 +2004,13 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
     // Computation of [xy]axp[0:2] == (min,max,n) :
     GAxisPars(&min, &max, &n, log, axis);
 
-#define G_Store_AXP(is_X)			\
-    if(is_X) {					\
+#define G_Store_AXP(is_X)				\
+    if(is_X) {						\
 	gpptr(dd)->xaxp[0] = dpptr(dd)->xaxp[0] = min;	\
 	gpptr(dd)->xaxp[1] = dpptr(dd)->xaxp[1] = max;	\
 	gpptr(dd)->xaxp[2] = dpptr(dd)->xaxp[2] = n;	\
-    }						\
-    else {					\
+    }							\
+    else {						\
 	gpptr(dd)->yaxp[0] = dpptr(dd)->yaxp[0] = min;	\
 	gpptr(dd)->yaxp[1] = dpptr(dd)->yaxp[1] = max;	\
 	gpptr(dd)->yaxp[2] = dpptr(dd)->yaxp[2] = n;	\
@@ -2018,7 +2019,6 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
     G_Store_AXP(is_xaxis);
 }
 #undef EPS_FAC_1
-#undef EPS_FAC_2
 
 void GSetupAxis(int axis, pGEDevDesc dd)
 {
@@ -2031,12 +2031,12 @@ void GSetupAxis(int axis, pGEDevDesc dd)
     Rboolean is_xaxis = (axis == 1 || axis == 3);
 
     if(is_xaxis) {
-	n = gpptr(dd)->lab[0];
+	n   = gpptr(dd)->lab[0];
 	min = gpptr(dd)->usr[0];
 	max = gpptr(dd)->usr[1];
     }
     else {
-	n = gpptr(dd)->lab[1];
+	n   = gpptr(dd)->lab[1];
 	min = gpptr(dd)->usr[2];
 	max = gpptr(dd)->usr[3];
     }
