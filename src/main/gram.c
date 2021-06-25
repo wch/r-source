@@ -3680,6 +3680,9 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs)
 	/* allow for a top-level placeholder */
 	SEXP phcell = findPlaceholderCell(R_PlaceholderToken, rhs);
 	if (phcell != NULL) {
+	    if (TAG(phcell) == R_NilValue)
+		error(_("pipe placeholder can only be used as a "
+			"named argument"));
 	    SETCAR(phcell, lhs);
 	    return rhs;
 	}
