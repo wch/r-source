@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2020   The R Core Team
+ *  Copyright (C) 2004-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -201,6 +201,10 @@ static int xbufmakeroom(xbuf p, xlong size)
 {
     if (size > p->dim) return 0;
     while ((p->av < size) || (p->ns == p->ms)) {
+	/* PR#17851 lost-scrollbar/lost-history issue could be handled here.
+	   Comment from Bill Dunlap: "One could change the p->av<size case to
+	   discard only enough lines to make space for the new characters, but
+	   I don't know if this extra complexity would be worthwhile." */
 	xbufshift(p);
     }
     p->av -= size;
