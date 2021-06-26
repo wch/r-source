@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.extract}
@@ -41,7 +41,7 @@ model.weights(x)
   is numeric.
 
   \code{model.weights} is slightly different from
-  \code{model.frame(, "weights")} in not naming the vector it returns.
+  \code{model.extract(, "weights")} in not naming the vector it returns.
 }
 \value{The specified component of the model frame, usually a vector.}
 
@@ -55,7 +55,8 @@ stopifnot(model.extract(a, "response") == model.response(a))
 a <- model.frame(ncases/(ncases+ncontrols) ~ agegp + tobgp + alcgp,
                  data = esoph, weights = ncases+ncontrols)
 model.response(a)
-model.extract(a, "weights")
+(mw <- model.extract(a, "weights"))
+stopifnot(identical(unname(mw), model.weights(a)))
 
 a <- model.frame(cbind(ncases,ncontrols) ~ agegp,
                  something = tobgp, data = esoph)

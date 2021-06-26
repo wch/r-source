@@ -2293,11 +2293,11 @@ par("yaxp") :            2         4         4
 
 Warning messages:
 1: In plot.window(...) :
-  relative range of values (  43 * EPS) is small (axis 2)
+  axis(2, *): range of values (3e-14) is small wrt |M| =     3.1 --> not pretty()
 2: In plot.window(...) :
-  relative range of values (  36 * EPS) is small (axis 2)
+  axis(2, *): range of values (2.5e-14) is small wrt |M| =     3.1 --> not pretty()
 3: In plot.window(...) :
-  relative range of values (   0 * EPS) is small (axis 2)
+  axis(2, *): range of values (    0) is small wrt |M| =       4 --> not pretty()
 > par(mfrow = c(1,1))
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing
