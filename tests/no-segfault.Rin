@@ -98,7 +98,7 @@ if(.Platform$OS.type == "windows") cat('options(pager = "console")\n')
 cat('options(error=expression(NULL))',
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
-cat(".libPaths(tail(.libPaths(), 1)) # no extra libraries (w/ many pkgs)\n")
+cat(".libPaths(tail(.libPaths(), 1), include.site=FALSE) # no extra libraries (w/ many pkgs)\n")
 
 cat(".proctime00 <- proc.time()\n")
 
