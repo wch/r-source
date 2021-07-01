@@ -3959,9 +3959,15 @@ SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
     return R_NilValue;    
 }
 
+// for API back compatibility:
 SEXP L_pretty(SEXP scale) {
+    /* Default preferred number of ticks hard coded ! */
+    return L_pretty2(scale, ScalarInteger(5));
+}
+SEXP L_pretty2(SEXP scale, SEXP n_) {
     double min = numeric(scale, 0);
     double max = numeric(scale, 1);
+    int n = asInteger(n_);
     double temp;
     /* FIXME:  This is just a dummy pointer because we do not have
      * log scales.  This will cause death and destruction if it is 
@@ -3969,8 +3975,6 @@ SEXP L_pretty(SEXP scale) {
      */
     double *usr = NULL;
     double axp[3];
-    /* FIXME:  Default preferred number of ticks hard coded ! */
-    int n = 5;
     Rboolean swap = min > max;
     /* 
      * Feature: 

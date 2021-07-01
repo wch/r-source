@@ -2692,6 +2692,9 @@ SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
 # undef ERROR
 #endif
 #include <R_ext/Applic.h>
+/* .Internal(pretty(min(x), max(x), n, min.n, shrink.sml, 
+ *                  c(high.u.bias, u5.bias), eps.correct))
+ */
 SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);

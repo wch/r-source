@@ -7548,7 +7548,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         code_files <- list_files_with_type(file.path(dir, "R"),
                                            "code",
                                            OS_subdirs = OS_subdirs)
-        names(code_files) <- .file_path_relative_to_dir(code_files, dir)
+        names(code_files) <-
+            file_path_relative_to(code_files, dir, parent = FALSE)
         lines <- Filter(length, lapply(code_files, find_non_ASCII_lines))
         if(length(lines))
             out$R_files_non_ASCII <- lines

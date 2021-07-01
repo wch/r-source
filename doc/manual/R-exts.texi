@@ -2879,7 +2879,7 @@ Note that C++17 or C++20 `support' does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
-@uref{https://libcxx.llvm.org/docs/Cxx1zStatus.html} to see if the
+@uref{https://libcxx.llvm.org/Cxx1zStatus.html} to see if the
 features you want to use are widely implemented.
 
 A requirement of C++17 or later should always be declared in the

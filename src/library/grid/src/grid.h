@@ -326,6 +326,7 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size);
 SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
 SEXP L_pretty(SEXP scale);
+SEXP L_pretty2(SEXP scale, SEXP n);
 SEXP L_locator();
 SEXP L_convert(SEXP x, SEXP whatfrom,
 	       SEXP whatto, SEXP unitto);

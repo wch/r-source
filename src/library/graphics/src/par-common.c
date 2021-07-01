@@ -17,10 +17,15 @@
  *  https://www.R-project.org/Licenses/
  */
 
+    double x;
+    int ix = 0;
+    char cx = '\0';
+
 /* Graphical parameters which are treated identically by
  * par( <nam> = <value> )  and	highlevel  plotfun (..., <nam> = <value> ).
  *
  * This is #included both from Specify() and Specify2() into ./par.c
+ *			       ~~~~~~~~~     ~~~~~~~~~~      =======
 */
     if (streql(what, "adj")) {
 	lengthCheck(what, value, 1);	x = asReal(value);

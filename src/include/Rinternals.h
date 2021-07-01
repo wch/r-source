@@ -1806,6 +1806,8 @@ Rbyte *RAW0(SEXP x);
 void SET_LOGICAL_ELT(SEXP x, R_xlen_t i, int v);
 void SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v);
 void SET_REAL_ELT(SEXP x, R_xlen_t i, double v);
+void SET_COMPLEX_ELT(SEXP x, R_xlen_t i, Rcomplex v);
+void SET_RAW_ELT(SEXP x, R_xlen_t i, Rbyte v);
 #endif
 
 #ifdef USE_RINTERNALS

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1999--2010  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2021        The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -91,13 +92,29 @@ char *get_R_HOME(void)
 	return (rhomebuf);
 
     /* And then the registry */
-    rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core\\R", 0,
-		      KEY_READ, &hkey);
+    rc = RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\R-core\\R", 0,
+                      KEY_READ, &hkey);
     if (rc == ERROR_SUCCESS) {
 	rc = RegQueryValueEx(hkey, "InstallPath", 0, &keytype,
-			     (LPBYTE) rhomebuf, &cbData);
+                             (LPBYTE) rhomebuf, &cbData);
 	RegCloseKey (hkey);
-    } else return NULL;
-    if (rc != ERROR_SUCCESS) return NULL;
-    return rhomebuf;
+	return (rc == ERROR_SUCCESS) ? rhomebuf : NULL;
+	/* Do not look into the machine registry when there are any
+	   versions of R installed for the current user. Any installation
+	   of R updates the path in the registry (user or machine) and any
+	   uninstallation clears it, so the entry may be unset even when
+	   some versions of R are installed. One should use R_HOME
+	   environment variable to avoid surprise.
+	*/
+    }
+
+    rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core\\R", 0,
+                      KEY_READ, &hkey);
+    if (rc == ERROR_SUCCESS) {
+	rc = RegQueryValueEx(hkey, "InstallPath", 0, &keytype,
+                             (LPBYTE) rhomebuf, &cbData);
+	RegCloseKey (hkey);
+	return (rc == ERROR_SUCCESS) ? rhomebuf : NULL;
+    }
+    return NULL;
 }
