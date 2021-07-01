@@ -5060,6 +5060,11 @@ altint_dup_multicheck(ivec, 0, s3class = "fake_class")
 altreal_dup_multicheck(dvec, 0, 0, 0, s3class = "fake_class")
 
 
+## Value stored in .Last.value needs to count at least one reference
+c(1)
+stopifnot(1 + .Last.value + .Last.value == 3)
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
