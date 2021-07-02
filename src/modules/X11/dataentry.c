@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2020  The R Core Team
+ *  Copyright (C) 1998--2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1346,7 +1346,7 @@ static void handlechar(DEstruct DE, char *text)
 	}
     }
 
-    if (clength+strlen(text) > BOOSTED_BUF_SIZE - MB_CUR_MAX - 1) {
+    if (clength+strlen(text) > BOOSTED_BUF_SIZE - R_MB_CUR_MAX - 1) {
 	warning("dataentry: expression too long");
 	goto donehc;
     }

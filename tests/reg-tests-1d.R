@@ -5069,6 +5069,15 @@ c(1)
 stopifnot(1 + .Last.value + .Last.value == 3)
 
 
+## in 4.1.0, encodeString() below would return unflagged UTF-8
+## representation of the string
+if (l10n_info()$"Latin-1" && localeToCharset()=="ISO8859-1") {
+  # checking localeToCharset() because on Windows, in C locale,
+  # l10n_info() would report Latin-1 when that is the code page
+  y <- "\xfc"
+  stopifnot(y == encodeString(y))
+} 
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

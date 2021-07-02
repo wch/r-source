@@ -389,6 +389,15 @@ void attribute_hidden R_check_locale(void)
     }
 #endif
     mbcslocale = MB_CUR_MAX > 1;
+    R_MB_CUR_MAX = MB_CUR_MAX;
+#ifdef __sun
+    /* Solaris 10 (at least) has MB_CUR_MAX == 3 in some, but ==4
+       in other UTF-8 locales. The former does not allow working
+       with non-BMP characters using mbrtowc(). Work-around by
+       allowing to use more. */
+    if (utf8locale && R_MB_CUR_MAX < 4)
+	R_MB_CUR_MAX = 4;
+#endif
 #ifdef Win32
     {
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;

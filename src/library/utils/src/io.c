@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2018   The R Core Team.
+ *  Copyright (C) 1998-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -310,7 +310,7 @@ SEXP countfields(SEXP args)
     int nfields, nskip, i, c, inquote, quote = 0;
     int blocksize, nlines, blskip;
     const char *p;
-    Rboolean dbcslocale = (MB_CUR_MAX == 2);
+    Rboolean dbcslocale = (R_MB_CUR_MAX == 2);
     LocalData data = {NULL, 0, 0, '.', "", NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE,	 FALSE};
     data.NAstrings = R_NilValue;
