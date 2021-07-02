@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009-2020 The R Core Team.
+ *  Copyright (C) 2009-2021 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -84,35 +84,6 @@
 
 # define sockerrno WSAGetLastError()
 
-# define ECONNREFUSED WSAECONNREFUSED
-# define EADDRINUSE WSAEADDRINUSE
-# define ENOTSOCK WSAENOTSOCK
-# define EISCONN WSAEISCONN
-# define ETIMEDOUT WSAETIMEDOUT
-# define ENETUNREACH WSAENETUNREACH
-# define EINPROGRESS WSAEINPROGRESS
-# define EALREADY WSAEALREADY
-# define EAFNOSUPPORT WSAEAFNOSUPPORT
-# define EOPNOTSUPP WSAEOPNOTSUPP
-# define EWOULDBLOCK WSAEWOULDBLOCK
-/* those are occasionally defined by MinGW's errno, so override them
- * with socket equivalents */
-# ifdef EBADF
-#  undef EBADF
-# endif
-# ifdef EINVAL
-#  undef EINVAL
-# endif
-# ifdef EFAULT
-#  undef EFAULT
-# endif
-# ifdef EACCES
-#  undef EACCES
-# endif
-# define EFAULT WSAEFAULT
-# define EINVAL WSAEINVAL
-# define EACCES WSAEACCES
-# define EBADF WSAEBADF
 
 static int initsocks(void)
 {
@@ -1323,7 +1294,11 @@ int in_R_HTTPDCreate(const char *ip, int port)
 
     /* bind to the desired port */
     if (bind(srv_sock, build_sin(&srv_sa, ip, port), sizeof(srv_sa))) {
+#ifndef _WIN32
 	if (sockerrno == EADDRINUSE) {
+#else
+	if (sockerrno == WSAEADDRINUSE) {
+#endif
 	    closesocket(srv_sock);
 	    srv_sock = INVALID_SOCKET;
 	    return -2;
