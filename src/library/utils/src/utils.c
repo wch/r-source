@@ -56,43 +56,54 @@ SEXP unzip(SEXP args)
 /* Declarations from Defn.h */
 int IS_ASCII(SEXP x);
 int IS_UTF8(SEXP x);
+int ENC_KNOWN(SEXP x);
+extern Rboolean utf8locale;
 const wchar_t *Rf_wtransChar(SEXP x);
 
 #if defined(USE_RI18N_FNS) || (defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE))
 SEXP charClass(SEXP x, SEXP scl)
 {
-    R_xlen_t n;
-    const int *px;
-    if (isString(x)) {
-	if (XLENGTH(x) != 1)
-	    error(_("argument 'x' must be a length-1 character vector"));
-	if (IS_ASCII(x) || IS_UTF8(x))
-	    error(_("argument 'x' must be UTF-8 encoded (including ASCII)"));
-	PROTECT(x); // PROTECT for balance only
-	SEXP sx = STRING_ELT(x, 0);
-	const wchar_t *wx = Rf_wtransChar(sx);
-	n = wcslen(wx);;
-	px = (const int*) wx;
-    } else {
-	PROTECT(x = coerceVector(x, INTSXP));
-	n = XLENGTH(x);
-	px = INTEGER(x);
-    }
-
-    if (!isString(scl))
+    int nProtect = 0;
+    if (!isString(scl) || length(scl) != 1)
 	error(_("argument 'class' must be a character string"));
     const char *cl = CHAR(STRING_ELT(scl, 0));
     wctype_t wcl = wctype(cl);
-    if(wcl == 0) error("character class \"%s\" is invalid", cl);
+    if(wcl == 0)
+	error("character class \"%s\" is invalid", cl);
 
-    SEXP ans = allocVector(LGLSXP, n);
-    int *pans = LOGICAL(ans);
-    for (R_xlen_t i = 0; i < n; i++) {
-	int this = px[i];
-	if (this < 0) pans[i] = NA_LOGICAL;
-	else pans[i] = iswctype(this, wcl);
+    R_xlen_t n;
+    SEXP ans;
+    if (isString(x)) {
+	if (XLENGTH(x) != 1)
+	    error(_("argument 'x' must be a length-1 character vector"));
+	SEXP sx = STRING_ELT(x, 0);
+	if (!(IS_ASCII(sx) || IS_UTF8(sx) || (utf8locale && !ENC_KNOWN(sx))))
+	    error(_("argument 'x' must be UTF-8 encoded (including ASCII)"));
+	const wchar_t *wx = Rf_wtransChar(sx);
+	n = wcslen(wx);;
+	PROTECT(ans = allocVector(LGLSXP, n));
+	nProtect++;
+	int *pans = LOGICAL(ans);
+	for (R_xlen_t i = 0; i < n; i++) {
+	    // casting in case wchar_t is signed short: avoid sign extension
+	    int this = (int)(unsigned int)wx[i];
+	    pans[i] = iswctype(this, wcl);
+	}
+    } else {
+	PROTECT(x = coerceVector(x, INTSXP));
+	nProtect++;
+	n = XLENGTH(x);
+	const int* px = INTEGER(x);
+	PROTECT(ans = allocVector(LGLSXP, n));
+	nProtect++;
+	int *pans = LOGICAL(ans);
+	for (R_xlen_t i = 0; i < n; i++) {
+	    int this = px[i];
+	    if (this < 0) pans[i] = NA_LOGICAL;
+	    else pans[i] = iswctype(this, wcl);
+	}
     }
-    UNPROTECT(1);
+    UNPROTECT(nProtect);
     return ans;
 }
 #else
