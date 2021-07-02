@@ -15291,7 +15291,7 @@ scale(x, scale = TRUE)
 @end example
 
 @noindent
-would do most likely do different things, to the justifiable
+would most likely do different things, to the justifiable
 consternation of the end user.
 
 To add a further twist, which default is used when a user calls
