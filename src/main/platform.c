@@ -490,11 +490,7 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	SEXP el = STRING_ELT(fn, i);
 	if (!isNull(el) && el != NA_STRING)
-#ifdef Win32
-	    f[i] = acopy_string(reEnc(CHAR(el), getCharCE(el), CE_UTF8, 1));
-#else
 	    f[i] = acopy_string(translateCharFP(el));
-#endif
 	else
 	    error(_("invalid filename specification"));
 	if (STRING_ELT(hd, i) != NA_STRING)
