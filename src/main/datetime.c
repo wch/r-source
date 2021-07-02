@@ -885,6 +885,9 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    const char *p = translateChar(STRING_ELT(sformat, i));
 	    if (strstr(p, "%Z") || strstr(p, "%z")) {needTZ = 1; break;}
 	}
+	/* strftime (per POSIX) calls settz(), so we need to set TZ, but
+	   we would not have to call settz() directly (except for the
+	   old OLD_Win32 code) */
 	if(needTZ) settz = set_tz(tz1, oldtz);
     }
 
@@ -941,8 +944,11 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #elif defined USE_INTERNAL_MKTIME
 	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
 #else
-	    // The system one, as we use system strftime here
-	    if(tm.tm_isdst >= 0) tzname[tm.tm_isdst] = tm_zone;
+	    /* Modifying tzname causes memory corruption on Solaris. It
+	       is not specified to have any effect and strftime is documented
+	       to call settz().*/
+	    if(tm.tm_isdst >= 0 && strcmp(tzname[tm.tm_isdst], tm_zone))
+		warning(_("Timezone specified in the object field cannot be used on this system."));
 #endif
 #ifdef HAVE_TM_GMTOFF
 	    int tmp = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
