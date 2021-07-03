@@ -815,7 +815,7 @@ fil <- "Sweave-test-1.Rnw"
 file.copy(system.file("Sweave", fil, package="utils"), tempdir())
 owd <- setwd(tempdir())
 (o <- capture.output(utils:::.Sweave(fil, no.q = TRUE), type = "message"))
-stopifnot(grepl("exit status 0", o[2]))
+stopifnot(grepl("exit status 0", tail(o, 1)))
 setwd(owd)
 ## R CMD Sweave gave status 1 and hence an error in R 3.4.0 (only)
 
@@ -5156,12 +5156,12 @@ options(warn=1) # allow warnings *as they happen*
 ## Warning in pretty.default(c(-B, B)) :
 ##   Internal(pretty()): very large range 4e+307, corrected to 2.24712e+307
 nps <- length(ps)
-dd <- mean(dps <- diff(ps))
+dd <- sum((dps <- diff(ps))/length(dps)) # mean w/o overflow
 epsC <- .Machine$double.eps
 relD <- (dps/dd - 1)/epsC
 relEr <- function(f, y) abs((f-y)/(f+y)*2) # cheap relative error, |f| > 0 !
 stopifnot(relEr(c(-B,B), ps[c(1L,nps)]) <= 4*epsC,
-          -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]
+          -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]; w/o long-double: [-5, .., 4\
 ## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0
 f. <- c(-1.797, -1.79, -1.75, seq(-1.7, -1, by=.1))
 stopifnot(!is.unsorted(f.))
@@ -5176,7 +5176,7 @@ for(n in c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)) {
     else stopifnot(abs(n.s/n - 1) <= 1/2)
     if(n) cat("length(.) <> n relative err in [", fmtRng(n.s/n - 1), "]\n")
     lapply(pBL, function(ps) {
-        mdB <- mean(dB <- diff(ps))
+        mdB <- sum((dB <- diff(ps))/length(dB))
         rd <- dB/mdB - 1 # relative differences
         ## print(range(rd))
         x <- c(attr(ps,"f")*1e308, 2^1023.9)
@@ -5185,7 +5185,6 @@ for(n in c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)) {
     }) -> .tmp
 }
 ## many of these pretty() calls errored (because internally gave Inf) in R <= 4.1.0
-
 
 
 
