@@ -5160,6 +5160,9 @@ dd <- sum((dps <- diff(ps))/length(dps)) # mean w/o overflow
 epsC <- .Machine$double.eps
 relD <- (dps/dd - 1)/epsC
 relEr <- function(f, y) abs((f-y)/(f+y)*2) # cheap relative error, |f| > 0 !
+stopifnot(is.finite(mean(ps)), ## these all failed without "long-double"
+          is.finite(mdp <- mean(dps)),
+          all.equal(dd, mdp, tolerance=1e-15))
 stopifnot(relEr(c(-B,B), ps[c(1L,nps)]) <= 4*epsC,
           -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]; w/o long-double: [-5, .., 4\
 ## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0

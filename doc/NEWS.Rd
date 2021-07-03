@@ -111,6 +111,9 @@
       \item \code{pretty(x)} with finite \code{x} now returns finite values
       also in the case where the extreme \code{x} values are close in size
       to the maximal representable number \code{.Machine$double.xmax}.
+
+      \item \code{mean(x)} with finite \code{x} now is finite also without
+      "long.double" capability.
     }
   }
 }
