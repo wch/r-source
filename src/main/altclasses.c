@@ -1459,6 +1459,15 @@ static R_INLINE SEXP WRAPPER_WRAPPED_RW(SEXP x)
 
 static SEXP wrapper_Serialized_state(SEXP x)
 {
+    /* If the wrapped value is not an ALTREP and there is no useful
+       metadata then return NULL to allow this to be serialized as a
+       standard object. This avoids serializing potentially large
+       attributes on the wrapped value (PR18142). */
+    if (! ALTREP(WRAPPER_WRAPPED(x)) &&
+	WRAPPER_SORTED(x) == UNKNOWN_SORTEDNESS &&
+	! WRAPPER_NO_NA(x))
+	return NULL;
+
     return CONS(WRAPPER_WRAPPED(x), WRAPPER_METADATA(x));
 }
 
