@@ -114,6 +114,10 @@
 
       \item \code{mean(x)} with finite \code{x} now is finite also without
       "long.double" capability.
+
+      \item \command{R CMD Rd2pdf} no longer leaves an empty build
+      directory behind when it aborts due to an already existing output
+      file (\PR{18141}).
     }
   }
 }
