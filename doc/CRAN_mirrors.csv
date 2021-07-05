@@ -21,7 +21,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Canada (ON 1) [https]",Canada,Toronto,https://utstat.toronto.edu/cran/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
 "Canada (ON 2) [https]",Canada,Toronto,https://cran.pacha.dev/,"DigitalOcean","Mauricio Vargas <mavargas11 # uc.cl>",1,ca,"secure_mirror_from_master"
 "Chile (Santiago) [https]",Chile,Santiago,https://cran.dcc.uchile.cl/,"Departamento de Ciencias de la Computación, Universidad de Chile","Mauricio Vargas <mvargas # dcc.uchile.cl>",1,cl,"secure_mirror_from_master"
-"Chile (Temuco) [https]",Chile,Temuco,https://cran.dme.ufro.cl/,"Departamento de Matemática y Estadística, Universidad de La Frontera","tic-dme # ufrontera.cl",1,cl
+"Chile (Temuco) [https]",Chile,Temuco,https://cran.dme.ufro.cl/,"Departamento de Matemática y Estadística, Universidad de La Frontera","tic-dme # ufrontera.cl",0,cl
 "China (Beijing 1) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn,
 "China (Beijing 2) [https]",China,Beijing,https://mirrors.bfsu.edu.cn/CRAN/,"Beijing Foreign Studies University","Aron Xu <aron # bfsu.edu.cn>",1,cn,"secure_mirror_from_master"
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn,"secure_mirror_from_master"
@@ -58,7 +58,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "India [https]",India,Bhubaneswar,https://mirror.niser.ac.in/cran/,"National Institute of Science Education and Research (NISER)","Subhankar Mishra <smishra # niser.ac.in>",1,in,"secure_mirror_from_master"
 "Indonesia (Jakarta) [https]",Indonesia,Jakarta,https://repo.bppt.go.id/cran/,"Agency for The Application and Assessment of Technology","Imam Cartealy <imam.cartealy # bppt.go.id>",1,id,"secure_mirror_from_master"
 "Iran [https]",Iran,Mashhad,https://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir,"secure_mirror_from_master"
-"Ireland [https]",Ireland,Dublin,https://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie,
+"Ireland [https]",Ireland,Dublin,https://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",0,ie,
 "Italy (Milano) [https]",Italy,Milano,https://cran.mirror.garr.it/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it,"secure_mirror_from_master"
 "Italy (Padua) [https]",Italy,Padua,https://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it,"secure_mirror_from_master"
 "Japan (Tokyo) [https]",Japan,Tokyo,https://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
@@ -66,7 +66,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Korea (Busan) [https]",Korea,Busan,https://ftp.harukasan.org/CRAN/,"Information and Database Systems Laboratory, Pukyong National University","Jongmin Kim <jmkim # ftp.harukasan.org>",1,kr,
 "Korea (Gyeongsan-si) [https]",Korea,Gyeongsan-si,https://cran.yu.ac.kr/,"Yeungnam University","sysop # yu.ac.kr",1,kr,"secure_mirror_from_master"
 "Korea (Seoul 1) [https]",Korea,Seoul,https://cran.seoul.go.kr/,"Bigdata Campus, Seoul Metropolitan Govermment","bigdata # seoul.go.kr",1,kr,"secure_mirror_from_master"
-"Korea (Seoul 2)",Korea,Seoul,http://healthstat.snu.ac.kr/CRAN/,"Graduate School of Public Health, Seoul National University, Seoul","Sunghow # gmail.com",1,kr,
+"Korea (Seoul 2)",Korea,Seoul,http://healthstat.snu.ac.kr/CRAN/,"Graduate School of Public Health, Seoul National University, Seoul","Sunghow # gmail.com",0,kr,
 "Korea (Ulsan) [https]",Korea,Ulsan,https://cran.biodisk.org/,"The Genome Institute of UNIST (Ulsan National Institute of Science and Technology)","ldsrman # gmail.com",1,kr,"secure_mirror_from_master"
 "Malaysia [https]",Malaysia,Serdang,https://mirrors.upm.edu.my/CRAN/,"Universiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my,"secure_mirror_from_master"
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
