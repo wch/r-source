@@ -497,7 +497,7 @@ add_dummies <- function(dir, Log)
             pkgdir <- getwd()
             resultLog(Log, "OK")
         } else {
-            errorLog(Log, "Package directory ", sQuote(pkg), "does not exist.")
+            errorLog(Log, "Package directory ", sQuote(pkg), " does not exist.")
             summaryLog(Log)
             do_exit(1L)
         }
@@ -4283,20 +4283,25 @@ add_dummies <- function(dir, Log)
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
             dir <- file.path(pkgdir, "inst", "doc")
-            outputs <- character(length(vigns$docs))
-	    .msg <- character()
-            for (i in seq_along(vigns$docs)) {
-                file <- vigns$docs[i]
-                name <- vigns$names[i]
-                engine <- vignetteEngine(vigns$engines[i])
-                outputs[i] <- tryCatch({
-                    find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
-                }, error = function(e) {
-		    .msg <<- c(.msg, conditionMessage(e))
-	            NA}
-		)
+            if (dir.exists(dir)) {
+                outputs <- character(length(vigns$docs))
+                .msg <- character()
+                for (i in seq_along(vigns$docs)) {
+                    file <- vigns$docs[i]
+                    name <- vigns$names[i]
+                    engine <- vignetteEngine(vigns$engines[i])
+                    outputs[i] <- tryCatch({
+                        find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
+                    }, error = function(e) {
+                        .msg <<- c(.msg, conditionMessage(e))
+                        NA}
+                    )
+                }
+                bad_vignettes <- vigns$docs[is.na(outputs)]
+            } else {
+                .msg <- "Directory 'inst/doc' does not exist."
+                bad_vignettes <- vigns$docs
             }
-            bad_vignettes <- vigns$docs[is.na(outputs)]
             if (nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
