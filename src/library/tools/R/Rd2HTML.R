@@ -173,7 +173,7 @@ createRedirects <- function(file, Rdobj)
     redirHTML <- sprintf("<html><head><meta http-equiv='refresh' content='0; url=../html/%s'></head></html>\n", urlify(basename(file)))
     toProcess <- which(RdTags(Rdobj) == "\\alias")
     helpdir <- paste0(dirname(dirname(file)), "/help") # .../pkg/help/
-    aliasName <- function(i) Rdobj[[i]][[1]]
+    aliasName <- function(i) trimws(Rdobj[[i]][[1]])
     aliasFile <- function(i) file.path(helpdir, sprintf("%s.html", topic2filename(aliasName(i))))
     redirMsg <- function(type, src, dest, status) {
         ## change sprintf to gettextf to make translatable, but seems unnecessary
