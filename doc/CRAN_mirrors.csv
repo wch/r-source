@@ -45,7 +45,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille) [https]",France,Marseille,https://cran.biotools.fr/,"IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr,"secure_mirror_from_master"
 "France (Montpellier) [https]",France,Montpellier,https://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr,"secure_mirror_from_master"
-"France (Paris 1) [https]",France,Paris,https://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
+"France (Paris 1) [https]",France,Paris,https://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr,"secure_mirror_from_master"
 "Germany (Erlangen) [https]",Germany,Erlangen,https://ftp.fau.de/cran/,"Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)","rrze-ftp-admins # fau.de",1,de,"secure_mirror_from_master"
 "Germany (Leipzig) [https]",Germany,Leipzig,https://mirror.dogado.de/cran/,"dogado GmbH","mirror # dogado.de",1,de,"secure_mirror_from_master"
 "Germany (Göttingen) [https]",Germany,Göttingen,https://ftp.gwdg.de/pub/misc/cran/,"GWDG Göttingen","ftpadmin # gwdg.de",1,de,"secure_mirror_from_master"
