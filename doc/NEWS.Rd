@@ -87,6 +87,10 @@
 
       \item Embedded \R on Windows can now find \R home directory via the
       registry even when installed only for the current user (\PR{18135}).
+
+      \item \code{pretty(x)} with finite \code{x} now returns finite values
+      also in the case where the extreme \code{x} values are close in size
+      to the maximal representable number \code{.Machine$double.xmax}.
     }
   }
 }
