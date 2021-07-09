@@ -43,7 +43,10 @@
       has always been the intention.
 
       \item The \code{contrasts} setter \code{`contrasts<-`} gets explicit
-      default \code{how.many = NULL} rather than just using \code{missing(how.many)}.
+      default \code{how.many = NULL} rather than just using
+      \code{missing(how.many)}.
+
+      \item \code{grid.pretty()} got new optional argument \code{n = 5}.
     }
   }
 
