@@ -5150,6 +5150,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* with a value, in function returning void",
                              ": warning: .*\\[-Wlto",
                              ": warning: .*\\[-Wodr\\]",
+                             ": warning: .*\\[-Wswitch\\]",
                              ": warning: line number out of range",
                              ## gcc 10 some -fanalyzer warnings
                              ": warning: .*\\[-Wanalyzer-null-dereference\\]",
