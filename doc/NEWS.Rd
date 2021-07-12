@@ -47,6 +47,8 @@
       \code{missing(how.many)}.
 
       \item \code{grid.pretty()} got new optional argument \code{n = 5}.
+
+      \item \code{pretty()} gets option \code{bounds = TRUE}.
     }
   }
 
@@ -110,10 +112,6 @@
       \item Messages from C code in the \file{cairo} section of package
       \pkg{grDevices} are now also up for translation, thanks to Michael
       Chirico's \PR{18123}.
-
-      \item \code{pretty(x)} with finite \code{x} now returns finite values
-      also in the case where the extreme \code{x} values are close in size
-      to the maximal representable number \code{.Machine$double.xmax}.
 
       \item \code{mean(x)} with finite \code{x} now is finite also without
       "long.double" capability.
@@ -207,6 +205,10 @@
 
       \item Embedded \R on Windows can now find \R home directory via the
       registry even when installed only for the current user (\PR{18135}).
+
+      \item \code{pretty(x)} with finite \code{x} now returns finite values
+      also in the case where the extreme \code{x} values are close in size
+      to the maximal representable number \code{.Machine$double.xmax}.
     }
   }
 }

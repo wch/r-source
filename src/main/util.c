@@ -2717,10 +2717,13 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "high.u.bias");
     if (!R_FINITE(z = REAL(hi)[1]) || z < 0.)
 	error(_("invalid '%s' argument"), "u5.bias");
-    int eps = asInteger(CAR(args)); /* eps.correct */
+    int eps = asInteger(CAR(args)); args = CDR(args); /* eps.correct */
     if (eps == NA_INTEGER || eps < 0 || eps > 2)
 	error(_("'eps.correct' must be 0, 1, or 2"));
-    R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, 1);
+    int return_bounds = asLogical(CAR(args)); args = CDR(args); /* bounds */
+    if (return_bounds == NA_LOGICAL)
+	error(_("'bounds' must be TRUE or FALSE"));
+    R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, return_bounds);
     //------ (returns 'unit' which we do not need)
     PROTECT(ans = allocVector(VECSXP, 3));
     SET_VECTOR_ELT(ans, 0, ScalarReal(l));

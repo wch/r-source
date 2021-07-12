@@ -1,6 +1,6 @@
 % File src/library/base/man/pretty.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pretty}
@@ -10,7 +10,7 @@ pretty(x, \dots)
 
 \method{pretty}{default}(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
        high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
-       eps.correct = 0, \dots)
+       eps.correct = 0, bounds = TRUE, \dots)
 }
 \alias{pretty}
 \alias{pretty.default}
@@ -34,7 +34,12 @@ pretty(x, \dots)
     \emph{epsilon correction} is made at the boundaries such that
     the result boundaries will be outside \code{range(x)}; in the
     \emph{small} case, the correction is only done if \code{eps.correct
-       >= 2}.}
+      >= 2}.}
+  \item{bounds}{a \code{\link{logical}} indicating if the resulting vector
+    should \emph{cover} the full \code{range(x)}, i.e., strictly include
+    the bounds of \code{x}.  New from \R 4.2.0, allowing \code{bound=FALSE}
+    to reproduce how \R's graphics engine computes axis tick locations (in
+    \code{GEPretty()}).}
   \item{\dots}{further arguments for methods.}
 }
 \description{
