@@ -48,7 +48,8 @@
 
       \item \code{grid.pretty()} got new optional argument \code{n = 5}.
 
-      \item \code{pretty()} gets option \code{bounds = TRUE}.
+      \item New \code{.pretty()} with option \code{bounds} as technical
+      utility version of \code{pretty()}.
     }
   }
 

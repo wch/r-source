@@ -18,16 +18,24 @@
 
 pretty <- function(x, ...) UseMethod("pretty")
 
+.pretty <- function(x, n = 5L, min.n = n %/% 3L, shrink.sml = 0.75,
+                    high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
+                    eps.correct = 0L, bounds = TRUE) {
+    x <- x[is.finite(x <- as.numeric(x))]
+    if(length(x)) # return  list(l=, u=, n=) or list(ns=, nu=, n=, unit=)
+        .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
+                         c(high.u.bias, u5.bias), eps.correct, bounds))
+}
 
 pretty.default <-
     function(x, n = 5L, min.n = n %/% 3L, shrink.sml = 0.75,
              high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
-             eps.correct = 0L, bounds = TRUE, ...)
+             eps.correct = 0L, ...)
 {
     x <- x[is.finite(x <- as.numeric(x))]
     if(!length(x)) return(x)
     z <- .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
-                          c(high.u.bias, u5.bias), eps.correct, bounds))
+                          c(high.u.bias, u5.bias), eps.correct, TRUE))
     n <- z$n
     s <- seq.int(z$l, z$u, length.out = n + 1L)
     if(!eps.correct && n) { # maybe zap smalls from seq() rounding errors

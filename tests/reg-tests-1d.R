@@ -1,6 +1,5 @@
 ## Regression tests for R >= 3.4.0
 
-pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
 tryCid <- function(expr) tryCatch(expr, error = identity)
 tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
@@ -1091,6 +1090,7 @@ assertErrV(plot.new())
 if(no.grid <- !("grid" %in% loadedNamespaces())) requireNamespace("grid")
 assertErrV(grid::grid.newpage())
 if(no.grid) unloadNamespace("grid") ; options(op)
+pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")# revert to reasonable device
 ## both errors gave segfaults in R <= 3.4.1
 
 
@@ -5167,9 +5167,14 @@ stopifnot(relEr(c(-B,B), ps[c(1L,nps)]) <= 4*epsC,
           -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]; w/o long-double: [-5, .., 4\
 ## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0
 f. <- c(-1.797, -1.79, -1.75, seq(-1.7, -1, by=.1))
-stopifnot(!is.unsorted(f.))
+stopifnot(!is.unsorted(f.)) ; f.nm <- setNames(, f.)
 fmtRng <- function(x) paste(format(range(x)), collapse=", ")
-for(n in c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)) {
+ns <- c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)
+nms.n <- formatC(ns, digits=0, format="f")
+nmsRng <- c(t(outer(paste0("r",1:2), c("lo","hi"), paste, sep=".")))
+rr <- matrix(NA, length(ns), 4, dimnames=list(nms.n, nmsRng))
+for(i.n in seq_along(ns)) {
+    n <- ns[i.n]
     cat("n = ", n,":\n--------\n")
     pBL <- lapply(f., function(f) structure(pretty(c(f*1e308, 2^1023.9), n), f=f))
     ## -> a warning per f
@@ -5178,15 +5183,36 @@ for(n in c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)) {
     if(n <= 15) stopifnot(n.s <= 20)# seen {14,..,17}
     else stopifnot(abs(n.s/n - 1) <= 1/2)
     if(n) cat("length(.) <> n relative err in [", fmtRng(n.s/n - 1), "]\n")
-    lapply(pBL, function(ps) {
+    ## .pretty(*, bounds=FALSE) :
+    prM <- t(sapply(f.nm, function(f)
+        unlist( .pretty(c(f*1e308, 2^1023.9), n, bounds=FALSE) )))
+    print(prM)
+    luM <- prM[,c("ns","nu")] * prM[,"unit"] # the pretty-scaled unit
+    r1 <- luM[,"ns"] / (f.nm*1e308)
+    rr[i.n, 1:2] <- r1 <- range(r1)
+    cat(sprintf("range(r1): [%g, %g]\n", r1[1], r1[2]))
+    r2 <- luM[,"nu"] / 2^1023.9
+    rr[i.n, 3:4] <- r2 <- range(r2)
+    cat(sprintf("range(r2): [%g, %g]\n", r2[1], r2[2]))
+    stopifnot(exprs = { is.matrix(prM)
+            prM[,"nu"] - prM[,"ns"] == prM[,"n"] # could differ, but not for this data
+            identical(colnames(prM), c("ns", "nu", "n", "unit"))
+            ## These bounds depend on 'n' :
+            r1 >= if(n <= 12) 0.55 else 0.89
+            r1 <= if(n <= 15) 1.4  else 1.1
+            r2 >= if(n <= 12) 0.58 else 0.95
+            r2 <= if(n <= 15) 1    else 1.025
+    })
+    invisible(lapply(pBL, function(ps) {
         mdB <- sum((dB <- diff(ps))/length(dB))
         rd <- dB/mdB - 1 # relative differences
         ## print(range(rd))
         x <- c(attr(ps,"f")*1e308, 2^1023.9)
         stopifnot(if(n >= 1) abs(rd) <= n * 3e-15 else TRUE,
                   ps[1] <= x[1] , x[2] <= ps[length(ps)])
-    }) -> .tmp
+    }))
 }
+stopifnot(abs(rr-1) < 3.3/ns)
 ## many of these pretty() calls errored (because internally gave Inf) in R <= 4.1.0
 
 

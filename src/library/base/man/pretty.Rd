@@ -5,15 +5,20 @@
 
 \name{pretty}
 \title{Pretty Breakpoints}
+\alias{pretty}
+\alias{.pretty}
+\alias{pretty.default}
 \usage{
 pretty(x, \dots)
 
 \method{pretty}{default}(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
        high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
-       eps.correct = 0, bounds = TRUE, \dots)
+       eps.correct = 0, \dots)
+
+.pretty(x, n = 5L, min.n = n \%/\% 3,  shrink.sml = 0.75,
+       high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
+       eps.correct = 0L, bounds = TRUE)
 }
-\alias{pretty}
-\alias{pretty.default}
 \arguments{
   \item{x}{an object coercible to numeric by \code{\link{as.numeric}}.}
   \item{n}{integer giving the \emph{desired} number of
@@ -65,6 +70,15 @@ pretty(x, \dots)
 
   \dots\dots\dots
 }
+\value{\code{pretty()} returns a numeric vector with \dQuote{pretty}
+  entries (in decimal notation).
+
+  For ease of investigating the underlying C \code{R_pretty()}
+  function, \code{.pretty()} returns a \code{\link{list}} with entries
+  \code{ns}, \code{nu}, \code{n}, and (\dQuote{pretty}) \code{unit}, where
+  \code{n*} are integer valued (but only \code{n} is of class
+  \code{\link{integer}}).
+}
 \seealso{
   \code{\link{axTicks}} for the computation of pretty axis tick
   locations in plots, particularly on the log scale.
@@ -91,7 +105,8 @@ pretty(pi)
 
 add.names <- function(v) { names(v) <- paste(v); v}
 utils::str(lapply(add.names(-10:20), pretty))
-utils::str(lapply(add.names(0:20),   pretty, min.n = 0))
+## min.n = 0  returns a length-1 vector "if pretty":
+utils::str(lapply(add.names(0:20),  pretty, min.n = 0))
 sapply(    add.names(0:20),   pretty, min.n = 4)
 
 pretty(1.234e100)

@@ -525,7 +525,7 @@ SEXP R_listCompact(SEXP s, Rboolean keep_initial) {
     // skip initial NULL values
 	while (s != R_NilValue && CAR(s) == R_NilValue)
 	    s = CDR(s);
-    
+
     SEXP val = s;
     SEXP prev = s;
     while (s != R_NilValue) {
@@ -1465,7 +1465,7 @@ static size_t Rwcrtomb32(char *s, R_wchar_t cvalue, size_t n)
 
    The return value is the number of chars including the terminating
    null.  If the buffer is not big enough, the result is truncated but
-   still null-terminated 
+   still null-terminated
 */
 attribute_hidden // but used in windlgs
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
@@ -1546,7 +1546,7 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 }
 
 /* Truncate a string in place (in native encoding) so that it only contains
-   valid multi-byte characters. Has no effect in non-mbcs locales. 
+   valid multi-byte characters. Has no effect in non-mbcs locales.
 
    This function may be invoked by the error handler via
    REvprintf->Rvsnprintf_mbcs.  Do not change it unless you are SURE that
@@ -2692,7 +2692,7 @@ SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
 # undef ERROR
 #endif
 #include <R_ext/Applic.h>
-/* .Internal(pretty(min(x), max(x), n, min.n, shrink.sml, 
+/* .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
  *                  c(high.u.bias, u5.bias), eps.correct))
  */
 SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -2723,17 +2723,28 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     int return_bounds = asLogical(CAR(args)); args = CDR(args); /* bounds */
     if (return_bounds == NA_LOGICAL)
 	error(_("'bounds' must be TRUE or FALSE"));
-    R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, return_bounds);
-    //------ (returns 'unit' which we do not need)
-    PROTECT(ans = allocVector(VECSXP, 3));
+    double unit;
+    if(return_bounds)
+	       R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, 1);
+    else // unit  and (ns,nu)
+	unit = R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, 0);
+    int l_ans = return_bounds ? 3 : 4;
+    PROTECT(ans = allocVector(VECSXP, l_ans));
     SET_VECTOR_ELT(ans, 0, ScalarReal(l));
     SET_VECTOR_ELT(ans, 1, ScalarReal(u));
     SET_VECTOR_ELT(ans, 2, ScalarInteger(n));
-    nm = allocVector(STRSXP, 3);
+    nm = allocVector(STRSXP, l_ans);
     setAttrib(ans, R_NamesSymbol, nm);
-    SET_STRING_ELT(nm, 0, mkChar("l"));
-    SET_STRING_ELT(nm, 1, mkChar("u"));
     SET_STRING_ELT(nm, 2, mkChar("n"));
+    if(return_bounds) {
+	SET_STRING_ELT(nm, 0, mkChar("l"));
+	SET_STRING_ELT(nm, 1, mkChar("u"));
+    } else {
+	SET_STRING_ELT(nm, 0, mkChar("ns"));
+	SET_STRING_ELT(nm, 1, mkChar("nu"));
+	SET_STRING_ELT(nm, 3, mkChar("unit"));
+	SET_VECTOR_ELT(ans,3, ScalarReal(unit));
+    }
     UNPROTECT(2);
     return ans;
 }
