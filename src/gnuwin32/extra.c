@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2020  The R Core Team
+ *  Copyright (C) 2005--2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1105,82 +1105,6 @@ char *getDLLVersion(void)
     snprintf(DLLversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     return (DLLversion);
 }
-
-
-
-/* UTF-8 support ----------------------------------------------- */
-
-#ifdef SUPPORT_UTF8_WIN32
-/* This is currently unused: for faking UTF-8 locale conversions */
-
-#define FAKE_UTF8 1
-
-
-size_t Rmbrtowc(wchar_t *wc, const char *s)
-{
-#ifdef FAKE_UTF8
-    unsigned int byte;
-    wchar_t local, *w;
-    byte = *((unsigned char *)s);
-    w = wc ? wc: &local;
-
-    if (byte == 0) {
-	*w = (wchar_t) 0;
-	return 0;
-    } else if (byte < 0xC0) {
-	*w = (wchar_t) byte;
-	return 1;
-    } else if (byte < 0xE0) {
-	if(strlen(s) < 2) return -2;
-	if ((s[1] & 0xC0) == 0x80) {
-	    *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
-	    return 2;
-	} else return -1;
-    } else if (byte < 0xF0) {
-	if(strlen(s) < 3) return -2;
-	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
-	    *w = (wchar_t) (((byte & 0x0F) << 12)
-			    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
-	    byte = *w;
-	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
-	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
-	    return 3;
-	} else return -1;
-    }
-    return -2;
-#else
-    return mbrtowc(wc, s, MB_CUR_MAX, NULL);
-#endif
-}
-
-size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
-{
-#ifdef FAKE_UTF8
-    int m, res=0;
-    const char *p;
-
-    if(wc) {
-	for(p = s; ; p+=m) {
-	    m = Rmbrtowc(wc+res, p);
-	    if(m < 0) error(_("invalid input in 'Rmbstowcs'"));
-	    if(m <= 0) break;
-	    res++;
-	    if(res >= n) break;
-	}
-    } else {
-	for(p = s; ; p+=m) {
-	    m  = Rmbrtowc(NULL, p);
-	    if(m < 0) error(_("invalid input in 'Rmbstowcs'"));
-	    if(m <= 0) break;
-	    res++;
-	}
-    }
-    return res;
-#else
-    return mbstowcs(wc, s, n);
-#endif
-}
-#endif
 
 /* base::file.choose */
 SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)

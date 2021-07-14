@@ -794,10 +794,8 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 // These two support "utf8"
 # ifdef Win32
     const char *cp = "ASCII";
-#  ifndef SUPPORT_UTF8_WIN32 /* Always, at present */
     char to[20] = "";
     if (localeCP > 0) {snprintf(to, 20, "CP%d", localeCP); cp = to;}
-#  endif
 # else /* __APPLE__ */
     const char *cp = "UTF-8";
     if (latin1locale) cp = "ISO-8859-1";
