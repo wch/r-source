@@ -254,7 +254,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    tmpcon <- file()
 	    sink(file = tmpcon)
 	    if(options$eval) err <- evalWithOpt(ce, options, env)
-	    res <- c(res, "\n") # attampt to  make sure final line is complete
+	    res <- c(res, "\n") # attempt to  make sure final line is complete
 	    sink()
 	    output <- readLines(tmpcon, warn = FALSE) # sometimes attempt fails.
 	    close(tmpcon)
