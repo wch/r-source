@@ -5239,8 +5239,9 @@ psmm <- lapply(h.u, function(hu)
 summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 2.122e-314"
 (T <- table(psA <- unlist(psmm))) # is this portable?
 (nT <- as.numeric(names(T)))
+range(rEd <- abs(2e-314/diff(nT) - 1))
 stopifnot(nT >= 0, length(nT) == 11,
-          abs(2e-314/diff(nT) - 1) <= 2^-50) # seen 0
+          rEd <= 2^-50) # only seen rEd == 0
 ##
 psmm.o <- lapply(h.u, function(hu)
     lapply(fsS, function(f) # older R: f.min = 20 hardwired:
@@ -5248,8 +5249,9 @@ psmm.o <- lapply(h.u, function(hu)
 summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 4.45015e-307"
 (To <- table(psAo <- unlist(psmm.o)))
 (nTo <- as.numeric(names(To)))
+range(rEdo <- abs(5e-307/diff(nTo) - 1))
 stopifnot(nTo >= 0, length(nTo) == 11,
-          abs(5e-307/diff(nTo) -1) <= 2^-49) # seen up to 2^-51
+          rEdo <= 2^-44) # seen max of 2^-51 on Lnx_64; .. on Win64
 
 
 
