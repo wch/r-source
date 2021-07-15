@@ -4,6 +4,8 @@
         paste(libp, collapse = .Platform$path.sep)
     else "" # character(0) is invalid for Sys.setenv()
 }
+.libPaths(tail(.libPaths(), 1), include.site=FALSE) # no extra libraries (w/ many pkgs)\n")
+
 Sys.setenv(R_LIBS = .R_LIBS() # for build.pkg() & install.packages()
          , R_BUILD_ENVIRON = "nothing" # avoid ~/.R/build.environ which might set R_LIBS
          , R_ENVIRON = "none"
