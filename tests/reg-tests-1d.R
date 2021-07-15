@@ -1,6 +1,5 @@
 ## Regression tests for R >= 3.4.0
 
-pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
 tryCid <- function(expr) tryCatch(expr, error = identity)
 tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
@@ -10,6 +9,7 @@ onWindows <- .Platform$OS.type == "windows"
 .M <- .Machine
 str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
 b64 <- .M$sizeof.pointer == 8
+options(nwarnings = 10000) # (rather than just 50)
 
 
 ## body() / formals() notably the replacement versions
@@ -815,7 +815,7 @@ fil <- "Sweave-test-1.Rnw"
 file.copy(system.file("Sweave", fil, package="utils"), tempdir())
 owd <- setwd(tempdir())
 (o <- capture.output(utils:::.Sweave(fil, no.q = TRUE), type = "message"))
-stopifnot(grepl("exit status 0", o[2]))
+stopifnot(grepl("exit status 0", tail(o, 1)))
 setwd(owd)
 ## R CMD Sweave gave status 1 and hence an error in R 3.4.0 (only)
 
@@ -1091,6 +1091,7 @@ assertErrV(plot.new())
 if(no.grid <- !("grid" %in% loadedNamespaces())) requireNamespace("grid")
 assertErrV(grid::grid.newpage())
 if(no.grid) unloadNamespace("grid") ; options(op)
+pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")# revert to reasonable device
 ## both errors gave segfaults in R <= 3.4.1
 
 
@@ -5151,22 +5152,30 @@ stopifnot(is.na(match(c("NA", "\u{e0}"), NA)))
 
 ## pretty(x) when range(x) is finite but diff(range(x)) is +/- Inf:
 B <- 1e308; 2*B; (s <- seq(-B,B,length.out = 3))
-options(warn=1) # allow warnings *as they happen*
+options(warn=1) # => warnings *as they happen*
 (ps <- pretty(c(-B,B)))
 ## Warning in pretty.default(c(-B, B)) :
 ##   Internal(pretty()): very large range 4e+307, corrected to 2.24712e+307
 nps <- length(ps)
-dd <- mean(dps <- diff(ps))
+dd <- sum((dps <- diff(ps))/length(dps)) # mean w/o overflow
 epsC <- .Machine$double.eps
 relD <- (dps/dd - 1)/epsC
 relEr <- function(f, y) abs((f-y)/(f+y)*2) # cheap relative error, |f| > 0 !
+stopifnot(is.finite(mean(ps)), ## these all failed without "long-double"
+          is.finite(mdp <- mean(dps)),
+          all.equal(dd, mdp, tolerance=1e-15))
 stopifnot(relEr(c(-B,B), ps[c(1L,nps)]) <= 4*epsC,
-          -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]
+          -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]; w/o long-double: [-5, .., 4\
 ## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0
 f. <- c(-1.797, -1.79, -1.75, seq(-1.7, -1, by=.1))
-stopifnot(!is.unsorted(f.))
+stopifnot(!is.unsorted(f.)) ; f.nm <- setNames(, f.)
 fmtRng <- function(x) paste(format(range(x)), collapse=", ")
-for(n in c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)) {
+ns <- c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)
+nms.n <- formatC(ns, digits=0, format="f")
+nmsRng <- c(t(outer(paste0("r",1:2), c("lo","hi"), paste, sep=".")))
+rr <- matrix(NA, length(ns), 4, dimnames=list(nms.n, nmsRng))
+for(i.n in seq_along(ns)) {
+    n <- ns[i.n]
     cat("n = ", n,":\n--------\n")
     pBL <- lapply(f., function(f) structure(pretty(c(f*1e308, 2^1023.9), n), f=f))
     ## -> a warning per f
@@ -5175,17 +5184,74 @@ for(n in c(2:12, 15, 20, 30, 51, 100, 2001, 1e5)) {
     if(n <= 15) stopifnot(n.s <= 20)# seen {14,..,17}
     else stopifnot(abs(n.s/n - 1) <= 1/2)
     if(n) cat("length(.) <> n relative err in [", fmtRng(n.s/n - 1), "]\n")
-    lapply(pBL, function(ps) {
-        mdB <- mean(dB <- diff(ps))
+    ## .pretty(*, bounds=FALSE) :
+    prM <- t(sapply(f.nm, function(f)
+        unlist( .pretty(c(f*1e308, 2^1023.9), n, bounds=FALSE) )))
+    print(prM)
+    luM <- prM[,c("ns","nu")] * prM[,"unit"] # the pretty-scaled unit
+    r1 <- luM[,"ns"] / (f.nm*1e308)
+    rr[i.n, 1:2] <- r1 <- range(r1)
+    cat(sprintf("range(r1): [%g, %g]\n", r1[1], r1[2]))
+    r2 <- luM[,"nu"] / 2^1023.9
+    rr[i.n, 3:4] <- r2 <- range(r2)
+    cat(sprintf("range(r2): [%g, %g]\n", r2[1], r2[2]))
+    stopifnot(exprs = { is.matrix(prM)
+            prM[,"nu"] - prM[,"ns"] == prM[,"n"] # could differ, but not for this data
+            identical(colnames(prM), c("ns", "nu", "n", "unit"))
+            ## These bounds depend on 'n' :
+            r1 >= if(n <= 12) 0.55 else 0.89
+            r1 <= if(n <= 15) 1.4  else 1.1
+            r2 >= if(n <= 12) 0.58 else 0.95
+            r2 <= if(n <= 15) 1    else 1.025
+    })
+    invisible(lapply(pBL, function(ps) {
+        mdB <- sum((dB <- diff(ps))/length(dB))
         rd <- dB/mdB - 1 # relative differences
         ## print(range(rd))
         x <- c(attr(ps,"f")*1e308, 2^1023.9)
         stopifnot(if(n >= 1) abs(rd) <= n * 3e-15 else TRUE,
                   ps[1] <= x[1] , x[2] <= ps[length(ps)])
-    }) -> .tmp
+    }))
 }
+##
+stopifnot(abs(rr-1) < 3.3/ns)
 ## many of these pretty() calls errored (because internally gave Inf) in R <= 4.1.0
-
+##
+##---------------- very small ranges ------------------
+## The really smallest positive number (unless subnormals do "not exist"):
+mm <- with(.Machine, double.xmin * double.eps)
+log2(mm) == -1074 # T
+## "of course", this an extreme *sub normal* number, e.g.
+mm == c(0.50001, 1.49999) * mm # TRUE TRUE (!)
+(1.5*mm) / mm #  2  (!!)
+##
+nns0 <- setNames(,0:28) # n=0,1 give often warnings (and make no difference!)
+nns <-  setNames(,2:30)
+fs <- c(.05, .1, .25, .375, .5, .75, .9, .95, .99, .995, .999, .9999, .99999)
+names(fs) <- sub("^0", "", formatC(fs))
+h.u <- c(.5, 1, 1.5, 2, 2.5, 3, 4, 6, 10); names(h.u) <- formatC(h.u); h.u
+## for mm/f, *sub*normal:
+fsS <- fs[fs <= 0.75]
+options(warn=0) # (collect warnings)
+psmm <- lapply(h.u, function(hu)
+    lapply(fsS, function(f)
+        lapply(nns, pretty, x = c(0, mm/f), high.u=hu, eps.correction = 2)))
+summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 2.122e-314"
+(T <- table(psA <- unlist(psmm))) # is this portable?
+(nT <- as.numeric(names(T)))
+range(rEd <- abs(2e-314/diff(nT) - 1))
+stopifnot(nT >= 0, length(nT) == 11,
+          rEd <= 2^-50) # only seen rEd == 0
+##
+psmm.o <- lapply(h.u, function(hu)
+    lapply(fsS, function(f) # older R: f.min = 20 hardwired:
+        lapply(nns, pretty, x = c(0, mm/f), high.u=hu, f.min = 20) ))
+summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 4.45015e-307"
+(To <- table(psAo <- unlist(psmm.o)))
+(nTo <- as.numeric(names(To)))
+range(rEdo <- abs(5e-307/diff(nTo) - 1))
+stopifnot(nTo >= 0, length(nTo) == 11,
+          rEdo <= 2^-44) # seen max of 2^-51 on Lnx_64; .. on Win64
 
 
 

@@ -932,16 +932,16 @@ function(pkgdir, outfile, title, batch = FALSE,
     if(!nzchar(dir)) dir <- paste(files, collapse = " ")
 
     ## Prepare for building the documentation.
-    if(dir.exists(build_dir) && unlink(build_dir, recursive = TRUE)) {
-        cat("cannot write to build dir\n")
-        q("no", status = 2L, runLast = FALSE)
-    }
-    dir.create(build_dir, FALSE)
     if(!nzchar(output)) output <- paste0("Rd2.", out_ext)
     if(file.exists(output) && !force) {
         cat("file", sQuote(output), "exists; please remove it first\n")
         q("no", status = 1L, runLast = FALSE)
     }
+    if(dir.exists(build_dir) && unlink(build_dir, recursive = TRUE)) {
+        cat("cannot write to build dir\n")
+        q("no", status = 2L, runLast = FALSE)
+    }
+    dir.create(build_dir, FALSE)
 
     res <-
         try(.Rd2pdf(files[1L], file.path(build_dir, "Rd2.tex"),

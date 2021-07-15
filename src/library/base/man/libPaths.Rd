@@ -52,8 +52,8 @@
   How paths in \code{new} with a trailing slash are treated is
   OS-dependent.  On a POSIX filesystem existing directories can usually
   be specified with a trailing slash. On Windows filepaths with a
-  trailing slash (or backslash) are invalid and so will never be added
-  to the library search path.
+  trailing slash (or backslash) are invalid and existing directories
+  specified with a trailing slash may not be added to the library search path.
 
   At startup, the library search path is initialized from the
   environment variables \env{R_LIBS}, \env{R_LIBS_USER} and

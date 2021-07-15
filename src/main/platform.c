@@ -423,10 +423,6 @@ void attribute_hidden R_check_locale(void)
 	systemCP = GetACP();
     }
 #endif
-#if defined(SUPPORT_UTF8_WIN32) /* never at present */
-    utf8locale = mbcslocale = TRUE;
-    strcpy(native_enc, "UTF-8");
-#endif
 }
 
 /*  date

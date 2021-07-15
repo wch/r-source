@@ -43,7 +43,14 @@
       has always been the intention.
 
       \item The \code{contrasts} setter \code{`contrasts<-`} gets explicit
-      default \code{how.many = NULL} rather than just using \code{missing(how.many)}.
+      default \code{how.many = NULL} rather than just using
+      \code{missing(how.many)}.
+
+      \item \code{grid.pretty()} got new optional argument \code{n = 5}.
+
+      \item New \code{.pretty()} with option \code{bounds} as technical
+      utility version of \code{pretty()}, and it and \code{pretty()} get
+      new argument \code{f.min} with a better than back-compatible default.
     }
   }
 
@@ -108,9 +115,12 @@
       \pkg{grDevices} are now also up for translation, thanks to Michael
       Chirico's \PR{18123}.
 
-      \item \code{pretty(x)} with finite \code{x} now returns finite values
-      also in the case where the extreme \code{x} values are close in size
-      to the maximal representable number \code{.Machine$double.xmax}.
+      \item \code{mean(x)} with finite \code{x} now is finite also without
+      "long.double" capability.
+
+      \item \command{R CMD Rd2pdf} no longer leaves an empty build
+      directory behind when it aborts due to an already existing output
+      file (\PR{18141}).
     }
   }
 }
@@ -181,6 +191,34 @@
       \item \code{all.equal(x,y)} now returns \code{TRUE} correctly also
       when several entries of \code{abs(x)} and \code{abs(y)} are close to
       \code{.Machine$double.xmax}, the largest finite \code{numeric}.
+
+      \item \code{model.frame()} now clears the object bit when removing the
+      \code{class} attribute of a value via \code{na.action} (\PR{18100}).
+
+      \item \code{charClass()} now works with multi-character
+      strings on Windows (\PR{18104}, fixed by Bill Dunlap).
+
+      \item \code{encodeString()} on Solaris now works again in Latin-1
+      encoding on characters represented differently in UTF-8.  Support for
+      surrogate pairs on Solaris has been improved.
+
+      \item \code{file.show()} on Windows now works with non-ASCII path
+      names representable in the current native encoding (\PR{18132}).
+
+      \item Embedded \R on Windows can now find \R home directory via the
+      registry even when installed only for the current user (\PR{18135}).
+
+      \item \code{pretty(x)} with finite \code{x} now returns finite values
+      also in the case where the extreme \code{x} values are close in size
+      to the maximal representable number \code{.Machine$double.xmax}.
+      %% to be ported, but only *part* of 80621 :
+      Also, it's been tweaked for very small ranges and when a boundary is
+      close (or equal) to zero; e.g., \code{pretty(c(0,1e-317))} no longer
+      has negative numbers, currently still warning about a very small
+      range, and \code{pretty(2^-(1024 - 2^-1/(c(24,10))))} is more accurate.
+
+      \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
+      report and patch by Jeroen Ooms in \PR{18152}.)
     }
   }
 }

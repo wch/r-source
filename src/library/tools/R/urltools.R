@@ -639,7 +639,14 @@ function(x, ...)
     u <- x$URL
     new <- x$New
     ind <- nzchar(new)
-    u[ind] <- sprintf("%s (moved to %s)", u[ind], new[ind])
+    if(any(ind)) {
+        u[ind] <- sprintf("%s (moved to %s)", u[ind], new[ind])
+        if(config_val_to_logical(Sys.getenv("_R_CHECK_URLS_SHOW_301_STATUS_",
+                                            "FALSE"))) {
+            x$Message[ind] <- "Moved Permanently"
+            x$Status[ind] <- "301"
+        }
+    }
 
     paste0(sprintf("URL: %s", u),
            sprintf("\nFrom: %s",

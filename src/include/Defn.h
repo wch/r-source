@@ -1425,17 +1425,6 @@ void R_CleanTempDir(void);
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
-
-#if defined(SUPPORT_UTF8_WIN32)
-#define mbrtowc(a,b,c,d) Rmbrtowc(a,b)
-#define wcrtomb(a,b,c) Rwcrtomb(a,b)
-#define mbstowcs(a,b,c) Rmbstowcs(a,b,c)
-#define wcstombs(a,b,c) Rwcstombs(a,b,c)
-size_t Rmbrtowc(wchar_t *wc, const char *s);
-size_t Rwcrtomb(char *s, const wchar_t wc);
-size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
-size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
-#endif
 #endif
 
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);

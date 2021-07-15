@@ -1,6 +1,6 @@
 % File src/library/stats/man/optim.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{optim}
@@ -156,7 +156,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
       is positive. Defaults to every 10 iterations for \code{"BFGS"} and
       \code{"L-BFGS-B"}, or every 100 temperatures for \code{"SANN"}.}
     \item{\code{warn.1d.NelderMead}}{a \code{\link{logical}} indicating
-      if the (default) \code{"Nelder-Mean"} method should signal a
+      if the (default) \code{"Nelder-Mead"} method should signal a
       warning when used for one-dimensional minimization.  As the
       warning is sometimes inappropriate, you can suppress it by setting
       this option to false.}

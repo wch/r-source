@@ -255,6 +255,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   \code{skipNul = TRUE}) may work.
 }
 
+\section{CSV files}{
+  See the help on \code{\link{write.csv}} for the various conventions
+  for \code{.csv} files.  The commonest form of CSV file with row names
+  needs to be read with \code{read.csv(..., row.names = 1)} to use the
+  names in the first columnn of the file as row names.
+}
+
 \value{
   A data frame (\code{\link{data.frame}}) containing a representation of
   the data in the file.

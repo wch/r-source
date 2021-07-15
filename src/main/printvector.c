@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2017  The R Core Team.
+ *  Copyright (C) 1998-2021  The R Core Team.
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,7 @@
 #include <config.h>
 #endif
 
-#include "Rinternals.h"
+#include "Defn.h"
 #include "Print.h"
 #include <R_ext/Itermacros.h> /* for ITERATE_BY_REGION */
 

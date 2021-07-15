@@ -27,7 +27,7 @@ R.home(component = "home")
   The \R home directory is often referred to as \var{R_HOME},
   and is the value of an environment variable of that name in an \R
   session.
-  It can be found outside an \R session by \code{R \link{RHOME}}.
+  It can be found outside an \R session by \code{R \link[utils]{RHOME}}.
 }
 \value{
   A character string giving the \R home directory or path to a
