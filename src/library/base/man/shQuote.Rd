@@ -38,17 +38,19 @@ shQuote(string, type = c("sh", "csh", "cmd", "cmd2"))
   empty) and surround each with single quotes, and the single quotes
   with double quotes.
   
-  In Windows, command line interpretation is done by the application
-  as well as the shell.  It may depend on the compiler used:
-  Microsoft's rules for the C run-time are given at 
-  \url{https://docs.microsoft.com/en-us/previous-versions/ms880421(v=msdn.10)}.
-  It may depend on
-  the whim of the programmer of the application: check its
-  documentation.  The \code{type = "cmd"} quoting surrounds the string
-  by double quotes and escapes internal double quotes by a backslash.
-  As Windows path names cannot contain double quotes, this makes
-  \code{shQuote} safe for use with many applications when used with
-  \code{\link{system}} or \code{\link{system2}}.  The Windows
+  In Windows, command line interpretation is done by the application as well
+  as the shell.  It may depend on the compiler used: Microsoft's rules for
+  the C run-time are given at
+  \url{https://docs.microsoft.com/en-us/cpp/c-language/parsing-c-command-line-arguments?view=msvc-160}. 
+  It may depend on the whim of the programmer of the application: check its
+  documentation.  The \code{type = "cmd"} prepares the string for parsing as
+  an argument by the Microsoft's rules and makes \code{shQuote} safe for use
+  with many applications when used with \code{\link{system}} or
+  \code{\link{system2}}.  It surrounds the string by double quotes and
+  escapes internal double quotes by a backslash.  Any trailing backslashes
+  and backslashes that were originally before double quotes are doubled.
+
+  The Windows
   \command{cmd.exe} shell (used by default with \code{\link{shell}})
   uses \code{type = "cmd2"} quoting:  special characters are prefixed
   with \code{"^"}.  In some cases, two types of quoting should be

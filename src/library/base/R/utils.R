@@ -20,9 +20,21 @@ shQuote <- function(string, type = c("sh", "csh", "cmd", "cmd2"))
 {
     if(missing(type) && .Platform$OS.type == "windows") type <- "cmd"
     type <- match.arg(type)
-    if(type == "cmd")
-	paste0('"', gsub('"', '\\"', string, fixed=TRUE), '"')
-    else if (type == "cmd2")
+    if(type == "cmd") {
+        # Prepare the string for parsing by Microsoft C startup code as
+        # described for non-argv[0] arguments:
+        #   https://docs.microsoft.com/en-us/cpp/c-language/parsing-c-command-line-arguments?view=msvc-160
+
+        # Backslashes before a double quote have a special meaning, so
+        # replace any series of backslashes followed by a double quote with
+        # twice as many backslashes, and an escaped double quote.
+        string <- gsub("(\\\\*)\"", "\\1\\1\\\\\"", string)
+
+        # Double trailing backslashes if any, because of the final double
+        # quote we are appending.
+        string <- sub("(\\\\+)$", "\\1\\1", string)
+        paste0("\"", string, "\"", recycle0 = TRUE)
+    } else if (type == "cmd2")
         gsub('([()%!^"<>&|])', "^\\1", string)
     else if(!length(string))
 	""
