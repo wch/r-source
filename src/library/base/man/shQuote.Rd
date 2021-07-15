@@ -1,6 +1,6 @@
 % File src/library/base/man/shQuote.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shQuote}
@@ -34,8 +34,9 @@ shQuote(string, type = c("sh", "csh", "cmd", "cmd2"))
   contain single quotes, we can use double quotes provided it does not
   contain dollar or backquote (and we need to escape backslash,
   exclamation mark and double quote).  As a last resort, we need to
-  split the string into pieces not containing single quotes and surround
-  each with single quotes, and the single quotes with double quotes.
+  split the string into pieces not containing single quotes (some may be
+  empty) and surround each with single quotes, and the single quotes
+  with double quotes.
   
   In Windows, command line interpretation is done by the application
   as well as the shell.  It may depend on the compiler used:
