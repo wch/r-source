@@ -211,11 +211,14 @@
       \item \code{pretty(x)} with finite \code{x} now returns finite values
       also in the case where the extreme \code{x} values are close in size
       to the maximal representable number \code{.Machine$double.xmax}.
-
+      %% to be ported, but only *part* of 80621 :
       Also, it's been tweaked for very small ranges and when a boundary is
       close (or equal) to zero; e.g., \code{pretty(c(0,1e-317))} no longer
       has negative numbers, currently still warning about a very small
       range, and \code{pretty(2^-(1024 - 2^-1/(c(24,10))))} is more accurate.
+
+      \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
+      report and patch by Jeroen Ooms in \PR{18152}.)
     }
   }
 }
