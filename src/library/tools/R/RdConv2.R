@@ -280,7 +280,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	}
 	if (options$results == "rd") {
 	    res <- as.character(err)   # The last value of the chunk
-	    enc <- Encoding(res)
+	    enc <- if(length(res)) Encoding(res) else "unknown"
 	    tmpcon <- file()
 	    writeLines(res, tmpcon, useBytes = TRUE)
 	    parseFragment <- function(cond) {
