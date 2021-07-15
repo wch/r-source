@@ -2698,7 +2698,6 @@ SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    SEXP ans, nm, hi;
     double l = asReal(CAR(args)); args = CDR(args);
     if (!R_FINITE(l)) error(_("invalid '%s' argument"), "l");
     double u = asReal(CAR(args)); args = CDR(args);
@@ -2711,12 +2710,14 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     double shrink = asReal(CAR(args)); args = CDR(args);
     if (!R_FINITE(shrink) || shrink <= 0.)
 	error(_("invalid '%s' argument"), "shrink.sml");
-    PROTECT(hi = coerceVector(CAR(args), REALSXP)); args = CDR(args);
-    double z;
-    if (!R_FINITE(z = REAL(hi)[0]) || z < 0.)
+    SEXP hi = PROTECT(coerceVector(CAR(args), REALSXP)); args = CDR(args); // (h, h5, f.min)
+    double *z = REAL(hi);
+    if (!R_FINITE(z[0]) || z[0] < 0.)
 	error(_("invalid '%s' argument"), "high.u.bias");
-    if (!R_FINITE(z = REAL(hi)[1]) || z < 0.)
+    if (!R_FINITE(z[1]) || z[1] < 0.)
 	error(_("invalid '%s' argument"), "u5.bias");
+    if (!R_FINITE(z[2]) || z[2] <= 0.)
+	error(_("invalid '%s' argument"), "f.min");
     int eps = asInteger(CAR(args)); args = CDR(args); /* eps.correct */
     if (eps == NA_INTEGER || eps < 0 || eps > 2)
 	error(_("'eps.correct' must be 0, 1, or 2"));
@@ -2729,12 +2730,12 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     else // unit  and (ns,nu)
 	unit = R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, 0);
     int l_ans = return_bounds ? 3 : 4;
-    PROTECT(ans = allocVector(VECSXP, l_ans));
+    SEXP ans = PROTECT(allocVector(VECSXP, l_ans)),
+	nm = allocVector(STRSXP, l_ans);
+    setAttrib(ans, R_NamesSymbol, nm);
     SET_VECTOR_ELT(ans, 0, ScalarReal(l));
     SET_VECTOR_ELT(ans, 1, ScalarReal(u));
     SET_VECTOR_ELT(ans, 2, ScalarInteger(n));
-    nm = allocVector(STRSXP, l_ans);
-    setAttrib(ans, R_NamesSymbol, nm);
     SET_STRING_ELT(nm, 2, mkChar("n"));
     if(return_bounds) {
 	SET_STRING_ELT(nm, 0, mkChar("l"));

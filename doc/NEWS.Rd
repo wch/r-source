@@ -49,7 +49,8 @@
       \item \code{grid.pretty()} got new optional argument \code{n = 5}.
 
       \item New \code{.pretty()} with option \code{bounds} as technical
-      utility version of \code{pretty()}.
+      utility version of \code{pretty()}, and it and \code{pretty()} get
+      new argument \code{f.min} with a better than back-compatible default.
     }
   }
 
@@ -210,6 +211,11 @@
       \item \code{pretty(x)} with finite \code{x} now returns finite values
       also in the case where the extreme \code{x} values are close in size
       to the maximal representable number \code{.Machine$double.xmax}.
+
+      Also, it's been tweaked for very small ranges and when a boundary is
+      close (or equal) to zero; e.g., \code{pretty(c(0,1e-317))} no longer
+      has negative numbers, currently still warning about a very small
+      range, and \code{pretty(2^-(1024 - 2^-1/(c(24,10))))} is more accurate.
     }
   }
 }
