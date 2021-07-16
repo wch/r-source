@@ -5295,7 +5295,7 @@ for(e2Min in c(-1074, -1070, -1060, -1050)) {
         all.equal(
             cbind(usr= c(-7.19077254e+306, 2^mE, Inf),
                   xaxp=c(0, rep(1.5e+308,2))), puaxN)
-        all.equal(10^cumsum(c(-307, rep(123, 5))), axu, tol=1e-14)
+        all.equal(10^cumsum(c(-307, rep(123, 5))), axu, tol=1e-12)# 3.4e-14 {Win64}
         all.equal(puax[1:2,"xaxp"], c(1e-307, 1e308))
         all.equal(u, log10(sL[c(1,length(sL))]))
     })
