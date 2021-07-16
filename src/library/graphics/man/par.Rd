@@ -1,6 +1,6 @@
 % File src/library/graphics/man/par.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{par}
@@ -331,9 +331,7 @@ par(\dots, no.readonly = FALSE)
       which modifies the default way that axes are annotated.  The values of
       \code{x} and \code{y} give the (approximate) number of tickmarks
       on the x and y axes and \code{len} specifies the label length.  The
-      default is \code{c(5, 5, 7)}.  Note that this only affects the way
-      the parameters \code{xaxp} and \code{yaxp} are set when the user
-      coordinate system is set up, and is not consulted when axes are drawn.
+      default is \code{c(5, 5, 7)}. % values accessed by CreateAtVector()
       \code{len} \emph{is unimplemented} in \R.}
     \item{\code{las}}{numeric in \{0,1,2,3\}; the style of axis labels.
       \describe{

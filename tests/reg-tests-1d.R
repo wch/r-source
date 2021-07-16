@@ -5254,6 +5254,87 @@ stopifnot(nTo >= 0, length(nTo) == 11,
           rEdo <= 2^-44) # seen max of 2^-51 on Lnx_64; .. on Win64
 
 
+## graphics::axis(), but also *engine* GScale() / GPretty() etc
+## when range(.) is finite, but diff(range(.)) is Inf:
+mplot <- function(..., pch=20, col=2, type="o") {
+    plot(..., pch=pch, col=col, type=type, axes=FALSE)
+    list(a1 = axis(1), a2 = axis(2))
+}
+options(warn=2) # (*no* warnings anymore !)
+summary(LL <- 2^(994:1024 - 1e-12))
+## simple unproblematic (not in all cases!)
+a <- mplot(log2(LL), sin(LL))
+stopifnot(all.equal(list(a1= seq(995, 1025, by=5), a2= (-2:2)/2), a))
+a <- mplot(LL, sin(LL)) # gave infinite axis extents [GEPretty(-7.19077e+306,inf,5)]
+## then warning .. plot.window(): Internal(pretty()): very large range, but no longer!
+al <- mplot(LL, sin(LL), log="x")
+## gave Error in axis(1):
+## log - axis(), 'at' creation, _LARGE_ range: invalid {xy}axp or par; nint=5
+##        axp[0:1]=(1e+299,1e+308), usr[0:1]=(7.28752e+298,inf); i=9, ni=1
+stopifnot(exprs = {
+    all.equal(a, list(a1=5e307 * 0:3, a2=(-2:2)/2))
+    all.equal(al$a1, 10^(299:308))
+})
+parUAx <- function(pua = par(c("usr", "xaxp"))) {
+    rbind(M <- sapply(pua, `[`, 1:2), D = diff(M))
+}
+mE <- 1024 - 1e-12
+if(dev.interactive()) opa <- par(ask=TRUE)
+for(e2Min in c(-1074, -1070, -1060, -1050)) {
+    cat("\ne2Min=",e2Min,":\n------------\n")
+    sL <- 2^seq(e2Min, mE, length=128)
+    mplot(sL, sin(sL))# was Error plot.window(): infinite axis extents [GEPretty(-7.19e306,inf,5)]
+    print(puaxN <- parUAx())
+    mplot(sL, sin(sL), log="x")
+    ## gave Error in axis(side... log - axis(), 'at' creation, _LARGE_ range: ....
+    ##   axp[0:1]=(1e-307,1e+308), usr[0:1]=(8.28905e-317,inf); i=615, ni=123
+    print(puax <- parUAx())
+    u <- puax[1:2, "usr"]
+    print(axu <- axisTicks(u, log=TRUE))
+    stopifnot(exprs = {
+        all.equal(
+            cbind(usr= c(-7.19077254e+306, 2^mE, Inf),
+                  xaxp=c(0, rep(1.5e+308,2))), puaxN)
+        all.equal(10^cumsum(c(-307, rep(123, 5))), axu, tol=1e-14)
+        all.equal(puax[1:2,"xaxp"], c(1e-307, 1e308))
+        all.equal(u, log10(sL[c(1,length(sL))]))
+    })
+} ## gave warnings: plot.window() .. pretty(): very large range .. corrected to ..
+if(dev.interactive()) par(opa)
+## Just the range: --------------------------------------------------
+sL <- 2^c(-1074, mE)
+mplot(sL, 1:2, yaxt="n")# was Error plot.window(): infinite axis extents [GEPretty(*)]
+## works ok now (2nd point: partly clipped off)
+(puax <- parUAx()) # usr *and* axp where = Inf, now axp is finite!
+## stopifnot(all.equal( c(0, rep(1.6e308, 2)), puax[,"xaxp"] )) ## for now:
+stopifnot( all.equal(rep(1.5e308,2), puax[-1,"xaxp"]) )
+all.equal(5e307*(0:3), grid::grid.pretty(range(sL))) #  <==> GEPretty() is fine
+##============================================================================
+##
+## Using LL is *harder*: large on both sides! ==> diff(LL) == Inf
+(LL <- c(-1,1)* 2^mE) # similarly bad as 'sL' (cut-off points to the very left..)
+a <- mplot(LL, 0:1) # (no warning)
+(puax <- parUAx()) ## diff(usr) = Inf, but xaxp is ok ==> axis labels "fine"
+stopifnot(exprs = {
+    all.equal(a$a1, axTicks(1))
+    all.equal(a$a1, (-3:3)*5e307)
+    all.equal(LL, puax[1:2,"usr"], tol=1e-10)
+    puax[3,] == Inf
+})
+## These are even a bit better (no partial clipping) {gave error in R <= 4.1.0}:
+a2  <- mplot(LL/2,    1:2, yaxt="n")
+a75 <- mplot(LL/1.75, 1:2, yaxt="n")
+(puax <- parUAx())
+stopifnot(exprs = {
+    all.equal(a2 $a1, (-1:1)*5e307)
+    all.equal(a75$a1, (-2:2)*5e307)
+    all.equal(a75$a1, axTicks(1))
+    puax[3,] == Inf
+    all.equal(c(-1,1)*1e308, puax[1:2,"xaxp"])
+})
+## axisTicks(), axis() -- graphics *engine* & {graphics} -- "unpretty" in R <= 4.1.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

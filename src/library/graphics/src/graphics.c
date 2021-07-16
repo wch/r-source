@@ -669,8 +669,8 @@ double xNPCtoUsr(double x, pGEDevDesc dd)
     if (gpptr(dd)->xlog)
 	return Rexp10(gpptr(dd)->logusr[0] +
 		   x*(gpptr(dd)->logusr[1] - gpptr(dd)->logusr[0]));
-    else
-	return gpptr(dd)->usr[0] + x*(gpptr(dd)->usr[1] - gpptr(dd)->usr[0]);
+    else // care:  u*[1] - u*[0]  may be infinite: divide, and at the end multiply by 2:
+	return gpptr(dd)->usr[0] + ldexp(x*(ldexp(gpptr(dd)->usr[1],-1) - ldexp(gpptr(dd)->usr[0],-1)), 1);
 }
 
 double yNPCtoUsr(double y, pGEDevDesc dd)
@@ -678,8 +678,8 @@ double yNPCtoUsr(double y, pGEDevDesc dd)
     if (gpptr(dd)->ylog)
 	return Rexp10(gpptr(dd)->logusr[2] +
 		   y*(gpptr(dd)->logusr[3]-gpptr(dd)->logusr[2]));
-    else
-	return gpptr(dd)->usr[2] + y*(gpptr(dd)->usr[3] - gpptr(dd)->usr[2]);
+    else // care:  u*[3] - u*[2]  may be infinite: divide, and at the end multiply by 2:
+	return gpptr(dd)->usr[2] + ldexp(y*(ldexp(gpptr(dd)->usr[3],-1) - ldexp(gpptr(dd)->usr[2],-1)), 1);
 }
 
 double xDevtoUsr(double x, pGEDevDesc dd)
@@ -1667,8 +1667,9 @@ void GMapWin2Fig(pGEDevDesc dd)
     }
     else {
 	gpptr(dd)->win2fig.bx = dpptr(dd)->win2fig.bx =
-	    (gpptr(dd)->plt[1] - gpptr(dd)->plt[0])/
-	    (gpptr(dd)->usr[1] - gpptr(dd)->usr[0]);
+	    // care:  u*[1] - u*[0]  may be infinite: divide/multiply by 2:
+	    ldexp(      (gpptr(dd)->plt[1]     -       gpptr(dd)->plt[0])/
+		  (ldexp(gpptr(dd)->usr[1],-1) - ldexp(gpptr(dd)->usr[0], -1)), -1);
 	gpptr(dd)->win2fig.ax = dpptr(dd)->win2fig.ax =
 	    gpptr(dd)->plt[0] - gpptr(dd)->win2fig.bx * gpptr(dd)->usr[0];
     }
@@ -1681,8 +1682,9 @@ void GMapWin2Fig(pGEDevDesc dd)
     }
     else {
 	gpptr(dd)->win2fig.by = dpptr(dd)->win2fig.by =
-	    (gpptr(dd)->plt[3] - gpptr(dd)->plt[2])/
-	    (gpptr(dd)->usr[3] - gpptr(dd)->usr[2]);
+	    // care:  u*[1] - u*[0]  may be infinite: divide/multiply by 2:
+	    ldexp(      (gpptr(dd)->plt[3]     -       gpptr(dd)->plt[2])/
+		  (ldexp(gpptr(dd)->usr[3],-1) - ldexp(gpptr(dd)->usr[2], -1)), -1);
 	gpptr(dd)->win2fig.ay = dpptr(dd)->win2fig.ay =
 	    gpptr(dd)->plt[2] - gpptr(dd)->win2fig.by * gpptr(dd)->usr[2];
     }
@@ -1891,18 +1893,23 @@ pGEDevDesc GNewPlot(Rboolean recording)
 }
 #undef G_ERR_MSG
 
-/*
-// (usr, log, n_inp) |--> (axp = (min, max), n_out) :
 
-void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
-
-* ----> in src/main/graphics.c (as used in grDevices too)
-*          ------------------- */
-
+/*  GScale(min, max, axis, <dev>)
+ *  =============================
+ *
+ * After massaging (min,max) heavily, depending on '(n, log, style)' (from <dev>),
+ * it will map / transform
+ *
+ * (usr, log, n_inp) |--> (axp = (min, max), n_out) :
+ *
+ * via  GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
+ * ----> in ../../../main/graphics.c (as used in grDevices too)
+ *          ------------------------
+*/
 void GScale(double min, double max, int axis, pGEDevDesc dd)
 {
-/* GScale: used to default axis information
- *	   i.e., if user has NOT specified par(usr=...)
+/* GScale(): provides default axis information
+ *	   i.e., if user has NOT specified par(usr=.., {x,y}axp= ..)
  * NB: can have min > max !
  *              =========
 */
@@ -1929,30 +1936,85 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	max = log10(max);
     }
     if(!R_FINITE(min) || !R_FINITE(max)) {
-	warning(_("nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"),
-		min, max, axis, log);
-	if(!R_FINITE(min)) min = - .45 * DBL_MAX;
-	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
+	warning(_("nonfinite axis=%d limits [GScale(%g,%g,..); log=%d] -- corrected now"),
+		axis, min, max, log);
+	if(!R_FINITE(min)) min = - .45 * ((min < 0) ? -DBL_MAX : DBL_MAX);
+	if(!R_FINITE(max)) max = + .45 * ((max < 0) ? -DBL_MAX : DBL_MAX);
+    } // both are now finite, but difference may still overflow
+    if(!R_FINITE(max - min)) {
+#ifdef not_needed_as_pretty_is_better
+# define EPS_CC     1e-15
+ //                 ----- was 1e-12 up to R 4.1.0
+	const double one_f = 1. + EPS_CC;
+	double d1 = fabs(min/DBL_MAX - max/DBL_MAX) * one_f; // in interval (1,2)
+	warning(_("nonfinite axis=%d *range* [GScale(%g,%g,..); log=%d] => / %g"),
+		axis, min, max, log, d1);
+	min /= d1;
+	max /= d1;
 	/* max - min is now finite */
+# ifdef DEBUG_GScale
+	REprintf(" --> (min=%.3g, max=%.3g), now finite |max-min|=%.5g\n",
+		 min, max, fabs(max - min));
+# endif
+#else
+# ifdef DEBUG_GScale
+	REprintf("nonfinite axis=%d *range* [GScale(%g,%g,..); log=%d]: problem (?)\n",
+		 axis, min, max, log);
+# endif
+#endif
     }
     /* Version <= 1.2.0 had
        if (min == max)	 -- exact equality for real numbers */
     double temp = fmax2(fabs(max), fabs(min));
+#ifdef DEBUG_GScale
+    REprintf("GScale(): max(|min|,|max|)=%.3g;", temp);
+#endif
     if(temp == 0) {/* min = max = 0 */
 	min = -1;
 	max =  1;
     }
-    else if(fabs(max - min) < temp * EPS_FAC_1 * DBL_EPSILON) {
-	temp *= (min == max) ? .4 : 1e-2;
-	min -= temp;
-	max += temp;
+    else {
+	double tf = // careful to avoid overflow (and underflow) here:
+	    (temp > 1)
+	    ? (temp * DBL_EPSILON) * EPS_FAC_1
+	    : (temp * EPS_FAC_1  ) * DBL_EPSILON;
+	if(tf == 0) tf = DBL_MIN;
+	if(fabs(max - min) < tf) {
+#ifdef DEBUG_GScale
+	    REprintf(" (min=%.3g, max=%.3g): small |max-min|=%.7g < %.7g;\n",
+		     min, max, fabs(max - min), tf);
+#endif
+	    temp *= (min == max) ? .4 : 1e-2;
+	    min -= temp;
+	    max += temp;
+#ifdef DEBUG_GScale
+	    REprintf("   d=%g  => new (min=%g, max=%g)\n", temp, min,max);
+#endif
+	}
     }
 
     switch(style) {
     case 'r':
-	temp = 0.04 * (max-min);
-	min -= temp;
-	max += temp;
+	temp = (temp > 100
+		? 0.04*max - 0.04*min // not to overflow
+		: 0.04*(max-min)); // is negative iff max < min
+	if(!log) { // careful now to not get to +/- Inf :
+	    double d;
+#ifdef DEBUG_GScale
+	    REprintf(" axs='r', (min=%g, max=%g), d0=%g; ", min,max, temp);
+#endif
+	    d=min-temp; if(R_FINITE(d)) min = d; else min = (d < 0) ? -DBL_MAX : DBL_MAX;
+	    d=max+temp; if(R_FINITE(d)) max = d; else max = (d < 0) ? -DBL_MAX : DBL_MAX;
+	} else { // log; should be far away from Inf
+#ifdef DEBUG_GScale
+	    REprintf(" log=T; axs='r' adj by 0.04*d; ");
+#endif
+	    min -= temp;
+	    max += temp;
+	}
+#ifdef DEBUG_GScale
+	REprintf("adj = %g => new (min=%g, max=%g)\n", temp, min,max);
+#endif
 	break;
     case 'i':
 	break;
@@ -1968,11 +2030,16 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	    temp = fmin2(min_o, 1.01* DBL_MIN); /* allow smaller non 0 */
 	    min = log10(temp);
 	}
-	if(max >= 308.25) { /* overflows */
+	if(max >= 308.25035) { /* ~= log10(.99 * DBL_MAX) */
 	    tmp2 = fmax2(max_o, .99 * DBL_MAX);
 	    max = log10(tmp2);
 	} else tmp2 = Rexp10(max);
+#ifdef DEBUG_GScale
+	REprintf(" log=TRUE: setting (temp,tmp2)=(%g,%g) for usr and (min,max)=(%g,%g) for logusr\n",
+		 temp,tmp2, min,max);
+#endif
     }
+
     if(is_xaxis) {
 	if (log) {
 	    gpptr(dd)->usr[0] = dpptr(dd)->usr[0] = temp;

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/axis.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -102,9 +102,10 @@ axTicks <- function(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
     } else { # linear
 	n <- as.integer(abs(axp[3L]) + 0.25)
 	r <- seq.int(axp[1L], axp[2L], length.out = n + 1L)
-	## zapsmall(r), but using same computations as C-based axisTicks():
+	## zapsmall(r), but using same computations as C-based axisTicks()
 	n. <- max(1L, n)
-	r[abs(r) < abs(axp[2L] - axp[1L])/(100*n.)] <- 0
+	N <- 100*n.
+	r[abs(r) < abs(axp[2L]/N - axp[1L]/N)] <- 0
 	r
     }
 }

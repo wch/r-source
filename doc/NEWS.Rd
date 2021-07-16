@@ -51,6 +51,12 @@
       \item New \code{.pretty()} with option \code{bounds} as technical
       utility version of \code{pretty()}, and it and \code{pretty()} get
       new argument \code{f.min} with a better than back-compatible default.
+
+      \item The graphics engine's based \code{axisTicks()} and related
+      functions such as \pkg{graphics} package's \code{axis()} work better,
+      notably for the log scale; partly because the \code{pretty()}
+      improvements, but also because care is taken e.g., when \code{ylim}
+      is finite, but \code{diff(ylim)} is infinite.
     }
   }
 
