@@ -259,7 +259,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   See the help on \code{\link{write.csv}} for the various conventions
   for \code{.csv} files.  The commonest form of CSV file with row names
   needs to be read with \code{read.csv(..., row.names = 1)} to use the
-  names in the first columnn of the file as row names.
+  names in the first column of the file as row names.
 }
 
 \value{
