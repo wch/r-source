@@ -4314,6 +4314,8 @@ SEXP (SETCAD4R)(SEXP x, SEXP y)
     return y;
 }
 
+SEXP (EXTPTR_PROT)(SEXP x) { return EXTPTR_PROT(CHK(x)); }
+SEXP (EXTPTR_TAG)(SEXP x) { return EXTPTR_TAG(CHK(x)); }
 void *(EXTPTR_PTR)(SEXP x) { return EXTPTR_PTR(CHK(x)); }
 
 void (SET_MISSING)(SEXP x, int v) { SET_MISSING(CHKCONS(x), v); }
