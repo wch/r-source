@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009-2014 The R Core Team.
+ *  Copyright (C) 2009-2021 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -227,7 +227,33 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 			Rprintf("TAG: "); /* TAG should be a one-liner since it's a symbol so we don't put it on an extra line*/
 			inspect_tree(0, TAG(lc), deep - 1, pvec);
 		    }
-		    inspect_tree(pre + 2, CAR(lc), deep - 1, pvec);
+		    if (BNDCELL_TAG(lc)) {
+			int type = BNDCELL_TAG(lc);
+			pp(pre + 2);
+			Rprintf("immediate %s: ", sexptype2char(type));
+			switch(type) {
+			case REALSXP:
+			    Rprintf("%g\n", BNDCELL_DVAL(lc));
+			    break;
+			case INTSXP:
+			    if (BNDCELL_IVAL(lc) == NA_INTEGER)
+				Rprintf("NA\n");
+			    else
+				Rprintf("%d\n", BNDCELL_IVAL(lc));
+			    break;
+			case LGLSXP:
+			    if (BNDCELL_LVAL(lc) == NA_INTEGER)
+				Rprintf("NA\n");
+			    else if (BNDCELL_LVAL(lc))
+				Rprintf("TRUE\n");
+			    else
+				Rprintf("FALSE\n");
+			    break;
+			default: error("unknown immediate binding type");
+			}
+		    }
+		    else
+			inspect_tree(pre + 2, CAR(lc), deep - 1, pvec);
 		    lc = CDR(lc);
 		}
 	    }
