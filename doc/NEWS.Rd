@@ -88,6 +88,12 @@
     \itemize{
       \item The non-API header \file{R_ext/R-ftp-http.h} is no longer
       provided, as the entry points it covered are now all defunct.
+
+      \item A number of non-API declarations and macro definitions have
+      been moved from the installed header \file{Rinternals.h} to the
+      internal header \file{Defn.h}. Packages that only use entry points
+      and definitions documented to be part of the API as specified in
+      \sQuote{Writing R Extensions} §6 should not be affected.
     }
   }
 

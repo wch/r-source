@@ -13159,7 +13159,7 @@ the @R{} source code, apart from @code{SET_STRING_ELT} and
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
 
-If efficiency is essential, the internal versions of the accessors can be
+If efficiency is essential, internal versions of some accessors can be
 obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
