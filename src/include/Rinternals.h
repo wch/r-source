@@ -1102,7 +1102,6 @@ const int *(INTEGER_OR_NULL)(SEXP x);
 const double *(REAL_OR_NULL)(SEXP x);
 const Rcomplex *(COMPLEX_OR_NULL)(SEXP x);
 const Rbyte *(RAW_OR_NULL)(SEXP x);
-void *(STDVEC_DATAPTR)(SEXP x); // used by vroom
 int (INTEGER_ELT)(SEXP x, R_xlen_t i);
 double (REAL_ELT)(SEXP x, R_xlen_t i);
 int (LOGICAL_ELT)(SEXP x, R_xlen_t i);
@@ -1196,6 +1195,8 @@ void SET_HASHTAB(SEXP x, SEXP v); // used by rlang and others
 void SET_PRENV(SEXP x, SEXP v); // used by dplyr, others
 void SET_PRVALUE(SEXP x, SEXP v); // used by dplyr, others
 void SET_PRCODE(SEXP x, SEXP v); // used by magrittr, others
+
+void *(STDVEC_DATAPTR)(SEXP x); // used by vroom
 
 /* Growable vector support */ // used by multbxxc
 int (IS_GROWABLE)(SEXP x);
