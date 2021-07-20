@@ -76,7 +76,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 
   The print method for the objects returned by \code{aspell} has an
   \code{indent} argument controlling the indentation of the positions of
-  possibly mis-spelled words.  The default is 2; Emacs users may find it
+  possibly misspelled words.  The default is 2; Emacs users may find it
   useful to use an indentation of 0 and visit output in grep-mode.  It
   also has a \code{verbose} argument: when this is true, suggestions for
   replacements are shown as well.
@@ -91,7 +91,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 }
 \value{
   A data frame inheriting from \code{aspell} (which has a useful print
-  method) with the information about possibly mis-spelled words.
+  method) with the information about possibly misspelled words.
 }
 \references{
   Kurt Hornik and Duncan Murdoch (2011).
