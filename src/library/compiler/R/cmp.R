@@ -1414,7 +1414,7 @@ tryInline <- function(e, cb, cntxt) {
 setInlineHandler("function", function(e, cb, cntxt) {
     forms <- e[[2]]
     body <- e[[3]]
-    sref <- e[[4]]
+    sref <- if (length(e) > 3) e[[4]] else NULL
     ncntxt <- make.functionContext(cntxt, forms, body)
     if (mayCallBrowser(body, cntxt))
         return(FALSE)
