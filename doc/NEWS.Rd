@@ -431,7 +431,7 @@
       \code{Sys.getlocale("LC_CTYPE")}.
 
       \item New function \code{gregexec()} which generalizes \code{regexec()}
-      to find \emph{all} disjoint matches and well as all substrings
+      to find \emph{all} disjoint matches and all substrings
       corresponding to parenthesized subexpressions of the given regular
       expression.  (Contributed by Brodie Gaslam.)
 
