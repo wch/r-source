@@ -11502,6 +11502,8 @@ grown) yet the current value needs to be protected.  For these cases
 can be used to replace the protected value using @code{REPROTECT}.
 @findex PROTECT_WITH_INDEX
 @findex REPROTECT
+@findex R_ProtectWithIndex
+@findex R_Reprotect
 For example (from the internal code for @code{optim})
 
 @example
@@ -12068,11 +12070,66 @@ and there are versions of this for all the atomic vector types (those for
 a length-one character vector being @code{ScalarString} with argument a
 @code{CHARSXP} and @code{mkString} with argument @code{const char *}).
 
+@findex ScalarReal
+@findex ScalarInteger
+@findex ScalarLogical
+@findex ScalarComplex
+@findex ScalarRaw
+@findex ScalarString
+@findex mkString
+@example
+@group
+SEXP ScalarReal(double);
+SEXP ScalarInteger(int);
+SEXP ScalarLogical(int)
+SEXP ScalarRaw(Rbyte);
+SEXP ScalarComplex(Rcomplex);
+SEXP ScalarString(SEXP);
+SEXP mkString(const char *);
+@end group
+@end example
+
 Some of the @code{is@var{XXXX}} functions differ from their apparent
 @R{}-level counterparts: for example @code{isVector} is true for any
 atomic vector type (@code{isVectorAtomic}) and for lists and expressions
 (@code{isVectorList}) (with no check on attributes).  @code{isMatrix} is
 a test of a length-2 @code{"dim"} attribute.
+@findex isVector
+@findex isVectorAtomic
+@findex isVectorList
+@findex isMatrix
+@findex isPairList
+@findex isPrimitive
+@findex isTs
+@findex isNumeric
+@findex isArray
+@findex isFactor
+@findex isObject
+@findex isFunction
+@findex isLanguage
+@findex isNewList
+@comment @findex isNumber
+@comment @findex isFrame
+@example
+@group
+Rboolean isVector(SEXP);
+Rboolean isVectorAtomic(SEXP);
+Rboolean isVectorList(SEXP);
+Rboolean isMatrix(SEXP);
+Rboolean isPairList(SEXP);
+Rboolean isPrimitive(SEXP);
+Rboolean isTs(SEXP);
+Rboolean isNumeric(SEXP);
+Rboolean isArray(SEXP);
+Rboolean isFactor(SEXP);
+Rboolean isObject(SEXP);
+Rboolean isFunction(SEXP);
+Rboolean isLanguage(SEXP);
+Rboolean isNewList(SEXP);
+@comment Rboolean isNumber(SEXP);
+@comment Rboolean isFrame (SEXP);
+@end group
+@end example
 
 There are a series of small macros/functions to help construct pairlists
 and language objects (whose internal structures just differ by
