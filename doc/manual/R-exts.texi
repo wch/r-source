@@ -11632,10 +11632,21 @@ Unless you are very sure about the type of the arguments, the code
 should check the data types.  Sometimes it may also be necessary to
 check data types of objects created by evaluating an @R{} expression in
 the C code.  You can use functions like @code{isReal}, @code{isInteger}
-and @code{isString} to do type checking.  See the header file
-@file{Rinternals.h} for definitions of other such functions.  All of
-these take a @code{SEXP} as argument and return 1 or 0 to indicate
-@var{TRUE} or @var{FALSE}.
+and @code{isString} to do type checking.
+@findex isReal
+@findex isInteger
+@findex isString
+Other such functions declared in the header file @file{Rinternals.h}
+include @code{isNull}, @code{isSymbol}, @code{isLogical},
+@code{isComplex}, @code{isExpression}, and @code{isEnvironment}.
+@findex isNull
+@findex isSymbol
+@findex isLogical
+@findex isComplex
+@findex isExpression
+@findex isEnvironment
+All of these take a @code{SEXP} as argument and return 1 or 0 to
+indicate @var{TRUE} or @var{FALSE}.
 
 What happens if the @code{SEXP} is not of the correct type?  Sometimes
 you have no other option except to generate an error.  You can use the
@@ -12071,10 +12082,30 @@ block: it constructs a pairlist from @code{u} followed by @code{v}
 that constructs a language object.  Functions @code{list1} to
 @code{list6} construct a pairlist from one to six items, and
 @code{lang1} to @code{lang6} do the same for a language object (a
-function to call plus zero to five arguments).  Functions @code{elt} and
-@code{lastElt} find the @var{i}th element and the last element of a
-pairlist, and @code{nthcdr} returns a pointer to the @var{n}th position
-in the pairlist (whose @code{CAR} is the @var{n}th item).
+function to call plus zero to five arguments).
+@findex CONS
+@findex cons
+@findex list1
+@findex list2
+@findex list3
+@findex list4
+@findex list5
+@findex list6
+@findex LCONS
+@findex lcons
+@findex lang1
+@findex lang2
+@findex lang3
+@findex lang4
+@findex lang5
+@findex lang6
+Functions @code{elt} and @code{lastElt} find the @var{i}th element and
+the last element of a pairlist, and @code{nthcdr} returns a pointer to
+the @var{n}th position in the pairlist (whose @code{CAR} is the
+@var{n}th item).
+@findex elt
+@findex lastElt
+@findex nthcdr
 
 Functions @code{str2type} and @code{type2str} map @R{}
 length-one character strings to and from @code{SEXPTYPE} numbers, and
@@ -12413,6 +12444,21 @@ showArgs1 <- function(...) invisible(.Call("showArgs1", list(...)))
 
 @noindent
 The (very similar) C code is in the scripts.
+
+Additional functions for accessing pairlist components are @code{CAAR},
+@code{CDAR}, @code{CDDR}, and @code{CDDDR}.
+@findex CAAR
+@findex CDAR
+@findex CDDR
+@findex CDDDR
+These components can be modified with @code{SETCAR}, @code{SETCDR},
+@code{SETCADR}, @code{SETCADDR}, @code{SETCADDDR}, and @code{SETCAD4R}.
+@findex SETCAR
+@findex SETCDR
+@findex SETCADR
+@findex SETCADDR
+@findex SETCADDDR
+@findex SETCAD4R
 
 @node Missing and special values,  , Calling .External, Interface functions .Call and .External
 @subsection Missing and special values
@@ -13221,6 +13267,10 @@ The vector accessors like @code{REAL} and @code{INTEGER} and
 (For efficiency they may be macros or inline functions when used in
 the @R{} source code, apart from @code{SET_STRING_ELT} and
 @code{SET_VECTOR_ELT} which are always functions.)
+@findex VECTOR_ELT
+@findex SET_VECTOR_ELT
+@findex REAL
+@findex INTEGER
 
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
