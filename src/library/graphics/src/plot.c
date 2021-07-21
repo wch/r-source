@@ -535,6 +535,15 @@ SEXP C_plot_window(SEXP args)
     if ((dpptr(dd)->xlog && (xmin < 0 || xmax < 0)) ||
 	(dpptr(dd)->ylog && (ymin < 0 || ymax < 0)))
 	    error(_("Logarithmic axis must have positive limits"));
+    // NB:  values == 0  are *not* caught (==> error msg above is misleading !
+
+#ifdef DEBUG_axis
+    REprintf("plot.window(): (xmin,xmax) = (%g,%g); (ymin,ymax) = (%g,%g)",
+	     xmin,xmax, ymin,ymax);
+    if (R_FINITE(asp) && asp > 0)
+	REprintf("  .. asp > 0 : will use xadd,yadd");
+    REprintf("\n");
+#endif
 
     if (R_FINITE(asp) && asp > 0) { // finite 'asp' > 0 specified
 	double
@@ -558,6 +567,10 @@ SEXP C_plot_window(SEXP args)
 	}
 	if(xmax < xmin) xadd *= -1;
 	if(ymax < ymin) yadd *= -1;
+
+#ifdef DEBUG_axis
+	REprintf(" --> GScale(xmin-xadd, xmax+xadd, ..) ; xadd=%g, yadd=%g\n", xadd, yadd);
+#endif
 	GScale(xmin - xadd, xmax + xadd, 1, dd);
 	GScale(ymin - yadd, ymax + yadd, 2, dd);
     }

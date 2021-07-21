@@ -43,7 +43,7 @@
 #define _(String) (String)
 #endif
 
-/*--->> Documentation now in  ../include/Rgraphics.h  "API" ----- */
+/*--->> Documentation now in ../../../include/Rgraphics.h (*not* API) ----- */
 
 double R_Log10(double x)
 {
@@ -1928,50 +1928,49 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	log   = gpptr(dd)->ylog;
     }
 
-    double min_o = 0., max_o = 0.;/*-Wall*/
+#ifdef DEBUG_GScale
+    REprintf("GScale(%g, %g, ax=%d); n=lab[.]=%d, log=%s;", min, max, axis,
+	     n, log ? "TRUE" : "F");
+#endif
+    // double min_o = 0., max_o = 0.;/*-Wall*/
     if (log) {
 	/*  keep original  min, max - to use in extremis */
-	min_o = min; max_o = max;
+	// min_o = min; max_o = max;
 	min = log10(min);
 	max = log10(max);
+#ifdef DEBUG_GScale
+	REprintf(" log10(*) -> new (%g, %g);", min, max);
+#endif
     }
     if(!R_FINITE(min) || !R_FINITE(max)) {
-	warning(_("nonfinite axis=%d limits [GScale(%g,%g,..); log=%d] -- corrected now"),
-		axis, min, max, log);
-	if(!R_FINITE(min)) min = - .45 * ((min < 0) ? -DBL_MAX : DBL_MAX);
-	if(!R_FINITE(max)) max = + .45 * ((max < 0) ? -DBL_MAX : DBL_MAX);
+	warning(_("nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"),
+		axis, min, max, log ? "TRUE" : "F");
+	if(log) { // (min, max) in log10 scale:
+	    if(!R_FINITE(min)) min = (min < 0) ? -320. : 308.254715559; // = log10(0.99999999789 * DBL_MAX)
+	    if(!R_FINITE(max)) max = (max < 0) ? -320. : 308.254715559;
+	} else {
+	    if(!R_FINITE(min)) min = .45 * ((min < 0) ? -DBL_MAX : DBL_MAX);
+	    if(!R_FINITE(max)) max = .45 * ((max < 0) ? -DBL_MAX : DBL_MAX);
+	}
     } // both are now finite, but difference may still overflow
     if(!R_FINITE(max - min)) {
-#ifdef not_needed_as_pretty_is_better
-# define EPS_CC     1e-15
- //                 ----- was 1e-12 up to R 4.1.0
-	const double one_f = 1. + EPS_CC;
-	double d1 = fabs(min/DBL_MAX - max/DBL_MAX) * one_f; // in interval (1,2)
-	warning(_("nonfinite axis=%d *range* [GScale(%g,%g,..); log=%d] => / %g"),
-		axis, min, max, log, d1);
-	min /= d1;
-	max /= d1;
-	/* max - min is now finite */
-# ifdef DEBUG_GScale
-	REprintf(" --> (min=%.3g, max=%.3g), now finite |max-min|=%.5g\n",
-		 min, max, fabs(max - min));
-# endif
-#else
-# ifdef DEBUG_GScale
-	REprintf("nonfinite axis=%d *range* [GScale(%g,%g,..); log=%d]: problem (?)\n",
-		 axis, min, max, log);
-# endif
+#ifdef DEBUG_GScale
+	REprintf("nonfinite axis=%d *range* of (%g,%g): now ok (?)\n",
+		 axis, min, max);
 #endif
     }
     /* Version <= 1.2.0 had
        if (min == max)	 -- exact equality for real numbers */
     double temp = fmax2(fabs(max), fabs(min));
 #ifdef DEBUG_GScale
-    REprintf("GScale(): max(|min|,|max|)=%.3g;", temp);
+    REprintf(" d:= max(|min|,|max|)=%.3g;\n", temp);
 #endif
     if(temp == 0) {/* min = max = 0 */
 	min = -1;
 	max =  1;
+#ifdef DEBUG_GScale
+	REprintf(" d=0  ==>  (min,max) = (-1,1);");
+#endif
     }
     else {
 	double tf = // careful to avoid overflow (and underflow) here:
@@ -2001,13 +2000,13 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	if(!log) { // careful now to not get to +/- Inf :
 	    double d;
 #ifdef DEBUG_GScale
-	    REprintf(" axs='r', (min=%g, max=%g), d0=%g; ", min,max, temp);
+	    REprintf(" axs='r', (min=%g, max=%g), adding +/- d0=%g; ", min,max, temp);
 #endif
 	    d=min-temp; if(R_FINITE(d)) min = d; else min = (d < 0) ? -DBL_MAX : DBL_MAX;
 	    d=max+temp; if(R_FINITE(d)) max = d; else max = (d < 0) ? -DBL_MAX : DBL_MAX;
 	} else { // log; should be far away from Inf
 #ifdef DEBUG_GScale
-	    REprintf(" log=T; axs='r' adj by 0.04*d; ");
+	    REprintf(" log=T; axs='r' adj:= 0.04*d; ");
 #endif
 	    min -= temp;
 	    max += temp;
@@ -2027,15 +2026,16 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
     double tmp2 = 0.;
     if (log) { /* 10^max may have gotten +Inf ; or  10^min has become 0 */
 	if((temp = Rexp10(min)) == 0.) {/* or < 1.01*DBL_MIN */
-	    temp = fmin2(min_o, 1.01* DBL_MIN); /* allow smaller non 0 */
+	    temp = 1.01* DBL_MIN;
 	    min = log10(temp);
 	}
 	if(max >= 308.25035) { /* ~= log10(.99 * DBL_MAX) */
-	    tmp2 = fmax2(max_o, .99 * DBL_MAX);
+	    tmp2 = .99 * DBL_MAX;
 	    max = log10(tmp2);
 	} else tmp2 = Rexp10(max);
+	// In all cases:  (temp,tmp2) == 10^(min,max)
 #ifdef DEBUG_GScale
-	REprintf(" log=TRUE: setting (temp,tmp2)=(%g,%g) for usr and (min,max)=(%g,%g) for logusr\n",
+	REprintf(" log: set (temp,tmp2)=(%g,%g) for usr and (min,max)=(%g,%g) for logusr\n",
 		 temp,tmp2, min,max);
 #endif
     }

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axTicks.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{axTicks}
@@ -85,7 +85,8 @@ par(op)
 
 x <- 9.9*10^(-3:10)
 plot(x, 1:14, log = "x")
-axTicks(1) # now length 5, in R <= 2.13.x gave the following
+axTicks(1) # now length 7, in R <= 2.13.x gave 'nintLog = Inf' res; then
+## 1e-01 1e+01 1e+03 1e+05 1e+07 1e+09 1e+11 ; since R 4.2.0: 1e-2 1e0 1e2 .. 1e10
 axTicks(1, nintLog = Inf) # rather too many
 
 ## An example using axTicks() without reference to an existing plot

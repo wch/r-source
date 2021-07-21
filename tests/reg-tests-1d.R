@@ -1,3 +1,4 @@
+
 ## Regression tests for R >= 3.4.0
 
 .pt <- proc.time()
@@ -5251,7 +5252,7 @@ summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 4.4
 (nTo <- as.numeric(names(To)))
 range(rEdo <- abs(5e-307/diff(nTo) - 1))
 stopifnot(nTo >= 0, length(nTo) == 11,
-          rEdo <= 2^-44) # seen max of 2^-51 on Lnx_64; .. on Win64
+          rEdo <= 2^-44) # seen max of 2^-51 on Lnx_64; 2^-44.5 on Win64
 
 
 ## graphics::axis(), but also *engine* GScale() / GPretty() etc
@@ -5279,8 +5280,10 @@ parUAx <- function(pua = par(c("usr", "xaxp"))) {
     rbind(M <- sapply(pua, `[`, 1:2), D = diff(M))
 }
 mE <- 1024 - 1e-12
-if(dev.interactive()) opa <- par(ask=TRUE)
-for(e2Min in c(-1074, -1070, -1060, -1050)) {
+if(dev.interactive()) opa <- par(ask=TRUE, xaxs = par("xaxs"))
+for(xaxs in c("r","i")) {
+  cat(sprintf('xaxs = "%s"\n==========\n', xaxs)); par(xaxs = xaxs)
+  for(e2Min in c(-1074, -1070, -1060, -1050)) {
     cat("\ne2Min=",e2Min,":\n------------\n")
     sL <- 2^seq(e2Min, mE, length=128)
     mplot(sL, sin(sL))# was Error plot.window(): infinite axis extents [GEPretty(-7.19e306,inf,5)]
@@ -5292,13 +5295,18 @@ for(e2Min in c(-1074, -1070, -1060, -1050)) {
     u <- puax[1:2, "usr"]
     print(axu <- axisTicks(u, log=TRUE))
     stopifnot(exprs = {
-        all.equal(
-            cbind(usr= c(-7.19077254e+306, 2^mE, Inf),
-                  xaxp=c(0, rep(1.5e+308,2))), puaxN)
+        all.equal(puaxN,
+                  list("r" = cbind(usr= c(-7.19077254e+306, 2^mE, Inf),
+                                   xaxp=c(0, rep(1.5e+308,2))),
+                       "i" = cbind(usr= 2^c(e2Min, mE, mE),
+                                   xaxp=c(0, rep(1.5e+308,2))))[[xaxs]])
         all.equal(10^cumsum(c(-307, rep(123, 5))), axu, tol=1e-12)# 3.4e-14 {Win64}
         all.equal(puax[1:2,"xaxp"], c(1e-307, 1e308))
-        all.equal(u, log10(sL[c(1,length(sL))]))
+        { cat("1 - u / ... : ")
+            abs(print(1 - u / c(c(r=-1022, i=e2Min)[[xaxs]], mE) * log2(10))) < 5e-5 }
+        ## all.equal(u, log10(sL[c(1,length(sL))]))
     })
+  }
 } ## gave warnings: plot.window() .. pretty(): very large range .. corrected to ..
 if(dev.interactive()) par(opa)
 ## Just the range: --------------------------------------------------
@@ -5333,6 +5341,22 @@ stopifnot(exprs = {
     all.equal(c(-1,1)*1e308, puax[1:2,"xaxp"])
 })
 ## axisTicks(), axis() -- graphics *engine* & {graphics} -- "unpretty" in R <= 4.1.x
+for(yMin in c(0, 5e-324, 1e-318, 1e-312, 1e-306)) {
+    W <- NULL
+    withCallingHandlers(
+        plot(1:2, (1:2)/16, ylim = c(yMin, 1),
+             log="y", main= sprintf("ylim = c(%g, 1)", yMin))
+        , warning = function(w){ W <<- w ; invokeRestart("muffleWarning") })
+    if(englishMsgs && yMin == 0)
+        stopifnot(grepl("nonfinite axis=2 limits [GScale(-inf,", conditionMessage(W), fixed=TRUE))
+    atx <- axisTicks(par("usr")[3:4], log=TRUE, axp=par("yaxp")) # ditto
+    if(yMin > 0) {
+        print(axT <- axTicks(2)) #  1e-307 1e-244 1e-181 1e-118  1e-55  1e+08
+        stopifnot(all.equal(axT, atx, tol = 1e-15))
+    }
+    stopifnot(all.equal(atx, 10^cumsum(c(-307, rep(63, 5))), tol=1e-14))
+}
+## the *first* plot looked ugly in R <= 4.1.0 and failed for a few days in R-devel
 
 
 
