@@ -13262,15 +13262,19 @@ connection if it is no longer is use.
 @node Vector accessor functions, Character encoding issues, External pointers and weak references, System and foreign language interfaces
 @section Vector accessor functions
 
-The vector accessors like @code{REAL} and @code{INTEGER} and
-@code{VECTOR_ELT} are @emph{functions} when used in @R{} extensions.
-(For efficiency they may be macros or inline functions when used in
-the @R{} source code, apart from @code{SET_STRING_ELT} and
-@code{SET_VECTOR_ELT} which are always functions.)
+The vector accessors like @code{REAL}, @code{INTEGER}, @code{LOGICAL},
+@code{RAW}, @code{COMPLEX}, and @code{VECTOR_ELT} are @emph{functions}
+when used in @R{} extensions.  (For efficiency they may be macros or
+inline functions when used in the @R{} source code, apart from
+@code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
+functions.)
 @findex VECTOR_ELT
 @findex SET_VECTOR_ELT
 @findex REAL
 @findex INTEGER
+@findex LOGICAL
+@findex RAW
+@findex COMPLEX
 
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
