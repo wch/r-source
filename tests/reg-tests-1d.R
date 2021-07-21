@@ -5354,7 +5354,7 @@ for(yMin in c(0, 5e-324, 1e-318, 1e-312, 1e-306)) {
         print(axT <- axTicks(2)) #  1e-307 1e-244 1e-181 1e-118  1e-55  1e+08
         stopifnot(all.equal(axT, atx, tol = 1e-15))
     }
-    stopifnot(all.equal(atx, 10^cumsum(c(-307, rep(63, 5))), tol=1e-14))
+    stopifnot(all.equal(atx, 10^cumsum(c(-307, rep(63, 5))), tol=1e-13)) # Win64: 3.3e-14
 }
 ## the *first* plot looked ugly in R <= 4.1.0 and failed for a few days in R-devel
 
