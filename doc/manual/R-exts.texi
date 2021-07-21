@@ -9465,6 +9465,8 @@ The key to inspecting @R{} objects from compiled code is the function
 @code{PrintValue(SEXP @var{s})} which uses the normal @R{} printing
 mechanisms to print the @R{} object pointed to by @var{s}, or the safer
 version @code{R_PV(SEXP @var{s})} which will only print `objects'.
+@findex PrintValue
+@findex R_PV
 
 One way to make use of @code{PrintValue} is to insert suitable calls
 into the code to be debugged.
@@ -11404,6 +11406,8 @@ right type.
 
 @findex PROTECT
 @findex UNPROTECT
+@findex protect
+@findex unprotect
 
 We need to know a little about the way @R{} handles memory allocation.
 The memory allocated for @R{} objects is not freed by the user; instead,
@@ -11487,6 +11491,7 @@ in a multi-set created by @code{R_NewPreciousMSet} and typically itself
 protected using @code{PROTECT}.  These functions should not be needed
 outside parsers.
 @findex UNPROTECT_PTR
+@findex unprotect_ptr
 @findex R_PreserveInMSet
 @findex R_ReleaseFromMSet
 @findex R_NewPreciousMSet
@@ -11642,6 +11647,7 @@ object, you can change the type by using
 @example
 @var{newSexp} = PROTECT(coerceVector(@var{oldSexp}, REALSXP));
 @end example
+@findex coerceVector
 
 @noindent
 Protection is needed as a new @emph{object} is created; the object
@@ -11761,7 +11767,15 @@ There are shortcuts here too: the functions @code{namesgets},
 @code{dimgets} and @code{dimnamesgets} are the internal versions of the
 default methods of @code{names<-}, @code{dim<-} and @code{dimnames<-}
 (for vectors and arrays), and there are functions such as
-@code{GetMatrixDimnames} and @code{GetArrayDimnames}.
+@code{GetColNames}, @code{GetRowNames}, @code{GetMatrixDimnames} and
+@code{GetArrayDimnames}.
+@findex GetArrayDimnames
+@findex GetMatrixDimnames
+@findex GetColNames
+@findex GetRowNames
+@findex namesgets
+@findex dimnamesgets
+@findex dimgets
 
 What happens if we want to add an attribute that is not pre-defined? We
 need to add a symbol for it @emph{via} a call to
@@ -11828,6 +11842,7 @@ We can use
 @}
 @end group
 @end example
+@findex classgets
 
 @noindent
 As the value is a character vector, we have to know how to create that
@@ -11903,6 +11918,8 @@ R character vectors are stored as @code{STRSXP}s, a vector type like
 @code{VECSXP} where every element is of type @code{CHARSXP}.  The
 @code{CHARSXP} elements of @code{STRSXP}s are accessed using
 @code{STRING_ELT} and @code{SET_STRING_ELT}.
+@findex STRING_ELT
+@findex SET_STRING_ELT
 
 @code{CHARSXP}s are read-only objects and must never be modified.  In
 particular, the C-style string contained in a @code{CHARSXP} should be
@@ -11954,6 +11971,7 @@ SEXP getvar(SEXP name, SEXP rho)
 @}
 @end group
 @end example
+@findex installChar
 
 The main work is done by
 @findex findVar
@@ -12019,6 +12037,11 @@ failed.  There are also @code{asInteger}, @code{asReal} and
 @code{asComplex}.  The function @code{asChar} returns a @code{CHARSXP}.
 All of these functions ignore any elements of an input vector after the
 first.
+@findex asInteger
+@findex asLogical
+@findex asReal
+@findex asComplex
+@findex asChar
 
 To return a length-one real vector we can use
 
@@ -12056,6 +12079,9 @@ in the pairlist (whose @code{CAR} is the @var{n}th item).
 Functions @code{str2type} and @code{type2str} map @R{}
 length-one character strings to and from @code{SEXPTYPE} numbers, and
 @code{type2char} maps numbers to C character strings.
+@findex str2type
+@findex type2str
+@findex type2char
 
 @comment Want to encourage use of some of the more stable and useful R_*
 @comment and Rf_* functions:
@@ -12072,9 +12098,11 @@ These typically contain ``workhorses'' of their @R{} counterparts.
 
 Functions @code{any_duplicated} and @code{any_duplicated3} are fast
 versions of @R{}'s @code{any(duplicated(.))}.
+@findex any_duplicated
+@findex any_duplicated3
 
 Function @code{R_compute_identical} corresponds to @R{}'s @code{identical} function.
-
+@findex R_compute_identical
 
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying
@@ -12162,6 +12190,9 @@ This mechanism is to be replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
+@findex MAYBE_REFERENCED
+@findex MAYBE_SHARED
+@findex MARK_NOT_MUTABLE
 
 @table@code
 @item MAYBE_REFERENCED(x)
@@ -12282,6 +12313,10 @@ of the interface they are objects that are already in use.  The macros
   fourth = CAD4R(args);
 @end group
 @end example
+@findex CADR
+@findex CADDR
+@findex CADDDR
+@findex CAD4R
 
 @noindent
 provide convenient ways to access the first four arguments.  More
@@ -12358,6 +12393,9 @@ SEXP showArgs(SEXP args)
 @}
 @end group
 @end example
+@findex PRINTNAME
+@findex TYPEOF
+@findex TAG
 
 This can be called by the wrapper function
 
@@ -12431,12 +12469,14 @@ The main function we will use is
 @example
 SEXP eval(SEXP expr, SEXP rho);
 @end example
+@findex eval
 
 @noindent
 the equivalent of the interpreted @R{} code @code{eval(expr, envir =
 rho)} (so @code{rho} must be an environment), although we can also make
 use of @code{findVar}, @code{defineVar} and @code{findFun} (which
 restricts the search to functions).
+@findex findFun
 
 To see how this might be applied, here is a simplified internal version
 of @code{lapply} for expressions, used as
@@ -12533,6 +12573,8 @@ and evaluating, consider the following fragment of
     eval(s, env);
     UNPROTECT(1);
 @end example
+@findex allocList
+@findex SET_TAG
 
 @noindent
 At this point @code{CAR(a)} is the @R{} object to be printed, the
@@ -12552,6 +12594,7 @@ Customarily, the evaluation environment is passed from the calling
 @R{} code (see @code{rho} above). In special cases it is possible that
 the C code may need to obtain the current evaluation environment
 which can be done via @code{R_GetCurrentEnv()} function.
+@findex R_GetCurrentEnv
 
 @menu
 * Zero-finding::
@@ -12791,6 +12834,7 @@ the matrix: here we want it to be @code{REALSXP}.  The other two
 arguments are the numbers of rows and columns.  (Note that @code{LENGTH}
 is intended to be used for vectors: @code{length} is more generally
 applicable.)
+@findex allocMatrix
 
 @example
 @group
@@ -12983,6 +13027,7 @@ An external pointer is created by
 @example
 SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
 @end example
+@findex R_MakeExternalPtr
 
 @noindent
 where @code{p} is the pointer (and hence this cannot portably be a
@@ -13002,6 +13047,7 @@ is
 typedef void * (*R_DL_FUNC)();
 SEXP R_MakeExternalPtrFn(R_DL_FUNC p, SEXP tag, SEXP prot);
 @end example
+@findex R_MakeExternalPtrFn
 
 
 The elements of an external pointer can be accessed and set @emph{via}
@@ -13016,6 +13062,15 @@ void R_SetExternalPtrAddr(SEXP s, void *p);
 void R_SetExternalPtrTag(SEXP s, SEXP tag);
 void R_SetExternalPtrProtected(SEXP s, SEXP p);
 @end example
+@findex R_ExternalPtrAddr
+@findex R_ExternalPtrAddrFn
+@findex R_ExternalPtrTag
+@findex R_ExternalPtrProtected
+@findex R_ClearExternalPtr
+@findex R_SetExternalPtrAddr
+@findex R_SetExternalPtrTag
+@findex R_SetExternalPtrProtected
+
 
 @noindent
 Clearing a pointer sets its value to the C @code{NULL} pointer.
@@ -13026,11 +13081,17 @@ to be run when the object is garbage collected.  This can be @R{} code
 or C code, and the various interfaces are, respectively.
 
 @example
+void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
 
 typedef void (*R_CFinalizer_t)(SEXP);
+void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit);
 @end example
+@findex R_RegisterFinalizer
+@findex R_RegisterCFinalizer
+@findex R_RegisterFinalizerEx
+@findex R_RegisterCFinalizerEx
 
 @noindent
 The @R{} function indicated by @code{fun} should be a function of a
@@ -13071,6 +13132,8 @@ SEXP R_MakeWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit);
 SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin,
                     Rboolean onexit);
 @end example
+@findex R_MakeWeakRef
+@findex R_MakeWeakRefC
 
 @noindent
 where the @R{} or C finalizer are specified in exactly the same way as
@@ -13084,6 +13147,9 @@ SEXP R_WeakRefKey(SEXP w);
 SEXP R_WeakRefValue(SEXP w);
 void R_RunWeakRefFinalizer(SEXP w);
 @end example
+@findex R_WeakRefKey
+@findex R_WeakRefValue
+@findex R_RunWeakRefFinalizer
 
 A toy example of the use of weak references can be found at
 @uref{https://homepage.stat.uiowa.edu/~luke/R/references/weakfinex.html},
@@ -13154,7 +13220,7 @@ The vector accessors like @code{REAL} and @code{INTEGER} and
 @code{VECTOR_ELT} are @emph{functions} when used in @R{} extensions.
 (For efficiency they may be macros or inline functions when used in
 the @R{} source code, apart from @code{SET_STRING_ELT} and
-@code{SET_VECTOR_ELT} which are always functions.) 
+@code{SET_VECTOR_ELT} which are always functions.)
 
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
@@ -13497,8 +13563,16 @@ The basic error signaling routines are the equivalents of @code{stop} and
 @group
 void error(const char * @var{format}, ...);
 void warning(const char * @var{format}, ...);
+void errorcall(SEXP @var{call}, const char * @var{format}, ...);
+void warningcall(SEXP @var{call}, const char * @var{format}, ...);
+void warningcall_immediate(SEXP @var{call}, const char * @var{format}, ...);
 @end group
 @end example
+@findex error
+@findex warning
+@findex errorcall
+@findex warningcall
+@findex warningcall_immediate
 
 @noindent
 These have the same call sequences as calls to @code{printf}, but in the
@@ -14614,6 +14688,8 @@ more details, particularly about reasons for failure (@code{ier >= 1}).
 available to users' C code.
 The following is declared in header file @file{Rinternals.h}.
 
+@findex R_orderVector
+@findex R_orderVector1
 @deftypefun void  R_orderVector (int* @var{indx}, int @var{n}, SEXP @var{arglist}, Rboolean @var{nalast}, Rboolean @var{decreasing})
 @deftypefunx void R_orderVector1 (int* @var{indx}, int @var{n}, SEXP @var{x}, Rboolean @var{nalast}, Rboolean @var{decreasing})
 
@@ -14635,6 +14711,10 @@ decreasing)}.  It was added in @R{} 3.3.0.
 All other sort routines are declared in header file
 @file{R_ext/Utils.h} (included by @file{R.h}) and include the following.
 
+@findex R_isort
+@findex R_rsort
+@findex R_csort
+@findex R_rsort_with_index
 @deftypefun void R_isort (int* @var{x}, int @var{n})
 @deftypefunx void R_rsort (double* @var{x}, int @var{n})
 @deftypefunx void R_csort (Rcomplex* @var{x}, int @var{n})
@@ -14647,11 +14727,15 @@ the imaginary part.)  @code{NA}s are sorted last.
 permutation to @var{index}.  @code{NA}s are sorted last.
 @end deftypefun
 
+@findex revsort
 @deftypefun void revsort (double* @var{x}, int* @var{index}, int @var{n})
 Is similar to @code{rsort_with_index} but sorts into decreasing order,
 and @code{NA}s are not handled.
 @end deftypefun
 
+@findex iPsort
+@findex rPsort
+@findex cPsort
 @deftypefun void iPsort (int* @var{x}, int @var{n}, int @var{k})
 @deftypefunx void rPsort (double* @var{x}, int @var{n}, int @var{k})
 @deftypefunx void cPsort (Rcomplex* @var{x}, int @var{n}, int @var{k})
@@ -14660,7 +14744,10 @@ These all provide (very) partial sorting: they permute @var{x} so that
 the left, larger ones to the right.
 @end deftypefun
 
-
+@findex R_qsort
+@findex R_qsort_I
+@findex R_qsort_int
+@findex R_qsort_int_I
 @deftypefun  void R_qsort   (double *@var{v}, size_t @var{i}, size_t @var{j})
 @deftypefunx void R_qsort_I (double *@var{v}, int *@var{I}, int @var{i}, int @var{j})
 @deftypefunx void R_qsort_int   (int *@var{iv}, size_t @var{i}, size_t @var{j})
@@ -14679,6 +14766,8 @@ Note that @code{NA}s are not handled (explicitly) and you should
 use different sorting functions if @code{NA}s can be present.
 @end deftypefun
 
+@findex qsort3
+@findex qsort4
 @deftypefun subroutine qsort4 (double precision @var{v}, integer @var{indx}, integer @var{ii}, integer @var{jj})
 @deftypefunx subroutine qsort3 (double precision @var{v}, integer @var{ii}, integer @var{jj})
 
@@ -14687,6 +14776,7 @@ The Fortran interface routines for sorting double precision vectors are
 @code{R_qsort_I}, respectively.
 @end deftypefun
 
+@findex R_max_col
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes}, int* @var{ties_meth})
 Given the @var{nr} by @var{nc} matrix @code{matrix} in column-major
 (``Fortran'')
@@ -14698,6 +14788,8 @@ column number of the maximal element in the @var{i}-th row (the same as
 See @R{}'s help page @code{?max.col}.
 @end deftypefun
 
+@findex findInterval
+@findex findInterval2
 @deftypefun int findInterval (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
 @deftypefunx int findInterval2(double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, Rboolean @var{left_open}, int @var{ilo}, int* @var{mflag})
 Given the ordered vector @var{xt} of length @var{n}, return the interval
@@ -14728,6 +14820,9 @@ There is also an @code{F77_CALL(interv)()} version of
 A system-independent interface to produce the name of a temporary
 file is provided as
 
+@findex R_tmpnam
+@findex R_tmpnam2
+@findex R_free_tmpnam
 @deftypefun {char *} R_tmpnam (const char *@var{prefix}, const char *@var{tmpdir})
 @deftypefunx {char *} R_tmpnam2 (const char *@var{prefix}, const char *@var{tmpdir}, const char *@var{fileext})
 @deftypefunx {void} R_free_tmpnam (char *@var{name})
@@ -14745,6 +14840,7 @@ longer recommended.
 There is also the internal function used to expand file names in several
 @R{} functions, and called directly by @code{path.expand}.
 
+@findex R_ExpandFileName
 @deftypefun {const char *} R_ExpandFileName (const char *@var{fn})
 Expand a path name @var{fn} by replacing a leading tilde by the user's
 home directory (if defined).  The precise meaning is platform-specific;
@@ -14814,6 +14910,9 @@ SEXP R_tryCatch(SEXP (*fun)(void *data), void *data,
 SEXP R_withCallingErrorHandler(SEXP (*fun)(void *data), void *data,
 			       SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata)
 @end example
+@findex R_tryCatchError
+@findex R_tryCatch
+@findex R_withCallingErrorHandler
 
 @code{R_tryCatchError} establishes an exiting handler for conditions
 inheriting form class @code{error}.
@@ -14841,6 +14940,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
                      void (*clean)(void *data, Rboolean jump), void *cdata,
                      SEXP cont);
 @end example
+@findex R_UnwindProtect
 
 @code{R_UnwindProtect} can be used in two ways.  The simper usage,
 suitable for use in C code, passes @code{NULL} for the @code{cont}
@@ -14858,6 +14958,8 @@ two additional functions:
 SEXP R_MakeUnwindCont();
 void NORET R_ContinueUnwind(SEXP cont);
 @end example
+@findex R_MakeUnwindCont
+@findex R_ContinueUnwind
 
 @code{R_MakeUnwindCont} allocates a @emph{continuation token}
 @code{cont} to pass to @code{R_UnwindProtect}. This token should be
@@ -14868,7 +14970,6 @@ of control, it can throw a C++ exception to a C++ @code{catch} outside
 the C++ code to be unwound, and then use the continuation token in the a
 call @code{R_ContinueUnwind(cont)} to resume the non-local transfer of
 control within R.
-
 
 @node Allowing interrupts, Platform and version information, Condition handling and cleanup code, The R API
 @section Allowing interrupts
@@ -14883,6 +14984,7 @@ interrupted at suitable points by calling from C
 
 void R_CheckUserInterrupt(void);
 @end example
+@findex R_CheckUserInterrupt
 
 @noindent
 and from Fortran
@@ -14890,6 +14992,7 @@ and from Fortran
 @example
 subroutine rchkusr()
 @end example
+@findex rchkusr
 
 These check if the user has requested an interrupt, and if so branch to
 @R{}'s error signaling functions.
@@ -15820,6 +15923,8 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @}
 @end example
 @end deftypefun
+@findex R_dot_Last
+@findex R_RunExitFinalizers
 
 These callbacks should never be changed in a running @R{} session (and
 hence cannot be called from an extension package).
