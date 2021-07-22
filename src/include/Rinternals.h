@@ -94,7 +94,7 @@ typedef int R_len_t;
 */
 #ifndef enum_SEXPTYPE
 /* NOT YET using enum:
- *  1)	The SEXPREC struct below has 'SEXPTYPE type : 5'
+ *  1)	The internal SEXPREC struct has 'SEXPTYPE type : 5'
  *	(making FUNSXP and CLOSXP equivalent in there),
  *	giving (-Wall only ?) warnings all over the place
  * 2)	Many switch(type) { case ... } statements need a final `default:'
