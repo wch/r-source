@@ -54,8 +54,7 @@ find_vignette_product <-
 
     exts <- c(exts, toupper(exts))
     pattern1 <- sprintf("^%s[.](%s)$", name, paste(exts, collapse = "|"))
-    output0 <- list.files(path = dir, all.files = FALSE, full.names = FALSE,
-                          no.. = TRUE)
+    output0 <- list.files(path = dir, no.. = TRUE)
     output0 <- output0[file_test("-f", file.path(dir, output0))]
     output <- grep(pattern1, output0, value = TRUE)
     # If main is FALSE, we want to find all other files with related

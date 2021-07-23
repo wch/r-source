@@ -233,7 +233,7 @@
       report and patch by Jeroen Ooms in \PR{18152}.)
 
       \item The error message for not finding vignette files when weaving
-      has correct file sizes now. (Thanks to Sebastian Meyer's \PR{18158}.)
+      has correct file sizes now. (Thanks to Sebastian Meyer's \PR{18154}.)
     }
   }
 }
