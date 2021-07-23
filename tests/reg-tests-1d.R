@@ -5359,6 +5359,16 @@ for(yMin in c(0, 5e-324, 1e-318, 1e-312, 1e-306)) {
 ## the *first* plot looked ugly in R <= 4.1.0 and failed for a few days in R-devel
 
 
+## Error message for missing weave outputs, PR#18154:
+d.doc <- system.file("doc", package = "utils")
+(msg <- tryCatch(tools:::find_vignette_product("Sweeeeeave",
+			     engine = tools::vignetteEngine("Sweave"), dir = d.doc),
+		 error = conditionMessage))
+(patt <- paste0(rep("\\([0-9]+ bytes\\)", length(list.files(d.doc))), collapse=".*"))
+stopifnot(grepl(patt, msg))
+## contained all "(NA bytes)" in R <= 4.1.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

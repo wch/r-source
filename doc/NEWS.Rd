@@ -231,6 +231,9 @@
 
       \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
       report and patch by Jeroen Ooms in \PR{18152}.)
+
+      \item The error message for not finding vignette files when weaving
+      has correct file sizes now. (Thanks to Sebastian Meyer's \PR{18158}.)
     }
   }
 }
