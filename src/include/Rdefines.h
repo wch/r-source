@@ -165,7 +165,7 @@
 #define NEW_OBJECT(class_def)	R_do_new_object(class_def)
 #define NEW(class_def)		R_do_new_object(class_def)
 
-#define s_object                struct SEXPREC
+typedef struct SEXPREC s_object;
 #define S_EVALUATOR             /**/
 
 /* These conflict with definitions in R_ext/Boolean.h,
