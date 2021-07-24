@@ -14362,13 +14362,6 @@ may be advantageous when one of them is close to @eqn{1, 1}.
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
 @subsection Mathematical functions
 
-@findex gammafn
-@findex lgammafn
-@findex digamma
-@findex trigamma
-@findex tetragamma
-@findex pentagamma
-@findex psigamma
 @cindex Gamma function
 @deftypefun double gammafn (double @var{x})
 @deftypefunx double lgammafn (double @var{x})
@@ -14384,16 +14377,12 @@ function, which is the derivative of @code{lgammafn}. In other words,
 @code{trigamma(x) == psigamma(x,1)}, etc.
 @end deftypefun
 
-@findex beta
-@findex lbeta
 @cindex Beta function
 @deftypefun double beta (double @var{a}, double @var{b})
 @deftypefunx double lbeta (double @var{a}, double @var{b})
 The (complete) Beta function and its natural logarithm.
 @end deftypefun
 
-@findex choose
-@findex lchoose
 @deftypefun double choose (double @var{n}, double @var{k})
 @deftypefunx double lchoose (double @var{n}, double @var{k})
 The number of combinations of @var{k} items chosen from from @var{n} and
@@ -14402,10 +14391,6 @@ the natural logarithm of its absolute value, generalized to arbitrary real
 needed).
 @end deftypefun
 
-@findex bessel_i
-@findex bessel_j
-@findex bessel_k
-@findex bessel_y
 @cindex Bessel functions
 @deftypefun double bessel_i (double @var{x}, double @var{nu}, double @var{expo})
 @deftypefunx double bessel_j (double @var{x}, double @var{nu})
@@ -14799,8 +14784,6 @@ more details, particularly about reasons for failure (@code{ier >= 1}).
 available to users' C code.
 The following is declared in header file @file{Rinternals.h}.
 
-@findex R_orderVector
-@findex R_orderVector1
 @deftypefun void  R_orderVector (int* @var{indx}, int @var{n}, SEXP @var{arglist}, Rboolean @var{nalast}, Rboolean @var{decreasing})
 @deftypefunx void R_orderVector1 (int* @var{indx}, int @var{n}, SEXP @var{x}, Rboolean @var{nalast}, Rboolean @var{decreasing})
 
@@ -14822,10 +14805,6 @@ decreasing)}.  It was added in @R{} 3.3.0.
 All other sort routines are declared in header file
 @file{R_ext/Utils.h} (included by @file{R.h}) and include the following.
 
-@findex R_isort
-@findex R_rsort
-@findex R_csort
-@findex R_rsort_with_index
 @deftypefun void R_isort (int* @var{x}, int @var{n})
 @deftypefunx void R_rsort (double* @var{x}, int @var{n})
 @deftypefunx void R_csort (Rcomplex* @var{x}, int @var{n})
@@ -14838,15 +14817,11 @@ the imaginary part.)  @code{NA}s are sorted last.
 permutation to @var{index}.  @code{NA}s are sorted last.
 @end deftypefun
 
-@findex revsort
 @deftypefun void revsort (double* @var{x}, int* @var{index}, int @var{n})
 Is similar to @code{rsort_with_index} but sorts into decreasing order,
 and @code{NA}s are not handled.
 @end deftypefun
 
-@findex iPsort
-@findex rPsort
-@findex cPsort
 @deftypefun void iPsort (int* @var{x}, int @var{n}, int @var{k})
 @deftypefunx void rPsort (double* @var{x}, int @var{n}, int @var{k})
 @deftypefunx void cPsort (Rcomplex* @var{x}, int @var{n}, int @var{k})
@@ -14855,10 +14830,6 @@ These all provide (very) partial sorting: they permute @var{x} so that
 the left, larger ones to the right.
 @end deftypefun
 
-@findex R_qsort
-@findex R_qsort_I
-@findex R_qsort_int
-@findex R_qsort_int_I
 @deftypefun  void R_qsort   (double *@var{v}, size_t @var{i}, size_t @var{j})
 @deftypefunx void R_qsort_I (double *@var{v}, int *@var{I}, int @var{i}, int @var{j})
 @deftypefunx void R_qsort_int   (int *@var{iv}, size_t @var{i}, size_t @var{j})
@@ -14877,8 +14848,6 @@ Note that @code{NA}s are not handled (explicitly) and you should
 use different sorting functions if @code{NA}s can be present.
 @end deftypefun
 
-@findex qsort3
-@findex qsort4
 @deftypefun subroutine qsort4 (double precision @var{v}, integer @var{indx}, integer @var{ii}, integer @var{jj})
 @deftypefunx subroutine qsort3 (double precision @var{v}, integer @var{ii}, integer @var{jj})
 
@@ -14887,7 +14856,6 @@ The Fortran interface routines for sorting double precision vectors are
 @code{R_qsort_I}, respectively.
 @end deftypefun
 
-@findex R_max_col
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes}, int* @var{ties_meth})
 Given the @var{nr} by @var{nc} matrix @code{matrix} in column-major
 (``Fortran'')
@@ -14899,8 +14867,6 @@ column number of the maximal element in the @var{i}-th row (the same as
 See @R{}'s help page @code{?max.col}.
 @end deftypefun
 
-@findex findInterval
-@findex findInterval2
 @deftypefun int findInterval (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
 @deftypefunx int findInterval2(double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, Rboolean @var{left_open}, int @var{ilo}, int* @var{mflag})
 Given the ordered vector @var{xt} of length @var{n}, return the interval
@@ -14931,9 +14897,6 @@ There is also an @code{F77_CALL(interv)()} version of
 A system-independent interface to produce the name of a temporary
 file is provided as
 
-@findex R_tmpnam
-@findex R_tmpnam2
-@findex R_free_tmpnam
 @deftypefun {char *} R_tmpnam (const char *@var{prefix}, const char *@var{tmpdir})
 @deftypefunx {char *} R_tmpnam2 (const char *@var{prefix}, const char *@var{tmpdir}, const char *@var{fileext})
 @deftypefunx {void} R_free_tmpnam (char *@var{name})
@@ -14951,7 +14914,6 @@ longer recommended.
 There is also the internal function used to expand file names in several
 @R{} functions, and called directly by @code{path.expand}.
 
-@findex R_ExpandFileName
 @deftypefun {const char *} R_ExpandFileName (const char *@var{fn})
 Expand a path name @var{fn} by replacing a leading tilde by the user's
 home directory (if defined).  The precise meaning is platform-specific;
