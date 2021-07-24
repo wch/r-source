@@ -12108,6 +12108,9 @@ a test of a length-2 @code{"dim"} attribute.
 @findex isFunction
 @findex isLanguage
 @findex isNewList
+@findex isList
+@findex isOrdered
+@findex isUnordered
 @comment @findex isNumber
 @comment @findex isFrame
 @example
@@ -12126,6 +12129,9 @@ Rboolean isObject(SEXP);
 Rboolean isFunction(SEXP);
 Rboolean isLanguage(SEXP);
 Rboolean isNewList(SEXP);
+Rboolean isList(SEXP);
+Rboolean isOrdered(SEXP);
+Rboolean isUnordered(SEXP);
 @comment Rboolean isNumber(SEXP);
 @comment Rboolean isFrame (SEXP);
 @end group
@@ -13880,6 +13886,9 @@ avoided.
 Some subroutines are provided to ease the output of information from
 Fortran code.
 
+@findex dblepr
+@findex realpr
+@findex intpr
 @example
 @group
 subroutine dblepr(@var{label}, @var{nchar}, @var{data}, @var{ndata})
@@ -13890,6 +13899,10 @@ subroutine intpr (@var{label}, @var{nchar}, @var{data}, @var{ndata})
 
 @noindent
 and from @R{}@tie{}4.0.0,
+@findex labelpr
+@findex dblepr1
+@findex realpr1
+@findex intpr1
 @example
 @group
 subroutine labelpr(@var{label}, @var{nchar})
@@ -14610,6 +14623,7 @@ The C code underlying @code{optim} can be accessed directly.  The user
 needs to supply a function to compute the function to be minimized, of
 the type
 
+@findex optimfn
 @example
 typedef double optimfn(int n, double *par, void *ex);
 @end example
@@ -14621,6 +14635,7 @@ routine, normally used to carry auxiliary information.
 
 Some of the methods also require a gradient function
 
+@findex optimgr
 @example
 typedef void optimgr(int n, double *par, double *gr, void *ex);
 @end example
@@ -14697,6 +14712,7 @@ The C code underlying @code{integrate} can be accessed directly.  The
 user needs to supply a @emph{vectorizing} C function to compute the
 function to be integrated, of the type
 
+@findex integr_fn
 @example
 typedef void integr_fn(double *x, int n, void *ex);
 @end example
@@ -15584,6 +15600,8 @@ on @acronym{CRAN}'s @samp{Archive} area) and macOS consoles are others.
 The source for @file{@var{R_HOME}/bin/exec/R} is in file
 @file{src/main/Rmain.c} and is very simple
 
+@findex Rf_initialize_R
+@findex Rf_mainloop
 @example
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
 void Rf_mainloop();                     /* in main.c */
@@ -15648,6 +15666,11 @@ are not part of the automated test procedures and so little tested.} in the
 @file{tests/Embedding} directory.  These make use of
 @code{Rf_initEmbeddedR} in @file{src/main/Rembedded.c}, and essentially
 use
+@findex Rf_initEmbeddedR
+@findex R_ReplDLLinit
+@findex R_ReplDLLdo1
+@findex Rf_endEmbeddedR
+@findex run_Rmainloop
 @example
 #include <Rembedded.h>
 
@@ -15998,6 +16021,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @end deftypefun
 @findex R_dot_Last
 @findex R_RunExitFinalizers
+@findex R_CleanTempDir
 
 These callbacks should never be changed in a running @R{} session (and
 hence cannot be called from an extension package).
@@ -16023,6 +16047,7 @@ register symbols to be used with @code{.C}, @code{.Call} etc.  This
 entry can be obtained by calling @code{getEmbeddingDllInfo}, so a
 typical use is
 
+@findex R_getEmbeddingDllInfo
 @example
 DllInfo *info = R_getEmbeddingDllInfo();
 R_registerRoutines(info, cMethods, callMethods, NULL, NULL);
@@ -16089,6 +16114,8 @@ handler for events on a particular file descriptor, or to set a polling
 interval (@emph{via} @code{R_wait_usec}) and a function to be called
 periodically @emph{via} @code{R_PolledEvents}: the polling mechanism is used by
 the @pkg{tcltk} package.
+@findex R_PolledEvents
+@findex R_wait_usec
 
 It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
@@ -16221,6 +16248,7 @@ Examples of calling @file{R.dll} directly are provided in the directory
 @file{src/@/gnuwin32/@/front-ends}, including a simple command-line
 front end @file{rtest.c} whose code is
 
+@findex setup_Rmainloop
 @smallexample
 #define Win32
 #include <windows.h>
@@ -16335,6 +16363,8 @@ administrative install and
 @code{HKEY_CURRENT_USER\Software\R-core\R\InstallPath} otherwise, if
 selected during installation (as it is by default).
 
+@findex R_DefParams
+@findex R_SetParams
 @item
 Define startup conditions and callbacks @emph{via} the @code{Rstart} structure.
 @code{R_DefParams} sets the defaults, and @code{R_SetParams} sets
