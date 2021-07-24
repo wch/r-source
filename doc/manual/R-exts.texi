@@ -13545,6 +13545,7 @@ included by @file{R.h}.
 @findex S_realloc
 @findex vmaxget
 @findex vmaxset
+@findex nrows
 
 Here @R{} will reclaim the memory at the end of the call to @code{.C},
 @code{.Call} or @code{.External}.  Use
@@ -15875,7 +15876,7 @@ a state terminates (@code{@var{which}=0}).
 @deftypefunx void R_WriteConsoleEx (const char *@var{buf}, int @var{buflen}, int @var{otype})
 @deftypefunx void R_ResetConsole ()
 @deftypefunx void R_FlushConsole ()
-@deftypefunx void R_ClearErrConsole ()
+@deftypefunx void R_ClearerrConsole ()
 
 These functions interact with a console.
 
@@ -16022,6 +16023,10 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @findex R_dot_Last
 @findex R_RunExitFinalizers
 @findex R_CleanTempDir
+@findex R_SaveGlobalEnv
+@findex Rf_KillAllDevices
+@findex CleanEd
+@findex fpu_setup
 
 These callbacks should never be changed in a running @R{} session (and
 hence cannot be called from an extension package).
@@ -16249,6 +16254,8 @@ Examples of calling @file{R.dll} directly are provided in the directory
 front end @file{rtest.c} whose code is
 
 @findex setup_Rmainloop
+@findex R_setStartTime
+@findex R_set_command_line_arguments
 @smallexample
 #define Win32
 #include <windows.h>
@@ -16398,6 +16405,8 @@ needed -- two ways are provided to allow this:
 @code{Rp->callback}.  A version of this is used to run package Tcl/Tk
 for @pkg{tcltk} under Windows, for the code is
 
+@findex R_ProcessEvents
+@findex onintr
 @example
 void R_ProcessEvents(void)
 @{
