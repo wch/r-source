@@ -6788,6 +6788,11 @@ add_dummies <- function(dir, Log)
                     ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
                 }
             }
+            ## Precautionary clean up
+            if (length(ff)) {
+                ff <- ff[!is.na(ff)]
+                ff <- ff[ff != "NA"]
+            }
             if (length(ff)) {
                 noteLog(Log)
                 msg <- c("Found the following files/directories:",
