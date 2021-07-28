@@ -81,6 +81,10 @@
       files/directories left behind in home, \file{/tmp} (even though
       \env{TMPDIR} is set) and other directories.  See the \dQuote{R
 	Internals} manual for details.
+
+      \item \command{R CMD check} now reports byte-compilation errors
+      during installation.  These are not usually fatal but may result
+      in parts of the package not being byte-compiled.
     }
   }
 
