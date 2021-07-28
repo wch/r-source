@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2016 The R Core Team.
+ *  Copyright (C) 1999-2021 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,9 +23,11 @@
 
 /* From 'Writing R Extensions:
 
-   'these are not kept up to date and are not recommended for new projects.'
+Rdefines.h  macros for an S-like interface to the above (no longer maintained)
 
-   As from R 3.3.0 they have been adjusted to work when R_NO_REMAP is defined.
+and its contents are no longer documented.
+
+The use of ‘USE_RINTERNALS’ with Rdefines.h is not supported.
 */
 
 #ifndef R_DEFINES_H

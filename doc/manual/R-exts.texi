@@ -13346,12 +13346,9 @@ If efficiency is essential, internal versions of some accessors can be
 obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
-provides a stricter test that the accessors have been used correctly.
-Also be prepared to adjust your code should @R{} internals change.
-Note too that the use of @samp{USE_RINTERNALS} when the header is
-included in C++ code is not supported: doing so may use C99 features
-which are not necessarily supported by the C++ compiler.  Nor is use
-with @file{Rdefines.h} supported.
+provides a stricter test that the accessors have been used correctly,
+and be prepared to adjust your code should @R{} internals change.  (The
+use of @samp{USE_RINTERNALS} with @file{Rdefines.h} is not supported.)
 
 The accessor functions, and other functions in the @R{} API, are also
 subject to change to support the @samp{ALTREP} project
