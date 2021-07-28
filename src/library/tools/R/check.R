@@ -5377,6 +5377,11 @@ add_dummies <- function(dir, Log)
                     !grepl(pkgname, lines, fixed = TRUE, useBytes = TRUE)
                 lines <- lines[!ex]
 
+                ## byte-compilation errors, often from bugs there
+                this <- grep("Error: compilation failed -",
+                             lines0, value = TRUE)
+                lines <- c(lines, unique(this))
+
                 note_re <-
                     "warning: control may reach end of non-void function"
 
