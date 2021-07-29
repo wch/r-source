@@ -18,7 +18,7 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   \item{condition}{a condition that can be retrieved once the browser is
     invoked.}
   \item{expr}{An expression, which if it evaluates to \code{TRUE} the
-    debugger will invoked, otherwise control is returned directly.}
+    debugger will be invoked, otherwise control is returned directly.}
   \item{skipCalls}{how many previous calls to skip when reporting the
     calling context.}
 }
