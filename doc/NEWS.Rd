@@ -137,6 +137,9 @@
       \item \command{R CMD Rd2pdf} no longer leaves an empty build
       directory behind when it aborts due to an already existing output
       file (\PR{18141}).
+
+      \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
+      report and patch by Jeroen Ooms in \PR{18152}.)
     }
   }
 }
@@ -227,17 +230,18 @@
       \item \code{pretty(x)} with finite \code{x} now returns finite values
       also in the case where the extreme \code{x} values are close in size
       to the maximal representable number \code{.Machine$double.xmax}.
-      %% to be ported, but only *part* of 80621 :
+
       Also, it's been tweaked for very small ranges and when a boundary is
       close (or equal) to zero; e.g., \code{pretty(c(0,1e-317))} no longer
       has negative numbers, currently still warning about a very small
       range, and \code{pretty(2^-(1024 - 2^-1/(c(24,10))))} is more accurate.
 
-      \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
-      report and patch by Jeroen Ooms in \PR{18152}.)
-
       \item The error message for not finding vignette files when weaving
       has correct file sizes now. (Thanks to Sebastian Meyer's \PR{18154}.)
+
+      \item \code{dnbinom(20, <large>, 1)} now correctly gives 0, and
+      similar cases are more accurate with underflow precaution.
+      (Reported by Francisco Vera Alcivar in \PR{18072}.)
     }
   }
 }
