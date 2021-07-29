@@ -91,6 +91,12 @@
       \item \code{pretty(x)} with finite \code{x} now returns finite values
       also in the case where the extreme \code{x} values are close in size
       to the maximal representable number \code{.Machine$double.xmax}.
+
+      Also, it's been tweaked for very small ranges and when a boundary is
+      close (or equal) to zero; e.g., \code{pretty(c(0,1e-317))} no longer
+      has negative numbers, currently still warning about a very small
+      range, and \code{pretty(2^-(1024 - 2^-1/(c(24,10))))} is more accurate.
+
     }
   }
 }
@@ -297,7 +303,7 @@
       \code{Sys.getlocale("LC_CTYPE")}.
 
       \item New function \code{gregexec()} which generalizes \code{regexec()}
-      to find \emph{all} disjoint matches and well as all substrings
+      to find \emph{all} disjoint matches and all substrings
       corresponding to parenthesized subexpressions of the given regular
       expression.  (Contributed by Brodie Gaslam.)
 
