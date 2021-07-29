@@ -1,6 +1,6 @@
 % File src/library/base/man/browser.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browser}
@@ -17,7 +17,8 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   \item{text}{a text string that can be retrieved once the browser is invoked.}
   \item{condition}{a condition that can be retrieved once the browser is
     invoked.}
-  \item{expr}{An expression, which if it evaluates to \code{TRUE} the
+  \item{expr}{a \dQuote{condition}.  By default, and whenever not false
+    after being coerced to \code{\link{logical}}, the
     debugger will be invoked, otherwise control is returned directly.}
   \item{skipCalls}{how many previous calls to skip when reporting the
     calling context.}
@@ -37,7 +38,8 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   The purpose of the \code{expr} argument is to allow for the illusion
   of conditional debugging. It is an illusion, because execution is
   always paused at the call to browser, but control is only passed
-  to the evaluator described below if \code{expr} evaluates to \code{TRUE}.
+  to the evaluator described below if \code{expr} is not \code{FALSE} after
+  coercion to logical.
   In most cases it is going to be more efficient to use an \code{if}
   statement in the calling program, but in some cases using this argument
   will be simpler.
