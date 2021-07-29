@@ -15715,7 +15715,7 @@ errors to be trapped and to make use of extended precision registers).
 The standard code sets up a session temporary directory in the usual
 way, @emph{unless} @code{R_TempDir} is set to a non-NULL value before
 @code{Rf_initEmbeddedR} is called.  In that case the value is assumed to
-contain an existing writable directory (no check is done), and it is not
+contain an existing writable directory, and it is not
 cleaned up when @R{} is shut down.
 
 @code{Rf_initEmbeddedR} sets @R{} to be in interactive mode: you can set
