@@ -97,6 +97,9 @@
       has negative numbers, currently still warning about a very small
       range, and \code{pretty(2^-(1024 - 2^-1/(c(24,10))))} is more accurate.
 
+
+      \item The error message for not finding vignette files when weaving
+      has correct file sizes now. (Thanks to Sebastian Meyer's \PR{18154}.)
     }
   }
 }
