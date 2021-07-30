@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/nclass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nclass}
@@ -10,15 +10,17 @@
 \encoding{UTF-8}
 \title{Compute the Number of Classes for a Histogram}
 \description{
-  Compute the number of classes for a histogram.
+  Compute the number of classes for a histogram, notably \code{\link{hist}()}.
 }
 \usage{
 nclass.Sturges(x)
 nclass.scott(x)
-nclass.FD(x)
+nclass.FD(x, digits = 5)
 }
 \arguments{
   \item{x}{a data vector.}
+  \item{digits}{number of \emph{significant} digits to keep when rounding
+    \code{x} before the \code{\link{IQR}} computation; see \sQuote{Details} below.}
 }
 \value{
   The suggested number of classes.
@@ -32,10 +34,11 @@ nclass.FD(x)
   returns \code{1}.
 
   \code{nclass.FD} uses the Freedman-Diaconis choice based on the
-  inter-quartile range (\code{\link{IQR}(signif(x, 5))}) unless that's
+  inter-quartile range (\code{\link{IQR}(signif(x, digits))}) unless that's
   zero where it uses increasingly more extreme symmetric quantiles up to
   c(1,511)/512 and if that difference is still zero, reverts to using
-  Scott's choice.
+  Scott's choice.  The default of \code{digits = 5} was chosen after a few
+  experiments, but may be too low for some situations, see \PR{17274}.
 }
 \references{
   Venables, W. N. and Ripley, B. D. (2002)
@@ -62,7 +65,7 @@ nclass.FD(x)
   \emph{Journal of the American Statistical Association}, \bold{21},
   65--66.
   \doi{10.1080/01621459.1926.10502161}.
-  
+
 }
 \seealso{
   \code{\link{hist}} and \code{\link[MASS]{truehist}} (package

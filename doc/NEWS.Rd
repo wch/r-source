@@ -57,6 +57,8 @@
       notably for the log scale; partly because the \code{pretty()}
       improvements, but also because care is taken e.g., when \code{ylim}
       is finite, but \code{diff(ylim)} is infinite.
+
+      \item Histogram breaks rule \code{nclass.FD()} gets \code{digits} option.
     }
   }
 
