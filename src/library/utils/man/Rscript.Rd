@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rscript}
@@ -20,7 +20,8 @@
   \item{expr, expr2}{\R expression(s), properly quoted.}
   \item{file}{the name of a file containing \R commands.  \samp{-}
     indicates \file{stdin}.}
-  \item{args}{arguments to be passed to the script in \code{file}.}
+  \item{args}{arguments to be passed to the script in \code{file} or
+    expressions supplied via \option{-e}.}
 }
 \details{
   \command{Rscript --help} gives details of usage, and

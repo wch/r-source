@@ -1,12 +1,12 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 2002--2009  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
+ *  the Free Software Foundation; either version 3 of the License, or
  *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -30,7 +30,7 @@
 #include <Rmath.h> // for imax2
 
 /* used in graphics and grid */
-SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
+SEXP CreateAtVector(double axp[], const double usr[], int nint, Rboolean logflag)
 {
 /*	Create an  'at = ...' vector for  axis(.)
  *	i.e., the vector of tick mark locations,
@@ -39,33 +39,61 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
  *	axp[0:2] = (x1, x2, nInt), where x1..x2 are the extreme tick marks
  *		   {unless in log case, where nInt \in {1,2,3 ; -1,-2,....}
  *		    and the `nint' argument is used *instead*.}
-
+ *
+ * only if(logflag && axp[2] >= 0)
+ *			usr[0:1] is used, additionally
+ *
  *	The resulting REAL vector must have length >= 1, ideally >= 2
  */
     SEXP at = R_NilValue;/* -Wall*/
-    double umin, umax, dn, rng, small;
+    double dn, rng, small;
     int i, n;
+    // "arbitrary" threshold: |delta_tick| / SMALL  is "barely visible" in plot
+#define SMALL_F 100.
     if (!logflag || axp[2] < 0) { /* --- linear axis --- Only use axp[] arg. */
 	n = (int)(fabs(axp[2]) + 0.25);/* >= 0 */
 	dn = imax2(1, n);
 	rng = axp[1] - axp[0];
-	small = fabs(rng)/(100.*dn);
 	at = allocVector(REALSXP, n + 1);
-	for (i = 0; i <= n; i++) {
-	    REAL(at)[i] = axp[0] + (i / dn) * rng;
-	    if (fabs(REAL(at)[i]) < small)
-		REAL(at)[i] = 0;
+	double a_i;
+	if(!R_FINITE(rng)) { // need to carefully work around overflow
+	    double at_ = axp[0]/dn; // 2021-07: "/dn" avoids overflow
+	    rng = axp[1]/dn - at_;
+	    small = fabs(rng)/SMALL_F;
+#ifdef DEBUG_axis
+	    REprintf("CreateAtVector(axp=(%g,%g, %g), log=F, diff(*)=Inf: at_=%g, rng=%g, small=%g\n",
+		     axp[0],axp[1], axp[2], at_, rng, small);
+#endif
+	    int n2 = n/2; // integer division
+	    for (i = 0; i <= n2; i++) { // from the left
+		a_i = axp[0] + i * rng;
+		// REprintf(" at[i=%2d]=%g\n", i+1, a_i);
+		REAL(at)[i] = (fabs(a_i) < small) ? 0. : a_i;
+	    }
+	    for (int i2 = 0; i2 < n-n2; i2++) { // from the right
+		i = n-i2; // for(i in n:k) where k = n-(n-n2-1) = n2+1
+		a_i = axp[1] - i2 * rng;
+		// REprintf(" at[i=%2d]=%g\n", i+1, a_i);
+		REAL(at)[i] = (fabs(a_i) < small) ? 0. : a_i;
+	    }
+	}
+	else { // rng is finite (normal case):
+	    small = fabs(rng)/SMALL_F/dn;
+	    for (i = 0; i <= n; i++) {
+		a_i = axp[0] + (i / dn) * rng;
+		REAL(at)[i] = (fabs(a_i) < small) ? 0. : a_i;
+	    }
 	}
     }
     else { /* ------ log axis ----- */
 	Rboolean reversed = FALSE;
-
+	double
+	    umin = usr[0],
+	    umax = usr[1];
 	n = (int)(axp[2] + 0.5);
 	/* {xy}axp[2] for 'log': GLpretty() [./graphics.c] sets
 	   n < 0: very small scale ==> linear axis, above, or
 	   n = 1,2,3.  see switch() below */
-	umin = usr[0];
-	umax = usr[1];
 #ifdef DEBUG_axis
 	REprintf("CreateAtVector(axp=(%g,%g,%g), usr=(%g,%g), _log_):",
 		 axp[0],axp[1],axp[2],  usr[0],usr[1]);
@@ -86,9 +114,9 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 			"usr[0] = %g > %g = usr[1] !", umin, umax);
 	    }
 	}
-	/* allow a fuzz since we will do things like 0.2*dn >= umin */
-	umin *= 1 - 1e-12;
-	umax *= 1 + 1e-12;
+	/* allow a fuzz (iff we don't under-/over-flow) since we will do things like 0.2*dn >= umin */
+	dn = 1 - 1e-12; if(fabs(umin*dn) >     0.  ) umin *= dn;
+	dn = 1 + 1e-12; if(fabs(umax*dn) <= DBL_MAX) umax *= dn;
 
 	dn = axp[0];
 	if (dn < DBL_MIN) {/* was 1e-300; now seems too cautious */
@@ -145,10 +173,13 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	    REprintf("expo.diff d0 - nint*ne =: d1=%g\n", d1);
 #endif
 	    d0 = dn;
-	    if(d1 > 3) {
+
+#define Large_D1 5
+//              === was '3' all up into R 4.1.0
+	    if(d1 > Large_D1) {
 		d0 = dn * Rexp10(floor(d1/2));
 #ifdef DEBUG_axis
-		REprintf(" d0 := dn * 10 ^ fl(d1/2) = dn * 10^%d = %g\n",
+		REprintf("large d1 => d0 := dn * 10 ^ fl(d1/2) = dn * 10^%d = %g\n",
 			 (int)floor(d1/2), d0);
 #endif
 	    }
@@ -161,7 +192,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 		n++;
 	    }
 #ifdef DEBUG_axis
-	    REprintf(" rng:=10^(ne/%d) = %g => n=%d, final dn=%g\n", k, rng, n, dn);
+	    REprintf(" rng:=10^(ne/(k=%d)) = %g => n=%d, final dn=%g\n", k, rng, n, dn);
 #endif
 	    if (!n)
 		error("log - axis(), 'at' creation, _LARGE_ range: "
@@ -224,8 +255,9 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 		dn *= 10;
 	    }
 #ifdef DEBUG_axis
-	    REprintf(" .. case 3: (umin,umax) = (%g, %g); n=%d, dn=%g\n",
-		     umin, umax, n, dn);
+	    REprintf(" .. case 3: (umin,umax)-usr[*] = (%g, %g); n=%d, dn=%g\n",
+		     umin-usr[reversed? 1: 0],
+		     umax-usr[reversed? 0: 1], n, dn);
 #endif
 	    if (!n)
 		error("log - axis(), 'at' creation, _SMALL_ range: "
@@ -255,11 +287,10 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	if (reversed) {/* reverse back again - last assignment was at[n++]= . */
 	    for (i = 0; i < n/2; i++) { /* swap( at[i], at[n-i-1] ) : */
 		dn = REAL(at)[i];
-		REAL(at)[i] = REAL(at)[n-i-1];
-		REAL(at)[n-i-1] = dn;
+		     REAL(at)[i] = REAL(at)[n-i-1];
+		                   REAL(at)[n-i-1] = dn;
 	    }
 	}
     } /* linear / log */
     return at;
 }
-

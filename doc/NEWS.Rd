@@ -51,6 +51,12 @@
       \item New \code{.pretty()} with option \code{bounds} as technical
       utility version of \code{pretty()}, and it and \code{pretty()} get
       new argument \code{f.min} with a better than back-compatible default.
+
+      \item The graphics engine's based \code{axisTicks()} and related
+      functions such as \pkg{graphics} package's \code{axis()} work better,
+      notably for the log scale; partly because the \code{pretty()}
+      improvements, but also because care is taken e.g., when \code{ylim}
+      is finite, but \code{diff(ylim)} is infinite.
     }
   }
 
@@ -75,6 +81,10 @@
       files/directories left behind in home, \file{/tmp} (even though
       \env{TMPDIR} is set) and other directories.  See the \dQuote{R
 	Internals} manual for details.
+
+      \item \command{R CMD check} now reports byte-compilation errors
+      during installation.  These are not usually fatal but may result
+      in parts of the package not being byte-compiled.
     }
   }
 
@@ -82,6 +92,12 @@
     \itemize{
       \item The non-API header \file{R_ext/R-ftp-http.h} is no longer
       provided, as the entry points it covered are now all defunct.
+
+      \item A number of non-API declarations and macro definitions have
+      been moved from the installed header \file{Rinternals.h} to the
+      internal header \file{Defn.h}. Packages that only use entry points
+      and definitions documented to be part of the API as specified in
+      \sQuote{Writing R Extensions} §6 should not be affected.
     }
   }
 
@@ -121,6 +137,9 @@
       \item \command{R CMD Rd2pdf} no longer leaves an empty build
       directory behind when it aborts due to an already existing output
       file (\PR{18141}).
+
+      \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
+      report and patch by Jeroen Ooms in \PR{18152}.)
     }
   }
 }
@@ -211,14 +230,18 @@
       \item \code{pretty(x)} with finite \code{x} now returns finite values
       also in the case where the extreme \code{x} values are close in size
       to the maximal representable number \code{.Machine$double.xmax}.
-      %% to be ported, but only *part* of 80621 :
+
       Also, it's been tweaked for very small ranges and when a boundary is
       close (or equal) to zero; e.g., \code{pretty(c(0,1e-317))} no longer
       has negative numbers, currently still warning about a very small
       range, and \code{pretty(2^-(1024 - 2^-1/(c(24,10))))} is more accurate.
 
-      \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
-      report and patch by Jeroen Ooms in \PR{18152}.)
+      \item The error message for not finding vignette files when weaving
+      has correct file sizes now. (Thanks to Sebastian Meyer's \PR{18154}.)
+
+      \item \code{dnbinom(20, <large>, 1)} now correctly gives 0, and
+      similar cases are more accurate with underflow precaution.
+      (Reported by Francisco Vera Alcivar in \PR{18072}.)
     }
   }
 }
@@ -425,7 +448,7 @@
       \code{Sys.getlocale("LC_CTYPE")}.
 
       \item New function \code{gregexec()} which generalizes \code{regexec()}
-      to find \emph{all} disjoint matches and well as all substrings
+      to find \emph{all} disjoint matches and all substrings
       corresponding to parenthesized subexpressions of the given regular
       expression.  (Contributed by Brodie Gaslam.)
 

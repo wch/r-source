@@ -1,6 +1,6 @@
 % File src/library/utils/man/sourceutils.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2013 R Core Team
+% Copyright 2011-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sourceutils}
@@ -46,9 +46,10 @@ getSrcLocation(x, which = c("line", "column", "byte", "parse"),
   The components are as follows:
   \describe{
     \item{line}{The line number where the object starts or ends.}
-    \item{column}{The column number where the object starts or ends.}
+    \item{column}{The column number where the object starts or ends.
+      Horizontal tabs are converted to spaces.}
     \item{byte}{As for \code{"column"}, but counting bytes, which may
-      differ in case of multibyte characters.}
+      differ in case of multibyte characters (and horizontal tabs).}
     \item{parse}{As for \code{"line"}, but this ignores \code{#line} directives.}
   }
 }

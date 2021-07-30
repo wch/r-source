@@ -465,23 +465,21 @@ SEXP C_plot_new(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 SEXP C_plot_window(SEXP args)
 {
-    SEXP xlim, ylim, logarg;
-
     args = CDR(args);
     if (length(args) < 3)
 	error(_("at least 3 arguments required"));
 
-    xlim = CAR(args);
+    SEXP xlim = CAR(args);
     if (!isNumeric(xlim) || LENGTH(xlim) != 2)
 	error(_("invalid '%s' value"), "xlim");
     args = CDR(args);
 
-    ylim = CAR(args);
+    SEXP ylim = CAR(args);
     if (!isNumeric(ylim) || LENGTH(ylim) != 2)
 	error(_("invalid '%s' value"), "ylim");
     args = CDR(args);
 
-    logarg = CAR(args);
+    SEXP logarg = CAR(args);
     if (!isString(logarg))
 	error(_("\"log=\" specification must be character"));
     Rboolean logscale = FALSE;
@@ -537,13 +535,24 @@ SEXP C_plot_window(SEXP args)
     if ((dpptr(dd)->xlog && (xmin < 0 || xmax < 0)) ||
 	(dpptr(dd)->ylog && (ymin < 0 || ymax < 0)))
 	    error(_("Logarithmic axis must have positive limits"));
+    // NB:  values == 0  are *not* caught (==> error msg above is misleading !
 
-    if (R_FINITE(asp) && asp > 0) {
-	double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;
-	pin1 = GConvertXUnits(1.0, NPC, INCHES, dd);
-	pin2 = GConvertYUnits(1.0, NPC, INCHES, dd);
-	xdelta = fabs(xmax - xmin) / asp;
-	ydelta = fabs(ymax - ymin);
+#ifdef DEBUG_axis
+    REprintf("plot.window(): (xmin,xmax) = (%g,%g); (ymin,ymax) = (%g,%g)",
+	     xmin,xmax, ymin,ymax);
+    if (R_FINITE(asp) && asp > 0)
+	REprintf("  .. asp > 0 : will use xadd,yadd");
+    REprintf("\n");
+#endif
+
+    if (R_FINITE(asp) && asp > 0) { // finite 'asp' > 0 specified
+	double
+	    pin1 = GConvertXUnits(1.0, NPC, INCHES, dd),
+	    pin2 = GConvertYUnits(1.0, NPC, INCHES, dd),
+	    // FIXME:  |zmax - zmin| may be Inf, even when both are finite
+	    xdelta = fabs(xmax - xmin) / asp,
+	    ydelta = fabs(ymax - ymin),
+	    scale, xscale, yscale, xadd, yadd;
 	if(xdelta == 0.0 && ydelta == 0.0) {
 	    /* We really do mean zero: small non-zero values work.
 	       Mimic the behaviour of GScale for the x axis. */
@@ -558,10 +567,14 @@ SEXP C_plot_window(SEXP args)
 	}
 	if(xmax < xmin) xadd *= -1;
 	if(ymax < ymin) yadd *= -1;
+
+#ifdef DEBUG_axis
+	REprintf(" --> GScale(xmin-xadd, xmax+xadd, ..) ; xadd=%g, yadd=%g\n", xadd, yadd);
+#endif
 	GScale(xmin - xadd, xmax + xadd, 1, dd);
 	GScale(ymin - yadd, ymax + yadd, 2, dd);
     }
-    else { /* asp <= 0 or not finite -- includes logscale ! */
+    else { /* asp is NA, or not positive and finite -- includes logscale ! */
 	GScale(xmin, xmax, 1, dd);
 	GScale(ymin, ymax, 2, dd);
     }
@@ -597,17 +610,26 @@ static void GetAxisLimits(double left, double right, Rboolean logflag,
 	eps = 0.5 * FLT_EPSILON;
     /* or better?
      *  eps = 0.5 * (left == 0.) ? FLT_EPSILON : fmin2(FLT_EPSILON, fabs(left)); */
-    else
+    else if(eps == R_PosInf) { // redo w/o overflow (trying to prevent eager optimization by compilers):
+	eps = right*FLT_EPSILON; eps -= left*FLT_EPSILON;
+    } else {
 	eps *= FLT_EPSILON;
+    }
     *low  = left  - eps;
     *high = right + eps;
 
     if (logflag) {
-	*low  = exp(*low);
-	*high = exp(*high);
+	*low = exp(*low);
+	if(*high < M_LN2 * DBL_MAX_EXP) // <==> exp(*high) will not overflow
+	    *high = exp(*high);
+	else
+	    *high = DBL_MAX;
+    } else {
+	if(*low  == R_NegInf) *low  = -DBL_MAX;
+	if(*high == R_PosInf) *high =  DBL_MAX;
     }
 #ifdef DEBUG_axis
-    REprintf(" GetAxisLimits(%g,%g, log=%d) --> low=%g, high=%g)\n",
+    REprintf(" GetAxisLimits(%g,%g, log=%d) --> low=%g, high=%g\n",
 	     left,right, logflag,  *low, *high);
 #endif
 }
@@ -898,8 +920,8 @@ SEXP C_axis(SEXP args)
 
     /* Retrieve relevant "par" values. */
     double axp[3], usr[2];
-    Rboolean logflag = FALSE;
-    int nint = 0;
+    Rboolean logflag;
+    int nint;
     if(x_axis) {
 	axp[0] = gpptr(dd)->xaxp[0];
 	axp[1] = gpptr(dd)->xaxp[1];
@@ -930,8 +952,14 @@ SEXP C_axis(SEXP args)
     /* Determine the tickmark positions.  Note that these may fall */
     /* outside the plot window. We will clip them in the code below. */
 
+#ifdef DEBUG_axis
+    REprintf("C_axis(side=%d, x_ax=%s, las=%d, perpendicular=%s, gap = %g):\n",
+	     side, x_axis?"TRUE":"FALSE", gpptr(dd)->las,
+	     perpendicular?"TRUE":"FALSE", gap);
+#endif
+
     Rboolean create_at = isNull(at);
-    if (create_at)
+    if (create_at) // graphics engine (in ../../../main/plot.c ):
 	at = CreateAtVector(axp, usr, nint, logflag);
     else
 	at = isReal(at) ? duplicate(at) : coerceVector(at, REALSXP);
@@ -975,11 +1003,8 @@ SEXP C_axis(SEXP args)
 
     /* Ok, all systems are "GO".  Let's get to it. */
 #ifdef DEBUG_axis
-    REprintf("C_axis(side=%d): n=%d finite 'at' locations = (%g <= .. <= %g);\n"
-	     "       x_ax=%s, las=%d, perpendicular=%s, gap = %g,\n",
-	     side, n, REAL(at)[0], REAL(at)[n-1],
-	     x_axis?"TRUE":"FALSE", gpptr(dd)->las,
-	     perpendicular?"TRUE":"FALSE", gap);
+    REprintf("  axis(): --> n=%d finite 'at' locations = (%g <= .. <= %g);\n",
+	     n, REAL(at)[0], REAL(at)[n-1]);
 #endif
     /* At this point we know the value of "xaxt" and "yaxt",
      * so we test to see whether the relevant one is "n".
@@ -1068,6 +1093,11 @@ SEXP C_axis(SEXP args)
 			x = GConvertX(x, USER, NFC, dd);
 			GLine(x, axis_base, x, axis_tick, NFC, dd);
 		    }
+#ifdef DEBUG_axis
+		    else {
+			REprintf("x=at[i=%d]=%g not in (low,high) skip tick\n", i+1, x);
+		    }
+#endif
 		}
 	    }
 	}
@@ -1115,7 +1145,12 @@ SEXP C_axis(SEXP args)
 	}
 	for (i = istart; i != iend; i += incr) {
 	    double x = REAL(at)[i];
-	    if (!R_FINITE(x)) continue;
+	    if (!R_FINITE(x)) {
+#ifdef DEBUG_axis
+		REprintf(" non-finite x=at[i=%d]=%g -> no label!\n", i+1, x);
+#endif
+		continue;
+	    }
 	    double padjval = REAL(padj)[i % npadj];
 	    padjval = ComputePAdjValue(padjval, side, gpptr(dd)->las);
 	    // Clip tick labels to user coordinates: draw only if  x = at[i] is in (low, high)
@@ -1138,8 +1173,8 @@ SEXP C_axis(SEXP args)
 				    : GStrWidth (ss, getCharCE(label), NFC, dd)),
 			    tnew = temp - 0.5 * labw;
 #ifdef DEBUG_axis
-			REprintf("tnew-tlast = %9g-%9g=%9g %2s gap\n", tnew, tlast,
-				 tnew-tlast, (tnew - tlast >= gap) ? ">=" : "<");
+			REprintf(" tnew-tlast = %9g-%9g=%9g %2s gap\n", tnew, tlast,
+				   tnew-tlast, (tnew-tlast >= gap) ? ">=" : " <");
 #endif
 			if (tnew - tlast >= gap) {
 			    GMtext(ss, getCharCE(label),
@@ -1150,6 +1185,11 @@ SEXP C_axis(SEXP args)
 		    }
 		}
 	    }
+#ifdef DEBUG_axis
+	    else {
+		REprintf(" x=at[i=%d]=%g not in (low,high) skip label\n", i+1, x);
+	    }
+#endif
 	}
       } // if(dolabels)
     }
@@ -1223,6 +1263,11 @@ SEXP C_axis(SEXP args)
 			y = GConvertY(y, USER, NFC, dd);
 			GLine(axis_base, y, axis_tick, y, NFC, dd);
 		    }
+#ifdef DEBUG_axis
+		    else {
+			REprintf("y=at[i=%d]=%g not in (low,high) skip tick\n", i+1, y);
+		    }
+#endif
 		}
 	    }
 	}
@@ -1269,7 +1314,12 @@ SEXP C_axis(SEXP args)
 	}
 	for (i = istart; i != iend; i += incr) {
 	    double y = REAL(at)[i];
-	    if (!R_FINITE(y)) continue;
+	    if (!R_FINITE(y)) {
+#ifdef DEBUG_axis
+		REprintf(" non-finite y=at[i=%d]=%g -> no label!\n", i+1, y);
+#endif
+		continue;
+	    }
 	    double padjval = REAL(padj)[i % npadj];
 	    padjval = ComputePAdjValue(padjval, side, gpptr(dd)->las);
 	    /* Clip tick labels to user coordinates. */
@@ -1292,8 +1342,8 @@ SEXP C_axis(SEXP args)
 					DEVICE, NFC, dd)),
 			    tnew = temp - 0.5 * labw;
 #ifdef DEBUG_axis
-			REprintf("tnew-tlast = %9g-%9g=%9g %2s gap\n", tnew, tlast,
-				 tnew-tlast, (tnew - tlast >= gap) ? ">=" : "<");
+			REprintf(" tnew-tlast = %9g-%9g=%9g %2s gap\n", tnew, tlast,
+				   tnew-tlast, (tnew-tlast >= gap) ? ">=" : " <");
 #endif
 			if (tnew - tlast >= gap) {
 			    GMtext(ss, getCharCE(label),
@@ -1304,6 +1354,11 @@ SEXP C_axis(SEXP args)
 		    }
 		}
 	    }
+#ifdef DEBUG_axis
+	    else {
+		REprintf(" y=at[i=%d]=%g not in (low,high) skip label\n", i+1, y);
+	    }
+#endif
 	}
       } // if(dolabels)
     } // else (y - axis)

@@ -5377,6 +5377,11 @@ add_dummies <- function(dir, Log)
                     !grepl(pkgname, lines, fixed = TRUE, useBytes = TRUE)
                 lines <- lines[!ex]
 
+                ## byte-compilation errors, often from bugs there
+                this <- grep("Error: compilation failed -",
+                             lines0, value = TRUE)
+                lines <- c(lines, unique(this))
+
                 note_re <-
                     "warning: control may reach end of non-void function"
 
@@ -6787,6 +6792,11 @@ add_dummies <- function(dir, Log)
                     }
                     ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
                 }
+            }
+            ## Precautionary clean up
+            if (length(ff)) {
+                ff <- ff[!is.na(ff)]
+                ff <- ff[ff != "NA"]
             }
             if (length(ff)) {
                 noteLog(Log)

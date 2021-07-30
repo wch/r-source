@@ -758,4 +758,18 @@ stopifnot(exprs = {
 ## all three  qpois(), qbinom() & qnbinom() were *far* from good in R <= 4.1.0
 
 
+## PR#18072 : dnbinom() underflow
+stopifnot(dnbinom(1:40, size=2^58, prob = 1) == 0)
+## gave mostly 1 in R <= 4.1.0
+x <- unique(sort(c(1:12, 15, outer(c(1,2,5), 10^(1:11)))))
+sz <- 2^70 ; prb <- .9999999
+summary(dn <- dnbinom(x, size=sz, prob = prb, log=TRUE))
+dL <- 118059167912526.5
+summary(dl.dn1 <- diff(log(dn[-1] + dL)))
+stopifnot(dn + dL > 0,
+          0.09 < dl.dn1, dl.dn1 < 0.93)
+## accuracy loss of 6 and more digits in R <= 4.1.0
+
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2018  The R Core Team
+ *  Copyright (C) 2006-2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -252,6 +252,9 @@ int main(int argc_, char *argv_[])
 	    i0 = i;
 	    continue;
 	}
+	if (e_mode) break;
+	    /* Once in e_mode, only additional -e options are to be processed.
+	       Any remaining --options belong to the expressions (PR#18102). */ 
 	if(strncmp(argv[i], "--", 2) != 0) break;
 	if(strcmp(argv[i], "--verbose") == 0) {
 	    verbose = 1;

@@ -1368,6 +1368,7 @@ function()
                "Title",
                "Type",
                "URL",
+               "UseLTO",
                "Version",
                "VignetteBuilder",
                "ZipData"),

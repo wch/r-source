@@ -755,12 +755,15 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     else if (streql(what, "cxy")) {
 	value = allocVector(REALSXP, 2);
 	/* == par("cin") / par("pin") : */
-	REAL(value)[0] = dpptr(dd)->scale * dd->dev->cra[0]
+	// prevent overflow in diff(usr): divide & multiply by 2 :
+	REAL(value)[0] = ldexp(
+	    dpptr(dd)->scale * dd->dev->cra[0]
 	    * dd->dev->ipr[0] / dpptr(dd)->pin[0]
-	    * (dpptr(dd)->usr[1] - dpptr(dd)->usr[0]);
-	REAL(value)[1] = dpptr(dd)->scale * dd->dev->cra[1]
+	    * (ldexp(dpptr(dd)->usr[1],-1) - ldexp(dpptr(dd)->usr[0],-1)), 1);
+	REAL(value)[1] = ldexp(
+	    dpptr(dd)->scale * dd->dev->cra[1]
 	    * dd->dev->ipr[1] / dpptr(dd)->pin[1]
-	    * (dpptr(dd)->usr[3] - dpptr(dd)->usr[2]);
+	    * (ldexp(dpptr(dd)->usr[3],-1) - ldexp(dpptr(dd)->usr[2],-1)), 1);
     }
     else if (streql(what, "din")) {
 	value = allocVector(REALSXP, 2);

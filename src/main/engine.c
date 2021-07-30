@@ -2458,7 +2458,7 @@ void GEPretty(double *lo, double *up, int *ndiv)
     // For *finite* boundaries, now allow (*up - *lo) = +/- inf  as R_pretty() now does
     double ns = *lo, nu = *up;
 #ifdef DEBUG_axis
-    double x1 = ns, x2 = nu;  int nd = *ndiv;
+    double x1 = ns, x2 = nu;
 #endif
     double unit, high_u_fact[3] = { .8, 1.7, 1.125 };
                              // =   (h, h5 , f_min) = (high.u.bias, u5.bias, f_min)
