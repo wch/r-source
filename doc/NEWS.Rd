@@ -146,7 +146,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.0 patched}{
+\section{\Rlogo CHANGES IN R 4.1.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{require(\var{pkg}, quietly = TRUE)} is quieter and in
