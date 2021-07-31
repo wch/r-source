@@ -5297,11 +5297,27 @@ As noted elsewhere, the C++17 standard was finalized only recently (Dec
 2017) and support for it is patchy or absent on several platforms used
 for @R{}.  So portable code should not require C++17 (let alone C++20).
 
-Note too that the POSIX standards only require recently-defined
-functions to be declared if certain macros are defined with large enough
-values, and on some compiler/OS combinations@footnote{This is seen on
-Linux, Solaris and FreeBSD, although each has other ways to turn on all
-extensions, e.g.@: defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
+@c Centos had 10 years of support, for Centos 7 expiring in June 2024.
+@c RHEL has 10 years, with more extended support, up to 4 years.
+@c Ubuntu LTS has 5 years' general support and 8 extended support.
+@c Ubuntu 16.04 (EOL 2021-04) came with GCC 5.4 but 7 was available
+@c Ubuntu 18.04 came with GCC 7.3 or 7.4.
+@c RHEL/Centos 6 came with GCC 4.4.
+@c RHEL/Centos 7 came with GCC 4.8, with 4.4 available.
+@c RHEL/Centos 8 has GCC 8.
+A common error is to assume recent versions of compilers or OSes.  In
+production environments `long term support' versions of OSes may be in
+use for many years,@footnote{Ubuntu provides 5 years of support (but
+people were running 14.04 after 7 years) and RHEL provides 10 years full
+support and up to 14 with extended support.} and their compilers may not
+be updated during that time.  For example, GCC 4.8 was still in use in
+2021 and could be (in RHEL 7) until 2028.
+
+The POSIX standards only require recently-defined functions to be
+declared if certain macros are defined with large enough values, and on
+some compiler/OS combinations@footnote{This is seen on Linux, Solaris
+and FreeBSD, although each has other ways to turn on all extensions,
+e.g.@: defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
 @code{_BSD_SOURCE}: the GCC compilers by default define
 @code{_GNU_SOURCE} unless a strict standard such as @option{-std=c99} is
 used.  On macOS extensions are declared unless one of these macros is
@@ -5403,7 +5419,7 @@ Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html} and
 @uref{https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Extensions.html}.
 
-Other GNU extensions which have bitten package writers is the use of
+Other GNU extensions which have bitten package writers are the use of
 non-portable characters such as @samp{$} in identifiers and use of C++
 headers under @file{ext}.
 
@@ -5445,7 +5461,10 @@ systems and not on others.  (A prominent example is the C++ header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
 @command{g++}.  Another issue is the C header @code{<time.h>} which is
 included by other headers on Linux and Windows but not macOS nor
-Solaris.)
+Solaris.)  @command{g++}@tie{}11 often needs explicit inclusion of the
+C++ headers @code{<limits>} (for @code{numeric_limits}) or
+@code{<exception>} (for @code{set_terminate} and similar), whereas
+earlier versions included these in other headers.
 
 Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
 are defined by C99 in the header @file{stdlib.h} and (in the
