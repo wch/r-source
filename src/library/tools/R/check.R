@@ -5200,7 +5200,9 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wlogical-not-parentheses\\]",
                              ## For non-portable flags (seen in sub-Makefiles)
                              "warning: .* \\[-Wunknown-warning-option\\]",
-                             "warning: .* \\[-Wnested-anon-types\\]"
+                             "warning: .* \\[-Wnested-anon-types\\]",
+                             "warning: .* is not needed and will not be emitted",
+                             "warning: .* \\[-Wnon-literal-null-conversion\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
