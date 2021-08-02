@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2014 The R Core Team
+ *  Copyright (C) 2005-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -618,6 +618,12 @@ const char *locale2charset(const char *locale)
     }
     
 #ifdef Win32
+    /* Perhaps too permissive options taken from
+       https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/setlocale-wsetlocale?view=msvc-160#utf-8-support
+    */
+    if (!strcmp(enc, "UTF8") || !strcmp(enc, "UTF-8") || !strcmp(enc, "utf8")
+        || !strcmp(enc, "utf-8") || !strcmp(enc, "Utf-8"))
+	return "UTF-8";
     /*
       ## PUTTY suggests mapping Windows code pages as
       ## 1250 -> ISO 8859-2: this is WRONG
