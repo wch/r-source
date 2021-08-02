@@ -1588,7 +1588,7 @@ of the application where you installed it (which may not be where you
 want this time @dots{}).
 
 Various parts of the build require XQuartz to be installed: see
-@uref{https://www.xquartz.org/releases}.@footnote{At the time of writing
+@uref{https://www.xquartz.org/releases/}.@footnote{At the time of writing
 the distribution was built/tested against 2.7.11 for compatibility with
 @R{} 4.0.0.}  These include the @pkg{tcltk} package and the @code{X11}
 device: attempting to use these without XQuartz will if possible remind
@@ -5264,7 +5264,7 @@ available only for @cputype{arm64}, where components @code{cairo},
 @node Other C/C++ compilers, Other libraries, Cairo graphics, macOS
 @subsection Other C/C++ compilers
 
-Other distributions of @command{clang} are available from
+Other distributions of @command{clang} may be available from
 @uref{https://releases.llvm.org/}.  In particular, these include support
 for OpenMP which Apple builds of @command{clang} do not, and may contain
 more bugfixes and new features (such as better diagnostics) than that in
@@ -5471,10 +5471,10 @@ writing for @cputype{arm64}.} You can also install directly a recent
 Java from
 @uref{https://www.oracle.com/java/technologies/javase-downloads.html,
 Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
-available, e.g.@: from @uref{https://adoptopenjdk.net, AdoptOpenJDK},
+available, e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 or (when released ca 2020-09) 17 but
+long-term support, e.g.@: 8 or 11 or (when released in 2021-09) 17 but
 not 9, 10, 12--16 which have/had a 6-month lifetime.
 
 Binary distributions of @R{} are built against a specific version
@@ -5484,7 +5484,7 @@ will likely be needed to be run before using Java-using packages.
 To use Java (specifically, package @CRANpkg{rJava}) with a
 @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
 @cputype{arm64} macOS install a @cputype{x86_64} build of a Java JRE
-such as that from @uref{https://adoptopenjdk.net, AdoptOpenJDK}, then
+such as that from @uref{https://adoptium.net, Adoptium}, then
 run @command{sudo R CMD javareconf}.
 
 To see what compatible versions of Java are currently installed, run
@@ -5512,10 +5512,10 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm"
 in @file{config.site}.
 
 @c jdk.java.net no longer has Java 11 LTS builds.
-To use the builds of OpenJDK from @uref{https://adoptopenjdk.net,
-AdoptOpenJDK} set e.g.@:
+To select a build of OpenJDK from @uref{https://adoptium.net,
+Adoptium} set e.g.@:
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-11.jdk/Contents/Home
 @end example
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
@@ -5684,7 +5684,7 @@ To correctly set the architecture (which will be auto-detected as
 @node Native builds,  , `Apple Silicon', `Apple Silicon'
 @subsubsection Native builds
 
-This section is experimental, and everything said should be prefixed by
+This section is someowhat provisional, and everything said should be prefixed by
 `at the time of writing'.  It follows the @acronym{CRAN} distribution in
 using @file{/opt/R/arm64} rather than @file{/usr/local}: this largely
 allows natively-compiled software to co-exist with Intel-compiled
@@ -5715,11 +5715,6 @@ Binary builds of the prerequisites@footnote{At the time of writing this
 had Aqua-based Tcl/Tk not the X11-based variant in the CRAN distribution
 of @R{}.  Also, no @code{readline}: the @acronym{CRAN} distribution uses
 @code{libedit} emulation.} are available at
-@uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
-into @file{/opt/R/arm64}: it is simplest to first create that directory
-and adjust its ownership if desired:
-
-Binary builds of the prerequisites are available at
 @uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
 into @file{/opt/R/arm64}: it is simplest to first create that directory
 and adjust its ownership if desired:
@@ -5781,7 +5776,10 @@ described at @uref{https://openradar.appspot.com/FB8914243} but
 @emph{ab initio} builds work.
 
 Native Java builds are becoming available, for example
-@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}.
+@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
+and this architecture has been announced as part of Java 17 (2021-09)
+from OpenJDK.
+@c https://openjdk.java.net/jeps/391
 
 As with Intel builds, use the @code{Accelerate} library could be used
 @emph{via} the configuration option
