@@ -2866,6 +2866,9 @@ in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
 from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
 back-compatibility @option{-std=gnu1y}.
 
+@c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
+@c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
+@c RHEL 7 (4.8, end of all support in 2028) are examples.
 C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
 specified in an analogous way (replacing @code{14} by @code{17} or
 @code{20}) but compiler/OS support is platform-dependent.  Some C++17
@@ -5311,7 +5314,8 @@ use for many years,@footnote{Ubuntu provides 5 years of support (but
 people were running 14.04 after 7 years) and RHEL provides 10 years full
 support and up to 14 with extended support.} and their compilers may not
 be updated during that time.  For example, GCC 4.8 was still in use in
-2021 and could be (in RHEL 7) until 2028.
+2021 and could be (in RHEL 7) until 2028: that supports neither C++14
+nor C++17.
 
 The POSIX standards only require recently-defined functions to be
 declared if certain macros are defined with large enough values, and on
