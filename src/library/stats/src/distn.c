@@ -455,7 +455,7 @@ DEFMATH4_2(qtukey)
 
 
 /* from src/nmath/wilcox.c
-   Since 4.2.0 declared in Rnmath.h
+   Since 4.2.0 declared in Rmath.h
 extern void signrank_free(void);
 extern void wilcox_free(void);
 */
