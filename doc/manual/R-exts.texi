@@ -14374,9 +14374,11 @@ distributions.
 @noindent
 Entries marked with an asterisk only have @samp{p} and @samp{q}
 functions available, and none of the non-central distributions have
-@samp{r} functions.  After a call to @code{dwilcox}, @code{pwilcox} or
+@samp{r} functions.  After calls to @code{dwilcox}, @code{pwilcox} or
 @code{qwilcox} the function @code{wilcox_free()} should be called, and
-similarly for the signed rank functions.
+similarly @code{signrank_free()} for the signed rank functions.
+@findex wilcox_free
+@findex signrank_free
 
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)

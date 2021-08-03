@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2018  The R Core Team
+ *  Copyright (C) 1998--2021  The R Core Team
  *  Copyright (C) 1995--1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -454,9 +454,11 @@ DEFMATH4_2(qtukey)
 /* These are here to get them in the correct package */
 
 
-/* from src/nmath/wilcox.c */
+/* from src/nmath/wilcox.c
+   Since 4.2.0 declared in Rnmath.h
 extern void signrank_free(void);
 extern void wilcox_free(void);
+*/
 
 SEXP stats_signrank_free(void)
 {
