@@ -142,6 +142,11 @@
 
       \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
       report and patch by Jeroen Ooms in \PR{18152}.)
+
+      \item \code{density(x, weights=w, na.rm=TRUE)} when \code{anyNA(x)}
+      is true, now removes weights \dQuote{in parallel} to \code{x}, fixing
+      \PR{18151}, reported by Matthias Gondan.
+      Additionally, it gets a \code{subdensity} option.
     }
   }
 }

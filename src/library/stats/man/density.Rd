@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -15,7 +15,7 @@ density(x, \dots)
                    "triangular", "biweight",
                    "cosine", "optcosine"),
         weights = NULL, window = kernel, width,
-        give.Rkern = FALSE,
+        give.Rkern = FALSE, subdensity = FALSE,
         n = 512, from, to, cut = 3, na.rm = FALSE, \dots)
 }
 \arguments{
@@ -55,7 +55,11 @@ density(x, \dots)
   \item{weights}{numeric vector of non-negative observation weights,
     hence of same length as \code{x}. The default \code{NULL} is
     equivalent to \code{weights = rep(1/nx, nx)} where \code{nx} is the
-    length of (the finite entries of) \code{x[]}.}
+    length of (the finite entries of) \code{x[]}.  If \code{na.rm = TRUE}
+    and there are \code{NA}'s in \code{x}, they \emph{and} the
+    corresponding weights are removed before computations.  In that case,
+    when the original weights have summed to one, they are re-scaled to
+    keep doing so.}
 
   \item{width}{this exists for compatibility with S; if given, and
     \code{bw} is not, will set \code{bw} to \code{width} if this is a
@@ -65,6 +69,11 @@ density(x, \dots)
   \item{give.Rkern}{logical; if true, \emph{no} density is estimated, and
     the \sQuote{canonical bandwidth} of the chosen \code{kernel} is returned
     instead.}
+
+  \item{subdensity}{used only when \code{weights} are specified which do not sum
+    to one.  When true, it indicates that a \dQuote{sub-density}
+    is desired and no warning should be signalled.  By default, when false,
+    a \code{\link{warning}} is signalled when the weights do not sum to one.}
 
   \item{n}{the number of equally spaced points at which the density is
     to be estimated.  When \code{n > 512}, it is rounded up to a power
