@@ -5343,7 +5343,8 @@ or
 @end example
 @noindent
 before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
-@code{strnlen} are such functions.)
+@code{strnlen} are such functions --  there are several older platforms
+which do not have the POSIX 2008 function @code{strnlen}.)
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
@@ -5518,7 +5519,9 @@ strerror strlen strncmp strtol tan trunc
 @end example
 @noindent
 This problem is less common than it used to be, but in 2019
-@command{clang} did not have @code{bind} in the main namespace.
+@command{clang} did not have @code{bind} in the main namespace.  Also
+seen has been type @code{size_t} defined only in the @code{std} namespace.
+@c with g++ on Solaris 10.
 
 @item
 @c including clang as from 4.0.0
