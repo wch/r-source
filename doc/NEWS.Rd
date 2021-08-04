@@ -87,6 +87,10 @@
       \item \command{R CMD check} now reports byte-compilation errors
       during installation.  These are not usually fatal but may result
       in parts of the package not being byte-compiled.
+
+      \item \env{_R_DEPENDS_ONLY_} can be applied selectively to
+      examples, tests and/or vignettes in \command{R CMD check}: see the
+      \dQuote{R Internals} manual.
     }
   }
 

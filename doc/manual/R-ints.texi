@@ -4054,14 +4054,23 @@ the @file{data} directory, so checks if any dataset depends on
 packages which are in Suggests or undeclared.  Default: false (but
 true for CRAN submission checks)
 
+@item _R_CHECK_DEPENDS_ONLY_EXAMPLES_
+@itemx _R_CHECK_DEPENDS_ONLY_TESTS_
+@itemx _R_CHECK_DEPENDS_ONLY_VIGNETTES_
+Should  @env{_R_CHECK_DEPENDS_ONLY_} be applied to the checking of
+examples, tests or vignettes?
+Default: the value of @env{_R_CHECK_DEPENDS_ONLY_}.
+
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
 packages unavailable unless declared.
 Default: false (but true for CRAN submission checks).
 
 This may give false positives on code which uses
-@code{grDevices::densCols} and @code{stats:::asSparse} as these invoke
-@CRANpkg{KernSmooth} and @CRANpkg{Matrix} respectively.
+@code{grDevices::densCols} and @code{stats:::.asSparse} /
+@code{stats:::.Diag} as these invoke @CRANpkg{KernSmooth} and
+@CRANpkg{Matrix} respectively. (Those in @pkg{stats} are called from
+various contrasts functions if @code{sparse = TRUE} is used.)
 
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with

@@ -612,7 +612,7 @@ add_dummies <- function(dir, Log)
 
         check_Rd_files(haveR, chkInternal = R_check_Rd_internal_too)
 
-        check_data() # 'data' dir and sysdata.rda
+        if (!extra_arch) check_data() # 'data' dir and sysdata.rda
 
         if (!is_base_pkg && !extra_arch) check_src_dir(desc)
 
@@ -2568,9 +2568,7 @@ add_dummies <- function(dir, Log)
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
-            el <- if (R_check_depends_only_data) {
-                      setRlibs(pkgdir = pkgdir, libdir = libdir)
-                  } else elibs
+            el <- if (R_cdo_data) setRlibs(pkgdir = pkgdir, libdir = libdir) else elibs
             out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2, el)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
@@ -2581,7 +2579,7 @@ add_dummies <- function(dir, Log)
                 if(any(bad) || bad2) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
                 if(bad2)
-                    if(R_check_depends_only_data || R_check_suggests_only)
+                    if(R_cdo_data || R_check_suggests_only)
                         printLog0(Log,
                                   "  The dataset(s) may use package(s) not declared in Depends/Imports.\n")
                     else
@@ -3827,7 +3825,8 @@ add_dummies <- function(dir, Log)
             ## so force LANGUAGE=en
             status <- R_runR0(NULL, c(Ropts, enc),
                               c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
-                                if(nzchar(arch)) env0, jitstr, elibs),
+                                if(nzchar(arch)) env0, jitstr,
+                                if(R_cdo_examples) elibs else character()),
                               stdout = exout, stderr = exout,
                               stdin = exfile, arch = arch, timeout = tlim)
             t2 <- proc.time()
@@ -4496,7 +4495,8 @@ add_dummies <- function(dir, Log)
                     status <- R_runR0(Rcmd,
                                       if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                       ## add timing as footer, as BATCH does
-                                      env = c(jitstr, "R_BATCH=1234", elibs,
+                                      env = c(jitstr, "R_BATCH=1234",
+                                              if (R_cdo_vignettes) elibs else character(),
                                               "_R_CHECK_INTERNALS2_=1"),
                                       stdout = outfile, stderr = outfile,
                                       timeout = tlim)
@@ -4639,20 +4639,29 @@ add_dummies <- function(dir, Log)
                                 opWarn_string,
                                 file.path(pkgoutdir, "vign_test", pkgname0))
                     else {
-                        ## serialize elibs to avoid quotation hell
-                        tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
-                                   fixed=TRUE)
-                        saveRDS(c(jitstr, elibs), tf)
-                        sprintf("%s\ntools:::buildVignettes(dir = '%s', ser_elibs = '%s')",
-                                opWarn_string,
-                                file.path(pkgoutdir, "vign_test", pkgname0),
-                                tf)
+                        if (R_cdo_vignettes) {
+                            ## serialize elibs to avoid quotation hell
+                            tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
+                                       fixed = TRUE)
+                            saveRDS(c(jitstr, elibs), tf)
+                            sprintf("%s\ntools:::buildVignettes(dir = '%s', ser_elibs = '%s')",
+                                    opWarn_string,
+                                    file.path(pkgoutdir, "vign_test", pkgname0),
+                                    tf)
+                        } else {
+                            sprintf("%s\ntools:::buildVignettes(dir = '%s')",
+                                    opWarn_string,
+                                    file.path(pkgoutdir, "vign_test", pkgname0))
+                       }
                     }
                 tlim <- get_timeout(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_",
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
                 outfile <- file.path(pkgoutdir, "build_vignettes.log")
-                status <- R_runR0(Rcmd, R_opts2, c(jitstr, elibs),
+                status <- R_runR0(Rcmd, R_opts2,
+                                  c(jitstr,
+                                    if(R_cdo_vignettes) elibs
+                                    else character()),
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)
                 t2 <- proc.time()
@@ -6207,14 +6216,23 @@ add_dummies <- function(dir, Log)
         unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_ARCH_"), ",")[[1]])
     R_check_unsafe_calls <-
         config_val_to_logical(Sys.getenv("_R_CHECK_UNSAFE_CALLS_", "TRUE"))
-    R_check_depends_only <-
+    R_cdo <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
+    R_cdo_examples <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_EXAMPLES_",
+                                         R_cdo))
+    R_cdo_tests <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_TESTS_",
+                                         R_cdo))
+    R_cdo_vignettes <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_VIGNETTES_",
+                                         R_cdo))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
     ## Restrict check of data() to Imports/Depends, if not already done
-    R_check_depends_only_data <-
+    R_cdo_data <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_DATA_",
-                                         "FALSE")) && !R_check_depends_only
+                                         "FALSE")) && !R_cdo
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
     R_check_FF_DUP <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
@@ -6670,14 +6688,14 @@ add_dummies <- function(dir, Log)
         } else check_incoming <- FALSE  ## end of if (!is_base_pkg)
 
         elibs <- if(is_base_pkg) character()
-        else if(R_check_depends_only)
+             else if(R_cdo || R_cdo_examples || R_cdo_vignettes)
             setRlibs(pkgdir = pkgdir, libdir = libdir)
         else if(R_check_suggests_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
         else character()
 
         elibs_tests <- if(is_base_pkg) character()
-        else if(R_check_depends_only)
+        else if(R_cdo_tests)
             setRlibs(pkgdir = pkgdir, libdir = libdir, tests = TRUE)
         else if(R_check_suggests_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
