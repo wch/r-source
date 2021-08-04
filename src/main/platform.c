@@ -1262,12 +1262,15 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 		Rboolean not_dot = strcmp(de->d_name, ".") && strcmp(de->d_name, "..");
 		if (recursive) {
+		    int res;
 #ifdef Win32
 		    if (strlen(dnp) == 2 && dnp[1] == ':') // e.g. "C:"
-			snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
+			res = snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
 		    else
 #endif
-			snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+			res = snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+		    if (res >= PATH_MAX) 
+			warning(_("over-long path"));
 
 #ifdef Windows
 		    _stati64(p, &sb);
@@ -1291,12 +1294,14 @@ list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 			    if (stem) {
 #ifdef Win32
 				if(strlen(stem) == 2 && stem[1] == ':')
-				    snprintf(stem2, PATH_MAX, "%s%s", stem,
+				    res = snprintf(stem2, PATH_MAX, "%s%s", stem,
 					     de->d_name);
 				else
 #endif
-				    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+				    res = snprintf(stem2, PATH_MAX, "%s%s%s", stem,
 					     R_FileSep, de->d_name);
+				if (res >= PATH_MAX)
+				    warning(_("over-long path"));
 			    } else
 				strcpy(stem2, de->d_name);
 
@@ -1400,14 +1405,17 @@ static void list_dirs(const char *dnp, const char *nm,
 	    SET_STRING_ELT(*pans, (*count)++, mkChar(full ? dnp : nm));
 	}
 	while ((de = readdir(dir))) {
+	    int res;
 #ifdef Win32
 	    if (strlen(dnp) == 2 && dnp[1] == ':')
-		snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
+		res = snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
 	    else
-		snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+		res = snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
 #else
-	    snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+	    res = snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
 #endif
+	    if (res >= PATH_MAX)
+		warning(_("over-long path"));
 #ifdef Windows
 	    _stati64(p, &sb);
 #else
@@ -1417,8 +1425,10 @@ static void list_dirs(const char *dnp, const char *nm,
 		if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
 		    if(recursive) {
 			char nm2[PATH_MAX];
-			snprintf(nm2, PATH_MAX, "%s%s%s", nm, R_FileSep,
+			res = snprintf(nm2, PATH_MAX, "%s%s%s", nm, R_FileSep,
 				 de->d_name);
+			if (res >= PATH_MAX)
+			    warning(_("over-long path"));
 			list_dirs(p, nm[0] ? nm2 : de->d_name, full, count,
 				  pans, countmax, idx, recursive);
 
@@ -1717,11 +1727,14 @@ static int R_unlink(const char *name, int recursive, int force)
 		    if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 			continue;
 		    size_t n = strlen(name);
+		    int pres;
 		    if (name[n] == R_FileSep[0])
-			snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
+			pres = snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
 		    else
-			snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep,
+			pres = snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep,
 				 de->d_name);
+		    if (pres >= PATH_MAX)
+			error(_("path too long"));
 		    lstat(p, &sb);
 		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 			if (force) chmod(p, sb.st_mode | S_IWUSR | S_IXUSR);

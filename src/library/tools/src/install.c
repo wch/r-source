@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2015 The R Core Team
+ *  Copyright (C) 1998--2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -89,10 +89,13 @@ static void chmod_one(const char *name, const int grpwrt)
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
 		size_t n = strlen(name);
+		int res;
 		if (name[n-1] == R_FileSep[0])
-		    snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
+		    res = snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
 		else
-		    snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, de->d_name);
+		    res = snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, de->d_name);
+		if (res >= PATH_MAX)
+		    error(_("path too long"));
 		chmod_one(p, grpwrt);
 	    }
 	    closedir(dir);
