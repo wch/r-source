@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (c) 1989 The Regents of the University of California.
- *  Copyright (C) 2013-2014 The R Core Team
+ *  Copyright (C) 2013-2021 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,6 +59,10 @@
 #include <limits.h> // for INT_MAX
 
 #include "datetime.h"
+
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
 
 static char * _add(const char *, char *, const char *);
 static char * _conv(int, const char *, char *, const char *);
@@ -306,12 +310,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		stm  tm = *t;
 		char buf[22]; // <= 19 digs + sign + terminator
 		int_fast64_t mkt = R_mktime(&tm);
-#ifdef _WIN32
-		// not ISO C99, so warns
-		(void) snprintf(buf, 22, "%I64d", mkt);
-#else
 		(void) snprintf(buf, 22, "%lld", (long long) mkt);
-#endif
 		pt = _add(buf, pt, ptlim);
 	    }
 	    continue;
