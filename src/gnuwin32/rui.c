@@ -659,11 +659,11 @@ static void menurwFAQ(control m)
 
 static void menuabout(control m)
 {
-    char  s[256], s2[256];
+    char  s[400], s2[256];
 
 
     PrintVersionString(s2, 256);
-    snprintf(s, 256, "%s\n%s %s %s",
+    snprintf(s, 400, "%s\n%s %s %s",
 	     s2,
 	     "Copyright (C)", R_YEAR,
 	     "The R Foundation for Statistical Computing");
@@ -1252,7 +1252,7 @@ menuItems *wingetmenuitems(const char *mname, char *errmsg) {
     }
 
     q = (char *)malloc(1000 * sizeof(char));
-    r = (char *)malloc(1000 * sizeof(char));
+    r = (char *)malloc(1002 * sizeof(char));
 
     items = (menuItems *)malloc(sizeof(menuItems));
     if(nitems > 0)
@@ -1276,7 +1276,7 @@ menuItems *wingetmenuitems(const char *mname, char *errmsg) {
 	/* determined if this is say item 'foo' from menu 'Blah/bar' */
 	/* or item 'bar/foo' from menu 'Blah'.  Check this manually */
 	/* by adding the item label to the menu we're looking for. */
-	snprintf(r, 1000, "%s%s", mitem, umitems[i]->m->text);
+	snprintf(r, 1002, "%s%s", mitem, umitems[i]->m->text);
 	if (strcmp(r, p) != 0)
 	    continue;
 
