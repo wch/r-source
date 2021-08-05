@@ -27,10 +27,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     method <- match.arg(method)
     DNAME <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
 
-    if(length(x) != length(y))
-	stop("'x' and 'y' must have the same length")
     if(!is.numeric(x)) stop("'x' must be a numeric vector")
     if(!is.numeric(y)) stop("'y' must be a numeric vector")
+    if(length(x) != length(y))
+	stop("'x' and 'y' must have the same length")
     OK <- complete.cases(x, y)
     x <- x[OK]
     y <- y[OK]
@@ -118,7 +118,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     vu <- sum(yties * (yties - 1) * (2 * yties + 5))
                     v1 <- sum(xties * (xties - 1)) * sum(yties * (yties - 1))
                     v2 <- sum(xties * (xties - 1) * (xties - 2)) *
-                        sum(yties * (yties - 1) * (yties - 2))
+                          sum(yties * (yties - 1) * (yties - 2))
 
                     var_S <- (v0 - vt - vu) / 18 +
                         v1 / (2 * n * (n - 1)) +

@@ -365,7 +365,8 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
-	res = (int) mbrtowc(wc, s, clen, NULL);
+	mbs_init(&mb_st);
+	res = (int) mbrtowc(wc, s, clen, &mb_st);
 	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
@@ -901,16 +902,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   416,   416,   417,   418,   419,   420,   423,   424,   425,
-     428,   429,   432,   433,   434,   435,   437,   438,   440,   441,
-     442,   443,   444,   446,   447,   448,   449,   450,   451,   452,
-     453,   454,   455,   456,   457,   458,   459,   460,   461,   462,
-     463,   464,   465,   466,   467,   468,   470,   471,   472,   473,
-     474,   475,   476,   477,   478,   479,   480,   481,   482,   483,
-     484,   485,   486,   487,   488,   489,   490,   491,   492,   496,
-     499,   502,   506,   507,   508,   509,   510,   511,   514,   515,
-     518,   519,   520,   521,   522,   523,   524,   525,   528,   529,
-     530,   531,   532,   536
+       0,   417,   417,   418,   419,   420,   421,   424,   425,   426,
+     429,   430,   433,   434,   435,   436,   438,   439,   441,   442,
+     443,   444,   445,   447,   448,   449,   450,   451,   452,   453,
+     454,   455,   456,   457,   458,   459,   460,   461,   462,   463,
+     464,   465,   466,   467,   468,   469,   471,   472,   473,   474,
+     475,   476,   477,   478,   479,   480,   481,   482,   483,   484,
+     485,   486,   487,   488,   489,   490,   491,   492,   493,   497,
+     500,   503,   507,   508,   509,   510,   511,   512,   515,   516,
+     519,   520,   521,   522,   523,   524,   525,   526,   529,   530,
+     531,   532,   533,   537
 };
 #endif
 
@@ -5111,7 +5112,10 @@ static int StringValue(int c, Rboolean forSymbol)
 	    wchar_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbrtowc(&wc, s, 2, NULL);
+	    /* This is not necessarily correct for stateful SBCS */
+	    mbstate_t mb_st;
+	    mbs_init(&mb_st);
+	    mbrtowc(&wc, s, 2, &mb_st);
 #endif
 	    WTEXT_PUSH(wc);
 	}
@@ -5238,7 +5242,10 @@ static int RawStringValue(int c0, int c)
 	    wchar_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbrtowc(&wc, s, 2, NULL);
+	    /* This is not necessarily correct for stateful SBCS */
+	    mbstate_t mb_st;
+	    mbs_init(&mb_st);
+	    mbrtowc(&wc, s, 2, &mb_st);
 #endif
 	    WTEXT_PUSH(wc);
 	}
@@ -5308,7 +5315,10 @@ int isValidName(const char *name)
 	   use the wchar variants */
 	size_t n = strlen(name), used;
 	wchar_t wc;
-	used = Mbrtowc(&wc, p, n, NULL); p += used; n -= used;
+	/* This is not necessarily correct for stateful MBCS */
+	mbstate_t mb_st;
+	mbs_init(&mb_st);
+	used = Mbrtowc(&wc, p, n, &mb_st); p += used; n -= used;
 	if(used == 0) return 0;
 	if (wc != L'.' && !iswalpha(wc) ) return 0;
 	if (wc == L'.') {
@@ -5316,7 +5326,7 @@ int isValidName(const char *name)
 	    if(isdigit(0xff & (int)*p)) return 0;
 	    /* Mbrtowc(&wc, p, n, NULL); if(iswdigit(wc)) return 0; */
 	}
-	while((used = Mbrtowc(&wc, p, n, NULL))) {
+	while((used = Mbrtowc(&wc, p, n, &mb_st))) {
 	    if (!(iswalnum(wc) || wc == L'.' || wc == L'_')) break;
 	    p += used; n -= used;
 	}

@@ -57,6 +57,8 @@
       notably for the log scale; partly because the \code{pretty()}
       improvements, but also because care is taken e.g., when \code{ylim}
       is finite, but \code{diff(ylim)} is infinite.
+
+      \item Histogram breaks rule \code{nclass.FD()} gets \code{digits} option.
     }
   }
 
@@ -85,6 +87,10 @@
       \item \command{R CMD check} now reports byte-compilation errors
       during installation.  These are not usually fatal but may result
       in parts of the package not being byte-compiled.
+
+      \item \env{_R_DEPENDS_ONLY_} can be applied selectively to
+      examples, tests and/or vignettes in \command{R CMD check}: see the
+      \dQuote{R Internals} manual.
     }
   }
 
@@ -140,11 +146,16 @@
 
       \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
       report and patch by Jeroen Ooms in \PR{18152}.)
+
+      \item \code{density(x, weights=w, na.rm=TRUE)} when \code{anyNA(x)}
+      is true, now removes weights \dQuote{in parallel} to \code{x}, fixing
+      \PR{18151}, reported by Matthias Gondan.
+      Additionally, it gets a \code{subdensity} option.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.0 patched}{
+\section{\Rlogo CHANGES IN R 4.1.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{require(\var{pkg}, quietly = TRUE)} is quieter and in

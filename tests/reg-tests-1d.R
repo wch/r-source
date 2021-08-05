@@ -5369,6 +5369,23 @@ stopifnot(grepl(patt, msg))
 ## contained all "(NA bytes)" in R <= 4.1.0
 
 
+## density(x_with_NA, weights = *, na.rm=TRUE) -- PR#18151
+x <- c(1, 2, NA, 4)
+w <- rep(1/4, 4) # summing to one !
+dxw  <- density(x, weights=w, na.rm=TRUE) ## gave Error
+dx3  <- density(x[-3], weights=w[-3], subdensity = TRUE)
+dx3w <- density(x[-3], weights=w[-3]*4/3)
+dx3. <- density(x[-3])
+(cmpN <- setdiff(names(dxw), c("call","data.name")))
+stopifnot(exprs = {
+    all.equal(dxw[cmpN], dx3.[cmpN])
+    all.equal(dxw[cmpN], dx3w[cmpN])
+    all.equal(dxw$bw, dx3$bw)
+    all.equal(dxw$y,  dx3$y * 4/3)
+})
+## in R <= 4.1.0, Error in density..: 'x' and 'weights' have unequal length
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

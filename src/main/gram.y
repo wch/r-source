@@ -300,7 +300,8 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
-	res = (int) mbrtowc(wc, s, clen, NULL);
+	mbs_init(&mb_st);
+	res = (int) mbrtowc(wc, s, clen, &mb_st);
 	if(res == -1) error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
@@ -2890,7 +2891,10 @@ static int StringValue(int c, Rboolean forSymbol)
 	    wchar_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbrtowc(&wc, s, 2, NULL);
+	    /* This is not necessarily correct for stateful SBCS */
+	    mbstate_t mb_st;
+	    mbs_init(&mb_st);
+	    mbrtowc(&wc, s, 2, &mb_st);
 #endif
 	    WTEXT_PUSH(wc);
 	}
@@ -3017,7 +3021,10 @@ static int RawStringValue(int c0, int c)
 	    wchar_t wc;
 	    char s[2] = " ";
 	    s[0] = (char) c;
-	    mbrtowc(&wc, s, 2, NULL);
+	    /* This is not necessarily correct for stateful SBCS */
+	    mbstate_t mb_st;
+	    mbs_init(&mb_st);
+	    mbrtowc(&wc, s, 2, &mb_st);
 #endif
 	    WTEXT_PUSH(wc);
 	}
@@ -3087,7 +3094,10 @@ int isValidName(const char *name)
 	   use the wchar variants */
 	size_t n = strlen(name), used;
 	wchar_t wc;
-	used = Mbrtowc(&wc, p, n, NULL); p += used; n -= used;
+	/* This is not necessarily correct for stateful MBCS */
+	mbstate_t mb_st;
+	mbs_init(&mb_st);
+	used = Mbrtowc(&wc, p, n, &mb_st); p += used; n -= used;
 	if(used == 0) return 0;
 	if (wc != L'.' && !iswalpha(wc) ) return 0;
 	if (wc == L'.') {
@@ -3095,7 +3105,7 @@ int isValidName(const char *name)
 	    if(isdigit(0xff & (int)*p)) return 0;
 	    /* Mbrtowc(&wc, p, n, NULL); if(iswdigit(wc)) return 0; */
 	}
-	while((used = Mbrtowc(&wc, p, n, NULL))) {
+	while((used = Mbrtowc(&wc, p, n, &mb_st))) {
 	    if (!(iswalnum(wc) || wc == L'.' || wc == L'_')) break;
 	    p += used; n -= used;
 	}

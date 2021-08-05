@@ -54,6 +54,9 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
     if(.Platform$OS.type == "windows") {
         x <- strsplit(locale, ".", fixed=TRUE)[[1L]]
         if(length(x) != 2) return(NA_character_)
+        ## see https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/setlocale-wsetlocale?view=msvc-160#utf-8-support
+        if (x[2L] %in% c("UTF8", "UTF-8", "utf8", "utf-8", "Utf-8"))
+            return("UTF-8")
         ## PUTTY suggests mapping Windows code pages as
         ## 1250 -> ISO 8859-2
         ## 1251 -> KOI8-U

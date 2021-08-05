@@ -1,7 +1,7 @@
 #  File src/library/stats/R/density.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ density.default <-
 	     kernel = c("gaussian", "epanechnikov", "rectangular",
 	     "triangular", "biweight", "cosine", "optcosine"),
 	     weights = NULL, window = kernel, width,
-	     give.Rkern = FALSE,
+	     give.Rkern = FALSE, subdensity = FALSE,
 	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
 {
     chkDots(...)
@@ -46,12 +46,27 @@ density.default <-
         stop("argument 'x' must be numeric")
     name <- deparse1(substitute(x))
     x <- as.vector(x)
+    N <- length(x)
+    if(has.wts <- !is.null(weights)) {
+        if(length(weights) != N)
+            stop("'x' and 'weights' have unequal length")
+        some.na <- FALSE
+    }
     x.na <- is.na(x)
     if (any(x.na)) {
-        if (na.rm) x <- x[!x.na]
+        if (na.rm) {
+            N <- length(x <- x[!x.na])
+            if(has.wts) {
+                some.na <- TRUE
+                trueD <- isTRUE(all.equal(1, sum(weights)))
+                weights <- weights[!x.na]
+                if(trueD) ## keep weights summing to one
+                    weights <- weights/sum(weights)
+            }
+        }
         else stop("'x' contains missing values")
     }
-    N <- nx <- as.integer(length(x))
+    nx <- N <- as.integer(N)
     if(is.na(N)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
     x.finite <- is.finite(x)
     if(any(!x.finite)) {
@@ -60,13 +75,11 @@ density.default <-
     }
 
     ## Handle 'weights'
-    if(is.null(weights))  {
+    if(!has.wts)  {
         weights <- rep.int(1/nx, nx)
         totMass <- nx/N
     }
     else {
-        if(length(weights) != N)
-            stop("'x' and 'weights' have unequal length")
         if(!all(is.finite(weights)))
             stop("'weights' must all be finite")
         if(any(weights < 0))
@@ -78,7 +91,7 @@ density.default <-
         } else totMass <- 1
 
         ## No error, since user may have wanted "sub-density"
-        if (!isTRUE(all.equal(1, wsum)))
+        if (!subdensity && !isTRUE(all.equal(1, wsum)))
             warning("sum(weights) != 1  -- will not get true density")
     }
 

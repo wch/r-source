@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/calc.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -99,9 +99,9 @@ nclass.scott <- function(x)
     if(h > 0) max(1, ceiling(diff(range(x))/h)) else 1L
 }
 
-nclass.FD <- function(x)
+nclass.FD <- function(x, digits = 5)
 {
-    h <- 2 * stats::IQR(x. <- signif(x, digits = 5))
+    h <- 2 * stats::IQR(x. <- signif(x, digits=digits))
     if (h == 0) {
 	x. <- sort(x.)
 	al <- 1/4; al.min <- 1/512 # try quantiles 1/8, 1/16, ... 1/512

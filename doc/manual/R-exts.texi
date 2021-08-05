@@ -2866,6 +2866,9 @@ in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
 from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
 back-compatibility @option{-std=gnu1y}.
 
+@c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
+@c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
+@c RHEL 7 (4.8, end of all support in 2028) are examples.
 C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
 specified in an analogous way (replacing @code{14} by @code{17} or
 @code{20}) but compiler/OS support is platform-dependent.  Some C++17
@@ -4955,7 +4958,8 @@ versions of @command{pandoc} for macOS did not work on @R{}'s target of
 High Sierra (and this too was undocumented): at the time of writing both
 @samp{2.7.3} and @samp{2.14.0.1} did.  (Currently @command{pandoc} is
 only available for Intel macOS but that build works well enough on
-@cputype{arm64} machines.)
+@cputype{arm64} machines.)  Another example is the Rust compilation
+system (@command{cargo} and @command{rustc}).
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
@@ -4971,12 +4975,13 @@ Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
 example macOS 10.16 was announced not to have them (but released as
 macOS 11 with them).  Python 2 has passed end-of-life and been removed
-from some major distributions.
+from many major distributions.  Support for Rust cannot be assumed, and
+it does not even support all the @R{} platforms used by @acronym{CRAN}.
 
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
 macOS is @file{/Applications/CMake.app/Contents/bin/cmake} and that
-should be looked for if it is not on the path.
+should be looked for if @command{make} is not on the path.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
@@ -5286,18 +5291,39 @@ versions the default standard was that of the compiler used, often C++98
 or C++14, and the default is likely to change in future.  For maximal
 portability a package should either specify a standard (@pxref{Using C++
 code}) or be tested under all of C++11, C++98 and C++14.  (Specifying
-C++14 or later will limit portability.)
+C++14 will limit portability.)
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
 the compilers used for @R{}, including on macOS.  (Use the C++11
 versions instead.)
 
-Note too that the POSIX standards only require recently-defined
-functions to be declared if certain macros are defined with large enough
-values, and on some compiler/OS combinations@footnote{This is seen on
-Linux, Solaris and FreeBSD, although each has other ways to turn on all
-extensions, e.g.@: defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
+As noted elsewhere, the C++17 standard was finalized only recently (Dec
+2017) and support for it is patchy or absent on several platforms used
+for @R{}.  So portable code should not require C++17 (let alone C++20).
+
+@c Centos had 10 years of support, for Centos 7 expiring in June 2024.
+@c RHEL has 10 years, with more extended support, up to 4 years.
+@c Ubuntu LTS has 5 years' general support and 8 extended support.
+@c Ubuntu 16.04 (EOL 2021-04) came with GCC 5.4 but 7 was available
+@c Ubuntu 18.04 came with GCC 7.3 or 7.4.
+@c RHEL/Centos 6 came with GCC 4.4.
+@c RHEL/Centos 7 came with GCC 4.8, with 4.4 available.
+@c RHEL/Centos 8 has GCC 8.
+A common error is to assume recent versions of compilers or OSes.  In
+production environments `long term support' versions of OSes may be in
+use for many years,@footnote{Ubuntu provides 5 years of support (but
+people were running 14.04 after 7 years) and RHEL provides 10 years full
+support and up to 14 with extended support.} and their compilers may not
+be updated during that time.  For example, GCC 4.8 was still in use in
+2021 and could be (in RHEL 7) until 2028: that supports neither C++14
+nor C++17.
+
+The POSIX standards only require recently-defined functions to be
+declared if certain macros are defined with large enough values, and on
+some compiler/OS combinations@footnote{This is seen on Linux, Solaris
+and FreeBSD, although each has other ways to turn on all extensions,
+e.g.@: defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
 @code{_BSD_SOURCE}: the GCC compilers by default define
 @code{_GNU_SOURCE} unless a strict standard such as @option{-std=c99} is
 used.  On macOS extensions are declared unless one of these macros is
@@ -5319,7 +5345,8 @@ or
 @end example
 @noindent
 before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
-@code{strnlen} are such functions.)
+@code{strnlen} are such functions --  there are several older platforms
+which do not have the POSIX 2008 function @code{strnlen}.)
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
@@ -5399,7 +5426,7 @@ Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html} and
 @uref{https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Extensions.html}.
 
-Other GNU extensions which have bitten package writers is the use of
+Other GNU extensions which have bitten package writers are the use of
 non-portable characters such as @samp{$} in identifiers and use of C++
 headers under @file{ext}.
 
@@ -5441,7 +5468,10 @@ systems and not on others.  (A prominent example is the C++ header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
 @command{g++}.  Another issue is the C header @code{<time.h>} which is
 included by other headers on Linux and Windows but not macOS nor
-Solaris.)
+Solaris.)  @command{g++}@tie{}11 often needs explicit inclusion of the
+C++ headers @code{<limits>} (for @code{numeric_limits}) or
+@code{<exception>} (for @code{set_terminate} and similar), whereas
+earlier versions included these in other headers.
 
 Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
 are defined by C99 in the header @file{stdlib.h} and (in the
@@ -5491,7 +5521,9 @@ strerror strlen strncmp strtol tan trunc
 @end example
 @noindent
 This problem is less common than it used to be, but in 2019
-@command{clang} did not have @code{bind} in the main namespace.
+@command{clang} did not have @code{bind} in the main namespace.  Also
+seen has been type @code{size_t} defined only in the @code{std} namespace.
+@c with g++ on Solaris 10.
 
 @item
 @c including clang as from 4.0.0
@@ -14344,9 +14376,11 @@ distributions.
 @noindent
 Entries marked with an asterisk only have @samp{p} and @samp{q}
 functions available, and none of the non-central distributions have
-@samp{r} functions.  After a call to @code{dwilcox}, @code{pwilcox} or
+@samp{r} functions.  After calls to @code{dwilcox}, @code{pwilcox} or
 @code{qwilcox} the function @code{wilcox_free()} should be called, and
-similarly for the signed rank functions.
+similarly @code{signrank_free()} for the signed rank functions.
+@findex wilcox_free
+@findex signrank_free
 
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
