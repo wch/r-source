@@ -4018,60 +4018,6 @@ aggregate) the ratio of CPU time to elapsed time exceeds this threshold
 Windows.
 Default: @code{NA}.
 
-@item _R_CHECK_INSTALL_DEPENDS_
-If set to a true value and a test installation is to be done, this is
-done with @code{.libPaths()} containing just a temporary library
-directory and @code{.Library}.  The temporary library is populated by
-symbolic links@footnote{under Windows, junction points, or copies if
-environment variable @env{R_WIN_NO_JUNCTIONS} has a non-empty value.}
-to the installed copies of all the Depends/Imports/LinkingTo packages
-which are not in @code{.Library}.  Default: false (but true for CRAN
-submission checks).
-
-Note that this is actually implemented in @command{R CMD INSTALL}, so it
-is available to those who first install recording to a log, then call
-@command{R CMD check}.
-
-@item _R_CHECK_DEPENDS_ONLY_
-@itemx _R_CHECK_SUGGESTS_ONLY_
-If set to a true value, running examples, tests and vignettes is done
-with @code{.libPaths()} containing just a temporary library directory
-and @code{.Library}.  The temporary library is populated by symbolic
-links@footnote{see the previous footnote.} to the installed copies of
-all the Depends/Imports and (for the second only) Suggests packages
-which are not in @code{.Library}.  (As exceptions, packages in a
-@samp{VignetteBuilder} field and test-suite managers in @samp{Suggests}
-are always made available.)  
-Default: false (but
-@env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN submission checks: some
-of the regular checks use true
-@c Solaris and Windows
-and some use false).
-
-@item _R_CHECK_DEPENDS_ONLY_DATA_
-Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the check of loading from
-the @file{data} directory, so checks if any dataset depends on
-packages which are in Suggests or undeclared.  Default: false (but
-true for CRAN submission checks)
-
-@item _R_CHECK_DEPENDS_ONLY_EXAMPLES_
-@itemx _R_CHECK_DEPENDS_ONLY_TESTS_
-@itemx _R_CHECK_DEPENDS_ONLY_VIGNETTES_
-Should  @env{_R_CHECK_DEPENDS_ONLY_} be applied to the checking of
-examples, tests or vignettes?
-Default: the value of @env{_R_CHECK_DEPENDS_ONLY_}.
-
-@item _R_CHECK_NO_RECOMMENDED_
-If set to a true value, augment the previous checks to make recommended
-packages unavailable unless declared.
-Default: false (but true for CRAN submission checks).
-
-This may give false positives on code which uses
-@code{grDevices::densCols} and @code{stats:::.asSparse} /
-@code{stats:::.Diag} as these invoke @CRANpkg{KernSmooth} and
-@CRANpkg{Matrix} respectively. (Those in @pkg{stats} are called from
-various contrasts functions if @code{sparse = TRUE} is used.)
-
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with
 @var{value} a logical constant) giving additional arguments for the
@@ -4444,6 +4390,67 @@ dimensions in a call to @code{matrix} gives a warning: setting this to a
 true value gives an error with a compact traceback.
 @c
 Default: false (but true for CRAN submission checks).
+@end vtable
+
+The following variables control checks for undeclared/unconditional use
+of other packages.  They work by setting up a temporary library
+directory and setting @code{.libPaths()} to just that and
+@code{.Library}, so are only effective if additional packages are
+installed somewhere other than @code{.Library}.  The temporary library
+is populated by symbolic links@footnote{under Windows, junction points,
+or copies if environment variable @env{R_WIN_NO_JUNCTIONS} has a
+non-empty value.} to installed packages not also in @code{.library}.
+
+@vtable @code
+@item _R_CHECK_INSTALL_DEPENDS_
+If set to a true value and a test installation is to be done, this is
+done with a temporary library populated by all the
+Depends/Imports/LinkingTo packages.
+Default: false (but true for CRAN submission checks).
+
+Note that this is actually implemented in @command{R CMD INSTALL}, so it
+is available to those who first install recording to a log, then call
+@command{R CMD check}.
+
+@item _R_CHECK_SUGGESTS_ONLY_
+If set to a true value, running examples, tests and vignettes is done
+with a temporary library directory populated by all the
+Depends/Imports/Suggests packages.  (As exceptions, packages in a
+@samp{VignetteBuilder} field are always made available.)
+@c
+Default: false (but true for CRAN submission checks: some of the regular
+checks use true and some use false).
+
+@item _R_CHECK_DEPENDS_ONLY_
+As for @env{_R_CHECK_SUGGESTS_ONLY_} but using only Depends/Imports (and
+the exceptions, including test-suite managers in @samp{Suggests}).
+Default: false
+
+@item _R_CHECK_DEPENDS_ONLY_DATA_
+Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the check of loading from
+the @file{data} directory, so checks if any dataset depends on
+packages which are in Suggests or undeclared.
+Default: false (but true for CRAN submission checks)
+
+@item _R_CHECK_DEPENDS_ONLY_EXAMPLES_
+@itemx _R_CHECK_DEPENDS_ONLY_TESTS_
+@itemx _R_CHECK_DEPENDS_ONLY_VIGNETTES_
+Apply @env{_R_CHECK_DEPENDS_ONLY_} only to the checking of
+examples, tests or vignettes.  These can be used on their own, or
+with a false value to override @env{_R_CHECK_DEPENDS_ONLY_}.
+@c
+Default: the value of @env{_R_CHECK_DEPENDS_ONLY_} or false if that is unset..
+
+@item _R_CHECK_NO_RECOMMENDED_
+If set to a true value, augment the previous checks to make recommended
+packages unavailable unless declared (even if installed in @code{.library}).
+Default: false (but true for CRAN submission checks).
+
+This may give false positives on code which uses
+@code{grDevices::densCols} and @code{stats:::.asSparse} /
+@code{stats:::.Diag} as these invoke @CRANpkg{KernSmooth} and
+@CRANpkg{Matrix} respectively. (Those in @pkg{stats} are called from
+various contrasts functions if @code{sparse = TRUE} is used.)
 @end vtable
 
 CRAN's submission checks use something like
