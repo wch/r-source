@@ -4958,7 +4958,8 @@ versions of @command{pandoc} for macOS did not work on @R{}'s target of
 High Sierra (and this too was undocumented): at the time of writing both
 @samp{2.7.3} and @samp{2.14.0.1} did.  (Currently @command{pandoc} is
 only available for Intel macOS but that build works well enough on
-@cputype{arm64} machines.)
+@cputype{arm64} machines.)  Another example is the Rust compilation
+system (@command{cargo} and @command{rustc}).
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
@@ -4974,12 +4975,13 @@ Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
 example macOS 10.16 was announced not to have them (but released as
 macOS 11 with them).  Python 2 has passed end-of-life and been removed
-from some major distributions.
+from many major distributions.  Support for Rust cannot be assumed, and
+it does not even support all the @R{} platforms used by @acronum{CRAN}.
 
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
 macOS is @file{/Applications/CMake.app/Contents/bin/cmake} and that
-should be looked for if it is not on the path.
+should be looked for if @command{make} is not on the path.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
