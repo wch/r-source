@@ -867,7 +867,7 @@ inclu2(size_t np, double *xnext, double *xrow, double ynext,
 /*
   Matwey V. Kornilov's implementation of algorithm by
   Dr. Raphael Rossignol
-  See https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14682 for details.
+  See https://bugs.r-project.org/show_bug.cgi?id=14682 for details.
 */
 SEXP getQ0bis(SEXP sPhi, SEXP sTheta, SEXP sTol)
 {

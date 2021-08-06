@@ -42,7 +42,7 @@ bug.report <- function(subject = "", address,
                      "  We will now try to open that website in a browser"))
         flush.console()
         Sys.sleep(2)
-        browseURL("https://bugs.r-project.org/bugzilla3/index.cgi")
+        browseURL("https://bugs.r-project.org/index.cgi")
     }
 
     if (is.null(package)) return(baseR())

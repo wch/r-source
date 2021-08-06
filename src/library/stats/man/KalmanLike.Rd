@@ -132,7 +132,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
   \doi{10.2307/2346910}.
 
   R bug report PR#14682 (2011-2013)
-  \url{https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14682}.
+  \url{https://bugs.r-project.org/show_bug.cgi?id=14682}.
 }
 
 \seealso{

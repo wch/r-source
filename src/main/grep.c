@@ -301,7 +301,7 @@ static long R_pcre_max_recursions()
     uintptr_t ans, stack_used, current_frame;
     /* Approximate size of stack frame in PCRE match(), actually
        platform / compiler dependent.  Estimate found at
-       https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=16757
+       https://bugs.r-project.org/show_bug.cgi?id=16757
        However, it seems that on Solaris compiled with cc, the size is
        much larger (not too surprising as that happens with R's
        parser). OTOH, OpenCSW's builds of PCRE are built to use the

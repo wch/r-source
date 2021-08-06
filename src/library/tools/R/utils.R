@@ -1603,7 +1603,7 @@ function(package, lib.loc)
     ## Otherwise, we do not attempt reloading: previously we tried at
     ## least when attached, but reloading namespaces invalidates DLLs
     ## and S3 registries, see e.g. PR#18130
-    ## <https://bugs.r-project.org/bugzilla/show_bug.cgi?id=18130>.
+    ## <https://bugs.r-project.org/show_bug.cgi?id=18130>.
     ## Hence if already loaded, we can neither ensure that the package
     ## came from @code{lib.loc}, nor that we used the currently
     ## installed versions.
