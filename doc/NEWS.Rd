@@ -151,6 +151,11 @@
       is true, now removes weights \dQuote{in parallel} to \code{x}, fixing
       \PR{18151}, reported by Matthias Gondan.
       Additionally, it gets a \code{subdensity} option.
+
+      \item Conversion of \verb{\Sexpr[]{<expR>}} to LaTeX or HTML no longer
+      produces long blocks of empty lines when \code{<expR>} itself
+      contains several lines all producing empty output.  Thanks to a
+      report and patch by Ivan Krylow posted to R-devel.
     }
   }
 }

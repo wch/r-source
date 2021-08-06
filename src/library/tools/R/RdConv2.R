@@ -329,10 +329,12 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    }
 	} else if (options$results == "text")
 	    res <- tagged(err, "TEXT")
-	else if (length(res)) {
+	else if (options$results == "hide" || !length(res))
+	    res <- tagged("", "COMMENT")
+	else { ## if (length(res)) 
 	    res <- lapply(as.list(res), function(x) tagged(x, "VERB"))
 	    res <- tagged(res, "\\verb")
-	} else res <- tagged("", "COMMENT")
+	}
     } else res <- code
     ## return :
     replaceRdSrcrefs(res, codesrcref)
