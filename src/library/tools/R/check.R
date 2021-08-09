@@ -1052,6 +1052,24 @@ add_dummies <- function(dir, Log)
             }
         }
 
+        ## Also check logical fields for appropriate values.
+        db <- .read_description(dfile)
+        fields <- c("LazyData", "KeepSource", "ByteCompile", "UseLTO",
+                    "StagedInstall", "Biarch", "BuildVignettes")
+        bad <- fields[vapply(fields,
+                             function(f) {
+                                 !is.na(x <- db[f]) &&
+                                     suppressWarnings(is.na(utils:::str2logical(x)))
+                             },
+                             NA)]
+        if(length(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     paste(c("Malformed field(s):", bad), collapse = " "),
+                     "\n")
+        }
+
         if(!is_base_pkg && is.na(db["Packaged"])) {
             if(!any) (noteLog(Log))
             any <- TRUE
