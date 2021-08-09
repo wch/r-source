@@ -6085,6 +6085,10 @@ add_dummies <- function(dir, Log)
         ## If we do not install, then we cannot *run* any code.
         do_examples <- do_tests <- do_vignettes <- do_build_vignettes <- 0
     }
+    if(startsWith(install, "check+fake")) {
+        install <- paste0("check", substring(install, 11L))
+        opts <- c(opts, "--install=fake")
+    }
     if (run_dontrun) opts <- c(opts, "--run-dontrun")
     if (run_donttest) opts <- c(opts, "--run-donttest")
     opts0 <- opts # other options are added later.
