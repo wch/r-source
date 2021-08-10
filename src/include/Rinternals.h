@@ -1216,4 +1216,7 @@ void (SET_NAMED)(SEXP x, int v);
 }
 #endif
 
+// used by BIOC::matter; mightbe reasonable to include in API
+SEXP R_tryWrap(SEXP);
+
 #endif /* R_INTERNALS_H_ */
