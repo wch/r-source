@@ -2465,14 +2465,15 @@ works well under Windows, this is less important than anticipated.)
 
 Messages for the @samp{RGui} domain are marked by @code{G_("msg")}, a
 macro that is defined in header file @file{src/gnuwin32/win-nls.h}.  The
-list of files that are considered is hardcoded in the
-@code{RGui.pot-update} target of file @file{po/Makefile.in.in}: note
+list of files that are considered is hardcoded in function @code{update_RGui_po}
+in file @file{src/library/tools/R/translations.R}, which is invoked via the
+@code{update-RGui} target of file @file{po/Makefile.win}: note
 that this includes @file{devWindows.c} as the menus on the
 @code{windows} device are considered to be part of the GUI.  (There is
 also @code{GN_("msg")}, the analogue of @code{N_("msg")}.)
 
 The template and message catalogs for the @samp{RGui} domain are in the
-top-level @file{po} directory.
+top-level @file{po} directory of package @pkg{base}.
 
 
 @node macOS GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
@@ -4059,8 +4060,10 @@ packages unavailable unless declared.
 Default: false (but true for CRAN submission checks).
 
 This may give false positives on code which uses
-@code{grDevices::densCols} and @code{stats:::asSparse} as these invoke
-@CRANpkg{KernSmooth} and @CRANpkg{Matrix} respectively.
+@code{grDevices::densCols} and @code{stats:::.asSparse} /
+@code{stats:::.Diag} as these invoke @CRANpkg{KernSmooth} and
+@CRANpkg{Matrix} respectively. (Those in @pkg{stats} are called from
+various contrasts functions if @code{sparse = TRUE} is used.)
 
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with
@@ -4336,7 +4339,7 @@ subdirectory of the @R{} session directory for the @code{check} process:
 if any files or directories are left there they are removed.  Since some
 of these might be out of the user's control, environment variable
 @env{_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_} can specify an (extended
-regex) pattern of file names not to be reported -- CRAN uses
+regex) pattern of file paths not to be reported -- CRAN uses
 @samp{^ompi.} for directories left behind by OpenMPI.  There are rare
 instances where @env{TEMPDIR} is not respected and so files are left in
 @file{/tmp} (and not reported): one example is

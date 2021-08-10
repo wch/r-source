@@ -2267,7 +2267,7 @@ DLL.
 There is some support for packages which wish to use
 OpenMP@footnote{@uref{https://www.openmp.org/},
 @uref{https://en.wikipedia.org/wiki/OpenMP},
-@uref{https://hpc.llnl.gov/openmp-tutorial}}.  The
+@uref{https://hpc.llnl.gov/training/tutorials/openmp-tutorial}}.  The
 @command{make} macros
 
 @example
@@ -2879,7 +2879,7 @@ Note that C++17 or C++20 `support' does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
-@uref{https://libcxx.llvm.org/docs/Cxx1zStatus.html} to see if the
+@uref{https://libcxx.llvm.org/Cxx1zStatus.html} to see if the
 features you want to use are widely implemented.
 
 A requirement of C++17 or later should always be declared in the
@@ -4955,7 +4955,8 @@ versions of @command{pandoc} for macOS did not work on @R{}'s target of
 High Sierra (and this too was undocumented): at the time of writing both
 @samp{2.7.3} and @samp{2.14.0.1} did.  (Currently @command{pandoc} is
 only available for Intel macOS but that build works well enough on
-@cputype{arm64} machines.)
+@cputype{arm64} machines.)  Another example is the Rust compilation
+system (@command{cargo} and @command{rustc}).
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
@@ -4971,12 +4972,13 @@ Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
 example macOS 10.16 was announced not to have them (but released as
 macOS 11 with them).  Python 2 has passed end-of-life and been removed
-from some major distributions.
+from many major distributions.  Support for Rust cannot be assumed, and
+it does not even support all the @R{} platforms used by @acronym{CRAN}.
 
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
 macOS is @file{/Applications/CMake.app/Contents/bin/cmake} and that
-should be looked for if it is not on the path.
+should be looked for if @command{make} is not on the path.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
@@ -5311,7 +5313,8 @@ use for many years,@footnote{Ubuntu provides 5 years of support (but
 people were running 14.04 after 7 years) and RHEL provides 10 years full
 support and up to 14 with extended support.} and their compilers may not
 be updated during that time.  For example, GCC 4.8 was still in use in
-2021 and could be (in RHEL 7) until 2028.
+2021 and could be (in RHEL 7) until 2028: that supports neither C++14
+nor C++17.
 
 The POSIX standards only require recently-defined functions to be
 declared if certain macros are defined with large enough values, and on
@@ -5339,7 +5342,8 @@ or
 @end example
 @noindent
 before @emph{any} headers.  (@code{strdup}, @code{strncasecmp} and
-@code{strnlen} are such functions.)
+@code{strnlen} are such functions --  there are several older platforms
+which do not have the POSIX 2008 function @code{strnlen}.)
 
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
@@ -5514,7 +5518,9 @@ strerror strlen strncmp strtol tan trunc
 @end example
 @noindent
 This problem is less common than it used to be, but in 2019
-@command{clang} did not have @code{bind} in the main namespace.
+@command{clang} did not have @code{bind} in the main namespace.  Also
+seen has been type @code{size_t} defined only in the @code{std} namespace.
+@c with g++ on Solaris 10.
 
 @item
 @c including clang as from 4.0.0
@@ -8331,7 +8337,7 @@ Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version), @command{Shark} (in version of @code{Xcode}
 up to those for Snow Leopard), and @command{Instruments} (part of
 @code{Xcode}, see
-@uref{https://help.apple.com/instruments/mac/current}).
+@uref{https://help.apple.com/instruments/mac/current/}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
@@ -9275,7 +9281,7 @@ analysis, it does not rely on code paths being exercised.
 See
 @uref{https://gcc.gnu.org/onlinedocs/gcc-10.1.0/gcc/Static-Analyzer-Options.html}
 (or the documentation for your version of @command{gcc} if later) and
-@uref{https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10/}
+@uref{https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10}
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `gcc', Checking memory access
 @subsection Using `Dr. Memory'
@@ -14170,7 +14176,9 @@ Entries marked with an asterisk only have @samp{p} and @samp{q}
 functions available, and none of the non-central distributions have
 @samp{r} functions.  After a call to @code{dwilcox}, @code{pwilcox} or
 @code{qwilcox} the function @code{wilcox_free()} should be called, and
-similarly for the signed rank functions.
+similarly @code{signrank_free()} for the signed rank functions.
+@findex wilcox_free
+@findex signrank_free
 
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
