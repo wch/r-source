@@ -6298,7 +6298,7 @@ function(dir, testdir, lib.loc = NULL)
         }
     }
     res <- .check_packages_used_helper(db, c(Rinfiles, Rfiles))
-    if(use_subdirs && any(lengths(bad <- res[1L : 3L]))) {
+    if(any(lengths(bad <- res[1L : 3L]))) {
         ## Filter results against available package names to avoid (too
         ## many) false positives.
         ## <FIXME>
