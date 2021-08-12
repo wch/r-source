@@ -8981,12 +8981,12 @@ threaded programs.
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
-FreeBSD, with some support for Intel macOS, NetBSD and Windows. (There
-is a faster variant, HWASAN, for @cputype{aarch64} only.)  On some
-platforms the runtime library, @pkg{libasan}, needs to be installed
-separately, and for checking C++ you may also need @pkg{libubsan}.} of
-@command{gcc} and @command{clang} on common Linux and macOS platforms.
-See
+FreeBSD, with some support for Intel macOS, NetBSD and Windows, but not
+with the toolchains normally used with @R{}. (There is a faster variant,
+HWASAN, for @cputype{aarch64} only.)  On some platforms the runtime
+library, @pkg{libasan}, needs to be installed separately, and for
+checking C++ you may also need @pkg{libubsan}.} of @command{gcc} and
+@command{clang} on common Linux and macOS platforms.  See
 @uref{https://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{https://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://github.com/google/sanitizers}.
@@ -9160,7 +9160,10 @@ separately.} of @command{clang} and GCC.  Its (main) runtime library is
 linked into each package's DLL, so it is less often needed to be
 included in @env{MAIN_LDFLAGS}.  Platforms supported by @command{clang}
 are listed at
-@uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#supported-platforms}.
+@uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#supported-platforms}:
+@acronym{CRAN} uses it for C/C++ with both GCC and @command{clang} on
+@cputype{x86_64} Linux: the two toolchains often highlight different
+things with more reports from @command{clang} than GCC.
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
