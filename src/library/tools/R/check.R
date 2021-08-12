@@ -568,7 +568,7 @@ add_dummies <- function(dir, Log)
 
         check_Rd_files(haveR, chkInternal = R_check_Rd_internal_too)
 
-        check_data() # 'data' dir and sysdata.rda
+        if (!extra_arch) check_data() # 'data' dir and sysdata.rda
 
         if (!is_base_pkg && !extra_arch) check_src_dir(desc)
 
