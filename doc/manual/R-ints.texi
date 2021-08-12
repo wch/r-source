@@ -4295,7 +4295,7 @@ of these might be out of the user's control, environment variable
 regex) pattern of file paths not to be reported -- CRAN uses
 @samp{^ompi.} for directories left behind by OpenMPI.  There are rare
 instances where @env{TEMPDIR} is not respected and so files are left in
-@file{/tmp} (and not reported, but see the nest item): one example is
+@file{/tmp} (and not reported, but see the next item): one example is
 @file{/tmp/boost_interprocess} on some OSes.
 @c macOS is one.
 Default: false (but true for CRAN submission checks).

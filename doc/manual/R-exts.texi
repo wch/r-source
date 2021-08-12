@@ -8980,11 +8980,13 @@ threaded programs.
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
-builds@footnote{currently on Linux and macOS (including the builds from
-Xcode 7 and later), with some support for Solaris.  On some platforms
-the runtime library, @pkg{libasan}, needs to be installed separately,
-and for checking C++ you may also need @pkg{libubsan}.} of @command{gcc}
-and @command{clang} on common Linux and macOS platforms.  See
+builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
+FreeBSD, with some support for Intel macOS, NetBSD and Windows. (There
+is a faster variant, HWASAN, for @cputype{aarch64} only.)  On some
+platforms the runtime library, @pkg{libasan}, needs to be installed
+separately, and for checking C++ you may also need @pkg{libubsan}.} of
+@command{gcc} and @command{clang} on common Linux and macOS platforms.
+See
 @uref{https://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{https://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://github.com/google/sanitizers}.
@@ -9010,10 +9012,10 @@ uninitialized memory.
 
 Recent versions return symbolic addresses for the location of the error
 provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
-in distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
+distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
-on the path or has been renamed@footnote{as Ubuntu has been said to do.}, one
-can use an environment variable, e.g.@:
+on the path or has been renamed@footnote{as Ubuntu has been said to
+do.}, one can use an environment variable, e.g.@:
 
 @example
 ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
@@ -9156,7 +9158,9 @@ might be @code{NA_INTEGER}.
 platforms the runtime library, @pkg{libubsan}, needs to be installed
 separately.} of @command{clang} and GCC.  Its (main) runtime library is
 linked into each package's DLL, so it is less often needed to be
-included in @env{MAIN_LDFLAGS}.
+included in @env{MAIN_LDFLAGS}.  Platforms supported by @command{clang}
+are listed at
+@uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#supported-platforms}.
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
