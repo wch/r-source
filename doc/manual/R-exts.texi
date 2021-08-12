@@ -14383,14 +14383,27 @@ distributions.
 @noindent
 Entries marked with an asterisk only have @samp{p} and @samp{q}
 functions available, and none of the non-central distributions have
-@samp{r} functions.  After calls to @code{dwilcox}, @code{pwilcox} or
-@code{qwilcox} the function @code{wilcox_free()} should be called, and
-similarly @code{signrank_free()} for the signed rank functions.
-@findex wilcox_free
-@findex signrank_free
+@samp{r} functions.
 
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
+
+After calls to @code{dwilcox}, @code{pwilcox} or @code{qwilcox} the
+function @code{wilcox_free()} should be called, and similarly
+@code{signrank_free()} for the signed rank functions.
+@findex wilcox_free
+@findex signrank_free
+Since @code{wilcox_free()} and @code{signrank_free()} were only added to
+@file{Rmath.h} in @R{}@tie{} 4.2.0, their use requires something like
+@example
+#include "Rmath.h"
+#include "Rversion.h"
+
+#if R_VERSION < R_Version(4, 2, 0)
+extern void wilcox_free(void);
+extern void signrank_free(void);
+#endif
+@end example
 
 For the negative binomial distribution (@samp{nbinom}), in addition to the
 @code{(size, prob)} parametrization, the alternative @code{(size, mu)}
@@ -14407,8 +14420,9 @@ double dbinom_raw(double x, double n, double p, double q, int give_log)
 double dpois_raw (double x, double lambda, int give_log)
 @end group
 @end example
-Note that @code{dbinom_raw()} gets both @eqn{p, p} and @eqn{q = 1-p, q = 1-p} which
-may be advantageous when one of them is close to @eqn{1, 1}.
+Note that @code{dbinom_raw()} returns both @eqn{p, p} and @eqn{q = 1-p,
+q = 1-p} which may be advantageous when one of them is close to @eqn{1,
+1}.
 
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
