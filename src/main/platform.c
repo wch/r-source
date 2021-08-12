@@ -1589,9 +1589,17 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 static int R_rmdir(const wchar_t *dir)
 {
     wchar_t tmp[MAX_PATH];
-    GetShortPathNameW(dir, tmp, MAX_PATH);
-    //printf("removing directory %ls\n", tmp);
-    return _wrmdir(tmp);
+    DWORD res = 0;
+    /* FIXME: GetShortPathName is probably not needed here anymore. */
+    res = GetShortPathNameW(dir, tmp, MAX_PATH);
+    if (res == 0) 
+	/* GetShortPathName mail fail if there are insufficient permissions
+	   on a component of the path. */
+        return _wrmdir(dir);
+    else
+	/* Even when GetShortPathName succeeds, "tmp" may be the long name,
+	   because short names may not be enabled/available. */
+        return _wrmdir(tmp);
 }
 
 /* Junctions and symbolic links are fundamentally reparse points, so
