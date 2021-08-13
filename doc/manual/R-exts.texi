@@ -12319,7 +12319,7 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is to be replaced in @R{} 4.0.0. To
+This mechanism was replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
@@ -13529,7 +13529,7 @@ files when using these entry points.
 This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
 @code{warning}: whether these matter depends on the OS and toolchain,
-with many problem reports involving @command{clang++].}, and can be
+with many problem reports involving @command{clang++}.}, and can be
 eliminated by defining @code{R_NO_REMAP} and prepending @samp{Rf_} to
 @emph{all} the function names used from @file{Rinternals.h} and
 @file{R_ext/Error.h}.  These problems can usually be avoided by
