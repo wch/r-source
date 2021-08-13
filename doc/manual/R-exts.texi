@@ -2866,6 +2866,9 @@ in @file{@var{HOME}/.R/Makevars.win}.  The @command{g++} version used
 from @R{} 4.0.0 supports C++14 with flag @option{-std=gnu14} and for
 back-compatibility @option{-std=gnu1y}.
 
+@c Ubuntu 16.04LTS (5.4, ESM support until 2024-04)
+@c Ubuntu 14.04LTS (4.8, ESM support until 2022-04)
+@c RHEL 7 (4.8, end of all support in 2028) are examples.
 C++17 (as from @R{} 3.4.0) and C++20 (as from @R{} 4.0.0) can be
 specified in an analogous way (replacing @code{14} by @code{17} or
 @code{20}) but compiler/OS support is platform-dependent.  Some C++17
@@ -8978,12 +8981,12 @@ threaded programs.
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
-FreeBSD, with some support for Intel macOS, NetBSD and Windows. (There
-is a faster variant, HWASAN, for @cputype{aarch64} only.)  On some
-platforms the runtime library, @pkg{libasan}, needs to be installed
-separately, and for checking C++ you may also need @pkg{libubsan}.} of
-@command{gcc} and @command{clang} on common Linux and macOS platforms.
-See
+FreeBSD, with some support for Intel macOS, NetBSD and Windows, but not
+with the toolchains normally used with @R{}. (There is a faster variant,
+HWASAN, for @cputype{aarch64} only.)  On some platforms the runtime
+library, @pkg{libasan}, needs to be installed separately, and for
+checking C++ you may also need @pkg{libubsan}.} of @command{gcc} and
+@command{clang} on common Linux and macOS platforms.  See
 @uref{https://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{https://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://github.com/google/sanitizers}.
@@ -9157,7 +9160,10 @@ separately.} of @command{clang} and GCC.  Its (main) runtime library is
 linked into each package's DLL, so it is less often needed to be
 included in @env{MAIN_LDFLAGS}.  Platforms supported by @command{clang}
 are listed at
-@uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#supported-platforms}.
+@uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#supported-platforms}:
+@acronym{CRAN} uses it for C/C++ with both GCC and @command{clang} on
+@cputype{x86_64} Linux: the two toolchains often highlight different
+things with more reports from @command{clang} than GCC.
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
@@ -11660,10 +11666,12 @@ Unless you are very sure about the type of the arguments, the code
 should check the data types.  Sometimes it may also be necessary to
 check data types of objects created by evaluating an @R{} expression in
 the C code.  You can use functions like @code{isReal}, @code{isInteger}
-and @code{isString} to do type checking.  See the header file
-@file{Rinternals.h} for definitions of other such functions.  All of
-these take a @code{SEXP} as argument and return 1 or 0 to indicate
-@var{TRUE} or @var{FALSE}.
+and @code{isString} to do type checking.
+Other such functions declared in the header file @file{Rinternals.h}
+include @code{isNull}, @code{isSymbol}, @code{isLogical},
+@code{isComplex}, @code{isExpression}, and @code{isEnvironment}.
+All of these take a @code{SEXP} as argument and return 1 or 0 to
+indicate @var{TRUE} or @var{FALSE}.
 
 What happens if the @code{SEXP} is not of the correct type?  Sometimes
 you have no other option except to generate an error.  You can use the
@@ -11794,7 +11802,8 @@ There are shortcuts here too: the functions @code{namesgets},
 @code{dimgets} and @code{dimnamesgets} are the internal versions of the
 default methods of @code{names<-}, @code{dim<-} and @code{dimnames<-}
 (for vectors and arrays), and there are functions such as
-@code{GetMatrixDimnames} and @code{GetArrayDimnames}.
+@code{GetColNames}, @code{GetRowNames}, @code{GetMatrixDimnames} and
+@code{GetArrayDimnames}.
 
 What happens if we want to add an attribute that is not pre-defined? We
 need to add a symbol for it @emph{via} a call to
@@ -12191,7 +12200,7 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is to be replaced in @R{} 4.0.0. To
+This mechanism was replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
@@ -12408,6 +12417,11 @@ showArgs1 <- function(...) invisible(.Call("showArgs1", list(...)))
 
 @noindent
 The (very similar) C code is in the scripts.
+
+Additional functions for accessing pairlist components are @code{CAAR},
+@code{CDAR}, @code{CDDR}, and @code{CDDDR}.  These components can be
+modified with @code{SETCAR}, @code{SETCDR}, @code{SETCADR},
+@code{SETCADDR}, @code{SETCADDDR}, and @code{SETCAD4R}.
 
 @node Missing and special values,  , Calling .External, Interface functions .Call and .External
 @subsection Missing and special values
@@ -13059,9 +13073,11 @@ to be run when the object is garbage collected.  This can be @R{} code
 or C code, and the various interfaces are, respectively.
 
 @example
+void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
 
 typedef void (*R_CFinalizer_t)(SEXP);
+void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit);
 @end example
 
@@ -13183,16 +13199,17 @@ connection if it is no longer is use.
 @node Vector accessor functions, Character encoding issues, External pointers and weak references, System and foreign language interfaces
 @section Vector accessor functions
 
-The vector accessors like @code{REAL} and @code{INTEGER} and
-@code{VECTOR_ELT} are @emph{functions} when used in @R{} extensions.
-(For efficiency they may be macros or inline functions when used in
-the @R{} source code, apart from @code{SET_STRING_ELT} and
-@code{SET_VECTOR_ELT} which are always functions.) 
+The vector accessors like @code{REAL}, @code{INTEGER}, @code{LOGICAL},
+@code{RAW}, @code{COMPLEX}, and @code{VECTOR_ELT} are @emph{functions}
+when used in @R{} extensions.  (For efficiency they may be macros or
+inline functions when used in the @R{} source code, apart from
+@code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
+functions.)
 
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
 
-If efficiency is essential, the internal versions of the accessors can be
+If efficiency is essential, internal versions of some accessors can be
 obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
@@ -13337,13 +13354,15 @@ user code, it is @emph{essential} to include the appropriate header
 files when using these entry points.
 @end quotation
 
-This remapping can cause problems@footnote{Known problems are redefining
-@code{LENGTH}, @code{error}, @code{length}, @code{vector} and
-@code{warning}}, and can be eliminated by defining @code{R_NO_REMAP} and
-prepending @samp{Rf_} to @emph{all} the function names used from
-@file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
-usually be avoided by including other headers (such as system headers
-and those for external software used by the package) before @file{R.h}.
+This remapping can cause problems@footnote{Known problems have been
+defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
+@code{warning}: whether these matter depends on the OS and toolchain,
+with many problem reports involving @command{clang++}.}, and can be
+eliminated by defining @code{R_NO_REMAP} and prepending @samp{Rf_} to
+@emph{all} the function names used from @file{Rinternals.h} and
+@file{R_ext/Error.h}.  These problems can usually be avoided by
+including other headers (such as system headers and those for external
+software used by the package) before @file{R.h}.
 
 We can classify the entry points as
 
@@ -13527,6 +13546,9 @@ The basic error signaling routines are the equivalents of @code{stop} and
 @group
 void error(const char * @var{format}, ...);
 void warning(const char * @var{format}, ...);
+void errorcall(SEXP @var{call}, const char * @var{format}, ...);
+void warningcall(SEXP @var{call}, const char * @var{format}, ...);
+void warningcall_immediate(SEXP @var{call}, const char * @var{format}, ...);
 @end group
 @end example
 
@@ -14202,8 +14224,9 @@ double dbinom_raw(double x, double n, double p, double q, int give_log)
 double dpois_raw (double x, double lambda, int give_log)
 @end group
 @end example
-Note that @code{dbinom_raw()} gets both @eqn{p, p} and @eqn{q = 1-p, q = 1-p} which
-may be advantageous when one of them is close to @eqn{1, 1}.
+Note that @code{dbinom_raw()} returns both @eqn{p, p} and @eqn{q = 1-p,
+q = 1-p} which may be advantageous when one of them is close to @eqn{1,
+1}.
 
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
