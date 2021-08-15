@@ -4899,24 +4899,28 @@ elements.  Now longer vectors are allowed on 64-bit platforms, matrices
 with more elements are supported provided that each of the dimensions is
 no more than 2^31-1.  However, not all applications can be supported.
 
-The main problem is linear algebra done by Fortran code compiled
-with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all
-the compilers currently used with @R{} on a 64-bit platform allow
-matrices each of whose dimensions is less than 2^31 but with more than
-2^31 elements, and index them correctly, and a substantial part of the
+The main problem is linear algebra done by Fortran code compiled with
+32-bit @code{INTEGER}.  Although not guaranteed, it seems that all the
+compilers currently used with @R{} on a 64-bit platform allow matrices
+each of whose dimensions is less than 2^31 but with 2^31 or more
+elements and index them correctly, and a substantial part of the
 support software (such as @acronym{BLAS} and @acronym{LAPACK}) also
 work.
 
 There are exceptions: for example some complex @acronym{LAPACK}
 auxiliary routines do use a single @code{INTEGER} index and hence
 overflow silently and segfault or give incorrect results.  One example
-is @code{svd()} on a complex matrix.
+seen was @code{svd()} on a complex matrix.
 
 Since this is implementation-dependent, it is possible that optimized
-@acronym{BLAS} and @acronym{LAPACK} may have further restrictions,
-although none have yet been encountered.  For matrix algebra on large
-matrices one almost certainly wants a machine with a lot of RAM (100s of
-gigabytes), many cores and a multi-threaded @acronym{BLAS}.
+@acronym{BLAS} and @acronym{LAPACK} may have further restrictions:
+a segfault have been reported from @code{svd()} using ATLAS on
+@cputype{x86_64} Linux.
+@c https://stat.ethz.ch/pipermail/r-devel/2021-August/081004.html
+
+For matrix algebra on large matrices one almost certainly wants a
+machine with a lot of RAM (100s of gigabytes), many cores and a
+multi-threaded @acronym{BLAS}.
 
 
 
