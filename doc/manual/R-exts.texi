@@ -13350,19 +13350,21 @@ can be used from C++ code.
 
 @quotation Note
 Because @R{} re-maps many of its external names to avoid clashes with
-user code, it is @emph{essential} to include the appropriate header
-files when using these entry points.
+system or user code, it is @emph{essential} to include the appropriate
+header files when using these entry points.
 @end quotation
 
 This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
 @code{warning}: whether these matter depends on the OS and toolchain,
 with many problem reports involving @command{clang++}.}, and can be
-eliminated by defining @code{R_NO_REMAP} and prepending @samp{Rf_} to
-@emph{all} the function names used from @file{Rinternals.h} and
-@file{R_ext/Error.h}.  These problems can usually be avoided by
-including other headers (such as system headers and those for external
-software used by the package) before @file{R.h}.
+eliminated by defining @code{R_NO_REMAP} (before including any @R{}
+headers) and prepending @samp{Rf_} to @emph{all} the function names used
+from @file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
+usually be avoided by including other headers (such as system headers
+and those for external software used by the package) before any @R{}
+headers. (Beware that headers from other packages, notably
+@file{Rcpp.h}, may include @R{} headers.)
 
 We can classify the entry points as
 
@@ -15244,8 +15246,8 @@ use.
 Let us re-iterate the advice to include system headers before the @R{}
 header files, especially @file{Rinternals.h} (included by
 @file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may be
-used in system headers (fewer if @samp{R_NO_REMAP} is defined, or
-@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
+used in system headers (fewer if @samp{R_NO_REMAP} is defined before
+inclusion, or @samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
