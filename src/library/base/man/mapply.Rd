@@ -20,7 +20,7 @@
 \usage{
 mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
        USE.NAMES = TRUE)
-.mapply(FUN, dots, MoreArgs = NULL)
+.mapply(FUN, dots, MoreArgs)
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
@@ -42,7 +42,7 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
   the call will be named if \code{\dots} or \code{MoreArgs} are named.
 
   For the arguments in \code{\dots} (or components in \code{dots}) class specific
-  subsetting (such as \code{\link{\[}}) and \code{length} methods will be
+  subsetting (such as \code{\link{[}}) and \code{length} methods will be
   used where applicable.
 }
 \value{
