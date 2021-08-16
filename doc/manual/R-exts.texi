@@ -13689,7 +13689,7 @@ the interface providing @R{} error signaling.  This memory lasts until
 freed by the user and is additional to the memory allocated for the @R{}
 workspace.
 
-The interface functions are
+The interface macros are
 
 @example
 @group
@@ -13702,9 +13702,9 @@ void Free(@var{any} *@var{p})
 @noindent
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
 If there is an error during allocation it is handled by @R{}, so if
-these routines return the memory has been successfully allocated or
-freed.  @code{Free} will set the pointer @var{p} to @code{NULL}.  (Some
-but not all versions of @Sl{} do so.)
+these return the memory has been successfully allocated or freed.
+@code{Free} will set the pointer @var{p} to @code{NULL}.  (Some but not
+all versions of @Sl{} did so.)
 
 Users should arrange to @code{Free} this memory when no longer needed,
 including on error or user interrupt.  This can often be done most
@@ -13715,11 +13715,14 @@ Do not assume that memory allocated by @code{Calloc}/@code{Realloc}
 comes from the same pool as used by @code{malloc}: in particular do not
 use @code{free} or @code{strdup} with it.
 
-Memory obtained by these functions should be aligned in the same way as
+Memory obtained by these macros should be aligned in the same way as
 @code{malloc}, that is `suitably aligned for any kind of variable'.
 
-These entry points need to be prefixed by @code{R_} if
-@code{STRICT_R_HEADERS} has been defined.
+@findex R_Calloc
+@findex R_Realloc
+@findex R_Free
+These macros need to be prefixed by @code{R_} if @code{STRICT_R_HEADERS}
+has been defined: the prefixed forms can always be used.
 
 
 @node Error signaling, Random numbers, Memory allocation, The R API
