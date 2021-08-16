@@ -68,11 +68,12 @@ extern void *R_chk_realloc(void *, R_SIZE_T);
 extern void R_chk_free(void *);
 
 #ifndef STRICT_R_HEADERS
-/* S-PLUS 3.x but not 5.x NULLs the pointer in the following */
+/* S-PLUS 3.x but not 5.x NULLed the pointer in Free */
 #define Calloc(n, t)   (t *) R_chk_calloc( (R_SIZE_T) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (R_SIZE_T)((n) * sizeof(t)) )
 #define Free(p)        (R_chk_free( (void *)(p) ), (p) = NULL)
 #endif
+    
 #define R_Calloc(n, t)   (t *) R_chk_calloc( (R_SIZE_T) (n), sizeof(t) )
 #define R_Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (R_SIZE_T)((n) * sizeof(t)) )
 #define R_Free(p)      (R_chk_free( (void *)(p) ), (p) = NULL)
