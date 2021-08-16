@@ -32,10 +32,7 @@
 #ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 # define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #endif
-/* The C++ headers in Oracle Developer Studio are strict C++, and 100+
-   packages would fail because of not using e.g. std::floor.
-   We workaround the this, here and in Rmath.h.
-
+/*
    DO_NOT_USE_CXX_HEADERS is legacy, left as a last resort.
 */
 #if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
@@ -43,9 +40,11 @@
 # include <cstdio>
 # include <climits>
 # include <cmath>
+/* No longer needed with C++11 versions of C++ headers
 # ifdef __SUNPRO_CC
 using namespace std;
-# endif
+# endif 
+*/
 #else
 # include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
 # include <stdio.h>  /* Used by ca 200 packages, but not in R itself */

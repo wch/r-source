@@ -161,6 +161,15 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.1.1 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The workaround in headers \file{R.h} and \file{Rmath.h}
+      (\code{use namespace std:}) for the Oracle Developer Studio
+      compiler is no longer needed now C++11 is required so has been
+      removed.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{.mapply(F, dots, .)} no longer segfaults when
