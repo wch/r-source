@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2015  The R Core Team
+ *  Copyright (C) 2003-2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,15 +28,22 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
-    SEXP f = CAR(args), varyingArgs = CADR(args), constantArgs = CADDR(args);
-    int m, zero = 0;
+    SEXP f = CAR(args),
+	varyingArgs = CADR(args),   // = 'dots' in R
+	constantArgs = CADDR(args); // = 'MoreArgs' in R
     R_xlen_t *lengths, *counters, longest = 0;
 
-    m = length(varyingArgs);
+    int nprot = 5;
+    if(TYPEOF(varyingArgs) != VECSXP) { // (rarely, hence checking)
+	varyingArgs = PROTECT(coerceVector(varyingArgs, VECSXP)); // or error
+	nprot++;
+    }
+    int m = length(varyingArgs);
     SEXP vnames = PROTECT(getAttrib(varyingArgs, R_NamesSymbol));
     Rboolean named = vnames != R_NilValue;
 
     lengths = (R_xlen_t *)  R_alloc(m, sizeof(R_xlen_t));
+    int zero = 0;
     for (int i = 0; i < m; i++) {
 	SEXP tmp1 = VECTOR_ELT(varyingArgs, i);
 	lengths[i] = xlength(tmp1);
@@ -72,8 +79,8 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	;
     else if (isVectorList(constantArgs))
 	fcall = VectorToPairList(constantArgs);
-    else
-	error(_("argument 'MoreArgs' of 'mapply' is not a list"));
+    else if (!isPairList(constantArgs))
+	error(_("argument 'MoreArgs' of 'mapply' is not a list or pairlist"));
     PROTECT_INDEX fi;
     PROTECT_WITH_INDEX(fcall, &fi);
 
@@ -112,6 +119,6 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (counters[j] != lengths[j])
 	    warning(_("longer argument not a multiple of length of shorter"));
 
-    UNPROTECT(5);
+    UNPROTECT(nprot);
     return ans;
 }
