@@ -4849,6 +4849,17 @@ Note that on some systems @command{ar -cr} must have at least one file
 specified.
 
 @item
+The @command{strip} utility is platform-specific (and @acronym{CRAN}
+prohibits removing debug symbols).  For example flags
+@option{--strip-debug} and @option{--strip-unneeded} of the GNU version
+are not supported on macOS nor Solaris@footnote{which is
+@file{/usr/ccs/bin/strip}, not @file{/usr/bin/strip}.}: the POSIX
+standard for @command{strip} does not mention any options, and what
+calling it without options does is platform-dependent. Stripping a
+@file{.so} file could even prevent it being dynamically loaded into @R{}
+on an untested platform.
+
+@item
 Some people have a need to set a locale.  Locale names are not portable,
 and e.g.@: @samp{fr_FR.utf8} is commonly used on Linux but not accepted on
 either Solaris or macOS.  @samp{fr_FR.UTF-8} is more portable, being
@@ -13535,8 +13546,9 @@ headers) and prepending @samp{Rf_} to @emph{all} the function names used
 from @file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
 usually be avoided by including other headers (such as system headers
 and those for external software used by the package) before any @R{}
-headers. (Beware that headers from other packages, notably
-@file{Rcpp.h}, may include @R{} headers.)
+headers. (Headers from other packages may include @R{} headers directly
+or @emph{via} inclusion from further packages, and may define
+@code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
 
 We can classify the entry points as
 
