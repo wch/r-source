@@ -172,8 +172,8 @@
 
       \item When an R documentation (\sQuote{help} source) file \file{man/foo.Rd}
       in a package has \verb{\donttest{..}} examples with a syntax error, it is now
-      signalled more correctly, with line numbers relating to a file
-      \file{*-Ex-full.R}, thanks to Duncan Murdoch and Sebastian Meyer's
+      signalled as ERROR and with correct line numbers relating to the
+      \file{*-Ex.R} file, thanks to Duncan Murdoch and Sebastian Meyer's
       reports and patch proposals in \PR{17501}.
     }
   }
@@ -188,7 +188,7 @@
       removed.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{.mapply(F, dots, .)} no longer segfaults when

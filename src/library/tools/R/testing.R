@@ -565,7 +565,7 @@ testInstalledPackage <-
     function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE,
              ..., commentDontrun = TRUE, commentDonttest = TRUE)
 {
-    Rfile <- paste0(pkg, if(!commentDonttest) "-full", "-Ex.R")
+    Rfile <- paste0(pkg, "-Ex.R")
 
     db <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
     if (!length(db)) {

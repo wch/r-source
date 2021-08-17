@@ -248,10 +248,10 @@ tf <- tempfile("chk_donttest")
 system.time(status <-
         tools:::run_Rcmd(c("check", "PR17501_1.0.tar.gz", "--no-manual"),
                          out=tf, timeout = 30)) # see 5--7 sec
-status # 0, still (for now)
 stopifnot(exprs = {
+    status == 1 # an ERROR now
     is.character(exLines <-
-                     readLines(file.path("PR17501.Rcheck", "PR17501-full-Ex.R")))
+                     readLines(file.path("PR17501.Rcheck", "PR17501-Ex.R")))
     { str(exLines); length(exLines) > 20 } # str(): diagnostic in case
     is.integer(i <- grep("^R\\.Version\\( *# missing closing paren", exLines))
     grepl("^## No test", exLines[i-1])

@@ -6246,7 +6246,6 @@ function(package, dir, lib.loc = NULL)
     file <- .createExdotR(pkg_name, dir, silent = TRUE,
                           commentDonttest = FALSE)
     if (is.null(file)) return(invisible(NULL)) # e.g, no examples
-    on.exit(unlink(file))
     enc <- db["Encoding"]
     if(!is.na(enc) &&
        (Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))) {
@@ -6258,12 +6257,7 @@ function(package, dir, lib.loc = NULL)
         on.exit(close(con), add = TRUE)
     } else con <- file
 
-    res <-
     .check_packages_used_helper(db, con)
-    ## Save full version of Ex.R to parent dir if it has parse errors
-    if(length(res$parse_errors))
-    	file.copy(file, file.path(dir, ".."))
-    res
 }
 
 
