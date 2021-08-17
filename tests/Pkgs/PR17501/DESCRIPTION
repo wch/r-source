@@ -1,0 +1,9 @@
+Package: PR17501
+Title: Syntax Error in 'donttest' Example
+Version: 1.0
+Author: Sebastian Meyer
+Maintainer: R Core <R-core@almost.r-project.org>
+Description: Tiny example package with a syntax error in a 'donttest' example.
+License: GPL (>= 2)
+NeedsCompilation: no
+

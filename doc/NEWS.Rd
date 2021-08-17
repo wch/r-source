@@ -169,6 +169,12 @@
       \item \command{R CMD build} no longer fails if a package vignette
       uses child documents and \file{inst/doc} exists.  (Thanks to
       Sebastian Meyer's \PR{18156}.)
+
+      \item When an R documentation (\sQuote{help} source) file \file{man/foo.Rd}
+      in a package has \verb{\donttest{..}} examples with a syntax error, it is now
+      signalled more correctly, with line numbers relating to a file
+      \file{*-Ex-full.R}, thanks to Duncan Murdoch and Sebastian Meyer's
+      reports and patch proposals in \PR{17501}.
     }
   }
 }
