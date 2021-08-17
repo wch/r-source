@@ -77,6 +77,15 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \command{R CMD INSTALL} no longer tangles vignettes. This
+      completes an \command{R CMD build} change in \R 3.0.0 and affects
+      packages built before \R 3.0.2. Such packages should be rebuilt to
+      have the tangled R code of vignettes shipped with the tarball.
+    }
+  }
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} can optionally report
@@ -142,7 +151,7 @@
 
       \item \command{R CMD Rd2pdf} no longer leaves an empty build
       directory behind when it aborts due to an already existing output
-      file (\PR{18141}).
+      file.  (Thanks to Sebastian Meyer's \PR{18141}.)
 
       \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
       report and patch by Jeroen Ooms in \PR{18152}.)
@@ -156,6 +165,10 @@
       produces long blocks of empty lines when \code{<expR>} itself
       contains several lines all producing empty output.  Thanks to a
       report and patch by Ivan Krylow posted to R-devel.
+
+      \item \command{R CMD build} no longer fails if a package vignette
+      uses child documents and \file{inst/doc} exists.  (Thanks to
+      Sebastian Meyer's \PR{18156}.)
     }
   }
 }
