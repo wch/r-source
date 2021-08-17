@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.POSIXt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist.POSIXt}
@@ -33,7 +33,7 @@
  }
   \item{\dots}{\link{graphical parameters}, or arguments to
     \code{\link{hist.default}} such as \code{include.lowest},
-      \code{right} and \code{labels}.}
+    \code{density} and \code{labels}.}
   \item{xlab}{a character string giving the label for the x axis, if plotted.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.}
