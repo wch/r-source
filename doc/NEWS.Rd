@@ -97,7 +97,7 @@
       during installation.  These are not usually fatal but may result
       in parts of the package not being byte-compiled.
 
-      \item \env{_R_DEPENDS_ONLY_} can be applied selectively to
+      \item \env{_R_CHECK_DEPENDS_ONLY_} can be applied selectively to
       examples, tests and/or vignettes in \command{R CMD check}: see the
       \dQuote{R Internals} manual.
     }
@@ -544,7 +544,7 @@
 
       \item New palettes \code{"Rocket"} and \code{"Mako"} for
       \code{hcl.colors()} (approximating palettes of the same name
-      from the 'viridisLite' package).
+      from the \pkg{viridisLite} package).
 
       Contributed by Achim Zeileis.
 
