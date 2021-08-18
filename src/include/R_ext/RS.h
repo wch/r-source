@@ -78,11 +78,14 @@ extern void R_chk_free(void *);
 #define R_Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (R_SIZE_T)((n) * sizeof(t)) )
 #define R_Free(p)      (R_chk_free( (void *)(p) ), (p) = NULL)
 
+/* undocumented until 4.1.2: widely used. */
 #define Memcpy(p,q,n)  memcpy( p, q, (R_SIZE_T)(n) * sizeof(*p) )
 
-/* added for 3.0.0 */
+/* added for 3.0.0 but undocumented until 4.1.2.
+   Used by a couple of packages. */
 #define Memzero(p,n)  memset(p, 0, (R_SIZE_T)(n) * sizeof(*p))
 
+/* In NEWS.2 for R 2.6.0 for but not otherwise documented.  Used by patchDVI */
 #define CallocCharBuf(n) (char *) R_chk_calloc(((R_SIZE_T)(n))+1, sizeof(char))
 
 /* S Like Fortran Interface */
