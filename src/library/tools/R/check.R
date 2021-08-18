@@ -6775,6 +6775,7 @@ add_dummies <- function(dir, Log)
                           sprintf("%s-Ex.%s",
                                   pkgname,
                                   c("R", "Rout", "pdf", "timings")),
+                          sprintf("%s-full-Ex.R", pkgname),
                           sprintf("%s-manual.%s",
                                   pkgname,
                                   c("log", "pdf")),
