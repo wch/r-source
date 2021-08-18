@@ -177,7 +177,6 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
     res <- hist.default(unclass(x), unclass(breaks), plot = FALSE,
                         warn.unused = FALSE, right = right, ...)
     res$equidist <- TRUE # years are of uneven lengths
-    res$intensities <- res$intensities*incr
     res$xname <- xlab
     if(plot) {
         ## trick to swallow arguments for hist.default, separate out 'axes'
@@ -336,7 +335,6 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
     }
     res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, warn.unused = FALSE, right = right, ...)
     res$equidist <- TRUE # years are of uneven lengths
-    res$intensities <- res$intensities*incr
     res$xname <- xlab
     if(plot) {
         ## trick to swallow arguments for hist.default, separate out 'axes'
