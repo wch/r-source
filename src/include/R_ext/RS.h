@@ -44,8 +44,6 @@ extern "C" {
 
 /* S Like Error Handling */
 
-#include <R_ext/Error.h>	/* for error and warning */
-
 // deprecated: postpone removal to Oct 8
 #ifndef R_LEGACY_S_DEFS
 # define R_LEGACY_S_DEFS 1
@@ -53,13 +51,15 @@ extern "C" {
 
 #if !defined STRICT_R_HEADERS && defined R_LEGACY_S_DEFS && R_LEGACY_S_DEFS
 
+#include <R_ext/Error.h>	/* for Rf_error and Rf_warning */
+    
 #define R_PROBLEM_BUFSIZE	4096
 /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
 #define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
 #define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
-#define ERROR			),error(R_problem_buf);}
-#define RECOVER(x)		),error(R_problem_buf);}
-#define WARNING(x)		),warning(R_problem_buf);}
+#define ERROR			),RF_error(R_problem_buf);}
+#define RECOVER(x)		),Rf_error(R_problem_buf);}
+#define WARNING(x)		),Rf_warning(R_problem_buf);}
 #define LOCAL_EVALUATOR		/**/
 #define NULL_ENTRY		/**/
 #define WARN			WARNING(NULL)
