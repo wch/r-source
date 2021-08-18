@@ -46,6 +46,11 @@ extern "C" {
 
 #include <R_ext/Error.h>	/* for error and warning */
 
+// deprecated: postpone removal to Oct 8
+#ifndef R_LEGACY_S_DEFS
+# define R_LEGACY_S_DEFS 1
+#endif
+
 #if !defined STRICT_R_HEADERS && defined R_LEGACY_S_DEFS && R_LEGACY_S_DEFS
 
 #define R_PROBLEM_BUFSIZE	4096
