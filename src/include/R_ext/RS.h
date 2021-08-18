@@ -46,7 +46,7 @@ extern "C" {
 
 #include <R_ext/Error.h>	/* for error and warning */
 
-#ifndef STRICT_R_HEADERS
+#if !defined STRICT_R_HEADERS && defined R_LEGACY_S_DEFS && R_LEGACY_S_DEFS
 
 #define R_PROBLEM_BUFSIZE	4096
 /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */

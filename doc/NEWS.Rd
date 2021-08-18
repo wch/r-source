@@ -113,6 +113,15 @@
       internal header \file{Defn.h}. Packages that only use entry points
       and definitions documented to be part of the API as specified in
       \sQuote{Writing R Extensions} §6 should not be affected.
+
+      \item The legacy S-compatibility macros \code{PROBEM},
+      \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
+      \code{RECOVER}, \dots{} are deprecated and are no longer defined
+      by default in \file{R_exts/RS.h} (included by \file{R.h}).
+      Replace these by calls to \code{Rf_error} and \code{Rf_warning}.
+      For the time being the definitions can be reinststated by defining
+      macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
+      any \R{} header. [Early warning: removal planned for Oct 8.]
     }
   }
 
