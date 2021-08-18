@@ -203,6 +203,11 @@
       \item \code{.mapply(F, dots, .)} no longer segfaults when
       \code{dots} is not a \code{list} and uses \code{match.fun(F)} as
       always documented; reported by Andrew Simmons in \PR{18164}.
+
+      \item \code{hist(<Date>, ...)} and \code{hist(<POSIXt>, ...)}
+      no longer pass arguments for \code{rect()}, such as \code{col} and
+      \code{density}, to \code{axis()}.  (Thanks to Sebastian Meyer's
+      \PR{18171}.)      
     }
   }
 }
