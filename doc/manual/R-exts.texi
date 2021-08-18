@@ -13551,6 +13551,20 @@ Memory obtained by these macros should be aligned in the same way as
 These macros need to be prefixed by @code{R_} if @code{STRICT_R_HEADERS}
 has been defined: the prefixed forms can always be used.
 
+@findex CallocCharBuf
+@findex Memcpy
+@findex Memzero
+@example
+@group
+char * CallocCharBuf(size_t @var{n})
+void * Memcpy(@var{p}, @var{q}, @var{n})
+void * Memzero(@var{p}, @var{m})
+@end group
+@end example
+@code{CallocCharBuf} is shorthand for @code{Calloc(n+1, char)} to allow
+for the @code{nul} terminator.  @code{Memcpy} and @code{Memzero} take
+@code{n} items from array @code{p} and copy them to array @code{p} or
+zero them respectively.
 
 @node Error signaling, Random numbers, Memory allocation, The R API
 @section Error signaling
