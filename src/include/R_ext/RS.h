@@ -57,7 +57,7 @@ extern "C" {
 /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
 #define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
 #define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
-#define ERROR			),RF_error(R_problem_buf);}
+#define ERROR			),Rf_error(R_problem_buf);}
 #define RECOVER(x)		),Rf_error(R_problem_buf);}
 #define WARNING(x)		),Rf_warning(R_problem_buf);}
 #define LOCAL_EVALUATOR		/**/
