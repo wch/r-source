@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -33,7 +33,6 @@
 \alias{.Firstlib_as_onLoad}
 \alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
-\alias{.mapply}
 \alias{.detach}
 \alias{.maskedMsg}
 
@@ -60,7 +59,7 @@
 \alias{.doWrap}
 \alias{.doSortWrap}
 \title{Internal Objects in Package \pkg{base}}
-\description{% 'most': see e.g., .mapply
+\description{% 'most': see e.g., .detach
   Internal objects in the base package most of which are only user-visible
   because of the special nature of the base namespace.
 }
@@ -103,8 +102,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .cache_class(class, extends)
 
 .popath
-
-.mapply(FUN, dots, MoreArgs)
 
 .detach(pos)
 
@@ -160,10 +157,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
     the default classes.}
   \item{units}{see \code{\link{difftime}}.}
   \item{\dots}{Arguments passed to non-dot name versions.}
-    \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
-  \item{dots}{list of arguments to vectorize over (vectors or lists of
-    strictly positive length, or all of zero length).}
-  \item{MoreArgs}{a list of other arguments to \code{FUN}.}
   \item{pos}{an integer.}
 
   \item{same}{character vector of \emph{same} objects, masking others.}
@@ -246,7 +239,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.popath} is a variable created at startup which records where
   the \pkg{translations} package in use is.
 
-  \code{.mapply} and \code{.detach} are \sQuote{bare-bones} versions for
+  \code{.detach} is a \sQuote{bare-bones} version of \code{\link{detach}} for
   use in other \R packages.
 
   \code{.maskedMsg} is a utility called both from \code{\link{attach}()}
