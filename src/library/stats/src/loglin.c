@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <R_ext/Memory.h>
 #include <R_ext/Applic.h>
+#include <R_ext/Error.h>	/* for error */
 
 #undef max
 #undef min
