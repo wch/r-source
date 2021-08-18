@@ -13767,8 +13767,12 @@ simplest case can be called with a single character string argument
 giving the error message. (Don't do this if the string contains @samp{%}
 or might otherwise be interpreted as a format.)
 
+These are defined in header @file{R_ext/Error.h} included by
+@file{R.h}.
+
 If @code{STRICT_R_HEADERS} is not defined there is also an
-@Sl{}-compatibility interface which uses calls of the form
+@Sl{}-compatibility interface included in @file{R_ext/RS.h} which uses
+calls of the form
 
 @example
 @group
@@ -13851,6 +13855,8 @@ PutRNGstate();
 These essentially read in (or create) @code{.Random.seed} and write it
 out after use.
 
+These are defined in header @file{R_ext/Random.h}.
+
 File @file{S.h} defines @code{seed_in} and @code{seed_out} for
 @Sl{}-compatibility rather than @code{GetRNGstate} and
 @code{PutRNGstate}.  These take a @code{long *} argument which is
@@ -13911,6 +13917,7 @@ All of the above apply to @emph{double} variables only.  For integer
 variables there is a variable accessed by the macro @code{NA_INTEGER}
 which can used to set or test for missingness.
 
+These are defined in header @file{R_ext/Arith.h} included by @file{R.h}.
 
 @node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
 @section Printing
@@ -13935,8 +13942,8 @@ output stream.
 Functions @code{Rvprintf} and @code{REvprintf} are analogues using the
 @code{vprintf} interface.  Because that is a C99@footnote{also part of
 C++11.} interface, they are only defined by @file{R_ext/Print.h} in C++
-code if the macro @code{R_USE_C99_IN_CXX} is defined when it is
-included or, as from @R{} 4.0.0, a C++11 compiler is used.
+code if the macro @code{R_USE_C99_IN_CXX} is defined before it is
+included or (as from @R{} 4.0.0) a C++11 compiler is used.
 
 Another circumstance when it may be important to use these functions is
 when using parallel computation on a cluster of computational nodes, as
