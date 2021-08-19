@@ -379,7 +379,7 @@
       \item \code{type.convert()} now warns when its \code{as.is} argument
       is not specified, as the help file always said it \emph{should}.  In
       that case, the default is changed to \code{TRUE} in line with its
-      change in \code{read.table()} (related to \code{stringsAsFactor}) in
+      change in \code{read.table()} (related to \code{stringsAsFactors}) in
       \R 4.0.0.
 
       \item When printing list arrays, classed objects are now shown
@@ -510,7 +510,7 @@
       \item \code{names()} now works for \code{DOTSXP} objects.  On the
       other hand, in \file{R-lang}, the R language manual, we now warn
       against relying on the structure or even existence of such
-      \code{dot-dot-dot} objects.
+      dot-dot-dot objects.
 
       \item \code{all.equal()} no longer gives an error on \code{DOTSXP}
       objects.
@@ -967,14 +967,14 @@
       \item \code{identical(x,y)} is no longer true for differing
       \code{DOTSXP} objects, fixing \PR{18032}.
 
-      \item \code{str()} now works correctly for DOTSXP and related
+      \item \code{str()} now works correctly for \code{DOTSXP} and related
       exotics, even when these are doomed.
 
       Additionally, it no longer fails for \code{list}s with a \code{class} and
       \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
       necessarily fail, as currently for different \CRANpkg{igraph} objects.
 
-      \item Too long lines in environment files (e.g. \code{Renviron}) no
+      \item Too long lines in environment files (e.g., \file{Renviron}) no
       longer crash \R. This limit has been increased to 100,000 bytes.
       (\PR{18001}.)
 
@@ -1780,7 +1780,7 @@
       deprecated provision for 8.20--8.31 has been removed.
 
       \item Defunct functions \code{mem.limits()}, \code{.readRDS()},
-      \code{.saveRDS()},.\code{.find.package()}, and \code{.path.package()}
+      \code{.saveRDS()}, \code{.find.package()}, and \code{.path.package()}
       from package \pkg{base}
       and \code{allGenerics()}, \code{getAccess()}, \code{getAllMethods()},
       \code{getClassName()}, \code{getClassPackage()}, \code{getExtends()},
