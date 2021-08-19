@@ -114,11 +114,11 @@
       and definitions documented to be part of the API as specified in
       \sQuote{Writing R Extensions} §6 should not be affected.
 
-      \item The legacy S-compatibility macros \code{PROBEM},
+      \item The deprecated legacy S-compatibility macros \code{PROBLEM},
       \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
-      \code{RECOVER}, \dots{} are deprecated and are no longer defined
-      by default in \file{R_exts/RS.h} (included by \file{R.h}).
-      Replace these by calls to \code{Rf_error} and \code{Rf_warning}.
+      \code{RECOVER}, \dots{} are no longer defined by default in
+      \file{R_exts/RS.h} (included by \file{R.h}).  Replace these by
+      calls to \code{Rf_error} and \code{Rf_warning}.
 
       For the time being the definitions can be reinstated by defining
       macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
@@ -199,6 +199,16 @@
       (\code{use namespace std:}) for the Oracle Developer Studio
       compiler is no longer needed now C++11 is required so has been
       removed.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The legacy S-compatibility macros \code{PROBLEM},
+      \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
+      \code{RECOVER}, \dots{} are deprecated and will be hidden in \R
+      4.2.0. \R{}'s native interface of \code{Rf_error} and
+      \code{Rf_warning} has long been preferred.
     }
   }
 
