@@ -163,15 +163,14 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	       context. */
 	    R_interrupts_suspended = FALSE;
 
+	    /* check for and handle any pending interrupt registered
+	       by the standard handler. */
+	    if (R_interrupts_pending)
+		myintr();
+
 	    /* install a temporary signal handler for breaking out of
 	       a blocking select */
 	    oldSigintHandler = signal(SIGINT, handleSelectInterrupt);
-
-	    /* once the new sinal handler is in place we need to check
-	       for and handle any pending interrupt registered by the
-	       standard handler. */
-	    if (R_interrupts_pending)
-		myintr();
 
 	    /* now do the (possibly blocking) select, restore the
 	       signal handler, and return the result of the select. */
