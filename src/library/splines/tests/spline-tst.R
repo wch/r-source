@@ -2,7 +2,7 @@ require("splines")
 
 ## Bug report PR#16549 - 'bad value from splineDesign'
 ## Date: Wed, 30 Sep 2015 12:12:47 +0000
-## https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16549
+## https://bugs.r-project.org/show_bug.cgi?id=16549
 
 ## Reporter: roconnor@health.usf.edu  (extended original example code)
 

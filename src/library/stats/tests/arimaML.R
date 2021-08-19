@@ -1,4 +1,4 @@
-### PR#14682 : https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14682
+### PR#14682 : https://bugs.r-project.org/show_bug.cgi?id=14682
 ##  ========
 ## Subject:    getQ0() returns a non-positive covariance matrix
 ## Date:       Tue, 20 Sep 2011 12:06:16 -0400

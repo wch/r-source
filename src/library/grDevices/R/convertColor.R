@@ -133,7 +133,7 @@ colorConverter <-
               else fromXYZ
 
     ## redundant `white` / `reference.white` for backwards-compatibility
-    ## see https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17473
+    ## see https://bugs.r-project.org/show_bug.cgi?id=17473
     rval <- list(toXYZ = toXYZv, fromXYZ = fromXYZv,
                  name = name, white = white, reference.white = white)
     class(rval) <- "colorConverter"

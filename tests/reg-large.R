@@ -92,7 +92,7 @@ if(exists("res")) rm(res)
 gc(reset = TRUE) # for the next step
 
 ### Testing PR#17992  c() / unlist() name creation for large vectors
-## Part 2 (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17292#c4):
+## Part 2 (https://bugs.r-project.org/show_bug.cgi?id=17292#c4):
 if(availableGB > 37) system.time({
     res <- c(a = list(rep(c(b=raw(1)), 2^31-2), raw(2)), recursive=TRUE)
 })
