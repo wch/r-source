@@ -15,6 +15,16 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The legacy S-compatibility macros \code{PROBLEM},
+      \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
+      \code{RECOVER}, \dots{} are deprecated and will be hidden in \R
+      4.2.0. \R{}'s native interface of \code{Rf_error} and
+      \code{Rf_warning} has long been preferred.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{.mapply(F, dots, .)} no longer segfaults when
@@ -361,7 +371,7 @@
 
       \item New palettes \code{"Rocket"} and \code{"Mako"} for
       \code{hcl.colors()} (approximating palettes of the same name
-      from the 'viridisLite' package).
+      from the \pkg{viridisLite} package).
 
       Contributed by Achim Zeileis.
 
