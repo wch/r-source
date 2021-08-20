@@ -5193,7 +5193,11 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wanalyzer-malloc-leak\\]",
                              ": warning: .*\\[-Wanalyzer-file-leak\\]",
                              ": warning: .*\\[-Wanalyzer-use-after-free\\]",
-                             ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]"
+                             ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]",
+                             ## gcc and clang reports on use of #warning
+                             ## but not suppressing the warning itself.
+                             "\\[-Wcpp\\] ",
+                             "\\[-W#warnings\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
