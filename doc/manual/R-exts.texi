@@ -13604,7 +13604,8 @@ MESSAGE ...... WARNING(NULL_ENTRY)
 @noindent
 the last two being the forms available in all @Sl{} versions.  Here
 @samp{......} is a set of arguments to @code{printf}, so can be a string
-or a format string followed by arguments separated by commas.  This
+or a format string followed by arguments separated by commas.  (There is
+an unchecked length limit of 4095 bytes on the whole message.) This
 interface is deprecated and will be hidden/removed in future versions of
 @R{}.
 
