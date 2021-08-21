@@ -50,11 +50,11 @@ extern "C" {
 
 #define R_PROBLEM_BUFSIZE	4096
 /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
-#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
-#define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
-#define ERROR			),error(R_problem_buf);}
-#define RECOVER(x)		),error(R_problem_buf);}
-#define WARNING(x)		),warning(R_problem_buf);}
+#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(snprintf)(R_problem_buf, R_PROBLEM_BUFSIZE,
+#define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(snprintf)(R_problem_buf, R_PROBLEM_BUFSIZE,
+#define ERROR			),Rf_error(R_problem_buf);}
+#define RECOVER(x)		),Rf_error(R_problem_buf);}
+#define WARNING(x)		),Rf_warning(R_problem_buf);}
 #define LOCAL_EVALUATOR		/**/
 #define NULL_ENTRY		/**/
 #define WARN			WARNING(NULL)
@@ -68,7 +68,7 @@ extern void *R_chk_realloc(void *, R_SIZE_T);
 extern void R_chk_free(void *);
 
 #ifndef STRICT_R_HEADERS
-/* S-PLUS 3.x but not 5.x NULLs the pointer in the following */
+/* S-PLUS 3.x but not 5.x NULLed the pointer in Free */
 #define Calloc(n, t)   (t *) R_chk_calloc( (R_SIZE_T) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (R_SIZE_T)((n) * sizeof(t)) )
 #define Free(p)        (R_chk_free( (void *)(p) ), (p) = NULL)

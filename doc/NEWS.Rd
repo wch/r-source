@@ -11,7 +11,13 @@
       \item The workaround in headers \file{R.h} and \file{Rmath.h}
       (\code{use namespace std:}) for the Oracle Developer Studio
       compiler is no longer needed now C++11 is required so has been
-      removed.
+      removed.  A few more usages of \code{log} with an integer argument
+      are reported on Solaris.
+
+      \item The undocumented limit of 4095 bytes on messages from the
+      S-compatibility macros \code{PROBLEM} and \code{MESSAGE} is now
+      documented and longer messages will be silently truncated rather
+      than potentially causing segfaults. 
     }
   }
 
@@ -192,7 +198,7 @@
       \item \code{type.convert()} now warns when its \code{as.is} argument
       is not specified, as the help file always said it \emph{should}.  In
       that case, the default is changed to \code{TRUE} in line with its
-      change in \code{read.table()} (related to \code{stringsAsFactor}) in
+      change in \code{read.table()} (related to \code{stringsAsFactors}) in
       \R 4.0.0.
 
       \item When printing list arrays, classed objects are now shown
@@ -780,14 +786,14 @@
       \item \code{identical(x,y)} is no longer true for differing
       \code{DOTSXP} objects, fixing \PR{18032}.
 
-      \item \code{str()} now works correctly for DOTSXP and related
+      \item \code{str()} now works correctly for \code{DOTSXP} and related
       exotics, even when these are doomed.
 
       Additionally, it no longer fails for \code{list}s with a \code{class} and
       \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
       necessarily fail, as currently for different \CRANpkg{igraph} objects.
 
-      \item Too long lines in environment files (e.g. \code{Renviron}) no
+      \item Too long lines in environment files (e.g., \file{Renviron}) no
       longer crash \R. This limit has been increased to 100,000 bytes.
       (\PR{18001}.)
 
