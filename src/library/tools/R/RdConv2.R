@@ -279,15 +279,14 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    }
 	}
 	if (options$results == "rd") {
-	    res <- as.character(err)   # The last value of the chunk
-	    enc <- if(length(res)) Encoding(res) else "unknown"
+	    res <- enc2utf8(as.character(err))   # The last value of the chunk
 	    tmpcon <- file()
 	    writeLines(res, tmpcon, useBytes = TRUE)
 	    parseFragment <- function(cond) {
 	    	               seek(tmpcon, 0)
-	    	               parse_Rd(tmpcon, encoding=enc, fragment=TRUE, macros = macros)
+	    	               parse_Rd(tmpcon, encoding="UTF-8", fragment=TRUE, macros = macros)
 	    	            }
-	    res <- tryCatch(parse_Rd(tmpcon, encoding=enc, fragment=FALSE, macros = macros),
+	    res <- tryCatch(parse_Rd(tmpcon, encoding="UTF-8", fragment=FALSE, macros = macros),
 	    	            warning = parseFragment, error = parseFragment,
 	    	            finally = close(tmpcon))
 	    # Now remove that extra newline added by the writeLines
