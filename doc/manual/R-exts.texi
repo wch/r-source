@@ -13787,10 +13787,10 @@ MESSAGE ...... WARNING(NULL_ENTRY)
 the last two being the forms available in all @Sl{} versions.  Here
 @samp{......} is a set of arguments to @code{printf}, so can be a string
 or a format string followed by arguments separated by commas.  (There is
-an unchecked length limit of 4095 bytes on the whole message.)  These
-are deprecated and will be hidden in future: define
-@code{R_LEGACY_S_DEFS} to @code{1} before including any @R{} headers to
-continue to use them.
+a length limit of 4095 bytes on the whole message, with silent
+truncation from @R{} 4.1.2, unchecked eariler.)  These are deprecated
+and will be hidden in future: define @code{R_LEGACY_S_DEFS} to @code{1}
+before including any @R{} headers to continue to use them.
 
 @menu
 * Error signaling from Fortran::
