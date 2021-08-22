@@ -37,11 +37,6 @@
 #endif
 #if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 # include <cmath>
-/* No longer needed with C++11 versions of C++ headers
-# ifdef __SUNPRO_CC
-using namespace std;
-# endif
-*/
 #else
 # include <math.h>
 #endif
