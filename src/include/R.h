@@ -40,11 +40,6 @@
 # include <cstdio>
 # include <climits>
 # include <cmath>
-/* No longer needed with C++11 versions of C++ headers
-# ifdef __SUNPRO_CC
-using namespace std;
-# endif 
-*/
 #else
 # include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
 # include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
