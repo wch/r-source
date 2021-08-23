@@ -62,7 +62,7 @@ double dnorm4(double x, double mu, double sigma, int give_log)
 
      * x*x  may lose upto about two digits accuracy for "large" x
      * Morten Welinder's proposal for PR#15620
-     * https://bugs.r-project.org/bugzilla/show_bug.cgi?id=15620
+     * https://bugs.r-project.org/show_bug.cgi?id=15620
 
      * -- 1 --  No hoop jumping when we underflow to zero anyway:
 

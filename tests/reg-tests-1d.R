@@ -5166,7 +5166,7 @@ stopifnot(is.finite(mean(ps)), ## these all failed without "long-double"
           is.finite(mdp <- mean(dps)),
           all.equal(dd, mdp, tolerance=1e-15))
 stopifnot(relEr(c(-B,B), ps[c(1L,nps)]) <= 4*epsC,
-          -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]; w/o long-double: [-5, .., 4\
+          -8 <= relD, relD <= 8) # seen [-1.5,.., 3.0]; w/o long-double: [-5, .., 4]
 ## ps was   0 Inf Inf Inf Inf Inf Inf Inf Inf Inf  0 , in R <= 4.1.0
 f. <- c(-1.797, -1.79, -1.75, seq(-1.7, -1, by=.1))
 stopifnot(!is.unsorted(f.)) ; f.nm <- setNames(, f.)
@@ -5347,7 +5347,7 @@ for(yMin in c(0, 5e-324, 1e-318, 1e-312, 1e-306)) {
         plot(1:2, (1:2)/16, ylim = c(yMin, 1),
              log="y", main= sprintf("ylim = c(%g, 1)", yMin))
         , warning = function(w){ W <<- w ; invokeRestart("muffleWarning") })
-    if(englishMsgs && yMin == 0)
+    if(englishMsgs && yMin == 0 && !is.null(W))
         stopifnot(grepl("nonfinite axis=2 limits [GScale(-inf,", conditionMessage(W), fixed=TRUE))
     atx <- axisTicks(par("usr")[3:4], log=TRUE, axp=par("yaxp")) # ditto
     if(yMin > 0) {

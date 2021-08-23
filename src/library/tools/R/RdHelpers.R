@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdHelpers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2019 The R Core Team
+#  Copyright (C) 2019-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 Rd_expr_PR <-
 function(x)
 {
-    baseurl <- "https://bugs.R-project.org/bugzilla3/show_bug.cgi?id"
+    baseurl <- "https://bugs.R-project.org/show_bug.cgi?id"
     sprintf("\\href{%s=%s}{PR#%s}", baseurl, x, x)
 }
 
@@ -73,7 +73,7 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 {
     if (!length(find.package(pkg, lib.loc = lib.loc, quiet=TRUE)))
         "This package was not yet installed at build time.\\cr"
-    else {    
+    else {
 	tabular <- function(col1, col2)
 	    c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
 
@@ -90,10 +90,10 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 {
     if (!length(find.package(pkg, lib.loc = lib.loc, quiet=TRUE)))
         result <- c("", "Index:  This package was not yet installed at build time.\\cr")
-    else {    
+    else {
     	tabular <- function(col1, col2)
     	    c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
-    
+
         info <- library(help = pkg, lib.loc = lib.loc,
 	  	    character.only = TRUE)
 

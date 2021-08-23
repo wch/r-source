@@ -1596,7 +1596,7 @@ you.@footnote{If @command{otool} is installed: it is part of the macOS
 Command Line Tools.}  This is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
-macOS) such as @code{png(type = "cairo")}.
+macOS) such as @code{png(type = "cairo")} and @code{svg()}.
 
 If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the

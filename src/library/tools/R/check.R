@@ -1052,6 +1052,24 @@ add_dummies <- function(dir, Log)
             }
         }
 
+        ## Also check logical fields for appropriate values.
+        db <- .read_description(dfile)
+        fields <- c("LazyData", "KeepSource", "ByteCompile", "UseLTO",
+                    "StagedInstall", "Biarch", "BuildVignettes")
+        bad <- fields[vapply(fields,
+                             function(f) {
+                                 !is.na(x <- db[f]) &&
+                                     suppressWarnings(is.na(utils:::str2logical(x)))
+                             },
+                             NA)]
+        if(length(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     paste(c("Malformed field(s):", bad), collapse = " "),
+                     "\n")
+        }
+
         if(!is_base_pkg && is.na(db["Packaged"])) {
             if(!any) (noteLog(Log))
             any <- TRUE
@@ -2446,11 +2464,19 @@ add_dummies <- function(dir, Log)
                           sprintf("suppressPackageStartupMessages(tools:::.check_packages_used_in_examples(package = \"%s\"))\n", pkgname))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            exfile <- paste0(pkgname, "-Ex.R")
             if (length(out)) {
-                warningLog(Log)
+                failed <- any(grepl("parse error in file", out, fixed = TRUE))
+                if (failed) errorLog(Log) else warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                if (failed) {
+                    printLog0(Log, "** will not attempt to run examples\n")
+                    do_examples <<- FALSE
+                    file.copy(exfile, pkgoutdir)  # keep that file (PR#17501)
+                }
                 # wrapLog(msg_DESCRIPTION)
             } else resultLog(Log, "OK")
+            if (file.exists(exfile)) unlink(exfile)
 
         } ## FIXME, what if no install?
     }
@@ -5167,7 +5193,11 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wanalyzer-malloc-leak\\]",
                              ": warning: .*\\[-Wanalyzer-file-leak\\]",
                              ": warning: .*\\[-Wanalyzer-use-after-free\\]",
-                             ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]"
+                             ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]",
+                             ## gcc and clang reports on use of #warning
+                             ## but not suppressing the warning itself.
+                             "\\[-Wcpp\\] ",
+                             "\\[-W#warnings\\]"
                             )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
@@ -5428,8 +5458,7 @@ add_dummies <- function(dir, Log)
                 } else resultLog(Log, "OK")
             }   ## end of case B
         }
-
-    }
+    } ## {check_install()}
 
     ## This requires a GNU-like 'du' with 1k block sizes,
     ## so use -k (which POSIX requires).
@@ -6084,6 +6113,10 @@ add_dummies <- function(dir, Log)
         do_install_arg <- FALSE
         ## If we do not install, then we cannot *run* any code.
         do_examples <- do_tests <- do_vignettes <- do_build_vignettes <- 0
+    }
+    if(startsWith(install, "check+fake")) {
+        install <- paste0("check", substring(install, 11L))
+        opts <- c(opts, "--install=fake")
     }
     if (run_dontrun) opts <- c(opts, "--run-dontrun")
     if (run_donttest) opts <- c(opts, "--run-donttest")

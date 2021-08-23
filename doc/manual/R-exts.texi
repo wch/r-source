@@ -4849,6 +4849,17 @@ Note that on some systems @command{ar -cr} must have at least one file
 specified.
 
 @item
+The @command{strip} utility is platform-specific (and @acronym{CRAN}
+prohibits removing debug symbols).  For example flags
+@option{--strip-debug} and @option{--strip-unneeded} of the GNU version
+are not supported on macOS nor Solaris@footnote{which is
+@file{/usr/ccs/bin/strip}, not @file{/usr/bin/strip}.}: the POSIX
+standard for @command{strip} does not mention any options, and what
+calling it without options does is platform-dependent. Stripping a
+@file{.so} file could even prevent it being dynamically loaded into @R{}
+on an untested platform.
+
+@item
 Some people have a need to set a locale.  Locale names are not portable,
 and e.g.@: @samp{fr_FR.utf8} is commonly used on Linux but not accepted on
 either Solaris or macOS.  @samp{fr_FR.UTF-8} is more portable, being
@@ -8980,11 +8991,13 @@ threaded programs.
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
-builds@footnote{currently on Linux and macOS (including the builds from
-Xcode 7 and later), with some support for Solaris.  On some platforms
-the runtime library, @pkg{libasan}, needs to be installed separately,
-and for checking C++ you may also need @pkg{libubsan}.} of @command{gcc}
-and @command{clang} on common Linux and macOS platforms.  See
+builds@footnote{currently on @cputype{x86_64}/@cputype{ix86} Linux and
+FreeBSD, with some support for Intel macOS, NetBSD and Windows, but not
+with the toolchains normally used with @R{}. (There is a faster variant,
+HWASAN, for @cputype{aarch64} only.)  On some platforms the runtime
+library, @pkg{libasan}, needs to be installed separately, and for
+checking C++ you may also need @pkg{libubsan}.} of @command{gcc} and
+@command{clang} on common Linux and macOS platforms.  See
 @uref{https://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{https://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://github.com/google/sanitizers}.
@@ -9010,10 +9023,10 @@ uninitialized memory.
 
 Recent versions return symbolic addresses for the location of the error
 provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
-in distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
+distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
-on the path or has been renamed@footnote{as Ubuntu has been said to do.}, one
-can use an environment variable, e.g.@:
+on the path or has been renamed@footnote{as Ubuntu has been said to
+do.}, one can use an environment variable, e.g.@:
 
 @example
 ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
@@ -9156,7 +9169,12 @@ might be @code{NA_INTEGER}.
 platforms the runtime library, @pkg{libubsan}, needs to be installed
 separately.} of @command{clang} and GCC.  Its (main) runtime library is
 linked into each package's DLL, so it is less often needed to be
-included in @env{MAIN_LDFLAGS}.
+included in @env{MAIN_LDFLAGS}.  Platforms supported by @command{clang}
+are listed at
+@uref{https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#supported-platforms}:
+@acronym{CRAN} uses it for C/C++ with both GCC and @command{clang} on
+@cputype{x86_64} Linux: the two toolchains often highlight different
+things with more reports from @command{clang} than GCC.
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
@@ -12312,7 +12330,7 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is to be replaced in @R{} 4.0.0. To
+This mechanism was replaced in @R{} 4.0.0. To
 support future changes, package code should use the macros
 @code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
 @code{MARK_NOT_MUTABLE}. These currently correspond to
@@ -13515,17 +13533,22 @@ can be used from C++ code.
 
 @quotation Note
 Because @R{} re-maps many of its external names to avoid clashes with
-user code, it is @emph{essential} to include the appropriate header
-files when using these entry points.
+system or user code, it is @emph{essential} to include the appropriate
+header files when using these entry points.
 @end quotation
 
-This remapping can cause problems@footnote{Known problems are redefining
-@code{LENGTH}, @code{error}, @code{length}, @code{vector} and
-@code{warning}}, and can be eliminated by defining @code{R_NO_REMAP} and
-prepending @samp{Rf_} to @emph{all} the function names used from
-@file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
+This remapping can cause problems@footnote{Known problems have been
+defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
+@code{warning}: whether these matter depends on the OS and toolchain,
+with many problem reports involving @command{clang++}.}, and can be
+eliminated by defining @code{R_NO_REMAP} (before including any @R{}
+headers) and prepending @samp{Rf_} to @emph{all} the function names used
+from @file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
 usually be avoided by including other headers (such as system headers
-and those for external software used by the package) before @file{R.h}.
+and those for external software used by the package) before any @R{}
+headers. (Headers from other packages may include @R{} headers directly
+or @emph{via} inclusion from further packages, and may define
+@code{R_NO_REMAP} with or without including @file{Rinternals.h}.)
 
 We can classify the entry points as
 
@@ -13666,7 +13689,7 @@ the interface providing @R{} error signaling.  This memory lasts until
 freed by the user and is additional to the memory allocated for the @R{}
 workspace.
 
-The interface functions are
+The interface macros are
 
 @example
 @group
@@ -13679,9 +13702,9 @@ void Free(@var{any} *@var{p})
 @noindent
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
 If there is an error during allocation it is handled by @R{}, so if
-these routines return the memory has been successfully allocated or
-freed.  @code{Free} will set the pointer @var{p} to @code{NULL}.  (Some
-but not all versions of @Sl{} do so.)
+these return the memory has been successfully allocated or freed.
+@code{Free} will set the pointer @var{p} to @code{NULL}.  (Some but not
+all versions of @Sl{} did so.)
 
 Users should arrange to @code{Free} this memory when no longer needed,
 including on error or user interrupt.  This can often be done most
@@ -13692,12 +13715,29 @@ Do not assume that memory allocated by @code{Calloc}/@code{Realloc}
 comes from the same pool as used by @code{malloc}: in particular do not
 use @code{free} or @code{strdup} with it.
 
-Memory obtained by these functions should be aligned in the same way as
+Memory obtained by these macros should be aligned in the same way as
 @code{malloc}, that is `suitably aligned for any kind of variable'.
 
-These entry points need to be prefixed by @code{R_} if
-@code{STRICT_R_HEADERS} has been defined.
+@findex R_Calloc
+@findex R_Realloc
+@findex R_Free
+These macros need to be prefixed by @code{R_} if @code{STRICT_R_HEADERS}
+has been defined: the prefixed forms can always be used.
 
+@findex CallocCharBuf
+@findex Memcpy
+@findex Memzero
+@example
+@group
+char * CallocCharBuf(size_t @var{n})
+void * Memcpy(@var{p}, @var{q}, @var{n})
+void * Memzero(@var{p}, @var{m})
+@end group
+@end example
+@code{CallocCharBuf} is shorthand for @code{Calloc(n+1, char)} to allow
+for the @code{nul} terminator.  @code{Memcpy} and @code{Memzero} take
+@code{n} items from array @code{p} and copy them to array @code{p} or
+zero them respectively.
 
 @node Error signaling, Random numbers, Memory allocation, The R API
 @section Error signaling
@@ -13727,8 +13767,12 @@ simplest case can be called with a single character string argument
 giving the error message. (Don't do this if the string contains @samp{%}
 or might otherwise be interpreted as a format.)
 
+These are defined in header @file{R_ext/Error.h} included by
+@file{R.h}.
+
 If @code{STRICT_R_HEADERS} is not defined there is also an
-@Sl{}-compatibility interface which uses calls of the form
+@Sl{}-compatibility interface included in @file{R_ext/RS.h} which uses
+calls of the form
 
 @example
 @group
@@ -13742,7 +13786,11 @@ MESSAGE ...... WARNING(NULL_ENTRY)
 @noindent
 the last two being the forms available in all @Sl{} versions.  Here
 @samp{......} is a set of arguments to @code{printf}, so can be a string
-or a format string followed by arguments separated by commas.
+or a format string followed by arguments separated by commas.  (There is
+a length limit of 4095 bytes on the whole message, with silent
+truncation from @R{} 4.1.2, unchecked eariler.)  These are deprecated
+and will be hidden in future: define @code{R_LEGACY_S_DEFS} to @code{1}
+before including any @R{} headers to continue to use them.
 
 @menu
 * Error signaling from Fortran::
@@ -13809,6 +13857,8 @@ PutRNGstate();
 These essentially read in (or create) @code{.Random.seed} and write it
 out after use.
 
+These are defined in header @file{R_ext/Random.h}.
+
 File @file{S.h} defines @code{seed_in} and @code{seed_out} for
 @Sl{}-compatibility rather than @code{GetRNGstate} and
 @code{PutRNGstate}.  These take a @code{long *} argument which is
@@ -13869,6 +13919,7 @@ All of the above apply to @emph{double} variables only.  For integer
 variables there is a variable accessed by the macro @code{NA_INTEGER}
 which can used to set or test for missingness.
 
+These are defined in header @file{R_ext/Arith.h} included by @file{R.h}.
 
 @node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
 @section Printing
@@ -13893,8 +13944,8 @@ output stream.
 Functions @code{Rvprintf} and @code{REvprintf} are analogues using the
 @code{vprintf} interface.  Because that is a C99@footnote{also part of
 C++11.} interface, they are only defined by @file{R_ext/Print.h} in C++
-code if the macro @code{R_USE_C99_IN_CXX} is defined when it is
-included or, as from @R{} 4.0.0, a C++11 compiler is used.
+code if the macro @code{R_USE_C99_IN_CXX} is defined before it is
+included or (as from @R{} 4.0.0) a C++11 compiler is used.
 
 Another circumstance when it may be important to use these functions is
 when using parallel computation on a cluster of computational nodes, as
@@ -14376,14 +14427,27 @@ distributions.
 @noindent
 Entries marked with an asterisk only have @samp{p} and @samp{q}
 functions available, and none of the non-central distributions have
-@samp{r} functions.  After calls to @code{dwilcox}, @code{pwilcox} or
-@code{qwilcox} the function @code{wilcox_free()} should be called, and
-similarly @code{signrank_free()} for the signed rank functions.
-@findex wilcox_free
-@findex signrank_free
+@samp{r} functions.
 
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
+
+After calls to @code{dwilcox}, @code{pwilcox} or @code{qwilcox} the
+function @code{wilcox_free()} should be called, and similarly
+@code{signrank_free()} for the signed rank functions.
+@findex wilcox_free
+@findex signrank_free
+Since @code{wilcox_free()} and @code{signrank_free()} were only added to
+@file{Rmath.h} in @R{}@tie{} 4.2.0, their use requires something like
+@example
+#include "Rmath.h"
+#include "Rversion.h"
+
+#if R_VERSION < R_Version(4, 2, 0)
+extern void wilcox_free(void);
+extern void signrank_free(void);
+#endif
+@end example
 
 For the negative binomial distribution (@samp{nbinom}), in addition to the
 @code{(size, prob)} parametrization, the alternative @code{(size, mu)}
@@ -14400,8 +14464,9 @@ double dbinom_raw(double x, double n, double p, double q, int give_log)
 double dpois_raw (double x, double lambda, int give_log)
 @end group
 @end example
-Note that @code{dbinom_raw()} gets both @eqn{p, p} and @eqn{q = 1-p, q = 1-p} which
-may be advantageous when one of them is close to @eqn{1, 1}.
+Note that @code{dbinom_raw()} returns both @eqn{p, p} and @eqn{q = 1-p,
+q = 1-p} which may be advantageous when one of them is close to @eqn{1,
+1}.
 
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
@@ -15413,8 +15478,8 @@ use.
 Let us re-iterate the advice to include system headers before the @R{}
 header files, especially @file{Rinternals.h} (included by
 @file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may be
-used in system headers (fewer if @samp{R_NO_REMAP} is defined, or
-@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
+used in system headers (fewer if @samp{R_NO_REMAP} is defined before
+inclusion, or @samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods

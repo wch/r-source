@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto and Brian Ripley
- *             (C) 2007-2020  The R Core Team
+ *             (C) 2007-2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,13 +44,14 @@ static char RunError[501] = "";
 
 /* This might be given a command line (whole = 0) or just the
    executable (whole = 1).  In the later case the path may or may not
-   be quoted */
+   be quoted. */
 static char *expandcmd(const char *cmd, int whole)
 {
     char c = '\0';
     char *s, *p, *q = NULL, *f, *dest, *src;
     int   d, ext, len = strlen(cmd)+1;
     char buf[len], fl[len], fn[MAX_PATH];
+    DWORD res = 0;
 
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
@@ -119,8 +120,15 @@ static char *expandcmd(const char *cmd, int whole)
       since SearchPath already returns 'short names'. However,
       this is not documented so I prefer to be explicit.
     */
-    /* NOTE: short names are not always enabled */
-    GetShortPathName(fn, s, MAX_PATH);
+    /* NOTE: short names are not always enabled/available. In that case,
+       GetShortPathName may succeed and return the original (long) name. */
+    res = GetShortPathName(fn, s, MAX_PATH);
+    if (res == 0) 
+	/* Use full name if GetShortPathName fails, i.e. due to insufficient
+	   permissions for some component of the path. */
+        strncpy(s, fn, d + 1);
+
+    /* FIXME: warn if the path contains space? */
     if (!whole) {
 	*q = c;
 	strcat(s, q);

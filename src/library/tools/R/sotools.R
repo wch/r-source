@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2020 The R Core Team
+#  Copyright (C) 2011-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -419,8 +419,8 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "locale2charset", "match5", "matherr",
             "max_contour_segments", "mbcsToUcs2", "memtrace_report",
             "parseError", "pythag_", "rs_", "rwarnc_",
-            "signrank_free", "tql2_", "tqlrat_", "tred1_", "tred2_",
-            "utf8locale", "wilcox_free", "yylloc",
+            "tql2_", "tqlrat_", "tred1_", "tred2_", "utf8locale", "yylloc",
+            # "signrank_free", "wilcox_free" are API only from 4.2.0
 
 ## Rinterface.h, Rembedded.h, R_ext/{RStartup,eventloop}.h
             "AllDevicesKilled", "R_CStackLimit", "R_CStackStart",

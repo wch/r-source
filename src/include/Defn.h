@@ -249,13 +249,9 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
 
 #ifdef SWITCH_TO_REFCNT
-# ifdef USE_RINTERNALS
-#  define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
-# endif
+# define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
 #else
-# ifdef USE_RINTERNALS
-#  define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
-# endif
+# define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
 #endif
 
 /* To make complex assignments a bit safer, in particular with
@@ -762,7 +758,7 @@ void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
-#endif
+#endif /* USE_RINTERNALS */
 
 void R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
         const char *errmsg, const char *warnmsg, const char *varname,
@@ -819,7 +815,7 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 # define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
 # define SET_CACHED(x) (((x)->sxpinfo.gp) |= CACHED_MASK)
 # define IS_CACHED(x) (((x)->sxpinfo.gp) & CACHED_MASK)
-#else
+#else /* USE_RINTERNALS */
 /* Needed only for write-barrier testing */
 int IS_BYTES(SEXP x);
 void SET_BYTES(SEXP x);
@@ -832,7 +828,8 @@ void SET_UTF8(SEXP x);
 int ENC_KNOWN(SEXP x);
 int SET_CACHED(SEXP x);
 int IS_CACHED(SEXP x);
-#endif
+#endif /* USE_RINTERNALS */
+
 /* macros and declarations for managing CHARSXP cache */
 # define CXHEAD(x) (x)
 # define CXTAIL(x) ATTRIB(x)

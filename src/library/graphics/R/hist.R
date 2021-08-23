@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/hist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2020 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ hist.default <-
 {
     if (!is.numeric(x))
 	stop("'x' must be numeric")
-    xname <- paste(deparse(substitute(x), 500), collapse="\n")
+    xname <- deparse1(substitute(x), collapse="\n")
     n <- length(x <- x[is.finite(x)])
     n <- as.integer(n)
     if(is.na(n)) stop("invalid length(x)")

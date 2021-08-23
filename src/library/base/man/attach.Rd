@@ -1,6 +1,6 @@
 % File src/library/base/man/attach.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attach}
@@ -21,11 +21,15 @@ attach(what, pos = 2L, name = deparse1(substitute(what), backtick=FALSE),
     to attach.}
   \item{name}{name to use for the attached database. Names starting with
     \code{package:} are reserved for \code{\link{library}}.}
-  \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
+  \item{warn.conflicts}{logical.  If \code{TRUE}, \code{\link{message}()}s are
     printed about \code{\link{conflicts}} from attaching the database,
     unless that database contains an object \code{.conflicts.OK}.  A
     conflict is a function masking a function, or a non-function masking
     a non-function.
+
+    NB: Even though the name is \code{warn.conflicts} for historical
+    reasons, the messages about conflicts are \emph{not}
+    \code{\link{warning}()}s but \code{\link{message}()}s.
   }
 }
 \description{

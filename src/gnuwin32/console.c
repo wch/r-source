@@ -1617,6 +1617,9 @@ static wchar_t consolegetc(control c)
 	    p->numkeys--;
 	    if (p->already) p->already--;
 	} else {
+	    /* Will not work for stateful encodings */
+	    mbstate_t mb_st;
+	    memset(&mb_st, 0, sizeof(mbstate_t));
 	    if(mbcslocale) {
 		/* Possibly multiple 'keys' for a single keystroke */
 		char tmp[20];
@@ -1624,7 +1627,7 @@ static wchar_t consolegetc(control c)
 
 		for(i = 0; i < MB_CUR_MAX; i++)
 		    tmp[i] = p->kbuf[(p->firstkey + i) % NKEYS];
-		used = mbrtowc(&ch, tmp, MB_CUR_MAX, NULL);
+		used = mbrtowc(&ch, tmp, MB_CUR_MAX, &mb_st);
 		p->firstkey = (p->firstkey + used) % NKEYS;
 		p->numkeys -= used;
 		if (p->already) p->already -= used;
@@ -1633,7 +1636,7 @@ static wchar_t consolegetc(control c)
 		if(ch >=128) {
 		    char tmp[2] = " ";
 		    tmp[0] = ch;
-		    mbrtowc(&ch, tmp, 2, NULL);
+		    mbrtowc(&ch, tmp, 2, &mb_st);
 		}
 		p->firstkey = (p->firstkey + 1) % NKEYS;
 		p->numkeys--;

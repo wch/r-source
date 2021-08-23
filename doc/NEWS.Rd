@@ -42,23 +42,24 @@
       \emph{and} suppressed from explicit calls to \code{.axisPars()} as
       has always been the intention.
 
-      \item The \code{contrasts} setter \code{`contrasts<-`} gets explicit
-      default \code{how.many = NULL} rather than just using
-      \code{missing(how.many)}.
+      \item The \code{contrasts} setter function \code{`contrasts<-`}
+      gains an explicit default \code{how.many = NULL} rather than just
+      using \code{missing(how.many)}.
 
-      \item \code{grid.pretty()} got new optional argument \code{n = 5}.
+      \item \code{grid.pretty()} gains a new optional argument \code{n = 5}.
 
-      \item New \code{.pretty()} with option \code{bounds} as technical
-      utility version of \code{pretty()}, and it and \code{pretty()} get
-      new argument \code{f.min} with a better than back-compatible default.
+      \item There is a new function \code{.pretty()} with option
+      \code{bounds} as a technical-utility version of \code{pretty()}.  It
+      and \code{pretty()} gain a new argument \code{f.min} with a better
+      than back-compatible default.
 
-      \item The graphics engine's based \code{axisTicks()} and related
-      functions such as \pkg{graphics} package's \code{axis()} work better,
-      notably for the log scale; partly because the \code{pretty()}
-      improvements, but also because care is taken e.g., when \code{ylim}
-      is finite, but \code{diff(ylim)} is infinite.
+      \item Function \code{grDevices::axisTicks()} and related functions
+      such as \code{graphics::axis()} work better, notably for the log
+      scale; partly because of the \code{pretty()} improvements, but also
+      because care is taken e.g., when \code{ylim} is finite but
+      \code{diff(ylim)} is infinite.
 
-      \item Histogram breaks rule \code{nclass.FD()} gets \code{digits} option.
+      \item \code{nclass.FD()} gains a \code{digits} option.
     }
   }
 
@@ -77,6 +78,16 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \command{R CMD INSTALL} no longer tangles vignettes. This
+      completes an \command{R CMD build} change in \R 3.0.0 and affects
+      packages built before \R 3.0.2. Such packages should be re-made
+      with \command{R CMD build} to have the tangled \R code of vignettes
+      shipped with the tarball. 
+    }
+  }
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} can optionally report
@@ -88,7 +99,7 @@
       during installation.  These are not usually fatal but may result
       in parts of the package not being byte-compiled.
 
-      \item \env{_R_DEPENDS_ONLY_} can be applied selectively to
+      \item \env{_R_CHECK_DEPENDS_ONLY_} can be applied selectively to
       examples, tests and/or vignettes in \command{R CMD check}: see the
       \dQuote{R Internals} manual.
     }
@@ -104,13 +115,26 @@
       internal header \file{Defn.h}. Packages that only use entry points
       and definitions documented to be part of the API as specified in
       \sQuote{Writing R Extensions} §6 should not be affected.
+
+      \item The deprecated legacy S-compatibility macros \code{PROBLEM},
+      \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
+      \code{RECOVER}, \dots{} are no longer defined by default in
+      \file{R_exts/RS.h} (included by \file{R.h}).  Replace these by
+      calls to \code{Rf_error} and \code{Rf_warning}.
+
+      For the time being the definitions can be reinstated by defining
+      macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
+      any \R{} header.  Header \file{R_ext/RS.h} will no longer include
+      \file{R_ext/Error.h} unless \code{R_LEGACY_S_DEFS} is set.
+
+      [Early warning: removal planned for Oct 8.]
     }
   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The (non-default and deprecated) \code{method = "internal"}
-      for \code{download.file} and \code{url} no longer supports
+      for \code{download.file()} and \code{url()} no longer supports
       \samp{http://} nor \samp{ftp://} URIs.  (It is used only for
       \samp{file://} URIs.)
 
@@ -120,7 +144,7 @@
 
       On Windows, the deprecated \code{method = "wininet"} now gives a
       warning for \samp{http://} and \samp{https://} URIs for both
-      \code{download.file} and \code{url}. (It is no longer the default
+      \code{download.file()} and \code{url()}. (It is no longer the default
       method.)
     }
   }
@@ -134,15 +158,15 @@
 	significant digits} should mean (\PR{18098}).
 
       \item Messages from C code in the \file{cairo} section of package
-      \pkg{grDevices} are now also up for translation, thanks to Michael
-      Chirico's \PR{18123}.
+      \pkg{grDevices} are now also offered for translation, thanks to
+      Michael Chirico's \PR{18123}.
 
       \item \code{mean(x)} with finite \code{x} now is finite also without
       "long.double" capability.
 
       \item \command{R CMD Rd2pdf} no longer leaves an empty build
       directory behind when it aborts due to an already existing output
-      file (\PR{18141}).
+      file.  (Thanks to Sebastian Meyer's \PR{18141}.)
 
       \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
       report and patch by Jeroen Ooms in \PR{18152}.)
@@ -151,6 +175,62 @@
       is true, now removes weights \dQuote{in parallel} to \code{x}, fixing
       \PR{18151}, reported by Matthias Gondan.
       Additionally, it gets a \code{subdensity} option.
+
+      \item Conversion of \verb{\Sexpr[]{<expR>}} to LaTeX or HTML no longer
+      produces long blocks of empty lines when \code{<expR>} itself
+      contains several lines all producing empty output.  Thanks to a
+      report and patch by Ivan Krylow posted to R-devel.
+
+      \item \command{R CMD build} no longer fails if a package vignette
+      uses child documents and \file{inst/doc} exists.  (Thanks to
+      Sebastian Meyer's \PR{18156}.)
+
+      \item When an R documentation (\sQuote{help} source) file
+      \file{man/foo.Rd} in a package has \verb{\donttest{..}} examples
+      with a syntax error, it is now signalled as ERROR and with correct
+      line numbers relating to the \file{*-Ex.R} file, thanks to Duncan
+      Murdoch and Sebastian Meyer's reports and patch proposals in
+      \PR{17501}.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.1.1 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The workaround in headers \file{R.h} and \file{Rmath.h}
+      (\code{using namespace std;}) for the Oracle Developer Studio
+      compiler is no longer needed now C++11 is required so has been
+      removed.  A few more usages of \code{log} with an integer argument
+      are reported on Solaris.
+
+      \item The undocumented limit of 4095 bytes on messages from the
+      S-compatibility macros \code{PROBLEM} and \code{MESSAGE} is now
+      documented and longer messages will be silently truncated rather
+      than potentially causing segfaults. 
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The legacy S-compatibility macros \code{PROBLEM},
+      \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
+      \code{RECOVER}, \dots{} are deprecated and will be hidden in \R
+      4.2.0. \R{}'s native interface of \code{Rf_error} and
+      \code{Rf_warning} has long been preferred.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{.mapply(F, dots, .)} no longer segfaults when
+      \code{dots} is not a \code{list} and uses \code{match.fun(F)} as
+      always documented; reported by Andrew Simmons in \PR{18164}.
+
+      \item \code{hist(<Date>, ...)} and \code{hist(<POSIXt>, ...)}
+      no longer pass arguments for \code{rect()}, such as \code{col} and
+      \code{density}, to \code{axis()}.  (Thanks to Sebastian Meyer's
+      \PR{18171}.)      
     }
   }
 }
@@ -308,7 +388,7 @@
       \item \code{type.convert()} now warns when its \code{as.is} argument
       is not specified, as the help file always said it \emph{should}.  In
       that case, the default is changed to \code{TRUE} in line with its
-      change in \code{read.table()} (related to \code{stringsAsFactor}) in
+      change in \code{read.table()} (related to \code{stringsAsFactors}) in
       \R 4.0.0.
 
       \item When printing list arrays, classed objects are now shown
@@ -439,7 +519,7 @@
       \item \code{names()} now works for \code{DOTSXP} objects.  On the
       other hand, in \file{R-lang}, the R language manual, we now warn
       against relying on the structure or even existence of such
-      \code{dot-dot-dot} objects.
+      dot-dot-dot objects.
 
       \item \code{all.equal()} no longer gives an error on \code{DOTSXP}
       objects.
@@ -487,7 +567,7 @@
 
       \item New palettes \code{"Rocket"} and \code{"Mako"} for
       \code{hcl.colors()} (approximating palettes of the same name
-      from the 'viridisLite' package).
+      from the \pkg{viridisLite} package).
 
       Contributed by Achim Zeileis.
 
@@ -896,14 +976,14 @@
       \item \code{identical(x,y)} is no longer true for differing
       \code{DOTSXP} objects, fixing \PR{18032}.
 
-      \item \code{str()} now works correctly for DOTSXP and related
+      \item \code{str()} now works correctly for \code{DOTSXP} and related
       exotics, even when these are doomed.
 
       Additionally, it no longer fails for \code{list}s with a \code{class} and
       \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
       necessarily fail, as currently for different \CRANpkg{igraph} objects.
 
-      \item Too long lines in environment files (e.g. \code{Renviron}) no
+      \item Too long lines in environment files (e.g., \file{Renviron}) no
       longer crash \R. This limit has been increased to 100,000 bytes.
       (\PR{18001}.)
 
@@ -1709,7 +1789,7 @@
       deprecated provision for 8.20--8.31 has been removed.
 
       \item Defunct functions \code{mem.limits()}, \code{.readRDS()},
-      \code{.saveRDS()},.\code{.find.package()}, and \code{.path.package()}
+      \code{.saveRDS()}, \code{.find.package()}, and \code{.path.package()}
       from package \pkg{base}
       and \code{allGenerics()}, \code{getAccess()}, \code{getAllMethods()},
       \code{getClassName()}, \code{getClassPackage()}, \code{getExtends()},
