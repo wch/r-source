@@ -5683,7 +5683,7 @@ To correctly set the architecture (which will be auto-detected as
 @node Native builds,  , `Apple Silicon', `Apple Silicon'
 @subsubsection Native builds
 
-This section is someowhat provisional, and everything said should be prefixed by
+This section is somewhat provisional, and everything said should be prefixed by
 `at the time of writing'.  It follows the @acronym{CRAN} distribution in
 using @file{/opt/R/arm64} rather than @file{/usr/local}: this largely
 allows natively-compiled software to co-exist with Intel-compiled
