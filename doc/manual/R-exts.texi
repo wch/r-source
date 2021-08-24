@@ -13590,7 +13590,8 @@ giving the error message. (Don't do this if the string contains @samp{%}
 or might otherwise be interpreted as a format.)
 
 If @code{STRICT_R_HEADERS} is not defined there is also an
-@Sl{}-compatibility interface which uses calls of the form
+@Sl{}-compatibility interface included in @file{R_ext/RS.h} which uses
+calls of the form
 
 @example
 @group
@@ -13605,9 +13606,9 @@ MESSAGE ...... WARNING(NULL_ENTRY)
 the last two being the forms available in all @Sl{} versions.  Here
 @samp{......} is a set of arguments to @code{printf}, so can be a string
 or a format string followed by arguments separated by commas.  (There is
-an unchecked length limit of 4095 bytes on the whole message.) This
-interface is deprecated and will be hidden/removed in future versions of
-@R{}.
+a length limit of 4095 bytes on the whole message, with silent
+truncation from @R{} 4.1.2, unchecked earlier.)  This interface is
+deprecated and will be hidden/removed in future versions of @R{}.
 
 @menu
 * Error signaling from Fortran::
