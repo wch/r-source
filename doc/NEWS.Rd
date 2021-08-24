@@ -11,8 +11,9 @@
       \item The workaround in headers \file{R.h} and \file{Rmath.h}
       (\code{using namespace std;}) for the Oracle Developer Studio
       compiler is no longer needed now C++11 is required so has been
-      removed.  A few more usages of \code{log} with an integer argument
-      are reported on Solaris.
+      removed.  A couple more usages of \code{log()} (which should have
+      been \code{std::log()}) with an \code{int} argument are reported on
+      Solaris.
 
       \item The undocumented limit of 4095 bytes on messages from the
       S-compatibility macros \code{PROBLEM} and \code{MESSAGE} is now
@@ -38,8 +39,8 @@
       always documented; reported by Andrew Simmons in \PR{18164}.
 
       \item \code{hist(<Date>, ...)} and \code{hist(<POSIXt>, ...)}
-      no longer pass arguments for \code{rect()}, such as \code{col} and
-      \code{density}, to \code{axis()}.  (Thanks to Sebastian Meyer's
+      no longer pass arguments for \code{rect()} (such as \code{col} and
+      \code{density}) to \code{axis()}.  (Thanks to Sebastian Meyer's
       \PR{18171}.)      
     }
   }
