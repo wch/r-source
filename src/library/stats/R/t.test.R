@@ -65,7 +65,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	tstat <- (mx-mu)/stderr
 	method <- if(paired) "Paired t-test" else "One Sample t-test"
 	estimate <-
-	    setNames(mx, if(paired)"mean of the differences" else "mean of x")
+	    setNames(mx, if(paired)"mean difference" else "mean of x")
     } else {
 	ny <- length(y)
         if(nx < 1 || (!var.equal && nx < 2))
@@ -112,7 +112,9 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     cint <- mu + cint * stderr
     names(tstat) <- "t"
     names(df) <- "df"
-    names(mu) <- if(paired || !is.null(y)) "difference in means" else "mean"
+    names(mu) <- if(paired) "mean difference"
+                 else if(!is.null(y)) "difference in means"
+                 else "mean"
     attr(cint,"conf.level") <- conf.level
     rval <- list(statistic = tstat, parameter = df, p.value = pval,
 	       conf.int = cint, estimate = estimate, null.value = mu,

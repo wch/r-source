@@ -597,7 +597,7 @@ function(package = NULL, lib.loc = NULL,
 	    warning("removing all entries with invalid multi-byte character data")
 	    for(i in seq_along(db)) {
 		ind <- db[[i]][, "ID"] %in% bad_IDs
-		db[[i]] <- db[[i]][!ind, ]
+		db[[i]] <- db[[i]][!ind, , drop = FALSE]
 	    }
 	}
 
@@ -607,7 +607,7 @@ function(package = NULL, lib.loc = NULL,
         if(length(bad_IDs)) {
 	    for(i in seq_along(db)) {
 		ind <- db[[i]][, "ID"] %in% bad_IDs
-		db[[i]] <- db[[i]][!ind, ]
+		db[[i]] <- db[[i]][!ind, , drop = FALSE]
 	    }
 	}
 
