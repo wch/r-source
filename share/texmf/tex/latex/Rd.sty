@@ -232,12 +232,29 @@
   \egroup
 }
 
-\DeclareRobustCommand{\code}{\bgroup\Rd@noligs\Rd@code}
+\ifx\l@nohyphenation \@undefined
+  \newlanguage\l@nohyphenation
+\fi
+
+% \DeclareRobustCommand{\code}{\bgroup\Rd@noligs\Rd@code}
+\def\Rd@code@space{\leavevmode\unskip\space\ignorespaces}
+{\catcode`\ =\active%
+\gdef\Rd@code@obeyspaces{\catcode`\ \active\let \Rd@code@space}}
+\def\Rd@code@wrk#1{\texttt{#1}\egroup}
+\def\Rd@code@ini{%
+  \language\l@nohyphenation
+  \normalfont\spaceskip=\fontdimen2\font\relax
+  \Rd@noligs \Rd@frenchspacing \Rd@code@obeyspaces 
+}
+\DeclareRobustCommand{\code}{\bgroup \Rd@code@ini \Rd@code@wrk}
+
 \let\command=\code
 \let\env=\code
 
-\def\Rd@samp#1{\Rd@code{#1}\rq}
-\DeclareRobustCommand{\samp}{\lq\bgroup\Rd@noligs\Rd@samp}
+% \def\Rd@samp#1{\Rd@code{#1}\rq}
+% \DeclareRobustCommand{\samp}{\lq\bgroup\Rd@noligs\Rd@samp}
+\def\Rd@samp@wrk#1{\texttt{#1}\egroup\rq}
+\DeclareRobustCommand{\samp}{\lq\bgroup\Rd@code@ini\Rd@samp@wrk}
 \let\option=\samp
 
 \def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\@noligs\obeylines\@vobeyspaces\parskip\z@skip\Rd@AsIsX}
