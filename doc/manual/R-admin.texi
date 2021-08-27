@@ -1551,18 +1551,18 @@ The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X'. Click on that, then download the file
 @file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
 and later on @cputype{x86_64} (Intel) CPU (High Sierra, Mojave,
-Catalina, Big Sur, @dots{}).  It can also be installed on
+Catalina, Big Sur, Monterey, @dots{}).  It can also be installed on
 @cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs running Big Sur
 using `Rosetta' emulation@footnote{You may be asked to install Rosetta
-at first use -- @url{https://support.apple.com/en-us/HT211861} --
-which may need administrator privileges.}, as can @acronym{CRAN} binary
-packages.
+at first use -- @url{https://support.apple.com/en-us/HT211861} -- which
+may need administrator privileges.}, as can @acronym{CRAN} binary
+packages.  There is also a `native' build for `Apple Silicon' Macs:
+unless otherwise stated the instructions here are for the Intel build.
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
 unsigned/not notarized: to install those Control/right/two-finger click,
-select @samp{Open With} and @samp{Installer}.)  There may be a
-pre-release package for @cputype{arm64} for testers only (currently).
+select @samp{Open With} and @samp{Installer}.)
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -5429,14 +5429,11 @@ in the native macOS style: this will not work with @Rapp{} because of
 conflicts over the macOS menu, but for those only using command-line
 @R{} this provides a much more intuitive interface to Tk for experienced
 Mac users.  Earlier versions of macOS came with an Aqua Tcl/Tk
-distribution but these were often not at all recent versions of Tcl/Tk
-(8.5.9 in High Sierra, which is not even the latest patched version in
-that series). (Catalina included a partial distribution which lacks the
-files needed to compile against Tcl/Tk.) It is better to install Tcl/Tk
-8.6.x from the sources@footnote{Configure Tk with
-@option{--enable-aqua}.} or a binary distribution from
-@uref{https://www.activestate.com/activetcl/downloads}.  For the
-latter, configure @R{} with
+distribution but these were often not at all recent versions of Tcl/Tk.
+It is better to install Tcl/Tk 8.6.x from the sources@footnote{Configure
+Tk with @option{--enable-aqua}.} or a binary distribution from
+@uref{https://www.activestate.com/activetcl/downloads}.  For the latter,
+configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
@@ -5474,8 +5471,10 @@ Oracle}.  Builds of OpenJDK with a less restrictive licence may also be
 available, e.g.@: from @uref{https://adoptium.net, Adoptium},
 @uref{https://www.azul.com/downloads/zulu-community/, Azul} or
 @uref{https://jdk.java.net/}.  We recommend you install a version with
-long-term support, e.g.@: 8 or 11 or (when released in 2021-09) 17 but
-not 9, 10, 12--16 which have/had a 6-month lifetime.
+long-term support, e.g.@: 11 or 17 but not 9, 10, 12--16 or 18 which
+have/had a 6-month lifetime.  (Note that these sources may use unusual
+designations for Intel macOS builds such as @code{x86 64-bit} and
+@code{x64}.)
 
 Binary distributions of @R{} are built against a specific version
 (e.g.@: 11.0.6) of Java so @command{sudo R CMD javareconf}
@@ -5483,9 +5482,8 @@ will likely be needed to be run before using Java-using packages.
 
 To use Java (specifically, package @CRANpkg{rJava}) with a
 @acronym{CRAN} (@cputype{x86_64}) binary distribution of @R{} on
-@cputype{arm64} macOS install a @cputype{x86_64} build of a Java JRE
-such as that from @uref{https://adoptium.net, Adoptium}, then
-run @command{sudo R CMD javareconf}.
+@cputype{arm64} macOS install an Intel build of a Java JRE from one of
+the sites linked above, then run @command{sudo R CMD javareconf}.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
@@ -5495,28 +5493,35 @@ run.
 
 Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used to install packages @CRANpkg{rJava} and
-@CRANpkg{JavaGD}); the latter requires a JDK (Java SDK) and not just a
-JRE@footnote{As from Java 11, there is no separate client JRE
-distribution from Oracle, but there may be from OpenJDK.}.
+@CRANpkg{JavaGD}); the latter requires a JDK (Java SDK).
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  A Oracle JDK can be
-specified explicitly by something like
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
-JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
-JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
-JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
-@end example
-@noindent
-in @file{config.site}.
-
-@c jdk.java.net no longer has Java 11 LTS builds.
-To select a build of OpenJDK from @uref{https://adoptium.net,
-Adoptium} set e.g.@:
+need some help, e.g.@: by setting environment variable @env{JAVA_HOME}.
+To select a build of OpenJDK from @uref{https://adoptium.net, Adoptium}
+set e.g.@:
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-11.jdk/Contents/Home
 @end example
+@noindent
+in @file{config.site}.  For Java 17 from @uref{https://jdk.java.net/},
+use
+@example
+JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
+@end example
+
+
+@c A Oracle JDK can be
+@c specified explicitly by something like
+@c @example
+@c JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
+@c JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
+@c JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
+@c JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
+@c @end example
+@c @noindent
+@c in @file{config.site}.
+
+@c jdk.java.net no longer has Java 11 LTS builds.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.
@@ -5775,33 +5780,32 @@ Updating a build may fail because of the bug
 described at @uref{https://openradar.appspot.com/FB8914243} but
 @emph{ab initio} builds work.
 
-Native Java builds are becoming available, for example
+Native Java builds are available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
-and this architecture has been announced as part of Java 17 (2021-09)
-from OpenJDK.
-@c https://openjdk.java.net/jeps/391
+and this architecture (which they call @code{macos-aarch64}) will be part
+of Java 17 from OpenJDK at @uref{https://jdk.java.net/17/}.
 
-As with Intel builds, use the @code{Accelerate} library could be used
+As with Intel builds, the @code{Accelerate} library could be used
 @emph{via} the configuration option
 
 @example
 --with-blas="-framework Accelerate"
 @end example
 
-It is possible to build external C/C++ libraries containing both
-architectures which could then be used for building packages.  A typical
-configure line might be
+@c It is possible to build external C/C++ libraries containing both
+@c architectures which could then be used for building packages.  A typical
+@c configure line might be
 
-@example
-./configure --enable-static --disable-shared \
-CC='clang -arch arm64 -arch x86_64' CFLAGS=-O2 \
-CXX='clang++ -arch arm64 -arch x86_64' CXXFLAGS=-O2 \
-CPP='clang -E' CXXCPP='clang++ -E'
-@end example
+@c @example
+@c ./configure --enable-static --disable-shared \
+@c CC='clang -arch arm64 -arch x86_64' CFLAGS=-O2 \
+@c CXX='clang++ -arch arm64 -arch x86_64' CXXFLAGS=-O2 \
+@c CPP='clang -E' CXXCPP='clang++ -E'
+@c @end example
 
-@noindent
-Such libraries installed into the usual default of @file{/usr/local}
-will be usable for both @cputype{arm64} and @cputype{x86_64} builds.
+@c @noindent
+@c Such libraries installed into the usual default of @file{/usr/local}
+@c will be usable for both @cputype{arm64} and @cputype{x86_64} builds.
 
 @c https://developer.apple.com/documentation/xcode/building_a_universal_macos_binary
 According to Apple, C/C++ code intended only for this architecture can
