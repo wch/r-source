@@ -403,9 +403,9 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 	       	          },
 
                "\\verb"= {
-                   of0("\\AsIs{")
+                   of0("\\AsIs{\\texttt{")
                    writeContent(block, tag)
-                   of1("}")
+                   of1("}}")
                },
                "\\special"= writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
