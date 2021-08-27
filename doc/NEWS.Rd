@@ -179,7 +179,7 @@
       \item Conversion of \verb{\Sexpr[]{<expR>}} to LaTeX or HTML no longer
       produces long blocks of empty lines when \code{<expR>} itself
       contains several lines all producing empty output.  Thanks to a
-      report and patch by Ivan Krylow posted to R-devel.
+      report and patch by Ivan Krylov posted to R-devel.
 
       \item \command{R CMD build} no longer fails if a package vignette
       uses child documents and \file{inst/doc} exists.  (Thanks to
