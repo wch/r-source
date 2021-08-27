@@ -1548,16 +1548,18 @@ Windows' CRLF line endings.
 
 [The rest of this paragraph is only relevant after release.]
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
-OS X'. Click on that, then download the file
-@file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.13
-and later on @cputype{x86_64} (Intel) CPU (High Sierra, Mojave,
-Catalina, Big Sur, Monterey, @dots{}).  It can also be installed on
-@cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs running Big Sur
-using `Rosetta' emulation@footnote{You may be asked to install Rosetta
-at first use -- @url{https://support.apple.com/en-us/HT211861} -- which
-may need administrator privileges.}, as can @acronym{CRAN} binary
-packages.  There is also a `native' build for `Apple Silicon' Macs:
-unless otherwise stated the instructions here are for the Intel build.
+OS X' which takes you to a new page. Two files are offered for download,
+@file{R-@value{VERSIONno}.pkg} and @file{R-@value{VERSIONno}-arm64.pkg}.
+The first runs on macOS 10.13 and later on @cputype{x86_64} (Intel) CPU
+(High Sierra, Mojave, Catalina, Big Sur, Monterey, @dots{}).  It can
+also be installed on @cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs
+running Big Sur using `Rosetta' emulation@footnote{You may be asked to
+install Rosetta at first use --
+@url{https://support.apple.com/en-us/HT211861} -- which may need
+administrator privileges.}, as can @acronym{CRAN} binary packages.
+Package @file{R-@value{VERSIONno}-arm64.pkg} is a `native' build for
+`Apple Silicon' Macs and runs @emph{only} on those (under macOS 11 or
+later, Big Sur, Monterey, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -1566,6 +1568,17 @@ select @samp{Open With} and @samp{Installer}.)
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
+
+Those with a @cputype{arm64} Mac have a choice of build.  The
+@cputype{x86_64} build is a little better supported (for example, more
+binary packages are available from @acronym{CRAN} and only
+@cputype{x86_64} from some other repositories).  Rosetta emulation works
+really well, with a very few reports of problems with binary packages
+solved by re-compilation.  The `native' build is a little faster (and
+for some tasks, considerably so) but may give different numerical
+results from the far more common @cputype{x86_64} platforms (on macOS
+and other OSes) as ARM hardware lacks extended-precision floating-point
+operations.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Software Update' in 'System Preferences'
@@ -1579,7 +1592,7 @@ component is needed to use package @pkg{tcltk}. The `Texinfo' component
 is only needed by those installing source packages or @R{} from its
 sources.)
 
-This is an Apple Installer package. If you encounter any problem during
+These are Apple Installer packages.  If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.  Note the the
@@ -1588,15 +1601,17 @@ of the application where you installed it (which may not be where you
 want this time @dots{}).
 
 Various parts of the build require XQuartz to be installed: see
-@uref{https://www.xquartz.org/releases/}.@footnote{At the time of writing
-the distribution was built/tested against 2.7.11 for compatibility with
-@R{} 4.0.0.}  These include the @pkg{tcltk} package and the @code{X11}
-device: attempting to use these without XQuartz will if possible remind
+@uref{https://www.xquartz.org/releases/}.@footnote{At the time of
+writing the Intel distribution was built/tested against 2.7.11 for
+compatibility with @R{} 4.0.0: the @cputype{arm64} one against 2.8.1.}
+These include the @pkg{tcltk} package and the @code{X11} device:
+attempting to use these without XQuartz will if possible remind
 you.@footnote{If @command{otool} is installed: it is part of the macOS
 Command Line Tools.}  This is also needed for some
 @cindex Cairo
 builds of the cairographics-based devices (which are not often used on
-macOS) such as @code{png(type = "cairo")} and @code{svg()}.
+macOS) such as @code{png(type = "cairo")} and @code{svg()} and some
+third-party packages (e.g.@: @CRANpkg{rgl}).
 
 If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the
@@ -1629,9 +1644,9 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer puts links to @command{R} and
-@command{Rscript} in @file{/usr/local/bin}.  If these are missing (as
-they may be under `Big Sur'), you can run directly the copies in
-@file{/Library/Frameworks/R.framework/Resources/} or link those yourself
+@command{Rscript} in @file{/usr/local/bin}.  If these are missing, you
+can run directly the copies in
+@file{/Library/Frameworks/R.framework/Resources/bin} or link those yourself
 to somewhere on your path.} so these can be typed as commands as on any
 other Unix-alike: see the next chapter of this manual.  There are some
 small differences which may surprise users of @R{} on other platforms,
@@ -1644,7 +1659,11 @@ highlighted in bold.
 Those using the @command{zsh} shell (the default for new user accounts
 as from Catalina) might find the command @command{R} being masked by the
 @command{zsh} builtin @command{r} (which recalls commands).  One can use
-a full path to @R{} in an alias, or add @code{disable r} to @file{~/.zshrc}.
+a full path to @R{} in an alias, or add @code{disable r} to
+@file{~/.zshrc}.
+
+If you have installed both installer packages on an @code{arm64} Mac,
+the last installed will be used.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
 It has been reported that running @Rapp{} may fail if no preferences are
@@ -1674,8 +1693,7 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit()} for data frames and matrices (the latter are the
 default for command-line @R{} but not @Rapp{}) requires
-@uref{https://www.xquartz.org/, XQuartz} to be installed.  So do
-the @pkg{tcltk} package and some third-party packages.
+@uref{https://www.xquartz.org/, XQuartz} to be installed.
 
 Under some rather nebulous circumstances messages have been seen from
 @code{fontconfig} about missing/unreadable configuration files when
@@ -1709,18 +1727,20 @@ sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
 @end example
 
 The installation consists of up to four Apple packages:@footnote{At the
-time of writing: use @command{pkgutil --pkgs | grep org.r-project} to
-check..}  @code{org.r-project.R.fw.pkg}, @code{org.r-project.R.GUI.pkg},
-@code{org.r-project.x86_64.tcltk.x11} and
-@code{org.r-project.x86_64.texinfo}. You can use @code{pkgutil --forget}
-if you want the Apple Installer to forget about the package without
-deleting its files (useful for the @R{} framework when installing
-multiple @R{} versions in parallel), or after you have deleted the
-files.
+time of writing: use @command{pkgutil --pkgs | grep -i org.r-project} to
+check..} for the Intel build, @code{org.R-project.R.fw.pkg},
+@code{org.R-project.R.GUI.pkg}, @code{org.r-project.x86_64.tcltk.x11}
+and @code{org.r-project.x86_64.texinfo}. You can use @code{sudo pkgutil
+--forget} if you want the Apple Installer to forget about the package
+without deleting its files (useful for the @R{} framework when
+installing multiple @R{} versions in parallel), or after you have
+deleted the files. @strong{NB:} the package names are case-sensitive and
+the @R{} domain is given inconsistently.
 
-Uninstalling the Tcl/Tk or Texinfo components (which are installed under
-@file{/usr/local}) is not as simple.  You can list the files they installed
-in a Terminal by
+Uninstalling the Tcl/Tk and Texinfo components (which are installed under
+@file{/usr/local} on a @cputype{x86_64} build and @file{/opt/R/arm64}
+for an @cputype{arm64} one) is not as simple.  You can list the files
+they installed in a Terminal by e.g.@:
 
 @example
 pkgutil --files org.r-project.x86_64.tcltk.x11
@@ -1746,22 +1766,18 @@ These are paths relative to @file{/}, the root of the file system.
 @section Multiple versions
 
 The installer will remove any previous version@footnote{More precisely,
-of the Apple package of the same name: this means that installing a package for
-3.6.x does not remove an installation for 4.0 or later.} of
-the @R{} framework which it finds installed.  This can be avoided by
-using @command{pkgutil --forget} (see the previous section).  However,
-note that different versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{4.1},
-@file{4.0} and so on, so it is not possible to have different
-@samp{4.x.y} versions installed for the same @samp{x}.
+of the Apple package of the same name: this means that installing a
+package for 3.6.x does not remove an installation for 4.0 or later, and
+that Intel and ARM versions can be installed together, apart from
+@code{org.R-project.R.GUI.pkg}.} of the @R{} framework which it finds
+installed.  This can be avoided by using @command{pkgutil --forget} (see
+the previous section).  However, note that different versions are
+installed under @file{/Library/Frameworks/R.framework/Versions} as
+@file{4.1} (or @file{4.1-arm64}), @file{4.1} and so on, so it is not
+possible to have different @samp{4.x.y} versions installed for the same
+@samp{x} and CPU type.
 
-A version of @R{} can be run directly from the command-line as e.g.@:
-@example
-/Library/Frameworks/R.framework/Versions/4.0/Resources/bin/R
-@end example
-
-@noindent
-However, @Rapp{} will always run the `current' version, that is the last
+@Rapp{} will always run the `current' version, that is the last
 installed version.
 @c A small utility, @command{Rswitch.app} (available at
 @c @url{https://mac.R-project.org/#other}: it is 32-bit so not usable on
