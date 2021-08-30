@@ -97,7 +97,6 @@ It is biased towards users of 64-bit Windows.
 * Can I run R from a CD or USB drive?::  
 * How do I UNinstall R?::       
 * What's the best way to upgrade?::  
-* There seems to be a limit on the memory it uses!::  
 * How can I keep workspaces for different projects in different directories?::  
 * How do I print from R?::      
 * Can I use R CMD BATCH?::      
@@ -186,7 +185,7 @@ starting @code{R i386} and one for 64-bit starting @code{R x64}
 
 You may also want to add command-line arguments at the end of the
 Target field (@emph{after} any final double quote, and separated by a
-space), for example @code{--sdi --max-mem-size=1G}.  You can also set
+space), for example @code{--sdi --no-environ}.  You can also set
 environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/myRlib}, and if you want to ensure that menus and
 messages are in (American) English, @code{LANGUAGE=en}.
@@ -291,7 +290,7 @@ If all else fails, you can just delete the whole directory in which R
 was installed.
 
 
-@node What's the best way to upgrade?, There seems to be a limit on the memory it uses!, How do I UNinstall R?, Installation and Usage
+@node What's the best way to upgrade?, How do I UNinstall R?, Installation and Usage
 @section What's the best way to upgrade?
 
 That's a matter of taste.  For most people the best thing to do is to
@@ -309,39 +308,7 @@ changes (e.g.@: from 4.0.2 to 4.1.0).  A simple way to do so is to
 copy (say) @file{R\win-library\4.0} to @file{R\win-library\4.1} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
-
-@node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, What's the best way to upgrade?, Installation and Usage
-@section There seems to be a limit on the memory it uses!
-
-Indeed there is.  It is set by the command-line flag
-@option{--max-mem-size} (@pxref{How do I install R for Windows?}) or by
-environment variable @env{R_MAX_MEM_SIZE}. 
-
-For a 64-bit build of R it defaults to the amount of RAM.
-
-For a 32-bit build of R it defaults to the smaller of the amount of
-physical RAM in the machine and 0.5GB less than the limit on user
-virtual memory for a process (most often 2GB when using a 32-bit edition
-of Windows).
-
-Use @code{?Memory} and @code{?memory.size} for information about memory
-usage.  The limit can be raised (if possible) by calling
-@code{memory.limit} within a running R session.
-
-The 32-bit executables support up to 3GB of user address space per
-process under suitably enabled versions of 32-bit Windows (see
-@uref{https://docs.microsoft.com/@/en-gb/@/windows/@/desktop/@/Memory/@/physical-address-extension},
-@uref{https://docs.microsoft.com/@/en-gb/@/windows/@/desktop/@/Memory/@/4-gigabyte-tuning};
-this is not enabled by default).  On such systems, the default for
-@code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
-all but the earliest 64-bit versions of Windows the user address space
-for a 32-bit process is 4GB, and there the default for
-@code{--max-mem-size} is the smaller of the amount of RAM and 3.5GB.
-
-
-@c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
-
-@node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
+@node How can I keep workspaces for different projects in different directories?, How do I print from R?, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?
 
 Create a separate shortcut for each project: see Q2.5.  All the paths to

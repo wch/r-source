@@ -60,6 +60,16 @@
       \code{diff(ylim)} is infinite.
 
       \item \code{nclass.FD()} gains a \code{digits} option.
+
+      \item \R on Windows uses again the system memory allocator. 
+      Previously, \R shipped with Doug Lea's allocator as a replacement to
+      overcome performance limitations seen with system allocators on
+      earlier versions of Windows.  Like on Unix-alike, once using the
+      system allocator, \R on Windows no longer provides
+      \code{memory.limit()}, \code{memory.size()}, command-line option
+      \option{--max-mem-size} and environment variable \env{R_MAX_MEM_SIZE}. 
+      The allocation limit was important on 32-bit Windows, but \R no longer
+      supports 32-bit builds.
     }
   }
 

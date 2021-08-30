@@ -225,7 +225,6 @@
  R_lazyLoadDBinsertValue
  R_localtime
  R_localtime_r
- R_max_memory
  R_max_num_math_threads
  R_mktime
  R_moduleCdynload
@@ -415,10 +414,6 @@
  RguiPackageMenu
  Rgui_Edit
  Rgui_configure
- Rm_calloc
- Rm_free
- Rm_malloc
- Rm_realloc
  Rsockselect
  Rstrlen
  Rstrwid
@@ -829,7 +824,6 @@
  do_memDecompress
  do_memlimits
  do_memoryprofile
- do_memsize
  do_merge
  do_mget
  do_missing
@@ -1310,7 +1304,6 @@
  lzma_vli_decode
  lzma_vli_encode
  lzma_vli_size
- mallinfo
  mb_char_len
  mbcsValid
  menuclear

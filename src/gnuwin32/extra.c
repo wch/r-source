@@ -284,60 +284,6 @@ void Rsleep(double timeint)
 
 }
 
-
-#define MALLINFO_FIELD_TYPE size_t
-struct mallinfo {
-    MALLINFO_FIELD_TYPE arena;    /* non-mmapped space allocated from system */
-    MALLINFO_FIELD_TYPE ordblks;  /* number of free chunks */
-    MALLINFO_FIELD_TYPE smblks;   /* number of fastbin blocks */
-    MALLINFO_FIELD_TYPE hblks;    /* number of mmapped regions */
-    MALLINFO_FIELD_TYPE hblkhd;   /* space in mmapped regions */
-    MALLINFO_FIELD_TYPE usmblks;  /* maximum total allocated space */
-    MALLINFO_FIELD_TYPE fsmblks;  /* space available in freed fastbin blocks */
-    MALLINFO_FIELD_TYPE uordblks; /* total allocated space */
-    MALLINFO_FIELD_TYPE fordblks; /* total free space */
-    MALLINFO_FIELD_TYPE keepcost; /* top-most, releasable (via malloc_trim) space */
-};
-extern R_size_t R_max_memory;
-
-struct mallinfo mallinfo(void);
-
-SEXP in_memsize(SEXP ssize)
-{
-    SEXP ans;
-    int maxmem = NA_LOGICAL;
-
-    if(isLogical(ssize)) 
-	maxmem = asLogical(ssize);
-    else if(isReal(ssize)) {
-	R_size_t newmax;
-	double mem = asReal(ssize);
-	if (!R_FINITE(mem))
-	    error(_("incorrect argument"));
-#ifndef _WIN64
-	if(mem >= 4096)
-	    error(_("don't be silly!: your machine has a 4Gb address limit"));
-#endif
-	newmax = mem * 1048576.0;
-	if (newmax < R_max_memory)
-	    warning(_("cannot decrease memory limit: ignored"));
-	else
-	    R_max_memory = newmax;
-    } else
-	error(_("incorrect argument"));
-	
-    PROTECT(ans = allocVector(REALSXP, 1));
-    if(maxmem == NA_LOGICAL)
-	REAL(ans)[0] = R_max_memory;
-    else if(maxmem)
-	REAL(ans)[0] = mallinfo().usmblks;
-    else
-	REAL(ans)[0] = mallinfo().uordblks;
-    REAL(ans)[0] /= 1048576.0;
-    UNPROTECT(1);
-    return ans;
-}
-
 SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP path = R_NilValue, ans;

@@ -77,7 +77,7 @@ endif
 
 dllversion-RESFLAGS = -I../include
 CSOURCES = \
-  console.c dynload.c editor.c embeddedR.c extra.c malloc.c \
+  console.c dynload.c editor.c embeddedR.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rt_complete.c \
   rui.c run.c shext.c sys-win32.c system.c dos_wglob.c
 OBJS = $(CSOURCES:.c=.o) dllversion.o
@@ -428,7 +428,6 @@ distribution:
 
 ## ============= End of maintainer targets ========================
 
-# Dependencies: malloc.c doesn't have any
 DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)

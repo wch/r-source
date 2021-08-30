@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/sysutils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,9 +16,17 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-memory.size <- function(max = FALSE) round(.Call(C_memsize, max), 2L)
+memory.size <- function(max = FALSE)
+{
+    warning("'memory.size()' is no longer supported", call.=FALSE)
+    Inf
+}
 
-memory.limit <- function(size = NA) trunc(.Call(C_memsize, size))
+memory.limit <- function(size = NA)
+{
+    warning("'memory.limit()' is no longer supported", call.=FALSE)
+    Inf
+}
 
 DLL.version <- function(path) .Call(C_dllversion, path)
 

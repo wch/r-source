@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2017   The R Core Team.
+ *  Copyright (C) 2012-2021   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,7 +64,6 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(getWindowsHandle, 1),
     CALLDEF(getWindowsHandles, 2),
     CALLDEF(loadRconsole, 1),
-    CALLDEF(memsize, 1),
     CALLDEF(shortpath, 1),
 #endif
 
