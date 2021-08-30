@@ -4905,7 +4905,7 @@ OpenJDK including FreeBSD and most Linux distributions).
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 (announced 16 17)
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 (announced 18)
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in use.
@@ -4953,7 +4953,7 @@ package should only be requiring a JRE unless providing its own Java
 interface.
 
 Java 8 is still in widespread use (and may remain so because of licence
-changes, although Oracle will end its support even for personal use at
+changes, although Oracle ended its support even for personal use at
 the end of 2020), but Java 7 was the latest provided by Oracle for
 several platforms.
 
