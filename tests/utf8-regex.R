@@ -137,6 +137,16 @@ stopifnot(eq(z, strsplit(txt, "[a-c]", useBytes = TRUE)[[1]]))
 stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE)[[1]]))
 stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE, useBytes = TRUE)[[1]]))
 
+## strsplit did not useBytes correctly in POSIX mode in R < 4.2 as
+## MBCS would still be interpreted
+x <- "\xf1\xa1_\xc5\xa2"
+split.a <- list(c("\xf1\xa1", "\xc5\xa2"))
+split.b <- list(c("\xf1", "_\xc5\xa2"))
+stopifnot(identical(strsplit(x, "_", useBytes=TRUE, perl=TRUE), split.a),
+          identical(strsplit(x, "\xa1", useBytes=TRUE, perl=TRUE), split.b),
+          identical(strsplit(x, "_", useBytes=TRUE), split.a),
+          identical(strsplit(x, "\xa1", useBytes=TRUE), split.b))
+
 ## from strsplit.Rd
 z <- strsplit("A text I want to display with spaces", NULL)[[1]]
 stopifnot(identical(z,
