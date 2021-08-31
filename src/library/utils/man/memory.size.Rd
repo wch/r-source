@@ -21,3 +21,4 @@ memory.size(max = FALSE)
 memory.limit(size = NA)
 }
 \keyword{utilities}
+\keyword{internal}
