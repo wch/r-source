@@ -1293,6 +1293,11 @@ SEXP L_newpage()
 	GENewPage(&gc, dd);
     }
     
+    return R_NilValue;
+}
+
+SEXP L_clearDefinitions(SEXP clearGroups) {
+    pGEDevDesc dd = getDevice();
     /* Clear all device patterns */
     dd->dev->releasePattern(R_NilValue, dd->dev);
     /* Clear all clip paths */
@@ -1300,9 +1305,10 @@ SEXP L_newpage()
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
     /* Clear all masks */
     dd->dev->releaseMask(R_NilValue, dd->dev);
-    /* Clear all groups */
-    dd->dev->releaseGroup(R_NilValue, dd->dev);
-
+    if (LOGICAL(clearGroups)[0]) {
+        /* Clear all groups */
+        dd->dev->releaseGroup(R_NilValue, dd->dev);
+    }
     return R_NilValue;
 }
 

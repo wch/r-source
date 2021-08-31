@@ -54,6 +54,7 @@ static const R_CallMethodDef callMethods[] = {
     LCALLDEF(currentGPar, 0),
     LCALLDEF(newpagerecording, 0),
     LCALLDEF(newpage, 0),
+    LCALLDEF(clearDefinitions, 1),
     LCALLDEF(initGPar, 0),
     LCALLDEF(initViewportStack, 0),
     LCALLDEF(initDisplayList, 0),

@@ -332,7 +332,8 @@ current.rotation <- function() {
 # you should provide an argument to allow people to turn it off
 # so that they can use your function within a parent viewport
 # (rather than the whole device) if they want to.
-grid.newpage <- function(recording=TRUE) {
+grid.newpage <- function(recording=TRUE,
+                         clearGroups=TRUE) {
     for (fun in getHook("before.grid.newpage"))  {
         if(is.character(fun)) fun <- get(fun)
         try(fun())
@@ -342,6 +343,7 @@ grid.newpage <- function(recording=TRUE) {
     # on a new device
     .Call(C_newpagerecording)
     .Call(C_newpage)
+    .Call(C_clearDefinitions, as.logical(clearGroups))
     .Call(C_initGPar)
     .Call(C_initViewportStack)
     if (recording) {

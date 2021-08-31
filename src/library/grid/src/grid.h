@@ -302,6 +302,7 @@ SEXP L_setEngineRecording(SEXP value);
 SEXP L_currentGPar();
 SEXP L_newpagerecording();
 SEXP L_newpage();
+SEXP L_clearDefinitions(SEXP clearGroups);
 SEXP L_initGPar();
 SEXP L_initViewportStack();
 SEXP L_initDisplayList();
