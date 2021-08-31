@@ -61,15 +61,13 @@
 
       \item \code{nclass.FD()} gains a \code{digits} option.
 
-      \item \R on Windows uses again the system memory allocator. 
-      Previously, \R shipped with Doug Lea's allocator as a replacement to
-      overcome performance limitations seen with system allocators on
-      earlier versions of Windows.  Like on Unix-alike, once using the
-      system allocator, \R on Windows no longer provides
-      \code{memory.limit()}, \code{memory.size()}, command-line option
-      \option{--max-mem-size} and environment variable \env{R_MAX_MEM_SIZE}. 
-      The allocation limit was important on 32-bit Windows, but \R no longer
-      supports 32-bit builds.
+      \item \R on Windows now uses the system memory allocator.  Doug
+      Lea's allocator was used since \R 1.2.0 to mitigate performance
+      limitations seen with system allocators on earlier versions of
+      Windows.
+
+      \code{memory.limit()} and \code{memory.size()} are now stubs on
+      Windows (as on Unix-alikes).
     }
   }
 
@@ -156,6 +154,11 @@
       warning for \samp{http://} and \samp{https://} URIs for both
       \code{download.file()} and \code{url()}. (It is no longer the default
       method.)
+
+      \item On Windows, the command-line option \option{--max-mem-size}
+      and environment variable \env{R_MAX_MEM_SIZE} are defunct.  The
+      memory allocation limit was important for 32-bit Windows builds,
+      but these are no longer supported.
     }
   }
 
