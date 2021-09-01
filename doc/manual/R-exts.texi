@@ -13542,10 +13542,12 @@ header files when using these entry points.
 This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
 @code{warning}: whether these matter depends on the OS and toolchain,
-with many problem reports involving @command{clang++}.}, and can be
-eliminated by defining @code{R_NO_REMAP} (before including any @R{}
-headers) and prepending @samp{Rf_} to @emph{all} the function names used
-from @file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
+with many problem reports involving @command{clang++}.  As from
+@command{clang} 13.0.0, the remapping of @code{match} breaks the
+subsequent inclusion of @file{omp.h}.}, and can be eliminated by
+defining @code{R_NO_REMAP} (before including any @R{} headers) and
+prepending @samp{Rf_} to @emph{all} the function names used from
+@file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
 usually be avoided by including other headers (such as system headers
 and those for external software used by the package) before any @R{}
 headers. (Headers from other packages may include @R{} headers directly
