@@ -1,6 +1,6 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Random}
@@ -66,14 +66,21 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     The Wichmann--Hill generator has a cycle length of
     \eqn{6.9536 \times 10^{12}}{6.9536e12} (=
     \code{prod(p-1)/4}, see \emph{Applied Statistics} (1984)
-    \bold{33}, 123 which corrects the original article).}
+    \bold{33}, 123 which corrects the original article).
+    It exhibits 12 clear failures in the TestU01 Crush suite and 22
+    in the BigCrush suite (\emph{L'Ecuyer}, 2007).}
 
     \item{\code{"Marsaglia-Multicarry"}:}{
     A \emph{multiply-with-carry} RNG is used, as recommended by George
     Marsaglia in his post to the mailing list \file{sci.stat.math}.
-    It has a period of more than \eqn{2^{60}}{2^60} and has passed
-    all tests (according to Marsaglia).  The seed is two integers (all
-    values allowed).}
+    It has a period of more than \eqn{2^{60}}{2^60}.
+
+    It exhibits 40 clear failures in L'Ecuyer's TestU01 Crush suite.
+    Combined with Ahrens-Dieter or Kinderman-Ramage it exhibits
+    deviations from normality even for univariate distribution
+    generation.  See \PR{18168} for a discussion.
+
+    The seed is two integers (all values allowed).}
 
     \item{\code{"Super-Duper"}:}{
     Marsaglia's famous Super-Duper from the 70's.  This is the original
@@ -87,7 +94,10 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     The two seeds are the Tausworthe and congruence long integers,
     respectively.  A one-to-one mapping to S's \code{.Random.seed[1:12]}
     is possible but we will not publish one, not least as this generator
-    is \bold{not} exactly the same as that in recent versions of S-PLUS.}
+    is \bold{not} exactly the same as that in recent versions of S-PLUS.
+
+    It exhibits 25 clear failures in the TestU01 Crush suite (\emph{L'Ecuyer}, 2007).
+    }
 
     \item{\code{"Mersenne-Twister"}:}{
       From Matsumoto and Nishimura (1998); code updated in 2002.
@@ -100,6 +110,9 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       R uses its own initialization method due to B. D. Ripley and is
       not affected by the initialization issue in the 1998 code of
       Matsumoto and Nishimura addressed in a 2002 update.
+
+      It exhibits 2 clear failures in each of the TestU01 Crush and the
+      BigCrush suite (\emph{L'Ecuyer}, 2007).
     }
 
     \item{\code{"Knuth-TAOCP-2002"}:}{
@@ -118,10 +131,16 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       The 2002 version was not backwards compatible with the earlier
       version: the initialization of the GFSR from the seed was altered.
       \R did not allow you to choose consecutive seeds, the reported
-      \sQuote{weakness}, and already scrambled the seeds.
+      \sQuote{weakness}, and already scrambled the seeds. Otherwise,
+      the algorithm is identical to Knuth-TAOCP-2002, with the same
+      lagged Fibonacci recurrence formula.
 
       Initialization of this generator is done in interpreted \R code
       and so takes a short but noticeable time.
+
+      It exhibits 3 clear failure in the TestU01 Crush suite and
+      4 clear failures in the BigCrush suite
+      (\emph{L'Ecuyer}, 2007).
     }
     \item{\code{"L'Ecuyer-CMRG"}:}{
       A \sQuote{combined multiple-recursive generator} from L'Ecuyer
@@ -138,6 +157,9 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
       This is not particularly interesting of itself, but provides the
       basis for the multiple streams used in package \pkg{parallel}.
       % See \code{\link{RngStream}}.
+
+      It exhibits 6 clear failures in each of the TestU01 Crush and the
+      BigCrush suite (\emph{L'Ecuyer}, 2007).
     }
 
     \item{\code{"user-supplied"}:}{
@@ -271,6 +293,14 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   random number generators.
   \emph{Operations Research}, \bold{47}, 159--164.
   \doi{10.1287/opre.47.1.159}.
+
+  L'Ecuyer, P. and Simard, R. (2007).
+  TestU01: A C Library for Empirical Testing of Random Number Generators
+  \emph{ACM Transactions on Mathematical Software}, \bold{33}, Article 22.
+  \doi{10.1145/1268776.1268777}.
+  \cr The TestU01 C library is available from
+  \url{http://simul.iro.umontreal.ca/testu01/tu01.html} or also
+  \url{https://github.com/umontreal-simul/TestU01-2009}.
 
   Marsaglia, G. (1997).
   \emph{A random number generator for C}.

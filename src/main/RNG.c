@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2019  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -459,8 +459,9 @@ static void RNGkind(RNGtype newkind)
  */
     if (newkind == (RNGtype)-1) newkind = RNG_DEFAULT;
     switch(newkind) {
-    case WICHMANN_HILL:
     case MARSAGLIA_MULTICARRY:
+	warning(_("RNGkind: Marsaglia-Multicarry has poor statistical properties"));
+    case WICHMANN_HILL:
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
     case KNUTH_TAOCP:
@@ -487,6 +488,12 @@ static void Norm_kind(N01type kind)
 {
     /* N01type is an enumeration type, so this will probably get
        mapped to an unsigned integer type. */
+    if (kind == KINDERMAN_RAMAGE && RNG_kind == MARSAGLIA_MULTICARRY) {
+	warning(_("RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-Multicarry"));
+    }
+    if (kind == AHRENS_DIETER && RNG_kind == MARSAGLIA_MULTICARRY) {
+	warning(_("RNGkind: deviations from normality for Ahrens-Dieter + Marsaglia-Multicarry"));
+    }
     if (kind == (N01type)-1) kind = N01_DEFAULT;
     if (kind > KINDERMAN_RAMAGE)
 	error(_("invalid Normal type in 'RNGkind'"));

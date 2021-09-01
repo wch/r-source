@@ -92,7 +92,7 @@
       completes an \command{R CMD build} change in \R 3.0.0 and affects
       packages built before \R 3.0.2. Such packages should be re-made
       with \command{R CMD build} to have the tangled \R code of vignettes
-      shipped with the tarball. 
+      shipped with the tarball.
     }
   }
 
@@ -221,7 +221,7 @@
       \item The undocumented limit of 4095 bytes on messages from the
       S-compatibility macros \code{PROBLEM} and \code{MESSAGE} is now
       documented and longer messages will be silently truncated rather
-      than potentially causing segfaults. 
+      than potentially causing segfaults.
     }
   }
 
@@ -244,7 +244,11 @@
       \item \code{hist(<Date>, ...)} and \code{hist(<POSIXt>, ...)}
       no longer pass arguments for \code{rect()} (such as \code{col} and
       \code{density}) to \code{axis()}.  (Thanks to Sebastian Meyer's
-      \PR{18171}.)      
+      \PR{18171}.)
+
+      \item Setting the RNG to \code{"Marsaglia-Multicarry"} e.g., by
+      \code{RNGkind()}, now warns in more places, thanks to
+      André Gillibert's report and patch in \PR{18168}.
     }
   }
 }
