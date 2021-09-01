@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2015 The  R Core Team
+ *  Copyright (C) 2000--2021 The  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -114,6 +114,8 @@
 
 /* additions for density functions (C.Loader) */
 #define R_D_fexp(f,x)     (give_log ? -0.5*log(f)+(x) : exp(x)/sqrt(f))
+// version working with rf := sqrt(f) [avoiding overflow in computation of f in the caller]
+#define R_D_rtxp(rf,x)    (give_log ? -log(rf)+(x) : exp(x)/(rf))
 
 /* [neg]ative or [non int]eger : */
 #define R_D_negInonint(x) (x < 0. || R_nonint(x))

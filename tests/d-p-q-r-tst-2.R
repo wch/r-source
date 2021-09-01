@@ -771,5 +771,26 @@ stopifnot(dn + dL > 0,
 ## accuracy loss of 6 and more digits in R <= 4.1.0
 
 
+## PR#15628 ebd0() for dpois() [for now] \\  dpois(x, *) for  2\pi x >= DMAX
+stopifnot(exprs = {
+ print(abs(dpois(  40, 7.5)/ 6.81705586862060455e-17 -1)) < 6e-16 # 2.66e-15 in R <= 4.1.1
+ print(abs(dpois(1400,1000)/ 1.46677334419656833e-33 -1)) < 8e-16 # 1.71e-14 in R <= 4.1.1
+})
+## very large x:
+x <- trunc(2^(1000+ head(seq(1,24, by=1/64), -1)))
+L <- tail(x,1)
+dpxx <-  dpois(x,x) ## had ended in many 0's
+ldpxx <- dpois(x,x, log=TRUE) # ... -Inf
+(d <- mean(dlp <- diff(ldpxx)))# -0.005415
+stopifnot(exprs = {
+    dpxx > 0
+    is.finite(ldpxx)
+    print(abs(print(dpois(L,L))/ (1/sqrt(2*pi)/sqrt(L)) -1)) < 1e-15 # see 1.11e-16
+    abs(range(dlp) - d) < 1e-12 # seen 4.4e-14, was NaN in R <= 4.1.1
+    all.equal(ldpxx, log(dpxx), tol = 1e-15)
+})
+## dpois(x,x) underflowed to zero in R <= 4.1.1 for such large x.
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

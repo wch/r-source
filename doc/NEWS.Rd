@@ -68,6 +68,15 @@
 
       \code{memory.limit()} and \code{memory.size()} are now stubs on
       Windows (as on Unix-alikes).
+
+      \item The R Mathlib internal function \code{bd0()}, indirectly called
+      from a dozen of probability density and distribution functions such
+      as \code{dpois()}, \code{dbinom()}, \code{dgamma()}, \code{pgamma()} etc,
+      has been complemented by a more sophisticated, (mostly) more accurate
+      \code{ebd0()}, currently called only by internal \code{dpois_raw()}
+      improving accuracy for \R level \code{dpois()} and potentially others
+      calling it such as \code{dnbinom()}, \code{dgamma()} or \code{pgamma()}.
+      (Thanks to Morten Welinder's \PR{15628}.)
     }
   }
 
