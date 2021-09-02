@@ -80,6 +80,10 @@
 
       \item \code{write.table()} gets \code{sep = " "} argument as
       suggested by Thomas Soeiro.
+
+      \item The names of locale categories supported by \R's
+      \code{Sys.getlocale()} and \code{Sys.setlocale()} are now provided by
+      variable \code{.LC.categories}.
     }
   }
 
