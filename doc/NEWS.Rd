@@ -77,6 +77,9 @@
       improving accuracy for \R level \code{dpois()} and potentially others
       calling it such as \code{dnbinom()}, \code{dgamma()} or \code{pgamma()}.
       (Thanks to Morten Welinder's \PR{15628}.)
+
+      \item \code{write.table()} gets \code{sep = " "} argument as
+      suggested by Thomas Soeiro.
     }
   }
 
