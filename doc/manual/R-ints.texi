@@ -1123,10 +1123,10 @@ operations is termed the @dfn{write barrier} and is done by making the
 @code{SEXP} opaque and only providing access via functions (which cannot
 be used as lvalues in assignments in C).
 
-All code in @R{} extensions is by default behind the write barrier.  The
-only way to obtain direct access to the internals of the @code{SEXPREC}s
-is to define @samp{USE_RINTERNALS} before including header file
-@file{Rinternals.h}, which is normally defined in @file{Defn.h}.  To
+All code in @R{} extensions is behind the write barrier.  @R{}
+extensions cannot directly access the internals of the @code{SEXPREC}s.
+Base code can access internals if @samp{USE_RINTERNALS} is defined.
+This is normally defined in @file{Defn.h} when @R{} is compiled.  To
 enable a check on the way that the access is used, @R{} can be compiled
 with flag @option{--enable-strict-barrier} which ensures that header
 @file{Defn.h} does not define @samp{USE_RINTERNALS} and hence that
