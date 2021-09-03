@@ -1123,10 +1123,10 @@ operations is termed the @dfn{write barrier} and is done by making the
 @code{SEXP} opaque and only providing access via functions (which cannot
 be used as lvalues in assignments in C).
 
-All code in @R{} extensions is by default behind the write barrier.  The
-only way to obtain direct access to the internals of the @code{SEXPREC}s
-is to define @samp{USE_RINTERNALS} before including header file
-@file{Rinternals.h}, which is normally defined in @file{Defn.h}.  To
+All code in @R{} extensions is behind the write barrier.  @R{}
+extensions cannot directly access the internals of the @code{SEXPREC}s.
+Base code can access internals if @samp{USE_RINTERNALS} is defined.
+This is normally defined in @file{Defn.h} when @R{} is compiled.  To
 enable a check on the way that the access is used, @R{} can be compiled
 with flag @option{--enable-strict-barrier} which ensures that header
 @file{Defn.h} does not define @samp{USE_RINTERNALS} and hence that
@@ -1574,22 +1574,7 @@ override for @code{c}.
 @section Memory allocators
 
 @R{}'s memory allocation is almost all done via routines in file
-@file{src/main/memory.c}.  It is important to keep track of where memory
-is allocated, as the Windows port (by default) makes use of a memory
-allocator that differs from @code{malloc} etc as provided by MinGW.
-Specifically, there are entry points @code{Rm_malloc}, @code{Rm_free},
-@code{Rm_calloc} and @code{Rm_free} provided by file
-@file{src/gnuwin32/malloc.c}.  This was done for two reasons.  The
-primary motivation was performance: the allocator provided by MSVCRT
-@emph{via} MinGW was far too slow at handling the many small allocations
-that the allocation system for @code{SEXPREC}s uses.  As a side benefit,
-we can set a limit on the amount of allocated memory: this is useful as
-whereas Windows does provide virtual memory it is relatively far slower
-than many other @R{} platforms and so limiting @R{}'s use of swapping is
-highly advantageous.  The high-performance allocator is only called from
-@file{src/main/memory.c}, @file{src/main/regex.c}, @file{src/extra/pcre}
-and @file{src/extra/xdr}: note that this means that it is not used in
-packages.
+@file{src/main/memory.c}. 
 
 The rest of @R{} should where possible make use of the allocators made
 available by file @file{src/main/memory.c}, which are also the methods

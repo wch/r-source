@@ -4895,20 +4895,21 @@ and its presence tested like any other external command.} and tested at
 runtime (not least as the Java installation when the package is
 installed might not be the same as when the package is run and will not
 be for binary packages).  Java 8 is available for fewer platforms than
-Java 7, and Java 11 for fewer still (at the time of writing, only
+Java 7 was, and Java 11 for fewer still (at the time of writing, only
 @cputype{x86_64} Linux, macOS, 64-bit Windows and 64-bit Solaris 11 from
-Oracle; Linux on several CPUs, Intel-based macOS, 32-
-and 64-bit Windows and AIX from from @uref{https://adoptopenjdk.net} and
+Oracle; Linux on several 64-bit CPUs, Intel-based macOS, 32- and 64-bit
+Windows and AIX from from @uref{https://adoptium.net/} and
 @cputype{arm64} macOS from Zulu -- several OSes provide builds of
 OpenJDK including FreeBSD and most Linux distributions).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 (announced 16 17)
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 (announced 18)
 @end example
 @noindent
-and as from 2018 a year.month scheme such as @samp{18.9} is also in use.
+and as from 2018 a year.month scheme such as @samp{18.9} is also in
+use.  Fortunately only the integer values are likely to be relevant.
 
 A suitable test for Java at least version 8 for packages using
 @CRANpkg{rJava} would be something like
@@ -4922,11 +4923,11 @@ if(substr(jv, 1L, 2L) == "1.") @{
 @end example
 @noindent
 Java 9 changed the format of this string (which used to be something
-like @samp{1.8.0_162-b12}); Java 11 gives @code{jv} as @samp{11+28}
-whereas Java 10.0.2 gave
-@samp{10.0.2+10}. (@uref{https://openjdk.java.net/jeps/322} details the
-current scheme.  Note that it is necessary to allow for pre-releases
-like @samp{11-ea+22}.)
+like @samp{1.8.0_292-b10}); Java 11 gave @code{jv} as @samp{11+28}
+whereas Java 11.0.11 gives @samp{11.0.11+9}.
+(@uref{https://openjdk.java.net/jeps/322} details the current scheme.
+Note that it is necessary to allow for pre-releases like
+@samp{11-ea+22}.)
 
 Note too that the compiler used to produce a @code{jar} can impose a minimum
 Java version, often resulting in an arcane message like
@@ -4952,10 +4953,11 @@ Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
 interface.
 
+@c https://endoflife.date/java
 Java 8 is still in widespread use (and may remain so because of licence
-changes, although Oracle will end its support even for personal use at
-the end of 2020), but Java 7 was the latest provided by Oracle for
-several platforms.
+changes: although Oracle ended its support even for personal use at the
+end of 2020, OpenJDK has full support until 2022-03), but Java 7 was the
+latest provided by Oracle for several platforms.
 
 @item
 A package with a hard-to-satisfy system requirement is by definition not
@@ -13392,20 +13394,10 @@ functions.)
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
 
-If efficiency is essential, internal versions of some accessors can be
-obtained by defining @samp{USE_RINTERNALS} before including
-@file{Rinternals.h}.  If you find it necessary to do so, please do test
-that your code compiles without @samp{USE_RINTERNALS} defined, as this
-provides a stricter test that the accessors have been used correctly,
-and be prepared to adjust your code should @R{} internals change.  (The
-use of @samp{USE_RINTERNALS} with @file{Rdefines.h} is not supported.)
-
-The accessor functions, and other functions in the @R{} API, are also
-subject to change to support the @samp{ALTREP} project
-(@uref{https://svn.r-project.org/R/branches/ALTREP/ALTREP.html}). Code
-that does not define @samp{USE_RINTERNALS} should not be affected by
-these changes, but code that does define @samp{USE_RINTERNALS} may need
-to be adjusted.
+Formerly it was possible for packages to obtain internal versions of
+some accessors by defining @samp{USE_RINTERNALS} before including
+@file{Rinternals.h}. This is no longer the case. Defining
+@samp{USE_RINTERNALS} now has no effect.
 
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
@@ -13540,10 +13532,12 @@ header files when using these entry points.
 This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{vector} and
 @code{warning}: whether these matter depends on the OS and toolchain,
-with many problem reports involving @command{clang++}.}, and can be
-eliminated by defining @code{R_NO_REMAP} (before including any @R{}
-headers) and prepending @samp{Rf_} to @emph{all} the function names used
-from @file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
+with many problem reports involving @command{clang++}.  As from
+@command{clang} 13.0.0, the remapping of @code{match} breaks the
+subsequent inclusion of @file{omp.h}.}, and can be eliminated by
+defining @code{R_NO_REMAP} (before including any @R{} headers) and
+prepending @samp{Rf_} to @emph{all} the function names used from
+@file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
 usually be avoided by including other headers (such as system headers
 and those for external software used by the package) before any @R{}
 headers. (Headers from other packages may include @R{} headers directly

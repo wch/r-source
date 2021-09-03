@@ -8764,7 +8764,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
         if (pd->currentMask >= 0) {
             PDFwriteMask(pd->currentMask, pd);
         }
-        PDFwrite(buf, 100, "%.2f %.2f %.2f %.2f re", pd, x0, y0, x1-x0, y1-y0);
+        PDFwrite(buf, 100, "%.2f %.2f %.2f %.2f re\n", pd, x0, y0, x1-x0, y1-y0);
         if (!pd->appendingClipPath) {
             switch(code) {
             case 1: PDFwrite(buf, 100, " S\n", pd); break;

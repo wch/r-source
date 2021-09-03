@@ -1,73 +1,24 @@
 % File src/library/utils/man/memory.size.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memory.size}
 \alias{memory.size}
 \alias{memory.limit}
-\title{Report on Memory Allocation (on Windows)}
+\title{Report on Memory Allocation (no longer supported)}
 \description{
   \describe{
-  \item{On MS Windows,}{
-    \code{memory.size()} reports the current or maximum memory allocation of
-    the \code{malloc} function used in this version of \R.
 
-    \code{memory.limit()} reports or increases the limit in force
-    on the total allocation.}
-
-  \item{On non-Windows platforms}{these are
-    stubs which report infinity (\code{\link{Inf}}) with a warning.}
-  }
+  These functions are currently stubs which report infinity
+  (\code{\link{Inf}}) with a warning on all platforms.  OS's own facilities
+  can be used on some systems to limit memory allocation.
+ }
 }
 \usage{
 memory.size(max = FALSE)
 
 memory.limit(size = NA)
 }
-\arguments{
-  \item{max}{logical.  If \code{TRUE} the maximum amount of memory
-    obtained from the OS is reported, if \code{FALSE} the amount
-    currently in use, if \code{NA} the memory limit.}
-  \item{size}{numeric.  If \code{NA} report the memory limit, otherwise
-    request a new limit, in Mb.  Only values of up to 4095 are allowed on
-    32-bit \R builds, but see \sQuote{Details}.}
-}
-\details{
-  Command-line flag \option{--max-mem-size} sets the maximum value of
-  obtainable memory (including a very small amount of housekeeping
-  overhead).  This cannot exceed 3Gb on 32-bit Windows, and most
-  versions are limited to 2Gb.  The minimum is currently 32Mb.
-
-  If 32-bit \R is run on most 64-bit versions of Windows the maximum
-  value of obtainable memory is just under 4Gb.  For a 64-bit versions
-  of \R under 64-bit Windows the limit is currently 8Tb.
-
-  Memory limits can only be increased.
-
-  Environment variable \env{R_MAX_MEM_SIZE} provides another way to
-  specify the initial limit.
-}
-\value{
-  A number: On Windows, size in Mb (1048576 bytes), rounded to 0.01 Mb for \code{memory.size}
-  and rounded down for \code{memory.limit}.
-  \cr On other platforms: \code{\link{Inf}} always.
-}
-\note{
-  These functions exist on all platforms, but on non-Windows always
-  report infinity as \R does itself provide limits on memory
-  allocation---the OS's own facilities can be used.
-}
-\seealso{
-  \link{Memory-limits} for other limits.
-
-  On Windows: The rw-FAQ for more details and references.
-}
-\examples{
-if(.Platform$OS.type == "windows") withAutoprint({
-memory.size()
-memory.size(TRUE)
-memory.limit()
-})
-}
 \keyword{utilities}
+\keyword{internal}

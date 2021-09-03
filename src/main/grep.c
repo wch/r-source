@@ -918,8 +918,12 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (mbcslocale && !mbcsValid(split))
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
-	    if ((rc = tre_regcomp(&reg, split, cflags)))
-		reg_report(rc, &reg, split);
+	    if (useBytes)
+		rc = tre_regcompb(&reg, split, cflags);
+	    else
+		rc = tre_regcomp(&reg, split, cflags);
+
+	    if(rc) reg_report(rc, &reg, split);
 
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
@@ -945,11 +949,20 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		ntok = 0;
 		bufp = buf;
 		if (*bufp) {
-		    while((rc = tre_regexec(&reg, bufp, 1, regmatch, 0)) == 0) {
+		    if (useBytes) {
+			while(!(rc = tre_regexecb(&reg, bufp, 1, regmatch, 0))) {
 			/* Empty matches get the next char, so move by one. */
 			bufp += MAX(regmatch[0].rm_eo, 1);
 			ntok++;
 			if (*bufp == '\0') break;
+		    }
+		    } else {
+			while(!(rc = tre_regexec(&reg, bufp, 1, regmatch, 0))) {
+			    /* Empty matches get the next char, so move by one. */
+			    bufp += MAX(regmatch[0].rm_eo, 1);
+			    ntok++;
+			    if (*bufp == '\0') break;
+			}
 		    }
 		    // AFAICS the only possible error report is REG_ESPACE
 		    if (rc == REG_ESPACE)
@@ -962,7 +975,10 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		bufp = buf;
 		pt = Realloc(pt, strlen(buf)+1, char);
 		for (j = 0; j < ntok; j++) {
-		    int rc = tre_regexec(&reg, bufp, 1, regmatch, 0);
+		    int rc;
+		    if(useBytes) rc = tre_regexecb(&reg, bufp, 1, regmatch, 0);
+		    else rc = tre_regexec(&reg, bufp, 1, regmatch, 0);
+
 		    // AFAICS the only possible error report is REG_ESPACE
 		    if (rc == REG_ESPACE)
 			warning("Out-of-memory error in regexp matching for element %d",

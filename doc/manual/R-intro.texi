@@ -7152,15 +7152,6 @@ locations.  This defaults to 10000, but can be increased to allow
 large and complicated calculations to be done.  Currently the maximum
 value accepted is 100000.
 
-@item --max-mem-size=@var{N}
-(Windows only) Specify a limit for the amount of memory to be used both
-for @R{} objects and working areas.  This is set by default to the
-smaller of the amount of physical RAM in the machine and for 32-bit
-@R{}, 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb per
-process and have the support enabled: see the @file{rw-FAQ} Q2.9; 3.5Gb
-on most 64-bit versions of Windows.}, and must be between 32Mb and the
-maximum allowed on that version of Windows.
-
 @item --quiet
 @itemx --silent
 @itemx -q

@@ -1162,22 +1162,6 @@ const char *R_curErrorBuf(); // used by unix */
 int (IS_SCALAR)(SEXP x, int type); // used by symengine */
 Rboolean Rf_psmatch(const char *, const char *, Rboolean); // used by rgl
 
-/* stringi defines USE_RINTERNALS and NO_REMAP so needs these for now */
-#ifdef USE_RINTERNALS
-#undef isNull
-#define isNull(s)	(TYPEOF(s) == NILSXP)
-#undef isSymbol
-#define isSymbol(s)	(TYPEOF(s) == SYMSXP)
-#undef isLogical
-#define isLogical(s)	(TYPEOF(s) == LGLSXP)
-#undef isReal
-#define isReal(s)	(TYPEOF(s) == REALSXP)
-#undef isString
-#define isString(s)	(TYPEOF(s) == STRSXP)
-#undef isObject
-#define isObject(s)	(OBJECT(s) != 0)
-#endif
-
 /* used in a couple of packages but should probably be dropped */
 				/* match(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }

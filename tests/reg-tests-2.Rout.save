@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-07-09 r80613) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-08-31 r80839) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1624,6 +1624,13 @@ Eye:Sex   3   11.764 190.64
 [1] 0.9303634 0.2812239 0.1085806 0.8053228
 [1] 0.2916627 0.9085017 0.7958965 0.1980655
 [1] 0.05247575 0.28290867 0.20930324 0.16794887
+Warning messages:
+1: In set.seed(123, type) :
+  RNGkind: Marsaglia-Multicarry has poor statistical properties
+2: In set.seed(1000, type) :
+  RNGkind: Marsaglia-Multicarry has poor statistical properties
+3: In set.seed(77, type) :
+  RNGkind: Marsaglia-Multicarry has poor statistical properties
 > RNGkind(normal.kind = "Kinderman-Ramage")
 > set.seed(123)
 > RNGkind()
@@ -1647,6 +1654,9 @@ Eye:Sex   3   11.764 190.64
 [1] 0.04062130 0.06511825 0.99290488 0.95540467
 > set.seed(123, "default")
 > set.seed(123, "Marsaglia-Multicarry") ## Careful, not the default anymore
+Warning message:
+In set.seed(123, "Marsaglia-Multicarry") :
+  RNGkind: Marsaglia-Multicarry has poor statistical properties
 > runif(4)
 [1] 0.1200427 0.1991600 0.7292821 0.8115922
 > ## last set.seed failed < 1.5.0.

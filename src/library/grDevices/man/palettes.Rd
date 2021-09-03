@@ -139,10 +139,10 @@ suitable palette from \code{hcl.colors} instead of
   \url{https://en.wikipedia.org/w/index.php?title=HCL_color_space&oldid=883465135}.
   Accessed March 26, 2019.
 
-  Zeileis, A., Fisher, J. C., Hornik, K., Ihaka, R., McWhite, C. D., Murrell, P., Stauffer, R. and Wilke, C. O. (2019).
+  Zeileis, A., Fisher, J. C., Hornik, K., Ihaka, R., McWhite, C. D., Murrell, P., Stauffer, R. and Wilke, C. O. (2020).
   \dQuote{colorspace: A toolbox for manipulating and assessing colors and palettes.}
-  arXiv:1903.06490, arXiv.org E-Print Archive.
-  \url{https://arxiv.org/abs/1903.06490}.
+  \emph{Journal of Statistical Software}, \bold{96}(1), 1--49.
+  \doi{10.18637/jss.v096.i01}
 
   Ihaka, R. (2003).
   \dQuote{Colour for presentation graphics.}
