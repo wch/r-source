@@ -85,7 +85,7 @@
 
       \item The names of the locale categories supported by \R's
       \code{Sys.getlocale()} and \code{Sys.setlocale()} are now provided
-      by variable \code{.LC.categories} in the \code{base] namespace.
+      by variable \code{.LC.categories} in the \code{base} namespace.
     }
   }
 
