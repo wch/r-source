@@ -69,21 +69,23 @@
       \code{memory.limit()} and \code{memory.size()} are now stubs on
       Windows (as on Unix-alikes).
 
-      \item The R Mathlib internal function \code{bd0()}, indirectly called
-      from a dozen of probability density and distribution functions such
-      as \code{dpois()}, \code{dbinom()}, \code{dgamma()}, \code{pgamma()} etc,
-      has been complemented by a more sophisticated, (mostly) more accurate
-      \code{ebd0()}, currently called only by internal \code{dpois_raw()}
-      improving accuracy for \R level \code{dpois()} and potentially others
-      calling it such as \code{dnbinom()}, \code{dgamma()} or \code{pgamma()}.
-      (Thanks to Morten Welinder's \PR{15628}.)
+      \item The R Mathlib internal C function \code{bd0()} (called
+      indirectly from a dozen probability density and distribution
+      functions such as \code{dpois()}, \code{dbinom()},
+      \code{dgamma()}, \code{pgamma()} \emph{etc}) has been complemented
+      by a more sophisticated and (mostly) more accurate C function
+      \code{ebd0()}, currently called only by internal
+      \code{dpois_raw()} improving accuracy for \R level \code{dpois()}
+      and potentially others calling it such as \code{dnbinom()},
+      \code{dgamma()} or \code{pgamma()}.  (Thanks to Morten Welinder's
+      \PR{15628}.)
 
-      \item \code{write.table()} gets \code{sep = " "} argument as
+      \item \code{write.table()} gains \code{sep = " "} argument as
       suggested by Thomas Soeiro.
 
-      \item The names of locale categories supported by \R's
-      \code{Sys.getlocale()} and \code{Sys.setlocale()} are now provided by
-      variable \code{.LC.categories}.
+      \item The names of the locale categories supported by \R's
+      \code{Sys.getlocale()} and \code{Sys.setlocale()} are now provided
+      by variable \code{.LC.categories} in the \code{base] namespace.
     }
   }
 
@@ -139,6 +141,12 @@
       internal header \file{Defn.h}. Packages that only use entry points
       and definitions documented to be part of the API as specified in
       \sQuote{Writing R Extensions} §6 should not be affected.
+
+      \item The macro \code{USE_RINTERNALS} no longer has any effect
+      when compiling package code.  Packages which also use
+      \code{R_NO_REMAP} will need to ensure that the remapped names are
+      used for calls to API functions that were formerly also made
+      available as macros.
 
       \item The deprecated legacy S-compatibility macros \code{PROBLEM},
       \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
