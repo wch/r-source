@@ -80,12 +80,17 @@
       \code{dgamma()} or \code{pgamma()}.  (Thanks to Morten Welinder's
       \PR{15628}.)
 
-      \item \code{write.table()} gains \code{sep = " "} argument as
+      \item \code{write.ftable()} gains \code{sep = " "} argument as
       suggested by Thomas Soeiro.
 
       \item The names of the locale categories supported by \R's
       \code{Sys.getlocale()} and \code{Sys.setlocale()} are now provided
       by variable \code{.LC.categories} in the \code{base} namespace.
+
+      \item The \code{Date} and \code{POSIXt} methods for \code{hist()}
+      and the \code{histogram} method for \code{plot()} now also use the
+      new default \code{col = "lightgray"} in consistency with the
+      corresponding change to \code{hist()}'s default for \R 4.0.0.
     }
   }
 

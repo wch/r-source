@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist}
@@ -59,7 +59,7 @@ hist(x, \dots)
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise).}
   \item{col}{a colour to be used to fill the bars.
-    The default of \code{NULL} yields unfilled bars.}
+    The default used to be \code{NULL} (unfilled bars) in \R versions before 4.0.0.}
   \item{border}{the color of the border around the bars.  The default
     is to use the standard foreground color.}
   \item{main, xlab, ylab}{main title and axis labels: these arguments to
