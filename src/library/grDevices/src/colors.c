@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2014  The R Core Team
+ *  Copyright (C) 1997-2021  The R Core Team
  *  Copyright (C) 2003	     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -467,6 +467,7 @@ SEXP rgb(SEXP r, SEXP g, SEXP b, SEXP a, SEXP MCV, SEXP nam)
     return c;
 }
 
+// R  gray (level, alpha)  --> .Call(C_gray, level, if(missing(alpha)) NULL else alpha)
 SEXP gray(SEXP lev, SEXP a)
 {
     SEXP ans;
@@ -474,10 +475,15 @@ SEXP gray(SEXP lev, SEXP a)
     int i, ilevel, nlev;
 
     lev  = PROTECT(coerceVector(lev,REALSXP));
-    if(!isNull(a)) a = coerceVector(a,REALSXP);
-    PROTECT(a);
     nlev = LENGTH(lev);
-    PROTECT(ans = allocVector(STRSXP, nlev));
+    ans = allocVector(STRSXP, nlev);
+    if(!nlev) {
+	UNPROTECT(1);
+	return(ans);
+    }
+    PROTECT(ans);
+    if(!isNull(a)) a = coerceVector(a,REALSXP); // alpha
+    PROTECT(a);
     if(isNull(a)) {
 	for (i = 0; i < nlev; i++) {
 	    level = REAL(lev)[i];

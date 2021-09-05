@@ -278,6 +278,9 @@
       \item Setting the RNG to \code{"Marsaglia-Multicarry"} e.g., by
       \code{RNGkind()}, now warns in more places, thanks to
       André Gillibert's report and patch in \PR{18168}.
+
+      \item \code{gray(numeric(), alpha=1/2)} no longer segfaults, fixing
+      \PR{18183}, reported by Till Krenz.
     }
   }
 }
