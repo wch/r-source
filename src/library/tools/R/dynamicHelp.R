@@ -262,7 +262,7 @@ httpd <- function(path, query, ...)
 
     error_page <- function(msg)
         list(payload =
-             paste0(HTMLheader("httpd error"), msg, "\n</div></body></html>"))
+             paste(c(HTMLheader("httpd error"), msg, "\n</div></body></html>"), collapse = "\n"))
 
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))
