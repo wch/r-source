@@ -8030,8 +8030,6 @@ the amount of memory in use decrease, so a function appears to use
 little memory.  Running under @code{gctorture} helps with both problems:
 it slows down the code to effectively increase the sampling frequency
 and it makes each garbage collection release a smaller amount of memory.
-Changing the memory limits with @code{mem.limits()} may also be useful,
-to see how the code would run under different memory conditions.
 
 @node Tracking memory allocations, Tracing copies of an object, Memory statistics from Rprof, Profiling R code for memory use
 @subsection Tracking memory allocations
