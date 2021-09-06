@@ -121,3 +121,4 @@ SEXP setMask(SEXP args);
 SEXP defineGroup(SEXP args);
 SEXP useGroup(SEXP args);
 SEXP devUp();
+SEXP stroke(SEXP args);

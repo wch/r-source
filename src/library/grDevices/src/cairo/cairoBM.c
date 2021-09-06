@@ -524,6 +524,9 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     dd->defineGroup = Cairo_DefineGroup;
     dd->useGroup = Cairo_UseGroup;
     dd->releaseGroup = Cairo_ReleaseGroup;
+    dd->stroke = Cairo_Stroke;
+    dd->fill = Cairo_Fill;
+    dd->fillStroke = Cairo_FillStroke;
 
     dd->left = 0;
     dd->right = width;

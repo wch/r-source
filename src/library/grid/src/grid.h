@@ -674,6 +674,11 @@ SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
 
+/* From path.c */
+SEXP L_stroke(SEXP path);
+SEXP L_fill(SEXP path, SEXP rule);
+SEXP L_fillStroke(SEXP path, SEXP rule);
+
 /* From unit.c */
 SEXP validUnits(SEXP units);
 SEXP constructUnits(SEXP amount, SEXP data, SEXP unit);

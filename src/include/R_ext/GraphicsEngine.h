@@ -580,7 +580,7 @@ double R_GE_tilingPatternHeight(SEXP pattern);
 int R_GE_tilingPatternExtend(SEXP pattern);
 
 /* Composition operators */
-/* Must match order in ../library/grid/R/composite.R */
+/* Must match order in ../library/grid/R/group.R */
 /* Porter-Duff */
 #define R_GE_compositeClear 1
 #define R_GE_compositeSource 2
@@ -609,6 +609,15 @@ int R_GE_tilingPatternExtend(SEXP pattern);
 #define R_GE_compositeSoftLight 23
 #define R_GE_compositeDifference 24
 #define R_GE_compositeExclusion 25
+
+/* Path rules */
+/* Must match order in ../library/grid/R/path.R */
+#define R_GE_nonZeroWindingRule 1
+#define R_GE_evenOddRule        2
+
+void GEStroke(SEXP path, const pGEcontext gc, pGEDevDesc dd);
+void GEFill(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
+void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
 
 #ifdef __cplusplus
 }

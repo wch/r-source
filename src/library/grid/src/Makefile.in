@@ -13,7 +13,7 @@ R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
 
-SOURCES_C = clippath.c gpar.c grid.c just.c layout.c mask.c matrix.c \
+SOURCES_C = clippath.c gpar.c grid.c just.c layout.c mask.c matrix.c path.c \
   register.c state.c unit.c util.c viewport.c
 
 SOURCES_F =

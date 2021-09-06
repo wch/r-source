@@ -764,7 +764,26 @@ struct _DevDesc {
 #else
     void (*releaseGroup)();
 #endif
-    
+
+    /* Draw (stroke or fill) a path,
+     * where the path is defined by an R function that draws something
+     */
+#if R_USE_PROTOTYPES
+    void (*stroke)(SEXP path, const pGEcontext gc, pDevDesc dd);
+#else
+    void (*stroke)();
+#endif
+#if R_USE_PROTOTYPES
+    void (*fill)(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
+#else
+    void (*fill)();
+#endif
+#if R_USE_PROTOTYPES
+    void (*fillStroke)(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
+#else
+    void (*fillStroke)();
+#endif
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

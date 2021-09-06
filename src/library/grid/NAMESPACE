@@ -90,6 +90,12 @@ export(
        "useTranslate", "useRotate", "useScale",
        "viewportTranslate", "viewportRotate", "viewportScale",
        "viewportTransform",
+
+       # Paths
+       "asPath",
+       "strokeGrob", "grid.stroke",
+       "fillGrob", "grid.fill",
+       "fillStrokeGrob", "grid.fillStroke",
     
        # Listing grobs and viewports
        "grid.ls",
