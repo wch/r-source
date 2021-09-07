@@ -1,15 +1,6 @@
 
-fillRules <- c("winding", "evenodd")
-
-ruleIndex <- function(x) {
-    rule <- match(x, fillRules)
-    if (is.na(rule))
-        stop("Invalid fill rule")
-    as.integer(rule)
-}
-
 ## Mark a grob as something to draw as a single "path"
-asPath <- function(x, gp=gpar(), rule=c("winding", "evenodd")) {
+as.path <- function(x, gp=gpar(), rule=c("winding", "evenodd")) {
     if (!is.grob(x))
         stop("Only a grob can be converted to a path")
     path <- list(grob=x, gp=gp, rule=match.arg(rule))
@@ -49,7 +40,7 @@ drawDetails.GridFill <- function(x, recording) {
     path <- function() {
         grid.draw(x$grob, recording=FALSE)
     }
-    grid.Call.graphics(C_fill, path, ruleIndex(x$rule))
+    grid.Call.graphics(C_fill, path, .ruleIndex(x$rule))
 }
 
 fillGrob <- function(x, ...) {
@@ -80,7 +71,7 @@ drawDetails.GridFillStroke <- function(x, recording) {
     path <- function() {
         grid.draw(x$grob, recording=FALSE)
     }
-    grid.Call.graphics(C_fillStroke, path, ruleIndex(x$rule))
+    grid.Call.graphics(C_fillStroke, path, .ruleIndex(x$rule))
 }
 
 fillStrokeGrob <- function(x, ...) {

@@ -402,6 +402,13 @@ static cairo_path_t* CairoCreateClipPath(SEXP clipPath, int index, pX11Desc xd)
     R_fcall = PROTECT(lang1(clipPath));
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
+    /* Apply path fill rule */
+    switch (R_GE_clipPathFillRule(clipPath)) {
+    case R_GE_nonZeroWindingRule: 
+        cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_WINDING); break;
+    case R_GE_evenOddRule:
+        cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_EVEN_ODD); break;
+    }
     /* Set the clipping region from the path */
     cairo_reset_clip(cc);
     cairo_clip_preserve(cc);

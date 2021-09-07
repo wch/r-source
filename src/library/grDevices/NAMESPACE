@@ -28,8 +28,8 @@ export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks,
        xfig, xyTable, xy.coords, xyz.coords,
 
        .linearGradientPattern, .radialGradientPattern,
-       .setClipPath, .setMask, .setPattern, .tilingPattern,
-       .defineGroup, .useGroup, .devUp)
+       .clipPath, .setClipPath, .setMask, .setPattern, .tilingPattern,
+       .defineGroup, .useGroup, .devUp, .ruleIndex)
 
 ## devices common to all platforms
 export(X11, x11, bitmap, bmp, cairo_pdf, cairo_ps, jpeg, png, svg, tiff)

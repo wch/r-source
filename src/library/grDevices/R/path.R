@@ -17,19 +17,15 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## Create R objects defining clipping paths
+## Create R objects defining paths
 
-#######################################################
-## MUST match C API in
-## ../../../main/clippath.c and
-## ../../../include/R_ext/GraphicsEngine.h
-#######################################################
+fillRules <- c("winding", "evenodd")
 
-.clipPath <- function(fun, rule) {
-    attr(fun, "rule") <- .ruleIndex(rule)
-    fun
+.ruleIndex <- function(x) {
+    rule <- match(x, fillRules)
+    if (is.na(rule))
+        stop("Invalid fill rule")
+    as.integer(rule)
 }
 
-.setClipPath <- function(path, index) {
-    .External(C_setClipPath, path, index)
-}
+

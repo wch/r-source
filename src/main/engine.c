@@ -3782,6 +3782,7 @@ void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
 /****************************************************************
  * Path-drawing
  ****************************************************************/
+
 void GEStroke(SEXP path, const pGEcontext gc, pGEDevDesc dd) {
     if (dd->dev->deviceVersion >= R_GE_group) {
         dd->dev->stroke(path, gc, dd->dev);

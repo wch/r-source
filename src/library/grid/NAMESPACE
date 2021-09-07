@@ -92,7 +92,7 @@ export(
        "viewportTransform",
 
        # Paths
-       "asPath",
+       "as.path",
        "strokeGrob", "grid.stroke",
        "fillGrob", "grid.fill",
        "fillStrokeGrob", "grid.fillStroke",

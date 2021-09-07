@@ -615,6 +615,8 @@ int R_GE_tilingPatternExtend(SEXP pattern);
 #define R_GE_nonZeroWindingRule 1
 #define R_GE_evenOddRule        2
 
+int R_GE_clipPathFillRule(SEXP path);
+
 void GEStroke(SEXP path, const pGEcontext gc, pGEDevDesc dd);
 void GEFill(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
 void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
