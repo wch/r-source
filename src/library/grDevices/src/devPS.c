@@ -9235,7 +9235,9 @@ static void PDF_Polyline(int n, double *x, double *y,
 	    yy = y[i];
 	    PDFwrite(buf, 100, "%.2f %.2f l\n", pd, xx, yy);
 	}
-	PDFwrite(buf, 100, "S\n", pd);
+        if (!pd->appendingPath) {        
+            PDFwrite(buf, 100, "S\n", pd);
+        }
     }
 }
 
