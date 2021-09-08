@@ -5617,7 +5617,7 @@ typedef struct {
     PDFdefn *definitions;
     int numDefns;
     int maxDefns;
-    Rboolean appendingPath; /* Are we defining a (clipping) path ? */
+    int appendingPath; /* Are we defining a (clipping) path ? */
     int appendingMask; /* Are we defining a mask ? */
     int currentMask;
     int appendingPattern; /* Are we defining a (tiling) pattern ? */
@@ -6389,7 +6389,7 @@ static int newPath(SEXP path, int type, PDFDesc *pd)
     }
 
     /* Put device in "append mode" */
-    pd->appendingPath = TRUE;
+    pd->appendingPath = defNum;
 
     /* Evaluate the path function to generate the clipping path */
     R_fcall = PROTECT(lang1(path));
@@ -6407,7 +6407,7 @@ static int newPath(SEXP path, int type, PDFDesc *pd)
 
     trimDefn(defNum, pd);
     /* Exit "append mode" */
-    pd->appendingPath = FALSE;
+    pd->appendingPath = -1;
 
     return defNum;
 }
@@ -6708,7 +6708,7 @@ static int PDFwrite(char *buf, size_t size, const char *fmt, PDFDesc *pd, ...)
     val = vsnprintf(buf, size, fmt, ap);
     va_end(ap);
 
-    if (pd->appendingPath) {
+    if (pd->appendingPath >= 0) {
         addToPath(buf, pd);
     } else if (pd->appendingPattern >= 0 && 
                (pd->appendingPattern > pd->appendingMask) &&
@@ -7484,7 +7484,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
         free(dd);
 	error(_("failed to allocate definitions"));
     }
-    pd->appendingPath = FALSE;
+    pd->appendingPath = -1;
     pd->appendingMask = -1;
     pd->currentMask = -1;
     pd->appendingPattern = -1;
@@ -8752,7 +8752,7 @@ static void PDF_NewPage(const pGEcontext gc,
      */
     fprintf(pd->pdffp, "1 J 1 j q\n");
     PDF_Invalidate(pd);
-    pd->appendingPath = FALSE;
+    pd->appendingPath = -1;
     pd->appendingMask = -1;
     pd->currentMask = -1;
     pd->appendingPattern = -1;
@@ -8813,7 +8813,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
          *    mask (if appending a mask)
          *    file (otherwise)
          */
-        if (!pd->appendingPath) {
+        if (pd->appendingPath < 0) {
             if (gc->patternFill != R_NilValue) { 
                 PDF_SetPatternFill(gc->patternFill, dd);
             } else if(code & 2) {
@@ -8828,7 +8828,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
             PDFwriteMask(pd->currentMask, pd);
         }
         PDFwrite(buf, 100, "%.2f %.2f %.2f %.2f re\n", pd, x0, y0, x1-x0, y1-y0);
-        if (!pd->appendingPath) {
+        if (pd->appendingPath < 0) {
             switch(code) {
             case 1: PDFwrite(buf, 100, " S\n", pd); break;
             case 2: PDFwrite(buf, 100, " f\n", pd); break;
@@ -8914,7 +8914,7 @@ static void PDF_Raster(unsigned int *raster,
     PDF_checkOffline();
 
     /* A raster image adds nothing to a clipping path */
-    if (pd->appendingPath) 
+    if (pd->appendingPath >= 0) 
         return;
 
     /* A raster image cannot be used in a pattern or mask either (for now) */
@@ -8978,7 +8978,7 @@ static void PDF_Circle(double x, double y, double r,
     } else {            
         code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
     }
-    if (!pd->appendingPath) {
+    if (pd->appendingPath < 0) {
         if (gc->patternFill != R_NilValue) { 
             PDF_SetPatternFill(gc->patternFill, dd);
         } else if(code & 2) {
@@ -9017,7 +9017,7 @@ static void PDF_Circle(double x, double y, double r,
                 PDFwrite(buf, 100, 
                          "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", pd,
                          x - s, y - r, x - r, y - s, x - r, y);
-                if (!pd->appendingPath) {
+                if (pd->appendingPath < 0) {
                     switch(code) {
                     case 1: PDFwrite(buf, 100, "S\n", pd); break;
                     case 2: PDFwrite(buf, 100, "f\n", pd); break;
@@ -9036,7 +9036,7 @@ static void PDF_Circle(double x, double y, double r,
             if (a < 0.01) return; // avoid 0 dims below.
             xx = x - 0.396*a;
             yy = y - 0.347*a;
-            if (pd->appendingPath) {
+            if (pd->appendingPath >= 0) {
                 tr = 7;
             } else {
                 tr = (R_OPAQUE(gc->fill)) +
@@ -9063,7 +9063,7 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
 
     if(!R_VIS(gc->col)) return;
 
-    if (!pd->appendingPath) {
+    if (pd->appendingPath < 0) {
         PDF_SetLineColor(gc->col, dd);
         PDF_SetLineStyle(gc, dd);
     }
@@ -9097,7 +9097,7 @@ static void PDF_Polygon(int n, double *x, double *y,
     }
     if (code) {
         if(pd->inText) textoff(pd);
-        if (!pd->appendingPath) {
+        if (pd->appendingPath < 0) {
             if (gc->patternFill != R_NilValue) { 
                 PDF_SetPatternFill(gc->patternFill, dd);
             } else if(code & 2) {
@@ -9120,7 +9120,7 @@ static void PDF_Polygon(int n, double *x, double *y,
             PDFwrite(buf, 100, "%.2f %.2f l\n", pd, xx, yy);
         }
         PDFwrite(buf, 100, "h ", pd, xx, yy);
-        if (!pd->appendingPath) {
+        if (pd->appendingPath < 0) {
             if (pd->fillOddEven) {
                 switch(code) {
                 case 1: PDFwrite(buf, 100, "S\n", pd); break;
@@ -9162,7 +9162,7 @@ static void PDF_Path(double *x, double *y,
     }
     if (code) {
         if(pd->inText) textoff(pd);
-        if (!pd->appendingPath) {
+        if (pd->appendingPath < 0) {
             if(code & 2)
                 PDF_SetFill(gc->fill, dd);
             if(code & 1) {
@@ -9189,7 +9189,7 @@ static void PDF_Path(double *x, double *y,
                 PDFwrite(buf, 100, "h\n", pd);
         }
         PDFwrite(buf, 100, "h\n", pd);
-        if (!pd->appendingPath) {
+        if (pd->appendingPath < 0) {
             if (winding) {
             switch(code) {
                 case 1: PDFwrite(buf, 100, "S\n", pd); break;
@@ -9220,7 +9220,7 @@ static void PDF_Polyline(int n, double *x, double *y,
 
     if(pd->inText) textoff(pd);
     if(R_VIS(gc->col)) {
-        if (!pd->appendingPath) {        
+        if (pd->appendingPath < 0) {        
             PDF_SetLineColor(gc->col, dd);
             PDF_SetLineStyle(gc, dd);
         }
@@ -9235,7 +9235,7 @@ static void PDF_Polyline(int n, double *x, double *y,
 	    yy = y[i];
 	    PDFwrite(buf, 100, "%.2f %.2f l\n", pd, xx, yy);
 	}
-        if (!pd->appendingPath) {        
+        if (pd->appendingPath < 0) {        
             PDFwrite(buf, 100, "S\n", pd);
         }
     }
@@ -9873,7 +9873,7 @@ static void PDF_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {
     if(pd->inText) textoff(pd);
 
     /* Compositing groups do not contribute to a clipping path */
-    if (!pd->appendingPath) {
+    if (pd->appendingPath < 0) {
 
         if (pd->currentMask >= 0) {
             PDFwriteMask(pd->currentMask, pd);
