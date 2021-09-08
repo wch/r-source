@@ -6376,7 +6376,7 @@ static int countPatterns(PDFDesc *pd)
 static void addToPath(char* str, PDFDesc *pd)
 {
     /* Just append to the "current" definition */
-    catDefn(str, pd->numDefns - 1, pd);
+    catDefn(str, pd->appendingPath, pd);
 }
 
 static int newPath(SEXP path, int type, PDFDesc *pd)
