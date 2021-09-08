@@ -4850,14 +4850,18 @@ specified.
 
 @item
 The @command{strip} utility is platform-specific (and @acronym{CRAN}
-prohibits removing debug symbols).  For example flags
+prohibits removing debug symbols).  For example the options
 @option{--strip-debug} and @option{--strip-unneeded} of the GNU version
 are not supported on macOS nor Solaris@footnote{which is
 @file{/usr/ccs/bin/strip}, not @file{/usr/bin/strip}.}: the POSIX
 standard for @command{strip} does not mention any options, and what
-calling it without options does is platform-dependent. Stripping a
+calling it without options does is platform-dependent.  Stripping a
 @file{.so} file could even prevent it being dynamically loaded into @R{}
 on an untested platform.
+
+@command{ld -S} invokes @command{strip --strip-debug} on GNU
+@command{ld} but is not portable: in particular on Solaris it does
+something completely different and takes an argument.
 
 @item
 Some people have a need to set a locale.  Locale names are not portable,
