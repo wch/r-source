@@ -3495,7 +3495,7 @@ require the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 Some systems (notably macOS and at least some FreeBSD systems) have
 inadequate support for collation in multibyte locales.  It is possible
 to replace the OS's collation support by that from ICU (International
-Components for Unicode, @uref{http://site.icu-project.org/}), and this
+Components for Unicode, @uref{https://icu.unicode.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris, FreeBSD, macOS and AIX, usually as

@@ -117,7 +117,7 @@ x != y
   \emph{Unicode Collation Algorithm}
   (\url{https://unicode.org/reports/tr10/}) is likely to be increasingly
   influential.  Where available \R by default makes use of ICU
-  (\url{http://site.icu-project.org/}) for collation (except in a C
+  (\url{https://icu.unicode.org/}) for collation (except in a C
   locale).
 }
 \seealso{
