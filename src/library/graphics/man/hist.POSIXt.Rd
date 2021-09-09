@@ -8,7 +8,8 @@
 \alias{hist.Date}
 \title{Histogram of a Date or Date-Time Object}
 \description{
-  Method for \code{\link{hist}} applied to date or date-time objects.
+  Methods for \code{\link{hist}} applied to date (class \code{"\link{Date}"})
+  or date-time (class  \code{"\link{POSIXt}"}) objects.
 }
 \usage{
 \method{hist}{POSIXt}(x, breaks, \dots,
@@ -22,7 +23,8 @@
      start.on.monday = TRUE, format, right = TRUE)
 }
 \arguments{
-  \item{x}{an object inheriting from class \code{"POSIXt"} or \code{"Date"}.}
+  \item{x}{an object inheriting from class \code{"\link{POSIXt}"}
+    or \code{"\link{Date}"}.}
   \item{breaks}{
     a vector of cut points \emph{or} number giving the number of
     intervals which \code{x} is to be cut into \emph{or} an

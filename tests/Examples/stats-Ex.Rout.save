@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-08-25 r80818) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-09-02 r80849) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -11144,8 +11144,9 @@ Consider specifying 'start' or using a selfStart model
 > curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 > lines(x, predict(nlmod), col = 2)
 > 
-> ## Here, requiring close convergence, you need to use more accurate numerical
-> ##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
+> ## Here, requiring close convergence, must use more accurate numerical differentiation,
+> ## as this typically gives Error: "step factor .. reduced below 'minFactor' .."
+> ## IGNORE_RDIFF_BEGIN
 > try(nlm1 <- update(nlmod, control = list(tol = 1e-7)))
 Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
@@ -11158,7 +11159,6 @@ Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
 > ctr2 <- nls.control(nDcentral=TRUE, tol = 8e-8, # <- even smaller than above
 +    warnOnly = (grepl("^aarch64.*linux", R.version$platform) && grepl("^NixOS", osVersion)
 +               ))
-> ## IGNORE_RDIFF_BEGIN
 > (nlm2 <- update(nlmod, control = ctr2, trace = TRUE)); options(o2)
 Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.

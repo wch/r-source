@@ -16,7 +16,7 @@
 \alias{LC_MONETARY}
 \alias{LC_NUMERIC}
 \alias{LC_TIME}
-%% Next 3  are only 'ifdef unix':
+%% Next 3  were only 'ifdef unix':
 \alias{LC_MESSAGES}
 \alias{LC_PAPER}
 \alias{LC_MEASUREMENT}
@@ -35,8 +35,9 @@ Sys.setlocale (category = "LC_ALL", locale = "")
     \code{"LC_CTYPE"}, \code{"LC_MONETARY"}, \code{"LC_NUMERIC"} and
     \code{"LC_TIME"}.  Some systems (not Windows) will also support
     \code{"LC_MESSAGES"}, \code{"LC_PAPER"} and \code{"LC_MEASUREMENT"}.
-    These \emph{supported} category names are also available in
-    \code{.LC.categories}.
+    These category names are available in \code{.LC.categories}; even when
+    not supported, \code{Sys.getlocale(.)} will return \code{""}, e.g., for
+    the \code{"LC_PAPER"} example on Windows.
   }
   \item{locale}{character string.  A valid locale name on the system in
     use.  Normally \code{""} (the default) will pick up the default
@@ -164,7 +165,7 @@ Sys.setlocale("LC_TIME", "de_DE.utf8")   # some Linux versions
 Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set
-.LC.categories # of length 9 or 6, depending on .Platform$OS.type
+.LC.categories # of length 9 on all platforms
 
 \dontrun{
 Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting,

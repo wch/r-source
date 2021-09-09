@@ -18,7 +18,7 @@
 
 .LC.categories <- c("LC_ALL",      "LC_COLLATE", "LC_CTYPE",
                     "LC_MONETARY", "LC_NUMERIC", "LC_TIME",
-                    if(.Platform$OS.type == "unix")
+                    ## if(.Platform$OS.type == "unix") -- but should not error on Windows
                         c("LC_MESSAGES", "LC_PAPER", "LC_MEASUREMENT"))
 
 Sys.getlocale <- function(category = "LC_ALL")

@@ -2882,7 +2882,7 @@ Note that C++17 or C++20 `support' does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
-@uref{https://libcxx.llvm.org/Cxx1zStatus.html} to see if the
+@uref{https://clang.llvm.org/cxx_status.html} to see if the
 features you want to use are widely implemented.
 
 A requirement of C++17 or later should always be declared in the
@@ -4850,14 +4850,18 @@ specified.
 
 @item
 The @command{strip} utility is platform-specific (and @acronym{CRAN}
-prohibits removing debug symbols).  For example flags
+prohibits removing debug symbols).  For example the options
 @option{--strip-debug} and @option{--strip-unneeded} of the GNU version
 are not supported on macOS nor Solaris@footnote{which is
 @file{/usr/ccs/bin/strip}, not @file{/usr/bin/strip}.}: the POSIX
 standard for @command{strip} does not mention any options, and what
-calling it without options does is platform-dependent. Stripping a
+calling it without options does is platform-dependent.  Stripping a
 @file{.so} file could even prevent it being dynamically loaded into @R{}
 on an untested platform.
+
+@command{ld -S} invokes @command{strip --strip-debug} on GNU
+@command{ld} but is not portable: in particular on Solaris it does
+something completely different and takes an argument.
 
 @item
 Some people have a need to set a locale.  Locale names are not portable,
@@ -8030,8 +8034,6 @@ the amount of memory in use decrease, so a function appears to use
 little memory.  Running under @code{gctorture} helps with both problems:
 it slows down the code to effectively increase the sampling frequency
 and it makes each garbage collection release a smaller amount of memory.
-Changing the memory limits with @code{mem.limits()} may also be useful,
-to see how the code would run under different memory conditions.
 
 @node Tracking memory allocations, Tracing copies of an object, Memory statistics from Rprof, Profiling R code for memory use
 @subsection Tracking memory allocations
