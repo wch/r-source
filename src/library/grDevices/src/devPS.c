@@ -5480,7 +5480,9 @@ typedef struct {
 #define PDFcontent 6
 #define PDFtilingPattern 7
 #define PDFgroup 8
-#define PDFpath 9
+#define PDFstrokePath 9
+#define PDFfillPath 10
+#define PDFfillStrokePath 11
 
 /* PDF Blend Modes */
 #define PDFnormal 0
@@ -5618,6 +5620,8 @@ typedef struct {
     int numDefns;
     int maxDefns;
     int appendingPath; /* Are we defining a (clipping) path ? */
+    Rboolean pathContainsText; /* Does the path contain text ? */
+    Rboolean pathContainsDrawing; /* Does the path contain any drawing ? */
     int appendingMask; /* Are we defining a mask ? */
     int currentMask;
     int appendingPattern; /* Are we defining a (tiling) pattern ? */
@@ -6373,6 +6377,18 @@ static int countPatterns(PDFDesc *pd)
  * Stuff for (clipping) paths
  */
 
+static Rboolean appendingPathWithText(PDFDesc *pd) {
+    /* Are we are capturing a path AND 
+     * there is already text in the path ? */
+    if (pd->appendingPath >= 0 &&
+        pd->pathContainsText) {
+        warning(_("Drawing not appended to path (contains text)"));
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
 static void addToPath(char* str, PDFDesc *pd)
 {
     /* Just append to the "current" definition */
@@ -6390,6 +6406,8 @@ static int newPath(SEXP path, int type, PDFDesc *pd)
 
     /* Put device in "append mode" */
     pd->appendingPath = defNum;
+    pd->pathContainsText = FALSE;
+    pd->pathContainsDrawing = FALSE;
 
     /* Evaluate the path function to generate the clipping path */
     R_fcall = PROTECT(lang1(path));
@@ -6771,14 +6789,13 @@ static void PDFwriteGroupDefs(int objoffset, PDFDesc *pd)
 
 static void PDFwriteClipPath(int i, PDFDesc *pd)
 {
-    char* buf1;
-    char buf2[10];
+    char* buf;
     size_t len = strlen(pd->definitions[i].str);
-    buf1 = malloc((len + 1)*sizeof(char));
+    buf = malloc((len + 1)*sizeof(char));
 
-    PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
+    PDFwrite(buf, len + 1, "%s", pd, pd->definitions[i].str);
 
-    free(buf1);
+    free(buf);
 }
 
 static void PDFwriteMask(int i, PDFDesc *pd)
@@ -6790,7 +6807,7 @@ static void PDFwriteMask(int i, PDFDesc *pd)
     }
 }
 
-static void PDFstrokePath(int i, PDFDesc *pd)
+static void PDFStrokePath(int i, PDFDesc *pd)
 {
     char* buf1;
     char buf2[10];
@@ -6803,7 +6820,7 @@ static void PDFstrokePath(int i, PDFDesc *pd)
     free(buf1);
 }
 
-static void PDFfillPath(int i, int rule, PDFDesc *pd)
+static void PDFFillPath(int i, int rule, PDFDesc *pd)
 {
     char* buf1;
     char buf2[10];
@@ -6821,7 +6838,7 @@ static void PDFfillPath(int i, int rule, PDFDesc *pd)
     free(buf1);
 }
 
-static void PDFfillStrokePath(int i, int rule, PDFDesc *pd)
+static void PDFFillStrokePath(int i, int rule, PDFDesc *pd)
 {
     char* buf1;
     char buf2[10];
@@ -6909,7 +6926,9 @@ static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
         /* Definition object number */
         fprintf(pd->pdffp, "%d", pd->nobjs);
         if (pd->definitions[i].type == PDFclipPath ||
-            pd->definitions[i].type == PDFpath ||
+            pd->definitions[i].type == PDFstrokePath ||
+            pd->definitions[i].type == PDFfillPath ||
+            pd->definitions[i].type == PDFfillStrokePath ||
             pd->definitions[i].type == PDFcontent) {
             fprintf(pd->pdffp, " 0 obj << >> endobj\n");
         } else if (pd->definitions[i].type == PDFtilingPattern) {
@@ -7485,6 +7504,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	error(_("failed to allocate definitions"));
     }
     pd->appendingPath = -1;
+    pd->pathContainsText = FALSE;
+    pd->pathContainsDrawing = FALSE;
     pd->appendingMask = -1;
     pd->currentMask = -1;
     pd->appendingPattern = -1;
@@ -8753,6 +8774,8 @@ static void PDF_NewPage(const pGEcontext gc,
     fprintf(pd->pdffp, "1 J 1 j q\n");
     PDF_Invalidate(pd);
     pd->appendingPath = -1;
+    pd->pathContainsText = FALSE;
+    pd->pathContainsDrawing = FALSE;
     pd->appendingMask = -1;
     pd->currentMask = -1;
     pd->appendingPattern = -1;
@@ -8787,6 +8810,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 
     PDF_checkOffline();
 
+    if (appendingPathWithText(pd)) return;
 
     if (gc->patternFill != R_NilValue) { 
         if (R_VIS(gc->col)) {
@@ -8834,6 +8858,8 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
             case 2: PDFwrite(buf, 100, " f\n", pd); break;
             case 3: PDFwrite(buf, 100, " B\n", pd); break;
             }
+        } else {
+            pd->pathContainsDrawing = TRUE;
         }
     }
 }
@@ -8969,6 +8995,8 @@ static void PDF_Circle(double x, double y, double r,
     if (r <= 0.0) return;  /* since PR#14797 use 0-sized pch=1, but now
 			      GECircle omits such circles */
 
+    if (appendingPathWithText(pd)) return;
+
     if (gc->patternFill != R_NilValue) { 
         if (R_VIS(gc->col)) {
             code = 3;
@@ -9023,6 +9051,8 @@ static void PDF_Circle(double x, double y, double r,
                     case 2: PDFwrite(buf, 100, "f\n", pd); break;
                     case 3: PDFwrite(buf, 100, "B\n", pd); break;
                     }
+                } else {
+                    pd->pathContainsDrawing = TRUE;
                 }
             }
         } else {
@@ -9048,6 +9078,10 @@ static void PDF_Circle(double x, double y, double r,
                      tr, a, a, xx, yy);
             PDFwrite(buf, 100, " (l) Tj 0 Tr\n", pd);
             textoff(pd); /* added in 2.8.0 */
+            if (pd->appendingPath >= 0) {
+                pd->pathContainsText = TRUE;
+                pd->pathContainsDrawing = TRUE;
+            }
         }
     }
 }
@@ -9063,6 +9097,8 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
 
     if(!R_VIS(gc->col)) return;
 
+    if (appendingPathWithText(pd)) return;
+
     if (pd->appendingPath < 0) {
         PDF_SetLineColor(gc->col, dd);
         PDF_SetLineStyle(gc, dd);
@@ -9072,7 +9108,13 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
     }
 
     if(pd->inText) textoff(pd);
-    PDFwrite(buf, 100, "%.2f %.2f m %.2f %.2f l S\n", pd, x1, y1, x2, y2);
+    PDFwrite(buf, 100, "%.2f %.2f m %.2f %.2f l ", pd, x1, y1, x2, y2);
+
+    if (pd->appendingPath < 0) {
+        PDFwrite(buf, 100, " S\n", pd);
+    } else {
+        pd->pathContainsDrawing = TRUE;
+    }
 }
 
 static void PDF_Polygon(int n, double *x, double *y,
@@ -9085,6 +9127,8 @@ static void PDF_Polygon(int n, double *x, double *y,
     char buf[100];
 
     PDF_checkOffline();
+
+    if (appendingPathWithText(pd)) return;
 
     if (gc->patternFill != R_NilValue) { 
         if (R_VIS(gc->col)) {
@@ -9134,6 +9178,8 @@ static void PDF_Polygon(int n, double *x, double *y,
                 case 3: PDFwrite(buf, 100, "B\n", pd); break;
                 }
             }
+        } else {
+            pd->pathContainsDrawing = TRUE;
         }
     }
 }
@@ -9150,6 +9196,8 @@ static void PDF_Path(double *x, double *y,
     char buf[100];
 
     PDF_checkOffline();
+
+    if (appendingPathWithText(pd)) return;
 
     if (gc->patternFill != R_NilValue) { 
         if (R_VIS(gc->col)) {
@@ -9203,6 +9251,8 @@ static void PDF_Path(double *x, double *y,
                 case 3: PDFwrite(buf, 100, "B*\n", pd); break;
                 }
             }
+        } else {
+            pd->pathContainsDrawing = TRUE;
         }
     }
 }
@@ -9217,6 +9267,8 @@ static void PDF_Polyline(int n, double *x, double *y,
     char buf[100];
 
     PDF_checkOffline();
+
+    if (appendingPathWithText(pd)) return;
 
     if(pd->inText) textoff(pd);
     if(R_VIS(gc->col)) {
@@ -9237,6 +9289,8 @@ static void PDF_Polyline(int n, double *x, double *y,
 	}
         if (pd->appendingPath < 0) {        
             PDFwrite(buf, 100, "S\n", pd);
+        } else {
+            pd->pathContainsDrawing = TRUE;
         }
     }
 }
@@ -9317,15 +9371,50 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
     return num;
 }
 
+static void PDFWriteString(const char *str, size_t nb, PDFDesc *pd)
+{
+    size_t i;
+    char buf[10];
+
+    PDFwrite(buf, 10, "(", pd);
+    for (i = 0 ; i < nb && *str; i++, str++)
+	switch(*str) {
+	case '\n':
+            PDFwrite(buf, 10, "\\n", pd);
+	    break;
+	case '\\':
+            PDFwrite(buf, 10, "\\\\", pd);
+	    break;
+	case '-':
+#ifdef USE_HYPHEN
+	    if (!isdigit((int)str[1]))
+                PDFwrite(buf, 10, PS_hyphen, pd);
+	    else
+#endif
+                PDFwrite(buf, 2, str, pd);
+	    break;
+	case '(':
+	case ')':
+            PDFwrite(buf, 10, "\\%c", pd, *str);
+	    break;
+	default:
+            PDFwrite(buf, 2, str, pd);
+	    break;
+	}
+    PDFwrite(buf, 10, ")", pd);
+}
+
 /* added for 2.9.0 (donated by Ei-ji Nakama) : */
-static void PDFWriteT1KerningString(FILE *fp, const char *str,
+static void PDFWriteT1KerningString(const char *str,
 				    FontMetricInfo *metrics,
-				    const pGEcontext gc)
+				    const pGEcontext gc,
+                                    PDFDesc *pd)
 {
     unsigned char p1, p2;
     size_t i, n;
     int j, ary_buf[128], *ary;
     Rboolean haveKerning = FALSE;
+    char buf[10];
 
     n = strlen(str);
     if (n < 1) return;
@@ -9351,40 +9440,85 @@ static void PDFWriteT1KerningString(FILE *fp, const char *str,
     }
     ary[i] = 0;
     if(haveKerning) {
-	fputc('[', fp); fputc('(', fp);
+        PDFwrite(buf, 10, "[", pd); 
+        PDFwrite(buf, 10, "(", pd);
 	for(i =  0; str[i]; i++) {
 	    switch(str[i]) {
 	    case '\n':
-		fprintf(fp, "\\n");
+                PDFwrite(buf, 10, "\\n", pd);
 		break;
 	    case '\\':
-		fprintf(fp, "\\\\");
+                PDFwrite(buf, 10, "\\\\", pd);
 		break;
 	    case '-':
 #ifdef USE_HYPHEN
 		if (!isdigit((int)str[i+1]))
-		    fputc(PS_hyphen, fp);
+                    PDFwrite(buf, 10, PS_hyphen, pd);
 		else
 #endif
-		    fputc(str[i], fp);
+                    PDFwrite(buf, 2, &str[i], pd);
 		break;
 	    case '(':
 	    case ')':
-		fprintf(fp, "\\%c", str[i]);
+                PDFwrite(buf, 10, "\\%c", pd, str[i]);
 		break;
 	    default:
-		fputc(str[i], fp);
+                PDFwrite(buf, 2, &str[i], pd);
 		break;
 	    }
-	    if( ary[i] != 0 && str[i+1] ) fprintf(fp, ") %d (", -ary[i]);
+	    if ( ary[i] != 0 && str[i+1] ) 
+                PDFwrite(buf, 10, ") %d (", pd, -ary[i]);
 	}
-	fprintf(fp, ")] TJ\n");
+        PDFwrite(buf, 10, ")] TJ\n", pd);
     } else {
-	PostScriptWriteString(fp, str, strlen(str));
-	fprintf(fp, " Tj\n");
+	PDFWriteString(str, strlen(str), pd);
+        PDFwrite(buf, 10, " Tj\n", pd);
     }
 
     if(ary != ary_buf) Free(ary);
+}
+
+static void PDFSetTextGraphicsState(const pGEcontext gc, pDevDesc dd) {
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    int code;
+    if (pd->appendingPath < 0) {
+        PDF_SetFill(gc->col, dd);
+    } else {
+        /* Obey different parameter settings if adding to a path */
+        if (gc->patternFill != R_NilValue) { 
+            if (R_VIS(gc->col)) {
+                code = 3;
+            } else {
+                code = 2;
+            }
+        } else {            
+            code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
+        }
+        if (gc->patternFill != R_NilValue) { 
+            PDF_SetPatternFill(gc->patternFill, dd);
+        } else if (code & 2) {
+            PDF_SetFill(gc->fill, dd);
+        }
+        if (code & 1) {
+            PDF_SetLineColor(gc->col, dd);
+            PDF_SetLineStyle(gc, dd);
+        }
+    }
+}
+
+static void PDFSetTextRenderMode(PDFDesc *pd) {
+    char buf[10];
+    int mode;
+    if (pd->appendingPath >= 0) {
+        /* Set text rendering mode */
+        switch (pd->definitions[pd->appendingPath].type) {
+        case PDFclipPath: mode = 7; break;
+        case PDFstrokePath: mode = 1; break;
+        case PDFfillPath: mode = 0; break;
+        case PDFfillStrokePath: mode = 2; break;
+        }
+        PDFwrite(buf, 10, "%d Tr\n", pd, mode);
+    }
 }
 
 static FontMetricInfo *PDFmetricInfo(const char *, int, PDFDesc *);
@@ -9397,6 +9531,7 @@ static void PDFSimpleText(double x, double y, const char *str,
     int size = (int)floor(gc->cex * gc->ps + 0.5);
     int face = gc->fontface;
     double a, b, bm, rot1;
+    char buf[200];
 
     if(!R_VIS(gc->col) || size <= 0) return;
 
@@ -9404,27 +9539,45 @@ static void PDFSimpleText(double x, double y, const char *str,
 	warning(_("attempt to use invalid font %d replaced by font 1"), face);
 	face = 1;
     }
-    rot1 = rot * DEG2RAD;
-    a = size * cos(rot1);
-    b = size * sin(rot1);
-    bm = -b;
-    /* avoid printing -0.00 on rotated text */
-    if(fabs(a) < 0.01) a = 0.0;
-    if(fabs(b) < 0.01) {b = 0.0; bm = 0.0;}
-    if(!pd->inText) texton(pd);
-    PDF_SetFill(gc->col, dd);
-    fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
-	    font,
-	    a, b, bm, a, x, y);
-    if (pd->useKern &&
-	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
-	PDFWriteT1KerningString(pd->pdffp, str,
-				PDFmetricInfo(gc->fontfamily, face, pd), gc);
+
+    /* Do NOT write text to a path that already contains drawing */
+    if (pd->appendingPath >= 0 &&
+        pd->pathContainsDrawing) {
+        warning(_("Text not added to path containing other drawing"));
     } else {
-	PostScriptWriteString(pd->pdffp, str, strlen(str));
-	fprintf(pd->pdffp, " Tj\n");
+
+        rot1 = rot * DEG2RAD;
+        a = size * cos(rot1);
+        b = size * sin(rot1);
+        bm = -b;
+        /* avoid printing -0.00 on rotated text */
+        if(fabs(a) < 0.01) a = 0.0;
+        if(fabs(b) < 0.01) {b = 0.0; bm = 0.0;}
+
+        if(!pd->inText) texton(pd);
+        PDFSetTextGraphicsState(gc, dd);
+        if (pd->currentMask >= 0) {
+            PDFwriteMask(pd->currentMask, pd);
+        }
+        PDFSetTextRenderMode(pd);
+        PDFwrite(buf, 200, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ", pd,
+                 font, a, b, bm, a, x, y);
+        if (pd->useKern &&
+            isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
+            PDFWriteT1KerningString(str,
+                                    PDFmetricInfo(gc->fontfamily, face, pd), 
+                                    gc, pd);
+        } else {
+            PDFWriteString(str, strlen(str), pd);
+            PDFwrite(buf, 200, " Tj\n", pd);
+        }
+        textoff(pd); /* added in 2.8.0 */
+
+        if (pd->appendingPath >= 0) {
+            pd->pathContainsText = TRUE;
+            pd->pathContainsDrawing = TRUE;
+        }
     }
-    textoff(pd); /* added in 2.8.0 */
 }
 
 static char *PDFconvname(const char *family, PDFDesc *pd);
@@ -9440,143 +9593,183 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
     double a, b, bm, rot1;
     char *buff;
     const char *str1;
+    char buf10[10], buf200[200];
 
     PDF_checkOffline();
 
     if(!R_VIS(gc->col) || size <= 0) return;
 
-    if(face < 1 || face > 5) {
-	warning(_("attempt to use invalid font %d replaced by font 1"), face);
-	face = 1;
+    /* Do NOT write text to a path that already contains drawing */
+    if (pd->appendingPath >= 0 &&
+        pd->pathContainsDrawing) {
+        warning(_("Text not added to path containing other drawing"));
+
+    } else {
+
+        if(face < 1 || face > 5) {
+            warning(_("attempt to use invalid font %d replaced by font 1"), 
+                    face);
+            face = 1;
+        }
+        if (face == 5) {
+            PDFSimpleText(x, y, str, rot, hadj,
+                          PDFfontNumber(gc->fontfamily, face, pd),
+                          gc, dd);
+            return;
+        }
+
+        rot1 = rot * DEG2RAD;
+        a = size * cos(rot1);
+        b = size * sin(rot1);
+        bm = -b;
+        /* avoid printing -0.00 on rotated text */
+        if(fabs(a) < 0.01) a = 0.0;
+        if(fabs(b) < 0.01) {b = 0.0; bm = 0.0;}
+        if(!pd->inText) texton(pd);
+
+        if(isCIDFont(gc->fontfamily, PDFFonts, pd->defaultCIDFont) && face != 5) {
+            /* NB we could be in a SBCS here */
+            size_t ucslen;
+            unsigned char *p;
+            int fontIndex;
+
+            /*
+             * CID convert optimize PDF encoding == locale encode case
+             */
+            cidfontfamily cidfont = findDeviceCIDFont(gc->fontfamily,
+                                                      pd->cidfonts,
+                                                      &fontIndex);
+            if (!cidfont) {
+                int dontcare;
+                /*
+                 * Try to load the font
+                 */
+                cidfont = addCIDFont(gc->fontfamily, 1);
+                if (cidfont) {
+                    if (!addPDFDeviceCIDfont(cidfont, pd, &dontcare)) {
+                        cidfont = NULL;
+                    }
+                }
+            }
+            if (!cidfont)
+                error(_("failed to find or load PDF CID font"));
+            if(!dd->hasTextUTF8 &&
+               !strcmp(locale2charset(NULL), cidfont->encoding)) {
+                PDFSetTextGraphicsState(gc, dd);
+                if (pd->currentMask >= 0) {
+                    PDFwriteMask(pd->currentMask, pd);
+                }
+                PDFSetTextRenderMode(pd);
+                PDFwrite(buf200, 200,
+                         "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ", pd,
+                         PDFfontNumber(gc->fontfamily, face, pd),
+                         a, b, bm, a, x, y);
+                PDFwrite(buf10, 10, "<", pd);
+                p = (unsigned char *) str;
+                while(*p)
+                    PDFwrite(buf10, 10, "%02x", pd, *p++);
+                PDFwrite(buf10, 10, ">", pd);
+                PDFwrite(buf10, 10, " Tj\n", pd);
+
+                if (pd->appendingPath >= 0) {
+                    pd->pathContainsText = TRUE;
+                    pd->pathContainsDrawing = TRUE;
+                }
+
+                return;
+            }
+
+            /*
+             * CID convert  PDF encoding != locale encode case
+             */
+            ucslen = (dd->hasTextUTF8) ? Rf_utf8towcs(NULL, str, 0): mbstowcs(NULL, str, 0);
+            if (ucslen != (size_t)-1) {
+                void *cd;
+                const char *i_buf; char *o_buf;
+                size_t i, nb, i_len,  o_len, buflen = ucslen*sizeof(R_ucs2_t);
+                size_t status;
+
+                cd = (void*)Riconv_open(cidfont->encoding,
+                                        (enc == CE_UTF8) ? "UTF-8": "");
+                if(cd  == (void*)-1) return;
+
+                R_CheckStack2(buflen);
+                unsigned char buf[buflen];
+
+                i_buf = (char *)str;
+                o_buf = (char *)buf;
+                i_len = strlen(str); /* no terminator,
+                                        as output a byte at a time */
+                nb = o_len = buflen;
+
+                status = Riconv(cd, &i_buf, (size_t *)&i_len,
+                                (char **)&o_buf, (size_t *)&o_len);
+
+                Riconv_close(cd);
+                if(status == (size_t)-1)
+                    warning(_("failed in text conversion to encoding '%s'"),
+                            cidfont->encoding);
+                else {
+                    unsigned char *p;
+                    PDFSetTextGraphicsState(gc, dd);
+                    if (pd->currentMask >= 0) {
+                        PDFwriteMask(pd->currentMask, pd);
+                    }
+                    PDFSetTextRenderMode(pd);
+                    PDFwrite(buf200, 200,
+                            "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm <", pd,
+                            PDFfontNumber(gc->fontfamily, face, pd),
+                            a, b, bm, a, x, y);
+                    for(i = 0, p = buf; i < nb - o_len; i++)
+                        PDFwrite(buf10, 10, "%02x", pd, *p++);
+                    PDFwrite(buf10, 10, "> Tj\n", pd);
+
+                    if (pd->appendingPath >= 0) {
+                        pd->pathContainsText = TRUE;
+                        pd->pathContainsDrawing = TRUE;
+                    }
+
+                }
+                return;
+            } else {
+                warning(_("invalid string in '%s'"), "PDF_Text");
+                return;
+            }
+        }
+
+        PDFSetTextGraphicsState(gc, dd);
+        if (pd->currentMask >= 0) {
+            PDFwriteMask(pd->currentMask, pd);
+        }
+        PDFSetTextRenderMode(pd);
+        PDFwrite(buf200, 200, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ", pd,
+                PDFfontNumber(gc->fontfamily, face, pd),
+                a, b, bm, a, x, y);
+        if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str) && face < 5) {
+            /* face 5 handled above */
+            R_CheckStack2(strlen(str)+1);
+            buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+            mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
+            str1 = buff;
+        } else str1 = str;
+
+        if (pd->useKern &&
+            isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
+            PDFWriteT1KerningString(str1,
+                                    PDFmetricInfo(gc->fontfamily, face, pd), 
+                                    gc, pd);
+        } else{
+            PDFWriteString(str1, strlen(str1), pd);
+            PDFwrite(buf10, 10, " Tj\n", pd);
+        }
+        textoff(pd); /* added in 2.8.0 */
+
+        if (pd->appendingPath >= 0) {
+            pd->pathContainsText = TRUE;
+            pd->pathContainsDrawing = TRUE;
+        }
+
     }
-    if (face == 5) {
-	PDFSimpleText(x, y, str, rot, hadj,
-		      PDFfontNumber(gc->fontfamily, face, pd),
-		      gc, dd);
-	return;
-    }
-
-    rot1 = rot * DEG2RAD;
-    a = size * cos(rot1);
-    b = size * sin(rot1);
-    bm = -b;
-    /* avoid printing -0.00 on rotated text */
-    if(fabs(a) < 0.01) a = 0.0;
-    if(fabs(b) < 0.01) {b = 0.0; bm = 0.0;}
-    if(!pd->inText) texton(pd);
-
-    if(isCIDFont(gc->fontfamily, PDFFonts, pd->defaultCIDFont) && face != 5) {
-	/* NB we could be in a SBCS here */
-	size_t ucslen;
-	unsigned char *p;
-	int fontIndex;
-
-	/*
-	 * CID convert optimize PDF encoding == locale encode case
-	 */
-	cidfontfamily cidfont = findDeviceCIDFont(gc->fontfamily,
-						  pd->cidfonts,
-						  &fontIndex);
-	if (!cidfont) {
-	    int dontcare;
-	    /*
-	     * Try to load the font
-	     */
-	    cidfont = addCIDFont(gc->fontfamily, 1);
-	    if (cidfont) {
-		if (!addPDFDeviceCIDfont(cidfont, pd, &dontcare)) {
-		    cidfont = NULL;
-		}
-	    }
-	}
-	if (!cidfont)
-	    error(_("failed to find or load PDF CID font"));
-	if(!dd->hasTextUTF8 &&
-	   !strcmp(locale2charset(NULL), cidfont->encoding)) {
-	    PDF_SetFill(gc->col, dd);
-	    fprintf(pd->pdffp,
-		    "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
-		    PDFfontNumber(gc->fontfamily, face, pd),
-		    a, b, bm, a, x, y);
-
-	    fprintf(pd->pdffp, "<");
-	    p = (unsigned char *) str;
-	    while(*p)
-		fprintf(pd->pdffp, "%02x", *p++);
-	    fprintf(pd->pdffp, ">");
-	    fprintf(pd->pdffp, " Tj\n");
-	    return;
-	}
-
-	/*
-	 * CID convert  PDF encoding != locale encode case
-	 */
-	ucslen = (dd->hasTextUTF8) ? Rf_utf8towcs(NULL, str, 0): mbstowcs(NULL, str, 0);
-	if (ucslen != (size_t)-1) {
-	    void *cd;
-	    const char *i_buf; char *o_buf;
-	    size_t i, nb, i_len,  o_len, buflen = ucslen*sizeof(R_ucs2_t);
-	    size_t status;
-
-	    cd = (void*)Riconv_open(cidfont->encoding,
-				    (enc == CE_UTF8) ? "UTF-8": "");
-	    if(cd  == (void*)-1) return;
-
-	    R_CheckStack2(buflen);
-	    unsigned char buf[buflen];
-
-	    i_buf = (char *)str;
-	    o_buf = (char *)buf;
-	    i_len = strlen(str); /* no terminator,
-				    as output a byte at a time */
-	    nb = o_len = buflen;
-
-	    status = Riconv(cd, &i_buf, (size_t *)&i_len,
-			    (char **)&o_buf, (size_t *)&o_len);
-
-	    Riconv_close(cd);
-	    if(status == (size_t)-1)
-		warning(_("failed in text conversion to encoding '%s'"),
-			cidfont->encoding);
-	    else {
-		unsigned char *p;
-		PDF_SetFill(gc->col, dd);
-		fprintf(pd->pdffp,
-			"/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm <",
-			PDFfontNumber(gc->fontfamily, face, pd),
-			a, b, bm, a, x, y);
-		for(i = 0, p = buf; i < nb - o_len; i++)
-		    fprintf(pd->pdffp, "%02x", *p++);
-		fprintf(pd->pdffp, "> Tj\n");
-	    }
-	    return;
-	} else {
-	    warning(_("invalid string in '%s'"), "PDF_Text");
-	    return;
-	}
-    }
-
-    PDF_SetFill(gc->col, dd);
-    fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
-	    PDFfontNumber(gc->fontfamily, face, pd),
-	    a, b, bm, a, x, y);
-    if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str) && face < 5) {
-	/* face 5 handled above */
-	R_CheckStack2(strlen(str)+1);
-	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
-	mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
-	str1 = buff;
-    } else str1 = str;
-
-    if (pd->useKern &&
-	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
-	PDFWriteT1KerningString(pd->pdffp, str1,
-				PDFmetricInfo(gc->fontfamily, face, pd), gc);
-    } else{
-	PostScriptWriteString(pd->pdffp, str1, strlen(str1));
-	fprintf(pd->pdffp, " Tj\n");
-    }
-    textoff(pd); /* added in 2.8.0 */
 }
 
 static void PDF_Text(double x, double y, const char *str,
@@ -9909,7 +10102,7 @@ static void PDF_releaseGroup(SEXP ref, pDevDesc dd) {}
 
 static void PDF_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    int index = newPath(path, PDFpath, pd);
+    int index = newPath(path, PDFstrokePath, pd);
     if (index >= 0) {
         if(pd->inText) textoff(pd);
         if(R_VIS(gc->col)) {
@@ -9918,15 +10111,14 @@ static void PDF_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
             if (pd->currentMask >= 0) {
                 PDFwriteMask(pd->currentMask, pd);
             }
-            PDFstrokePath(index, pd);
+            PDFStrokePath(index, pd);
         }
     }
 }
 
 static void PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    int code;
-    int index = newPath(path, PDFpath, pd);
+    int index = newPath(path, PDFfillPath, pd);
     if (index >= 0) {
         if (gc->patternFill != R_NilValue || R_VIS(gc->fill)) {
             if(pd->inText) textoff(pd);
@@ -9938,7 +10130,7 @@ static void PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
             if (pd->currentMask >= 0) {
                 PDFwriteMask(pd->currentMask, pd);
             }
-            PDFfillPath(index, rule, pd);
+            PDFFillPath(index, rule, pd);
         }
     }
 }
@@ -9947,7 +10139,7 @@ static void PDF_fillStroke(SEXP path, int rule,
                            const pGEcontext gc, pDevDesc dd) {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code;
-    int index = newPath(path, PDFpath, pd);
+    int index = newPath(path, PDFfillStrokePath, pd);
     if (index >= 0) {
         if (gc->patternFill != R_NilValue) { 
             if (R_VIS(gc->col)) {
@@ -9973,9 +10165,9 @@ static void PDF_fillStroke(SEXP path, int rule,
                 PDFwriteMask(pd->currentMask, pd);
             }
             switch(code) {
-            case 1: PDFstrokePath(index, pd); break;
-            case 2: PDFfillPath(index, rule, pd); break;
-            case 3: PDFfillStrokePath(index, rule, pd); break;
+            case 1: PDFStrokePath(index, pd); break;
+            case 2: PDFFillPath(index, rule, pd); break;
+            case 3: PDFFillStrokePath(index, rule, pd); break;
             }
 
         }
