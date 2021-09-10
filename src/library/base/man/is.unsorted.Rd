@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.unsorted}
@@ -22,7 +22,9 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
 }
 \details{
   \code{is.unsorted} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.  However (as
+  \code{NA} removal is handled in the \R code prior to dispatch) methods
+  need to be written for signature \code{(x, strictly)}.
 }
 \value{
   A length-one logical value.  All objects of length 0 or 1 are sorted.
