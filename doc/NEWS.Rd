@@ -41,7 +41,10 @@
       \item \code{hist(<Date>, ...)} and \code{hist(<POSIXt>, ...)}
       no longer pass arguments for \code{rect()} (such as \code{col} and
       \code{density}) to \code{axis()}.  (Thanks to Sebastian Meyer's
-      \PR{18171}.)      
+      \PR{18171}.)
+
+      \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
+      report and patch by Jeroen Ooms in \PR{18152}.)
     }
   }
 }
