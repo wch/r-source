@@ -281,6 +281,9 @@
 
       \item \code{gray(numeric(), alpha=1/2)} no longer segfaults, fixing
       \PR{18183}, reported by Till Krenz.
+
+      \item Fixed \code{dnbinom(x, size=<very_small>, .., log=TRUE)}
+      regression, reported by Martin Morgan.
     }
   }
 }
