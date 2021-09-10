@@ -620,6 +620,25 @@ msgstr ""
 msgid "'.Random.seed' has wrong length"
 msgstr "'.Random.seed' de taille incorrecte"
 
+#: src/main/RNG.c:463
+msgid "RNGkind: Marsaglia-Multicarry has poor statistical properties"
+msgstr ""
+"RNGkind: Marsaglia-Multicarry a des mauvaises propriétés statistiques"
+
+#: src/main/RNG.c:492
+msgid ""
+"RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-"
+"Multicarry"
+msgstr ""
+"RNGkind: forts écarts à la normalité pour Kinderman-Ramage + Marsaglia-"
+"Multicarry"
+
+#: src/main/RNG.c:496
+msgid ""
+"RNGkind: deviations from normality for Ahrens-Dieter + Marsaglia-Multicarry"
+msgstr ""
+"RNGkind: écarts à la normalité pour Ahrens-Dieter + Marsaglia-Multicarry"
+
 #: src/main/RNG.c:472
 #, c-format
 msgid "RNGkind: unimplemented RNG kind %d"

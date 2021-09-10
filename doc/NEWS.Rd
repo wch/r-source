@@ -18,7 +18,7 @@
       \item The undocumented limit of 4095 bytes on messages from the
       S-compatibility macros \code{PROBLEM} and \code{MESSAGE} is now
       documented and longer messages will be silently truncated rather
-      than potentially causing segfaults. 
+      than potentially causing segfaults.
     }
   }
 
@@ -45,6 +45,10 @@
 
       \item \verb{\Sexpr{ch}} now preserves \code{Encoding(ch)}. (Thanks to
       report and patch by Jeroen Ooms in \PR{18152}.)
+
+      \item Setting the RNG to \code{"Marsaglia-Multicarry"} e.g., by
+      \code{RNGkind()}, now warns in more places, thanks to
+      André Gillibert's report and patch in \PR{18168}.
     }
   }
 }
