@@ -125,14 +125,35 @@ static void CairoColor(unsigned int col, pX11Desc xd)
  * Patterns
  ***************************
  */
+
+/* Just a starting value */
+#define maxPatterns 64
+
 static void CairoInitPatterns(pX11Desc xd)
 {
     int i;
-    xd->numPatterns = 20;
+    xd->numPatterns = maxPatterns;
     xd->patterns = malloc(sizeof(cairo_pattern_t*) * xd->numPatterns);
     for (i = 0; i < xd->numPatterns; i++) {
         xd->patterns[i] = NULL;
     }
+}
+
+static int CairoGrowPatterns(pX11Desc xd)
+{
+    int i, newMax = 2*xd->numPatterns;
+    void *tmp;
+    tmp = realloc(xd->patterns, sizeof(cairo_pattern_t*) * newMax);
+    if (!tmp) { 
+        warning(_("Cairo patterns exhausted (failed to increase maxPatterns)"));
+        return 0;
+    }
+    xd->patterns = tmp;
+    for (i = xd->numPatterns; i < newMax; i++) {
+        xd->patterns[i] = NULL;
+    }
+    xd->numPatterns = newMax;
+    return 1;
 }
 
 static void CairoCleanPatterns(pX11Desc xd)
@@ -163,9 +184,15 @@ static int CairoNewPatternIndex(pX11Desc xd)
     for (i = 0; i < xd->numPatterns; i++) {
         if (xd->patterns[i] == NULL) {
             return i;
+        } else {
+            if (i == (xd->numPatterns - 1) &&
+                !CairoGrowPatterns(xd)) {
+                return -1;
+            }
         }
     }    
-    warning(_("Cairo patterns exhausted (try opening device with more patterns)"));
+    /* Should never get here, but just in case */
+    warning(_("Cairo patterns exhausted"));
     return -1;
 }
 
@@ -341,15 +368,36 @@ static void CairoPatternFill(SEXP ref, pX11Desc xd)
  * Clipping paths
  ***************************
  */
+
+/* Just a starting value */
+#define maxClipPaths 64
+
 static void CairoInitClipPaths(pX11Desc xd)
 {
     int i;
     /* Zero clip paths */
-    xd->numClipPaths = 20;
+    xd->numClipPaths = maxClipPaths;
     xd->clippaths = malloc(sizeof(cairo_path_t*) * xd->numClipPaths);
     for (i = 0; i < xd->numClipPaths; i++) {
         xd->clippaths[i] = NULL;
     }
+}
+
+static int CairoGrowClipPaths(pX11Desc xd)
+{
+    int i, newMax = 2*xd->numClipPaths;
+    void *tmp;
+    tmp = realloc(xd->clippaths, sizeof(cairo_path_t*) * newMax);
+    if (!tmp) { 
+        warning(_("Cairo clipping paths exhausted (failed to increase maxClipPaths)"));
+        return 0;
+    }
+    xd->clippaths = tmp;
+    for (i = xd->numClipPaths; i < newMax; i++) {
+        xd->clippaths[i] = NULL;
+    }
+    xd->numClipPaths = newMax;
+    return 1;
 }
 
 static void CairoCleanClipPaths(pX11Desc xd)
@@ -381,6 +429,11 @@ static int CairoNewClipPathIndex(pX11Desc xd)
     for (i = 0; i < xd->numClipPaths; i++) {
         if (xd->clippaths[i] == NULL) {
             return i;
+        } else {
+            if (i == (xd->numClipPaths - 1) &&
+                !CairoGrowClipPaths(xd)) {
+                return -1;
+            }
         }
     }    
     warning(_("Cairo clipping paths exhausted"));
@@ -494,6 +547,10 @@ static void CairoReleaseClipPath(int index, pX11Desc xd)
  * Masks
  ***************************
  */
+
+/* Just a starting value */
+#define maxMasks 64
+
 static void CairoInitMasks(pX11Desc xd)
 {
     int i;
@@ -503,6 +560,23 @@ static void CairoInitMasks(pX11Desc xd)
         xd->masks[i] = NULL;
     }
     xd->currentMask = -1;
+}
+
+static int CairoGrowMasks(pX11Desc xd)
+{
+    int i, newMax = 2*xd->numMasks;
+    void *tmp;
+    tmp = realloc(xd->masks, sizeof(cairo_pattern_t*) * newMax);
+    if (!tmp) { 
+        warning(_("Cairo masks exhausted (failed to increase maxMasks)"));
+        return 0;
+    }
+    xd->masks = tmp;
+    for (i = xd->numMasks; i < newMax; i++) {
+        xd->masks[i] = NULL;
+    }
+    xd->numMasks = newMax;
+    return 1;
 }
 
 static void CairoCleanMasks(pX11Desc xd)
@@ -535,9 +609,14 @@ static int CairoNewMaskIndex(pX11Desc xd)
     for (i = 0; i < xd->numMasks; i++) {
         if (xd->masks[i] == NULL) {
             return i;
+        } else {
+            if (i == (xd->numMasks - 1) &&
+                !CairoGrowMasks(xd)) {
+                return -1;
+            }
         }
     }    
-    warning(_("Cairo masks exhausted (try opening device with more masks)"));
+    warning(_("Cairo masks exhausted"));
     return -1;
 }
 
@@ -609,6 +688,10 @@ static void CairoReleaseMask(int index, pX11Desc xd)
  * Groups
  ***************************
  */
+
+/* Just a starting value */
+#define maxGroups 64
+
 static void CairoInitGroups(pX11Desc xd)
 {
     int i;
@@ -617,6 +700,23 @@ static void CairoInitGroups(pX11Desc xd)
     for (i = 0; i < xd->numGroups; i++) {
         xd->groups[i] = NULL;
     }
+}
+
+static int CairoGrowGroups(pX11Desc xd)
+{
+    int i, newMax = 2*xd->numGroups;
+    void *tmp;
+    tmp = realloc(xd->groups, sizeof(cairo_pattern_t*) * newMax);
+    if (!tmp) { 
+        warning(_("Cairo groups exhausted (failed to increase maxGroups)"));
+        return 0;
+    }
+    xd->groups = tmp;
+    for (i = xd->numGroups; i < newMax; i++) {
+        xd->groups[i] = NULL;
+    }
+    xd->numGroups = newMax;
+    return 1;
 }
 
 static void CairoCleanGroups(pX11Desc xd)
@@ -648,9 +748,14 @@ static int CairoNewGroupIndex(pX11Desc xd)
     for (i = 0; i < xd->numGroups; i++) {
         if (xd->groups[i] == NULL) {
             return i;
+        } else {
+            if (i == (xd->numGroups - 1) &&
+                !CairoGrowGroups(xd)) {
+                return -1;
+            }
         }
     }    
-    warning(_("Cairo groups exhausted (try opening device with more groups)"));
+    warning(_("Cairo groups exhausted"));
     return -1;
 }
 
@@ -723,7 +828,7 @@ static SEXP CairoDefineGroup(SEXP src, int op, SEXP dst, pX11Desc xd)
     SEXP ref;
     int index;
 
-    /* Create a new mask */
+    /* Create a new group */
     index = CairoNewGroupIndex(xd);
     if (index >= 0) {
         cairo_group = CairoCreateGroup(src, op, dst, xd);
