@@ -1572,12 +1572,13 @@ the Windows@footnote{@samp{BWidget} still is on Windows but
 @samp{Tktable} is less widely available than it used to be, including
 not in the main repositories for major Linux distributions).
 @c Not in Fedora since 17
-@c 2008 sources at https://sourceforge.net/projects/tktable/files/tktable/2.10/
-@c In Feb 2021 declared by DALY PhViD RSiena RSurvey dgmb forensim
+@c
+@c In Sep 2021 Tktable declared by DALY PhViD RSurvey forensim
 @c rriskDistributions tcltk2
-
-@c In Feb 2021 declared by FFD GGEBiplotGUI OligoSpecificitySystem
-@c PBSmodelling asbio biplotbootGUI cncaGUI dgmb dpa multibiplotGUI rpanel
+@c
+@c In Sep 2021 BWidget declared by FFD GGEBiplotGUI PBSmodelling asbio
+@c biplotbootGUI cncaGUI multibiplotGUI
+@c
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
 fairly easy to do: first find the Tcl search path:
 
@@ -1607,6 +1608,17 @@ To (silently) test for the presence of @samp{Tktable} one can use
 library(tcltk)
 have_tktable <- !isFALSE(suppressWarnings(tclRequire('Tktable')))
 @end example
+
+@noindent
+Installing @samp{Tktable} needs a C compiler and the Tk headers (not
+necessarily installed with Tcl/Tk).  At the time of writing the latest
+sources (from 2008) were available from
+@uref{https://sourceforge.net/projects/tktable/files/tktable/2.10/Tktable2.10.tar.gz},
+but needed patching for current Tk (8.6.11, but not 8.6.10) -- a patch
+can be found at @uref{https://www.stats.ox.ac.uk/pub/bdr/Tktable/}. For
+a system installation of Tk you may need to install Tktable as
+@samp{root} as on e.g.@: Fedora all the locations on @code{auto_path}
+are owned by @samp{root}.
 
 @node Specifying URLs,  , Non-R scripts in packages, Package structure
 @subsection Specifying URLs
