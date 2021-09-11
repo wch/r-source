@@ -2179,7 +2179,8 @@ at
 
 Tcl/Tk extension @code{BWidget} used to be
 distributed with @R{} but no longer is; @code{Tktable} has been
-distributed with most versions of @R{} (but not 4.0.0).
+distributed with most versions of @R{} (but not 4.0.0 and not
+@cputype{arm64} builds of 4.1.0 or 4.1.1).
 
 A few of the binary packages need other software to be installed on your
 system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
