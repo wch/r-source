@@ -285,6 +285,9 @@ struct _GEDevDesc {
 
     /* per-device setting for 'ask' (use NewFrameConfirm) */
     Rboolean ask;
+
+    /* Is a device appending a path ? */
+    Rboolean appending;
 };
 
 typedef GEDevDesc* pGEDevDesc;

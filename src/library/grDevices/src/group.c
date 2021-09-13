@@ -34,11 +34,15 @@ SEXP defineGroup(SEXP args)
     SEXP ref = R_NilValue;
     pGEDevDesc dd = GEcurrentDevice();
     if (dd->dev->deviceVersion >= R_GE_group) {
-        SEXP source = CADR(args);
-        SEXP op = CADDR(args);
-        SEXP destination = CADDDR(args);
-        ref = dd->dev->defineGroup(source, INTEGER(op)[0], destination, 
-                                   dd->dev);
+        if (dd->appending) {
+            warning(_("Group definition ignored (device is appending path)"));
+        } else {
+            SEXP source = CADR(args);
+            SEXP op = CADDR(args);
+            SEXP destination = CADDDR(args);
+            ref = dd->dev->defineGroup(source, INTEGER(op)[0], destination, 
+                                       dd->dev);
+        }
     }
     return ref;
 }
@@ -49,9 +53,13 @@ SEXP useGroup(SEXP args)
     /* This device operation is actually performing rendering */
     GEMode(1, dd);
     if (dd->dev->deviceVersion >= R_GE_group) {
-        SEXP ref = CADR(args);
-        SEXP trans = CADDR(args);
-        dd->dev->useGroup(ref, trans, dd->dev);
+        if (dd->appending) {
+            warning(_("Group use ignored (device is appending path)"));
+        } else {
+            SEXP ref = CADR(args);
+            SEXP trans = CADDR(args);
+            dd->dev->useGroup(ref, trans, dd->dev);
+        }
     }
     GEMode(0, dd);
     return R_NilValue;

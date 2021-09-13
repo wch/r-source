@@ -59,7 +59,7 @@
 #define GSS_ENGINERECORDING 13
 /* #define GSS_ASK 14 unused in R >= 2.7.0 */
 #define GSS_SCALE 15
-#define GSS_RESOLVINGCLIP 16
+#define GSS_RESOLVINGPATH 16
 #define GSS_GROUPS 17
 
 /*

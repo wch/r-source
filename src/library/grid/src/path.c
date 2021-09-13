@@ -31,7 +31,9 @@ SEXP L_stroke(SEXP path)
     gcontextFromgpar(currentgp, 0, &gc, dd);
     
     GEMode(1, dd);
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
     GEStroke(path, &gc, dd);
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     GEMode(0, dd);
 
     return R_NilValue;
@@ -48,7 +50,9 @@ SEXP L_fill(SEXP path, SEXP rule)
     gcontextFromgpar(currentgp, 0, &gc, dd);
     
     GEMode(1, dd);
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
     GEFill(path, INTEGER(rule)[0], &gc, dd);
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     GEMode(0, dd);
 
     return R_NilValue;
@@ -65,7 +69,9 @@ SEXP L_fillStroke(SEXP path, SEXP rule)
     gcontextFromgpar(currentgp, 0, &gc, dd);
     
     GEMode(1, dd);
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
     GEFillStroke(path, INTEGER(rule)[0], &gc, dd);
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     GEMode(0, dd);
 
     return R_NilValue;

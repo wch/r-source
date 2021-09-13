@@ -46,7 +46,7 @@ int gridRegisterIndex;
  *  Replaced by per-device setting as from R 2.7.0.]
  * GSS_SCALE 15 = a scale or "zoom" factor for all output 
  *   (to support "fit to window" resizing on windows device)
- * GSS_RESOLVINGCLIP 16 = are we currently resolving a clipping path
+ * GSS_RESOLVINGPATH 16 = are we currently resolving a (clipping) path
  *   (used to turn off/disallow things like clipping while resolving)
  * GSS_GROUPS 17 = mapping of group names to device references
  * 
@@ -100,7 +100,7 @@ void initOtherState(pGEDevDesc dd)
     /* Clear all device patterns */
     dd->dev->releasePattern(R_NilValue, dd->dev);
     /* Clear all clip paths */
-    setGridStateElement(dd, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
     /* Clear all masks */
     dd->dev->releaseMask(R_NilValue, dd->dev);
@@ -144,7 +144,7 @@ void fillGridSystemState(SEXP state, pGEDevDesc dd)
     SET_VECTOR_ELT(state, GSS_ASK, ScalarLogical(dd->ask));
 #endif
     SET_VECTOR_ELT(state, GSS_SCALE, ScalarReal(1.0));
-    SET_VECTOR_ELT(state, GSS_RESOLVINGCLIP, ScalarLogical(FALSE));
+    SET_VECTOR_ELT(state, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     SET_VECTOR_ELT(state, GSS_GROUPS, R_NilValue);
     UNPROTECT(1);
 }
