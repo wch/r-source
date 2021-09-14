@@ -6171,7 +6171,7 @@ static SEXP addShading(SEXP pattern, PDFDesc *pd)
      * to file (PDF_endfile)
      */
     initDefn(defNum, PDFshadingPattern, pd);
-    catDefn(" 0 obj\n<<\n/Type Pattern\n/PatternType 2\n/Shading\n", 
+    catDefn(" 0 obj\n<<\n/Type /Pattern\n/PatternType 2\n/Shading\n", 
             defNum, pd);
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
