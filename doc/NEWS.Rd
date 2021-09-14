@@ -287,6 +287,9 @@
 
       \item \code{as.Date.POSIXlt(x)} now keeps \code{names(x)}, thanks to
       Davis Vaughan's report and patch in \PR{18188}.
+
+      \item \code{model.response()} now strips an \code{"AsIs"} class typically,
+      thanks to Duncan Murdoch's report and other discussants in \PR{18190}.
     }
   }
 }
