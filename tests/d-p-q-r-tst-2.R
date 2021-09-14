@@ -769,8 +769,18 @@ summary(dl.dn1 <- diff(log(dn[-1] + dL)))
 stopifnot(dn + dL > 0,
           0.09 < dl.dn1, dl.dn1 < 0.93)
 ## accuracy loss of 6 and more digits in R <= 4.1.0
+##---- reverse case, very *small* size ---------------
+dS <- dnbinom(1:90, size=1e-15, mu=200, log=TRUE)
+d4S <- diff(d3S <- diff(ddS <- diff(dS)))
+stopifnot(-39.1 < dS,  dS < -34.53
+    ,     -0.7 < ddS, ddS < -0.01116
+    , 0.000126 < d3S, d3S < 0.287683
+    ,    -0.17 < d4S, d4S < -2.8859e-6
+    , all.equal(c(-48.40172, -49.155492, -49.905797, -50.653012, -51.397452),
+                dnbinom(16:20, size=1e-15, prob=1/2, log=TRUE))
+)
+## failed in R 4.1.1 (and R-devel) only
 
 
 
-cat("Time elapsed: ", proc.time() - .ptime,"\n")
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
