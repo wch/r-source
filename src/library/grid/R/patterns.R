@@ -150,9 +150,11 @@ resolveFill.GridGrobPattern <- function(fill) {
         width <- diff(range(x))
         height <- diff(range(y))
         ## Temporary viewport for calculations, so do NOT record on grid DL
+        ## Also, ensure NO mask (at least initially) for resolution of pattern
         pushViewport(viewport(left, bottom, width, height,
                               default.units="in",
-                              just=c("left", "bottom")),
+                              just=c("left", "bottom"),
+                              mask="none"),
                      recording=FALSE)
         pattern <- resolvePattern(fill)
         popViewport(recording=FALSE)
