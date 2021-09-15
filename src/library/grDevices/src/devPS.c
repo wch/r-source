@@ -5484,7 +5484,7 @@ typedef struct {
 #define PDFfillPath 10
 #define PDFfillStrokePath 11
 #define PDFtemp 12
-#define PDFshadingSoftMask 4
+#define PDFshadingSoftMask 13
 
 /* PDF Blend Modes */
 #define PDFnormal 0
@@ -6143,13 +6143,12 @@ static int addShadingSoftMask(SEXP pattern, PDFDesc *pd)
     return defNum;
 }
 
-static void completeShadingSoftMask(int defNum, PDFDesc *pd)
+static void completeShadingSoftMask(int defNum, int defnOffset, PDFDesc *pd)
 {
     /* Write out mask content object */
-    int offset = (pd->nobjs - defNum);
-    int contentObj = pd->definitions[defNum].contentDefn + offset + 1;
+    int contentObj = pd->definitions[defNum].contentDefn + defnOffset + 1;
     char buf[100];
-    snprintf(buf, 100," %d 0 R\n>>\n>>\nendobj\n", contentObj);
+    snprintf(buf, 100,"%d 0 R\n>>\n>>\nendobj\n", contentObj);
     catDefn(buf, defNum, pd);
 }
 
@@ -6236,13 +6235,13 @@ static SEXP addShading(SEXP pattern, PDFDesc *pd)
     return ref;
 }
 
-static void completeShading(int defNum, PDFDesc *pd)
+static void completeShading(int defNum, int defnOffset, PDFDesc *pd)
 {
     /* If we started a soft mask (for semitransparent shading)
      * we need to finish it here */
     int maskNum = pd->definitions[defNum].contentDefn;
     if (maskNum >= 0) {    
-        completeShadingSoftMask(maskNum, pd);
+        completeShadingSoftMask(maskNum, defnOffset, pd);
     }
 }
 
@@ -6583,11 +6582,10 @@ static int newMask(SEXP path, PDFDesc *pd)
     return defNum;
 }
 
-static void completeMask(int defNum, PDFDesc *pd)
+static void completeMask(int defNum, int defnOffset, PDFDesc *pd)
 {
     /* Write out mask content object */
-    int offset = (pd->nobjs - defNum);
-    int contentObj = pd->definitions[defNum].contentDefn + offset;
+    int contentObj = pd->definitions[defNum].contentDefn + defnOffset + 1;
     char buf[100];
     snprintf(buf, 100," %d 0 R\n>>\n>>\nendobj\n", contentObj);
     catDefn(buf, defNum, pd);
@@ -6986,6 +6984,7 @@ static void PDFwriteGroup(int i, PDFDesc *pd)
 
 static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
 {
+    int defnOffset = pd->nobjs;
     for (int i = 0; i < pd->numDefns; i++) {
         /* All definitions written out, to keep the math somewhere near sane,
          * but some definitions are just empty here
@@ -7006,7 +7005,7 @@ static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
             /* IF semitransparent shading, 
              * need to complete mask at end of file to get its
              * content object number right */
-            completeShading(i, pd);
+            completeShading(i, defnOffset, pd);
             fputs(pd->definitions[i].str, pd->pdffp);
         } else if (pd->definitions[i].type == PDFtilingPattern) {
             /* Need to complete tiling pattern at end of file
@@ -7016,7 +7015,7 @@ static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
         } else if (pd->definitions[i].type == PDFsoftMask) {
             /* Need to complete mask at end of file to get its
              * content object number right */
-            completeMask(i, pd);
+            completeMask(i, defnOffset, pd);
             fputs(pd->definitions[i].str, pd->pdffp);
         } else {
             fputs(pd->definitions[i].str, pd->pdffp);
