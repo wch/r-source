@@ -116,9 +116,33 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     if (!ATTR_AS_SET) {
 	PROTECT(ax);
 	PROTECT(ay);
-	Rboolean idattr = R_compute_identical(ax, ay, flags);
-	UNPROTECT(2);
-	if(! idattr) return FALSE;
+	while (ax != R_NilValue) {
+	    if (ay == R_NilValue) {
+		UNPROTECT(2); /* ax, ay */
+		return FALSE;
+	    }
+	    /* Need to check for R_RowNamesSymbol and treat specially */
+	    if (TAG(ax) == R_RowNamesSymbol) {
+		SEXP atrx = PROTECT(getAttrib(x, R_RowNamesSymbol));
+		SEXP atry = PROTECT(getAttrib(y, R_RowNamesSymbol));
+		if (!R_compute_identical(atrx, atry, flags)) {
+		    UNPROTECT(4); /* atrx, atry, ax, ay */
+		    return FALSE;
+		} 
+		UNPROTECT(2); /* atrx, atry */
+	    } else if (!R_compute_identical(CAR(ax), CAR(ay), flags)) {	  
+		UNPROTECT(2); /* ax, ay */
+		return FALSE;
+	    }
+	    if (!R_compute_identical(PRINTNAME(TAG(ax)),
+	                             PRINTNAME(TAG(ay)), flags)) {
+		UNPROTECT(2); /* ax, ay */
+		return FALSE;
+	    }
+	    ax = CDR(ax);
+	    ay = CDR(ay);
+	}
+	UNPROTECT(2); /* ax, ay */
     }
     /* Attributes are special: they should be tagged pairlists.  We
        don't test them if they are not, and we do not test the order
