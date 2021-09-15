@@ -5483,6 +5483,8 @@ typedef struct {
 #define PDFstrokePath 9
 #define PDFfillPath 10
 #define PDFfillStrokePath 11
+#define PDFtemp 12
+#define PDFshadingSoftMask 4
 
 /* PDF Blend Modes */
 #define PDFnormal 0
@@ -5514,6 +5516,7 @@ typedef struct {
     int type;
     int nchar;
     char* str;
+    int contentDefn;
 } PDFdefn;
 
 typedef struct {
@@ -5732,6 +5735,12 @@ static void initDefn(int i, int type, PDFDesc *pd)
     pd->definitions[i].nchar = DEFBUFSIZE;
     pd->definitions[i].str = malloc(DEFBUFSIZE*sizeof(char));
     pd->definitions[i].str[0] = '\0';
+    pd->definitions[i].contentDefn = -1;
+}
+
+static void addDefnContent(int i, int content, PDFDesc *pd)
+{
+    pd->definitions[i].contentDefn = content;
 }
 
 static void catDefn(char* buf, int i, PDFDesc *pd) 
@@ -6078,48 +6087,70 @@ static void addRadialGradient(SEXP gradient, char* colormodel,
 static int addShadingSoftMask(SEXP pattern, PDFDesc *pd)
 {
     int defNum = growDefinitions(pd);
-    initDefn(defNum, PDFsoftMask, pd);
+    initDefn(defNum, PDFshadingSoftMask, pd);
+    int xobjDefn = growDefinitions(pd);
+    initDefn(xobjDefn, PDFcontent, pd);
+    addDefnContent(defNum, xobjDefn, pd);
     /* Object number will be determined when definition written
      * to file (PDF_endfile)
      */
     catDefn(" 0 obj\n<<\n/Type /ExtGState\n/AIS false\n/SMask\n<<\n",
             defNum, pd);
-    catDefn("/Type /Mask\n/S /Luminosity\n/G\n<<\n",
+    catDefn("/Type /Mask\n/S /Luminosity\n/G ",
             defNum, pd);
-    catDefn("/Type /XObject\n/Subtype /Form\n/FormType 1\n/Group\n<<\n",
-            defNum, pd);
+    /* Mask definition completed when definition written
+     * to file (PDF_endfile)
+     */
+
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    catDefn(" 0 obj\n",
+            xobjDefn, pd);
+    catDefn("<<\n/Type /XObject\n/Subtype /Form\n/FormType 1\n/Group\n<<\n",
+            xobjDefn, pd);
     catDefn("/Type /Group\n/CS /DeviceGray\n/I true\n/S /Transparency\n",
-            defNum, pd);
+            xobjDefn, pd);
     catDefn(">>\n/Resources\n<<\n",
-            defNum, pd);
+            xobjDefn, pd);
     catDefn("/Shading\n<<\n/S0\n",
-            defNum, pd);
+            xobjDefn, pd);
     switch(R_GE_patternType(pattern)) {
     case R_GE_linearGradientPattern: 
-        addLinearGradient(pattern, "gray", defNum, pd);
+        addLinearGradient(pattern, "gray", xobjDefn, pd);
         break;
     case R_GE_radialGradientPattern: 
-        addRadialGradient(pattern, "gray", defNum, pd);
+        addRadialGradient(pattern, "gray", xobjDefn, pd);
         break;
     default:
         warning("Shading type not yet supported");
         return -1;
     }
     catDefn(">>\n/ExtGState << /G0 << /CA 1 /ca 1 >> >>\n",
-            defNum, pd);
+            xobjDefn, pd);
     char buf[30];
     snprintf(buf, 
              30,
              ">>\n/BBox [0 0 %d %d]\n",
              (int) (0.5 + pd->paperwidth), (int) (0.5 + pd->paperheight));
-    catDefn(buf, defNum, pd);
+    catDefn(buf, xobjDefn, pd);
     /* Note the spaces before the >> just after the endstream;
      * ghostscript seems to need those to avoid error (!?) */
-    catDefn("/Length 14\n>>\nstream\n/G0 gs /S0 sh\nendstream\n  >>\n",
-            defNum, pd);
-    catDefn(">>\nendobj\n", defNum, pd);
-    trimDefn(defNum, pd);
+    catDefn("/Length 14\n>>\nstream\n/G0 gs /S0 sh\nendstream\nendobj\n",
+            xobjDefn, pd);
+    trimDefn(xobjDefn, pd);
+
     return defNum;
+}
+
+static void completeShadingSoftMask(int defNum, PDFDesc *pd)
+{
+    /* Write out mask content object */
+    int offset = (pd->nobjs - defNum);
+    int contentObj = pd->definitions[defNum].contentDefn + offset + 1;
+    char buf[100];
+    snprintf(buf, 100," %d 0 R\n>>\n>>\nendobj\n", contentObj);
+    catDefn(buf, defNum, pd);
 }
 
 /*
@@ -6190,6 +6221,7 @@ static SEXP addShading(SEXP pattern, PDFDesc *pd)
         if (semiTransparentShading(pattern)) {
             int maskNum = addShadingSoftMask(pattern, pd);
             if (maskNum >= 0) {
+                addDefnContent(defNum, maskNum, pd);
                 PROTECT(ref = allocVector(INTSXP, 2));
                 INTEGER(ref)[0] = defNum;
                 INTEGER(ref)[1] = maskNum;
@@ -6202,6 +6234,16 @@ static SEXP addShading(SEXP pattern, PDFDesc *pd)
         }
     }
     return ref;
+}
+
+static void completeShading(int defNum, PDFDesc *pd)
+{
+    /* If we started a soft mask (for semitransparent shading)
+     * we need to finish it here */
+    int maskNum = pd->definitions[defNum].contentDefn;
+    if (maskNum >= 0) {    
+        completeShadingSoftMask(maskNum, pd);
+    }
 }
 
 /***********************************************************************
@@ -6220,7 +6262,10 @@ static int newTiling(SEXP pattern, PDFDesc *pd)
      * so we can determine length of the content
      */
     int contentDefn = growDefinitions(pd);
-    initDefn(contentDefn, PDFcontent, pd);
+    /* Use PDFtemp instead of PDFcontent because this content is 
+     * NOT written out as separate object */
+    initDefn(contentDefn, PDFtemp, pd);
+    addDefnContent(defNum, contentDefn, pd);
     /* Some initialisation that newpage does
      * (expected by other captured output)
      */
@@ -6292,7 +6337,7 @@ static void completeTiling(int defNum, int resourceDictOffset, PDFDesc *pd)
     /* (strong) assumption here that tiling pattern content is 
      * very next definition
      */
-    int contentDefn = defNum + 1;
+    int contentDefn = pd->definitions[defNum].contentDefn;
 
     catDefn("/Resources\n",
             defNum, pd);
@@ -6447,12 +6492,15 @@ static int newMask(SEXP path, PDFDesc *pd)
     char buf[100];
     int defNum = growDefinitions(pd);
     initDefn(defNum, PDFsoftMask, pd);
-    
+    int xobjDefn = growDefinitions(pd);
+    initDefn(xobjDefn, PDFcontent, pd);
+    addDefnContent(defNum, xobjDefn, pd);
+
     /* Use temporary definition to store the mask content
      * so we can determine length of the content
      */
     int tempDefn = growDefinitions(pd);
-    initDefn(tempDefn, PDFcontent, pd);
+    initDefn(tempDefn, PDFtemp, pd);
     /* Some initialisation that newpage does
      * (expected by other captured output)
      */
@@ -6489,10 +6537,17 @@ static int newMask(SEXP path, PDFDesc *pd)
      */
     catDefn(" 0 obj\n<<\n/Type /ExtGState\n/AIS false\n/SMask\n<<\n",
             defNum, pd);
-    catDefn("/Type /Mask\n/S /Alpha\n/G\n<<\n",
+    catDefn("/Type /Mask\n/S /Alpha\n/G",
             defNum, pd);
-    catDefn("/Type /XObject\n/Subtype /Form\n/FormType 1\n/Group\n<<\n",
-            defNum, pd);
+    /* Mask definition completed when definition written
+     * to file (PDF_endfile)
+     */
+    
+    /* Object number will be determined when definition written
+     * to file (PDF_endfile)
+     */
+    catDefn(" 0 obj\n<</Type /XObject\n/Subtype /Form\n/FormType 1\n/Group\n<<\n",
+            xobjDefn, pd);
     char colorspace[12];
     if (streql(pd->colormodel, "gray"))
         strcpy(colorspace, "/DeviceGray");
@@ -6504,12 +6559,12 @@ static int newMask(SEXP path, PDFDesc *pd)
              100,
              "/Type /Group\n/CS %s\n/I true\n/S /Transparency\n",
              colorspace);
-    catDefn(buf, defNum, pd);
+    catDefn(buf, xobjDefn, pd);
     snprintf(buf, 
              100,
              ">>\n/BBox [0 0 %d %d]\n",
              (int) (0.5 + pd->paperwidth), (int) (0.5 + pd->paperheight));
-    catDefn(buf, defNum, pd);
+    catDefn(buf, xobjDefn, pd);
 
     /* Note the spaces before the >> just after the endstream;
      * ghostscript seems to need those to avoid error (!?) */
@@ -6517,15 +6572,25 @@ static int newMask(SEXP path, PDFDesc *pd)
              100,
              "/Length %d\n",
              (int) strlen(pd->definitions[tempDefn].str));
-    catDefn(buf, defNum, pd);
-    catDefn(">>\nstream\n", defNum, pd);
+    catDefn(buf, xobjDefn, pd);
+    catDefn(">>\nstream\n", xobjDefn, pd);
     /* Copy mask content */
-    copyDefn(tempDefn, defNum, pd);
-    catDefn("endstream\n  >>\n", defNum, pd);
-    catDefn(">>\nendobj\n", defNum, pd);
+    copyDefn(tempDefn, xobjDefn, pd);
+    catDefn("endstream\n", xobjDefn, pd);
+    catDefn("endobj\n", xobjDefn, pd);
 
-    trimDefn(defNum, pd);
+    trimDefn(xobjDefn, pd);
     return defNum;
+}
+
+static void completeMask(int defNum, PDFDesc *pd)
+{
+    /* Write out mask content object */
+    int offset = (pd->nobjs - defNum);
+    int contentObj = pd->definitions[defNum].contentDefn + offset;
+    char buf[100];
+    snprintf(buf, 100," %d 0 R\n>>\n>>\nendobj\n", contentObj);
+    catDefn(buf, defNum, pd);
 }
 
 static SEXP addMask(SEXP mask, SEXP ref, PDFDesc *pd) 
@@ -6619,7 +6684,7 @@ static int newGroup(SEXP source, int op, SEXP destination, PDFDesc *pd)
      * so we can determine length of the content
      */
     int tempDefn = growDefinitions(pd);
-    initDefn(tempDefn, PDFcontent, pd);
+    initDefn(tempDefn, PDFtemp, pd);
     /* Some initialisation that newpage does
      * (expected by other captured output)
      */
@@ -6766,7 +6831,8 @@ static void PDFwriteSoftMaskDefs(int objoffset, PDFDesc *pd)
     int i;
     char buf[100];
     for (i = 0; i < pd->numDefns; i++) {
-        if (pd->definitions[i].type == PDFsoftMask) {
+        if (pd->definitions[i].type == PDFsoftMask ||
+            pd->definitions[i].type == PDFshadingSoftMask) {
             PDFwrite(buf, 100, "/Def%d %d 0 R\n", pd,
                      i, i + objoffset);
         }
@@ -6929,13 +6995,23 @@ static void PDFwriteDefinitions(int resourceDictOffset, PDFDesc *pd)
             pd->definitions[i].type == PDFstrokePath ||
             pd->definitions[i].type == PDFfillPath ||
             pd->definitions[i].type == PDFfillStrokePath ||
-            pd->definitions[i].type == PDFcontent) {
+            pd->definitions[i].type == PDFtemp) {
             fprintf(pd->pdffp, " 0 obj << >> endobj\n");
+        } else if (pd->definitions[i].type == PDFshadingPattern) {
+            /* IF semitransparent shading, 
+             * need to complete mask at end of file to get its
+             * content object number right */
+            completeShading(i, pd);
+            fputs(pd->definitions[i].str, pd->pdffp);
         } else if (pd->definitions[i].type == PDFtilingPattern) {
             /* Need to complete tiling pattern at end of file
-             * to get its Resource Dictionary right
-             */         
+             * to get its Resource Dictionary right */         
             completeTiling(i, resourceDictOffset, pd);
+            fputs(pd->definitions[i].str, pd->pdffp);
+        } else if (pd->definitions[i].type == PDFsoftMask) {
+            /* Need to complete mask at end of file to get its
+             * content object number right */
+            completeMask(i, pd);
             fputs(pd->definitions[i].str, pd->pdffp);
         } else {
             fputs(pd->definitions[i].str, pd->pdffp);
