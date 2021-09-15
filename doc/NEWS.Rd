@@ -91,6 +91,10 @@
       and the \code{histogram} method for \code{plot()} now also use the
       new default \code{col = "lightgray"} in consistency with the
       corresponding change to \code{hist()}'s default for \R 4.0.0.
+
+      \item \code{hist.default()} gains new \code{fuzz} argument, and the
+      histogram \code{plot} method no longer uses fractional axis ticks
+      when displaying counts (\code{"Frequency"}).
     }
   }
 

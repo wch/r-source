@@ -10,7 +10,7 @@ hist(x, \dots)
 
 \method{hist}{default}(x, breaks = "Sturges",
      freq = NULL, probability = !freq,
-     include.lowest = TRUE, right = TRUE,
+     include.lowest = TRUE, right = TRUE, fuzz = 1e-7,
      density = NULL, angle = 45, col = "lightgray", border = NULL,
      main = paste("Histogram of" , xname),
      xlim = range(breaks), ylim = NULL,
@@ -51,7 +51,10 @@ hist(x, \dots)
     unless \code{breaks} is a vector.}
   \item{right}{logical; if \code{TRUE}, the histogram cells are
     right-closed (left open) intervals.}
-
+  \item{fuzz}{non-negative number, for the case when the data is
+    \dQuote{pretty} and some observations \code{x[.]} are close but not
+    exactly on a \code{break}.  For counting fuzzy breaks proportional
+    to \code{fuzz} are used.  The default is occasionally suboptimal.}
   \item{density}{the density of shading lines, in lines per inch.
     The default value of \code{NULL} means that no shading lines
     are drawn. Non-positive values of \code{density} also inhibit the
@@ -105,11 +108,11 @@ hist(x, \dots)
   fraction of the data points falling in the cells.
 
   If \code{right = TRUE} (default), the histogram cells are intervals
-  of the form \code{(a, b]}, i.e., they include their right-hand endpoint,
+  of the form \eqn{(a, b]}, i.e., they include their right-hand endpoint,
   but not their left one, with the exception of the first cell when
   \code{include.lowest} is \code{TRUE}.
 
-  For \code{right = FALSE}, the intervals are of the form \code{[a, b)},
+  For \code{right = FALSE}, the intervals are of the form \eqn{[a, b)},
   and \code{include.lowest} means \sQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the median bin size
@@ -192,6 +195,9 @@ hh <- hist(XXL, "FD") # did not work in R <= 3.4.1; now gives warning
 ## pretty() determines how many counts are used (platform dependently!):
 length(hh$breaks) ## typically 1 million -- though 1e6 was "a suggestion only"
 }
+## R >= 4.2.0: no "*.5" labels on y-axis:
+hist(c(2,3,3,5,5,6,6,6,7))
+
 require(stats)
 set.seed(14)
 x <- rchisq(100, df = 4)

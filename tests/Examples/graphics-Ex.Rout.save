@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-07-20 r80647) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-09-14 r80893) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1097,6 +1097,9 @@ List of 6
 +      main = "WRONG histogram") # and warning
 Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = angle,  :
   the AREAS in the plot are wrong -- rather use 'freq = FALSE'
+> ## R >= 4.2.0: no "*.5" labels on y-axis:
+> hist(c(2,3,3,5,5,6,6,6,7))
+> 
 > require(stats)
 > set.seed(14)
 > x <- rchisq(100, df = 4)
@@ -3101,7 +3104,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.453 0.216 3.777 0 0 
+Time elapsed:  2.623 0.089 2.767 0 0 
 > grDevices::dev.off()
 null device 
           1 
