@@ -179,8 +179,9 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
     res$equidist <- TRUE # years are of uneven lengths
     res$xname <- xlab
     if(plot) {
-        ## trick to swallow arguments for plot.histogram, separate out 'axes'
+        ## swallow '...' args only for hist.default() above & separate out 'axes':
         myplot <- function(res, xlab, freq, format, breaks,
+                           include.lowest, fuzz, # <<- swallowed here
                            density = NULL, angle = 45, col = "lightgray",
                            border = NULL, lty = NULL,
                            labels = FALSE,
@@ -338,8 +339,9 @@ hist.Date <- function(x, breaks, ..., xlab = deparse1(substitute(x)),
     res$equidist <- TRUE # years are of uneven lengths
     res$xname <- xlab
     if(plot) {
-        ## trick to swallow arguments for plot.histogram, separate out 'axes'
+        ## swallow '...' args only for hist.default() above & separate out 'axes':
         myplot <- function(res, xlab, freq, format, breaks,
+                           include.lowest, fuzz, # <<- swallowed here
                            density = NULL, angle = 45, col = "lightgray",
                            border = NULL, lty = NULL,
                            labels = FALSE,
