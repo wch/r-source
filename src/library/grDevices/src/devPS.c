@@ -6818,7 +6818,12 @@ static void PDFwritePatternDefs(int objoffset, int excludeDef, PDFDesc *pd)
     for (i = 0; i < pd->numDefns; i++) {
         if ((pd->definitions[i].type == PDFshadingPattern ||
              pd->definitions[i].type == PDFtilingPattern) &&
-            i != excludeDef) {
+            /* Only write patterns with higher def number 
+             * (defined AFTER this pattern)
+             * to avoid infinite loop from later pattern referring to
+             * earlier pattern (when earlier pattern being filled with
+             * later pattern) */
+            i > excludeDef) {
             PDFwrite(buf, 100, "/Def%d %d 0 R\n", pd,
                      i, i + objoffset);
         }
