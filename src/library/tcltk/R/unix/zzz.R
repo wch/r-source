@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/unix/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,18 +49,23 @@
             ind <- grep("libtk[.0-9]+[.]dylib", out)
             if(length(ind)) {
                 this <- sub(" .*", "", sub("^\t", "", out[ind]))
-                ##  message("tcltk DLL is linked to ", shQuote(this))
-                if(!file.exists(this))
+                if(!file.exists(this)) {
+                    ## one issue here is that libtk built from unpatched
+                    ## sources has wrong id, so we report what it is looking for
+                    ## (/opt/R/arm64/lib:/usr/X11R6/lib/libtk8.6.dylib is wrong)
+                    message("tcltk DLL is linked to ", shQuote(this))
                     stop("Tcl/Tk libraries are missing: install the Tcl/Tk component from the R installer",
                          domain = NA)
+                }
             }
             ind <- grep("libX11[.][0-9]+[.]dylib", out)
             if(length(ind)) {
                 this <- sub(" .*", "", sub("^\t", "", out[ind]))
-                ##  message("tcltk DLL is linked to ", shQuote(this))
-                if(!file.exists(this))
+                if(!file.exists(this)) {
+                    message("tcltk DLL is linked to ", shQuote(this))
                     stop("X11 library is missing: install XQuartz from www.xquartz.org",
                          domain = NA)
+                }
             }
         }
 
