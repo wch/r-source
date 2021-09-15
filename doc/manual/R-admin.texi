@@ -5711,15 +5711,15 @@ To correctly set the architecture (which will be auto-detected as
 @node Native builds,  , `Apple Silicon', `Apple Silicon'
 @subsubsection Native builds
 
-This section is somewhat provisional, and everything said should be prefixed by
-`at the time of writing'.  It follows the @acronym{CRAN} distribution in
-using @file{/opt/R/arm64} rather than @file{/usr/local}: this largely
-allows natively-compiled software to co-exist with Intel-compiled
-software (although the C/C++ compilers and linker will still search
-@file{/usr/local/include} and @file{/usr/local/lib}).
+This section follows the @acronym{CRAN} distribution in using
+@file{/opt/R/arm64} rather than @file{/usr/local}: this largely allows
+natively-compiled software to co-exist with compiled-for-Intel software
+(although the C/C++ compilers and linker will still search
+@file{/usr/local/include} and @file{/usr/local/lib}).  Availability of
+software is still evolving.
 
 No Fortran compiler has been released for this architecture although
-there are ports under development.  We used the preliminary fork of
+there are ports under development.  We used the fork of
 @command{gfortran} from @url{https://github.com/iains/gcc-darwin-arm64}
 of which there are binary distributions at
 @uref{https://mac.r-project.org/libs-arm64/} and
@@ -5738,12 +5738,16 @@ A release of XQuartz 2.8.1 is available @emph{via}
 supports both @cputype{arm64} and @cputype{x86_64} builds.
 
 Binary builds of the prerequisites@footnote{At the time of writing this
-had Aqua-based Tcl/Tk not the X11-based variant in the CRAN distribution
-of @R{}.  Also, no @code{readline}: the @acronym{CRAN} distribution uses
+showed Aqua-based Tcl/Tk not the X11-based variant in the CRAN
+distribution of @R{}, which was at
+@uref{https://mac.r-project.org/libs-arm64/tcl8.6.11-darwin20.4-arm64.tar.gz}
+and
+@uref{https://mac.r-project.org/libs-arm64/tk8.6.11-xft-darwin20.4-arm64.tar.gz}.
+Also, no @code{readline}: the @acronym{CRAN} distribution uses
 @code{libedit} emulation.} are available at
-@uref{https://mac.r-project.org/libs-arm64/}.  These (largely) unpack
-into @file{/opt/R/arm64}: it is simplest to first create that directory
-and adjust its ownership if desired:
+@uref{https://mac.r-project.org/libs-arm64/}.  These unpack into
+@file{/opt/R/arm64}: it is simplest to first create that directory and
+adjust its ownership if desired:
 
 @example
 sudo mkdir -p /opt/R/arm64
@@ -5788,10 +5792,10 @@ configure @R{} using something like
 
 @example
 /path/to/configure --enable-R-shlib --enable-memory-profiling \
-  --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh \
-  --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh \
-  PKG_CONFIG_PATH=/opt/R/arm64/local/lib/pkgconfig:/usr/lib/pkgconfig \
-  JAVA_HOME=/path/to/zulu-11.jdk/Contents/Home
+  --with-tcl-config=/opt/R/arm64/lib/tclConfig.sh \
+  --with-tk-config=/opt/R/arm64/lib/tkConfig.sh \
+  PKG_CONFIG_PATH=/opt/R/arm64/lib/pkgconfig:/usr/lib/pkgconfig \
+  JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
 @end example
 
 Updating a build may fail because of the bug
@@ -5800,8 +5804,13 @@ described at @uref{https://openradar.appspot.com/FB8914243} but
 
 Native Java builds are available, for example
 @uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
-and this architecture (which they call @code{macos-aarch64}) will be part
-of Java 17 from OpenJDK at @uref{https://jdk.java.net/17/}.
+and this architecture (which they call @code{macos-aarch64}) for Java 17
+from OpenJDK at @uref{https://jdk.java.net/17/}; it will be available
+from @uref{https://adoptium.net, Adoptium}.  Note that for some
+distributions @cputype{arm64} and @cputype{x86_64} builds use the same
+location so do not co-exist, and others do not point
+@file{/usr/bin/java} to the correct version so @env{JAVA_HOME} may need
+to be set at runtime.
 
 As with Intel builds, the @code{Accelerate} library could be used
 @emph{via} the configuration option
