@@ -49,27 +49,27 @@ taskCallbackManager(handlers = list(), registered = FALSE,
 }
 \value{
   A \code{\link{list}} containing 6 functions:
-  \item{\code{add()}}{register a callback with this manager, giving the
+  \item{add()}{register a callback with this manager, giving the
     function, an optional 5-th argument, an optional name
     by which the callback is stored in the list,
     and a \code{register} argument which controls whether
     the \code{evaluate} function is registered with the internal
     C-level dispatch mechanism if necessary.}
-  \item{\code{remove()}}{remove an element from the manager's collection
+  \item{remove()}{remove an element from the manager's collection
     of callbacks, either by name or position/index.}
-  \item{\code{evaluate()}}{the \sQuote{real} callback function that is registered
+  \item{evaluate()}{the \sQuote{real} callback function that is registered
     with the C-level dispatch mechanism and which invokes each of the
     R-level callbacks within this manager's control.}
-  \item{\code{suspend()}}{a function to set the suspend state
+  \item{suspend()}{a function to set the suspend state
     of the manager.  If it is suspended, none of the callbacks will be
     invoked when a task is completed.  One sets the state by specifying
     a logical value for the \code{status} argument.
   }
-  \item{\code{register()}}{a function to register the \code{evaluate}
+  \item{register()}{a function to register the \code{evaluate}
     function with the internal C-level dispatch mechanism.  This is
     done automatically by the \code{add} function, but can be called
     manually.}
-  \item{\code{callbacks()}}{returns the list of callbacks being maintained
+  \item{callbacks()}{returns the list of callbacks being maintained
     by this manager.}
 }
 \seealso{
