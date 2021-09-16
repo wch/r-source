@@ -113,52 +113,57 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     else {
 	ax = ATTRIB(x); ay = ATTRIB(y);
     }
-    if (!ATTR_AS_SET) {
-	PROTECT(ax);
-	PROTECT(ay);
-	while (ax != R_NilValue) {
-	    if (ay == R_NilValue) {
-		UNPROTECT(2); /* ax, ay */
-		return FALSE;
-	    }
-	    /* Need to check for R_RowNamesSymbol and treat specially */
-	    if (TAG(ax) == R_RowNamesSymbol) {
-		SEXP atrx = PROTECT(getAttrib(x, R_RowNamesSymbol));
-		SEXP atry = PROTECT(getAttrib(y, R_RowNamesSymbol));
-		if (!R_compute_identical(atrx, atry, flags)) {
-		    UNPROTECT(4); /* atrx, atry, ax, ay */
-		    return FALSE;
-		} 
-		UNPROTECT(2); /* atrx, atry */
-	    } else if (!R_compute_identical(CAR(ax), CAR(ay), flags)) {	  
-		UNPROTECT(2); /* ax, ay */
-		return FALSE;
-	    }
-	    if (!R_compute_identical(PRINTNAME(TAG(ax)),
-	                             PRINTNAME(TAG(ay)), flags)) {
-		UNPROTECT(2); /* ax, ay */
-		return FALSE;
-	    }
-	    ax = CDR(ax);
-	    ay = CDR(ay);
-	}
-	UNPROTECT(2); /* ax, ay */
-    }
-    /* Attributes are special: they should be tagged pairlists.  We
-       don't test them if they are not, and we do not test the order
-       if they are.
 
-       This code is not very efficient, but then neither is using
-       pairlists for attributes.  If long attribute lists become more
-       common (and they are used for S4 slots) we should store them in
-       a hash table.
-    */
-    else if(ax != R_NilValue || ay != R_NilValue) {
+    if(ax != R_NilValue || ay != R_NilValue) {
 	if(ax == R_NilValue || ay == R_NilValue)
 	    return FALSE;
+	/* Attributes are tagged pairlists with unique non-empty non-NA tags.
+	   This code still includes a check and if they are not pairlists,
+	   they are not compared, with a warning (could be turned into an error
+	   or removed). */
 	if(TYPEOF(ax) != LISTSXP || TYPEOF(ay) != LISTSXP) {
 	    warning(_("ignoring non-pairlist attributes"));
-	} else {
+	} else if (!ATTR_AS_SET) {
+	    /* ax, ay might be fresh allocations from duplicating into
+	       x_, y_) above, so need to be protected from possible
+	       allocations in getAttrib and recursive calls to
+	       R_compute_identical in the loop. */
+	    PROTECT(ax);
+	    PROTECT(ay);
+	    while (ax != R_NilValue) {
+		if (ay == R_NilValue) {
+		    UNPROTECT(2); /* ax, ay */
+		    return FALSE;
+		}
+		/* Need to check for R_RowNamesSymbol and treat specially */
+		if (TAG(ax) == R_RowNamesSymbol) {
+		    SEXP atrx = PROTECT(getAttrib(x, R_RowNamesSymbol));
+		    SEXP atry = PROTECT(getAttrib(y, R_RowNamesSymbol));
+		    if (!R_compute_identical(atrx, atry, flags)) {
+			UNPROTECT(4); /* atrx, atry, ax, ay */
+			return FALSE;
+		    } 
+		    UNPROTECT(2); /* atrx, atry */
+		} else if (!R_compute_identical(CAR(ax), CAR(ay), flags)) {	  
+		    UNPROTECT(2); /* ax, ay */
+		    return FALSE;
+		}
+		if (!R_compute_identical(PRINTNAME(TAG(ax)),
+					 PRINTNAME(TAG(ay)), flags)) {
+		    UNPROTECT(2); /* ax, ay */
+		    return FALSE;
+		}
+		ax = CDR(ax);
+		ay = CDR(ay);
+	    }
+	    UNPROTECT(2); /* ax, ay */
+	    if (ay != R_NilValue)
+		return FALSE;
+	} else /* ATTR_AS_SET */ {
+	    /* This code is not very efficient, but then neither is using
+	       pairlists for attributes.  If long attribute lists become more
+	       common (and they are used for S4 slots) we should store them in
+	       a hash table. */
 	    SEXP elx, ely;
 	    if(length(ax) != length(ay)) return FALSE;
 	    /* They are the same length and should have
