@@ -668,7 +668,7 @@ dnl            USE_INCLUDED_LIBINTL, BUILD_INCLUDED_LIBINTL.
 AC_DEFUN([AM_INTL_SUBDIR],
 [
   AC_REQUIRE([AC_PROG_INSTALL])dnl
-  AC_REQUIRE([AM_PROG_MKDIR_P])dnl defined by automake
+  AC_REQUIRE([AC_PROG_MKDIR_P])dnl
   AC_REQUIRE([AC_PROG_CC])dnl
   AC_REQUIRE([AC_CANONICAL_HOST])dnl
   AC_REQUIRE([gt_GLIBC2])dnl
@@ -1590,10 +1590,10 @@ Found it
       dnl Define it ourselves. Here we assume that the type 'size_t' is not wider
       dnl than the type 'unsigned long'. Try hard to find a definition that can
       dnl be used in a preprocessor #if, i.e. doesn't contain a cast.
-      _AC_COMPUTE_INT([sizeof (size_t) * CHAR_BIT - 1], size_t_bits_minus_1,
+      AC_COMPUTE_INT([sizeof (size_t) * CHAR_BIT - 1], size_t_bits_minus_1,
         [#include <stddef.h>
 #include <limits.h>], size_t_bits_minus_1=)
-      _AC_COMPUTE_INT([sizeof (size_t) <= sizeof (unsigned int)], fits_in_uint,
+      AC_COMPUTE_INT([sizeof (size_t) <= sizeof (unsigned int)], fits_in_uint,
         [#include <stddef.h>], fits_in_uint=)
       if test -n "$size_t_bits_minus_1" && test -n "$fits_in_uint"; then
         if test $fits_in_uint = 1; then
