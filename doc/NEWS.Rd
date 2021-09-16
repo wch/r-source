@@ -55,6 +55,9 @@
 
       \item Fixed \code{dnbinom(x, size=<very_small>, .., log=TRUE)}
       regression, reported by Martin Morgan.
+
+      \item \code{as.Date.POSIXlt(x)} now keeps \code{names(x)}, thanks to
+      Davis Vaughan's report and patch in \PR{18188}.
     }
   }
 }
