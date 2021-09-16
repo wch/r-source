@@ -2600,9 +2600,8 @@ if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${dgemm} in ${BLAS_LIBS}])
-    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}
-                 void ${dgemm}();],
-		${dgemm}(), [acx_blas_ok=yes], [BLAS_LIBS=""])
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[void ${xerbla}(char *srname, int *info){}
+                 void ${dgemm}();]], [[${dgemm}()]])],[acx_blas_ok=yes],[BLAS_LIBS=""])
     AC_MSG_RESULT([${acx_blas_ok}])
     LIBS="${r_save_LIBS}"
     dnl from 2020-11 make failure an error: used to fallback to search
@@ -3495,25 +3494,21 @@ dnl need to ignore cache for this as it may set LIBS
 unset ac_cv_func_iconv
 AC_CACHE_CHECK(for iconv, ac_cv_func_iconv, [
   ac_cv_func_iconv="no"
-  AC_TRY_LINK([#include <stdlib.h>
+  AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
-#endif],
-      [iconv_t cd = iconv_open("","");
+#endif]], [[iconv_t cd = iconv_open("","");
        iconv(cd,NULL,NULL,NULL,NULL);
-       iconv_close(cd);],
-      ac_cv_func_iconv=yes)
+       iconv_close(cd);]])],[ac_cv_func_iconv=yes],[])
   if test "$ac_cv_func_iconv" != yes; then
     r_save_LIBS="$LIBS"
     LIBS="$LIBS -liconv"
-    AC_TRY_LINK([#include <stdlib.h>
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
-#endif],
-        [iconv_t cd = iconv_open("","");
+#endif]], [[iconv_t cd = iconv_open("","");
          iconv(cd,NULL,NULL,NULL,NULL);
-         iconv_close(cd);],
-        ac_cv_func_iconv="in libiconv")
+         iconv_close(cd);]])],[ac_cv_func_iconv="in libiconv"],[])
       if test "$ac_cv_func_iconv" = no; then
         LIBS="$r_save_LIBS"
       fi
@@ -3640,14 +3635,12 @@ fi
 dnl if the iconv we are using was in libiconv we have already included -liconv
 AC_CACHE_CHECK(for iconvlist, ac_cv_func_iconvlist, [
   ac_cv_func_iconvlist="no"
-  AC_TRY_LINK([#include <stdlib.h>
+  AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
 static int count_one (unsigned int namescount, const char * const *names, void *data)
-{return 0;}],
-    [iconvlist(count_one, NULL);],
-      ac_cv_func_iconvlist=yes)
+{return 0;}]], [[iconvlist(count_one, NULL);]])],[ac_cv_func_iconvlist=yes],[])
    ])
 if test "$ac_cv_func_iconvlist" = yes; then
   AC_DEFINE(HAVE_ICONVLIST, 1, [Define if you have the `iconvlist' function.])
@@ -3757,8 +3750,7 @@ AS_VAR_POPDEF([ac_Symbol])dnl
 ## --------------------------------------------------------
 ## Defines HAVE_SYMBOL if declared.  SYMBOLS is an m4 list.
 AC_DEFUN([R_CHECK_FUNCS],
-[AC_FOREACH([AC_Func], [$1],
-  [AH_TEMPLATE(AS_TR_CPP(HAVE_[]AC_Func),
+[m4_foreach_w([AC_Func],[$1],[AH_TEMPLATE(AS_TR_CPP(HAVE_[]AC_Func),
                [Define to 1 if you have the `]AC_Func[' function.])])dnl
 for ac_func in $1
 do
