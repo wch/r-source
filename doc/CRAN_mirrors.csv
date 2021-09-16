@@ -20,7 +20,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Canada (NS) [https]",Canada,Halifax,https://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",0,ca
 "Canada (ON 1) [https]",Canada,Toronto,https://utstat.toronto.edu/cran/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
 "Canada (ON 2) [https]",Canada,Toronto,https://cran.pacha.dev/,"DigitalOcean","Mauricio Vargas <mavargas11 # uc.cl>",1,ca,"secure_mirror_from_master"
-"Canada (ON 3) [https]",Canada,Waterloo,https://mirror.csclub.uwaterloo.ca/CRAN/,"University of Waterloo","syscom # csclub.uwaterloo.ca",1,ca
+"Canada (ON 3) [https]",Canada,Waterloo,https://mirror.csclub.uwaterloo.ca/CRAN/,"University of Waterloo","syscom # csclub.uwaterloo.ca",1,ca,"secure_mirror_from_master"
 "Chile (Santiago) [https]",Chile,Santiago,https://cran.dcc.uchile.cl/,"Departamento de Ciencias de la Computación, Universidad de Chile","Mauricio Vargas <mvargas # dcc.uchile.cl>",1,cl,"secure_mirror_from_master"
 "Chile (Temuco) [https]",Chile,Temuco,https://cran.dme.ufro.cl/,"Departamento de Matemática y Estadística, Universidad de La Frontera","tic-dme # ufrontera.cl",0,cl
 "China (Beijing 1) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn,
