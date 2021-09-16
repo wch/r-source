@@ -805,7 +805,7 @@ fi
 ## on at least one system the latter actually used -lgfortran
 ## (which was broken) and the previous test here did not.
 AC_DEFUN([R_PROG_FC_CAN_RUN],
-[AC_REQUIRE([AC_CHECK_LIBM])
+[AC_REQUIRE([LT_LIB_M])
 AC_MSG_CHECKING([whether mixed C/Fortran code can be run])
 AC_CACHE_VAL([r_cv_prog_fc_can_run],
 [cat > conftestf.f <<EOF
@@ -874,7 +874,7 @@ fi
 ## --------------------
 ## Check whether the Fortran and C compilers agree on int and double.
 AC_DEFUN([R_PROG_FC_CC_COMPAT],
-[AC_REQUIRE([AC_CHECK_LIBM])
+[AC_REQUIRE([LT_LIB_M])
 AC_MSG_CHECKING([whether ${FC} and ${CC} agree on int and double])
 AC_CACHE_VAL([r_cv_prog_fc_cc_compat],
 [cat > conftestf.f <<EOF
@@ -963,7 +963,7 @@ fi
 ## ----------------------------
 ## Check whether the Fortran and C compilers agree on double complex.
 AC_DEFUN([R_PROG_FC_CC_COMPAT_COMPLEX],
-[AC_REQUIRE([AC_CHECK_LIBM])
+[AC_REQUIRE([LT_LIB_M])
 AC_MSG_CHECKING([whether ${FC} and ${CC} agree on double complex])
 AC_CACHE_VAL([r_cv_prog_fc_cc_compat_complex],
 [cat > conftestf.f <<EOF
