@@ -24,8 +24,8 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
-  \item{\dots}{arguments to vectorize over (vectors or lists of strictly
-    positive length, or all of zero length).  See also \sQuote{Details}.}
+  \item{\dots}{arguments to vectorize over, will be recycled to common
+  length (zero if one of them is).  See also \sQuote{Details}.}
   \item{dots}{\code{\link{list}} or \code{\link{pairlist}} of arguments to
     vectorize over, see \code{\dots} above.}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
@@ -37,7 +37,8 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
 }
 \details{
   \code{mapply} calls \code{FUN} for the values of \code{\dots}
-  (re-cycled to the length of the longest, unless any have length zero),
+  (re-cycled to the length of the longest, unless any have length zero
+  where recycling to zero length will return \code{list()}),
   followed by the arguments given in \code{MoreArgs}.  The arguments in
   the call will be named if \code{\dots} or \code{MoreArgs} are named.
 
@@ -68,6 +69,8 @@ mapply(function(x, y) seq_len(x) + y,
 word <- function(C, k) paste(rep.int(C, k), collapse = "")
 ## names from the first, too:
 utils::str(L <- mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE))
+
+mapply(word, "A", integer()) # gave Error, now list()
 }
 \keyword{manip}
 \keyword{utilities}

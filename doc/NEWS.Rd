@@ -95,6 +95,10 @@
       \item \code{hist.default()} gains new \code{fuzz} argument, and the
       histogram \code{plot} method no longer uses fractional axis ticks
       when displaying counts (\code{"Frequency"}).
+
+      \item \code{mapply()} and hence \code{Map()} now also obey the
+      \dQuote{max-or-0-if-any} recycling rule, such that, e.g.,
+      \code{Map(`+`, 1:3, 1[0])} is valid now.
     }
   }
 
