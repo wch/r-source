@@ -45119,8 +45119,6 @@ fi
 ## PCRE[12] headers and libraries.
 have_pcre2=no
 if test "x${use_pcre2}" = xyes; then
-## FIXME: Maybe these should be the other way around?
-## Maybe there should be a way to use pkg-config --static
 if "${PKG_CONFIG}" --exists libpcre2-8; then
   PCRE2_CPPFLAGS=`"${PKG_CONFIG}" --cflags libpcre2-8`
   PCRE2_LIBS=`"${PKG_CONFIG}" --libs libpcre2-8`
