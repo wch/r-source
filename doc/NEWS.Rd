@@ -294,6 +294,10 @@
 
       \item \code{model.response()} now strips an \code{"AsIs"} class typically,
       thanks to Duncan Murdoch's report and other discussants in \PR{18190}.
+
+      \item \code{try()} is considerably faster in case of an error and
+      long call, as e.g., from some \code{do.call()}.  Thanks to
+      Alexander Kaever's suggestion posted to R-devel.
     }
   }
 }
