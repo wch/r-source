@@ -602,9 +602,16 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ntok = strlen(buf);
 		    PROTECT(t = allocVector(STRSXP, ntok));
 		    bf[1] = '\0';
-		    for (j = 0; j < ntok; j++) {
-			bf[0] = buf[j];
-			SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
+		    if(useBytes) {
+			for (j = 0; j < ntok; j++) {
+			    bf[0] = buf[j];
+			    SET_STRING_ELT(t, j, mkChar(bf));
+			}
+		    } else {
+			for (j = 0; j < ntok; j++) {
+			    bf[0] = buf[j];
+			    SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
+			}
 		    }
 		}
 		SET_VECTOR_ELT(ans, i, t);
@@ -689,7 +696,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			bufp += MAX(slen-1, 0);
 			laststart = bufp+1;
-			if (use_UTF8)
+			if (useBytes)
+			    SET_STRING_ELT(t, j, mkChar(pt));
+			else if (use_UTF8)
 			    SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 			else
 			    SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
@@ -698,7 +707,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    bufp = laststart;
 		}
 		if (*bufp) {
-		    if (use_UTF8)
+		    if (useBytes)
+			SET_STRING_ELT(t, ntok, mkChar(bufp));
+		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
 			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
@@ -811,13 +822,17 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    if (use_UTF8)
+		    if (useBytes)
+			SET_STRING_ELT(t, j, mkChar(pt));
+		    else if (use_UTF8)
 			SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 		    else
 			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
 		if (*bufp) {
-		    if (use_UTF8)
+		    if (useBytes)
+			SET_STRING_ELT(t, ntok, mkChar(bufp));
+		    else if (use_UTF8)
 			SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
 		    else
 			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
@@ -995,10 +1010,17 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
+		    if (useBytes)
+			SET_STRING_ELT(t, j, mkChar(pt));
+		    else
+			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
-		if (*bufp)
-		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		if (*bufp) {
+		    if (useBytes)
+			SET_STRING_ELT(t, ntok, mkChar(bufp));
+		    else
+			SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		}
 		vmaxset(vmax2);
 	    }
 	    tre_regfree(&reg);
@@ -2357,7 +2379,7 @@ static SEXP
 gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC,
 		R_xlen_t i, SEXP itype)
 {
-    int matchIndex = -1, j, st, foundAll = 0, foundAny = 0, rc;
+    int matchIndex = -1, j, st, foundAll = 0, foundAny = 0;
     size_t len, offset = 0;
     regmatch_t regmatch[10];
     SEXP ans, matchlen;         /* Return vect and its attribute */
@@ -2384,10 +2406,11 @@ gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC,
     }
 
     while (!foundAll) {
+        int rc = REG_OK; // in case offset>=len (e.g., when len==0)
 	if ( offset < len &&
 	     (rc = !use_WC ? tre_regexecb(reg, string+offset, 1, regmatch, eflags) :
 	      tre_regwexec(reg, ws+offset, 1, regmatch, eflags))
-	     == 0) {
+	     == REG_OK) {
 	    if ((matchIndex + 1) == bufsize) {
 		/* Reallocate match buffers */
 		int newbufsize = bufsize * 2;

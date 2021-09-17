@@ -1239,6 +1239,8 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
+/* `*s` should point to a string derived from `ref` after `ref` has been
+   translated to native encoding.  See `?Encoding` */
 SEXP attribute_hidden markKnown(const char *s, SEXP ref)
 {
     int ienc = 0;

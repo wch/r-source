@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -686,6 +686,8 @@ model.response <- function (data, type = "any")
 		storage.mode(v) <- "double"
 	    else if (type != "any") stop("invalid response type")
 	    if (is.matrix(v) && ncol(v) == 1L) dim(v) <- NULL
+	    if(is.object(v) && inherits(v, "AsIs"))
+		v <- unclass(v)
 	    rows <- attr(data, "row.names")
 	    if (nrows <- length(rows)) {
 		if (length(v) == nrows) names(v) <- rows
@@ -703,7 +705,8 @@ model.extract <- function (frame, component)
     component <- as.character(substitute(component))
     rval <- switch(component,
 		   response = model.response(frame),
-		   offset = model.offset(frame),
+		   offset   = model.offset  (frame),
+                   ## otherwise :
                    frame[[paste0("(", component, ")")]]
                    )
     if(!is.null(rval)){

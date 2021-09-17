@@ -33,8 +33,8 @@ model.weights(x)
   e.g.\sspace{}the \code{etastart} and \code{mustart} components of a
   \code{\link{glm}} fit.
 
-  \code{model.offset} and \code{model.response} are equivalent to
-  \code{model.extract(, "offset")} and \code{model.extract(, "response")}
+  \code{model.extract(m, "offset")} and \code{model.extract(m, "response")}
+  are equivalent to \code{model.offset(m)} and \code{model.response(m)}
   respectively.  \code{model.offset} sums any terms specified by
   \code{\link{offset}} terms in the formula or by \code{offset} arguments
   in the call producing the model frame: it does check that the offset
@@ -43,7 +43,10 @@ model.weights(x)
   \code{model.weights} is slightly different from
   \code{model.extract(, "weights")} in not naming the vector it returns.
 }
-\value{The specified component of the model frame, usually a vector.}
+\value{The specified component of the model frame, usually a vector.
+  \code{model.response()} now \emph{drops} a possible \code{"Asis"} class
+  (stemming from \code{\link{I}(.)}).
+}
 
 \seealso{\code{\link{model.frame}}, \code{\link{offset}}}
 

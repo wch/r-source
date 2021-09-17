@@ -201,7 +201,7 @@ void onintrNoResume() { onintrEx(FALSE); }
    These do far more processing than is allowed in a signal handler ....
 */
 
-RETSIGTYPE attribute_hidden onsigusr1(int dummy)
+void attribute_hidden onsigusr1(int dummy)
 {
     if (R_interrupts_suspended) {
 	/**** ought to save signal and handle after suspend */
@@ -236,7 +236,7 @@ RETSIGTYPE attribute_hidden onsigusr1(int dummy)
 }
 
 
-RETSIGTYPE attribute_hidden onsigusr2(int dummy)
+void attribute_hidden onsigusr2(int dummy)
 {
     inError = 1;
 

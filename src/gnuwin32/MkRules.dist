@@ -17,7 +17,7 @@
 ## ============== configuration macros for building R ===================
 
 # Path of library directory containing zlib, bzlib, liblzma, pcre,
-# libpng, libjpeg, libtiff.
+# libpng, libjpeg, libtiff, xz.
 # Use 'make rsync-extsoft' to populate the default directory.
 # EXT_LIBS = $(LOCAL_SOFT)
 

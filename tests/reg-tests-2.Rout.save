@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-08-31 r80839) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-09-15 r80900) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5841,6 +5841,10 @@ structure(list(X1.4 = 1:4), class = "data.frame", row.names = c(NA,
 [1] TRUE
 > all.equal(d0, d1)
 [1] TRUE
+> ## change to identical(,attrib.as.set) code to support internal representation in 4.2.0
+> identical(d0, d1, attrib.as.set = FALSE)
+[1] TRUE
+> ##
 > row.names(d1) <- as.character(1:4)
 > dput(d1)
 structure(list(X1.4 = 1:4), class = "data.frame", row.names = c("1", 
@@ -6371,7 +6375,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x22b3320>
+<bytecode: 0x565441e62e98>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6382,7 +6386,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x22b3320>
+<bytecode: 0x565441e62e98>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6394,7 +6398,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x22b3320>
+<bytecode: 0x565441e62e98>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}

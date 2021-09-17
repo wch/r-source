@@ -2078,6 +2078,9 @@ dput(d0)
 dput(d1)
 identical(d0, d1)
 all.equal(d0, d1)
+## change to identical(,attrib.as.set) code to support internal representation in 4.2.0
+identical(d0, d1, attrib.as.set = FALSE)
+##
 row.names(d1) <- as.character(1:4)
 dput(d1)
 identical(d0, d1)

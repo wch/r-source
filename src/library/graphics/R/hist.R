@@ -21,7 +21,8 @@ hist <- function(x, ...) UseMethod("hist")
 hist.default <-
     function (x, breaks = "Sturges", freq = NULL,
 	      probability = !freq, include.lowest= TRUE,
-	      right = TRUE, density = NULL, angle = 45,
+	      right = TRUE, fuzz = 1e-7,
+              density = NULL, angle = 45,
 	      col = "lightgray", border = NULL,
 	      main = paste("Histogram of", xname),
 	      xlim = range(breaks), ylim = NULL,
@@ -113,7 +114,8 @@ hist.default <-
     ## As one break point could be very much larger than the others,
     ## as from 1.9.1 we no longer use the range. (PR#6931)
     ## diddle <- 1e-7 * max(abs(range(breaks)))  ## NB: h == diff(breaks)
-    diddle <- 1e-7 * if(nB > 5) stats::median(h)
+    stopifnot("fuzz must be non-negative" = fuzz >= 0)
+    diddle <- fuzz * if(nB > 5) stats::median(h)
     ## for few breaks, protect against very large bins:
 		     else if(nB <= 3) diff(range(x)) else min(h[h > 0])
     fuzz <- if(right)
@@ -146,10 +148,10 @@ hist.default <-
 	    ## make an effort to warn about "non sensical" arguments:
 	    nf <- names(formals()) ## all formals but those:
 	    nf <- nf[is.na(match(nf, c("x", "breaks", "nclass", "plot",
-				       "include.lowest", "right")))]
+				       "include.lowest", "right", "fuzz")))]
 	    missE <- lapply(nf, function(n)
 			    substitute(missing(.), list(. = as.name(n))))
-	    not.miss <- ! sapply(missE, eval, envir = environment())
+	    not.miss <- ! vapply(missE, eval, NA, envir = environment())
 	    if(any(not.miss))
 		warning(sprintf(ngettext(sum(not.miss),
 					 "argument %s is not made use of",
@@ -191,7 +193,10 @@ plot.histogram <-
 	if(ann) title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if(axes) {
 	    axis(1, ...)
-	    axis(2, ...)
+            yt <- axTicks(2)
+            if(freq && any(ni <- (yt %% 1) != 0)) # remove non-integers:
+                yt <- yt[!ni]
+	    axis(2, at=yt, ...)
 	}
     }
     rect(x$breaks[-nB], 0, x$breaks[-1L], y,

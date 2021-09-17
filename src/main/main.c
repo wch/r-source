@@ -429,7 +429,7 @@ int R_ReplDLLdo1(void)
 /* We can now print a greeting, run the .First function and then enter */
 /* the read-eval-print loop. */
 
-static RETSIGTYPE handleInterrupt(int dummy)
+static void handleInterrupt(int dummy)
 {
     R_interrupts_pending = 1;
     signal(SIGINT, handleInterrupt);
@@ -445,7 +445,7 @@ static RETSIGTYPE handleInterrupt(int dummy)
 // controlled by the internal http server in the internet module
 int R_ignore_SIGPIPE = 0;
 
-static RETSIGTYPE handlePipe(int dummy)
+static void handlePipe(int dummy)
 {
     signal(SIGPIPE, handlePipe);
     if (!R_ignore_SIGPIPE) error("ignoring SIGPIPE signal");

@@ -861,10 +861,10 @@ AC_SUBST(STRIP_STATIC_LIB)
 
 ## <NOTE>
 ## This actually comes from libtool.m4.
-AC_CHECK_LIBM
+LT_LIB_M
 AC_SUBST(LIBM)
 ## </NOTE>
-## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
+## LT_LIB_M computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
 ## This gives: 'sin' is a builtin with type 'double (double)'
 AC_CHECK_LIB(m, sin)
@@ -915,7 +915,6 @@ AC_SUBST(READLINE_LIBS)
 
 ### * Checks for header files.
 
-AC_HEADER_STDC
 AC_HEADER_DIRENT
 ## we also assume readdir and closedir
 if test "${ac_cv_search_opendir}" = "no"; then
@@ -954,9 +953,6 @@ R_HEADER_GLIBC2
 
 ### * Checks for types.
 
-## clang complains when checking return type
-##   indirection requires pointer operand ('void' invalid)
-AC_TYPE_SIGNAL
 ## liblzma uses uint64_t: used unconditionally in src/main/util.c
 AC_TYPE_UINT64_T
 AC_CHECK_TYPES([int64_t, int_fast64_t])

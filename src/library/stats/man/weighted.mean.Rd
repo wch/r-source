@@ -33,8 +33,8 @@ weighted.mean(x, w, \dots)
   and \code{\link{sum}} have suitable methods, including complex vectors.
 
   If \code{w} is missing then all elements of \code{x} are given the
-  same weight, otherwise the weights coerced to numeric by
-  \code{\link{as.numeric}} and normalized to sum to one (if possible: if
+  same weight, otherwise the weights 
+  are normalized to sum to one (if possible: if
   their sum is zero or infinite the value is likely to be \code{NaN}).
 
   Missing values in \code{w} are not handled specially and so give a
