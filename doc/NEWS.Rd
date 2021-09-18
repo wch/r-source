@@ -302,6 +302,9 @@
       \item \code{try()} is considerably faster in case of an error and
       long call, as e.g., from some \code{do.call()}.  Thanks to
       Alexander Kaever's suggestion posted to R-devel.
+
+      \item \code{qqline(y = <object>)} such as \code{y=I(.)}, now works,
+      see also \PR{18190}.
     }
   }
 }
