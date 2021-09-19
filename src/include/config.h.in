@@ -1053,9 +1053,6 @@
 /* Define if the pthread_in_use() detection is hard. (For intl) */
 #undef PTHREAD_IN_USE_DETECTION_HARD
 
-/* Define as the return type of signal handlers (`int' or `void'). */
-#undef RETSIGTYPE
-
 /* Define this to use architecture-dependent subdirectories of this name. */
 #undef R_ARCH
 
