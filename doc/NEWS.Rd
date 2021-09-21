@@ -99,6 +99,10 @@
       \item \code{mapply()} and hence \code{Map()} now also obey the
       \dQuote{max-or-0-if-any} recycling rule, such that, e.g.,
       \code{Map(`+`, 1:3, 1[0])} is valid now.
+
+      \code{as.character(<obj>)} for \code{"hexmode"} or \code{"octmode"}
+      objects now fulfills the important basic rule
+      \code{as.character(x)[j] === as.character(x[j])}.
     }
   }
 

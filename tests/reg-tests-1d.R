@@ -5415,6 +5415,23 @@ qqline(I(1:12))
 ## --> $ operator is invalid for atomic vectors (from coef() in abline())
 
 
+## More "rational" as.character() for <octmode> and <hexmode>,
+## fulfilling the "law"   as.<vector>(x)[j]  ===  as.<vector>(x[j])
+i <- matrix(0:21, 2)
+hi <- as.character(as.hexmode(i))
+oi <- as.character(as.octmode(i))
+stopifnot(exprs = {
+    identical(dim (hi), dim(i))
+    identical(nrow(oi), nrow(i))
+    hi[1:8] == as.character(0:7)
+    oi[1:8] == hi[1:8]
+  c(nchar(hi)) == rep(1:2, c(16,6))
+  c(nchar(oi)) == rep(1:2, c(8,14))
+})
+## as.character.*() methods had used format() previously
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
