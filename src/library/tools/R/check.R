@@ -1388,6 +1388,7 @@ add_dummies <- function(dir, Log)
                        "INSTALL.windows",
                        "README.md", "NEWS.md",
                        "configure", "configure.win", "cleanup", "cleanup.win",
+                       "configure.ucrt", "cleanup.ucrt",
                        "configure.ac", "configure.in",
                        "datafiles",
                        "R", "data", "demo", "exec", "inst", "man",
