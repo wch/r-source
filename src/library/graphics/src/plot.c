@@ -941,13 +941,13 @@ SEXP C_axis(SEXP args)
     }
 
     /* Deferred processing */
-    int lineoff = 0;
+    double lineoff = 0;
     if (!R_FINITE(line)) {
 	/* Except that here mgp values are not relative to themselves */
 	line = gpptr(dd)->mgp[2];
-	lineoff = (int) line;
+	lineoff = line;
     }
-    if (!R_FINITE(pos)) pos = NA_REAL; else lineoff = 0;
+    if (!R_FINITE(pos)) pos = NA_REAL; else lineoff = 0.;
 
     /* Determine the tickmark positions.  Note that these may fall */
     /* outside the plot window. We will clip them in the code below. */

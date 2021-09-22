@@ -309,6 +309,10 @@
 
       \item \code{qqline(y = <object>)} such as \code{y=I(.)}, now works,
       see also \PR{18190}.
+
+      \item Non-integer \code{mgp} \code{par()} settings are now obeyed
+      instead of truncated to integer, in \code{axis()} and \code{mtext()},
+      thanks to Duncan Murdoch's report and suggestion in \PR{18194}.
     }
   }
 }
