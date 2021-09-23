@@ -312,7 +312,7 @@ Rd2HTML <-
                   "\\file"='&lsquo;<span class="file">',
                   "\\option"='<span class="option">',
                   "\\pkg"='<span class="pkg">',
-                  "\\samp"='<span class="samp">',
+                  "\\samp"='&lsquo;<span class="samp">&#8288;',
                   "\\sQuote"="&lsquo;",
                   "\\dQuote"="&ldquo;",
                   "\\verb"='<code style="white-space: pre;">')
@@ -322,7 +322,7 @@ Rd2HTML <-
                    "\\file"='</span>&rsquo;',
                    "\\option"="</span>",
                    "\\pkg"="</span>",
-                   "\\samp"="</span>",
+                   "\\samp"="&#8288;</span>&rsquo;",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;",
                    "\\verb"="</code>")

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-06-17 r80510) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-09-17 r80929) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -330,7 +330,6 @@ Time   0.109   0.000   0.110
 > ###===== Random numbers -- first, just output:
 > 
 > set.seed(123)
-> # .Random.seed <- c(0L, 17292L, 29447L, 24113L)
 > n <- 20
 > ## for(pre in PDQR) { n <- paste("r",pre,sep=""); cat(n,": "); str(get(n))}
 > (Rbeta	  <- rbeta    (n, shape1 = .8, shape2 = 2) )
@@ -338,8 +337,9 @@ Time   0.109   0.000   0.110
  [7] 0.136510774 0.618501837 0.028641308 0.151670292 0.242835922 0.551824427
 [13] 0.127798688 0.087335901 0.509096247 0.382121566 0.773494885 0.639404676
 [19] 0.066559813 0.227487378
-> (Rbinom	  <- rbinom   (n, size = 55, prob = pi/16) )
- [1]  7 13 15 10 12  7 10  9 13 10 13 13 13 10 13 12 12  3 11  8
+> (Rbinom	  <- sort(unique(
++              rbinom   (n, size = 55, prob = pi/16))))
+[1]  3  7  8  9 10 11 12 13 15
 > (Rcauchy  <- rcauchy  (n, location = 12, scale = 2) )
  [1] 17.042930  6.592944 15.980645 12.728113 13.921385  8.570544 19.557102
  [8] 10.430404 12.669798 21.641273 11.905411 11.301537 11.254793 13.226057
@@ -361,10 +361,12 @@ Time   0.109   0.000   0.110
  [1] 11.843056  6.993596 12.413160  5.980309  5.970495 15.674812  7.382163
  [8] 11.343789  5.392676  3.766812 15.331767  2.451095 13.046780 10.999054
 [15]  9.929606  6.239055  3.588397 26.196937  3.647236 23.051571
-> (Rgeom	  <- rgeom    (n, prob = pi/16) )
- [1] 8 2 4 2 3 5 5 4 1 8 1 6 1 6 8 3 8 7 5 0
-> (Rhyper	  <- rhyper   (n, m = 40, n = 30, k = 20) )
- [1] 12 11 12 10 13 11 13 13  8 12 12 15 11 11 11 12  9 11 12 12
+> (Rgeom	  <- sort(unique(
++              rgeom    (n, prob = pi/16))))
+[1] 0 1 2 3 4 5 6 7 8
+> (Rhyper	  <- sort(unique(
++              rhyper   (n, m = 40, n = 30, k = 20))))
+[1]  8  9 10 11 12 13 15
 > (Rlnorm	  <- rlnorm   (n, meanlog = -1, sdlog = 3) )
  [1] 1.873201e-02 5.609747e+01 9.793124e-02 4.203730e-02 9.015415e-03
  [6] 7.795979e-03 6.574837e-02 2.348924e+00 1.027326e+01 3.073340e+00
@@ -382,8 +384,9 @@ Time   0.109   0.000   0.110
  [7]  0.4577794 -2.4157378  1.5402158  1.7773118 -1.9624917 -4.9029209
 [13]  6.3787040  1.3350950  1.0696427 -6.1133966  2.3161164 -1.9415584
 [19] -2.0400782  2.1153214
-> (Rpois	  <- rpois    (n, lambda = 12) )
- [1] 10 15 14  9 15 12 16  7  7 14 11 14 16 12 15  7  7 13 15 12
+> (Rpois	  <- sort(unique(
++              rpois    (n, lambda = 12))))
+[1]  7  9 10 11 12 13 14 15 16
 > (Rsignrank<- rsignrank(n, n = 47) )
  [1] 531 522 385 583 731 461 542 590 485 582 571 475 702 537 395 571 603 515 477
 [20] 609
@@ -416,10 +419,8 @@ Time   0.109   0.000   0.110
 [13] 0.32741433 0.24605563 0.81153016 0.69214938 0.96181357 0.90094249
 [19] 0.19989455 0.49493375
 > (Pbinom	  <- pbinom   (Rbinom, size = 55, prob = pi/16) )
- [1] 0.128811009 0.822082686 0.939887897 0.473358125 0.725714645 0.128811009
- [7] 0.473358125 0.340181320 0.822082686 0.473358125 0.822082686 0.822082686
-[13] 0.822082686 0.473358125 0.822082686 0.725714645 0.725714645 0.002917878
-[19] 0.606468256 0.221684127
+[1] 0.002917878 0.128811009 0.221684127 0.340181320 0.473358125 0.606468256
+[7] 0.725714645 0.822082686 0.939887897
 > (Pcauchy  <- pcauchy  (Rcauchy, location = 12, scale = 2) )
  [1] 0.8798165 0.1127710 0.8517979 0.6111354 0.7436195 0.1680556 0.9176468
  [8] 0.2881958 0.6028646 0.9348927 0.4849570 0.3930511 0.3864691 0.6750527
@@ -444,14 +445,10 @@ Time   0.109   0.000   0.110
  [8] 0.6618778 0.2931040 0.1745504 0.8105456 0.0872524 0.7344167 0.6453838
 [15] 0.5901700 0.3545801 0.1619732 0.9669094 0.1661030 0.9441847
 > (Pgeom	  <- pgeom    (Rgeom, prob = pi/16) )
- [1] 0.8601686 0.4809591 0.6647753 0.4809591 0.5828725 0.7305965 0.7305965
- [8] 0.6647753 0.3541459 0.8601686 0.3541459 0.7834938 0.3541459 0.7834938
-[15] 0.8601686 0.5828725 0.8601686 0.8260047 0.7305965 0.1963495
+[1] 0.1963495 0.3541459 0.4809591 0.5828725 0.6647753 0.7305965 0.7834938
+[8] 0.8260047 0.8601686
 > (Phyper	  <- phyper   (Rhyper, m = 40, n = 30, k = 20) )
- [1] 0.71494883 0.51295659 0.71494883 0.30864260 0.86627413 0.51295659
- [7] 0.86627413 0.86627413 0.05904998 0.71494883 0.71494883 0.98680472
-[13] 0.51295659 0.51295659 0.51295659 0.71494883 0.15132082 0.51295659
-[19] 0.71494883 0.71494883
+[1] 0.05904998 0.15132082 0.30864260 0.51295659 0.71494883 0.86627413 0.98680472
 > (Plnorm	  <- plnorm   (Rlnorm, meanlog = -1, sdlog = 3) )
  [1] 0.16047510 0.95310121 0.32954742 0.23481968 0.10817853 0.09944582
  [7] 0.28299287 0.73170766 0.86646776 0.76039954 0.35805697 0.52382260
@@ -473,9 +470,8 @@ Time   0.109   0.000   0.110
 [13] 0.99304478 0.78182307 0.75486546 0.04414707 0.86550081 0.37681641
 [19] 0.36441108 0.85046748
 > (Ppois	  <- ppois    (Rpois, lambda = 12) )
- [1] 0.3472294 0.8444157 0.7720245 0.2423922 0.8444157 0.5759652 0.8987090
- [8] 0.0895045 0.0895045 0.7720245 0.4615973 0.7720245 0.8987090 0.5759652
-[15] 0.8444157 0.0895045 0.0895045 0.6815356 0.8444157 0.5759652
+[1] 0.0895045 0.2423922 0.3472294 0.4615973 0.5759652 0.6815356 0.7720245
+[8] 0.8444157 0.8987090
 > (Psignrank<- psignrank(Rsignrank, n = 47) )
  [1] 0.36663746 0.33169387 0.02921581 0.58098562 0.96191228 0.14044836
  [7] 0.41083885 0.60942723 0.20480997 0.57688473 0.53132960 0.17614726
@@ -512,10 +508,8 @@ Time   0.109   0.000   0.110
  [8] 0.6047651 2.8467121 1.7813410 1.4470712 0.7268595 1.8952825 2.1401041
 [15] 0.8090938 1.0785126 0.3433595 0.5678419 2.3110352 1.4958106
 > dbinom	 (Rbinom, size = 55, prob = pi/16)
- [1] 0.063354298 0.096368041 0.047170694 0.133176805 0.119246389 0.063354298
- [7] 0.133176805 0.118497194 0.096368041 0.133176805 0.096368041 0.096368041
-[13] 0.096368041 0.133176805 0.096368041 0.119246389 0.119246389 0.002298608
-[19] 0.133110131 0.092873118
+[1] 0.002298608 0.063354298 0.092873118 0.118497194 0.133176805 0.133110131
+[7] 0.119246389 0.096368041 0.047170694
 > dcauchy	 (Rcauchy, location = 12, scale = 2)
  [1] 0.021630824 0.019154376 0.032078738 0.140529537 0.082766881 0.040391664
  [7] 0.010417640 0.098492589 0.143104718 0.006566194 0.158799748 0.141854068
@@ -541,15 +535,10 @@ Time   0.109   0.000   0.110
 [13] 0.038400284 0.048758423 0.054515175 0.071657454 0.070028735 0.005557423
 [19] 0.070344309 0.009173320
 > dgeom	 (Rgeom, prob = pi/16)
- [1] 0.03416390 0.12681315 0.08190279 0.12681315 0.10191344 0.06582121
- [7] 0.06582121 0.08190279 0.15779640 0.03416390 0.15779640 0.05289725
-[13] 0.15779640 0.05289725 0.03416390 0.10191344 0.03416390 0.04251090
-[19] 0.06582121 0.19634954
+[1] 0.19634954 0.15779640 0.12681315 0.10191344 0.08190279 0.06582121 0.05289725
+[8] 0.04251090 0.03416390
 > dhyper	 (Rhyper, m = 40, n = 30, k = 20)
- [1] 0.20199224 0.20431399 0.20199224 0.15732178 0.15132529 0.20431399
- [7] 0.15132529 0.15132529 0.04108936 0.20199224 0.20199224 0.03541012
-[13] 0.20431399 0.20431399 0.20431399 0.20199224 0.09227084 0.20431399
-[19] 0.20199224 0.20199224
+[1] 0.04108936 0.09227084 0.15732178 0.20431399 0.20199224 0.15132529 0.03541012
 > dlnorm	 (Rlnorm, meanlog = -1, sdlog = 3)
  [1] 4.3380954158 0.0005822436 1.2319845653 2.4357017049 6.8694422907
  [6] 7.4733929149 1.7154009417 0.0467724227 0.0069920836 0.0336865537
@@ -571,10 +560,8 @@ Time   0.109   0.000   0.110
 [13] 0.006458952 0.098226734 0.104819164 0.031112294 0.072188495 0.126589892
 [19] 0.125224300 0.077557930
 > dpois	 (Rpois, lambda = 12)
- [1] 0.10483726 0.07239112 0.09048890 0.08736438 0.07239112 0.11436792
- [7] 0.05429334 0.04368219 0.04368219 0.09048890 0.11436792 0.09048890
-[13] 0.05429334 0.11436792 0.07239112 0.04368219 0.04368219 0.10557038
-[19] 0.07239112 0.11436792
+[1] 0.04368219 0.08736438 0.10483726 0.11436792 0.11436792 0.10557038 0.09048890
+[8] 0.07239112 0.05429334
 > dsignrank(Rsignrank, n = 47)
  [1] 0.0039429676 0.0038018425 0.0007151971 0.0041008982 0.0009032331
  [6] 0.0023508267 0.0040737886 0.0040318201 0.0029828933 0.0041090875
@@ -601,9 +588,11 @@ Time   0.109   0.000   0.110
 [19] 0.014141025 0.014737869
 > 
 > ## Check q*(p*(.)) = identity
+> ep <- 1e-7
+> f1 <- 1 - 1e-7 # = 0.9999999
 > All.eq(Rbeta,	  qbeta	   (Pbeta, shape1 = .8, shape2 = 2))
 [1] TRUE
-> All.eq(Rbinom,	  qbinom   (Pbinom, size = 55, prob = pi/16))
+> All.eq(Rbinom,	  qbinom   (Pbinom*f1, size = 55, prob = pi/16))
 [1] TRUE
 > All.eq(Rcauchy,	  qcauchy  (Pcauchy, location = 12, scale = 2))
 [1] TRUE
@@ -615,21 +604,21 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rgamma,	  qgamma   (Pgamma, shape = 2, scale = 5))
 [1] TRUE
-> All.eq(Rgeom,	  qgeom	   (Pgeom, prob = pi/16))
+> All.eq(Rgeom,	  qgeom	   (Pgeom*f1, prob = pi/16))
 [1] TRUE
-> All.eq(Rhyper,	  qhyper   (Phyper, m = 40, n = 30, k = 20))
+> All.eq(Rhyper,	  qhyper   (Phyper*f1, m = 40, n = 30, k = 20))
 [1] TRUE
 > All.eq(Rlnorm,	  qlnorm   (Plnorm, meanlog = -1, sdlog = 3))
 [1] TRUE
 > All.eq(Rlogis,	  qlogis   (Plogis, location = 12, scale = 2))
 [1] TRUE
-> All.eq(Rnbinom,	  qnbinom  (Pnbinom, size = 7, prob = .01))
+> All.eq(Rnbinom,	  qnbinom  (Pnbinom*f1, size = 7, prob = .01))
 [1] TRUE
 > All.eq(Rnorm,	  qnorm	   (Pnorm, mean = -1, sd = 3))
 [1] TRUE
-> All.eq(Rpois,	  qpois	   (Ppois, lambda = 12))
+> All.eq(Rpois,	  qpois	   (Ppois*f1, lambda = 12))
 [1] TRUE
-> All.eq(Rsignrank, qsignrank(Psignrank, n = 47))
+> All.eq(Rsignrank, qsignrank(Psignrank*f1, n = 47))
 [1] TRUE
 > All.eq(Rt,	  qt	   (Pt,	 df = 11))
 [1] TRUE
@@ -639,13 +628,14 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rweibull,  qweibull (Pweibull, shape = 3, scale = 2))
 [1] TRUE
-> All.eq(Rwilcox,	  qwilcox  (Pwilcox, m = 13, n = 17))
+> All.eq(Rwilcox,	  qwilcox  (Pwilcox*f1, m = 13, n = 17))
 [1] TRUE
 > 
 > ## Same with "upper tail":
+> p1 <- 1 + ep
 > All.eq(Rbeta,	  qbeta	   (1- Pbeta, shape1 = .8, shape2 = 2, lower=F))
 [1] TRUE
-> All.eq(Rbinom,	  qbinom   (1- Pbinom, size = 55, prob = pi/16, lower=F))
+> All.eq(Rbinom,	  qbinom  (p1- Pbinom, size = 55, prob = pi/16, lower=F))
 [1] TRUE
 > All.eq(Rcauchy,	  qcauchy  (1- Pcauchy, location = 12, scale = 2, lower=F))
 [1] TRUE
@@ -657,21 +647,21 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rgamma,	  qgamma   (1- Pgamma, shape = 2, scale = 5, lower=F))
 [1] TRUE
-> All.eq(Rgeom,	  qgeom	   (1- Pgeom, prob = pi/16, lower=F))
+> All.eq(Rgeom,	  qgeom	  (p1- Pgeom, prob = pi/16, lower=F))
 [1] TRUE
-> All.eq(Rhyper,	  qhyper   (1- Phyper, m = 40, n = 30, k = 20, lower=F))
+> All.eq(Rhyper,	  qhyper  (p1- Phyper, m = 40, n = 30, k = 20, lower=F))
 [1] TRUE
 > All.eq(Rlnorm,	  qlnorm   (1- Plnorm, meanlog = -1, sdlog = 3, lower=F))
 [1] TRUE
 > All.eq(Rlogis,	  qlogis   (1- Plogis, location = 12, scale = 2, lower=F))
 [1] TRUE
-> All.eq(Rnbinom,	  qnbinom  (1- Pnbinom, size = 7, prob = .01, lower=F))
+> All.eq(Rnbinom,	  qnbinom (p1- Pnbinom, size = 7, prob = .01, lower=F))
 [1] TRUE
 > All.eq(Rnorm,	  qnorm	   (1- Pnorm, mean = -1, sd = 3,lower=F))
 [1] TRUE
-> All.eq(Rpois,	  qpois	   (1- Ppois, lambda = 12, lower=F))
+> All.eq(Rpois,	  qpois	  (p1- Ppois, lambda = 12, lower=F))
 [1] TRUE
-> All.eq(Rsignrank, qsignrank(1- Psignrank, n = 47, lower=F))
+> All.eq(Rsignrank, qsignrank(p1-Psignrank, n = 47, lower=F))
 [1] TRUE
 > All.eq(Rt,	  qt	   (1- Pt,  df = 11,   lower=F))
 [1] TRUE
@@ -681,13 +671,13 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rweibull,  qweibull (1- Pweibull, shape = 3, scale = 2, lower=F))
 [1] TRUE
-> All.eq(Rwilcox,	  qwilcox  (1- Pwilcox, m = 13, n = 17, lower=F))
+> All.eq(Rwilcox,	  qwilcox (p1- Pwilcox, m = 13, n = 17, lower=F))
 [1] TRUE
 > 
 > ## Check q*(p* ( log ), log) = identity
 > All.eq(Rbeta,	  qbeta	   (log(Pbeta), shape1 = .8, shape2 = 2, log=TRUE))
 [1] TRUE
-> All.eq(Rbinom,	  qbinom   (log(Pbinom), size = 55, prob = pi/16, log=TRUE))
+> All.eq(Rbinom,	  qbinom   (log(Pbinom)-ep, size = 55, prob = pi/16, log=TRUE))
 [1] TRUE
 > All.eq(Rcauchy,	  qcauchy  (log(Pcauchy), location = 12, scale = 2, log=TRUE))
 [1] TRUE
@@ -699,21 +689,21 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rgamma,	  qgamma   (log(Pgamma), shape = 2, scale = 5, log=TRUE))
 [1] TRUE
-> All.eq(Rgeom,	  qgeom	   (log(Pgeom), prob = pi/16, log=TRUE))
+> All.eq(Rgeom,	  qgeom	   (log(Pgeom)-ep, prob = pi/16, log=TRUE))
 [1] TRUE
-> All.eq(Rhyper,	  qhyper   (log(Phyper), m = 40, n = 30, k = 20, log=TRUE))
+> All.eq(Rhyper,	  qhyper   (log(Phyper)-ep, m = 40, n = 30, k = 20, log=TRUE))
 [1] TRUE
 > All.eq(Rlnorm,	  qlnorm   (log(Plnorm), meanlog = -1, sdlog = 3, log=TRUE))
 [1] TRUE
 > All.eq(Rlogis,	  qlogis   (log(Plogis), location = 12, scale = 2, log=TRUE))
 [1] TRUE
-> All.eq(Rnbinom,	  qnbinom  (log(Pnbinom), size = 7, prob = .01, log=TRUE))
+> All.eq(Rnbinom,	  qnbinom  (log(Pnbinom)-ep, size = 7, prob = .01, log=TRUE))
 [1] TRUE
 > All.eq(Rnorm,	  qnorm	   (log(Pnorm), mean = -1, sd = 3, log=TRUE))
 [1] TRUE
-> All.eq(Rpois,	  qpois	   (log(Ppois), lambda = 12, log=TRUE))
+> All.eq(Rpois,	  qpois	   (log(Ppois)-ep, lambda = 12, log=TRUE)) # fuzz for Solaris
 [1] TRUE
-> All.eq(Rsignrank, qsignrank(log(Psignrank), n = 47, log=TRUE))
+> All.eq(Rsignrank, qsignrank(log(Psignrank)-ep, n = 47, log=TRUE))
 [1] TRUE
 > All.eq(Rt,	  qt	   (log(Pt), df = 11, log=TRUE))
 [1] TRUE
@@ -723,14 +713,13 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rweibull,  qweibull (log(Pweibull), shape = 3, scale = 2, log=TRUE))
 [1] TRUE
-> All.eq(Rwilcox,	  qwilcox  (log(Pwilcox), m = 13, n = 17, log=TRUE))
+> All.eq(Rwilcox,	  qwilcox  (log(Pwilcox)-ep, m = 13, n = 17, log=TRUE))
 [1] TRUE
 > 
 > ## same q*(p* (log) log) with upper tail:
-> 
 > All.eq(Rbeta,	  qbeta	   (log1p(-Pbeta), shape1 = .8, shape2 = 2, lower=F, log=T))
 [1] TRUE
-> All.eq(Rbinom,	  qbinom   (log1p(-Pbinom), size = 55, prob = pi/16, lower=F, log=T))
+> All.eq(Rbinom,	  qbinom   (log1p(-Pbinom)+ep, size = 55, prob = pi/16, lower=F, log=T))
 [1] TRUE
 > All.eq(Rcauchy,	  qcauchy  (log1p(-Pcauchy), location = 12, scale = 2, lower=F, log=T))
 [1] TRUE
@@ -742,21 +731,21 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rgamma,	  qgamma   (log1p(-Pgamma), shape = 2, scale = 5, lower=F, log=T))
 [1] TRUE
-> All.eq(Rgeom,	  qgeom	   (log1p(-Pgeom), prob = pi/16, lower=F, log=T))
+> All.eq(Rgeom,	  qgeom	   (log1p(-Pgeom)+ep, prob = pi/16, lower=F, log=T))
 [1] TRUE
-> All.eq(Rhyper,	  qhyper   (log1p(-Phyper), m = 40, n = 30, k = 20, lower=F, log=T))
+> All.eq(Rhyper,	  qhyper   (log1p(-Phyper)+ep, m = 40, n = 30, k = 20, lower=F, log=T))
 [1] TRUE
 > All.eq(Rlnorm,	  qlnorm   (log1p(-Plnorm), meanlog = -1, sdlog = 3, lower=F, log=T))
 [1] TRUE
 > All.eq(Rlogis,	  qlogis   (log1p(-Plogis), location = 12, scale = 2, lower=F, log=T))
 [1] TRUE
-> All.eq(Rnbinom,	  qnbinom  (log1p(-Pnbinom), size = 7, prob = .01, lower=F, log=T))
+> All.eq(Rnbinom,	  qnbinom  (log1p(-Pnbinom)+ep, size = 7, prob = .01, lower=F, log=T))
 [1] TRUE
 > All.eq(Rnorm,	  qnorm	   (log1p(-Pnorm), mean = -1, sd = 3, lower=F, log=T))
 [1] TRUE
-> All.eq(Rpois,	  qpois	   (log1p(-Ppois), lambda = 12, lower=F, log=T))
+> All.eq(Rpois,	  qpois	   (log1p(-Ppois)+ep, lambda = 12, lower=F, log=T))
 [1] TRUE
-> All.eq(Rsignrank, qsignrank(log1p(-Psignrank), n = 47, lower=F, log=T))
+> All.eq(Rsignrank, qsignrank(log1p(-Psignrank)+ep, n = 47, lower=F, log=T))
 [1] TRUE
 > All.eq(Rt,	  qt	   (log1p(-Pt ), df = 11,   lower=F, log=T))
 [1] TRUE
@@ -766,7 +755,7 @@ Time   0.109   0.000   0.110
 [1] TRUE
 > All.eq(Rweibull,  qweibull (log1p(-Pweibull), shape = 3, scale = 2, lower=F, log=T))
 [1] TRUE
-> All.eq(Rwilcox,	  qwilcox  (log1p(-Pwilcox), m = 13, n = 17, lower=F, log=T))
+> All.eq(Rwilcox,	  qwilcox  (log1p(-Pwilcox)+ep, m = 13, n = 17, lower=F, log=T))
 [1] TRUE
 > 
 > 

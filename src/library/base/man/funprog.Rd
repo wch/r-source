@@ -1,6 +1,6 @@
 % File src/library/base/man/funprog.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 \name{funprog}
 \alias{Filter}
@@ -123,6 +123,10 @@ cfrac <- function(x) Reduce(function(u, v) u + 1 / v, x, right = TRUE)
 cfrac(c(3, 7, 15, 1, 292))
 ## Continued fraction approximation for Euler's number (e):
 cfrac(c(2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8))
+
+## Map() now recycles similar to basic Ops:
+Map(`+`, 1,         1 : 3) ;         1 + 1:3
+Map(`+`, numeric(), 1 : 3) ; numeric() + 1+3
 
 ## Iterative function application:
 Funcall <- function(f, ...) f(...)

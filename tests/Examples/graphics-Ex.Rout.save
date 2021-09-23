@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-09-14 r80893) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-09-17 r80929) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1038,7 +1038,7 @@ Asserted error: some 'x' not counted; maybe 'breaks' do not span range of 'x'
 > try ( hist(brks[-13] + 1, brks, include.lowest = FALSE) )
 Error in hist.default(unclass(x), unclass(breaks), plot = FALSE, warn.unused = FALSE,  : 
   some 'x' not counted; maybe 'breaks' do not span range of 'x'
-> ##  decreasing 'fuzz' solves the issue:
+> ## and decreasing 'fuzz' solves the issue:
 > hb <- hist(brks[-13] + 1, brks, include.lowest = FALSE, fuzz = 1e-10)
 > stopifnot(hb$counts == 1)
 > 
@@ -1116,6 +1116,11 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > require(stats)
 > set.seed(14)
 > x <- rchisq(100, df = 4)
+> 
+> ## Histogram with custom x-axis:
+> hist(x, xaxt = "n")
+> axis(1, at = 0:17)
+> 
 > ## Don't show: 
 > op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))
 > ## End(Don't show)

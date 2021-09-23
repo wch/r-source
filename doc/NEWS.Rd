@@ -95,6 +95,14 @@
       \item \code{hist.default()} gains new \code{fuzz} argument, and the
       histogram \code{plot} method no longer uses fractional axis ticks
       when displaying counts (\code{"Frequency"}).
+
+      \item \code{mapply()} and hence \code{Map()} now also obey the
+      \dQuote{max-or-0-if-any} recycling rule, such that, e.g.,
+      \code{Map(`+`, 1:3, 1[0])} is valid now.
+
+      \code{as.character(<obj>)} for \code{"hexmode"} or \code{"octmode"}
+      objects now fulfills the important basic rule
+      \code{as.character(x)[j] === as.character(x[j])}.
     }
   }
 
@@ -294,6 +302,21 @@
 
       \item \code{model.response()} now strips an \code{"AsIs"} class typically,
       thanks to Duncan Murdoch's report and other discussants in \PR{18190}.
+
+      \item \code{try()} is considerably faster in case of an error and
+      long call, as e.g., from some \code{do.call()}.  Thanks to
+      Alexander Kaever's suggestion posted to R-devel.
+
+      \item \code{qqline(y = <object>)} such as \code{y=I(.)}, now works,
+      see also \PR{18190}.
+
+      \item Non-integer \code{mgp} \code{par()} settings are now obeyed
+      instead of truncated to integer, in \code{axis()} and \code{mtext()},
+      thanks to Duncan Murdoch's report and suggestion in \PR{18194}.
+
+      \item \code{formatC(x)} returns length zero \code{character()} now,
+      rather than \code{""} when \code{x} is of length zero, as documented,
+      thanks to Davis Vaughan's post to R-devel.
     }
   }
 }

@@ -4526,7 +4526,7 @@ Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
 in the AT&T Bourne shell used on Solaris 10/11, even though they are in
 the POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.}
-Bourne shells: the previous @R{} toolset on Windows@footnote{as from
+Bourne shells: an earlier @R{} toolset on Windows@footnote{as from
 @R{} 4.0.0 the default is @command{bash}.} and some Unix-alike OSes use
 @command{ash} (@uref{https://en.wikipedia.org/wiki/Almquist_shell}),
 a `slim' shell with few builtins or variants such as @command{dash}.
@@ -4568,10 +4568,10 @@ rather unpredictable and may include a version such as
 @samp{darwin19.0}: @command{`uname`} is often what is intended (with
 common values @samp{Darwin}, @samp{Linux} and @samp{SunOS}).
 
-On macOS Catalina which shell @file{/bin/sh} invokes is user- and
+On macOS which shell @file{/bin/sh} invokes is user- and
 platform-dependent: it might be @command{bash} version 3.2,
 @command{dash} or @command{zsh} (for new accounts it is @command{zsh},
-for accounts ported from an earlier version it is usually
+for accounts ported from Mojave or earlier it is usually
 @command{bash}).
 
 @item
@@ -4590,10 +4590,9 @@ personal @file{Makevars} files.
 R-admin, R Installation and Administration},
 @end ifset
 
-Portable C++ code needs to follow the 2011 standard or to specify
-C+14/17/20 where available (which is not the case on all @R{}
-platforms).  Currently C++14 code is a little less portable than C++11
-and C++17/20 support is patchy across @R{} platforms.
+Portable C++ code needs to follow both the 2011 and 2014 standards or to
+specify C+11/14/17/20 where available (which is not the case on all @R{}
+platforms).  Currently C++17/20 support is patchy across @R{} platforms.
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
@@ -4688,13 +4687,9 @@ platforms (including 64-bit Windows), but 64-bit on most modern Unix and
 Linux platforms.  It is rather unlikely that the use of @code{long} in C
 code has been thought through: if you need a longer type than @code{int}
 you should use a configure test for a C99/C++11 type such as
-@code{int_fast64_t} (and failing that, @code{long long}@footnote{but
-note that @code{long long} is not a standard C++98 type, and C++
-compilers for earlier versions of @R{} set up for strict C++98
-conformance will reject it.  C++11 (the default since @R{} 3.6.2)
-includes @code{long long}.}) and typedef your own type, or use another
-suitable type (such as @code{size_t}, but beware that is unsigned and
-@code{ssize_t} is not portable).
+@code{int_fast64_t} (and failing that, @code{long long}) and typedef
+your own type, or use another suitable type (such as @code{size_t}, but
+beware that is unsigned and @code{ssize_t} is not portable).
 @c https://en.cppreference.com/w/cpp/language/types claims long long is
 @c >= 64-bit, but that is not obvious in the standard.
 
@@ -5133,6 +5128,13 @@ There were 22 warnings (use warnings() to see them)
 @noindent
 is pointless, especially for automated checking systems.
 
+@item
+If your package uses dates/times, ensure that it works in all timezones,
+especially those near boundaries (problems have most often be seen in
+@samp{Europe/London} (zero offset in Winter) and
+@samp{Pacific/Auckland}, near enough the International Date line) and
+with offsets not in whole hours (Adelaide, Chatham Islands, ...).
+
 @end itemize
 
 @node PDF size, Check timing, Writing portable packages, Writing portable packages
@@ -5434,7 +5436,8 @@ C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
 integer types.  The effect of calling @code{abs} with a floating-point
 type is implementation-specific: it may truncate to an integer.  For
 clarity and to avoid compiler warnings, use @code{abs} for integer types
-and @code{fabs} for double values.
+and @code{fabs} for double values, and when using C++11 include
+@file{<cmath>} and use the @code{std::} prefix.
 
 @item
 It is an error (and make little sense, although has been seen) to call

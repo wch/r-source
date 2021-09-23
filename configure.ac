@@ -738,7 +738,8 @@ AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search pat
 
 AC_PROG_CC
 AC_PROG_GCC_TRADITIONAL
-AC_GNU_SOURCE ## see note above
+dnl AC_GNU_SOURCE ## see note above
+AC_USE_SYSTEM_EXTENSIONS ## see note above
 
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS

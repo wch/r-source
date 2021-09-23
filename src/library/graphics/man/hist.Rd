@@ -201,6 +201,11 @@ hist(c(2,3,3,5,5,6,6,6,7))
 require(stats)
 set.seed(14)
 x <- rchisq(100, df = 4)
+
+## Histogram with custom x-axis:
+hist(x, xaxt = "n")
+axis(1, at = 0:17)
+
 \dontshow{op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))}
 ## Comparing data with a model distribution should be done with qqplot()!
 qqplot(x, qchisq(ppoints(x), df = 4)); abline(0, 1, col = 2, lty = 2)

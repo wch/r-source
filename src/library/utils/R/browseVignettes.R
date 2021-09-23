@@ -73,14 +73,14 @@ print.browseVignettes <- function(x, ...)
     	css_file <- "/doc/html/R.css"
     else
     	css_file <- file.path(R.home("doc"), "html", "R.css")
-    cat(sprintf("<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
-<html>
+    cat(sprintf("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
 <head>
 <title>R Vignettes</title>
-<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes' />
-<link rel='stylesheet' type='text/css' href='%s'>
-</head><body><div class='container'>\n", css_file))
+<link rel='stylesheet' type='text/css' href='%s' />
+</head>\n<body>\n<div class='container'>\n", css_file))
     cat(sprintf("<h2>Vignettes found by <code><q>%s</q></code></h2>",
                 deparse1(attr(x, "call"))))
     cat("<div class=\"vignettes\">")
@@ -93,8 +93,10 @@ print.browseVignettes <- function(x, ...)
         cat("\n</ul>\n")
     }
     cat("</div>")
-    cat(sprintf("<hr/><p>%s</p>", attr(x, "footer")))
-    cat("</div></body></html>\n")
+    cat("<hr/>")
+    if(nzchar(foot <- attr(x, "footer")))
+        cat(sprintf("<p>%s</p>", foot))
+    cat("</div>\n</body>\n</html>\n")
     sink()
     ## the first two don't work on Windows with browser=NULL.
     ## browseURL(URLencode(sprintf("file://%s", file)))

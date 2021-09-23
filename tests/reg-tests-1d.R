@@ -5398,6 +5398,7 @@ stopifnot(identical(names(ch), names(d1)),
           identical(names(ch), names(d3)))
 ## in R <= 4.1.1, names got lost whenever as.Date.POSIXlt() was called
 
+
 ## residuals(<lm-with-AsIs>) were is.object(.) & failed in qqline()
 x <- sort(runif(20))
 y <- (2*x^(1/3) + rnorm(x)/16)^3
@@ -5407,6 +5408,27 @@ plot(fit, which = 2) # gave Error: $ operator is invalid for atomic vectors
 stopifnot(class(r <- residuals(fit)) == "numeric", # was "AsIs"
           names(r) == as.character(seq_along(r)))
 ## in R <= 4.1.1, plot.lm() -->> qqline() -->> abline()  wrongly chose coef(.)
+
+
+## qqline(<object>, *) - also from PR#18190
+qqline(I(1:12))
+## --> $ operator is invalid for atomic vectors (from coef() in abline())
+
+
+## More "rational" as.character() for <octmode> and <hexmode>,
+## fulfilling the "law"   as.<vector>(x)[j]  ===  as.<vector>(x[j])
+i <- matrix(0:21, 2)
+hi <- as.character(as.hexmode(i))
+oi <- as.character(as.octmode(i))
+stopifnot(exprs = {
+    identical(dim (hi), dim(i))
+    identical(nrow(oi), nrow(i))
+    hi[1:8] == as.character(0:7)
+    oi[1:8] == hi[1:8]
+  c(nchar(hi)) == rep(1:2, c(16,6))
+  c(nchar(oi)) == rep(1:2, c(8,14))
+})
+## as.character.*() methods had used format() previously
 
 
 
