@@ -1,7 +1,7 @@
 #  File src/library/base/R/sets.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,21 +16,40 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## See the help for why as.vector is used:
-## it includes coercing factors.
-union <- function(x, y) unique(c(as.vector(x), as.vector(y)))
+union <- function(x, y) {
+    u <- as.vector(x)
+    v <- as.vector(y)
+    if(!is.object(x) || !is.object(y) ||
+       !identical(class(x), class(y))) {
+        x <- u
+        y <- v
+    }
+    c(x[!duplicated(u)],
+      y[!duplicated(v) & (match(v, u, 0L) == 0L)])
+}
 
 intersect <- function(x, y)
 {
-    y <- as.vector(y)
-    unique(y[match(as.vector(x), y, 0L)])
+    u <- as.vector(x)
+    v <- as.vector(y)
+    if(!is.object(x) || !is.object(y) ||
+       !identical(class(x), class(y))) {
+        x <- u
+        y <- v
+    }
+    c(x[!duplicated(u) & (match(u, v, 0L) > 0L)],
+      y[numeric()])
+    ## (Could avoid combining with y[numeric()] in the common class
+    ## case.)
 }
 
 setdiff <- function(x, y)
 {
-    x <- as.vector(x)
-    y <- as.vector(y)
-    unique(if(length(x) || length(y)) x[match(x, y, 0L) == 0L] else x)
+    if(!length(x))
+        return(x)
+    u <- as.vector(x)
+    v <- as.vector(y)
+    x[!duplicated(u) & (match(u, v, 0L) == 0L)]
 }
 
 ## speed optimization etc: R-devel, Jan.4-6, 2000; then again 15 yrs later
@@ -41,5 +60,9 @@ setequal <- function(x, y)
     !( anyNA(match(x, y)) || anyNA(match(y, x)) )
 }
 
-##  same as %in% ( ./match.R ) but different arg names:
-is.element <- function(el, set) match(el, set, 0L) > 0L
+## same as %in% ( ./match.R ) but different arg names, and use match()
+## on as.vector() transformations for consistency with the other set
+## functions.
+is.element <- function(el, set)
+    match(as.vector(el), as.vector(set), 0L) > 0L
+
