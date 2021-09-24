@@ -7,6 +7,7 @@
 \alias{vector}
 \alias{as.vector}
 \alias{as.vector.factor}
+\alias{as.vector.POSIXlt}
 \alias{is.vector}
 \alias{atomic} % for cat.Rd and read.table.Rd
 \title{Vectors}
