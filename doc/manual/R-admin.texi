@@ -5514,11 +5514,12 @@ run.
 
 Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used to install packages @CRANpkg{rJava} and
-@CRANpkg{JavaGD}); the latter requires a JDK (Java SDK).
+@CRANpkg{JavaGD}); the latter requires a JDK (Java SDK).  Most
+distributions of Java 9 or later are of a full JDK.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
 need some help, e.g.@: by setting environment variable @env{JAVA_HOME}.
-To select a build of OpenJDK from @uref{https://adoptium.net, Adoptium}
+To select a build from @uref{https://adoptium.net, Adoptium}
 set e.g.@:
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/termurin-11.jdk/Contents/Home
@@ -5529,6 +5530,16 @@ use
 @example
 JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
 @end example
+
+For an @cputype{arm64} build, the earliest Java version which is
+officially supported is 17.  The currrently simplest way to install Java
+is from @uref{https://adoptium.net, Adoptium} (who call the architecture
+@cputype{aarch64}): this installs into an Apple-standard location and so
+works with @command{/usr/bin/java}. Other builds are available from
+@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
+and from OpenJDK at @uref{https://jdk.java.net/17/}, for which
+@env{JAVA_HOME} may need to be set both when configuring @R{} and at
+runtime.
 
 
 @c A Oracle JDK can be
@@ -5798,16 +5809,6 @@ configure @R{} using something like
 Updating a build may fail because of the bug
 described at @uref{https://openradar.appspot.com/FB8914243} but
 @emph{ab initio} builds work.
-
-Native Java builds are available, for example
-@uref{https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk}
-and this architecture (which they call @code{macos-aarch64}) for Java 17
-from OpenJDK at @uref{https://jdk.java.net/17/}; it will be available
-from @uref{https://adoptium.net, Adoptium}.  Note that for some
-distributions @cputype{arm64} and @cputype{x86_64} builds use the same
-location so do not co-exist, and others do not point
-@file{/usr/bin/java} to the correct version so @env{JAVA_HOME} may need
-to be set at runtime.
 
 As with Intel builds, the @code{Accelerate} library could be used
 @emph{via} the configuration option
