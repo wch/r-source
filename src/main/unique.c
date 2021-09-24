@@ -1174,14 +1174,16 @@ static SEXP match_transform(SEXP s, SEXP env)
 {
     if(OBJECT(s)) {
 	if(inherits(s, "factor")) return asCharacterFactor(s);
-	else if(inherits(s, "POSIXlt")) { /* and maybe more classes in the future:
-					   * Call R's (generic)	 as.character(s) : */
+	/*
+	else if(inherits(s, "POSIXlt")) { // and maybe more classes in the future:
+					  // Call R's (generic) as.character(s): 
 	    SEXP call, r;
 	    PROTECT(call = lang2(R_AsCharacterSymbol, s));
 	    r = eval(call, env);
 	    UNPROTECT(1);
 	    return r;
 	}
+	*/
 	else {
 	    SEXP call, r;
 	    PROTECT(call = lang2(install("mtfrm"), s));
