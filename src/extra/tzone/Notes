@@ -34,3 +34,5 @@ suffice on earlier versions of macOS.)  As a sanity check, the size of
 zoneinfo.zip should be about 410KB if 64-bit: a 32-bit version will be
 about 280KB.
 
+Note that we include 'backward': vendor versions might not, or might
+use 'backzone'.
