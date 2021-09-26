@@ -128,6 +128,13 @@
       packages built before \R 3.0.2. Such packages should be re-made
       with \command{R CMD build} to have the tangled \R code of vignettes
       shipped with the tarball.
+
+      \item \code{USE_FC_LEN_T} will becomes the default: this uses the
+      correct protoypes for Fortran BLAS/LAPACK routines called from
+      C/C++, and requires adjustmnt of most such calls -- see
+      \dQuote{Writing R Extensions}.
+      [Currently planned for early Nov: \acronym{CRAN} package authors
+      have been notified.]
     }
   }
 
