@@ -1,9 +1,10 @@
 % File src/library/base/man/hexmode.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hexmode}
+\title{Integer Numbers Displayed in Hexadecimal}
 \alias{as.hexmode}
 \alias{format.hexmode}
 \alias{print.hexmode}
@@ -15,11 +16,13 @@
 %% FIXME: xor() is not generic (yet?).
 %% \alias{xor.hexmode}
 \alias{hexmode}
-\title{Display Numbers in Hexadecimal}
 \description{
-  Convert or print integers in hexadecimal format, with as many digits
-  as are needed to display the largest, using leading zeroes as
-  necessary.
+  Integers which are displayed in hexadecimal (short \sQuote{hex}) format,
+  with as many digits as are needed to display the largest, using leading
+  zeroes as necessary.
+
+  Arithmetic works as for integers, and non-integer valued mathematical
+  functions typically work by truncating the result to integer.
 }
 \usage{
 as.hexmode(x)
@@ -40,11 +43,14 @@ as.hexmode(x)
 }
 \details{
   Class \code{"hexmode"} consists of integer vectors with that class
-  attribute, used merely to ensure that they are printed in hex.
+  attribute, used primarily to ensure that they are printed in hex.
+  Subsetting (\code{\link{[}}) works too, as do arithmetic or
+  other mathematical operations, albeit truncated to integer.
 
-  If \code{width = NULL} (the default), the output is padded with
-  leading zeroes to the smallest width needed for all the non-missing
-  elements.
+  \code{as.character(x)} converts each entry individually, hence with no
+  leading zeroes, whereas in \code{format()}, when \code{width = NULL} (the
+  default), the output is padded with leading zeroes to the smallest width
+  needed for all the non-missing elements.
 
   \code{as.hexmode} can convert integers (of \link{type} \code{"integer"} or
   \code{"double"}) and character vectors whose elements contain only
@@ -70,6 +76,19 @@ identical(as.integer(i), .Machine$integer.max)
 
 hm <- as.hexmode(c(NA, 1)); hm
 as.integer(hm)
+
+Xm <- as.hexmode(1:16)
+Xm # print()s via format()
+stopifnot(nchar(format(Xm)) == 2)
+Xm[-16] # *no* leading zeroes!
+stopifnot(format(Xm[-16]) == c(1:9, letters[1:6]))
+
+## Integer arithmetic (remaining "hexmode"):
+16*Xm
+Xm^2
+-Xm
+(fac <- factorial(Xm[1:12])) # !1, !2, !3, !4 .. in hexadecimals
+as.integer(fac) # indeed the same as  factorial(1:12)
 }
 \keyword{utilities}
 \keyword{print}
