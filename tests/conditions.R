@@ -106,6 +106,18 @@ bumped <- list(
     error = function(...) "bar"
 )
 stopifnot(identical(globalCallingHandlers(), bumped))
+## Fails in R 4.0
+globalCallingHandlers(
+    warning = function(...) "foo",
+    error = function(...) "foo"
+)
+bumped <- list(
+    warning = function(...) "foo",
+    error = function(...) "foo",
+    condition = function(...) "foo",
+    error = function(...) "bar"
+)
+stopifnot(identical(globalCallingHandlers(), bumped))
 globalCallingHandlers(NULL)
 
 ## Attributes and closure environments are detected in the duplicate

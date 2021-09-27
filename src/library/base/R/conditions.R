@@ -404,17 +404,17 @@ globalCallingHandlers <-
                 ## first duplicate on the stack, so that registering a
                 ## handler again has the effect of pushing it on top of the
                 ## stack.
-                classes <- names(gh)
-                for (class in unique(classes)) {
-                    idx <- which(class == classes)
+                for (class in unique(names(gh))) {
+                    idx <- which(class == names(gh))
 
                     ## Ideally we'd just use `duplicated()` on the list
                     ## of handlers. Since that doesn't take into
                     ## account the closure environments, we first
-                    ## convert the functions to lists.
+                    ## convert the functions to lists and also remove
+                    ## source references.
                     funAsList <- function(x) {
                         out <- list(formals(x), body(x), environment(x))
-                        attributes(out) <- attributes(x)
+                        attributes(out) <- attributes(utils::removeSource(x))
                         out
                     }
                     classHandlers <- lapply(gh[idx], funAsList)
