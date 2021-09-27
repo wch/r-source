@@ -5431,6 +5431,13 @@ stopifnot(exprs = {
 ## as.character.*() methods had used format() previously
 
 
+## within.list() & within.data.frame() assumed setdiff(a, b) to always eval 'b'
+stopifnot(exprs = {
+  identical(list(1, let="abc"), within(list(1), let <- "abc"))
+  identical(data.frame(let = character()), within(data.frame(), let <- character()))
+})# failed for ~ 40 hours in R-devel
+
+
 ## mapply() & Map() follow usual "max-or-0-if" recycling rule and keeps
 ## returning a named list in the "empty" case.
 nL0 <- setNames(list(), character()) # named empty list
