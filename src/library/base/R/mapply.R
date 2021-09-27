@@ -23,9 +23,9 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 
     answer <- .Internal(mapply(FUN, dots, MoreArgs))
 
-    if (USE.NAMES && length(answer) && length(dots)) {
+    if (USE.NAMES && length(dots)) {
 	if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]]))
-	    names(answer) <- dots[[1L]]
+            names(answer) <- if(length(answer)) dots[[1L]] else character()
 	else if (!is.null(names1))
 	    names(answer) <- names1
     }

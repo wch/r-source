@@ -5431,6 +5431,19 @@ stopifnot(exprs = {
 ## as.character.*() methods had used format() previously
 
 
+## mapply() & Map() follow usual "max-or-0-if" recycling rule and keeps
+## returning a named list in the "empty" case.
+nL0 <- setNames(list(), character()) # named empty list
+stopifnot(exprs = {
+    identical(list(), mapply(`+`, 1:3, NULL))
+    identical(nL0, mapply(paste, character(), NULL))
+    identical(nL0, mapply(paste, character(), letters))
+    identical(nL0, mapply(paste, "A", character()) )
+    identical(nL0, mapply(paste, character(), letters) )
+})
+## zero-length argument with non-zero one errored in R <= 4.1.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
