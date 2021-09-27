@@ -95,3 +95,47 @@ grid.fillStroke <- function(...) {
     grid.draw(fillStrokeGrob(...))
 }
 
+################################
+## Other grob methods
+grobCoords.GridStroke <- function(x, closed, ...) {
+    if (closed)
+        emptyCoords()
+    else
+        grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+                   closed, ...)
+}
+    
+grobPoints.GridStroke <- function(x, closed, ...) {
+    if (closed)
+        emptyCoords()
+    else
+        grobPoints(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+                   closed, ...)
+}
+
+grobCoords.GridFill <- function(x, closed, ...) {
+    if (closed)
+        grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+                   closed, ...)
+    else
+        emptyCoords()
+}
+
+grobPoints.GridFill <- function(x, closed, ...) {
+    if (closed)
+        grobPoints(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+                   closed, ...)
+    else
+        emptyCoords()
+}
+
+grobCoords.GridFillStroke <- function(x, closed, ...) {
+    grobCoords(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+                     closed, ...)
+}
+
+grobPoints.GridFillStroke <- function(x, closed, ...) {
+    grobPoints(gTree(children=gList(x$grob), gp=x$gp, vp=x$vp),
+                     closed, ...)
+}
+

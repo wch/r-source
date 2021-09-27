@@ -43,16 +43,27 @@ SEXP L_fill(SEXP path, SEXP rule)
 {
     R_GE_gcontext gc;
     SEXP currentgp;
+    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentgp = gridStateElement(dd, GSS_GPAR);
+    PROTECT(resolvedFill = resolveGPar(currentgp));
     gcontextFromgpar(currentgp, 0, &gc, dd);
     
     GEMode(1, dd);
+
     setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
     GEFill(path, INTEGER(rule)[0], &gc, dd);
     setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
+
+    if (resolvedFill != R_NilValue &&
+        Rf_inherits(resolvedFill, "GridGrobPattern")) {
+        SEXP patternRef = getListElement(resolvedFill, "index");
+        dd->dev->releasePattern(patternRef, dd->dev);
+    }
+    UNPROTECT(1); /* resolvedFill */
+
     GEMode(0, dd);
 
     return R_NilValue;
@@ -62,16 +73,27 @@ SEXP L_fillStroke(SEXP path, SEXP rule)
 {
     R_GE_gcontext gc;
     SEXP currentgp;
+    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentgp = gridStateElement(dd, GSS_GPAR);
+    PROTECT(resolvedFill = resolveGPar(currentgp));
     gcontextFromgpar(currentgp, 0, &gc, dd);
     
     GEMode(1, dd);
+
     setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
     GEFillStroke(path, INTEGER(rule)[0], &gc, dd);
     setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
+
+    if (resolvedFill != R_NilValue &&
+        Rf_inherits(resolvedFill, "GridGrobPattern")) {
+        SEXP patternRef = getListElement(resolvedFill, "index");
+        dd->dev->releasePattern(patternRef, dd->dev);
+    }
+    UNPROTECT(1); /* resolvedFill */
+
     GEMode(0, dd);
 
     return R_NilValue;
