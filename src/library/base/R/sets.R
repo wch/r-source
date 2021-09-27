@@ -24,12 +24,16 @@ union <- function(x, y) {
         x <- u
         y <- v
     }
-    c(x[!duplicated(u)],
-      y[!duplicated(v) & (match(v, u, 0L) == 0L)])
+    z <- c(x[!duplicated(u)],
+           y[!duplicated(v) & (match(v, u, 0L) == 0L)])
+    names(z) <- NULL
+    z
 }
 
 intersect <- function(x, y)
 {
+    if(is.null(x) || is.null(y))
+        return(NULL)
     u <- as.vector(x)
     v <- as.vector(y)
     if(!is.object(x) || !is.object(y) ||
@@ -37,10 +41,12 @@ intersect <- function(x, y)
         x <- u
         y <- v
     }
-    c(x[!duplicated(u) & (match(u, v, 0L) > 0L)],
-      y[numeric()])
+    z <- c(x[!duplicated(u) & (match(u, v, 0L) > 0L)],
+           y[numeric()])
     ## (Could avoid combining with y[numeric()] in the common class
     ## case.)
+    names(z) <- NULL
+    z
 }
 
 setdiff <- function(x, y)
@@ -49,7 +55,9 @@ setdiff <- function(x, y)
         return(x)
     u <- as.vector(x)
     v <- as.vector(y)
-    x[!duplicated(u) & (match(u, v, 0L) == 0L)]
+    z <- x[!duplicated(u) & (match(u, v, 0L) == 0L)]
+    names(z) <- NULL
+    z
 }
 
 ## speed optimization etc: R-devel, Jan.4-6, 2000; then again 15 yrs later
