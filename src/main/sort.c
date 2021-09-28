@@ -239,9 +239,10 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
 
+    SEXP strictlyArg = CADDR(args);
     /* right now is.unsorted only tells you if something is sorted ascending
       hopefully someday it will work for descending too */
-    if(!asLogical(CADR(args))) { /*not strict since we don't memoize that */
+    if(!asLogical(strictlyArg)) { /*not strict since we don't memoize that */
 	if(KNOWN_INCR(sorted)) {
 	    UNPROTECT(1);
 	    return ScalarLogical(FALSE);
@@ -257,7 +258,7 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    int strictly = asLogical(CADR(args));
+    int strictly = asLogical(strictlyArg);
     if(strictly == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "strictly");
     if(isVectorAtomic(x)) {
@@ -268,7 +269,7 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isObject(x)) {
 	SEXP call;
 	PROTECT(call = 	// R>  .gtn(x, strictly) :
-		lang3(install(".gtn"), x, CADR(args)));
+		lang3(install(".gtn"), x, strictlyArg));
 	ans = eval(call, rho);
 	UNPROTECT(2);
 	return ans;
