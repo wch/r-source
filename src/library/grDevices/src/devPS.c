@@ -9032,6 +9032,9 @@ static void PDF_Raster(unsigned int *raster,
     if(pd->inText) textoff(pd);
     /* Save graphics state */
     PDFwrite(buf, 100, "q\n", pd);
+    if (pd->currentMask >= 0) {
+        PDFwriteMask(pd->currentMask, pd);
+    }
     /* Need to set AIS graphics state parameter ? */
     if (alpha) 
         PDFwrite(buf, 100, "/GSais gs\n", pd);
