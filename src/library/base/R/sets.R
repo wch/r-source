@@ -19,15 +19,23 @@
 union <- function(x, y) {
     u <- as.vector(x)
     v <- as.vector(y)
-    if(!is.object(x) || !is.object(y) ||
-       !identical(class(x), class(y))) {
-        x <- u
-        y <- v
-    }
-    z <- c(x[!duplicated(u)],
-           y[!duplicated(v) & (match(v, u, 0L) == 0L)])
-    names(z) <- NULL
-    z
+    ## <FIXME>
+    ## Remove eventually: not safe enough for arbitrary classes.
+    ##   if(!is.object(x) || !is.object(y) ||
+    ##      !identical(class(x), class(y))) {
+    ##       x <- u
+    ##       y <- v
+    ##   }
+    ##   z <- c(x[!duplicated(u)],
+    ##          y[!duplicated(v) & (match(v, u, 0L) == 0L)])
+    ##   names(z) <- NULL
+    ##   z
+    ## </FIXME>
+    ## Could do
+    ##   c(u[!duplicated(u)],
+    ##     v[!duplicated(v) & (match(v, u, 0L) == 0L)])
+    ## but the following is faster and "basically the same":
+    unique(c(u, v))
 }
 
 intersect <- function(x, y)
@@ -36,28 +44,35 @@ intersect <- function(x, y)
         return(NULL)
     u <- as.vector(x)
     v <- as.vector(y)
-    if(!is.object(x) || !is.object(y) ||
-       !identical(class(x), class(y))) {
-        x <- u
-        y <- v
-    }
-    z <- c(x[!duplicated(u) & (match(u, v, 0L) > 0L)],
-           y[numeric()])
-    ## (Could avoid combining with y[numeric()] in the common class
-    ## case.)
-    names(z) <- NULL
-    z
+    ## <FIXME>
+    ## Remove eventually: not safe enough for arbitrary classes.
+    ##   if(!is.object(x) || !is.object(y) ||
+    ##      !identical(class(x), class(y))) {
+    ##       x <- u
+    ##       y <- v
+    ##   }
+    ##   z <- c(x[!duplicated(u) & (match(u, v, 0L) > 0L)],
+    ##          y[numeric()])
+    ##   ## (Combining with y[numeric()] in the common class case is needed
+    ##   ## e.g. for factors to combine levels.)
+    ##   names(z) <- NULL
+    ##   z
+    ## </FIXME>
+    c(u[!duplicated(u) & (match(u, v, 0L) > 0L)],
+      v[numeric()])
 }
 
 setdiff <- function(x, y)
 {
-    if(!length(x))
-        return(x)
     u <- as.vector(x)
     v <- as.vector(y)
-    z <- x[!duplicated(u) & (match(u, v, 0L) == 0L)]
-    names(z) <- NULL
-    z
+    ## <FIXME>
+    ## Remove eventually: not safe enough for arbitrary classes.
+    ##   z <- x[!duplicated(u) & (match(u, v, 0L) == 0L)]
+    ##   names(z) <- NULL
+    ##   z
+    ## </FIXME>
+    u[!duplicated(u) & (match(u, v, 0L) == 0L)]
 }
 
 ## speed optimization etc: R-devel, Jan.4-6, 2000; then again 15 yrs later
