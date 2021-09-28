@@ -412,12 +412,17 @@ globalCallingHandlers <-
                     ## account the closure environments, we first
                     ## convert the functions to lists and also remove
                     ## source references.
+		    attributes0 <- function(x) {
+                        ax <- attributes(x)
+                        ax[!names(ax) %in%
+                           c("srcref", "srcfile", "wholeSrcref")]
+                    }
                     funAsList <- function(x) {
                         out <- list(formals(x), body(x), environment(x))
-                        ax <- attributes(x)
-                        attributes(out) <- ax[names(ax) != "srcref"]
+                        attributes(out) <- attributes0(x)
+                        attributes(out[[2]]) <- attributes0(out[[2]])
                         out
-                    }
+		    }
                     classHandlers <- lapply(gh[idx], funAsList)
                     dups <- duplicated(classHandlers)
 
