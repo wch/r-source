@@ -6846,14 +6846,12 @@ static void PDFwriteGroupDefs(int objoffset, PDFDesc *pd)
 {
     int i;
     char buf[100];
-    PDFwrite(buf, 100, "/XObject <<\n", pd);
     for (i = 0; i < pd->numDefns; i++) {
         if (pd->definitions[i].type == PDFgroup) {
             PDFwrite(buf, 100, "/Def%d %d 0 R\n", pd,
                      i, i + objoffset);
         }
     }
-    PDFwrite(buf, 100, ">>\n", pd);
 }
 
 static void PDFwriteClipPath(int i, PDFDesc *pd)
@@ -8291,22 +8289,6 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
     }
     PDFwrite(buf, 100, ">>\n", pd);
 
-    if (nraster > 0) {
-	/* image XObjects */
-	PDFwrite(buf, 100, "/XObject <<\n", pd);
-	for (i = pd->fileRasters; i < nraster; i++) {
-	    PDFwrite(buf, 100, "  /Im%d %d 0 R\n", pd,
-                     i, pd->rasters[i].nobj);
-		if (pd->masks[i] >= 0)
-		    PDFwrite(buf, 100, "  /Mask%d %d 0 R\n", pd,
-                             pd->masks[i], pd->rasters[i].nmaskobj);
-	}
-	PDFwrite(buf, 100, ">>\n", pd);
-        if (endpage) {
-            pd->fileRasters = nraster;
-        }
-    }
-
     /* graphics state parameter dictionaries */
     PDFwrite(buf, 100, "/ExtGState << ", pd);
     for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++)
@@ -8326,10 +8308,30 @@ static int PDFwriteResourceDictionary(int objOffset, Rboolean endpage,
     }    
     PDFwrite(buf, 100, ">>\n", pd);
 
-    /* Compositing groups XObjects */
-    if (pd->numDefns > 0) {
+    /* Map resource names to XObjects */
+    if (nraster > 0 || pd->numDefns > 0) {
+	PDFwrite(buf, 100, "/XObject <<\n", pd);
+
+	/* image XObjects */
+        int start = 0;
+        if (endpage) 
+            start = pd->fileRasters;
+	for (i = start; i < nraster; i++) {
+	    PDFwrite(buf, 100, "  /Im%d %d 0 R\n", pd,
+                     i, pd->rasters[i].nobj);
+		if (pd->masks[i] >= 0)
+		    PDFwrite(buf, 100, "  /Mask%d %d 0 R\n", pd,
+                             pd->masks[i], pd->rasters[i].nmaskobj);
+	}
+
+        /* Group XObjects */
         PDFwriteGroupDefs(defnOffset, pd);
-    }    
+
+	PDFwrite(buf, 100, ">>\n", pd);
+        if (endpage) {
+            pd->fileRasters = nraster;
+        }
+    }
 
     /* patterns */
     if (pd->numDefns > 0) {
@@ -9016,46 +9018,37 @@ static void PDF_Raster(unsigned int *raster,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double angle, cosa, sina;
     int alpha;
+    char buf[100];
 
     PDF_checkOffline();
 
-    /* A raster image adds nothing to a clipping path */
+    /* A raster image adds nothing to a (clipping) path */
     if (pd->appendingPath >= 0) 
         return;
-
-    /* A raster image cannot be used in a pattern or mask either (for now) */
-    if (pd->appendingMask >= 0 || pd->appendingPattern >= 0) {
-        warning("Raster image within mask ignored");
-        return;
-    }
 
     /* Record the raster so can write it out when page is finished */
     alpha = addRaster(raster, w, h, interpolate, pd);
 
     if(pd->inText) textoff(pd);
     /* Save graphics state */
-    fprintf(pd->pdffp, "q\n");
+    PDFwrite(buf, 100, "q\n", pd);
     /* Need to set AIS graphics state parameter ? */
-    if (alpha) fprintf(pd->pdffp, "/GSais gs\n");
+    if (alpha) 
+        PDFwrite(buf, 100, "/GSais gs\n", pd);
     /* translate */
-    fprintf(pd->pdffp,
-	    "1 0 0 1 %.2f %.2f cm\n",
-	    x, y);
+    PDFwrite(buf, 100,  "1 0 0 1 %.2f %.2f cm\n", pd, x, y);
     /* rotate */
     angle = rot*M_PI/180;
     cosa = cos(angle);
     sina = sin(angle);
-    fprintf(pd->pdffp,
-	    "%.2f %.2f %.2f %.2f 0 0 cm\n",
-	    cosa, sina, -sina, cosa);
+    PDFwrite(buf, 100, "%.2f %.2f %.2f %.2f 0 0 cm\n", pd, 
+             cosa, sina, -sina, cosa);
     /* scale */
-    fprintf(pd->pdffp,
-	    "%.2f 0 0 %.2f 0 0 cm\n",
-	    width, height);
+    PDFwrite(buf, 100, "%.2f 0 0 %.2f 0 0 cm\n", pd, width, height);
     /* Refer to XObject which will be written to file when page is finished */
-    fprintf(pd->pdffp, "/Im%d Do\n", pd->numRasters - 1);
+    PDFwrite(buf, 100, "/Im%d Do\n", pd, pd->numRasters - 1);
     /* Restore graphics state */
-    fprintf(pd->pdffp, "Q\n");
+    PDFwrite(buf, 100, "Q\n", pd);
 }
 
 #endif
