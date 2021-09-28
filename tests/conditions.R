@@ -133,3 +133,20 @@ expectedList <- list(
 globalCallingHandlers(error = hnd1, error = hnd2, error = hnd3)
 stopifnot(identical(globalCallingHandlers(), expectedList))
 globalCallingHandlers(NULL)
+
+## Source references do not cause handlers to be treated as distinct
+withSource <- function(src, envir = parent.frame(), file = NULL) {
+    if (is.null(file)) {
+	file <- tempfile("sourced", fileext = ".R")
+    }
+    on.exit(unlink(file))
+    writeLines(src, file)
+    source(file, local = envir, keep.source = TRUE)
+}
+withSource("hnd1 <- structure(function(...) { NULL })")
+withSource("hnd2 <- structure(function(...) { NULL })")
+globalCallingHandlers(NULL)
+globalCallingHandlers(error = hnd1)
+globalCallingHandlers(error = hnd2)
+stopifnot(identical(globalCallingHandlers(), list(error = hnd2)))
+globalCallingHandlers(NULL)
