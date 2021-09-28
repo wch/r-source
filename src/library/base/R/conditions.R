@@ -1,7 +1,7 @@
 #  File src/library/base/R/conditions.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -414,7 +414,8 @@ globalCallingHandlers <-
                     ## source references.
                     funAsList <- function(x) {
                         out <- list(formals(x), body(x), environment(x))
-                        attributes(out) <- attributes(utils::removeSource(x))
+                        ax <- attributes(x)
+                        attributes(out) <- ax[names(ax) != "srcref"]
                         out
                     }
                     classHandlers <- lapply(gh[idx], funAsList)
