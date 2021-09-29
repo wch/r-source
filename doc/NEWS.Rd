@@ -65,6 +65,10 @@
       \item \code{try()} is considerably faster in case of an error and
       long call, as e.g., from some \code{do.call()}.  Thanks to
       Alexander Kaever's suggestion posted to R-devel.
+
+      \item Non-integer \code{mgp} \code{par()} settings are now handled
+      correctly in \code{axis()} and \code{mtext()}, thanks to Mikael
+      Jagan and Duncan Murdoch's report and suggestion in \PR{18194}.
     }
   }
 }
