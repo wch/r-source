@@ -55,7 +55,8 @@ vpTree(parent, children)
     For back-compatibility, a logical value of \code{TRUE} corresponds
     to \code{"on"} and \code{FALSE} corresponds to \code{"inherit"}.
 
-    May also be a grob (or a gTree) that describes a clipping path.}
+    May also be a grob (or a gTree) that describes a clipping path
+    or the result of a call to \code{\link{as.path}}.}
   \item{mask}{One of \code{"none"} (or \code{FALSE})
     or \code{"inherit"} (or \code{TRUE}) 
     or a grob (or a gTree).  This specifies that the viewport
@@ -115,6 +116,10 @@ vpTree(parent, children)
     or because it is within another viewport which is rotated) then
     the \code{clip} flag is ignored.
 
+    If \code{clip} is a grob, then that grob (which may be more
+    than one shape) defines a clipping path.  The function
+    \code{as.path} may be used to specify a fill rule for the path.
+    
     Viewport names need not be unique.  When pushed, viewports
     sharing the same parent must have unique names, which means that
     if you push a viewport with the same name as an existing viewport,

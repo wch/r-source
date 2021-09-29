@@ -79,7 +79,10 @@ extern "C" {
  *             - masks
  *             Added deviceVersion
  * Version 14: Added deviceClip
- * Version 15: Added group
+ * Version 15: For R 4.2.0
+ *             Added more graphical definitions
+ *             - groups
+ *             - paths
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
