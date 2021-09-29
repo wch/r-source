@@ -251,7 +251,7 @@
       \PR{17501}.
 
       \item Determining correct translation domain in non-base packages,
-      addressing the combo of \PR{18092} and \PR{17998#c6} with reports and
+      addressing the combo of \PR{18092} and \PR{17998} (\code{#c6}) with reports and
       \emph{augmented} patch #2904 by Suharto Anggono.
     }
   }
