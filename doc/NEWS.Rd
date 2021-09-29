@@ -364,7 +364,7 @@
       \item \code{names()} now works for \code{DOTSXP} objects.  On the
       other hand, in \file{R-lang}, the R language manual, we now warn
       against relying on the structure or even existence of such
-      \code{dot-dot-dot} objects.
+      dot-dot-dot objects.
 
       \item \code{all.equal()} no longer gives an error on \code{DOTSXP}
       objects.
@@ -828,6 +828,11 @@
       \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
       necessarily fail, as currently for different \CRANpkg{igraph} objects.
 
+      \item Message translation domains, e.g., for errors and warnings, are
+      now correctly determined also when e.g., a \pkg{base} function is
+      called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
+      thanks to a patch from Joris Goosen fixing \PR{17998}.
+
       \item Too long lines in environment files (e.g., \file{Renviron}) no
       longer crash \R. This limit has been increased to 100,000 bytes.
       (\PR{18001}.)
@@ -971,11 +976,6 @@
       \item \code{checkRdaFiles(ff)$version} is now correct also when
       \code{ff} contains files of different versions, thanks to a report
       and patch from Sebastian Meyer in \PR{18041}.
-
-      \item Message translation domains, e.g., for errors and warnings, are
-      now correctly determined also when e.g., a \pkg{base} function is
-      called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
-      thanks to a patch from Joris Goosen fixing \PR{17998}.
 
       \item macOS: Quartz device live drawing could fail (no plot is shown)
       if the system changes the drawing context after view update (often
@@ -1634,7 +1634,7 @@
       deprecated provision for 8.20--8.31 has been removed.
 
       \item Defunct functions \code{mem.limits()}, \code{.readRDS()},
-      \code{.saveRDS()},.\code{.find.package()}, and \code{.path.package()}
+      \code{.saveRDS()}, \code{.find.package()}, and \code{.path.package()}
       from package \pkg{base}
       and \code{allGenerics()}, \code{getAccess()}, \code{getAllMethods()},
       \code{getClassName()}, \code{getClassPackage()}, \code{getExtends()},
