@@ -66,6 +66,9 @@
       long call, as e.g., from some \code{do.call()}.  Thanks to
       Alexander Kaever's suggestion posted to R-devel.
 
+      \item \code{qqline(y = <object>)} such as \code{y=I(.)}, now works,
+      see also \PR{18190}.
+
       \item Non-integer \code{mgp} \code{par()} settings are now handled
       correctly in \code{axis()} and \code{mtext()}, thanks to Mikael
       Jagan and Duncan Murdoch's report and suggestion in \PR{18194}.
