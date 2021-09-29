@@ -72,6 +72,10 @@
       \item Non-integer \code{mgp} \code{par()} settings are now handled
       correctly in \code{axis()} and \code{mtext()}, thanks to Mikael
       Jagan and Duncan Murdoch's report and suggestion in \PR{18194}.
+
+      \item \code{formatC(x)} returns length zero \code{character()} now,
+      rather than \code{""} when \code{x} is of length zero, as documented,
+      thanks to Davis Vaughan's post to R-devel.
     }
   }
 }

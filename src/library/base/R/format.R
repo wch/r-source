@@ -1,7 +1,7 @@
 #  File src/library/base/R/format.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 		       justify = if(flag=="-") "left" else "right")
     }
 
-    if (!(n <- length(x))) return("")
+    if (!(n <- length(x))) return(character())
     if (is.null(mode))	  mode <- storage.mode(x)
     else if (any(mode == c("double", "real", "integer")))  {
       ## for .C call later on
