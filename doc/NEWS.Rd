@@ -249,6 +249,10 @@
       line numbers relating to the \file{*-Ex.R} file, thanks to Duncan
       Murdoch and Sebastian Meyer's reports and patch proposals in
       \PR{17501}.
+
+      \item Determining correct translation domain in non-base packages,
+      addressing the combo of \PR{18092} and \PR{17998#c6} with reports and
+      \emph{augmented} patch #2904 by Suharto Anggono.
     }
   }
 }

@@ -1091,45 +1091,39 @@ void NORET jump_to_toplevel()
 
 
 /* Called from do_gettext() and do_ngettext() */
-static char * determine_domain_gettext(SEXP domain_, SEXP rho)
+static char * determine_domain_gettext(SEXP domain_)
 {
     const char *domain = "";
     char *buf; // will be returned
 
-    /* The passed rho is ignored because (n)gettext is called through a
-     * helper function in stop.R. And the context is more useful anyhow */
+    /* If cptr->cloenv is not R_GlobalEnv,
+     * ENCLOS(cptr->cloenv) is CLOENV(cptr->callfun) */
+    /* R_findParentContext(cptr, 1)->cloenv == cptr->sysparent */
     if(isNull(domain_)) {
-	RCNTXT *cptr;
-	for (cptr = R_GlobalContext; cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
-	     cptr = cptr->nextcontext)
-	    if (cptr->callflag & CTXT_FUNCTION) {
-		/* stop() etc have internal call to .makeMessage */
-		const char *cfn = CHAR(STRING_ELT(deparse1s(CAR(cptr->call)), 0));
+	RCNTXT *cptr = R_findParentContext(R_GlobalContext, 1);
+	SEXP rho = cptr ? CLOENV(cptr->callfun) : R_EmptyEnv;
 
-		if(streql(cfn, "stop") || streql(cfn, "warning") || streql(cfn, "message"))
-		    continue;
-		else
-		    break;
+	/* stop() etc have internal call to .makeMessage */
+	/* gettextf calls gettext */
+	if (rho == R_BaseNamespace) {
+	    SEXP call = getCurrentCall(), cfn = CAR(call);
+	    if (TYPEOF(cfn) == SYMSXP && !streql(CHAR(PRINTNAME(cfn)), "ngettext") &&
+		TYPEOF(CADR(call)) == SYMSXP) {
+		cptr = R_findParentContext(cptr, 1);
+		rho = cptr ? CLOENV(cptr->callfun) : R_EmptyEnv;
 	    }
+	}
 
-	/* First we try to see if sysparent leads us to a namespace, because gettext
-	   might have a different environment due to being called from (in?) a closure.
-	   If that fails we try cloenv, as the original code did. */
-	/* FIXME: should we only do this search when cptr->callflag & CTXT_FUNCTION? */
 	SEXP ns = R_NilValue;
-	for(size_t attempt = 0; attempt < 2 && isNull(ns); attempt++) {
-	    rho = (cptr == NULL) ?
-		R_EmptyEnv :
-		attempt == 0 ? cptr->sysparent : cptr->cloenv;
 	    while(rho != R_EmptyEnv) {
 		if (rho == R_GlobalEnv) break;
 		else if (R_IsNamespaceEnv(rho)) {
 		    ns = R_NamespaceEnvSpec(rho);
 		    break;
 		}
+		if(rho == ENCLOS(rho)) break; // *does* happen
 		rho = ENCLOS(rho);
 	    }
-	}
 	if (!isNull(ns)) {
 	    PROTECT(ns);
 	    domain = translateChar(STRING_ELT(ns, 0));
@@ -1173,7 +1167,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(!isString(string)) error(_("invalid '%s' value"), "string");
 
-    char * domain = determine_domain_gettext(CAR(args), rho);
+    char * domain = determine_domain_gettext(CAR(args));
 
     if(domain && strlen(domain)) {
 	SEXP ans = PROTECT(allocVector(STRSXP, n));
@@ -1247,8 +1241,7 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'%s' must be a character string"), "msg2");
 
 #ifdef ENABLE_NLS
-    SEXP sdom = CADDDR(args);
-    char * domain = determine_domain_gettext(sdom, rho);
+    char * domain = determine_domain_gettext(CADDDR(args));
 
     if(domain && strlen(domain)) {
 	/* libintl seems to malfunction if given a message of "" */
