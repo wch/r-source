@@ -1305,7 +1305,8 @@ SEXP L_clearDefinitions(SEXP clearGroups) {
     dd->dev->releaseClipPath(R_NilValue, dd->dev);
     /* Clear all masks */
     dd->dev->releaseMask(R_NilValue, dd->dev);
-    if (LOGICAL(clearGroups)[0]) {
+    if (LOGICAL(clearGroups)[0] && 
+        dd->dev->deviceVersion > R_GE_group) {
         /* Clear all groups */
         dd->dev->releaseGroup(R_NilValue, dd->dev);
     }
