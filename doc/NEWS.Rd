@@ -129,7 +129,7 @@
       with \command{R CMD build} to have the tangled \R code of vignettes
       shipped with the tarball.
 
-      \item \code{USE_FC_LEN_T} will becomes the default: this uses the
+      \item \code{USE_FC_LEN_T} will become the default: this uses the
       correct protoypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustmnt of most such calls -- see
       \dQuote{Writing R Extensions}.
@@ -1076,6 +1076,11 @@
       \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
       necessarily fail, as currently for different \CRANpkg{igraph} objects.
 
+      \item Message translation domains, e.g., for errors and warnings, are
+      now correctly determined also when e.g., a \pkg{base} function is
+      called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
+      thanks to a patch from Joris Goosen fixing \PR{17998}.
+
       \item Too long lines in environment files (e.g., \file{Renviron}) no
       longer crash \R. This limit has been increased to 100,000 bytes.
       (\PR{18001}.)
@@ -1219,11 +1224,6 @@
       \item \code{checkRdaFiles(ff)$version} is now correct also when
       \code{ff} contains files of different versions, thanks to a report
       and patch from Sebastian Meyer in \PR{18041}.
-
-      \item Message translation domains, e.g., for errors and warnings, are
-      now correctly determined also when e.g., a \pkg{base} function is
-      called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
-      thanks to a patch from Joris Goosen fixing \PR{17998}.
 
       \item macOS: Quartz device live drawing could fail (no plot is shown)
       if the system changes the drawing context after view update (often
