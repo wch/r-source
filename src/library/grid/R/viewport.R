@@ -86,7 +86,7 @@ valid.viewport <- function(x, y, width, height, just,
   if (!is.logical(clip)) {
       if (is.grob(clip)) {
           clip <- createClipPath(as.path(clip))
-      } else if (inherits(clip, "grobAsPath")) {
+      } else if (inherits(clip, "GridPath")) {
           clip <- createClipPath(clip)
       } else {
           clip <- switch(as.character(clip),
