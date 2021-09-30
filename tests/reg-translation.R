@@ -28,10 +28,31 @@ if( !OK ) {
 }
 
 ## Translation domain for a function not in a package: PR#17998
-tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage)
+tryCmsg  <- function(expr) tryCatch(expr, error   = conditionMessage)
+tryCWarn <- function(expr) tryCatch(expr, warning = conditionMessage)
 chk0 <- function(x) stopifnot(x == 0)
 (m1 <- tryCmsg(chk0(1))) # (not translated in R < 4.1.0)
 ## switch back to English (if possible) for final report.
 Sys.setenv(LANGUAGE="en")
 m2 <- "x == 0 n'est pas TRUE"
 if(m1 != m2) stop("message was not translated to French")
+
+## More -- for PR#18902 (<--> PR#17998, part 2)
+enTxt <- "incompatible dimensions"
+deTxt <- "inkompatible Dimensionen"
+Sys.setenv(LANGUAGE="de")
+stopifnot(identical(deTxt, gettext(enTxt, domain="R-stats")))
+f <- function(...) stop(enTxt)
+environment(f) <- asNamespace("stats")
+stopifnot(identical(deTxt, tryCmsg(f())))
+## 2nd example (base vs stats):
+enTxt <- "namespace is already attached"
+deTxt <- "Namensraum ist bereits angehängt"
+f <- function(...) warning(enTxt)
+stopifnot(exprs = {
+    identical(gettext(enTxt, domain="R-base" ), deTxt)
+    identical(gettext(enTxt, domain="R-stats"), enTxt)
+    identical({environment(f) <- asNamespace("base") ; tryCWarn(f())}, deTxt)
+    identical({environment(f) <- asNamespace("stats"); tryCWarn(f())}, enTxt)
+})# in both cases:  not present in stats  =>  not translated
+

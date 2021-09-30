@@ -1,9 +1,10 @@
 % File src/library/base/man/octmode.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{octmode}
+\title{Integer Numbers Displayed in Octal}
 \alias{as.octmode}
 \alias{format.octmode}
 \alias{print.octmode}
@@ -15,10 +16,13 @@
 %% FIXME: xor() is not generic (yet?).
 %% \alias{xor.octmode}
 \alias{octmode}
-\title{Display Numbers in Octal}
 \description{
-  Convert or print integers in octal format, with as many digits as are
-  needed to display the largest, using leading zeroes as necessary.
+  Integers which are displayed in octal (base-8 number system) format, with as
+  many digits as are needed to display the largest, using leading zeroes as
+  necessary.
+
+  Arithmetic works as for integers, and non-integer valued mathematical
+  functions typically work by truncating the result to integer.
 }
 \usage{
 as.octmode(x)
@@ -36,14 +40,16 @@ as.octmode(x)
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
-  Class \code{"octmode"} consists of integer vectors with that class
-  attribute, used merely to ensure that they are printed in octal
+  \code{"octmode"} objects are integer vectors with that class
+  attribute, used primarily to ensure that they are printed in octal
   notation, specifically for Unix-like file permissions such as
-  \code{755}.  Subsetting (\code{\link{[}}) works too.
+  \code{755}.  Subsetting (\code{\link{[}}) works too, as do arithmetic or
+  other mathematical operations, albeit truncated to integer.
 
-  If \code{width = NULL} (the default), the output is padded with
-  leading zeroes to the smallest width needed for all the non-missing
-  elements.
+  \code{as.character(x)} converts each entry individually, hence with no
+  leading zeroes, whereas in \code{format()}, when \code{width = NULL} (the
+  default), the output is padded with leading zeroes to the smallest width
+  needed for all the non-missing elements.
 
   \code{as.octmode} can convert integers (of \link{type} \code{"integer"} or
   \code{"double"}) and character vectors whose elements contain only
@@ -73,6 +79,25 @@ fmode <- as.octmode("170")
 \donttest{
 umask <- Sys.umask(NA) # depends on platform
 c(fmode, "666", "755") & !umask
-}}
+}
+
+om <- as.octmode(1:12)
+om # print()s via format()
+stopifnot(nchar(format(om)) == 2)
+om[1:7] # *no* leading zeroes!
+stopifnot(format(om[1:7]) == as.character(1:7))
+om2 <- as.octmode(c(1:10, 60:70))
+om2 # prints via format() -> with 3 octals
+stopifnot(nchar(format(om2)) == 3)
+as.character(om2) # strings of length 1, 2, 3
+
+
+## Integer arithmetic (remaining "octmode"):
+om^2
+om * 64
+-om
+(fac <- factorial(om)) # !1, !2, !3, !4 .. in hexadecimals
+as.integer(fac) # indeed the same as  factorial(1:12)
+}
 \keyword{utilities}
 \keyword{print}

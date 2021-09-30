@@ -62,5 +62,7 @@ makeContent(x)
   (a modified version of \code{x}).
 }
 \author{ Paul Murrell }
+\references{ "Changes to grid for R 3.0.0",
+Paul Murrell, \emph{The R Journal} (2013) 5:2, pages 148-160. }
 \seealso{ \code{\link{grid.draw}} }
 \keyword{ dplot }

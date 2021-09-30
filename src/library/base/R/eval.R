@@ -63,8 +63,9 @@ within.data.frame <- function(data, expr, ...)
     eval(substitute(expr), e)
     l <- as.list(e, all.names=TRUE)
     l <- l[!vapply(l, is.null, NA, USE.NAMES=FALSE)]
+    nl <- names(l)
     ## del: variables to *del*ete from data[]; keep non-NULL ones
-    del <- setdiff(names(data), (nl <- names(l)))
+    del <- setdiff(names(data), nl)
     data[ nl] <- l
     data[del] <- NULL
     data
@@ -77,7 +78,8 @@ within.list <- function(data, expr, keepAttrs = TRUE, ...)
     eval(substitute(expr), e)
     if(keepAttrs) { # names() kept in original order; also other attributes
 	l <- as.list(e, all.names=TRUE)
-	del <- setdiff(names(data), (nl <- names(l))) # variables to delete
+        nl <- names(l)
+	del <- setdiff(names(data), nl) # variables to delete
 	data[ nl] <- l
 	data[del] <- NULL
 	data

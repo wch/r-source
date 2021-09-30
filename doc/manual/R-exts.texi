@@ -4799,7 +4799,9 @@ Where possible @command{R CMD build} will replace them by copies.
 @item
 If you do not yourself have a Windows system, consider submitting your
 source package to WinBuilder (@uref{https://win-builder.r-project.org/})
-before distribution.
+before distribution.  If you need to check on an M1 Mac, there is a
+check service at
+@uref{https://mac.r-project.org/macbuilder/submit.html}.
 
 @item
 It is bad practice for package code to alter the search path using

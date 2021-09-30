@@ -128,6 +128,13 @@
       packages built before \R 3.0.2. Such packages should be re-made
       with \command{R CMD build} to have the tangled \R code of vignettes
       shipped with the tarball.
+
+      \item \code{USE_FC_LEN_T} will become the default: this uses the
+      correct protoypes for Fortran BLAS/LAPACK routines called from
+      C/C++, and requires adjustmnt of most such calls -- see
+      \dQuote{Writing R Extensions}.
+      [Currently planned for early Nov: \acronym{CRAN} package authors
+      have been notified.]
     }
   }
 
@@ -242,6 +249,14 @@
       line numbers relating to the \file{*-Ex.R} file, thanks to Duncan
       Murdoch and Sebastian Meyer's reports and patch proposals in
       \PR{17501}.
+
+      \item Determining correct translation domain in non-base packages,
+      addressing the combo of \PR{18092} and \PR{17998} (\code{#c6}) with reports and
+      \emph{augmented} patch #2904 by Suharto Anggono.
+
+      \item \code{identical(attrib.as.set=FALSE)} now works correctly with
+      data frames with default row names (Thanks to Charlie Gao's
+      \PR{18179}).
     }
   }
 }
@@ -260,6 +275,11 @@
       S-compatibility macros \code{PROBLEM} and \code{MESSAGE} is now
       documented and longer messages will be silently truncated rather
       than potentially causing segfaults.
+
+      \item If the \code{R_NO_SEGV_HANDLER} environment variable is
+      non-empty, the signal handler for SEGV/ILL/BUS signals (which
+      offers recovery user interface) is not set. This allows more
+      reliable debugging of crashes that involve the console.
     }
   }
 
@@ -310,9 +330,9 @@
       \item \code{qqline(y = <object>)} such as \code{y=I(.)}, now works,
       see also \PR{18190}.
 
-      \item Non-integer \code{mgp} \code{par()} settings are now obeyed
-      instead of truncated to integer, in \code{axis()} and \code{mtext()},
-      thanks to Duncan Murdoch's report and suggestion in \PR{18194}.
+      \item Non-integer \code{mgp} \code{par()} settings are now handled
+      correctly in \code{axis()} and \code{mtext()}, thanks to Mikael
+      Jagan and Duncan Murdoch's report and suggestion in \PR{18194}.
 
       \item \code{formatC(x)} returns length zero \code{character()} now,
       rather than \code{""} when \code{x} is of length zero, as documented,
@@ -1069,6 +1089,11 @@
       \dQuote{irregular} method definitions such that e.g. \code{lapply(*)} will
       necessarily fail, as currently for different \CRANpkg{igraph} objects.
 
+      \item Message translation domains, e.g., for errors and warnings, are
+      now correctly determined also when e.g., a \pkg{base} function is
+      called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
+      thanks to a patch from Joris Goosen fixing \PR{17998}.
+
       \item Too long lines in environment files (e.g., \file{Renviron}) no
       longer crash \R. This limit has been increased to 100,000 bytes.
       (\PR{18001}.)
@@ -1212,11 +1237,6 @@
       \item \code{checkRdaFiles(ff)$version} is now correct also when
       \code{ff} contains files of different versions, thanks to a report
       and patch from Sebastian Meyer in \PR{18041}.
-
-      \item Message translation domains, e.g., for errors and warnings, are
-      now correctly determined also when e.g., a \pkg{base} function is
-      called from \dQuote{top-level} function (i.e., defined in \code{globalenv()}),
-      thanks to a patch from Joris Goosen fixing \PR{17998}.
 
       \item macOS: Quartz device live drawing could fail (no plot is shown)
       if the system changes the drawing context after view update (often
