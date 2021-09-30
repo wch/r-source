@@ -19,6 +19,11 @@
       S-compatibility macros \code{PROBLEM} and \code{MESSAGE} is now
       documented and longer messages will be silently truncated rather
       than potentially causing segfaults.
+
+      \item If the \code{R_NO_SEGV_HANDLER} environment variable is
+      non-empty, the signal handler for SEGV/ILL/BUS signals (which
+      offers recovery user interface) is not set. This allows more
+      reliable debugging of crashes that involve the console.
     }
   }
 
