@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2021-06-02 06:11+0100\n"
-"PO-Revision-Date: 2012-03-16 15:59+0100\n"
+"PO-Revision-Date: 2021-10-01 11:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language: es\n"
@@ -19,14 +19,13 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 
 #: src/appl/optim.c:60
-#, fuzzy
 msgid "non-finite value supplied by 'optim'"
-msgstr "valor no finito provisto por optim"
+msgstr "valor no finito provisto por 'optim'"
 
 #: src/appl/optim.c:67
-#, fuzzy, c-format
+#, c-format
 msgid "candidate point in 'optim' evaluated to length %d not %d"
-msgstr "se evaluó el punto candidato en optim de tamaño %d, no %d"
+msgstr "se evaluó el punto candidato en 'optim' de tamaño %d, no %d"
 
 #: src/appl/optim.c:136
 msgid "REPORT must be > 0 (method = \"BFGS\")"
@@ -41,9 +40,8 @@ msgid "function cannot be evaluated at initial parameters"
 msgstr "la función no se puede evaluar en los parámetros iniciales"
 
 #: src/appl/optim.c:497
-#, fuzzy
 msgid "unknown 'type' in \"CG\" method of 'optim'"
-msgstr "'type' desconocido en el método CG de optim"
+msgstr "'type' desconocido en el método \"CG\" de 'optim'"
 
 #: src/appl/optim.c:510
 msgid "Function cannot be evaluated at initial parameters"
@@ -64,7 +62,7 @@ msgstr "L-BFGS-B necesita valores finitos de 'fn'"
 
 #: src/appl/optim.c:741
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
-msgstr "trace, REPORT debe ser > 0 (método = \"SANN\")"
+msgstr "trace, REPORT debe ser >= 0 (método = \"SANN\")"
 
 #: src/appl/pretty.c:115
 msgid "Internal(pretty()): very small range.. corrected"
@@ -85,7 +83,7 @@ msgstr "no se puede obtener una carpeta de trabajo"
 
 #: src/gnuwin32/extra.c:63 src/gnuwin32/extra.c:92 src/gnuwin32/extra.c:131
 msgid "R_HOME not set"
-msgstr "variable no definida en R_HOME"
+msgstr "variable R_HOME no definida"
 
 #: src/gnuwin32/extra.c:71
 #, c-format
@@ -1759,7 +1757,7 @@ msgstr "intento de coaccionar un objeto diferente a un factor"
 
 #: src/main/coerce.c:1434 src/main/coerce.c:1444
 msgid "malformed factor"
-msgstr ""
+msgstr "factor mal formado"
 
 #: src/main/coerce.c:1594
 msgid "list argument expected"
@@ -4047,12 +4045,12 @@ msgstr "byte code no se está desarrollando"
 #: src/main/eval.c:8334 src/main/eval.c:8338 src/main/eval.c:8342
 #, fuzzy
 msgid "byte code profiling is not supported in this build"
-msgstr "esta plataforma no soporta nsl()"
+msgstr "esta plataforma no soporta byte code profiling"
 
 #: src/main/gevents.c:45
 #, fuzzy, c-format
 msgid "'%s' events not supported in this device"
-msgstr "esta plataforma no soporta nsl()"
+msgstr "esta plataforma no soporta '%s' ..events"
 
 #: src/main/gevents.c:69
 #, fuzzy
@@ -4069,9 +4067,8 @@ msgid "invalid prompt"
 msgstr "prompt inválido"
 
 #: src/main/gevents.c:153
-#, fuzzy
 msgid "recursive use of 'getGraphicsEvent' not supported"
-msgstr "el modo '%s' no es soportado en call_R"
+msgstr ""
 
 #: src/main/gevents.c:164
 #, fuzzy
@@ -4121,7 +4118,7 @@ msgstr "desbordamiento contextstack"
 #: src/main/gram.y:2226 src/main/gram.y:2232
 #, fuzzy, c-format
 msgid "unexpected input"
-msgstr "inesperado %s"
+msgstr "entrada inesperada"
 
 #: src/main/gram.y:2229 src/main/main.c:317
 #, fuzzy, c-format
@@ -4141,12 +4138,12 @@ msgstr "constante numérica"
 #: src/main/gram.y:2241
 #, fuzzy, c-format
 msgid "unexpected symbol"
-msgstr "inesperado %s"
+msgstr "inesperado symbolo"
 
 #: src/main/gram.y:2244
 #, fuzzy, c-format
 msgid "unexpected assignment"
-msgstr "inesperado %s"
+msgstr "inesperado asignación"
 
 #: src/main/gram.y:2247
 #, fuzzy, c-format
@@ -4181,14 +4178,14 @@ msgstr "%sL contiene un punto decimal innecesario"
 
 #: src/main/gram.y:2688 src/main/gram.y:2711 src/main/gram.y:2748
 #: src/main/gram.y:2785
-#, fuzzy, c-format
+#, c-format
 msgid "nul character not allowed (line %d)"
-msgstr "carácter multibyte inválido en la linea %d"
+msgstr "carácter nul inválido (línea %d)"
 
 #: src/main/gram.y:2704
 #, fuzzy, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' utilizado sin dígitos hexadecimales"
+msgstr "'\\x' utilizado sin dígitos hexadecimales en .. \"%s\""
 
 #: src/main/gram.y:2720
 #, c-format
@@ -4200,7 +4197,7 @@ msgstr ""
 #: src/main/gram.y:2735
 #, fuzzy, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' utilizado sin dígitos hexadecimales"
+msgstr "'\\u' utilizado sin dígitos hexadecimales en .. \"%s\""
 
 #: src/main/gram.y:2743
 #, c-format
@@ -4215,9 +4212,9 @@ msgstr ""
 "(línea %d)"
 
 #: src/main/gram.y:2772
-#, fuzzy, c-format
+#, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' utilizado sin dígitos hexadecimales"
+msgstr "'\\U' utilizado sin dígitos hexadecimales en .. \"%s\""
 
 #: src/main/gram.y:2780
 #, c-format
@@ -4225,19 +4222,19 @@ msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "inválido \\U{xxxxxxxx} secuencia (línea %d)"
 
 #: src/main/gram.y:2789
-#, fuzzy, c-format
+#, c-format
 msgid "invalid \\U{xxxxxxxx} value %6x (line %d)"
-msgstr "inválido \\U{xxxxxxxx} secuencia (línea %d)"
+msgstr "inválido \\U{xxxxxxxx} secuencia %6x (línea %d)"
 
 #: src/main/gram.y:2792
-#, fuzzy, c-format
+#, c-format
 msgid "invalid \\Uxxxxxxxx value %6x (line %d)"
-msgstr "inválido \\U{xxxxxxxx} secuencia (línea %d)"
+msgstr "inválido \\U{xxxxxxxx} secuencia %6x (línea %d)"
 
 #: src/main/gram.y:2840
-#, fuzzy, c-format
+#, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
-msgstr "'\\%c' es un escape no reconocido en una cadena de caracteres"
+msgstr "'\\%c' es un escape no reconocido en una cadena de caracteres comenziando \"%s\""
 
 #: src/main/gram.y:2906 src/main/gram.y:3032
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
@@ -4284,22 +4281,19 @@ msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "amplitud relativa de valores =%4.0f * EPS, es pequeño (eixo %d)"
 
 #: src/main/grep.c:152
-#, fuzzy, c-format
+#, c-format
 msgid "TRE pattern compilation error '%s'"
-msgstr ""
-"error en patron de compilacion PCRE \n"
-"\t'%s'\n"
-"\ta '%s'\n"
+msgstr "error en patron de compilacion TRE '%s'"
 
 #: src/main/grep.c:153
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression '%s', reason '%s'"
-msgstr "expresión regular '%s' inválida"
+msgstr "expresión regular '%s' inválida, motivo '%s'"
 
 #: src/main/grep.c:155
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression, reason '%s'"
-msgstr "expresión regular '%s' inválida"
+msgstr "expresión regular inválida, motivo '%s'"
 
 #: src/main/grep.c:193
 #, c-format
@@ -4331,7 +4325,7 @@ msgid ""
 "PCRE JIT compilation error\n"
 "\t'%s'"
 msgstr ""
-"error en patron de compilacion PCRE \n"
+"error en patron de compilacion PCRE JIT\n"
 "\t'%s'\n"
 "\ta '%s'\n"
 
@@ -4363,7 +4357,7 @@ msgstr "string de entrada %d es inválida en este locale"
 #: src/main/grep.c:1199 src/main/grep.c:2834
 #, fuzzy
 msgid "regular expression is invalid UTF-8"
-msgstr "la expresión regular es inválida es este locale"
+msgstr "la expresión regular es inválida UTF-8"
 
 #: src/main/grep.c:1650
 msgid "pattern matches an empty string infinitely, returning first match only"
@@ -4372,14 +4366,12 @@ msgstr ""
 "patrón único "
 
 #: src/main/grep.c:1973
-#, fuzzy
 msgid "'pattern' is invalid UTF-8"
-msgstr "'pattern' es inválido en este locale"
+msgstr "'pattern' es inválido UTF-8"
 
 #: src/main/grep.c:1975
-#, fuzzy
 msgid "'replacement' is invalid UTF-8"
-msgstr "'replacement' es inválido en este locale"
+msgstr "'replacement' es inválido UTF-8"
 
 #: src/main/grep.c:1979
 msgid "'pattern' is invalid in this locale"
@@ -4503,18 +4495,17 @@ msgid "unable to open the base package\n"
 msgstr "imposible abrir el paquete base package\n"
 
 #: src/main/main.c:1033
-#, fuzzy, c-format
+#, c-format
 msgid "unable to restore saved data in %s\n"
-msgstr "imposible restaurar datos guardados en .RData\n"
+msgstr "imposible restaurar datos guardados en %s\n"
 
 #: src/main/main.c:1082
 msgid "During startup - "
 msgstr "Durante la inicialización - "
 
 #: src/main/main.c:1098
-#, fuzzy
 msgid "unable to initialize the JIT\n"
-msgstr "no fue posible abrir un archivo de lectura"
+msgstr "no fue posible inicializar el JIT\n"
 
 #: src/main/main.c:1371
 msgid "cannot quit from browser"
@@ -7144,9 +7135,8 @@ msgid "all arguments must be named"
 msgstr "los atributos deben tener nombre"
 
 #: src/main/util.c:2501
-#, fuzzy
 msgid "ICU is not supported on this build"
-msgstr "esta plataforma no soporta nsl()"
+msgstr "esta plataforma no soporta ICU"
 
 #: src/main/util.c:2568
 #, fuzzy
