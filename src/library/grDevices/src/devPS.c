@@ -5732,9 +5732,15 @@ static void     PDF_fillStroke(SEXP path, int rule,
 static void initDefn(int i, int type, PDFDesc *pd) 
 {
     pd->definitions[i].type = type;
-    pd->definitions[i].nchar = DEFBUFSIZE;
     pd->definitions[i].str = malloc(DEFBUFSIZE*sizeof(char));
-    pd->definitions[i].str[0] = '\0';
+    if (pd->definitions[i].str) {
+        pd->definitions[i].nchar = DEFBUFSIZE;
+        pd->definitions[i].str[0] = '\0';
+    } else {
+        warning(_("Failed to allocate PDF definition string"));
+        pd->definitions[i].nchar = 0;
+        pd->definitions[i].str = NULL;
+    }
     pd->definitions[i].contentDefn = -1;
 }
 
@@ -5783,9 +5789,12 @@ static void initDefinitions(PDFDesc *pd)
 {
     int i;
     pd->definitions = malloc(pd->maxDefns*sizeof(PDFdefn));
-    for (i = 0; i < pd->maxDefns; i++) {
-        pd->definitions[i].str = NULL;
-    }
+    
+    if (pd->definitions) {
+        for (i = 0; i < pd->maxDefns; i++) {
+            pd->definitions[i].str = NULL;
+        }
+    } /* else error thrown in PDFDeviceDriver */
 }
 
 static int growDefinitions(PDFDesc *pd)
@@ -6860,9 +6869,12 @@ static void PDFwriteClipPath(int i, PDFDesc *pd)
     size_t len = strlen(pd->definitions[i].str);
     buf = malloc((len + 1)*sizeof(char));
 
-    PDFwrite(buf, len + 1, "%s", pd, pd->definitions[i].str);
-
-    free(buf);
+    if (buf) {
+        PDFwrite(buf, len + 1, "%s", pd, pd->definitions[i].str);
+        free(buf);
+    } else {
+        warning(_("Failed to write PDF clipping path"));
+    }        
 }
 
 static void PDFwriteMask(int i, PDFDesc *pd)
@@ -6881,10 +6893,13 @@ static void PDFStrokePath(int i, PDFDesc *pd)
     size_t len = strlen(pd->definitions[i].str);
     buf1 = malloc((len + 1)*sizeof(char));
 
-    PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
-    PDFwrite(buf2, 10, " S n\n", pd);
-
-    free(buf1);
+    if (buf1) {
+        PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
+        PDFwrite(buf2, 10, " S n\n", pd);
+        free(buf1);
+    } else {
+        warning(_("Failed to write PDF stroke"));
+    }        
 }
 
 static void PDFFillPath(int i, int rule, PDFDesc *pd)
@@ -6894,15 +6909,18 @@ static void PDFFillPath(int i, int rule, PDFDesc *pd)
     size_t len = strlen(pd->definitions[i].str);
     buf1 = malloc((len + 1)*sizeof(char));
 
-    PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
-    switch (rule) {
-    case R_GE_nonZeroWindingRule:
-        PDFwrite(buf2, 10, " f n\n", pd); break;
-    case R_GE_evenOddRule:
-        PDFwrite(buf2, 10, " f* n\n", pd); break;
+    if (buf1) {
+        PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
+        switch (rule) {
+        case R_GE_nonZeroWindingRule:
+            PDFwrite(buf2, 10, " f n\n", pd); break;
+        case R_GE_evenOddRule:
+            PDFwrite(buf2, 10, " f* n\n", pd); break;
+        }
+        free(buf1);
+    } else {
+        warning(_("Failed to write PDF fill"));        
     }
-
-    free(buf1);
 }
 
 static void PDFFillStrokePath(int i, int rule, PDFDesc *pd)
@@ -6912,15 +6930,18 @@ static void PDFFillStrokePath(int i, int rule, PDFDesc *pd)
     size_t len = strlen(pd->definitions[i].str);
     buf1 = malloc((len + 1)*sizeof(char));
 
-    PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
-    switch (rule) {
-    case R_GE_nonZeroWindingRule:
-        PDFwrite(buf2, 10, " B n\n", pd); break;
-    case R_GE_evenOddRule:
-        PDFwrite(buf2, 10, " B* n\n", pd); break;
+    if (buf1) {
+        PDFwrite(buf1, len + 1, "%s", pd, pd->definitions[i].str);
+        switch (rule) {
+        case R_GE_nonZeroWindingRule:
+            PDFwrite(buf2, 10, " B n\n", pd); break;
+        case R_GE_evenOddRule:
+            PDFwrite(buf2, 10, " B* n\n", pd); break;
+        }        
+        free(buf1);
+    } else {
+        warning(_("Failed to write PDF fillStroke"));
     }
-
-    free(buf1);
 }
 
 /*
@@ -9452,7 +9473,7 @@ static void PDFWriteString(const char *str, size_t nb, PDFDesc *pd)
     size_t i;
     char buf[10];
 
-    PDFwrite(buf, 10, "(", pd);
+    PDFwrite(buf, 2, "(", pd);
     for (i = 0 ; i < nb && *str; i++, str++)
 	switch(*str) {
 	case '\n':
@@ -9464,20 +9485,20 @@ static void PDFWriteString(const char *str, size_t nb, PDFDesc *pd)
 	case '-':
 #ifdef USE_HYPHEN
 	    if (!isdigit((int)str[1]))
-                PDFwrite(buf, 10, PS_hyphen, pd);
+                PDFwrite(buf, 2, PS_hyphen, pd);
 	    else
 #endif
-                PDFwrite(buf, 2, str, pd);
+                PDFwrite(buf, 2, "%c", pd, *str);
 	    break;
 	case '(':
 	case ')':
             PDFwrite(buf, 10, "\\%c", pd, *str);
 	    break;
 	default:
-            PDFwrite(buf, 2, str, pd);
+            PDFwrite(buf, 2, "%c", pd, *str);
 	    break;
 	}
-    PDFwrite(buf, 10, ")", pd);
+    PDFwrite(buf, 2, ")", pd);
 }
 
 /* added for 2.9.0 (donated by Ei-ji Nakama) : */
