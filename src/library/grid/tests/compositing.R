@@ -1,6 +1,17 @@
 
 library(grid)
 
+HersheyLabel <- function(x, y=unit(.5, "npc")) {
+    lines <- strsplit(x, "\n")[[1]]
+    if (!is.unit(y))
+        y <- unit(y, "npc")
+    n <- length(lines)
+    if (n > 1) {
+        y <- y + unit(rev(seq(n)) - mean(seq(n)), "lines")
+    }
+    grid.text(lines, y=y, gp=gpar(fontfamily="HersheySans"))
+}
+
 r1 <- rectGrob(x=1/3, y=2/3, width=.5, height=.5,
                gp=gpar(col=NA, fill=rgb(.7, 0, 0, .8)))
 r2 <- rectGrob(x=2/3, y=1/3, width=.5, height=.5,
