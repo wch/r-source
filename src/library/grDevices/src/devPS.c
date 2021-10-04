@@ -3033,6 +3033,14 @@ static SEXP     PS_setClipPath(SEXP path, SEXP ref, pDevDesc dd);
 static void     PS_releaseClipPath(SEXP ref, pDevDesc dd);
 static SEXP     PS_setMask(SEXP path, SEXP ref, pDevDesc dd);
 static void     PS_releaseMask(SEXP ref, pDevDesc dd);
+static SEXP     PS_defineGroup(SEXP source, int op, SEXP destination, 
+                               pDevDesc dd);
+static void     PS_useGroup(SEXP ref, SEXP trans, pDevDesc dd);
+static void     PS_releaseGroup(SEXP ref, pDevDesc dd);
+static void     PS_stroke(SEXP path, const pGEcontext gc, pDevDesc dd);
+static void     PS_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
+static void     PS_fillStroke(SEXP path, int rule, const pGEcontext gc, 
+                              pDevDesc dd);
 
 /* PostScript Support (formerly in PostScript.c) */
 
@@ -3495,11 +3503,17 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->releaseClipPath = PS_releaseClipPath;
     dd->setMask         = PS_setMask;
     dd->releaseMask     = PS_releaseMask;
+    dd->defineGroup     = PS_defineGroup;
+    dd->useGroup        = PS_useGroup;
+    dd->releaseGroup    = PS_releaseGroup;
+    dd->stroke          = PS_stroke;
+    dd->fill            = PS_fill;
+    dd->fillStroke      = PS_fillStroke;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
 
-    dd->deviceVersion = R_GE_definitions;
+    dd->deviceVersion = R_GE_group;
     return TRUE;
 }
 
@@ -4535,6 +4549,20 @@ static SEXP PS_setMask(SEXP path, SEXP ref, pDevDesc dd) {
 
 static void PS_releaseMask(SEXP ref, pDevDesc dd) {}
 
+static SEXP PS_defineGroup(SEXP source, int op, SEXP destination, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void PS_useGroup(SEXP ref, SEXP trans, pDevDesc dd) {}
+
+static void PS_releaseGroup(SEXP ref, pDevDesc dd) {}
+
+static void PS_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {}
+
+static void PS_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {}
+
+static void PS_fillStroke(SEXP path, int rule, const pGEcontext gc, 
+                          pDevDesc dd) {}
 
 
 /***********************************************************************
