@@ -130,8 +130,8 @@
       shipped with the tarball.
 
       \item \code{USE_FC_LEN_T} will become the default: this uses the
-      correct protoypes for Fortran BLAS/LAPACK routines called from
-      C/C++, and requires adjustmnt of most such calls -- see
+      correct prototypes for Fortran BLAS/LAPACK routines called from
+      C/C++, and requires adjustment of most such calls -- see
       \dQuote{Writing R Extensions}.
       [Currently planned for early Nov: \acronym{CRAN} package authors
       have been notified.]

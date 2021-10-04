@@ -5532,7 +5532,7 @@ JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
 @end example
 
 For an @cputype{arm64} build, the earliest Java version which is
-officially supported is 17.  The currrently simplest way to install Java
+officially supported is 17.  The currently simplest way to install Java
 is from @uref{https://adoptium.net, Adoptium} (who call the architecture
 @cputype{aarch64}): this installs into an Apple-standard location and so
 works with @command{/usr/bin/java}. Other builds are available from
