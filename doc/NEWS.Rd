@@ -100,7 +100,7 @@
       \dQuote{max-or-0-if-any} recycling rule, such that, e.g.,
       \code{Map(`+`, 1:3, 1[0])} is valid now.
 
-      \code{as.character(<obj>)} for \code{"hexmode"} or \code{"octmode"}
+      \item \code{as.character(<obj>)} for \code{"hexmode"} or \code{"octmode"}
       objects now fulfills the important basic rule
       \code{as.character(x)[j] === as.character(x[j])}.
     }
@@ -337,6 +337,8 @@
       \item \code{formatC(x)} returns length zero \code{character()} now,
       rather than \code{""} when \code{x} is of length zero, as documented,
       thanks to Davis Vaughan's post to R-devel.
+
+      \item \code{removeSource(fn)} now retains (other) \code{attributes(fn)}.
     }
   }
 }
