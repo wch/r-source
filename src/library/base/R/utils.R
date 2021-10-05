@@ -36,10 +36,8 @@ shQuote <- function(string, type = c("sh", "csh", "cmd", "cmd2"))
         paste0("\"", string, "\"", recycle0 = TRUE)
     } else if (type == "cmd2")
         gsub('([()%!^"<>&|])', "^\\1", string)
-    else if(!length(string))
-	""
-    else if(!any(grepl("'", string))) # has single quote
-	paste0("'", string, "'")
+    else if(!any(grepl("'", string))) # has no single quotes
+	paste0("'", string, "'", recycle0 = TRUE)
     else if(type == "sh")
 	paste0('"', gsub('(["$`\\])', "\\\\\\1", string), '"')
     else if(!any(grepl("([$`])", string)))

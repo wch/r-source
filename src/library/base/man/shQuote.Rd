@@ -57,7 +57,9 @@ shQuote(string, type = c("sh", "csh", "cmd", "cmd2"))
   used:  first for the application, and then \code{type = "cmd2"} 
   for \command{cmd.exe}.  See the examples below.  
 }
-  
+\value{
+  A character vector of the same length as \code{string}.
+}
 \references{ Loukides, M. \emph{et al} (2002) \emph{Unix Power Tools}
   Third Edition. O'Reilly.  Section 27.12.
   
