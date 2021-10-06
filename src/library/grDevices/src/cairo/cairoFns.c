@@ -1935,12 +1935,6 @@ static void Cairo_Text(double x, double y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     const char *textstr;
 
-    /*
-     * Cairo "toy" text does not add to the clipping path (yet?)
-     */
-    if (xd->appending) 
-        return;
-
     if (!utf8Valid(str)) error("invalid string in Cairo_Text");
 
     if (gc->fontface == 5 && dd->wantSymbolUTF8 == NA_LOGICAL &&
@@ -1955,9 +1949,11 @@ static void Cairo_Text(double x, double y,
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
 
-        if (xd->currentMask >= 0) {
-            /* If masking, draw temporary pattern */
-            cairo_push_group(xd->cc);
+        if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                /* If masking, draw temporary pattern */
+                cairo_push_group(xd->cc);
+            }
         }
 
 	FT_getFont(gc, dd, xd->fontscale);
@@ -1969,17 +1965,23 @@ static void Cairo_Text(double x, double y,
 	    if (hadj != 0.0)
 		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
 	}
-	CairoColor(gc->col, xd);
-	cairo_show_text(xd->cc, textstr);
+        if (!xd->appending) {
+            CairoColor(gc->col, xd);
+            cairo_show_text(xd->cc, textstr);
+        } else {
+            cairo_text_path(xd->cc, textstr);
+        }
 
-        if (xd->currentMask >= 0) {
-            /* If masking, use temporary pattern as source and mask that */
-            cairo_pattern_t *source = cairo_pop_group(xd->cc);
-            cairo_pattern_t *mask = xd->masks[xd->currentMask];
-            cairo_set_source(xd->cc, source);
-            cairo_mask(xd->cc, mask);
-            /* Release temporary pattern */
-            cairo_pattern_destroy(source);
+        if (!xd->appending) {
+            if (xd->currentMask >= 0) {
+                /* If masking, use temporary pattern as source and mask that */
+                cairo_pattern_t *source = cairo_pop_group(xd->cc);
+                cairo_pattern_t *mask = xd->masks[xd->currentMask];
+                cairo_set_source(xd->cc, source);
+                cairo_mask(xd->cc, mask);
+                /* Release temporary pattern */
+                cairo_pattern_destroy(source);
+            }
         }
 
 	cairo_restore(xd->cc);
