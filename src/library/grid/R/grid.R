@@ -342,9 +342,9 @@ grid.newpage <- function(recording=TRUE,
     # things slightly differently if grid.newpage is the first grid operation
     # on a new device
     .Call(C_newpagerecording)
+    .Call(C_initGPar)
     .Call(C_newpage)
     .Call(C_clearDefinitions, as.logical(clearGroups))
-    .Call(C_initGPar)
     .Call(C_initViewportStack)
     if (recording) {
         .Call(C_initDisplayList)
