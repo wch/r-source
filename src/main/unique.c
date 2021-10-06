@@ -612,8 +612,6 @@ R_xlen_t sorted_real_count_NANs(SEXP x) {
 	v[ind] = FALSE;							\
     } while(0)
 
-#define NAN_IS_R_NA(xptr) (memcmp(&NA_REAL, xptr, sizeof(double)) == 0)
-
 static SEXP sorted_Duplicated(SEXP x, Rboolean from_last, int nmax)
 {
     //  n guaranteed >= 2 from calling function (Duplicated)
@@ -661,7 +659,7 @@ static SEXP sorted_Duplicated(SEXP x, Rboolean from_last, int nmax)
 	ITERATE_BY_REGION_##itype(x, xptr, idx, nb,			\
 				  double, REAL, na_left, numnas, {	\
 				      for(R_xlen_t i = istart; icond; iter) { \
-					  if(NAN_IS_R_NA(xptr + i)) {	\
+					  if(R_NaN_is_R_NA(xptr[i])) {	\
 					      v[idx + i] = seen_na;	\
 					      seen_na = TRUE;		\
 					  } else {			\
@@ -795,7 +793,7 @@ R_xlen_t sorted_any_duplicated(SEXP x, Rboolean from_last) {
 	ITERATE_BY_REGION_##itype(x, xptr, idx, nb, double, REAL,	\
 				  start, count, {			\
 				      for(R_xlen_t i = istart; icond; iter) { \
-					  if(NAN_IS_R_NA(xptr + i)) {	\
+					  if(R_NaN_is_R_NA(xptr[i])) {	\
 					      if(seen_na) {		\
 						  return idx + i + 1;	\
 					      } else {			\
