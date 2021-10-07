@@ -1619,6 +1619,7 @@ SEXP R_bcDecode(SEXP);
 void R_registerBC(SEXP, SEXP);
 Rboolean R_checkConstants(Rboolean);
 Rboolean R_BCVersionOK(SEXP);
+int R_NaN_is_R_NA(double);
 
 /* Environment and Binding Features */
 void R_RestoreHashCount(SEXP rho);

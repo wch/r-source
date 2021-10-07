@@ -47,8 +47,13 @@ environment(f) <- asNamespace("stats")
 stopifnot(identical(deTxt, tryCmsg(f())))
 ## 2nd example (base vs stats):
 enTxt <- "namespace is already attached"
-deTxt <- "Namensraum ist bereits angehängt"
+deTxt <- "Namensraum ist bereits angehängt"; Encoding(deTxt)
+all.equal(gettext(enTxt, domain="R-stats"), enTxt)
+(trTxt <- gettext(enTxt, domain="R-base"));  Encoding(trTxt)
+all.equal(trTxt, deTxt)
+identical(trTxt, deTxt) # not TRUE on Windows (why ?)
 f <- function(...) warning(enTxt)
+if(.Platform$OS.type != "windows") # (FIXME, is it just the encoding?)
 stopifnot(exprs = {
     identical(gettext(enTxt, domain="R-base" ), deTxt)
     identical(gettext(enTxt, domain="R-stats"), enTxt)

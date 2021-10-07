@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+# move to base (!?)
 removeSource <- function(fn) {
 
     recurse <- function(part) {
@@ -33,9 +34,12 @@ removeSource <- function(fn) {
     if(is.function(fn)) {
         if(!is.primitive(fn)) {
             attr(fn, "srcref") <- NULL
+            ## `body<-`(f, *) drops all attributes of f
+            at <- attributes(fn)
             attr(body(fn), "wholeSrcref") <- NULL
             attr(body(fn), "srcfile") <- NULL
             body(fn) <- recurse(body(fn))
+            if(!is.null(at)) attributes(fn) <- at
         }
         fn
     }

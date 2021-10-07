@@ -296,7 +296,7 @@ httpd <- function(path, query, ...)
     ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past
     fileRegexp <- "^/library/+([^/]*)/html/([^/]*)\\.html$"
-    topicRegexp <- "^/library/+([^/]*)/help/([^/]*)$"
+    topicRegexp <- "^/library/+([^/]*)/help/(.*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     demoRegexp <- "^/library/([^/]*)/demo$"
     demosRegexp <- "^/library/([^/]*)/demo/([^/]*)$"
