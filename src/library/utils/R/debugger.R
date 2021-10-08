@@ -139,8 +139,6 @@ recover <-
             cat(gettext("recover called non-interactively; frames dumped, use debugger() to view\n"))
             return(NULL)
         }
-        else if(isFALSE(getOption("show.error.messages"))) # from try(silent=TRUE)?
-            return(NULL)
         calls <- limitedLabels(calls[1L:from])
         repeat {
             which <- menu(calls,
