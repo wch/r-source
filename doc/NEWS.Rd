@@ -254,6 +254,10 @@
       addressing the combo of \PR{18092} and \PR{17998} (\code{#c6}) with reports and
       \emph{augmented} patch #2904 by Suharto Anggono.
 
+      Note that \code{"R-base"} is no longer default domain e.g., for
+      top-level calls to \code{gettext()}; rather translation needs
+      explicit \code{domain = *} specification in such cases.
+
       \item \code{identical(attrib.as.set=FALSE)} now works correctly with
       data frames with default row names (Thanks to Charlie Gao's
       \PR{18179}).
