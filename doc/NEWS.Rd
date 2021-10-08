@@ -176,15 +176,14 @@
       \code{MESSAGE}, \code{ERROR}, \code{WARN}, \code{WARNING},
       \code{RECOVER}, \dots{} are no longer defined by default in
       \file{R_exts/RS.h} (included by \file{R.h}).  Replace these by
-      calls to \code{Rf_error} and \code{Rf_warning}.
+      calls to \code{Rf_error} and \code{Rf_warning} (defined in header
+      \file{R_ext/Error.h} included by \file{R.h}).
 
       For the time being the definitions can be reinstated by defining
       macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
       any \R{} header.  Header \file{R_ext/RS.h} will no longer include
-      \file{R_ext/Error.h} unless \code{R_LEGACY_S_DEFS} is set.
-
-      [Early warning: removal planned for Oct 8.]
-    }
+      \file{R_ext/Error.h} unless \code{R_LEGACY_S_DEFS} is set to \code{1}.
+   }
   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
