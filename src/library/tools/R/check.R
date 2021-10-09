@@ -5242,7 +5242,8 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wunknown-warning-option\\]",
                              "warning: .* \\[-Wnested-anon-types\\]",
                              "warning: .* is not needed and will not be emitted",
-                             "warning: .* \\[-Wnon-literal-null-conversion\\]"
+                             "warning: .* \\[-Wnon-literal-null-conversion\\]",
+                             "warning: .* \\[-Wignored-optimization-argument\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
