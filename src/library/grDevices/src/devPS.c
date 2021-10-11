@@ -5790,7 +5790,12 @@ static void catDefn(char* buf, int i, PDFDesc *pd)
 	if (!tmp) error(_("failed to increase definition string (shut down PDF device)"));
 	pd->definitions[i].str = tmp;
     }
-    strncat(pd->definitions[i].str, buf, buflen);
+    strncat(pd->definitions[i].str, buf, 
+            /* Instead of 'buflen', ensure that cannot write more
+             * characters from 'buf' than 'pd->definitions[i].str' 
+             * can hold, including leaving room for terminating \0
+             */
+            pd->definitions[i].nchar - strlen(pd->definitions[i].str) - 1);
 }
 
 static void copyDefn(int fromDefn, int toDefn, PDFDesc *pd)
@@ -9633,7 +9638,7 @@ static void PDFSetTextGraphicsState(const pGEcontext gc, pDevDesc dd) {
 
 static void PDFSetTextRenderMode(PDFDesc *pd) {
     char buf[10];
-    int mode;
+    int mode = 0;
     if (pd->appendingPath >= 0) {
         /* Set text rendering mode */
         switch (pd->definitions[pd->appendingPath].type) {
