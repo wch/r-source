@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1330,6 +1330,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 	if (incomp) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
 	data.nomatch = nmatch;
 	HashTableSetup(table, &data, NA_INTEGER);
+	PROTECT(data.HashTable); nprot++;
 	if(type == STRSXP) {
 	    Rboolean useBytes = FALSE;
 	    Rboolean useUTF8 = FALSE;
@@ -1373,7 +1374,6 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 	    data.useUTF8 = useUTF8;
 	    data.useCache = useCache;
 	}
-	PROTECT(data.HashTable); nprot++;
 	DoHashing(table, &data);
 	if (incomp) UndoHashing(incomp, table, &data);
 	ans = HashLookup(table, x, &data);
