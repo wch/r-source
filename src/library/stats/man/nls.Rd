@@ -289,7 +289,9 @@ try(nlm1 <- update(nlmod, control = list(tol = 1e-7)))
 o2 <- options(digits = 10) # more accuracy for 'trace'
 ## central differencing works here typically (PR#18165: not converging on *some*):
 ctr2 <- nls.control(nDcentral=TRUE, tol = 8e-8, # <- even smaller than above
-   warnOnly = (grepl("^aarch64.*linux", R.version$platform) && grepl("^NixOS", osVersion)
+   warnOnly =
+        TRUE || # << work around; e.g. needed on some ATLAS-Lapack setups
+        (grepl("^aarch64.*linux", R.version$platform) && grepl("^NixOS", osVersion)
               ))
 (nlm2 <- update(nlmod, control = ctr2, trace = TRUE)); options(o2)
 ## --> convergence tolerance  4.997e-8 (in 11 iter.)
