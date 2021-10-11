@@ -152,6 +152,10 @@
       \item \env{_R_CHECK_DEPENDS_ONLY_} can be applied selectively to
       examples, tests and/or vignettes in \command{R CMD check}: see the
       \dQuote{R Internals} manual.
+
+      \item \env{_R_CHECK_SRC_MINUS_W_IMPLICIT_} now defaults to true:
+      recent versions of Apple \command{clang} on macOS have made
+      implicit function declarations in C into a compilation error.
     }
   }
 

@@ -5117,10 +5117,12 @@ add_dummies <- function(dir, Log)
                 ## Warnings spotted by gcc with
                 ##   '-Wimplicit-function-declaration'
                 ## which is implied by '-Wall'.
-                ## Currently only accessible via an internal environment
+                ## True as from R 4.2.0, as Apple clang on macOS made these
+                ## errors in 2020.
+                ## Previously only accessible via an internal environment
                 ## variable.
                 check_src_flag <-
-                    Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "FALSE")
+                    Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "TRUE")
                 ## (Not quite perfect, as the name should really
                 ## include 'IMPLICIT_FUNCTION_DECLARATION'.)
                 if (config_val_to_logical(check_src_flag)) {
