@@ -81,6 +81,8 @@
       \item \code{formatC(x)} returns length zero \code{character()} now,
       rather than \code{""} when \code{x} is of length zero, as documented,
       thanks to Davis Vaughan's post to R-devel.
+
+      \item \code{removeSource(fn)} now retains (other) \code{attributes(fn)}.
     }
   }
 }
