@@ -275,7 +275,7 @@ int R_nchar(SEXP string, nchar_type type_,
 		if (msg_name)
 		    R_FreeStringBufferL(&cbuff);
 		vmaxset(vmax);
-		return (nci18n < 1) ? nc : nci18n;
+		return (nci18n < 0) ? nc : nci18n;
 	    } else if (!allowNA) {
 		if (msg_name)
 		    error(_("invalid multibyte string, %s"), msg_name);

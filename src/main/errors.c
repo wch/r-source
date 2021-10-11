@@ -425,7 +425,7 @@ static int wd(const char * buf)
 #else
 	nw = wcswidth(wc, 2147483647);
 #endif
-	return (nw < 1) ? nc : nw;
+	return (nw < 0) ? nc : nw;
     }
     return nc;
 }
