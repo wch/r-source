@@ -1,5 +1,5 @@
 
-Changes from grid_4.0.* to grid_4.1.0:
+Changes from grid_4.1.* to grid_4.2.0:
 -------------------------------------
 
 1.  New 'vpPath' argument to grid.grep() so that we can ask for
@@ -11,6 +11,37 @@ Changes from grid_4.0.* to grid_4.1.0:
     grid.grep("path", viewports=TRUE)
 
     ... behaves as before.
+
+2.  New grid.group(), grid.define(), and grid.use() functions for
+    defining and using "isolated groups" (on supported devices).
+    These can be used to draw content in isolation before combining
+    the content with the main image, to apply compositing operators
+    other than "over", and to apply affine transformations to
+    content.
+
+3.  New grid.stroke(), grid.fill(), and grid.fillStroke() functions
+    for defining a path (based on a grob) and then stroking and/or
+    filling that path.
+
+4.  viewport(clip) can now be a path, from as.path().  This defines a
+    clipping path and allows the fill rule for the path to be
+    specified.
+
+5.  Text and raster content can now be included in patterns,
+    (clipping) paths, and masks (and groups).  (On supported devices.)
+
+6.  The fixed limit on the number of patterns, clipping paths, and/or
+    masks on Cairo-based devices has been removed.
+
+7.  Fix for reinitialising gpar settings when pushViewport() then
+    grid.newpage() WITHOUT up/popViewport().
+
+8.  Clipping paths and masks are turned off (initially) when resolving
+    a pattern.
+
+9.  Stricter rules to disallow pattern, clipping path, mask, group, or
+    path within clipping path or path.
+
 
 
 Changes from grid_4.0.* to grid_4.1.0:
