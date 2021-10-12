@@ -2744,9 +2744,9 @@ if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_
   ## Also, to be defensive there should be a similar test with SHLIB_LD
   ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
-  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
-       conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
-       ${LIBM} ${BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} \
+      -o conftest${ac_exeext} conftest.${ac_objext} conftestf.${ac_objext} \
+      ${BLAS_LIBS} ${FLIBS} ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
     ## redirect error messages to config.log
@@ -2961,9 +2961,9 @@ if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_
   ## Also, to be defensive there should be a similar test with SHLIB_LD
   ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
-  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
-       conftest.${ac_objext} ${FLIBS} \
-       ${LIBM} ${BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} \
+       -o conftest${ac_exeext} conftest.${ac_objext} \
+       ${BLAS_LIBS} ${FLIBS} ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
     r_cv_complete_blas=yes

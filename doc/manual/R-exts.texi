@@ -13783,9 +13783,12 @@ or might otherwise be interpreted as a format.)
 These are defined in header @file{R_ext/Error.h} included by
 @file{R.h}.
 
-If @code{STRICT_R_HEADERS} is not defined there is also an
-@Sl{}-compatibility interface included in @file{R_ext/RS.h} which uses
-calls of the form
+If @code{STRICT_R_HEADERS} is not defined there was also an
+@Sl{}-compatibility interface included in @file{R_ext/RS.h}.  This is
+hidden as from @R{} 4.2.0: define @code{R_LEGACY_S_DEFS} to @code{1}
+before including any @R{} headers to continue to use them.
+
+That interface used calls of the form
 
 @example
 @group
@@ -13801,9 +13804,7 @@ the last two being the forms available in all @Sl{} versions.  Here
 @samp{......} is a set of arguments to @code{printf}, so can be a string
 or a format string followed by arguments separated by commas.  (There is
 a length limit of 4095 bytes on the whole message, with silent
-truncation from @R{} 4.1.2, unchecked earlier.)  These are deprecated
-and will be hidden in future: define @code{R_LEGACY_S_DEFS} to @code{1}
-before including any @R{} headers to continue to use them.
+truncation from @R{} 4.1.2, unchecked earlier.)
 
 @menu
 * Error signaling from Fortran::

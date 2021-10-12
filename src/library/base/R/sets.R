@@ -26,14 +26,14 @@ union <- function(x, y) {
     ##       x <- u
     ##       y <- v
     ##   }
-    ##   z <- c(x[!duplicated(u)],
-    ##          y[!duplicated(v) & (match(v, u, 0L) == 0L)])
+    ##   z <- c(x[!duplicated(unclass(u))],
+    ##          y[!duplicated(unclass(v)) & (match(v, u, 0L) == 0L)])
     ##   names(z) <- NULL
     ##   z
     ## </FIXME>
     ## Could do
-    ##   c(u[!duplicated(u)],
-    ##     v[!duplicated(v) & (match(v, u, 0L) == 0L)])
+    ##   c(u[!duplicated(unclass(u))],
+    ##     v[!duplicated(unclass(v)) & (match(v, u, 0L) == 0L)])
     ## but the following is faster and "basically the same":
     unique(c(u, v))
 }
@@ -51,14 +51,14 @@ intersect <- function(x, y)
     ##       x <- u
     ##       y <- v
     ##   }
-    ##   z <- c(x[!duplicated(u) & (match(u, v, 0L) > 0L)],
+    ##   z <- c(x[!duplicated(unclass(u)) & (match(u, v, 0L) > 0L)],
     ##          y[numeric()])
     ##   ## (Combining with y[numeric()] in the common class case is needed
     ##   ## e.g. for factors to combine levels.)
     ##   names(z) <- NULL
     ##   z
     ## </FIXME>
-    c(u[!duplicated(u) & (match(u, v, 0L) > 0L)],
+    c(u[!duplicated(unclass(u)) & (match(u, v, 0L) > 0L)],
       v[numeric()])
 }
 
@@ -68,11 +68,11 @@ setdiff <- function(x, y)
     v <- as.vector(y)
     ## <FIXME>
     ## Remove eventually: not safe enough for arbitrary classes.
-    ##   z <- x[!duplicated(u) & (match(u, v, 0L) == 0L)]
+    ##   z <- x[!duplicated(unclass(u)) & (match(u, v, 0L) == 0L)]
     ##   names(z) <- NULL
     ##   z
     ## </FIXME>
-    u[!duplicated(u) & (match(u, v, 0L) == 0L)]
+    u[!duplicated(unclass(u)) & (match(u, v, 0L) == 0L)]
 }
 
 ## speed optimization etc: R-devel, Jan.4-6, 2000; then again 15 yrs later

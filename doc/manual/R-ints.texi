@@ -3883,8 +3883,9 @@ and Bioconductor repositories known to @R{} is used.
 Control whether installation output is checked for compilation warnings
 about implicit function declarations (as spotted by GCC with command
 line option @option{-Wimplicit-function-declaration}, which is implied
-by @option{-Wall}).
-Default: false.
+by @option{-Wall}).  NB: implicit function declarations are errors in
+some recent C compilers, including Apple @command{clang}.
+Default: true from @R{} 4.2.0, previously false.
 @item _R_CHECK_SRC_MINUS_W_UNUSED_
 Control whether installation output is checked for compilation warnings
 about unused code constituents (as spotted by GCC with command line

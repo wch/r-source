@@ -33,7 +33,8 @@ bindtextdomain(domain, dirname = NULL)
   If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
   or \code{ngettext}  is called from a function in the namespace of
   package \pkg{pkg} the domain is set to \code{"R-pkg"}.  Otherwise
-  there is no default domain.  Note in particular that \code{.onAttach}
+  there is no default domain.  In \R versions up to 4.1.x, \code{"R-base"}
+  has been chosen in spite of this.  Note in particular that \code{.onAttach}
   and \code{\link{.onLoad}} are not called from the package namespace, so
   messages there should always provide a domain explicitly.
 
@@ -80,8 +81,8 @@ bindtextdomain(domain, dirname = NULL)
   \code{\link{stop}} and \code{\link{warning}} make use of \code{gettext} to
   translate messages.
 
-  \code{\link{xgettext}} for extracting translatable strings from \R
-  source files.
+  \code{\link{xgettext}} (package \pkg{tools}) for extracting translatable
+  strings from \R source files.
 }
 \examples{
 bindtextdomain("R")  # non-null if and only if NLS is enabled
