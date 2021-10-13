@@ -4118,7 +4118,7 @@ static void R_StringHash_resize(unsigned int newsize)
 	    if (ISNULL(new_chain))
 		SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
 	    /* move the current chain link to the new chain */
-	    /* this is a destrictive modification */
+	    /* this is a destructive modification */
 	    new_chain = SET_CXTAIL(val, new_chain);
 	    SET_VECTOR_ELT(new_table, new_hashcode, new_chain);
 	    chain = next;
@@ -4229,7 +4229,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	chain = VECTOR_ELT(R_StringHash, hashcode);
 	if (ISNULL(chain))
 	    SET_HASHPRI(R_StringHash, HASHPRI(R_StringHash) + 1);
-	/* this is a destrictive modification */
+	/* this is a destructive modification */
 	chain = SET_CXTAIL(cval, chain);
 	SET_VECTOR_ELT(R_StringHash, hashcode, chain);
 
