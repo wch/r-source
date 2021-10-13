@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-08-05 r80716) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3529,15 +3529,15 @@ attr(,"class")
 > ## time-dependent ==> ignore diffs:
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2021-08-04" "2021-08-05" "2021-08-06" "2021-08-07" "2021-08-08"
-[6] "2021-08-09"
+[1] "2021-10-11" "2021-10-12" "2021-10-13" "2021-10-14" "2021-10-15"
+[6] "2021-10-16"
 > pretty(Sys.time(), n = 10)
- [1] "2021-08-06 01:49:44 CEST" "2021-08-06 01:49:45 CEST"
- [3] "2021-08-06 01:49:46 CEST" "2021-08-06 01:49:47 CEST"
- [5] "2021-08-06 01:49:48 CEST" "2021-08-06 01:49:49 CEST"
- [7] "2021-08-06 01:49:50 CEST" "2021-08-06 01:49:51 CEST"
- [9] "2021-08-06 01:49:52 CEST" "2021-08-06 01:49:53 CEST"
-[11] "2021-08-06 01:49:54 CEST"
+ [1] "2021-10-13 10:13:48 BST" "2021-10-13 10:13:49 BST"
+ [3] "2021-10-13 10:13:50 BST" "2021-10-13 10:13:51 BST"
+ [5] "2021-10-13 10:13:52 BST" "2021-10-13 10:13:53 BST"
+ [7] "2021-10-13 10:13:54 BST" "2021-10-13 10:13:55 BST"
+ [9] "2021-10-13 10:13:56 BST" "2021-10-13 10:13:57 BST"
+[11] "2021-10-13 10:13:58 BST"
 > ## IGNORE_RDIFF_END
 > 
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
@@ -4283,7 +4283,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  49.641 0.634 50.437 0 0 
+Time elapsed:  50.224 0.659 51.054 0 0 
 > grDevices::dev.off()
 null device 
           1 
