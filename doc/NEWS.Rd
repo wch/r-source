@@ -103,6 +103,10 @@
       \item \code{as.character(<obj>)} for \code{"hexmode"} or
       \code{"octmode"} objects now fulfils the important basic rule
       \code{as.character(x)[j] === as.character(x[j])}.
+
+      \item \code{substr(ch, start,end) <- new} now e.g., preserves
+      \code{names(ch)}; ditto for \code{substring()}, thanks to a patch
+      from Brodie Gaslam.
     }
   }
 
