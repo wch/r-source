@@ -1261,21 +1261,37 @@ add_dummies <- function(dir, Log)
                 }
                 check_autoconf <- check_incoming ||
                     config_val_to_logical(Sys.getenv("_R_CHECK_AUTOCONF_", "FALSE"))
-                if (check_autoconf && nzchar(Sys.which("autoreconf"))) {
-                    td <- tempfile()
-                    dir.create(td)
-                    file.copy(".", td, recursive = TRUE)
-                    od <- setwd(td)
-                    out <- suppressWarnings(system2("autoreconf", "-fi",
-                                                    stdout = TRUE, stderr = TRUE, timeout = 60))
-                    setwd(od); unlink(td, recursive = TRUE)
-                    if (length(out)) {
-                        if(!any) {
-                            any <- TRUE
-                            warningLog(Log)
+                if (check_autoconf) {
+                    arcf <- Sys.getenv("AUTORECONF", "autoreconf")
+                    arcf <- strsplit(arcf, " ")[[1L]]
+                    autoreconf <- arcf[1L]
+                    autoreconf_options <- arcf[-1L]
+                    if(nzchar(Sys.which(autoreconf))) {
+                        ver <- system2(autoreconf, "--version",
+                                       stdout = TRUE, stderr = TRUE)[1]
+                        if (grepl("2[.]6[89]", ver))
+                            autoreconf_options <-
+                                unique(c(autoreconf_options,
+                                         "--warnings=obsolete"))
+                        td <- tempfile()
+                        dir.create(td)
+                        file.copy(".", td, recursive = TRUE)
+                        od <- setwd(td)
+                        autoreconf_options <- c(autoreconf_options, "-f", "-i")
+                        out <- suppressWarnings(system2(autoreconf,
+                                                        autoreconf_options,
+                                                        stdout = TRUE,
+                                                        stderr = TRUE,
+                                                        timeout = 60))
+                        setwd(od); unlink(td, recursive = TRUE)
+                        if (length(out)) {
+                            if(!any) {
+                                any <- TRUE
+                                warningLog(Log)
+                            }
+                            printLog0(Log, "  Output from running autoreconf:\n")
+                            printLog0(Log, .format_lines_with_indent(out), "\n")
                         }
-                        printLog0(Log, "  Output from running autoreconf:\n")
-                        printLog0(Log, .format_lines_with_indent(out), "\n")
                     }
                 }
             }

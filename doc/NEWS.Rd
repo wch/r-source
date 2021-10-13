@@ -100,8 +100,8 @@
       \dQuote{max-or-0-if-any} recycling rule, such that, e.g.,
       \code{Map(`+`, 1:3, 1[0])} is valid now.
 
-      \item \code{as.character(<obj>)} for \code{"hexmode"} or \code{"octmode"}
-      objects now fulfills the important basic rule
+      \item \code{as.character(<obj>)} for \code{"hexmode"} or
+      \code{"octmode"} objects now fulfils the important basic rule
       \code{as.character(x)[j] === as.character(x[j])}.
     }
   }
@@ -156,6 +156,10 @@
       \item \env{_R_CHECK_SRC_MINUS_W_IMPLICIT_} now defaults to true:
       recent versions of Apple \command{clang} on macOS have made
       implicit function declarations in C into a compilation error.
+
+      \item \command{R CMD check --as-cran} takes note of the
+      environment variable \env{AUTORECONF}.  See \dQuote{R Internals} §8
+      for further details.
     }
   }
 
