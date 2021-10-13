@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
+R version 4.1.1 Patched (2021-10-12 r81047) -- "Kick Things"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -590,7 +590,7 @@ attr(,"class")
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.212 0.015 0.228 0 0 
+Time elapsed:  0.216 0.011 0.229 0 0 
 > grDevices::dev.off()
 null device 
           1 

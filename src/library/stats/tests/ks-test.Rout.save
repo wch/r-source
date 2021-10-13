@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
+R version 4.1.1 Patched (2021-10-12 r81047) -- "Kick Things"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.387   0.058   0.429 
+  0.394   0.059   0.434 

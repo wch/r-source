@@ -1,5 +1,5 @@
 
-R version 4.1.0 Patched (2021-06-17 r80511) -- "Camp Pontanezen"
+R version 4.1.1 Patched (2021-10-12 r81047) -- "Kick Things"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1527,5 +1527,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.761 0.058 1.828 0 0 
+Time elapsed:  1.749 0.058 1.814 0 0 
 > 
