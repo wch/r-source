@@ -85,5 +85,6 @@ testit <- function(x = sort(runif(20)), ...)
 testit()
 testit(runif(10))
 testit(style = 3)
+testit(char=' \u27a4')
 }}
 \keyword{utilities}
