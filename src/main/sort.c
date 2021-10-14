@@ -219,6 +219,19 @@ Rboolean isUnsorted(SEXP x, Rboolean strictly)
 
 SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    if (length(args) == 2) {
+	/* This allows for old calls of the form
+	   .Internal(is.unsorted(x, strictly)) prior to adding the
+	   na.rm argument in order to match the closure signature to
+	   the signature expected by methods called in
+	   DispatchOrEval. These old calls might have been captured in
+	   closures or S4 generic definitions. This code inserts a
+	   value for the na.rm argument in the list of evaluated
+	   arguments. The first cell of args is protected when
+	   do_isunsorted is called. */
+	SEXP tmp = CONS_NR(R_FalseValue, CDR(args));
+	SETCDR(args, tmp);
+    }
     checkArity(op, args);
 
     SEXP ans, x = CAR(args);
@@ -239,9 +252,10 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
 
+    SEXP strictlyArg = CADDR(args);
     /* right now is.unsorted only tells you if something is sorted ascending
       hopefully someday it will work for descending too */
-    if(!asLogical(CADR(args))) { /*not strict since we don't memoize that */
+    if(!asLogical(strictlyArg)) { /*not strict since we don't memoize that */
 	if(KNOWN_INCR(sorted)) {
 	    UNPROTECT(1);
 	    return ScalarLogical(FALSE);
@@ -257,7 +271,7 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    int strictly = asLogical(CADR(args));
+    int strictly = asLogical(strictlyArg);
     if(strictly == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "strictly");
     if(isVectorAtomic(x)) {
@@ -268,7 +282,7 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isObject(x)) {
 	SEXP call;
 	PROTECT(call = 	// R>  .gtn(x, strictly) :
-		lang3(install(".gtn"), x, CADR(args)));
+		lang3(install(".gtn"), x, strictlyArg));
 	ans = eval(call, rho);
 	UNPROTECT(2);
 	return ans;

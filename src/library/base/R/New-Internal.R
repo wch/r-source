@@ -182,7 +182,7 @@ is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
     ## else
     if(na.rm && any(ii <- is.na(x)))
 	x <- x[!ii]
-    .Internal(is.unsorted(x, strictly))
+    .Internal(is.unsorted(x, na.rm, strictly))
 }
 
 nchar <- function(x, type = "chars", allowNA = FALSE, keepNA = NA)
