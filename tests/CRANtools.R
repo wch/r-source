@@ -1,7 +1,7 @@
 ### This needs a full local CRAN mirror or Internet access
 
 ## This may need to download, so increase the timeout.
-option(timeout = max(600, getOption('timeout'))
+option(timeout = max(600, getOption('timeout')))
 
 .ptime <- proc.time()
 
