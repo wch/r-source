@@ -275,6 +275,10 @@
 
       \item \code{txtProgresBar()} now enforces a non-zero width for
       \code{char}, without which no progress can be visible.
+
+      \item \code{dimnames(table(d))} is more consistent in the case where
+      \code{d} is a list with a single component, thanks to Thomas Soeiro's
+      report to R-devel.
     }
   }
 }

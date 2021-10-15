@@ -5471,6 +5471,12 @@ stopifnot(Ch == ch, identical(at, attributes(Ch)))
 ## Ch had lost all attributes in R <= 4.1.x
 
 
+## dimnames(table(.)) in the 1D list/data.frame case:
+(dnn <- dimnames(table(warpbreaks[3])))
+stopifnot(identical(dnn, list(tension = levels(warpbreaks[[3]]))))
+## dnn had no names() in R <= 4.1.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
