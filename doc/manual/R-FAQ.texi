@@ -268,7 +268,7 @@ Since mid-1997 there has been a core group (the ``R Core Team'') who can
 modify the R source code archive.  The group currently consists of Doug
 Bates, John Chambers, Peter Dalgaard, Robert Gentleman,
 Kurt Hornik, Ross Ihaka, Tomas Kalibera, Michael Lawrence, Friedrich Leisch, Uwe Ligges,
-Thomas Lumley, Martin Maechler, Martin Morgan, Paul Murrell, Martyn
+Thomas Lumley, Martin Maechler, Sebastian Meyer, Paul Murrell, Martyn
 Plummer, Brian Ripley, Deepayan Sarkar, Duncan Temple Lang, Luke
 Tierney, and Simon Urbanek.
 
