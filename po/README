@@ -13,7 +13,7 @@ Target
 
 updates the message catalogs for the C and R code in the interpreter
 and standard packages.  To update just one package, see
-?tools::update-pkg-po .
+?tools::update_pkg_po .
 
 If you add a package with messages that should be translated (hence
 not 'datasets'), add it to R_PKGS_PO in po/Makefile.in.  R-level
