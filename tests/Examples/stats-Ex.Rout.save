@@ -1,5 +1,5 @@
 
-R version 4.1.1 Patched (2021-10-12 r81047) -- "Kick Things"
+R version 4.1.1 Patched (2021-10-14 r81061) -- "Kick Things"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -11145,15 +11145,18 @@ Consider specifying 'start' or using a selfStart model
 > lines(x, predict(nlmod), col = 2)
 > 
 > ## Here, requiring close convergence, you need to use more accurate numerical
-> ##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
+> ## differentiation; the first fit gives Error: "step factor .. reduced below 'minFactor' .."
 > options(digits = 10) # more accuracy for 'trace'
 > ## IGNORE_RDIFF_BEGIN
-> try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
+> try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. typically work:
 Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
->    (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
+Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  : 
+  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
+>    (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE, warnOnly=TRUE),
++                    trace = TRUE))
 Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
@@ -11176,6 +11179,7 @@ Nonlinear regression model
       Const           A           B 
 100.0288750   9.9162284   0.5025217 
  residual sum-of-squares: 0.9906046
+> ## 2nd fit still fails on some (less accurate) platforms => using warnOnly
 > ## --> convergence tolerance  4.997e-8 (in 11 iter.)
 > ## IGNORE_RDIFF_END
 > 

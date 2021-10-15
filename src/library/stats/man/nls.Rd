@@ -283,11 +283,13 @@ curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
 lines(x, predict(nlmod), col = 2)
 
 ## Here, requiring close convergence, you need to use more accurate numerical
-##  differentiation; this gives Error: "step factor .. reduced below 'minFactor' .."
+## differentiation; the first fit gives Error: "step factor .. reduced below 'minFactor' .."
 options(digits = 10) # more accuracy for 'trace'
 ## IGNORE_RDIFF_BEGIN
-try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. work here:
-   (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE), trace=TRUE))
+try(nlm1 <- update(nlmod, control = list(tol = 1e-7))) # where central diff. typically work:
+   (nlm2 <- update(nlmod, control = list(tol = 8e-8, nDcentral=TRUE, warnOnly=TRUE),
+                   trace = TRUE))
+## 2nd fit still fails on some (less accurate) platforms => using warnOnly
 ## --> convergence tolerance  4.997e-8 (in 11 iter.)
 ## IGNORE_RDIFF_END
 
