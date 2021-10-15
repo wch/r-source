@@ -4990,27 +4990,37 @@ altint_dup_multicheck <- function(vec, numna, s3class = NULL) {
     altint_dup_check(ivec, numna, TRUE, TRUE, s3class = s3class)
 }
 
-altreal_dup_check <- function(vec, numna, numnan, numinf, nalast, fromlast, s3class = NULL) {
+altreal_dup_check <- function(vec, numna, numnan, numinf, nalast, fromlast,
+                              s3class = NULL) {
     if(length(vec) > 0) {
+        ## on Intel adding 0 changes the NA_real_ NaN from signaling
+        ## to non-signaling
         if(numna > 0) {
-            vec[1:numna] <- NA_real_
+            vec[1:numna] <- rep(c(NA_real_, NA_real_ + 0), length.out = numna)
         }
         if(numnan > 0) {
-            vec[seq(1+numna, 1+numnan)] <- NaN
+            vec[seq(1 + numna, numna + numnan)] <-
+                rep(c(NaN, NaN + 0), length.out = numnan)
         }
         if(numinf > 0) {
             infstrt <- 1 + numna + numnan
-            vec[seq(infstrt, infstrt + numinf - 1)] <- rep(c(Inf, -Inf), length.out = numinf)
+            vec[seq(infstrt, infstrt + numinf - 1)] <-
+                rep(c(Inf, -Inf), length.out = numinf)
         }
     } ## end length(vec) > 0
-    altrep_dup_test(vec, nalast = nalast, fromlast = fromlast, s3class = s3class)
+    altrep_dup_test(vec, nalast = nalast, fromlast = fromlast,
+                    s3class = s3class)
 }
 
 altreal_dup_multicheck <- function(vec, numna, numnan, numinf, s3class = NULL) {
-    altreal_dup_check(ivec, numna, numnan, numinf, FALSE, FALSE, s3class = s3class)
-    altreal_dup_check(ivec, numna, numnan, numinf, FALSE, TRUE, s3class = s3class)
-    altreal_dup_check(ivec, numna, numnan, numinf, TRUE, FALSE, s3class = s3class)
-    altreal_dup_check(ivec, numna, numnan, numinf, TRUE, TRUE, s3class = s3class)
+    altreal_dup_check(ivec, numna, numnan, numinf, FALSE, FALSE,
+                      s3class = s3class)
+    altreal_dup_check(ivec, numna, numnan, numinf, FALSE, TRUE,
+                      s3class = s3class)
+    altreal_dup_check(ivec, numna, numnan, numinf, TRUE, FALSE,
+                      s3class = s3class)
+    altreal_dup_check(ivec, numna, numnan, numinf, TRUE, TRUE,
+                      s3class = s3class)
 }
 
 ## NB buffer size used by ITERATE_BY_REGION macros is 512, so we need to test
