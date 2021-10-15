@@ -5461,6 +5461,16 @@ stopifnot(exprs = {
 ## zero-length argument with non-zero one errored in R <= 4.1.x
 
 
+## substr(ch, beg, end) <- CH  preserving attributes incl. names
+ch <- c("one", "two", "three", "four", "5")
+Ch <- setNames(,ch); attr(Ch, "foo") <- "bar"
+at <- attributes(Ch)
+substring(ch, 2) <- c("||", "+++"); ch # recycling along ch
+substring(Ch, 2) <- c("||", "+++")
+stopifnot(Ch == ch, identical(at, attributes(Ch)))
+## Ch had lost all attributes in R <= 4.1.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

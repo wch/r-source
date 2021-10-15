@@ -100,9 +100,13 @@
       \dQuote{max-or-0-if-any} recycling rule, such that, e.g.,
       \code{Map(`+`, 1:3, 1[0])} is valid now.
 
-      \item \code{as.character(<obj>)} for \code{"hexmode"} or \code{"octmode"}
-      objects now fulfills the important basic rule
+      \item \code{as.character(<obj>)} for \code{"hexmode"} or
+      \code{"octmode"} objects now fulfils the important basic rule
       \code{as.character(x)[j] === as.character(x[j])}.
+
+      \item \code{substr(ch, start,end) <- new} now e.g., preserves
+      \code{names(ch)}; ditto for \code{substring()}, thanks to a patch
+      from Brodie Gaslam.
     }
   }
 
@@ -156,6 +160,10 @@
       \item \env{_R_CHECK_SRC_MINUS_W_IMPLICIT_} now defaults to true:
       recent versions of Apple \command{clang} on macOS have made
       implicit function declarations in C into a compilation error.
+
+      \item \command{R CMD check --as-cran} makes use of the
+      environment variable \env{AUTORECONF}.  See the
+      \dQuote{R Internals} manual §8 for further details.
     }
   }
 
@@ -254,8 +262,8 @@
       \PR{17501}.
 
       \item Determining correct translation domain in non-base packages,
-      addressing the combo of \PR{18092} and \PR{17998} (\code{#c6}) with reports and
-      \emph{augmented} patch #2904 by Suharto Anggono.
+      addressing the combo of \PR{18092} and \PR{17998} (\code{#c6})
+      with reports and \emph{augmented} patch #2904 by Suharto Anggono.
 
       Note that \code{"R-base"} is no longer default domain e.g., for
       top-level calls to \code{gettext()}; rather translation needs
@@ -264,6 +272,9 @@
       \item \code{identical(attrib.as.set=FALSE)} now works correctly with
       data frames with default row names (Thanks to Charlie Gao's
       \PR{18179}).
+
+      \item \code{txtProgresBar()} now enforces a non-zero width for
+      \code{char}, without which no progress can be visible.
     }
   }
 }
