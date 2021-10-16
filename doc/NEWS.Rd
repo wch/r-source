@@ -112,7 +112,7 @@
       \samp{ftp://}.)
 
       For \samp{ftp://} URIs the default method is now \code{"libcurl"}
-      if available (which it is on \acronym{CRAN builds}).
+      if available (which it is on \acronym{CRAN} builds).
 
       \code{method = "wininet"} remains the default for \samp{http://}
       and \samp{https://} URIs but if \code{libcurl} is available, using
