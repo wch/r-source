@@ -100,9 +100,6 @@ heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
   By default (\code{scale = "row"}) the rows are scaled to have mean
   zero and standard deviation one.  There is some empirical evidence
   from genomic plotting that this is useful.
-
-  The default colors are not pretty.  Consider using enhancements such
-  as the \CRANpkg{RColorBrewer} package.
 }
 \note{
   Unless \code{Rowv = NA} (or \code{Colw = NA}), the original rows and
