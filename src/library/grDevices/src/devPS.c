@@ -9586,14 +9586,14 @@ static void PDFWriteT1KerningString(const char *str,
                     PDFwrite(buf, 10, PS_hyphen, pd);
 		else
 #endif
-                    PDFwrite(buf, 2, &str[i], pd);
+                PDFwrite(buf, 2, "%c", pd, str[i]);
 		break;
 	    case '(':
 	    case ')':
                 PDFwrite(buf, 10, "\\%c", pd, str[i]);
 		break;
 	    default:
-                PDFwrite(buf, 2, &str[i], pd);
+                PDFwrite(buf, 2, "%c", pd, str[i]);
 		break;
 	    }
 	    if ( ary[i] != 0 && str[i+1] ) 
