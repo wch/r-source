@@ -270,7 +270,8 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
         from <- unclass(as.Date(from))
         to <- unclass(as.Date(to))
         res <- seq.int(from, to, length.out = length.out)
-        return(.Date(res))
+        ## force double storage for consistency
+        return(.Date(as.numeric(res)))
     }
 
     if (length(by) != 1L) stop("'by' must be of length 1")
@@ -302,7 +303,8 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
             ## defeat test in seq.default
             res <- seq.int(0, to0 - from, by) + from
         }
-        res <- .Date(res)
+        ## force double storage for consistency
+        res <- .Date(as.numeric(res))
     } else {  # months or quarters or years
         r1 <- as.POSIXlt(from)
         if(valid == 5L) { # years
