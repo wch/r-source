@@ -1867,13 +1867,18 @@ stopifnot(identical(as.vector(m1[,2]), as.vector(m2[,2])))
 
 
 ## JMC's version of class<- did not work as documented. (PR#14942)
-x <- 1:10
-class(x) <- character()
-class(x) <- "foo"
-class(x) <- character()
-oldClass(x) <- "foo"
-oldClass(x) <- character()
+chk1 <- function(x, cls="foo")
+    stopifnot(identical(list(attr(x,"class"), class(x), oldClass(x)),
+                        list(cls, cls, cls)))
+chk2 <- function(x) stopifnot(identical(class(x), "integer"),
+                              is.null(oldClass(x)),
+                              is.null(attr(x,"class")))
+## all class setting variants work consistently:
+f <- 1:2; attr(f, "class") <- "foo"; chk1(f); attr(f, "class") <- character(0); chk2(f)
+f <- 1:2;         class(f) <- "foo"; chk1(f);         class(f) <- character(0); chk2(f)
+f <- 1:2;      oldClass(f) <- "foo"; chk1(f);      oldClass(f) <- character(0); chk2(f)
 ## class<- version failed: required NULL
+## in R <= 2.15.1 (2012)
 
 
 ## anova.lmlist could fail (PR#14960)

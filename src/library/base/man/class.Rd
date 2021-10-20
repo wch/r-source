@@ -1,6 +1,6 @@
 % File src/library/base/man/class.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{class}
@@ -45,6 +45,7 @@ oldClass(x) <- value
   giving the names of the classes from which the object \emph{inherits}.
   (Functions \code{oldClass} and \code{oldClass<-} get and set the
   attribute, which can also be done directly.)
+  % and when set directly, uses yet different C code classgets()
 
   %% the (n == 0) clause in R_data_class():
   If the object does not have a class attribute, it has an implicit
@@ -84,8 +85,11 @@ oldClass(x) <- value
 
   The function \code{class} prints the vector of names of classes an
   object inherits from.  Correspondingly, \code{class<-} sets the
-  classes an object inherits from.  Assigning \code{NULL} removes the
-  class attribute.
+  classes an object inherits from.  Assigning an empty character vector or
+  \code{NULL} removes the class attribute, as for \code{oldClass<-} or
+  direct attribute setting.  Whereas it is clearer to explicitly assign
+  \code{NULL} to remove the class, using an empty vector is more natural in
+  e.g., \code{class(x) <- \link{setdiff}(class(x), "ts")}.
 
   \code{unclass} returns (a copy of) its argument with its class
   attribute removed.  (It is not allowed for objects which cannot be
@@ -105,7 +109,7 @@ oldClass(x) <- value
   object, and otherwise giving \code{TRUE} iff \emph{all} elements of
   \code{class(x)} are contained in \code{what}.
 
-  All but \code{inherits} are \link{primitive} functions.
+  All but \code{inherits} and \code{isa} are \link{primitive} functions.
 }
 
 \note{
@@ -116,11 +120,6 @@ oldClass(x) <- value
   than \code{oldClass}.  \emph{However}, \link{group generic}s dispatch
   on the \code{oldClass} for efficiency, and \link{internal generic}s
   only dispatch on objects for which \code{\link{is.object}} is true.
-
-  In older versions of \R, assigning a zero-length vector with
-  \code{class} removed the class: it is now an error (whereas it
-  still works for \code{oldClass}).  It is clearer to always assign \code{NULL}
-  to remove the class.
 }
 
 \section{Formal classes}{
