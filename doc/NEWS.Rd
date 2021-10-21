@@ -283,7 +283,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.1 patched}{
+\section{\Rlogo CHANGES IN R 4.1.2}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The workaround in headers \file{R.h} and \file{Rmath.h}
