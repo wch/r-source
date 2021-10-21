@@ -32,9 +32,13 @@ bindtextdomain(domain, dirname = NULL)
 \details{
   If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
   or \code{ngettext}  is called from a function in the namespace of
-  package \pkg{pkg} the domain is set to \code{"R-pkg"}.  Otherwise
-  there is no default domain.  In \R versions up to 4.1.x, \code{"R-base"}
-  has been chosen in spite of this.  Note in particular that \code{.onAttach}
+  package \pkg{pkg} including called via \code{\link{stop}()},
+  \code{\link{warning}()}, or \code{\link{message}()} from the function,
+  or, say, evaluated as if called from that namespace, see the
+  \code{evalq()} example, % and more in ../../../../tests/reg-translation.R
+  the domain is set to \code{"R-pkg"}.  Otherwise there is no default
+  domain and messages are not translated unless \code{domain} is provided
+  explicitly.  Note in particular that \code{.onAttach}
   and \code{\link{.onLoad}} are not called from the package namespace, so
   messages there should always provide a domain explicitly.
 
@@ -110,6 +114,13 @@ cat(sprintf(ngettext(length(miss),
                      "variable \%s contains missing values\n",
                      "variables \%s contain missing values\n"),
             paste(sQuote(miss), collapse = ", ")))
+
+enT <- "empty model supplied"
+Sys.setenv(LANGUAGE = "de") # may not always 'work'
+gettext(enT, domain="R-stats")# "leeres Modell angegeben" (if translation works)
+tget <- function() gettext(enT)
+tget() # not translated as fn tget() is not from "stats" pkg/namespace
+evalq(function() gettext(enT), asNamespace("stats"))() # *is* translated
 }
 \keyword{ utilities }
 \keyword{ character }
