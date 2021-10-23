@@ -1,7 +1,7 @@
 #  File src/library/stats/R/selfStart.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2001-2020 The R Core Team
+#  Copyright (C) 2001-2021 The R Core Team
 #  Copyright (C) 1997,1999 Jose C. Pinheiro and Douglas M. Bates
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -94,7 +94,14 @@ getInitial.formula <-
 getInitial.selfStart <-
     function(object, data, mCall, LHS = NULL, ...)
 {
-    (attr(object, "initial"))(mCall = mCall, data = data, LHS = LHS, ...)
+    iniFn <- attr(object, "initial")
+    if(length(formals(iniFn)) > 3L)
+        iniFn(mCall = mCall, data = data, LHS = LHS, ...)
+    else { # e.g. for nlme/inst/scripts/ch08.R {twice}
+        .Deprecated(msg=
+     "selfStart initializing functions should have a final '...' argument since R 4.1.0")
+        iniFn(mCall = mCall, data = data, LHS = LHS)
+    }
 }
 
 getInitial.default <-

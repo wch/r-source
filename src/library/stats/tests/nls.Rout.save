@@ -1,11 +1,13 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-10-21 r81085) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -64,6 +66,29 @@ Type 'q()' to quit R.
 function (x, Asym, xmid, scal)  
  - attr(*, "initial")=function (mCall, LHS, data)  
  - attr(*, "class")= chr "selfStart"
+> ## with parameters  and  getInitial():
+> logist <- selfStart(logist, initial = logistInit,
++                     parameters = c("Asym", "xmid", "scal"))
+> tools::assertWarning(verbose = TRUE,
++  in1 <- getInitial(circumference ~ logist(age, Asym, xmid, scal), Orange)
++ ) # no warning previously
+Asserted warning: selfStart initializing functions should have a final '...' argument since R 4.1.0
+> ## but this then failed, now gives the same warning:
+> tools::assertWarning(verbose = TRUE,
++  fm <- nls(circumference ~ logist(age, Asym, xmid, scal), Orange)
++ )
+Asserted warning: selfStart initializing functions should have a final '...' argument since R 4.1.0
+> ## in R 4.1.{0,1} gave
+> ## Error in (attr(object, "initial"))(mCall = mCall, data = data, LHS = LHS,  :
+> ##  unused arguments (control = list(.......), trace = FALSE)
+> ## IGNORE_RDIFF_BEGIN
+> coef(summary(fm))
+     Estimate Std. Error t value   Pr(>|t|)
+Asym   192.69     20.244  9.5182 7.4824e-11
+xmid   728.76    107.299  6.7919 1.1202e-07
+scal   353.53     81.472  4.3393 1.3382e-04
+> ## IGNORE_RDIFF_END
+> 
 > 
 > ## lower and upper in algorithm="port"
 > set.seed(123)
@@ -795,4 +820,4 @@ List of 2
 > 
 > proc.time()
    user  system elapsed 
-  1.758   0.076   1.823 
+  1.125   0.123   1.454 

@@ -279,6 +279,10 @@
       \item \code{dimnames(table(d))} is more consistent in the case where
       \code{d} is a list with a single component, thanks to Thomas Soeiro's
       report to R-devel.
+
+      \item Initialization of self-starting models with pre-R-4.1.0 API
+      initialization functions (missing the \code{...} argument) for now
+      works again, with a deprecation warning.
     }
   }
 }
