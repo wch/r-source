@@ -275,11 +275,19 @@
 
       \item \code{txtProgresBar()} now enforces a non-zero width for
       \code{char}, without which no progress can be visible.
+
+      \item \code{dimnames(table(d))} is more consistent in the case where
+      \code{d} is a list with a single component, thanks to Thomas Soeiro's
+      report to R-devel.
+
+      \item Initialization of self-starting models with pre-R-4.1.0 API
+      initialization functions (missing the \code{...} argument) for now
+      works again, with a deprecation warning.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.1 patched}{
+\section{\Rlogo CHANGES IN R 4.1.2}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The workaround in headers \file{R.h} and \file{Rmath.h}
@@ -386,7 +394,7 @@
       \samp{ftp://}.)
 
       For \samp{ftp://} URIs the default method is now \code{"libcurl"}
-      if available (which it is on \acronym{CRAN builds}).
+      if available (which it is on \acronym{CRAN} builds).
 
       \code{method = "wininet"} remains the default for \samp{http://}
       and \samp{https://} URIs but if \code{libcurl} is available, using

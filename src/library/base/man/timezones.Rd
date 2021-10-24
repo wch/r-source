@@ -318,7 +318,7 @@ OlsonNames(tzdir = NULL)
 \examples{
 Sys.timezone()
 
-str(OlsonNames()) ## typically close to 600 hundred names,
+str(OlsonNames()) ## typically close to six hundred names,
 ## typically some acronyms/aliases such as "UTC", "NZ", "MET", "Eire", ..., but
 ## mostly pairs (and triplets) such as "Pacific/Auckland"
 table(sl <- grepl("/", OlsonNames()))

@@ -28,10 +28,11 @@ if( !OK ) {
 }
 
 ## Translation domain for a function not in a package: PR#17998
-tryCmsg  <- function(expr) tryCatch(expr, error   = conditionMessage)
-tryCWarn <- function(expr) tryCatch(expr, warning = conditionMessage)
+tryCEmsg <- function(expr) tryCatch(expr, error   = conditionMessage)
+tryCWmsg <- function(expr) tryCatch(expr, warning = conditionMessage)
 chk0 <- function(x) stopifnot(x == 0)
-(m1 <- tryCmsg(chk0(1))) # (not translated in R < 4.1.0)
+nsSt <- asNamespace("stats")
+(m1 <- tryCEmsg(chk0(1))) # (not translated in R < 4.1.0)
 ## switch back to English (if possible) for final report.
 Sys.setenv(LANGUAGE="en")
 m2 <- "x == 0 n'est pas TRUE"
@@ -43,21 +44,50 @@ deTxt <- "inkompatible Dimensionen"
 Sys.setenv(LANGUAGE="de")
 stopifnot(identical(deTxt, gettext(enTxt, domain="R-stats")))
 f <- function(...) stop(enTxt)
-environment(f) <- asNamespace("stats")
-stopifnot(identical(deTxt, tryCmsg(f())))
+environment(f) <- nsSt
+stopifnot(identical(deTxt, tryCEmsg(f()))) # failed in R <= 4.1.x
 ## 2nd example (base vs stats):
 enTxt <- "namespace is already attached"
-deTxt <- "Namensraum ist bereits angehängt"; Encoding(deTxt)
+deTxt <- "Namensraum ist bereits angehängt"
+Encoding(deTxt) <- "UTF-8" # e.g. on Windows where it was  "latin1"
 all.equal(gettext(enTxt, domain="R-stats"), enTxt)
-(trTxt <- gettext(enTxt, domain="R-base"));  Encoding(trTxt)
+(trTxt <- gettext(enTxt, domain="R-base")); Encoding(trTxt) # unknown
 all.equal(trTxt, deTxt)
-identical(trTxt, deTxt) # not TRUE on Windows (why ?)
 f <- function(...) warning(enTxt)
-if(.Platform$OS.type != "windows") # (FIXME, is it just the encoding?)
+(trTxtSt <- {environment(f) <- nsSt; tryCWmsg(f())})
 stopifnot(exprs = {
-    identical(gettext(enTxt, domain="R-base" ), deTxt)
+    identical(trTxt, deTxt)
     identical(gettext(enTxt, domain="R-stats"), enTxt)
-    identical({environment(f) <- asNamespace("base") ; tryCWarn(f())}, deTxt)
-    identical({environment(f) <- asNamespace("stats"); tryCWarn(f())}, enTxt)
-})# in both cases:  not present in stats  =>  not translated
+    identical({environment(f) <- .BaseNamespaceEnv; tryCWmsg(f())}, deTxt)
+    identical({environment(f) <- nsSt;              tryCWmsg(f())}, enTxt)# not in R <= 4.1.x
+    identical(trTxtSt, enTxt) # (not in 4.1.x, but in 4.0.5)
+})# in all cases:  not present in stats  =>  not translated
 
+## Functions not *from* package namespace, but "as if" (PR#17998, from Comment 35):
+enT <- "empty model supplied"
+(deT <- gettext(enT, domain="R-stats"))# "leeres Modell angegeben"
+isD <- function(tx) identical(deT, tx)
+stopifnot(exprs = {
+    ## 1-4: translated in R 4.0.z *and* 4.1.z
+    isD(evalq(function() gettext(enT), nsSt)())
+    isD(evalq(function() do.call(gettext, list(enT)), nsSt)())
+    isD(evalq(function() evalq(gettext(enT)), nsSt)())
+    isD(evalq(function() local(gettext(enT)), nsSt)())
+    ## 5-7: not translated in R 4.0.*; translated in R 4.1.* (incl. R-patched)
+    ##      ditto in R-devel *after* the Oct.20 (2021) patch:
+    isD(evalq(local(gettext(enT)), nsSt))
+    isD(evalq(gettext(enT), nsSt))
+    isD(do.call("gettext", list(enT), envir=nsSt))
+    ## 8-11: in comment #37, Suharto added  " Other cases: "
+    isD(evalq(function() (function() gettext(enT))(), nsSt)())
+    isD(evalq(function() function() gettext(enT), nsSt)()())
+    isD(evalq((function() function() gettext(enT))(), nsSt)())
+    isD(evalq(local(function() gettext(enT)), nsSt)())
+    require(compiler) ## and more cases with byte compiler consideration
+    isD(cmpfun(evalq(function() gettext(enT), nsSt))())
+    isD(cmpfun(evalq(function() do.call("gettext", list(enT)), nsSt))())
+    isD(cmpfun(evalq(function() evalq(gettext(enT)), nsSt))())
+    isD(cmpfun(evalq(function() local(gettext(enT)), nsSt))())
+    isD(eval(compile(quote(local(gettext(enT)))), nsSt))
+    isD(eval(compile(quote(gettext(enT))), nsSt))
+})

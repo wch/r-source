@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:26\n"
-"PO-Revision-Date: 2020-10-26 17:11+0200\n"
+"POT-Creation-Date: 2021-10-15 18:41\n"
+"PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: lt\n"
@@ -557,7 +557,7 @@ msgid "numeric contrasts or contrast name expected"
 msgstr "tikėtini skaitiniai kontrastai ar kontrasto pavadinimas"
 
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr "% reikia teisingai įdiegto 'Matrix' paketo"
+msgstr "%s reikia teisingai įdiegto 'Matrix' paketo"
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "nepakanka laisvės laipsnių apibrėžti kontrastus"
@@ -695,11 +695,11 @@ msgstr "'RowSideColors' turi būti nrow(x) ilgio tekstinis vektorius"
 msgid "argument 'x' must be numeric"
 msgstr "argumentas 'x' turi būti skaitinis"
 
-msgid "'x' contains missing values"
-msgstr "'x' turi trūkstamų reikšmių"
-
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x' ir 'weights' ilgiai nevienodi"
+
+msgid "'x' contains missing values"
+msgstr "'x' turi trūkstamų reikšmių"
 
 msgid "'weights' must all be finite"
 msgstr "'weights' turi būti baigtinis"
@@ -2159,6 +2159,9 @@ msgstr "'spline' reikia n >= 1"
 
 msgid "spline: first and last y values differ - using y[1L] for both"
 msgstr "spline: pirma ir paskutinė y reikšmės skiriasi - naudokite y[1L] abiem"
+
+msgid "should never happen: invalid method:"
+msgstr ""
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' turi būti tarp 0 ir 3"

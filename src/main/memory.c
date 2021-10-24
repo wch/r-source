@@ -678,7 +678,7 @@ static R_size_t R_NodesInUse = 0;
 #define FREE_FORWARD_CASE
 #endif
 /*** assume for now all ALTREP nodes are based on CONS nodes */
-#define DO_CHILDREN(__n__,dc__action__,dc__extra__) do { \
+#define DO_CHILDREN4(__n__,dc__action__,dc__str__action__,dc__extra__) do { \
   if (HAS_GENUINE_ATTRIB(__n__)) \
     dc__action__(ATTRIB(__n__), dc__extra__); \
   if (ALTREP(__n__)) {					\
@@ -701,6 +701,12 @@ static R_size_t R_NodesInUse = 0;
   case S4SXP: \
     break; \
   case STRSXP: \
+    { \
+      R_xlen_t i; \
+      for (i = 0; i < XLENGTH(__n__); i++) \
+	dc__str__action__(VECTOR_ELT(__n__, i), dc__extra__); \
+    } \
+    break; \
   case EXPRSXP: \
   case VECSXP: \
     { \
@@ -740,25 +746,58 @@ static R_size_t R_NodesInUse = 0;
   } \
 } while(0)
 
+#define DO_CHILDREN(__n__,dc__action__,dc__extra__) \
+    DO_CHILDREN4(__n__,dc__action__,dc__action__,dc__extra__)
+
 
 /* Forwarding Nodes.  These macros mark nodes or children of nodes and
    place them on the forwarding list.  The forwarding list is assumed
    to be in a local variable of the caller named named
    forwarded_nodes. */
 
+#define MARK_AND_UNSNAP_NODE(s) do {		\
+	SEXP mu__n__ = (s);			\
+	CHECK_FOR_FREE_NODE(mu__n__);		\
+	MARK_NODE(mu__n__);			\
+	UNSNAP_NODE(mu__n__);			\
+    } while (0)
+
 #define FORWARD_NODE(s) do { \
   SEXP fn__n__ = (s); \
   if (fn__n__ && ! NODE_IS_MARKED(fn__n__)) { \
-    CHECK_FOR_FREE_NODE(fn__n__) \
-    MARK_NODE(fn__n__); \
-    UNSNAP_NODE(fn__n__); \
+    MARK_AND_UNSNAP_NODE(fn__n__); \
     SET_NEXT_NODE(fn__n__, forwarded_nodes); \
     forwarded_nodes = fn__n__; \
   } \
 } while (0)
 
+#define PROCESS_ONE_NODE(s) do {				\
+	SEXP pn__n__ = (s);					\
+	int __cls__ = NODE_CLASS(pn__n__);			\
+	int __gen__ = NODE_GENERATION(pn__n__);			\
+	SNAP_NODE(pn__n__, R_GenHeap[__cls__].Old[__gen__]);	\
+	R_GenHeap[__cls__].OldCount[__gen__]++;			\
+    } while (0)
+
+/* avoid pushing on the forwarding stack when possible */
+#define FORWARD_AND_PROCESS_ONE_NODE(s, tp) do {	\
+	SEXP fpn__n__ = (s);				\
+	int __tp__ = (tp);				\
+	if (fpn__n__ && ! NODE_IS_MARKED(fpn__n__)) {	\
+	    if (TYPEOF(fpn__n__) == __tp__ &&		\
+		! HAS_GENUINE_ATTRIB(fpn__n__)) {	\
+		MARK_AND_UNSNAP_NODE(fpn__n__);		\
+		PROCESS_ONE_NODE(fpn__n__);		\
+	    }						\
+	    else FORWARD_NODE(fpn__n__);		\
+	}						\
+    } while (0)
+
+#define PROCESS_CHARSXP(__n__) FORWARD_AND_PROCESS_ONE_NODE(__n__, CHARSXP)
+#define FC_PROCESS_CHARSXP(__n__,__dummy__) PROCESS_CHARSXP(__n__)
 #define FC_FORWARD_NODE(__n__,__dummy__) FORWARD_NODE(__n__)
-#define FORWARD_CHILDREN(__n__) DO_CHILDREN(__n__,FC_FORWARD_NODE, 0)
+#define FORWARD_CHILDREN(__n__) \
+    DO_CHILDREN4(__n__, FC_FORWARD_NODE, FC_PROCESS_CHARSXP, 0)
 
 /* This macro should help localize where a FREESXP node is encountered
    in the GC */
@@ -1607,10 +1646,9 @@ SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define PROCESS_NODES() do { \
     while (forwarded_nodes != NULL) { \
-	s = forwarded_nodes; \
+	SEXP s = forwarded_nodes; \
 	forwarded_nodes = NEXT_NODE(forwarded_nodes); \
-	SNAP_NODE(s, R_GenHeap[NODE_CLASS(s)].Old[NODE_GENERATION(s)]); \
-	R_GenHeap[NODE_CLASS(s)].OldCount[NODE_GENERATION(s)]++; \
+	PROCESS_ONE_NODE(s); \
 	FORWARD_CHILDREN(s); \
     } \
 } while (0)
@@ -1836,8 +1874,9 @@ static int RunGenCollect(R_size_t size_needed)
 	}
 	SET_TRUELENGTH(R_StringHash, nc); /* SET_HASHPRI, really */
     }
-    FORWARD_NODE(R_StringHash);
-    PROCESS_NODES();
+    /* chains are known to be marked so don't need to scan again */
+    FORWARD_AND_PROCESS_ONE_NODE(R_StringHash, VECSXP);
+    PROCESS_NODES(); /* probably nothing to process, but just in case ... */
 
 #ifdef PROTECTCHECK
     for(i=0; i< NUM_SMALL_NODE_CLASSES;i++){

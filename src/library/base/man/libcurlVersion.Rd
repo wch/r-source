@@ -1,6 +1,6 @@
 % File src/library/base/man/curlVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2015-2017 R Core Team
+% Copyright 2015-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{libcurlVersion}
@@ -51,8 +51,8 @@ libcurlVersion()
   SSL versions (the current standard being known as TLS).  Normally
   \code{libcurl} used with \R uses SecureTransport on macOS, OpenSSL on
   Windows and GnuTLS, NSS or OpenSSL on Unix-alikes.  (At the time of
-  writing Debian-based Linuxen use GnuTLS and RedHat-based ones use NSS,
-  but it has been announced that Fedora 27 will switch to OpenSSL.)
+  writing Debian-based Linuxen use GnuTLS and RedHat-based ones use
+  OpenSSL, having previouly used NSS.)
 }
 \examples{
 libcurlVersion()

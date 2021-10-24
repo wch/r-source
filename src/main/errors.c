@@ -1089,39 +1089,63 @@ void NORET jump_to_toplevel()
 
 /* #define DEBUG_GETTEXT 1 */
 
+#ifdef DEBUG_GETTEXT
+# include <Print.h>
+# define GETT_PRINT(...) REprintf(__VA_ARGS__)
+#else
+# define GETT_PRINT(...) do {} while(0)
+#endif
 
 /* Called from do_gettext() and do_ngettext() */
-static char * determine_domain_gettext(SEXP domain_)
+static char * determine_domain_gettext(SEXP domain_, Rboolean up)
 {
     const char *domain = "";
     char *buf; // will be returned
 
-    /* If cptr->cloenv is not R_GlobalEnv,
+    /* If TYPEOF(cptr->callfun) == CLOSXP (not .Primitive("eval")),
      * ENCLOS(cptr->cloenv) is CLOENV(cptr->callfun) */
     /* R_findParentContext(cptr, 1)->cloenv == cptr->sysparent */
     if(isNull(domain_)) {
-	RCNTXT *cptr = R_findParentContext(R_GlobalContext, 1);
-	SEXP rho = cptr ? CLOENV(cptr->callfun) : R_EmptyEnv;
+	RCNTXT *cptr;
+	GETT_PRINT(">> determine_domain_gettext(), first rho=%s\n", EncodeEnvironment(rho));
 
 	/* stop() etc have internal call to .makeMessage */
 	/* gettextf calls gettext */
-	if (rho == R_BaseNamespace) {
-	    SEXP call = getCurrentCall(), cfn = CAR(call);
-	    if (TYPEOF(cfn) == SYMSXP && !streql(CHAR(PRINTNAME(cfn)), "ngettext") &&
-		TYPEOF(CADR(call)) == SYMSXP) {
-		cptr = R_findParentContext(cptr, 1);
-		rho = cptr ? CLOENV(cptr->callfun) : R_EmptyEnv;
+
+	SEXP rho = R_EmptyEnv;
+	if(R_GlobalContext->callflag & CTXT_FUNCTION) {
+	    if(up) {
+		SEXP call = R_GlobalContext->call;
+		/* The call is of the form
+		   <symbol>(<symbol>, domain = domain [possible other argument]) */
+		rho =
+		    (isSymbol(CAR(call)) && (call = CDR(call)) != R_NilValue &&
+		     TAG(call) == R_NilValue && isSymbol(CAR(call)) &&
+		     (call = CDR(call)) != R_NilValue &&
+		     isSymbol(TAG(call)) && streql(CHAR(PRINTNAME(TAG(call))), "domain") &&
+		     isSymbol(CAR(call)) && streql(CHAR(PRINTNAME(CAR(call))), "domain") &&
+		     (cptr = R_findParentContext(R_GlobalContext, 1)))
+		    ? cptr->sysparent
+		    : R_GlobalContext->sysparent;
 	    }
+	    else
+		rho = R_GlobalContext->sysparent;
 	}
+	GETT_PRINT(" .. rho1_domain_ => rho=%s\n", EncodeEnvironment(rho));
 
 	SEXP ns = R_NilValue;
+	int cnt = 0;
 	    while(rho != R_EmptyEnv) {
 		if (rho == R_GlobalEnv) break;
 		else if (R_IsNamespaceEnv(rho)) {
 		    ns = R_NamespaceEnvSpec(rho);
 		    break;
 		}
-		if(rho == ENCLOS(rho)) break; // *does* happen
+		if(++cnt <= 5 || cnt > 99) { // diagnose "inf." loop
+		    GETT_PRINT("  cnt=%4d, rho=%s\n", cnt, EncodeEnvironment(rho));
+		    if(cnt > 111) break;
+		}
+		if(rho == ENCLOS(rho)) break; // *did* happen; now keep for safety
 		rho = ENCLOS(rho);
 	    }
 	if (!isNull(ns)) {
@@ -1132,12 +1156,10 @@ static char * determine_domain_gettext(SEXP domain_)
 		buf = R_alloc(len, sizeof(char));
 		Rsnprintf_mbcs(buf, len, "R-%s", domain);
 		UNPROTECT(1); /* ns */
-#ifdef DEBUG_GETTEXT
-		REprintf("Managed to determine 'domain' from environment as: '%s'\n", buf);
-#endif
+		GETT_PRINT("Managed to determine 'domain' from environment as: '%s'\n", buf);
 		return buf;
 	    }
-	    UNPROTECT(1); /* ns */ 
+	    UNPROTECT(1); /* ns */
 	}
 	return NULL;
 
@@ -1148,7 +1170,7 @@ static char * determine_domain_gettext(SEXP domain_)
 	buf = R_alloc(strlen(domain) + 1, sizeof(char));
 	strcpy(buf, domain);
 	return buf;
-	
+
     } else if(isLogical(domain_) && LENGTH(domain_) == 1 && LOGICAL(domain_)[0] == NA_LOGICAL)
 	return NULL;
     else error(_("invalid '%s' value"), "domain");
@@ -1167,7 +1189,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(!isString(string)) error(_("invalid '%s' value"), "string");
 
-    char * domain = determine_domain_gettext(CAR(args));
+    char * domain = determine_domain_gettext(CAR(args), /*up*/TRUE);
 
     if(domain && strlen(domain)) {
 	SEXP ans = PROTECT(allocVector(STRSXP, n));
@@ -1205,9 +1227,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 
 	    if(strlen(tmp)) {
-#ifdef DEBUG_GETTEXT
-		REprintf("translating '%s' in domain '%s'\n", tmp, domain);
-#endif
+		GETT_PRINT("translating '%s' in domain '%s'\n", tmp, domain);
 		tr = dgettext(domain, tmp);
  		R_CheckStack2(        strlen(tr) + ihead + itail + 1);
 		tmp = (char *) alloca(strlen(tr) + ihead + itail + 1);
@@ -1241,7 +1261,7 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'%s' must be a character string"), "msg2");
 
 #ifdef ENABLE_NLS
-    char * domain = determine_domain_gettext(CADDDR(args));
+    char * domain = determine_domain_gettext(CADDDR(args), /*up*/FALSE);
 
     if(domain && strlen(domain)) {
 	/* libintl seems to malfunction if given a message of "" */
@@ -1272,7 +1292,7 @@ SEXP attribute_hidden do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else {
 	if(!isString(CADR(args)) || LENGTH(CADR(args)) != 1)
 	    error(_("invalid '%s' value"), "dirname");
-	res = bindtextdomain(translateChar(STRING_ELT(CAR(args),0)),
+	res = bindtextdomain(translateChar(STRING_ELT(CAR (args),0)),
 			     translateChar(STRING_ELT(CADR(args),0)));
     }
     if(res) return mkString(res);
