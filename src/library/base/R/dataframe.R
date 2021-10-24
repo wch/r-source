@@ -1722,7 +1722,7 @@ function(x = list(), nrow = 0L)
 {
     stopifnot(is.list(x), is.null(nrow) || nrow >= 0L)
     if(n <- length(x)) {
-        if(length(unique(lengths(x))) > 1L)
+        if(length(nrow <- unique(lengths(x))) > 1L)
             stop("all variables should have the same length")
     } else {
         if(is.null(nrow))
