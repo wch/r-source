@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-10-24 r81094) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1006,6 +1006,40 @@ grandparent::parent::child
 > 
 > 
 > cleanEx()
+> nameEx("grid.group")
+> ### * grid.group
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.group
+> ### Title: Draw a Group
+> ### Aliases: grid.group groupGrob grid.define defineGrob grid.use useGrob
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for groups (or masks or patterns),
+> ##       there will only be two overlapping opaque circles 
+> grid.newpage()
+> pat <- pattern(rasterGrob(matrix(c(.5, 1, 1, .5), nrow=2),
++                           width=unit(1, "cm"),
++                           height=unit(1, "cm"),
++                           interpolate=FALSE),
++                width=unit(1, "cm"), height=unit(1, "cm"),
++                extend="repeat")
+> grid.rect(gp=gpar(col=NA, fill=pat))
+> mask <- rectGrob(gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+> pushViewport(viewport(mask=mask))
+> pushViewport(viewport(y=.5, height=.5, just="bottom"))
+> grid.circle(1:2/3, r=.45, gp=gpar(fill=2:3))
+> popViewport()
+> pushViewport(viewport(y=0, height=.5, just="bottom"))
+> grid.group(circleGrob(1:2/3, r=.45, gp=gpar(fill=2:3)))
+> popViewport()
+> 
+> 
+> 
+> cleanEx()
 > nameEx("grid.layout")
 > ### * grid.layout
 > 
@@ -1557,6 +1591,29 @@ List of 6
 +                             width=unit(1, "inches"), height=unit(1, "inches")))
 > grid.show.viewport(viewport(layout.pos.row=2, layout.pos.col=2:3),
 +                    grid.layout(3, 4))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grid.stroke")
+> ### * grid.stroke
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.stroke
+> ### Title: Stroke or Fill a Path
+> ### Aliases: grid.stroke strokeGrob strokeGrob.grob strokeGrob.GridPath
+> ###   grid.fill fillGrob fillGrob.grob fillGrob.GridPath grid.fillStroke
+> ###   fillStrokeGrob fillStrokeGrob.grob fillStrokeGrob.GridPath as.path
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for stroking and filling
+> ##       nothing will be drawn
+> grid.newpage()
+> grid.stroke(textGrob("hello", gp=gpar(cex=10)))
+> grid.fill(circleGrob(1:2/3, r=.3), gp=gpar(fill=rgb(1,0,0,.5)))
 > 
 > 
 > 
@@ -2164,6 +2221,45 @@ $min$sum$mm
 > 
 > 
 > cleanEx()
+> nameEx("viewportTransform")
+> ### * viewportTransform
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: viewportTransform
+> ### Title: Define a Group Transformation
+> ### Aliases: viewportTransform viewportTranslate viewportScale
+> ###   viewportRotate defnTranslate defnScale defnRotate useTranslate
+> ###   useScale useRotate groupTranslate groupScale groupRotate groupShear
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for groups nothing will be drawn
+> grid.newpage()
+> ## Define and use group in same viewport
+> pushViewport(viewport(width=.2, height=.2))
+> grid.define(circleGrob(gp=gpar(lwd=5)), name="circle")
+> grid.use("circle")
+> popViewport()
+> ## Use group in viewport that is translated and scaled
+> pushViewport(viewport(x=.2, y=.2, width=.1, height=.1))
+> grid.use("circle")
+> popViewport()
+> ## Use group in viewport that is translated and scaled
+> ## BUT only make use of the translation
+> pushViewport(viewport(x=.2, y=.8, width=.1, height=.1))
+> grid.use("circle", transform=viewportTranslate)
+> popViewport()
+> ## Use group in viewport that is translated and scaled
+> ## unevenly (distorted)
+> pushViewport(viewport(x=.8, y=.7, width=.2, height=.4))
+> grid.use("circle")
+> popViewport()
+> 
+> 
+> 
+> cleanEx()
 > nameEx("viewports")
 > ### * viewports
 > 
@@ -2310,7 +2406,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.613 0.025 1.647 0 0 
+Time elapsed:  2.028 0.036 2.064 0 0 
 > grDevices::dev.off()
 null device 
           1 

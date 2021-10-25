@@ -17,7 +17,8 @@ SOURCES_C = \
 	Rdynload.c Renviron.c RNG.c \
 	agrep.c altclasses.c altrep.c apply.c arithmetic.c array.c attrib.c \
 	bind.c builtin.c \
-	character.c coerce.c colors.c complex.c connections.c context.c cum.c \
+	character.c clippath.c coerce.c \
+	colors.c complex.c connections.c context.c cum.c \
 	dcf.c datetime.c debug.c deparse.c devices.c \
 	dotcode.c dounzip.c dstruct.c duplicate.c \
 	edit.c engine.c envir.c errors.c eval.c \

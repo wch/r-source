@@ -10,11 +10,14 @@
   This function erases the current device or moves to a new page.
 }
 \usage{
-grid.newpage(recording = TRUE)
+grid.newpage(recording = TRUE, clearGroups = TRUE)
 }
 \arguments{
   \item{recording}{A logical value to indicate whether the new-page
     operation should be saved onto the Grid display list.}
+  \item{clearGroups}{A logical value indicating whether any groups
+    that have been defined on the current page should be
+    released (see \code{\link{grid.group}}).}
 }
 \details{
   The new page is painted with the fill colour

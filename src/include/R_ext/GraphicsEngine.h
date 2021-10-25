@@ -79,11 +79,16 @@ extern "C" {
  *             - masks
  *             Added deviceVersion
  * Version 14: Added deviceClip
+ * Version 15: For R 4.2.0
+ *             Added more graphical definitions
+ *             - groups
+ *             - paths
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
+#define R_GE_group       15
 
-#define R_GE_version R_GE_deviceClip
+#define R_GE_version R_GE_group
 
 int R_GE_getVersion(void);
 
@@ -283,6 +288,9 @@ struct _GEDevDesc {
 
     /* per-device setting for 'ask' (use NewFrameConfirm) */
     Rboolean ask;
+
+    /* Is a device appending a path ? */
+    Rboolean appending;
 };
 
 typedef GEDevDesc* pGEDevDesc;
@@ -576,6 +584,48 @@ double R_GE_tilingPatternY(SEXP pattern);
 double R_GE_tilingPatternWidth(SEXP pattern);
 double R_GE_tilingPatternHeight(SEXP pattern);
 int R_GE_tilingPatternExtend(SEXP pattern);
+
+/* Composition operators */
+/* Must match order in ../library/grid/R/group.R */
+/* Porter-Duff */
+#define R_GE_compositeClear 1
+#define R_GE_compositeSource 2
+#define R_GE_compositeOver 3
+#define R_GE_compositeIn 4
+#define R_GE_compositeOut 5
+#define R_GE_compositeAtop 6
+#define R_GE_compositeDest 7
+#define R_GE_compositeDestOver 8
+#define R_GE_compositeDestIn 9
+#define R_GE_compositeDestOut 10
+#define R_GE_compositeDestAtop 11
+#define R_GE_compositeXor 12
+/* Additional Porter-Duff */
+#define R_GE_compositeAdd 13
+#define R_GE_compositeSaturate 14
+/* PDF Blend Modes */
+#define R_GE_compositeMultiply 15
+#define R_GE_compositeScreen 16
+#define R_GE_compositeOverlay 17
+#define R_GE_compositeDarken 18
+#define R_GE_compositeLighten 19
+#define R_GE_compositeColorDodge 20
+#define R_GE_compositeColorBurn 21
+#define R_GE_compositeHardLight 22
+#define R_GE_compositeSoftLight 23
+#define R_GE_compositeDifference 24
+#define R_GE_compositeExclusion 25
+
+/* Path rules */
+/* Must match order in ../library/grid/R/path.R */
+#define R_GE_nonZeroWindingRule 1
+#define R_GE_evenOddRule        2
+
+int R_GE_clipPathFillRule(SEXP path);
+
+void GEStroke(SEXP path, const pGEcontext gc, pGEDevDesc dd);
+void GEFill(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
+void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
 
 #ifdef __cplusplus
 }

@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2019 The R Core Team
+ *  Copyright (C) 2019	     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,21 +17,22 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#include "grid.h"
+/* This should be regarded as part of the graphics engine */
 
-Rboolean isClipPath(SEXP clip) {
-    return Rf_inherits(clip, "GridClipPath");
-}
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
-SEXP resolveClipPath(SEXP path, pGEDevDesc dd) 
-{
-    SEXP resolveFn, R_fcall, result;
-    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
-    PROTECT(resolveFn = findFun(install("resolveClipPath"), R_gridEvalEnv));
-    PROTECT(R_fcall = lang2(resolveFn, path));
-    result = eval(R_fcall, R_gridEvalEnv);
-    setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
-    UNPROTECT(2);
-    return result;    
+#include <Defn.h>
+#include <R_ext/GraphicsEngine.h>
+
+/*
+ * C API for graphics devices to interrogate gradient SEXPs
+ *
+ * MUST match R structures in ../library/grDevices/R/clippath.R
+ */
+
+int R_GE_clipPathFillRule(SEXP path) {
+    return INTEGER(getAttrib(path, install("rule")))[0];
 }
 

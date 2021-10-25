@@ -115,6 +115,9 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(setPattern, 1),
     EXTDEF(setClipPath, 2),
     EXTDEF(setMask, 2),
+    EXTDEF(defineGroup, 3),
+    EXTDEF(useGroup, 2),
+    EXTDEF(devUp, 0),
     EXTDEF(devAskNewPage, 1),
 
 #ifdef _WIN32

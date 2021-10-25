@@ -81,6 +81,22 @@ export(
        "setChildren",
        "showGrob",
 
+       # Groups
+       "groupGrob", "grid.group",
+       "defineGrob", "grid.define",
+       "useGrob", "grid.use",
+       "groupTranslate", "groupRotate", "groupScale", "groupShear",
+       "defnTranslate", "defnRotate", "defnScale",
+       "useTranslate", "useRotate", "useScale",
+       "viewportTranslate", "viewportRotate", "viewportScale",
+       "viewportTransform",
+
+       # Paths
+       "as.path",
+       "strokeGrob", "grid.stroke",
+       "fillGrob", "grid.fill",
+       "fillStrokeGrob", "grid.fillStroke",
+    
        # Listing grobs and viewports
        "grid.ls",
        "nestedListing", "pathListing", "grobPathListing",
@@ -210,6 +226,9 @@ S3method("gridList", "up")
 S3method("grobCoords", "grob")
 S3method("grobCoords", "gList")
 S3method("grobCoords", "gTree")
+S3method("grobCoords", "GridStroke")
+S3method("grobCoords", "GridFill")
+S3method("grobCoords", "GridFillStroke")
 S3method("grobPoints", "move.to")
 S3method("grobPoints", "line.to")
 S3method("grobPoints", "circle")
@@ -225,6 +244,11 @@ S3method("grobPoints", "rect")
 S3method("grobPoints", "segments")
 S3method("grobPoints", "text")
 S3method("grobPoints", "xspline")
+S3method("grobPoints", "gList")
+S3method("grobPoints", "gTree")
+S3method("grobPoints", "GridStroke")
+S3method("grobPoints", "GridFill")
+S3method("grobPoints", "GridFillStroke")
 
 S3method("grobHeight", "grob")
 S3method("grobHeight", "gList")
@@ -454,3 +478,10 @@ S3method("unresolvePattern", "GridResolvedPattern")
 S3method("upgradeUnit", "unit")
 S3method("upgradeUnit", "unit.arithmetic")
 S3method("upgradeUnit", "unit.list")
+
+S3method("strokeGrob", "grob")
+S3method("strokeGrob", "GridPath")
+S3method("fillGrob", "grob")
+S3method("fillGrob", "GridPath")
+S3method("fillStrokeGrob", "grob")
+S3method("fillStrokeGrob", "GridPath")

@@ -110,6 +110,26 @@
     }
   }
 
+  \subsection{GRAPHICS}{
+    \itemize{
+      \item The graphics engine version, \code{R_GE_version}, has been
+      bumped to \code{15} and so packages that provide graphics devices
+      should be reinstalled.
+
+      \item The \pkg{grid} package has new functions for drawing
+      isolated groups: \code{grid.group()}, \code{grid.define()}, and
+      \code{grid.use()}.  These functions add compositing operators and
+      affine transformations to R's graphics capabilities.
+
+      The \pkg{grid} package also has new functions for stroking
+      and filling paths:  \code{grid.stroke()}, \code{grid.fill()},
+      and \code{grid.fillStroke()}.
+
+      These new features are only supported so far on the Cairo-based
+      graphics devices and on the \code{pdf()} device.
+    }
+  }
+  
   \subsection{INSTALLATION}{
     \itemize{
       \item Facilities for accessing \samp{ftp://} sites are no longer
