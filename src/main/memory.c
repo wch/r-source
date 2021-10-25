@@ -4617,6 +4617,8 @@ void *R_AllocStringBuffer(size_t blen, R_StringBuffer *buf)
     blen = (blen / bsize) * bsize;
     if(blen < blen1) blen += bsize;
 
+    /* Result may be accessed as `wchar_t *` and other types; malloc /
+      realloc guarantee correct memory alignment for all object types */
     if(buf->data == NULL) {
 	buf->data = (char *) malloc(blen);
 	if(buf->data)
