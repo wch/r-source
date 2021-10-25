@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
@@ -12,7 +12,7 @@
      caption = list("Residuals vs Fitted", "Normal Q-Q",
        "Scale-Location", "Cook's distance",
        "Residuals vs Leverage",
-       expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
+       expression("Cook's dist vs Leverage* " * h[ii] / (1 - h[ii]))),
      panel = if(add.smooth) function(x, y, ...)
               panel.smooth(x, y, iter=iter.smooth, ...) else points,
      sub.caption = NULL, main = "",
@@ -28,13 +28,21 @@
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
     \code{\link{glm}}.}
-  \item{which}{if a subset of the plots is required, specify a subset of
-    the numbers \code{1:6}, see \code{caption} below (and the
-    \sQuote{Details}) for the different kinds.}
+  \item{which}{a subset of the numbers \code{1:6}, by default \code{1:3, 5},
+    referring to \enumerate{
+      \item "Residuals vs Fitted", aka \sQuote{Tukey-Anscombe} plot. % 1
+      \item "Normal Q-Q" plot, an enhanced \code{\link{qqnorm}(resid(.))} % 2
+      \item "Scale-Location"     % 3
+      \item "Cook's distance"    % 4
+      \item "Residuals   vs  Leverage"      % 5
+      \item "Cook's dist vs Lev./(1-Lev.)"  % 6
+    },
+  see also \sQuote{Details} below.}
   \item{caption}{captions to appear above the plots;
     \code{\link{character}} vector or \code{\link{list}} of valid
     graphics annotations, see \code{\link{as.graphicsAnnot}}, of length
-    6, the j-th entry corresponding to \code{which[j]}.  Can be set to
+    6, the j-th entry corresponding to \code{which[j]}, see also the
+    default vector in \sQuote{Usage}.  Can be set to
     \code{""} or \code{NA} to suppress all captions.
   }
   \item{panel}{panel function.  The useful alternative to
@@ -87,37 +95,39 @@
   separate pages, or as a subtitle in the outer margin (if any) when
   there are multiple plots per page.
 
-  The \sQuote{Scale-Location} plot, also called \sQuote{Spread-Location} or
+  The \sQuote{Scale-Location} plot (\code{which=3}), also called \sQuote{Spread-Location} or
   \sQuote{S-L} plot, takes the square root of the absolute residuals in
   order to diminish skewness (\eqn{\sqrt{| E |}}{sqrt(|E|)} is much less skewed
   than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 
-  The \sQuote{S-L}, the Q-Q, and the Residual-Leverage plot, use
+  The \sQuote{S-L}, the Q-Q, and the Residual-Leverage (\code{which=5}) plot use
   \emph{standardized} residuals which have identical variance (under the
   hypothesis).  They are given as
   \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s * sqrt(1 - h.ii))}
-  where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
+  where the \emph{\sQuote{leverages}} \eqn{h_{ii}}{h.ii} are the diagonal entries
+  of the hat matrix,
   \code{\link{influence}()$hat} (see also \code{\link{hat}}), and
-  where the Residual-Leverage plot uses standardized Pearson residuals
+  where the Residual-Leverage plot uses the standardized Pearson residuals
   (\code{\link{residuals.glm}(type = "pearson")}) for \eqn{R[i]}.
 
-  The Residual-Leverage plot shows contours of equal Cook's distance,
+  The Residual-Leverage plot (\code{which=5}) shows contours of equal Cook's distance,
   for values of \code{cook.levels} (by default 0.5 and 1) and omits
   cases with leverage one with a warning.  If the leverages are constant
   (as is typically the case in a balanced \code{\link{aov}} situation)
   the plot uses factor level combinations instead of the leverages for
   the x-axis.  (The factor levels are ordered by mean fitted value.)
 
-  In the Cook's distance vs leverage/(1-leverage) plot, contours of
+  In the Cook's distance vs leverage/(1-leverage) (= \dQuote{leverage*}), contours of
   standardized residuals (\code{\link{rstandard}(.)}) that are equal in
-  magnitude are lines through the origin.  The contour lines are
-  labelled with the magnitudes.
+  magnitude are lines through the origin.  These lines are labelled with
+  the magnitudes.  The x-axis is labeled with the (non equidistant)
+  leverages \eqn{h_{ii}}{h.ii}.
 
   Notice that some plots may not make much sense for the \code{glm}
   case; e.g., the normal Q-Q plot only makes sense if the distribution
   is approximately normal.
-    
 }
+
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980).
   \emph{Regression Diagnostics}.

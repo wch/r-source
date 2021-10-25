@@ -21,7 +21,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	  caption = list("Residuals vs Fitted", "Normal Q-Q",
 	  "Scale-Location", "Cook's distance",
 	  "Residuals vs Leverage",
-	  expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
+	  expression("Cook's dist vs Leverage* " * h[ii] / (1 - h[ii]))),
 	  panel = if(add.smooth) function(x, y, ...)
               panel.smooth(x, y, iter=iter.smooth, ...) else points,
 	  sub.caption = NULL, main = "",
