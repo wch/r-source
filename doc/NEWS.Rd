@@ -107,6 +107,9 @@
       \item \code{substr(ch, start,end) <- new} now e.g., preserves
       \code{names(ch)}; ditto for \code{substring()}, thanks to a patch
       from Brodie Gaslam.
+
+      \item \code{plot(<lm>)} gains a \code{extend.ylim.f} argument, in
+      partial response to \PR{15285}.
     }
   }
 
@@ -129,7 +132,7 @@
       graphics devices and on the \code{pdf()} device.
     }
   }
-  
+
   \subsection{INSTALLATION}{
     \itemize{
       \item Facilities for accessing \samp{ftp://} sites are no longer

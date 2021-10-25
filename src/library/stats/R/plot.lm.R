@@ -31,7 +31,9 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	  add.smooth = getOption("add.smooth"),
           iter.smooth = if(isGlm # && binomialLike
                            ) 0 else 3,
-	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25)
+	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25
+        , extend.ylim.f = 0.08
+          )
 {
     dropInf <- function(x, h) {
 	if(any(isInf <- h >= 1.0)) {
@@ -138,7 +140,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
     if (show[1L]) {
 	ylim <- range(r, na.rm=TRUE)
 	if(id.n > 0)
-	    ylim <- extendrange(r = ylim, f = 0.08)
+	    ylim <- extendrange(r = ylim, f = extend.ylim.f)
         dev.hold()
 	plot(yh, r, xlab = l.fit, ylab = "Residuals", main = main,
 	     ylim = ylim, type = "n", ...)
@@ -203,7 +205,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
         ## ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
 	ylim <- range(rs, na.rm = TRUE)
 	if (id.n > 0) {
-	    ylim <- extendrange(r = ylim, f = 0.08)
+	    ylim <- extendrange(r = ylim, f = extend.ylim.f)
 	    show.rs <- order(-cook)[iid]
 	}
         do.plot <- TRUE

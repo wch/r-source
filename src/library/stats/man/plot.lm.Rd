@@ -23,7 +23,9 @@
      add.smooth = getOption("add.smooth"),
      iter.smooth = if(isGlm) 0 else 3,
      label.pos = c(4,2),
-     cex.caption = 1, cex.oma.main = 1.25)
+     cex.caption = 1, cex.oma.main = 1.25
+   , extend.ylim.f = 0.08
+     )
 }
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
@@ -78,6 +80,9 @@
   \item{cex.caption}{controls the size of \code{caption}.}
   \item{cex.oma.main}{controls the size of the \code{sub.caption} only if
     that is \emph{above} the figures when there is more than one.}
+  \item{extend.ylim.f}{a numeric vector of length 1 or 2, to be used in
+    \code{ylim <- \link{extendrange}(r=ylim, f = *)}
+    for plots \code{1} and \code{5} when \code{id.n} is non-empty.}
 }
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
