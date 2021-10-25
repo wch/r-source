@@ -109,7 +109,8 @@
       from Brodie Gaslam.
 
       \item \code{plot(<lm>)} gains a \code{extend.ylim.f} argument, in
-      partial response to \PR{15285}.
+      partial response to \PR{15285}; further \PR{17784} is fixed thanks to
+      several contributors and a patch by Elin Waring.
     }
   }
 

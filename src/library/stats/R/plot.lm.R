@@ -109,9 +109,9 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	show.r <- sort.list(abs(r), decreasing = TRUE)[iid]
 	if(any(show[2L:3L]))
 	    show.rs <- sort.list(abs(rs), decreasing = TRUE)[iid]
-	text.id <- function(x, y, ind, adj.x = TRUE) {
+	text.id <- function(x, y, ind, adj.x = TRUE, usr = par("usr")) {
 	    labpos <-
-                if(adj.x) label.pos[1+as.numeric(x > mean(range(x)))] else 3
+		if(adj.x) label.pos[(x > mean(usr[1:2]))+1L] else 3
 	    text(x, y, labels.id[ind], cex = cex.id, xpd = TRUE,
 		 pos = labpos, offset = 0.25)
 	}
@@ -261,8 +261,8 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                 title(sub = sub.caption, ...)
             if(length(cook.levels)) {
                 p <- x$rank # not length(coef(x))
-                usr <- par("usr")
-                hh <- seq.int(min(r.hat[1L], r.hat[2L]/100), usr[2L],
+                usr2 <- par("usr")[2L]
+                hh <- seq.int(min(r.hat[1L], r.hat[2L]/100), usr2,
                               length.out = 101)
                 for(crit in cook.levels) {
                     cl.h <- sqrt(crit*p*(1-hh)/hh)
@@ -271,7 +271,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                 }
                 legend("bottomleft", legend = "Cook's distance",
                        lty = 2, col = 2, bty = "n")
-                xmax <- min(0.99, usr[2L])
+                xmax <- min(0.99, usr2)
                 ymult <- sqrt(p*(1-xmax)/xmax)
                 aty <- sqrt(cook.levels)*ymult
                 axis(4, at = c(-rev(aty), aty),
@@ -331,7 +331,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	mtext(getCaption(6), 3, 0.25, cex = cex.caption)
 	if (id.n > 0) {
 	    show.r <- order(-cook)[iid]
-            text.id(g[show.r], cook[show.r], show.r)
+            text.id(g[show.r], cook[show.r], show.r, usr=usr)
         }
         dev.flush()
     }

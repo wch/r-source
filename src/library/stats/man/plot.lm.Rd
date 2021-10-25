@@ -76,7 +76,7 @@
     observations, but also for other models where the response
     distribution can be highly skewed.}
   \item{label.pos}{positioning of labels, for the left half and right
-    half of the graph respectively, for plots 1-3.}
+    half of the graph respectively, for plots 1-3, 5, 6.}
   \item{cex.caption}{controls the size of \code{caption}.}
   \item{cex.oma.main}{controls the size of the \code{sub.caption} only if
     that is \emph{above} the figures when there is more than one.}
