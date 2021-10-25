@@ -1,7 +1,7 @@
 #  File src/library/stats/R/plot.lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -78,9 +78,12 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
     if (any(show[c(2L,3L,5L)])) {
         ## (Defensive programming used when fusing code for 2:3 and 5)
 	ylab5 <- ylab23 <- if(isGlm) "Std. Pearson resid." else "Standardized residuals"
-	r.w <- if (is.null(w)) r else sqrt(w) * r
+	## nowhere used:  r.w <- if(is.null(w)) r else sqrt(w) * r
         ## NB: rs is already NaN if r=0, hii=1
-	rsp <- rs <- dropInf( if (isGlm) rstandard(x, type="pearson") else r.w/(s * sqrt(1 - hii)), hii )
+        rs <- dropInf(if(isGlm) rstandard(x, type="pearson")
+                      else # r.w / (s*sqrt(1 - hii))
+                          (if(is.null(w)) r else sqrt(w) * r) / (s * sqrt(1 - hii)),
+                      hii)
     }
 
     if (any(show[5L:6L])) { # using 'leverages'
@@ -91,7 +94,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
     if (any(show[c(1L, 3L)]))
 	l.fit <- if (isGlm) "Predicted values" else "Fitted values"
     if (is.null(id.n))
-	id.n <- 0
+	id.n <- 0L
     else {
 	id.n <- as.integer(id.n)
 	if(id.n < 0L || id.n > n)
@@ -198,13 +201,10 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
     if (show[5L]) {
         ### Now handled earlier, consistently with 2:3, except variable naming
         ## ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
-        ## r.w <- residuals(x, "pearson")
-        ## if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
- 	## rsp <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
-	ylim <- range(rsp, na.rm = TRUE)
+	ylim <- range(rs, na.rm = TRUE)
 	if (id.n > 0) {
 	    ylim <- extendrange(r = ylim, f = 0.08)
-	    show.rsp <- order(-cook)[iid]
+	    show.rs <- order(-cook)[iid]
 	}
         do.plot <- TRUE
         if(isConst.hat) { ## leverages are all the same
@@ -224,7 +224,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                 facval <- (dm-1) %*% ff
                 xx <- facval # for use in do.plot section.
                 dev.hold()
-                plot(facval, rsp, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
+                plot(facval, rs, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
                      ylim = ylim, xaxt = "n",
                      main = main, xlab = "Factor Level Combinations",
                      ylab = ylab5, type = "n", ...)
@@ -232,7 +232,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                      labels = x$xlevels[[1L]])
                 mtext(paste(facvars[1L],":"), side = 1, line = 0.25, adj=-.05)
                 abline(v = ff[1L]*(0:nlev[1L]) - 1/2, col="gray", lty="F4")
-                panel(facval, rsp, ...)
+                panel(facval, rs, ...)
                 abline(h = 0, lty = 3, col = "gray")
                 dev.flush()
             }
@@ -244,16 +244,16 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                 do.plot <- FALSE
             }
         }
-        else { ## Residual vs Leverage
+        else { ## Residual ('rs') vs Leverage
             xx <- hii
             ## omit hatvalues of 1.
             xx[xx >= 1] <- NA
 
             dev.hold()
-            plot(xx, rsp, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
+            plot(xx, rs, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
                  main = main, xlab = "Leverage", ylab = ylab5, type = "n",
                  ...)
-            panel(xx, rsp, ...)
+            panel(xx, rs, ...)
             abline(h = 0, v = 0, lty = 3, col = "gray")
             if (one.fig)
                 title(sub = sub.caption, ...)
@@ -282,9 +282,9 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	if (do.plot) {
 	    mtext(getCaption(5), 3, 0.25, cex = cex.caption)
 	    if (id.n > 0) {
-		y.id <- rsp[show.rsp]
+		y.id <- rs[show.rs]
 		y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
-		text.id(xx[show.rsp], y.id, show.rsp)
+		text.id(xx[show.rs], y.id, show.rs)
 	    }
 	}
     }
@@ -297,7 +297,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
              xlab = expression("Leverage  " * h[ii]),
 	     xaxt = "n", type = "n", ...)
 	panel(g, cook, ...)
-        ## Label axis with h_ii values
+        ## Label axis with h_ii values, instead of h_ii / (1 - h_ii):
 	athat <- pretty(hii)
 	axis(1, at = athat/(1-athat), labels = paste(athat))
 	if (one.fig)
