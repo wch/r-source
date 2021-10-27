@@ -4981,11 +4981,11 @@ platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
 URLs.} that vary by build but are not documented.  Several recent
 versions of @command{pandoc} for macOS did not work on @R{}'s target of
-High Sierra (and this too was undocumented): at the time of writing both
-@samp{2.7.3} and @samp{2.14.0.1} did.  (Currently @command{pandoc} is
-only available for Intel macOS but that build works well enough on
-@cputype{arm64} machines.)  Another example is the Rust compilation
-system (@command{cargo} and @command{rustc}).
+High Sierra (and this too was undocumented): at the time of writing
+@samp{2.7.3} and @samp{2.14.0} and later did.  (Currently
+@command{pandoc} is only available for Intel macOS but that build works
+well enough on @cputype{arm64} machines.)  Another example is the Rust
+compilation system (@command{cargo} and @command{rustc}).
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
