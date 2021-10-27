@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-10-24 r81094) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-10-25 r81105) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2231,6 +2231,7 @@ $min$sum$mm
 > ### Aliases: viewportTransform viewportTranslate viewportScale
 > ###   viewportRotate defnTranslate defnScale defnRotate useTranslate
 > ###   useScale useRotate groupTranslate groupScale groupRotate groupShear
+> ###   groupFlip
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -2406,7 +2407,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.028 0.036 2.064 0 0 
+Time elapsed:  1.924 0.012 1.936 0 0 
 > grDevices::dev.off()
 null device 
           1 

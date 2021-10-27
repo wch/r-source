@@ -18,13 +18,14 @@
 \alias{groupScale}
 \alias{groupRotate}
 \alias{groupShear}
+\alias{groupFlip}
 \title{ Define a Group Transformation }
 \description{
   These functions define the transformation that will be applied
   when a \code{grid.define()}d group is \code{grid.use()}d.
 }
 \usage{
-viewportTransform(group, shear=groupShear(0, 0), \dots) 
+viewportTransform(group, shear=groupShear(), flip=groupFlip(), \dots) 
 viewportTranslate(group, \dots)
 viewportScale(group, \dots)
 viewportRotate(group, \dots)
@@ -34,10 +35,11 @@ defnRotate(group, inverse=FALSE, \dots)
 useTranslate(group, inverse=FALSE, \dots)
 useScale(group, inverse=FALSE, \dots)
 useRotate(group, inverse=FALSE, \dots)
-groupTranslate(dx, dy)
-groupRotate(r)
-groupScale(sx, sy)
-groupShear(sx, sy)
+groupTranslate(dx=0, dy=0)
+groupRotate(r=0)
+groupScale(sx=1, sy=1)
+groupShear(sx=0, sy=0)
+groupFlip(flipX=FALSE, flipY=FALSE)
 }
 \arguments{
   \item{group}{The group that is being transformed.}
@@ -45,9 +47,12 @@ groupShear(sx, sy)
     forward or backward transformation.}
   \item{shear}{An affine transformation matrix that describes
     a shear transformation.}
+  \item{flip}{An affine transformation matrix that describes
+    a scaling inversion.}
   \item{dx, dy}{The translation to apply.}
   \item{r}{The rotation to apply.}
   \item{sx, sy}{The scaling (or shear) to apply.}
+  \item{flipX, flipY}{Whether to negate the x-scaling or y-scaling (logical).}
   \item{\dots}{Arguments passed on to lower-level transformation functions.}
 }
 \value{

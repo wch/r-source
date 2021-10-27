@@ -99,7 +99,7 @@ lookupGroup <- function(name) {
 ##########################
 ## Transforms (for grid.use())
 
-groupTranslate <- function(dx, dy) {
+groupTranslate <- function(dx=0, dy=0) {
     translate <- diag(3)
     translate[3, 1] <- dx
     translate[3, 2] <- dy
@@ -130,7 +130,7 @@ viewportTranslate <- function(group, ...) {
     defnTranslate(group, inverse=TRUE) %*% useTranslate(group)
 }
 
-groupRotate <- function(r) {
+groupRotate <- function(r=0) {
     ## Account for devices that have origin at top-left
     if (!.devUp()) r <- -r
     rotate <- diag(3)
@@ -172,7 +172,7 @@ viewportRotate <- function(group, ...) {
     }
 }
 
-groupScale <- function(sx, sy) {
+groupScale <- function(sx=1, sy=1) {
     scale <- diag(3)
     scale[1, 1] <- sx
     scale[2, 2] <- sy
@@ -199,7 +199,7 @@ viewportScale <- function(group, ...) {
         defnTranslate(group)
 }
 
-groupShear <- function(sx, sy) {
+groupShear <- function(sx=0, sy=0) {
     ## Account for devices that have origin at top-left
     if (!.devUp()) { sx <- -sx; sy <- -sy }
     shear <- diag(3)
@@ -208,9 +208,21 @@ groupShear <- function(sx, sy) {
     shear        
 }
 
-viewportTransform <- function(group, shear=groupShear(0, 0), ...) {
+groupFlip <- function(flipX=FALSE, flipY=FALSE) {
+    flip <- diag(3)
+    if (flipX)
+        flip[1, 1] <- -1
+    if (flipY)
+        flip[2, 2] <- -1
+    flip
+}
+
+viewportTransform <- function(group,
+                              shear=groupShear(),
+                              flip=groupFlip(), ...) {
     r <- current.rotation()
     defnTranslate(group, inverse=TRUE) %*%
+        flip %*%
         useScale(group) %*%
         shear %*%
         groupRotate(r - group$r) %*%

@@ -85,7 +85,7 @@ export(
        "groupGrob", "grid.group",
        "defineGrob", "grid.define",
        "useGrob", "grid.use",
-       "groupTranslate", "groupRotate", "groupScale", "groupShear",
+       "groupTranslate", "groupRotate", "groupScale", "groupShear", "groupFlip",
        "defnTranslate", "defnRotate", "defnScale",
        "useTranslate", "useRotate", "useScale",
        "viewportTranslate", "viewportRotate", "viewportScale",
