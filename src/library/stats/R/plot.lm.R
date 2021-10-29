@@ -28,6 +28,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	  ask = prod(par("mfcol")) < length(which) && dev.interactive(), ...,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
 	  qqline = TRUE, cook.levels = c(0.5, 1.0),
+          cook.col = 8, cook.lty = 2, cook.legendChanges = list(),
 	  add.smooth = getOption("add.smooth"),
           iter.smooth = if(isGlm # && binomialLike
                            ) 0 else 3,
@@ -266,18 +267,22 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                               length.out = 101)
                 for(crit in cook.levels) {
                     cl.h <- sqrt(crit*p*(1-hh)/hh)
-                    lines(hh, cl.h, lty = 2, col = 2)
-                    lines(hh,-cl.h, lty = 2, col = 2)
+                    lines(hh, cl.h, lty = cook.lty, col = cook.col)
+                    lines(hh,-cl.h, lty = cook.lty, col = cook.col)
                 }
-                legend("bottomleft", legend = "Cook's distance",
-                       lty = 2, col = 2, bty = "n")
+		if(!is.null(cook.legendChanges))
+		    do.call(legend, modifyList(
+				list(x = "bottomleft", legend = "Cook's distance = c",
+				     lty = cook.lty, col = cook.col, text.col = cook.col,
+				     bty = "n", adj = 0.1, y.intersp = 1/8),
+				cook.legendChanges))
                 xmax <- min(0.99, usr2)
                 ymult <- sqrt(p*(1-xmax)/xmax)
                 aty <- sqrt(cook.levels)*ymult
                 axis(4, at = c(-rev(aty), aty),
                      labels = paste(c(rev(cook.levels), cook.levels)),
                      mgp = c(.25,.25,0), las = 2, tck = 0,
-                     cex.axis = cex.id, col.axis = 2)
+                     cex.axis = cex.id, col.axis = cook.col)
             }
             dev.flush()
         } # if(const h_ii) .. else ..
@@ -315,12 +320,12 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	    if(p*ymax > bi2*xmax) {
 		xi <- xmax + strwidth(" ")/3
 		yi <- bi2*xi/p
-		abline(0, bi2, lty = 2)
+		abline(0, bi2, lty = cook.lty)
 		text(xi, yi, paste(bval[i]), adj = 0, xpd = TRUE)
 	    } else {
 		yi <- ymax - 1.5*strheight(" ")
 		xi <- p*yi/bi2
-		lines(c(0, xi), c(0, yi), lty = 2)
+		lines(c(0, xi), c(0, yi), lty = cook.lty)
 		text(xi, ymax-0.8*strheight(" "), paste(bval[i]),
 		     adj = 0.5, xpd = TRUE)
 	    }

@@ -111,6 +111,9 @@
       \item \code{plot(<lm>)} gains a \code{extend.ylim.f} argument, in
       partial response to \PR{15285}; further \PR{17784} is fixed thanks to
       several contributors and a patch by Elin Waring.
+      The Cook's dist contours get customizable via \code{cook.col} and
+      \code{cook.lty} with a different default color and their legend is
+      nicer by default and customizable via \code{cook.legendChanges}.
     }
   }
 

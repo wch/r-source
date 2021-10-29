@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-10-28 r81109) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -9188,7 +9188,7 @@ it = 10 -2.083333 -2.083333
 > 
 > ### Name: lm
 > ### Title: Fitting Linear Models
-> ### Aliases: lm
+> ### Aliases: lm print.lm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -11152,6 +11152,8 @@ Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
+Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  : 
+  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
 > o2 <- options(digits = 10) # more accuracy for 'trace'
 > ## central differencing works here typically (PR#18165: not converging on *some*):
 > ctr2 <- nls.control(nDcentral=TRUE, tol = 8e-8, # <- even smaller than above
@@ -12110,7 +12112,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ## 4 plots on 1 page;
 > ## allow room for printing model formula in outer margin:
-> par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
+> par(mfrow = c(2, 2), oma = c(0, 0, 2, 0)) -> opar
 > plot(lm.SR)
 > plot(lm.SR, id.n = NULL)                 # no id's
 > plot(lm.SR, id.n = 5, labels.id = NULL)  # 5 id numbers
@@ -12119,20 +12121,34 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > ## Cook's distances instead of Residual-Leverage plot
 > plot(lm.SR, which = 1:4)
 > 
-> ## Fit a smooth curve, where applicable:
-> plot(lm.SR, panel = panel.smooth)
-> ## Gives a smoother curve
+> ## All the above fit a smooth curve where applicable
+> ## by default unless "add.smooth" is changed.
+> ## Give a smoother curve by increasing the lowess span :
 > plot(lm.SR, panel = function(x, y) panel.smooth(x, y, span = 1))
 > 
-> par(mfrow = c(2,1))  # same oma as above
+> par(mfrow = c(2,1)) # same oma as above
 > plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")
+> 
+> ## Cook's distance tweaking; col / "legend" suppressed here
+> par(mfrow = c(2,3)) # same oma ...
+> plot(lm.SR, which = 1:6, cook.col = "royalblue")
+> 
+> ## A case where over plotting of the "legend" is to be avoided:
+> if(dev.interactive()) getOption("device")(height = 6, width = 4)
+> par(mfrow= c(3,1), mar= c(5,5,4,2)/2 +.1, mgp= c(1.4, .5, 0))
+> plot(lm.SR, which=5, extend.ylim.f = c(0.2, 0.08))
+> plot(lm.SR, which=5, cook.lty="dotdash",
++      cook.legendChanges = list(x = "bottomright"))
+> plot(lm.SR, which=5, cook.legendChanges=NULL)# no "legend"
 > 
 > ## Don't show: 
 > ## An example with *long* formula that needs abbreviation:
+> par(mfrow = c(2,2))
 > for(i in 1:5) assign(paste("long.var.name", i, sep = "."), runif(10))
 > plot(lm(long.var.name.1 ~
 +         long.var.name.2 + long.var.name.3 + long.var.name.4 + long.var.name.5))
 > ## End(Don't show)
+> par(opar) # reset par()s
 > 
 > 
 > 
@@ -19186,7 +19202,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.667 0.249 7.957 0 0 
+Time elapsed:  4.106 0.165 4.388 0 0 
 > grDevices::dev.off()
 null device 
           1 
