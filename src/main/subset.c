@@ -93,6 +93,13 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
 	}					  \
     } while (0)
 
+static void NORET errorcallNotSubsettable(SEXP x, SEXP call)
+{
+    SEXP cond = R_makeNotSubsettableError(x, call);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
 SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
 {
     if (x == R_NilValue)
@@ -152,7 +159,7 @@ SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
     case LANGSXP:
 	/* cannot happen: LANGSXPs are coerced to lists */
     default:
-	errorcall(call, R_MSG_ob_nonsub, type2char(mode));
+	errorcallNotSubsettable(x, call);
     }
     UNPROTECT(1); /* result */
     return result;
@@ -814,7 +821,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(px = x, i = 0 ; px != R_NilValue ; px = CDR(px))
 	    SET_VECTOR_ELT(ax, i++, CAR(px));
     }
-    else errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+    else errorcallNotSubsettable(x, call);
 
     /* This is the actual subsetting code. */
     /* The separation of arrays and matrices is purely an optimization. */
@@ -984,7 +991,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* back to the regular program */
     if (!(isVector(x) || isList(x) || isLanguage(x)))
-	errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+	errorcallNotSubsettable(x, call);
 
 #ifndef SWITCH_TO_REFCNT
     int named_x;
@@ -1377,7 +1384,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	errorcall(call, "$ operator is invalid for atomic vectors");
     }
     else /* e.g. a function */
-	errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+	errorcallNotSubsettable(x, call);
     UNPROTECT(2); /* input, x */
     return R_NilValue;
 }

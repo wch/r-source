@@ -290,6 +290,13 @@ x$name <- value
   nothing.
 }
 
+\section{Error conditions}{
+  Attempting to apply a subsetting operation to objects for which this is
+  not possible singals an error of class
+  \code{notSubsettableError}. The \code{object} component of the error
+  condition contains the non-subsettable object. 
+}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

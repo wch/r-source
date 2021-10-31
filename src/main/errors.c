@@ -2578,3 +2578,101 @@ SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
     R_ToplevelContext->handlerstack = R_HandlerStack;
     return R_NilValue;
 }
+
+
+/* signaling conditions from C code */
+
+void attribute_hidden R_signalCondition(SEXP cond, SEXP call,
+					int restoreHandlerStack,
+					int exitOnly)
+{
+    if (restoreHandlerStack) {
+	SEXP oldstack = R_HandlerStack;
+	PROTECT(oldstack);
+	R_signalCondition(cond, call, FALSE, exitOnly);
+	R_HandlerStack = oldstack;
+	UNPROTECT(1); /* oldstack */
+    }
+    else {
+	SEXP list;
+	while ((list = findConditionHandler(cond)) != R_NilValue) {
+	    SEXP entry = CAR(list);
+	    R_HandlerStack = CDR(list);
+	    if (IS_CALLING_ENTRY(entry)) {
+		SEXP h = ENTRY_HANDLER(entry);
+		if (h == R_RestartToken)
+		    break;
+		else if (! exitOnly) {
+		    R_CheckStack();
+		    SEXP hcall = LCONS(h, LCONS(cond, R_NilValue));
+		    PROTECT(hcall);
+		    eval(hcall, R_GlobalEnv);
+		    UNPROTECT(1); /* hcall */
+		}
+	    }
+	    else gotoExitingHandler(cond, call, entry);
+	}
+    }
+}
+
+attribute_hidden
+void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
+{
+    /* caller must make sure that 'cond' and 'call' are protected. */
+    R_signalCondition(cond, call, FALSE, exitOnly);
+
+    /* the first element of 'cond' must be a scalar string to be used
+       as the error message in default error processing. */
+    if (TYPEOF(cond) != VECSXP || LENGTH(cond) == 0)
+	error(_("condition object must be a VECSXP of length at least one"));
+    SEXP elt = VECTOR_ELT(cond, 0);
+    if (TYPEOF(elt) != STRSXP || LENGTH(elt) != 1)
+	error(_("first element of condition object must be a scalar string"));
+    
+    /* handler stack has been unwound so this uses the default handler */
+    errorcall(call, "%s", CHAR(STRING_ELT(elt, 0)));
+}
+
+attribute_hidden
+void NORET R_signalErrorCondition(SEXP cond, SEXP call)
+{
+    R_signalErrorConditionEx(cond, call, FALSE);
+}
+
+
+/* creating internal error conditions */
+
+/* use a static global buffer to create messages for the error
+   condition objects to save stack space */
+static char emsg_buf[BUFSIZE];
+
+attribute_hidden
+SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
+{
+    if (call == R_CurrentExpression)
+	/* behave like error() */
+	call = getCurrentCall();
+
+    SEXP cond = allocVector(VECSXP, 3);
+    PROTECT(cond);
+    Rsnprintf_mbcs(emsg_buf, BUFSIZE - 1,  R_MSG_ob_nonsub,
+		   type2char(TYPEOF(x)));
+    SET_VECTOR_ELT(cond, 0, mkString(emsg_buf));
+    SET_VECTOR_ELT(cond, 1, call);
+    SET_VECTOR_ELT(cond, 2, x);
+    
+    SEXP names = allocVector(STRSXP, 3);
+    setAttrib(cond, R_NamesSymbol, names);
+    SET_STRING_ELT(names, 0, mkChar("message"));
+    SET_STRING_ELT(names, 1, mkChar("call"));
+    SET_STRING_ELT(names, 2, mkChar("object"));
+
+    SEXP klass = allocVector(STRSXP, 3);
+    setAttrib(cond, R_ClassSymbol, klass);
+    SET_STRING_ELT(klass, 0, mkChar("notSubsettableError"));
+    SET_STRING_ELT(klass, 1, mkChar("error"));
+    SET_STRING_ELT(klass, 2, mkChar("condition"));
+
+    UNPROTECT(1); /* cond */
+    return cond;
+}

@@ -2051,6 +2051,8 @@ void NORET ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);    // including deparse()ing
 SEXP R_GetTracebackOnly(int);// no        deparse()ing
+void NORET R_signalErrorCondition(SEXP cond, SEXP call);
+SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
 
 R_size_t R_GetMaxVSize(void);
 void R_SetMaxVSize(R_size_t);

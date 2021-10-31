@@ -1573,6 +1573,14 @@ SEXP attribute_hidden do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign_dflt(call, op, ans, rho);
 }
 
+static void NORET errorNotSubsettable(SEXP x)
+{
+    SEXP call = R_CurrentExpression; /* behave like error() */
+    SEXP cond = R_makeNotSubsettableError(x, call);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
 SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP subs, x, y;
@@ -1653,7 +1661,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+	errorNotSubsettable(x);
 	break;
     }
 
@@ -2055,7 +2063,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(x);
 	PROTECT(xup);
     }
-    else error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+    else errorNotSubsettable(x);
 
     if(recursed) {
 	if (isVectorList(xup)) {
@@ -2181,7 +2189,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	     TYPEOF(x) == CLOSXP ||
 	     TYPEOF(x) == SPECIALSXP ||
 	     TYPEOF(x) == BUILTINSXP) {
-	error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
+	errorNotSubsettable(x);
     }
     else {
 	R_xlen_t i, imatch, nx;

@@ -114,6 +114,11 @@
       The Cook's dist contours get customizable via \code{cook.col} and
       \code{cook.lty} with a different default color and their legend is
       nicer by default and customizable via \code{cook.legendChanges}.
+
+      \item Attempting to subset an object that is not subsettable now
+      signals an error of class \code{notSubsettableError}. The
+      non-subsettable object is contained in the \code{object} field of
+      the error condition.
     }
   }
 
