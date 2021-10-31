@@ -334,6 +334,8 @@ current.rotation <- function() {
 # (rather than the whole device) if they want to.
 grid.newpage <- function(recording=TRUE,
                          clearGroups=TRUE) {
+    if (length(as.logical(clearGroups)) != 1)
+        stop("Invalid 'clearGroups' argument")
     for (fun in getHook("before.grid.newpage"))  {
         if(is.character(fun)) fun <- get(fun)
         try(fun())
