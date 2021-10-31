@@ -315,6 +315,10 @@
       \item Initialization of self-starting models with pre-R-4.1.0 API
       initialization functions (missing the \code{...} argument) for now
       works again, with a deprecation warning.
+
+      \item Fix for drawing semitransparent lines and fills on native
+      Windows graphics device (\PR{18219} and \PR{16694}).  Thanks to
+      Nick Ray for helpful diagnosis on Bugzilla.
     }
   }
 }
