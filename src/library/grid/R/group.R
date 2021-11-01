@@ -302,6 +302,12 @@ drawDetails.GridUse <- function(x, recording) {
         warning(paste0("Unknown group: ", x$group))
     else {
         transform <- x$transform(group)
+        if (!is.matrix(transform) ||
+            !is.numeric(transform) ||
+            !all(dim(transform) == 3)) {
+            warning("Invalid transform (nothing drawn)")
+            return()
+        }
         .useGroup(group$ref, transform)
     }
 }
