@@ -5,6 +5,16 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.1.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Initialization of self-starting models with pre-R-4.1.0 API
+      initialization functions (missing the \code{...} argument) for now
+      works again, with a deprecation warning.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.1.2}{
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
