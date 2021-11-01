@@ -83,9 +83,9 @@ nzchar(x, keepNA = FALSE)
   Names, dims and dimnames are copied from the input.
 
   For \code{nzchar}, a logical vector of the same length as \code{x},
-  true if and only if the element has non-zero length; if the element is
+  true if and only if the element has non-zero size; if the element is
   \code{NA}, \code{nzchar()} is true when \code{keepNA} is false (the
-  default) and \code{NA} otherwise.
+  default) or \code{NA}, and \code{NA} otherwise.
 }
 \note{
   This does \strong{not} by default give the number of characters that
@@ -151,6 +151,11 @@ nchar(x)
 
 nchar(deparse(mean))
 # 18 17  <-- unless mean differs from base::mean
+
+## NA behaviour as function of keepNA=* :
+logi <- setNames(, c(FALSE, NA, TRUE))
+sapply(logi, \(k) data.frame(nchar =  nchar (NA, keepNA=k),
+                             nzchar = nzchar(NA, keepNA=k)))
 
 x[3] <- NA; x
 nchar(x, keepNA= TRUE) #  5  6 NA  1 15

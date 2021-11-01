@@ -23,10 +23,12 @@ xngettext(dir, verbose = FALSE)
 xgettext2pot(dir, potFile, name = "R", version, bugs)
 }
 \arguments{
-  \item{dir}{the directory of a source package.}
+  \item{dir}{the directory of a source package, i.e., with a \file{./R} sub
+    directory.}
   \item{verbose}{logical: should each file be listed as it is processed?}
-  \item{asCall}{logical: if \code{TRUE} each argument is returned whole,
-    otherwise the strings within each argument are extracted.}
+  \item{asCall}{logical: if \code{TRUE} each argument is converted to
+    string and returned whole, otherwise the string literals within each
+    argument are extracted (recursively). See Examples.}
 
   \item{potFile}{name of \code{po} template file to be produced.
     Defaults to \file{R-\var{pkgname}.pot} where
@@ -41,13 +43,14 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
   \code{warning}, and \code{message}, as it is by the internal code that
   passes strings for translation.
 
-  We look to see if these functions were called with \code{domain = NA}
-  and if so omit the call if \code{asCall = TRUE}: note that the
-  call might contain a call to \code{gettext} which would be visible if
-  \code{asCall = FALSE}.
+  We look to see if the matched functions were called with
+  \code{domain = NA}.  If so, when \code{asCall} is true, the whole call
+  is omitted.  Note that a call might contain a nested call
+  to \code{gettext} (or \code{warning}, etc.) whose strings would be visible
+  if \code{asCall} is false.
 
   \code{xgettext2pot} calls \code{xgettext} and then \code{xngettext},
-  and writes a PO template file for use with the \pkg{GNU Gettext}
+  and writes a PO template file (to \code{potFile}) for use with the \pkg{GNU Gettext}
   tools.  This ensures that the strings for simple translation are
   unique in the file (as \pkg{GNU Gettext} requires), but does not do so
   for \code{ngettext} calls (and the rules are not stated in the Gettext
@@ -60,15 +63,45 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
 \value{
   For \code{xgettext}, a list of objects of class \code{"xgettext"}
   (which has a \code{print} method), one per source file that
-  potentially contains translatable strings.
+  contains potentially translatable strings.
 
   For \code{xngettext}, a list of objects of class \code{"xngettext"},
-  which are themselves lists of length-2 character strings.
+  which are themselves lists of length-2 character vectors.
 }
 \seealso{
   \code{\link{update_pkg_po}()} which calls \code{xgettext2pot()}.
 }
 \examples{\dontrun{## in a source-directory build of R:
 xgettext(file.path(R.home(), "src", "library", "splines"))
-}}
+}% dont..
+
+## Create source package-like  <tmp>/R/foo.R  and get text from it:
+tmpPkg <- tempdir()
+tmpRDir <- file.path(tmpPkg, "R")
+dir.create(tmpRDir, showWarnings = FALSE)
+fnChar <- paste(sep = "\n",
+  "foo <- function(x) {",
+  "  if (x < -1)  stop('too small')",
+  "  # messages unduplicated (not so for ngettext)",
+  "  if (x < -.5) stop('too small')",
+  "  if (x < 0) {",
+  "    warning(",
+  "      'sqrt(x) is', sqrt(as.complex(x)),",
+  "      ', which may be too small'",
+  "    )",
+  "  }",
+  "  # calls with domain=NA are skipped",
+  "  if (x == 0) cat(gettext('x is 0!\n', domain=NA))",
+  "  # gettext strings may be ignored due to 'outer' domain=NA",
+  "  if (x > 10) stop('x is ', gettextf('\%.2f', x), domain=NA)",
+  "  x",
+  "}")
+
+writeLines(fnChar, con = file.path(tmpRDir, "foo.R"))
+
+xgettext(tmpPkg, asCall=TRUE)  # default; shows ' sqrt(as.complex(x) '
+xgettext(tmpPkg, asCall=FALSE) # doesn't ; but then ' \%.2f '
+
+unlink(tmpRDir, recursive=TRUE)
+}
 \keyword{ utilities }
