@@ -101,8 +101,9 @@ fnChar <- paste(sep = "\n",
 
 writeLines(fnChar, con = file.path(tmpRDir, "foo.R"))
 
-xgettext(tmpPkg, asCall=TRUE)  # default; shows ' sqrt(as.complex(x) '
-xgettext(tmpPkg, asCall=FALSE) # doesn't ; but then ' \%.2f '
+## [[1]] : suppressing (tmpfile) name to make example Rdiff-able
+xgettext(tmpPkg, asCall=TRUE )[[1]] # default; shows  ' sqrt(as.complex(x)) '
+xgettext(tmpPkg, asCall=FALSE)[[1]] # doesn't ; but then ' \%.2f '
 
 unlink(tmpRDir, recursive=TRUE)
 }
