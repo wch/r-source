@@ -292,7 +292,7 @@ x$name <- value
 
 \section{Error conditions}{
   Attempting to apply a subsetting operation to objects for which this is
-  not possible singals an error of class
+  not possible signals an error of class
   \code{notSubsettableError}. The \code{object} component of the error
   condition contains the non-subsettable object. 
 }

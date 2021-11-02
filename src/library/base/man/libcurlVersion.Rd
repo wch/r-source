@@ -52,7 +52,7 @@ libcurlVersion()
   \code{libcurl} used with \R uses SecureTransport on macOS, OpenSSL on
   Windows and GnuTLS, NSS or OpenSSL on Unix-alikes.  (At the time of
   writing Debian-based Linuxen use GnuTLS and RedHat-based ones use
-  OpenSSL, having previouly used NSS.)
+  OpenSSL, having previously used NSS.)
 }
 \examples{
 libcurlVersion()
