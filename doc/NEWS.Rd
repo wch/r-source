@@ -322,9 +322,9 @@
 \section{\Rlogo CHANGES IN R 4.1.2 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item Initialization of self-starting models with pre-R-4.1.0 API
-      initialization functions (missing the \code{...} argument) for now
-      works again, with a deprecation warning.
+      \item Initialization of self-starting \code{nls()] models with
+	pre-R-4.1.0-API initialization functions (missing the \code{...}
+	argument) works again for now, with a deprecation warning.
     }
   }
 }
