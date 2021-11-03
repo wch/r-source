@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snow.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -247,17 +247,18 @@ findRecvOneTag <- function(cl, anytag) {
          enterSend = function(...) {},
          enterRecv = function(...) {})
 
+### NWS support no longer exists in snow
 
-closeNode.NWSnode <- function(node) snow::closeNode.NWSnode(node)
+##closeNode.NWSnode <- function(node) snow::closeNode.NWSnode(node)
 
 recvData.MPInode <- function(node) snow::recvData.MPInode(node)
-recvData.NWSnode <- function(node) snow::recvData.NWSnode(node)
+##recvData.NWSnode <- function(node) snow::recvData.NWSnode(node)
 
 recvOneData.MPIcluster <- function(cl) snow::recvOneData.MPIcluster(cl)
-recvOneData.NWScluster <- function(cl) snow::recvOneData.NWScluster(cl)
+##recvOneData.NWScluster <- function(cl) snow::recvOneData.NWScluster(cl)
 
 sendData.MPInode <- function(node, data) snow::sendData.MPInode(node, data)
-sendData.NWSnode <- function(node, data) snow::sendData.NWSnode(node, data)
+##sendData.NWSnode <- function(node, data) snow::sendData.NWSnode(node, data)
 
 ## these use NextMethod() so need copies.
 stopCluster.MPIcluster <- function(cl) {
@@ -271,9 +272,10 @@ stopCluster.spawnedMPIcluster <- function(cl) {
     Rmpi::mpi.comm.disconnect(comm)
 }
 
-stopCluster.NWScluster <- function(cl) {
-    NextMethod()
-    nws::nwsDeleteWs(cl[[1]]$wsServer, nws::nwsWsName(cl[[1]]$ws))
-    close(cl[[1]]$wsServer)
-}
+## stopCluster.NWScluster <- function(cl) {
+##     NextMethod()
+##     nws::nwsDeleteWs(cl[[1]]$wsServer, nws::nwsWsName(cl[[1]]$ws))
+##     close(cl[[1]]$wsServer)
+## }
+
 
