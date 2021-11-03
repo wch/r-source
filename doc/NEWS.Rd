@@ -330,13 +330,17 @@
       GUIs.)
     }
   }
-    
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Initialization of self-starting \code{nls()} models with
       initialization functions following the pre-R-4.1.0 API
       (without the \code{...} argument) works again for now, with a
       deprecation warning.
+
+      \item \code{substr(., start, stop) <- v} now treats \emph{negative}
+      \code{stop} values correctly.  Reported with a patch in \PR{18228} by
+      Brodie Gaslam.
     }
   }
 }

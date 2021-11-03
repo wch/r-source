@@ -18,8 +18,8 @@ substring(text, first, last = 1000000L) <- value
 }
 \arguments{
   \item{x, text}{a character vector.}
-  \item{start, first}{integer.  The first element to be replaced.}
-  \item{stop, last}{integer.  The last element to be replaced.}
+  \item{start, first}{integer.  The first element to be extracted or replaced.}
+  \item{stop, last}{integer.  The last element to be extracted or replaced.}
   \item{value}{a character vector, recycled if necessary.}
 }
 \description{

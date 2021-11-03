@@ -5469,6 +5469,10 @@ substring(ch, 2) <- c("||", "+++"); ch # recycling along ch
 substring(Ch, 2) <- c("||", "+++")
 stopifnot(Ch == ch, identical(at, attributes(Ch)))
 ## Ch had lost all attributes in R <= 4.1.x
+##
+## negative `stop` values
+stopifnot(identical(`substr<-`("A", 1, -1, "_"), "A"))
+## were treated as `(size_t) stop` in R <= 4.1.2
 
 
 ## dimnames(table(.)) in the 1D list/data.frame case:
