@@ -4,13 +4,20 @@
 % Distributed under GPL 2 or later
 
 \name{gettext}
+\title{Translate Text Messages}
 \alias{gettext}
 \alias{ngettext}
 \alias{bindtextdomain}
-\title{Translate Text Messages}
+\alias{Sys.setLanguage}
 \description{
-  If Native Language Support (NLS) was enabled in this build of \R (see
-  the \code{bindtextdomain()} example), attempt to
+  Translation of text messages typically from calls to
+  \code{\link{stop}()}, \code{\link{warning}()}, or \code{\link{message}()}
+  happens when Native Language Support (NLS) was enabled in this build of
+  \R as it is almost always, see also the \code{bindtextdomain()} example.
+
+  The functions documented here are the low level building blocks used
+  explicitely or implicitly in almost all such message producing calls and
+  they attempt to
   translate character vectors or set where the translations are to be found.
 }
 \usage{
@@ -19,6 +26,8 @@ gettext(\dots, domain = NULL)
 ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
+
+Sys.setLanguage(lang, domain = "R")
 }
 \arguments{
   \item{\dots}{One or more character vectors.}
@@ -28,6 +37,8 @@ bindtextdomain(domain, dirname = NULL)
   \item{msg2}{the message to be used in English for \code{n = 0, 2, 3, \dots}.}
   \item{dirname}{The directory in which to find translated message
     catalogs for the domain.}
+  \item{lang}{a \code{\link{character}} string specifying a language for
+    which translations should be sought.}
 }
 \details{
   If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
@@ -80,6 +91,11 @@ bindtextdomain(domain, dirname = NULL)
 
   For \code{bindtextdomain}, a character string giving the current base
   directory, or \code{NULL} if setting it failed.
+
+  For \code{Sys.setLanguage()}, the previous \code{LANGUAGE} setting
+  with \code{\link{attributes}} \code{\link{attr}(*, "ok")}, a \code{\link{logical}}
+  indicating success and \code{\link{attr}(*, "dir")} specifying the result
+  of the last \code{bindtextdomain()} called from \code{Sys.setLanguage()}.
 }
 \seealso{
   \code{\link{stop}} and \code{\link{warning}} make use of \code{gettext} to
@@ -104,6 +120,7 @@ msgstr[0] ""
 msgstr[1] ""
 }
 
+miss <- "One only" # this line, or the next for the ngettext() below
 miss <- c("one", "or", "another")
 cat(ngettext(length(miss), "variable", "variables"),
     paste(sQuote(miss), collapse = ", "),
@@ -115,12 +132,26 @@ cat(sprintf(ngettext(length(miss),
                      "variables \%s contain missing values\n"),
             paste(sQuote(miss), collapse = ", ")))
 
+thisLang <- Sys.getenv("LANGUAGE", unset = NA) # so we can reset it
+if(is.na(thisLang) || !nzchar(thisLang)) thisLang <- "en" # "factory" default
 enT <- "empty model supplied"
 Sys.setenv(LANGUAGE = "de") # may not always 'work'
 gettext(enT, domain="R-stats")# "leeres Modell angegeben" (if translation works)
 tget <- function() gettext(enT)
 tget() # not translated as fn tget() is not from "stats" pkg/namespace
 evalq(function() gettext(enT), asNamespace("stats"))() # *is* translated
+
+Sys.setLanguage("en") -> oldSet # does set LANGUAGE env.var
+errMsg <- function(expr) tryCatch(expr, error=conditionMessage)
+(errMsg(1 + "2") -> err)
+Sys.setLanguage("fr")
+errMsg(1 + "2")
+Sys.setLanguage("de")
+errMsg(1 + "2")
+if(nzchar(thisLang)) { ## reset to previous and check
+  Sys.setLanguage(thisLang)
+  stopifnot(identical(errMsg(1 + "2"), err))
+}  # else staying at 'de' ..
 }
 \keyword{ utilities }
 \keyword{ character }

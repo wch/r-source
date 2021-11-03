@@ -119,6 +119,9 @@
       signals an error of class \code{notSubsettableError}. The
       non-subsettable object is contained in the \code{object} field of
       the error condition.
+
+      \item New partly experimental \code{Sys.setLanguage()} utility,
+      solving the main problem of \PR{18055}.
     }
   }
 

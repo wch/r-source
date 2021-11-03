@@ -122,3 +122,21 @@ ngettext <- function(n, msg1, msg2, domain = NULL)
 
 gettextf <- function(fmt, ..., domain = NULL)
     sprintf(gettext(fmt, domain = domain), ...)
+
+## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
+## the default domain="R"  is for all of base R: {"R", "R-base", "RGui"}
+Sys.setLanguage <- function(lang, domain = "R") {
+    stopifnot(is.character(lang), length(lang) == 1L, grepl("^[a-z][a-z]", lang))
+    curLang <- Sys.getenv("LANGUAGE")
+    ok <- Sys.setenv(LANGUAGE=lang)
+    if(!ok)
+        warning(gettextf('Sys.setenv(LANGUAGE="%s")  may have failed', lang),
+                domain=NA)
+    currentD <- bindtextdomain(domain) # so we can revert
+    ## d.="R":  dirname(dirname(attr(packageDescription("translations"), "file")))
+    ## tempdir() containing *no* translation info ==> translations "flushed"
+    bindtextdomain(domain, dirname = tempdir())
+    bindtextdomain(domain, dirname = currentD) -> dir # reset
+    invisible(structure(curLang, ok = ok, dir = dir))
+}
+
