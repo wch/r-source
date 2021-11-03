@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ function(x, start = getwd(), parent = TRUE)
         unlist(Map(f, x, y, USE.NAMES = FALSE))
     }
 }
-    
+
 ### ** file_path_sans_ext
 
 file_path_sans_ext <-
@@ -111,7 +111,7 @@ function(op, x, y)
            "-f" = !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & !isdir,
            "-d" = dir.exists(x),
            "-h" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),
-           "-L" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),           
+           "-L" = (!is.na(y <- Sys.readlink(x)) & nzchar(y)),
            "-nt" = (!is.na(mt.x <- file.mtime(x))
                     & !is.na(mt.y <- file.mtime(y))
                     & (mt.x > mt.y)),
@@ -120,7 +120,7 @@ function(op, x, y)
                     & (mt.x < mt.y)),
            "-x" = (file.access(x, 1L) == 0L),
            "-w" = (file.access(x, 2L) == 0L),
-           "-r" = (file.access(x, 4L) == 0L),           
+           "-r" = (file.access(x, 4L) == 0L),
            stop(gettextf("test '%s' is not available", op),
                 domain = NA))
 }
@@ -557,7 +557,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .BioC_version_associated_with_R_version
 
 .BioC_version_associated_with_R_version <-
-    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.13"))
+    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.14"))
 ## Things are more complicated from R-2.15.x with still two BioC
 ## releases a year, so we do need to set this manually.
 
@@ -2275,7 +2275,7 @@ function(command, args = character(), env = character(),
 ### ** .trim_common_leading_whitespace
 
 .trim_common_leading_whitespace <-
-function(x)    
+function(x)
 {
     y <- sub("^([ \t]*).*", "\\1", x)
     n <- nchar(y)
@@ -2298,7 +2298,7 @@ function(x)
     }
     substring(x, min(n) + 1L)
 }
-    
+
 ### ** .try_quietly
 
 .try_quietly <-

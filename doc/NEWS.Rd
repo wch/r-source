@@ -320,6 +320,14 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.1.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The default version of Bioconductor has been changed to
+      3.14. (This is used by \code{setRepositories} and the menus in
+      GUIs.)
+    }
+  }
+    
   \subsection{BUG FIXES}{
     \itemize{
       \item Initialization of self-starting \code{nls()} models with
