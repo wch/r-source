@@ -1,6 +1,6 @@
 /*
  *   R : A Computer Language for Statistical Data Analysis
- *   Copyright (C) 1997-2008   The R Core Team
+ *   Copyright (C) 1997-2021   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -123,7 +123,9 @@ static void Putenv(char *a, char *b)
     /* now process the value */
     for(p = b, q = value; *p; p++) {
 	/* remove quotes around sections, preserve \ inside quotes */
-	if(!inquote && (*p == '"' || *p == '\'')) {
+	if(!inquote && (*p == '"' || *p == '\'') &&
+	   (p == b || *(p-1) != '\\')) {
+
 	    inquote = 1;
 	    quote = *p;
 	    continue;

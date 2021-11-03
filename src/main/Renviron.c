@@ -147,7 +147,9 @@ static void Putenv(char *a, char *b)
     /* now process the value */
     for(p = b, q = value; *p; p++) {
 	/* remove quotes around sections, preserve \ inside quotes */
-	if(!inquote && (*p == '"' || *p == '\'')) {
+	if(!inquote && (*p == '"' || *p == '\'') &&
+	   (p == b || *(p-1) != '\\')) {
+
 	    inquote = 1;
 	    quote = *p;
 	    continue;
