@@ -96,6 +96,7 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
 static void NORET errorcallNotSubsettable(SEXP x, SEXP call)
 {
     SEXP cond = R_makeNotSubsettableError(x, call);
+    PROTECT(cond);
     R_signalErrorCondition(cond, call);
     UNPROTECT(1); /* cond; not reached */
 }
