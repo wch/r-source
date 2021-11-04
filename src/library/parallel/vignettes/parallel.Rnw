@@ -873,7 +873,8 @@ Aliased functions \code{collect} and \code{parallel} are no longer provided.
 POSIX, and did not provide a means to set the timeout on the workers.
 This resulted in process interlocks on Solaris.
 
-\code{makeCluster} creates MPI or NWS clusters by calling \CRANpkg{snow}.
+\code{makeCluster} creates MPI %% or NWS
+clusters by calling \CRANpkg{snow}.
 
 \code{makePSOCKcluster} has been streamlined, as package \pkg{parallel} is in
 a known location on all systems, and \command{Rscript} is these days

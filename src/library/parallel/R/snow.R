@@ -153,7 +153,7 @@ makeCluster <-
            FORK = makeForkCluster(nnodes = spec, ...),
            SOCK = snow::makeSOCKcluster(names = spec, ...),
            MPI = snow::makeMPIcluster(count = spec, ...),
-           NWS = snow::makeNWScluster(names = spec, ...),
+           ## NWS = snow::makeNWScluster(names = spec, ...),
            stop("unknown cluster type"))
 }
 
