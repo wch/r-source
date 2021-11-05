@@ -113,6 +113,9 @@ RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 Rscript.o: ../../unix/Rscript.c ../../include/Rversion.h
 	$(CC) $(CFLAGS) -DBINDIR='"$(BINDIR)"' -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@
 
+Renviron.o: ../../main/Renviron.c
+	$(CC) $(CFLAGS) -I. -I../../include -DRENVIRON_WIN32_STANDALONE -c $< -o $@
+
 Rscript.exe: Rscript.o rsico.o 
 
 ## Used only in writing etc/.../Makeconf
