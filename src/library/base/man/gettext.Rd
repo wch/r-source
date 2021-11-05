@@ -16,7 +16,7 @@
   \R as it is almost always, see also the \code{bindtextdomain()} example.
 
   The functions documented here are the low level building blocks used
-  explicitely or implicitly in almost all such message producing calls and
+  explicitly or implicitly in almost all such message producing calls and
   they attempt to
   translate character vectors or set where the translations are to be found.
 }
