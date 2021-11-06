@@ -1410,7 +1410,8 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 
 Subdirectory @file{tools} is the preferred place for auxiliary files
 needed during configuration, and also for sources need to re-create
-scripts (e.g.@: M4 files for @command{autoconf}).
+scripts (e.g.@: M4 files for @command{autoconf}: some prefer to put
+those in a subdirectory @file{m4} of @file{tools}).
 
 
 @node Data in packages, Non-R scripts in packages, Package subdirectories, Package structure
@@ -1670,19 +1671,22 @@ for this and others.  Some checks can be done by the
 @c 'checkbaskisms' really is the correct path
 @uref{https://sourceforge.net/projects/checkbaskisms/files}, also
 available in most Linux distributions in a package named either
-@samp{devscripts} or @samp{devscripts-checkbashisms}: a possibly later
-version can be extracted from Debian sources such as the most recent
-@file{tar.xz} in 
-@uref{https://deb.debian.org/debian/pool/main/d/devscripts/}.}
-shell script @file{configure} in your package which (if present) is
-executed by @code{R CMD INSTALL} before any other action is performed.
-This can be a script created by the Autoconf mechanism, but may also be
-a script written by yourself.  Use this to detect if any nonstandard
-libraries are present such that corresponding code in the package can be
-disabled at install time rather than giving error messages when the
-package is compiled or used.  To summarize, the full power of Autoconf
-is available for your extension package (including variable
-substitution, searching for libraries, etc.).
+@samp{devscripts} or @samp{devscripts-checkbashisms}: a later version
+can be extracted from Debian sources such as the most recent
+@file{tar.xz} in
+@uref{https://deb.debian.org/debian/pool/main/d/devscripts/} and has
+been needed for recent versions of Perl.}  shell script @file{configure}
+in your package which (if present) is executed by @code{R CMD INSTALL}
+before any other action is performed.  This can be a script created by
+the Autoconf mechanism, but may also be a script written by yourself.
+Use this to detect if any nonstandard libraries are present such that
+corresponding code in the package can be disabled at install time rather
+than giving error messages when the package is compiled or used.  To
+summarize, the full power of Autoconf is available for your extension
+package (including variable substitution, searching for libraries,
+etc.).  Background and useful tips on Autconf and related tools
+(including @command{pkg-config} described below) can be found at
+@uref{https://autotools.io/}.
 
 @vindex R_PACKAGE_DIR
 @vindex R_PACKAGE_NAME
@@ -1966,10 +1970,19 @@ tested by @command{R CMD check --as-cran}).  This will include the file
 @command{autoreconf} as used by @command{R CMD check --as-cran} will
 report as such.} in the top-level directory of the package.  If
 extensions written in @command{m4} are needed, these should be included
-under the directory @file{tools} and included in @file{configure.ac}
+under the directory @file{tools} and included from @file{configure.ac}
 @emph{via} e.g.,
 @example
 m4_include([tools/ax_pthread.m4])
+@end example
+@noindent
+Alternatively, Autoconf can be asked to search all @file{.m4} files in a
+directory by including something like@footnote{For those using
+@command{autoconf} 2.70 or later there is also
+@code{AC_CONFIG_MACRO_DIRS} which allows multiple directories to be
+specified.}
+@example
+AC_CONFIG_MACRO_DIR([tools/m4])
 @end example
 @noindent
 One source of such extensions is the `Autoconf Archive'
