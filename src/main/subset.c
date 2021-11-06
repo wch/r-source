@@ -184,12 +184,12 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
     if (isMatrix(s) && isArray(x) && ncols(s) == length(attrib)) {
 	if (isString(s)) {
-	    s = strmat2intmat(s, GetArrayDimnames(x), call);
+	    s = strmat2intmat(s, GetArrayDimnames(x), call, x);
 	    UNPROTECT(1);
 	    PROTECT(s);
 	}
 	if (isInteger(s) || isReal(s)) {
-	    s = mat2indsub(attrib, s, call);
+	    s = mat2indsub(attrib, s, call, x);
 	    UNPROTECT(1);
 	    PROTECT(s);
 	}
@@ -241,6 +241,26 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     return result;
 }
 
+static void NORET errorcallOutOfBounds(SEXP x, int subscript,
+				       R_xlen_t index, SEXP call)
+{
+    SEXP sindex = ScalarReal((double) index);
+    PROTECT(sindex);
+    SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, NULL);
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(2); /* sindex, cond; not reached */
+}
+
+static void NORET errorcallOutOfBoundsSEXP(SEXP x, int subscript,
+					   SEXP sindex, SEXP call)
+{
+    SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, NULL);
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
 SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 
 /* The MATRIX_SUBSET_LOOP macro allows the branches based on index
@@ -252,14 +272,14 @@ SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 	    jj = psc[j];					\
 	    if (jj != NA_INTEGER) {				\
 		if (jj < 1 || jj > nc)				\
-		    errorcall(call, R_MSG_subs_o_b);		\
+		    errorcallOutOfBounds(x, 0, jj, call);	\
 		jj--;						\
 	    }							\
 	    for (i = 0; i < nrs; i++) {				\
 		ii = psr[i];					\
 		if (ii != NA_INTEGER) {				\
 		    if (ii < 1 || ii > nr)			\
-			errorcall(call, R_MSG_subs_o_b);	\
+			errorcallOutOfBounds(x, 1, ii, call);	\
 		    ii--;					\
 		}						\
 		ij = i + j * nrs;				\
@@ -465,7 +485,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		   point should be positive or NA_INTEGER, which is
 		   negative */
 		(jj < 1 && jj != NA_INTEGER))
-		errorcall(call, R_MSG_subs_o_b);
+		errorcallOutOfBounds(x, i, jj, call);
 	}
 
     /* Transfer the subset elements from "x" to "a". */
@@ -1041,7 +1061,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		UNPROTECT(2); /* args, x */
 		return R_NilValue;
 	    }
-	    else errorcall(call, R_MSG_subs_o_b);
+	    else errorcallOutOfBoundsSEXP(x, -1, thesub, call);
 	}
     } else { /* nsubs == ndims >= 2 : matrix|array indexing */
 	/* Here we use the fact that: */
@@ -1057,13 +1077,14 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	dimnames = getAttrib(x, R_DimNamesSymbol);
 	ndn = length(dimnames);
 	for (i = 0; i < nsubs; i++) {
+	    SEXP thesub = CAR(subs);
 	    pindx[i] = (int)
-		get1index(CAR(subs),
+		get1index(thesub,
 			  (i < ndn) ? VECTOR_ELT(dimnames, i) : R_NilValue,
 			  pindx[i], pok, -1, call);
 	    subs = CDR(subs);
 	    if (pindx[i] < 0 || pindx[i] >= pdims[i])
-		errorcall(call, R_MSG_subs_o_b);
+		errorcallOutOfBoundsSEXP(x, i, thesub, call);
 	}
 	offset = 0;
 	for (i = (nsubs - 1); i > 0; i--)

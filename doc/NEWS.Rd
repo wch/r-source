@@ -120,6 +120,9 @@
       non-subsettable object is contained in the \code{object} field of
       the error condition.
 
+      \item Subscript out of bounds errors are now signaled as errors of
+      class \code{subscriptOutOfBoundsError}. 
+
       \item New partly experimental \code{Sys.setLanguage()} utility,
       solving the main problem of \PR{18055}.
     }

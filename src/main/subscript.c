@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -44,6 +44,32 @@
 /* We might get a call with R_NilValue from subassignment code */
 #define ECALL(call, yy)     if(call == R_NilValue) error(yy);    else errorcall(call, yy);
 #define ECALL3(call, yy, A) if(call == R_NilValue) error(yy, A); else errorcall(call, yy, A);
+
+static void NORET ECALL_OutOfBounds(SEXP x, int subscript,
+				    R_xlen_t index, SEXP call)
+{
+    if (call == R_NilValue)
+	call = R_CurrentExpression; /* default behaves like error() */
+    SEXP sindex = ScalarReal((double) index);
+    PROTECT(sindex);
+    SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, NULL);
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(2); /* sindex, cond; not reached */
+}
+
+static void NORET ECALL_OutOfBoundsCHAR(SEXP x, int subscript,
+					SEXP sindex, SEXP call)
+{
+    if (call == R_NilValue)
+	call = R_CurrentExpression; /* default behaves like error() */
+    sindex = ScalarString(sindex);
+    PROTECT(sindex);
+    SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, NULL);
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(2); /* sindex, cond; not reached */
+}
 
 /* This allows for the unusual case where x is of length 2,
    and x[[-m]] selects one element for m = 1, 2.
@@ -368,7 +394,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 */
 
 
-SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
+SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call, SEXP x)
 {
     int nrs = nrows(s);
     R_xlen_t NR = nrs;
@@ -401,7 +427,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 		    }
 		    if(k == 0.) {rv[i] = 0.; break;}
 		    if (k > pdims[j]) {
-			ECALL(call, _("subscript out of bounds"));
+			ECALL_OutOfBounds(x, j, k, call);
 		    }
 		    rv[i] += (k - 1.) * tdim;
 		    tdim *= pdims[j];
@@ -420,7 +446,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 		    }
 		    if(k == 0) {rv[i] = 0.; break;}
 		    if (k > pdims[j]) {
-			ECALL(call, _("subscript out of bounds"));
+			ECALL_OutOfBounds(x, j, k, call);
 		    }
 		    rv[i] += (double) ((k - 1) * tdim);
 		    tdim *= pdims[j];
@@ -445,7 +471,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 		}
 		if(k == 0) {iv[i] = 0; break;}
 		if (k > pdims[j]) {
-		    ECALL(call, _("subscript out of bounds"));
+		    ECALL_OutOfBounds(x, j, k, call);
 		}
 		iv[i] += (k - 1) * tdim;
 		tdim *= pdims[j];
@@ -464,7 +490,7 @@ to an integer matrix by matching against the dimnames of x. NA values
 in any row of i propagate to the result.  Unmatched entries result in
 a subscript out of bounds error.  */
 
-SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
+SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call, SEXP x)
 {
     /* XXX: assumes all args are protected */
     int nr = nrows(s), i, j, v;
@@ -485,7 +511,7 @@ SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
 	    s_elt = STRING_ELT(s, idx);
 	    if (s_elt == NA_STRING) v = NA_INTEGER;
 	    if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
-	    if (v == 0) errorcall(call, _("subscript out of bounds"));
+	    if (v == 0) ECALL_OutOfBoundsCHAR(x, i, s_elt, call);
 	    psi[idx] = v;
 	}
 	UNPROTECT(1);
@@ -675,7 +701,8 @@ static SEXP positiveSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx)
 }
 
 static SEXP
-integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
+integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
+		 SEXP call, SEXP x)
 {
     R_xlen_t i;
     int ii, neg, max, canstretch;
@@ -699,7 +726,7 @@ integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
     if (max > nx) {
 	if(canstretch) *stretch = max;
 	else {
-	    ECALL(call, _("subscript out of bounds"));
+	    ECALL_OutOfBounds(x, -1, max, call);
 	}
     }
     if (neg) {
@@ -713,7 +740,8 @@ integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 }
 
 static SEXP
-realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
+realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
+	      SEXP call, SEXP x)
 {
     R_xlen_t i;
     int canstretch;
@@ -739,7 +767,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 #endif
 	if(canstretch) *stretch = (R_xlen_t) max;
 	else {
-	    ECALL(call, _("subscript out of bounds"));
+	    ECALL_OutOfBounds(x, -1, (R_xlen_t) max, call);
 	}
     }
     if (min < 0) {
@@ -823,7 +851,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 
 static SEXP
 stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
-		R_xlen_t *stretch, SEXP call)
+		R_xlen_t *stretch, SEXP call, SEXP x, int dim)
 {
     SEXP indx, indexnames = R_NilValue;
     R_xlen_t i, j, nnames, extra, sub;
@@ -895,7 +923,7 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
 	}
 	if (sub == 0) {
 	    if (!canstretch) {
-		ECALL(call, _("subscript out of bounds"));
+		ECALL_OutOfBoundsCHAR(x, dim, STRING_ELT(s, i), call);
 	    }
 	    extra += 1;
 	    sub = extra;
@@ -936,11 +964,11 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call)
     case LGLSXP:
 	return logicalSubscript(s, ns, nd, &stretch, call);
     case INTSXP:
-	return integerSubscript(s, ns, nd, &stretch, call);
+	return integerSubscript(s, ns, nd, &stretch, call, x);
     case REALSXP:
 	/* We don't yet allow subscripts > R_SHORT_LEN_MAX */
 	PROTECT(tmp = coerceVector(s, INTSXP));
-	tmp = integerSubscript(tmp, ns, nd, &stretch, call);
+	tmp = integerSubscript(tmp, ns, nd, &stretch, call, x);
 	UNPROTECT(1);
 	return tmp;
     case STRSXP:
@@ -949,7 +977,7 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call)
 	    ECALL(call, _("no 'dimnames' attribute for array"));
 	}
 	dnames = VECTOR_ELT(dnames, dim);
-	return stringSubscript(s, ns, nd, dnames, &stretch, call);
+	return stringSubscript(s, ns, nd, dnames, &stretch, call, x, dim);
     case SYMSXP:
 	if (s == R_MissingArg)
 	    return nullSubscript(nd);
@@ -1018,16 +1046,16 @@ makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 	ans = logicalSubscript(s, ns, nx, stretch, call);
 	break;
     case INTSXP:
-	ans = integerSubscript(s, ns, nx, stretch, call);
+	ans = integerSubscript(s, ns, nx, stretch, call, x);
 	break;
     case REALSXP:
-	ans = realSubscript(s, ns, nx, stretch, call);
+	ans = realSubscript(s, ns, nx, stretch, call, x);
 	break;
     case STRSXP:
     {
 	SEXP names = PROTECT(getAttrib(x, R_NamesSymbol));
 	/* *stretch = 0; */
-	ans = stringSubscript(s, ns, nx, names, stretch, call);
+	ans = stringSubscript(s, ns, nx, names, stretch, call, x, -1);
 	UNPROTECT(1); /* names */
 	break;
     }

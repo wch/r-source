@@ -2676,3 +2676,48 @@ SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
     UNPROTECT(1); /* cond */
     return cond;
 }
+
+attribute_hidden
+SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
+			    SEXP call, const char *prefix)
+{
+    if (call == R_CurrentExpression)
+	/* behave like error() */
+	call = getCurrentCall();
+
+    size_t bufsiz = BUFSIZ;
+    char *buf = emsg_buf;
+
+    if (prefix) {
+	size_t n = Rsnprintf_mbcs(buf, bufsiz - 1, "%s ", prefix);
+	bufsiz -= n;
+	buf += n;
+    }
+
+    Rsnprintf_mbcs(buf, bufsiz - 1, "%s", R_MSG_subs_o_b);
+
+    SEXP cond = allocVector(VECSXP, 5);
+    PROTECT(cond);
+    SET_VECTOR_ELT(cond, 0, mkString(emsg_buf));
+    SET_VECTOR_ELT(cond, 1, call);
+    SET_VECTOR_ELT(cond, 2, x);
+    SET_VECTOR_ELT(cond, 3, ScalarInteger(subscript + 1));
+    SET_VECTOR_ELT(cond, 4, sindex);
+
+    SEXP names = allocVector(STRSXP, 5);
+    setAttrib(cond, R_NamesSymbol, names);
+    SET_STRING_ELT(names, 0, mkChar("message"));
+    SET_STRING_ELT(names, 1, mkChar("call"));
+    SET_STRING_ELT(names, 2, mkChar("object"));
+    SET_STRING_ELT(names, 3, mkChar("subscript"));
+    SET_STRING_ELT(names, 4, mkChar("index"));
+
+    SEXP klass = allocVector(STRSXP, 3);
+    setAttrib(cond, R_ClassSymbol, klass);
+    SET_STRING_ELT(klass, 0, mkChar("subscriptOutOfBoundsError"));
+    SET_STRING_ELT(klass, 1, mkChar("error"));
+    SET_STRING_ELT(klass, 2, mkChar("condition"));
+
+    UNPROTECT(1); /* cond */
+    return cond;
+}

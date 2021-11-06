@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2020   The R Core Team
+ *  Copyright (C) 1997-2021   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -636,12 +636,12 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 	if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
 	    if (isString(s)) {
 		SEXP dnames = PROTECT(GetArrayDimnames(x));
-		s = strmat2intmat(s, dnames, call);
+		s = strmat2intmat(s, dnames, call, x);
 		UNPROTECT(2); /* dnames, s */
 		PROTECT(s);
 	    }
 	    if (isInteger(s) || isReal(s)) {
-		s = mat2indsub(dim, s, R_NilValue);
+		s = mat2indsub(dim, s, R_NilValue, x);
 		UNPROTECT(1);
 		PROTECT(s);
 	    }
@@ -1733,6 +1733,15 @@ SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign2_dflt(call, op, ans, rho);
 }
 
+static void NORET errorOutOfBoundsSEXP(SEXP x, int subscript, SEXP sindex)
+{
+    SEXP call = R_CurrentExpression; /* default behaves like error() */
+    SEXP cond = R_makeOutOfBoundsError(x, subscript, sindex, call, "[[ ]]");
+    PROTECT(cond);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); /* cond; not reached */
+}
+
 SEXP attribute_hidden
 do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1847,7 +1856,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		return xtop;
 	    }
 	    if (offset < 0)
-		error(_("[[ ]] subscript out of bounds"));
+		errorOutOfBoundsSEXP(x, -1, thesub);
 	    if (offset >= XLENGTH(x))
 		stretch = offset + 1;
 	}
@@ -1858,15 +1867,16 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    int *pindx = INTEGER0(indx);
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
+		SEXP thesub = CAR(subs);
 		pindx[i] = (int)
-		    get1index(CAR(subs), isNull(names) ?
+		    get1index(thesub, isNull(names) ?
 			      R_NilValue : VECTOR_ELT(names, i),
 			      pdims[i],
 			      /*partial ok*/FALSE, -1, call);
 		subs = CDR(subs);
 		if (pindx[i] < 0 ||
 		    pindx[i] >= pdims[i])
-		    error(_("[[ ]] subscript out of bounds"));
+		    errorOutOfBoundsSEXP(x, i, thesub);
 	    }
 	    offset = 0;
 	    for (i = (ndims - 1); i > 0; i--)
@@ -2041,14 +2051,15 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    int *pindx = INTEGER0(indx);
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
+		SEXP thesub = CAR(subs);
 		pindx[i] = (int)
-		    get1index(CAR(subs), VECTOR_ELT(names, i),
+		    get1index(thesub, VECTOR_ELT(names, i),
 			      pdims[i],
 			      /*partial ok*/FALSE, -1, call);
 		subs = CDR(subs);
 		if (pindx[i] < 0 ||
 		    pindx[i] >= pdims[i])
-		    error(_("[[ ]] subscript (%d) out of bounds"), i+1);
+		    errorOutOfBoundsSEXP(x, i, thesub);
 	    }
 	    offset = 0;
 	    for (i = (ndims - 1); i > 0; i--)

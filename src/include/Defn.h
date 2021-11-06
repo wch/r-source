@@ -1944,7 +1944,7 @@ SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
 SEXP makeSubscript(SEXP, SEXP, R_xlen_t *, SEXP);
 SEXP markKnown(const char *, SEXP);
-SEXP mat2indsub(SEXP, SEXP, SEXP);
+SEXP mat2indsub(SEXP, SEXP, SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
 SEXP matchArgs_NR(SEXP, SEXP, SEXP);
@@ -2008,7 +2008,7 @@ void sortVector(SEXP, Rboolean);
 void SrcrefPrompt(const char *, SEXP);
 void ssort(SEXP*,int);
 int StrToInternal(const char *);
-SEXP strmat2intmat(SEXP, SEXP, SEXP);
+SEXP strmat2intmat(SEXP, SEXP, SEXP, SEXP);
 SEXP substituteList(SEXP, SEXP);
 unsigned int TimeToSeed(void);
 SEXP tspgets(SEXP, SEXP);
@@ -2053,6 +2053,8 @@ SEXP R_GetTraceback(int);    // including deparse()ing
 SEXP R_GetTracebackOnly(int);// no        deparse()ing
 void NORET R_signalErrorCondition(SEXP cond, SEXP call);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
+SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
+			    SEXP call, const char *prefix);
 
 R_size_t R_GetMaxVSize(void);
 void R_SetMaxVSize(R_size_t);
