@@ -124,19 +124,29 @@ gettextf <- function(fmt, ..., domain = NULL)
     sprintf(gettext(fmt, domain = domain), ...)
 
 ## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
-## the default domain="R"  is for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, domain = "R") {
-    stopifnot(is.character(lang), length(lang) == 1L, grepl("^[a-z][a-z]", lang))
-    curLang <- Sys.getenv("LANGUAGE")
+## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
+Sys.setLanguage <- function(lang, unset = "en",
+                            resetDomain = FALSE, domain= "R")
+{
+    stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
+              grepl("^[a-z][a-z]", lang))
+    curLang <- Sys.getenv("LANGUAGE", unset = NA) # so it can be reset
+    if(is.na(curLang) || !nzchar(curLang))
+        curLang <- unset # "factory" default
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
         warning(gettextf('Sys.setenv(LANGUAGE="%s")  may have failed', lang),
                 domain=NA)
-    currentD <- bindtextdomain(domain) # so we can revert
-    ## d.="R":  dirname(dirname(attr(packageDescription("translations"), "file")))
-    ## tempdir() containing *no* translation info ==> translations "flushed"
-    bindtextdomain(domain, dirname = tempdir())
-    bindtextdomain(domain, dirname = currentD) -> dir # reset
-    invisible(structure(curLang, ok = ok, dir = dir))
+    if(.Platform$OS.type == "unix") { # we can work with LC_MESSAGES
+        lcM <- Sys.setlocale("LC_MESSAGES", "") # flushes the cache (for all domains)
+        ok <- ok & nzchar(lcM)
+    }
+    if(resetDomain) {
+        currentD <- bindtextdomain(domain) # so we can revert
+        ## d.="R": dirname(dirname(attr(packageDescription("translations"), "file")))
+        ## tempdir() containing *no* translation info ==> translations "flushed"
+        bindtextdomain(domain, dirname = tempdir())
+        bindtextdomain(domain, dirname = currentD) # reset
+    }
+    invisible(structure(curLang, ok = ok))
 }
-

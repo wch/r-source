@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, domain = "R")
+Sys.setLanguage(lang, domain = "R", unset = "en")
 }
 \arguments{
   \item{\dots}{One or more character vectors.}
@@ -39,6 +39,9 @@ Sys.setLanguage(lang, domain = "R")
     catalogs for the domain.}
   \item{lang}{a \code{\link{character}} string specifying a language for
     which translations should be sought.}
+  \item{unset}{a string, specifying the default language assumed to be
+    current in the case \code{\link{Sys.getenv}("LANGUAGE")} is unset or
+    empty.}
 }
 \details{
   If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
@@ -92,7 +95,8 @@ Sys.setLanguage(lang, domain = "R")
   For \code{bindtextdomain}, a character string giving the current base
   directory, or \code{NULL} if setting it failed.
 
-  For \code{Sys.setLanguage()}, the previous \code{LANGUAGE} setting
+  For \code{Sys.setLanguage()}, the previous \env{LANGUAGE} setting (or
+  the value \code{unset} if there hasn't been a non-empty \env{LANGUAGE})
   with \code{\link{attributes}} \code{\link{attr}(*, "ok")}, a \code{\link{logical}}
   indicating success and \code{\link{attr}(*, "dir")} specifying the result
   of the last \code{bindtextdomain()} called from \code{Sys.setLanguage()}.
@@ -141,6 +145,7 @@ tget <- function() gettext(enT)
 tget() # not translated as fn tget() is not from "stats" pkg/namespace
 evalq(function() gettext(enT), asNamespace("stats"))() # *is* translated
 
+## Sys.setLanguage()  -- typical usage --
 Sys.setLanguage("en") -> oldSet # does set LANGUAGE env.var
 errMsg <- function(expr) tryCatch(expr, error=conditionMessage)
 (errMsg(1 + "2") -> err)
@@ -148,7 +153,24 @@ Sys.setLanguage("fr")
 errMsg(1 + "2")
 Sys.setLanguage("de")
 errMsg(1 + "2")
-if(nzchar(thisLang)) { ## reset to previous and check
+## Usually, you would reset the language to "previous" via
+Sys.setLanguage(oldSet)
+
+## A show off of translations -- platform (font etc) dependent:
+## The translation languages available for "base" R in this version of R:
+langs <- list.files(bindtextdomain("R"),
+                    pattern = "^[a-z]{2}(_[A-Z]{2}|@quot)?$")
+langs
+txts <- sapply(setNames(,langs),
+               function(lang) { Sys.setLanguage(lang)
+                               gettext("incompatible dimensions", domain="R-stats") })
+## IGNORE_RDIFF_BEGIN
+cbind(txts)
+(nTrans <- length(unique(txts)))
+(not_translated <- names(txts[txts == txts[["en"]]]))
+## IGNORE_RDIFF_END
+## Here, we reset to the *original* setting before the full example started:
+ if(nzchar(thisLang)) { ## reset to previous and check
   Sys.setLanguage(thisLang)
   stopifnot(identical(errMsg(1 + "2"), err))
 }  # else staying at 'de' ..
