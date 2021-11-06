@@ -23,7 +23,7 @@ R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats
 
 all:
 
-R: 
+R:
 	@$(MAKE) install Rsharedir=${top_builddir}/share
 
 install:
@@ -52,13 +52,13 @@ Makefile: Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 update-RGui:
-	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
+	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\", mergeOpts=\"--no-wrap\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 
 ## en@quot has to be done in a UTF-8 locale
 update-pkg-po:
 	@for pkg in $(R_PKGS_PO); do \
 	   $(ECHO) "updating translations for $${pkg}"; \
-	   $(ECHO) "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\")" | \
+	   $(ECHO) "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\", mergeOpts=\"--no-wrap\")" | \
 	     R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE); \
 	done

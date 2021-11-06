@@ -71,7 +71,9 @@ en_quote <- function(potfile, outfile)
     close(con)
 }
 
-update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
+update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL,
+                          mergeOpts = "", # only those *in addition* to --update
+                          copyright, bugs)
 {
     same <- function(a, b)
     {
@@ -124,7 +126,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
         message("  R-", lang, ":", appendLF = FALSE, domain = NA)
         ## This seems not to update the file dates.
-        cmd <- paste("msgmerge --update", f, shQuote(potfile))
+        cmd <- paste("msgmerge --update", mergeOpts, f, shQuote(potfile))
         if(system(cmd) != 0L) {
             warning("running msgmerge on ", sQuote(f), " failed", domain = NA)
             next
@@ -200,7 +202,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     for (f in pofiles) {
         lang <- sub("[.]po", "", basename(f))
         message("  ", lang, ":", appendLF = FALSE, domain = NA)
-        cmd <- paste("msgmerge --update", shQuote(f), shQuote(potfile))
+        cmd <- paste("msgmerge --update", mergeOpts, shQuote(f), shQuote(potfile))
         if(system(cmd) != 0L) {
             warning("running msgmerge on ",  f, " failed", domain = NA)
             next
@@ -238,7 +240,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     invisible()
 }
 
-update_RGui_po <- function(srcdir)
+update_RGui_po <- function(srcdir, mergeOpts = "")
 {
     same <- function(a, b)
     {
@@ -279,7 +281,7 @@ update_RGui_po <- function(srcdir)
         lang <- sub("^RGui-(.*)[.]po$", "\\1", basename(f))
         lang2 <- sub("[.]po", "", basename(f))
         message("  ", lang2, ":", appendLF = FALSE, domain = NA)
-        cmd <- paste("msgmerge --update", f, potfile)
+        cmd <- paste("msgmerge --update", mergeOpts, f, potfile)
         if(system(cmd) != 0L) {
             warning("running msgmerge failed", domain = NA)
             next
