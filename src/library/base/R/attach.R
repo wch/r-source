@@ -1,7 +1,7 @@
 #  File src/library/base/R/attach.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,14 +25,14 @@
     objs <- strwrap(paste(same, collapse=", "), indent = 4L, exdent = 4L)
     txt <- if(by) {
         ngettext(length(same),
-                 "The following object is masked _by_ %s:\n\n%s\n",
-                 "The following objects are masked _by_ %s:\n\n%s\n")
+                 "The following object is masked _by_ %s:",
+                 "The following objects are masked _by_ %s:")
     } else {
         ngettext(length(same),
-                 "The following object is masked from %s:\n\n%s\n",
-                 "The following objects are masked from %s:\n\n%s\n")
+                 "The following object is masked from %s:",
+                 "The following objects are masked from %s:")
     }
-    sprintf(txt, pkg, paste(objs, collapse="\n"))
+    sprintf(paste0(txt,"\n\n%s\n"), pkg, paste(objs, collapse="\n"))
 }
 
 attach <- function(what, pos = 2L, name = deparse1(substitute(what), backtick=FALSE),

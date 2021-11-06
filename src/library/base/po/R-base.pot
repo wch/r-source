@@ -1672,13 +1672,13 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "The following object is masked _by_ %s:\n\n%s\n"
-msgid_plural "The following objects are masked _by_ %s:\n\n%s\n"
+msgid        "The following object is masked _by_ %s:"
+msgid_plural "The following objects are masked _by_ %s:"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "The following object is masked from %s:\n\n%s\n"
-msgid_plural "The following objects are masked from %s:\n\n%s\n"
+msgid        "The following object is masked from %s:"
+msgid_plural "The following objects are masked from %s:"
 msgstr[0]    ""
 msgstr[1]    ""
 
