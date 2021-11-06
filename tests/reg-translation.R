@@ -53,15 +53,30 @@ Encoding(deTxt) <- "UTF-8" # e.g. on Windows where it was  "latin1"
 all.equal(gettext(enTxt, domain="R-stats"), enTxt)
 (trTxt <- gettext(enTxt, domain="R-base")); Encoding(trTxt) # unknown
 all.equal(trTxt, deTxt)
-f <- function(...) warning(enTxt)
-(trTxtSt <- {environment(f) <- nsSt; tryCWmsg(f())})
+f <- function(...) warning(enTxt)  # warning() returns the message
+environment(f) <- .BaseNamespaceEnv; trTxtB <- f(); (trTxtBt <- tryCWmsg(f()))
+environment(f) <- nsSt;              trTxtS <- f(); (trTxtSt <- tryCWmsg(f()))
 stopifnot(exprs = {
     identical(trTxt, deTxt)
     identical(gettext(enTxt, domain="R-stats"), enTxt)
     identical({environment(f) <- .BaseNamespaceEnv; tryCWmsg(f())}, deTxt)
     identical({environment(f) <- nsSt;              tryCWmsg(f())}, enTxt)# not in R <= 4.1.x
+    identical(trTxtB , trTxt)
+    identical(trTxtBt, trTxt) # (not in 4.0.5)
+    identical(trTxtS , enTxt) # (not in 4.1.x, but in 4.0.5)
     identical(trTxtSt, enTxt) # (not in 4.1.x, but in 4.0.5)
 })# in all cases:  not present in stats  =>  not translated
+
+## gettextf
+chk <- function(tx) stopifnot(tx == sprintf("file '%s' not found", "/foo/bR"))
+f <- function() gettextf("file '%s' not found", "/foo/bR"); trTxt <- f()
+chk(trTxt) # failed in R 4.1.x
+trTxt <- gettextf("file '%s' not found", "/foo/bR"); chk(trTxt) # failed in R <= 4.1.x
+## gettext
+chk <- function(tx) stopifnot(tx == "file '%s' not found")
+     (trTxt <- gettext("file '%s' not found")); chk(trTxt) # failed in R 4.1.x
+print(trTxt <- gettext("file '%s' not found")); chk(trTxt) # failed in R <= 4.1.x
+
 
 ## Functions not *from* package namespace, but "as if" (PR#17998, from Comment 35):
 enT <- "empty model supplied"

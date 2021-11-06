@@ -52,3 +52,5 @@ z <- surrogate_pair(x)
 x1 <- intToUtf8(z, allow_surrogate_pairs = TRUE)
 x2 <- utf8ToInt(x1)
 stopifnot(x2 == x)
+
+proc.time() # ~ 9 sec
