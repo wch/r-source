@@ -2565,9 +2565,9 @@ AC_SUBST(R_BATCHSAVE)
 ## Java support
 ## R_JAVA
 custom_JAVA_HOME="${JAVA_HOME}"
-: ${JAVA_LIBS=~autodetect~}
-: ${JAVA_CPPFLAGS=~autodetect~}
-: ${JAVA_LD_LIBRARY_PATH=~autodetect~}
+: ${JAVA_LIBS='~autodetect~'}
+: ${JAVA_CPPFLAGS='~autodetect~'}
+: ${JAVA_LD_LIBRARY_PATH='~autodetect~'}
 custom_JAVA_LIBS="${JAVA_LIBS}"
 custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
 custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
