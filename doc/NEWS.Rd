@@ -123,6 +123,10 @@
       \item Subscript out of bounds errors are now signaled as errors of
       class \code{subscriptOutOfBoundsError}. 
 
+      \item Stack overflow errors are now signaled as errors inheriting
+      from class \code{stackOverflowError}. See
+      \code{?stackOverflowError} for more details.
+
       \item New partly experimental \code{Sys.setLanguage()} utility,
       solving the main problem of \PR{18055}.
     }

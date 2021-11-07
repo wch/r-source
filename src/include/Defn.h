@@ -2052,9 +2052,15 @@ void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);    // including deparse()ing
 SEXP R_GetTracebackOnly(int);// no        deparse()ing
 void NORET R_signalErrorCondition(SEXP cond, SEXP call);
+void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);
 SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 			    SEXP call, const char *prefix);
+SEXP R_makeCStackOverflowError(SEXP call, intptr_t usage);
+SEXP R_getProtectStackOverflowError();
+SEXP R_getExpressionStackOverflowError();
+SEXP R_getNodeStackOverflowError();
+void R_InitConditions();
 
 R_size_t R_GetMaxVSize(void);
 void R_SetMaxVSize(R_size_t);

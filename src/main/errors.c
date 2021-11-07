@@ -102,9 +102,13 @@ void NORET R_SignalCStackOverflow(intptr_t usage)
 	R_CStackLimit = (uintptr_t) (R_CStackLimit / 0.95);
     }
 
-    errorcall(R_NilValue, "C stack usage  %ld is too close to the limit",
-	      usage);
-    /* Do not translate this, to save stack space */
+    SEXP cond = R_makeCStackOverflowError(R_NilValue, usage);
+    PROTECT(cond);
+    /* calling handlers at this point might produce a C stack
+       overflow/SEGFAULT so treat them as failed and skip them */
+    /* use R_NilValue as the call to avoid using stack in deparsing */
+    R_signalErrorConditionEx(cond, R_NilValue, TRUE);
+    UNPROTECT(1); /* cond; not reached */
 }
 
 void (R_CheckStack)(void)
@@ -1012,6 +1016,7 @@ static void jump_to_top_ex(Rboolean traceback,
 	    if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */
 		REprintf(_("invalid option \"error\"\n"));
 	    else {
+		R_CheckStack();
 		inError = 3;
 		if (isLanguage(s))
 		    eval(s, R_GlobalEnv);
@@ -2582,9 +2587,9 @@ SEXP attribute_hidden do_addGlobHands(SEXP call, SEXP op,SEXP args, SEXP rho)
 
 /* signaling conditions from C code */
 
-void attribute_hidden R_signalCondition(SEXP cond, SEXP call,
-					int restoreHandlerStack,
-					int exitOnly)
+static void R_signalCondition(SEXP cond, SEXP call,
+			      int restoreHandlerStack,
+			      int exitOnly)
 {
     if (restoreHandlerStack) {
 	SEXP oldstack = R_HandlerStack;
@@ -2720,4 +2725,98 @@ SEXP R_makeOutOfBoundsError(SEXP x, int subscript, SEXP sindex,
 
     UNPROTECT(1); /* cond */
     return cond;
+}
+
+/* Do not translate this, to save stack space */
+static const char *C_SO_msg_fmt =
+    "C stack usage  %ld is too close to the limit";
+
+static SEXP R_makeStackOverflowError(const char *type, SEXP call,
+				     intptr_t usage)
+{
+    int csize = 2;
+    const char *msg;
+
+    if (call == R_CurrentExpression)
+	/* behave like error( */
+	call = getCurrentCall();
+
+    if (strcmp(type, "CStackOverflowError") == 0) {
+	csize = 3;
+	Rsnprintf_mbcs(emsg_buf, BUFSIZE - 1, C_SO_msg_fmt, usage);
+	msg = emsg_buf;
+    }
+    else if (strcmp(type, "protectStackOverflowError") == 0)
+	msg = _("protect(): protection stack overflow");
+    else if (strcmp(type, "expressionStackOverflowError") == 0)
+	msg = _("evaluation nested too deeply: infinite recursion / options(expressions=)?");
+    else if (strcmp(type, "nodeStackOverflowError") == 0)
+	msg = _("node stack overflow");
+    else error("unknown stack overflow error: %s", type);
+
+    SEXP cond = PROTECT(allocVector(VECSXP, csize));
+    SET_VECTOR_ELT(cond, 0, mkString(msg));
+    SET_VECTOR_ELT(cond, 1, call);
+
+    SEXP klass = allocVector(STRSXP, 4);
+    setAttrib(cond, R_ClassSymbol, klass);
+    SET_STRING_ELT(klass, 0, mkChar(type));
+    SET_STRING_ELT(klass, 1, mkChar("stackOverflowError"));
+    SET_STRING_ELT(klass, 2, mkChar("error"));
+    SET_STRING_ELT(klass, 3, mkChar("condition"));
+
+    SEXP names = allocVector(STRSXP, csize);
+    setAttrib(cond, R_NamesSymbol, names);
+    SET_STRING_ELT(names, 0, mkChar("message"));
+    SET_STRING_ELT(names, 1, mkChar("call"));
+
+    if (csize == 3) {
+	SET_VECTOR_ELT(cond, 2, ScalarReal((double) usage));
+	SET_STRING_ELT(names, 2, mkChar("usage"));
+    }
+
+    UNPROTECT(1); /* cond */
+    return cond;
+}
+
+SEXP attribute_hidden R_makeCStackOverflowError(SEXP call, intptr_t usage)
+{
+    return R_makeStackOverflowError("CStackOverflowError", call, usage);
+}
+
+static SEXP R_protectStackOverflowError = NULL;
+SEXP attribute_hidden R_getProtectStackOverflowError()
+{
+    return R_protectStackOverflowError;
+}
+
+static SEXP R_expressionStackOverflowError = NULL;
+SEXP attribute_hidden R_getExpressionStackOverflowError()
+{
+    return R_expressionStackOverflowError;
+}
+
+static SEXP R_nodeStackOverflowError = NULL;
+SEXP attribute_hidden R_getNodeStackOverflowError()
+{
+    return R_nodeStackOverflowError;
+}
+
+attribute_hidden
+void R_InitConditions()
+{
+    R_protectStackOverflowError =
+	R_makeStackOverflowError("protectStackOverflowError", R_NilValue, 0);
+    MARK_NOT_MUTABLE(R_protectStackOverflowError);
+    R_PreserveObject(R_protectStackOverflowError);
+
+    R_expressionStackOverflowError =
+	R_makeStackOverflowError("expressionStackOverflowError", R_NilValue, 0);
+    MARK_NOT_MUTABLE(R_expressionStackOverflowError);
+    R_PreserveObject(R_expressionStackOverflowError);
+
+    R_nodeStackOverflowError =
+	R_makeStackOverflowError("nodeStackOverflowError", R_NilValue, 0);
+    MARK_NOT_MUTABLE(R_nodeStackOverflowError);
+    R_PreserveObject(R_nodeStackOverflowError);
 }
