@@ -1684,7 +1684,7 @@ corresponding code in the package can be disabled at install time rather
 than giving error messages when the package is compiled or used.  To
 summarize, the full power of Autoconf is available for your extension
 package (including variable substitution, searching for libraries,
-etc.).  Background and useful tips on Autconf and related tools
+etc.).  Background and useful tips on Autoconf and related tools
 (including @command{pkg-config} described below) can be found at
 @uref{https://autotools.io/}.
 
