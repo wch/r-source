@@ -33,8 +33,8 @@ Sys.setLanguage(lang, unset = "en", resetDomain = FALSE, domain= "R")
 \arguments{
   \item{\dots}{One or more character vectors.}
   \item{trim}{logical indicating if the white space trimming in
-    \code{gettext()} should happen.  \code{trim=FALSE} may be needed for
-    compiled code (C / C++) messages which often end with \code{\n}.}
+    \code{gettext()} should happen.  \code{trim = FALSE} may be needed for
+    compiled code (C / C++) messages which often end with \code{\\n}.}
   \item{domain}{The \sQuote{domain} for the translation.}
   \item{n}{a non-negative integer.}
   \item{msg1}{the message to be used in English for \code{n = 1}.}
