@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2021-02-10 18:07+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -326,15 +326,15 @@ msgstr "environnement de travail requis (%.0f) trop large %s."
 msgid " probably because of setting 'se = TRUE'"
 msgstr " probablement à cause de l’argument 'se = TRUE'"
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr "ceci ne devrait pas se produire"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr "l'algorithme n'a pas convergé"
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "spécification de 'table' ou 'start' incorrecte"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -167,6 +167,10 @@ msgstr "dev.new(): usando postscript(arquivo=\"%s\")"
 
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr "'file' inválido"
 
 #, fuzzy
 msgid "Invalid pattern type"
@@ -449,8 +453,7 @@ msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "argumentos inválidos em 'windowsFonts' (devem ser nomes de fontes)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
-"argumentos inválidos em 'windowsFonts' (precisa de argumentos nomeados)"
+msgstr "argumentos inválidos em 'windowsFonts' (precisa de argumentos nomeados)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"

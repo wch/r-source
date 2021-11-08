@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58+0000\n"
+"POT-Creation-Date: 2021-11-06 17:17+0100\n"
 "PO-Revision-Date: 2011-11-28 23:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
 #: grid.c:199
-msgid "Turning clipping on or off within a clipping path is no honoured"
+msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr ""
 
 #: grid.c:241
@@ -31,11 +31,11 @@ msgid "cannot clip to rotated viewport"
 msgstr "Kan ikke klippe til roteret viewport"
 
 #: grid.c:455
-msgid "Clipping paths within a clipping path are not honoured"
+msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr ""
 
 #: grid.c:474
-msgid "Masks within a clipping path are not honoured"
+msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
@@ -47,44 +47,44 @@ msgstr "Kan ikke pop topniveau-viewporten (gitter og grafiks uddata blandet?)"
 msgid "attempt to plot on null device"
 msgstr "forsøg på at plotte på null-enhed"
 
-#: grid.c:1693
+#: grid.c:1702
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "Der er ingen layout defineret"
 
-#: grid.c:1913
+#: grid.c:1922
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkant ikke fundet (nulbredde eller nulhøjde?)"
 
-#: grid.c:1922
+#: grid.c:1931
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "Polygonkant ikke fundet"
 
-#: grid.c:2076
+#: grid.c:2085
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Kræver mindst to punkter at tegne pil"
 
-#: grid.c:2399
+#: grid.c:2408
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ikkebegrænsende kontrolpunkter i Xspline"
 
-#: grid.c:3324
+#: grid.c:3333
 msgid "non-finite x or y in graphics path"
 msgstr "ikkebegrænsende x eller y i grafiksti"
 
-#: grid.c:3374
+#: grid.c:3383
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3860
+#: grid.c:3869
 msgid "invalid plotting symbol"
 msgstr "ugyldigt plotsymbol"
 
-#: grid.c:3954
+#: grid.c:3963
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Kan ikke klippe til roteret rektangel"
@@ -103,7 +103,7 @@ msgstr "ugyldig layout.pos.col"
 msgid "singular transformation matrix"
 msgstr "entalstransformationsmatrix"
 
-#: state.c:180
+#: state.c:192
 #, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "Kan ikke lagre gittertilstand.  For mange enheder åbne?"
@@ -140,9 +140,7 @@ msgid "'units' must be of length > 0"
 msgstr "Enheder skal have længde > 0"
 
 #: unit.c:1584
-msgid ""
-"data must be either NULL, have length 1, or match the length of the final "
-"unit vector"
+msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr ""
 
 #: unit.c:1596

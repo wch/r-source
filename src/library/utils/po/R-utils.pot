@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:57\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -740,6 +740,9 @@ msgstr ""
 msgid "'file' must be \"\" or an open connection object"
 msgstr ""
 
+msgid "'char' must have a non-zero width"
+msgstr ""
+
 msgid "must have 'max' > 'min'"
 msgstr ""
 
@@ -1158,6 +1161,12 @@ msgid "unable to copy temporary installation %s to %s"
 msgstr ""
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
+msgstr ""
+
+msgid "'memory.size()' is no longer supported"
+msgstr ""
+
+msgid "'memory.limit()' is no longer supported"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -248,9 +248,7 @@ msgstr ""
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
 msgstr ""
 
 #: fourier.c:233
@@ -277,9 +275,7 @@ msgstr ""
 
 #: fourier.c:298
 #, c-format
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
 msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
@@ -318,15 +314,15 @@ msgstr ""
 msgid " probably because of setting 'se = TRUE'"
 msgstr ""
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr ""
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr ""
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr ""
 
@@ -508,9 +504,7 @@ msgstr ""
 
 #: model.c:1873
 #, c-format
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
 msgstr ""
 
 #: model.c:2157
@@ -854,8 +848,7 @@ msgstr "gradientfunktion skal returnere en numerisk vektor med længden %d"
 #: port.c:329
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr ""
-"Hessianfunktion skal returnere en kvadratisk numerisk matrix i orden %d"
+msgstr "Hessianfunktion skal returnere en kvadratisk numerisk matrix i orden %d"
 
 #: port.c:386
 msgid "'rho' must be an environment"

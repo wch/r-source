@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:17\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -98,6 +98,9 @@ msgstr "'pb' 不屬 %s 此一類別"
 
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' 必須是有兩個列的字元矩陣"
+
+msgid "tcltk DLL is linked to"
+msgstr ""
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "這個系統不支援 Tcl/Tk"

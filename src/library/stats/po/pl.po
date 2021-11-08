@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -11,8 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 2.0.4\n"
 
@@ -259,9 +258,7 @@ msgstr "wymagany jest (wielowymiarowy) szereg o wartościach będących wektoram
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
 msgstr ""
 
 #: fourier.c:233
@@ -288,9 +285,7 @@ msgstr ""
 
 #: fourier.c:298
 #, c-format
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
 msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
@@ -329,15 +324,15 @@ msgstr ""
 msgid " probably because of setting 'se = TRUE'"
 msgstr ""
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr "to nie powinno się wydarzyć"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr "algorytm nie uzbieżnił się"
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "niepoprawne określenie 'table' lub 'start'"
 
@@ -371,8 +366,7 @@ msgstr "Niepoprawne 'vmethod'"
 
 #: mAR.c:836
 msgid "Burg's algorithm failed to find partial correlation"
-msgstr ""
-"Algorytm Burga nie powiódł się przy próbie znalezienia częściowej korelacji"
+msgstr "Algorytm Burga nie powiódł się przy próbie znalezienia częściowej korelacji"
 
 #: model.c:97
 msgid "invalid variables"
@@ -434,9 +428,7 @@ msgstr "zmienna %d nie posiada poziomów"
 
 #: model.c:547
 msgid "the response appeared on the right-hand side and was dropped"
-msgstr ""
-"zmienna zależna pojawiła się po prawej stronie równania więc została "
-"odrzucona"
+msgstr "zmienna zależna pojawiła się po prawej stronie równania więc została odrzucona"
 
 #: model.c:567
 #, c-format
@@ -513,9 +505,7 @@ msgstr "argument 'data' posiada niepoprawny typ"
 
 #: model.c:1873
 #, c-format
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
 msgstr ""
 
 #: model.c:2157
@@ -592,9 +582,7 @@ msgstr ""
 
 #: nls.c:315
 msgid "Missing value or an infinity produced when evaluating the model"
-msgstr ""
-"Brakuje wartości lub wyprodukowano wartości nieskończone podczas wyliczania "
-"modelu"
+msgstr "Brakuje wartości lub wyprodukowano wartości nieskończone podczas wyliczania modelu"
 
 #: nls.c:328
 #, c-format
@@ -706,8 +694,7 @@ msgstr "niepoprawna wartość funkcji w optymalizatorze 'nlm'"
 
 #: optimize.c:566 optimize.c:581
 msgid "function value caching for optimization is seriously confused"
-msgstr ""
-"buforowanie wartości funkcji na potrzeby optymalizacji poważnie pomylone"
+msgstr "buforowanie wartości funkcji na potrzeby optymalizacji poważnie pomylone"
 
 #: optimize.c:596
 msgid "numeric parameter expected"
@@ -788,8 +775,7 @@ msgstr "Kolejna iteracja w granicach tolerancji.\n"
 
 #: optimize.c:674
 msgid "Last global step failed to locate a point lower than x.\n"
-msgstr ""
-"Ostatni globalny krok nie dał rady zlokalizować punktu niższego niż 'x'.\n"
+msgstr "Ostatni globalny krok nie dał rady zlokalizować punktu niższego niż 'x'.\n"
 
 #: optimize.c:675
 msgid ""
@@ -826,15 +812,11 @@ msgstr "niepoprawna wartość NA w parametrze"
 
 #: optimize.c:800
 msgid "hessian supplied is of the wrong length or mode, so ignored"
-msgstr ""
-"dostarczony hesjan posiada niepoprawną długość lub tryb, tak więc został "
-"zignorowany"
+msgstr "dostarczony hesjan posiada niepoprawną długość lub tryb, tak więc został zignorowany"
 
 #: optimize.c:804
 msgid "gradient supplied is of the wrong length or mode, so ignored"
-msgstr ""
-"dostarczony gradient posiada niepoprawną długość lub tryb, tak więc został "
-"zignorowany"
+msgstr "dostarczony gradient posiada niepoprawną długość lub tryb, tak więc został zignorowany"
 
 #: pacf.c:87
 msgid "bad Starma struct"
@@ -911,8 +893,7 @@ msgstr "'gradient' musi być macierzą liczbową o wymiarze (%d,%d)"
 #: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr ""
-"'fcn' wyprodukował tryb %d, długość %d - oczekiwano tryb %d, długość %d"
+msgstr "'fcn' wyprodukował tryb %d, długość %d - oczekiwano tryb %d, długość %d"
 
 #: port.c:534
 msgid "invalid type for eval_check_store"

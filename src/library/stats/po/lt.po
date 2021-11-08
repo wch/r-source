@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -208,8 +208,7 @@ msgid ""
 msgstr ""
 "FEXACT klaida 30. Viršytas dėklo ilgis, esantis f3xact,\n"
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
-"Padidinkite darbo sritį arba apsvarstykite galimybę naudoti 'simulate.p."
-"value=TRUE'"
+"Padidinkite darbo sritį arba apsvarstykite galimybę naudoti 'simulate.p.value=TRUE'"
 
 #: fexact.c:1404
 #, c-format
@@ -229,8 +228,7 @@ msgid ""
 msgstr ""
 "FEXACT klaida 7(%s). LDSTP=%d yra per maža šiai problemai spręsti,\n"
 "  (kval =%d, itop-ldstp=%d).\n"
-"Padidinkite darbo sritį arba apsvarstykite galimybę naudoti 'simulate.p."
-"value=TRUE'."
+"Padidinkite darbo sritį arba apsvarstykite galimybę naudoti 'simulate.p.value=TRUE'."
 
 #: fexact.c:1454
 #, c-format
@@ -241,8 +239,7 @@ msgid ""
 msgstr ""
 "FEXACT klaida 7(%s). LDSTP=%d yra per maža šiai problemai spręsti,\n"
 "  (pastp =%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
-"Padidinkite darbo sritį arba apsvarstykite galimybę naudoti 'simulate.p."
-"value=TRUE'"
+"Padidinkite darbo sritį arba apsvarstykite galimybę naudoti 'simulate.p.value=TRUE'"
 
 #: fourier.c:70 fourier.c:165
 msgid "non-numeric argument"
@@ -258,19 +255,13 @@ msgstr "reikalinga vektorinės reikšmės (daugiamatė) eilutė"
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
-msgstr ""
-"nextn() nerado sprendimo < %d = INT_MAX (maksimalus sveikasis skaičius); "
-"naudoti '0+ n' vietoj 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
+msgstr "nextn() nerado sprendimo < %d = INT_MAX (maksimalus sveikasis skaičius); naudoti '0+ n' vietoj 'n'"
 
 #: fourier.c:233
 #, c-format
 msgid "nextn<64>() found no solution < %ld = UINT64_MAX (the maximal integer)"
-msgstr ""
-"nextn<64>() nerado sprendimo < %ld = UINT64_MAX (maksimalus sveikasis "
-"skaičius)"
+msgstr "nextn<64>() nerado sprendimo < %ld = UINT64_MAX (maksimalus sveikasis skaičius)"
 
 #: fourier.c:249
 msgid "no factors"
@@ -290,12 +281,8 @@ msgstr "'n' privalo turėti typeof(.) \"integer\" arba \"double\""
 
 #: fourier.c:298
 #, c-format
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
-msgstr ""
-"nextn() = %<PRIu64> > 2^53 gali būti tiksliai atvaizduojamas R (kaip \"double"
-"\")"
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
+msgstr "nextn() = %<PRIu64> > 2^53 gali būti tiksliai atvaizduojamas R (kaip \"double\")"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
 #, c-format
@@ -333,15 +320,15 @@ msgstr "būtina darbo sritis (%.0f) yra per didelė %s."
 msgid " probably because of setting 'se = TRUE'"
 msgstr " tikriausiai dėl nustatymo 'se = TRUE'"
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr "tai neturėtų įvykti"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr "algoritmas nesutapo"
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "neteisinga 'table' arba 'start' specifikacija"
 
@@ -514,12 +501,8 @@ msgstr "argumentas 'data' yra netinkamo tipo"
 
 #: model.c:1873
 #, c-format
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
-msgstr ""
-"'varlist' pasikeitė (iš nvar=%d) į naują %d po EncodeVars() -- nebeturėtų "
-"įvykti!"
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
+msgstr "'varlist' pasikeitė (iš nvar=%d) į naują %d po EncodeVars() -- nebeturėtų įvykti!"
 
 #: model.c:2157
 msgid "'.' in formula and no 'data' argument"
@@ -788,8 +771,7 @@ msgstr "Paeiliui kartojasi netoleravimo ribose.\n"
 
 #: optimize.c:674
 msgid "Last global step failed to locate a point lower than x.\n"
-msgstr ""
-"Paskutiniam globaliam žingsniui nepavyko rasti taško, mažesnio nei x.\n"
+msgstr "Paskutiniam globaliam žingsniui nepavyko rasti taško, mažesnio nei x.\n"
 
 #: optimize.c:675
 msgid ""
@@ -867,8 +849,7 @@ msgstr "gradiento funkcija turi grąžinti skaitinį vektorių, kurio ilgis %d"
 #: port.c:329
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr ""
-"Hessian funkcija turi grąžinti kvadratinę skaitinę matricą, kurios eilė %d"
+msgstr "Hessian funkcija turi grąžinti kvadratinę skaitinę matricą, kurios eilė %d"
 
 #: port.c:386
 msgid "'rho' must be an environment"
@@ -880,9 +861,7 @@ msgstr "'d' turi būti netuščias skaitinis vektorius"
 
 #: port.c:390
 msgid "When Hessian defined must also have gradient defined"
-msgstr ""
-"Kai Hessian funkcija apibrėžta, tai taip pat turi būti apibrėžtas ir "
-"gradientas"
+msgstr "Kai Hessian funkcija apibrėžta, tai taip pat turi būti apibrėžtas ir gradientas"
 
 #: port.c:393
 #, c-format

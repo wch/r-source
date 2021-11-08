@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-06-02 06:08+0100\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -57,8 +57,7 @@ msgstr "specificazione formato '%s' non riconosciuto"
 
 #: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr ""
-"almeno un asterisco '*' è supportato in ogni specificazione di conversione"
+msgstr "almeno un asterisco '*' è supportato in ogni specificazione di conversione"
 
 #: gramLatex.c:2390 gramRd.c:3976
 #, c-format
@@ -117,8 +116,7 @@ msgstr "Non è possibile trovare la macro %s"
 #: gramRd.c:4036
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr ""
-"Fine inattesa dell'input (nella %c stringa virgolettata aperta in %s:%d:%d)"
+msgstr "Fine inattesa dell'input (nella %c stringa virgolettata aperta in %s:%d:%d)"
 
 #: gramRd.c:4535
 msgid "cannot open the connection"
@@ -149,12 +147,16 @@ msgstr "modalità testo errata %d in 'deparseRd'"
 msgid "invalid bind address specification"
 msgstr "specificazione indirizzo bind non valida"
 
-#: install.c:112 install.c:131 install.c:133
+#: install.c:98
+msgid "path too long"
+msgstr ""
+
+#: install.c:115 install.c:134 install.c:136
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
 
-#: install.c:162
+#: install.c:165
 msgid "write error during file append"
 msgstr "errore di scrittura durante file append"
 

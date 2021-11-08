@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-04-15 19:37+0100\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -20,24 +20,24 @@ msgstr ""
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-Language: Portuguese\n"
 
-#: src/gnuwin32/console.c:1172 src/gnuwin32/console.c:1214
+#: src/gnuwin32/console.c:1176 src/gnuwin32/console.c:1218
 msgid "Not enough memory"
 msgstr "Memória insuficiente"
 
-#: src/gnuwin32/console.c:1261 src/gnuwin32/console.c:1265
+#: src/gnuwin32/console.c:1265 src/gnuwin32/console.c:1269
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Memória insuficiente: texto não copiado para a área de transferência"
 
-#: src/gnuwin32/console.c:1303 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1307 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Não foi possível abrir a área de transferência"
 
-#: src/gnuwin32/console.c:1936
+#: src/gnuwin32/console.c:1943
 msgid "Insufficient memory. Please close the console"
 msgstr "Memória insuficiente. Por favor verifique o console"
 
-#: src/gnuwin32/console.c:1991 src/gnuwin32/console.c:2045
+#: src/gnuwin32/console.c:1998 src/gnuwin32/console.c:2052
 #: src/gnuwin32/preferences.c:338
 #, c-format
 msgid ""
@@ -47,23 +47,23 @@ msgstr ""
 "Fonte %s-%d-%d  não encontrada.\n"
 "Usando fonte fixa do sistema"
 
-#: src/gnuwin32/console.c:2150
+#: src/gnuwin32/console.c:2157
 msgid "Save selection to"
 msgstr "Salvar seleção em"
 
-#: src/gnuwin32/console.c:2152
+#: src/gnuwin32/console.c:2159
 msgid "Save console contents to"
 msgstr "Salvar conteúdo do console em"
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2258
 msgid "Scrolling.\n"
 msgstr "Fazendo rolagem.\n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2259
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  Teclado:  PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2260
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -71,107 +71,93 @@ msgstr ""
 "  Mouse: use a(s) barra(s) de rolagem.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2261
 msgid "Editing.\n"
 msgstr "Editando.\n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2262
 msgid "  Moving the cursor: \n"
 msgstr " Movendo o cursor: \n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2263
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     Seta esquerda ou Ctrl+B: anda para trás um caractere;\n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2264
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     Seta direita ou Ctrl+F: anda para frente um caractere;\n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2265
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home ou Ctrl+A: vai para o começo da linha;\n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2266
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End ou Ctrl+E: vai para o fim da linha;\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2267
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Histórico: setas para Cima e para Baixo, Ctrl+P, Ctrl+N\n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2268
 msgid "  Deleting:\n"
 msgstr "  Excluindo:\n"
 
-#: src/gnuwin32/console.c:2262
+#: src/gnuwin32/console.c:2269
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del ou Ctrl+D: exclui o caractere atual;\n"
 
 # precedente ou próximo?
-#: src/gnuwin32/console.c:2263
+#: src/gnuwin32/console.c:2270
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: exclui o caracter precedente;\n"
 
 # atual ou corrente?
-#: src/gnuwin32/console.c:2264
-msgid ""
-"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr ""
-"     Ctrl+Del ou Ctrl+K: apaga o texto do caracter atual até o final da "
-"linha.\n"
+#: src/gnuwin32/console.c:2271
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     Ctrl+Del ou Ctrl+K: apaga o texto do caracter atual até o final da linha.\n"
 
-#: src/gnuwin32/console.c:2265
+#: src/gnuwin32/console.c:2272
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: exclui todo o texto da linha atual.\n"
 
-#: src/gnuwin32/console.c:2266
+#: src/gnuwin32/console.c:2273
 msgid "  Copy and paste.\n"
 msgstr "  Copiar e colar.\n"
 
-#: src/gnuwin32/console.c:2267
-msgid ""
-"     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr ""
-"     Use o mouse (segurando o botão esquerdo) para marcar (selecionar) "
-"texto.\n"
+#: src/gnuwin32/console.c:2274
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     Use o mouse (segurando o botão esquerdo) para marcar (selecionar) texto.\n"
 
-#: src/gnuwin32/console.c:2268
-msgid ""
-"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr ""
-"     Use Shift+Del (ou Ctrl+C) para copiar o texto selecionado para a área "
-"de transferência e\n"
+#: src/gnuwin32/console.c:2275
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     Use Shift+Del (ou Ctrl+C) para copiar o texto selecionado para a área de transferência e\n"
 
-#: src/gnuwin32/console.c:2269
-msgid ""
-"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
-"(if any)  \n"
-msgstr ""
-"     Shift+Ins (ou Ctrl+V ou Ctrl+Y) para colar o conteúdo da área de "
-"transferência (se houver algum)  \n"
+#: src/gnuwin32/console.c:2276
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     Shift+Ins (ou Ctrl+V ou Ctrl+Y) para colar o conteúdo da área de transferência (se houver algum)  \n"
 
-#: src/gnuwin32/console.c:2270
+#: src/gnuwin32/console.c:2277
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     para o console, Ctrl+X primeiro copie depois cole\n"
 
-#: src/gnuwin32/console.c:2271
+#: src/gnuwin32/console.c:2278
 msgid "  Misc:\n"
 msgstr "  Misc:\n"
 
-#: src/gnuwin32/console.c:2272
+#: src/gnuwin32/console.c:2279
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: Limpa o console.\n"
 
-#: src/gnuwin32/console.c:2273
+#: src/gnuwin32/console.c:2280
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr ""
-"     Ctrl+O or INS: Alterna o modo de sobrescrita: inicialmente desligado.\n"
+msgstr "     Ctrl+O or INS: Alterna o modo de sobrescrita: inicialmente desligado.\n"
 
-#: src/gnuwin32/console.c:2274
+#: src/gnuwin32/console.c:2281
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: Troca o caracter atual com o da esquerda.\n"
 
-#: src/gnuwin32/console.c:2275
+#: src/gnuwin32/console.c:2282
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -179,7 +165,7 @@ msgstr ""
 "\n"
 "Nota: O console é atualizado somente quando alguma entrada é requerida.\n"
 
-#: src/gnuwin32/console.c:2276
+#: src/gnuwin32/console.c:2283
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -187,7 +173,7 @@ msgstr ""
 "  Use Ctrl+W para alternar entre a ativação/desativação desse recurso.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2277
+#: src/gnuwin32/console.c:2284
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -195,7 +181,7 @@ msgstr ""
 "Use ESC para parar o interpretador.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2278
+#: src/gnuwin32/console.c:2285
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -203,12 +189,11 @@ msgstr ""
 "TAB começa a completar a palavra atual.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2279
+#: src/gnuwin32/console.c:2286
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr ""
-"Teclas de atalho padrão do Windows podem ser usadas para mudar para o\n"
+msgstr "Teclas de atalho padrão do Windows podem ser usadas para mudar para o\n"
 
-#: src/gnuwin32/console.c:2280
+#: src/gnuwin32/console.c:2287
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "dispositivo gráfico (Ctrl+Tab ou Ctrl+F6 em MDI, Alt+Tab em SDI)"
 
@@ -258,9 +243,7 @@ msgstr "Executando comandos\n"
 
 #: src/gnuwin32/editor.c:609
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr ""
-"Para executar uma linha ou seção de código R, selecione o código e use um "
-"dos seguintes comandos\n"
+msgstr "Para executar uma linha ou seção de código R, selecione o código e use um dos seguintes comandos\n"
 
 #: src/gnuwin32/editor.c:610
 msgid "     Press Ctrl-R\n"
@@ -268,26 +251,19 @@ msgstr "     Pressione Ctrl-R\n"
 
 #: src/gnuwin32/editor.c:611
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr ""
-"     Seleciome \"Executar linha ou seleção\" a partir do menu \"Editar\"\n"
+msgstr "     Seleciome \"Executar linha ou seleção\" a partir do menu \"Editar\"\n"
 
 #: src/gnuwin32/editor.c:612
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr ""
-"     Pressione o ícone \"Executar linha ou seleção\" na barra de "
-"ferramentas\n"
+msgstr "     Pressione o ícone \"Executar linha ou seleção\" na barra de ferramentas\n"
 
 #: src/gnuwin32/editor.c:613
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
-msgstr ""
-"Isso irá copiar os comandos selecionados para o console e interpretá-los.\n"
+msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgstr "Isso irá copiar os comandos selecionados para o console e interpretá-los.\n"
 
 #: src/gnuwin32/editor.c:614
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
-msgstr ""
-"Se não há seleção, isso irá somente copiar a linha atual e prosseguir\n"
+msgid "If there is no selection, this will just run the current line and advance\n"
+msgstr "Se não há seleção, isso irá somente copiar a linha atual e prosseguir\n"
 
 #: src/gnuwin32/editor.c:615
 msgid "the cursor by one line.\n"
@@ -345,7 +321,7 @@ msgid "Print"
 msgstr "Imprimir"
 
 #: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
-#: src/library/utils/src/windows/dataentry.c:1791
+#: src/library/utils/src/windows/dataentry.c:1793
 #: src/library/grDevices/src/devWindows.c:1651
 msgid "File"
 msgstr "Arquivo"
@@ -377,7 +353,7 @@ msgid "Close script"
 msgstr "Fechar script"
 
 #: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1145
-#: src/library/utils/src/windows/dataentry.c:1797
+#: src/library/utils/src/windows/dataentry.c:1799
 msgid "Edit"
 msgstr "Editar"
 
@@ -402,8 +378,8 @@ msgid "GUI preferences..."
 msgstr "Preferências da interface gráfica"
 
 #: src/gnuwin32/editor.c:782 src/gnuwin32/rui.c:1188
-#: src/library/utils/src/windows/dataentry.c:1698
-#: src/library/utils/src/windows/dataentry.c:1808
+#: src/library/utils/src/windows/dataentry.c:1700
+#: src/library/utils/src/windows/dataentry.c:1810
 msgid "Help"
 msgstr "Ajuda"
 
@@ -423,7 +399,7 @@ msgstr "Não foi possível criar a janela do editor"
 msgid "Untitled"
 msgstr "Sem nome"
 
-#: src/gnuwin32/extra.c:1194
+#: src/gnuwin32/extra.c:1064
 msgid "Select file"
 msgstr "Selecionar arquivo"
 
@@ -449,14 +425,14 @@ msgid "Paste commands to console"
 msgstr "Colar os comandos no console"
 
 #: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
-#: src/library/utils/src/windows/dataentry.c:1704
+#: src/library/utils/src/windows/dataentry.c:1706
 #: src/library/grDevices/src/devWindows.c:1711
 msgid "Stay on top"
 msgstr "Sempre visível"
 
 #: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
-#: src/library/utils/src/windows/dataentry.c:1706
-#: src/library/utils/src/windows/dataentry.c:1793
+#: src/library/utils/src/windows/dataentry.c:1708
+#: src/library/utils/src/windows/dataentry.c:1795
 msgid "Close"
 msgstr "Fechar"
 
@@ -498,9 +474,7 @@ msgstr ""
 
 #: src/gnuwin32/preferences.c:376
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr ""
-"Modificações no tamanho do visualizador não se aplicam a visualizadores "
-"abertos"
+msgstr "Modificações no tamanho do visualizador não se aplicam a visualizadores abertos"
 
 #: src/gnuwin32/preferences.c:382
 msgid ""
@@ -838,14 +812,13 @@ msgstr "menu não encontrado"
 msgid "menu or item does not exist"
 msgstr "menu ou item não existe"
 
-#: src/gnuwin32/system.c:448
+#: src/gnuwin32/system.c:446
 msgid "Save workspace image?"
 msgstr "Salvar imagem da área de trabalho?"
 
 #: src/extra/graphapp/clipboard.c:69 src/extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
-msgstr ""
-"Memória insuficiente: a célula não foi copiada para a área de transferência"
+msgstr "Memória insuficiente: a célula não foi copiada para a área de transferência"
 
 #: src/extra/graphapp/dialogs.c:148 src/extra/graphapp/dialogs.c:165
 #: src/extra/graphapp/dialogs.c:182
@@ -890,72 +863,102 @@ msgstr "\"%s\" não encontrado"
 msgid "Arrange Icons"
 msgstr "Arrumar Ícones"
 
-#: src/library/utils/src/windows/dataentry.c:223
-#: src/library/utils/src/windows/dataentry.c:1851
-#: src/library/utils/src/windows/dataentry.c:1854
-#: src/library/utils/src/windows/dataentry.c:1885
+#: src/extra/graphapp/metafile.c:55
+#, fuzzy
+msgid "Unable to save metafile to the clipboard"
+msgstr "Não foi possível abrir a área de transferência"
+
+#: src/extra/graphapp/metafile.c:108
+#, fuzzy
+msgid "Unable to create metafile"
+msgstr "Não foi possível criar a janela do editor"
+
+#: src/extra/graphapp/metafile.c:113
+#, fuzzy
+msgid "Insufficient memory to create metafile"
+msgstr "Memória insuficiente. Por favor verifique o console"
+
+#: src/extra/graphapp/printer.c:90
+#, fuzzy
+msgid "Unable to choose printer"
+msgstr "Não foi possível criar janela do visualizador"
+
+#: src/extra/graphapp/printer.c:118
+#, fuzzy
+msgid "Insufficient memory for new printer"
+msgstr "Memória insuficiente para mostrar o arquivo no visualizador interno"
+
+#: src/extra/graphapp/printer.c:151
+#, fuzzy
+msgid "Unable to start the print job"
+msgstr "Não foi possível criar janela do visualizador"
+
+#: src/library/utils/src/windows/dataentry.c:225
+#: src/library/utils/src/windows/dataentry.c:1853
+#: src/library/utils/src/windows/dataentry.c:1856
+#: src/library/utils/src/windows/dataentry.c:1887
 msgid "invalid argument"
 msgstr "argumento inválido"
 
-#: src/library/utils/src/windows/dataentry.c:270
+#: src/library/utils/src/windows/dataentry.c:272
 msgid "invalid type for value"
 msgstr "tipo inválido para o valor"
 
-#: src/library/utils/src/windows/dataentry.c:281
+#: src/library/utils/src/windows/dataentry.c:283
 msgid "Data Editor"
 msgstr "Editor de dados"
 
-#: src/library/utils/src/windows/dataentry.c:331
+#: src/library/utils/src/windows/dataentry.c:333
 msgid "dataentry: internal memory problem"
 msgstr "dataentry: problema interno de memória"
 
-#: src/library/utils/src/windows/dataentry.c:634
-#: src/library/utils/src/windows/dataentry.c:1222
+#: src/library/utils/src/windows/dataentry.c:636
+#: src/library/utils/src/windows/dataentry.c:1224
 msgid "dataentry: internal memory error"
 msgstr "dataentry: erro interno de memória"
 
-#: src/library/utils/src/windows/dataentry.c:757
-#: src/library/utils/src/windows/dataentry.c:770
+#: src/library/utils/src/windows/dataentry.c:759
+#: src/library/utils/src/windows/dataentry.c:772
 msgid "internal type error in dataentry"
 msgstr "erro de tipo interno em dataentry"
 
-#: src/library/utils/src/windows/dataentry.c:853
+#: src/library/utils/src/windows/dataentry.c:855
 msgid "dataentry: parse error on string"
 msgstr "dataentry: erro de análise na cadeia de caracteres"
 
-#: src/library/utils/src/windows/dataentry.c:996
+#: src/library/utils/src/windows/dataentry.c:998
 msgid "dataentry: expression too long"
 msgstr "dataentry: expressão muito longa"
 
-#: src/library/utils/src/windows/dataentry.c:1473
+#: src/library/utils/src/windows/dataentry.c:1475
 msgid "column names cannot be blank"
 msgstr "nomes de colunas não podem ser brancos"
 
-#: src/library/utils/src/windows/dataentry.c:1519
+#: src/library/utils/src/windows/dataentry.c:1521
 msgid "Variable editor"
 msgstr "Editor de variáveis"
 
-#: src/library/utils/src/windows/dataentry.c:1524
+#: src/library/utils/src/windows/dataentry.c:1526
 msgid "variable name"
 msgstr "nome da variável"
 
-#: src/library/utils/src/windows/dataentry.c:1526
+#: src/library/utils/src/windows/dataentry.c:1528
 msgid "type"
 msgstr "tipo"
 
-#: src/library/utils/src/windows/dataentry.c:1640
+#: src/library/utils/src/windows/dataentry.c:1642
 msgid "Cell width(s)"
 msgstr "Largura da(s) célula(s)"
 
-#: src/library/utils/src/windows/dataentry.c:1646
+#: src/library/utils/src/windows/dataentry.c:1648
 msgid "Cell width"
 msgstr "Largura da célula"
 
-#: src/library/utils/src/windows/dataentry.c:1649
+#: src/library/utils/src/windows/dataentry.c:1651
 msgid "variable"
 msgstr "variável"
 
-#: src/library/utils/src/windows/dataentry.c:1692
+#: src/library/utils/src/windows/dataentry.c:1694
 msgid ""
 "Navigation.\n"
 "  Keyboard: cursor keys move selection\n"
@@ -984,8 +987,7 @@ msgstr ""
 "\tPgUp ou Ctrl+B: move uma tela para cima\n"
 "\tHome: move para a célula (1,1)\n"
 "\tEnd: mostra últimas linhas da última coluna.\n"
-"   Mouse: clique com o botão esquerdo em uma célula, use a(s) barra(s) de "
-"rolagem.\n"
+"   Mouse: clique com o botão esquerdo em uma célula, use a(s) barra(s) de rolagem.\n"
 "\n"
 "Edição.\n"
 "  Escreva na célula destacada atualmente\n"
@@ -995,39 +997,38 @@ msgstr ""
 "  Ctrl-L redesenha a tela, redimensionando automaticamente as colunas\n"
 "  Ctrl-C copia a célula selecionada\n"
 "  Ctrl-V cola na célula selecionada\n"
-"  Use o menu do botão direito para copiar, colar ou autodimensionar a coluna "
-"selecionada atualmente.\n"
+"  Use o menu do botão direito para copiar, colar ou autodimensionar a coluna selecionada atualmente.\n"
 "\n"
 
-#: src/library/utils/src/windows/dataentry.c:1700
+#: src/library/utils/src/windows/dataentry.c:1702
 msgid "Copy selected cell"
 msgstr "Copiar a célula selecionada"
 
-#: src/library/utils/src/windows/dataentry.c:1701
+#: src/library/utils/src/windows/dataentry.c:1703
 msgid "Paste to selected cell"
 msgstr "Colar na célula selecionada"
 
-#: src/library/utils/src/windows/dataentry.c:1702
+#: src/library/utils/src/windows/dataentry.c:1704
 msgid "Autosize column"
 msgstr "Autodimensionar a coluna"
 
-#: src/library/utils/src/windows/dataentry.c:1798
+#: src/library/utils/src/windows/dataentry.c:1800
 msgid "Copy  \tCTRL+C"
 msgstr "Copiar  \tCTRL+C"
 
-#: src/library/utils/src/windows/dataentry.c:1800
+#: src/library/utils/src/windows/dataentry.c:1802
 msgid "Paste \tCTRL+V"
 msgstr "Colar \tCTRL+V"
 
-#: src/library/utils/src/windows/dataentry.c:1802
+#: src/library/utils/src/windows/dataentry.c:1804
 msgid "Delete\tDEL"
 msgstr "Excluir\tDEL"
 
-#: src/library/utils/src/windows/dataentry.c:1805
+#: src/library/utils/src/windows/dataentry.c:1807
 msgid "Cell widths ..."
 msgstr "Comprimentos das células ..."
 
-#: src/library/utils/src/windows/dataentry.c:1809
+#: src/library/utils/src/windows/dataentry.c:1811
 msgid "Data editor"
 msgstr "Editor de dados"
 
@@ -1061,11 +1062,9 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced metafiles"
 
 #: src/library/grDevices/src/devWindows.c:1013
-#: src/library/grDevices/src/devWindows.c:3487
+#: src/library/grDevices/src/devWindows.c:3559
 msgid "file path selected is too long: only 512 bytes are allowed"
-msgstr ""
-"caminho do arquivo selecionado é muito grande: somente 512 bytes são "
-"permitidos"
+msgstr "caminho do arquivo selecionado é muito grande: somente 512 bytes são permitidos"
 
 #: src/library/grDevices/src/devWindows.c:1224
 msgid "No plot to replace!"
@@ -1206,15 +1205,15 @@ msgstr "Salvar como metafile..."
 msgid "Save as postscript..."
 msgstr "Salvar como postscript..."
 
-#: src/library/grDevices/src/devWindows.c:3153
+#: src/library/grDevices/src/devWindows.c:3225
 msgid "Locator is active"
 msgstr "Localizador está ativo"
 
-#: src/library/grDevices/src/devWindows.c:3813
+#: src/library/grDevices/src/devWindows.c:3885
 msgid "Waiting to confirm page change..."
 msgstr "Esperando para confirmar mudança de página..."
 
-#: src/library/grDevices/src/devWindows.c:3825
+#: src/library/grDevices/src/devWindows.c:3897
 msgid "Click or hit ENTER for next page"
 msgstr "Clique com o mouse ou pressione ENTER para próxima página"
 

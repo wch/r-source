@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2015-03-27 14:17+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -63,8 +63,7 @@ msgid "rgb values must be in [0, maxColorValue]"
 msgstr " rgb 値の範囲は [0, maxColorValue] でなければなりません "
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
-msgstr ""
-" 'start' と 'end' の値は異なり、どちらも範囲 [0, 1] 内になければなりません。 "
+msgstr " 'start' と 'end' の値は異なり、どちらも範囲 [0, 1] 内になければなりません。 "
 
 msgid "'palette' does not match any given palette"
 msgstr ""
@@ -88,12 +87,10 @@ msgid "display gamma = %s"
 msgstr " ディスプレイガンマ = %s "
 
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr ""
-" 'from' は \"colorConverter\" オブジェクトまたは文字列でなければなりません "
+msgstr " 'from' は \"colorConverter\" オブジェクトまたは文字列でなければなりません "
 
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr ""
-" 'to' は \"colorConverter\" オブジェクトまたは文字列でなければなりません "
+msgstr " 'to' は \"colorConverter\" オブジェクトまたは文字列でなければなりません "
 
 msgid "'from.ref.white' disagrees with definition of %s"
 msgstr " 'from.ref.white' が %s の定義と一致しません "
@@ -135,16 +132,13 @@ msgid "need to specify one of 'width' and 'height'"
 msgstr " 'width' と 'height' のどちらか一つを指定する必要があります "
 
 msgid "dev.control() called without an open graphics device"
-msgstr ""
-" dev.control() が，開かれたグラフィックスデバイスがないのに呼び出されました "
+msgstr " dev.control() が，開かれたグラフィックスデバイスがないのに呼び出されました "
 
 msgid "argument is missing with no default"
 msgstr " 引数がありませんが、省略時既定値もありません "
 
 msgid "dev.displaylist() called without an open graphics device"
-msgstr ""
-" dev.displaylist() が開かれたグラフィックスデバイスがないのに呼び出されまし"
-"た "
+msgstr " dev.displaylist() が開かれたグラフィックスデバイスがないのに呼び出されました "
 
 msgid "invalid setting for 'getOption(\"device\")'"
 msgstr " 'getOption(\"device\")' の設定が不正です "
@@ -166,6 +160,10 @@ msgstr " dev.new(): postscript(file=\"%s\") を使用します "
 
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr " 不正な 'file' です "
 
 #, fuzzy
 msgid "Invalid pattern type"
@@ -386,9 +384,7 @@ msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr " 'quartzFonts' 中の不正な引数です (名前がついた引数が必要です) "
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
-" このビルドでは cario ベースのデバイスはサポートされていません。\"Xlib\" を使"
-"います。 "
+msgstr " このビルドでは cario ベースのデバイスはサポートされていません。\"Xlib\" を使います。 "
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr " X11(type = \"XLib\") に対して、未知のファミリーです "
@@ -430,8 +426,7 @@ msgid "subscript out of range"
 msgstr " 添え字が範囲外です "
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr ""
-" 不正な Windows フォントです: 単一のフォントファミリー名でなければなりません "
+msgstr " 不正な Windows フォントです: 単一のフォントファミリー名でなければなりません "
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr " 'windowsFonts' 中の引数が不正です (フォント名が必要です) "
@@ -466,8 +461,7 @@ msgstr[0] " %d 個の正でない x の値が対数プロットから除かれ�
 #~ msgstr " すみません，'gs' が見つかりません "
 
 #~ msgid "loading snapshot from pre-3.0.0 R version"
-#~ msgstr ""
-#~ " R-3.0.0 以前のバージョンからのスナップショットが読み込まれています "
+#~ msgstr " R-3.0.0 以前のバージョンからのスナップショットが読み込まれています "
 
 #~ msgid "can only print from screen device"
 #~ msgstr " スクリーンデバイスからしかプリントすることが出来ません "
@@ -482,5 +476,4 @@ msgstr[0] " %d 個の正でない x の値が対数プロットから除かれ�
 #~ msgstr " 'antialias'の値が不正です "
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
-#~ msgstr ""
-#~ " quartz() デバイスは event loop manager なしに対話的に減らされました "
+#~ msgstr " quartz() デバイスは event loop manager なしに対話的に減らされました "

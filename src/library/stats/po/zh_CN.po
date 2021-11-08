@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -246,9 +246,7 @@ msgstr "需要矢量值系列(多变数)"
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
 msgstr ""
 
 #: fourier.c:233
@@ -275,9 +273,7 @@ msgstr ""
 
 #: fourier.c:298
 #, c-format
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
 msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
@@ -317,15 +313,15 @@ msgstr ""
 msgid " probably because of setting 'se = TRUE'"
 msgstr ""
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr "这不应该发生"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr "算法没有收敛"
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "'table'或'start'的设定不对"
 
@@ -498,9 +494,7 @@ msgstr "'data'参数种类有错"
 
 #: model.c:1873
 #, c-format
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
 msgstr ""
 
 #: model.c:2157
@@ -776,8 +770,7 @@ msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
-msgstr ""
-"要么x已经是函数的本地最小值，要么这个函数非线性太强，要么steptol设得太大。\n"
+msgstr "要么x已经是函数的本地最小值，要么这个函数非线性太强，要么steptol设得太大。\n"
 
 #: optimize.c:680
 msgid "Iteration limit exceeded.  Algorithm failed.\n"

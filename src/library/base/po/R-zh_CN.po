@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-12 09:25\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -223,9 +223,6 @@ msgstr "只能写字符对象"
 msgid "'headers' must have names and must not be NA"
 msgstr "'X'必需有带名字的维名"
 
-msgid "argument 'object' must deparse to a single character string"
-msgstr "参数'object'必需解析成单一个字符串"
-
 #, fuzzy
 msgid "'name' must be a single character string"
 msgstr "参数'object'必需解析成单一个字符串"
@@ -281,9 +278,7 @@ msgstr "数据框的'dimnames'给得不对"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "不能把\"%s\"类别强迫变成数据框"
 
-msgid ""
-"'row.names' is not a character vector of length %d -- omitting it. Will be "
-"an error!"
+msgid "'row.names' is not a character vector of length %d -- omitting it. Will be an error!"
 msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -340,8 +335,7 @@ msgstr "不支持这样的替换中矩阵索引"
 msgid "need 0, 1, or 2 subscripts"
 msgstr "需要零，一或二下标"
 
-msgid ""
-"missing values are not allowed in subscripted assignments of data frames"
+msgid "missing values are not allowed in subscripted assignments of data frames"
 msgstr "执行数据框下标赋值时是不允许遗漏值的"
 
 msgid "non-existent rows not allowed"
@@ -402,6 +396,10 @@ msgstr "只适用于全数值数据框"
 msgid "cannot xtfrm data frames"
 msgstr "不是数据框"
 
+#, fuzzy
+msgid "all variables should have the same length"
+msgstr "串列参数有错：所有变数的长度都应该是一样的"
+
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
 
@@ -447,8 +445,7 @@ msgstr "'to'的长度必需为一"
 msgid "'length.out' must be of length 1"
 msgstr "'length.out'的长度必需为一"
 
-msgid ""
-"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
 msgstr " 'to'，'by'，'length.out'/'along.with'中四个只能同时选两个"
 
 msgid "'by' must be of length 1"
@@ -611,8 +608,7 @@ msgstr "必需通过%s对象来设定DLL的名字。见getLoadedDLLs()"
 msgid "function is not in a namespace, so cannot locate associated DLL"
 msgstr "函数在名字空间里并不存在，因此无法找到与其对应的DLL"
 
-msgid ""
-"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr "寻找含本机協力子程式的DLL，但调用的名字空间里没有DLL"
 
 msgid "0 x 0 matrix"
@@ -646,9 +642,7 @@ msgstr "'%s'对順序化的因子没有意义"
 msgid "'%s' not defined for ordered factors"
 msgstr "'%s'对順序化的因子没有意义"
 
-msgid ""
-"'%s' is only meaningful for ordered factors if all arguments have the same "
-"level sets"
+msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "如果所有的参数都有相同的因子水平设置的话，'%s'才能对順序化的因子有意义"
 
 msgid "no files to copy to"
@@ -716,15 +710,13 @@ msgid "'flag' should contain only characters from [0+- #'I]"
 msgstr "'flag'只能含'0+- #'"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
-msgstr ""
-"'mode'的值必需是\"double\" (\"real\")， \"integer\"或\"character\"中的一个"
+msgstr "'mode'的值必需是\"double\" (\"real\")， \"integer\"或\"character\"中的一个"
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "用format=\"s\"时参数被强迫转变成\"character\" "
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
-msgstr ""
-"'format'的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
+msgstr "'format'的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
 
 msgid "'digits' reduced to %d"
 msgstr "'digits'被减少到%d"
@@ -738,9 +730,7 @@ msgstr "'zero.print'的长度一定得大于一"
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print'只能取字符，逻辑或NULL值"
 
-msgid ""
-"'zero.print' is truncated to fit into formatted zeros; consider "
-"'replace=TRUE'"
+msgid "'zero.print' is truncated to fit into formatted zeros; consider 'replace=TRUE'"
 msgstr ""
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
@@ -940,8 +930,7 @@ msgstr ""
 "找到多个叫%s的程辑包，\n"
 "载入'%s'里找到的那一个"
 
-msgid ""
-"Further information is available in the following vignettes in directory %s:"
+msgid "Further information is available in the following vignettes in directory %s:"
 msgstr "可以在目录%s中的小文品内找到更多的信息"
 
 msgid "Description:"
@@ -1043,6 +1032,10 @@ msgstr "'input'的长度一定得为一"
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input'和'target'一定都得是字符串"
 
+#, fuzzy
+msgid "cannot mtfrm"
+msgstr "不是数据框"
+
 msgid "'%s' is not a function, character or symbol"
 msgstr "'%s'不是函数，也不是字符，也不是符號"
 
@@ -1085,9 +1078,7 @@ msgstr ""
 msgid "additional arguments ignored in message()"
 msgstr "message()里附加参数略过不用"
 
-msgid ""
-"tracing functions requires the 'methods' package, but unable to load the "
-"'methods' namespace"
+msgid "tracing functions requires the 'methods' package, but unable to load the 'methods' namespace"
 msgstr "追蹤函数需要'methods'程辑包，但在载入'methods'名字空间的时候出了错"
 
 msgid "invalid to change the storage mode of a factor"
@@ -1120,20 +1111,13 @@ msgstr ""
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "名字空间%s已经在'loadNamespace'封條了"
 
-msgid ""
-"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
-"defined in the %s namespace"
-msgstr ""
-"不能为%1$s分配RegisteredNativeSymbol给%2$s因为%4$s已经在%3$s名字空间有定义了"
+msgid "failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace"
+msgstr "不能为%1$s分配RegisteredNativeSymbol给%2$s因为%4$s已经在%3$s名字空间有定义了"
 
-msgid ""
-"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
-"in the %s namespace"
+msgid "failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace"
 msgstr "不能为%1$s分配NativeSymbolInfo给%2$s因为%4$s已经在%3$s名字空间有定义了"
 
-msgid ""
-"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
-"%s namespace"
+msgid "failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace"
 msgstr "不能为%1$s分配NativeSymbolInfo因为%2$s已经在%3$s名字空间有定义了"
 
 msgid "package %s does not have a namespace"
@@ -1150,8 +1134,7 @@ msgstr "载入了名字空间%1$s %2$s，但需要的是%3$s %4$s"
 msgid "package %s has no 'package.rds' in Meta/"
 msgstr "程辑包%s 没有'NAMESPACE'这一文件"
 
-msgid ""
-"package %s has a license that you need to accept in an interactive session"
+msgid "package %s has a license that you need to accept in an interactive session"
 msgstr "程辑包%s的使用许可要求你先通过交互式会话时接受它"
 
 msgid "package %s has a license that you need to accept after viewing"
@@ -1173,9 +1156,7 @@ msgstr ""
 msgid "license for package %s not accepted"
 msgstr "程辑包%s的使用许可证没有被接受"
 
-msgid ""
-"package %s was installed by an R version with different internals; it needs "
-"to be reinstalled for use with this R version"
+msgid "package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version"
 msgstr ""
 
 msgid "-- processing imports for"
@@ -1210,8 +1191,7 @@ msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
-msgstr ""
-"虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
+msgstr "虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
 
 msgid "-- processing S4 stuff for"
 msgstr ""
@@ -1226,11 +1206,8 @@ msgstr ""
 msgid "--- processing classes"
 msgstr "类别不对"
 
-msgid ""
-"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
-"package %s"
-msgstr ""
-"虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
+msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
+msgstr "虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "在%s程辑包中%s类别指定被用于出口，但它的定义并不存在"
@@ -1304,12 +1281,8 @@ msgid "replacing previous import %s by %s when loading %s"
 msgstr "输入%2$s将代替前次引进%1$s"
 
 #, fuzzy
-msgid ""
-"No generic function %s found corresponding to requested imported methods "
-"from package %s when loading %s (malformed exports?)"
-msgstr ""
-"程序包\"%2$s\"里没有相应于为\"%1$s\"所要求的进口方法的泛型函数（是不是出口的"
-"格式不对？）"
+msgid "No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)"
+msgstr "程序包\"%2$s\"里没有相应于为\"%1$s\"所要求的进口方法的泛型函数（是不是出口的格式不对？）"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "不能在封闭名字空间里进行出口加入"
@@ -1346,8 +1319,7 @@ msgstr "方法有错"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "在载入名字空间'%2$s'的时候没有找到'%1$s'对象"
 
-msgid ""
-"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgid "While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
 msgstr ""
 
 msgid "Maybe package installed with version of R newer than %s ?"
@@ -1607,6 +1579,9 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "warning()里的附加参数略过不用"
 
+msgid "Sys.setenv(LANGUAGE=\"%s\")  may have failed"
+msgstr ""
+
 msgid ""
 "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
 "  Consider 'structure(list(), *)' instead."
@@ -1741,11 +1716,8 @@ msgstr ""
 msgid "invalid 'digits'"
 msgstr "'digits'的值不对"
 
-msgid ""
-"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
-"Windows only"
-msgstr ""
-"参数'show.output.on.console', 'minimized' 和'invisible'只适用在Windows上"
+msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
+msgstr "参数'show.output.on.console', 'minimized' 和'invisible'只适用在Windows上"
 
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern'的值必需是'TRUE'或'FALSE'值"
@@ -1898,12 +1870,8 @@ msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
 msgstr[0] "'by'必需指定唯一有效的列"
 
-msgid ""
-"Function found when exporting methods from the namespace %s which is not S4 "
-"generic: %s"
-msgid_plural ""
-"Functions found when exporting methods from the namespace %s which are not "
-"S4 generic: %s"
+msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
+msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
 msgstr[0] "在从名字空间%s中出口方法时发现了不是S4通用的函数%s"
 
 #, fuzzy
@@ -1912,10 +1880,8 @@ msgid_plural "No methods found in package %s for requests: %s when loading %s"
 msgstr[0] "在\"%s\"找不到%s需要的索取"
 
 #, fuzzy
-msgid ""
-"requested method not found in environment/package %s: %s when loading %s"
-msgid_plural ""
-"requested methods not found in environment/package %s: %s when loading %s"
+msgid "requested method not found in environment/package %s: %s when loading %s"
+msgid_plural "requested methods not found in environment/package %s: %s when loading %s"
 msgstr[0] "环境/程辑包%s里找不到所要求的方法：%s"
 
 msgid "class %s is not exported by 'namespace:%s'"
@@ -1950,6 +1916,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "argument 'object' must deparse to a single character string"
+#~ msgstr "参数'object'必需解析成单一个字符串"
 
 #~ msgid "'%s' is not an exported object from 'namespace:%s'"
 #~ msgstr "'%s'不是'namespace:%s'内的出口对象："

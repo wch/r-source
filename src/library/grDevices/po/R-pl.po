@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -11,8 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 2.0.4\n"
 
@@ -50,8 +49,7 @@ msgid "'bias' must be positive"
 msgstr "argument 'bias' musi być dodatni"
 
 msgid "'alpha' must be false if 'space' is specified"
-msgstr ""
-"argument 'alpha' musi mieć wartość FALSE, jeśli określono argument 'space'"
+msgstr "argument 'alpha' musi mieć wartość FALSE, jeśli określono argument 'space'"
 
 msgid "at least 3 columns needed"
 msgstr "przynajmniej 3 kolumny są potrzebne"
@@ -66,9 +64,7 @@ msgid "rgb values must be in [0, maxColorValue]"
 msgstr "argumenty 'r', 'g' oraz 'b' muszą być w przedziale [0, maxColorValue]"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
-msgstr ""
-"wartości 'start' oraz 'end' muszą być różne oraz zawierać się w przedziale "
-"[0, 1]."
+msgstr "wartości 'start' oraz 'end' muszą być różne oraz zawierać się w przedziale [0, 1]."
 
 msgid "'palette' does not match any given palette"
 msgstr ""
@@ -92,9 +88,7 @@ msgid "display gamma = %s"
 msgstr "wyświetl gamma = %s"
 
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr ""
-"argument 'from' musi być obiektem klasy \"colorConverter\" lub łańcuchem "
-"tekstowym"
+msgstr "argument 'from' musi być obiektem klasy \"colorConverter\" lub łańcuchem tekstowym"
 
 msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "'to' musi być obiektem klasy \"colorConverter\" lub łańcuchem"
@@ -145,8 +139,7 @@ msgid "argument is missing with no default"
 msgstr "brakuje argumentu, a brak zdefiniowanej dla niego wartości domyślnej"
 
 msgid "dev.displaylist() called without an open graphics device"
-msgstr ""
-"funkcja 'dev.displaylist()' wywołana bez otwartego urządzenia graficznego"
+msgstr "funkcja 'dev.displaylist()' wywołana bez otwartego urządzenia graficznego"
 
 msgid "invalid setting for 'getOption(\"device\")'"
 msgstr "niepoprawne ustawienie dla 'getOption(\"device\")'"
@@ -168,6 +161,10 @@ msgstr "dev.new(): używanie 'postscript(file=\"%s\")'"
 
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr "niepoprawny argument 'file'"
 
 #, fuzzy
 msgid "Invalid pattern type"
@@ -193,9 +190,7 @@ msgid "NOT changing %s"
 msgstr "NIE zmienianie %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
-"argument 'append' jest dla zapewnienia wstecznej kompatybilności i będzie "
-"zignorowany"
+msgstr "argument 'append' jest dla zapewnienia wstecznej kompatybilności i będzie zignorowany"
 
 msgid "unknown family '%s'"
 msgstr "nieznana rodzina '%s'"
@@ -267,8 +262,7 @@ msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "nie udało się dodać więcej znaczników na osi; 'min.n' jest zbyt duże?"
 
 msgid "a raster matrix must be character, or numeric, or logical"
-msgstr ""
-"macierz rastrowa musi być tekstem lub liczbą lub być wartością logiczną"
+msgstr "macierz rastrowa musi być tekstem lub liczbą lub być wartością logiczną"
 
 msgid "a raster array must be numeric"
 msgstr "tablica rastrowa musi być liczbowa"
@@ -389,8 +383,7 @@ msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr "niepoprawne argumenty w 'quatzFonts' (potrzebne są nazwane argumenty)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
-"czcionki oparte o cairo nie są wspierane w tej kompilacji - używanie \"Xlib\""
+msgstr "czcionki oparte o cairo nie są wspierane w tej kompilacji - używanie \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "nieznana rodzina dla  'X11(type = \"XLib\")'"
@@ -432,15 +425,13 @@ msgid "subscript out of range"
 msgstr "indeks jest poza zakresem"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr ""
-"niepoprawna czcionka Windows:  musi być nazwa pojedynczej rodziny czcionek"
+msgstr "niepoprawna czcionka Windows:  musi być nazwa pojedynczej rodziny czcionek"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "niepoprawne argumenty w 'windowsFonts' (muszą być nazwy czcionek)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
-"niepoprawne argumenty w 'windowsFonts' (potrzebne są nazwane argumenty)"
+msgstr "niepoprawne argumenty w 'windowsFonts' (potrzebne są nazwane argumenty)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"

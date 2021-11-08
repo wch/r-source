@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2021-02-10 17:42+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -150,6 +150,10 @@ msgstr "il faut naviguer dans au moins une vue"
 msgid "Invalid number of generations"
 msgstr "Nombre de générations incorrect"
 
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "argument 'arrow' incorrect"
+
 msgid "invalid object inserted on the display list"
 msgstr "objet incorrect inséré dans la liste d'affichage"
 
@@ -264,6 +268,30 @@ msgstr "il est seulement possible de définir 'children' dans  un objet \"gTree\
 msgid "Invalid 'order'"
 msgstr "'order' incorrect"
 
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "'order' incorrect"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "justification incorrecte"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
+msgstr "'order' incorrect"
+
 msgid "'l' must be a layout"
 msgstr "'l' doit être une mise en page (layout)"
 
@@ -311,6 +339,28 @@ msgstr "'listing' incorrect"
 
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x' et 'y' doivent être de même longueur"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x1', 'y1', 'x2' et 'y2' doivent être des unités ('units')"
+
+#, fuzzy
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "'x1', 'y1', 'x2' et 'y2' doivent être des unités ('units')"
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr "Le pattern de remplissage manquant est remplacé par un remplissage transparent"

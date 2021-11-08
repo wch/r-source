@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-05-03 09:57\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -794,13 +794,13 @@ msgstr ""
 msgid "Help pages:"
 msgstr ""
 
+msgid "No package named %s could be found"
+msgstr ""
+
 msgid "No help found for topic %s in any package."
 msgstr ""
 
 msgid "No package index found for package %s"
-msgstr ""
-
-msgid "No package named %s could be found"
 msgstr ""
 
 msgid "No help found for package %s"

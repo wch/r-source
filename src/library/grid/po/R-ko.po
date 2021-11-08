@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2020-08-13 10:30\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -64,9 +64,7 @@ msgid "invalid 'grob'"
 msgstr "유효하지 않은 'grob'입니다"
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr ""
-"유효하지 않은 'row' 그리고/또는 'col'입니다 (프레임 레이아웃에 그런 셀은 없습"
-"니다)"
+msgstr "유효하지 않은 'row' 그리고/또는 'col'입니다 (프레임 레이아웃에 그런 셀은 없습니다)"
 
 msgid "'col' can only be a range of existing columns"
 msgstr "'col'은 존재하는 열의 범위내에서만 얻을 수 있습니다"
@@ -80,19 +78,11 @@ msgstr "'row'는 존재하는 행의 범위내에서만 얻을 수 있습니다"
 msgid "invalid 'row' specification"
 msgstr "유효하지 않은 'row'지정입니다"
 
-msgid ""
-"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"'side=[\"left\", \"right\"]', 'col', 'col.before', 또는 'col.after' 중 하나 "
-"이상을 지정할 수 없습니다"
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "'side=[\"left\", \"right\"]', 'col', 'col.before', 또는 'col.after' 중 하나 이상을 지정할 수 없습니다"
 
-msgid ""
-"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"'side=[\"top\", \"bottom\"]', 'row', 'row.before', 또는 'row.after' 중 하나만"
-"을 지정해야 합니다"
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "'side=[\"top\", \"bottom\"]', 'row', 'row.before', 또는 'row.after' 중 하나만을 지정해야 합니다"
 
 msgid "invalid 'n'"
 msgstr "유효하지 않은 'n'입니다"
@@ -131,18 +121,13 @@ msgid "invalid display list element"
 msgstr "유효하지 않은 디스플레이 리스트의 구성요소입니다"
 
 #, fuzzy
-msgid ""
-"one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = "
-"TRUE')"
-msgstr ""
-"여러번 덮어 씌여진 grobs중 하나입니다 (grab은 정확한 것이 아닐 수도 있으므로 "
-"'wrap = TRUE'을 시도해보세요)"
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr "여러번 덮어 씌여진 grobs중 하나입니다 (grab은 정확한 것이 아닐 수도 있으므로 'wrap = TRUE'을 시도해보세요)"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "덮어 씌어진 뷰포트입니다 (grab은 아마도 정확하지 못할 수도 있습니다)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 msgstr ""
 
 msgid "only valid to push viewports"
@@ -165,6 +150,10 @@ msgstr "적어도 하나의 뷰포트를 찾아야만 합니다"
 
 msgid "Invalid number of generations"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid 'clearGroups' argument"
+msgstr "유효하지 않은 'arrow' 인자입니다"
 
 msgid "invalid object inserted on the display list"
 msgstr "디스플레이 목록에 삽입되어 있는 유효하지 않은 객체입니다"
@@ -251,9 +240,7 @@ msgid "it is only valid to edit a child of a \"gTree\""
 msgstr "\"gTree\"의 child를 수정하는 것만이 유효합니다"
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr ""
-"'children' 또는 'childrenOrder' 슬롯을 직접적으로 수정하는 것은 유효하지 않습"
-"니다"
+msgstr "'children' 또는 'childrenOrder' 슬롯을 직접적으로 수정하는 것은 유효하지 않습니다"
 
 msgid "invalid 'result'"
 msgstr "유효하지 않은 'result'입니다"
@@ -280,6 +267,30 @@ msgid "can only reorder 'children' for a \"gTree\""
 msgstr "\"gTree\"에 'children'을 재정렬만을 할 수 있습니다"
 
 msgid "Invalid 'order'"
+msgstr "유효하지 않은 'order'입니다"
+
+msgid "Group definition failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid source"
+msgstr "유효하지 않은 'order'입니다"
+
+#, fuzzy
+msgid "Invalid destination"
+msgstr "유효하지 않은 'edit'정보입니다"
+
+msgid "Invalid compositing operator"
+msgstr ""
+
+msgid "Unknown group:"
+msgstr ""
+
+msgid "Invalid transform (nothing drawn)"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid transform"
 msgstr "유효하지 않은 'order'입니다"
 
 msgid "'l' must be a layout"
@@ -313,8 +324,7 @@ msgid "invalid vertical justification"
 msgstr ""
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
-msgstr ""
-"'respect'는 반드시 논리값이거나 'nrow'행 'ncol'열을 가진 행렬이어야 합니다"
+msgstr "'respect'는 반드시 논리값이거나 'nrow'행 'ncol'열을 가진 행렬이어야 합니다"
 
 msgid "invalid 'print' argument"
 msgstr "유효하지 않은 'print' 인자입니다"
@@ -330,6 +340,27 @@ msgstr "유효하지 않은 'listing'입니다"
 
 msgid "invalid 'origin'"
 msgstr "유효하지 않은 'origin'입니다"
+
+msgid "Only a grob can be converted to a path"
+msgstr ""
+
+#, fuzzy
+msgid "colours and stops must be at least length 1"
+msgstr "'x'와 'y'는 반드시 같은 길이어야 합니다"
+
+#, fuzzy
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "'x'와 'y' 모두가 반드시 길이가 1인 유닛이어야 합니다"
+
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr ""
+
+#, fuzzy
+msgid "x, y, width, and height must all be length 1"
+msgstr "'x', 'y', 'width', 그리고 'height'는 반드시 길이가 1 이어야 합니다"
+
+msgid "Pattern must be based on grob"
+msgstr ""
 
 msgid "Missing pattern fill has been set to transparent"
 msgstr ""
@@ -405,8 +436,7 @@ msgid "'x' and 'y' must be 'unit' objects and have the same length"
 msgstr "'x'와 'y'는 반드시 'unit' 객체이어야 하며 같은 길이를 가져야 합니다"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-"'x', 'y', 'width', 그리고 'height' 모두가 반드시 길이가 1인 유닛이어야 합니다"
+msgstr "'x', 'y', 'width', 그리고 'height' 모두가 반드시 길이가 1인 유닛이어야 합니다"
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x'와 'y' 모두가 반드시 길이가 1인 유닛이어야 합니다"
@@ -502,10 +532,8 @@ msgstr ""
 msgid "only viewports allowed in 'vpStack'"
 msgstr ""
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'vpTree'에서 'parent'는 반드시 뷰포트이고 'children'은 반드시 'vpList'입니다"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'vpTree'에서 'parent'는 반드시 뷰포트이고 'children'은 반드시 'vpList'입니다"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "뷰포트 패스는 적어도 뷰포트 이름을 포함하고 있어야 합니다"

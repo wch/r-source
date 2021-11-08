@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58+0000\n"
+"POT-Creation-Date: 2021-11-06 17:17+0100\n"
 "PO-Revision-Date: 2014-03-26 10:02+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -23,7 +23,7 @@ msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
 #: grid.c:199
-msgid "Turning clipping on or off within a clipping path is no honoured"
+msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr ""
 
 #: grid.c:241
@@ -31,56 +31,54 @@ msgid "cannot clip to rotated viewport"
 msgstr " rotated viewport のクリップは出来ません "
 
 #: grid.c:455
-msgid "Clipping paths within a clipping path are not honoured"
+msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr ""
 
 #: grid.c:474
-msgid "Masks within a clipping path are not honoured"
+msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
 #: grid.c:916 grid.c:921 grid.c:1040 grid.c:1045
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr ""
-" トップレベルの viewport は pop することが出来ません ('grid' と 'graphics' の"
-"出力を混同していませんか?) "
+msgstr " トップレベルの viewport は pop することが出来ません ('grid' と 'graphics' の出力を混同していませんか?) "
 
 #: grid.c:1246
 msgid "attempt to plot on null device"
 msgstr " ナルデバイスにプロットしようとしています "
 
-#: grid.c:1693
+#: grid.c:1702
 msgid "there is no layout defined"
 msgstr " レイアウトが定義されていません "
 
-#: grid.c:1913
+#: grid.c:1922
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr " 多角形の頂点が見付かりません (幅もしくは高さがゼロ？) "
 
-#: grid.c:1922
+#: grid.c:1931
 msgid "polygon edge not found"
 msgstr " 多角形の頂点が見付かりません "
 
-#: grid.c:2076
+#: grid.c:2085
 msgid "require at least two points to draw arrow"
 msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
-#: grid.c:2399
+#: grid.c:2408
 msgid "non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
-#: grid.c:3324
+#: grid.c:3333
 msgid "non-finite x or y in graphics path"
 msgstr " グラフィックパスに有限でない x か y があります "
 
-#: grid.c:3374
+#: grid.c:3383
 msgid "Empty raster"
 msgstr " ラスターが空です "
 
-#: grid.c:3860
+#: grid.c:3869
 msgid "invalid plotting symbol"
 msgstr " 不正なプロット記号です "
 
-#: grid.c:3954
+#: grid.c:3963
 msgid "unable to clip to rotated rectangle"
 msgstr " 回転された矩形へクリップ出来ません "
 
@@ -96,11 +94,9 @@ msgstr " 不正な 'layout.pos.col' です "
 msgid "singular transformation matrix"
 msgstr " 特異な変換行列です "
 
-#: state.c:180
+#: state.c:192
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr ""
-" 現在の 'grid' の状態を保持することが出来ません。デバイスを開きすぎていません"
-"か? "
+msgstr " 現在の 'grid' の状態を保持することが出来ません。デバイスを開きすぎていませんか? "
 
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
@@ -131,9 +127,7 @@ msgid "'units' must be of length > 0"
 msgstr " 単位 ('units') の長さは 0 より大きくなければなりません "
 
 #: unit.c:1584
-msgid ""
-"data must be either NULL, have length 1, or match the length of the final "
-"unit vector"
+msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr ""
 
 #: unit.c:1596
@@ -174,8 +168,7 @@ msgstr ""
 
 #: viewport.c:330
 msgid "non-finite location and/or size for viewport"
-msgstr ""
-" 有限でない location かつ/または 有限でない viewport に対するサイズです "
+msgstr " 有限でない location かつ/または 有限でない viewport に対するサイズです "
 
 #~ msgid "unimplemented unit function"
 #~ msgstr " 未実装の単位 (unit) 関数です "

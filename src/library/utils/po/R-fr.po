@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59\n"
+"POT-Creation-Date: 2021-11-06 17:18\n"
 "PO-Revision-Date: 2021-02-10 17:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -809,6 +809,9 @@ msgstr "aucun objet de nom '%s' à afficher"
 msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' doit être \"\" ou un objet connexion"
 
+msgid "'char' must have a non-zero width"
+msgstr ""
+
 msgid "must have 'max' > 'min'"
 msgstr "doit avoir 'max' > 'min'"
 
@@ -1240,6 +1243,14 @@ msgstr "impossible de copier l'installation temporaire %s vers %s"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Seulement les fichiers '*.zip' et '*.tar.gz' peuvent être installés."
+
+#, fuzzy
+msgid "'memory.size()' is no longer supported"
+msgstr "'memory.size()' est spécifique à Windows"
+
+#, fuzzy
+msgid "'memory.limit()' is no longer supported"
+msgstr "'memory.limit()' est spécifique à Windows"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() ne peut être utilisé en mode non interactif"

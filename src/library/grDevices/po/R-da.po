@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:58\n"
+"POT-Creation-Date: 2021-11-06 17:17\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,6 +167,10 @@ msgstr "dev.new(): bruger postscript(file=\"%s\")"
 
 msgid "wrong 'type'; should never happen, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid fill rule"
+msgstr "ugyldig »file«"
 
 #, fuzzy
 msgid "Invalid pattern type"
@@ -397,8 +401,7 @@ msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr "ugyldige argumenter i quartzFonts (skal bruge navngivne argumenter)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
-"kairobaserede typer er ikke understøttet på denne bygning - bruger »Xlib«"
+msgstr "kairobaserede typer er ikke understøttet på denne bygning - bruger »Xlib«"
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "ukendt familie for X11(type = »XLib«)"

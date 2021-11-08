@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 4.1.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-10-07 17:26+0200\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2021-10-07 14:51+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -79,13 +79,11 @@ msgstr "  Déplacement du curseur : \n"
 
 #: src/gnuwin32/console.c:2263
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr ""
-"     Flèche gauche ou Ctrl+B : se déplacer d'un caractère vers la gauche ;\n"
+msgstr "     Flèche gauche ou Ctrl+B : se déplacer d'un caractère vers la gauche ;\n"
 
 #: src/gnuwin32/console.c:2264
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
-msgstr ""
-"     Flèche droite ou Ctrl+F : se déplacer d'un caractère vers la droite ;\n"
+msgstr "     Flèche droite ou Ctrl+F : se déplacer d'un caractère vers la droite ;\n"
 
 #: src/gnuwin32/console.c:2265
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
@@ -112,11 +110,8 @@ msgid "     Backspace: delete preceding character;\n"
 msgstr "     Suppr. arrière : effacer le caractère précédent ;\n"
 
 #: src/gnuwin32/console.c:2271
-msgid ""
-"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr ""
-"     Ctrl+Suppr ou Ctrl+K : effacer le texte du caractère sous le curseur "
-"jusqu'à la fin.\n"
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     Ctrl+Suppr ou Ctrl+K : effacer le texte du caractère sous le curseur jusqu'à la fin.\n"
 
 #: src/gnuwin32/console.c:2272
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -127,26 +122,16 @@ msgid "  Copy and paste.\n"
 msgstr "  Copier et coller.\n"
 
 #: src/gnuwin32/console.c:2274
-msgid ""
-"     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr ""
-"     Utilisez la souris (bouton gauche enfoncé) pour marquer (sélectionner) "
-"le texte.\n"
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     Utilisez la souris (bouton gauche enfoncé) pour marquer (sélectionner) le texte.\n"
 
 #: src/gnuwin32/console.c:2275
-msgid ""
-"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr ""
-"     Utilisez Shift+Suppr (ou Ctrl+C) pour copier le texte marqué dans le "
-"presse-papier et\n"
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     Utilisez Shift+Suppr (ou Ctrl+C) pour copier le texte marqué dans le presse-papier et\n"
 
 #: src/gnuwin32/console.c:2276
-msgid ""
-"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
-"(if any)  \n"
-msgstr ""
-"     Shift+Ins (ou Ctrl+V ou Ctrl+Y) pour coller le contenu du presse-"
-"papier\n"
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     Shift+Ins (ou Ctrl+V ou Ctrl+Y) pour coller le contenu du presse-papier\n"
 
 #: src/gnuwin32/console.c:2277
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -162,8 +147,7 @@ msgstr "     Ctrl+L : Effacer la console.\n"
 
 #: src/gnuwin32/console.c:2280
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr ""
-"     Ctrl+O ou INS : Bascule le mode surimpression ; désactivé au départ.\n"
+msgstr "     Ctrl+O ou INS : Bascule le mode surimpression ; désactivé au départ.\n"
 
 #: src/gnuwin32/console.c:2281
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -175,8 +159,7 @@ msgid ""
 "Note: Console is updated only when some input is required.\n"
 msgstr ""
 "\n"
-"Note: la console est mise à jour quand elle est prête à recevoir une "
-"commande.\n"
+"Note: la console est mise à jour quand elle est prête à recevoir une commande.\n"
 
 #: src/gnuwin32/console.c:2283
 msgid ""
@@ -208,8 +191,7 @@ msgstr "Les raccourcis Windows standard sont utilisables pour activer\n"
 
 #: src/gnuwin32/console.c:2287
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr ""
-"les périphériques graphiques (Ctrl+Tab ou Ctrl+F6 en MDI, Alt+Tab en SDI)"
+msgstr "les périphériques graphiques (Ctrl+Tab ou Ctrl+F6 en MDI, Alt+Tab en SDI)"
 
 #: src/gnuwin32/editor.c:91 src/gnuwin32/editor.c:93
 msgid "R Editor"
@@ -265,25 +247,19 @@ msgstr "     Appuyez Ctrl-R\n"
 
 #: src/gnuwin32/editor.c:611
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr ""
-"     Sélectionnez \"Exécuter la ligne ou sélection\" du menu \"Edition\"\n"
+msgstr "     Sélectionnez \"Exécuter la ligne ou sélection\" du menu \"Edition\"\n"
 
 #: src/gnuwin32/editor.c:612
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr ""
-"     Enfoncez le bouton \"Exécuter la ligne ou sélection\" de la barre "
-"d'outils\n"
+msgstr "     Enfoncez le bouton \"Exécuter la ligne ou sélection\" de la barre d'outils\n"
 
 #: src/gnuwin32/editor.c:613
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
+msgid "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "Cela copie le code sélectionné et l'évalue dans la console\n"
 
 #: src/gnuwin32/editor.c:614
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
-msgstr ""
-"S'il n'y a aucune sélection, la ligne courante est exécutée et le curseur\n"
+msgid "If there is no selection, this will just run the current line and advance\n"
+msgstr "S'il n'y a aucune sélection, la ligne courante est exécutée et le curseur\n"
 
 #: src/gnuwin32/editor.c:615
 msgid "the cursor by one line.\n"
@@ -429,8 +405,7 @@ msgstr "Erreur à l'ouverture du fichier"
 
 #: src/gnuwin32/pager.c:96
 msgid "Insufficient memory to display file in internal pager"
-msgstr ""
-"Mémoire insuffisante pour afficher le fichier dans un afficheur interne"
+msgstr "Mémoire insuffisante pour afficher le fichier dans un afficheur interne"
 
 #: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
 #: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
@@ -495,9 +470,7 @@ msgstr ""
 
 #: src/gnuwin32/preferences.c:376
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr ""
-"Les modifications dans la taille de l'afficheur ne seront pas appliquées aux "
-"afficheurs existants"
+msgstr "Les modifications dans la taille de l'afficheur ne seront pas appliquées aux afficheurs existants"
 
 #: src/gnuwin32/preferences.c:382
 msgid ""
@@ -571,8 +544,7 @@ msgstr "Chercher dans l'aide"
 
 #: src/gnuwin32/rui.c:617
 msgid "Search for words in help list archives and documentation"
-msgstr ""
-"Chercher des mots dans la documentation et les archives des listes d'aide"
+msgstr "Chercher des mots dans la documentation et les archives des listes d'aide"
 
 #: src/gnuwin32/rui.c:632
 msgid "Apropos"
@@ -909,8 +881,7 @@ msgstr "Impossible de créer la fenêtre de l'afficheur"
 #: src/extra/graphapp/printer.c:118
 #, fuzzy
 msgid "Insufficient memory for new printer"
-msgstr ""
-"Mémoire insuffisante pour afficher le fichier dans un afficheur interne"
+msgstr "Mémoire insuffisante pour afficher le fichier dans un afficheur interne"
 
 #: src/extra/graphapp/printer.c:151
 #, fuzzy
@@ -1011,8 +982,7 @@ msgstr ""
 "\tPgHaut ou Ctrl+B : déplace vers le haut d'un écran\n"
 "\tDébut : déplace vers la cellule (1,1)\n"
 "\tFin : montre la dernière ligne de la dernière colonne.\n"
-"   Souris : clic gauche dans une cellule, utilisez les barres de "
-"défilement.\n"
+"   Souris : clic gauche dans une cellule, utilisez les barres de défilement.\n"
 "\n"
 "Edition.\n"
 "  Entrez votre donnée dans la cellule active\n"
@@ -1086,7 +1056,7 @@ msgid "Enhanced metafiles"
 msgstr "Métafichier avancé EMF"
 
 #: src/library/grDevices/src/devWindows.c:1013
-#: src/library/grDevices/src/devWindows.c:3487
+#: src/library/grDevices/src/devWindows.c:3559
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "chemin sélectionné trop long : 512 caractères maximum"
 
@@ -1227,15 +1197,15 @@ msgstr "Sauver comme vectoriel..."
 msgid "Save as postscript..."
 msgstr "Sauver comme postscript..."
 
-#: src/library/grDevices/src/devWindows.c:3153
+#: src/library/grDevices/src/devWindows.c:3225
 msgid "Locator is active"
 msgstr "Le mode de localisation à la souris est actif"
 
-#: src/library/grDevices/src/devWindows.c:3813
+#: src/library/grDevices/src/devWindows.c:3885
 msgid "Waiting to confirm page change..."
 msgstr "Changement de page : attente de confirmation..."
 
-#: src/library/grDevices/src/devWindows.c:3825
+#: src/library/grDevices/src/devWindows.c:3897
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
 

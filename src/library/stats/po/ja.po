@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -248,9 +248,7 @@ msgstr " ベクトル値 (多変量) の系列が必要です "
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
 msgstr ""
 
 #: fourier.c:233
@@ -277,9 +275,7 @@ msgstr ""
 
 #: fourier.c:298
 #, c-format
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
 msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
@@ -318,15 +314,15 @@ msgstr ""
 msgid " probably because of setting 'se = TRUE'"
 msgstr ""
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr " これは起こるべきではありません "
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr " アルゴリズムが収束しませんでした "
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr " 'table' または 'start' の指定が誤っています "
 
@@ -437,8 +433,7 @@ msgstr " 行列は %.0g 行を必要とするかもしれません "
 #: model.c:582
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr ""
-" model.matrix 中の項 %d に問題があります: いかなる列も指定されていません "
+msgstr " model.matrix 中の項 %d に問題があります: いかなる列も指定されていません "
 
 #: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
@@ -500,9 +495,7 @@ msgstr " 'data' 引数が誤った型です "
 
 #: model.c:1873
 #, c-format
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
 msgstr ""
 
 #: model.c:2157
@@ -772,8 +765,7 @@ msgstr " 連続した繰り返しが許容範囲内です \n"
 
 #: optimize.c:674
 msgid "Last global step failed to locate a point lower than x.\n"
-msgstr ""
-" 最終の大局的ステップは x よりも小さな点を見つけることが出来ませんでした \n"
+msgstr " 最終の大局的ステップは x よりも小さな点を見つけることが出来ませんでした \n"
 
 #: optimize.c:675
 msgid ""
@@ -890,8 +882,7 @@ msgstr " 'gradient' は次元 (%d, %d) の数値行列でなければなりま�
 #: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr ""
-" モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした "
+msgstr " モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした "
 
 #: port.c:534
 msgid "invalid type for eval_check_store"
@@ -949,9 +940,7 @@ msgstr " 二番目の引数 'size' が不正です "
 #: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr ""
-" rcont2 [%d, %d]: exp がアンダーフローして 0 になりました; アルゴリズムが失敗"
-"しました "
+msgstr " rcont2 [%d, %d]: exp がアンダーフローして 0 になりました; アルゴリズムが失敗しました "
 
 #: smooth.c:107
 #, c-format

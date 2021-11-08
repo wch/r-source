@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -249,9 +249,7 @@ msgstr "série com valores vetoriais (multivariada) necessária"
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
 msgstr ""
 
 #: fourier.c:233
@@ -278,9 +276,7 @@ msgstr ""
 
 #: fourier.c:298
 #, c-format
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
 msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
@@ -320,15 +316,15 @@ msgstr ""
 msgid " probably because of setting 'se = TRUE'"
 msgstr ""
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr ""
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr ""
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr ""
 
@@ -440,8 +436,7 @@ msgstr "matrix requeriria %.0g colunas"
 #: model.c:582
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr ""
-"problema com o termo %d na matriz do modelo: nenhuma coluna foi atribuida"
+msgstr "problema com o termo %d na matriz do modelo: nenhuma coluna foi atribuida"
 
 #: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
@@ -449,8 +444,7 @@ msgstr "nomes dos termos serão truncados"
 
 #: model.c:645
 msgid "complex variables are not currently allowed in model matrices"
-msgstr ""
-"variáveis complexas não são atualmente permitidas em matrizes de modelo"
+msgstr "variáveis complexas não são atualmente permitidas em matrizes de modelo"
 
 #: model.c:669
 #, c-format
@@ -505,9 +499,7 @@ msgstr "argumento 'data' é do tipo errado"
 
 #: model.c:1873
 #, c-format
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
 msgstr ""
 
 #: model.c:2157
@@ -869,8 +861,7 @@ msgstr "'d' deve ser um vetor numérico não-vazio"
 
 #: port.c:390
 msgid "When Hessian defined must also have gradient defined"
-msgstr ""
-"quando a hessiana for definida o gradiente também deve ser especificado"
+msgstr "quando a hessiana for definida o gradiente também deve ser especificado"
 
 #: port.c:393
 #, c-format
@@ -898,8 +889,7 @@ msgstr "'gradient' deve ser uma matriz numérica de dimensão (%d,%d)"
 #: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr ""
-"fcn retornou modo %d, comprimento %d - esperado modo %d, comprimento %d"
+msgstr "fcn retornou modo %d, comprimento %d - esperado modo %d, comprimento %d"
 
 #: port.c:534
 msgid "invalid type for eval_check_store"

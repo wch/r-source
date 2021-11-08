@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-02-01 13:59+0000\n"
+"POT-Creation-Date: 2021-11-06 17:18+0100\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -247,9 +247,7 @@ msgstr "벡터기반의 (다변량) 시리즈가 필요합니다"
 
 #: fourier.c:221
 #, c-format
-msgid ""
-"nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' "
-"instead of 'n'"
+msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
 msgstr ""
 
 #: fourier.c:233
@@ -276,9 +274,7 @@ msgstr ""
 
 #: fourier.c:298
 #, c-format
-msgid ""
-"nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double"
-"\")"
+msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
 msgstr ""
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
@@ -288,9 +284,7 @@ msgstr "'%s'의 길이는 반드시 1이어야 합니다."
 
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
-msgstr ""
-"sm.method에 \"spline\"이 주어졌을 때에는 최대로 사용할 수 있는 행의 개수는 "
-"2500개입니다"
+msgstr "sm.method에 \"spline\"이 주어졌을 때에는 최대로 사용할 수 있는 행의 개수는 2500개입니다"
 
 #: lm.c:57
 msgid "'x' is not a matrix"
@@ -319,15 +313,15 @@ msgstr ""
 msgid " probably because of setting 'se = TRUE'"
 msgstr ""
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "this should not happen"
 msgstr "이것은 일어날 수 없는 경우입니다"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "algorithm did not converge"
 msgstr "알고리즘이 수렴하지 않습니다"
 
-#: loglin.c:375
+#: loglin.c:376
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "'table' 또는 'start'의 지정이 잘못되었습니다"
 
@@ -438,9 +432,7 @@ msgstr "행렬은 %.0g 열들을 필요로 합니다"
 #: model.c:582
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr ""
-"model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니"
-"다"
+msgstr "model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니다"
 
 #: model.c:631 model.c:636 model.c:642 model.c:653 model.c:659 model.c:665
 msgid "term names will be truncated"
@@ -502,9 +494,7 @@ msgstr "'data' 인자의 유형이 잘못되었습니다"
 
 #: model.c:1873
 #, c-format
-msgid ""
-"'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should "
-"no longer happen!"
+msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
 msgstr ""
 
 #: model.c:2157
@@ -847,8 +837,7 @@ msgstr "gradient function은 반드시 길이가 %d인 수치형 벡터를 반�
 #: port.c:329
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr ""
-"Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
+msgstr "Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
 
 #: port.c:386
 msgid "'rho' must be an environment"
@@ -865,8 +854,7 @@ msgstr "Hessian이 정의되었다면, 반드시 gradient 또한 정의되어져
 #: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr ""
-"environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
+msgstr "environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
 
 #: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
@@ -874,9 +862,7 @@ msgstr "'lower'와 'upper'는 반드시 수치형 벡터들이어야 합니다."
 
 #: port.c:466
 msgid "'getElement' applies only to named lists"
-msgstr ""
-"'getElement'는 오로지 원소에 이름이 주어진 리스트(list)들에만 적용할 수 있습"
-"니다."
+msgstr "'getElement'는 오로지 원소에 이름이 주어진 리스트(list)들에만 적용할 수 있습니다."
 
 #: port.c:487
 #, c-format
@@ -891,9 +877,7 @@ msgstr "'gradient'는 반드시 크기가 (%d,%d)인 수치형 행렬이어야 �
 #: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr ""
-"fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하"
-"였습니다."
+msgstr "fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하였습니다."
 
 #: port.c:534
 msgid "invalid type for eval_check_store"
@@ -951,8 +935,7 @@ msgstr "두 번째 인자 'size'가 올바르지 않습니다."
 #: rcont.c:85
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr ""
-"rcont2 [%d,%d]: exp의 값이 0보다 작기(underflow)하므로 알고리즘 실패입니다."
+msgstr "rcont2 [%d,%d]: exp의 값이 0보다 작기(underflow)하므로 알고리즘 실패입니다."
 
 #: smooth.c:107
 #, c-format
