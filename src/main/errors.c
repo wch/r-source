@@ -1182,10 +1182,17 @@ static char * determine_domain_gettext(SEXP domain_, Rboolean up)
 }
 
 
-/* gettext(domain, string) */
+/* gettext(domain, string, trim) */
 SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+#ifdef _gettext_3_args_only_
     checkArity(op, args);
+#else
+    // legacy code allowing "captured" 2-arg calls
+    int nargs = length(args);
+    if (nargs < 2 || nargs > 3)
+	errorcall(call, "either 2 or 3 arguments are required");
+#endif
 #ifdef ENABLE_NLS
     SEXP string = CADR(args);
     int n = LENGTH(string);
@@ -1198,6 +1205,12 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(domain && strlen(domain)) {
 	SEXP ans = PROTECT(allocVector(STRSXP, n));
+	Rboolean trim =
+#ifndef _gettext_3_args_only_
+	    TRUE;
+	if(nargs == 3)
+#endif
+	    asLogical(CADDR(args));
 	for(int i = 0; i < n; i++) {
 	    int ihead = 0, itail = 0;
 	    const char * This = translateChar(STRING_ELT(string, i));
@@ -1206,40 +1219,42 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_CheckStack2(strlen(This) + 1);
 	    tmp = (char *) alloca(strlen(This) + 1);
 	    strcpy(tmp, This);
-	    /* strip leading and trailing white spaces and
-	       add back after translation */
-	    for(p = tmp;
-		*p && (*p == ' ' || *p == '\t' || *p == '\n');
-		p++, ihead++) ;
 
-	    if(ihead > 0) {
-		R_CheckStack2(ihead + 1);
-		head = (char *) alloca(ihead + 1);
-		Rstrncpy(head, tmp, ihead + 1);
-		tmp += ihead;
+	    if(trim) {
+		/* strip leading and trailing white spaces and
+		   add back after translation */
+		for(p = tmp;
+		    *p && (*p == ' ' || *p == '\t' || *p == '\n');
+		    p++, ihead++) ;
+
+		if(ihead > 0) {
+		    R_CheckStack2(ihead + 1);
+		    head = (char *) alloca(ihead + 1);
+		    Rstrncpy(head, tmp, ihead + 1);
+		    tmp += ihead;
+		}
+
+		if(strlen(tmp))
+		    for(p = tmp+strlen(tmp)-1;
+			p >= tmp && (*p == ' ' || *p == '\t' || *p == '\n');
+			p--, itail++) ;
+
+		if(itail > 0) {
+		    R_CheckStack2(itail + 1);
+		    tail = (char *) alloca(itail + 1);
+		    strcpy(tail, tmp+strlen(tmp)-itail);
+		    tmp[strlen(tmp)-itail] = '\0';
+		}
 	    }
-
-	    if(strlen(tmp))
-		for(p = tmp+strlen(tmp)-1;
-		    p >= tmp && (*p == ' ' || *p == '\t' || *p == '\n');
-		    p--, itail++) ;
-
-	    if(itail > 0) {
-		R_CheckStack2(itail + 1);
-		tail = (char *) alloca(itail + 1);
-		strcpy(tail, tmp+strlen(tmp)-itail);
-		tmp[strlen(tmp)-itail] = '\0';
-	    }
-
 	    if(strlen(tmp)) {
 		GETT_PRINT("translating '%s' in domain '%s'\n", tmp, domain);
 		tr = dgettext(domain, tmp);
  		R_CheckStack2(        strlen(tr) + ihead + itail + 1);
 		tmp = (char *) alloca(strlen(tr) + ihead + itail + 1);
 		tmp[0] ='\0';
-		if(ihead > 0) strcat(tmp, head);
+		if(trim && ihead > 0) strcat(tmp, head);
 		strcat(tmp, tr);
-		if(itail > 0) strcat(tmp, tail);
+		if(trim && itail > 0) strcat(tmp, tail);
 		SET_STRING_ELT(ans, i, mkChar(tmp));
 	    } else
 		SET_STRING_ELT(ans, i, mkChar(This));
@@ -2633,7 +2648,7 @@ void NORET R_signalErrorConditionEx(SEXP cond, SEXP call, int exitOnly)
     SEXP elt = VECTOR_ELT(cond, 0);
     if (TYPEOF(elt) != STRSXP || LENGTH(elt) != 1)
 	error(_("first element of condition object must be a scalar string"));
-    
+
     /* handler stack has been unwound so this uses the default handler */
     errorcall(call, "%s", CHAR(STRING_ELT(elt, 0)));
 }
@@ -2665,7 +2680,7 @@ SEXP R_makeNotSubsettableError(SEXP x, SEXP call)
     SET_VECTOR_ELT(cond, 0, mkString(emsg_buf));
     SET_VECTOR_ELT(cond, 1, call);
     SET_VECTOR_ELT(cond, 2, x);
-    
+
     SEXP names = allocVector(STRSXP, 3);
     setAttrib(cond, R_NamesSymbol, names);
     SET_STRING_ELT(names, 0, mkChar("message"));

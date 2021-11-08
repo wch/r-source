@@ -7,9 +7,10 @@ if (!capabilities("NLS")) { ## e.g. when R was configured with --disable-nls
     q("no")
 }
 
-#### Report locale and charset
+#### Report locale, LANG* and charset
 Sys.getlocale()
-l10n_info()
+Sys.getenv(c("LANGUAGE","LANG"))
+str(l10n_info())
 
 #### Skip locales that do not support French (especially C)
 OK <- l10n_info()[["UTF-8"]] || l10n_info()[["Latin-1"]]
@@ -32,16 +33,17 @@ tryCEmsg <- function(expr) tryCatch(expr, error   = conditionMessage)
 tryCWmsg <- function(expr) tryCatch(expr, warning = conditionMessage)
 chk0 <- function(x) stopifnot(x == 0)
 nsSt <- asNamespace("stats")
+(Sys.setLanguage("fr") -> oldLang) # print previous
 (m1 <- tryCEmsg(chk0(1))) # (not translated in R < 4.1.0)
 ## switch back to English (if possible) for final report.
-Sys.setenv(LANGUAGE="en")
+Sys.setLanguage("en")
 m2 <- "x == 0 n'est pas TRUE"
 if(m1 != m2) stop("message was not translated to French")
 
 ## More -- for PR#18902 (<--> PR#17998, part 2)
 enTxt <- "incompatible dimensions"
 deTxt <- "inkompatible Dimensionen"
-Sys.setenv(LANGUAGE="de")
+Sys.setLanguage("de")
 stopifnot(identical(deTxt, gettext(enTxt, domain="R-stats")))
 f <- function(...) stop(enTxt)
 environment(f) <- nsSt
@@ -105,4 +107,18 @@ stopifnot(exprs = {
     isD(cmpfun(evalq(function() local(gettext(enT)), nsSt))())
     isD(eval(compile(quote(local(gettext(enT)))), nsSt))
     isD(eval(compile(quote(gettext(enT))), nsSt))
+})
+
+## Getting messages with trailing \n : either via ngettext() or w/ new trim=FALSE:
+txtE <- "Execution halted\n"
+Sys.setLanguage("fr")
+(n <- ngettext(1, txtE, "", domain="R"))
+(t. <- gettext(txtE, domain="R"))# default: translation *not* found
+t.T <- gettext(txtE, domain="R", trim=TRUE)# == default
+t.F <- gettext(txtE, domain="R", trim=FALSE)
+stopifnot(exprs = {
+    identical(t. , txtE)
+    identical(t.T, txtE)
+    identical(t.F, n)
+    t.F != t.T
 })

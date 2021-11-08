@@ -121,7 +121,7 @@
       the error condition.
 
       \item Subscript out of bounds errors are now signaled as errors of
-      class \code{subscriptOutOfBoundsError}. 
+      class \code{subscriptOutOfBoundsError}.
 
       \item Stack overflow errors are now signaled as errors inheriting
       from class \code{stackOverflowError}. See
@@ -129,6 +129,10 @@
 
       \item New partly experimental \code{Sys.setLanguage()} utility,
       solving the main problem of \PR{18055}.
+
+      \item \code{gettext()} and \code{gettextf()} get a new option
+      \code{trim = TRUE} which when set to false allows translations for
+      strings such as \code{"Execution halted\n"} typical for C code.
     }
   }
 

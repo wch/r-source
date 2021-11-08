@@ -21,16 +21,20 @@
   translate character vectors or set where the translations are to be found.
 }
 \usage{
-gettext(\dots, domain = NULL)
+gettext(\dots, domain = NULL, trim = TRUE)
 
 ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, domain = "R", unset = "en")
+Sys.setLanguage(lang, unset = "en", resetDomain = FALSE, domain= "R")
+
 }
 \arguments{
   \item{\dots}{One or more character vectors.}
+  \item{trim}{logical indicating if the white space trimming in
+    \code{gettext()} should happen.  \code{trim=FALSE} may be needed for
+    compiled code (C / C++) messages which often end with \code{\n}.}
   \item{domain}{The \sQuote{domain} for the translation.}
   \item{n}{a non-negative integer.}
   \item{msg1}{the message to be used in English for \code{n = 1}.}
@@ -42,6 +46,9 @@ Sys.setLanguage(lang, domain = "R", unset = "en")
   \item{unset}{a string, specifying the default language assumed to be
     current in the case \code{\link{Sys.getenv}("LANGUAGE")} is unset or
     empty.}
+  \item{resetDomain}{a \code{\link{logical}} specifying if the domain's
+    cache should be flushed via \code{domaintextdomain()}.  Does not seem
+    to be needed currently, on any platform.}
 }
 \details{
   If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
@@ -69,7 +76,8 @@ Sys.setLanguage(lang, domain = "R", unset = "en")
   Conventionally the domain for \R warning/error messages in package
   \pkg{pkg} is \code{"R-pkg"}, and that for C-level messages is \code{"pkg"}.
 
-  For \code{gettext}, leading and trailing whitespace is ignored when
+  For \code{gettext}, when \code{trim} is true as by default,
+  leading and trailing whitespace is ignored (\dQuote{trimmed}) when
   looking for the translation.
 
   \code{ngettext} is used where the message needs to vary by a single
@@ -95,8 +103,7 @@ Sys.setLanguage(lang, domain = "R", unset = "en")
   For \code{bindtextdomain}, a character string giving the current base
   directory, or \code{NULL} if setting it failed.
 
-  For \code{Sys.setLanguage()}, the previous \env{LANGUAGE} setting (or
-  the value \code{unset} if there hasn't been a non-empty \env{LANGUAGE})
+  For \code{Sys.setLanguage()}, the previous \env{LANGUAGE} setting
   with \code{\link{attributes}} \code{\link{attr}(*, "ok")}, a \code{\link{logical}}
   indicating success and \code{\link{attr}(*, "dir")} specifying the result
   of the last \code{bindtextdomain()} called from \code{Sys.setLanguage()}.
