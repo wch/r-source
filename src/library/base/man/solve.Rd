@@ -69,7 +69,7 @@ solve(a, b, \dots)
   \code{\link{backsolve}}, \code{\link{qr.solve}}.
 }
 \examples{
-hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, `+`) }
 h8 <- hilbert(8); h8
 sh8 <- solve(h8)
 round(sh8 \%*\% h8, 3)

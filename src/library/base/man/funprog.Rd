@@ -103,7 +103,7 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
 
 \examples{
 ## A general-purpose adder:
-add <- function(x) Reduce("+", x)
+add <- function(x) Reduce(`+`, x)
 add(list(1, 2, 3))
 ## Like sum(), but can also used for adding matrices etc., as it will
 ## use the appropriate '+' method in each reduction step.
@@ -114,7 +114,7 @@ FOO2 <- function(x, y) UseMethod("FOO2")
 ## FOO() methods can then be provided via FOO2() methods.
 
 ## A general-purpose cumulative adder:
-cadd <- function(x) Reduce("+", x, accumulate = TRUE)
+cadd <- function(x) Reduce(`+`, x, accumulate = TRUE)
 cadd(seq_len(7))
 
 ## A simple function to compute continued fractions:

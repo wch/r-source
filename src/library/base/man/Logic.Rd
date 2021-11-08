@@ -133,7 +133,7 @@ if (any(x == 0) || any(y == 0)) "zero encountered"
 
 x <- c(NA, FALSE, TRUE)
 names(x) <- as.character(x)
-outer(x, x, "&") ## AND table
-outer(x, x, "|") ## OR  table
+outer(x, x, `&`) ## AND table
+outer(x, x, `|`) ## OR  table
 }
 \keyword{logic}
