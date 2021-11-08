@@ -1205,12 +1205,14 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(domain && strlen(domain)) {
 	SEXP ans = PROTECT(allocVector(STRSXP, n));
-	Rboolean trim =
-#ifndef _gettext_3_args_only_
-	    TRUE;
-	if(nargs == 3)
+	Rboolean trim;
+#ifdef _gettext_3_args_only_
+#else
+	if(nargs == 2)
+	    trim = TRUE;
+	else
 #endif
-	    asLogical(CADDR(args));
+	    trim = asLogical(CADDR(args));
 	for(int i = 0; i < n; i++) {
 	    int ihead = 0, itail = 0;
 	    const char * This = translateChar(STRING_ELT(string, i));
