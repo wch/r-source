@@ -2394,6 +2394,58 @@ function(args, msg)
 
 ### * Miscellania
 
+### ** R
+
+R <-
+function(fun, args = list(), opts = character(), env = character(),
+         arch = "", timeout = 0)
+{
+    tfi <- tempfile("runri")
+    tfo <- tempfile("runro")
+    ## FIXME: do a more safe repos
+    wrk <- c(sprintf("x <- readRDS(\"%s\")", tfi),
+             "options(repos = x$repos)",
+             ## need quote = TRUE in case some of args are not self-evaluating
+             ## could catch other conditions also
+             "y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)",
+             sprintf("saveRDS(y, \"%s\")", tfo))
+    saveRDS(list(fun = fun, args = args, repos = getOption("repos")),
+            tfi)
+    cmd <- if(.Platform$OS.type == "windows") {
+               if(nzchar(arch))
+                   file.path(R.home(), "bin", arch, "Rterm.exe")
+               else
+                   file.path(R.home("bin"), "Rterm.exe")
+           } else {
+               if(nzchar(arch))
+                   opts <- c(paste0("--arch=", arch), opts)
+               file.path(R.home("bin"), "R")
+           }
+    res <- .system_with_capture(cmd, opts, env, input = wrk,
+                                timeout = timeout)
+    ## FIXME: what should the "value" be in case of error?
+    if(file.exists(tfo)) {
+        val <- readRDS(tfo)
+        if (inherits(val, "condition")) {
+            ## maybe wrap in a classed error and include some of res
+            msg <- paste0("error in inferior call:\n  ", conditionMessage(val))
+            stop(errorCondition(msg,
+                                class = "inferiorCallError",
+                                res = res,
+                                error = val))
+        }
+        else
+            ## everything worked; don't need to see res
+            val[[1L]]
+    }
+    else
+        ## again maybe wrap in a classed error  and include some of res
+        ## might want to distinguish two errors by sub-classes
+        stop(errorCondition("inferior call failed",
+                            class = "inferiorCallError",
+                            res = res))
+}
+
 ### ** Rcmd
 
 Rcmd <-
