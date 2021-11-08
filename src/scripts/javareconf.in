@@ -191,9 +191,9 @@ if test -z "$JAR"; then
 fi
 echo "Java archive tool: ${JAR}"
 
-: ${JAVA_LIBS=~autodetect~}
-: ${JAVA_CPPFLAGS=~autodetect~}
-: ${JAVA_LD_LIBRARY_PATH=~autodetect~}
+: ${JAVA_LIBS='~autodetect~'}
+: ${JAVA_CPPFLAGS='~autodetect~'}
+: ${JAVA_LD_LIBRARY_PATH='~autodetect~'}
 custom_JAVA_LIBS="${JAVA_LIBS}"
 custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
 custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
@@ -204,7 +204,7 @@ custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 ## we now look for a path to put in R_LD_LIBRARY_PATH which will
 ## enable libjvm to be found at run time.  This should not be needed,
 ## but it seems that libjvm is often not in the ld.so cache.
-if test "${JAVA_LIBS}" = "~autodetect~"; then
+if test "${JAVA_LIBS}" = '~autodetect~'; then
 	## we need to reset LD_LIBRARY_PATH, because Java automatically
 	## adds all LD_LIBRARY_PATH to Java path
 	save_LDLP=${LD_LIBRARY_PATH}

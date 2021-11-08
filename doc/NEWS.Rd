@@ -19,6 +19,10 @@
       \item Initialization of self-starting models with pre-R-4.1.0 API
       initialization functions (missing the \code{...} argument) for now
       works again, with a deprecation warning.
+
+      \item Fixed quoting of \code{~autodetect~} in Java setting defaults
+      to avoid inadvertent user lookup due to leading \code{~}, reported
+      in \PR{18231} by Harold Gutch.
     }
   }
 }
