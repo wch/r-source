@@ -1,6 +1,6 @@
 % File src/library/tools/man/update_pkg_po.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2013 R Core Team
+% Copyright 2012-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update_pkg_po}
@@ -13,7 +13,7 @@
   the translations.
 }
 \usage{
-update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
+update_pkg_po(pkgdir, pkg = NULL, version = NULL, mergeOpts = "", copyright, bugs)
 }
 \arguments{
   \item{pkgdir}{The path to the package directory.}
@@ -21,6 +21,10 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     \file{DESCRIPTION} file.}
   \item{version}{The package version: if \code{NULL} it is read from the
     package's \file{DESCRIPTION} file.}
+  \item{mergeOpts}{a string, by default empty, of options to
+    \command{msgmerge} in addition to \code{"--update"}.  Since \R 4.2.0,
+    \code{"--no-wrap"} is used when called from
+    \code{file.path(R.home("po"), "Makefile")}.}
   \item{copyright, bugs}{optional character strings for the
     \samp{Copyright} and \samp{Report-Msgid-Bugs-To} details in the
     template files.}
