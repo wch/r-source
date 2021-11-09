@@ -614,7 +614,7 @@ function(packages)
                  mapply(cbind,
                         Package =
                         lapply(v, function(e) e$packagelist$name),
-                        View = vapply(v, "[[", "name", FUN.VALUE = "")))
+                        View = vapply(v, `[[`, "name", FUN.VALUE = "")))
     v <- split(v[, 2L], v[, 1L])
 
     r <- package_dependencies(packages, a, reverse = TRUE)

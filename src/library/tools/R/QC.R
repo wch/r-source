@@ -1408,7 +1408,7 @@ function(package, dir, lib.loc = NULL, chkInternal = FALSE)
             exprs     <- exprs    [!ind]
             functions <- functions[!ind]
         }
-        ## (Note that as.character(sapply(exprs, "[[", 1L)) does not do
+        ## (Note that as.character(sapply(exprs, `[[`, 1L)) does not do
         ## what we want due to backquotifying.)
         arg_names_in_usage <-
             unlist(lapply(exprs,
@@ -1767,7 +1767,7 @@ function(package, dir, lib.loc = NULL)
         functions <-
             as.character(sapply(exprs,
                                 function(e) as.character(e[[1L]])))
-        ## (Note that as.character(sapply(exprs, "[[", 1L)) does not do
+        ## (Note that as.character(sapply(exprs, `[[`, 1L)) does not do
         ## what we want due to backquotifying.)
         ## Replacement functions.
         ind <- vapply(exprs, .is_call_from_replacement_function_usage, NA)
@@ -1814,7 +1814,7 @@ function(x, ...)
         ## documentation, in particular for the primary argument).
         ## Hence, even if we still provide information about this, we
         ## no longer print it by default.  One can still access it via
-        ##   lapply(checkDocStyle("foo"), "[[", "withGeneric")
+        ##   lapply(checkDocStyle("foo"), `[[`, "withGeneric")
         ## (but of course it does not print that nicely anymore),
         ## </NOTE>
         methods_with_full_name <- x[[nm]][["withFullName"]]
@@ -4218,8 +4218,8 @@ function(package, lib.loc = NULL)
                 ## uses
                 desc <- readRDS(file.path(find.package(package, NULL),
                                           "Meta", "package.rds"))
-                pkgs1 <- sapply(desc$Suggests, "[[", "name")
-                pkgs2 <- sapply(desc$Enhances, "[[", "name")
+                pkgs1 <- sapply(desc$Suggests, `[[`, "name")
+                pkgs2 <- sapply(desc$Enhances, `[[`, "name")
                 for(pkg in unique(c(pkgs1, pkgs2)))
                     ## tcltk warns if no DISPLAY variable
                     ##, errors if not compiled in
@@ -5017,8 +5017,8 @@ function(dir)
             loc <- Sys.getenv("R_ENCODING_LOCALES", NA_character_)
             if(!is.na(loc)) {
                 loc <- strsplit(strsplit(loc, ":")[[1L]], "=")
-                nm <- lapply(loc, "[[", 1L)
-                loc <- lapply(loc, "[[", 2L)
+                nm <- lapply(loc, `[[`, 1L)
+                loc <- lapply(loc, `[[`, 2L)
                 names(loc) <- nm
                 if(!is.null(l <- loc[[enc]]))
                     Sys.setlocale("LC_CTYPE", l)
@@ -5193,7 +5193,7 @@ function(dir)
     calls <- .find_calls_in_package_code(dir,
                                          .worker =
                                          .get_startup_function_calls_in_file)
-    FL <- unlist(lapply(calls, "[[", ".First.lib"))
+    FL <- unlist(lapply(calls, `[[`, ".First.lib"))
     calls <- Filter(length,
                     lapply(calls,
                            function(e)
@@ -5336,7 +5336,7 @@ function(dir)
     calls <- .find_calls_in_package_code(dir,
                                          .worker =
                                          .get_unload_function_calls_in_file)
-    LL <- unlist(lapply(calls, "[[", ".Last.lib"))
+    LL <- unlist(lapply(calls, `[[`, ".Last.lib"))
     calls <- Filter(length,
                     lapply(calls,
                            function(e)
@@ -6649,7 +6649,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             calls <- .find_calls(v, recursive = TRUE)
             if(!length(calls)) return()
             calls <- calls[.call_names(calls) == ".Internal"]
-            calls2 <- lapply(calls, "[", 2L)
+            calls2 <- lapply(calls, `[`, 2L)
             calls3 <-
                 sapply(calls2, function(x) sub("\\(.*", "", deparse(x)[1L]))
             internals <<- c(internals, calls3)

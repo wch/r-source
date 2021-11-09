@@ -5678,7 +5678,7 @@ add_dummies <- function(dir, Log)
             imp <- ns$imports
             lens <- lengths(imp)
             imp <- imp[lens == 2L]
-            nm <- sapply(imp, "[[", 1)
+            nm <- sapply(imp, `[[`, 1)
             lens <- vapply(imp, function(x) length(x[[2L]]), 0L)
             bad <- nm[lens == 0L]
             if(length(bad)) {

@@ -1230,7 +1230,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
             i <- match(i, names(x),
                        incomparables = c("", NA_character_))
         if(mj)
-            .POSIXlt(lapply(X = unclass(x), FUN = "[", i, drop = drop),
+            .POSIXlt(lapply(X = unclass(x), FUN = `[`, i, drop = drop),
                      attr(x, "tzone"), oldClass(x))
         else
             unclass(x)[[j]][i]
@@ -1447,7 +1447,7 @@ OlsonNames <- function(tzdir = NULL)
     if(!missing(i) && is.character(i)) {
         i <- match(i, names(x), incomparables = c("", NA_character_))
     }
-    .POSIXlt(lapply(X = unclass(x), FUN = "[[", i, drop = drop),
+    .POSIXlt(lapply(X = unclass(x), FUN = `[[`, i, drop = drop),
              attr(x, "tzone"), oldClass(x))
 }
 

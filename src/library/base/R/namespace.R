@@ -1056,7 +1056,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages,
                 ## The 'imports' list is named by where-from
                 ## and is in order of adding.
                 current <- getNamespaceInfo(self, "imports")
-                poss <- lapply(rev(current), "[", n)
+                poss <- lapply(rev(current), `[`, n)
                 poss <- poss[!sapply(poss, is.na)]
                 if(length(poss) >= 1L) {
                     prev <- names(poss)[1L]

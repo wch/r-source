@@ -49,7 +49,7 @@ function(file = NULL)
     MIME <- sapply(mapply(c, out$Name, out$Aliases),
                    function(u) {
                        if(any(ind <- grep("preferred MIME name", u)))
-                           sapply(strsplit(u[ind], " +"), "[[", 1L)
+                           sapply(strsplit(u[ind], " +"), `[[`, 1L)
                        else
                            character()
                    })
