@@ -41,10 +41,16 @@
   be supplied.  When using \option{-e} options be aware of the quoting
   rules in the shell used: see the examples.
 
-  Additional options accepted (before \code{file} or \code{args}) are
+  The prescribed order of arguments is important: e.g.  \option{--verbose}
+  specified after \option{-e} will be part of \code{args} and passed to the
+  expression; the same will happen to \option{-e} specified after
+  \code{file}.
+  
+  Additional options accepted as part of \code{options} (before \code{file}
+  or \option{-e}) are
   \describe{
     \item{\option{--verbose}}{gives details of what \command{Rscript} is
-      doing.  Also passed on to \R.}
+      doing.}
     \item{\option{--default-packages=list}}{where \code{list} is a
       comma-separated list of package names or \code{NULL}.  Sets the
       environment variable \env{R_DEFAULT_PACKAGES} which determines the
@@ -101,7 +107,9 @@ Rscript -e 'date()' -e 'format(Sys.time(), "\%a \%b \%d \%X \%Y")'
 Rscript --default-packages=methods,datasets,utils,grDevices,graphics,stats -e 'sessionInfo()'
 
 ## example #! script for a Unix-alike
-
+## (arguments given on the #! line end up as [options] to Rscript, while
+## arguments passed to the #! script end up as [args], so available to
+## commandArgs())
 #! /path/to/Rscript --vanilla --default-packages=utils
 args <- commandArgs(TRUE)
 res <- try(install.packages(args))
