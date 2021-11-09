@@ -457,7 +457,7 @@ function(x,
     collapse <- lapply(collapse, rep_len, 1L)
 
     ## extract selected elements
-    x <- lapply(unclass(x), "[", include)
+    x <- lapply(unclass(x), `[`, include)
     braces <- braces[include]
     collapse <- collapse[include]
 
@@ -615,8 +615,8 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
     rval <- lapply(seq_along(args$bibtype),
                    function(i)
                    do.call(bibentry1,
-                           c(lapply(args, "[[", i),
-                             list(other = lapply(other, "[[", i)))))
+                           c(lapply(args, `[[`, i),
+                             list(other = lapply(other, `[[`, i)))))
 
     ## add main header/footer for overall bibentry vector
     if(!.is_not_nonempty_text(mheader))
@@ -1018,7 +1018,7 @@ function(x, name)
     ## </COMMENT>
     is_attribute <- name %in% bibentry_attribute_names
     rval <- if(is_attribute) lapply(unclass(x), attr, name)
-        else lapply(unclass(x), "[[", name)
+        else lapply(unclass(x), `[[`, name)
     if(length(rval) == 1L) rval <- rval[[1L]]
     rval
 }

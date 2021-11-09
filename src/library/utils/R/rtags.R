@@ -74,7 +74,7 @@ write.etags <-
     lines <-
         switch(shorten.lines,
                none = lines,
-               simple = sapply(strsplit(lines, "function", fixed = TRUE), "[", 1),
+               simple = sapply(strsplit(lines, "function", fixed = TRUE), `[`, 1),
                token = mapply(shorten.to.string, lines, tokens))
     tag.lines <-
         paste(sprintf("%s\x7f%s\x01%d,%d",
@@ -164,7 +164,7 @@ rtags.file <-
     if (length(elist) == 0) return(invisible())
     lines <- readLines(src)
     tokens <- lapply(elist, expr2token)
-    startlines <- sapply(attr(elist, "srcref"), "[", 1L)
+    startlines <- sapply(attr(elist, "srcref"), `[`, 1L)
     if (length(tokens) != length(startlines))
         stop("length mismatch: bug in code!", domain = NA)
     keep <- lengths(tokens) == 1L

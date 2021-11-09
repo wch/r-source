@@ -63,12 +63,12 @@ TukeyHSD.aov <-
             n <- n[ord]
             if (!is.null(nms)) nms <- nms[ord]
         }
-        center <- outer(means, means, "-")
+        center <- outer(means, means, `-`)
         keep <- lower.tri(center)
         center <- center[keep]
         width <- qtukey(conf.level, length(means), x$df.residual) *
-            sqrt((MSE/2) * outer(1/n, 1/n, "+"))[keep]
-        est <- center/(sqrt((MSE/2) * outer(1/n, 1/n, "+"))[keep])
+            sqrt((MSE/2) * outer(1/n, 1/n, `+`))[keep]
+        est <- center/(sqrt((MSE/2) * outer(1/n, 1/n, `+`))[keep])
         pvals <- ptukey(abs(est), length(means), x$df.residual,
                         lower.tail = FALSE)
         dnames <- list(NULL, c("diff", "lwr", "upr","p adj"))

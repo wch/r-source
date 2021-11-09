@@ -123,7 +123,7 @@ summaryRprof <-
                                   "show" =  locations)]
        	      	if(length(x)) x else "<no location>"
             })
-        newfirsts  <- vapply(chunk, "[[", "char", 1L)
+        newfirsts  <- vapply(chunk, `[[`, "char", 1L)
         newuniques <- lapply(chunk,  unique)
         ulen <- lengths(newuniques)
         newuniques <- unlist(newuniques)
@@ -223,7 +223,7 @@ Rprof_memory_summary <- function(con, chunksize = 5000,
            chunk <- lapply(chunk, function(l) l[!(l %in% exclude)])
 
        len.pos <- lengths(chunk) > 0L
-       newfirsts <- sapply(chunk[len.pos], "[[",  1L)
+       newfirsts <- sapply(chunk[len.pos], `[[`,  1L)
        firsts <- c(firsts, newfirsts)
 
        if (!aggregate && length(label)) {

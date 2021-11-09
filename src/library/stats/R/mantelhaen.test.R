@@ -267,7 +267,7 @@ function(x, y = NULL, z = NULL,
             rowsums <- rowSums(f)[-I]   # n_{i.k}, i = 1 to I-1
             colsums <- colSums(f)[-J]   # n_{.jk}, j = 1 to J-1
             n <- n + c(f[-I, -J])
-            m <- m + c(outer(rowsums, colsums, "*")) / ntot
+            m <- m + c(outer(rowsums, colsums, `*`)) / ntot
             V <- V + (kronecker(diag(ntot * colsums, nrow = J - 1L)
                                 - outer(colsums, colsums),
                                 diag(ntot * rowsums, nrow = I - 1L)

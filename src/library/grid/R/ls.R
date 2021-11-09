@@ -747,7 +747,7 @@ grobPathListing <- function(x, ...) {
     subset <- grep("^g", x$type)
     if (length(subset)) {
         cl <- class(x)
-        subListing <- lapply(x, "[", subset)
+        subListing <- lapply(x, `[`, subset)
         class(subListing) <- cl
         pathListing(subListing, ...)
     }

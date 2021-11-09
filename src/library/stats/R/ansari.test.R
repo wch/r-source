@@ -72,7 +72,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 rab <- rank(c(x/sig, y))
                 sum(pmin(rab, N - rab + 1)[seq_along(x)])
             }
-            ratio <- outer(x, y, "/")
+            ratio <- outer(x, y, `/`)
             aratio <- ratio[ratio >= 0]
             sigma <- sort(aratio)
 

@@ -112,8 +112,8 @@ nlsModel.plinear <- function(form, data, start, wts, scaleOffset = 0, nDcentral 
             dtdot <- function(A, b) t(A) %*% b
         }
     } else {
-        ddot  <- function(A, b) apply(A, MARGIN =   3L    , FUN = "%*%", b)
-        dtdot <- function(A, b) apply(A, MARGIN = c(2L,3L), FUN = "%*%", b)
+        ddot  <- function(A, b) apply(A, MARGIN =   3L    , FUN = `%*%`, b)
+        dtdot <- function(A, b) apply(A, MARGIN = c(2L,3L), FUN = `%*%`, b)
     }
 
     getPars.noVarying <- function() unlist(mget(names(ind), env))

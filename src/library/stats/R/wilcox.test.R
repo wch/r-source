@@ -90,7 +90,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## gives a confidence interval for mean(x) - mean(y).
                 x <- x + mu             # we want a conf.int for the median
                 alpha <- 1 - conf.level
-                diffs <- outer(x, x, "+")
+                diffs <- outer(x, x, `+`)
                 diffs <- sort(diffs[!lower.tri(diffs)]) / 2
                 cint <-
                     switch(alternative,
@@ -300,7 +300,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## mean(x) - mean(y) in the two-sample case (cf. the
                 ## one-sample case).
                 alpha <- 1 - conf.level
-                diffs <- sort(outer(x, y, "-"))
+                diffs <- sort(outer(x, y, `-`))
                 cint <-
                     switch(alternative,
                            "two.sided" = {

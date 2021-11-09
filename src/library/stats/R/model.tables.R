@@ -157,7 +157,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     if(type == "means") {
 	gmtable <- mean(prjs[["(Intercept)"]])
 	class(gmtable) <- "mtable"
-	tables <- lapply(tables, "+", gmtable)
+	tables <- lapply(tables, `+`, gmtable)
 	tables <- c("Grand mean" = gmtable, tables)
     }
 #    n <- replications(attr(x, "call"), data = mf)

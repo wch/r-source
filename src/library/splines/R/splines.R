@@ -55,14 +55,14 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         if(any(ol)) {
 	    ## left pivot inside, i.e., a bit to the right of the boundary knot
 	    k.pivot <- (1-e)*Boundary.knots[1L] + e*Aknots[ord+1]
-            xl <- cbind(1, outer(x[ol] - k.pivot, 1L:degree, "^"))
+            xl <- cbind(1, outer(x[ol] - k.pivot, 1L:degree, `^`))
             tt <- splineDesign(Aknots, rep(k.pivot, ord), ord, derivs)
             basis[ol, ] <- xl %*% (tt/scalef)
         }
         if(any(or)) {
 	    ## right pivot inside, i.e., a bit to the left of the boundary knot:
 	    k.pivot <- (1-e)*Boundary.knots[2L] + e*Aknots[length(Aknots)-ord]
-            xr <- cbind(1, outer(x[or] - k.pivot, 1L:degree, "^"))
+            xr <- cbind(1, outer(x[or] - k.pivot, 1L:degree, `^`))
             tt <- splineDesign(Aknots, rep(k.pivot, ord), ord, derivs)
             basis[or, ] <- xr %*% (tt/scalef)
         }
