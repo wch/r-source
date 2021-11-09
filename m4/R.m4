@@ -3207,10 +3207,10 @@ int main() {
 #endif
 }
 ]])], [r_cv_have_pcre832=yes], [r_cv_have_pcre832=no], [r_cv_have_pcre832=no])])
-fi
 if test "x${r_cv_have_pcre832}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
+fi
 fi
 else
   have_pcre=no
