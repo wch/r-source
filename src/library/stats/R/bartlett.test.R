@@ -53,7 +53,7 @@ function(x, g, ...)
         n <- lengths(x) - 1L
         if (any(n <= 0))
             stop("there must be at least 2 observations in each group")
-        v <- sapply(x, "var")
+        v <- sapply(x, var)
     }
 
     n.total <- sum(n)

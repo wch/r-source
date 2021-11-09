@@ -33,7 +33,7 @@ function(x, incomparables = FALSE, fromLast = FALSE, ...)
     if(length(x) != 1L) {
         if(any(i <- vapply(x, is.factor, NA)))
             x[i] <- lapply(x[i], as.numeric)
-        if(any(i <- (lengths(lapply(x, "dim")) == 2L)))
+        if(any(i <- (lengths(lapply(x, dim)) == 2L)))
             x[i] <- lapply(x[i], split.data.frame, seq_len(nrow(x)))
         duplicated(do.call(Map, `names<-`(c(list, x), NULL)), fromLast = fromLast)
     }
@@ -74,7 +74,7 @@ function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
-    if(any(i <- (lengths(lapply(x, "dim")) == 2L)))
+    if(any(i <- (lengths(lapply(x, dim)) == 2L)))
         x[i] <- lapply(x[i], split.data.frame, seq_len(nrow(x)))
     anyDuplicated(do.call(Map, `names<-`(c(list, x), NULL)), fromLast = fromLast)
 }
