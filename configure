@@ -47237,10 +47237,10 @@ fi
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre832" >&5
 printf "%s\n" "$r_cv_have_pcre832" >&6; }
-fi
 if test "x${r_cv_have_pcre832}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
+fi
 fi
 else
   have_pcre=no
