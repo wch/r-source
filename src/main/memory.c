@@ -3516,13 +3516,13 @@ static SEXP DeleteFromList(SEXP object, SEXP list)
 
 #define ALLOW_PRECIOUS_HASH
 #ifdef ALLOW_PRECIOUS_HASH
-/* This allows using a fixed size hash table. This makes deleting mush
+/* This allows using a fixed size hash table. This makes deleting much
    more efficient for applications that don't follow the "sparing use"
    advice in R-exts.texi. Using the hash table is enabled by starting
    R with the environment variable R_HASH_PRECIOUS set.
 
    Pointer hashing as used here isn't entirely portable (we do it in
-   at least one othe rplace, in serialize.c) but it could be made so
+   at least one other place, in serialize.c) but it could be made so
    by computing a unique value based on the allocation page and
    position in the page. */
 
