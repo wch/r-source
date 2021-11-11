@@ -326,6 +326,9 @@
       \code{d} is a list with a single component, thanks to Thomas Soeiro's
       report to R-devel.
 
+      Further, \code{table(d1, d2)} now gives an error when \code{d1} and
+      \code{d2} are data frames as suggested by Thomas in \PR{18224}.
+
       \item Fix for drawing semitransparent lines and fills on native
       Windows graphics device (\PR{18219} and \PR{16694}).  Thanks to
       Nick Ray for helpful diagnosis on Bugzilla.

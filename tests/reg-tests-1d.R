@@ -5481,7 +5481,9 @@ stopifnot(identical(`substr<-`("A", 1, -1, "_"), "A"))
 stopifnot(identical(dnn, list(tension = levels(warpbreaks[[3]]))),
           identical(dn,  list(abc = c("A","B")))) # not ok in R-devel only
 ## dnn had no names() in R <= 4.1.x
-
+##
+## table(<d.fr.>, <d.fr.>) now signals the error (PR#18224):
+assertErrV( table(warpbreaks[2], warpbreaks[3]) )
 
 
 ## keep at end

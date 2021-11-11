@@ -62,7 +62,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     dims <- integer()
     pd <- 1L
     dn <- NULL
-    for (a in args) {
+    for (a in args) { ## a is args[[ length(dims)+1 ]]
 	if (is.null(lens)) lens <- length(a)
 	else if (length(a) != lens)
 	    stop("all arguments must have the same length")
@@ -72,6 +72,9 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
         ##
 	if(doNA) aNA <- anyNA(a) # *before* the following
         if(!fact.a) { ## factor(*, exclude=*) may generate NA levels where there were none!
+            if(!is.atomic(a)) stop(gettextf("'%s' is not atomic but of class \"%s\"",
+                                            deparse1(sys.call()[[length(dims) + 2L]]), class(a)),
+                                   domain=NA)
             a0 <- a
             ## A non-null setting of 'exclude' sets the
             ## excluded levels to missing, which is different
