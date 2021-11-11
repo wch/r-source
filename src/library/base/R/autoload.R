@@ -27,7 +27,7 @@ autoload <- function(name, package, reset=FALSE, ...)
     newcall$reset <- NULL
     if (is.na(match(package, .Autoloaded)))
 	assign(".Autoloaded", c(package, .Autoloaded), envir =.AutoloadEnv)
-    do.call("delayedAssign", list(name, newcall, .GlobalEnv, .AutoloadEnv))
+    do.call(delayedAssign, list(name, newcall, .GlobalEnv, .AutoloadEnv))
     ## no longer return the result, which is a promise
     invisible()
 }

@@ -283,7 +283,7 @@ function(..., na.rm)
     if(!ok)
         stop(gettextf("%s not defined for \"numeric_version\" objects",
                       .Generic), domain = NA)
-    x <- do.call("c", lapply(list(...), as.numeric_version))
+    x <- do.call(c, lapply(list(...), as.numeric_version))
     v <- xtfrm(x)
     if(!na.rm && length(pos <- which(is.na(v)))) {
         y <- x[pos[1L]]

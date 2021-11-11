@@ -148,5 +148,5 @@ function(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, ...)
     args <- rep(alist(a=), ndim)
     names(args) <- NULL
     args[[MARGIN]] <- !duplicated.default(temp, fromLast = fromLast, ...)
-    do.call("[", c(list(x), args, list(drop = FALSE)))
+    do.call(`[`, c(list(x), args, list(drop = FALSE)))
 }

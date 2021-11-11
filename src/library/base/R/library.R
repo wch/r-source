@@ -826,7 +826,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                         info
                 }
             })
-            db <- do.call("rbind", db)
+            db <- do.call(rbind, db)
             ok <- (apply(!is.na(db), 1L, all)
                    & (db[, "Package"] == pkg)
                    & (grepl(valid_package_version_regexp, db[, "Version"])))
