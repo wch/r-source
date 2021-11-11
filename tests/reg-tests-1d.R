@@ -5477,7 +5477,9 @@ stopifnot(identical(`substr<-`("A", 1, -1, "_"), "A"))
 
 ## dimnames(table(.)) in the 1D list/data.frame case:
 (dnn <- dimnames(table(warpbreaks[3])))
-stopifnot(identical(dnn, list(tension = levels(warpbreaks[[3]]))))
+  dn <- dimnames(table(warpbreaks[2], dnn = "abc"))
+stopifnot(identical(dnn, list(tension = levels(warpbreaks[[3]]))),
+          identical(dn,  list(abc = c("A","B")))) # not ok in R-devel only
 ## dnn had no names() in R <= 4.1.x
 
 

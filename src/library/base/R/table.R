@@ -50,7 +50,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     args <- list(...)
     if (length(args) == 1L && is.list(args[[1L]])) { ## e.g. a data.frame
 	args <- args[[1L]]
-	if(length(args) == 1L || length(dnn) != length(args))
+	if(missing(dnn) && length(args) == 1L || length(dnn) != length(args))
 	    dnn <- if (!is.null(argn <- names(args))) argn
 		   else paste(dnn[1L], seq_along(args), sep = ".")
     }
