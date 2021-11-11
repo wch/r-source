@@ -103,7 +103,7 @@ function(formula, data, subset, na.action, ...)
     mf <- eval(m, parent.frame())
     DNAME <- paste(names(mf), collapse = " and ")
     names(mf) <- NULL
-    y <- do.call("quade.test", as.list(mf))
+    y <- do.call(quade.test, as.list(mf))
     y$data.name <- DNAME
     y
 }

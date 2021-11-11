@@ -521,10 +521,10 @@ function(package = NULL, lib.loc = NULL,
 	## Create the global base, aliases, keywords and concepts tables
 	## via calls to rbind() on the columns of the matrix used for
 	## aggregating.
-	db <- list(Base     = do.call("rbind", dbMat[, 1]),
-		   Aliases  = do.call("rbind", dbMat[, 2]),
-		   Keywords = do.call("rbind", dbMat[, 3]),
-		   Concepts = do.call("rbind", dbMat[, 4]))
+	db <- list(Base     = do.call(rbind, dbMat[, 1]),
+		   Aliases  = do.call(rbind, dbMat[, 2]),
+		   Keywords = do.call(rbind, dbMat[, 3]),
+		   Concepts = do.call(rbind, dbMat[, 4]))
         rownames(db$Base) <- NULL
         ## <FIXME>
         ## Remove eventually ...

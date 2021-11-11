@@ -668,7 +668,7 @@ function(package, dir, lib.loc = NULL,
             }
         }
 
-        bad_functions <- do.call("c", bad_functions)
+        bad_functions <- do.call(c, bad_functions)
         if(length(bad_functions))
             bad_doc_objects[[docObj]] <- bad_functions
 
@@ -4387,7 +4387,7 @@ function(package, dir, lib.loc = NULL)
     }
 
     ## Flatten the xref db into one big matrix.
-    db <- cbind(do.call("rbind", db),
+    db <- cbind(do.call(rbind, db),
                 File = rep.int(names(db), vapply(db, NROW, 0L)))
     if(nrow(db) == 0L)
         return(structure(list(), class = "check_Rd_xrefs"))

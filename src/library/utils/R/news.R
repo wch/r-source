@@ -201,5 +201,5 @@ function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
 
 subset.news_db <-
 function(x, subset, ...) {
-    do.call("news", list(substitute(subset), db = x))
+    do.call(news, list(substitute(subset), db = x))
 }

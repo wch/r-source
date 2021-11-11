@@ -610,7 +610,7 @@ function(packages)
 
     v <- read_CRAN_object(CRAN_baseurl_for_src_area(),
                           "src/contrib/Views.rds")
-    v <- do.call("rbind",
+    v <- do.call(rbind,
                  mapply(cbind,
                         Package =
                         lapply(v, function(e) e$packagelist$name),

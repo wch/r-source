@@ -548,7 +548,7 @@ Summary.POSIXct <- function (..., na.rm)
         stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
              domain = NA)
     args <- list(...)
-    tz <- do.call("check_tzones", args)
+    tz <- do.call(check_tzones, args)
     .POSIXct(NextMethod(.Generic), tz = tz, cl = oldClass(args[[1L]]))
 }
 
@@ -559,7 +559,7 @@ Summary.POSIXlt <- function (..., na.rm)
         stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
              domain = NA)
     args <- list(...)
-    tz <- do.call("check_tzones", args)
+    tz <- do.call(check_tzones, args)
     args <- lapply(args, as.POSIXct)
     val <- do.call(.Generic, c(args, na.rm = na.rm))
     as.POSIXlt(.POSIXct(val, tz))
@@ -610,8 +610,7 @@ c.POSIXct <- function(..., recursive = FALSE) {
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
 c.POSIXlt <- function(..., recursive = FALSE) {
-    as.POSIXlt(do.call("c",
-                       lapply(list(...), as.POSIXct)))
+    as.POSIXlt(do.call(c, lapply(list(...), as.POSIXct)))
 }
 
 

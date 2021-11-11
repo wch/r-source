@@ -151,7 +151,7 @@ function (formula, data, subset, na.action, ...)
         if (nlevels(g) != 2L) 
             stop("grouping factor must have exactly 2 levels")
         DATA <- setNames(split(mf[[response]], g), c("x", "y"))
-        y <- do.call("t.test", c(DATA, list(...)))
+        y <- do.call(t.test, c(DATA, list(...)))
         if (length(y$estimate) == 2L) {
             names(y$estimate) <- paste("mean in group", levels(g))
             names(y$null.value) <-
@@ -163,11 +163,11 @@ function (formula, data, subset, na.action, ...)
         respVar <- mf[[response]]
         if (inherits(respVar, "Pair")){
             DATA <- list(x = respVar[,1], y = respVar[,2], paired=TRUE)
-            y <- do.call("t.test", c(DATA, list(...)))
+            y <- do.call(t.test, c(DATA, list(...)))
         }
         else {
             DATA <- list(x = respVar)
-            y <- do.call("t.test", c(DATA, list(...)))
+            y <- do.call(t.test, c(DATA, list(...)))
         }
     }
     y$data.name <- DNAME

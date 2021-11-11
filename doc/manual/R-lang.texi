@@ -3706,7 +3706,7 @@ function like @code{cbind} to all elements of a list or data frame.
 
 @example
 is.na.data.frame <- function (x) @{
-    y <- do.call("cbind", lapply(x, "is.na"))
+    y <- do.call(cbind, lapply(x, is.na))
     rownames(y) <- row.names(x)
     y
 @}

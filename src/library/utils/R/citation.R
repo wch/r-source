@@ -275,7 +275,7 @@ function(..., recursive = FALSE)
                          sQuote("person")),
                 domain = NA)
     args <- lapply(args, unclass)
-    rval <- do.call("c", args)
+    rval <- do.call(c, args)
     class(rval) <- "person"
     rval
 }
@@ -328,8 +328,7 @@ function(x)
 
     ## Step B.
     pattern <- "[[:space:]]?(,|,?[[:space:]]and)[[:space:]]+"
-    x <- do.call("c",
-                 regmatches(x, gregexpr(pattern, y), invert = TRUE))
+    x <- do.call(c, regmatches(x, gregexpr(pattern, y), invert = TRUE))
     x <- x[!vapply(x, .is_not_nonempty_text, NA)]
 
     ## don't expect Jr. to be a person
@@ -388,7 +387,7 @@ function(x)
         return(z)
     }
 
-    as.list(do.call("c", lapply(x, as_person1)))
+    as.list(do.call(c, lapply(x, as_person1)))
 }
 
 personList <-
@@ -399,7 +398,7 @@ function(...)
         stop(gettextf("all arguments must be of class %s",
                       dQuote("person")),
              domain = NA)
-    do.call("c", z)
+    do.call(c, z)
 }
 
 as.personList <-
@@ -414,7 +413,7 @@ as.personList.default <-
 function(x)
 {
     if(inherits(x, "person")) return(x)
-    do.call("c", lapply(x, as.person))
+    do.call(c, lapply(x, as.person))
 }
 
 format.person <-
@@ -489,7 +488,7 @@ function(x,
                                                      collapse[[i]]),
                                       braces[[i]][2L])
                        })
-	paste(do.call("c", rval), collapse = " ")
+	paste(do.call(c, rval), collapse = " ")
     }
 
     sapply(x, format_person1)
@@ -1078,7 +1077,7 @@ function(..., recursive = FALSE)
                          sQuote("bibentry")),
                 domain = NA)
     args <- lapply(args, unclass)
-    rval <- do.call("c", args)
+    rval <- do.call(c, args)
     .bibentry(rval)
 }
 
@@ -1196,7 +1195,7 @@ function(file, meta = NULL)
     if(rlen == 1L)
         rval <- rval[[1L]]
     else if(rlen > 1L)
-        rval <- do.call("c", rval)
+        rval <- do.call(c, rval)
     if(!.is_not_nonempty_text(mheader))
         attr(rval, "mheader") <- paste(mheader, collapse = "\n")
     if(!.is_not_nonempty_text(mfooter))
@@ -1393,7 +1392,7 @@ function(x)
     ## Let's by nice ...
     ## Alternatively, we could throw an error.
     if(!inherits(out, "person"))
-        out <- do.call("c", lapply(x, as.person))
+        out <- do.call(c, lapply(x, as.person))
 
     out
 }

@@ -125,7 +125,7 @@ is.na.data.frame <- function (x)
 {
     ## need to special-case no columns
     y <- if (length(x)) {
-        do.call("cbind", lapply(x, is.na)) # gives a matrix
+        do.call(cbind, lapply(x, is.na)) # gives a matrix
     } else matrix(FALSE, length(row.names(x)), 0)
     if(.row_names_info(x) > 0L) rownames(y) <- row.names(x)
     y

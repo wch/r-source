@@ -90,7 +90,7 @@ function(formula, data, subset, na.action, ...)
         stop("'formula' should be of the form response ~ group")
     DNAME <- paste(names(mf), collapse = " by ")
     names(mf) <- NULL
-    y <- do.call("fligner.test", as.list(mf))
+    y <- do.call(fligner.test, as.list(mf))
     y$data.name <- DNAME
     y
 }
