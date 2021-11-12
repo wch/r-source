@@ -167,16 +167,18 @@ Sys.setLanguage(oldSet)
 
 ## A show off of translations -- platform (font etc) dependent:
 ## The translation languages available for "base" R in this version of R:
-langs <- list.files(bindtextdomain("R"),
-                    pattern = "^[a-z]{2}(_[A-Z]{2}|@quot)?$")
-langs
-txts <- sapply(setNames(,langs),
-               function(lang) { Sys.setLanguage(lang)
-                               gettext("incompatible dimensions", domain="R-stats") })
 ## IGNORE_RDIFF_BEGIN
-cbind(txts)
-(nTrans <- length(unique(txts)))
-(not_translated <- names(txts[txts == txts[["en"]]]))
+if(capabilities("NLS")) withAutoprint({
+  langs <- list.files(bindtextdomain("R"),
+		      pattern = "^[a-z]{2}(_[A-Z]{2}|@quot)?$")
+  langs
+  txts <- sapply(setNames(,langs),
+		 function(lang) { Sys.setLanguage(lang)
+				 gettext("incompatible dimensions", domain="R-stats") })
+  cbind(txts)
+  (nTrans <- length(unique(txts)))
+  (not_translated <- names(txts[txts == txts[["en"]]]))
+})
 ## IGNORE_RDIFF_END
 ## Here, we reset to the *original* setting before the full example started:
  if(nzchar(thisLang)) { ## reset to previous and check

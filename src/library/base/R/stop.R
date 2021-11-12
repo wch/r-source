@@ -135,6 +135,6 @@ Sys.setLanguage <- function(lang, unset = "en", domain= "R")
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
         warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
-    ok. <- bindtextdomain(NULL) # only flush the cache (of already translated strings)
+    ok. <- isTRUE(bindtextdomain(NULL)) # only flush the cache (of already translated strings)
     invisible(structure(curLang, ok = ok && ok.))
 }
