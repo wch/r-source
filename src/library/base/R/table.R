@@ -22,6 +22,8 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 {
     list.names <- function(...) {
 	l <- as.list(substitute(list(...)))[-1L]
+	if (length(l) == 1L && is.list(..1) && !is.null(nm <- names(..1)))
+	    return(nm)
 	nm <- names(l)
 	fixup <- if (is.null(nm)) seq_along(l) else nm == ""
 	dep <- vapply(l[fixup], function(x)
@@ -50,9 +52,8 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     args <- list(...)
     if (length(args) == 1L && is.list(args[[1L]])) { ## e.g. a data.frame
 	args <- args[[1L]]
-	if(missing(dnn) && length(args) == 1L || length(dnn) != length(args))
-	    dnn <- if (!is.null(argn <- names(args))) argn
-		   else paste(dnn[1L], seq_along(args), sep = ".")
+	if (length(dnn) != length(args))
+	    dnn <- paste(dnn[1L], seq_along(args), sep = ".")
     }
     if (!length(args))
 	stop("nothing to tabulate")
@@ -73,7 +74,8 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	if(doNA) aNA <- anyNA(a) # *before* the following
         if(!fact.a) { ## factor(*, exclude=*) may generate NA levels where there were none!
             if(!is.atomic(a)) stop(gettextf("'%s' is not atomic but of class \"%s\"",
-                                            deparse1(sys.call()[[length(dims) + 2L]]), class(a)),
+                                            deparse1(match.call()[[length(dims) + 2L]]),
+                                            class(a)),
                                    domain=NA)
             a0 <- a
             ## A non-null setting of 'exclude' sets the

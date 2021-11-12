@@ -65,10 +65,11 @@ is.table(x)
   \item{sep, base}{passed to \code{\link{provideDimnames}}.}
 }
 \details{
-  If the argument \code{dnn} is not supplied \emph{and} if \code{\dots} is
-  not one \code{list} with its own \code{\link{names}()}, the internal function
+  If the argument \code{dnn} is not supplied, the internal function
   \code{list.names} is called to compute the \sQuote{dimname names} as
-  follows:  If the
+  follows:
+  If \code{\dots} is one \code{list} with its own \code{\link{names}()},
+  these \code{names} are used.  Otherwise, if the
   arguments in \code{\dots} are named, those names are used.  For the
   remaining arguments, \code{deparse.level = 0} gives an empty name,
   \code{deparse.level = 1} uses the supplied argument if it is a symbol,

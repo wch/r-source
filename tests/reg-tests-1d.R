@@ -5482,8 +5482,21 @@ stopifnot(identical(dnn, list(tension = levels(warpbreaks[[3]]))),
           identical(dn,  list(abc = c("A","B")))) # not ok in R-devel only
 ## dnn had no names() in R <= 4.1.x
 ##
+## table(<1-column data frame>), #c3 in PR#18224
+stopifnot({
+    names(dimnames(t1 <- table(FOO = list(warpbreaks[[2]])))) == "FOO"
+    names(dimnames(t2 <- table(      list(warpbreaks[[2]])))) == ""
+})
+## had a trailing ".1" for a while in R-devel only
+##
 ## table(<d.fr.>, <d.fr.>) now signals the error (PR#18224):
 assertErrV( table(warpbreaks[2], warpbreaks[3]) )
+r <- tryCatch(table(exclude=NA, warpbreaks[2], warpbreaks[3]), error=identity)
+stopifnot(exprs = {
+    inherits(r, "error")
+    grepl("^'warpbreaks\\[2\\]' is ", conditionMessage(r))
+})
+
 
 
 ## Wrong deparse()ing: not setting parens around ' if(..) .. else .. ' --- PR#18232
