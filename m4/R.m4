@@ -1327,11 +1327,10 @@ dnl we don't use AC_LANG_xx because ObjC++ is not defined as a language (yet)
 dnl (the test program is from the gcc test suite)
 dnl but it needed an #undef (PR#15107)
 cat << \EOF > conftest.mm
-#undef __OBJC2__
-#include <objc/Object.h>
+#include <Foundation/Foundation.h>
 #include <iostream>
 
-@interface Greeter : Object
+@interface Greeter : NSObject
 - (void) greet: (const char *)msg;
 @end
 

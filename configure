@@ -9607,11 +9607,10 @@ if test -n "${OBJCXX}"; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${OBJCXX} can compile ObjC++" >&5
 printf %s "checking whether ${OBJCXX} can compile ObjC++... " >&6; }
 cat << \EOF > conftest.mm
-#undef __OBJC2__
-#include <objc/Object.h>
+#include <Foundation/Foundation.h>
 #include <iostream>
 
-@interface Greeter : Object
+@interface Greeter : NSObject
 - (void) greet: (const char *)msg;
 @end
 
@@ -9646,11 +9645,10 @@ if test -z "${OBJCXX}"; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${CXX} can compile ObjC++" >&5
 printf %s "checking whether ${CXX} can compile ObjC++... " >&6; }
 cat << \EOF > conftest.mm
-#undef __OBJC2__
-#include <objc/Object.h>
+#include <Foundation/Foundation.h>
 #include <iostream>
 
-@interface Greeter : Object
+@interface Greeter : NSObject
 - (void) greet: (const char *)msg;
 @end
 
@@ -9680,11 +9678,10 @@ printf "%s\n" "no" >&6; }
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ${OBJC} can compile ObjC++" >&5
 printf %s "checking whether ${OBJC} can compile ObjC++... " >&6; }
 cat << \EOF > conftest.mm
-#undef __OBJC2__
-#include <objc/Object.h>
+#include <Foundation/Foundation.h>
 #include <iostream>
 
-@interface Greeter : Object
+@interface Greeter : NSObject
 - (void) greet: (const char *)msg;
 @end
 
@@ -26616,7 +26613,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26619: \"$ac_link\") >&5
+(eval echo $as_me:26616: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26692,7 +26689,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26695: \"$ac_link\") >&5
+(eval echo $as_me:26692: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
