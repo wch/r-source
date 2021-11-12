@@ -125,8 +125,7 @@ gettextf <- function(fmt, ..., domain = NULL, trim = TRUE)
 
 ## Could think of using *several* domains, i.e. domain = vector; but seems complicated;
 ## the default domain="R"  seems to work for all of base R: {"R", "R-base", "RGui"}
-Sys.setLanguage <- function(lang, unset = "en",
-                            resetDomain = FALSE, domain= "R")
+Sys.setLanguage <- function(lang, unset = "en", domain= "R")
 {
     stopifnot(is.character(lang), length(lang) == 1L, # e.g., "es" , "fr_CA"
               grepl("^[a-z][a-z]", lang))
@@ -135,18 +134,7 @@ Sys.setLanguage <- function(lang, unset = "en",
         curLang <- unset # "factory" default
     ok <- Sys.setenv(LANGUAGE=lang)
     if(!ok)
-        warning(gettextf('Sys.setenv(LANGUAGE="%s")  may have failed', lang),
-                domain=NA)
-    if(.Platform$OS.type == "unix") { # we can work with LC_MESSAGES
-        lcM <- Sys.setlocale("LC_MESSAGES", "") # flushes the cache (for all domains)
-        ok <- ok & nzchar(lcM)
-    }
-    if(resetDomain) {
-        currentD <- bindtextdomain(domain) # so we can revert
-        ## d.="R": dirname(dirname(attr(packageDescription("translations"), "file")))
-        ## tempdir() containing *no* translation info ==> translations "flushed"
-        bindtextdomain(domain, dirname = tempdir())
-        bindtextdomain(domain, dirname = currentD) # reset
-    }
-    invisible(structure(curLang, ok = ok))
+        warning(gettextf('Sys.setenv(LANGUAGE="%s") may have failed', lang), domain=NA)
+    ok. <- bindtextdomain(NULL) # only flush the cache (of already translated strings)
+    invisible(structure(curLang, ok = ok && ok.))
 }

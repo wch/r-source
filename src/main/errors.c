@@ -1304,11 +1304,15 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef ENABLE_NLS
-    char *res;
-
     checkArity(op, args);
-    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
+    if(isNull(CAR(args)) && isNull(CADR(args))) {
+	textdomain(textdomain(NULL)); // flush the cache
+	return ScalarLogical(TRUE);
+    }
+    else if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid '%s' value"), "domain");
+
+    char *res;
     if(isNull(CADR(args))) {
 	res = bindtextdomain(translateChar(STRING_ELT(CAR(args),0)), NULL);
     } else {

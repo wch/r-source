@@ -27,7 +27,7 @@ ngettext(n, msg1, msg2, domain = NULL)
 
 bindtextdomain(domain, dirname = NULL)
 
-Sys.setLanguage(lang, unset = "en", resetDomain = FALSE, domain= "R")
+Sys.setLanguage(lang, unset = "en", domain= "R")
 
 }
 \arguments{
@@ -35,7 +35,8 @@ Sys.setLanguage(lang, unset = "en", resetDomain = FALSE, domain= "R")
   \item{trim}{logical indicating if the white space trimming in
     \code{gettext()} should happen.  \code{trim = FALSE} may be needed for
     compiled code (C / C++) messages which often end with \code{\\n}.}
-  \item{domain}{The \sQuote{domain} for the translation.}
+  \item{domain}{the \sQuote{domain} for the translation, a \code{character}
+    string, or \code{\link{NULL}} to flush the cache; see \sQuote{Details}.}
   \item{n}{a non-negative integer.}
   \item{msg1}{the message to be used in English for \code{n = 1}.}
   \item{msg2}{the message to be used in English for \code{n = 0, 2, 3, \dots}.}
@@ -46,9 +47,6 @@ Sys.setLanguage(lang, unset = "en", resetDomain = FALSE, domain= "R")
   \item{unset}{a string, specifying the default language assumed to be
     current in the case \code{\link{Sys.getenv}("LANGUAGE")} is unset or
     empty.}
-  \item{resetDomain}{a \code{\link{logical}} specifying if the domain's
-    cache should be flushed via \code{domaintextdomain()}.  Does not seem
-    to be needed currently, on any platform.}
 }
 \details{
   If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
@@ -87,10 +85,14 @@ Sys.setLanguage(lang, unset = "en", resetDomain = FALSE, domain= "R")
   \code{\link{sprintf}}.  If English is used, \code{msg1} is returned if
   \code{n == 1} and \code{msg2} in all other cases.
 
-  \code{bindtextdomain} is a wrapper for the C function of the same
+  \code{bindtextdomain} is typically wrapper for the C function of the same
   name: your system may have a \command{man} page for it.  With a
   non-\code{NULL} \code{dirname} it specifies where to look for message
-  catalogues: with \code{domain = NULL} it returns the current location.
+  catalogues: with \code{dirname = NULL} it returns the current location.
+  %%
+  The special case \code{bindtextdomain(NULL)} calls C level
+  \code{textdomain(textdomain(NULL))} for the purpose of flushing (i.e.,
+  emptying) the cache of already translated strings.
 }
 \value{
   For \code{gettext}, a character vector, one element per string in
