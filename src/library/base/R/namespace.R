@@ -1610,7 +1610,12 @@ registerS3methods <- function(info, package, env)
 	    table <- new.env(hash = TRUE, parent = baseenv())
 	    defenv[[".__S3MethodsTable__."]] <- table
 	}
-        if(!is.null(e <- table[[nm]]) &&
+        ## Use tryCatch in case lazy loading promise has gone stale
+        ## from unloading/changing/reinstalling (PR16644).
+        ## This might make unloading work marginally better; still
+        ## safest to restart
+        e <- tryCatch(table[[nm]], error = function(e) NULL)
+        if(!is.null(e) &&
            !identical(e, get(method, envir = envir))) {
             current <- environmentName(environment(e))
             overwrite <<- rbind(overwrite, c(as.vector(nm), current))
