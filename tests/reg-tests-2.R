@@ -3196,3 +3196,22 @@ stopifnot( identical(ddd, dd2) )
 ##cm <- summary(lm(c(0,0,0) ~ 1))$coefficients
 cm <- cbind(Estimate = 0, SE = 0, t = NaN, "Pr(>|t|)" = NaN)
 printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0
+
+
+## deparse() wraps cflow bodies when deeply burried through a LHS (PR#18232)
+##
+## These didn't print the same before fix, the bquote() expression
+## missed parentheses
+quote(1 + (if (TRUE) 2) + 3)
+bquote(1 + .(quote(if (TRUE) 2)) + 3)
+##
+bquote(1 + .(quote(if (TRUE) 2)) ^ 3)
+##
+## Other constructs cancel the LHS state so that the `if` call isn't
+## wrapped here
+bquote(1 + .(quote(f(if (TRUE) 2))) + 3)
+bquote(1 + .(quote((2 + if (TRUE) 3))) + 4)
+##
+## cflow bodies are only wrapped if needed, there should be no
+## parentheses here
+quote(a <- if (TRUE) 1)

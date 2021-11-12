@@ -132,6 +132,7 @@ typedef struct {
     Rboolean startline; /* = TRUE; */
     int indent;
     SEXP strvec;
+    int left;
 
     DeparseBuffer buffer;
 
@@ -232,17 +233,28 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     SEXP svec;
     int savedigits;
     Rboolean need_ellipses = FALSE;
-    LocalParseData localData =
-	{/* linenumber */ 0,
-	 0, 0, 0, /*startline = */TRUE, 0,
-	 NULL,
-	 /* DeparseBuffer= */ {NULL, 0, BUFSIZE},
-	 DEFAULT_Cutoff, FALSE, 0, TRUE,
+    LocalParseData localData = {
+	.linenumber = 0,
+	.len = 0,
+	.incurly = 0,
+	.inlist = 0,
+	.startline = TRUE,
+	.indent = 0,
+	.strvec = NULL,
+	.left = 0,
+	.buffer = { NULL, 0, BUFSIZE },
+	.cutoff = DEFAULT_Cutoff,
+	.backtick = FALSE,
+	.opts = 0,
+	.sourceable = TRUE,
 #ifdef longstring_WARN
-	 FALSE,
+	.longstring = FALSE,
 #endif
-	 /* maxlines = */ INT_MAX,
-	 /* active = */TRUE, 0, FALSE};
+	.maxlines = INT_MAX,
+	.active = TRUE,
+	.isS4 = 0,
+	.fnarg = FALSE
+    };
     localData.cutoff = cutoff;
     localData.backtick = backtick;
     localData.opts = opts;
@@ -853,6 +865,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
     d->fnarg = FALSE;
 
+    /* This flag should only be set when recursing through the LHS
+       of binary ops, so by default we reset to zero */
+    int prevLeft = d->left;
+    d->left = 0;
+
     if (!d->active) return;
 
     Rboolean hasS4_t = TYPEOF(s) == S4SXP;
@@ -1081,6 +1098,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		d->opts &= ~QUOTEEXPRESSIONS;
 	    }
 	}
+
 	if (TYPEOF(op) == SYMSXP) {
 	    int userbinop = 0;
 	    if ((TYPEOF(SYMVALUE(op)) == BUILTINSXP) ||
@@ -1257,7 +1275,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(" ", d);
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    print2buff(" ", d);
-		    if ((parens = needsparens(fop, CADR(s), 0)))
+		    if ((parens = needsparens(fop, CADR(s), prevLeft)))
 			print2buff("(", d);
 		    deparse2buff(CADR(s), d);
 		    if (parens)
@@ -1278,7 +1296,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			isValidName(CHAR(STRING_ELT(CADR(s), 0))))
 			deparse2buff(STRING_ELT(CADR(s), 0), d);
 		    else {
-			if ((parens = needsparens(fop, CADR(s), 0)))
+			if ((parens = needsparens(fop, CADR(s), prevLeft)))
 			    print2buff("(", d);
 			deparse2buff(CADR(s), d);
 			if (parens)
@@ -1288,14 +1306,17 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_BINARY:
 		    if ((parens = needsparens(fop, CAR(s), 1)))
 			print2buff("(", d);
+		    d->left = 1;
 		    deparse2buff(CAR(s), d);
+		    d->left = 0;
 		    if (parens)
 			print2buff(")", d);
 		    print2buff(" ", d);
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    print2buff(" ", d);
 		    linebreak(&lbreak, d);
-		    if ((parens = needsparens(fop, CADR(s), 0)))
+
+		    if ((parens = needsparens(fop, CADR(s), prevLeft)))
 			print2buff("(", d);
 		    deparse2buff(CADR(s), d);
 		    if (parens)
@@ -1308,11 +1329,14 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_BINARY2:	/* no space between op and args */
 		    if ((parens = needsparens(fop, CAR(s), 1)))
 			print2buff("(", d);
+		    d->left = 1;
 		    deparse2buff(CAR(s), d);
+		    d->left = 0;
 		    if (parens)
 			print2buff(")", d);
+
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
-		    if ((parens = needsparens(fop, CADR(s), 0)))
+		    if ((parens = needsparens(fop, CADR(s), prevLeft)))
 			print2buff("(", d);
 		    deparse2buff(CADR(s), d);
 		    if (parens)
@@ -1320,7 +1344,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_UNARY:
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
-		    if ((parens = needsparens(fop, CAR(s), 0)))
+		    if ((parens = needsparens(fop, CAR(s), prevLeft)))
 			print2buff("(", d);
 		    deparse2buff(CAR(s), d);
 		    if (parens)
@@ -1448,6 +1472,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	d->sourceable = FALSE;
 	UNIMPLEMENTED_TYPE("deparse2buff", s);
     }
+
+    d->left = prevLeft;
 }
 
 
