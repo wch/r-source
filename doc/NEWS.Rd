@@ -332,6 +332,10 @@
       \item Fix for drawing semitransparent lines and fills on native
       Windows graphics device (\PR{18219} and \PR{16694}).  Thanks to
       Nick Ray for helpful diagnosis on Bugzilla.
+
+      \item The deparser now wraps sub expressions such as \code{if(A) .. }
+      with parentheses when needed; thanks to Duncan Murdoch's \PR{18232}
+      and Lionel Henry's patch there.
     }
   }
 }

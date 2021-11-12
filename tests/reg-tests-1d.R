@@ -5486,6 +5486,21 @@ stopifnot(identical(dnn, list(tension = levels(warpbreaks[[3]]))),
 assertErrV( table(warpbreaks[2], warpbreaks[3]) )
 
 
+## Wrong deparse()ing: not setting parens around ' if(..) .. else .. ' --- PR#18232
+## from Duncan Murdoch -- e1 and e2 are obviously different expressions :
+e1 <- quote(5 *  if (TRUE) 2 else 3 /4)
+e2 <- quote(5 * (if (TRUE) 2 else 3)/4) # evaluating differently
+stopifnot(eval(e1) == 10, eval(e2) == 2.5)
+## an equivalent version of e2 (same parse tree, but ..):
+ie <- 2:3; e2[[ie]] # (if (TRUE) 2 else 3)
+e3 <- e2 ; (e3[[ie]] <- e3[[c(2,3,2)]]) # missing the parens '( . )'
+e3 ## e3 behaves *still* like e2:
+stopifnot(eval(e3) == 2.5,
+          deparse(e3) == deparse(e2))
+## in R <= 4.1.x, e3 looked (i.e. was deparsed) like e1 -- wrongly
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
