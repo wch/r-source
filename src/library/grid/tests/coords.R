@@ -51,10 +51,17 @@ coords <- grobCoords(bezierGrob(c(0, 1, 2, 3), c(0, 1, 2, 3),
 coords <- lapply(coords[[1]], function(x) { x[c(1, length(x))] })
 check(coords, list(x=c(0, 3), y=c(0, 3)))
 
-## All emptyCoords
-coords <- grobCoords(textGrob("test"))
+## Text returns a bounding box if closed is TRUE
+coords <- grobCoords(textGrob("test", 0, 0, just=c("left", "bottom")),
+                     closed=TRUE)
+w <- convertWidth(stringWidth("test"), "in", valueOnly=TRUE)
+h <- convertHeight(stringHeight("test"), "in", valueOnly=TRUE)
+check(coords[[1]], list(x=c(0, 0, w, w), y=c(0, h, h, 0)))
+      
+coords <- grobCoords(textGrob("test"), closed=FALSE)
 check(coords, emptyCoords)
 
+## All emptyCoords
 coords <- grobCoords(moveToGrob())
 check(coords, emptyCoords)
 

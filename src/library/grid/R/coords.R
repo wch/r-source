@@ -2,6 +2,17 @@
 ## Functions to calculate a set of points around the perimeter
 ## (or along the length) of a grob
 
+## grobCoords() is a user-level function that emulates drawing
+## set up behaviour (pushing viewports and setting graphical parameters)
+
+## grobPoints() does not perform any set up and is for use
+## within other 'grid' functions when set up has already been done,
+## e.g., within resolveFill()
+
+################################################################################
+## grobCoords()
+##   Do drawing set up then calculate points
+
 grobCoords <- function(x, closed, ...) {
     UseMethod("grobCoords")
 }
@@ -9,7 +20,8 @@ grobCoords <- function(x, closed, ...) {
 emptyCoords <- list(x = 0, y = 0)
 
 isEmptyCoords <- function(coords) {
-    identical(coords, emptyCoords)
+    identical(coords, emptyCoords) ||
+        all(sapply(coords, identical, emptyCoords))
 }
 
 grobCoords.grob <- function(x, closed, ...) {
@@ -109,6 +121,10 @@ grobCoords.gTree <- function(x, closed, ...) {
     }
     pts
 }
+
+################################################################################
+## grobPoints()
+##   No drawing set up
 
 grobPoints <- function(x, closed, ...) {
     UseMethod("grobPoints")
@@ -308,11 +324,30 @@ grobPoints.xspline <- function(x, closed, ...) {
 
 ## beziergrob covered by splinegrob (via makeContent)
 
-## Do not treat these as open or closed shapes (for now)
+## Just return a bounding box for the text (if closed=TRUE)
 grobPoints.text <- function(x, closed, ...) {
-    emptyCoords
+    if (closed) {
+        bounds <- grid.Call(C_textBounds, as.graphicsAnnot(x$label),
+                            x$x, x$y,
+                            resolveHJust(x$just, x$hjust),
+                            resolveVJust(x$just, x$vjust),
+                            x$rot, 0)
+        if (is.null(bounds))
+            emptyCoords
+        else {
+            left <- bounds[5]
+            bottom <- bounds[6]
+            right <- left + bounds[3]
+            top <- bottom + bounds[4]
+            list(list(x=c(left, left, right, right),
+                      y=c(bottom, top, top, bottom)))
+        }
+    } else {
+        emptyCoords
+    }
 }
 
+## Do not treat these as open or closed shapes (for now)
 grobPoints.points <- function(x, closed, ...) {
     emptyCoords
 }
@@ -330,9 +365,36 @@ grobPoints.null <- function(x, closed, ...) {
 }
 
 ## Collections of grobs
-grobPoints.gList <- grobCoords.gList
+
+## NOTE that these generate coordinates from their children
+## and they must call grobCoords() rather than grobPoints()
+## on those children so that the children can perform any
+## relevant set up
+
+grobPoints.gList <- function(x, closed, ...) {
+    pts <- lapply(x, grobCoords, closed, ...)
+    ## Some children may produce list of lists
+    ptsLists <- lapply(pts,
+                       function(p) {
+                           if ("x" %in% names(p)) {
+                               list(p)
+                           } else {
+                               p
+                           }
+                       })
+    do.call("c", ptsLists)
+}
 
 grobPoints.gTree <- function(x, closed, ...) {
-    grobCoords(x$children[x$childrenOrder], closed, ...)
+    pts <- grobPoints(x$children[x$childrenOrder], closed, ...)
+    ptsLists <- lapply(pts,
+                       function(p) {
+                           if ("x" %in% names(p)) {
+                               list(p)
+                           } else {
+                               p
+                           }
+                       })
+    do.call("c", ptsLists)
 }
 

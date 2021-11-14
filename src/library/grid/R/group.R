@@ -326,3 +326,29 @@ grid.use <- function(group, transform=viewportTransform,
     grid.draw(useGrob(group, transform, name, gp, vp))
 }
                         
+################################
+## Other grob methods
+
+grobCoords.GridGroup <- function(x, closed, ...) {
+    if (is.null(x$dst))
+        children <- gList(x$src)
+    else
+        children <- gList(x$src, x$dst)
+    grobCoords(gTree(children=children, gp=x$gp, vp=x$vp),
+               closed, ...)
+}
+
+## NOTE that we still create a gTree so that grobPoints.gTree(),
+## via grobPoints.gList(), will still call grobCoords() on the
+## "child" src and dst
+grobPoints.GridGroup <- function(x, closed, ...) {
+    if (is.null(x$dst))
+        children <- gList(x$src)
+    else
+        children <- gList(x$src, x$dst)
+    grobPoints(gTree(children=children), closed, ...)
+}
+
+grobCoords.GridDefine <- grobCoords.GridGroup
+
+grobPoints.GridDefine <- grobPoints.GridGroup

@@ -455,6 +455,56 @@ group <- gTree(children=gList(rectGrob(width=.8, height=.5),
 grid.group(group)
 HersheyLabel("group with raster", y=.8)
     
+## Group with rect with gradient fill
+grid.newpage()
+grid.group(rectGrob(width=.5, height=.5,
+                    gp=gpar(fill=linearGradient())))
+HersheyLabel("group based on rect
+rect has linear gradient", y=.1)
+
+## Group with gradient fill
+grid.newpage()
+grid.group(rectGrob(width=.5, height=.5),
+           gp=gpar(fill=linearGradient()))
+HersheyLabel("group based on rect
+GROUP has linear gradient", y=.1)
+
+## Group with multiple shapes with gradient fill
+grid.newpage()
+grid.group(gTree(children=gList(rectGrob(.25, .25, .5, .5),
+                                rectGrob(.75, .75, .5, .5))),
+           gp=gpar(fill=linearGradient()))
+HersheyLabel("group based on two rects
+GROUP has linear gradient", y=.1)
+
+## Subtler problem (need fill captured on definition)
+grid.newpage()
+grid.define(rectGrob(width=.5, height=.5),
+            gp=gpar(fill=linearGradient()), name="g")
+grid.use("g")
+HersheyLabel("group based on rect
+GROUP has linear gradient
+group defined then used", y=.1)
+
+## Group points/coords include src and dst even if they are not drawn
+## (so linear gradient starts at bottom left of page NOT at centre of page)
+grid.newpage()
+grid.group(circleGrob(.25, .25, .5, gp=gpar(fill="black")),
+           "clear",
+           rectGrob(.75, .75, .5, .5),
+           gp=gpar(fill=linearGradient()))
+HersheyLabel("group based on circle and rect
+circle clears rect
+GROUP has linear gradient
+gradient extent is rect AND circle extent", y=.3)
+
+## Group with shapes that do NOT start at bottom-left
+grid.newpage()
+grid.group(circleGrob(3:4/5, 3:4/5, r=.1),
+           gp=gpar(fill=linearGradient()))
+HersheyLabel("group based on circles
+GROUP has linear gradient
+gradient extent is circle extent", y=.3)
 
 ################################################################################
 

@@ -570,3 +570,10 @@ to semitransparent red
 start circle is green
 final circle is red")
 
+## Text (path) filled with pattern
+grid.newpage()
+grid.fill(textGrob("test", gp=gpar(cex=10)),
+          gp=gpar(fontface="bold", fill=linearGradient(2:3)))
+HersheyLabel("stroked path based on text
+filled with linear gradient", y=.8)
+    
