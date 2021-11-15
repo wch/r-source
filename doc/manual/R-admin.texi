@@ -1553,8 +1553,8 @@ OS X' which takes you to a new page. Two files are offered for download,
 The first runs on macOS 10.13 and later on @cputype{x86_64} (Intel) CPU
 (High Sierra, Mojave, Catalina, Big Sur, Monterey, @dots{}).  It can
 also be installed on @cputype{arm64} (aka `Apple Silicon' aka `M1') CPUs
-running Big Sur using `Rosetta' emulation@footnote{You may be asked to
-install Rosetta at first use --
+running Big Sur or later using `Rosetta' emulation@footnote{You may be
+asked to install Rosetta at first use --
 @url{https://support.apple.com/en-us/HT211861} -- which may need
 administrator privileges.}, as can @acronym{CRAN} binary packages.
 Package @file{R-@value{VERSIONno}-arm64.pkg} is a `native' build for
@@ -1644,16 +1644,16 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer puts links to @command{R} and
-@command{Rscript} in @file{/usr/local/bin}.  If these are missing, you
-can run directly the copies in
-@file{/Library/Frameworks/R.framework/Resources/bin} or link those yourself
-to somewhere on your path.} so these can be typed as commands as on any
-other Unix-alike: see the next chapter of this manual.  There are some
-small differences which may surprise users of @R{} on other platforms,
-notably the default location of the personal library directory (under
-@file{~/Library/R}, e.g.@: @file{~/Library/R/x86_64/4.1/library}), and
-that warnings, messages and other output to @file{stderr} are
-highlighted in bold.
+@command{Rscript} in @file{/usr/local/bin}.  If these are missing or
+that is not on your path, you can run directly the copies in
+@file{/Library/Frameworks/R.framework/Resources/bin} or link those
+yourself to somewhere on your path.} so these can be typed as commands
+as on any other Unix-alike: see the next chapter of this manual.  There
+are some small differences which may surprise users of @R{} on other
+platforms, notably the default location of the personal library
+directory (under @file{~/Library/R}, e.g.@:
+@file{~/Library/R/x86_64/4.2/library}), and that warnings, messages and
+other output to @file{stderr} are highlighted in bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
 Those using the @command{zsh} shell (the default for new user accounts
@@ -5385,7 +5385,7 @@ The main @TeX{} implementation used by the developers is
 MacTeX@footnote{An essentially equivalent @TeX{} installation can be
 obtained by the Unix TeX Live installation scripts.}
 (@uref{https://www.tug.org/mactex/}): the full installation is about
-7GB, but a much smaller version (`Basic TeX') is available at
+7.5GB, but a much smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
 need to add some packages to build @R{}, e.g.@: for the 2021 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super

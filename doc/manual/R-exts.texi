@@ -1211,14 +1211,16 @@ There are default @command{make} variables and rules for this
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
 C++, fixed- or free-form Fortran, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
-platforms} with associated extensions @file{.c}, @file{.cc} or
-@file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
-@file{.mm}, respectively.  We recommend using @file{.h} for headers,
-also for C++@footnote{Using @file{.hpp} is not guaranteed to be
-portable.} or Fortran 9x include files.  (Use of extension @file{.C} for
-C++ is no longer supported.)  Files in the @file{src} directory should
-not be hidden (start with a dot), and hidden files will under some
-versions of @R{} be ignored.
+platforms.  Their main use is on macOS, but unfortunately recent
+versions of the macOS SDK have removed much of the support for Objective
+C v1.0 and Objective C++.} with associated extensions @file{.c},
+@file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95},
+@file{.m}, and @file{.mm}, respectively.  We recommend using @file{.h}
+for headers, also for C++@footnote{Using @file{.hpp} is not guaranteed
+to be portable.} or Fortran 9x include files.  (Use of extension
+@file{.C} for C++ is no longer supported.)  Files in the @file{src}
+directory should not be hidden (start with a dot), and hidden files will
+under some versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
 languages in a single package.  Because @R{} itself uses it, we know that
@@ -1410,7 +1412,8 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 
 Subdirectory @file{tools} is the preferred place for auxiliary files
 needed during configuration, and also for sources need to re-create
-scripts (e.g.@: M4 files for @command{autoconf}).
+scripts (e.g.@: M4 files for @command{autoconf}: some prefer to put
+those in a subdirectory @file{m4} of @file{tools}).
 
 
 @node Data in packages, Non-R scripts in packages, Package subdirectories, Package structure
@@ -1670,19 +1673,22 @@ for this and others.  Some checks can be done by the
 @c 'checkbaskisms' really is the correct path
 @uref{https://sourceforge.net/projects/checkbaskisms/files}, also
 available in most Linux distributions in a package named either
-@samp{devscripts} or @samp{devscripts-checkbashisms}: a possibly later
-version can be extracted from Debian sources such as the most recent
-@file{tar.xz} in 
-@uref{https://deb.debian.org/debian/pool/main/d/devscripts/}.}
-shell script @file{configure} in your package which (if present) is
-executed by @code{R CMD INSTALL} before any other action is performed.
-This can be a script created by the Autoconf mechanism, but may also be
-a script written by yourself.  Use this to detect if any nonstandard
-libraries are present such that corresponding code in the package can be
-disabled at install time rather than giving error messages when the
-package is compiled or used.  To summarize, the full power of Autoconf
-is available for your extension package (including variable
-substitution, searching for libraries, etc.).
+@samp{devscripts} or @samp{devscripts-checkbashisms}: a later version
+can be extracted from Debian sources such as the most recent
+@file{tar.xz} in
+@uref{https://deb.debian.org/debian/pool/main/d/devscripts/} and has
+been needed for recent versions of Perl.}  shell script @file{configure}
+in your package which (if present) is executed by @code{R CMD INSTALL}
+before any other action is performed.  This can be a script created by
+the Autoconf mechanism, but may also be a script written by yourself.
+Use this to detect if any nonstandard libraries are present such that
+corresponding code in the package can be disabled at install time rather
+than giving error messages when the package is compiled or used.  To
+summarize, the full power of Autoconf is available for your extension
+package (including variable substitution, searching for libraries,
+etc.).  Background and useful tips on Autconf and related tools
+(including @command{pkg-config} described below) can be found at
+@uref{https://autotools.io/}.
 
 @vindex R_PACKAGE_DIR
 @vindex R_PACKAGE_NAME
@@ -1966,10 +1972,19 @@ tested by @command{R CMD check --as-cran}).  This will include the file
 @command{autoreconf} as used by @command{R CMD check --as-cran} will
 report as such.} in the top-level directory of the package.  If
 extensions written in @command{m4} are needed, these should be included
-under the directory @file{tools} and included in @file{configure.ac}
+under the directory @file{tools} and included from @file{configure.ac}
 @emph{via} e.g.,
 @example
 m4_include([tools/ax_pthread.m4])
+@end example
+@noindent
+Alternatively, Autoconf can be asked to search all @file{.m4} files in a
+directory by including something like@footnote{For those using
+@command{autoconf} 2.70 or later there is also
+@code{AC_CONFIG_MACRO_DIRS} which allows multiple directories to be
+specified.}
+@example
+AC_CONFIG_MACRO_DIR([tools/m4])
 @end example
 @noindent
 One source of such extensions is the `Autoconf Archive'
@@ -7116,6 +7131,10 @@ initial labels to be specified.  Each @code{\item} takes two arguments,
 the label and the body of the item, in exactly the same way as an
 argument or value @code{\item}.  @code{\describe} commands are mapped to
 @code{<DL>} lists in @HTML{} and @code{\description} lists in @LaTeX{}.
+
+@c \itemize did to LaTeX in 2021-11
+Using these without any @code{\item}s may cause problems with some
+conversions and makes little sense.
 
 @findex \tabular
 The @code{\tabular} command takes two arguments.  The first gives for
