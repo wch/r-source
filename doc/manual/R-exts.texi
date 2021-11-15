@@ -1211,14 +1211,16 @@ There are default @command{make} variables and rules for this
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
 C++, fixed- or free-form Fortran, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
-platforms} with associated extensions @file{.c}, @file{.cc} or
-@file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
-@file{.mm}, respectively.  We recommend using @file{.h} for headers,
-also for C++@footnote{Using @file{.hpp} is not guaranteed to be
-portable.} or Fortran 9x include files.  (Use of extension @file{.C} for
-C++ is no longer supported.)  Files in the @file{src} directory should
-not be hidden (start with a dot), and hidden files will under some
-versions of @R{} be ignored.
+platforms.  Their main use is on macOS, but unfortunately recent
+versions of the macOS SDK have removed much of the support for Objective
+C v1.0 and Objective C++.} with associated extensions @file{.c},
+@file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95},
+@file{.m}, and @file{.mm}, respectively.  We recommend using @file{.h}
+for headers, also for C++@footnote{Using @file{.hpp} is not guaranteed
+to be portable.} or Fortran 9x include files.  (Use of extension
+@file{.C} for C++ is no longer supported.)  Files in the @file{src}
+directory should not be hidden (start with a dot), and hidden files will
+under some versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
 languages in a single package.  Because @R{} itself uses it, we know that
@@ -7129,6 +7131,10 @@ initial labels to be specified.  Each @code{\item} takes two arguments,
 the label and the body of the item, in exactly the same way as an
 argument or value @code{\item}.  @code{\describe} commands are mapped to
 @code{<DL>} lists in @HTML{} and @code{\description} lists in @LaTeX{}.
+
+@c \itemize did to LaTeX in 2021-11
+Using these without any @code{\item}s may cause problems with some
+conversions and makes little sense.
 
 @findex \tabular
 The @code{\tabular} command takes two arguments.  The first gives for
