@@ -5489,14 +5489,23 @@ stopifnot({
 })
 ## had a trailing ".1" for a while in R-devel only
 ##
-## table(<d.fr.>, <d.fr.>) now signals the error (PR#18224):
+## table(<d.fr.>, <d.fr.>) now signals an error (PR#18224):
 assertErrV( table(warpbreaks[2], warpbreaks[3]) )
-r <- tryCatch(table(exclude=NA, warpbreaks[2], warpbreaks[3]), error=identity)
+m1 <- tryCmsg(table(exclude=NA, warpbreaks[2], warpbreaks[3]))
+m2 <- tryCmsg(table(data.frame(a = 1, d = I(data.frame(x = 1)))))
 stopifnot(exprs = {
-    inherits(r, "error")
-    grepl("^'warpbreaks\\[2\\]' is ", conditionMessage(r))
+    is.character(m1)
+    identical(m1, m2)
+    !englishMsgs || identical(m1, "cannot xtfrm data frames")
 })
-
+## factor(<POSIXlt>) works fine, hence table(), does too:
+tm <- as.POSIXlt(c("1990-07-01", "1990-07-01", "1991-01-01"))
+stopifnot(exprs = {
+    is.table(t2 <- table(mon = tm$mon, time = tm))
+    t2 == c(0L,2:0)
+    is.table(t1 <- table(list(time = tm)))
+    t1 == 2:1
+})
 
 
 ## Wrong deparse()ing: not setting parens around ' if(..) .. else .. ' --- PR#18232

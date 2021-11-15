@@ -73,17 +73,15 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
         ##
 	if(doNA) aNA <- anyNA(a) # *before* the following
         if(!fact.a) { ## factor(*, exclude=*) may generate NA levels where there were none!
-            if(!is.atomic(a)) stop(gettextf("'%s' is not atomic but of class \"%s\"",
-                                            deparse1(match.call()[[length(dims) + 2L]]),
-                                            class(a)),
-                                   domain=NA)
             a0 <- a
             ## A non-null setting of 'exclude' sets the
             ## excluded levels to missing, which is different
             ## from the <NA> factor level, but these
             ## excluded levels must NOT EVER be tabulated.
+            op <- options(warn = 2) ## prevent non-sensical factor() creation: turn warnings into errors
             a <- # NB: this excludes first, unlike the is.factor() case
                 factor(a, exclude = exclude)
+            options(op)
         }
 
 	## if(doNA)
