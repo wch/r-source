@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-11-07 r81150) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-11-15 r81194) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.1.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1088,7 +1088,7 @@ flld.c+                plot.axes = { axis(1); axis(2); points(10, 10) })
 flld.c> ## Persian Rug Art:
 flld.c> x <- y <- seq(-4*pi, 4*pi, length.out = 27)
 
-flld.c> r <- sqrt(outer(x^2, y^2, "+"))
+flld.c> r <- sqrt(outer(x^2, y^2, `+`))
 
 flld.c> filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
 
@@ -1527,5 +1527,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  0.644 0.052 0.699 0 0 
+Time elapsed:  1.271 0.057 1.331 0 0 
 > 

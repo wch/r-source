@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-11-02 r81131) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-11-15 r81194) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin21.1.0 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2361,7 +2361,7 @@ Sum Buzz        19   28  14    26  14  28
 > sqsm <- function(x) sum(x)^2/100
 > B <- table(Sea, Bee)
 > round(sweep(addmargins(B, 1, list(list(All = sum, N = sqsm))), 2,
-+             apply(B, 2, sum)/100, "/"), 1)
++             apply(B, 2, sum)/100, `/`), 1)
        Bee
 Sea      Buzz   Hum
   Black  21.8  20.0
@@ -2371,7 +2371,7 @@ Sea      Buzz   Hum
   All   100.0 100.0
   N      87.0  90.0
 > round(sweep(addmargins(B, 2, list(list(All = sum, N = sqsm))), 1,
-+             apply(B, 1, sum)/100, "/"), 1)
++             apply(B, 1, sum)/100, `/`), 1)
        Bee
 Sea      Buzz   Hum   All     N
   Black  51.4  48.6 100.0  37.0
@@ -2382,7 +2382,7 @@ Sea      Buzz   Hum   All     N
 > # A total over Bee requires formation of the Bee-margin first:
 > mB <-  addmargins(B, 2, FUN = list(list(Total = sum)))
 > round(ftable(sweep(addmargins(mB, 1, list(list(All = sum, N = sqsm))), 2,
-+                    apply(mB, 2, sum)/100, "/")), 1)
++                    apply(mB, 2, sum)/100, `/`)), 1)
       Bee  Buzz   Hum Total
 Sea                        
 Black      21.8  20.0  20.9
@@ -10250,7 +10250,7 @@ NA        0    3    0
 > plot(med.d)
 > ## Check decomposition:
 > all(deaths ==
-+     med.d$overall + outer(med.d$row,med.d$col, "+") + med.d$residuals)
++     med.d$overall + outer(med.d$row,med.d$col, `+`) + med.d$residuals)
 [1] TRUE
 > 
 > 
@@ -11152,6 +11152,8 @@ Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
+Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  : 
+  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
 > o2 <- options(digits = 10) # more accuracy for 'trace'
 > ## central differencing works here typically (PR#18165: not converging on *some*):
 > ctr2 <- nls.control(nDcentral=TRUE, tol = 8e-8, # <- even smaller than above
@@ -14651,7 +14653,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > rowTotals <- rowSums(TeaTasting)
 > colTotals <- colSums(TeaTasting)
 > nOfCases <- sum(rowTotals)
-> expected <- outer(rowTotals, colTotals, "*") / nOfCases
+> expected <- outer(rowTotals, colTotals) / nOfCases
 > maxSqResid <- function(x) max((x - expected) ^ 2 / expected)
 > simMaxSqResid <-
 +     sapply(r2dtable(1000, rowTotals, colTotals), maxSqResid)
