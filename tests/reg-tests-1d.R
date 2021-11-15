@@ -5498,7 +5498,7 @@ m2 <- tryCmsg(table(data.frame(a = 1, d = I(data.frame(x = 1)))))
 stopifnot(exprs = {
     is.character(m1)
     identical(m1, m2)
-    !englishMsgs || identical(m1, "cannot xtfrm data frames")
+    !englishMsgs || grepl("cannot xtfrm data frames", m1)
 })
 ## factor(<POSIXlt>) works fine, hence table(), does too:
 tm <- as.POSIXlt(c("1990-07-01", "1990-07-01", "1991-01-01"))
