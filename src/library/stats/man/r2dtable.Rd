@@ -45,7 +45,7 @@ matrix(c(3, 1, 1, 3),
 rowTotals <- rowSums(TeaTasting)
 colTotals <- colSums(TeaTasting)
 nOfCases <- sum(rowTotals)
-expected <- outer(rowTotals, colTotals, "*") / nOfCases
+expected <- outer(rowTotals, colTotals) / nOfCases
 maxSqResid <- function(x) max((x - expected) ^ 2 / expected)
 simMaxSqResid <-
     sapply(r2dtable(1000, rowTotals, colTotals), maxSqResid)

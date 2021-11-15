@@ -135,7 +135,7 @@ filled.contour(x = 1:20, y = 1:20, z = b,
 
 ## Persian Rug Art:
 x <- y <- seq(-4*pi, 4*pi, length.out = 27)
-r <- sqrt(outer(x^2, y^2, "+"))
+r <- sqrt(outer(x^2, y^2, `+`))
 filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
 ## rather, the key *should* be labeled:
 filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE,

@@ -147,7 +147,7 @@ image(x, \dots)
 \examples{
 require("grDevices") # for colours
 x <- y <- seq(-4*pi, 4*pi, length.out = 27)
-r <- sqrt(outer(x^2, y^2, "+"))
+r <- sqrt(outer(x^2, y^2, `+`))
 image(z = z <- cos(r^2)*exp(-r/6), col = gray.colors(33))
 image(z, axes = FALSE, main = "Math can be beautiful ...",
       xlab = expression(cos(r^2) * e^{-r/6}))
