@@ -5490,7 +5490,9 @@ stopifnot({
 ## had a trailing ".1" for a while in R-devel only
 ##
 ## table(<d.fr.>, <d.fr.>) now signals an error (PR#18224):
-assertErrV( table(warpbreaks[2], warpbreaks[3]) )
+r <- tryCid( table(warpbreaks[2], warpbreaks[3]) )
+stopifnot(inherits(r, "error"),
+          grepl("cannot\\b.* data frame", conditionMessage(r)))
 m1 <- tryCmsg(table(exclude=NA, warpbreaks[2], warpbreaks[3]))
 m2 <- tryCmsg(table(data.frame(a = 1, d = I(data.frame(x = 1)))))
 stopifnot(exprs = {
