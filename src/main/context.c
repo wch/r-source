@@ -620,22 +620,42 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* We don't want to count the closure that do_sys is contained in, so the */
 /* indexing is adjusted to handle this. */
 
+/* Return first `CTXT_FUNCTION` context whose execution
+   env matches `rho` */
+RCNTXT *getLexicalContext(SEXP rho)
+{
+    RCNTXT *cptr = R_GlobalContext;
+
+    while (cptr && cptr != R_ToplevelContext) {
+	if (cptr->callflag & CTXT_FUNCTION && cptr->cloenv == rho)
+	    break;
+	cptr = cptr->nextcontext;
+    }
+
+    return cptr;
+}
+
+/* Return call of the first `CTXT_FUNCTION` context whose
+   execution env matches `rho` */
+SEXP getLexicalCall(SEXP rho)
+{
+    RCNTXT *cptr = getLexicalContext(rho);
+    if (cptr)
+	return cptr->call;
+    else
+	return R_NilValue;
+}
+
 SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i, n  = -1, nframe;
-    SEXP rval, t;
-    RCNTXT *cptr;
+    SEXP rval;
 
     checkArity(op, args);
+
     /* first find the context that sys.xxx needs to be evaluated in */
-    cptr = R_GlobalContext;
-    t = cptr->sysparent;
-    while (cptr != R_ToplevelContext) {
-	if (cptr->callflag & CTXT_FUNCTION )
-	    if (cptr->cloenv == t)
-		break;
-	cptr = cptr->nextcontext;
-    }
+    SEXP t = R_GlobalContext->sysparent;
+    RCNTXT *cptr = getLexicalContext(t);
 
     if (length(args) == 1) n = asInteger(CAR(args));
 

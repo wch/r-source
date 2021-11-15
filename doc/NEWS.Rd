@@ -133,6 +133,9 @@
       \item \code{gettext()} and \code{gettextf()} get a new option
       \code{trim = TRUE} which when set to false allows translations for
       strings such as \code{"Execution halted\n"} typical for C code.
+
+      \item \sQuote{Object not found} errors now mention a more accurate
+      context of error.
     }
   }
 

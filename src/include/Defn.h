@@ -1279,6 +1279,9 @@ enum {
     CTXT_UNWIND   = 128
 };
 
+RCNTXT *getLexicalContext(SEXP);
+SEXP getLexicalCall(SEXP);
+
 /*
 TOP   0 0 0 0 0 0  = 0
 NEX   1 0 0 0 0 0  = 1

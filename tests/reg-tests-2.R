@@ -3213,3 +3213,27 @@ bquote(1 + .(quote(f(if (TRUE) 2))) + 3)
 bquote(1 + .(quote((2 + if (TRUE) 3))) + 4)
 ## cflow bodies are only wrapped if needed ==> no parentheses here :
 quote(a <- if (TRUE) 1)
+
+
+## object not found error mentions lexical call
+if (exists("foo")) rm(foo)
+## Should not mention call because called at top level
+try(identity(foo))
+try(do.call("identity", alist(foo)))
+##
+## Should mention `f()` call
+f <- function() identity(foo)
+try(f())
+f <- compiler::cmpfun(f)
+try(f())
+f <- function() do.call("identity", alist(foo))
+try(f())
+f <- compiler::cmpfun(f)
+try(f())
+##
+## Should not mention call because there is no matching execution env
+try(do.call("identity", alist(foo), envir = new.env()))
+f <- function() do.call("identity", alist(foo), envir = new.env())
+try(f())
+f <- compiler::cmpfun(f)
+try(f())
