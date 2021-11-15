@@ -93,7 +93,7 @@ Duncan Murdoch
     markup (e.g., \CRANpkg{roxygen} comments) are not.
   }
 
-  Parse data by design explose details of the parser implementation, which
+  Parse data by design explore details of the parser implementation, which
   are subject to change without notice.  Applications computing on the parse
   data may require updates for each R release.
 }
