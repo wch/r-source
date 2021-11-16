@@ -177,6 +177,8 @@ validGP <- function(gpars) {
 			      EUC   = 7L,
 			      stop("invalid fontface ", ch)), 0L)
 	}
+    ## Remove fontface
+    gpars$fontface <- NULL
   }
   gpars
 }
@@ -205,6 +207,7 @@ validGP <- function(gpars) {
 set.gpar <- function(gp, grob=NULL) {
   if (!is.gpar(gp))
     stop("argument must be a 'gpar' object")
+  gp <- validGP(gp)
   temp <- grid.Call(C_getGPar)
   # gamma defunct in 2.7.0
   if ("gamma" %in% names(gp)) {
