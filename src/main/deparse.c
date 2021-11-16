@@ -1137,7 +1137,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			fop.kind = PP_FUNCALL;
 		} else
 		    fop = PPINFO(SYMVALUE(op));
-		if (fop.kind == PP_BINARY) {
+
+		switch (fop.kind) {
+		case PP_BINARY:
 		    switch (length(s)) {
 		    case 1:
 			fop.kind = PP_UNARY;
@@ -1151,12 +1153,28 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			fop.kind = PP_FUNCALL;
 			break;
 		    }
-		}
-		else if (fop.kind == PP_BINARY2) {
+		    break;
+		case PP_BINARY2:
 		    if (length(s) != 2)
 			fop.kind = PP_FUNCALL;
 		    else if (userbinop)
 			fop.kind = PP_BINARY;
+		    break;
+		case PP_DOLLAR: {
+		    if (length(s) != 2) {
+			fop.kind = PP_FUNCALL;
+			break;
+		    }
+		    SEXP rhs = CADR(s);
+		    if (TYPEOF(rhs) != SYMSXP &&
+			!(isValidString(rhs) && STRING_ELT(rhs, 0) != NA_STRING)) {
+			fop.kind = PP_FUNCALL;
+			break;
+		    }
+		    break;
+		}
+		default:
+		    break;
 		}
 		switch (fop.kind) {
 		case PP_IF:

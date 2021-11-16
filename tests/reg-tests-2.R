@@ -3224,3 +3224,12 @@ quote(`$`(-a, b))
 ## These should print the same.
 quote(`$`(1 + 1, b))
 quote((1 + 1)$b)
+##
+## Unparseable expressions are deparsed in prefixed form
+quote(`$`(1))
+quote(`$`(1, 2, 3))
+quote(`$`(1, NA_character_))
+quote(`$`(1, if (TRUE) 2))
+quote(`$`(`$`(1, if (TRUE) 2), 3))
+## Additional test (worked before)
+quote(a$"b")
