@@ -4933,7 +4933,7 @@ OpenJDK including FreeBSD and most Linux distributions).
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 (announced 18)
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 (announced 18 19 20)
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in
@@ -4998,9 +4998,10 @@ URLs.} that vary by build but are not documented.  Several recent
 versions of @command{pandoc} for macOS did not work on @R{}'s target of
 High Sierra (and this too was undocumented): at the time of writing
 @samp{2.7.3} and @samp{2.14.0} and later did.  (Currently
-@command{pandoc} is only available for Intel macOS but that build works
-well enough on @cputype{arm64} machines.)  Another example is the Rust
-compilation system (@command{cargo} and @command{rustc}).
+@command{pandoc} is only available from the official site for Intel
+macOS but that build works well enough on @cputype{arm64} machines.)
+Another example is the Rust compilation system (@command{cargo} and
+@command{rustc}).
 
 Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
@@ -5022,7 +5023,7 @@ it does not even support all the @R{} platforms used by @acronym{CRAN}.
 Command @command{cmake} is not commonly installed, and where it is, it
 might not be on the path.  In particular, the most common location on
 macOS is @file{/Applications/CMake.app/Contents/bin/cmake} and that
-should be looked for if @command{make} is not on the path.
+should be looked for if @command{cmake} is not found on the path.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
@@ -5087,7 +5088,9 @@ Do not test the exact format of @R{} messages (from @R{} itself or from
 other packages): They change, and they can be translated.
 
 Packages have even tested the exact format of system error messages,
-which are platform-dependent and perhaps locale-dependent.
+which are platform-dependent and perhaps locale-dependent.  For example,
+in late 2021 @code{libcurl} changed its warning/error messages,
+including when URLs are not found.
 
 @item
 If you use functions such as @code{View}, remember that in testing there
@@ -5783,7 +5786,7 @@ definitions of the same variable in different object files to the same
 object, or to a non-tentative definition.  However,
 @command{gcc}@tie{}10@footnote{see
 @uref{https://gcc.gnu.org/gcc-10/porting_to.html}.} and
-@command{clang}@tie{}11@footnote{See
+LLVM @command{clang}@tie{}11@footnote{See
 @uref{https://prereleases.llvm.org/11.0.0/rc2/tools/clang/docs/ReleaseNotes.html#modified-compiler-flags}.}
 have changed their default so that tentative definitions cannot be
 merged and the linker will give an error if the same variable is defined
