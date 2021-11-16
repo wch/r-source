@@ -604,15 +604,21 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 		}
 
 		switch(arginfo.kind) {
+		case PP_SUBSET:
+		    switch (mainop.kind) {
+		    case PP_DOLLAR:
+		    case PP_SUBSET:
+			if (mainop.precedence > arginfo.precedence)
+			    return FALSE;
+		    default:
+			break;
+		    }
+		    /* else fallthrough */
 		case PP_BINARY:
 		case PP_BINARY2:
 		    if (mainop.precedence == PREC_COMPARE &&
 			arginfo.precedence == PREC_COMPARE)
 			return TRUE;     /*   a < b < c   is not legal syntax */
-		    /* else fallthrough */
-		case PP_SUBSET:
-		    if (mainop.kind == PP_DOLLAR)
-		    	return FALSE;
 		    /* else fallthrough */
 		case PP_ASSIGN:
 		case PP_ASSIGN2:

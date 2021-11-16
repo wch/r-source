@@ -8146,4 +8146,11 @@ a <- if (TRUE) 1
 (-a)$b
 > quote(`$`(-a, b))
 (-a)$b
+> ##
+> ## Binary operators are parenthesised on the LHS of `$`.
+> ## These should print the same.
+> quote(`$`(1 + 1, b))
+(1 + 1)$b
+> quote((1 + 1)$b)
+(1 + 1)$b
 > 

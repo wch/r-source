@@ -3219,3 +3219,8 @@ quote(a <- if (TRUE) 1)
 ## These should print the same.
 quote((-a)$b)
 quote(`$`(-a, b))
+##
+## Binary operators are parenthesised on the LHS of `$`.
+## These should print the same.
+quote(`$`(1 + 1, b))
+quote((1 + 1)$b)
