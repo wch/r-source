@@ -8139,3 +8139,11 @@ mean of x
 > quote(a <- if (TRUE) 1)
 a <- if (TRUE) 1
 > 
+> 
+> ## Unary operators are parenthesised if needed.
+> ## These should print the same.
+> quote((-a)$b)
+(-a)$b
+> quote(`$`(-a, b))
+(-a)$b
+> 

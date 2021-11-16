@@ -3213,3 +3213,9 @@ bquote(1 + .(quote(f(if (TRUE) 2))) + 3)
 bquote(1 + .(quote((2 + if (TRUE) 3))) + 4)
 ## cflow bodies are only wrapped if needed ==> no parentheses here :
 quote(a <- if (TRUE) 1)
+
+
+## Unary operators are parenthesised if needed.
+## These should print the same.
+quote((-a)$b)
+quote(`$`(-a, b))

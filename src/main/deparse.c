@@ -580,27 +580,40 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 	    if ((TYPEOF(SYMVALUE(CAR(arg))) == BUILTINSXP) ||
 		(TYPEOF(SYMVALUE(CAR(arg))) == SPECIALSXP)) {
 		arginfo = PPINFO(SYMVALUE(CAR(arg)));
+
+		/* Not all binary ops are binary! */
 		switch(arginfo.kind) {
-		case PP_BINARY:	      /* Not all binary ops are binary! */
+		case PP_BINARY:
 		case PP_BINARY2:
 		    switch(length(CDR(arg))) {
 		    case 1:
 			if (!left)
 			    return FALSE;
-			if (arginfo.precedence == PREC_SUM)   /* binary +/- precedence upgraded as unary */
+			/* binary +/- precedence upgraded as unary */
+			if (arginfo.precedence == PREC_SUM)
 			    arginfo.precedence = PREC_SIGN;
+			arginfo.kind = PP_UNARY;
+			break;
 		    case 2:
-			if (mainop.precedence == PREC_COMPARE &&
-			    arginfo.precedence == PREC_COMPARE)
-		          return TRUE;     /*   a < b < c   is not legal syntax */
 			break;
 		    default:
 			return FALSE;
 		    }
+		default:
+		    break;
+		}
+
+		switch(arginfo.kind) {
+		case PP_BINARY:
+		case PP_BINARY2:
+		    if (mainop.precedence == PREC_COMPARE &&
+			arginfo.precedence == PREC_COMPARE)
+			return TRUE;     /*   a < b < c   is not legal syntax */
+		    /* else fallthrough */
 		case PP_SUBSET:
 		    if (mainop.kind == PP_DOLLAR)
 		    	return FALSE;
-		    /* fall through, don't break... */
+		    /* else fallthrough */
 		case PP_ASSIGN:
 		case PP_ASSIGN2:
 		case PP_UNARY:
