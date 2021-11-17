@@ -3040,6 +3040,9 @@ quote(!!x) # was `!(!x)`
 quote(??x) # Suboptimal
 quote(~+-!?x) # ditto: ....`?`(x)
 ## `!` no longer produces parentheses now
+##
+## There should be no parentheses
+quote(+!x)
 
 
 ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
@@ -3205,6 +3208,10 @@ printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0
  quote(1 +        (if (TRUE) 2)  + 3)
 bquote(1 + .(quote(if (TRUE) 2)) + 3)
 bquote(2 * .(quote(if (TRUE) 2 else 3)) / 4)
+## Additional tests from Suharto. Used to fail because `left` state
+## wasn't properly forwarded across operators
+bquote(1 + ++.(quote(if (TRUE) 2)) + 3)
+bquote(1^-.(quote(if (TRUE) 2)) + 3)
 ##
 ##__ All the following were ok in R <= 4.1.x already __
 bquote(1 + .(quote(if (TRUE) 2)) ^ 3) # already correct previously
