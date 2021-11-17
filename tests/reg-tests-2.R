@@ -3237,3 +3237,37 @@ f <- function() do.call("identity", alist(foo), envir = new.env())
 try(f())
 f <- compiler::cmpfun(f)
 try(f())
+
+
+## Missing argument error mentions lexical call
+## Local evaluation: Mentions `identity()`
+try(identity())
+f <- function() identity()
+try(f())
+f <- compiler::cmpfun(f)
+try(f())
+##
+## Promise evaluation: Mentions `f()` or `g()`
+f <- function(arg) is.factor(arg)
+g <- function(x) f(x)
+try(f())
+try(g())
+f <- compiler::cmpfun(f)
+g <- compiler::cmpfun(g)
+try(f())
+try(g())
+##
+## Direct evaluation, `eval(` wrapper: Mentions `eval()`
+f <- function() eval(quote(expr = ))
+try(f())
+f <- compiler::cmpfun(f)
+try(f())
+##
+## Direct evaluation, no `eval(` wrapper: Mentions `f()`
+f <- function() {
+    eval(bquote(delayedAssign("go", .(quote(expr = )))))
+    go
+}
+try(f())
+f <- compiler::cmpfun(f)
+try(f())

@@ -6630,8 +6630,7 @@ Error in complete.cases(list(), list()) :
 > ## error messages from (C-level) evalList
 > tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
 > try(tst()) # even nicer since R 3.5.0's change to sequential stopifnot()
-Error in stopifnot(is.numeric(y)) : 
-  argument "y" is missing, with no default
+Error in tst() : argument "y" is missing, with no default
 > try(c(1,,2))
 Error in c(1, , 2) : argument 2 is empty
 > ## change in 2.8.0 made these less clear
@@ -8171,4 +8170,49 @@ Error : object 'foo' not found
 > f <- compiler::cmpfun(f)
 > try(f())
 Error : object 'foo' not found
+> 
+> 
+> ## Missing argument error mentions lexical call
+> ## Local evaluation: Mentions `identity()`
+> try(identity())
+Error in identity() : argument "x" is missing, with no default
+> f <- function() identity()
+> try(f())
+Error in identity() : argument "x" is missing, with no default
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in identity() : argument "x" is missing, with no default
+> ##
+> ## Promise evaluation: Mentions `f()` or `g()`
+> f <- function(arg) is.factor(arg)
+> g <- function(x) f(x)
+> try(f())
+Error in f() : argument "arg" is missing, with no default
+> try(g())
+Error in g() : argument "x" is missing, with no default
+> f <- compiler::cmpfun(f)
+> g <- compiler::cmpfun(g)
+> try(f())
+Error in f() : argument "arg" is missing, with no default
+> try(g())
+Error in g() : argument "x" is missing, with no default
+> ##
+> ## Direct evaluation, `eval(` wrapper: Mentions `eval()`
+> f <- function() eval(quote(expr = ))
+> try(f())
+Error in eval(quote(expr = )) : argument is missing, with no default
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in eval(quote(expr = )) : argument is missing, with no default
+> ##
+> ## Direct evaluation, no `eval(` wrapper: Mentions `f()`
+> f <- function() {
++     eval(bquote(delayedAssign("go", .(quote(expr = )))))
++     go
++ }
+> try(f())
+Error in f() : argument is missing, with no default
+> f <- compiler::cmpfun(f)
+> try(f())
+Error in f() : argument is missing, with no default
 > 
