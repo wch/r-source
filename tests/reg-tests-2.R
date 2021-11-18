@@ -3040,6 +3040,9 @@ quote(!!x) # was `!(!x)`
 quote(??x) # Suboptimal
 quote(~+-!?x) # ditto: ....`?`(x)
 ## `!` no longer produces parentheses now
+##
+## There should be no parentheses
+quote(+!x)
 
 
 ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
@@ -3205,6 +3208,10 @@ printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0
  quote(1 +        (if (TRUE) 2)  + 3)
 bquote(1 + .(quote(if (TRUE) 2)) + 3)
 bquote(2 * .(quote(if (TRUE) 2 else 3)) / 4)
+## Additional tests from Suharto. Used to fail because `left` state
+## wasn't properly forwarded across operators
+bquote(1 + ++.(quote(if (TRUE) 2)) + 3)
+bquote(1^-.(quote(if (TRUE) 2)) + 3)
 ##
 ##__ All the following were ok in R <= 4.1.x already __
 bquote(1 + .(quote(if (TRUE) 2)) ^ 3) # already correct previously
@@ -3213,3 +3220,30 @@ bquote(1 + .(quote(f(if (TRUE) 2))) + 3)
 bquote(1 + .(quote((2 + if (TRUE) 3))) + 4)
 ## cflow bodies are only wrapped if needed ==> no parentheses here :
 quote(a <- if (TRUE) 1)
+##
+## These should print the same
+quote(`^`(-1, 2))
+quote((-1)^2)
+## There should be no parentheses
+quote(1^-2)
+quote(1^-2 + 3)
+
+
+## Unary operators are parenthesised if needed.
+## These should print the same.
+quote((-a)$b)
+quote(`$`(-a, b))
+##
+## Binary operators are parenthesised on the LHS of `$`.
+## These should print the same.
+quote(`$`(1 + 1, b))
+quote((1 + 1)$b)
+##
+## Unparseable expressions are deparsed in prefixed form
+quote(`$`(1))
+quote(`$`(1, 2, 3))
+quote(`$`(1, NA_character_))
+quote(`$`(1, if (TRUE) 2))
+quote(`$`(`$`(1, if (TRUE) 2), 3))
+## Additional test (worked before)
+quote(a$"b")

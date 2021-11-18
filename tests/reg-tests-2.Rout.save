@@ -7864,6 +7864,10 @@ list(one = 1, two = )
 > quote(~+-!?x) # ditto: ....`?`(x)
 ~+-!`?`(x)
 > ## `!` no longer produces parentheses now
+> ##
+> ## There should be no parentheses
+> quote(+!x)
++!x
 > 
 > 
 > ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
@@ -8126,6 +8130,12 @@ mean of x
 1 + (if (TRUE) 2) + 3
 > bquote(2 * .(quote(if (TRUE) 2 else 3)) / 4)
 2 * (if (TRUE) 2 else 3)/4
+> ## Additional tests from Suharto. Used to fail because `left` state
+> ## wasn't properly forwarded across operators
+> bquote(1 + ++.(quote(if (TRUE) 2)) + 3)
+1 + ++(if (TRUE) 2) + 3
+> bquote(1^-.(quote(if (TRUE) 2)) + 3)
+1^-(if (TRUE) 2) + 3
 > ##
 > ##__ All the following were ok in R <= 4.1.x already __
 > bquote(1 + .(quote(if (TRUE) 2)) ^ 3) # already correct previously
@@ -8138,4 +8148,45 @@ mean of x
 > ## cflow bodies are only wrapped if needed ==> no parentheses here :
 > quote(a <- if (TRUE) 1)
 a <- if (TRUE) 1
+> ##
+> ## These should print the same
+> quote(`^`(-1, 2))
+(-1)^2
+> quote((-1)^2)
+(-1)^2
+> ## There should be no parentheses
+> quote(1^-2)
+1^-2
+> quote(1^-2 + 3)
+1^-2 + 3
+> 
+> 
+> ## Unary operators are parenthesised if needed.
+> ## These should print the same.
+> quote((-a)$b)
+(-a)$b
+> quote(`$`(-a, b))
+(-a)$b
+> ##
+> ## Binary operators are parenthesised on the LHS of `$`.
+> ## These should print the same.
+> quote(`$`(1 + 1, b))
+(1 + 1)$b
+> quote((1 + 1)$b)
+(1 + 1)$b
+> ##
+> ## Unparseable expressions are deparsed in prefixed form
+> quote(`$`(1))
+`$`(1)
+> quote(`$`(1, 2, 3))
+`$`(1, 2, 3)
+> quote(`$`(1, NA_character_))
+`$`(1, NA_character_)
+> quote(`$`(1, if (TRUE) 2))
+`$`(1, if (TRUE) 2)
+> quote(`$`(`$`(1, if (TRUE) 2), 3))
+`$`(`$`(1, if (TRUE) 2), 3)
+> ## Additional test (worked before)
+> quote(a$"b")
+a$b
 > 
