@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -168,7 +168,7 @@ function(contriburl = contrib.url(repos, type), method,
             res0 <- cbind(res0[, fields, drop = FALSE], Repository = rp)
             res <- rbind(res, res0, deparse.level = 0L)
         }
-    }
+    } ## end  for(repos in *)
 
     if(!length(res)) return(res)
 
@@ -693,6 +693,16 @@ installed.packages <-
 
 remove.packages <- function(pkgs, lib)
 {
+    if(!length(pkgs)) return(invisible())
+    base <- vapply(pkgs, isBasePkg, FALSE)
+    if(any(base))
+        (if(all(base)) stop else warning)(
+            sprintf(ngettext(sum(base),
+                                 "package %s is a base package, and cannot be removed",
+                                 "packages %s are base packages, and cannot be removed"),
+                        paste(sQuote(pkgs[base]), collapse = ", ")),
+            domain = NA)
+
     updateIndices <- function(lib) {
         ## This matches what install.packages() does
         if(lib == .Library && .Platform$OS.type == "unix") {
@@ -709,7 +719,6 @@ remove.packages <- function(pkgs, lib)
         }
     }
 
-    if(!length(pkgs)) return(invisible())
 
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1L]

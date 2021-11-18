@@ -5524,6 +5524,13 @@ stopifnot(eval(e3) == 2.5,
 ## in R <= 4.1.x, e3 looked (i.e. was deparsed) like e1 -- wrongly
 
 
+## remove.packages(<base_pkg)  PR#18227
+m <- tryCmsg(remove.packages("stats"))
+if(englishMsgs)
+    stopifnot(grepl("a base package\\b.*\\bcannot be removed", m))
+stopifnot(is.function(mad))# 'stats' still there ..
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
