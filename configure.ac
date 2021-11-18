@@ -885,8 +885,9 @@ if test "${use_readline}" = yes; then
     ## only need ncurses if libreadline is not statically linked against it
     unset ac_cv_lib_readline_rl_callback_read_char
     AC_CHECK_LIB(ncurses, main, [],
-                 AC_CHECK_LIB(termcap, main, [],
-                              AC_CHECK_LIB(termlib, main)))
+                 AC_CHECK_LIB(tinfo, main, [],
+                              AC_CHECK_LIB(termcap, main, [],
+                                           AC_CHECK_LIB(termlib, main))))
     AC_CHECK_LIB(readline, rl_callback_read_char)
     use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
     if test "${use_readline}" = yes; then
