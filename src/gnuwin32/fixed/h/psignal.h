@@ -39,8 +39,12 @@
   is unfortunately undocumented by Microsoft.  Disabling unwinding provides
   the same behavior as on Linux, which may be a good thing for testing (C++
   destructors not called on long jumps), also it could be faster.
-*/
-   
+
+  The workaround is currently disabled, as it turns out the original cause
+  of the crashes are incorrect unwind tables generated due to a GCC bug
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103274. Currently, the work-
+  around is thus to use -fno-reorder-blocks-and-partition
+
 #if defined(__MINGW64__)
   #undef setjmp
   #ifdef _UCRT
@@ -49,6 +53,8 @@
     #define setjmp(x) _setjmp((x), NULL)
   #endif
 #endif
+
+*/
 
 #define	SIGHUP	1	/* hangup */
 #define	SIGINT	2	/* interrupt */

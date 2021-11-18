@@ -124,7 +124,7 @@
 
 # additional optimization flags (e.g. -mtune=native for a private build)
 # set in MkRules.rules but can be overridden here.
-# EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
+# EOPTS = -mfpmath=sse -msse2 -mstackrealign -fno-reorder-blocks-and-partition $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
 # set in MkRules.rules (assuming support) but can be overridden here.
