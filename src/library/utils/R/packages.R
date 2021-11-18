@@ -695,13 +695,15 @@ remove.packages <- function(pkgs, lib)
 {
     if(!length(pkgs)) return(invisible())
     base <- vapply(pkgs, isBasePkg, FALSE)
-    if(any(base))
+    if(any(base)) {
         (if(all(base)) stop else warning)(
             sprintf(ngettext(sum(base),
                                  "package %s is a base package, and cannot be removed",
                                  "packages %s are base packages, and cannot be removed"),
                         paste(sQuote(pkgs[base]), collapse = ", ")),
             domain = NA)
+        pkgs <- pkgs[!base]
+    }
 
     updateIndices <- function(lib) {
         ## This matches what install.packages() does
