@@ -448,8 +448,9 @@ add_dummies <- function(dir, Log)
             owner <- file.info(foo)[, "uname"]
             foo[owner == user]
         }
-        user <- if (.Platform$OS.type != "windows") Sys.getenv("LOGNAME")
-                else Sys.info()[["login"]]
+        ## This should always give the uname for files created by the
+        ## current user:
+        user <- Sys.info()[["effective_user"]]
         home <- normalizePath("~")
         xtra <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_XTRA_", "")
         xtra <- if (nzchar(xtra)) strsplit(xtra, ";", fixed = TRUE)[[1L]]
