@@ -63,6 +63,7 @@ format.default <-
 				    if(length(sls) == 1L) "slot" else "slots"), ">")
 	       },
 	       numeric =, logical =, complex =,
+               externalptr =,
 	       environment =
 		   prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,
 					      na.encode, scientific, decimal.mark)),
