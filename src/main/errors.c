@@ -1102,7 +1102,7 @@ void NORET jump_to_toplevel()
 #endif
 
 /* Called from do_gettext() and do_ngettext() */
-static char * determine_domain_gettext(SEXP domain_, Rboolean up)
+static const char * determine_domain_gettext(SEXP domain_, Rboolean up)
 {
     const char *domain = "";
     char *buf; // will be returned
@@ -1162,7 +1162,7 @@ static char * determine_domain_gettext(SEXP domain_, Rboolean up)
 		Rsnprintf_mbcs(buf, len, "R-%s", domain);
 		UNPROTECT(1); /* ns */
 		GETT_PRINT("Managed to determine 'domain' from environment as: '%s'\n", buf);
-		return buf;
+		return (const char*) buf;
 	    }
 	    UNPROTECT(1); /* ns */
 	}
@@ -1172,9 +1172,7 @@ static char * determine_domain_gettext(SEXP domain_, Rboolean up)
 	domain = translateChar(STRING_ELT(domain_, 0));
 	if (!strlen(domain))
 	    return NULL;
-	buf = R_alloc(strlen(domain) + 1, sizeof(char));
-	strcpy(buf, domain);
-	return buf;
+	return domain;
 
     } else if(isLogical(domain_) && LENGTH(domain_) == 1 && LOGICAL(domain_)[0] == NA_LOGICAL)
 	return NULL;
@@ -1201,7 +1199,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(!isString(string)) error(_("invalid '%s' value"), "string");
 
-    char * domain = determine_domain_gettext(CAR(args), /*up*/TRUE);
+    const char * domain = determine_domain_gettext(CAR(args), /*up*/TRUE);
 
     if(domain && strlen(domain)) {
 	SEXP ans = PROTECT(allocVector(STRSXP, n));
@@ -1216,13 +1214,14 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(int i = 0; i < n; i++) {
 	    int ihead = 0, itail = 0;
 	    const char * This = translateChar(STRING_ELT(string, i));
-	    char *tmp, *head = NULL, *tail = NULL, *p, *tr;
-
-	    R_CheckStack2(strlen(This) + 1);
-	    tmp = (char *) alloca(strlen(This) + 1);
-	    strcpy(tmp, This);
+	    char *tmp, *head = NULL, *tail = NULL, *tr;
+	    const char *p;
 
 	    if(trim) {
+		R_CheckStack2(strlen(This) + 1);
+		tmp = (char *) alloca(strlen(This) + 1);
+		strcpy(tmp, This);
+
 		/* strip leading and trailing white spaces and
 		   add back after translation */
 		for(p = tmp;
@@ -1247,16 +1246,22 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    strcpy(tail, tmp+strlen(tmp)-itail);
 		    tmp[strlen(tmp)-itail] = '\0';
 		}
-	    }
-	    if(strlen(tmp)) {
-		GETT_PRINT("translating '%s' in domain '%s'\n", tmp, domain);
-		tr = dgettext(domain, tmp);
+
+		p = tmp;
+	    } else
+		p = This;
+	    if(strlen(p)) {
+		GETT_PRINT("translating '%s' in domain '%s'\n", p, domain);
+		tr = dgettext(domain, p);
+		if(ihead > 0 || itail > 0) {
  		R_CheckStack2(        strlen(tr) + ihead + itail + 1);
 		tmp = (char *) alloca(strlen(tr) + ihead + itail + 1);
 		tmp[0] ='\0';
-		if(trim && ihead > 0) strcat(tmp, head);
+		if(ihead > 0) strcat(tmp, head);
 		strcat(tmp, tr);
-		if(trim && itail > 0) strcat(tmp, tail);
+		if(itail > 0) strcat(tmp, tail);
+		} else
+		    tmp = tr;
 		SET_STRING_ELT(ans, i, mkChar(tmp));
 	    } else
 		SET_STRING_ELT(ans, i, mkChar(This));
@@ -1283,7 +1288,7 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'%s' must be a character string"), "msg2");
 
 #ifdef ENABLE_NLS
-    char * domain = determine_domain_gettext(CADDDR(args), /*up*/FALSE);
+    const char * domain = determine_domain_gettext(CADDDR(args), /*up*/FALSE);
 
     if(domain && strlen(domain)) {
 	/* libintl seems to malfunction if given a message of "" */
