@@ -3040,6 +3040,9 @@ quote(!!x) # was `!(!x)`
 quote(??x) # Suboptimal
 quote(~+-!?x) # ditto: ....`?`(x)
 ## `!` no longer produces parentheses now
+##
+## There should be no parentheses (always worked)
+quote(+!x)
 
 
 ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
@@ -3205,11 +3208,39 @@ printCoefmat(cm)  # NaN's were replaced by NA in R < 4.1.0
  quote(1 +        (if (TRUE) 2)  + 3)
 bquote(1 + .(quote(if (TRUE) 2)) + 3)
 bquote(2 * .(quote(if (TRUE) 2 else 3)) / 4)
+## From Suharto. Failed `left` state wasn't properly forwarded across operators
+bquote(1 + ++.(quote(if (TRUE) 2)) + 3)
+bquote(1^- .  (quote(if (TRUE) 2)) + 3)
 ##
 ##__ All the following were ok in R <= 4.1.x already __
 bquote(1 + .(quote(if (TRUE) 2)) ^ 3) # already correct previously
 ## other constructs cancel the LHS state ==> `if` call isn't wrapped:
-bquote(1 + .(quote(f(if (TRUE) 2))) + 3)
+bquote(1 + .(quote(   f(if (TRUE) 2))) + 3)
 bquote(1 + .(quote((2 + if (TRUE) 3))) + 4)
 ## cflow bodies are only wrapped if needed ==> no parentheses here :
 quote(a <- if (TRUE) 1)
+## print the same
+quote(`^`(-1, 2))
+quote((-1)^2)
+## no parentheses:
+quote(1^-2)
+quote(1^-2 + 3)
+## The "formula" case of Adrian Dusa (maintainer of QCA); R-devel ML, Nov.15, 2021
+quote(A + ~B + C ~ D) # no parens
+## 'simple' binary op
+quote(a$"b")
+##__ end { all fine in older R }
+
+## Unary operators are parenthesised if needed; print the same:
+quote((-a)$b)
+quote(`$`(-a, b))    # no parens in R <= 4.1.x
+## Binary operators are parenthesised on the LHS of `$`. ; the same:
+quote((1 + 1)$b)
+quote(`$`(1 + 1, b)) # no parens in R <= 4.1.x
+##
+## Unparseable expressions are deparsed in prefixed form
+quote(`$`(1))       # was 1$NULL  in R <= 4.1.x
+quote(`$`(1, 2, 3)) # was 1$2
+quote(`$`(1, NA_character_)) # was 1$NA_char..
+quote(`$`(1, if(L) 2))   # was 1$if (L) 2
+quote(`$`(`$`(1, if(L) 2), 3))

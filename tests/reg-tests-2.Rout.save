@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-11-11 r81177) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-11-16 r81199) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7864,6 +7864,10 @@ list(one = 1, two = )
 > quote(~+-!?x) # ditto: ....`?`(x)
 ~+-!`?`(x)
 > ## `!` no longer produces parentheses now
+> ##
+> ## There should be no parentheses (always worked)
+> quote(+!x)
++!x
 > 
 > 
 > ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
@@ -8126,16 +8130,61 @@ mean of x
 1 + (if (TRUE) 2) + 3
 > bquote(2 * .(quote(if (TRUE) 2 else 3)) / 4)
 2 * (if (TRUE) 2 else 3)/4
+> ## From Suharto. Failed `left` state wasn't properly forwarded across operators
+> bquote(1 + ++.(quote(if (TRUE) 2)) + 3)
+1 + ++(if (TRUE) 2) + 3
+> bquote(1^- .  (quote(if (TRUE) 2)) + 3)
+1^-(if (TRUE) 2) + 3
 > ##
 > ##__ All the following were ok in R <= 4.1.x already __
 > bquote(1 + .(quote(if (TRUE) 2)) ^ 3) # already correct previously
 1 + (if (TRUE) 2)^3
 > ## other constructs cancel the LHS state ==> `if` call isn't wrapped:
-> bquote(1 + .(quote(f(if (TRUE) 2))) + 3)
+> bquote(1 + .(quote(   f(if (TRUE) 2))) + 3)
 1 + f(if (TRUE) 2) + 3
 > bquote(1 + .(quote((2 + if (TRUE) 3))) + 4)
 1 + (2 + if (TRUE) 3) + 4
 > ## cflow bodies are only wrapped if needed ==> no parentheses here :
 > quote(a <- if (TRUE) 1)
 a <- if (TRUE) 1
+> ## print the same
+> quote(`^`(-1, 2))
+(-1)^2
+> quote((-1)^2)
+(-1)^2
+> ## no parentheses:
+> quote(1^-2)
+1^-2
+> quote(1^-2 + 3)
+1^-2 + 3
+> ## The "formula" case of Adrian Dusa (maintainer of QCA); R-devel ML, Nov.15, 2021
+> quote(A + ~B + C ~ D) # no parens
+A + ~B + C ~ D
+> ## 'simple' binary op
+> quote(a$"b")
+a$b
+> ##__ end { all fine in older R }
+> 
+> ## Unary operators are parenthesised if needed; print the same:
+> quote((-a)$b)
+(-a)$b
+> quote(`$`(-a, b))    # no parens in R <= 4.1.x
+(-a)$b
+> ## Binary operators are parenthesised on the LHS of `$`. ; the same:
+> quote((1 + 1)$b)
+(1 + 1)$b
+> quote(`$`(1 + 1, b)) # no parens in R <= 4.1.x
+(1 + 1)$b
+> ##
+> ## Unparseable expressions are deparsed in prefixed form
+> quote(`$`(1))       # was 1$NULL  in R <= 4.1.x
+`$`(1)
+> quote(`$`(1, 2, 3)) # was 1$2
+`$`(1, 2, 3)
+> quote(`$`(1, NA_character_)) # was 1$NA_char..
+`$`(1, NA_character_)
+> quote(`$`(1, if(L) 2))   # was 1$if (L) 2
+`$`(1, if (L) 2)
+> quote(`$`(`$`(1, if(L) 2), 3))
+`$`(`$`(1, if (L) 2), 3)
 > 
