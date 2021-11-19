@@ -469,6 +469,9 @@
 /* Define to 1 if you have the `termlib' library (-ltermlib). */
 #undef HAVE_LIBTERMLIB
 
+/* Define to 1 if you have the `tinfo' library (-ltinfo). */
+#undef HAVE_LIBTINFO
+
 /* Define to 1 if you have the `tk' library (-ltk). */
 #undef HAVE_LIBTK
 
