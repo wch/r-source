@@ -5531,6 +5531,16 @@ if(englishMsgs)
 stopifnot(is.function(mad))# 'stats' still there ..
 
 
+## check that internal index in lapply is guarded against mutation
+f1 <- function(x) parent.frame()$i
+stopifnot(identical(unlist(lapply(1:3, f1)), 1:3))
+f2 <- function(x) {
+    e <- parent.frame()
+    if (x == 1) { ii <<- e$i; e$i[] <- e$i}
+    x
+}
+stopifnot(identical(unlist(lapply(1:3, f2)), 1:3))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
