@@ -46,7 +46,7 @@ is.hashtab(x)
   \item{value}{New value to associate with \code{key}.}
   \item{FUN}{A function of two arguments, the key and the value, to call
     for each entry.}
-  \item{x}{Object to be tested, printed, or formatted}
+  \item{x}{Object to be tested, printed, or formatted.}
   \item{\dots}{Additional arguments.}
 }
 
