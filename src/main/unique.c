@@ -2553,3 +2553,17 @@ int R_isHashtable(SEXP h)
     else
 	return TRUE;
 }
+
+/* This allows experimenting with creating hash tables at the R level. */
+SEXP attribute_hidden do_vhash(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x = CAR(args);
+    SEXP sUseCloEnv = CADR(args);
+    SEXP sK = CADDR(args);
+
+    int useCloEnv = sUseCloEnv == R_NilValue ? TRUE : asLogical(sUseCloEnv);
+    int K = sK == R_NilValue ? 31 : asInteger(sK);
+
+    int val = hash_identical(x, useCloEnv, K);
+    return ScalarInteger(val);
+}

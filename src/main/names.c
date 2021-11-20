@@ -269,6 +269,8 @@ FUNTAB R_FunTab[] =
 {"lengths",	do_lengths,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"sequence",	do_sequence,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
+{"vhash",	do_vhash,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+
 {"attach",	do_attach,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"detach",	do_detach,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"search",	do_search,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
