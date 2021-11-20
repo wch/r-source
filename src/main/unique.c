@@ -375,9 +375,12 @@ static hlen vhash_one(SEXP _this, HashData *d)
 	break;
     case CLOSXP:
 	/* all attributes are ignored */
-	key ^= vhash_one(BODY_EXPR(_this), d); key *= 97;
-	if (d->useCloEnv)
-	    key ^= vhash_one(CLOENV(_this), d);    key *= 97;
+	key ^= vhash_one(BODY_EXPR(_this), d);
+	key *= 97;
+	if (d->useCloEnv) {
+	    key ^= vhash_one(CLOENV(_this), d);
+	    key *= 97;
+	}
 	break;
     case SYMSXP:
 	/* at this point a symbol name should be guaranteed to have a
