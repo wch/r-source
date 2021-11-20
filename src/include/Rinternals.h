@@ -1153,6 +1153,33 @@ enum {SORTED_DECR_NA_1ST = -2,
 			    sorted == SORTED_DECR_NA_1ST)
 
 
+/* Experimental C interface for experimental hash table support
+
+   Not in the API (at least not yet) but declared here to allow some
+   experimenting */
+
+/* try to allow some type checking */
+typedef struct { SEXP cell; } R_hashtab_t;
+
+/* hash table types */
+#define HT_TYPE_IDENTICAL 0
+#define HT_TYPE_ADDRESS   1
+
+/* public C interface */
+R_hashtab_t R_asHashtable(SEXP h);
+SEXP R_HashtabSEXP(R_hashtab_t  h);
+int R_isHashtable(SEXP h);
+R_hashtab_t R_mkhashtab(int type);
+SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch);
+SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value);
+int R_remhash(R_hashtab_t h, SEXP key);
+int R_numhash(R_hashtab_t h);
+int R_typhash(R_hashtab_t h);
+SEXP R_maphash(R_hashtab_t h, SEXP FUN);
+void R_maphashC(R_hashtab_t h, void (*FUN)(SEXP, SEXP, void *), void *data);
+void R_clrhash(R_hashtab_t h);
+
+
 /* stuff that probably shouldn't be in the API but is getting used */
 
 void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp

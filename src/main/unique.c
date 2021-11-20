@@ -2250,3 +2250,300 @@ SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
+
+/***
+ *** Experimental Hath Table Implementation
+ ***
+ *** The interface is based loosely on the design of the Common Lisp
+ *** hash table support. Two equality tests are supported: identical()
+ *** and pointer equality.
+ ***/
+
+/**
+ ** C Level Interface
+ **/
+
+/*
+ * Low Level Functions
+ */
+
+static int hash_identical(SEXP x, int K)
+{
+    /* using 31 seems to work reasonably */
+    if (K == 0 || K > 31) K = 31;
+
+    HashData d = { .K = K, .useUTF8 = FALSE, .useCache = TRUE };
+
+    int val = (int) vhash_one(x, &d);
+    if (val == NA_INTEGER) val = 0;
+    if (val < 0) val = -val;
+    return val;
+}
+
+static int hash_address(SEXP x, int K)
+{
+    if (K == 0 || K > 31) K = 31;
+
+    HashData d = { .K = K };
+
+    int val = scatter(PTRHASH(x), &d);
+    if (val == NA_INTEGER) val = 0;
+    if (val < 0) val = -val;
+    return val;
+}
+
+/* allow for compiling with NAMED */
+static R_INLINE SEXP INC_NMD(SEXP x) {
+    INCREMENT_NAMED(x);
+    return x;
+}
+
+#define HT_SEXP(h) (h).cell
+#define HT_META_SIZE 2
+#define HT_META(h) R_ExternalPtrTag(HT_SEXP(h))
+
+#define HT_TABLE(h) R_ExternalPtrProtected(HT_SEXP(h))
+#define SET_HT_TABLE(h, table) R_SetExternalPtrProtected(HT_SEXP(h), table)
+
+#define HT_COUNT(h) (INTEGER(HT_META(h))[0])
+#define HT_TYPE(h) (INTEGER(HT_META(h))[1])
+
+#define HT_IS_VALID(h) (R_ExternalPtrAddr(HT_SEXP(h)) != NULL)
+#define HT_VALIDATE(h) R_SetExternalPtrAddr(HT_SEXP(h), R_GlobalEnv)
+
+static R_INLINE int HT_HASH(R_hashtab_t h, SEXP key)
+{
+    SEXP table = HT_TABLE(h);
+    switch(HT_TYPE(h)) {
+    case HT_TYPE_IDENTICAL:
+	return hash_identical(key, 0) % LENGTH(table);
+    case HT_TYPE_ADDRESS:
+	return hash_address(key, 0) % LENGTH(table);
+    default:
+	error("bad hash table type");
+    }
+}
+
+static R_INLINE int HT_EQUAL(R_hashtab_t h, SEXP x, SEXP y)
+{
+    switch(HT_TYPE(h)) {
+    case HT_TYPE_IDENTICAL: return R_compute_identical(x, y, 0);
+    case HT_TYPE_ADDRESS:   return x == y;
+    default: error("bad hash table type");
+    }
+}
+
+static void rehash(R_hashtab_t h, int new_size)
+{
+    HT_COUNT(h) = 0;
+    HT_VALIDATE(h);
+    
+    SEXP old_table = PROTECT(HT_TABLE(h));
+    int old_size = LENGTH(old_table);
+    SET_HT_TABLE(h, allocVector(VECSXP, new_size));
+    
+    for (int i = 0; i < old_size; i++)
+	for (SEXP cell = VECTOR_ELT(old_table, i);
+	     cell != R_NilValue;
+	     cell = CDR(cell))
+	    R_sethash(h, TAG(cell), CAR(cell));
+
+    UNPROTECT(1); /* old_table */
+}
+
+static SEXP getcell(R_hashtab_t h, SEXP key, int *pidx)
+{
+    SEXP table = HT_TABLE(h);
+
+    if (! HT_IS_VALID(h))
+	rehash(h, LENGTH(table));
+
+    int idx = HT_HASH(h, key);
+    *pidx = idx;
+
+    SEXP chain = VECTOR_ELT(table, idx);
+    while (chain != R_NilValue) {
+	if (HT_EQUAL(h, TAG(chain), key))
+	    return chain;
+	chain = CDR(chain);
+    }
+    return R_NilValue;
+}    
+
+
+/*
+ * Higer Level Public Functions
+ */
+
+#define HT_INIT_SIZE 8
+
+R_hashtab_t R_mkhashtab(int type)
+{
+    switch(type) {
+    case HT_TYPE_IDENTICAL:
+    case HT_TYPE_ADDRESS: break;
+    default: error("bad hash table type");
+    }
+    SEXP table = PROTECT(allocVector(VECSXP, HT_INIT_SIZE));
+    SEXP meta = PROTECT(allocVector(INTSXP, HT_META_SIZE));
+    R_hashtab_t val = { .cell = R_MakeExternalPtr(R_GlobalEnv, meta, table) };
+    HT_TYPE(val) = type;
+    UNPROTECT(2); /* table, meta */
+    return val;
+}
+
+SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch)
+{
+    int idx;
+    SEXP cell = getcell(h, key, &idx);
+    if (cell == R_NilValue)
+	return nomatch;
+    else
+	return CAR(cell);
+}
+
+SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value)
+{
+    int idx;
+    SEXP cell = getcell(h, key, &idx);
+    if (cell == R_NilValue) {
+	SEXP table = HT_TABLE(h);
+	SEXP chain = CONS(INC_NMD(value), VECTOR_ELT(table, idx));
+	SET_TAG(chain, INC_NMD(key));
+	SET_VECTOR_ELT(table, idx, chain);
+	int count = ++HT_COUNT(h);
+	if (count > 0.5 * LENGTH(table))
+	    rehash(h, 2 * LENGTH(table));
+    }
+    else {
+	SETCAR(cell, value);
+	INCREMENT_NAMED(value);
+    }
+    return value;
+}
+
+int R_remhash(R_hashtab_t h, SEXP key)
+{
+    int idx;
+    SEXP cell = getcell(h, key, &idx);
+
+    if (cell == R_NilValue)
+	return FALSE;
+    else {
+	SEXP table = HT_TABLE(h);
+	if (cell == VECTOR_ELT(table, idx))
+	    SET_VECTOR_ELT(table, idx, CDR(cell));
+	else {
+	    SEXP prev = VECTOR_ELT(table, idx);
+	    while (CDR(prev) !=  cell)
+		prev = CDR(prev);
+	    SETCDR(prev, CDR(cell));
+	}
+	HT_COUNT(h)--;
+	SETCAR(cell, R_NilValue);  // drop REFCNT on old value
+	SET_TAG(cell, R_NilValue); // drop REFCNT on old key
+	return TRUE;
+    }
+}
+
+int R_numhash(R_hashtab_t h) { return HT_COUNT(h); }
+int R_typhash(R_hashtab_t h) { return HT_TYPE(h); }
+
+static R_INLINE void defvar(SEXP sym, SEXP val, SEXP env)
+{
+    defineVar(sym, INC_NMD(val), env);
+}
+
+SEXP R_maphash(R_hashtab_t h, SEXP FUN)
+{
+    SEXP FUN_sym = install("FUN");
+    SEXP key_sym = install("key");
+    SEXP val_sym = install("value");
+
+    SEXP env = PROTECT(R_NewEnv(R_GlobalEnv, FALSE, 0));
+    SEXP call = PROTECT(lang3(FUN_sym, key_sym, val_sym));
+    defvar(FUN_sym, FUN, env);
+    
+    SEXP table = PROTECT(HT_TABLE(h)); // PROTECT in case FUN causes a rehash
+    int size = LENGTH(table);
+    for (int i = 0; i < size; i++) {
+	SEXP cell = VECTOR_ELT(table, i);
+	while (cell != R_NilValue) {
+	    SEXP next = PROTECT(CDR(cell));
+	    defvar(key_sym, TAG(cell), env); // key is PROTECTed by env
+	    defvar(val_sym, CAR(cell), env); // val is PROTECTed by env
+	    eval(call, env);
+	    cell = next;
+	    UNPROTECT(1); /* next */
+	}
+    }
+    UNPROTECT(3); /* env, call, table */
+    return R_NilValue;
+}
+
+void R_maphashC(R_hashtab_t h, void (*FUN)(SEXP, SEXP, void *), void *data)
+{
+    SEXP table = PROTECT(HT_TABLE(h)); // PROTECT in case FUN causes a rehash
+    int size = LENGTH(table);
+    for (int i = 0; i < size; i++) {
+	SEXP cell = VECTOR_ELT(table, i);
+	while (cell != R_NilValue) {
+	    SEXP next = PROTECT(CDR(cell));
+	    SEXP key = PROTECT(TAG(cell));
+	    SEXP val = PROTECT(CAR(cell));
+	    FUN(key, val, data);
+	    cell = next;
+	    UNPROTECT(3); /* next, key, val */
+	}
+    }
+    UNPROTECT(1); /* table */
+}
+
+void R_clrhash(R_hashtab_t h)
+{
+    SEXP table = HT_TABLE(h);
+    int size = LENGTH(table);
+    for (int i = 0; i < size; i++) {
+	for (SEXP cell = VECTOR_ELT(table, i);
+	     cell != R_NilValue;
+	     cell = CDR(cell)) {
+	    SETCAR(cell, R_NilValue);  // drop REFCNT on old value
+	    SET_TAG(cell, R_NilValue); // drop REFCNT on old key
+	}
+	SET_VECTOR_ELT(table, i, R_NilValue);
+    }
+    HT_COUNT(h) = 0;
+    /* could also drop table size bask down to HT_INIT_SIZE */
+}
+
+
+/**
+ ** R Level Interface Support
+ **/
+
+R_hashtab_t R_asHashtable(SEXP h)
+{
+    if (TYPEOF(h) != VECSXP || LENGTH(h) != 1 || ! inherits(h, "hashtab"))
+	error("not a proper hash table object");
+    SEXP p = VECTOR_ELT(h, 0);
+    if (TYPEOF(p) != EXTPTRSXP)
+	error("hash table object is corrupted");
+    R_hashtab_t val = { .cell = p };
+    return val;
+}
+
+SEXP R_HashtabSEXP(R_hashtab_t  h)
+{
+    return HT_SEXP(h);
+}
+
+int R_isHashtable(SEXP h)
+{
+    if (TYPEOF(h) != VECSXP ||
+	LENGTH(h) != 1 ||
+	! inherits(h, "hashtab") ||
+	TYPEOF(VECTOR_ELT(h, 0)) != EXTPTRSXP)
+	return FALSE;
+    else
+	return TRUE;
+}
