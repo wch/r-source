@@ -284,11 +284,17 @@ static int rawequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
     return (RAW_ELT(x, i) == RAW_ELT(y, j));
 }
 
+static hlen vhash_one(SEXP _this, HashData *d);
 static hlen vhash(SEXP x, R_xlen_t indx, HashData *d)
+{
+    SEXP _this = VECTOR_ELT(x, indx);
+    return vhash_one(_this, d);
+}
+
+static hlen vhash_one(SEXP _this, HashData *d)
 {
     int i;
     unsigned int key;
-    SEXP _this = VECTOR_ELT(x, indx);
 
     key = OBJECT(_this) + 2*TYPEOF(_this) + 100U*(unsigned int) length(_this);
     /* maybe we should also look at attributes, but that slows us down */
