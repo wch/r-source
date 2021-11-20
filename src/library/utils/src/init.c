@@ -97,6 +97,17 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(fileedit, 3),
     EXTDEF(selectlist, 4),
 
+    /* Hash Tables */
+    EXTDEF(hashtab_Ext, 1),
+    EXTDEF(gethash_Ext, 3),
+    EXTDEF(sethash_Ext, 3),
+    EXTDEF(remhash_Ext, 2),
+    EXTDEF(numhash_Ext, 1),
+    EXTDEF(typhash_Ext, 1),
+    EXTDEF(maphash_Ext, 2),
+    EXTDEF(clrhash_Ext, 1),
+    EXTDEF(ishashtab_Ext, 1),
+
 #ifdef Win32
     EXTDEF(winProgressBar, 6),
     EXTDEF(closeWinProgressBar, 1),

@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = init.c io.c size.c sock.c stubs.c utils.c \
+SOURCES_C = init.c io.c size.c sock.c stubs.c utils.c hashtab.c \
   windows/dataentry.c windows/dialogs.c windows/registry.c \
   windows/util.c windows/widgets.c
 

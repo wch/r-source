@@ -133,6 +133,9 @@
       \item \code{gettext()} and \code{gettextf()} get a new option
       \code{trim = TRUE} which when set to false allows translations for
       strings such as \code{"Execution halted\n"} typical for C code.
+
+      \item An experimental implementation of hash tables is now
+      available.  See \code{?hashtab} for more details.
     }
   }
 
