@@ -179,16 +179,29 @@ static hlen chash(SEXP x, R_xlen_t indx, HashData *d)
 #endif
 }
 
-/* Hash CHARSXP by address.  Hash values are int, For 64bit pointers,
- * we do (upper ^ lower) */
-static R_INLINE hlen cshash(SEXP x, R_xlen_t indx, HashData *d)
+/* Pointer hashing as used here isn't entirely portable (we do it in
+   several other places, sometimes in slightly different ways) but it
+   could be made so by computing a unique value based on the
+   allocation page and position in the page.
+
+   Pointer hashes will not be valid if serialized and unserialized in
+   another process.
+
+   Hash values are int, For 64bit pointers, we do (upper ^ lower) */
+static R_INLINE hlen PTRHASH(void *x)
 {
-    intptr_t z = (intptr_t) STRING_ELT(x, indx);
+    intptr_t z = (intptr_t) x;
     unsigned int z1 = (unsigned int)(z & 0xffffffff), z2 = 0;
 #if SIZEOF_LONG == 8
     z2 = (unsigned int)(z/0x100000000L);
 #endif
-    return scatter(z1 ^ z2, d);
+    return z1 ^ z2;
+}
+
+/* Hash CHARSXP by address. */
+static R_INLINE hlen cshash(SEXP x, R_xlen_t indx, HashData *d)
+{
+    return scatter(PTRHASH(STRING_ELT(x, indx)), d);
 }
 
 static R_INLINE hlen shash(SEXP x, R_xlen_t indx, HashData *d)
@@ -296,6 +309,12 @@ static hlen vhash_one(SEXP _this, HashData *d)
     int i;
     unsigned int key;
 
+    /* Handle environments by pointer hashing. Previously,
+       environments were hashed based only on length, which is not
+       very effective and could be expensive to compute. */
+    if (TYPEOF(_this) == ENVSXP)
+	return scatter(PTRHASH(_this), d);
+
     key = OBJECT(_this) + 2*TYPEOF(_this) + 100U*(unsigned int) length(_this);
     /* maybe we should also look at attributes, but that slows us down */
     switch (TYPEOF(_this)) {
@@ -336,11 +355,49 @@ static hlen vhash_one(SEXP _this, HashData *d)
 	    key *= 97;
 	}
 	break;
+    case EXPRSXP:
     case VECSXP:
+	R_CheckStack();
 	for(i = 0; i < LENGTH(_this); i++) {
 	    key ^= vhash(_this, i, d);
 	    key *= 97;
 	}
+	break;
+    case LANGSXP:
+	R_CheckStack();
+	/* all attributes are ignored */
+	/* might be good to consider envirnments on formulas */
+	for (SEXP next = _this; next != R_NilValue; next = CDR(next)) {
+	    key ^= vhash_one(CAR(next), d);
+	    key *= 97;
+	}
+	break;
+    case CLOSXP:
+	/* all attributes are ignored */
+	key ^= vhash_one(BODY_EXPR(_this), d);
+	key *= 97;
+	break;
+    case SYMSXP:
+	/* at this point a symbol name should be guaranteed to have a
+	   hash value */
+	key ^= HASHVALUE(PRINTNAME(_this));
+	key *= 97;
+	break;
+    case CHARSXP:
+	/* encoding is ignored */
+	if( !HASHASH(_this) ) {
+	    /* could also use cshash here, but would need to deal with
+	       uncached strings */
+	    SET_HASHVALUE(_this, R_Newhashpjw(CHAR(_this)));
+	    SET_HASHASH(_this, 1);
+	}
+	key ^= HASHVALUE(_this);
+	key *= 97;
+	break;
+    case EXTPTRSXP:
+	/* identical() considers only the EXTPTR_PTR values ... */
+	key ^= PTRHASH(EXTPTR_PTR(_this));
+	key *= 97;
 	break;
     default:
 	break;
