@@ -68,6 +68,7 @@ typedef struct {
     int res_dpi;  /* Values >0 recorded in the file */
 
     double w, h;
+    double xpinch, ypinch;
     rgb   fgcolor;		/* Foreground color */
     rgb   bgcolor;		/* Background color */
     rgb   canvascolor;		/* Canvas color */

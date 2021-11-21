@@ -149,7 +149,8 @@ win.print <-
 
 win.metafile <-
     function(filename = "", width = 7, height = 7, pointsize = 12,
-             family = "", restoreConsole = TRUE)
+             family = "", restoreConsole = TRUE,
+             xpinch = NA_real_, ypinch = NA_real_)
 {
     check <- Sys.getenv("_R_CHECK_WINDOWS_DEVICE_", "")
     if (identical(check, "stop"))
@@ -159,7 +160,7 @@ win.metafile <-
     filename <- path.expand(filename)
     invisible(.External(C_devga, paste0("win.metafile:", filename),
                         width, height, pointsize, FALSE, 1L,
-                        NA_real_, NA_real_, "white", 1,
+                        as.double(xpinch), as.double(ypinch), "white", 1,
                         NA_integer_, NA_integer_, FALSE, .PSenv, NA,
                         restoreConsole, "", FALSE, TRUE, family, 1L))
 }

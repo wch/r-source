@@ -74,7 +74,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole,
 			const char *title, Rboolean clickToConfirm,
-			Rboolean fillOddEven, const char *family, int quality);
+			Rboolean fillOddEven, const char *family, int quality,
+                        double xpinch, double ypinch);
 
 
 /* a colour used to represent the background on png if transparent
@@ -82,15 +83,6 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 */
 
 #define PNG_TRANS 0xfdfefd
-
-/* these really are globals: per machine, not per window */
-static double user_xpinch = 0.0, user_ypinch = 0.0;
-
-static void GAsetunits(double xpinch, double ypinch)
-{
-    user_xpinch = xpinch;
-    user_ypinch = ypinch;
-}
 
 static rgb GArgb(int color, double gamma)
 {
@@ -380,7 +372,7 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
 		       R_GlobalEnv, restoreConsole, "", FALSE,
 		       ((gadesc*) dd->deviceSpecific)->fillOddEven, "",
-		       DEFAULT_QUALITY))
+		       DEFAULT_QUALITY, 0.0, 0.0))
 	PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -1539,12 +1531,12 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     char buf[100];
 
     xd->kind = SCREEN;
-    if (R_FINITE(user_xpinch) && user_xpinch > 0.0)
-	dw = dw0 = (int) (w * user_xpinch);
+    if (xd->xpinch > 0.0)
+	dw = dw0 = (int) (w * xd->xpinch);
     else
 	dw = dw0 = (int) (w / pixelWidth(NULL));
-    if (R_FINITE(user_ypinch) && user_ypinch > 0.0)
-	dh = (int) (h * user_ypinch);
+    if (xd->ypinch > 0.0)
+	dh = (int) (h * xd->ypinch);
     else
 	dh = (int) (h / pixelHeight(NULL));
 
@@ -1923,7 +1915,8 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	snprintf(buf, 600, xd->filename, 1);
 	xd->w = MM_PER_INCH * w;
 	xd->h =  MM_PER_INCH * h;
-	xd->gawin = newmetafile(buf, MM_PER_INCH * w, MM_PER_INCH * h);
+	xd->gawin = newmetafile(buf, MM_PER_INCH * w, MM_PER_INCH * h,
+                                xd->xpinch, xd->ypinch);
 	xd->kind = METAFILE;
 	xd->fast = 0; /* use scalable line widths */
 	if (!xd->gawin) {
@@ -2182,7 +2175,7 @@ static void GA_NewPage(const pGEcontext gc,
 	else {
 	    del(xd->gawin);
 	    snprintf(buf, 600, xd->filename, xd->npage);
-	    xd->gawin = newmetafile(buf, xd->w, xd->h);
+	    xd->gawin = newmetafile(buf, xd->w, xd->h, xd->xpinch, xd->ypinch);
 	    if(!xd->gawin)
 		error(_("metafile '%s' could not be created"), buf);
 	}
@@ -3328,7 +3321,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			SEXP psenv, Rboolean restoreConsole,
 			const char *title, Rboolean clickToConfirm,
 			Rboolean fillOddEven, const char *family,
-			int quality)
+			int quality, double xpinch, double ypinch)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -3345,6 +3338,15 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 
     /* from here on, if need to bail out with "error", must also */
     /* free(xd) */
+
+    /* Allow user override of ppi */
+    xd->xpinch = 0.0;
+    xd->ypinch = 0.0;
+    if (R_FINITE(xpinch) && xpinch > 0.0 &&
+	R_FINITE(ypinch) && ypinch > 0.0) {
+        xd->xpinch = xpinch;
+        xd->ypinch = ypinch;
+    }
 
     ps = pointsize;
     if (ps < 1) ps = 12;
@@ -3454,10 +3456,10 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     if (xd->kind > METAFILE && xd->res_dpi > 0) ps *= xd->res_dpi/72.0;
 
     if (xd->kind <= METAFILE) {
-	/* it is 12 *point*, not 12 pixel */
-	double ps0 = ps * xd->rescale_factor;
-	dd->cra[0] = 0.9 * ps0 * devicepixelsx(xd->gawin) / 72.0;
-	dd->cra[1] = 1.2 * ps0 * devicepixelsy(xd->gawin) / 72.0;
+        /* it is 12 *point*, not 12 pixel */
+        double ps0 = ps * xd->rescale_factor;
+        dd->cra[0] = 0.9 * ps0 * devicepixelsx(xd->gawin) / 72.0;
+        dd->cra[1] = 1.2 * ps0 * devicepixelsy(xd->gawin) / 72.0;
     } else {
 	dd->cra[0] = 0.9 * ps;
 	dd->cra[1] = 1.2 * ps;
@@ -3474,12 +3476,12 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     /* Inches per raster unit */
 
     if (xd->kind <= METAFILE) { /* non-screen devices set NA_real_ */
-	if (R_FINITE(user_xpinch) && user_xpinch > 0.0)
-	    dd->ipr[0] = 1.0/user_xpinch;
+	if (xd->xpinch > 0.0)
+	    dd->ipr[0] = 1.0/xd->xpinch;
 	else
 	    dd->ipr[0] = pixelWidth(xd->gawin);
-	if (R_FINITE(user_ypinch) && user_ypinch > 0.0)
-	    dd->ipr[1] = 1.0/user_ypinch;
+	if (xd->ypinch > 0.0)
+	    dd->ipr[1] = 1.0/xd->ypinch;
 	else
 	    dd->ipr[1] = pixelHeight(xd->gawin);
     } else if (xd->res_dpi > 0) {
@@ -3840,12 +3842,11 @@ SEXP devga(SEXP args)
 	}
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return 0;
-	GAsetunits(xpinch, ypinch);
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
 			    restoreConsole, title, clickToConfirm,
-			    fillOddEven, family, quality)) {
+			    fillOddEven, family, quality, xpinch, ypinch)) {
 	    free(dev);
 	    error(_("unable to start %s() device"), type);
 	}

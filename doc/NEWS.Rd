@@ -343,6 +343,10 @@
       \item \code{remove.packages()} no longer tries to uninstall priority
       \code{base} packages, thanks to a report and suggestions by Colin Fay
       in \PR{18227}.
+
+      \item \code{win.metafile()} now has \code{xpinch} and
+      \code{ypinch} arguments so that the user can override Windows'
+      (potentially wrong) guess at device dimensions.
     }
   }
 }
