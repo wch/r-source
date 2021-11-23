@@ -2403,7 +2403,11 @@ R_hashtab_t R_mkhashtab(int type)
 SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch)
 {
     int idx;
+    PROTECT(HT_SEXP(h));
+    PROTECT(key);
+    PROTECT(nomatch);
     SEXP cell = getcell(h, key, &idx);
+    UNPROTECT(3); /* h, key, nomatch */
     if (cell == R_NilValue)
 	return nomatch;
     else
@@ -2413,6 +2417,9 @@ SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch)
 SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value)
 {
     int idx;
+    PROTECT(HT_SEXP(h));
+    PROTECT(key);
+    PROTECT(value);
     SEXP cell = getcell(h, key, &idx);
     if (cell == R_NilValue) {
 	SEXP table = HT_TABLE(h);
@@ -2427,13 +2434,17 @@ SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value)
 	SETCAR(cell, value);
 	INCREMENT_NAMED(value);
     }
+    UNPROTECT(3); /* h, key, value */
     return value;
 }
 
 int R_remhash(R_hashtab_t h, SEXP key)
 {
     int idx;
+    PROTECT(HT_SEXP(h));
+    PROTECT(key);
     SEXP cell = getcell(h, key, &idx);
+    UNPROTECT(2); /* h, key */
 
     if (cell == R_NilValue)
 	return FALSE;
@@ -2464,6 +2475,8 @@ static R_INLINE void defvar(SEXP sym, SEXP val, SEXP env)
 
 SEXP R_maphash(R_hashtab_t h, SEXP FUN)
 {
+    PROTECT(HT_SEXP(h));
+    PROTECT(FUN);
     SEXP FUN_sym = install("FUN");
     SEXP key_sym = install("key");
     SEXP val_sym = install("value");
@@ -2485,12 +2498,13 @@ SEXP R_maphash(R_hashtab_t h, SEXP FUN)
 	    UNPROTECT(1); /* next */
 	}
     }
-    UNPROTECT(3); /* env, call, table */
+    UNPROTECT(5); /* h, FUN, env, call, table */
     return R_NilValue;
 }
 
 void R_maphashC(R_hashtab_t h, void (*FUN)(SEXP, SEXP, void *), void *data)
 {
+    PROTECT(HT_SEXP(h));
     SEXP table = PROTECT(HT_TABLE(h)); // PROTECT in case FUN causes a rehash
     int size = LENGTH(table);
     for (int i = 0; i < size; i++) {
@@ -2504,7 +2518,7 @@ void R_maphashC(R_hashtab_t h, void (*FUN)(SEXP, SEXP, void *), void *data)
 	    UNPROTECT(3); /* next, key, val */
 	}
     }
-    UNPROTECT(1); /* table */
+    UNPROTECT(2); /* h, table */
 }
 
 void R_clrhash(R_hashtab_t h)
@@ -2521,7 +2535,7 @@ void R_clrhash(R_hashtab_t h)
 	SET_VECTOR_ELT(table, i, R_NilValue);
     }
     HT_COUNT(h) = 0;
-    /* could also drop table size bask down to HT_INIT_SIZE */
+    /* could also drop table size back down to HT_INIT_SIZE */
 }
 
 
