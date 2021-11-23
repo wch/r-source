@@ -132,7 +132,7 @@
 
   Leading and trailing white space in \code{\var{value}} are stripped.
   \code{\var{value}} is then processed in a similar way to a Unix shell:
-  in particular (single or double) quotes not preceeded by backslash
+  in particular (single or double) quotes not preceded by backslash
   are removed and backslashes are removed except inside such quotes.
 
   For readability and future compatibility it is recommended to only use

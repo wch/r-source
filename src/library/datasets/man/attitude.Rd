@@ -25,7 +25,7 @@
     X[3] \tab learning \tab numeric  \tab Opportunity to learn \cr
     X[4] \tab raises   \tab numeric  \tab Raises based on performance \cr
     X[5] \tab critical \tab numeric  \tab Too critical \cr
-    X[6] \tab advancel \tab numeric  \tab Advancement}
+    X[6] \tab advance  \tab numeric  \tab Advancement}
 }
 \source{
   Chatterjee, S. and Price, B. (1977)
