@@ -56,7 +56,7 @@ is.hashtab(x)
   arbitrary objects. Like environments, and unlike named lists and most
   other objects in R, hash tables are mutable.
 
-  New hash tables are created by \code{maphash}.  Two variants are
+  New hash tables are created by \code{hashtab}.  Two variants are
   available: keys can be considered to match if they are
   \code{\link{identical}()} (\code{type = "identical"}, the default), or
   if their addresses in memory are equal (\code{type = "address"}). The
