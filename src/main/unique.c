@@ -2315,7 +2315,7 @@ static R_INLINE SEXP INC_NMD(SEXP x) {
 #define HT_TYPE(h) (INTEGER(HT_META(h))[1])
 
 #define HT_IS_VALID(h) (R_ExternalPtrAddr(HT_SEXP(h)) != NULL)
-#define HT_VALIDATE(h) R_SetExternalPtrAddr(HT_SEXP(h), R_GlobalEnv)
+#define HT_VALIDATE(h) R_SetExternalPtrAddr(HT_SEXP(h), HT_SEXP(h))
 
 static R_INLINE int HT_HASH(R_hashtab_t h, SEXP key)
 {
@@ -2392,7 +2392,9 @@ R_hashtab_t R_mkhashtab(int type)
     }
     SEXP table = PROTECT(allocVector(VECSXP, HT_INIT_SIZE));
     SEXP meta = PROTECT(allocVector(INTSXP, HT_META_SIZE));
-    R_hashtab_t val = { .cell = R_MakeExternalPtr(R_GlobalEnv, meta, table) };
+    R_hashtab_t val = { .cell = R_MakeExternalPtr(NULL, meta, table) };
+    HT_VALIDATE(val);
+    HT_COUNT(val) = 0;
     HT_TYPE(val) = type;
     UNPROTECT(2); /* table, meta */
     return val;
