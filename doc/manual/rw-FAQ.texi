@@ -56,6 +56,7 @@ B. D. Ripley and D. J. Murdoch              @*
 
 
 @node Top, Introduction, (dir), (dir)
+@top R for Windows FAQ
 
 @menu
 * Introduction::                
