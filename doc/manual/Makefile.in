@@ -459,13 +459,15 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION $(srcdir)/Rman.css
 	@echo "making rw-FAQ.html"
-	@$(SED) $(SEDVER) $< | \
-	  $(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ 
+	@$(SED) $(SEDVER) $< > tmp.texi
+	@$(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ tmp.texi
+	@rm -f tmp.texi
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
-	@$(SED) $(SEDVER) $< | \
-	  $(TEXI2ANY) --no-headers --number-sections -o $@
+	@$(SED) $(SEDVER) $< > tmp.texi
+	@$(TEXI2ANY) --no-headers --number-sections -o $@ tmp.texi
+	@rm -f tmp.texi
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
