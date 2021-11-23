@@ -123,7 +123,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{\link{windows.options}}.  For example, a 13.3 inch 1280x800
   screen (a typical laptop display) was reported as 96 dpi even though
   it is physically about 114 dpi.  These arguments may also be useful
-  to match the scale of output to the size of a metafile (which otherise
+  to match the scale of output to the size of a metafile (which otherwise
   depends on the system being configured accurately).
 
   The different colours need to be distinguished carefully.  Areas
