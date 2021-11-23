@@ -139,6 +139,13 @@ h1[["ABC", nomatch = 77]]
 h1[["ABC"]] <- "DEF"
 h1[["ABC"]]
 
+## Integers and real numbers that are equal are considered different
+## (not identical) as keys:
+identical(3, 3L)
+sethash(h1, 3L, "DEF")
+gethash(h1, 3L)
+gethash(h1, 3)
+
 ## Two variables can refer to the same hash table.
 h2 <- h1
 identical(h1, h2)
