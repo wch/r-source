@@ -794,7 +794,7 @@ install.packages <-
             if(tlim > 0) {
                 if(nzchar(timeout <- Sys.which("timeout"))) {
                     ## SIGINT works better and is used for system.
-                    tlim_cmd <- c(shQuote(timeout), "--signal=INT", tlim)
+                    tlim_cmd <- c(shQuote(timeout), "-s INT", tlim)
                 } else
                     warning("timeouts for parallel installs require the 'timeout' command")
             }
