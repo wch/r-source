@@ -66,3 +66,5 @@ print.hashtab <- function(x, ...) {
 
 as.environment.hashtab <- function(x)
     stop("invalid object for 'as.environment'")
+
+length.hashtab <- function(x) numhash(x)

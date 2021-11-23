@@ -37,6 +37,7 @@ is.hashtab(x)
 \method{[[}{hashtab}(h, key, \dots) <- value
 \method{print}{hashtab}(x, \dots)
 \method{format}{hashtab}(x, \dots)
+\method{length}{hashtab}
 }
 \arguments{
   \item{type}{Character string specifying the hash table type.}
@@ -108,9 +109,10 @@ is.hashtab(x)
   same as the one used internally by \code{\link{duplicated}} and
   \code{\link{unique}}.
 
-  As an experimental feature the element operator \code{[[} can also be
-  used get or set hash table entries. It is not yet clear whether this
-  is a good idea.
+  As an experimental feature, the element operator \code{[[} can also be
+  used get or set hash table entries and \code{length} can be used to
+  obtain the number of entries.  It is not yet clear whether this is a
+  good idea.
 }
 
 \examples{
