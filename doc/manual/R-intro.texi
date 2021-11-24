@@ -2522,15 +2522,9 @@ factors, numeric matrices, lists, or other data frames.
 Matrices, lists, and data frames provide as many variables to the new
 data frame as they have columns, elements, or variables, respectively.
 @item
-Numeric vectors, logicals and factors are included as is, and by
-default@footnote{Conversion of character columns to factors is
-overridden using the @code{stringsAsFactors} argument to the
-@code{data.frame()} function.} character vectors are coerced to be
-factors, whose levels are the unique values appearing in the vector.
-@item
 Vector structures appearing as variables of the data frame must all have
-the @emph{same length}, and matrix structures must all have the same
-@emph{row size}.
+the @emph{same length}, and matrix structures must all have the
+@emph{same number of rows}.
 @end itemize
 
 A data frame may for many purposes be regarded as a matrix with columns
@@ -2781,7 +2775,7 @@ to be read as a data frame might look as follows.
 
 By default numeric items (except row labels) are read as numeric
 variables and non-numeric variables, such as @code{Cent.heat} in the
-example, as factors.  This can be changed if necessary.
+example, as character variables.  This can be changed if necessary.
 
 The function @code{read.table()} can then be used to read the data frame
 directly
