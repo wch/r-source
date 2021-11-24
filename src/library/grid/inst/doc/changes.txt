@@ -42,6 +42,11 @@ Changes from grid_4.1.* to grid_4.2.0:
 9.  Stricter rules to disallow pattern, clipping path, mask, group, or
     path within clipping path or path.
 
+10. Fix for replayPlot() of an "empty" 'grid' "plot"
+    (where recordPlot() was called with 'grid' loaded, 
+     but with no 'grid' drawing performed).
+
+    Bug 18237 (Thanks to Kevin Ushey for bug report).
 
 
 Changes from grid_4.0.* to grid_4.1.0:

@@ -390,12 +390,18 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
              */
             if (!isNull(gridState) && !isNull(VECTOR_ELT(gridState, 0))) {
                 int dlIndex = INTEGER(VECTOR_ELT(gridState, 1))[0];
-                if (dlIndex > 0) {
+                /* If 'grid' is loaded, but there has been no drawing,
+                 * the 'grid' DL will just consist of the ROOT viewport.
+                 * In that case, we want any 'grid' call to "dirty" the
+                 * device (in the 'grid' sense) and initialise 'grid'
+                 * (initVP(), initGPar(), etc)
+                 */
+                if (dlIndex > 1) {
                     /*
                      * Dirty the device, in a 'grid' sense, 
                      * (in case this is first 'grid' drawing on device) 
-                     * to stop first element on 'grid' DL
-                     * (which will be a call to L_gridDirty()) 
+                     * to stop first element on graphics engine DL
+                     * (which will trigger a call to L_gridDirty()) 
                      * from resetting the 'grid' DL.
                      * This will have the side effect of stopping L_gridDirty()
                      * from starting a new page (if the device is clean)
