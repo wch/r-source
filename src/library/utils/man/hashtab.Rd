@@ -37,7 +37,7 @@ is.hashtab(x)
 \method{[[}{hashtab}(h, key, \dots) <- value
 \method{print}{hashtab}(x, \dots)
 \method{format}{hashtab}(x, \dots)
-\method{length}{hashtab}
+\method{length}{hashtab}(x)
 }
 \arguments{
   \item{type}{Character string specifying the hash table type.}
