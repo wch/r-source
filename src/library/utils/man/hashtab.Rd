@@ -110,8 +110,8 @@ is.hashtab(x)
   \code{\link{unique}}.
 
   As an experimental feature, the element operator \code{[[} can also be
-  used get or set hash table entries and \code{length} can be used to
-  obtain the number of entries.  It is not yet clear whether this is a
+  used get or set hash table entries, and \code{length} can be used to
+  obtain the number of entries. It is not yet clear whether this is a
   good idea.
 }
 
