@@ -3211,6 +3211,8 @@ bquote(2 * .(quote(if (TRUE) 2 else 3)) / 4)
 ## From Suharto. Failed `left` state wasn't properly forwarded across operators
 bquote(1 + ++.(quote(if (TRUE) 2)) + 3)
 bquote(1^- .  (quote(if (TRUE) 2)) + 3)
+## (found when fiddling w/ cases below):
+quote(`-`(1 + if(L) 2, 3+4))# wrongly was  1 + if (L) 2 - (3 + 4)
 ##
 ##__ All the following were ok in R <= 4.1.x already __
 bquote(1 + .(quote(if (TRUE) 2)) ^ 3) # already correct previously
@@ -3229,6 +3231,26 @@ quote(1^-2 + 3)
 quote(A + ~B + C ~ D) # no parens
 ## 'simple' binary op
 quote(a$"b")
+## When cflow body is burried deeply through the right, don't rewrap
+## unnecessarily. There should be only one set of parentheses.
+## Cases where R-devel 81211 still gave unneeded parens:
+quote(`^`(1 + if(L) 2, 3))
+quote(`*`(1 - if(L) 2 else 22, 3))
+quote(`^`(1 + repeat 2, 3))
+quote(`*`(1 + repeat 2, 3))
+quote(`=`(1 + repeat 2, 3))# *no* parens in R <= 4.1.x
+quote(`=`(1 + `+`(2, repeat 3), 4))
+quote(`+`(`<-`(1, `=`(2, repeat 3)), 4)) # (1 <- (2 = ..
+quote(`+`(`:`(1, `=`(2, repeat 3)), 4))
+## No parentheses when the cflow form is trailing
+quote(1 + +repeat 2)
+quote(`<-`(1, +repeat 2))
+quote(1^+repeat 2)
+quote(`$`(1, +repeat 2))
+## More cases where parens are needed
+quote(`^`(`+`(repeat 1, 2), 3))
+quote(`+`(`+`(repeat 1, 2), 3))
+quote(`+`(`+`(`+`(repeat 1, repeat 2), repeat 3), 4))
 ##__ end { all fine in older R }
 
 ## Unary operators are parenthesised if needed; print the same:
@@ -3244,3 +3266,7 @@ quote(`$`(1, 2, 3)) # was 1$2
 quote(`$`(1, NA_character_)) # was 1$NA_char..
 quote(`$`(1, if(L) 2))   # was 1$if (L) 2
 quote(`$`(`$`(1, if(L) 2), 3))
+## No parens because prefix form
+quote(`$`(1 + repeat 2, 3))
+quote(`=`(`$`(1, `$`(2, repeat 3)), 4))
+## these were really bad in  R <= 4.1.x

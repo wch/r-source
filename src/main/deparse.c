@@ -1303,7 +1303,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    	print2buff("(", d);
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = 1;
+		    d->left = !parens;
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1312,7 +1312,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(" ", d);
 		    if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			print2buff("(", d);
-		    d->left = prevLeft;
+		    d->left = prevLeft && !parens;
 		    deparse2buff(CADR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1324,9 +1324,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_DOLLAR:
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = 1;
+		    d->left = !parens;
 		    deparse2buff(CAR(s), d);
-		    d->left = prevLeft;
 		    if (parens)
 			print2buff(")", d);
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
@@ -1337,6 +1336,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    else {
 			if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			    print2buff("(", d);
+			d->left = prevLeft && !parens;
 			deparse2buff(CADR(s), d);
 			if (parens)
 			    print2buff(")", d);
@@ -1346,9 +1346,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_BINARY:
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = 1;
+		    d->left = !parens;
 		    deparse2buff(CAR(s), d);
-		    d->left = prevLeft;
 		    if (parens)
 			print2buff(")", d);
 		    print2buff(" ", d);
@@ -1358,6 +1357,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
 		    if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			print2buff("(", d);
+		    d->left = prevLeft && !parens;
 		    deparse2buff(CADR(s), d);
 		    if (parens)
 			print2buff(")", d);
@@ -1370,15 +1370,15 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_BINARY2:	/* no space between op and args */
 		    if ((parens = needsparens(fop, CAR(s), 1, prevLeft)))
 			print2buff("(", d);
-		    d->left = 1;
+		    d->left = !parens;
 		    deparse2buff(CAR(s), d);
-		    d->left = prevLeft;
 		    if (parens)
 			print2buff(")", d);
 
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    if ((parens = needsparens(fop, CADR(s), 0, prevLeft)))
 			print2buff("(", d);
+		    d->left = prevLeft && !parens;
 		    deparse2buff(CADR(s), d);
 		    if (parens)
 			print2buff(")", d);
