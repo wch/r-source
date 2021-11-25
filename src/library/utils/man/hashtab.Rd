@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{hashtab}
+\title{Hash Tables (Experimental)}
 \alias{hashtab}
 \alias{gethash}
 \alias{sethash}
@@ -17,9 +18,8 @@
 \alias{[[<-.hashtab}
 \alias{print.hashtab}
 \alias{format.hashtab}
-\title{
-  Hash Tables (Experimental)
-}
+\alias{length.hashtab}
+\alias{str.hashtab}
 \description{
   Create and manipulate mutable hash tables.
 }
@@ -38,24 +38,27 @@ is.hashtab(x)
 \method{print}{hashtab}(x, \dots)
 \method{format}{hashtab}(x, \dots)
 \method{length}{hashtab}(x)
+\method{str}{hashtab}(object, \dots)
 }
 \arguments{
-  \item{type}{Character string specifying the hash table type.}
-  \item{h}{A hash table.}
-  \item{key}{An R object to use as a key.}
-  \item{nomatch}{Value to return if \code{key} does not match.}
-  \item{value}{New value to associate with \code{key}.}
-  \item{FUN}{A function of two arguments, the key and the value, to call
+  \item{type}{\code{\link{character}} string specifying the hash table type.}
+  \item{h, object}{a hash table.}
+  \item{key}{an \R object to use as a key.}
+  \item{nomatch}{value to return if \code{key} does not match.}
+  \item{value}{new value to associate with \code{key}.}
+  \item{FUN}{a \code{\link{function}} of two arguments, the key and the value, to call
     for each entry.}
-  \item{x}{Object to be tested, printed, or formatted.}
-  \item{\dots}{Additional arguments.}
+  \item{x}{object to be tested, printed, or formatted.}
+  \item{\dots}{additional arguments.}
 }
 
 \details{
   Hash tables are a data structure for efficiently associating keys with
-  values.  Hash tables are similar to environments, but keys can be
+  values.  Hash tables are similar to \code{\link{environment}}s, but keys can be
   arbitrary objects. Like environments, and unlike named lists and most
-  other objects in R, hash tables are mutable.
+  other objects in R, hash tables are mutable, i.e., they are \emph{not}
+  copied when modified and assignment means just giving a new name to the
+  same object.
 
   New hash tables are created by \code{hashtab}.  Two variants are
   available: keys can be considered to match if they are
@@ -151,10 +154,24 @@ gethash(h1, 3)
 ## Two variables can refer to the same hash table.
 h2 <- h1
 identical(h1, h2)
+## set in one, see in the "other"  <==> really one object with 2 names
 sethash(h2, NULL, 77)
 gethash(h1, NULL)
+str(h1)
 
+## An example of using  maphash():  get all hashkeys of a hash table:
+hashkeys <- function(h) {
+  val <- vector("list", numhash(h))
+  idx <- 0
+  maphash(h, function(k, v) { idx <<- idx + 1
+                              val[idx] <<- list(k) })
+  val
 }
+
+kList <- hashkeys(h1)
+str(kList) # the *order* is "arbitrary" & cannot be "known"
+}
+
 \keyword{data}
 \keyword{programming}
 \keyword{utilities}

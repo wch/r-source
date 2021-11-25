@@ -68,3 +68,9 @@ as.environment.hashtab <- function(x)
     stop("invalid object for 'as.environment'")
 
 length.hashtab <- function(x) numhash(x)
+
+str.hashtab <- function(object, ...) cat(format(object, ...), "\n")
+## or rather
+str.hashtab <- function(object, ...) 
+    cat(sprintf("class 'hashtab': %d entries; type=\"%s\", addr=%s",
+                numhash(object), typhash(object), format(unclass(object)[[1]])), "\n")
