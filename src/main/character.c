@@ -674,7 +674,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    ss = CHAR(el);
 	    slen = strlen(ss);
 	    if (start < 1) start = 1;
-	    if (stop > slen) stop = (int) slen; /* SBCS optimization */
+	    if (stop > (int) slen) stop = (int) slen; /* SBCS optimization */
 	    if (start > stop) {
 		/* just copy element across */
 		SET_STRING_ELT(s, i, STRING_ELT(x, i));

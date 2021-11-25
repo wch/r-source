@@ -13,7 +13,7 @@
       GUIs.)
     }
   }
-    
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Initialization of self-starting models with pre-R-4.1.0 API
@@ -23,6 +23,10 @@
       \item Fixed quoting of \code{~autodetect~} in Java setting defaults
       to avoid inadvertent user lookup due to leading \code{~}, reported
       in \PR{18231} by Harold Gutch.
+
+      \item \code{substr(., start, stop) <- v} now treats \emph{negative}
+      \code{stop} values correctly.  Reported with a patch in \PR{18228} by
+      Brodie Gaslam.
     }
   }
 }
