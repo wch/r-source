@@ -11,9 +11,18 @@
 \description{
   For each file in the \file{R} directory (including system-specific
   subdirectories) of a package, extract the unique arguments passed
-  to \code{\link{stop}}, \code{\link{warning}}, \code{\link{message}},
-  \code{\link{gettext}} and \code{\link{gettextf}}, or to
-  \code{\link{ngettext}}.
+  to these \dQuote{message generating} calls;
+  \describe{
+    \item{for \code{xgettext()}:}{% see c("warning", "stop", ..) in ../R/xgettext.R :
+      to \code{\link{stop}}, \code{\link{warning}}, \code{\link{message}},
+      \code{\link{packageStartupMessage}}, \code{\link{gettext}} and
+      \code{\link{gettextf}},}
+
+    \item{for \code{xngettext()}:}{
+      to \code{\link{ngettext}}.}
+  }
+
+  \code{xgettext2pot()} calls both \code{xgettext()} and then \code{xngettext()}.
 }
 \usage{
 xgettext(dir, verbose = FALSE, asCall = TRUE)
@@ -38,10 +47,11 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
     \R, and \code{bugs} to \code{"bugs.r-project.org"}.}
 }
 \details{
-  Leading and trailing white space (space, tab and linefeed) is removed
-  for calls to \code{gettext}, \code{gettextf}, \code{stop},
-  \code{warning}, and \code{message}, as it is by the internal code that
-  passes strings for translation.
+  Leading and trailing white space (space, tab and linefeed
+  (aka newline, i.e., \code{\n})) is removed
+  for all the calls extracted by \code{xgettext()}, see
+  \sQuote{Description} above,
+  as it is by the internal code that passes strings for translation.
 
   We look to see if the matched functions were called with
   \code{domain = NA}.  If so, when \code{asCall} is true, the whole call
