@@ -1,6 +1,6 @@
 % File src/library/base/man/expression.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{expression}
@@ -10,7 +10,7 @@
 \alias{as.expression.default}
 \title{Unevaluated Expressions}
 \description{
-  Creates or tests for objects of mode \code{"expression"}.
+  Creates or tests for objects of mode and class \code{"expression"}.
 }
 \usage{
 expression(\dots)
@@ -53,8 +53,10 @@ as.expression(x, \dots)
   \code{\link{as.symbol}}) and pairlists are returned as the element of
   a length-one expression vector.  Atomic vectors are placed
   element-by-element into an expression vector (without using any
-  names): lists are changed type to an expression vector (keeping all
-  attributes).  Other types are not currently supported.
+  names): \code{\link{list}}s have their type (\code{\link{typeof}})
+  changed to an expression vector
+  (keeping all attributes).
+  Other types are not currently supported.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -66,8 +68,7 @@ as.expression(x, \dots)
   \code{\link{eval}},
   \code{\link{function}}.
   Further,
-  \code{\link{text}} and
-  \code{\link{legend}}
+  \code{\link{text}}, \code{\link{legend}}, and \code{\link{plotmath}}
   for plotting mathematical expressions.
 }
 \examples{
