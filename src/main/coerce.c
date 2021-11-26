@@ -1527,8 +1527,16 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    CLEAR_ATTRIB(ans);
 	    return ans;
 	case EXPRSXP:
-	case VECSXP:
 	    return x;
+	case VECSXP:
+	    if(ATTRIB(x) == R_NilValue) return x;
+	    SEXP nms = getAttrib(x, R_NamesSymbol);
+	    if(nms != R_NilValue && CDR(ATTRIB(x)) == R_NilValue) return x;
+	    ans = MAYBE_REFERENCED(x) ? duplicate(x) : x;
+	    CLEAR_ATTRIB(ans);
+	    if (nms != R_NilValue)
+		setAttrib(ans, R_NamesSymbol, nms);
+	    return ans;
 	default:
 	    ;
 	}
