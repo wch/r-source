@@ -2765,12 +2765,12 @@ columns named @code{a} and @code{b}).
 @node Why does the help.start() search engine not work?, Why did my .Rprofile stop working when I updated R?, How can I sort the rows of a data frame?, R Miscellanea
 @section Why does the help.start() search engine not work?
 
-Since @R{} 2.10.0, the browser-based search engine in
-@code{help.start()} is an @HTML{} interface to @code{help.search()}, and
-should always work.  Before that, the engine utilized a Java applet.  In
-order for this to function properly, one needed a compatible version of
-Java installed on the system and linked to the browser, and both Java
-@emph{and} JavaScript enabled in the browser.
+Since R 2.10.0, the browser-based search engine in @code{help.start()}
+is an @HTML{} interface to @code{help.search()}, and should always work.
+Before that, the engine utilized a Java applet.  In order for this to
+function properly, one needed a compatible version of Java installed on
+the system and linked to the browser, and both Java @emph{and}
+JavaScript enabled in the browser.
 
 @node Why did my .Rprofile stop working when I updated R?, Where have all the methods gone?, Why does the help.start() search engine not work?, R Miscellanea
 @section Why did my .Rprofile stop working when I updated R?
