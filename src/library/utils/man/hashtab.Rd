@@ -168,8 +168,10 @@ hashkeys <- function(h) {
   val
 }
 
+## IGNORE_RDIFF_BEGIN
 kList <- hashkeys(h1)
 str(kList) # the *order* is "arbitrary" & cannot be "known"
+## IGNORE_RDIFF_END
 }
 
 \keyword{data}
