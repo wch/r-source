@@ -467,18 +467,20 @@ function(formula, data, subset, na.action, ...)
         g <- factor(mf[[-response]])
         if(nlevels(g) != 2L)
             stop("grouping factor must have exactly 2 levels")
-        DATA <- setNames(split(mf[[response]], g), c("x", "y"))
-        y <- do.call(wilcox.test, c(DATA, list(...)))
+        DATA <- split(mf[[response]], g)
+        ## Call the default method.
+        y <- wilcox.test(x = DATA[[1L]], y = DATA[[2L]], ...)
     }
     else { # 1-sample and paired tests
         respVar <- mf[[response]]
         if (inherits(respVar, "Pair")){
-            DATA <- list(x = respVar[,1], y = respVar[,2], paired=TRUE)
-            y <- do.call(wilcox.test, c(DATA, list(...)))
+            ## Call the default method.
+            y <- wilcox.test(x = respVar[, 1L], y = respVar[, 2L],
+                             paired = TRUE, ...)
         }
         else {
-            DATA <- list(x = respVar)
-            y <- do.call(wilcox.test, c(DATA, list(...)))
+            ## Call the default method.
+            y <- wilcox.test(x = respVar, ...)
         }
     }
     y$data.name <- DNAME

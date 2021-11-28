@@ -88,8 +88,8 @@ function(formula, data, subset, na.action, ...)
     if(length(mf) != 2L)
         stop("'formula' should be of the form response ~ group")
     DNAME <- paste(names(mf), collapse = " by ")
-    names(mf) <- NULL
-    y <- do.call(bartlett.test, as.list(mf))
+    ## Call the default method.
+    y <- bartlett.test(x = mf[[1L]], g = mf[[2L]])
     y$data.name <- DNAME
     y
 }

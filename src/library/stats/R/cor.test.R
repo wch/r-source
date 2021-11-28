@@ -216,8 +216,8 @@ function(formula, data, subset, na.action, ...)
     if(length(mf) != 2L)
         stop("invalid formula")
     DNAME <- paste(names(mf), collapse = " and ")
-    names(mf) <- c("x", "y")
-    y <- do.call(cor.test, c(mf, list(...)))
+    ## Call the default method.    
+    y <- cor.test(x = mf[[1L]], y = mf[[2L]], ...)
     y$data.name <- DNAME
     y
 }
