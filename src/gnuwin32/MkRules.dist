@@ -124,7 +124,18 @@
 
 # additional optimization flags (e.g. -mtune=native for a private build)
 # set in MkRules.rules but can be overridden here.
-# EOPTS = -mfpmath=sse -msse2 -mstackrealign -fno-reorder-blocks-and-partition $(LTO)
+#
+# -mstackrealign is used to avoid traps due to misaligned addresses with
+#   SSE2 (seen on 32-bit builds, probably not needed on 64-bit builds)
+#
+# -fno-reorder-blocks-and-partition works as a workaround for invalid unwind
+#   information, otherwise causing crashes on long jumps; however, it
+#   produces large amount of spurious notes with GCC optimization pragmas
+#
+# -fexceptions is an alternative workaround for invalid unwind information,
+#   though produces larger code
+#
+# EOPTS = -mfpmath=sse -msse2 -mstackrealign -fexceptions $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
 # set in MkRules.rules (assuming support) but can be overridden here.
