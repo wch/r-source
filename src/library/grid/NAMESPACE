@@ -96,6 +96,9 @@ export(
        "strokeGrob", "grid.stroke",
        "fillGrob", "grid.fill",
        "fillStrokeGrob", "grid.fillStroke",
+
+       # Masks
+       "as.mask",
     
        # Listing grobs and viewports
        "grid.ls",

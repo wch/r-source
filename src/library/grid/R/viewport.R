@@ -97,7 +97,9 @@ valid.viewport <- function(x, y, width, height, just,
       }
   }
   if (!is.logical(mask)) {
-      if (is.grob(mask)) {
+      if (isMask(mask)) {
+          ## Do nothing
+      } else if (is.grob(mask)) {
           mask <- createMask(mask)
       } else {
           mask <- switch(as.character(mask),

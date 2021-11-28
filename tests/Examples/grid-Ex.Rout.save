@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-10-25 r81105) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-11-24 r81238) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -78,6 +78,35 @@ $type
 
 attr(,"class")
 [1] "arrow"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("as.mask")
+> ### * as.mask
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: as.mask
+> ### Title: Define a Soft Mask
+> ### Aliases: as.mask
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ## NOTE: on devices without support for masks normal line segments 
+> ##       will be drawn
+> grid.newpage()
+> ## Alpha mask
+> grid.segments(y0=1, y1=0, gp=gpar(col=2, lwd=100))
+> pushViewport(viewport(mask=circleGrob(gp=gpar(fill=rgb(0,0,0,.5)))))
+> grid.segments(gp=gpar(col=3, lwd=100))
+> grid.newpage()
+> ## Luminance mask
+> grid.segments(y0=1, y1=0, gp=gpar(col=2, lwd=100))
+> pushViewport(viewport(mask=as.mask(circleGrob(gp=gpar(fill="grey50")),
++                                    "luminance")))
+> grid.segments(gp=gpar(col=3, lwd=100))
 > 
 > 
 > 
@@ -182,12 +211,12 @@ attr(,"class")
 +   just="left", name="C"))
 > pushViewport(viewport(width=0.8, height=0.8, name="D"))
 > current.vpPath()
-GRID.VP.65::A::C::D 
+GRID.VP.69::A::C::D 
 > upViewport(1)
 > current.vpPath()
-GRID.VP.65::A::C 
+GRID.VP.69::A::C 
 > current.vpTree()
-viewport[ROOT]->(viewport[GRID.VP.65]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
+viewport[ROOT]->(viewport[GRID.VP.69]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
 > current.viewport()
 viewport[C] 
 > current.vpTree(all=FALSE)
@@ -357,9 +386,9 @@ g1::g2
 > 
 > grid.grill()
 > getNames()
-[1] "GRID.text.171"     "GRID.rect.172"     "GRID.circle.173"  
-[4] "GRID.circle.174"   "GRID.rect.175"     "GRID.rect.176"    
-[7] "GRID.segments.177" "GRID.segments.178"
+[1] "GRID.text.179"     "GRID.rect.180"     "GRID.circle.181"  
+[4] "GRID.circle.182"   "GRID.rect.183"     "GRID.rect.184"    
+[7] "GRID.segments.185" "GRID.segments.186"
 > 
 > 
 > 
@@ -747,12 +776,12 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > # Draw xaxis
 > grid.xaxis(name="xax")
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
 > # Force xaxis
 > grid.force()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
   major
   ticks
@@ -760,51 +789,51 @@ xax
 > # Revert xaxis
 > grid.revert()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
 > # Draw and force yaxis
 > grid.force(yaxisGrob(), draw=TRUE)
-forcedgrob[GRID.yaxis.254] 
+forcedgrob[GRID.yaxis.262] 
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
-GRID.yaxis.254
+GRID.yaxis.262
   major
   ticks
   labels
 > # Revert yaxis
 > grid.revert()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
-GRID.yaxis.254
+GRID.yaxis.262
 > # Force JUST xaxis
 > grid.force("xax")
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
   major
   ticks
   labels
-GRID.yaxis.254
+GRID.yaxis.262
 > # Force ALL
 > grid.force()
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
   major
   ticks
   labels
-GRID.yaxis.254
+GRID.yaxis.262
   major
   ticks
   labels
 > # Revert JUST xaxis
 > grid.revert("xax")
 > grid.ls()
-GRID.text.253
+GRID.text.261
 xax
-GRID.yaxis.254
+GRID.yaxis.262
   major
   ticks
   labels
@@ -2407,7 +2436,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.924 0.012 1.936 0 0 
+Time elapsed:  2.212 0.024 2.232 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -6526,7 +6526,7 @@ static void addToMask(char* str, PDFDesc *pd)
     catDefn(str, pd->appendingMask, pd);
 }
 
-static int newMask(SEXP path, PDFDesc *pd)
+static int newMask(SEXP mask, PDFDesc *pd)
 {
     SEXP R_fcall;
     int mainMask;
@@ -6553,8 +6553,8 @@ static int newMask(SEXP path, PDFDesc *pd)
     /* Invalidate current settings so mask enforces its settings */
     PDF_Invalidate(pd);
 
-    /* Evaluate the path function to generate the mask */
-    R_fcall = PROTECT(lang1(path));
+    /* Evaluate the mask function to generate the mask */
+    R_fcall = PROTECT(lang1(mask));
     eval(R_fcall, R_GlobalEnv);
     UNPROTECT(1);
 
@@ -6578,8 +6578,14 @@ static int newMask(SEXP path, PDFDesc *pd)
      */
     catDefn(" 0 obj\n<<\n/Type /ExtGState\n/AIS false\n/SMask\n<<\n",
             defNum, pd);
-    catDefn("/Type /Mask\n/S /Alpha\n/G",
-            defNum, pd);
+    switch(R_GE_maskType(mask)) {
+    case R_GE_alphaMask:
+        catDefn("/Type /Mask\n/S /Alpha\n/G", defNum, pd);
+        break;
+    case R_GE_luminanceMask:
+        catDefn("/Type /Mask\n/S /Luminosity\n/G", defNum, pd);
+        break;
+    }
     /* Mask definition completed when definition written
      * to file (PDF_endfile)
      */

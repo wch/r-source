@@ -59,7 +59,8 @@ vpTree(parent, children)
     or the result of a call to \code{\link{as.path}}.}
   \item{mask}{One of \code{"none"} (or \code{FALSE})
     or \code{"inherit"} (or \code{TRUE}) 
-    or a grob (or a gTree).  This specifies that the viewport
+    or a grob (or a gTree) or the result of call to
+    \code{\link{as.mask}}.  This specifies that the viewport
     should have no mask, or it should inherit the mask of its parent,
     or it should have its own mask, as described by the grob.}
   \item{xscale}{A numeric vector of length two indicating the minimum and

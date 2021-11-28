@@ -27,7 +27,7 @@ export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks,
        topo.colors, trans3d, Type1Font, .axisPars,
        xfig, xyTable, xy.coords, xyz.coords,
 
-       .linearGradientPattern, .radialGradientPattern,
+       .linearGradientPattern, .mask, .radialGradientPattern,
        .clipPath, .setClipPath, .setMask, .setPattern, .tilingPattern,
        .defineGroup, .useGroup, .devUp, .ruleIndex)
 

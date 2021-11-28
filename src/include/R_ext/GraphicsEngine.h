@@ -617,7 +617,7 @@ int R_GE_tilingPatternExtend(SEXP pattern);
 #define R_GE_compositeExclusion 25
 
 /* Path rules */
-/* Must match order in ../library/grid/R/path.R */
+/* Must match order in ../library/grDevices/R/path.R */
 #define R_GE_nonZeroWindingRule 1
 #define R_GE_evenOddRule        2
 
@@ -626,6 +626,13 @@ int R_GE_clipPathFillRule(SEXP path);
 void GEStroke(SEXP path, const pGEcontext gc, pGEDevDesc dd);
 void GEFill(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
 void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
+
+/* Mask types */
+/* Must match order in ../library/grDevices/R/mask.R */
+#define R_GE_alphaMask     1
+#define R_GE_luminanceMask 2
+
+int R_GE_maskType(SEXP mask);
 
 #ifdef __cplusplus
 }
