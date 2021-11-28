@@ -5542,6 +5542,21 @@ f2 <- function(x) {
 stopifnot(identical(unlist(lapply(1:3, f2)), 1:3))
 
 
+## checking is.vector(as.vector(.)) for lists and expressions
+L0 <- list(a = quote(a+b), b = quote(B^2))
+L <- structure(L0, foo = "bar")
+E <- as.expression(L)
+stopifnot(exprs = {
+    identical(E, as.expression(L))
+    identical(L, as.list(E))
+    identical(vL <- as.vector(L), L0)
+    is.vector(vL)
+    identical(vE <- as.vector(E), as.expression(L0))
+    is.vector(vE)
+})
+## is.vector(.) gave FALSE, as "foo" attribute was kept
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
