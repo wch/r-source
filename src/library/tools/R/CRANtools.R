@@ -55,7 +55,9 @@ function(packages, results = NULL, details = NULL, issues = NULL)
 
     summarize_results <- function(p, r) {
         if(!NROW(r)) return(character())
-        tab <- table(r$Status)[c("FAIL", "ERROR", "WARN", "NOTE", "OK")]
+        ## <FIXME WARNING_and_FAILURE>        
+        tab <- table(r$Status)[c("FAILURE", "ERROR", "WARNING", "NOTE", "OK")]
+        ## </FIXME>
         tab <- tab[!is.na(tab)]
         paste(c(sprintf("Current CRAN status: %s",
                         paste(sprintf("%s: %s", names(tab), tab),
