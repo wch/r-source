@@ -494,6 +494,8 @@ a subscript out of bounds error.  */
 /*
   Called from `[`   VectorSubset()    ./subset.c	and
               `[<-` VectorSubassign() ./subassign.c
+
+  only if(isMatrix(s) && isArray(x) && ncols(s) == "length(dim(x))"),
   where dnamelist = PROTECT(GetArrayDimnames(x))
  */
 SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call, SEXP x)
@@ -511,7 +513,7 @@ SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call, SEXP x)
 	       nr, nc);
 #endif
     }
-#ifdef more_picky_not_yet
+#if 0 /* unneeded as only called  if (length(dnamelist) == nc) : */
     if(length(dnamelist) != nc) {
 	ECALL4(call,
           _("subscripting by character matrix of %d columns does not match length(dimnames(x)) == %d"),

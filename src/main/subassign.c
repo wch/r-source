@@ -595,11 +595,6 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
 
 static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 {
-    SEXP indx, newnames;
-    R_xlen_t i, ii, n, nx, ny, iny;
-    int which;
-    R_xlen_t stretch;
-
     /* try for quick return for simple scalar case */
     if (ATTRIB(s) == R_NilValue) {
 	if (TYPEOF(x) == REALSXP && IS_SCALAR(y, REALSXP)) {
@@ -634,23 +629,24 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     if (ATTRIB(s) != R_NilValue) { /* pretest to speed up simple case */
 	SEXP dim = getAttrib(x, R_DimSymbol);
 	if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
-	    if (isString(s)) {
+	    Rboolean string_s = isString(s);
+	    if (string_s) {
 		SEXP dnames = PROTECT(GetArrayDimnames(x));
 		s = strmat2intmat(s, dnames, call, x);
 		UNPROTECT(2); /* dnames, s */
 		PROTECT(s);
 	    }
-	    if (isInteger(s) || isReal(s)) {
-		s = mat2indsub(dim, s, R_NilValue, x);
+	    if (isInteger(s) || isReal(s)) { // not using call: when coming from string case
+		s = mat2indsub(dim, s, (string_s ? R_NilValue : call), x);
 		UNPROTECT(1);
 		PROTECT(s);
 	    }
 	}
     }
 
-    stretch = 1;
-    PROTECT(indx = makeSubscript(x, s, &stretch, R_NilValue));
-    n = xlength(indx);
+    R_xlen_t stretch = 1;
+    SEXP indx = PROTECT(makeSubscript(x, s, &stretch, R_NilValue));
+    R_xlen_t i, ii, n = xlength(indx);
     if(xlength(y) > 1)
 	for(i = 0; i < n; i++)
 	    if(gi(indx, i) == NA_INTEGER)
@@ -659,14 +655,15 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* Here we make sure that the LHS has */
     /* been coerced into a form which can */
     /* accept elements from the RHS. */
-    which = SubassignTypeFix(&x, &y, stretch, 1, call, rho);
+    int which = SubassignTypeFix(&x, &y, stretch, 1, call, rho);
     /* = 100 * TYPEOF(x) + TYPEOF(y);*/
     if (n == 0) {
 	UNPROTECT(2);
 	return x;
     }
-    ny = xlength(y);
-    nx = xlength(x);
+    R_xlen_t
+	ny = xlength(y),
+	nx = xlength(x), iny;
 
     PROTECT(x);
 
@@ -856,7 +853,7 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* Check for additional named elements. */
     /* Note makeSubscript passes the additional names back as the use.names
        attribute (a vector list) of the generated subscript vector */
-    newnames = getAttrib(indx, R_UseNamesSymbol);
+    SEXP newnames = getAttrib(indx, R_UseNamesSymbol);
     if (newnames != R_NilValue) {
 	SEXP oldnames = getAttrib(x, R_NamesSymbol);
 	if (oldnames != R_NilValue) {
@@ -889,6 +886,7 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     return x;
 }
 
+// in ./subscript.c :
 SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 
 #define MATRIX_ASSIGN_LOOP(CODE) do {			\
