@@ -24,6 +24,7 @@
  *  vectorIndex()     -- used for "[[" and "[[<-" with a vector arg
 
  *  mat2indsub()      -- for "mat[i]"     "    "            "
+ *  strmat2intmat()   -- for "mat[<ch>]"  "    "            "
 
  *  makeSubscript()   -- for "[" and "[<-" in ./subset.c and ./subassign.c,
  *			 and "[[<-" with a scalar in ./subassign.c
@@ -44,6 +45,7 @@
 /* We might get a call with R_NilValue from subassignment code */
 #define ECALL(call, yy)     if(call == R_NilValue) error(yy);    else errorcall(call, yy);
 #define ECALL3(call, yy, A) if(call == R_NilValue) error(yy, A); else errorcall(call, yy, A);
+#define ECALL4(call, yy, A, B) if(call == R_NilValue) error(yy, A, B); else errorcall(call, yy, A, B);
 
 static void NORET ECALL_OutOfBounds(SEXP x, int subscript,
 				    R_xlen_t index, SEXP call)
@@ -489,28 +491,51 @@ array and i is a character matrix with n columns, this code converts i
 to an integer matrix by matching against the dimnames of x. NA values
 in any row of i propagate to the result.  Unmatched entries result in
 a subscript out of bounds error.  */
-
+/*
+  Called from `[`   VectorSubset()    ./subset.c	and
+              `[<-` VectorSubassign() ./subassign.c
+  where dnamelist = PROTECT(GetArrayDimnames(x))
+ */
 SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call, SEXP x)
 {
     /* XXX: assumes all args are protected */
-    int nr = nrows(s), i, j, v;
-    R_xlen_t idx, NR = nr;
-    SEXP dnames, snames, si, sicol, s_elt;
-    PROTECT(snames = allocVector(STRSXP, nr));
-    PROTECT(si = allocVector(INTSXP, xlength(s)));
-    dimgets(si, getAttrib(s, R_DimSymbol));
+    SEXP dim = getAttrib(s, R_DimSymbol);
+    int nr = INTEGER(dim)[0], // = nrow(s)
+	nc = INTEGER(dim)[1]; // = ncol(s)
+    if(isNull(dnamelist)) { // && nr > 0)
+#if 1
+	ECALL(call, _("no 'dimnames' attribute for array")); // as in  arraySubscript()
+#else
+	ECALL4(call,
+          _("%d x %d character matrix subscript illegal for NULL dimnames"),
+	       nr, nc);
+#endif
+    }
+#ifdef more_picky_not_yet
+    if(length(dnamelist) != nc) {
+	ECALL4(call,
+          _("subscripting by character matrix of %d columns does not match length(dimnames(x)) == %d"),
+	       nc, length(dnamelist));
+    }
+#endif
+    SEXP snames = PROTECT(allocVector(STRSXP, nr));
+    // result si := an integer matrix of same dimension as 's'
+    SEXP si = PROTECT(allocVector(INTSXP, xlength(s)));
+    dimgets(si, dim);
     int *psi = INTEGER(si);
-    for (i = 0; i < length(dnamelist); i++) {
-	dnames = VECTOR_ELT(dnamelist, i);
-	for (j = 0; j < nr; j++)
-	    SET_STRING_ELT(snames, j, STRING_ELT(s, j + (i * NR)));
-	PROTECT(sicol = match(dnames, snames, 0));
-	for (j = 0; j < nr; j++) {
-	    v = INTEGER_ELT(sicol, j);
-	    idx = j + (i * NR);
-	    s_elt = STRING_ELT(s, idx);
+    memset(psi, 0, XLENGTH(si) * sizeof(int));
+    for (int i = 0; i < nc; i++) {
+	R_xlen_t iNR = i * (R_xlen_t) nr;
+	for (int j = 0; j < nr; j++)
+	    SET_STRING_ELT(snames, j, STRING_ELT(s, j + iNR));
+	SEXP dnames = VECTOR_ELT(dnamelist, i);
+	SEXP sicol = PROTECT(match(dnames, snames, 0));
+	for (int j = 0; j < nr; j++) {
+	    int v = INTEGER_ELT(sicol, j);
+	    R_xlen_t idx = j + iNR;
+	    SEXP s_elt = STRING_ELT(s, idx);
 	    if (s_elt == NA_STRING) v = NA_INTEGER;
-	    if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
+	    else if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
 	    if (v == 0) ECALL_OutOfBoundsCHAR(x, i, s_elt, call);
 	    psi[idx] = v;
 	}

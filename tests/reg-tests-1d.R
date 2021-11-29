@@ -5557,6 +5557,21 @@ stopifnot(exprs = {
 ## is.vector(.) gave FALSE, as "foo" attribute was kept
 
 
+## PR#18244:  <array_NULL_dimnames>[ <char-matrix> ]
+m <- matrix(1:9, 3)
+i <- cbind(letters, letters)
+ul <- unique(replicate(1e4, tryCatch(m[i], error=identity), simplify = FALSE))
+conditionMessage(ul[[1]])
+stopifnot(exprs = {
+    length(ul) == 1
+    inherits(ul[[1]], "error")
+    !englishMsgs || identical(conditionMessage(ul[[1]]),
+                              "no 'dimnames' attribute for array")
+})
+## gave "random" results in R <= 4.1.2
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

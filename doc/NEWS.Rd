@@ -374,6 +374,10 @@
       \item Fixed quoting of \code{~autodetect~} in Java setting defaults
       to avoid inadvertent user lookup due to leading \code{~}, reported
       in \PR{18231} by Harold Gutch.
+
+      \item Subscripting an array \code{x} without dimnames by a
+      \code{length(dim(x))}-column character matrix gave "random"
+      non-sense, now an error; reported in \PR{18244} by Mikael Jagan.
     }
   }
 }
