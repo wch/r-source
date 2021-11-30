@@ -1998,6 +1998,7 @@ licence).
 * Configure example::
 * Using F9x code::
 * Using C++ code::
+* Using @command{cmake}::
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2759,7 +2760,7 @@ define a module of the same name in multiple source files.
 @c As was done by frailtypack in 2018-12: gfortran accepted this, ODS
 @c on Solaris did not.
 
-@node Using C++ code,  , Using F9x code, Configure and cleanup
+@node Using C++ code, Using @command{cmake}, Using F9x code, Configure and cleanup
 @subsection Using C++ code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -2916,6 +2917,136 @@ A requirement of C++17 or later should always be declared in the
 @samp{SystemRequirements} field (as well as in @file{src/Makevars} or
 @file{src/Makefile}) so this is shown on the package's summary pages on
 @acronym{CRAN} or similar.
+
+
+@node Using @command{cmake},  , Using C++ code, Configure and cleanup
+@subsection Using @command{cmake}
+
+Packages often wish to include the sources of other software and compile
+that for inclusion in their @file{.so} or @file{.dll}, which is normally
+done by including (or unpacking) the sources in a subdirectory of
+@file{src}, as considered above.
+
+Further issues arise when the external software uses another build
+system such as @command{cmake}, principally to ensure that that
+@emph{all} the settings for compilers, include and load paths @emph{etc}
+are made.  This section has already mentioned the need to set
+at least some of
+@example
+CC CFLAGS CXX CXXFLAGS CPPFLAGS LDFLAGS
+@end example
+@noindent
+@code{CFLAGS} and @code{CXXFLAGS} will need to include @code{CPICFLAGS}
+and @code{CXXPICFLAGS} respectively unless (as below) @command{cmake} is
+asked to generate PIC code.
+
+Setting these (and more) as environment variables controls the behaviour
+of @command{cmake}
+(@uref{https://cmake.org/cmake/help/latest/manual/cmake-env-variables.7.html#manual:cmake-env-variables(7)}),
+but it may be desirable to translate these into native settings such as
+@example
+CMAKE_C_COMPILER
+CMAKE_C_FLAGS
+CMAKE_CXX_COMPILER
+CMAKE_CXX_FLAGS
+CMAKE_INCLUDE_PATH
+CMAKE_LIBRARY_PATH
+CMAKE_SHARED_LINKER_FLAGS_INIT
+CMAKE_OSX_DEPLOYMENT_TARGET
+@end example
+@noindent
+and it is often necesary to ensure a static library of PIC code is built by
+@example
+-DBUILD_SHARED_LIBS:bool=OFF
+-DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON
+@end example
+
+If @R{} is to be detected or used, this must be the build being used for
+package installation -- @command{"$@{R_HOME@}"/bin/R}.
+
+To fix ideas, consider a package with sources for a library @file{myLib}
+under @file{src/libs}.  Two approaches have been used.  It is often most
+convenient to build the external software in a directory other than its
+sources (particularly during development when the build directory can be
+removed between builds rather than attempting to clean the sources) --
+this is illustrated in the first approach.
+
+@enumerate
+@c taken by osqp and rbedrock
+@item
+Use the package's @file{configure} script to create a static library
+@file{src/build/libmyLib.a}.  This can then be treated in the same way
+as external software, for example having in @file{src/Makevars}
+@example
+PKG_CPPFLAGS = -Ilibs/include
+PKG_LIBS = build/libmyLib.a
+@end example
+@noindent
+(@code{-Lbuild -lmyLib} could also be used but this explicit
+specification avoids any confusion with dynamic libraries of the same
+name.)
+
+The @file{configure} script will need to contain something like (for C
+code)
+@example
+: $@{R_HOME=`R RHOME`@}
+if test -z "$@{R_HOME@}"; then
+  echo "could not determine R_HOME"
+  exit 1
+fi
+CC=`"$@{R_HOME@}/bin/R" CMD config CC`
+CFLAGS=`"$@{R_HOME@}/bin/R" CMD config CFLAGS`
+CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
+LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
+
+cd src
+mkdir build && cd build
+cmake ../libs \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS:bool=OFF \
+  -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON
+$@{MAKE@}
+@end example
+
+@c similar to symengine
+@item
+Use @file{src/Makevars} (or @file{src/Makevars.win}) to build within the
+subdirectory.  This could be something like (for C code)
+@example
+PKG_CPPFLAGS = -Ilibs/include
+PKG_LIBS = libs/libmyLib.a
+
+$(SHLIB): mylibs
+
+mylibs:
+        (cd libs; \
+          CC="$(CC)" CFLAGS="$(CFLAGS)" \
+          CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" \
+	  cmake . \
+	    -DCMAKE_BUILD_TYPE=Release \
+	    -DBUILD_SHARED_LIBS:bool=OFF \
+	    -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON; \
+	  $(MAKE))
+
+@end example
+@noindent
+the compiler and other settings having been set as Make variables by an
+@R{} makefile included by @command{INSTALL} before @file{src/Makevars}.
+
+@end enumerate
+
+A complication is that on macOS @command{cmake} (where installed) is
+commonly not on the path but at
+@file{/Applications/CMake.app/Contents/bin/cmake}.  One way to work
+around this is for the package's @file{configure} script to include
+@example
+if test -z "$CMAKE"; then CMAKE="`which cmake`"; fi
+if test -z "$CMAKE"; then CMAKE=/Applications/CMake.app/Contents/bin/cmake; fi
+if test -z "$CMAKE"; then echo "no 'cmake' command found"; exit 1; fi
+@end example
+@noindent
+and for the second approach to substitute @env{CMAKE} into
+@file{src//Makevars}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
