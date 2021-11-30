@@ -136,6 +136,11 @@
 
       \item An experimental implementation of hash tables is now
       available.  See \code{?hashtab} for more details.
+
+      \item \code{identical()} gains a \code{extptr.as.ref} argument for
+      requesting that external pointer objects be compared as reference
+      objects.
+      
     }
   }
 

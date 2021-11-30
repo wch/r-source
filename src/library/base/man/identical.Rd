@@ -14,7 +14,7 @@
 \usage{
 identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
           ignore.bytecode = TRUE, ignore.environment = FALSE,
-          ignore.srcref = TRUE)
+          ignore.srcref = TRUE, extptr.as.ref = FALSE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
@@ -37,6 +37,11 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
     should be ignored when comparing \link{closure}s.}
   \item{ignore.srcref}{logical indicating if their \code{"srcref"}
     attributes should be ignored when comparing \link{closure}s.}
+  \item{extptr.as.ref}{logical indicating whether external pointer
+    objects should be compared as reference objects and considered
+    identical only if they are the same object in memory. By default,
+    external pointers are considered identical if the addresses they
+    contain are identical.}
 }
 \details{
   A call to \code{identical} is the way to test exact equality in

@@ -18,9 +18,11 @@
 
 identical <- function(x, y, num.eq = TRUE, single.NA = TRUE,
                       attrib.as.set = TRUE, ignore.bytecode = TRUE,
-                      ignore.environment = FALSE, ignore.srcref = TRUE)
+                      ignore.environment = FALSE, ignore.srcref = TRUE,
+                      extptr.as.ref = FALSE)
     .Internal(identical(x,y, num.eq, single.NA, attrib.as.set,
-                        ignore.bytecode, ignore.environment, ignore.srcref))
+                        ignore.bytecode, ignore.environment, ignore.srcref,
+                        extptr.as.ref))
 
 ## till R 3.4.x:
 ## isTRUE <- function(x) identical(TRUE, x)
