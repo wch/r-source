@@ -22,7 +22,7 @@ CSOURCES = \
 	gevents.c gram.c gram-ex.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
-	main.c mapply.c match.c memory.c mkdtemp.c \
+	main.c mapply.c mask.c match.c memory.c mkdtemp.c \
 	names.c \
 	objects.c options.c \
 	paste.c patterns.c platform.c plot.c plot3d.c plotmath.c \
