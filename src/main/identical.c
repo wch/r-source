@@ -38,11 +38,18 @@ typedef enum {
 static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
 
 
+static R_INLINE int asFlag(SEXP x, const char *name)
+{
+    int val = asLogical(x);
+    if (val == NA_LOGICAL)
+	error(_("invalid '%s' value"), name);
+    return val;
+}
+
 /* .Internal(identical(..)) */
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1,
-	ignore_env = 0, ignore_srcref = 1, nargs = length(args), flags;
+    int nargs = length(args);
     /* avoid problems with earlier (and future) versions captured in S4
        methods: but this should be fixed where it is caused, in
        'methods'!
@@ -54,34 +61,46 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SEXP x = CAR(args); args = CDR(args);
     SEXP y = CAR(args); args = CDR(args);
-    num_eq = asLogical(CAR(args)); args = CDR(args);
-    single_NA = asLogical(CAR(args)); args = CDR(args);
-    attr_as_set = asLogical(CAR(args)); args = CDR(args);
+
+    int num_as_bits = ! asFlag(CAR(args), "num.eq"); args = CDR(args);
+    int NA_as_bits = ! asFlag(CAR(args), "single.NA"); args = CDR(args);
+    int attr_by_order = ! asFlag(CAR(args), "attrib.as.set"); args = CDR(args);
+
+    int use_bytecode = FALSE;
     if (nargs >= 6)
-	ignore_bytecode = asLogical(CAR(args));
+	use_bytecode = ! asFlag(CAR(args), "ignore.bytecode");
+
+    int use_cloenv = TRUE;
     if (nargs >= 7)
-	ignore_env = asLogical(CADR(args));
+	use_cloenv = ! asFlag(CADR(args), "ignore.environment");
+
+    int use_srcref = FALSE;
     if (nargs >= 8)
-	ignore_srcref = asLogical(CADDR(args));
+	use_srcref = ! asFlag(CADDR(args), "ignore.srcref");
 
-    if(num_eq          == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
-    if(single_NA       == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
-    if(attr_as_set     == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
-    if(ignore_bytecode == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.bytecode");
-    if(ignore_env      == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.environment");
-    if(ignore_srcref   == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.srcref");
+    int extptr_as_ref = FALSE;
+    if (nargs >= 9)
+	extptr_as_ref = asFlag(CADDDR(args), "extptr.as.ref");
 
-    flags = (num_eq ? 0 : 1) + (single_NA ? 0 : 2) + (attr_as_set ? 0 : 4) +
-	(ignore_bytecode ? 0 : 8) + (ignore_env ? 0 : 16) + (ignore_srcref ? 0 : 32);
+    int flags = 0;
+    if (num_as_bits) flags |= IDENT_NUM_AS_BITS;
+    if (NA_as_bits) flags |= IDENT_NA_AS_BITS;
+    if (attr_by_order) flags |= IDENT_ATTR_BY_ORDER;
+    if (use_bytecode) flags |= IDENT_USE_BYTECODE;
+    if (use_cloenv) flags |= IDENT_USE_CLOENV;
+    if (use_srcref) flags |= IDENT_USE_SRCREF;
+    if (extptr_as_ref) flags |= IDENT_EXTPTR_AS_REF;
+
     return ScalarLogical(R_compute_identical(x, y, flags));
 }
 
-#define NUM_EQ		(!(flags & 1))
-#define SINGLE_NA       (!(flags & 2))
-#define ATTR_AS_SET     (!(flags & 4))
-#define IGNORE_BYTECODE (!(flags & 8))
-#define IGNORE_ENV      (!(flags & 16))
-#define IGNORE_SRCREF   (!(flags & 32))
+#define NUM_EQ		(!(flags & IDENT_NUM_AS_BITS))
+#define SINGLE_NA       (!(flags & IDENT_NA_AS_BITS))
+#define ATTR_AS_SET     (!(flags & IDENT_ATTR_BY_ORDER))
+#define IGNORE_BYTECODE (!(flags & IDENT_USE_BYTECODE))
+#define IGNORE_ENV      (!(flags & IDENT_USE_CLOENV))
+#define IGNORE_SRCREF   (!(flags & IDENT_USE_SRCREF))
+#define EXTPTR_AS_REF   (flags & IDENT_EXTPTR_AS_REF)
 
 /* do the two objects compute as identical?
    Also used in unique.c */
@@ -319,7 +338,10 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	       R_compute_identical(BCODE_EXPR(x), BCODE_EXPR(y), flags) &&
 	       R_compute_identical(BCODE_CONSTS(x), BCODE_CONSTS(y), flags);
     case EXTPTRSXP:
-	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
+	if (EXTPTR_AS_REF)
+	    return x == y ? TRUE : FALSE;
+	else
+	    return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
     case RAWSXP:
 	if (XLENGTH(x) != XLENGTH(y)) return FALSE;
 	/* Use memcmp (which is ISO C90) to speed up the comparison */

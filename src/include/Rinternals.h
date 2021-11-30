@@ -818,13 +818,22 @@ int R_system(const char *);
 /* R_compute_identical:  C version of identical() function
    The third arg to R_compute_identical() consists of bitmapped flags for non-default options:
    currently the first 4 default to TRUE, so the flag is set for FALSE values:
-   1 = !NUM_EQ
-   2 = !SINGLE_NA
-   4 = !ATTR_AS_SET
-   8 = !IGNORE_BYTECODE
-  16 = !IGNORE_ENV
-  Default from R's default: 16
+   1 = !NUM_EQ              = IDENT_NUM_AS_BITS
+   2 = !SINGLE_NA           = IDENT_NA_AS_BITS
+   4 = !ATTR_AS_SET         = IDENT_ATTR_BY_ORDER
+   8 = !IGNORE_BYTECODE     = IDENT_USE_BYTECODE
+  16 = !IGNORE_ENV          = IDENT_USE_CLOENV
+  32 = !IGNORE_SRCREF       = IDENT_USE_SRCREF
+  64                        = IDENT_EXTPTR_AS_REF
+  Default from R's default: 16 = IDENT_USE_CLOENV
 */
+#define IDENT_NUM_AS_BITS      1
+#define IDENT_NA_AS_BITS       2
+#define IDENT_ATTR_BY_ORDER    4
+#define IDENT_USE_BYTECODE     8
+#define IDENT_USE_CLOENV      16
+#define IDENT_USE_SRCREF      32
+#define IDENT_EXTPTR_AS_REF   64
 Rboolean R_compute_identical(SEXP, SEXP, int);
 
 SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
