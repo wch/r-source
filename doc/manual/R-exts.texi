@@ -1914,26 +1914,36 @@ external software.  One tool which is increasingly available on
 Unix-alikes (but not by default@footnote{but it is available on the
 machines used to produce the @acronym{CRAN} binary packages: however as
 Apple does not ship @file{.pc} files for its system libraries such as
-@samp{zlib}, it may well not find information on these.} on macOS) to do
-this is @command{pkg-config}.  The @file{configure} script will need to
-test for the presence of the command itself@footnote{It is not wise to
-check the version of @command{pkg-config} as it is sometimes a link to
+@code{expat}, @code{libcurl}, @code{libxml2}, @code{sqlite3} and
+@samp{zlib}, it may well not find information on these.  Some
+substitutes are available from
+@url{https://github.com/R-macos/recipes/tree/master/stubs/pkgconfig-darwin}
+and are installed on the @acronym{CRAN} package builders.}  on macOS) to
+do this is @command{pkg-config}.  The @file{configure} script will need
+to test for the presence of the command itself@footnote{It is not wise
+to check the version of @command{pkg-config} as it is sometimes a link
+to
 @c in 2020 it was for Fedora but not Debian/Ubuntu
 @command{pkgconf}, a separate project with a different version series.}
-(see for example package @CRANpkg{Cairo}), and if present it can be
+(see for example package @CRANpkg{tiff}), and if present it can be
 asked if the software is installed, of a suitable version and for
 compilation/linking flags by e.g.@:
 
+@c packages using pkg-config in 2021-11:
+@c Cairo R2SWF RProtoBuf Rmixmod Rmpi RoBMA Rpoppler SuperGauss XML
+@c audio cairoDevice covafillr devEMF diseq fftw fftwtools gdaltools
+@c git2r imager lwgeom nloptr pbdMPI pcaL1 polyclip qs rgdal rgl rjags
+@c runjags sf showtext stringfish stringi sysfonts tiff tiledb vapour
 @example
-$ pkg-config --exists 'QtCore >= 4.0.0'  # check the status
-$ pkg-config --modversion QtCore
-4.8.7
-$ pkg-config --cflags QtCore
--DQT_SHARED -I/usr/include/QtCore
-$ pkg-config --libs QtCore
--lQtCore
-$ pkg-config --static --libs QtCore
--lQtCore -lpthread -lz -lm -ldl -lgthread-2.0 -pthread -lglib-2.0 -lrt
+$ pkg-config --exists 'libtiff-4 >= 4.1.0' --print-errors # check the status
+$ pkg-config --modversion libtiff-4
+4.3.0
+$ pkg-config --cflags libtiff-4
+-I/usr/local/include
+$ pkg-config --libs libtiff-4
+-L/usr/local/lib -ltiff
+$ pkg-config --static --libs libtiff-4
+-L/usr/local/lib -ltiff -lwebp -llzma -ljpeg -lz
 @end example
 
 @noindent
@@ -1953,8 +1963,14 @@ means that portable (source) packages need to allow for this.  It is
 that will often include further libraries that are not necessarily
 installed on the user's system (or maybe only the versioned library such
 as @file{libjbig.so.2.1} is installed and not @file{libjbig.so} which
-would be needed to use @code{-ljbig} often included in
+would be needed to use @code{-ljbig} sometimes included in
 @command{pkg-config --static --libs libtiff-4}).
+
+Another issue is that @command{pkg-config --exists} may not be reliable.
+It checks not only that the `module' is available but @emph{all} of the
+dependencies, including those in principle needed for static linking.
+(XQuartz 2.8.x only distributed dynamic libraries and not some of the
+@file{.pc} files needed for @code{--exists}.)
 
 Sometimes the name by which the software is known to
 @command{pkg-config} is not what one might expect (e.g.@:
