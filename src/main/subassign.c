@@ -629,15 +629,15 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     if (ATTRIB(s) != R_NilValue) { /* pretest to speed up simple case */
 	SEXP dim = getAttrib(x, R_DimSymbol);
 	if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
-	    Rboolean string_s = isString(s);
-	    if (string_s) {
+	    if (isString(s)) {
 		SEXP dnames = PROTECT(GetArrayDimnames(x));
 		s = strmat2intmat(s, dnames, call, x);
 		UNPROTECT(2); /* dnames, s */
 		PROTECT(s);
 	    }
-	    if (isInteger(s) || isReal(s)) { // not using call: when coming from string case
-		s = mat2indsub(dim, s, (string_s ? R_NilValue : call), x);
+	    if (isInteger(s) || isReal(s)) {
+		s = mat2indsub(dim, s, R_NilValue, x);
+		//                     .......... or call, as in VectorSubset() [subset.c]?
 		UNPROTECT(1);
 		PROTECT(s);
 	    }
