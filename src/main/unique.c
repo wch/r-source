@@ -2333,7 +2333,7 @@ static R_INLINE int HT_HASH(R_hashtab_t h, SEXP key)
 static R_INLINE int HT_EQUAL(R_hashtab_t h, SEXP x, SEXP y)
 {
     switch(HT_TYPE(h)) {
-    case HT_TYPE_IDENTICAL: return R_compute_identical(x, y, 0);
+    case HT_TYPE_IDENTICAL: return R_compute_identical(x, y, IDENT_USE_CLOENV);
     case HT_TYPE_ADDRESS:   return x == y;
     default: error("bad hash table type");
     }
