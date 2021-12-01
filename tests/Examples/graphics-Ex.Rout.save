@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2021-11-15 r81194) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-11-30 r81267) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -1625,7 +1623,7 @@ List of 2
 > ## put histograms on the diagonal
 > panel.hist <- function(x, ...)
 + {
-+     usr <- par("usr"); on.exit(par(usr))
++     usr <- par("usr")
 +     par(usr = c(usr[1:2], 0, 1.5) )
 +     h <- hist(x, plot = FALSE)
 +     breaks <- h$breaks; nB <- length(breaks)
@@ -1640,7 +1638,6 @@ List of 2
 > ## with size proportional to the correlations.
 > panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 + {
-+     usr <- par("usr"); on.exit(par(usr))
 +     par(usr = c(0, 1, 0, 1))
 +     r <- abs(cor(x, y))
 +     txt <- format(c(r, 0.123456789), digits = digits)[1]
@@ -2171,7 +2168,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x4e93d78>
+<bytecode: 0x55daca5416a8>
 <environment: namespace:graphics>
 > 
 > 
@@ -3041,7 +3038,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x42300b8>
+<bytecode: 0x55dacadb84e8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3122,7 +3119,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.433 0.096 2.537 0 0 
+Time elapsed:  2.98 0.04 3.02 0 0 
 > grDevices::dev.off()
 null device 
           1 
