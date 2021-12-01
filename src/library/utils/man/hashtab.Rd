@@ -108,9 +108,23 @@ is.hashtab(x)
   The interface design is based loosely on hash table support in Common
   Lisp.
 
-  The hashing function used for \code{"identical"} hash tables is the
-  same as the one used internally by \code{\link{duplicated}} and
-  \code{\link{unique}}.
+  The hash function and equality test used for \code{"identical"} hash
+  tables are the same as the ones used internally by
+  \code{\link{duplicated}} and \code{\link{unique}}, with two
+  exceptions:
+
+  \itemize{
+    \item{Closure environments are not ignored when comparing closures.
+      This corresponds to calling \code{\link{identical}()} with
+      \code{ignore.environment = FALSE}, which is the default for
+      \code{\link{identical}()}.}
+
+    \item{External pointer objects are compared as reference objects,
+      corresponding to calling \code{\link{identical}()} with
+      \code{extptr.as.ref = TRUE}. This ensures that hash tables with
+      keys containing external pointers behave reasonably when
+      serialized and unserialized.}
+  }
 
   As an experimental feature, the element operator \code{[[} can also be
   used get or set hash table entries, and \code{length} can be used to

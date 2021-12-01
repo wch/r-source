@@ -75,6 +75,7 @@ struct _HashData {
     Rboolean useUTF8;
     Rboolean useCache;
     Rboolean useCloEnv;
+    Rboolean extptrAsRef;
 };
 
 #define HTDATA_INT(d) (INTEGER0((d)->HashTable))
@@ -400,8 +401,11 @@ static hlen vhash_one(SEXP _this, HashData *d)
 	key *= 97;
 	break;
     case EXTPTRSXP:
-	/* identical() considers only the EXTPTR_PTR values ... */
-	key ^= PTRHASH(EXTPTR_PTR(_this));
+	if (d->extptrAsRef)
+	    key ^= PTRHASH(_this);
+	else
+	    /* identical() considers only the EXTPTR_PTR values ... */
+	    key ^= PTRHASH(EXTPTR_PTR(_this));
 	key *= 97;
 	break;
     default:
@@ -2279,6 +2283,7 @@ static int hash_identical(SEXP x, int useCloEnv, int K)
 
     HashData d = { .K = K, .useUTF8 = FALSE, .useCache = TRUE };
     d.useCloEnv = useCloEnv;
+    d.extptrAsRef = TRUE;
 
     int val = (int) vhash_one(x, &d);
     if (val == NA_INTEGER) val = 0;
@@ -2333,9 +2338,18 @@ static R_INLINE int HT_HASH(R_hashtab_t h, SEXP key)
 static R_INLINE int HT_EQUAL(R_hashtab_t h, SEXP x, SEXP y)
 {
     switch(HT_TYPE(h)) {
-    case HT_TYPE_IDENTICAL: return R_compute_identical(x, y, IDENT_USE_CLOENV);
-    case HT_TYPE_ADDRESS:   return x == y;
-    default: error("bad hash table type");
+    case HT_TYPE_IDENTICAL:
+	{
+	    /* IDENT_USE_CLOENV correspnds to the default in identical().
+	       IDENT_EXTPTR_AS_REF ensures that EXTPTRSXP objects in
+	       keys unserialize senibly. */
+	    int flags = IDENT_USE_CLOENV | IDENT_EXTPTR_AS_REF;
+	    return R_compute_identical(x, y, flags);
+	}
+    case HT_TYPE_ADDRESS:
+	return x == y;
+    default:
+	error("bad hash table type");
     }
 }
 
