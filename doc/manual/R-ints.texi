@@ -2770,6 +2770,8 @@ error or by the user).
 @item close the device.
 @end itemize
 
+
+
 The device also sets a number of variables, mainly Boolean flags
 indicating its capabilities.  Devices work entirely in `device units'
 which are up to its developer: they can be in pixels, big points (1/72
@@ -2963,6 +2965,14 @@ If a graphics device calls @code{R_GE_checkVersionOrDie(R_GE_version)}
 it can ensure it will only be used in versions of @R{} which provide the
 API it was designed for and compiled against.
 
+The @code{DevDesc} structure also contains an @code{int} @samp{deviceVersion}
+to indicate which version of the engine/device API that the device supports.
+If the device driver sets this correctly, 
+there is no need for a device driver to use 
+@code{R_GE_checkVersionOrDie(R_GE_version)} because the graphics engine will
+not make use of callbacks from an API version above the version that is
+supported by the device.
+
 @node Device capabilities, Handling text, Device structures, Graphics devices
 @subsection Device capabilities
 
@@ -3005,10 +3015,95 @@ is there support for rendering raster images?
 is there support for @code{grid::grid.cap}?
 @item @code{haveLocator}:
 is there an interactive locator?
+@item @code{deviceClip}:
+should the engine leave @emph{all} clipping to the device?
 @end itemize
 
-The last three can often be deduced to be false from the presence of
+@code{haveRaster},
+@code{haveCapture}, and @code{haveLocator}
+ can often be deduced to be false from the presence of
 @code{NULL} entries instead of the corresponding functions.
+
+In addition, the @code{capabilities} callback allows the device driver
+to provide more detailed information, especially related to callbacks
+in the engine/device API version 13 or higher.
+
+The @code{capabilities} callback is called with a list of integer
+vectors that represent the best guess that the graphics engine
+can make, based on the flags in the @code{DevDesc} structure and
+the @samp{deviceVersion}.  For some capabilities, the integer vector
+is length 1 with @code{0} for no support, @code{1} for support, or
+@code{NA} for unknown support.  For capabilities where support
+can be more nuanced, the integer vector may either take higher values
+or it may have length greater than 1,
+though length 1 and @code{0} still means no support and @code{NA} still means 
+unknown support.
+
+The following components of 
+this list are likely to need modifying (for these, the graphics engine 
+can only guess @code{0}
+if @samp{deviceVersion} is too low or @code{NA}
+otherwise):
+
+@itemize
+@item The @code{patterns} component reports what sort of pattern fills are 
+supported.  If the device supports one or more pattern types,
+this component should be replaced with an integer vector containing
+a value for each supported pattern type;
+the graphics engine provides 
+constants @code{R_GE_linearGradientPattern},
+@code{R_GE_radialGradientPattern}, and 
+@code{R_GE_tilingPattern}.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{clippingPaths} component reports whether 
+arbitrary clipping paths are supported. 
+If the device supports clipping paths, this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{masks} component reports what sort of masks are supported.
+If the device supports one or more mask types,
+this component should be replaced with an integer vector containing
+a value for each supported mask type;
+the graphics engine provides 
+constants @code{R_GE_alphaMask} and @code{R_GE_luminanceMask}.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{compositing} component reports which compositing operators 
+are supported. 
+If the device supports one or more compositing operators,
+this component should be replaced with an integer vector containing
+a value for each supported operator;
+The list of possible operators is long, 
+encompassing Porter-Duff operators and Adobe PDF Blend Modes; 
+the graphics engine provides constants @code{R_GE_compositeClear}, etc.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{transformations} component reports whether 
+affine transformations are supported.
+If the device supports transformations, this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
+@item The @code{paths} component reports whether stroking and 
+filling of paths composed of multiple shapes is supported. 
+If the device supports stroking and filling paths, 
+this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
+@end itemize
+
+The graphics engine provides constants like 
+@code{R_GE_capability_patterns} for selecting the appropriate
+component of the list of capabilities.
+
+It is valid (if unhelpful) for the device driver to return the list
+of capabilities unaltered.
 
 @node Handling text, Conventions, Device capabilities, Graphics devices
 @subsection Handling text
