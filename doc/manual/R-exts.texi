@@ -2971,7 +2971,7 @@ CMAKE_SHARED_LINKER_FLAGS_INIT
 CMAKE_OSX_DEPLOYMENT_TARGET
 @end example
 @noindent
-and it is often necesary to ensure a static library of PIC code is built by
+and it is often necessary to ensure a static library of PIC code is built by
 @example
 -DBUILD_SHARED_LIBS:bool=OFF
 -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON
