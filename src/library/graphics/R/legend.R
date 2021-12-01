@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/legend.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     xyc <- xyinch(par("cin"), warn.log=FALSE) # [uses par("usr") and "pin"]
     xc <- Cex * xyc[1L]
     yc <- Cex * xyc[2L]
-    if(any(n_ <- xc < 0)) text.width[n_] <- -text.width[n_]
+    if(any(xc < 0)) text.width <- -text.width
 
     xchar  <- xc
     xextra <- 0
