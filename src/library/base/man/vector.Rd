@@ -1,16 +1,16 @@
 % File src/library/base/man/vector.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{vector}
+\title{Vectors - Creation, Coercion, etc}
 \alias{vector}
 \alias{as.vector}
 \alias{as.vector.factor}
 \alias{as.vector.POSIXlt}
 \alias{is.vector}
 \alias{atomic} % for cat.Rd and read.table.Rd
-\title{Vectors}
 \usage{
 vector(mode = "logical", length = 0)
 as.vector(x, mode = "any")
@@ -30,12 +30,16 @@ is.vector(x, mode = "any")
   \item{x}{an \R object.}
 }
 \description{
+  A \emph{vector} in \R is either an atomic vector, i.e., one of the types
+  
+  
   \code{vector} produces a vector of the given length and mode.
 
   \code{as.vector}, a generic, attempts to coerce its argument into a
   vector of mode \code{mode} (the default is to coerce to whichever
-  vector mode is most convenient): if the result is atomic all
-  attributes are removed.
+  vector mode is most convenient): if the result is atomic
+  (\code{\link{is.atomic}}), all attributes are removed.
+  For \code{mode="any"}, see \sQuote{Details}.
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector of the
   specified mode having no attributes \emph{other than names}.  It returns
@@ -52,8 +56,16 @@ is.vector(x, mode = "any")
   For any \code{mode}, it will return \code{FALSE} if \code{x} has any
   attributes except names.  (This is incompatible with S.)  On the other
   hand, \code{as.vector} removes \emph{all} attributes including names
-  for results of atomic mode (but not those of mode \code{"list"} nor
-  \code{"expression"}).
+  for results of atomic mode.
+
+  For \code{mode = "any"}, when \code{x} is a \code{\link{list}} or
+  \code{\link{expression}}, \code{is.vector(as.vector(x))} is always true
+  only since \R 4.2.0.  When \code{\link{is.object}(x)} is true,
+  \code{as.vector(x)} returns \code{x} unaltered and \code{is.vector(x)} is
+  true for all such objects.
+  For non-object \code{x}'s, \code{as.vector(x)} strips all \code{\link{attributes}}
+  but \code{\link{names}}, and \code{is.vector(.)} is true for such lists
+  and expressions.
 
   Note that factors are \emph{not} vectors; \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts a factor to a character
@@ -69,7 +81,7 @@ is.vector(x, mode = "any")
 
   For \code{as.vector}, a vector (atomic or of type list or expression).
   All attributes are removed from the result if it is of an atomic mode,
-  but not in general for a list result.  The default method handles 24
+  but not in general for a list or expression result.  The default method handles 24
   input types and 12 values of \code{type}: the details of most
   coercions are undocumented and subject to change.
 
@@ -88,7 +100,7 @@ is.vector(x, mode = "any")
     \code{"pairlist"} or one of the aliases \code{"double"} and \code{"name"}.
 
     \item The return value should be of the appropriate mode.  For
-    \code{mode = "any"} this means an atomic vector or list.
+    \code{mode = "any"} this means an atomic vector or list or expression.
 
     \item Attributes should be treated appropriately: in particular when
     the result is an atomic vector there should be no attributes, not
@@ -96,6 +108,7 @@ is.vector(x, mode = "any")
 
     \item \code{is.vector(as.vector(x, m), m)} should be true for any
     mode \code{m}, including the default \code{"any"}.
+    Note that this was not fulfilled in \R versions up to 4.1.z.
   }
 }
 
@@ -107,7 +120,8 @@ is.vector(x, mode = "any")
 
   Note that \code{as.vector(x)} is not necessarily a null operation if
   \code{is.vector(x)} is true: any names will be removed from an atomic
-  vector.
+  vector. % This is considered a blemish; using `unname0(x)`
+  % would rather be recommended:  unname0 <- \(x) `names<-`(x, NULL)
 
   Non-vector \code{mode}s \code{"symbol"} (synonym \code{"name"}) and
   \code{"pairlist"} are accepted but have long been undocumented: they
