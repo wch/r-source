@@ -385,7 +385,12 @@ static hlen vhash_one(SEXP _this, HashData *d)
 	break;
     case SYMSXP:
 	/* at this point a symbol name should be guaranteed to have a
-	   hash value */
+	   hash value, but check just to be safe */
+	if (! HASHASH(PRINTNAME(_this)) ) {
+	    SET_HASHVALUE(PRINTNAME(_this),
+			  R_Newhashpjw(CHAR(PRINTNAME(_this))));
+	    SET_HASHASH(PRINTNAME(_this), 1);
+	}
 	key ^= HASHVALUE(PRINTNAME(_this));
 	key *= 97;
 	break;
