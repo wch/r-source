@@ -146,6 +146,8 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     }
     if (TYPEOF(v) == SYMSXP)
 	Rprintf("\"%s\"%s", EncodeChar(PRINTNAME(v)), (SYMVALUE(v) == R_UnboundValue) ? "" : " (has value)");
+    if (TYPEOF(v) == EXTPTRSXP)
+	Rprintf("<%p>", R_ExternalPtrAddr(v));
     switch (TYPEOF(v)) { /* for native vectors print the first elements in-line */
     case LGLSXP:
 	if (XLENGTH(v) > 0) {
@@ -278,6 +280,20 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	    inspect_tree(pre+2, BODY(v), deep - 1, pvec);
 	    pp(pre); Rprintf("CLOENV:\n");
 	    inspect_tree(pre+2, CLOENV(v), 0, pvec);
+	    break;
+	case EXTPTRSXP:
+	    {
+		SEXP prot = R_ExternalPtrProtected(v);
+		SEXP tag = R_ExternalPtrTag(v);
+		if (prot != R_NilValue) {
+		    pp(pre); Rprintf("PROTECTED:\n");
+		    inspect_tree(pre+2, prot, deep - 1, pvec);
+		}
+		if (tag != R_NilValue) {
+		    pp(pre); Rprintf("TAG:\n");
+		    inspect_tree(pre+2, tag, deep - 1, pvec);
+		}
+	    }
 	    break;
 	}
 
