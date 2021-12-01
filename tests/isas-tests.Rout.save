@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-11-26 r81252) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-11-30 r81267) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2486,7 +2486,7 @@ In doTryCatch(return(expr), name, parentenv, handler) :
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
 +    } else   !isall.equal(x, res)})
-[1] TRUE
+IS: [1] TRUE
 > res <- try(as.stepfun( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
@@ -2525,9 +2525,7 @@ In doTryCatch(return(expr), name, parentenv, handler) :
 [1] TRUE
 > f <- try(as.expression( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.expression( f )))
-[1] FALSE
-Error in report(identical(f, as.expression(f))) : x is not TRUE
-Calls: report -> stopifnot
+[1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 Warning message:
 In xtfrm.data.frame(x) : cannot xtfrm data frames
