@@ -3041,6 +3041,7 @@ static void     PS_stroke(SEXP path, const pGEcontext gc, pDevDesc dd);
 static void     PS_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
 static void     PS_fillStroke(SEXP path, int rule, const pGEcontext gc, 
                               pDevDesc dd);
+static SEXP     PS_capabilities(SEXP capabilities);
 
 /* PostScript Support (formerly in PostScript.c) */
 
@@ -3509,6 +3510,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->stroke          = PS_stroke;
     dd->fill            = PS_fill;
     dd->fillStroke      = PS_fillStroke;
+    dd->capabilities    = PS_capabilities;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -4563,6 +4565,8 @@ static void PS_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {}
 
 static void PS_fillStroke(SEXP path, int rule, const pGEcontext gc, 
                           pDevDesc dd) {}
+
+static SEXP PS_capabilities(SEXP capabilities) { return capabilities; }
 
 
 /***********************************************************************
@@ -5752,6 +5756,7 @@ static void     PDF_stroke(SEXP path, const pGEcontext gc, pDevDesc dd);
 static void     PDF_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd);
 static void     PDF_fillStroke(SEXP path, int rule, 
                                const pGEcontext gc, pDevDesc dd);
+static SEXP     PDF_capabilities(SEXP capabilities);
 
 /***********************************************************************
  * Stuff for recording definitions
@@ -7825,6 +7830,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->stroke          = PDF_stroke;
     dd->fill            = PDF_fill;
     dd->fillStroke      = PDF_fillStroke;
+    dd->capabilities    = PDF_capabilities;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -10308,6 +10314,55 @@ static void PDF_fillStroke(SEXP path, int rule,
 
         }
     }
+}
+
+static SEXP PDF_capabilities(SEXP capabilities) {
+    SEXP patterns, clippingPaths, masks, compositing, transforms, paths;
+
+    PROTECT(patterns = allocVector(INTSXP, 3));
+    INTEGER(patterns)[0] = R_GE_linearGradientPattern;
+    INTEGER(patterns)[1] = R_GE_radialGradientPattern;
+    INTEGER(patterns)[2] = R_GE_tilingPattern;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_patterns, patterns);
+    UNPROTECT(1);
+
+    PROTECT(clippingPaths = allocVector(INTSXP, 1));
+    INTEGER(clippingPaths)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_clippingPaths, clippingPaths);
+    UNPROTECT(1);
+
+    PROTECT(masks = allocVector(INTSXP, 2));
+    INTEGER(masks)[0] = R_GE_alphaMask;
+    INTEGER(masks)[1] = R_GE_luminanceMask;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_masks, masks);
+    UNPROTECT(1);
+
+    PROTECT(compositing = allocVector(INTSXP, 11));
+    INTEGER(compositing)[0] = R_GE_compositeMultiply;
+    INTEGER(compositing)[1] = R_GE_compositeScreen;
+    INTEGER(compositing)[2] = R_GE_compositeOverlay;
+    INTEGER(compositing)[3] = R_GE_compositeDarken;
+    INTEGER(compositing)[4] = R_GE_compositeLighten;
+    INTEGER(compositing)[5] = R_GE_compositeColorDodge;
+    INTEGER(compositing)[6] = R_GE_compositeColorBurn;
+    INTEGER(compositing)[7] = R_GE_compositeHardLight;
+    INTEGER(compositing)[8] = R_GE_compositeSoftLight;
+    INTEGER(compositing)[9] = R_GE_compositeDifference;
+    INTEGER(compositing)[10] = R_GE_compositeExclusion;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_compositing, compositing);
+    UNPROTECT(1);
+
+    PROTECT(transforms = allocVector(INTSXP, 1));
+    INTEGER(transforms)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_transformations, transforms);
+    UNPROTECT(1);
+
+    PROTECT(paths = allocVector(INTSXP, 1));
+    INTEGER(paths)[0] = 1;
+    SET_VECTOR_ELT(capabilities, R_GE_capability_paths, paths);
+    UNPROTECT(1);
+
+    return capabilities;
 }
 
 /*  PostScript Device Driver Parameters:

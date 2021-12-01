@@ -159,8 +159,18 @@
       and filling paths:  \code{grid.stroke()}, \code{grid.fill()},
       and \code{grid.fillStroke()}.
 
-      These new features are only supported so far on the Cairo-based
-      graphics devices and on the \code{pdf()} device.
+      A new function \code{as.path()} allows the user to specify the
+      fill rule for a path that is to be used for clipping, stroking, or
+      filling; available options are \code{"winding"} and
+      \code{"evenodd"}.  A new function \code{as.mask()} allows the user
+      to specify the type of a mask; available options are
+      \code{"alpha"} and \code{"luminance"}.
+
+      These new features are only supported so far (at most) on the
+      Cairo-based graphics devices and on the \code{pdf()} device.
+
+      \item \code{dev.capabilities()} reports on device support
+      for the new features.
     }
   }
 

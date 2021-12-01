@@ -783,6 +783,11 @@ struct _DevDesc {
 #else
     void (*fillStroke)();
 #endif
+#if R_USE_PROTOTYPES
+    SEXP (*capabilities)(SEXP cap);
+#else
+    SEXP (*capabilities)();
+#endif
 
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded

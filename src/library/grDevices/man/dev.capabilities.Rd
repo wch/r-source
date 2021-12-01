@@ -49,8 +49,29 @@ dev.capabilities(what = NULL)
     support \code{\link{locator}} and \code{\link{identify}}?}
   \item{events}{character:  Which events can be generated on this device?
     Currently this will be a subset of \code{c("MouseDown",
-    "MouseMove", "MouseUp", "Keybd")}, but other events may be
+      "MouseMove", "MouseUp", "Keybd")}, but other events may be
     supported in the future.  }
+  \item{patterns}{character:  Does the device support pattern fills?
+    One or more of
+    \code{c("LinearGradient", "RadialGradient", "TilingPattern")}
+    May also be \code{FALSE}.}
+  \item{clippingPaths}{logical:  Does the device support clipping
+    paths?}
+  \item{masks}{character:  Does the device support masks?
+    One or more of 
+    \code{c("alpha", "luminance")}
+    May also be \code{FALSE}.}
+  \item{compositing}{character: Does the device support compositing
+    operators?
+    There are many possible operators and devices may support any
+    subset.  For example the \code{\link{pdf}} device supports
+    a set of \dQuote{blend modes} whereas Cairo-based devices
+    support Porter-Duff operators as well.
+    May also be \code{FALSE}.}
+  \item{transformations}{logical:  Does the devices support affine
+    transformations ?}
+  \item{paths}{logical:  Does the device support stroking and filling
+    paths?}
 }
 \seealso{
   See \code{\link{getGraphicsEvent}} for details on interactive events.

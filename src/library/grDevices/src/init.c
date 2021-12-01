@@ -94,7 +94,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(XFig, 14),
     EXTDEF(PDF, 20),
     EXTDEF(devCairo, 12),
-    EXTDEF(devcap, 0),
+    EXTDEF(devcap, 1),
     EXTDEF(devcapture, 1),
     EXTDEF(devcontrol, 1),
     EXTDEF(devcopy, 1),

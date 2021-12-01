@@ -2931,6 +2931,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
         dd->stroke = Cairo_Stroke;
         dd->fill = Cairo_Fill;
         dd->fillStroke = Cairo_FillStroke;
+        dd->capabilities = Cairo_Capabilities;
 
         dd->deviceVersion = R_GE_group;
     } else

@@ -3,19 +3,6 @@
 ## THEN draw the result
 ## (normal drawing just composites each grob [in fact each shape!] with OVER)
 
-## Must match order in src/include/R_ext/GraphicsEngine.h
-compositingOperators <- c(## Porter-Duff
-                          "clear", "source", "over",
-                          "in", "out", "atop",
-                          "dest", "dest.over", "dest.in",
-                          "dest.out", "dest.atop", "xor",
-                          "add", "saturate",
-                          ## PDF "blend modes"
-                          "multiply", "screen", "overlay",
-                          "darken", "lighten", "color.dodge", "color.burn",
-                          "hard.light", "soft.light", "difference", "exclusion"
-                          )
-
 ##########################
 ## Support functions
 
@@ -56,8 +43,7 @@ finaliseGroup <- function(x) {
     } else { ## NULL ("transparent") destination
         destination <- NULL
     }
-    operation <- match(x$op, compositingOperators)
-    list(src=source, op=operation, dst=destination)
+    list(src=source, op=x$op, dst=destination)
 }
 
 ## group mappings are stored in 'grid' state in component 18 (17 zero-based)
@@ -251,8 +237,8 @@ groupGrob <- function(src,
         stop("Invalid source")
     if (!(is.grob(dst) || is.null(dst)))
         stop("Invalid destination")
-    if (!(op %in% compositingOperators))
-        stop("Invalid compositing operator")
+    ## Check valid 'op'
+    .opIndex(op)
     group <- gTree(src=src, op=op, dst=dst,
                    name=name, gp=gp, vp=vp, cl="GridGroup")
     group
@@ -282,8 +268,8 @@ defineGrob <- function(src,
         stop("Invalid source")
     if (!(is.grob(dst) || is.null(dst)))
         stop("Invalid destination")
-    if (!(op %in% compositingOperators))
-        stop("Invalid compositing operator")
+    ## Check valid 'op'
+    .opIndex(op)
     group <- gTree(src=src, op=op, dst=dst,
                    name=name, gp=gp, vp=vp, cl="GridDefine")
     group

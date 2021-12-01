@@ -83,6 +83,8 @@ extern "C" {
  *             Added more graphical definitions
  *             - groups
  *             - paths
+ *             - luminance masks
+ *             Added capabilities
  */
 #define R_GE_definitions 13
 #define R_GE_deviceClip  14
@@ -586,7 +588,7 @@ double R_GE_tilingPatternHeight(SEXP pattern);
 int R_GE_tilingPatternExtend(SEXP pattern);
 
 /* Composition operators */
-/* Must match order in ../library/grid/R/group.R */
+/* Must match order in ../library/grDevices/R/group.R */
 /* Porter-Duff */
 #define R_GE_compositeClear 1
 #define R_GE_compositeSource 2
@@ -633,6 +635,21 @@ void GEFillStroke(SEXP path, int rule, const pGEcontext gc, pGEDevDesc dd);
 #define R_GE_luminanceMask 2
 
 int R_GE_maskType(SEXP mask);
+
+/* Device capabilities */
+/* Must match order in ../library/grDevices/R/device.R */
+#define R_GE_capability_semiTransparency      0
+#define R_GE_capability_transparentBackground 1
+#define R_GE_capability_rasterImage           2
+#define R_GE_capability_capture               3
+#define R_GE_capability_locator               4
+#define R_GE_capability_events                5
+#define R_GE_capability_patterns              6
+#define R_GE_capability_clippingPaths         7
+#define R_GE_capability_masks                 8
+#define R_GE_capability_compositing           9
+#define R_GE_capability_transformations      10
+#define R_GE_capability_paths                11 
 
 #ifdef __cplusplus
 }
