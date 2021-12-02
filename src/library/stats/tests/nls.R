@@ -54,7 +54,7 @@ tools::assertWarning(verbose = TRUE,
 tools::assertWarning(verbose = TRUE,
  fm <- nls(circumference ~ logist(age, Asym, xmid, scal), Orange)
 )
-## in R 4.1.{0,1} gave
+## in R 4.1.{0,1,2} gave
 ## Error in (attr(object, "initial"))(mCall = mCall, data = data, LHS = LHS,  :
 ##  unused arguments (control = list(.......), trace = FALSE)
 ## IGNORE_RDIFF_BEGIN
