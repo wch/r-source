@@ -37,7 +37,7 @@ is.vector(x, mode = "any")
 
   \code{vector} produces a \sQuote{simple} vector of the given length and
   mode, where a \sQuote{simple} vector has no attribute, i.e., fulfills
-  \code{is.null(\link{attributes}(.)).
+  \code{is.null(\link{attributes}(.))}.
 
   \code{as.vector}, a generic, attempts to coerce its argument into a
   vector of mode \code{mode} (the default is to coerce to whichever
