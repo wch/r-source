@@ -140,7 +140,10 @@
       \item \code{identical()} gains a \code{extptr.as.ref} argument for
       requesting that external pointer objects be compared as reference
       objects.
-      
+
+      \item \code{reorder()} gets an argument \code{decreasing} which it
+      passes to \code{sort()} for level creation; based on the wish and
+      patch by Thomas Soeiro in \PR{18243}.
     }
   }
 
@@ -353,7 +356,7 @@
 
       \item The deparser now wraps sub expressions such as \code{if(A) .. }
       with parentheses when needed; thanks to Duncan Murdoch's \PR{18232}
-      and Lionel Henry's patch there.
+      and Lionel Henry's patches there.
 
       \item \code{remove.packages()} no longer tries to uninstall priority
       \code{base} packages, thanks to a report and suggestions by Colin Fay

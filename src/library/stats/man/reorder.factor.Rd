@@ -1,6 +1,6 @@
 % File src/library/stats/man/reorder.factor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{reorder.default}
@@ -17,7 +17,7 @@
 reorder(x, \dots)
 
 \method{reorder}{default}(x, X, FUN = mean, \dots,
-        order = is.ordered(x))
+        order = is.ordered(x), decreasing = FALSE)
 
 }
 \arguments{
@@ -26,7 +26,7 @@ reorder(x, \dots)
     levels will be reordered.  If \code{x} is not a factor, its unique
     values will be used as the implicit levels.
   }
-  \item{X}{ a vector of the same length as \code{x}, whose subset
+  \item{X}{a vector of the same length as \code{x}, whose subset
     of values for each unique level of \code{x} determines the
     eventual order of that level.
   }
@@ -37,12 +37,14 @@ reorder(x, \dots)
   \item{order}{ logical, whether return value will be an ordered factor
     rather than a factor.
   }
+  \item{decreasing}{logical, whether the levels will be ordered in
+    increasing or decreasing order.}
 }
 
 \value{
   A factor or an ordered factor (depending on the value of
   \code{order}), with the order of the levels determined by
-  \code{FUN} applied to \code{X} grouped by \code{x}.  The
+  \code{FUN} applied to \code{X} grouped by \code{x}.  By default, the
   levels are ordered such that the values returned by \code{FUN}
   are in increasing order.  Empty levels will be dropped.
 
@@ -69,6 +71,14 @@ boxplot(count ~ bymedian, data = InsectSprays,
         xlab = "Type of spray", ylab = "Insect count",
         main = "InsectSprays data", varwidth = TRUE,
         col = "lightgray")
+
+bymedianR <- with(InsectSprays, reorder(spray, count, median, decreasing=TRUE))
+stopifnot(exprs = {
+    identical(attr(bymedian, "scores") -> sc,
+              attr(bymedianR,"scores"))
+    identical(nms <- names(sc), LETTERS[1:6])
+    identical(levels(bymedian ), nms[isc <- order(sc)])
+    identical(levels(bymedianR), nms[rev(isc)])
+})
 }
 \keyword{utilities}
-
