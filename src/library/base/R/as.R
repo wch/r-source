@@ -1,7 +1,7 @@
 #  File src/library/base/R/as.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,11 +36,16 @@ as.list.default <- function (x, ...)
 
 as.list.function <- function (x, ...) c(formals(x), list(body(x)))
 
-## FIXME: as.vector(., "list")  should work for data.frames!
 as.list.data.frame <- function(x,...) {
     x <- unclass(x)
     attr(x,"row.names") <- NULL
     x
+}
+as.vector.data.frame <- function(x, mode = "any") {
+    x <- as.list.data.frame(x)
+    if(mode %in% c("any", "list"))
+        x
+    else as.vector(x, mode=mode)
 }
 
 as.list.environment <- function(x, all.names=FALSE, sorted=FALSE, ...)

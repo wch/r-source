@@ -7,6 +7,7 @@
 \title{Vectors - Creation, Coercion, etc}
 \alias{vector}
 \alias{as.vector}
+\alias{as.vector.data.frame}
 \alias{as.vector.factor}
 \alias{as.vector.POSIXlt}
 \alias{is.vector}
@@ -30,10 +31,13 @@ is.vector(x, mode = "any")
   \item{x}{an \R object.}
 }
 \description{
-  A \emph{vector} in \R is either an atomic vector, i.e., one of the types
-  
-  
-  \code{vector} produces a vector of the given length and mode.
+  A \emph{vector} in \R is either an atomic vector i.e., one of the atomic
+  types, see \sQuote{Details}, or of type (\code{\link{typeof}}) or mode
+  \code{\link{list}} or \code{\link{expression}}.
+
+  \code{vector} produces a \sQuote{simple} vector of the given length and
+  mode, where a \sQuote{simple} vector has no attribute, i.e., fulfills
+  \code{is.null(\link{attributes}(.)).
 
   \code{as.vector}, a generic, attempts to coerce its argument into a
   vector of mode \code{mode} (the default is to coerce to whichever
@@ -41,9 +45,10 @@ is.vector(x, mode = "any")
   (\code{\link{is.atomic}}), all attributes are removed.
   For \code{mode="any"}, see \sQuote{Details}.
 
-  \code{is.vector} returns \code{TRUE} if \code{x} is a vector of the
-  specified mode having no attributes \emph{other than names}.  It returns
-  \code{FALSE} otherwise.
+  \code{is.vector(xd)} returns \code{TRUE} if \code{x} is a vector of the
+  specified mode having no attributes \emph{other than names}.
+  For \code{mode="any"}, see \sQuote{Details}.
+  % It returns \code{FALSE} otherwise.
 }
 
 \details{
@@ -64,8 +69,8 @@ is.vector(x, mode = "any")
   \code{as.vector(x)} returns \code{x} unaltered and \code{is.vector(x)} is
   true for all such objects.
   For non-object \code{x}'s, \code{as.vector(x)} strips all \code{\link{attributes}}
-  but \code{\link{names}}, and \code{is.vector(.)} is true for such lists
-  and expressions.
+  but \code{\link{names}}, and \code{is.vector(x)} is true for such lists
+  and expressions unless \code{dim(x)} is not \code{NULL}.
 
   Note that factors are \emph{not} vectors; \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts a factor to a character

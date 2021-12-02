@@ -5546,6 +5546,7 @@ stopifnot(identical(unlist(lapply(1:3, f2)), 1:3))
 L0 <- list(a = quote(a+b), b = quote(B^2))
 L <- structure(L0, foo = "bar")
 E <- as.expression(L)
+d.f <- USArrests
 stopifnot(exprs = {
     identical(E, as.expression(L))
     identical(L, as.list(E))
@@ -5553,6 +5554,10 @@ stopifnot(exprs = {
     is.vector(vL)
     identical(vE <- as.vector(E), as.expression(L0))
     is.vector(vE)
+    ! is.vector(data.frame(a=1))
+    is.vector(as.vector(d.f) -> l.df)
+    identical(as.vector(d.f, mode="list"), l.df)
+    identical(as.list(d.f),                l.df)
 })
 ## is.vector(.) gave FALSE, as "foo" attribute was kept
 
