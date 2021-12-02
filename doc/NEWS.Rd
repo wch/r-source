@@ -206,6 +206,10 @@
       \dQuote{Writing R Extensions}.
       [Currently planned for early Nov: \acronym{CRAN} package authors
       have been notified.]
+
+      \item Package installation speed for packages installed with
+      \code{keep.source} has been improved. This resolve the issue
+      reported by Ofek Shilon in \PR{18236}.
     }
   }
 
