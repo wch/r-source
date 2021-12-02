@@ -5560,13 +5560,19 @@ stopifnot(exprs = {
 ## PR#18244:  <array_NULL_dimnames>[ <char-matrix> ]
 m <- matrix(1:9, 3)
 i <- cbind(letters, letters)
-ul <- unique(replicate(1e4, tryCatch(m[i], error=identity), simplify = FALSE))
-conditionMessage(ul[[1]])
+ul <- unique(replicate(1e4, tryCid(m[i]), simplify = FALSE))
+(msg <- conditionMessage(ul[[1]]))
+a4 <- array(1:10, dim=c(2,5,1,1))
+u4.<- unique(replicate(1e4, tryCid(a4[i]), simplify = FALSE))
+i4 <- cbind(i,i)
+u4 <- unique(replicate(1e4, tryCmsg(a4[i4]), simplify = FALSE))
 stopifnot(exprs = {
     length(ul) == 1
     inherits(ul[[1]], "error")
-    !englishMsgs || identical(conditionMessage(ul[[1]]),
-                              "no 'dimnames' attribute for array")
+    !englishMsgs || identical(msg, "no 'dimnames' attribute for array")
+    identical(u4., list(rep(NA_integer_, length(i))))
+    length(u4) == 1 ;  is.list(u4)
+    !englishMsgs || identical(u4[[1]], msg)
 })
 ## gave "random" results in R <= 4.1.2
 
