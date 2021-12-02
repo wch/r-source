@@ -396,6 +396,9 @@
       \item Subscripting an array \code{x} without dimnames by a
       \code{length(dim(x))}-column character matrix gave "random"
       non-sense, now an error; reported in \PR{18244} by Mikael Jagan.
+
+      \item \code{...names()} now matches \code{names(list(...))} closely,
+      fixing \PR{18247}.
     }
   }
 }

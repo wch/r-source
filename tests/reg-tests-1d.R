@@ -3994,12 +3994,12 @@ plot(w ~ x, data=dd, type = "h", xlab = quote(x[j]), ylab = quote(y[j]))# *now* 
 ## ...names()
 F <- function(x, ...) ...names()
 F(a, b="bla"/0, c=c, D=d, ..) # << does *not* evaluate arguments
-# |->  c("b", "c", "D", NA)
+# |->  c("b", "c", "D", "")
 stopifnot(exprs = {
-    identical(F(pi), character(0))
+    is.null(F(pi))
     F(foo = "bar") == "foo"
     identical(F(., .., .not.ok. = "a"-b, 2, 3, last = LAST),
-              c(  NA, ".not.ok.",      NA, NA,"last"))
+              c(  "", ".not.ok.",      "", "","last"))
 })
 # .. was wrong for a few days
 

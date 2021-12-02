@@ -1470,14 +1470,25 @@ SEXP attribute_hidden do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
     if (vl == R_UnboundValue)
 	error(_("incorrect context: the current call has no '...' to look in"));
     // else
-    SEXP out = PROTECT(allocVector(STRSXP, length_DOTS(vl)));
-    for(int i = 0; i < LENGTH(out); i++) {
-        SEXP tag = TAG(vl);
-        SET_STRING_ELT(out, i, tag == R_NilValue ? NA_STRING : PRINTNAME(tag));
-        vl = CDR(vl);
+    SEXP v_ = vl, out;
+    int n = length_DOTS(vl);
+    Rboolean named = FALSE;
+    for(int i = 0; i < n; i++) {
+	if(TAG(v_) != R_NilValue) { named = TRUE; break; }
+        v_ = CDR(v_);
     }
-
-    UNPROTECT(2); /* ans, vl */
+    if(named) {
+	PROTECT(out = allocVector(STRSXP, n)); // and is filled with "" already
+	for(int i = 0; i < n; i++) {
+	    if(TAG(vl) != R_NilValue)
+		SET_STRING_ELT(out, i, PRINTNAME(TAG(vl)));
+	    vl = CDR(vl);
+	}
+        UNPROTECT(1);
+    } else {
+	out = R_NilValue;
+    }
+    UNPROTECT(1);
     return out;
 }
 
@@ -3893,7 +3904,7 @@ SEXP attribute_hidden R_getNSValue(SEXP call, SEXP ns, SEXP name, int exported)
     SEXP exports = PROTECT(getVarValInFrame(info, R_exportsSymbol, FALSE));
     SEXP exportName = PROTECT(getVarValInFrame(exports, name, TRUE));
     if (exportName != R_UnboundValue) {
-	val = eval(checkVarName(call, exportName), ns);	
+	val = eval(checkVarName(call, exportName), ns);
 	UNPROTECT(4);  /* ns, info, exports, exportName */
 	return val;
     }
