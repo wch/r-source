@@ -232,11 +232,10 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd64, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin},
-@samp{aarch64-@/apple-@/darwin}@footnote{aka `Apple Silicon': the
-triplet name may change and is known to some as
-@samp{arm64-@/apple-@/darwin}.} and @samp{i386-@/sun-@/solaris} as well
-as perhaps (it is tested less frequently on these platforms)
+@samp{x86_64-@/apple-@/darwin} and
+@samp{aarch64-@/apple-@/darwin}@footnote{aka `Apple Silicon', known to
+some as @samp{arm64-@/apple-@/darwin}.}  as well as perhaps (it is
+tested less frequently on these platforms) @samp{i386-@/sun-@/solaris},
 @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
 @samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
@@ -955,20 +954,19 @@ case-changing (@code{wctrans}) and width (@code{wcwidth} and
 @code{wcswidth}) functions by ones contained in the @R{} sources.
 Replacement of the classification functions has been done for many years
 on macOS and AIX (and Windows): option @option{--with-internal-iswxxxxx}
-allows this to be suppressed on those platforms or used on others (it is
-now the default for Solaris).  Replacing the case-changing functions is
-new in @R{} 4.1.0 and the default on macOS.  Replacement of the width
-functions has also been done for many years and remains the default.
-These options will only matter to those working with non-ASCII character
-data, especially in languages written in a non-Western script (which
-includes `symbols' such as emoji).  Note that one of those
-@code{iswxxxxx} is @code{iswprint} which is used to decide whether to
-output a character as a glyph or as a @samp{\U@{xxxxxx@}} escape---for
-example, try @samp{"\U1f600"}, an emoji.  The width functions are of
-most importance in East Asian locale: their values differ between such
-locales.  (Replacing the system functions provides a degree of
-plaform-independence (including to OS updates) but replaces it with a
-dependence on the @R{} version.)
+allows this to be suppressed on those platforms or used on others.
+Replacing the case-changing functions was new in @R{} 4.1.0 and the
+default on macOS.  Replacement of the width functions has also been done
+for many years and remains the default.  These options will only matter
+to those working with non-ASCII character data, especially in languages
+written in a non-Western script (which includes `symbols' such as
+emoji).  Note that one of those @code{iswxxxxx} is @code{iswprint} which
+is used to decide whether to output a character as a glyph or as a
+@samp{\U@{xxxxxx@}} escape---for example, try @samp{"\U1f600"}, an
+emoji.  The width functions are of most importance in East Asian locale:
+their values differ between such locales.  (Replacing the system
+functions provides a degree of plaform-independence (including to OS
+updates) but replaces it with a dependence on the @R{} version.)
 
 @menu
 * Debugging Symbols::
@@ -1095,14 +1093,12 @@ the default compiler, in which case a different compiler could be
 selected for @code{CXX14} or @code{CXX17} or @code{CXX20} with its
 corresponding flags.
 
-The @option{-std} flag is supported by the GCC, @command{clang++}, Intel
-and Solaris compilers (the latter from version 12.4).  Currently
-accepted values are (plus some synonyms)
+The @option{-std} flag is supported by the GCC, @command{clang++} and
+Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
          c++20 gnu++20 (from 10)
-Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0)
-Solaris: c++11 c++14 (from 12.5)
+Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 19.0?)
 @end example
 @noindent
 (Those for @command{clang++} are documented at
@@ -1329,8 +1325,7 @@ run in parallel.  This affects both checking the package examples (part
 of @command{make check}) and package sources (part of @command{make
 check-devel} and @command{make check-recommended}).  It does require a
 @command{make} command which supports the @command{make -j @var{n}}
-option: most do but on Solaris you need to select GNU @code{make} or
-@code{dmake}.
+option: most do.
 
 
 Alternatively, the installed @R{} can be run, preferably with
@@ -1800,9 +1795,8 @@ file descriptors.  (Any modern OS should have default limits at least as
 large as these, but apparently NetBSD may not.  Use the shell command
 @command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
 (@command{csh}/@command{tcsh}) to check.)  For some
-compilers@footnote{The Oracle compilers on Solaris (where the issue is
-parsing very complex @R{} expressions) and GCC 9 on Linux.} and packages
-a larger stack size has been needed: 20-25MB has sufficed to date.
+compilers@footnote{Including GCC 9 on Linux.} and packages a larger
+stack size has been needed: 20-25MB has sufficed to date.
 
 @R{} makes use of a number of environment variables, the default values
 of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
@@ -2942,8 +2936,7 @@ Windows.)  64-bit builds have much larger limits.
 Because the pointers are larger, @R{}'s basic structures are larger.
 This means that @R{} objects take more space and (usually) more time to
 manipulate.  So 64-bit builds of @R{} will, all other things being
-equal, run slower than 32-bit builds.  (On Sparc Solaris the difference
-was 15-20%.)
+equal, run slower than 32-bit builds.
 
 @item
 However, `other things' may not be equal.  In the specific case of
@@ -3294,8 +3287,8 @@ suffices.  If building PCRE1 for use with @R{} a suitable
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
 @noindent  
-The @option{--enable-jit} flag is supported for most common CPUs.  (See
-also the comments for Solaris.)
+The @option{--enable-jit} flag is supported for most common CPUs but
+does not work (well or at all) for @cputype{arm64} macOS.
 
 Some packages require the `Unicode properties' which are
 optional for PCRE1: support for this and JIT can be checked at run-time
@@ -3345,10 +3338,8 @@ will also need file @file{texinfo.tex} installed (which is part of the
 @acronym{GNU} @pkg{texinfo} distribution but is often made part of the
 @TeX{} package in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (including those from @pkg{texinfo} 5.2 and
-6.0-6.6) need to be run under @command{bash} rather than a Bourne shell,
-especially on Solaris. Some of the issues which have been observed with
-broken versions of @command{texi2dvi} can be circumvented by setting the
+script.  Some of the issues which have been observed with broken
+versions of @command{texi2dvi} can be circumvented by setting the
 environment variable @env{R_TEXI2DVICMD} to the value @code{emulation}.}
 Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
 to be compatible: we have seen problems with older @TeX{} distributions.
@@ -3478,15 +3469,14 @@ contain one which is likely to suffice (although a system version may
 have higher performance).  @acronym{XDR} is part of @acronym{RPC} and
 historically has been part of @file{libc} on a Unix-alike.  (In
 principle @command{man xdr_string} should tell you which library is
-needed, but it often does not: on Solaris and others it is provided by
-@code{libnsl}.)  However some builds@footnote{This is the default as
-from @code{glibc} 2.26 and has been confirmed for Fedora >= 28, which does
-not mention this on its @command{man} pages.} of @code{glibc} omit or
-hide it with the intention that the @acronym{TI-RPC} library be used, in
-which case @code{libtirpc} (and its development version) should be
-installed, and its headers@footnote{@R{} uses @file{rpc/xdr.h} but that
-includes @file{netconfig.h} from the top @file{tirpc} directory.} need
-to be on the C include path or under @file{/usr/include/tirpc}.
+needed, but it often does not: on some OSes it is provided by
+@code{libnsl}.)  However some builds@footnote{Including that used by
+Fedora.} of @code{glibc} omit or hide it with the intention that the
+@acronym{TI-RPC} library be used, in which case @code{libtirpc} (and its
+development version) should be installed, and its headers@footnote{@R{}
+uses @file{rpc/xdr.h} but that includes @file{netconfig.h} from the top
+@file{tirpc} directory.} need to be on the C include path or under
+@file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3497,13 +3487,13 @@ require the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 Some systems (notably macOS and at least some FreeBSD systems) have
 inadequate support for collation in multibyte locales.  It is possible
 to replace the OS's collation support by that from ICU (International
-Components for Unicode, @uref{http://site.icu-project.org/}), and this
+Components for Unicode, @uref{https://icu.unicode.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
-Linux distributions, Solaris, FreeBSD, macOS and AIX, usually as
-@code{libicu} or @code{icu4c}.  It will be used by default where
-available: should a very old or broken version of ICU be found this can
-be suppressed by @option{--without-ICU}.
+Linux distributions, FreeBSD, macOS and AIX, usually as @code{libicu} or
+@code{icu4c}.  It will be used by default where available: should a very
+old or broken version of ICU be found this can be suppressed by
+@option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
@@ -4395,15 +4385,9 @@ path to a shell, e.g.@: @file{/usr/local/bin/bash}).
 @section Using make
 @findex make
 
-To compile @R{}, you will most likely find it easiest to use
-@acronym{GNU} @command{make}, although the Sun @command{make} works on
-Solaris.
-
 To build in a separate directory you need a @command{make} that supports
 the @code{VPATH} variable, for example @acronym{GNU} @command{make} and
-Sun @command{make}.
-
-@command{dmake} has also been used. e.g,@: on Solaris 10.
+@command{dmake}.
 
 If you want to use a @command{make} by another name, for example if your
 @acronym{GNU} @command{make} is called @samp{gmake}, you need to set the
@@ -4562,8 +4546,8 @@ under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
 @command{autoconf} of 2.69 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
-this para in late 2018, @pkg{autoconf-2.69} from 2012 and
-@pkg{automake-1.16.1} from 2018.} have been thoroughly tested.
+this para in late 2021, @pkg{autoconf-2.71} and @pkg{automake-1.16.5}.}
+have been thoroughly tested.
 
 File @file{src/include/config.h} is created by @command{autoheader}
 (part of @pkg{autoconf}).
@@ -4624,7 +4608,6 @@ Linux: __linux__
 macOS: __APPLE__
 NetBSD: __NetBSD__
 OpenBSD: __OpenBSD__
-Solaris: __sun, sun
 Windows: _WIN32, _WIN64
 @end example
 
@@ -5286,7 +5269,7 @@ available only for @cputype{arm64}, where components @code{cairo},
 @subsection Other C/C++ compilers
 
 Other distributions of @command{clang} may be available from
-@uref{https://releases.llvm.org/}.  In particular, these include support
+@uref{}.  In particular, these include support
 for OpenMP which Apple builds of @command{clang} do not, and may contain
 more bugfixes and new features (such as better diagnostics) than that in
 Command Line Tools / Xcode.
@@ -5533,7 +5516,7 @@ JAVA_HOME=/path/to/jdk-17.jdk/Contents/Home
 @end example
 
 For an @cputype{arm64} build, the earliest Java version which is
-officially supported is 17.  The currrently simplest way to install Java
+officially supported is 17.  The currently simplest way to install Java
 is from @uref{https://adoptium.net, Adoptium} (who call the architecture
 @cputype{aarch64}): this installs into an Apple-standard location and so
 works with @command{/usr/bin/java}. Other builds are available from
