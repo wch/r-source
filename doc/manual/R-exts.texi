@@ -8310,11 +8310,10 @@ be current.
 
 @menu
 * Linux::
-* Solaris::
 * macOS::
 @end menu
 
-@node Linux, Solaris, Profiling compiled code, Profiling compiled code
+@node Linux, macOS, Profiling compiled code, Profiling compiled code
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
@@ -8527,14 +8526,7 @@ samples  %        symbol name
 Shutting down the profiler and clearing the records needs to be done as
 root.
 
-
-@node Solaris, macOS, Linux, Profiling compiled code
-@subsection Solaris
-
-On 64-bit (only) Solaris, the standard profiling tool @command{gprof}
-collects information from shared objects compiled with @option{-pg}.
-
-@node macOS,  , Solaris, Profiling compiled code
+@node macOS,  , Linux, Profiling compiled code
 @subsection macOS
 
 Developers have recommended @command{sample} (or @command{Sampler.app},
