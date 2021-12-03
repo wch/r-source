@@ -232,11 +232,10 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd64, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin},
-@samp{aarch64-@/apple-@/darwin}@footnote{aka `Apple Silicon': the
-triplet name may change and is known to some as
-@samp{arm64-@/apple-@/darwin}.} and @samp{i386-@/sun-@/solaris} as well
-as perhaps (it is tested less frequently on these platforms)
+@samp{x86_64-@/apple-@/darwin} and
+@samp{aarch64-@/apple-@/darwin}@footnote{aka `Apple Silicon', known to
+some as @samp{arm64-@/apple-@/darwin}.}  as well as perhaps (it is
+tested less frequently on these platforms) @samp{i386-@/sun-@/solaris},
 @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
 @samp{i386-@/*-@/netbsd}, @samp{x86_64-@/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
@@ -798,8 +797,8 @@ make prefix=/path/to/here uninstall-libR
 
 Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
-builds under Linux and Solaris for different @acronym{CPU}s or 32- and
-64-bit builds.
+builds under Linux for different @acronym{CPU}s or 32- and 64-bit
+builds.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
@@ -955,20 +954,19 @@ case-changing (@code{wctrans}) and width (@code{wcwidth} and
 @code{wcswidth}) functions by ones contained in the @R{} sources.
 Replacement of the classification functions has been done for many years
 on macOS and AIX (and Windows): option @option{--with-internal-iswxxxxx}
-allows this to be suppressed on those platforms or used on others (it is
-now the default for Solaris).  Replacing the case-changing functions is
-new in @R{} 4.1.0 and the default on macOS.  Replacement of the width
-functions has also been done for many years and remains the default.
-These options will only matter to those working with non-ASCII character
-data, especially in languages written in a non-Western script (which
-includes `symbols' such as emoji).  Note that one of those
-@code{iswxxxxx} is @code{iswprint} which is used to decide whether to
-output a character as a glyph or as a @samp{\U@{xxxxxx@}} escape---for
-example, try @samp{"\U1f600"}, an emoji.  The width functions are of
-most importance in East Asian locale: their values differ between such
-locales.  (Replacing the system functions provides a degree of
-plaform-independence (including to OS updates) but replaces it with a
-dependence on the @R{} version.)
+allows this to be suppressed on those platforms or used on others.
+Replacing the case-changing functions was new in @R{} 4.1.0 and the
+default on macOS.  Replacement of the width functions has also been done
+for many years and remains the default.  These options will only matter
+to those working with non-ASCII character data, especially in languages
+written in a non-Western script (which includes `symbols' such as
+emoji).  Note that one of those @code{iswxxxxx} is @code{iswprint} which
+is used to decide whether to output a character as a glyph or as a
+@samp{\U@{xxxxxx@}} escape---for example, try @samp{"\U1f600"}, an
+emoji.  The width functions are of most importance in East Asian locale:
+their values differ between such locales.  (Replacing the system
+functions provides a degree of plaform-independence (including to OS
+updates) but replaces it with a dependence on the @R{} version.)
 
 @menu
 * Debugging Symbols::
@@ -1095,14 +1093,12 @@ the default compiler, in which case a different compiler could be
 selected for @code{CXX14} or @code{CXX17} or @code{CXX20} with its
 corresponding flags.
 
-The @option{-std} flag is supported by the GCC, @command{clang++}, Intel
-and Solaris compilers (the latter from version 12.4).  Currently
-accepted values are (plus some synonyms)
+The @option{-std} flag is supported by the GCC, @command{clang++} and
+Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
 g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
          c++20 gnu++20 (from 10)
-Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0)
-Solaris: c++11 c++14 (from 12.5)
+Intel:   c++11 c++14 (from 16.0) c++17 (from 17.0) c++20 (from 19.0?)
 @end example
 @noindent
 (Those for @command{clang++} are documented at
@@ -1329,8 +1325,7 @@ run in parallel.  This affects both checking the package examples (part
 of @command{make check}) and package sources (part of @command{make
 check-devel} and @command{make check-recommended}).  It does require a
 @command{make} command which supports the @command{make -j @var{n}}
-option: most do but on Solaris you need to select GNU @code{make} or
-@code{dmake}.
+option: most do.
 
 
 Alternatively, the installed @R{} can be run, preferably with
@@ -1800,9 +1795,8 @@ file descriptors.  (Any modern OS should have default limits at least as
 large as these, but apparently NetBSD may not.  Use the shell command
 @command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
 (@command{csh}/@command{tcsh}) to check.)  For some
-compilers@footnote{The Oracle compilers on Solaris (where the issue is
-parsing very complex @R{} expressions) and GCC 9 on Linux.} and packages
-a larger stack size has been needed: 20-25MB has sufficed to date.
+compilers@footnote{Including GCC 9 on Linux.} and packages a larger
+stack size has been needed: 20-25MB has sufficed to date.
 
 @R{} makes use of a number of environment variables, the default values
 of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
@@ -2941,8 +2935,7 @@ Windows.)  64-bit builds have much larger limits.
 Because the pointers are larger, @R{}'s basic structures are larger.
 This means that @R{} objects take more space and (usually) more time to
 manipulate.  So 64-bit builds of @R{} will, all other things being
-equal, run slower than 32-bit builds.  (On Sparc Solaris the difference
-was 15-20%.)
+equal, run slower than 32-bit builds.
 
 @item
 However, `other things' may not be equal.  In the specific case of
@@ -3293,8 +3286,8 @@ suffices.  If building PCRE1 for use with @R{} a suitable
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
 @noindent  
-The @option{--enable-jit} flag is supported for most common CPUs.  (See
-also the comments for Solaris.)
+The @option{--enable-jit} flag is supported for most common CPUs but
+does not work (well or at all) for @cputype{arm64} macOS.
 
 Some packages require the `Unicode properties' which are
 optional for PCRE1: support for this and JIT can be checked at run-time
@@ -3344,10 +3337,8 @@ will also need file @file{texinfo.tex} installed (which is part of the
 @acronym{GNU} @pkg{texinfo} distribution but is often made part of the
 @TeX{} package in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (including those from @pkg{texinfo} 5.2 and
-6.0-6.6) need to be run under @command{bash} rather than a Bourne shell,
-especially on Solaris. Some of the issues which have been observed with
-broken versions of @command{texi2dvi} can be circumvented by setting the
+script.  Some of the issues which have been observed with broken
+versions of @command{texi2dvi} can be circumvented by setting the
 environment variable @env{R_TEXI2DVICMD} to the value @code{emulation}.}
 Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
 to be compatible: we have seen problems with older @TeX{} distributions.
@@ -3477,15 +3468,14 @@ contain one which is likely to suffice (although a system version may
 have higher performance).  @acronym{XDR} is part of @acronym{RPC} and
 historically has been part of @file{libc} on a Unix-alike.  (In
 principle @command{man xdr_string} should tell you which library is
-needed, but it often does not: on Solaris and others it is provided by
-@code{libnsl}.)  However some builds@footnote{This is the default as
-from @code{glibc} 2.26 and has been confirmed for Fedora >= 28, which does
-not mention this on its @command{man} pages.} of @code{glibc} omit or
-hide it with the intention that the @acronym{TI-RPC} library be used, in
-which case @code{libtirpc} (and its development version) should be
-installed, and its headers@footnote{@R{} uses @file{rpc/xdr.h} but that
-includes @file{netconfig.h} from the top @file{tirpc} directory.} need
-to be on the C include path or under @file{/usr/include/tirpc}.
+needed, but it often does not: on some OSes it is provided by
+@code{libnsl}.)  However some builds@footnote{Including that used by
+Fedora.} of @code{glibc} omit or hide it with the intention that the
+@acronym{TI-RPC} library be used, in which case @code{libtirpc} (and its
+development version) should be installed, and its headers@footnote{@R{}
+uses @file{rpc/xdr.h} but that includes @file{netconfig.h} from the top
+@file{tirpc} directory.} need to be on the C include path or under
+@file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3499,10 +3489,10 @@ to replace the OS's collation support by that from ICU (International
 Components for Unicode, @uref{https://icu.unicode.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
-Linux distributions, Solaris, FreeBSD, macOS and AIX, usually as
-@code{libicu} or @code{icu4c}.  It will be used by default where
-available: should a very old or broken version of ICU be found this can
-be suppressed by @option{--without-ICU}.
+Linux distributions, FreeBSD, macOS and AIX, usually as @code{libicu} or
+@code{icu4c}.  It will be used by default where available: should a very
+old or broken version of ICU be found this can be suppressed by
+@option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
@@ -4394,15 +4384,9 @@ path to a shell, e.g.@: @file{/usr/local/bin/bash}).
 @section Using make
 @findex make
 
-To compile @R{}, you will most likely find it easiest to use
-@acronym{GNU} @command{make}, although the Sun @command{make} works on
-Solaris.
-
 To build in a separate directory you need a @command{make} that supports
 the @code{VPATH} variable, for example @acronym{GNU} @command{make} and
-Sun @command{make}.
-
-@command{dmake} has also been used. e.g,@: on Solaris 10.
+@command{dmake}.
 
 If you want to use a @command{make} by another name, for example if your
 @acronym{GNU} @command{make} is called @samp{gmake}, you need to set the
@@ -4561,8 +4545,8 @@ under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
 @command{autoconf} of 2.69 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
-this para in late 2018, @pkg{autoconf-2.69} from 2012 and
-@pkg{automake-1.16.1} from 2018.} have been thoroughly tested.
+this para in late 2021, @pkg{autoconf-2.71} and @pkg{automake-1.16.5}.}
+have been thoroughly tested.
 
 File @file{src/include/config.h} is created by @command{autoheader}
 (part of @pkg{autoconf}).
@@ -4623,7 +4607,6 @@ Linux: __linux__
 macOS: __APPLE__
 NetBSD: __NetBSD__
 OpenBSD: __OpenBSD__
-Solaris: __sun, sun
 Windows: _WIN32, _WIN64
 @end example
 
@@ -4631,7 +4614,6 @@ Windows: _WIN32, _WIN64
 * X11 issues::
 * Linux::
 * macOS::
-* Solaris::
 * FreeBSD::
 * OpenBSD::
 * Cygwin::
@@ -4997,7 +4979,7 @@ SAFE_FFLAGS=-axsse2
 @c x86_64-apple-macos10.12 and arm64-apple-macos11
 @c 'Activity monitor' reports the architectures as 'Intel' and 'Apple'
 
-@node macOS, Solaris, Linux, Platform notes
+@node macOS, FreeBSD, Linux, Platform notes
 @section macOS
 @cindex macOS
 
@@ -5285,10 +5267,9 @@ available only for @cputype{arm64}, where components @code{cairo},
 @subsection Other C/C++ compilers
 
 Other distributions of @command{clang} may be available from
-@uref{https://releases.llvm.org/}.@footnote{At the time of writing there
-was one for @command{clang} 12.0.0 but not for several other recent
-versions.} In particular, these include support for OpenMP which Apple
-builds of @command{clang} do not.
+@uref{https://github.com/llvm/llvm-project/releases/}. In particular,
+these include support for OpenMP which Apple builds of @command{clang}
+do not.
 
 Suppose one of these distributions is installed under
 @file{/usr/local/clang}. Use a file @file{config.site} containing
@@ -5844,265 +5825,266 @@ If building software or installing source packages with @command{cmake}
 architecture (use @command{file} to be sure).  Running compilers from an
 @cputype{x86_64} executable will generate @cputype{x86_64} code @dots{}.
 
-@node Solaris, FreeBSD, macOS, Platform notes
-@section Solaris
-@cindex Solaris
+@c @node Solaris, FreeBSD, macOS, Platform notes
+@c @section Solaris
+@c @cindex Solaris
 
-@menu
-* 64-bit builds::
-* Using gcc::
-@end menu
+@c @menu
+@c * 64-bit builds::
+@c * Using gcc::
+@c @end menu
 
-@R{} has been built successfully on Solaris 10 using the (zero cost)
-Oracle Developer Studio@footnote{Formerly known as Oracle Solaris Studio
-or Sun Studio.} compilers: there has also been success with
-@command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
-or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
-@cputype{x86} executables are the default.)  How these compilers
-identify themselves is slightly confusing: commands @command{CC -V} with
-Developer Studio 12.5 and 12.6 report as versions 5.14 and 5.15.  We
-will only consider Developer Studio versions 12.5 (May 2016) and 12.6
-(July 2017).
+@c @R{} has been built successfully on Solaris 10 using the (zero cost)
+@c Oracle Developer Studio@footnote{Formerly known as Oracle Solaris Studio
+@c or Sun Studio.} compilers: there has also been success with
+@c @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
+@c or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
+@c @cputype{x86} executables are the default.)  How these compilers
+@c identify themselves is slightly confusing: commands @command{CC -V} with
+@c Developer Studio 12.5 and 12.6 report as versions 5.14 and 5.15.  We
+@c will only consider Developer Studio versions 12.5 (May 2016) and 12.6
+@c (July 2017).
 
-There have been few reports on Solaris 11, with no known extra issues.
+@c There have been few reports on Solaris 11, with no known extra issues.
 
-Solaris was last tested on Sparc machines in June 2017.
+@c Solaris was last tested on Sparc machines in June 2017 and on
+@c @cputype{amd64} in December 2021.
 
-The Solaris versions of several of the tools needed to build @R{}
-(e.g.@: @command{make}, @command{ar} and @command{ld}) are in
-@file{/usr/ccs/bin}, so if using those tools ensure this is in your
-path.  A version of the preferred @acronym{GNU} @command{tar} is (if
-installed) in @file{/usr/sfw/bin}.  It may be necessary to avoid the
-tools in @file{/usr/ucb}: POSIX-compliant versions of some tools can be
-found in @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
+@c The Solaris versions of several of the tools needed to build @R{}
+@c (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
+@c @file{/usr/ccs/bin}, so if using those tools ensure this is in your
+@c path.  A version of the preferred @acronym{GNU} @command{tar} is (if
+@c installed) in @file{/usr/sfw/bin}.  It may be necessary to avoid the
+@c tools in @file{/usr/ucb}: POSIX-compliant versions of some tools can be
+@c found in @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
-A large selection of Open Source software can be installed from
-@uref{https://www.opencsw.org}, by default installed under
-@file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
-(sufficient) but @code{zlib} version 1.2.3 (too old): OpenCSW has 1.2.8.
-(Note from 2019: updating of OpenCSW has slowed or stopped.)
+@c A large selection of Open Source software can be installed from
+@c @uref{https://www.opencsw.org}, by default installed under
+@c @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
+@c (sufficient) but @code{zlib} version 1.2.3 (too old): OpenCSW has 1.2.8.
+@c (Note from 2019: updating of OpenCSW has slowed or stopped.)
 
-At least when compiling with Oracle compilers, Solaris uses far more
-stack space than other platforms.  This makes it desirable to build
-PCRE1 (and PCRE2 < 10.30) with the option
-@option{--disable-stack-for-recursion}: the OpenCSW distribution was at
-the time of writing.
+@c At least when compiling with Oracle compilers, Solaris uses far more
+@c stack space than other platforms.  This makes it desirable to build
+@c PCRE1 (and PCRE2 < 10.30) with the option
+@c @option{--disable-stack-for-recursion}: the OpenCSW distribution was at
+@c the time of writing.
 
-The Oracle compilers are unusual in not including
-@file{/usr/local/include} in the default include search path: @R{}'s
-default @code{CPPFLAGS=-I/usr/local/include} remedies this.  If you rely
-on OpenCSW software you may need @code{CPPFLAGS=-I/opt/csw/include} (or
-both).
+@c The Oracle compilers are unusual in not including
+@c @file{/usr/local/include} in the default include search path: @R{}'s
+@c default @code{CPPFLAGS=-I/usr/local/include} remedies this.  If you rely
+@c on OpenCSW software you may need @code{CPPFLAGS=-I/opt/csw/include} (or
+@c both).
 
-You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
-Solaris version of @code{iconv} is not sufficiently powerful.
+@c You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
+@c Solaris version of @code{iconv} is not sufficiently powerful.
 
-The native @command{make} suffices to build @R{} but a number of
-packages require @acronym{GNU} @command{make} (some without declaring it
-as @samp{SystemRequirements} in the @file{DESCRIPTION} file).
+@c The native @command{make} suffices to build @R{} but a number of
+@c packages require @acronym{GNU} @command{make} (some without declaring it
+@c as @samp{SystemRequirements} in the @file{DESCRIPTION} file).
 
-The support for the C99 @code{long double} type on Sparc hardware uses
-quad-precision arithmetic, and this is usually slow because it is done
-by software emulation.  On such systems the @command{configure} option
-@option{--disable-long-double} can be used for faster but less accurate
-computations.
+@c The support for the C99 @code{long double} type on Sparc hardware uses
+@c quad-precision arithmetic, and this is usually slow because it is done
+@c by software emulation.  On such systems the @command{configure} option
+@c @option{--disable-long-double} can be used for faster but less accurate
+@c computations.
 
-The Solaris time-zone conversion services seem to be unreliable pre-1916
-in Europe (when daylight-savings time was first introduced): most often
-reporting in the non-existent DST variant.  Using @command{configure}
-option @option{--with-internal-tzcode} is recommended, and required if
-you find time-zone abbreviations being given odd values (as has been
-seen on 64-bit builds without it). It is also required for 
-@command{make check} to pass on Solaris 10.
+@c The Solaris time-zone conversion services seem to be unreliable pre-1916
+@c in Europe (when daylight-savings time was first introduced): most often
+@c reporting in the non-existent DST variant.  Using @command{configure}
+@c option @option{--with-internal-tzcode} is recommended, and required if
+@c you find time-zone abbreviations being given odd values (as has been
+@c seen on 64-bit builds without it). It is also required for 
+@c @command{make check} to pass on Solaris 10.
 
-Using configure options @option{--with-internal-iswxxxxx} and
-@option{--with-internal-towlower} is recommended for those working with
-non-Western character data (as the system implementations use old tables
-only covering the Unicode Basic Multilingual Plane).
+@c Using configure options @option{--with-internal-iswxxxxx} and
+@c @option{--with-internal-towlower} is recommended for those working with
+@c non-Western character data (as the system implementations use old tables
+@c only covering the Unicode Basic Multilingual Plane).
 
-When using the Oracle compilers do @emph{not} specify @option{-fast}, as
-this disables @acronym{IEEE} arithmetic and @command{make check} will
-fail.
+@c When using the Oracle compilers do @emph{not} specify @option{-fast}, as
+@c this disables @acronym{IEEE} arithmetic and @command{make check} will
+@c fail.
 
-A little juggling of paths was needed to ensure @acronym{GNU}
-@code{libiconv} (in @file{/usr/local}) was used rather than the Solaris
-@code{iconv}:
+@c A little juggling of paths was needed to ensure @acronym{GNU}
+@c @code{libiconv} (in @file{/usr/local}) was used rather than the Solaris
+@c @code{iconv}:
 
-@example
-CC="cc -xc99"
-CFLAGS="-O -xlibmieee"
-FC=f95
-FFLAGS=-O
-CXX=CC
-CXXSTD="-std=c++11 -library=stdcpp,CrunG3"
-CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
-CXX14STD="-std=c++14 -library=stdcpp,CrunG3"
-CXXFLAGS=-O
-R_LD_LIBRARY_PATH="/opt/developerstudio12.6/lib:/usr/local/lib:/opt/csw/lib"
-@end example
+@c @example
+@c CC="cc -xc99"
+@c CFLAGS="-O -xlibmieee"
+@c FC=f95
+@c FFLAGS=-O
+@c CXX=CC
+@c CXXSTD="-std=c++11 -library=stdcpp,CrunG3"
+@c CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
+@c CXX14STD="-std=c++14 -library=stdcpp,CrunG3"
+@c CXXFLAGS=-O
+@c R_LD_LIBRARY_PATH="/opt/developerstudio12.6/lib:/usr/local/lib:/opt/csw/lib"
+@c @end example
 
-The Oracle compilers do not by default conform to the C99 standard
-(appendix F 8.9) on the return values of functions such as @code{log}:
-use @option{-xlibmieee} to ensure this.
+@c The Oracle compilers do not by default conform to the C99 standard
+@c (appendix F 8.9) on the return values of functions such as @code{log}:
+@c use @option{-xlibmieee} to ensure this.
 
-A peculiarity of some versions of the Fortran compiler has been that
-when asked to link a shared object they did not link against all the
-Fortran 9x runtime libraries, hence
-@example
-FCLIBS_XTRA="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
-@end example
+@c A peculiarity of some versions of the Fortran compiler has been that
+@c when asked to link a shared object they did not link against all the
+@c Fortran 9x runtime libraries, hence
+@c @example
+@c FCLIBS_XTRA="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
+@c @end example
 
-@noindent
-has been needed.
+@c @noindent
+@c has been needed.
 
-Using @code{-xlibmil} in @code{CFLAGS} or @code{FFLAGS} allows more
-system mathematical functions to be inlined.
+@c Using @code{-xlibmil} in @code{CFLAGS} or @code{FFLAGS} allows more
+@c system mathematical functions to be inlined.
 
-On @cputype{x86} you will get marginally higher performance @emph{via}
+@c On @cputype{x86} you will get marginally higher performance @emph{via}
 
-@example
-CFLAGS="-xO5 -xlibmieee -xlibmil -nofstore -xtarget=native"
-FFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
-CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
-SAFE_FFLAGS="-O -xlibmil -fstore -xtarget=native"
-@end example
+@c @example
+@c CFLAGS="-xO5 -xlibmieee -xlibmil -nofstore -xtarget=native"
+@c FFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
+@c CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
+@c SAFE_FFLAGS="-O -xlibmil -fstore -xtarget=native"
+@c @end example
 
-@noindent
-but the use of @code{-nofstore} can be less numerically stable, and some
-packages have in the past failed to compile at optimization
-level 5.
+@c @noindent
+@c but the use of @code{-nofstore} can be less numerically stable, and some
+@c packages have in the past failed to compile at optimization
+@c level 5.
 
-The Oracle compilers provide several implementations of the C++
-standards which select both the set of headers and a C++ runtime
-library.  One of those is selected by the @option{-library} flag, which
-as it is needed for both compiling and linking is best specified as part
-of the compiler or standard.  Current @R{} expects a C++11 compiler, for
-which the choice given above is the only possibility.  Although version
-12.5 accepted the flag @option{-std=c++14}, it did not pass
-@command{configure}'s conformance tests: version 12.6 does.
-
-
-@cindex BLAS library
-@cindex LAPACK library
-
-The performance library @code{sunperf} is available for use with the
-Oracle compilers.  If selected as a @acronym{BLAS}, it must also be
-selected as LAPACK @emph{via}
-
-@example
-./configure --with-blas='-library=sunperf' --with-lapack
-@end example
-
-@noindent
-This has often given test failures in the past, in several different
-places.@footnote{When last checked it failed in @file{tests/reg-BLAS.R},
-and on some builds, including for @cputype{amd64}, it failed in
-@code{example(eigen)}.}
-
-Parsing very complex @R{} expressions needs a lot of stack space when
-the Oracle compilers are used: several packages require the stack
-increased to at least 20MB.
-
-Some people have reported that the Solaris @code{libintl} needs to be
-avoided, for example by using @option{--disable-nls} or
-@option{--with-included-gettext} or using @code{libintl} from OpenCSW.
-(On the other hand, there have been many successful installs which
-automatically detected @code{libintl} from OpenCSW or selected the
-included @code{gettext}.)
-
-It has been reported that some Solaris installations need
-
-@example
-INTERNET_LIBS="-lsocket -lnsl"
-@end example
-
-@noindent
-on the @command{configure} command line or in file @file{config.site};
-however, there have been many successful installs without this.
-
-@node 64-bit builds, Using gcc, Solaris, Solaris
-@subsection 64-bit builds
-
-On both @samp{x86} and @samp{Sparc} platforms the compilers default to
-32-bit code.
-
-For a 64-bit target add @option{-m64} to the compiler macros
-and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
-@code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
-library directories if used, e.g.@: @code{-L/opt/csw/lib/amd64}).
-It will also be necessary to point @command{pkg-config} at the 64-bit
-directories, e.g.@: by something like
-
-@example
-PKG_CONFIG_PATH= /usr/local/lib/amd64/pkgconfig:/opt/csw/lib/64/pkgconfig:/usr/lib/64/pkgconfig
-@end example
-
-@noindent
-and to specify a 64-bit Java VM by e.g.@:
-
-@example
-JAVA_CPPFLAGS="-I$@{JAVA_HOME@}/../include -I$@{JAVA_HOME@}/../include/solaris"
-JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
-JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
-  -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
-@end example
-
-@node Using gcc,  , 64-bit builds, Solaris
-@subsection Using gcc
-
-If using @command{gcc}, ensure that the compiler was compiled for the
-version of Solaris in use.  (This can be ascertained from @command{gcc
--v}.)  @command{gcc} makes modified versions of some header files, and
-several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.  Note that this can even
-apply to OS patches: some 2016 patches to Solaris 10 changed its C
-header files in way incompatible@footnote{In particular, header
-@file{cmath} in C++11 mode includes @file{math.h} and
-@file{iso/math_c99.h} and @command{gcc} had `fixed' an earlier version
-of the latter.} with the modified versions included with OpenCSW's
-binary distribution.
-
-The notes here are for @command{gcc} set up to use the Solaris linker:
-it can also be set up to use GNU @command{ld}, but that has not been
-tested.  The tests were for compilers from the OpenCSW repository:
-Solaris systems often come with much older compilers installed under
-@file{/usr/sfw/bin}.  One of @option{-m32} or @option{-m64} will be the
-default and could be omitted, but it is not easy to find out which.
-(For OpenCSW it is @option{-m32}.)
-
-Compilation for an @cputype{x86} target with @command{gcc}@tie{}5.2.0
-needed
-
-@example
-CC="gcc -m32"
-CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
-FC="gfortran -m32"
-CXX="g++ -m32"
-LDFLAGS="-L/opt/csw/lib -L/usr/local/lib"
-@end example
-
-For an @cputype{amd64} target we used 
-
-@example
-CC="gcc -m64"
-CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
-FC="gfortran -m64"
-CXX="g++ -m64"
-LDFLAGS="-L/opt/csw/lib/amd64 -L/usr/local/lib/amd64"
-@end example
-
-Note that paths such as @file{/opt/csw/lib}, @file{/usr/local/lib/amd64}
-and @file{/opt/csw/lib/amd64} may need to be in the
-@enindex LD_LIBRARY_PATH
-@env{LD_LIBRARY_PATH} during configuration.
-
-The latest version of @command{gcc} available in the OpenCSW
-distribution at the time of writing was 5.5.0 (and had been since Oct
-2017).  Later versions can be built from the sources, e.g.@: 9.3.0 (which
-supports C++17, unlike 5.x).
+@c The Oracle compilers provide several implementations of the C++
+@c standards which select both the set of headers and a C++ runtime
+@c library.  One of those is selected by the @option{-library} flag, which
+@c as it is needed for both compiling and linking is best specified as part
+@c of the compiler or standard.  Current @R{} expects a C++11 compiler, for
+@c which the choice given above is the only possibility.  Although version
+@c 12.5 accepted the flag @option{-std=c++14}, it did not pass
+@c @command{configure}'s conformance tests: version 12.6 does.
 
 
-@node FreeBSD, OpenBSD, Solaris, Platform notes
+@c @cindex BLAS library
+@c @cindex LAPACK library
+
+@c The performance library @code{sunperf} is available for use with the
+@c Oracle compilers.  If selected as a @acronym{BLAS}, it must also be
+@c selected as LAPACK @emph{via}
+
+@c @example
+@c ./configure --with-blas='-library=sunperf' --with-lapack
+@c @end example
+
+@c @noindent
+@c This has often given test failures in the past, in several different
+@c places.@footnote{When last checked it failed in @file{tests/reg-BLAS.R},
+@c and on some builds, including for @cputype{amd64}, it failed in
+@c @code{example(eigen)}.}
+
+@c Parsing very complex @R{} expressions needs a lot of stack space when
+@c the Oracle compilers are used: several packages require the stack
+@c increased to at least 20MB.
+
+@c Some people have reported that the Solaris @code{libintl} needs to be
+@c avoided, for example by using @option{--disable-nls} or
+@c @option{--with-included-gettext} or using @code{libintl} from OpenCSW.
+@c (On the other hand, there have been many successful installs which
+@c automatically detected @code{libintl} from OpenCSW or selected the
+@c included @code{gettext}.)
+
+@c It has been reported that some Solaris installations need
+
+@c @example
+@c INTERNET_LIBS="-lsocket -lnsl"
+@c @end example
+
+@c @noindent
+@c on the @command{configure} command line or in file @file{config.site};
+@c however, there have been many successful installs without this.
+
+@c @node 64-bit builds, Using gcc, Solaris, Solaris
+@c @subsection 64-bit builds
+
+@c On both @samp{x86} and @samp{Sparc} platforms the compilers default to
+@c 32-bit code.
+
+@c For a 64-bit target add @option{-m64} to the compiler macros
+@c and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
+@c @code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
+@c library directories if used, e.g.@: @code{-L/opt/csw/lib/amd64}).
+@c It will also be necessary to point @command{pkg-config} at the 64-bit
+@c directories, e.g.@: by something like
+
+@c @example
+@c PKG_CONFIG_PATH= /usr/local/lib/amd64/pkgconfig:/opt/csw/lib/64/pkgconfig:/usr/lib/64/pkgconfig
+@c @end example
+
+@c @noindent
+@c and to specify a 64-bit Java VM by e.g.@:
+
+@c @example
+@c JAVA_CPPFLAGS="-I$@{JAVA_HOME@}/../include -I$@{JAVA_HOME@}/../include/solaris"
+@c JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
+@c JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
+@c   -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
+@c @end example
+
+@c @node Using gcc,  , 64-bit builds, Solaris
+@c @subsection Using gcc
+
+@c If using @command{gcc}, ensure that the compiler was compiled for the
+@c version of Solaris in use.  (This can be ascertained from @command{gcc
+@c -v}.)  @command{gcc} makes modified versions of some header files, and
+@c several reports of problems were due to using @command{gcc} compiled on
+@c one version of Solaris on a later version.  Note that this can even
+@c apply to OS patches: some 2016 patches to Solaris 10 changed its C
+@c header files in way incompatible@footnote{In particular, header
+@c @file{cmath} in C++11 mode includes @file{math.h} and
+@c @file{iso/math_c99.h} and @command{gcc} had `fixed' an earlier version
+@c of the latter.} with the modified versions included with OpenCSW's
+@c binary distribution.
+
+@c The notes here are for @command{gcc} set up to use the Solaris linker:
+@c it can also be set up to use GNU @command{ld}, but that has not been
+@c tested.  The tests were for compilers from the OpenCSW repository:
+@c Solaris systems often come with much older compilers installed under
+@c @file{/usr/sfw/bin}.  One of @option{-m32} or @option{-m64} will be the
+@c default and could be omitted, but it is not easy to find out which.
+@c (For OpenCSW it is @option{-m32}.)
+
+@c Compilation for an @cputype{x86} target with @command{gcc}@tie{}5.2.0
+@c needed
+
+@c @example
+@c CC="gcc -m32"
+@c CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
+@c FC="gfortran -m32"
+@c CXX="g++ -m32"
+@c LDFLAGS="-L/opt/csw/lib -L/usr/local/lib"
+@c @end example
+
+@c For an @cputype{amd64} target we used 
+
+@c @example
+@c CC="gcc -m64"
+@c CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
+@c FC="gfortran -m64"
+@c CXX="g++ -m64"
+@c LDFLAGS="-L/opt/csw/lib/amd64 -L/usr/local/lib/amd64"
+@c @end example
+
+@c Note that paths such as @file{/opt/csw/lib}, @file{/usr/local/lib/amd64}
+@c and @file{/opt/csw/lib/amd64} may need to be in the
+@c @enindex LD_LIBRARY_PATH
+@c @env{LD_LIBRARY_PATH} during configuration.
+
+@c The latest version of @command{gcc} available in the OpenCSW
+@c distribution at the time of writing was 5.5.0 (and had been since Oct
+@c 2017).  Later versions can be built from the sources, e.g.@: 9.3.0 (which
+@c supports C++17, unlike 5.x).
+
+
+@node FreeBSD, OpenBSD, macOS, Platform notes
 @section FreeBSD
 @cindex FreeBSD
 
