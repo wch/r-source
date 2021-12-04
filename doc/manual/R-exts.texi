@@ -1980,6 +1980,18 @@ Sometimes the name by which the software is known to
 pkg-config --list-all | sort
 @end example
 
+Some external software provides a @file{-config} command to do a similar
+job to @command{pkg-config}, including
+@example
+curl-config   freetype-config  gdal-config    geos-config
+gsl-config    iodbc-config     libpng-config  nc-config
+pcre-config   pcre2-config     xml2-config    xslt-config
+@end example
+@noindent
+(@command{curl-config} is for @code{libcurl} not @command{curl}.
+@command{nc-config} is for @code{netcdf}.)  Most have an option to use
+static libraries.
+
 If using Autoconf it is good practice to include all the Autoconf
 sources in the the package (and required for an Open Source package and
 tested by @command{R CMD check --as-cran}).  This will include the file
@@ -3058,7 +3070,7 @@ around this is for the package's @file{configure} script to include
 @example
 if test -z "$CMAKE"; then CMAKE="`which cmake`"; fi
 if test -z "$CMAKE"; then CMAKE=/Applications/CMake.app/Contents/bin/cmake; fi
-if test -z "$CMAKE"; then echo "no 'cmake' command found"; exit 1; fi
+if test -f "$CMAKE"; then echo "no 'cmake' command found"; exit 1; fi
 @end example
 @noindent
 and for the second approach to substitute @env{CMAKE} into
