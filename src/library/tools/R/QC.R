@@ -483,8 +483,7 @@ function(package, dir, lib.loc = NULL,
         names(function_args_in_ns) <- functions_in_ns
 
         function_args_in_S3Table <-
-            lapply(functions_in_S3Table,
-                   function(f) formals(get(f, envir = S3Table)))
+            lapply(functions_in_S3Table, function(f) formals(S3Table[[f]]))
         names(function_args_in_S3Table) <- functions_in_S3Table
 
         tmp <- c(function_args_in_code, function_args_in_S3Table,
