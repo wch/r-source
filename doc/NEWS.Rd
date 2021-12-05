@@ -120,10 +120,10 @@
       non-subsettable object is contained in the \code{object} field of
       the error condition.
 
-      \item Subscript out of bounds errors are now signaled as errors of
+      \item Subscript-out-of-bounds errors are now signaled as errors of
       class \code{subscriptOutOfBoundsError}.
 
-      \item Stack overflow errors are now signaled as errors inheriting
+      \item Stack-overflow errors are now signaled as errors inheriting
       from class \code{stackOverflowError}. See
       \code{?stackOverflowError} for more details.
 
@@ -149,8 +149,8 @@
       \item \code{as.vector()} and \code{is.vector()} have been changed in
       order to fulfill \code{is.vector(as.vector(.))} more often when the
       argument is of type \code{list} or \code{expression}.
-      To this end, \code{as.vector} got a \code{data.frame} method which
-      now returns a simple list (also obeying a long standing \sQuote{FIXME}
+      To this end, \code{as.vector()} gains a \code{data.frame} method which
+      returns a simple list (also obeying a long standing \sQuote{FIXME}
       to enable \code{as.vector(<data.frame>, mode="list")}.
     }
   }
@@ -295,7 +295,7 @@
 
       \item On Windows, the command-line option \option{--max-mem-size}
       and environment variable \env{R_MAX_MEM_SIZE} are defunct.  The
-      memory allocation limit was important for 32-bit Windows builds,
+      memory allocation limit was important for 32-bit builds,
       but these are no longer supported.
     }
   }
@@ -319,7 +319,7 @@
       directory behind when it aborts due to an already existing output
       file.  (Thanks to Sebastian Meyer's \PR{18141}.)
 
-      \item \code{density(x, weights=w, na.rm=TRUE)} when \code{anyNA(x)}
+      \item \code{density(x, weights = w, na.rm = TRUE)} when \code{anyNA(x)}
       is true, now removes weights \dQuote{in parallel} to \code{x}, fixing
       \PR{18151}, reported by Matthias Gondan.
       Additionally, it gets a \code{subdensity} option.
@@ -340,9 +340,10 @@
       Murdoch and Sebastian Meyer's reports and patch proposals in
       \PR{17501}.
 
-      \item Determining correct translation domain in non-base packages,
-      addressing the combo of \PR{18092} and \PR{17998} (\code{#c6})
-      with reports and \emph{augmented} patch #2904 by Suharto Anggono.
+      \item Determining the correct translation domain in non-base
+      packages, addressing the combination of \PR{18092} and \PR{17998}
+      (\code{#c6}) with reports and \emph{augmented} patch #2904 by
+      Suharto Anggono.
 
       Note that \code{"R-base"} is no longer default domain e.g., for
       top-level calls to \code{gettext()}; rather translation needs
@@ -362,11 +363,11 @@
       Further, \code{table(d1, d2)} now gives an error when \code{d1} and
       \code{d2} are data frames as suggested by Thomas in \PR{18224}.
 
-      \item Fix for drawing semitransparent lines and fills on native
-      Windows graphics device (\PR{18219} and \PR{16694}).  Thanks to
-      Nick Ray for helpful diagnosis on Bugzilla.
+      \item Fix for drawing semi-transparent lines and fills on the
+      native Windows graphics device (\PR{18219} and \PR{16694}).
+      Thanks to Nick Ray for helpful diagnosis on Bugzilla.
 
-      \item The deparser now wraps sub expressions such as \code{if(A) .. }
+      \item The deparser now wraps sub-expressions such as \code{if(A) .. }
       with parentheses when needed; thanks to Duncan Murdoch's \PR{18232}
       and Lionel Henry's patches there.
 
