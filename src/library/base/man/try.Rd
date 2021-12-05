@@ -1,6 +1,6 @@
 % File src/library/base/man/try.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{try}
@@ -44,10 +44,18 @@ try(expr, silent = FALSE,
   chunk and the error message should appear in the resulting document.
 }
 \value{
-  The value of the expression if \code{expr} is evaluated without error,
-  but an invisible object of class \code{"try-error"} containing the
-  error message, and the error condition as the \code{"condition"}
-  attribute, if it fails.
+  The value of the expression if \code{expr} is evaluated without error:
+  otherwise an invisible object inheriting from class \code{"try-error"}
+  containing the error message with the error condition as the
+  \code{"condition"} attribute.
+}
+\section{Warning}{
+  Do not test\preformatted{
+    if (class(res) == "try-error"))
+}
+  as if there is no error, the result might (now or in future) have a
+  class of length > 1. Use \code{if(\link{inherits}(res, "try-error"))}
+  instead.
 }
 \seealso{
   \code{\link{options}} for setting error handlers and suppressing the
