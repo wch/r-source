@@ -148,6 +148,8 @@
       \item \code{as.vector()} gains a \code{data.frame} method which
       returns a simple named list, also obeying a long standing \sQuote{FIXME}
       to enable \code{as.vector(<data.frame>, mode="list")}.
+      This will break code relying on \code{as.vector(<data.frame>)} to
+      return the unchanged data frame.
     }
   }
 
