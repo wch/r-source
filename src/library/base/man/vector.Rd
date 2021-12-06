@@ -45,7 +45,7 @@ is.vector(x, mode = "any")
   (\code{\link{is.atomic}}), all attributes are removed.
   For \code{mode="any"}, see \sQuote{Details}.
 
-  \code{is.vector(xd)} returns \code{TRUE} if \code{x} is a vector of the
+  \code{is.vector(x)} returns \code{TRUE} if \code{x} is a vector of the
   specified mode having no attributes \emph{other than names}.
   For \code{mode="any"}, see \sQuote{Details}.
   % It returns \code{FALSE} otherwise.
@@ -63,14 +63,13 @@ is.vector(x, mode = "any")
   hand, \code{as.vector} removes \emph{all} attributes including names
   for results of atomic mode.
 
-  For \code{mode = "any"}, when \code{x} is a \code{\link{list}} or
-  \code{\link{expression}}, \code{is.vector(as.vector(x))} is always true
-  only since \R 4.2.0.  When \code{\link{is.object}(x)} is true,
-  \code{as.vector(x)} returns \code{x} unaltered and \code{is.vector(x)} is
-  true for all such objects.
-  For non-object \code{x}'s, \code{as.vector(x)} strips all \code{\link{attributes}}
-  but \code{\link{names}}, and \code{is.vector(x)} is true for such lists
-  and expressions unless \code{dim(x)} is not \code{NULL}.
+  For \code{mode = "any"}, and atomic vectors \code{x}, \code{as.vector(x)}
+  strips all \code{\link{attributes}} (including \code{\link{names}}),
+  returning a simple atomic vector. \cr
+  However, when \code{x} is of type \code{"\link{list}"} or
+  \code{"\link{expression}"}, \code{as.vector(x)} currently returns the
+  argument \code{x} unchanged, unless there is an \code{as.vector} method
+  for \code{\link{class}(x)}.
 
   Note that factors are \emph{not} vectors; \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts a factor to a character
@@ -113,7 +112,12 @@ is.vector(x, mode = "any")
 
     \item \code{is.vector(as.vector(x, m), m)} should be true for any
     mode \code{m}, including the default \code{"any"}.
-    Note that this was not fulfilled in \R versions up to 4.1.z.
+
+    Currently this is not fulfilled in \R when \code{m == "any"} and
+    \code{x} is of type \code{\link{list}} or \code{\link{expression}} with
+    attributes in addition to \code{\link{names}} --- typically the case for
+    (S3 or S4) objects (see \code{\link{is.object}}) which are lists
+    internally.
   }
 }
 

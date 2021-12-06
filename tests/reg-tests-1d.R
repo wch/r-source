@@ -5546,20 +5546,26 @@ stopifnot(identical(unlist(lapply(1:3, f2)), 1:3))
 L0 <- list(a = quote(a+b), b = quote(B^2))
 L <- structure(L0, foo = "bar")
 E <- as.expression(L)
-d.f <- USArrests
+(do.isas.vector.experi <- as.logical(
+     Sys.getenv("_R_IS_AS_VECTOR_EXPERIMENTS_", FALSE)))
 stopifnot(exprs = {
     identical(E, as.expression(L))
     identical(L, as.list(E))
+}); if(do.isas.vector.experi) stopifnot(exprs = {
     identical(vL <- as.vector(L), L0)
     is.vector(vL)
     identical(vE <- as.vector(E), as.expression(L0))
     is.vector(vE)
+})
+## is.vector(.) gave FALSE, as "foo" attribute was kept
+d.f <- USArrests
+## as.vector.data.frame() --> is.vector(as.vector(d.f))
+stopifnot(exprs = {
     ! is.vector(data.frame(a=1))
     is.vector(as.vector(d.f) -> l.df)
     identical(as.vector(d.f, mode="list"), l.df)
     identical(as.list(d.f),                l.df)
 })
-## is.vector(.) gave FALSE, as "foo" attribute was kept
 
 
 ## PR#18244:  <array_NULL_dimnames>[ <char-matrix> ]

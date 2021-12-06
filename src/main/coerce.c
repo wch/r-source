@@ -1489,13 +1489,24 @@ SEXP attribute_hidden do_asatomic(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* _R_IS_AS_VECTOR_EXPERIMENTS_ : aiming for is.vector(as.vector(.))
+   consistency; specified at *start* of R session : */
+static int do_is_as_vector_experiments = -1;
+#define MAYBE_CACHE_DO_IS_AS_VECTORS_EXPERI				\
+do {									\
+  if(do_is_as_vector_experiments == -1) {				\
+    char *vector_experi = getenv("_R_IS_AS_VECTOR_EXPERIMENTS_");	\
+    do_is_as_vector_experiments =					\
+ 	((vector_experi != NULL) && StringTrue(vector_experi)) ? 1 : 0;	\
+  }									\
+} while(0)
+
+
 /* NB: as.vector is used for several other as.xxxx, including
    as.expression, as.list, as.pairlist, as.symbol, (as.single) */
 SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, ans;
-    int type;
-
+    SEXP ans;
     /* DispatchOrEval internal generic: as.vector */
     if (DispatchOrEval(call, op, "as.vector", args, rho, &ans, 0, 1))
 	return(ans);
@@ -1504,14 +1515,14 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* run the generic internal code */
 
     checkArity(op, args);
-    x = CAR(args);
-
     if (!isString(CADR(args)) || LENGTH(CADR(args)) != 1)
 	error_return(R_MSG_mode);
-    if (!strcmp("function", (CHAR(STRING_ELT(CADR(args), 0))))) /* ASCII */
-	type = CLOSXP;
-    else
-	type = str2type(CHAR(STRING_ELT(CADR(args), 0))); /* ASCII */
+
+    SEXP x = CAR(args);
+    int type =
+	(!strcmp("function", CHAR(STRING_ELT(CADR(args), 0))))  /* ASCII */
+	? CLOSXP
+	: str2type(CHAR(STRING_ELT(CADR(args), 0))); /* ASCII */
 
     /* "any" case added in 2.13.0 */
     if(type == ANYSXP || TYPEOF(x) == type) {
@@ -1527,16 +1538,21 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    CLEAR_ATTRIB(ans);
 	    return ans;
 	case EXPRSXP:
-	case VECSXP:
-	    if(ATTRIB(x) == R_NilValue) return x;
-	    if(OBJECT(x)) return x; // protect e.g.  setClass(., contains="list")
-	    SEXP nms = getAttrib(x, R_NamesSymbol);
-	    if(nms != R_NilValue && CDR(ATTRIB(x)) == R_NilValue) return x;
-	    ans = MAYBE_REFERENCED(x) ? duplicate(x) : x;
-	    CLEAR_ATTRIB(ans);
-	    if (nms != R_NilValue)
-		setAttrib(ans, R_NamesSymbol, nms);
-	    return ans;
+	case VECSXP: {
+	    MAYBE_CACHE_DO_IS_AS_VECTORS_EXPERI;
+	    if(do_is_as_vector_experiments) {
+		if(ATTRIB(x) == R_NilValue) return x;
+		if(OBJECT(x)) return x; // protect e.g.  setClass(., contains="list")
+		SEXP nms = getAttrib(x, R_NamesSymbol);
+		if(nms != R_NilValue && CDR(ATTRIB(x)) == R_NilValue) return x;
+		ans = MAYBE_REFERENCED(x) ? duplicate(x) : x;
+		CLEAR_ATTRIB(ans);
+		if (nms != R_NilValue)
+		    setAttrib(ans, R_NamesSymbol, nms);
+		return ans;
+	    } else
+		return x;
+	}
 	default:
 	    ;
 	}
@@ -2160,8 +2176,10 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL0(ans)[0] = 0;
 
     if (LOGICAL0(ans)[0]) {
-      Rboolean IS_vector = any && isVectorList(x) && OBJECT(x);
-      if(IS_vector) {
+      Rboolean IS_vector = FALSE;
+      MAYBE_CACHE_DO_IS_AS_VECTORS_EXPERI;
+      if(do_is_as_vector_experiments) {
+	if((IS_vector = any && isVectorList(x) && OBJECT(x))) {
 	    // use of is.vector(.) to check for non-matrix/array => try dim(.) :
 	  static SEXP op_dim = NULL;
 	  if (op_dim == NULL)
@@ -2169,6 +2187,7 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	  SEXP args = PROTECT(list1(x));
 	  IS_vector = isNull(do_dim(call, op_dim, args, rho));
 	  UNPROTECT(1);
+	}
       }
       if(IS_vector) {
 	  // list or expression w/ is.object() and no dim(): stay TRUE

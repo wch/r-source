@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-11-30 r81267) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-12-05 r81297) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -122,8 +122,8 @@ List of 2
 +     "\n\t starting with 'is.' :\t  ",
 +     sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 
-Number of all base objects:	1373
-Number of functions from these:	1329
+Number of all base objects:	1374
+Number of functions from these:	1330
 	 starting with 'is.' :	  50
 
 > ## R ver.| #{is*()}
@@ -594,7 +594,7 @@ is.raw             : .
 is.recursive       : | 
 is.symbol          : . 
 is.table           : . 
-is.vector          : | 
+is.vector          : . 
 
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
 is.array           : . 

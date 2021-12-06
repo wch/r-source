@@ -145,12 +145,8 @@
       passes to \code{sort()} for level creation; based on the wish and
       patch by Thomas Soeiro in \PR{18243}.
 
-      %% possibly for  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}
-      \item \code{as.vector()} and \code{is.vector()} have been changed in
-      order to fulfill \code{is.vector(as.vector(.))} more often when the
-      argument is of type \code{list} or \code{expression}.
-      To this end, \code{as.vector()} gains a \code{data.frame} method which
-      returns a simple list (also obeying a long standing \sQuote{FIXME}
+      \item \code{as.vector()} gains a \code{data.frame} method which
+      returns a simple named list, also obeying a long standing \sQuote{FIXME}
       to enable \code{as.vector(<data.frame>, mode="list")}.
     }
   }
