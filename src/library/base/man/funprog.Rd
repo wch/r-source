@@ -126,7 +126,7 @@ cfrac(c(2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8))
 
 ## Map() now recycles similar to basic Ops:
 Map(`+`, 1,         1 : 3) ;         1 + 1:3
-Map(`+`, numeric(), 1 : 3) ; numeric() + 1+3
+Map(`+`, numeric(), 1 : 3) ; numeric() + 1:3
 
 ## Iterative function application:
 Funcall <- function(f, ...) f(...)
