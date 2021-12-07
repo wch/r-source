@@ -366,7 +366,7 @@ dev.capabilities <- function(what = NULL)
     if (!(is.list(capabilities) &&
           length(capabilities) == ncap &&
           all(sapply(capabilities, class) == "integer")))
-        stop("Invalid capabilites - alert the device maintainer")
+        stop("Invalid capabilities - alert the device maintainer")
     
     z <- vector("list", ncap)
     names(z) <- c("semiTransparency",
