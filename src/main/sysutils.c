@@ -2015,6 +2015,29 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
 void attribute_hidden R_CheckTimeLimits(void)
 {
     if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
+
+	/* On Linux and macOS at least R_getProcTime can be quite slow;
+	   currentTIme is somewhat faster. */
+
+	/* To reduce overhead, skip checking TIME_CHECK_SKIP times. */
+	const int TIME_CHECK_SKIP = 5;
+	static int check_count = 0;
+	if (check_count < TIME_CHECK_SKIP) {
+	    check_count++;
+	    return;
+	}
+	else check_count = 0;
+
+	/* Before calling R_getProcTime first use checkTime to make
+	   sure at least TIME_CHECK_DELTA seconds have elapsed since
+	   the last call. */
+	const double TIME_CHECK_DELTA = 0.05;
+	static double check_time = 0;
+	double tm = currentTime();
+	if (tm < check_time)
+	    return;
+	else check_time = tm + TIME_CHECK_DELTA;
+
 	double cpu, data[5];
 	R_getProcTime(data);
 #ifdef Win32
