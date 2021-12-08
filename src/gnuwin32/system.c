@@ -111,6 +111,10 @@ void R_ProcessEvents(void)
 {
     while (peekevent()) doevent();
     if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
+#ifdef HAVE_CHECK_TIME_LIMITS
+	/* switch to using R_CheckTimeLimits after testing on WIndows */
+	R_CheckTimeLimits();
+#else
 	double cpu, data[5];
 	R_getProcTime(data);
 	cpu = data[0] + data[1];  /* children? */
@@ -130,6 +134,7 @@ void R_ProcessEvents(void)
 	    } else
 		error(_("reached CPU time limit"));
 	}
+#endif
     }
     if (UserBreak) {
 	UserBreak = FALSE;

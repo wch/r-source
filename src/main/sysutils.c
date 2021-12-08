@@ -2012,6 +2012,35 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+void attribute_hidden R_CheckTimeLimits(void)
+{
+    if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
+	double cpu, data[5];
+	R_getProcTime(data);
+#ifdef Win32
+	cpu = data[0] + data[1];
+#else
+	cpu = data[0] + data[1] + data[3] + data[4];
+#endif
+	if (elapsedLimit > 0.0 && data[2] > elapsedLimit) {
+	    cpuLimit = elapsedLimit = -1;
+	    if (elapsedLimit2 > 0.0 && data[2] > elapsedLimit2) {
+		elapsedLimit2 = -1.0;
+		error(_("reached session elapsed time limit"));
+	    } else
+		error(_("reached elapsed time limit"));
+	}
+	if (cpuLimit > 0.0 && cpu > cpuLimit) {
+	    cpuLimit = elapsedLimit = -1;
+	    if (cpuLimit2 > 0.0 && cpu > cpuLimit2) {
+		cpuLimit2 = -1.0;
+		error(_("reached session CPU time limit"));
+	    } else
+		error(_("reached CPU time limit"));
+	}
+    }
+}
+
 /* moved from character.c in 2.10.0: configure requires this */
 
 #ifdef HAVE_GLOB_H
