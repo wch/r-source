@@ -95,8 +95,14 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   time zones represent the same time and time zones have multiple names,
   but several of the components are optional.
 
-  Note that \code{identical(x, y, FALSE, FALSE, FALSE, FALSE)} pickily
-  tests for exact equality.
+  Note that the strictest test for equality is
+  \preformatted{
+    identical(x, y,
+              num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
+              ignore.bytecode = TRUE, ignore.environment = FALSE,
+              ignore.srcref = TRUE, extptr.as.ref = FALSE)
+}
+	     
 }
 \value{
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}
