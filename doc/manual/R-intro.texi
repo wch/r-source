@@ -7507,7 +7507,9 @@ When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
 is used.  Note that other versions of @strong{readline} exist and may be
-used by the inbuilt command line editor: this used to happen on macOS.
+used by the inbuilt command line editor: this is most common on macOS.
+You can find out which version (if any) is available by running
+@code{extSoftVersion()} in an @R{} session.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}
