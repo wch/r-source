@@ -2281,7 +2281,7 @@ SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
  * Low Level Functions
  */
 
-static int hash_identical(SEXP x, int useCloEnv, int K)
+static int hash_identical(SEXP x, int K, int useCloEnv)
 {
     /* using 31 seems to work reasonably */
     if (K == 0 || K > 31) K = 31;
@@ -2315,7 +2315,7 @@ static R_INLINE SEXP INC_NMD(SEXP x) {
 }
 
 #define HT_SEXP(h) (h).cell
-#define HT_META_SIZE 2
+#define HT_META_SIZE 3
 #define HT_META(h) R_ExternalPtrTag(HT_SEXP(h))
 
 #define HT_TABLE(h) R_ExternalPtrProtected(HT_SEXP(h))
@@ -2323,18 +2323,18 @@ static R_INLINE SEXP INC_NMD(SEXP x) {
 
 #define HT_COUNT(h) (INTEGER(HT_META(h))[0])
 #define HT_TYPE(h) (INTEGER(HT_META(h))[1])
+#define HT_TABLE_K(h) (INTEGER(HT_META(h))[2])
 
 #define HT_IS_VALID(h) (R_ExternalPtrAddr(HT_SEXP(h)) != NULL)
 #define HT_VALIDATE(h) R_SetExternalPtrAddr(HT_SEXP(h), HT_SEXP(h))
 
 static R_INLINE int HT_HASH(R_hashtab_t h, SEXP key)
 {
-    SEXP table = HT_TABLE(h);
     switch(HT_TYPE(h)) {
     case HT_TYPE_IDENTICAL:
-	return hash_identical(key, TRUE, 0) % LENGTH(table);
+	return hash_identical(key, HT_TABLE_K(h), TRUE);
     case HT_TYPE_ADDRESS:
-	return hash_address(key, 0) % LENGTH(table);
+	return hash_address(key, HT_TABLE_K(h));
     default:
 	error("bad hash table type");
     }
@@ -2358,15 +2358,28 @@ static R_INLINE int HT_EQUAL(R_hashtab_t h, SEXP x, SEXP y)
     }
 }
 
-static void rehash(R_hashtab_t h, int new_size)
+static void rehash(R_hashtab_t h, int resize)
 {
+    /* If the meta-data structure is changed then a saved hash table
+       will be invalid. For now, just check and reject incompatible
+       oned. For future changes would be better to try to
+       rewrite/repair the meta data. */
+    if (TYPEOF(HT_META(h)) != INTSXP || LENGTH(HT_META(h)) != HT_META_SIZE)
+	error("invalid hash table meta data");
+
+    SEXP old_table = PROTECT(HT_TABLE(h));
+    int old_size = LENGTH(old_table);
+
+    R_xlen_t new_size = resize ? 2 * old_size : old_size;
+    if (new_size > INT_MAX)
+	error("hash size would exceed limit");
+
     HT_COUNT(h) = 0;
     HT_VALIDATE(h);
     
-    SEXP old_table = PROTECT(HT_TABLE(h));
-    int old_size = LENGTH(old_table);
     SET_HT_TABLE(h, allocVector(VECSXP, new_size));
-    
+    if (resize) HT_TABLE_K(h)++;
+
     for (int i = 0; i < old_size; i++)
 	for (SEXP cell = VECTOR_ELT(old_table, i);
 	     cell != R_NilValue;
@@ -2381,7 +2394,7 @@ static SEXP getcell(R_hashtab_t h, SEXP key, int *pidx)
     SEXP table = HT_TABLE(h);
 
     if (! HT_IS_VALID(h))
-	rehash(h, LENGTH(table));
+	rehash(h, FALSE);
 
     int idx = HT_HASH(h, key);
     *pidx = idx;
@@ -2400,7 +2413,9 @@ static SEXP getcell(R_hashtab_t h, SEXP key, int *pidx)
  * Higer Level Public Functions
  */
 
+/* HT_INIT_SIZE = 2 ^ HT_INIT_K */
 #define HT_INIT_SIZE 8
+#define HT_INIT_K 3
 
 R_hashtab_t R_mkhashtab(int type)
 {
@@ -2415,6 +2430,7 @@ R_hashtab_t R_mkhashtab(int type)
     HT_VALIDATE(val);
     HT_COUNT(val) = 0;
     HT_TYPE(val) = type;
+    HT_TABLE_K(val) = HT_INIT_K;
     UNPROTECT(2); /* table, meta */
     return val;
 }
@@ -2447,7 +2463,7 @@ SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value)
 	SET_VECTOR_ELT(table, idx, chain);
 	int count = ++HT_COUNT(h);
 	if (count > 0.5 * LENGTH(table))
-	    rehash(h, 2 * LENGTH(table));
+	    rehash(h, TRUE);
     }
     else {
 	SETCAR(cell, value);
@@ -2593,12 +2609,12 @@ int R_isHashtable(SEXP h)
 SEXP attribute_hidden do_vhash(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x = CAR(args);
-    SEXP sUseCloEnv = CADR(args);
-    SEXP sK = CADDR(args);
+    SEXP sK = CADR(args);
+    SEXP sUseCloEnv = CADDR(args);
 
-    int useCloEnv = sUseCloEnv == R_NilValue ? TRUE : asLogical(sUseCloEnv);
     int K = sK == R_NilValue ? 31 : asInteger(sK);
+    int useCloEnv = sUseCloEnv == R_NilValue ? TRUE : asLogical(sUseCloEnv);
 
-    int val = hash_identical(x, useCloEnv, K);
+    int val = hash_identical(x, K, useCloEnv);
     return ScalarInteger(val);
 }
