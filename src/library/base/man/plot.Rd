@@ -53,7 +53,7 @@ plot(x, y, \dots)
       e.g.\sspace{}\code{\link{plot.factor}}, do not accept this.
     }
     \item{\code{main}}{an overall title for the plot: see \code{\link{title}}.}
-    \item{\code{sub}}{a sub title for the plot: see \code{\link{title}}.}
+    \item{\code{sub}}{a subtitle for the plot: see \code{\link{title}}.}
     \item{\code{xlab}}{a title for the x axis: see \code{\link{title}}.}
     \item{\code{ylab}}{a title for the y axis: see \code{\link{title}}.}
     \item{\code{asp}}{the \eqn{y/x} aspect ratio,

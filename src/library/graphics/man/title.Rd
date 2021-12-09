@@ -79,7 +79,7 @@ title(main = list("Stopping Distance versus Speed", cex = 1.5,
 
 ## Specifying "..." :
 plot(1, col.axis = "sky blue", col.lab = "thistle")
-title("Main Title", sub = "sub title",
+title("Main Title", sub = "subtitle",
       cex.main = 2,   font.main= 4, col.main= "blue",
       cex.sub = 0.75, font.sub = 3, col.sub = "red")
 

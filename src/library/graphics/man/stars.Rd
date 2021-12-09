@@ -79,7 +79,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{axes}{logical flag: if \code{TRUE} axes are added to the plot.}
   \item{frame.plot}{logical flag: if \code{TRUE}, the plot region is framed.}
   \item{main}{a main title for the plot.}
-  \item{sub}{a sub title for the plot.}
+  \item{sub}{a subtitle for the plot.}
   \item{xlab}{a label for the x axis.}
   \item{ylab}{a label for the y axis.}
   \item{cex}{character expansion factor for the labels.}

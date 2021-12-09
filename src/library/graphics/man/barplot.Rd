@@ -81,7 +81,7 @@ barplot(height, \dots)
     Use \code{border = NA} to omit borders.  If there are shading
     lines, \code{border = TRUE} means use the same colour for
     the border as for the shading lines.}
-  \item{main,sub}{overall and sub title for the plot.}
+  \item{main,sub}{main title and subtitle for the plot.}
   \item{xlab}{a label for the x axis.}
   \item{ylab}{a label for the y axis.}
   \item{xlim}{limits for the x axis.}
