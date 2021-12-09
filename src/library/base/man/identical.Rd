@@ -98,9 +98,9 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   Note that the strictest test for equality is
   \preformatted{
     identical(x, y,
-              num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
-              ignore.bytecode = TRUE, ignore.environment = FALSE,
-              ignore.srcref = TRUE, extptr.as.ref = FALSE)
+              num.eq = FALSE, single.NA = FALSE, attrib.as.set = FALSE,
+              ignore.bytecode = FALSE, ignore.environment = FALSE,
+              ignore.srcref = FALSE, extptr.as.ref = TRUE)
 }
 	     
 }
