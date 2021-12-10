@@ -2320,6 +2320,7 @@ static R_INLINE SEXP INC_NMD(SEXP x) {
 
 #define HT_TABLE(h) R_ExternalPtrProtected(HT_SEXP(h))
 #define SET_HT_TABLE(h, table) R_SetExternalPtrProtected(HT_SEXP(h), table)
+#define HT_TABLE_SIZE(h) LENGTH(HT_TABLE(h))
 
 #define HT_COUNT(h) (INTEGER(HT_META(h))[0])
 #define HT_TYPE(h) (INTEGER(HT_META(h))[1])
@@ -2460,13 +2461,15 @@ SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value)
     PROTECT(value);
     SEXP cell = getcell(h, key, &idx);
     if (cell == R_NilValue) {
+	int new_count = HT_COUNT(h) + 1;
+	if (new_count > 0.5 * HT_TABLE_SIZE(h))
+	    /* rehash() will fail if new_count would be too large */
+	    rehash(h, TRUE);
 	SEXP table = HT_TABLE(h);
 	SEXP chain = CONS(INC_NMD(value), VECTOR_ELT(table, idx));
 	SET_TAG(chain, INC_NMD(key));
 	SET_VECTOR_ELT(table, idx, chain);
-	int count = ++HT_COUNT(h);
-	if (count > 0.5 * LENGTH(table))
-	    rehash(h, TRUE);
+	HT_COUNT(h) = new_count;
     }
     else {
 	SETCAR(cell, value);
