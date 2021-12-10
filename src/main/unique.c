@@ -2413,24 +2413,27 @@ static SEXP getcell(R_hashtab_t h, SEXP key, int *pidx)
  * Higer Level Public Functions
  */
 
-/* HT_INIT_SIZE = 2 ^ HT_INIT_K */
-#define HT_INIT_SIZE 8
+/* initial size = 2 ^ HT_INIT_K */
 #define HT_INIT_K 3
 
-R_hashtab_t R_mkhashtab(int type)
+R_hashtab_t R_mkhashtab(int type, int K)
 {
+    if (K < 3 || K > 30) K = 3;
+    int size = 1;
+    for (int i = 0; i < K; i++) size *= 2;
+
     switch(type) {
     case HT_TYPE_IDENTICAL:
     case HT_TYPE_ADDRESS: break;
     default: error("bad hash table type");
     }
-    SEXP table = PROTECT(allocVector(VECSXP, HT_INIT_SIZE));
+    SEXP table = PROTECT(allocVector(VECSXP, size));
     SEXP meta = PROTECT(allocVector(INTSXP, HT_META_SIZE));
     R_hashtab_t val = { .cell = R_MakeExternalPtr(NULL, meta, table) };
     HT_VALIDATE(val);
     HT_COUNT(val) = 0;
     HT_TYPE(val) = type;
-    HT_TABLE_K(val) = HT_INIT_K;
+    HT_TABLE_K(val) = K;
     UNPROTECT(2); /* table, meta */
     return val;
 }

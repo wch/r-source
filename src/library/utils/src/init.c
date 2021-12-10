@@ -98,7 +98,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(selectlist, 4),
 
     /* Hash Tables */
-    EXTDEF(hashtab_Ext, 1),
+    EXTDEF(hashtab_Ext, 2),
     EXTDEF(gethash_Ext, 3),
     EXTDEF(sethash_Ext, 3),
     EXTDEF(remhash_Ext, 2),

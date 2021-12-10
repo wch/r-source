@@ -16,9 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-hashtab <- function(type = c("identical", "address")) {
+hashtab <- function(type = c("identical", "address"), size) {
+    K <- if (missing(size)) 3 else ceiling(log2(2 * size))
     type <- match.arg(type)
-    .External(C_hashtab_Ext, type)
+    .External(C_hashtab_Ext, type, K)
 }
 
 gethash <- function(h, key, nomatch = NULL)

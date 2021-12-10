@@ -24,7 +24,7 @@
   Create and manipulate mutable hash tables.
 }
 \usage{
-hashtab(type = c("identical", "address"))
+hashtab(type = c("identical", "address"), size)
 gethash(h, key, nomatch = NULL)
 sethash(h, key, value)
 remhash(h, key)
@@ -42,6 +42,7 @@ is.hashtab(x)
 }
 \arguments{
   \item{type}{\code{\link{character}} string specifying the hash table type.}
+  \item{size}{an integer specifying the expected number of entries.}
   \item{h, object}{a hash table.}
   \item{key}{an \R object to use as a key.}
   \item{nomatch}{value to return if \code{key} does not match.}
@@ -54,17 +55,20 @@ is.hashtab(x)
 
 \details{
   Hash tables are a data structure for efficiently associating keys with
-  values.  Hash tables are similar to \code{\link{environment}}s, but keys can be
-  arbitrary objects. Like environments, and unlike named lists and most
-  other objects in R, hash tables are mutable, i.e., they are \emph{not}
-  copied when modified and assignment means just giving a new name to the
-  same object.
+  values.  Hash tables are similar to \code{\link{environment}}s, but
+  keys can be arbitrary objects. Like environments, and unlike named
+  lists and most other objects in R, hash tables are mutable, i.e., they
+  are \emph{not} copied when modified and assignment means just giving a
+  new name to the same object.
 
   New hash tables are created by \code{hashtab}.  Two variants are
   available: keys can be considered to match if they are
   \code{\link{identical}()} (\code{type = "identical"}, the default), or
   if their addresses in memory are equal (\code{type = "address"}). The
   default \code{"identical"} type is almost always the right choice.
+  The \code{size} argument provides a hint for setting the initial
+  hash table size. The hash table will grow if necessary, but specifying
+  an expected size can be more efficient.
 
   \code{gethash} returns the value associated with \code{key}.  If
   \code{key} is not present in the table, then the value of

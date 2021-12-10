@@ -50,10 +50,11 @@ static int HT_TypeFromString(SEXP x)
 
 SEXP hashtab_Ext(SEXP args)
 {
-    args = checkArgCountPop(args, 1);
+    args = checkArgCountPop(args, 2);
     int type = HT_TypeFromString(CAR(args));
+    int K = asInteger(CADR(args));
     SEXP val = PROTECT(allocVector(VECSXP, 1));
-    SET_VECTOR_ELT(val, 0, R_HashtabSEXP(R_mkhashtab(type)));
+    SET_VECTOR_ELT(val, 0, R_HashtabSEXP(R_mkhashtab(type, K)));
     setAttrib(val, R_ClassSymbol, mkString("hashtab"));
     UNPROTECT(1); /* val */
     return val;
