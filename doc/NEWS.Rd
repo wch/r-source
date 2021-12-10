@@ -16,9 +16,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Initialization of self-starting models with pre-R-4.1.0 API
-      initialization functions (missing the \code{...} argument) for now
-      works again, with a deprecation warning.
+      \item Initialization of self-starting \code{nls()} models with
+      initialization functions following the pre-R-4.1.0 API
+      (without the \code{...} argument) works again for now, with a
+      deprecation warning.
 
       \item Fixed quoting of \code{~autodetect~} in Java setting defaults
       to avoid inadvertent user lookup due to leading \code{~}, reported
@@ -27,6 +28,10 @@
       \item \code{substr(., start, stop) <- v} now treats \emph{negative}
       \code{stop} values correctly.  Reported with a patch in \PR{18228} by
       Brodie Gaslam.
+
+      \item Subscripting an array \code{x} without dimnames by a
+      \code{length(dim(x))}-column character matrix gave "random"
+      non-sense, now an error; reported in \PR{18244} by Mikael Jagan.
     }
   }
 }

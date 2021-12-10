@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2020  The R Core Team
+ *  Copyright (C) 1997--2021  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -467,13 +467,19 @@ a subscript out of bounds error.  */
 SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
 {
     /* XXX: assumes all args are protected */
-    int nr = nrows(s), i, j, v;
+    SEXP dim = getAttrib(s, R_DimSymbol);
+    int nr = INTEGER(dim)[0]; // = nrow(s)
+    if(isNull(dnamelist)) { // && nr > 0)
+	ECALL(call, _("no 'dimnames' attribute for array")); // as in  arraySubscript()
+    }
+    int i, j, v;
     R_xlen_t idx, NR = nr;
     SEXP dnames, snames, si, sicol, s_elt;
     PROTECT(snames = allocVector(STRSXP, nr));
     PROTECT(si = allocVector(INTSXP, xlength(s)));
-    dimgets(si, getAttrib(s, R_DimSymbol));
+    dimgets(si, dim);
     int *psi = INTEGER(si);
+    memset(psi, 0, XLENGTH(si) * sizeof(int));
     for (i = 0; i < length(dnamelist); i++) {
 	dnames = VECTOR_ELT(dnamelist, i);
 	for (j = 0; j < nr; j++)
