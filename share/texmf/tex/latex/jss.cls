@@ -1,10 +1,10 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{3.2}
+\def\fileversion{3.3}
 \def\filename{jss}
-\def\filedate{2020/12/09}
+\def\filedate{2021/12/10}
 %%
-%% Package `jss' to use with LaTeX2e for JSS publications (http://www.jstatsoft.org/)
+%% Package `jss' to use with LaTeX2e for JSS publications (https://www.jstatsoft.org/)
 %% License: GPL-2 | GPL-3
 %% Copyright: (C) Achim Zeileis
 %% Please report errors to Achim.Zeileis@R-project.org
@@ -51,7 +51,7 @@
 \ProcessOptions
 \LoadClass[11pt,a4paper,twoside]{article}
 %% required packages
-\RequirePackage{graphicx,color,ae,fancyvrb}
+\RequirePackage{graphicx,xcolor,ae,fancyvrb}
 \RequirePackage[T1]{fontenc}
 \IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
 \IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
@@ -130,7 +130,7 @@
   Affiliation\\
   Address, Country\\
   E-mail: \email{name@address}\\
-  URL: \url{http://link/to/webpage/}
+  URL: \url{https://link/to/webpage/}
 }
 
 \Reviewer{Firstname Lastname\\Affiliation}
@@ -143,7 +143,7 @@
 \ISBN{x-xxxxx-xxx-x}
 \Pages{xv + 123}
 \Price{USD 69.95 (P)}
-\URL{http://link/to/webpage/}
+\URL{https://link/to/webpage/}
 \DOI{10.18637/jss.v000.i00}
 \if@article
   \Seriesname{Issue}
@@ -230,10 +230,10 @@
     \vspace{.1\baselineskip}
     {\fontfamily{pzc} \fontsize{13}{15} \selectfont Journal of Statistical Software}
     \hfill
-    \url{http://www.jstatsoft.org/}\\ \nopagebreak
+    \url{https://www.jstatsoft.org/}\\ \nopagebreak
     published by the Foundation for Open Access Statistics
     \hfill
-    \url{http://www.foastat.org/}\\[.3\baselineskip] \nopagebreak
+    \url{https://www.foastat.org/}\\[.3\baselineskip] \nopagebreak
     {\@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue}
     \hfill
     \@Firstdate\\ \nopagebreak
@@ -417,8 +417,10 @@
   \renewcommand{\subsubsection}{\secdef \jsssubsubsec \jsssubsubsecnn}
 \fi
 %% colors
+\AtBeginDocument{%
 \definecolor{Red}{rgb}{0.5,0,0}
 \definecolor{Blue}{rgb}{0,0,0.5}
+}
 \if@review
   \hypersetup{%
     hyperindex = {true},
