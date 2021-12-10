@@ -1,6 +1,6 @@
 % File src/library/base/man/maxCol.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{maxCol}
@@ -30,7 +30,8 @@ max.col(m, ties.method = c("random", "first", "last"))
 
   If \code{ties.method = "first"}, \code{max.col} returns the
   column number of the \emph{first} of several maxima in every row, the
-  same   as \code{\link{unname}(\link{apply}(m, 1, \link{which.max}))}.\cr
+  same   as \code{\link{unname}(\link{apply}(m, 1, \link{which.max}))}
+  if \code{m} has no missing values.\cr
   Correspondingly, \code{ties.method = "last"} returns the \emph{last}
   of possibly several indices.
 }
