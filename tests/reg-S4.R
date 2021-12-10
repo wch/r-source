@@ -418,8 +418,8 @@ if(require("Matrix", lib.loc = .Library, quietly = TRUE)) {
 	      identical(pmin(1, D5.), pmin(1, as.matrix(D5.))),
 	      identical(D5N, pmax(D5N, -1)),
 	      identical(D5N, pmin(D5N, 5)),
-	      identical(unname(as.matrix(pmin(D5N+1, 3))),
-			       pmin(as.matrix(D5N)+1, 3)),
+	      identical(as.matrix(pmin(D5N +1, 3)),
+			pmin(as.matrix(D5N)+1, 3)),
 	      ##
 	      TRUE)
 } else

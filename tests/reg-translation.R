@@ -116,6 +116,7 @@ Sys.setLanguage("fr")
 (t. <- gettext(txtE, domain="R"))# default: translation *not* found
 t.T <- gettext(txtE, domain="R", trim=TRUE)# == default
 t.F <- gettext(txtE, domain="R", trim=FALSE)
+cbind(t.F, n, t.T)
 stopifnot(exprs = {
     identical(t. , txtE)
     identical(t.T, txtE)

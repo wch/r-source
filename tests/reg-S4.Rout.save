@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
+R Under development (unstable) (2021-12-10 r81320) -- "Unsuffered Consequences"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -619,8 +619,8 @@ An object of class "foo"
 + 	      identical(pmin(1, D5.), pmin(1, as.matrix(D5.))),
 + 	      identical(D5N, pmax(D5N, -1)),
 + 	      identical(D5N, pmin(D5N, 5)),
-+ 	      identical(unname(as.matrix(pmin(D5N+1, 3))),
-+ 			       pmin(as.matrix(D5N)+1, 3)),
++ 	      identical(as.matrix(pmin(D5N +1, 3)),
++ 			pmin(as.matrix(D5N)+1, 3)),
 + 	      ##
 + 	      TRUE)
 + } else
