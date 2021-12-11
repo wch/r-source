@@ -4,16 +4,38 @@
 ## etc/*/Makeconf: see fixed/Makefile
 
 ## Customize by copying to MkRules.local and uncommenting and editing 
-## some of the definitions there.  
-## 
+## some of the definitions there. The values are tailored to Rtools42, the
+## currently recommented toolchain using gcc 10.3, MinGW-w64 9, 64-bit only,
+## UCRT. R is only intended to be built for 64-bit UCRT as of R 4.2. 
 
 ## =========== configuration macros for building packages ================
-# Absolute path to '/usr/local' software collection.  The versions used
-# on CRAN can be found at https://www.stats.ox.ac.uk/pub/Rtools/libs.html
-# It can be interrogated by 'R CMD config LOCAL_SOFT'
-# Use 'make rsync-extsoft' to populate the default directory.
-# LOCAL_SOFT = $(R_HOME)/extsoft
 
+# LOCAL_SOFT is intended to point to software collection with static
+# libraries and headers installed "outside of Rtools", in the same spirit as
+# software is installed on Linux into '/usr/local' if it is not available in
+# the respective Linux distribution. 
+#
+# CRAN distributed this software and running 'make rsync-extsoft' would
+# populate the default directory $(R_HOME)/extsoft.  The versions used on
+# CRAN recommended for R 2.14.2 to 3.2.4 can still be found at
+# https://www.stats.ox.ac.uk/pub/Rtools/libs.html
+#
+# Eventually, this software collection became part of Rtools, so it should
+# no longer be referred to via LOCAL_SOFT.  Rtools42 hence introduce
+# variable R_TOOLS_SOFT for use in R packages to refer to headers or
+# libraries in the Rtools software collection (which in turn can be
+# influenced by R_CUSTOM_TOOLS_SOFT for packages).  LOCAL_SOFT should not be
+# used for that purpose.  R source code refers to that software collection
+# using EXT_LIBS.
+#
+# However, a number of CRAN packages ended up referring to Rtools software
+# collection via LOCAL_SOFT, so LOCAL_SOFT is set up by default to also
+# point to the Rtools software. This may be changed in the future. To build
+# R from source, gcc has to be on PATH, hence assuming the recommended
+# Rtools42 toolchain:
+#
+# LOCAL_SOFT = $(patsubst %/bin/gcc,%,$(shell which gcc))
+#
 ## ============== configuration macros for building R ===================
 
 # Path of library directory containing zlib, bzlib, liblzma, pcre,
@@ -41,21 +63,21 @@
 # TOOL_PATH =
 # for other toolchains leave these empty and set the more detailed options below
 
-# With the recommended gcc 8.3.0 toolchain or another toolchain, set
+# With the previously recommended gcc 8.3.0 toolchain, set
 # BINPREF and BINPREF64 (below) to the respective bin directories.  
 # Include the trailing /, and use / not \.
 # Do this in the more detailed options below
-# Set this to 32 or 64
-# WIN = 32
+# Set this to 32 or 64 (in previously recommended toolchains)
+# WIN = 64
 
 
 ### BEGIN more detailed options
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
 # including a trailing / .  
-# BINPREF = c:/rtools40/mingw32/bin/
+# BINPREF = 
 # prefix for 64-bit:
-# BINPREF64 = c:/rtools40/mingw64/bin/
+# BINPREF64 =
 # Set this to indicate a non-gcc compiler and version
 # COMPILED_BY = <determined automatically>
 
@@ -95,27 +117,38 @@
 # USE_LIBCURL = YES
 # path to parent of libcurl headers
 # CURL_PATH =
-# libs: for 32-bit
+# libs: for 32-bit (previously recommended toolchain)
 # CURL_LIBS = -lcurl -lrtmp -lssl -lssh2 -lcrypto -lgdi32 -lcrypt32 -lz -lws2_32 -lgdi32 -lcrypt32 -lwldap32 -lwinmm -lidn
-# libs: for 64-bit
+# libs: for 64-bit (previously recommended toolchain)
 # CURL_LIBS = -lcurl -lrtmp -lssl -lssh2 -lcrypto -lgdi32 -lcrypt32 -lz -lws2_32 -lgdi32 -lcrypt32 -lwldap32 -lwinmm
+# libs: currently recommended gcc 10.3 64-bit toolchain
+# CURL_LIBS=-lcurl -lzstd -lrtmp -lssl -lssh2 -lgcrypt -lcrypto -lgdi32 -lz -lws2_32 -lgdi32 -lcrypt32 -lidn2 -lunistring -liconv -lgpg-error -lwldap32 -lwinmm
 
-# For the cairographics devices
-# Optionally use a static build of cairographics from
-#   https://www.rforge.net/Cairo/files/cairo-current-win.tar.gz
-# and set CAIRO_HOME to the parent of the win32/win64 directories
+# For the cairographics devices, with the previously recommended toolchains
+# one would optionally use a static build of cairographics from
+# https://www.rforge.net/Cairo/files/cairo-current-win.tar.gz
 #
-# If CAIRO_HOME is not set the devices are not built (default).
-# CAIRO_HOME =
+# set to build cairo devices in "cairodevices" or "distribution" targets
+# (they are not built in "all" even if this is set)
+# USE_CAIRO = YES
+# set to cairo headers (included in the recommended toolchain, but under "cairo")
+# CAIRO_CPPFLAGS = -I$(EXT_LIBS)/include/cairo
+# set to cairo libraries (included in the recommended toolchain)
+# CAIRO_LIBS = "-lcairo -lfontconfig -lfreetype -lpng -lpixman-1 -lexpat -lharfbuzz -lbz2 -lintl -lz -liconv -lgdi32 -lmsimg32"
+#
+# Previous versions of R used CAIRO_HOME and an empty value meant to not
+# build cairo. This is no longer used.
 
 # set this to YES to build static HTML help
 # BUILD_HTML = NO
 
-# unset this if you are *not* using MiKTeX
+# set to use MiKTeX (and unset otherwise)
 # MIKTEX = TRUE
 # TEXI2DVI = texi2dvi
-# MiKTEX no longer provides texi2dvi and needs something like
+# MiKTEX no longer provides texi2dvi and needs something like (previous toolchains)
 # TEXI2DVI = TEXINDEX=/Rtools/bin/texindex.exe texify
+# with the currently recommended toolchain, Msys2 texi2dvi is used, but needs a workaround for a bug
+# TEXI2DVI = env COMSPEC= texi2dvi
 
 # for texinfo >= 5.1. If the texinfo files are installed at /packages/texinfo,
 # TEXI2ANY = /path/to/perl -I/packages/texinfo /packages/texinfo/texi2any
@@ -123,26 +156,33 @@
 # TEXI2ANY = missing
 
 # additional optimization flags (e.g. -mtune=native for a private build)
-# set in MkRules.rules but can be overridden here.
 #
 # -mstackrealign is used to avoid traps due to misaligned addresses with
-#   SSE2 (seen on 32-bit builds, probably not needed on 64-bit builds)
+#   SSE2 (seen on 32-bit builds with forced SSE2 using -mfpmath=sse -msse2,
+#   probably not needed on 64-bit builds)
 #
 # -fno-reorder-blocks-and-partition works as a workaround for invalid unwind
 #   information, otherwise causing crashes on long jumps; however, it
 #   produces large amount of spurious notes with GCC optimization pragmas
+#   due to a GCC bug
 #
 # -fexceptions is an alternative workaround for invalid unwind information,
 #   though produces larger code
 #
+# The underlying bug in GCC requiring -fno-reorder-blocks-and-partition or
+# -fexceptions has been fixed in GCC 10/11/12, so -fexceptions is no longer
+# strictly needed (the recommended gcc 10.3 toolchain already has that
+# bugfix).
+#
+# See MkRules.rules where -fno-optimize-sibling-calls is optionally added to
+# work around issues with gfortran/legacy calls from C.
+#
 # EOPTS = -mfpmath=sse -msse2 -mstackrealign -fexceptions $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
-# set in MkRules.rules (assuming support) but can be overridden here.
 # OPENMP = -fopenmp
 
 # define to -pthread if the toolchain has pthreads support
-# set in MkRules.rules (assuming support) but can be overridden here.
 # PTHREAD = -pthread
 
 # define to use Link-Time Optimization.
@@ -153,8 +193,8 @@
 
 ## ====== configuration macros for building installer ===========
 
-# location where Inno Setup 5.[34].x was installed. Spaces allowed.
-# ISDIR = C:/packages/Inno
+# location where Inno Setup 6 was installed. Spaces allowed.
+# ISDIR = C:/Program Files (x86)/Inno Setup 6
 
 # optional location where qpdf was installed (in $(QPDF)/bin). Spaces allowed.
 # QPDF =
@@ -164,8 +204,6 @@
 
 # Full paths of extra DLLs that need to be shipped
 # e.g
-# DLLs32 = c:/R/bin/pthreadGC2-w32.dll
-# DLLs64 = c:/R/bin64/pthreadGC2-w64.dll
 # DLLs32 =
 # DLLs64 =
 
