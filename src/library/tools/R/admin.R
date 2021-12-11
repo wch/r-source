@@ -85,9 +85,31 @@ function(dir, outDir, builtStamp=character())
     ## But in any case, it is true for fields obtained from expanding R
     ## fields (Authors@R): these should not be reformatted.
 
+    ## ExperimentalWindowsRuntime field is used during the transition from
+    ## MSVCRT to UCRT to reduce the risk of accidental installation of
+    ## packages built for MSVCRT into R built for UCRT. It is important
+    ## particularly when using multiple package repositories where the
+    ## initial ones in the list replace (incompatible) binary packages
+    ## provided in the repositories later.
+    ## To be removed, possibly before relase of R 4.2.
+
+    ExperimentalWindowsRuntime <- NULL
+    if(.Platform$OS.type == "windows") {
+        if("ExperimentalWindowsRuntime" %in% nm) {
+            db <- db[-match("ExperimentalWindowsRuntime", nm)]
+            warning(gettextf("*** someone has corrupted the ExperimentalWindowsRuntime field in package '%s' ***",
+                             db["Package"]),
+                    domain = NA,
+                    call. = FALSE)
+        }
+        if(db["NeedsCompilation"] %in% "yes")
+            ExperimentalWindowsRuntime <- "ucrt"
+    }
+
     db <- c(db,
             .expand_package_description_db_R_fields(db),
-            Built = Built)
+            Built = Built,
+            ExperimentalWindowsRuntime = ExperimentalWindowsRuntime)
 
     ## <FIXME>
     ## This should no longer be necessary?

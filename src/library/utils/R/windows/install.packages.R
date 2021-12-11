@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/install.packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -53,8 +53,22 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
         flush.console()
     }
 
+    ## See src/library/tools/R/admin.R for comment about ExperimentalWindowsRuntime
+
+    ## This experimental feature is intended as temporary. If a similar
+    ## feature was intended for regular use, it should be propagated deeper
+    ## into the package installation logic. Currently the user may be
+    ## offered to install a newer version of a package, but later that
+    ## installation may be refused when that version is an incompatible
+    ## build.
     desc <- read.dcf(file.path(pkgname, "DESCRIPTION"),
-                     c("Package", "Type"))
+                     c("Package", "Type", 
+                       "NeedsCompilation", "ExperimentalWindowsRuntime"))
+    if ((desc[1L, "NeedsCompilation"] %in% "yes") &&
+        !(desc[1L, "ExperimentalWindowsRuntime"] %in% "ucrt"))
+        
+        stop(gettextf("package %s not installed because it is not built for UCRT", sQuote(pkgname)), domain = NA)
+
     if(desc[1L, "Type"] %in% "Translation") {
         fp <- file.path(pkgname, "share", "locale")
         if(file.exists(fp)) {
