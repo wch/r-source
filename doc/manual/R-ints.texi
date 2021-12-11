@@ -1292,9 +1292,9 @@ lacking a powerful enough @code{iconv}), it is likely that they work in
 Latin-1, the old @R{} assumption. Then the parser can return a
 UTF-8-encoded string if it encounters a @samp{\uxxxx} escape for a
 Unicode point that cannot be represented in the current charset.  (This
-needs MBCS support, and was only enabled@footnote{See define
-@code{USE_UTF8_IF_POSSIBLE} in file @file{src/main/gram.c}.} on
-Windows.)  This is enabled for all platforms, and a @samp{\uxxxx} or
+needs MBCS support, and in the past was only enabled@footnote{See define
+@code{USE_UTF8_IF_POSSIBLE} in old versions of file @file{src/main/gram.c}.} on
+Windows.)  Now this is enabled for all platforms, and a @samp{\uxxxx} or
 @samp{\Uxxxxxxxx} escape ensures that the parsed string will be marked
 as UTF-8.
 
