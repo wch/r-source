@@ -1751,7 +1751,8 @@ add_dummies <- function(dir, Log)
             ## that source files have the predefined extensions.
             ## </NOTE>
             if (!any(file.exists(file.path("src",
-                                           c("Makefile", "Makefile.win",
+                                           c("Makefile", "Makefile.win", 
+					     "Makefile.ucrt",
                                              "install.libs.R"))))) {
                 if (!length(dir("src", pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)"))) {
                     if (!any) warningLog(Log)
@@ -3144,7 +3145,8 @@ add_dummies <- function(dir, Log)
         ## statically linked).
         makefiles <- Sys.glob(file.path("src",
                                         c("Makevars", "Makevars.in",
-                                          "Makefile", "Makefile.win")))
+                                          "Makefile", "Makefile.win",
+					  "Makefile.ucrt")))
         if(length(makefiles)) {
             checkingLog(Log, "for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS)")
             any <- FALSE
@@ -3190,8 +3192,9 @@ add_dummies <- function(dir, Log)
 
         makefiles <- Sys.glob(file.path("src",
                                         c("Makevars", "Makevars.in",
-                                          "Makevars.win",
-                                          "Makefile", "Makefile.win")))
+                                          "Makevars.win", "Makevars.ucrt",
+                                          "Makefile", "Makefile.win",
+					  "Makefile.ucrt")))
 
         if(length(makefiles)) {
             checkingLog(Log, "use of PKG_*FLAGS in Makefiles")
@@ -3427,7 +3430,7 @@ add_dummies <- function(dir, Log)
         ## spaces for which there is no portable way to quote/escape.
         all_files <-
             dir(".",
-                pattern = "^(Makefile|Makefile.in|Makefile.win|makefile|GNUmakefile)$",
+                pattern = "^(Makefile|Makefile.in|Makefile.win|Makefile.ucrt|makefile|GNUmakefile)$",
                 recursive = TRUE)
         all_files <- unique(sort(all_files))
         if(length(all_files)) {
@@ -5402,6 +5405,8 @@ add_dummies <- function(dir, Log)
                 if (WINDOWS) {
                     ## Warning on Windows with some packages that
                     ## cannot transparently be installed bi-arch.
+                    lines <- filtergrep("Warning: this package has a non-empty 'configure.ucrt' file",
+                                        lines)
                     lines <- filtergrep("Warning: this package has a non-empty 'configure.win' file",
                                         lines)
                     ## Warning on x64 Windows gcc 4.5.1 that
@@ -5829,6 +5834,7 @@ add_dummies <- function(dir, Log)
                 setwd(srcd)
                 if (!file.exists("Makefile") &&
                     !file.exists("Makefile.win") &&
+		    !file.exists("Makefile.ucrt") &&
                     !(file.exists("Makefile.in") && spec_install)) {
                     ## Recognized extensions for sources or headers.
                     srcfiles <- dir(".", all.files = TRUE)

@@ -507,7 +507,9 @@ if(FALSE) {
 
             owd <- setwd("src")
             if (WINDOWS) {
-                if (file.exists("Makefile.win"))
+                if (file.exists("Makefile.ucrt"))
+                    system(paste(MAKE, "-f Makefile.ucrt clean"))
+                else if (file.exists("Makefile.win"))
                     system(paste(MAKE, "-f Makefile.win clean"))
                 else
                     unlink(c("Makedeps",
@@ -522,7 +524,10 @@ if(FALSE) {
             setwd(owd)
         }
         if (WINDOWS) {
-            if (file.exists("cleanup.win")) system("sh ./cleanup.win")
+            if (file.exists("cleanup.ucrt"))
+                system("sh ./cleanup.ucrt") 
+            else if (file.exists("cleanup.win"))
+                system("sh ./cleanup.win")
         } else if (file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
             warning("'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'", call. = FALSE)
@@ -1141,7 +1146,10 @@ if(FALSE) {
 
         if (use_configure) {
             if (WINDOWS) {
-                if (file.exists("configure.win")) {
+                if (file.exists("configure.ucrt")) {
+                    res <- system("sh ./configure.ucrt")
+                    if (res) pkgerrmsg("configuration failed", pkg_name)
+                } else if (file.exists("configure.win")) {
                     res <- system("sh ./configure.win")
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
@@ -1228,13 +1236,15 @@ if(FALSE) {
                 if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER",
                                            NA_character_))) {
                     if (file.exists(f))  makefiles <- f
-                } else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+                } else if (file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
+                    makefiles <- f
+                else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
                     makefiles <- f
                 else if (file.exists(f <- path.expand("~/.R/Makevars")))
                     makefiles <- f
-                if (file.exists("Makefile.win")) {
-                    makefiles <- c("Makefile.win", makefiles)
-                    message("  running 'src/Makefile.win' ...", domain = NA)
+                if (file.exists(f <- "Makefile.ucrt") || file.exists(f <- "Makefile.win")) {
+                    makefiles <- c(f, makefiles)
+                    message(paste0("  running 'src/", f, "' ..."), domain = NA)
                     res <- system(paste("make --no-print-directory",
                                         paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0L) shlib_install(instdir, rarch)
@@ -1252,7 +1262,8 @@ if(FALSE) {
                         f[f %in% c("i386", "x64")]
                     }
                     one_only <- !multiarch
-                    if(!one_only && file.exists("../configure.win")) {
+                    has_configure_ucrt <- file.exists("../configure.ucrt")
+                    if(!one_only && (has_configure_ucrt || file.exists("../configure.win"))) {
                         ## for now, hardcode some exceptions
                         ## These are packages which have arch-independent
                         ## code in configure.win
@@ -1266,11 +1277,15 @@ if(FALSE) {
                              "proj4", "randtoolbox", "rgdal", "rngWELL",
                              "rphast", "rtfbs", "sparsenet", "tcltk2",
                              "tiff", "udunits2"))
-                            one_only <- sum(nchar(readLines("../configure.win", warn = FALSE), "bytes")) > 0
+                            one_only <- sum(nchar(readLines(
+                                if(has_configure_ucrt) "../configure.ucrt" else "../configure.win",
+                                warn = FALSE), "bytes")) > 0
                         if(one_only && !force_biarch) {
                             if(parse_description_field(desc, "Biarch", FALSE))
                                 force_biarch <- TRUE
-                            else
+                            else if (has_configure_ucrt)
+                                warning("this package has a non-empty 'configure.ucrt' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
+                            else 
                                 warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
                         }
                     }
@@ -2531,6 +2546,9 @@ if(FALSE) {
         if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA_character_))) {
             if (file.exists(f))  makefiles <- c(makefiles, f)
         } else if (rarch == "/x64" &&
+                   file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
+            makefiles <- c(makefiles, f)
+        else if (rarch == "/x64" &&
                    file.exists(f <- path.expand("~/.R/Makevars.win64")))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
@@ -2542,9 +2560,9 @@ if(FALSE) {
     }
 
     makeobjs <- paste0("OBJECTS=", shQuote(objs))
-    if (WINDOWS && file.exists("Makevars.win")) {
-        makefiles <- c("Makevars.win", makefiles)
-        lines <- readLines("Makevars.win", warn = FALSE)
+    if (WINDOWS && (file.exists(fn <- "Makevars.ucrt") || file.exists(fn <- "Makevars.win"))) {
+        makefiles <- c(fn, makefiles)
+        lines <- readLines(fn, warn = FALSE)
         if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes = TRUE)))
             makeobjs <- ""
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
@@ -3071,6 +3089,9 @@ function()
         if(!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA_character_))) {
             if(file.exists(f)) m <- f
         }
+        else if((Sys.getenv("R_ARCH") == "/x64") &&
+                file.exists(f <- path.expand("~/.R/Makevars.ucrt")))
+            m <- f
         else if((Sys.getenv("R_ARCH") == "/x64") &&
                 file.exists(f <- path.expand("~/.R/Makevars.win64")))
             m <- f

@@ -185,9 +185,10 @@
 
   \subsection{WINDOWS}{
     \itemize{
-      \item R now uses UTF-8 as the native encoding on recent Windows
+      \item R uses UTF-8 as the native encoding on recent Windows
       systems: at least Windows 10 (version 1903), Windows Server 2022 or
-      Windows Server 1903.
+      Windows Server 1903. As a part of this change, R requires UCRT as the
+      C runtime.
 
       \item As a temporary measure to ease the transition from MSVCRT to
       UCRT, R is applying patches to some packages at installation time.
@@ -197,6 +198,14 @@
       \item A new 64-bit only Tcl/Tk bundle is now used.  The previous
       32-bit/64-bit combined bundle had a different layout and is no longer
       supported.
+
+      \item R now supports files \file{Makevars.ucrt}, \file{Makefile.ucrt},
+      \file{configure.ucrt}, \file{cleanup.ucrt} which will be used in
+      preference of the \file{.win} variants.  This allows packages to
+      provide content specific to UCRT/Rtools42 while supporting older
+      versions of R via \file{.win} files.  Support for \file{.ucrt} file
+      may be removed in the future once building packages from source on
+      older versions of R would no longer be needed.
 
       \item R has experimental support for installation-time patching of
       packages. Patches may be installed from a given URL, local directory,
