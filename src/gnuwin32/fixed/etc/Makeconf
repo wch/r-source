@@ -52,7 +52,8 @@ DLL = $(CC)
 
 ## Things defined in Renviron on Unix
 SED = sed
-TAR = tar
+TAR ?= tar
+TAR_OPTIONS ?= --force-local
 
 ## Things defined in MkRules
 CAT = cat
