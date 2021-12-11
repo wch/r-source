@@ -183,6 +183,17 @@
     }
   }
 
+  \subsection{WINDOWS}{
+    \itemize{
+      \item A new 64-bit only Tcl/Tk bundle is now used.  The previous
+      32-bit/64-bit combined bundle had a different layout and is no longer
+      supported.
+
+      \item \code{libcurl} is now required for installation.
+    }
+  }
+
+
   \subsection{INSTALLATION}{
     \itemize{
       \item Facilities for accessing \samp{ftp://} sites are no longer
@@ -192,11 +203,6 @@
     }
   }
 
-  \subsection{INSTALLATION ON WINDOWS}{
-    \itemize{
-      \item \code{libcurl} is now required.
-    }
-  }
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
