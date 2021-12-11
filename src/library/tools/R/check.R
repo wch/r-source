@@ -4820,9 +4820,11 @@ add_dummies <- function(dir, Log)
                 checkingLog(Log, "PDF version of manual without hyperrefs or index")
                 ## Also turn off hyperrefs.
                 Sys.setenv(R_RD4PDF = "times")
+                ## --force is used for the case when pdf file was created by
+                ## the previous run (seen with MiKTeX on Windows)
                 args <- c( "Rd2pdf ", Rd2pdf_opts,
                           paste0("--build-dir=", shQuote(build_dir)),
-                          "--no-clean", "--no-index",
+                          "--no-clean", "--no-index", "--force",
                           "-o ", man_file, topdir)
                 if (run_Rcmd(args, "Rdlatex.log", timeout = tlim)) {
                     ## FIXME: the info is almost certainly in Rdlatex.log
