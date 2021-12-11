@@ -1130,7 +1130,7 @@ if(FALSE) {
                         dir.create("install_time_patches", recursive=TRUE)
                         fname <- paste0("install_time_patches/", basename(p))
                         if (grepl("^http", purl))
-                            download.file(purl, destfile = fname, mode = "wb")
+                            utils::download.file(purl, destfile = fname, mode = "wb")
     		        else
                             file.copy(purl, fname)
                         if (system2("patch", args = c("-p2", "--binary", "--force"), stdin = fname) != 0)
