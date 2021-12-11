@@ -60,3 +60,17 @@ local({
        file.exists(ca_path <- file.path(R.home("etc"), "curl-ca-bundle.crt")))
         Sys.setenv(CURL_CA_BUNDLE = ca_path)
 })
+
+local({
+    setRtools42Path <- 0
+    # INSTALLER-BUILD: setRtools42Path <- 1
+
+    if (setRtools42Path) {
+        rthome <- Sys.getenv("RTOOLS42_HOME", "c:/rtools42")
+        rtpath <- paste0(rthome, "/x86_64-w64-mingw32.static.posix/bin;",
+                         rthome, "/usr/bin")
+        path <- Sys.getenv("R_CUSTOM_TOOLS_PATH", rtpath)
+        Sys.setenv(R_RTOOLS42_PATH = rtpath)
+        Sys.setenv(PATH = paste0(path, ";", Sys.getenv("PATH")))
+    }
+})
