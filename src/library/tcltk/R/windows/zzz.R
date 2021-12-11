@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/windows/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2021 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,15 +21,12 @@
 .onLoad <- function(libname, pkgname)
 {
     if(!nzchar(tclbin <- Sys.getenv("MY_TCLTK"))) {
-        tclbin <- file.path(R.home(), "Tcl",
-                            if(.Machine$sizeof.pointer == 8) "bin64" else "bin")
+        tclbin <- file.path(R.home(), "Tcl", "bin")
         if(!file.exists(tclbin))
             stop("Tcl/Tk support files were not installed", call.=FALSE)
-        if(.Machine$sizeof.pointer == 8) {
-            lib64 <- gsub("\\", "/", file.path(R.home(), "Tcl", "lib64"),
-                          fixed=TRUE)
-            Sys.setenv(TCLLIBPATH = lib64)
-        } else Sys.unsetenv("TCLLIBPATH") # in case called from a 64-bit process
+        lib <- gsub("\\", "/", file.path(R.home(), "Tcl", "lib"),
+                      fixed=TRUE)
+        Sys.setenv(TCLLIBPATH = lib)
     }
     library.dynam("tcltk", pkgname, libname, DLLpath = tclbin)
     routines <- getDLLRegisteredRoutines("tcltk", addNames = FALSE)

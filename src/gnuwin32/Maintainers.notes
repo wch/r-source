@@ -40,7 +40,15 @@ DJM 2003-02-25
 
 3) Making Tcl/Tk.
 
-See https://github.com/waddella/Tclbuild.
+For R 4.2 (64-bit UCRT bundle),
+see https://svn.r-project.org/R-dev-web/trunk/WindowsBuilds/winutf8/ucrt3/tcl_bundle/
+
+For more background, see "Tcl/Tk bundle" in
+https://svn.r-project.org/R-dev-web/trunk/WindowsBuilds/winutf8/winutf8.html
+
+Earlier versions used:
+  https://github.com/waddella/Tclbuild
+  https://raw.githubusercontent.com/r-windows/r-base/master/create-tcltk-bundle.sh
 
 
 4) Linking to DLLs.
