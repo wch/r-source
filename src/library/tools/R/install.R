@@ -526,7 +526,7 @@ if(FALSE) {
         } else if (file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
             warning("'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'", call. = FALSE)
-
+        revert_install_time_patches()
     }
 
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
@@ -1068,6 +1068,77 @@ if(FALSE) {
 
         if (preclean) run_clean()
 
+        if (WINDOWS) {
+            # Installation-time patching is enabled as a temporary measure
+            # during the transition from MSVCRT to UCRT, when packages with
+            # many reverse dependencies have to be update to link. To
+            # disable this feature, switch it_patches_base below to "no".
+
+            # Users may locally disable this feature by setting
+            # _R_INSTALL_TIME_PATCHES_ to "no", or provide a local directory
+            # with their own patches.
+
+            it_patches_base <- Sys.getenv("_R_INSTALL_TIME_PATCHES_",
+                "https://www.r-project.org/nosvn/winutf8/ucrt3/")
+
+            # The patches are identified by package name. An index is used
+            # to map the name to a directory with patches for a given
+            # package. There may be multiple patches for a single package,
+            # but that hasn't been used. The patches applied to a package
+            # are copied into directory install_time_patches inside the
+            # package installation (so in library, but also in binary
+            # package build) for reference.
+
+            # The patches are automatically reverted on cleanup, see
+            # revert_install_time_patches, also during R CMD build (see
+            # build.R). The latter is needed to ensure that unpatched source
+            # package tarball is produced when the package native code is
+            # compiled during R CMD build, e.g. to build vignettes.
+
+            # This feature is experimental, it may be completely removed in
+            # the future.
+
+	    if (!it_patches_base %in% c("no", "disabled", "false", "FALSE")) {
+        
+                patches_idx <- tryCatch({
+                        idxfile <- file(paste0(it_patches_base, "/",
+                                               "patches_idx.rds"))
+                        patches_idx <- readRDS(idxfile)
+                        close(idxfile)
+                        patches_idx
+                    },
+                    error = function(e) NULL)
+
+                if (is.null(patches_idx))
+                    message("WARNING: installation-time patches will not be applied, could not get the patches index")
+                else {
+                    patches_msg <- FALSE
+                    for(p in patches_idx[[pkg_name]]) {
+                        if (!patches_msg) {
+                            patches_msg <- TRUE
+                            starsmsg(stars, "applying installation-time patches")
+                        }
+                        purl <- paste0(it_patches_base, "/", p)
+                        have_patch <- nzchar(Sys.which("patch"))
+                        if (!have_patch)
+                            stop("patch utility is needed for installation-time patching")
+                        dir.create("install_time_patches", recursive=TRUE)
+                        fname <- paste0("install_time_patches/", basename(p))
+                        if (grepl("^http", purl))
+                            download.file(purl, destfile = fname, mode = "wb")
+    		        else
+                            file.copy(purl, fname)
+                        if (system2("patch", args = c("-p2", "--binary", "--force"), stdin = fname) != 0)
+                            message("WARNING: failed to apply patch ", p, "\n")
+                        else
+                            message("Applied installation-time patch ", purl,
+                                    " and saved it as ", fname,
+                                    " in package installation\n")
+                     }
+                }
+            }
+	}
+
         if (use_configure) {
             if (WINDOWS) {
                 if (file.exists("configure.win")) {
@@ -1329,8 +1400,11 @@ if(FALSE) {
             ## Windows, even if it is installed.
             if (!grepl(" x64 ", utils::win.version())) test_archs <- "i386"
         }
-
+ 
         if (have_cross) Sys.unsetenv("R_ARCH")
+
+        if (WINDOWS && dir.exists("install_time_patches"))
+            file.copy("install_time_patches", instdir, recursive = TRUE)
 
         ## R files must start with a letter
 	if (install_R && dir.exists("R") && length(dir("R"))) {
@@ -3016,6 +3090,26 @@ function()
             m <- f
     }
     m
+}
+
+revert_install_time_patches <- function()
+{
+    WINDOWS <- .Platform$OS.type == "windows"
+    if (WINDOWS && dir.exists("install_time_patches")) {
+        patches <- sort(list.files("install_time_patches"),
+                        decreasing = TRUE)
+        for(p in patches) {
+            fname <- paste0("install_time_patches/", p)
+            if (system2("patch",
+                        args = c("-p2", "--binary", "--force", "--reverse"),
+                        stdin = fname) != 0)
+                message("WARNING: failed to revert patch ", p, "\n")
+            else
+                message("Reverted installation-time patch ", p,
+                        " in package installation\n")
+        }
+        unlink("install_time_patches", recursive = TRUE)
+    }
 }
 
 ### * makevars_site

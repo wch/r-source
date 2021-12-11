@@ -185,9 +185,19 @@
 
   \subsection{WINDOWS}{
     \itemize{
+      \item As a temporary measure to ease the transition from MSVCRT to
+      UCRT, R is applying patches to some packages at installation time.
+      See \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}.
+      This measure is intended to end before R 4.2 is released.
+      
       \item A new 64-bit only Tcl/Tk bundle is now used.  The previous
       32-bit/64-bit combined bundle had a different layout and is no longer
       supported.
+
+      \item R has experimental support for installation-time patching of
+      packages. Patches may be installed from a given URL, local directory,
+      or disabled. Patches are included into the installed packages for
+      reference.
 
       \item \code{libcurl} is now required for installation.
     }

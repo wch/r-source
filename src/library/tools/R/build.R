@@ -518,6 +518,7 @@ inRbuildignore <- function(files, pkgdir) {
             messageLog(Log, "running 'cleanup'")
             Ssystem("./cleanup")
         }
+        revert_install_time_patches()
     }
 
     update_Rd_index <- function(oldindex, Rd_files, Log)
