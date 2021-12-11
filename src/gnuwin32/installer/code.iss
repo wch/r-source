@@ -23,6 +23,7 @@ var
   option : String;
   index : Integer;
 begin
+  WizardForm.DiskSpaceLabel.Visible := False;
   NoAdminPage := CreateOutputMsgPage(wpWelcome, SetupMessage(msgInformationTitle), 
     CustomMessage('adminprivilegesrequired'), CustomMessage('adminexplanation'));
   
