@@ -104,7 +104,7 @@ imagedir:
 	$(CP) -pR ../windlgs $(RPREFIX)/src/library
 ifeq "$(WIN)" "64" 	
 # Edit Makeconf
-	$(SED) -e 's!^BINPREF [?]= .*!BINPREF ?= "$$(RTOOLS40_ROOT)/mingw64/bin/"!' \
+	$(SED) -e 's!^LOCAL_SOFT [?]= .*!LOCAL_SOFT ?= $$(patsubst %/bin/gcc,%,$$(shell which gcc))!' \
 	  $(R_HOME)/etc/x64/Makeconf > $(RPREFIX)/etc/x64/Makeconf
 endif	  
 # test dir
