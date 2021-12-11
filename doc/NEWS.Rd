@@ -185,6 +185,10 @@
 
   \subsection{WINDOWS}{
     \itemize{
+      \item R now uses UTF-8 as the native encoding on recent Windows
+      systems: at least Windows 10 (version 1903), Windows Server 2022 or
+      Windows Server 1903.
+
       \item As a temporary measure to ease the transition from MSVCRT to
       UCRT, R is applying patches to some packages at installation time.
       See \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}.
