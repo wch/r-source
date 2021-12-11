@@ -199,6 +199,11 @@
       or disabled. Patches are included into the installed packages for
       reference.
 
+      \item Rtools42 include an original Msys2 build of GNU \command{tar}.
+      Drive letters can be made to work by adding \option{--force-local} to
+      environment variable \env{TAR_OPTIONS}. Rtools40 and earlier included
+      a special version which used this option by default.
+
       \item \code{libcurl} is now required for installation.
     }
   }
