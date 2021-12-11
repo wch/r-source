@@ -185,46 +185,47 @@
 
   \subsection{WINDOWS}{
     \itemize{
-      \item R uses UTF-8 as the native encoding on recent Windows
-      systems: at least Windows 10 (version 1903), Windows Server 2022 or
-      Windows Server 1903. As a part of this change, R requires UCRT as the
-      C runtime.
+      \item \R uses UTF-8 as the native encoding on recent Windows systems
+      (at least Windows 10 version 1903, Windows Server 2022 or Windows
+      Server 1903).  As a part of this change, R uses UCRT as the C runtime.
+      UCRT has to be installed manually on system older than Windows 10 or
+      Windows Server 2016 before installing \R.
 
       \item As a temporary measure to ease the transition from MSVCRT to
-      UCRT, R is applying patches to some CRAN and Bioconductor packages at
+      UCRT, \R is applying patches to some CRAN and Bioconductor packages at
       installation time.  See
       \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}. 
       This measure is intended to end before R 4.2 is released.
       
-      \item A new 64-bit only Tcl/Tk bundle is now used.  The previous
-      32-bit/64-bit combined bundle had a different layout and is no longer
-      supported.
+      \item \R uses a new 64-bit Tcl/Tk bundle.  The previous 32-bit/64-bit
+      combined bundle had a different layout and can no longer be used.
 
-      \item Make files and installer script for Windows have been tailored
-      to Rtools42, a newly recommended 64-bit gcc 10.3 UCRT toolchain.  R
-      installed from the installer automatically finds Rtools42. This
-      replaces support for the previous toolchain, Rtools40.
+      \item Make files and installer scripts for Windows have been tailored
+      to Rtools42, the newly recommended 64-bit gcc 10.3 MinGW-W64 UCRT toolchain.
 
-      \item R now supports files \file{Makevars.ucrt}, \file{Makefile.ucrt},
-      \file{configure.ucrt}, \file{cleanup.ucrt} which will be used in
-      preference of the \file{.win} variants.  This allows packages to
-      provide content specific to UCRT/Rtools42 while supporting older
-      versions of R via \file{.win} files.  Support for \file{.ucrt} file
-      may be removed in the future once building packages from source on
-      older versions of R would no longer be needed.
+      \item \R now supports files \file{Makevars.ucrt},
+      \file{Makefile.ucrt}, \file{configure.ucrt} and \file{cleanup.ucrt} in
+      packages, which are used in preference of the \file{.win} variants. 
+      This allows keeping the \file{.win} around to support older versions
+      of \R.  This feature will be removed in the future once support for
+      older versions of \R would no longer be needed.
 
       \item \code{R.version} gains new field \code{crt} (only on Windows) to
       denote the C runtime. The value is \code{"ucrt"}.
 
-      \item R has experimental support for installation-time patching of
-      packages. Patches may be installed from a given URL, local directory,
-      or disabled. Patches are included into the installed packages for
-      reference.
+      \item \R now supports installation-time patching of packages.  Patches
+      may be installed from a given URL, local directory, or disabled. 
+      Patches are included into the installed packages for reference.  This
+      experimental feature may be removed in the future.
 
       \item Rtools42 include an original Msys2 build of GNU \command{tar}.
       Drive letters can be made to work by adding \option{--force-local} to
       environment variable \env{TAR_OPTIONS}. Rtools40 and earlier included
       a special version which used this option by default.
+
+      \item Installer builds of \R automatically find Rtools42 software
+      collection as well as the compiler toolchain.  No \env{PATH} setting
+      is required from the user.
 
       \item \code{libcurl} is now required for installation.
     }
