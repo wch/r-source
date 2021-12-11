@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2013  The R Core Team
+ *  Copyright (C) 1998--2021  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,46 +49,56 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP value, names;
     char buf[128];
+    int i = 0;
 
     checkArity(op, args);
+#ifndef Win32
     PROTECT(value = allocVector(VECSXP,14));
     PROTECT(names = allocVector(STRSXP,14));
+#else
+    PROTECT(value = allocVector(VECSXP,15));
+    PROTECT(names = allocVector(STRSXP,15));
+#endif
 
-    SET_STRING_ELT(names, 0, mkChar("platform"));
-    SET_VECTOR_ELT(value, 0, mkString(R_PLATFORM));
-    SET_STRING_ELT(names, 1, mkChar("arch"));
-    SET_VECTOR_ELT(value, 1, mkString(R_CPU));
-    SET_STRING_ELT(names, 2, mkChar("os"));
-    SET_VECTOR_ELT(value, 2, mkString(R_OS));
+    SET_STRING_ELT(names, i, mkChar("platform"));
+    SET_VECTOR_ELT(value, i++, mkString(R_PLATFORM));
+    SET_STRING_ELT(names, i, mkChar("arch"));
+    SET_VECTOR_ELT(value, i++, mkString(R_CPU));
+    SET_STRING_ELT(names, i, mkChar("os"));
+    SET_VECTOR_ELT(value, i++, mkString(R_OS));
+#ifdef Win32
+    SET_STRING_ELT(names, i, mkChar("crt"));
+    SET_VECTOR_ELT(value, i++, mkString(R_CRT));
+#endif
 
     snprintf(buf, 128, "%s, %s", R_CPU, R_OS);
-    SET_STRING_ELT(names, 3, mkChar("system"));
-    SET_VECTOR_ELT(value, 3, mkString(buf));
+    SET_STRING_ELT(names, i, mkChar("system"));
+    SET_VECTOR_ELT(value, i++, mkString(buf));
 
-    SET_STRING_ELT(names, 4, mkChar("status"));
-    SET_VECTOR_ELT(value, 4, mkString(R_STATUS));
-    SET_STRING_ELT(names, 5, mkChar("major"));
-    SET_VECTOR_ELT(value, 5, mkString(R_MAJOR));
-    SET_STRING_ELT(names, 6, mkChar("minor"));
-    SET_VECTOR_ELT(value, 6, mkString(R_MINOR));
-    SET_STRING_ELT(names, 7, mkChar("year"));
-    SET_VECTOR_ELT(value, 7, mkString(R_YEAR));
-    SET_STRING_ELT(names, 8, mkChar("month"));
-    SET_VECTOR_ELT(value, 8, mkString(R_MONTH));
-    SET_STRING_ELT(names, 9, mkChar("day"));
-    SET_VECTOR_ELT(value, 9, mkString(R_DAY));
-    SET_STRING_ELT(names, 10, mkChar("svn rev"));
+    SET_STRING_ELT(names, i, mkChar("status"));
+    SET_VECTOR_ELT(value, i++, mkString(R_STATUS));
+    SET_STRING_ELT(names, i, mkChar("major"));
+    SET_VECTOR_ELT(value, i++, mkString(R_MAJOR));
+    SET_STRING_ELT(names, i, mkChar("minor"));
+    SET_VECTOR_ELT(value, i++, mkString(R_MINOR));
+    SET_STRING_ELT(names, i, mkChar("year"));
+    SET_VECTOR_ELT(value, i++, mkString(R_YEAR));
+    SET_STRING_ELT(names, i, mkChar("month"));
+    SET_VECTOR_ELT(value, i++, mkString(R_MONTH));
+    SET_STRING_ELT(names, i, mkChar("day"));
+    SET_VECTOR_ELT(value, i++, mkString(R_DAY));
 
+    SET_STRING_ELT(names, i, mkChar("svn rev"));
     snprintf(buf, 128, "%d", R_SVN_REVISION);
-    SET_VECTOR_ELT(value, 10, mkString(buf));
-    SET_STRING_ELT(names, 11, mkChar("language"));
-    SET_VECTOR_ELT(value, 11, mkString("R"));
+    SET_VECTOR_ELT(value, i++, mkString(buf));
+    SET_STRING_ELT(names, i, mkChar("language"));
+    SET_VECTOR_ELT(value, i++, mkString("R"));
 
     PrintVersionString(buf, 128);
-    SET_STRING_ELT(names, 12, mkChar("version.string"));
-    SET_VECTOR_ELT(value, 12, mkString(buf));
-    SET_STRING_ELT(names, 13, mkChar("nickname"));
-    SET_VECTOR_ELT(value, 13, mkString(R_NICK));
+    SET_STRING_ELT(names, i, mkChar("version.string"));
+    SET_VECTOR_ELT(value, i++, mkString(buf));
+    SET_STRING_ELT(names, i, mkChar("nickname"));
+    SET_VECTOR_ELT(value, i++, mkString(R_NICK));
 
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
@@ -109,20 +119,29 @@ void attribute_hidden PrintVersion(char *s, size_t len)
 
 void attribute_hidden PrintVersionString(char *s, size_t len)
 {
+    
+#ifndef Win32
+# define _R_PV_EXTRA_ ""
+#else
+# define _R_PV_EXTRA_ " " R_CRT
+#endif
     if(R_SVN_REVISION <= 0) {// 'svn info' failed in ../../Makefile.in
-	snprintf(s, len, "R version %s.%s %s (%s-%s-%s)",
-		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
-    } else if(strlen(R_STATUS) == 0) {
-	snprintf(s, len, "R version %s.%s (%s-%s-%s)",
-		R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
-    } else if(strcmp(R_STATUS, "Under development (unstable)") == 0) {
-	snprintf(s, len, "R %s (%s-%s-%s r%d)",
-		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_REVISION);
-    } else {
-	snprintf(s, len, "R version %s.%s %s (%s-%s-%s r%d)",
+	snprintf(s, len, "R version %s.%s %s (%s-%s-%s%s)",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
-		R_SVN_REVISION);
+	        _R_PV_EXTRA_);
+    } else if(strlen(R_STATUS) == 0) {
+	snprintf(s, len, "R version %s.%s (%s-%s-%s%s)",
+		R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY, _R_PV_EXTRA_);
+    } else if(strcmp(R_STATUS, "Under development (unstable)") == 0) {
+	snprintf(s, len, "R %s (%s-%s-%s r%d%s)",
+		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_REVISION,
+	        _R_PV_EXTRA_);
+    } else {
+	snprintf(s, len, "R version %s.%s %s (%s-%s-%s r%d%s)",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
+		R_SVN_REVISION, _R_PV_EXTRA_);
     }
+#undef _R_PV_EXTRA_
 }
 
 void attribute_hidden PrintVersion_part_1(char *s, size_t len)

@@ -207,6 +207,9 @@
       may be removed in the future once building packages from source on
       older versions of R would no longer be needed.
 
+      \item \code{R.version} gains new field \code{crt} (only on Windows) to
+      denote the C runtime. The value is \code{"ucrt"}.
+
       \item R has experimental support for installation-time patching of
       packages. Patches may be installed from a given URL, local directory,
       or disabled. Patches are included into the installed packages for

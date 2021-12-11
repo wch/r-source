@@ -1,6 +1,6 @@
 % File src/library/base/man/Version.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{R.Version}
@@ -30,6 +30,7 @@ version
  }
   \item{arch}{the architecture (CPU) \R was built on/for.}
   \item{os}{the underlying operating system.}
+  \item{crt}{the C runtime on Windows.}
   \item{system}{CPU and OS, separated by a comma.}
   \item{status}{the status of the version (e.g., \code{"alpha"})}
   \item{major}{the major version number}
@@ -66,7 +67,13 @@ version
 
   Note that OS names might not be what you expect: for example macOS
   Mavericks 10.9.4 identifies itself as \samp{darwin13.3.0}, Linux
-  usually as \samp{linux-gnu} and Solaris 10 as \samp{solaris2.10}.
+  usually as \samp{linux-gnu}, Solaris 10 as \samp{solaris2.10} and Windows
+  as \samp{mingw32}.
+
+  \code{R.version$crt} is supported on Windows since \R 4.2.0 and returns
+  \code{"ucrt"} to denote the Universal C Runtime. It would return
+  \code{"msvcrt"} for the older Microsoft Visual C++ Runtime (but \R does
+  not use that runtime since 4.2.0).
 }
 \seealso{
   \code{\link{sessionInfo}} which provides additional information;

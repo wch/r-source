@@ -1105,6 +1105,14 @@
 #define R_PLATFORM "i386-w64-mingw32"
 #endif
 
+/* Define this to be the C runtime R has been built for. */
+#if defined(_UCRT) || ((__MSVCRT_VERSION__ >= 0x1400) || (__MSVCRT_VERSION__ >= 0xE00 && __MSVCRT_VERSION__ < 0x1000))
+  /* __MSVCRT_VERSION__ is defined in _mingw.h. Keep in step with corecrt.h. */
+  #define R_CRT "ucrt"
+#else
+  #define R_CRT "msvcrt"
+#endif
+
 /* Define this to be printing command on your system. */
 #define R_PRINTCMD ""
 
