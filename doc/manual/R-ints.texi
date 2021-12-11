@@ -1314,7 +1314,7 @@ assumption: it wants the symbol font to be encoded in UTF-8 as if it
 were encoded in Latin-1 rather than Adobe Symbol: this is selected by
 @code{wantSymbolUTF8 = NA_LOGICAL}.
 
-Windows has no UTF-8 locales, but rather expects to work with
+Windows with MSVCRT as the C runtime has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
 which it used not to be when encoding support was added to @R{}.}
 strings.  @R{} (being written in standard C) would not work internally
@@ -1329,6 +1329,39 @@ convention is used (see header file @file{rgui_UTF8.h}) by
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
 Windows if the encoding is declared explicitly on an unopened
 connection passed to those functions.
+
+Windows have multiple notions of the current locale encoding, one is in the
+C runtime (C library) and another is the active code page (system locale). 
+The active code page is used when calling non-UTF-16 variants of Windows API
+functions (earlier referred to as ANSI calls), either directly or indirectly
+via POSIX wrappers inside MinGW-w64, from R, R packages and libraries they
+link to.  While R has handled many cases by calling directly the UTF-16
+variants of the Windows API, it still may sometimes use the non-UTF-16 ones,
+and external libraries also primarily developed for POSIX systems typically
+do that.  Therefore, for R to reliably work with (non-ASCII) strings on
+Windows, both the C locale encoding and the active code page on Windows must
+be the same, and by default they are.
+
+The Windows UCRT C runtime supports UTF-8 locales.  Historically, the active
+code page was a system-wide setting, changing which required a reboot, and
+UTF-8 was not supported.  Later a "BETA: Use Unicode UTF-8 for worldwide
+language support" feature has been added to set the active code page to
+UTF-8, but this still required a reboot and impacted all applications, many
+of which would not work correctly with that unexpected setting, so it could
+not be used in practice.
+
+Windows since Windows 10 (version 1903), Windows Server 2022 (LTSC), and
+Windows Server 1903 (semi-annual channel) allow setting the active code page
+to UTF-8 in the application manifest.  This changes the active code page
+only for the given application and does so together with changing also the
+UCRT C locale to UTF-8. R 4.2 for Windows uses this feature to get UTF-8 as
+the native encoding on Windows. To make that possible, R had to switch to
+UCRT, which in turn required creation of Rtools42.
+
+Older versions of Windows still rely on the previous encoding support where
+the native encoding cannot be UTF-8. R 4.2 requires UCRT to work, but UCRT
+can be installed on Windows since Vista SP2 and Windows Server 2008 SP2. It
+is shipped with Windows since Windows 10 and Windows Server 2016.
 
 @node The CHARSXP cache, Warnings and errors, Encodings for CHARSXPs, R Internal Structures
 @section The CHARSXP cache
