@@ -303,8 +303,7 @@ are quite deliberately installed in parallel folders so you can keep old
 versions around if you wish.
 
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
-of your home directory, @file{R\win64-library\@var{x.y}} on 64-bit
-builds), you will need to update that too when the minor version of R
+of your home directory, you will need to update that too when the minor version of R
 changes (e.g.@: from 4.0.2 to 4.1.0).  A simple way to do so is to
 copy (say) @file{R\win-library\4.0} to @file{R\win-library\4.1} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
