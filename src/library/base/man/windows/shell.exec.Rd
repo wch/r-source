@@ -1,6 +1,6 @@
 % File src/library/base/man/windows/shell.exec.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shell.exec}
@@ -10,11 +10,12 @@
 shell.exec(file)
 }
 \arguments{
-  \item{file}{file or URL to be opened.}
+  \item{file}{file, directory or URL to be opened.}
 }
 \description{
   Opens the specified file or URL using the application specified in the
-  Windows file associations.
+  Windows file associations. A directory is opened in a new or existing 
+  explorer window.
 }
 \details{
   The path in \code{file} should be a full path.
@@ -41,6 +42,9 @@ shell.exec(file)
 shell.exec("C:\\\\Program Files\\\\BreezeSys\\\\BreezeBrowser\\\\Breezebrowser.htm")
 shell.exec("C:/Program Files/BreezeSys/BreezeBrowser/Breezebrowser.htm")
 shell.exec("file:///C:/Program Files/BreezeSys/BreezeBrowser/Breezebrowser.htm")
+shell.exec(.libPaths()[1])
+shell.exec(R.home())
+shell.exec(path.expand("~"))
 }}
 
 \keyword{utilities}
