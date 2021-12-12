@@ -128,7 +128,7 @@ It is biased towards users of 64-bit Windows.
 Go to any CRAN site (see @uref{https://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win.exe} of about 65MB.
+installer @samp{@RWVER@-win.exe} of about 76MB.
 
 There are also links on that page to the @samp{r-patched} and
 @samp{r-devel} snapshots.  These are frequently updated builds of
@@ -142,17 +142,18 @@ as changes that are planned to eventually make it into the next
 
 Current binary versions of R are known to run on Windows 7 or later,
 including on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
+Starting from R 4.2.0, 32-bit versions are no longer provided.
 Windows XP is no longer supported.
 
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 went end of life 2014-04-08
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly 64-bit Windows 7, Windows Server 2008 and Windows 10.
+mainly 64-bit Windows 7, Windows Server 2008, Windows Server 2022 and Windows 10.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  An installation takes
-up to 150MB of disk space.
+up to 170MB of disk space.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -162,7 +163,7 @@ rights@footnote{Non-administrator accounts will automatically be offered
 a default installation directory in the user area.} should consider
 installing into a non-system area (such as @file{C:\R}).  Installing to
 a network share (a filepath starting with @code{\\machine\...}) is not
-supported: such paths will need to mapped to a network drive.
+supported: such paths will need to be mapped to a network drive.
 
 To install use @samp{@RWVER@-win.exe}.  Just double-click on the icon
 and follow the instructions.  If you have an account with Administrator
@@ -180,13 +181,17 @@ You may need to
 confirm that you want to proceed with installing a program from an
 `unknown' or `unidentified' publisher.
 
-After installation you should choose a working directory for R.  You
+After installation you may choose a working directory for R. By default,
+it is the Windows "personal" directory  (typically 
+@file{C:\Users\username\Documents}). You
 will have a shortcut to @file{Rgui.exe} on your desktop and/or somewhere
 on the Start menu file tree, and perhaps also in the Quick Launch part
 of the taskbar (Vista and earlier).  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
+Also, you need to remove the argument @code{--cd-to-userdocs} in the Target
+field, which implements the default behavior.
 (If your account was not the one used for installation, you may need to
-copy the shortcut before editing it.)
+copy the shortcut before editing it.) 
 
 On some systems you will have two shortcuts, one for 32-bit with a label
 starting @code{R i386} and one for 64-bit starting @code{R x64}
@@ -229,6 +234,9 @@ set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
 @samp{i386}, @samp{x64} and @samp{translations}.
+@item /CURRENTUSER
+install for the current user only even if the current user has Administrator
+privileges
 @end table
 
 @noindent
@@ -323,7 +331,8 @@ running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 Create a separate shortcut for each project: see Q2.5.  All the paths to
 files used by R are relative to the starting directory, so setting the
-`Start in' field automatically helps separate projects.
+`Start in' field (and removing the
+@code{--cd-to-userdocs} argument) automatically helps separate projects.
 
 Alternatively, start R by double-clicking on a saved @file{.RData} file
 in the directory for the project you want to use, or drag-and-drop a
@@ -594,7 +603,7 @@ Task manager.
 
 
 @node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
-@section Does R run under Windows Vista/7/8/Server 2008?
+@section Does R run under Windows Vista/7/8/10/Server 2008/2016/2022?
 
 It does.  A few issues have been reported that are related to the way
 accounts and file permissions work.  (These are not specifically R
@@ -756,6 +765,8 @@ one), then releasing the Alt key.
 @node Can I use R on 64-bit Windows?, Should I run 32-bit or 64-bit R?, There is no tilde on my keyboard, Installation and Usage
 @section Can I use R on 64-bit Windows?
 
+Since R 4.2.0, 32-bit builds are no longer provided.
+
 The 32-bit build of R for Windows will run on both 32-bit and
 64-bit@footnote{what Windows calls x64 for x86-64 CPUs, not the very
 rare ia64 Windows for Itanium CPUs.} versions of Windows.  64-bit
@@ -773,6 +784,7 @@ examples in this FAQ.
 @section Should I run 32-bit or 64-bit R?
 
 Obviously, only relevant if you are using 64-bit Windows.
+Since R 4.2.0, 32-bit builds are no longer provided.
 
 For most users we would recommend using the `native' build, that is the
 32-bit version on 32-bit Windows and the 64-bit version of 64-bit Windows.
@@ -808,6 +820,7 @@ similarly for 32-bit Microsoft Office.)
 Obviously, only relevant if the machine is running a 64-bit version of
 Windows -- simply select both when using the installer.  You can also go
 back and add 64-bit components to a 32-bit install, or @emph{vice versa}.
+Since R 4.2.0, 32-bit builds are no longer provided.
 
 For many Registry items, 32- and 64-bit programs have different views of
 the Registry, but clashes can occur.  The most obvious problem is the
