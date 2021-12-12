@@ -196,7 +196,15 @@
       installation time.  See
       \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}. 
       This measure is intended to end before R 4.2 is released.
-      
+
+      \item The personal library on Windows, folder
+      \file{R\\win-library\\x.y} where \file{x.y} stands for \R release
+      \file{x.y.z}, is now by default a subdirectory of Local Application
+      Data (usually a hidden directory
+      \file{C:\\Users\\username\\AppData\\Local}).  Use
+      \code{shell.exec(.libPaths()[1])} to open the personal library in
+      explorer when it is first in the list (\PR{17842}).
+
       \item \R uses a new 64-bit Tcl/Tk bundle.  The previous 32-bit/64-bit
       combined bundle had a different layout and can no longer be used.
 
@@ -228,7 +236,7 @@
       is required from the user.
 
       \item The default installation directory of R for user-only installation
-      has been changed to the User Program Files (usually
+      has been changed to the User Program Files (usually a hidden directory
       \file{C:\\Users\\username\\AppData\\Local\\Programs}) to follow Windows
       conventions. Use \code{shell.exec(R.home())} to open \R installation
       directory in explorer (\PR{17842}).

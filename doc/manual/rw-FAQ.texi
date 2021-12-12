@@ -311,7 +311,9 @@ are quite deliberately installed in parallel folders so you can keep old
 versions around if you wish.
 
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
-of your home directory, you will need to update that too when the minor version of R
+of your @file{$@{LOCALAPPDATA@}} directory in R since 4.2.0 or of your home
+directory with earlier versions of R),
+you will need to update that too when the minor version of R
 changes (e.g.@: from 4.0.2 to 4.1.0).  A simple way to do so is to
 copy (say) @file{R\win-library\4.0} to @file{R\win-library\4.1} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
@@ -1110,8 +1112,10 @@ library(mypkg, lib.loc="p:/myRlib")
 @end example
 
 You can also have a personal library, which defaults to the directory
-@file{R\win-library\@var{x.y}} of your home directory for versions
-@var{x.y.z} of R.  This location can be changed by setting the
+@file{R\win-library\@var{x.y}} of your @file{$@{LOCALAPPDATA@}} directory
+(e.g. @file{C:\Users\username\AppData\Local}) for versions
+@var{x.y.z} since R 4.2.0. With older versions of R, it was a subdirectory
+of your home directory by default. This location can be changed by setting the
 environment variable @env{R_LIBS_USER}, and can be found from inside R
 by running @code{Sys.getenv("R_LIBS_USER")}.  This will only be used if
 it exists so you may need to create it: you can use
