@@ -168,7 +168,15 @@ To install use @samp{@RWVER@-win.exe}.  Just double-click on the icon
 and follow the instructions.  If you have an account with Administrator
 privileges you will be able to install R in the @file{Program Files}
 area and to set all the optional registry entries; otherwise you will
-only be able to install R in your own file area.  You may need to
+only be able to install R in your own file area.  Since R 4.2.0, the default
+location in that case is the User Program Files folder (typically
+@file{$@{LOCALAPPDATA@}\Programs}, so e.g.
+@file{C:\Users\username\AppData\Local\Programs}). Prior to R 4.2.0, the
+default location was the Windows "personal" directory  (typically
+@file{C:\Users\username\Documents}). Once R is installed, one may open the
+installation directory in explorer using @code{shell.exec(R.home())}.
+
+You may need to
 confirm that you want to proceed with installing a program from an
 `unknown' or `unidentified' publisher.
 

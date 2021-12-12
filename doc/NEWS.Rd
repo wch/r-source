@@ -227,6 +227,12 @@
       collection as well as the compiler toolchain.  No \env{PATH} setting
       is required from the user.
 
+      \item The default installation directory of R for user-only installation
+      has been changed to the User Program Files (usually
+      \file{C:\\Users\\username\\AppData\\Local\\Programs}) to follow Windows
+      conventions. Use \code{shell.exec(R.home())} to open \R installation
+      directory in explorer (\PR{17842}).
+
       \item \code{libcurl} is now required for installation.
     }
   }
