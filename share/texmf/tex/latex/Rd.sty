@@ -328,8 +328,9 @@
   %% Formerly in R's hyperref.cfg, possibly to be shared with Sweave.sty
   %% as well (but without setting pagebackref as this can give trouble
   %% for .bib entries containing URLs with '#' characters).
-  \definecolor{Blue}{rgb}{0,0,0.8}
-  \definecolor{Red}{rgb}{0.7,0,0}
+  \AtBeginDocument{%
+    \definecolor{Blue}{rgb}{0,0,0.8}
+    \definecolor{Red}{rgb}{0.7,0,0}}
   \hypersetup{%
     hyperindex,%
     colorlinks,%
