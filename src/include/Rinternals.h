@@ -1178,7 +1178,7 @@ typedef struct { SEXP cell; } R_hashtab_t;
 R_hashtab_t R_asHashtable(SEXP h);
 SEXP R_HashtabSEXP(R_hashtab_t  h);
 int R_isHashtable(SEXP h);
-R_hashtab_t R_mkhashtab(int type, int K);
+    R_hashtab_t R_mkhashtab(int type, int /*K*/);
 SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch);
 SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value);
 int R_remhash(R_hashtab_t h, SEXP key);
