@@ -673,11 +673,9 @@ function(dir, logs = NULL, ...)
             if(any(ind)) {
                 status <- sub(re, "\\6", lines[ind],
                               perl = TRUE, useBytes = TRUE)
-                ## <FIXME WARNING_and_FAILURE>                
                 if(any(status == "")) "FAILURE"
                 else if(any(status == "ERROR")) "ERROR"
                 else if(any(status == "WARNING")) "WARNING"
-                ## </FIXME>
                 else "NOTE"
             } else {
                 "OK"
@@ -701,10 +699,8 @@ function(results)
                  status, deparse.level = 0L)
     tab <- tab[match(c("Source packages", "Reverse depends"),
                      rownames(tab), nomatch = 0L),
-               ## <FIXME WARNING_and_FAILURE>               
                match(c("FAILURE", "ERROR", "WARNING", "NOTE", "OK"),
                      colnames(tab), nomatch = 0L),
-               ## </FIXME>
                drop = FALSE]
     names(dimnames(tab)) <- NULL
     tab
@@ -931,21 +927,17 @@ function(log, drop_ok = TRUE, ...)
                                     perl = TRUE, useBytes = TRUE)
                        status <- sub(re, "\\6", line,
                                      perl = TRUE, useBytes = TRUE)
-                       ## <FIXME WARNING_and_FAILURE>                       
                        if(status == "") status <- "FAILURE"
-                       ## </FIXME>
                        list(check = check,
                             status = status,
                             output = paste(s[-1L], collapse = "\n"))
                    })
 
         status <- vapply(chunks, `[[`, "", "status")
-        ## <FIXME WARNING_and_FAILURE>        
         if(isTRUE(drop_ok) ||
            (is.na(drop_ok)
                && all(is.na(match(c("ERROR", "FAILURE"), status)))))
             chunks <- chunks[is.na(match(status, drop_ok_status_tags))]
-        ## </FIXME>
         
         chunks
     }
@@ -1128,12 +1120,10 @@ function(new, old, outputs = FALSE)
     db <- do.call(rbind, chunks)
 
     ## Drop checks that are OK in both versions
-    ## <FIXME WARNING_and_FAILURE>    
     x.issue <- !is.na(match(db$Status.x,
                             c("ERROR","FAILURE","NOTE","WARNING")))
     y.issue <- !is.na(match(db$Status.y,
                             c("ERROR","FAILURE","NOTE","WARNING")))
-    ## </FIXME>
     db <- db[x.issue | y.issue,]
 
     ## Even with the above simplification, missing entries do not
@@ -1184,9 +1174,7 @@ function(x, i, j, drop = FALSE)
     if(((nargs() - !missing(drop)) == 3L)
        && (length(i) == 1L)
        && any(!is.na(match(i, c("==", "!=", "<", "<=", ">", ">="))))) {
-        ## <FIXME WARNING_and_FAILURE>        
         levels <- c("", "OK", "NOTE", "WARNING", "ERROR", "FAILURE")
-        ## </FIXME>
         encode <- function(s) {
             s <- sub("\n.*", "", s)
             s[is.na(match(s, levels))] <- ""
