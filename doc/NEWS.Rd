@@ -231,10 +231,10 @@
       future.
 
       \item \file{Rtools42} include an unpatched Msys2 build of GNU
-      \command{tar}.  Drive letters can be made to work by adding
-      \option{--force-local} to environment variable \env{TAR_OPTIONS}.
-      (\file{Rtools40} and earlier included a special version which used
-      this option by default.)
+      \command{tar}.  Paths including drive letters can be made to work
+      by adding \option{--force-local} to environment variable
+      \env{TAR_OPTIONS}.  (\file{Rtools40} and earlier included a
+      patched version which defaulted to this option.)
 
       \item Installer builds of \R automatically find the
       \file{Rtools42} software collection as well as the compiler
@@ -247,7 +247,7 @@
       Windows conventions.  Use \code{shell.exec(R.home())} from \R{} to
       open the \R installation directory in Explorer (\PR{17842}).
 
-      \item \code{libcurl} is now required for installation.
+      \item \code{libcurl} is now required for building from source.
     }
   }
 
