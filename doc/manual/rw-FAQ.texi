@@ -459,7 +459,7 @@ You can find the home directory from R code by @code{Sys.getenv("R_USER")}
 or @code{normalizePath("~")}, @samp{~} being Unix notation for the home
 directory. Note that some distributions of Unix utilities for Windows, such
 as Msys2 (and hence Rtools) or cygwin set the environment variable
-\env{HOME} to a user directory of their choice. When R is invoked from a
+@env{HOME} to a user directory of their choice. When R is invoked from a
 shell of such an distribution, the home directory in R would hence be
 typically not be the Windows "personal" directory. With Rtools40 and
 Rtools42, it is the user profile (e.g. @file{C:\Users\username}).
