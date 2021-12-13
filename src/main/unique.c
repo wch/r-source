@@ -2329,7 +2329,7 @@ static R_INLINE SEXP INC_NMD(SEXP x) {
 #define HT_IS_VALID(h) (R_ExternalPtrAddr(HT_SEXP(h)) != NULL)
 #define HT_VALIDATE(h) R_SetExternalPtrAddr(HT_SEXP(h), HT_SEXP(h))
 
-static R_INLINE int HT_HASH(R_hashtab_t h, SEXP key)
+static R_INLINE int HT_HASH(R_hashtab_type h, SEXP key)
 {
     switch(HT_TYPE(h)) {
     case HT_TYPE_IDENTICAL:
@@ -2341,7 +2341,7 @@ static R_INLINE int HT_HASH(R_hashtab_t h, SEXP key)
     }
 }
 
-static R_INLINE int HT_EQUAL(R_hashtab_t h, SEXP x, SEXP y)
+static R_INLINE int HT_EQUAL(R_hashtab_type h, SEXP x, SEXP y)
 {
     switch(HT_TYPE(h)) {
     case HT_TYPE_IDENTICAL:
@@ -2359,7 +2359,7 @@ static R_INLINE int HT_EQUAL(R_hashtab_t h, SEXP x, SEXP y)
     }
 }
 
-static void rehash(R_hashtab_t h, int resize)
+static void rehash(R_hashtab_type h, int resize)
 {
     /* If the meta-data structure is changed then a saved hash table
        will be invalid. For now, just check and reject incompatible
@@ -2390,7 +2390,7 @@ static void rehash(R_hashtab_t h, int resize)
     UNPROTECT(1); /* old_table */
 }
 
-static SEXP getcell(R_hashtab_t h, SEXP key, int *pidx)
+static SEXP getcell(R_hashtab_type h, SEXP key, int *pidx)
 {
     SEXP table = HT_TABLE(h);
 
@@ -2417,7 +2417,7 @@ static SEXP getcell(R_hashtab_t h, SEXP key, int *pidx)
 /* initial size = 2 ^ HT_INIT_K */
 #define HT_INIT_K 3
 
-R_hashtab_t R_mkhashtab(int type, int K)
+R_hashtab_type R_mkhashtab(int type, int K)
 {
     if (K < 3 || K > 30) K = 3;
     int size = 1;
@@ -2430,7 +2430,7 @@ R_hashtab_t R_mkhashtab(int type, int K)
     }
     SEXP table = PROTECT(allocVector(VECSXP, size));
     SEXP meta = PROTECT(allocVector(INTSXP, HT_META_SIZE));
-    R_hashtab_t val = { .cell = R_MakeExternalPtr(NULL, meta, table) };
+    R_hashtab_type val = { .cell = R_MakeExternalPtr(NULL, meta, table) };
     HT_VALIDATE(val);
     HT_COUNT(val) = 0;
     HT_TYPE(val) = type;
@@ -2439,7 +2439,7 @@ R_hashtab_t R_mkhashtab(int type, int K)
     return val;
 }
 
-SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch)
+SEXP R_gethash(R_hashtab_type h, SEXP key, SEXP nomatch)
 {
     int idx;
     PROTECT(HT_SEXP(h));
@@ -2453,7 +2453,7 @@ SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch)
 	return CAR(cell);
 }
 
-SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value)
+SEXP R_sethash(R_hashtab_type h, SEXP key, SEXP value)
 {
     int idx;
     PROTECT(HT_SEXP(h));
@@ -2482,7 +2482,7 @@ SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value)
     return value;
 }
 
-int R_remhash(R_hashtab_t h, SEXP key)
+int R_remhash(R_hashtab_type h, SEXP key)
 {
     int idx;
     PROTECT(HT_SEXP(h));
@@ -2509,15 +2509,15 @@ int R_remhash(R_hashtab_t h, SEXP key)
     }
 }
 
-int R_numhash(R_hashtab_t h) { return HT_COUNT(h); }
-int R_typhash(R_hashtab_t h) { return HT_TYPE(h); }
+int R_numhash(R_hashtab_type h) { return HT_COUNT(h); }
+int R_typhash(R_hashtab_type h) { return HT_TYPE(h); }
 
 static R_INLINE void defvar(SEXP sym, SEXP val, SEXP env)
 {
     defineVar(sym, INC_NMD(val), env);
 }
 
-SEXP R_maphash(R_hashtab_t h, SEXP FUN)
+SEXP R_maphash(R_hashtab_type h, SEXP FUN)
 {
     PROTECT(HT_SEXP(h));
     PROTECT(FUN);
@@ -2546,7 +2546,7 @@ SEXP R_maphash(R_hashtab_t h, SEXP FUN)
     return R_NilValue;
 }
 
-void R_maphashC(R_hashtab_t h, void (*FUN)(SEXP, SEXP, void *), void *data)
+void R_maphashC(R_hashtab_type h, void (*FUN)(SEXP, SEXP, void *), void *data)
 {
     PROTECT(HT_SEXP(h));
     SEXP table = PROTECT(HT_TABLE(h)); // PROTECT in case FUN causes a rehash
@@ -2565,7 +2565,7 @@ void R_maphashC(R_hashtab_t h, void (*FUN)(SEXP, SEXP, void *), void *data)
     UNPROTECT(2); /* h, table */
 }
 
-void R_clrhash(R_hashtab_t h)
+void R_clrhash(R_hashtab_type h)
 {
     SEXP table = HT_TABLE(h);
     int size = LENGTH(table);
@@ -2587,18 +2587,18 @@ void R_clrhash(R_hashtab_t h)
  ** R Level Interface Support
  **/
 
-R_hashtab_t R_asHashtable(SEXP h)
+R_hashtab_type R_asHashtable(SEXP h)
 {
     if (TYPEOF(h) != VECSXP || LENGTH(h) != 1 || ! inherits(h, "hashtab"))
 	error("not a proper hash table object");
     SEXP p = VECTOR_ELT(h, 0);
     if (TYPEOF(p) != EXTPTRSXP)
 	error("hash table object is corrupted");
-    R_hashtab_t val = { .cell = p };
+    R_hashtab_type val = { .cell = p };
     return val;
 }
 
-SEXP R_HashtabSEXP(R_hashtab_t  h)
+SEXP R_HashtabSEXP(R_hashtab_type  h)
 {
     return HT_SEXP(h);
 }

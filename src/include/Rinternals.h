@@ -1168,25 +1168,25 @@ enum {SORTED_DECR_NA_1ST = -2,
    experimenting */
 
 /* try to allow some type checking */
-typedef struct { SEXP cell; } R_hashtab_t;
+typedef struct { SEXP cell; } R_hashtab_type;
 
 /* hash table types */
 #define HT_TYPE_IDENTICAL 0
 #define HT_TYPE_ADDRESS   1
 
 /* public C interface */
-R_hashtab_t R_asHashtable(SEXP h);
-SEXP R_HashtabSEXP(R_hashtab_t  h);
+R_hashtab_type R_asHashtable(SEXP h);
+SEXP R_HashtabSEXP(R_hashtab_type  h);
 int R_isHashtable(SEXP h);
-    R_hashtab_t R_mkhashtab(int type, int /*K*/);
-SEXP R_gethash(R_hashtab_t h, SEXP key, SEXP nomatch);
-SEXP R_sethash(R_hashtab_t h, SEXP key, SEXP value);
-int R_remhash(R_hashtab_t h, SEXP key);
-int R_numhash(R_hashtab_t h);
-int R_typhash(R_hashtab_t h);
-SEXP R_maphash(R_hashtab_t h, SEXP FUN);
-void R_maphashC(R_hashtab_t h, void (*FUN)(SEXP, SEXP, void *), void *data);
-void R_clrhash(R_hashtab_t h);
+    R_hashtab_type R_mkhashtab(int type, int /*K*/);
+SEXP R_gethash(R_hashtab_type h, SEXP key, SEXP nomatch);
+SEXP R_sethash(R_hashtab_type h, SEXP key, SEXP value);
+int R_remhash(R_hashtab_type h, SEXP key);
+int R_numhash(R_hashtab_type h);
+int R_typhash(R_hashtab_type h);
+SEXP R_maphash(R_hashtab_type h, SEXP FUN);
+void R_maphashC(R_hashtab_type h, void (*FUN)(SEXP, SEXP, void *), void *data);
+void R_clrhash(R_hashtab_type h);
 
 
 /* stuff that probably shouldn't be in the API but is getting used */
