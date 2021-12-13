@@ -26,14 +26,14 @@
 @title R for Windows FAQ
 @subtitle Frequently Asked Questions on R for Windows
 @subtitle Version @value{VERSION}
-@author B. D. Ripley and D. J. Murdoch
+@author B. D. Ripley and D. J. Murdoch, updates by T. Kalibera
 @end titlepage
 
 @ifinfo
-R for Windows FAQ                           @*
-Frequently Asked Questions on R for Windows @*
-Version for @value{VERSION}                 @*
-B. D. Ripley and D. J. Murdoch              @*
+R for Windows FAQ                                       @*
+Frequently Asked Questions on R for Windows             @*
+Version for @value{VERSION}                             @*
+B. D. Ripley and D. J. Murdoch, updates by T. Kalibera  @*
 
 @sp 2
 @end ifinfo
@@ -41,7 +41,7 @@ B. D. Ripley and D. J. Murdoch              @*
 @ifhtml
 @html
 <h2>Version for <tt>@value{VERSION}</tt></h2>
-<address>B. D. Ripley and D. J. Murdoch</address>
+<address>B. D. Ripley and D. J. Murdoch, updates by T. Kalibera</address>
 <hr>
 @end html
 @end ifhtml
@@ -82,7 +82,8 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows.
-It is biased towards users of 64-bit Windows.
+It is biased towards users of 64-bit Windows and since R 4.2.0, only 64-bit
+builds of R are provided.
 
 
 @newchap{}
@@ -135,33 +136,59 @@ There are also links on that page to the @samp{r-patched} and
 development versions of R.  The @samp{r-patched} build includes bug
 fixes to the current release, and @samp{r-devel} contains these as well
 as changes that are planned to eventually make it into the next
-@samp{x.y.0} release.
+@samp{x.y.0} release. @samp{r-devel} is less stable and likely to contain
+bugs, be careful if you use it.
 
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-Current binary versions of R are known to run on Windows 7 or later,
-including on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
-Starting from R 4.2.0, 32-bit versions are no longer provided.
+Current binary versions of R are known to run on Windows 7 or later. R 4.1
+is the last version that supported 32-bit versions: @xref{Can I use R on 64-bit Windows?}.
+R 4.2.0 requires the Universal C Runtime (UCRT), which is included in
+Windows 10 and Windows Server 2016 or newer. On earlier versions of Windows,
+UCRT has to be installed before installing R. UCRT is available for Windows since
+Windows Vista SP2 and Windows Server 2008 SP2.
+
 Windows XP is no longer supported.
 
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 went end of life 2014-04-08
+@c Vista went end of life 2017-04-11 
+@c 7 went end of life 2020-01-14
+@c 8 went end of life 2016-01-12, but 8.1 is still supported
+@c Server 2008 R2 went end of life 2020-01-14
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly 64-bit Windows 7, Windows Server 2008, Windows Server 2022 and Windows 10.
+recently mainly 64-bit Windows Server 2008 R2 (based on Windows 7), Windows
+10, Windows Server 2016 and Windows Server 2022.
+
+For UTF-8 to be the native encoding, you need R at least 4.2 and at least
+Windows 10 (version 1903) on desktop systems, Windows Server 2022 on
+long-term support server systems or Windows Server 1903 from the semi-annual
+channel.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  An installation takes
 up to 170MB of disk space.
 
-If you want to be able to build packages from sources, we recommend that
-you choose an installation path not containing spaces.  (Using a path
-with spaces in will probably work, but is little-tested.)  Users
-installing for a single user using an account with administrator
-rights@footnote{Non-administrator accounts will automatically be offered
-a default installation directory in the user area.} should consider
-installing into a non-system area (such as @file{C:\R}).  Installing to
+We tried to make R to work with space in file names, but building of some
+packages from source may not work as this is little tested.  By default,
+most versions of Windows have short names (aka 8dot3names) enabled by
+default on the system drive, and hence @file{Program Files} folder has a
+short-name variant @samp{PROGRA~1}, which is then used by R.  When R is
+installed on a different drive, we recommend that you ensure that the short
+name is available or choose an installation directory name without space,
+such as @file{D:\R}.  You can check whether the short name is available from
+R by @code{shortPathName(R.home())} or by @command{dir /X} from the
+@samp{Command Prompt}.  If it is not, you may create it using
+@command{fsutil}, e.g.
+@command{fsutil file setshortname "Program Files" PROGRA~1} and
+@command{fsutil file setshortname "Program Files (x86)" PROGRA~2}. This may
+also be needed by some other applications used from R packages.
+We have come across Windows Server 2022 docker container images with short
+names disabled even on the system drive.
+
+Installing to
 a network share (a filepath starting with @code{\\machine\...}) is not
 supported: such paths will need to be mapped to a network drive.
 
@@ -193,7 +220,7 @@ field, which implements the default behavior.
 (If your account was not the one used for installation, you may need to
 copy the shortcut before editing it.) 
 
-On some systems you will have two shortcuts, one for 32-bit with a label
+On some systems with R prior to 4.2 you will have two shortcuts, one for 32-bit with a label
 starting @code{R i386} and one for 64-bit starting @code{R x64}
 (@pxref{Should I run 32-bit or 64-bit R?})
 
@@ -233,7 +260,7 @@ set the default installation directory
 set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
-@samp{i386}, @samp{x64} and @samp{translations}.
+@samp{i386} (up to R 4.1), @samp{x64} and @samp{translations}.
 @item /CURRENTUSER
 install for the current user only even if the current user has Administrator
 privileges
@@ -301,7 +328,8 @@ you may be asked to confirm that you wish to run a program from an
 `unknown' or `unidentified' publisher.
 
 Uninstalling R only removes files from the initial installation, not
-(for example) packages you have installed or updated.
+(for example) packages you have installed or updated in your personal
+library.
 
 If all else fails, you can just delete the whole directory in which R
 was installed.
@@ -310,13 +338,25 @@ was installed.
 @node What's the best way to upgrade?, How do I UNinstall R?, Installation and Usage
 @section What's the best way to upgrade?
 
-That's a matter of taste.  For most people the best thing to do is to
-uninstall R (see the previous Q), install the new version, copy any
+That's a matter of taste. For most people the best thing to do is to
+uninstall R (see the previous Q), install the new version, and then there
+are two options what to do with the library.
+
+The simpler but more resource intensive one is to install all required
+packages again with the new version of R and then delete the old library
+once you no longer need it e.g. for reference. Sometimes, this is necessary
+when there is a change in R that makes the installed packages incompatible,
+such as when upgrading from R 4.1 to R 4.2 (installed packages with native
+code/DLLs are incompatible). 
+
+A previously recommended option was to copy any
 installed packages to the library folder in the new installation, run
 @code{update.packages(checkBuilt=TRUE, ask=FALSE)} in the new R and then
 delete anything left of the old installation.  Different versions of R
 are quite deliberately installed in parallel folders so you can keep old
-versions around if you wish.
+versions around if you wish. This would often work, but not e.g. when
+upgrading from R 4.1 to R 4.2, in that case one could do this only for
+packages without native code/DLLs.
 
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
 of your @file{$@{LOCALAPPDATA@}} directory in R since 4.2.0 or of your home
@@ -399,21 +439,34 @@ Several places in the documentation use these terms.
 
 The working directory is the directory from which @code{Rgui} or
 @command{Rterm} was launched, unless a shortcut was used when it is given
-by the `Start in' field of the shortcut's properties.  You can find this
+by the `Start in' field of the shortcut's properties (or @code{--cd-to-userdocs}
+was passed as argument). You can find this
 from R code by the call @code{getwd()}.
 
-The home directory is set as follows: If environment variable
+The home directory (sometimes referred to as user's home directory, but not
+R home directory) is set as follows: If environment variable
 @env{R_USER} is set, its value is used.  Otherwise if environment
 variable @env{HOME} is set, its value is used.  After those two
 user-controllable settings, R tries to find system-defined home
 directories.  It first tries to use the Windows "personal" directory
-(typically @file{C:\Users\username\Documents}).  If that fails, if both
+(typically @file{C:\Users\username\Documents}).  If that fails (but that 
+is not expected on current Windows), if both
 environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are set (and
 they normally are), the value is @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If
 all of these fail, the current working directory is used.
 
-You can find this from R code by @code{Sys.getenv("R_USER")} or
-@code{normalizePath("~")}, @samp{~} being Unix notation for the home directory.
+You can find the home directory from R code by @code{Sys.getenv("R_USER")}
+or @code{normalizePath("~")}, @samp{~} being Unix notation for the home
+directory. Note that some distributions of Unix utilities for Windows, such
+as Msys2 (and hence Rtools) or cygwin set the environment variable
+\env{HOME} to a user directory of their choice. When R is invoked from a
+shell of such an distribution, the home directory in R would hence be
+typically not be the Windows "personal" directory. With Rtools40 and
+Rtools42, it is the user profile (e.g. @file{C:\Users\username}).
+
+The R home directory is the directory where R was installed. You can find
+this from R code by @code{R.home()} or @code{Sys.getenv("R_HOME")}. From
+outside R, you can find it by invoking @code{R RHOME}.
 
 @node How do I set environment variables?, R can't find my file, What are HOME and working directories?, Installation and Usage
 @section How do I set environment variables?
@@ -479,7 +532,7 @@ packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @samp{PROGRA~1}; you can get it as the
 `MS-DOS name' from the Properties of the file on some versions of
 Windows, and from @command{dir /X} in a @samp{Command Prompt} window),
-and using the function @code{shortPathName} from R code.
+and using the function @code{shortPathName} from R code. See also Q2.2.
 
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
@@ -545,12 +598,15 @@ firewall program).
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
-This has not been reported for a few years, but used to happen
+This has not been reported for many few years, but used to happen
 regularly.  All the occurrences we have solved have been traced to
 faulty versions of @samp{msvcrt.dll}: we have installed a workaround
 that seems to avoid this.  A few other people have discovered this was
 caused by desktop switcher and keyboard macro programs, for example
 `Macro Magic' and `JS Pager'.
+
+R 4.2 uses UCRT as the C runtime instead of MSVCRT. No such problems have
+been reported so far.
 
 @node What does 'DLL attempted to change FPU control word' mean?, Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
 @section What does 'DLL attempted to change FPU control word' mean?
@@ -565,6 +621,10 @@ updated.
 Unfortunately, because DLLs may themselves load other DLLs it is not
 possible for R to track which DLL caused the problem.
 
+This is less of a problem with 64-bit builds of R, which use SSE
+instructions for computations instead of the FPU. We may be able to remove
+this handling of the FPU control word in future versions of R.
+
 See also @code{?dyn.load}.
 
 @node Other strange crashes., Why does R never use more than 50% of my CPU?, What does 'DLL attempted to change FPU control word' mean?, Installation and Usage
@@ -572,7 +632,8 @@ See also @code{?dyn.load}.
 
 Some users have found that @code{Rgui.exe} fails to start, exiting with
 a ``Floating-point invalid operation'' or other low level error.  This
-error may also happen in the middle of a session.  In some cases where
+error may also happen in the middle of a session. This hasn't been 
+reported for several years. In some cases where
 we have tracked this down, it was due to bugs in the video driver on the
 system in question: it makes changes to the floating point control word
 which are incompatible with R.  (Good practice would restore the control
@@ -601,13 +662,22 @@ You can see how many `CPU's are assumed by looking at the number of
 graphs of `CPU Usage History' on the `Performance' tab of the Windows
 Task manager.
 
+R itself would only use multiple CPUs during parallel installation of
+packages, which needs to be selected by user. Some contributed R packages
+use multiple CPUs or multiple threads.
+
 
 @node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
 @section Does R run under Windows Vista/7/8/10/Server 2008/2016/2022?
 
-It does.  A few issues have been reported that are related to the way
-accounts and file permissions work.  (These are not specifically R
-issues, but changes in user experiences.)
+R 4.2 code base still conservatively uses Windows Vista and later features
+when available, so it should still run on Vista, but this is not tested (see
+Q2.2), and the code is tuned for newer systems. Some performance
+work-arounds for old Windows systems past their end of support may be
+removed, such as a custom memory allocator.
+
+Since 4.2, R allows to use UTF-8 as the native encoding, but this requires
+recent Windows (see Q2.2).
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
@@ -689,7 +759,6 @@ unless you `Run as administrator': we suggest you use an R session
 running under Administrator privileges when updating those.
 @end itemize
 
-
 Another issue with Vista was that the standard POSIX ways that R uses
 (e.g.@: in @code{file.info} and @code{file.access}) to look at file
 permissions no longer work reliably.  @code{file.access} was re-written
@@ -705,7 +774,15 @@ more reliable with these OSes (but still not 100% correct).
 @node Quotes don't come out right on the console/terminal/pager, There is no tilde on my keyboard, Does R run under Windows Vista?, Installation and Usage
 @section Quotes don't come out right on the console/terminal/pager.
 
-R may make use of directional quotes that are not always rendered
+R 4.2 uses UTF-8 as the native encoding on recent Windows (see Q2.2) and
+this should make also previously reported problem problems disappear.  With
+this feature, R automatically uses the 65001 code page (UTF-8).  When using
+@code{RTerm} from the @code{Windows Command Prompt} (@file{cmd.exe}) or
+@code{Power Shell}, one may have to switch the code page of the terminal
+with @command{chcp 65001} and select a suitable font that has glyphs for the
+characters intended, such as @samp{NSimFun} for Asian language).
+
+R may make use of directional quotes that were not always rendered
 correctly by Windows: these are used by default only by @code{Rgui} in
 suitable locales (not Chinese/Japanese/Korean).
 
@@ -765,9 +842,10 @@ one), then releasing the Alt key.
 @node Can I use R on 64-bit Windows?, Should I run 32-bit or 64-bit R?, There is no tilde on my keyboard, Installation and Usage
 @section Can I use R on 64-bit Windows?
 
-Since R 4.2.0, 32-bit builds are no longer provided.
+Yes, and this is the primarily used and the only tested option now.  Since R
+4.2.0, 32-bit builds are no longer provided.
 
-The 32-bit build of R for Windows will run on both 32-bit and
+The 32-bit build of R for Windows (R 4.1 and earlier) will run on both 32-bit and
 64-bit@footnote{what Windows calls x64 for x86-64 CPUs, not the very
 rare ia64 Windows for Itanium CPUs.} versions of Windows.  64-bit
 versions of Windows run 32-bit executables under the WOW (Windows on
@@ -775,7 +853,7 @@ Windows) subsystem: they run in almost exactly the same way as on a
 32-bit version of Windows, except that the address limit for the R
 process is 4GB (rather than 2GB or perhaps 3GB).
 
-When R is installed on 64-bit Windows there is the option of installing
+When R 4.1 and earlier is installed on 64-bit Windows there is the option of installing
 32- and/or 64-bit builds: the default is to install both. If you are
 using the 32-bit build, replace @samp{x64} by @samp{i386} in the
 examples in this FAQ.
@@ -939,6 +1017,20 @@ Suitable versions of Windows support what it calls `East Asian'
 languages, but e.g.@: Western installations of Windows often do not have
 such support.  So we need to assume that your copy of Windows does.
 
+R 4.2 on recent versions of Windows (see Q2.2) uses UTF-8 as the native
+encoding.  It is thus possible to use characters outside of the system
+locale code page in R, including the command-line frontent
+@command{Rterm.exe} (and @command{Rgui.exe}, where limited support has
+existed before). For use in @command{RTerm}, one needs to set up the
+terminal (e.g. @file{cmd.exe} or @code{PowerShell}) itself to use UTF-8,
+which can be done via @command{chcp 65001}, and to choose suitable fonts
+which have the required glyphs, such as @code{NSimFun} for Asian languages.
+Use @code{l10n_info()} from R to check whether R is really running in UTF-8
+as native encoding.
+
+With R 4.2 on earlier versions of Windows and with earlier versions of R,
+the following content still applies.
+
 Both @command{Rterm.exe} and @command{Rgui.exe} support single- and
 double-width characters.  It will be necessary to select suitable fonts
 in files @file{Rconsole} and @file{Rdevga} (see @code{?Rconsole} or the
@@ -1018,7 +1110,7 @@ Support for these characters within @command{Rterm} depends on the
 environment (the terminal window and shell, including locale and
 codepage settings) within which it is run as well as the font used by
 the terminal window.  Those are usually on legacy DOS settings and need
-to altered.
+to altered (see Q3.3).
 
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated.
@@ -1215,6 +1307,10 @@ MY_TCLTK=c:/Tcl/bin
 extensions (although they may be downloaded via the @code{Teacup}
 facility) and this only works for 32-bit R.
 
+As only 64-bit builds are provided as of R 4.2, the Tcl/Tk bundle used is
+now also 64-bit only.  The older combined 32-bit/64-bit bundle for R 4.1
+cannot be used with R 4.2, because it has a different directory layout even
+for the 64-bit part.
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
 @section Hyperlinks in HTML sometimes do not work.
@@ -1350,6 +1446,9 @@ source.
 
 Packages without compiled code nor a @file{configure.win} script will
 run on both 32- and 64-bit R.
+
+Since R 4.2.0, 32-bit builds are no longer provided. The following
+information refers to previous versions of R.
 
 Packages with compiled code but no @file{configure.win} nor
 @code{src/Makefile.win} file will be built for both when running on a
@@ -1558,8 +1657,16 @@ function @code{setwd}: see its help page.
 Yes.  All ports of R use the same format for saved workspaces, so they
 are interchangeable (for the same 4.x.? version of R, at least).
 
+It is possible to save references to package namespaces when saving the
+workspace: if that happens the package will need to be installed on the
+machine loading the workspace.
+
+As of R 3.6, which uses serialization format 3 for saving the workspace by
+default, information about the current encoding is recorded in the
+workspace.
+
 Note though that character data in a workspace will be in a particular
-encoding that may not be recorded in the workspace, so workspaces
+encoding that may not be recorded in the workspace for older versions of R, so workspaces
 containing non-@acronym{ASCII} character data may not be interchangeable
 even on the same OS.  Since R marks character data when it knows it to
 be in UTF-8 or Latin-1 (including its Windows superset, CP1252), strings
@@ -1567,9 +1674,14 @@ in those encodings are likely to be transferred correctly: fortunately
 this covers most of the common cases (macOS normally uses UTF-8, and
 Linux users are likely to use UTF-8 or perhaps Latin-1).
 
-It is possible to save references to package namespaces when saving the
-workspace: if that happens the package will need to be installed on the
-machine loading the workspace.
+As of R 3.6, when the workspace is loaded, the characters in other encodings
+are converted to the current encoding, if possible. When this is not
+possible, such as the characters are not representable in such encodings,
+they are converted to UTF-8 with a warning, which may cause some disruption
+or confuse some software.
+
+As of R 4.2, when running on recent Windows, the native encoding is UTF-8
+and so these problems should disappear.
 
 @newchap{}
 @node The R Console, Building from Source, Workspaces, Top
