@@ -206,17 +206,18 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   in which these got removed rather than updated). For further information
   see \url{https://curl.se/docs/sslcerts.html}.
 
-  This is an issue for \code{method = "libcurl"} on Windows, where the
-  OS does not provide a suitable CA certificate bundle, so by default on
-  Windows certificates are not verified.  To turn verification on, set
-  environment variable \env{CURL_CA_BUNDLE} to the path to a certificate
-  bundle file, usually named \file{ca-bundle.crt} or
-  \file{curl-ca-bundle.crt}.  (This is normally done for a binary
-  installation of \R, which installs
-  \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets
-  \env{CURL_CA_BUNDLE} to point to it if that environment variable is not
-  already set.)  For an updated certificate bundle, see
-  \url{https://curl.se/docs/sslcerts.html}.
+  On Windows, with \code{method = "libcurl"}, the CA root certificates are
+  provided by the OS when \R was linked with \code{libcurl} with
+  \code{Schannel} enabled, which is the default in Rtools.  This can be
+  verified by that \code{libcurlVersion()} returns a version string
+  containing "Schannel".  If it does not, for verification to be on, the
+  environment variable \env{CURL_CA_BUNDLE} must be set to a path to a
+  certificate bundle file, usually named \file{ca-bundle.crt} or
+  \file{curl-ca-bundle.crt}.  (This is normally done automatically for a
+  binary installation of \R, which installs
+  \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets \env{CURL_CA_BUNDLE}
+  to point to it if that environment variable is not already set.) For an
+  updated certificate bundle, see \url{https://curl.se/docs/sslcerts.html}. 
   Currently one can download a copy from
   \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
   and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.

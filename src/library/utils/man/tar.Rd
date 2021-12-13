@@ -53,8 +53,19 @@ tar(tarfile, files = NULL,
   (follow symbolic links, also \option{-L} on some platforms),
   \samp{--acls}, \option{--exclude-backups}, \option{--exclude-vcs} (and
   similar) and on Windows \option{--force-local} (so drives can be
-  included in filepaths: however, this is the default for the
-  \command{Rtools} \command{tar}).  For GNU \command{tar},
+  included in filepaths). \command{Rtools} 4 and earlier included a
+  \command{tar} which used \option{--force-local}, but \command{Rtools} 4.2
+  includes original GNU \command{tar}, which does not use it by default.
+
+  A convenient and robust way to set options for GNU \command{tar} is via
+  environment variable \env{TAR_OPTIONS}.  Appending \option{--force-local}
+  to \env{TAR} does not work with GNU \command{tar} due to restrictions on
+  how some options can be mixed.  The \command{tar} available on Windows 10
+  (libarchive's \command{bsdtar}) supports drive letters by default.  It
+  does not support the \option{--force-local}, but ignores
+  \env{TAR_OPTIONS}.
+
+  For GNU \command{tar},
   \option{--format=ustar} forces a more portable format. (The default is
   set at compilation and will be shown at the end of the output from
   \command{tar --help}: for version 1.30 \sQuote{out-of-the-box} it is 
@@ -88,12 +99,12 @@ tar(tarfile, files = NULL,
   removed in favour of \command{pax}, and in any case many common
   implementations diverged from the former standard.
 
-  Many \R platforms use a version of GNU \command{tar} (including
-  \command{Rtools} on Windows), but the behaviour seems to be changed
-  with each version.  macOS >= 10.6 and FreeBSD use \command{bsdtar}
+  Many \R platforms use a version of GNU \command{tar}, but the behaviour
+  seems to be changed with each version.  macOS >= 10.6, FreeBSD and Windows
+  10 use \command{bsdtar}
   from the libarchive project (but for macOS a version from 2017 or
   earlier, 2010 for High Sierra), and commercial Unixes will have their
-  own versions.  \command{bsdtar} is available for many other platforms:
+  own versions. \command{bsdtar} is available for many other platforms:
   macOS up to at least 10.9 had GNU \command{tar} as \command{gnutar}
   and other platforms, e.g.\sspace{}Solaris, have it as \command{gtar}:
   on a Unix-alike \command{configure} will try \command{gnutar} and

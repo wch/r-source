@@ -183,6 +183,69 @@
     }
   }
 
+  \subsection{WINDOWS}{
+    \itemize{
+      \item \R uses UTF-8 as the native encoding on recent Windows systems
+      (at least Windows 10 version 1903, Windows Server 2022 or Windows
+      Server 1903).  As a part of this change, R uses UCRT as the C runtime.
+      UCRT has to be installed manually on system older than Windows 10 or
+      Windows Server 2016 before installing \R.
+
+      \item As a temporary measure to ease the transition from MSVCRT to
+      UCRT, \R is applying patches to some CRAN and Bioconductor packages at
+      installation time.  See
+      \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}. 
+      This measure is intended to end before R 4.2 is released.
+
+      \item The personal library on Windows, folder
+      \file{R\\win-library\\x.y} where \file{x.y} stands for \R release
+      \file{x.y.z}, is now by default a subdirectory of Local Application
+      Data (usually a hidden directory
+      \file{C:\\Users\\username\\AppData\\Local}).  Use
+      \code{shell.exec(.libPaths()[1])} to open the personal library in
+      explorer when it is first in the list (\PR{17842}).
+
+      \item \R uses a new 64-bit Tcl/Tk bundle.  The previous 32-bit/64-bit
+      combined bundle had a different layout and can no longer be used.
+
+      \item Make files and installer scripts for Windows have been tailored
+      to Rtools42, the newly recommended 64-bit gcc 10.3 MinGW-W64 UCRT toolchain.
+
+      \item \R now supports files \file{Makevars.ucrt},
+      \file{Makefile.ucrt}, \file{configure.ucrt} and \file{cleanup.ucrt} in
+      packages, which are used in preference of the \file{.win} variants. 
+      This allows keeping the \file{.win} around to support older versions
+      of \R.  This feature will be removed in the future once support for
+      older versions of \R would no longer be needed.
+
+      \item \code{R.version} gains new field \code{crt} (only on Windows) to
+      denote the C runtime. The value is \code{"ucrt"}.
+
+      \item \R now supports installation-time patching of packages.  Patches
+      may be installed from a given URL, local directory, or disabled. 
+      Patches are included into the installed packages for reference.  This
+      experimental feature may be removed in the future.
+
+      \item Rtools42 include an original Msys2 build of GNU \command{tar}.
+      Drive letters can be made to work by adding \option{--force-local} to
+      environment variable \env{TAR_OPTIONS}. Rtools40 and earlier included
+      a special version which used this option by default.
+
+      \item Installer builds of \R automatically find Rtools42 software
+      collection as well as the compiler toolchain.  No \env{PATH} setting
+      is required from the user.
+
+      \item The default installation directory of R for user-only installation
+      has been changed to the User Program Files (usually a hidden directory
+      \file{C:\\Users\\username\\AppData\\Local\\Programs}) to follow Windows
+      conventions. Use \code{shell.exec(R.home())} to open \R installation
+      directory in explorer (\PR{17842}).
+
+      \item \code{libcurl} is now required for installation.
+    }
+  }
+
+
   \subsection{INSTALLATION}{
     \itemize{
       \item Facilities for accessing \samp{ftp://} sites are no longer
@@ -192,11 +255,6 @@
     }
   }
 
-  \subsection{INSTALLATION ON WINDOWS}{
-    \itemize{
-      \item \code{libcurl} is now required.
-    }
-  }
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{

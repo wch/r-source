@@ -36,7 +36,7 @@ devWindows-CPPFLAGS = -I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS
 
 winbitmap-CPPFLAGS = -DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I"$(EXT_LIBS)/include"
 
-PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff -ljpeg -lz
+PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff -ljpeg -lzstd -lz -lwebp -llzma
 
 
 all: makeMakedeps shlib

@@ -37,7 +37,6 @@ ifeq "$(WIN)" "64"
 	  -e "s|RC_ARCH =|RC_ARCH = $(RC_ARCH)|" \
 	  -e "s|M_ARCH =|M_ARCH = $(M_ARCH)|" \
 	  -e "s|@SYMPAT@|$(SYMPAT)|" \
-	  -e "s|(TCL_HOME)/bin|(TCL_HOME)/bin64|" \
 	  -e "s|@OPENMP@|$(OPENMP)|" \
 	  -e "s|@PTHREAD@|$(PTHREAD)|" \
 	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \

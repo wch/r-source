@@ -4880,7 +4880,7 @@ function(dir, doDelete = FALSE)
     if(dir.exists(code_dir)) {
         all_files <- mydir(code_dir)
         ## Under Windows, need a Makefile.win for methods.
-        R_files <- c("sysdata.rda", "Makefile.win",
+        R_files <- c("sysdata.rda", "Makefile.win", "Makefile.ucrt",
                      list_files_with_type(code_dir, "code",
                                           full.names = FALSE,
                                           OS_subdirs = OS_subdirs))
