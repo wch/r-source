@@ -3257,7 +3257,7 @@ character, which font at which size?  Some help can be obtained by
 looking at what this is used for.  The first element, `width', is not
 used by @R{} except to set the graphical parameters.  The second,
 `height', is use to set the line spacing, that is the relationship
-between @code{par("mai")} and @code{par("mai")} and so on.  It is
+between @code{par("mar")} and @code{par("mai")} and so on.  It is
 suggested that a good choice is
 
 @example

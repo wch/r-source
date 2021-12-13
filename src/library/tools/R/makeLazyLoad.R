@@ -195,8 +195,8 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
         }
         list(insert = insert, getname = getname)
     }
-    ## Use a hash table once utils is available.
-    if (requireNamespace("utils", quietly = TRUE)) 
+    ## Use a hash table once utils is fully available.
+    if (file.exists(system.file("R", "utils.rdx", package = "utils")))
         envtable <- function() {
             idx <- 0
             h <- utils::hashtab()
