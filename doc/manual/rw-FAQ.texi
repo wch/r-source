@@ -1019,7 +1019,7 @@ such support.  So we need to assume that your copy of Windows does.
 
 R 4.2 on recent versions of Windows (see Q2.2) uses UTF-8 as the native
 encoding.  It is thus possible to use characters outside of the system
-locale code page in R, including the command-line frontent
+locale code page in R, including the command-line front-end
 @command{Rterm.exe} (and @command{Rgui.exe}, where limited support has
 existed before). For use in @command{RTerm}, one needs to set up the
 terminal (e.g. @file{cmd.exe} or @code{PowerShell}) itself to use UTF-8,

@@ -197,7 +197,7 @@
       \url{https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows}.
       This measure is intended to end before \R 4.2.0 is released.
 
-      \item The defult personal library on Windows, folder
+      \item The default personal library on Windows, folder
       \file{R\\win-library\\x.y} where \file{x.y} stands for \R release
       \file{x.y.z}, is now a subdirectory of Local Application Data
       directory (usually a hidden directory

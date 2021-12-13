@@ -9886,7 +9886,7 @@ debugger
 (@uref{https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#I-cannot-attach-debugger-to-R}),
 although both were possible on High Sierra.  This can also affect
 locally compiled builds, where attaching to an interactive @R{} session
-under Big Sur or Monterey worked in 2021 after giving administator
+under Big Sur or Monterey worked in 2021 after giving administrator
 permission @emph{via} a popup-up.  (To debug in what Apple deems a
 non-interactive session, e.g. logged in remotely, see @command{man
 DevToolsSecurity}.)
