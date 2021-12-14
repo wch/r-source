@@ -30,11 +30,12 @@
 #
 # However, a number of CRAN packages ended up referring to Rtools software
 # collection via LOCAL_SOFT, so LOCAL_SOFT is set up by default to also
-# point to the Rtools software. This may be changed in the future. To build
-# R from source, gcc has to be on PATH, hence assuming the recommended
-# Rtools42 toolchain:
+# point to the Rtools software. This may be changed in the future.
 #
-# LOCAL_SOFT = $(patsubst %/bin/gcc,%,$(shell which gcc))
+# To build R from source with Rtools42 (installed from installer as well as
+# tarball), gcc has to be on PATH and LOCAL_SOFT can be computed as follows:
+#
+# LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
 #
 ## ============== configuration macros for building R ===================
 

@@ -1,9 +1,8 @@
 #-*- Makefile -*-
 
-## Defaults for user settings, see MkRules.dist for descriptions.  It is
-## assumed that the compiler toolchain is on PATH (e.g.  gcc)
-
-LOCAL_SOFT ?= $(patsubst %/bin/gcc,%,$(shell which gcc))
+## Defaults for user settings, see MkRules.dist for descriptions. Rtools42
+## assumes that the compiler toolchain (e.g. gcc, as, ...) is on PATH
+LOCAL_SOFT ?= $(shell which `echo $(CC) | sed -e 's/ .*//g'` | sed -e 's!/bin/[^/]\+!!g')
 EXT_LIBS ?= $(LOCAL_SOFT)
 G_FLAG ?= -gdwarf-2
 USE_ATLAS ?= NO
