@@ -66,3 +66,7 @@ p {
     margin-top: 0.6ex;
     margin-bottom: 1.2ex;
 }
+
+#Top > .header, #Top > h1 {     /* for Texinfo 6.8 */
+    display: none
+}
