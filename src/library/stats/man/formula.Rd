@@ -1,6 +1,6 @@
 % File src/library/stats/man/formula.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formula}
@@ -39,9 +39,9 @@ as.formula(object, env = parent.frame())
     as well.}
 }
 \details{
-  The models fit by, e.g., the \code{\link{lm}} and \code{\link{glm}} functions
-  are specified in a compact symbolic form.
-  The \code{~} operator is basic in the formation of such models.
+  The models fitted by, e.g., the \code{\link{lm}} and \code{\link{glm}}
+  functions are specified in a compact symbolic form.
+  The \code{\link{~}} operator is basic in the formation of such models.
   An expression of the form \code{y ~ model} is interpreted
   as a specification that the response \code{y} is modelled
   by a linear predictor specified symbolically by \code{model}.
@@ -156,7 +156,7 @@ as.formula(object, env = parent.frame())
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{I}}, \code{\link{offset}}.
+  \code{\link{~}}, \code{\link{I}}, \code{\link{offset}}.
 
   For formula manipulation: \code{\link{terms}}, and \code{\link{all.vars}};
   for typical use: \code{\link{lm}}, \code{\link{glm}}, and
