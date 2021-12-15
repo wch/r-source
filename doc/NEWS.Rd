@@ -440,6 +440,11 @@
       \item \code{win.metafile()} now has \code{xpinch} and
       \code{ypinch} arguments so that the user can override Windows'
       (potentially wrong) guess at device dimensions.
+
+      \item \code{x[i]} for non-integer \code{i} now should behave in all
+      cases as always documented: the index used is equivalent to
+      \code{as.integer(i)} unless that would overflow where
+      \code{trunc(i)} is used instead.
     }
   }
 }
@@ -460,13 +465,13 @@
       (without the \code{...} argument) works again for now, with a
       deprecation warning.
 
-      \item \code{substr(., start, stop) <- v} now treats \emph{negative}
-      \code{stop} values correctly.  Reported with a patch in \PR{18228} by
-      Brodie Gaslam.
-
       \item Fixed quoting of \code{~autodetect~} in Java setting defaults
       to avoid inadvertent user lookup due to leading \code{~}, reported
       in \PR{18231} by Harold Gutch.
+
+      \item \code{substr(., start, stop) <- v} now treats \emph{negative}
+      \code{stop} values correctly.  Reported with a patch in \PR{18228} by
+      Brodie Gaslam.
 
       \item Subscripting an array \code{x} without dimnames by a
       \code{length(dim(x))}-column character matrix gave "random"

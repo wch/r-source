@@ -5588,6 +5588,46 @@ stopifnot(exprs = {
 ## gave "random" results in R <= 4.1.2
 
 
+## PR#17977 --- x[<fractional>] behavior should fulfill x[i] === x[as.integer(i)]
+x <- 1:3
+stopifnot(exprs = {
+    identical(x[-3.5], x[-3])
+    identical(x[-0.5], x[0]) ; identical(x[0], integer())
+    identical(x[c(-.5, .5)], x[0])
+    identical(x[c(-1, .5)], x[-1:0])
+})
+LL <- matrix(as.raw(1:2), 2, 2^30)# large (no overflow in index computations!)
+ca.half <- 0.5+ (eps <- unique(sort(outer(2^-c(16, 21, 26, 30), -1:1))))
+print(eps, digits=3)
+LL[cbind(2, ca.half)]   # should be of length 0, too: ca.half ~= 0.5
+LL[cbind(1, 1+ca.half)] # should be constantly == raw(1L) '01'
+LL[cbind(2+ca.half, 1)] # all 02
+LL[cbind(-ca.half, 1)] # raw(0) --- correct
+stopifnot(exprs = {
+    length(LL[cbind(2, ca.half)]) == 0    
+    LL[cbind(1, 1+ca.half)] == as.raw(1L) 
+    LL[cbind(2+ca.half, 1)] == as.raw(2L) 
+    length(LL[cbind( -ca.half, 1)]) == 0
+})
+## Now for `[[` :
+x <- 1:3
+(e05 <- tryCmsg(x[[0.5]]))
+if(englishMsgs)
+    stopifnot(grepl("attempt to select less than one element", e05))
+eN <- tryCmsg(x[[-0.5]])
+stopifnot(identical(e05, eN))
+(e2 <- tryCmsg((1:2)[[-0.5]]))
+stopifnot(identical(e05, eN), identical(e05, e2),
+          identical((1:2)[[-1.5]], 2L))
+(s <- (1:2)[[-1.5]])
+stopifnot(identical(s, (1:2)[[-1L]]), identical(s, 2L))
+## check.bounds:
+op <- options(warn = 2, check.bounds=TRUE)
+x <- NA; x[1.5] <- 3.3 ;   options(op)
+stopifnot(identical(x, 3.3))
+## gave a wrong warning in R <= 4.1.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

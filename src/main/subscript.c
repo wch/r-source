@@ -123,11 +123,11 @@ OneIndex(SEXP x, SEXP s, R_xlen_t nx, int partial, SEXP *newname,
 	double dblind = REAL_ELT(s, pos);
 	if(!ISNAN(dblind)) {
 	    /* see comment above integerOneIndex */
-	    if (dblind > 0) indx = (R_xlen_t)(dblind - 1);
-	    else if (dblind == 0 || nx < 2) {
+	    if (dblind >= 1) indx = (R_xlen_t)(dblind - 1);
+	    else if (dblind > -1 || nx < 2) {
 		ECALL3(call, _("attempt to select less than one element in %s"), "OneIndex <real>");
 	    } else if (nx == 2 && dblind > -3)
-		indx = (R_xlen_t)(2 + dblind);
+		indx = 2 + (R_xlen_t) dblind;
 	    else {
 		ECALL3(call, _("attempt to select more than one element in %s"), "OneIndex <real>");
 	    }
@@ -240,18 +240,18 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 	double dblind = REAL_ELT(s, pos);
 	if(!ISNAN(dblind)) {
 	    /* see comment above integerOneIndex */
-	    if (dblind > 0) {
+	    if (dblind >= 1) {
 		if(R_FINITE(dblind)) indx = (R_xlen_t)(dblind - 1);
-	    } else if (dblind == 0 || len < 2) {
+	    } else if (dblind > -1 || len < 2) {
 		ECALL3(call,
-		       (dblind < 0) ? _("invalid negative subscript in %s")
+		       (dblind <= -1) ? _("invalid negative subscript in %s")
 		       : _("attempt to select less than one element in %s"),
 		       "get1index <real>");
 	    } else if (len == 2 && dblind > -3) // dblind = -2 or -1 {why exception ?}
-		indx = (R_xlen_t)(2 + dblind);
+		indx = 2 + (R_xlen_t) dblind;
 	    else {
 		ECALL3(call,
-		       (dblind < 0) ? _("invalid negative subscript in %s")
+		       (dblind <= -1) ? _("invalid negative subscript in %s")
 		       : _("attempt to select more than one element in %s"),
 		       "get1index <real>");
 	    }
@@ -394,8 +394,13 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
    A zero/NA anywhere in a row will cause a zero/NA in the same
    position in the result.
 */
+/*
+  Called from `[`   VectorSubset()    ./subset.c	and
+              `[<-` VectorSubassign() ./subassign.c
 
-
+  only if(isMatrix(s) && isArray(x) && ncols(s) == "length(dim(x))"),
+  where dims = getAttrib(x, R_DimSymbol);
+*/
 SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call, SEXP x)
 {
     int nrs = nrows(s);
@@ -424,6 +429,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call, SEXP x)
 		for (int j = 0; j < ndim; j++) {
 		    double k = ps[i + j * NR];
 		    if(ISNAN(k)) {rv[i] = NA_REAL; break;}
+		    k = trunc(k); // = "as.integer(k)" for large k
 		    if(k < 0) {
 			ECALL(call, _("negative values are not allowed in a matrix subscript"));
 		    }
@@ -770,23 +776,19 @@ static SEXP
 realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
 	      SEXP call, SEXP x)
 {
-    R_xlen_t i;
-    int canstretch;
-    double ii, min, max;
-    Rboolean isna = FALSE;
-    canstretch = *stretch > 0;
+    int canstretch = *stretch > 0;
     *stretch = 0;
-    min = 0;
-    max = 0;
+    double min = 0, max = 0;
     const double *ps = REAL_RO(s);
-    for (i = 0; i < ns; i++) {
-	ii = ps[i];
+    Rboolean isna = FALSE;
+    for (R_xlen_t i = 0; i < ns; i++) {
+	double ii = ps[i];
 	if (R_FINITE(ii)) {
 	    if (ii < min) min = ii;
 	    if (ii > max) max = ii;
 	} else isna = TRUE;
     }
-    if (max > nx) {
+    if (max >= nx+1.) {
 #ifndef LONG_VECTOR_SUPPORT
 	if (max > INT_MAX) {
 	    ECALL(call, _("subscript too large for 32-bit R"));
@@ -797,19 +799,16 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
 	    ECALL_OutOfBounds(x, -1, (R_xlen_t) max, call);
 	}
     }
-    if (min < 0) {
-	if (max == 0 && !isna) {
-	    SEXP indx;
-	    R_xlen_t stretch = 0;
-	    double dx;
-	    R_xlen_t i, ix;
-	    PROTECT(indx = allocVector(LGLSXP, nx));
+    if (min <= -1) {
+	if (max < 1 && !isna) {
+	    R_xlen_t i, stretch = 0;
+	    SEXP indx = PROTECT(allocVector(LGLSXP, nx));
 	    int *pindx = LOGICAL(indx);
 	    for (i = 0; i < nx; i++) pindx[i] = 1;
 	    for (i = 0; i < ns; i++) {
-		dx = ps[i];
-		if (R_FINITE(dx) && dx != 0  && -dx <= nx) {
-		    ix = (R_xlen_t)(-dx - 1);
+		double dx = ps[i];
+		if (R_FINITE(dx) && dx <= -1  && -dx < nx+1.) {
+		    R_xlen_t ix = (R_xlen_t)(-dx - 1);
 		    pindx[ix] = 0;
 		}
 	    }
