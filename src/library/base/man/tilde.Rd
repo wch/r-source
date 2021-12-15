@@ -1,6 +1,6 @@
 % File src/library/base/man/tilde.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tilde}
@@ -22,7 +22,8 @@ y ~ model
 
   A formula has \link{mode} \code{\link{call}}.  It can be subsetted by
   \code{[[}: the components are \code{~}, the left-hand side (if
-  present) and the right-hand side \emph{in that order}.
+  present) and the right-hand side \emph{in that order}.  (Thus
+  one-sided formulae have two components.)
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

@@ -191,9 +191,9 @@ x$name <- value
   hence providing access to even more general list-like objects.
 
   \code{[} and \code{[[} are sometimes applied to other recursive
-  objects such as \link{call}s and \link{expression}s.  Pairlists are
-  coerced to lists for extraction by \code{[}, but all three operators
-  can be used for replacement.
+  objects such as \link{call}s and \link{expression}s.  Pairlists (such
+  as calls) are coerced to lists for extraction by \code{[}, but all
+  three operators can be used for replacement.
 
   \code{[[} can be applied recursively to lists, so that if the single
   index \code{i} is a vector of length \code{p}, \code{alist[[i]]} is
