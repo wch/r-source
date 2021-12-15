@@ -73,12 +73,11 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   as the data set.
 
   If no data sets are specified, \code{data} lists the available data
-  sets.  It looks for a new-style data index in the \file{Meta} or, if
-  this is not found, an old-style \file{00Index} file in the \file{data}
-  directory of each specified package, and uses these files to prepare a
-  listing.  If there is a \file{data} area but no index, available data
-  files for loading are computed and included in the listing, and a
-  warning is given: such packages are incomplete.  The information about
+  sets.  For each package,
+  it looks for a data index in the \file{Meta} subdirectory or, if
+  this is not found, scans the \file{data} subdirectory for data files
+  using \code{\link{list_files_with_type}}.
+  The information about
   available data sets is returned in an object of class
   \code{"packageIQR"}.  The structure of this class is experimental.
   Where the datasets have a different name from the argument that should
