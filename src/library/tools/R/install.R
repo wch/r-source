@@ -1133,6 +1133,13 @@ if(FALSE) {
                             utils::download.file(purl, destfile = fname, mode = "wb")
     		        else
                             file.copy(purl, fname)
+                        ## FIXME: we could first run --dry-run to
+                        ## non-destructively check if the patch can be
+                        ## applied (suggested by Dirk Eddelbuettel)
+                        ##
+                        ## We could also try reverting (-R) and if that
+                        ## succeeds fully, assume the patch has already been
+                        ## aplied.
                         if (system2("patch", args = c("-p2", "--binary", "--force"), stdin = fname) != 0)
                             message("WARNING: failed to apply patch ", p, "\n")
                         else
