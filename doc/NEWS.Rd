@@ -441,9 +441,9 @@
       \code{ypinch} arguments so that the user can override Windows'
       (potentially wrong) guess at device dimensions.
 
-      \item \code{x[i]} for non-integer \code{i} now should behave in all
-      cases as always documented: the index used is equivalent to
-      \code{as.integer(i)} unless that would overflow where
+      \item \code{x[i]} and \code{x[[i]]} for non-integer \code{i}
+      should now behave in all cases as always documented: the index used is
+      equivalent to \code{as.integer(i)} unless that would overflow where
       \code{trunc(i)} is used instead.
     }
   }
