@@ -1419,7 +1419,7 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
     nx = unitLength(x);
     PROTECT(answer = allocVector(REALSXP, nx));
     for (i=0; i<nx; i++) {
-        updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
+	updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
         TOunit = INTEGER(unitto)[i % LENGTH(unitto)];
         FROMaxis = INTEGER(whatfrom)[0];
         TOaxis = INTEGER(whatto)[0];
@@ -2599,7 +2599,7 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow)
     GEMode(1, dd);
     for (i=0; i<maxn; i++) {
 	double xx0, yy0, xx1, yy1;
-    updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
+        updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
 	transformLocn(x0, y0, i, vpc, &gc, 
 		      vpWidthCM, vpHeightCM,
 		      dd, transform, &xx0, &yy0);
@@ -3553,6 +3553,13 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* If not drawing (calculating size), NULL gp$fill to avoid 
+     * infinite loop when gp$fill is a pattern 
+     * (resolving a pattern involves calculating size) */
+    currentgp = PROTECT(duplicate(currentgp));
+    if (!draw) {
+        setListElement(currentgp, "fill", R_NilValue);
+    }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -3745,7 +3752,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 	}
     }
     vmaxset(vmax);
-    UNPROTECT(1);
+    UNPROTECT(2);
     return result;
 }
 
@@ -3774,7 +3781,491 @@ SEXP L_textBounds(SEXP label, SEXP x, SEXP y,
 		    REAL(theta)[0], FALSE);
 }
 
-SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
+static SEXP symbolCoords(double *x, double *y, int n, pGEDevDesc dd)
+{
+    SEXP result = PROTECT(allocVector(VECSXP, 2));
+    SEXP xs = PROTECT(allocVector(REALSXP, n));
+    SEXP ys = PROTECT(allocVector(REALSXP, n));
+    int i;
+    for (i=0; i<n; i++) {
+        REAL(xs)[i] = fromDeviceX(x[i], GE_INCHES, dd);
+        REAL(ys)[i] = fromDeviceY(y[i], GE_INCHES, dd);
+    }
+    SET_VECTOR_ELT(result, 0, xs);
+    SET_VECTOR_ELT(result, 1, ys);
+    UNPROTECT(3);
+    return result;
+}
+
+/*
+ * In many ways a duplicate of GESymbol, but with the ability
+ * to rotate symbols AND the ability to return symbol 
+ * outlines and/or bounding boxes
+ */
+#define SMALL	0.25
+#define RADIUS	0.375
+#define SQRC	0.88622692545275801364		/* sqrt(pi / 4) */
+#define DMDC	1.25331413731550025119		/* sqrt(pi / 4) * sqrt(2) */
+#define TRC0	1.55512030155621416073		/* sqrt(4 * pi/(3 * sqrt(3))) */
+#define TRC1	1.34677368708859836060		/* TRC0 * sqrt(3) / 2 */
+#define TRC2	0.77756015077810708036		/* TRC0 / 2 */
+
+/* Draw one of the R special symbols. */
+/* "size" is in device coordinates and is assumed to be a width
+ * rather than a height.
+ * This could cause a problem for devices which have ipr[0] != ipr[1]
+ * The problem would be evident where calculations are done on
+ * angles -- in those cases, a conversion to and from GE_INCHES is done
+ * to preserve angles.
+ */
+/* If 'draw', render the symbol, else return symbol coordinates 
+ * Return R_NilValue if no coordinates. 
+ */
+SEXP gridSymbol(double x, double y, int pch, double size, 
+                Rboolean draw, Rboolean closed,
+                const pGEcontext gc, pGEDevDesc dd)
+{
+    double r, xc, yc;
+    double xx[4], yy[4];
+    unsigned int maxchar;
+
+    SEXP result = R_NilValue;
+    int resultProtect = 0;
+
+    maxchar = (mbcslocale && gc->fontface != 5) ? 127 : 255;
+    /* Special cases for plotting pch="." or pch=<character>
+     */
+    if (pch == NA_INTEGER) {
+        /* do nothing */
+
+    } else if(pch < 0) {
+	size_t res;
+	char str[16]; // probably 7 would do
+	if(gc->fontface == 5)
+	    error("use of negative pch with symbol font is invalid");
+	res = Rf_ucstoutf8(str, -pch); // throws error if unsuccessful 
+	str[res] = '\0';
+        if (draw) {
+            GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);
+        } else {
+            warning(_("Coordinates for text pch not yet supported"));
+        }
+
+    } else if(' ' <= pch && pch <= maxchar) {
+	if (pch == '.') {
+	    /*
+	     * NOTE:  we are *filling* a rect with the current
+	     * colour (we are not drawing the border AND we are
+	     * not using the current fill colour)
+	     */
+	    gc->fill = gc->col;
+	    gc->col = R_TRANWHITE;
+            gc->patternFill = R_NilValue;
+	    /*
+	       The idea here is to use a 0.01" square, but to be of
+	       at least one device unit in each direction,
+	       assuming that corresponds to pixels. That may be odd if
+	       pixels are not square, but only on low resolution
+	       devices where we can do nothing better.
+
+	       For this symbol only, size is cex (see engine.c).
+
+	       Prior to 2.1.0 the offsets were always 0.5.
+	    */
+	    xc = size * fabs(toDeviceWidth(0.005, GE_INCHES, dd));
+	    yc = size * fabs(toDeviceHeight(0.005, GE_INCHES, dd));
+	    if(size > 0 && xc < 0.5) xc = 0.5;
+	    if(size > 0 && yc < 0.5) yc = 0.5;
+            if (draw) {
+                GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            } else {
+                if (closed) {
+                    xx[0] = x-xc;
+                    xx[1] = x-xc;
+                    xx[2] = x+xc;
+                    xx[3] = x+xc;
+                    yy[0] = y-yc;
+                    yy[1] = y+yc;
+                    yy[2] = y+yc;
+                    yy[3] = y-yc;
+                    PROTECT(result = symbolCoords(xx, yy, 4, dd));
+                    resultProtect = 1;
+                }
+            }
+	} else {
+	    char str[2];
+	    str[0] = (char) pch;
+	    str[1] = '\0';
+            if (draw) {
+                GEText(x, y, str,
+                       (gc->fontface == 5) ? CE_SYMBOL : CE_NATIVE,
+                       NA_REAL, NA_REAL, 0., gc, dd);
+            } else {
+                warning(_("Coordinates for text pch not yet supported"));
+            }
+	}
+    }
+    else if(pch > maxchar)
+	    warning(_("pch value '%d' is invalid in this locale"), pch);
+    else {
+	double GSTR_0 = fromDeviceWidth(size, GE_INCHES, dd);
+
+	switch(pch) {
+
+	case 0: /* S square */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            }
+	    break;
+
+	case 1: /* S octahedron ( circle) */
+	    xc = RADIUS * size; /* NB: could be zero */
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GECircle(x, y, xc, gc, dd);
+            }
+	    break;
+
+	case 2:	/* S triangle - point up */
+	    xc = RADIUS * GSTR_0;
+	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
+	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
+	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y+r;
+	    xx[1] = x+xc; yy[1] = y-yc;
+	    xx[2] = x-xc; yy[2] = y-yc;
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(3, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 3: /* S plus */
+	    xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GELine(x-xc, y, x+xc, y, gc, dd);
+                GELine(x, y-yc, x, y+yc, gc, dd);
+            }
+	    break;
+
+	case 4: /* S times */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+                GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            }
+	    break;
+
+	case 5: /* S diamond */
+	    xc = toDeviceWidth(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
+	    xx[0] = x-xc; yy[0] = y;
+	    xx[1] = x; yy[1] = y+yc;
+	    xx[2] = x+xc; yy[2] = y;
+	    xx[3] = x; yy[3] = y-yc;
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(4, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 6: /* S triangle - point down */
+	    xc = RADIUS * GSTR_0;
+	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
+	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
+	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y-r;
+	    xx[1] = x+xc; yy[1] = y+yc;
+	    xx[2] = x-xc; yy[2] = y+yc;
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(3, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 7:	/* S square and times superimposed */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+                GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+                GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            }
+	    break;
+
+	case 8: /* S plus and times superimposed */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+                GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            }
+	    xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GELine(x-xc, y, x+xc, y, gc, dd);
+                GELine(x, y-yc, x, y+yc, gc, dd);
+            }
+	    break;
+
+	case 9: /* S diamond and plus superimposed */
+	    xc = toDeviceWidth(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GELine(x-xc, y, x+xc, y, gc, dd);
+                GELine(x, y-yc, x, y+yc, gc, dd);
+            }
+	    xx[0] = x-xc; yy[0] = y;
+	    xx[1] = x; yy[1] = y+yc;
+	    xx[2] = x+xc; yy[2] = y;
+	    xx[3] = x; yy[3] = y-yc;
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(4, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 10: /* S hexagon (circle) and plus superimposed */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GECircle(x, y, xc, gc, dd);
+                GELine(x-xc, y, x+xc, y, gc, dd);
+                GELine(x, y-yc, x, y+yc, gc, dd);
+            }
+	    break;
+
+	case 11: /* S superimposed triangles */
+	    xc = RADIUS * GSTR_0;
+	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
+	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
+	    yc = 0.5 * (yc + r);
+	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y-r;
+	    xx[1] = x+xc; yy[1] = y+yc;
+	    xx[2] = x-xc; yy[2] = y+yc;
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(3, xx, yy, gc, dd);
+            }
+	    xx[0] = x; yy[0] = y+r;
+	    xx[1] = x+xc; yy[1] = y-yc;
+	    xx[2] = x-xc; yy[2] = y-yc;
+            if (draw) {
+                GEPolygon(3, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 12: /* S square and plus superimposed */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GELine(x-xc, y, x+xc, y, gc, dd);
+                GELine(x, y-yc, x, y+yc, gc, dd);
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            }
+	    break;
+
+	case 13: /* S octagon (circle) and times superimposed */
+	    xc = RADIUS * size;
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GECircle(x, y, xc, gc, dd);
+            }
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+                GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
+            }
+	    break;
+
+	case 14: /* S square and point-up triangle superimposed */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y+yc;
+	    xx[1] = x+xc; yy[1] = y-yc;
+	    xx[2] = x-xc; yy[2] = y-yc;
+            if (draw) {
+                gc->fill = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(3, xx, yy, gc, dd);
+                GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            }
+	    break;
+
+	case 15: /* S filled square */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xx[0] = x-xc; yy[0] = y-yc;
+	    xx[1] = x+xc; yy[1] = y-yc;
+	    xx[2] = x+xc; yy[2] = y+yc;
+	    xx[3] = x-xc; yy[3] = y+yc;
+            if (draw) {
+                gc->fill = gc->col;
+                gc->col = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(4, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 16: /* S filled octagon (circle) */
+	    xc = RADIUS * size;
+            if (draw) {
+                gc->fill = gc->col;
+                gc->col = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GECircle(x, y, xc, gc, dd);
+            }
+	    break;
+
+	case 17: /* S filled point-up triangle */
+	    xc = RADIUS * GSTR_0;
+	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
+	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
+	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y+r;
+	    xx[1] = x+xc; yy[1] = y-yc;
+	    xx[2] = x-xc; yy[2] = y-yc;
+            if (draw) {
+                gc->fill = gc->col;
+                gc->col = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(3, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 18: /* S filled diamond */
+	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xx[0] = x-xc; yy[0] = y;
+	    xx[1] = x; yy[1] = y+yc;
+	    xx[2] = x+xc; yy[2] = y;
+	    xx[3] = x; yy[3] = y-yc;
+            if (draw) {
+                gc->fill = gc->col;
+                gc->col = R_TRANWHITE;
+                gc->patternFill = R_NilValue;
+                GEPolygon(4, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 19: /* R filled circle */
+	    xc = RADIUS * size;
+            if (draw) {
+                gc->fill = gc->col;
+                gc->patternFill = R_NilValue;
+                GECircle(x, y, xc, gc, dd);
+            }
+	    break;
+
+
+	case 20: /* R `Dot' (small circle) */
+	    xc = SMALL * size;
+            if (draw) {
+                gc->fill = gc->col;
+                gc->patternFill = R_NilValue;
+                GECircle(x, y, xc, gc, dd);
+            }
+	    break;
+
+
+	case 21: /* circles */
+	    xc = RADIUS * size;
+            if (draw) {
+                GECircle(x, y, xc, gc, dd);
+            } else {
+                if (closed) {
+                    double cx[100];
+                    double cy[100];
+                    int i;
+                    for (i=0; i<100; i++) {
+                        cx[i] = x + xc*cos(i/100.0*2.0*M_PI);
+                        cy[i] = y + xc*sin(i/100.0*2.0*M_PI);
+                    }
+                    PROTECT(result = symbolCoords(cx, cy, 100, dd));
+                    resultProtect = 1;
+                }
+            }
+	    break;
+
+	case  22: /* squares */
+	    xc = toDeviceWidth(RADIUS * SQRC * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * SQRC * GSTR_0, GE_INCHES, dd);
+            if (draw) {
+                GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+            }
+	    break;
+
+	case 23: /* diamonds */
+	    xc = toDeviceWidth(RADIUS * DMDC * GSTR_0, GE_INCHES, dd);
+	    yc = toDeviceHeight(RADIUS * DMDC * GSTR_0, GE_INCHES, dd);
+	    xx[0] = x	  ; yy[0] = y-yc;
+	    xx[1] = x+xc; yy[1] = y;
+	    xx[2] = x	  ; yy[2] = y+yc;
+	    xx[3] = x-xc; yy[3] = y;
+            if (draw) {
+                GEPolygon(4, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 24: /* triangle (point up) */
+	    xc = RADIUS * GSTR_0;
+	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
+	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
+	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y+r;
+	    xx[1] = x+xc; yy[1] = y-yc;
+	    xx[2] = x-xc; yy[2] = y-yc;
+            if (draw) {
+                GEPolygon(3, xx, yy, gc, dd);
+            }
+	    break;
+
+	case 25: /* triangle (point down) */
+	    xc = RADIUS * GSTR_0;
+	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
+	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
+	    xc = toDeviceWidth(TRC1 * xc, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y-r;
+	    xx[1] = x+xc; yy[1] = y+yc;
+	    xx[2] = x-xc; yy[2] = y+yc;
+            if (draw) {
+                GEPolygon(3, xx, yy, gc, dd);
+            }
+	    break;
+	default:
+	    warning(_("unimplemented pch value '%d'"), pch);
+	}
+    }
+
+    if (resultProtect > 0)
+        UNPROTECT(resultProtect);
+
+    return result;
+}
+
+static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size, 
+                       Rboolean draw, Rboolean closed) 
 {
     int i, nx, npch, nss;
     /*    double *xx, *yy;*/
@@ -3790,17 +4281,27 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
-    SEXP resolvedFill = R_NilValue;
+    SEXP result = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to store/cache resolved gp$fill to avoid
+     * stupid amounts of pattern resolving (resolving a resolved
+     * pattern is basically a no-op), WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* If not drawing (calculating size), set gp$fill to transparent
+     * to avoid infinite loop when gp$fill is a pattern 
+     * (resolving a pattern involves calculating size) */
+    if (!draw) {
+        setListElement(currentgp, "fill", mkString("black"));
+    }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    PROTECT(resolvedFill = resolveGPar(currentgp));
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     nx = unitLength(x); 
     npch = LENGTH(pch);
@@ -3858,8 +4359,11 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
             break;
         }
     }
-    GEMode(1, dd);
-
+    if (draw)
+        GEMode(1, dd);
+    else {
+        PROTECT(result = allocVector(VECSXP, nx));
+    }
     for (i=0; i<nx; i++)
 	if (R_FINITE(xx[i]) && R_FINITE(yy[i])) {
 	    /* FIXME:  The symbols will not respond to viewport
@@ -3877,24 +4381,38 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	         * special case for pch = "."
 	         */
 	        if (ipch == 46) symbolSize = gpCex(currentgp, i);
-            /*
-             * FIXME: 
-             * For character-based symbols, we need to modify
-             * gc->cex so that the FONT size corresponds to
-             * the specified symbolSize.
-             */
-	        GESymbol(xx[i], yy[i], ipch, symbolSize, &gc, dd);
+                /*
+                 * FIXME: 
+                 * For character-based symbols, we need to modify
+                 * gc->cex so that the FONT size corresponds to
+                 * the specified symbolSize.
+                 */
+                if (draw)
+                    gridSymbol(xx[i], yy[i], ipch, symbolSize, 
+                               TRUE, closed, &gc, dd);
+                else 
+                    SET_VECTOR_ELT(result, i,
+                                   gridSymbol(xx[i], yy[i], ipch, symbolSize, 
+                                              FALSE, closed, &gc, dd));
 	    }
 	}
-    GEMode(0, dd);
-    if (resolvedFill != R_NilValue &&
-        Rf_inherits(resolvedFill, "GridGrobPattern")) {
-        SEXP patternRef = getListElement(resolvedFill, "index");
-        dd->dev->releasePattern(patternRef, dd->dev);
-    }
-    UNPROTECT(1); /* resolvedFill */
+    if (draw) 
+        GEMode(0, dd);
+    else 
+        UNPROTECT(1); /* result */
     vmaxset(vmax);
-    return R_NilValue;
+    UNPROTECT(2); 
+    return result;
+}
+
+SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
+{
+    return gridPoints(x, y, pch, size, TRUE, NA_LOGICAL);
+}
+
+SEXP L_pointsPoints(SEXP x, SEXP y, SEXP pch, SEXP size, SEXP closed)
+{
+    return gridPoints(x, y, pch, size, FALSE, LOGICAL(closed)[0]);
 }
 
 SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust) 
@@ -4058,7 +4576,7 @@ SEXP L_locator() {
  * Return four values representing boundary of set of locations
  * in INCHES.
  *
- * Result is (xmin, xmax, ymin, ymax)
+ * Result is (edgex, edgey, width, height, xmin, ymax)
  *
  * Used for lines, segments, polygons
  */
@@ -4085,6 +4603,11 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* If not drawing (calculating size), NULL gp$fill to avoid 
+     * infinite loop when gp$fill is a pattern 
+     * (resolving a pattern involves calculating size) */
+    currentgp = PROTECT(duplicate(currentgp));
+    setListElement(currentgp, "fill", R_NilValue);
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -4125,7 +4648,7 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
     }
     if (nloc > 0) {
 	hullEdge(xx, yy, nx, REAL(theta)[0], &edgex, &edgey);
-	result = allocVector(REALSXP, 4);
+	result = allocVector(REALSXP, 6);
 	/*
 	 * Reverse the scale adjustment (zoom factor)
 	 * when calculating physical value to return to user-level
@@ -4138,8 +4661,13 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
 	    REAL(gridStateElement(dd, GSS_SCALE))[0];
 	REAL(result)[3] = (ymax - ymin) / 
 	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+        REAL(result)[4] = xmin /
+            REAL(gridStateElement(dd, GSS_SCALE))[0];
+        REAL(result)[5] = ymin / 
+            REAL(gridStateElement(dd, GSS_SCALE))[0];
     } 
     vmaxset(vmax);
+    UNPROTECT(1);
     return result;
 }
 

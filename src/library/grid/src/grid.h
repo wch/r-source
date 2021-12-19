@@ -673,6 +673,7 @@ SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
 SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
+SEXP L_pointsPoints(SEXP x, SEXP y, SEXP pch, SEXP size, SEXP closed);
 
 /* From path.c */
 SEXP L_stroke(SEXP path);

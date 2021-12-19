@@ -10,7 +10,8 @@ linearGradient <- function(colours = c("black", "white"),
                            x1 = unit(0, "npc"), y1 = unit(0, "npc"),  
                            x2 = unit(1, "npc"), y2 = unit(1, "npc"),
                            default.units = "npc",
-                           extend = c("pad", "repeat", "reflect", "none")) {
+                           extend = c("pad", "repeat", "reflect", "none"),
+                           group = TRUE) {
 
     nstops <- max(length(colours), length(stops))
     if (nstops < 1)
@@ -34,7 +35,7 @@ linearGradient <- function(colours = c("black", "white"),
     grad <- list(x1 = x1, y1 = y1,
                  x2 = x2, y2 = y2,
                  stops = as.numeric(stops), colours = colours,
-                 extend = match.arg(extend))
+                 extend = match.arg(extend), group = as.logical(group))
     class(grad) <- c("GridLinearGradient", "GridPattern")
     grad
 }
@@ -46,7 +47,8 @@ radialGradient <- function(colours = c("black", "white"),
                            cx2 = unit(.5, "npc"), cy2 = unit(.5, "npc"),
                            r2 = unit(.5, "npc"),
                            default.units = "npc",
-                           extend = c("pad", "repeat", "reflect", "none")) {
+                           extend = c("pad", "repeat", "reflect", "none"),
+                           group = TRUE) {
 
     nstops <- max(length(colours), length(stops))
     if (nstops < 1)
@@ -75,7 +77,7 @@ radialGradient <- function(colours = c("black", "white"),
     grad <- list(cx1 = cx1, cy1 = cy1, r1=r1,
                  cx2 = cx2, cy2 = cy2, r2=r2,
                  stops = as.numeric(stops), colours = colours,
-                 extend = match.arg(extend))
+                 extend = match.arg(extend), group = as.logical(group))
     class(grad) <- c("GridRadialGradient", "GridPattern")
     grad
 }
@@ -90,7 +92,8 @@ pattern <- function(grob,
                     default.units = "npc",
                     just="centre", hjust=NULL, vjust=NULL,
                     extend = c("pad", "repeat", "reflect", "none"),
-                    gp = gpar(fill="transparent")) {
+                    gp = gpar(fill="transparent"),
+                    group = TRUE) {
 
     if (! is.unit(x))
         x <- unit(x, default.units)
@@ -124,7 +127,7 @@ pattern <- function(grob,
     pat <- list(f=patternFun,
                 x=x, y=y, width=width, height=height,
                 hjust=hjust, vjust=vjust,
-                extend=match.arg(extend))
+                extend = match.arg(extend), group = as.logical(group))
     class(pat) <- c("GridTilingPattern", "GridPattern")
     pat
 }
@@ -136,35 +139,60 @@ resolvedPattern <- function(pattern, ref) {
 }
 
 ## Called when drawing a grob
-resolveFill <- function(fill) {
+resolveFill <- function(fill, ...) {
     UseMethod("resolveFill")
 }
 
 ## Simple fills include an R colour (integer or string) or NA
 ## These just pass through
-resolveFill.default <- function(fill) {
+resolveFill.default <- function(fill, ...) {
     fill
 }
 
 ## A pattern fill that has already been resolved
-resolveFill.GridResolvedPattern <- function(fill) {
+resolveFill.GridResolvedPattern <- function(fill, ...) {
+    fill
+}
+
+## A list of patterns that have already been resolved
+resolveFill.GridResolvedPatternList <- function(fill, ...) {
     fill
 }
 
 ## A pattern fill that needs resolving
 ## (a grid::GridPattern)
-## This will handle viewports
-resolveFill.GridPattern <- function(fill) {
+## This will handle viewports (with a single pattern)
+resolveFill.GridPattern <- function(fill, ...) {
     resolvePattern(fill)
 }
 
-## This will handle grobs
-resolveFill.GridGrobPattern <- function(fill) {
+## This will handle viewports (with a list of patterns)
+resolveFill.GridPatternList <- function(fill, ...) {
+    resolvedPatterns <- lapply(fill, resolvePattern)
+    class(resolvedPatterns) <- c("GridResolvedPatternList",
+                                 class(fill))
+    resolvedPatterns
+}
+
+## This will handle grobs (with a single pattern)
+resolveFill.GridGrobPattern <- function(fill, index=1, ...) {
     ## All predrawing has been done
     pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
     if (!isEmptyCoords(pts)) {
-        x <- unlist(lapply(pts, function(p) p$x))
-        y <- unlist(lapply(pts, function(p) p$y))
+        if (fill$group || length(pts) == 1) {
+            ## Pattern is relative to bounding box of all shapes
+            x <- unlist(lapply(pts, function(p) p$x))
+            y <- unlist(lapply(pts, function(p) p$y))
+        } else {
+            ## Pattern is relative to bounding box of individual shapes
+            if (index > length(pts)) {
+                warning("grob drawing produces more shapes than grob coords
+(recycling coords)")
+                index <- (index - 1) %% length(pts) + 1
+            }
+            x <- pts[[index]]$x
+            y <- pts[[index]]$y
+        }
         left <- min(x)
         bottom <- min(y)
         width <- diff(range(x))
@@ -172,16 +200,66 @@ resolveFill.GridGrobPattern <- function(fill) {
         ## Temporary viewport for calculations, so do NOT record on grid DL
         ## Also, ensure NO mask and NO clip
         ## (at least initially) for resolution of pattern
+        ## Also, set fill to "transparent"
+        ## (to avoid this viewport picking up the fill being resolved)
         pushViewport(viewport(left, bottom, width, height,
                               default.units="in",
                               just=c("left", "bottom"),
-                              clip="off", mask="none"),
+                              clip="off", mask="none",
+                              gp=gpar(fill="transparent")),
                      recording=FALSE)
         pattern <- resolvePattern(fill)
         popViewport(recording=FALSE)
         pattern
     } else {
-        warning("Gradient fill applied to object with no inside")
+        warning("Pattern fill applied to object with no inside")
+        ## Set fill to transparent
+        "transparent"
+    }
+}
+
+## This will handle grobs (with a list of patterns)
+resolveFill.GridGrobPatternList <- function(fill, ...) {
+    ## All predrawing has been done
+    pts <- grobPoints(attr(fill, "grob"), closed=TRUE)
+    if (!isEmptyCoords(pts)) {
+        resolvedFills <- vector("list", length(pts))
+        for (i in seq_along(pts)) {
+            ## Recycle patterns if necessary
+            which <- (i - 1) %% length(fill) + 1
+            if (fill[[which]]$group || length(pts) == 1) {
+                ## Pattern is relative to bounding box of all shapes
+                x <- unlist(lapply(pts, function(p) p$x))
+                y <- unlist(lapply(pts, function(p) p$y))
+            } else {
+                ## Pattern is relative to bounding box of individual shapes
+                x <- pts[[i]]$x
+                y <- pts[[i]]$y
+            }
+            left <- min(x)
+            bottom <- min(y)
+            width <- diff(range(x))
+            height <- diff(range(y))
+            ## Temporary viewport for calculations, so do NOT record on grid DL
+            ## Also, ensure NO mask and NO clip
+            ## (at least initially) for resolution of pattern
+            ## Also, set fill to "transparent"
+            ## (to avoid this viewport picking up the fill being resolved)
+            pushViewport(viewport(left, bottom, width, height,
+                                  default.units="in",
+                                  just=c("left", "bottom"),
+                                  clip="off", mask="none",
+                                  gp=gpar(fill="transparent")),
+                         recording=FALSE)
+            pattern <- resolvePattern(fill[[which]])
+            popViewport(recording=FALSE)
+            resolvedFills[[which]] <- pattern
+        }
+        class(resolvedFills) <- c("GridResolvedPatternList",
+                                  class(fill))
+        resolvedFills
+    } else {
+        warning("Pattern fill applied to object with no inside")
         ## Set fill to transparent
         "transparent"
     }
