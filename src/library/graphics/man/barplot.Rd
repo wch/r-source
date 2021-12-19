@@ -1,6 +1,6 @@
 % File src/library/graphics/man/barplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{barplot}
@@ -75,8 +75,9 @@ barplot(height, \dots)
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise), for the bars or bar components.}
   \item{col}{a vector of colors for the bars or bar components.
-    By default, grey is used if \code{height} is a vector, and a
-    gamma-corrected grey palette if \code{height} is a matrix.}
+    By default, \code{"grey"} is used if \code{height} is a vector, and a
+    gamma-corrected grey palette if \code{height} is a matrix;
+    see \code{\link{grey.colors}}.}
   \item{border}{the color to be used for the border of the bars.
     Use \code{border = NA} to omit borders.  If there are shading
     lines, \code{border = TRUE} means use the same colour for
