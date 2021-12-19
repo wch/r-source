@@ -1,6 +1,6 @@
 % File src/library/utils/man/type.convert.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{type.convert}
@@ -25,9 +25,9 @@ type.convert(x, \dots)
   \item{na.strings}{a vector of strings which are to be interpreted as
     \code{\link{NA}} values.  Blank fields are also considered to be
     missing values in logical, integer, numeric or complex vectors.}
-  \item{as.is}{whether convert to \code{\link{factor}}s.  When false (was
-    default before \R 4.0.0), convert character vectors to factors.  See
-    \sQuote{Details}.}
+  \item{as.is}{whether to store strings as plain \code{character}. When
+    false (was default before \R 4.0.0), convert character vectors to
+    factors.  See \sQuote{Details}.}
   \item{dec}{the character to be assumed for decimal points.}
   \item{numerals}{string indicating how to convert numbers whose
     conversion to double precision would lose accuracy, typically when
@@ -89,25 +89,25 @@ type.convert(x, \dots)
 \examples{
 ## Numeric to integer
 class(rivers)
-x <- type.convert(rivers)
+x <- type.convert(rivers, as.is = TRUE)
 class(x)
 
 ## Convert many columns
-auto <- type.convert(mtcars)
+auto <- type.convert(mtcars, as.is = TRUE)
 str(mtcars)
 str(auto)
 
 ## Convert matrix
-phones <- type.convert(WorldPhones)
+phones <- type.convert(WorldPhones, as.is = TRUE)
 storage.mode(WorldPhones)
 storage.mode(phones)
 
 ## Factor or character
 chr <- c("A", "B", "B", "A")
 fac <- factor(c("A", "B", "B", "A"))
-type.convert(chr)               # -> factor
-type.convert(fac)               # -> factor
-type.convert(chr, as.is = TRUE) # -> character
-type.convert(fac, as.is = TRUE) # -> character
+type.convert(chr, as.is = FALSE) # -> factor
+type.convert(fac, as.is = FALSE) # -> factor
+type.convert(chr, as.is = TRUE)  # -> character
+type.convert(fac, as.is = TRUE)  # -> character
 }
 \keyword{manip}
