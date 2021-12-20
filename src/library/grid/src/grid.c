@@ -431,9 +431,10 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
         SEXP vpgp = PROTECT(VECTOR_ELT(pushedvp, VP_GP));
         SEXP fill = getListElement(vpgp, "fill");
         if (fill != R_NilValue) {
-            /* Do not keep resolved fill because cannot release it
-               * (until grid.newpage()) 
-               */
+            /* Do not keep resolved fill reference because cannot release fill
+             * (until grid.newpage()) 
+             * NOTE that resolveGPar() stores the resolved fill in 'vpgp'
+             */
             resolveGPar(vpgp);
             /* Record the resolved fill for subsequent up/down/pop */
             SET_VECTOR_ELT(VECTOR_ELT(pushedvp, PVP_GPAR),
@@ -1406,6 +1407,14 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* Duplicate current gp so we can modify current gp WITHOUT
+     * touching current gp in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* We are not drawing, we are calculating a transformation so set
+     * gp$fill to transparent to avoid infinite loop when gp$fill is a
+     * pattern (resolving a pattern may involve calculating a
+     * transformation) */
+    setListElement(currentgp, "fill", mkString("black"));
     /* 
      * We do not need the current transformation, but
      * we need the side effects of calculating it in
@@ -1568,7 +1577,7 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
             }
         }
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return answer;
 }
 
@@ -1590,6 +1599,9 @@ SEXP L_devLoc(SEXP x, SEXP y, SEXP device) {
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* See L_convert() for detailed comments */
+    currentgp = PROTECT(duplicate(currentgp));
+    setListElement(currentgp, "fill", mkString("black"));
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -1618,7 +1630,7 @@ SEXP L_devLoc(SEXP x, SEXP y, SEXP device) {
     }
     SET_VECTOR_ELT(result, 0, devx);
     SET_VECTOR_ELT(result, 1, devy);
-    UNPROTECT(3);
+    UNPROTECT(4);
     return result;
 }
 
@@ -1637,6 +1649,9 @@ SEXP L_devDim(SEXP x, SEXP y, SEXP device) {
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* See L_convert() for detailed comments */
+    currentgp = PROTECT(duplicate(currentgp));
+    setListElement(currentgp, "fill", mkString("black"));
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
@@ -1664,7 +1679,7 @@ SEXP L_devDim(SEXP x, SEXP y, SEXP device) {
     }
     SET_VECTOR_ELT(result, 0, devx);
     SET_VECTOR_ELT(result, 1, devy);
-    UNPROTECT(3);
+    UNPROTECT(4);
     return result;
 }
 
