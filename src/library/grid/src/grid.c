@@ -3057,19 +3057,26 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     double xmax = -DOUBLE_XMAX;
     double ymin = DOUBLE_XMAX;
     double ymax = -DOUBLE_XMAX;
-    SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
     currentgp = gridStateElement(dd, GSS_GPAR);
+    /* This copy is used to store/cache resolved gp$fill to avoid
+     * stupid amounts of pattern resolving (resolving a resolved
+     * pattern is basically a no-op), WITHOUT touching current gp
+     * in 'grid' state. */
+    currentgp = PROTECT(duplicate(currentgp));
+    /* If not drawing (calculating size), set gp$fill to transparent
+     * to avoid infinite loop when gp$fill is a pattern 
+     * (resolving a pattern involves calculating size) */
+    if (!draw) {
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("black"));
+    }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    if (draw) {
-        PROTECT(resolvedFill = resolveGPar(currentgp));
-    }
     initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     maxn = unitLength(x); 
     ny = unitLength(y); 
@@ -3235,12 +3242,6 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     }
     if (draw) {
 	GEMode(0, dd);
-        if (resolvedFill != R_NilValue &&
-            Rf_inherits(resolvedFill, "GridGrobPattern")) {
-            SEXP patternRef = getListElement(resolvedFill, "index");
-            dd->dev->releasePattern(patternRef, dd->dev);
-        }
-        UNPROTECT(1); /* resolvedFill */
     }
     if (nrect > 0) {
 	result = allocVector(REALSXP, 4);
