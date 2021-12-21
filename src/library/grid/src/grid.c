@@ -3804,8 +3804,8 @@ static SEXP symbolCoords(double *x, double *y, int n, pGEDevDesc dd)
     SEXP ys = PROTECT(allocVector(REALSXP, n));
     int i;
     for (i=0; i<n; i++) {
-        REAL(xs)[i] = fromDeviceX(x[i], GE_INCHES, dd);
-        REAL(ys)[i] = fromDeviceY(y[i], GE_INCHES, dd);
+        REAL(xs)[i] = x[i];
+        REAL(ys)[i] = y[i];
     }
     SET_VECTOR_ELT(result, 0, xs);
     SET_VECTOR_ELT(result, 1, ys);
@@ -3888,14 +3888,16 @@ SEXP gridSymbol(double x, double y, int pch, double size,
 
 	       Prior to 2.1.0 the offsets were always 0.5.
 	    */
-	    xc = size * fabs(toDeviceWidth(0.005, GE_INCHES, dd));
-	    yc = size * fabs(toDeviceHeight(0.005, GE_INCHES, dd));
-	    if(size > 0 && xc < 0.5) xc = 0.5;
-	    if(size > 0 && yc < 0.5) yc = 0.5;
             if (draw) {
+                xc = size * fabs(toDeviceWidth(0.005, GE_INCHES, dd));
+                yc = size * fabs(toDeviceHeight(0.005, GE_INCHES, dd));
+                if(size > 0 && xc < 0.5) xc = 0.5;
+                if(size > 0 && yc < 0.5) yc = 0.5;
                 GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
             } else {
                 if (closed) {
+                    xc = size * .005;
+                    yc = size * .005;
                     xx[0] = x-xc;
                     xx[1] = x-xc;
                     xx[2] = x+xc;
@@ -4344,22 +4346,36 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
     yy = (double *) R_alloc(nx, sizeof(double));
     for (i=0; i<nx; i++) {
 	updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
-	transformLocn(x, y, i, vpc, &gc,
-		      vpWidthCM, vpHeightCM,
-		      dd,
-		      transform,
-		      &(xx[i]), &(yy[i]));
-	/* The graphics engine only takes device coordinates
+	/*
+	 * If drawing, convert to INCHES on device
+	 * If just calculating bounds, convert to INCHES within current vp
 	 */
-	xx[i] = toDeviceX(xx[i], GE_INCHES, dd);
-	yy[i] = toDeviceY(yy[i], GE_INCHES, dd);
+        if (draw) {
+            transformLocn(x, y, i, vpc, &gc,
+                          vpWidthCM, vpHeightCM,
+                          dd,
+                          transform,
+                          &(xx[i]), &(yy[i]));
+            /* The graphics engine only takes device coordinates
+             */
+            xx[i] = toDeviceX(xx[i], GE_INCHES, dd);
+            yy[i] = toDeviceY(yy[i], GE_INCHES, dd);
+        } else {
+	    xx[i] = transformXtoINCHES(x, i, vpc, &gc,
+                                       vpWidthCM, vpHeightCM, 
+                                       dd);
+	    yy[i] = transformYtoINCHES(y, i, vpc, &gc,
+                                       vpWidthCM, vpHeightCM, 
+                                       dd);	    
+        }
     }
     ss = (double *) R_alloc(nss, sizeof(double));
     for (i=0; i < nss; i++) {
         updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
         ss[i] = transformWidthtoINCHES(size, i, vpc, &gc,
                                        vpWidthCM, vpHeightCM, dd);
-        ss[i] = toDeviceWidth(ss[i], GE_INCHES, dd);
+        if (draw)
+            ss[i] = toDeviceWidth(ss[i], GE_INCHES, dd);
     }
     ps = (int *) R_alloc(npch, sizeof(int));
     if (isString(pch)) pType = 0;

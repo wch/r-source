@@ -347,27 +347,6 @@ grobPoints.text <- function(x, closed, ...) {
     }
 }
 
-## Just calculate bounding box of *point locations*
-## (will not include extent of actual data symbols)
-## (same thing as happens for x/y/width/height of points grobs)
-notrun <- function(x, closed, ...) {
-    if (closed) {
-        bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
-        if (is.null(bounds))
-            emptyCoords
-        else {
-            left <- bounds[5]
-            bottom <- bounds[6]
-            right <- left + bounds[3]
-            top <- bottom + bounds[4]
-            list(list(x=c(left, left, right, right),
-                      y=c(bottom, top, top, bottom)))
-        }
-    } else {
-        emptyCoords
-    }
-}
-
 grobPoints.points <- function(x, closed, ...) {
     closed <- as.logical(closed)
     if (is.na(closed)) 
