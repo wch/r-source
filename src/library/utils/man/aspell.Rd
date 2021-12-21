@@ -1,6 +1,6 @@
 % File src/library/utils/man/aspell.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aspell}
@@ -44,6 +44,12 @@ aspell(files, filter, control = list(), encoding = "unknown",
   \url{https://www.cs.hmc.edu/~geoff/ispell.html}, respectively, for
   obtaining the Aspell, Hunspell and (International) Ispell programs and
   dictionaries.
+
+  On Windows, Aspell is available via MSYS2.  One should use a non-Cygwin
+  version, e.g.  package \code{mingw-w64-x86_64-aspell}.  The version built
+  against the Cygwin runtime (package \code{aspell}) requires Unix line
+  endings in files and Unix-style paths, which is incompatible with
+  \code{aspell()}.
 
   The currently available built-in filters are \code{"Rd"}
   (corresponding to \code{\link{RdTextFilter}}), \code{"Sweave"}
