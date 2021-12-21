@@ -4296,6 +4296,7 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
     R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
+    SEXP savedFill;
     SEXP result = R_NilValue;
     /* Get the current device 
      */
@@ -4311,7 +4312,7 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
      * to avoid infinite loop when gp$fill is a pattern 
      * (resolving a pattern involves calculating size) */
     if (!draw) {
-        setListElement(currentgp, "fill", mkString("black"));
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("black"));
     }
     getViewportTransform(currentvp, dd, 
 			 &vpWidthCM, &vpHeightCM, 
@@ -4328,6 +4329,14 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
         LENGTH(VECTOR_ELT(currentgp, GP_CEX)) * 
         LENGTH(VECTOR_ELT(currentgp, GP_LINEHEIGHT));
     nss = nss > nx ? nx : nss;
+    if (draw) {
+        /* Save copy of fill and set currentgp$fill to "black" 
+         * for transformations 
+         * (to avoid unnecessary resolving of pattern fills)
+         */
+        PROTECT(savedFill = duplicate(VECTOR_ELT(currentgp, GP_FILL)));
+        SET_VECTOR_ELT(currentgp, GP_FILL, mkString("black"));
+    }
     /* Convert the x and y values to CM locations */
     vmax = vmaxget();
     xx = (double *) R_alloc(nx, sizeof(double));
@@ -4374,9 +4383,12 @@ static SEXP gridPoints(SEXP x, SEXP y, SEXP pch, SEXP size,
             break;
         }
     }
-    if (draw)
+    if (draw) {
         GEMode(1, dd);
-    else {
+        /* Restore currentgp$fill for drawing */
+        SET_VECTOR_ELT(currentgp, GP_FILL, savedFill);
+        UNPROTECT(1); /* savedFill */
+    } else {
         PROTECT(result = allocVector(VECSXP, nx));
     }
     for (i=0; i<nx; i++)

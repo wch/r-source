@@ -306,7 +306,7 @@ SEXP resolveGPar(SEXP gp)
     if (Rf_inherits(gpFillSXP(gp), "GridPattern") ||
         Rf_inherits(gpFillSXP(gp), "GridPatternList")) {
         SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), 0));
-        setListElement(gp, "fill", resolvedFill);
+        SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
         result = resolvedFill;
         UNPROTECT(1);
     }
@@ -531,7 +531,12 @@ void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar,
         } else {
             /* This handles case where pattern fill has not yet 
              * been resolved */
-            if (Rf_inherits(gpFillSXP(gp), "GridGrobPattern")) {
+            if (!LOGICAL(getListElement(gpFillSXP(gp), "group"))[0]) {
+                /* Pattern will be resolved for each individual shape
+                 * in updateGContext, so do not bother here.
+                 */
+                gpIsScalar[GP_FILL] = 0;
+            } else if (Rf_inherits(gpFillSXP(gp), "GridGrobPattern")) {
                 SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), 0));
                 /* Pattern may not resolve (e.g., we are filling a stroke) */
                 if (Rf_inherits(resolvedFill, "GridResolvedPattern")) {
@@ -540,14 +545,13 @@ void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar,
                     gcCache->patternFill = gc->patternFill = fillRef;
                     /* Store resolved gp$fill in currentgp (which is duplicate
                      * of 'grid' state currentgp) */
-                    setListElement(gp, "fill", resolvedFill);
+                    SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
                 } else {
                     gcCache->fill = gc->fill = R_TRANWHITE;
                     gcCache->patternFill = gc->patternFill = R_NilValue;
                 }
                 UNPROTECT(1);
-                gpIsScalar[GP_FILL] = 
-                    LOGICAL(getListElement(gpFillSXP(gp), "group"))[0];
+                gpIsScalar[GP_FILL] = 1;
             } else {
                 /* Fallback is to use no fill */
                 gcCache->fill = gc->fill = R_TRANWHITE;
@@ -575,7 +579,7 @@ void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar,
                 gcCache->patternFill = gc->patternFill = fillRef;
                 /* Store resolved gp$fill in currentgp (which is duplicate
                  * of 'grid' state currentgp) */
-                setListElement(gp, "fill", resolvedFill);
+                SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
             } else {
                 gcCache->fill = gc->fill = R_TRANWHITE;
                 gcCache->patternFill = gc->patternFill = R_NilValue;
@@ -632,7 +636,7 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
                 /* Pattern needs to be resolved for each grob shape 
                  * so UNresolve the saved pattern */
                 SEXP unresolvedFill = PROTECT(unresolveFill(gpFillSXP(gp)));
-                setListElement(gp, "fill", unresolvedFill);
+                SET_VECTOR_ELT(gp, GP_FILL, unresolvedFill);
                 UNPROTECT(1);
             }
             SEXP resolvedFill = PROTECT(resolveFill(gpFillSXP(gp), i));
@@ -643,7 +647,7 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
                 gcCache->patternFill = gc->patternFill = fillRef;
                 /* Store resolved gp$fill in currentgp (which is duplicate
                  * of 'grid' state currentgp) */
-                setListElement(gp, "fill", resolvedFill);
+                SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
             } else {
                 gcCache->fill = gc->fill = R_TRANWHITE;
                 gcCache->patternFill = gc->patternFill = R_NilValue;
@@ -668,7 +672,7 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
                 gcCache->patternFill = gc->patternFill = fillRef;
                 /* Store resolved gp$fill in currentgp (which is duplicate
                  * of 'grid' state currentgp) */
-                setListElement(gp, "fill", resolvedFill);
+                SET_VECTOR_ELT(gp, GP_FILL, resolvedFill);
             } else {
                 gcCache->fill = gc->fill = R_TRANWHITE;
                 gcCache->patternFill = gc->patternFill = R_NilValue;
