@@ -4678,6 +4678,13 @@ int Seql(SEXP a, SEXP b)
     /* Leave this to compiler to optimize */
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
+    else if (IS_BYTES(a) || IS_BYTES(b)) {
+	if (IS_BYTES(a) && IS_BYTES(b))
+	    /* only get here if at least one is not cached */
+	    return !strcmp(CHAR(a), CHAR(b));
+	else
+	    return 0;
+    }	    
     else {
 	SEXP vmax = R_VStack;
 	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
