@@ -150,6 +150,12 @@
       \sQuote{FIXME} to enable \code{as.vector(<data.frame>,
       mode="list")}.  This breaks code relying on
       \code{as.vector(<data.frame>)} to return the unchanged data frame.
+
+      \item \code{legend()} is now vectorized for arguments \code{cex},
+      \code{x.intersp}, and \code{text.width}.
+      The latter can now also be specified as a vector (one element for
+      each column of the legend) or as \code{NA} for computing a proper
+      column wise maximum value of \code{strwidth(legend)}.
     }
   }
 

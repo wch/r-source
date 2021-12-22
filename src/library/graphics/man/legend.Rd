@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -72,9 +72,12 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     text.  Useful for y-adjustment when \code{labels} are
     \link{plotmath} expressions.}
   \item{text.width}{the width of the legend text in x (\code{"user"})
-    coordinates.  (Should be a single positive number even for a reversed
-    x axis.)  Defaults to the proper value computed by
-    \code{\link{strwidth}(legend)}.}
+    coordinates.  (Should be positive even for a reversed
+    x axis.)  
+    Can be a single positive numeric value (same width for each column of the legend),
+    a vector (one element for each column of the legend),
+    \code{NULL} (default) for computing a proper maximum value of \code{\link{strwidth}(legend)}),
+    or \code{NA} for computing a proper column wise maximum value of \code{\link{strwidth}(legend)}).}
   \item{text.col}{the color used for the legend text.}
   \item{text.font}{the font used for the legend text, see \code{\link{text}}.}
   \item{merge}{logical; if \code{TRUE}, merge points and lines but
@@ -293,5 +296,14 @@ for(i in 1:4) {
           ncol = 2, cex = 2, lwd = 3, text.font = i, text.col = c6)
 }
 par(op)
+
+# using text.width for several columns
+plot(1, type="n")
+legend("topleft", c("This legend", "has", "equally sized", "columns."), 
+       pch = 1:4, ncol = 4)
+legend("bottomleft", c("This legend", "has", "optimally sized", "columns."), 
+       pch = 1:4, ncol = 4, text.width = NA)
+legend("right", letters[1:4], pch = 1:4, ncol = 4, 
+       text.width = 1:4 / 50)
 }
 \keyword{aplot}

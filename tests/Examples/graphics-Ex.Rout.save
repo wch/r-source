@@ -1423,6 +1423,15 @@ List of 2
 + }
 > par(op)
 > 
+> # using text.width for several columns
+> plot(1, type="n")
+> legend("topleft", c("This legend", "has", "equally sized", "columns."), 
++        pch = 1:4, ncol = 4)
+> legend("bottomleft", c("This legend", "has", "optimally sized", "columns."), 
++        pch = 1:4, ncol = 4, text.width = NA)
+> legend("right", letters[1:4], pch = 1:4, ncol = 4, 
++        text.width = 1:4 / 50)
+> 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
