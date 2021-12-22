@@ -1404,6 +1404,8 @@ if(FALSE) {
                              paste("Archs:", paste(dirs, collapse = ", "))
                              )
                 writeLines(newdesc, descfile, useBytes = TRUE)
+                saveRDS(.split_description(.read_description(descfile)),
+                         file.path(instdir, "Meta", "package.rds"))
             }
         } else if (multiarch) {   # end of src dir
             if (WINDOWS) {

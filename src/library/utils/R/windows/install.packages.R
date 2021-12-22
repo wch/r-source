@@ -184,6 +184,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
                                    paste(basename(dirs), collapse=", "))
                              )
                 writeLines(newdesc, descfile, useBytes = TRUE)
+                saveRDS(tools:::.split_description(tools:::.read_description(descfile)),
+                        file.path(instPath, "Meta", "package.rds"))
             }
         } else {
             ## If the package is already installed, remove it.  If it
