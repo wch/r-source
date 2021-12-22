@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -87,15 +87,17 @@
   \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
     type.  Will be zero if there is no such type (or its use was
     disabled when \R was built), otherwise possibly
-    \code{12} (most 32-bit builds) or \code{16} (most 64-bit builds).}
+    \code{12} (most 32-bit builds),  \code{16} (most 64-bit builds) or 8
+    (CPUs such as ARM where \code{long double} is identical to \code{double}.}
   \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}
 
-  \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{when
+  \item{longdouble.eps, longdouble.neg.eps, longdouble.digits, ...}{
+    introduced in \R 4.0.0. When
     \code{\link{capabilities}("long.double")} is true, there are 10 such
     \code{"longdouble.<kind>"} values, specifying the \code{long double}
-    property corresponding to its \code{"double.*"} counterpart, above, see
+    property corresponding to its \code{"double.*"} counterpart.  See
     also \sQuote{Note}.}
 }
 \details{
@@ -132,8 +134,8 @@
   Note that it is legal for a platform to have a \code{long double} C
   type which is identical to the \code{double} type --- this happens on
   ARM cpus.  In that case \code{\link{capabilities}("long.double")} will
-  be false but \code{.Machine} may contain \code{"longdouble.<kind>"}
-  elements.
+  be false but on versions of \R prior to 4.0.4, \code{.Machine} may contain
+  \code{"longdouble.<kind>"} elements.
 }
 \source{
   Uses a C translation of Fortran code in the reference, modified by the
