@@ -88,16 +88,73 @@ void rcmdusage (char *RCMD)
 	    "for usage information for each command.\n\n");
 }
 
+/* length of argument if quoted to be passed as a second or 
+   later to a program conforming to MSVC conventions */
+size_t quoted_arg_len(const char *arg)
+{
+    size_t len = 0;
+    size_t nbackslashes = 0;
+    for (size_t i = 0; arg[i]; i++) {
+	if (arg[i] == '\\')
+	    nbackslashes++;
+	else if (arg[i] == '"') {
+	    /* double backslashes before quote and escape the quote */
+	    len += 2 * nbackslashes;
+	    nbackslashes = 0;
+	    len += 2; /* \" */
+	} else {
+	    len += nbackslashes;
+	    nbackslashes = 0;
+	    len ++;
+	}
+    }
+    /* double trailing backslashes due to the following quote */
+    len += 2 * nbackslashes;
+    len += 2; /* surrounding double quotes */
+    return len;
+}
+
+/* strcat a quoted version of the argument to dest */
+char *quoted_arg_cat(char *dest, const char *arg)
+{
+    size_t j = strlen(dest);
+    size_t nbackslashes = 0;
+
+    dest[j++] = '"';
+    for (size_t i = 0; arg[i] ; i++) {
+	if (arg[i] == '\\')
+	    nbackslashes++;
+	else if (arg[i] == '"') {
+	    /* double backslashes before quote and escape the quote */
+	    for (;nbackslashes; nbackslashes--) {
+		dest[j++] = '\\';
+		dest[j++] = '\\';
+	    }
+	    dest[j++] = '\\';
+	    dest[j++] = '"';
+	} else {
+	    for (;nbackslashes; nbackslashes--) dest[j++] = '\\';
+	    dest[j++] = arg[i]; 
+	}
+    }
+    /* double trailing backslashes due to the following quote */
+    for (;nbackslashes; nbackslashes--) {
+	dest[j++] = '\\';
+	dest[j++] = '\\';
+    }
+    dest[j++] = '"';
+    dest[j] = '\0';
+    return dest;
+}
+
 #define PROCESS_CMD(ARG)	if (cmdarg + 1 < argc) {\
 	    for (i = cmdarg + 1; i < argc; i++) {\
 		strcat(cmd, ARG);\
-		if (strlen(cmd) + strlen(argv[i]) > 9900) {\
+		if (strlen(cmd) + quoted_arg_len(argv[i]) > 9900) {\
 		    fprintf(stderr, "command line too long\n");\
 		    return(27);\
 		}\
-		strcat(cmd, "\"");\
-		strcat(cmd, argv[i]);\
-		strcat(cmd, "\"");\
+		quoted_arg_cat(cmd, argv[i]);\
 	    }\
 	    /* the outermost double quotes are needed for cmd.exe */\
 	    strcat(cmd,"\"");\

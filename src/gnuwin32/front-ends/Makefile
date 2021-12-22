@@ -106,7 +106,7 @@ Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
 R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
-Rfe.exe: Rfe.o ../rhome.o rcico.o
+Rfe.exe: Rfe.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
