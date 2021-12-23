@@ -1624,11 +1624,10 @@ static int R_rmdir(const wchar_t *dir)
 static int isReparsePoint(const wchar_t *name)
 {
     DWORD res = GetFileAttributesW(name);
-    if(res == INVALID_FILE_ATTRIBUTES) {
-	warning("cannot get info on '%ls', reason '%s'",
-		name, formatError(GetLastError()));
+    if(res == INVALID_FILE_ATTRIBUTES)
+	/* Do not warn, because this function is also used for files that don't
+	   exist. R_WFileExists may return false for broken symbolic links. */
 	return 0;
-    }
     // printf("%ls: %x\n", name, res);
     return res & FILE_ATTRIBUTE_REPARSE_POINT;
 }
@@ -1664,7 +1663,9 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
     R_CheckStack(); // called recursively
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
     //printf("R_unlink(%ls)\n", name);
-    if (!R_WFileExists(name)) return 0;
+    /* We cannot use R_WFileExists here since it is false for broken
+       symbolic links
+       if (!R_WFileExists(name)) return 0; */
     if (force) _wchmod(name, _S_IWRITE);
 
     if (recursive) {
