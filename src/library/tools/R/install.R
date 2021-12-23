@@ -366,6 +366,12 @@ if(FALSE) {
 
         dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         if (!dir.exists(instdir)) {
+            # This allows a package to be installed if a broken symbolic
+            # link (or a regular file) is place (PR#18262)
+            unlink(instdir, recursive = FALSE)
+            dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
+        }
+        if (!dir.exists(instdir)) {
             message("ERROR: unable to create ", sQuote(instdir), domain = NA)
             do_exit_on_error()
         }
