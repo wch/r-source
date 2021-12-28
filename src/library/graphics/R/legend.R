@@ -25,7 +25,8 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	 text.width = NULL, text.col = par("col"), text.font = NULL,
 	 merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-	 inset = 0, xpd, title.col = text.col, title.adj = 0.5,
+	 inset = 0, xpd, title.col = text.col[1], title.adj = 0.5, 
+	 title.cex = cex[1], title.font = text.font[1],
          seg.len = 2)
 {
     ## the 2nd arg may really be `legend'
@@ -62,14 +63,14 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
     } else nx <- 0
 
-    reverse.axis <- par("xaxp")[1] > par("xaxp")[2]
+    reverse.xaxis <- par("xaxp")[1] > par("xaxp")[2]
+    reverse.yaxis <- par("yaxp")[1] > par("yaxp")[2]    
     xlog <- par("xlog")
     ylog <- par("ylog")
     
     ## recycle
     cex <- rep(cex, length.out=n.leg)
     x.intersp <- rep(x.intersp, length.out=n.leg)
-    y.intersp <- rep(y.intersp, length.out=n.leg)
     seg.len <- rep(seg.len, length.out=n.leg)
 
     rect2 <- function(left, top, dx, dy, density = NULL, angle, ...) {
@@ -98,6 +99,13 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	xmat <- matrix(c(rep(x, length.out=n), rep(0L, n.legpercol * ncol - n)), ncol=ncol)
 	res <- apply(xmat, 2, function(x) fun(x))
 	res[res == 0L] <- max(res) # space for empty columns
+	if(reverse) res <- -res
+	return(res)
+    }
+    rowwise <- function(x, n, ncol, n.legpercol, fun, reverse=FALSE){
+	## needed for legend with >1 rows
+	xmat <- matrix(c(rep(x, length.out=n), rep(0L, n.legpercol * ncol - n)), ncol=ncol)
+	res <- apply(xmat, 1, function(x) fun(x))
 	if(reverse) res <- -res
 	return(res)
     }
@@ -144,11 +152,18 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 
     xchar  <- xc
     xextra <- 0
-    yextra <- yc * (y.intersp - 1)
+
+    y.intersp <- rep(y.intersp, length.out=n.legpercol)
+    yextra <- rowwise(yc, n=n.leg, ncol=ncol, n.legpercol=n.legpercol, 
+    				  fun=function(x) max(abs(x)), reverse = reverse.yaxis) * (y.intersp - 1)
     ## watch out for reversed axis here: heights can be negative
-    ymax <- max(yc) * max(1, mapply(strheight, legend, cex = cex, 
+    ymax <- sign(yc[1]) * max(abs(yc)) * max(1, mapply(strheight, legend, cex = cex, 
     								font = text.font, MoreArgs = list(units = "user"))/yc)
     ychar <- yextra + ymax
+    ymaxtitle <- title.cex * par("cex") * xyc[2L] * 
+    	max(1, strheight(title, cex = title.cex, font = title.font, units = "user") / 
+    						(title.cex * par("cex") * xyc[2L]))
+    ychartitle <- yextra[1] + ymaxtitle
     if(trace) catn("  xchar=", fv(xchar), "; (yextra, ychar)=", fv(yextra,ychar))
 
     if(mfill) {
@@ -201,26 +216,29 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     }
     else {## nx == 1  or  auto
 	## -- (w,h) := (width,height) of the box to draw -- computed in steps
-	h <- (n.legpercol + !is.null(title)) * ychar + yc
+    yc <- rowwise(yc, n.leg, ncol, n.legpercol, 
+      			  fun = function(x) max(abs(x)), reverse = reverse.yaxis)
+    h <- sum(ychar) + yc[length(yc)] + (!is.null(title)) * ychartitle
 
 	## calculate optimal width per column, and other widths
     xch1 <- colwise(xchar, n.leg, ncol, n.legpercol, 
-    				fun = function(x) max(abs(x)), reverse=reverse.axis)
+    				fun = function(x) max(abs(x)), reverse=reverse.xaxis)
     x.interspCol <- colwise(x.intersp, n.leg, ncol, n.legpercol, fun = max)
     seg.lenCol <- colwise(seg.len, n.leg, ncol, n.legpercol, fun = max)
     text.width <- colwise(text.width, n = ifelse(auto.text.width, n.leg, ncol), ncol,
                             n.legpercol = ifelse(auto.text.width, n.legpercol, 1),
-                            fun = function(x) max(abs(x)), reverse=reverse.axis)
+                            fun = function(x) max(abs(x)), reverse=reverse.xaxis)
 
 	w0 <- text.width + (x.interspCol + 1) * xch1
 	if(mfill)	w0 <- w0 + dx.fill
 	if(do.lines)	w0 <- w0 + (seg.lenCol + x.off)*xch1
 
 	w <- sum(w0) + 0.5 * xch1[ncol]   # width of box
-	h <- max(h, na.rm=TRUE)   # height of box
 
 	if (!is.null(title)
-	    && (abs(tw <- strwidth(title, units="user", cex=cex) + 0.5*xch1[ncol])) > abs(w)) {
+	    && (abs(tw <- strwidth(title, units="user", 
+                               cex = title.cex, font = title.font) + 
+				0.5 * title.cex * par("cex") * xyc[1L])) > abs(w)) {
 	    xextra <- (tw - w)/2
 	    w <- tw
 	}
@@ -257,9 +275,10 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
     xt <- left + xc + xextra +  
 	rep(c(0, cumsum(w0))[1L:ncol], each=n.legpercol, length.out=n.leg)
-    yt <- top -	0.5 * yextra - ymax -
-	(rep.int(1L:n.legpercol,ncol)[1L:n.leg] - 1 + !is.null(title)) * ychar
-
+	topspace <- 0.5 * ymax + (!is.null(title)) * ychartitle
+    yt <- top -	topspace - cumsum((c(0, ychar)/2 + c(ychar, 0)/2)[1L:n.legpercol])
+    yt <- rep(yt, length.out=n.leg)
+    
     if (mfill) {		#- draw filled boxes -------------
 	if(plot) {
 	    if(!is.null(fill)) fill <- rep_len(fill, n.leg)
@@ -317,8 +336,9 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     xt <- xt + x.intersp * xc
     if(plot) {
 	if (!is.null(title))
-            text2(left + w*title.adj, top - ymax, labels = title,
-                  adj = c(title.adj, 0), cex = cex, col = title.col)
+            text2(left + w*title.adj, top - ymaxtitle, labels = title,
+                  adj = c(title.adj, 0), cex = title.cex, 
+                  col = title.col, font = title.font)
 
 	text2(xt, yt, labels = legend, adj = adj, cex = cex,
 	      col = text.col, font = text.font)

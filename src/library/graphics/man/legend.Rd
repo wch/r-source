@@ -16,7 +16,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        text.font = NULL, merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-       inset = 0, xpd, title.col = text.col, title.adj = 0.5,
+       inset = 0, xpd, title.col = text.col[1], title.adj = 0.5,
+       title.cex = cex[1], title.font = text.font[1],
        seg.len = 2)
 }
 \description{
@@ -66,8 +67,10 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     x location.  A value of 0 means left justified, 0.5 means centered
     and 1 means right justified.}
   \item{yjust}{the same as \code{xjust} for the legend y location.}
-  \item{x.intersp}{character interspacing factor for horizontal (x) spacing.}
-  \item{y.intersp}{the same for vertical (y) line distances.}
+  \item{x.intersp}{character interspacing factor for horizontal (x) spacing
+    between symbol and legend text.}
+  \item{y.intersp}{vertical (y) distances (in lines of text shared above/below each legend entry).
+    A vector with one element for each row of the legend can be used.}
   \item{adj}{numeric of length 1 or 2; the string adjustment for legend
     text.  Useful for y-adjustment when \code{labels} are
     \link{plotmath} expressions.}
@@ -98,9 +101,12 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     plot region when legend is placed by keyword.}
   \item{xpd}{if supplied, a value of the \link{graphical parameter} \code{xpd}
     to be used while the legend is being drawn.}
-  \item{title.col}{color for \code{title}.}
+  \item{title.col}{color for \code{title}, defaults to \code{text.col[1]}.}
   \item{title.adj}{horizontal adjustment for \code{title}: see the help
     for \code{\link{par}("adj")}.}
+  \item{title.cex}{expansion factor(s) for the title, defaults to \code{cex[1]}.}
+  \item{title.font}{the font used for the legend title, defaults to \code{text.font[1]}, 
+    see \code{\link{text}}.}
   \item{seg.len}{the length of lines drawn to illustrate \code{lty}
     and/or \code{lwd} (in units of character widths).}
 }

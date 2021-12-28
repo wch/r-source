@@ -156,6 +156,10 @@
       The latter can now also be specified as a vector (one element for
       each column of the legend) or as \code{NA} for computing a proper
       column wise maximum value of \code{strwidth(legend)}.
+	  The argument \code{y.intersp} can be specified as a vector with 
+	  one entry for each row of the legend.
+	  \code{legend()} also gains new arguments \code{title.cex} and 
+	  \code{title.font}. Thanks to Swetlana Herbrandt.
     }
   }
 
