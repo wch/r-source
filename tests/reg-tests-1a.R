@@ -2434,7 +2434,7 @@ Quine <- structure(list(Eth = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     0, 1, 5, 5, 5, 5, 7, 11, 15, 5, 14, 6, 6, 7, 28, 0, 5, 14,
     2, 2, 3, 8, 10, 12, 1, 1, 9, 22, 3, 3, 5, 15, 18, 22, 37)),
     .Names = c("Eth", "Sex", "Age", "Slow or fast", "Days"),
-    class = "data.frame", row.names = 1:46)
+    class = "data.frame", row.names = 1:146)
 step(aov(log(Days+2.5) ~ .^4, data=Quine))
 set.seed(11)
 DF <- data.frame(y=rnorm(21), `x 1`=-10:10., check.names = FALSE)
