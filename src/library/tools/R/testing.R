@@ -611,7 +611,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "array-subset",
                 "p-r-random-tests", "d-p-q-r-tst-2",
-                "any-all", "d-p-q-r-tests")
+                "any-all", "structure", "d-p-q-r-tests")
     ## "sloppy specific":
     tests2 <- c("complex", "print-tests", "lapack", "datasets", "datetime",
                 "iec60559")
