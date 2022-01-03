@@ -20,7 +20,7 @@ cat(deparse(z), "\n")
 z2 <- structure(1:10, .Tsp = c(1959.25, 1961.5, 4), class = "ts")
 identical(z, z2)
 
-## levels <-> .Labek is most relevant to factors, but is always remapped.
+## levels <-> .Label is most relevant to factors, but is always remapped.
 x <- 1:3
 attr(x, "levels") <- letters[x]
 cat(deparse(x), "\n")
