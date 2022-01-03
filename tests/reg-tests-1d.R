@@ -5604,9 +5604,9 @@ LL[cbind(1, 1+ca.half)] # should be constantly == raw(1L) '01'
 LL[cbind(2+ca.half, 1)] # all 02
 LL[cbind(-ca.half, 1)] # raw(0) --- correct
 stopifnot(exprs = {
-    length(LL[cbind(2, ca.half)]) == 0    
-    LL[cbind(1, 1+ca.half)] == as.raw(1L) 
-    LL[cbind(2+ca.half, 1)] == as.raw(2L) 
+    length(LL[cbind(2, ca.half)]) == 0
+    LL[cbind(1, 1+ca.half)] == as.raw(1L)
+    LL[cbind(2+ca.half, 1)] == as.raw(2L)
     length(LL[cbind( -ca.half, 1)]) == 0
 })
 ## Now for `[[` :
@@ -5626,6 +5626,13 @@ op <- options(warn = 2, check.bounds=TRUE)
 x <- NA; x[1.5] <- 3.3 ;   options(op)
 stopifnot(identical(x, 3.3))
 ## gave a wrong warning in R <= 4.1.x
+
+
+## all.equal.numeric(*, scale=s)  where length(s) > 1 -- PR#18272
+stopifnot(
+    identical("Mean scaled difference: 1",
+              all.equal(c(1, 1), c(1.01, 1.01), scale = c(.01, .01))))
+## gave error when _R_CHECK_LENGTH_1_LOGIC2_ was set and length 2 answer otherwise
 
 
 
