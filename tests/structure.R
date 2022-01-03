@@ -7,6 +7,8 @@
 ## deparsed: ".Dim", ".Dimnames", ".Names", ".Tsp", ".Label"
 ## structure() remaps to the printed form.
 
+## The remapping in deparse will be removed in R 4.2.0.
+
 X <- matrix(1:4, 2, 2, dimnames=list(c("A", "B"), 1:2))
 names(attributes(X))
 cat(deparse(X), "\n")
@@ -20,7 +22,7 @@ cat(deparse(z), "\n")
 z2 <- structure(1:10, .Tsp = c(1959.25, 1961.5, 4), class = "ts")
 identical(z, z2)
 
-## levels <-> .Labek is most relevant to factors, but is always remapped.
+## levels <-> .Label is most relevant to factors, but is always remapped.
 x <- 1:3
 attr(x, "levels") <- letters[x]
 cat(deparse(x), "\n")

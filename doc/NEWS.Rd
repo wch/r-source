@@ -160,6 +160,10 @@
       one entry for each row of the legend.
       \code{legend()} also gains new arguments \code{title.cex} and 
       \code{title.font}. Thanks to Swetlana Herbrandt.
+
+      \item Deparsing no longer remaps attribute names \samp{dim},
+      \code{dimnames}, \code{levels}, \code{names} and \code{tsp} to
+      historical S-compatible names (which \code{structure()} maps back).
     }
   }
 

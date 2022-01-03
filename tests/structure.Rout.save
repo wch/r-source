@@ -7,8 +7,6 @@ R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
 
-  Natural language support but running in an English locale
-
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
@@ -26,11 +24,13 @@ Type 'q()' to quit R.
 > ## deparsed: ".Dim", ".Dimnames", ".Names", ".Tsp", ".Label"
 > ## structure() remaps to the printed form.
 > 
+> ## The remapping in deparse will be removed in R 4.2.0.
+> 
 > X <- matrix(1:4, 2, 2, dimnames=list(c("A", "B"), 1:2))
 > names(attributes(X))
 [1] "dim"      "dimnames"
 > cat(deparse(X), "\n")
-structure(1:4, .Dim = c(2L, 2L), .Dimnames = list(c("A", "B"),      c("1", "2"))) 
+structure(1:4, dim = c(2L, 2L), dimnames = list(c("A", "B"),      c("1", "2"))) 
 > Y <- structure(1:4, .Dim = c(2L, 2L),
 +                .Dimnames = list(c("A", "B"), c("1", "2")))
 > identical(X, Y)
@@ -45,16 +45,16 @@ $class
 [1] "ts"
 
 > cat(deparse(z), "\n")
-structure(1:10, .Tsp = c(1959.25, 1961.5, 4), class = "ts") 
+structure(1:10, tsp = c(1959.25, 1961.5, 4), class = "ts") 
 > z2 <- structure(1:10, .Tsp = c(1959.25, 1961.5, 4), class = "ts")
 > identical(z, z2)
 [1] TRUE
 > 
-> ## levels <-> .Labek is most relevant to factors, but is always remapped.
+> ## levels <-> .Label is most relevant to factors, but is always remapped.
 > x <- 1:3
 > attr(x, "levels") <- letters[x]
 > cat(deparse(x), "\n")
-structure(1:3, .Label = c("a", "b", "c")) 
+structure(1:3, levels = c("a", "b", "c")) 
 > y <- structure(1:3, .Label = c("a", "b", "c"))
 > identical(x, y)
 [1] TRUE
@@ -79,13 +79,10 @@ $class
 [1] "factor"
 
 > cat(deparse(state))
-structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L,  2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), .Label = c("treated",  "untreated"), class = "factor")> 
+structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L,  2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), levels = c("treated",  "untreated"), class = "factor")> 
 > state2 <- structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 +                       2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L),
 +                     levels = c("treated", "untreated"), class = "factor")
 > identical(state,state2)
 [1] TRUE
 > 
-> proc.time()
-   user  system elapsed 
-  0.070   0.020   0.094 
