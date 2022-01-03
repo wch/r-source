@@ -46,8 +46,8 @@ freeny.x <-
 		13.1169, 13.1222, 13.1266, 13.1356,
 		13.1415, 13.1444, 13.1459,
 		13.152, 13.1593, 13.1579, 13.1625, 13.1664),
-	    .Dim = c(39, 4),
-	    .Dimnames = list(character(0),
+	    dim = c(39, 4),
+	    dimnames = list(character(0),
 		c("lag quarterly revenue", "price index",
 		  "income level", "market potential"))
 	    )
@@ -65,7 +65,7 @@ freeny.y <-
 		9.60048, 9.64496, 9.6439,
 		9.69405, 9.69958, 9.68683,
 		9.71774, 9.74924, 9.77536,
-		9.79424), .Tsp = c(1962.25, 1971.75, 4), class="ts")
+		9.79424), tsp = c(1962.25, 1971.75, 4), class="ts")
 
 ##-- This gives a data.frame which sometimes [str(..)] behaves horribly :
 freeny <- data.frame(y = freeny.y, freeny.x, row.names = stats::time(freeny.y))

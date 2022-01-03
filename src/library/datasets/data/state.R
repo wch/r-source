@@ -103,8 +103,8 @@ structure(c(3615, 365, 2212, 2110, 21198, 2541, 3100, 579, 8277, 4931,
             109889, 9027, 7521, 121412, 47831, 48798, 69273, 40975,
             68782, 96184, 44966, 1049, 30225, 75955, 41328, 262134,
             82096, 9267, 39780, 66570, 24070, 54464, 97203),
-          .Dim = c(50, 8),
-          .Dimnames = list(state.name,
+          dim = c(50, 8),
+          dimnames = list(state.name,
           c("Population", "Income", "Illiteracy", "Life Exp", "Murder",
             "HS Grad", "Frost", "Area")))
 
