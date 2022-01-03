@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -147,19 +147,20 @@ all.equal.numeric <-
     current <- current[!out]
     if(!countEQ) N <- length(target)
     if(is.integer(target) && is.integer(current)) target <- as.double(target)
-    xy <- sum(abs(target - current)/N) ## abs(z) == Mod(z) for complex
     what <-
 	if(is.null(scale)) {
-	    xn <- (sabst0 + sum(abs(target)/N))
-	    if(is.finite(xn) && xn > tolerance) {
-		xy <- xy/xn
+	    scale <- (sabst0 + sum(abs(target)/N))
+	    if(is.finite(scale) && scale > tolerance) {
 		"relative"
-	    } else "absolute"
+	    } else {
+		scale <- 1
+                "absolute"
+	    }
 	} else {
 	    stopifnot(all(scale > 0))
-	    xy <- xy/scale
 	    if(all(abs(scale - 1) < 1e-7)) "absolute" else "scaled"
 	}
+    xy <- sum(abs(target - current)/(N*scale)) ## abs(z) == Mod(z) for complex
 
     if (cplx) what <- paste(what, "Mod") # PR#10575
     if(is.na(xy) || xy > tolerance)

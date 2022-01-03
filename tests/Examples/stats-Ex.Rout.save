@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2021-12-01 r81279) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R Under development (unstable) (2022-01-03 r81434) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -9188,7 +9188,7 @@ it = 10 -2.083333 -2.083333
 > 
 > ### Name: lm
 > ### Title: Fitting Linear Models
-> ### Aliases: lm
+> ### Aliases: lm print.lm
 > ### Keywords: regression
 > 
 > ### ** Examples

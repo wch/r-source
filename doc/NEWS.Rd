@@ -156,9 +156,9 @@
       The latter can now also be specified as a vector (one element for
       each column of the legend) or as \code{NA} for computing a proper
       column wise maximum value of \code{strwidth(legend)}.
-      The argument \code{y.intersp} can be specified as a vector with 
+      The argument \code{y.intersp} can be specified as a vector with
       one entry for each row of the legend.
-      \code{legend()} also gains new arguments \code{title.cex} and 
+      \code{legend()} also gains new arguments \code{title.cex} and
       \code{title.font}. Thanks to Swetlana Herbrandt.
 
       \item Deparsing no longer remaps attribute names \samp{dim},
@@ -429,7 +429,7 @@
       data frames with default row names (Thanks to Charlie Gao's
       \PR{18179}).
 
-      \item \code{txtProgresBar()} now enforces a non-zero width for
+      \item \code{txtProgressBar()} now enforces a non-zero width for
       \code{char}, without which no progress can be visible.
 
       \item \code{dimnames(table(d))} is more consistent in the case where
@@ -493,6 +493,9 @@
 
       \item \code{...names()} now matches \code{names(list(...))} closely,
       fixing \PR{18247}.
+
+      \item \code{all.equal(*, scale = s)} now works as intended when
+      \code{length(s) > 1}, thanks to Michael Chirico's \PR{18272}.
     }
   }
 }

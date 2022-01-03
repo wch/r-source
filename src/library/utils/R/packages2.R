@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -938,10 +938,8 @@ suppressForeignCheck <- function(names, package, add = TRUE)
 
 registerNames <- function(names, package, .listFile, add = TRUE) {
     .simplePackageName <- function(env) {
-        if(exists(".packageName", envir = env, inherits = FALSE))
-           get(".packageName", envir = env)
-        else
-            "(unknown package)"
+        get0(".packageName", envir = env, inherits = FALSE,
+             ifnotfound = "(unknown package)")
     }
     if(missing(package)) {
         env <- topenv(parent.frame(2L)) # We cannot be called directly!
@@ -953,18 +951,13 @@ registerNames <- function(names, package, .listFile, add = TRUE) {
     }
     else
         env <- asNamespace(package)
-    if(exists(.listFile, envir = env, inherits = FALSE))
-        current <- get(.listFile, envir = env)
-    else
-        current <- character()
+
+    current <- get0(.listFile, envir = env, inherits = FALSE, ifnotfound = character())
     if(! missing(names)) {
         if(environmentIsLocked(env))
             stop(gettextf("The namespace for package \"%s\" is locked; no changes in the global variables list may be made.",
                           package))
-        if(add)
-            current <- unique(c(current, names))
-        else
-            current <- names
+        current <- if(add) unique(c(current, names)) else names
         assign(.listFile, current, envir = env)
     }
     current

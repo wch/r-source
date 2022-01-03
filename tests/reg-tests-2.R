@@ -312,12 +312,12 @@ summary(data.frame(x))
 
 ## Chong Gu 2001-Feb-16.  step on binomials
 detg1 <-
-structure(list(Temp = structure(c(2L, 1L, 2L, 1L, 2L, 1L, 2L,
-    1L, 2L, 1L, 2L, 1L), levels = c("High", "Low"), class = "factor"),
-    M.user = structure(c(1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L,
-    1L, 2L, 2L), levels = c("N", "Y"), class = "factor"),
-    Soft = structure(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L),
-    levels = c("Hard", "Medium", "Soft"), class = "factor"),
+structure(list(Temp = factor(c(2L, 1L, 2L, 1L, 2L, 1L, 2L,
+    1L, 2L, 1L, 2L, 1L), labels = c("High", "Low")),
+    M.user = factor(c(1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L,
+    1L, 2L, 2L), labels = c("N", "Y")),
+    Soft = factor(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L),
+    labels = c("Hard", "Medium", "Soft")),
     M = c(42, 30, 52, 43,
     50, 23, 55, 47, 53, 27, 49, 29), X = c(68, 42, 37, 24, 66,
     33, 47, 23, 63, 29, 57, 19)), names = c("Temp", "M.user",
@@ -367,9 +367,9 @@ gofX.df<-
     0.999573603041505, 0.67546318055115, -0.756802495307928,
     -0.0583741434275801, -0.756802495307928, 0.999573603041505,
     -0.756802495307928, 0.67546318055115, -0.0583741434275801
-    ), groups = structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L,
-                            2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L),
-                          class = "factor", levels = c("1", "2", "3"))),
+    ), groups = factor(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L,
+                         2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L),
+                       labels = c("1", "2", "3"))),
 names = c("A", "B", "C", "D", "groups"), row.names = 1:24,
 class = "data.frame")
 
