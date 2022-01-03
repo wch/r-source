@@ -397,7 +397,7 @@ structure(list(Treat = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L,
-3L), .Label = c("CBT", "Cont", "FT"), class = "factor"), Prewt = c(80.7,
+3L), levels = c("CBT", "Cont", "FT"), class = "factor"), Prewt = c(80.7,
 89.4, 91.8, 74, 78.1, 88.3, 87.3, 75.1, 80.6, 78.4, 77.6, 88.7,
 81.3, 78.1, 70.5, 77.3, 85.2, 86, 84.1, 79.7, 85.5, 84.4, 79.6,
 77.5, 72.3, 89, 80.5, 84.9, 81.5, 82.6, 79.9, 88.7, 94.9, 76.3,
@@ -411,7 +411,7 @@ structure(list(Treat = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
 95.3, 82.4, 72.5, 90.9, 71.3, 85.4, 81.6, 89.1, 83.9, 82.7, 75.7,
 82.6, 100.4, 85.2, 83.6, 84.6, 96.2, 86.7, 95.2, 94.3, 91.5,
 91.9, 100.3, 76.7, 76.8, 101.6, 94.9, 75.2, 77.8, 95.5, 90.7,
-92.5, 93.8, 91.7, 98)), .Names = c("Treat", "Prewt", "Postwt"
+92.5, 93.8, 91.7, 98)), names = c("Treat", "Prewt", "Postwt"
 ), class = "data.frame", row.names = 1:72)
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
 	    family = gaussian, data = anorexia)
@@ -1403,7 +1403,7 @@ persp(1:2, 1:2, matrix(1:4, 2), xlab=1)
 ## PR#1244 bug in det using method="qr"
 ## method argument is no longer used in det
 #m2 <- structure(c(9822616000, 3841723000, 79790.09, 3841723000, 1502536000,
-#		  31251.82, 79790.09, 31251.82, 64156419.36), .Dim = c(3, 3))
+#		  31251.82, 79790.09, 31251.82, 64156419.36), dim = c(3, 3))
 #(d1 <- det(m2, method="eigenvalues"))
 #(d2 <- det(m2, method="qr"))
 #stopifnot(d2 == 0) ## 1.4.1 gave 9.331893e+19
@@ -1686,16 +1686,16 @@ stopifnot(identical(x, unlist(as.list(x))))
 AA <- structure(list(Y2 = c(10, 9, 0, 0, 5, 6, 0, 0, 8, 9, 0, 0, 4,
 4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = structure(c(1L, 1L,
 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 3L,
-3L, 3L, 3L, 3L, 3L, 3L), .Label = c("1", "2", "3"), class = "factor"),
+3L, 3L, 3L, 3L, 3L, 3L), levels = c("1", "2", "3"), class = "factor"),
     AAAAAAAA = structure(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L,
     1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L
-    ), .Label = c("E1", "E2"), class = "factor"), B2 = structure(c(1L,
+    ), levels = c("E1", "E2"), class = "factor"), B2 = structure(c(1L,
     1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L,
-    1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L), .Label = c("Red", "Unred"
+    1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L), levels = c("Red", "Unred"
     ), class = "factor"), C2 = structure(c(1L, 2L, 1L, 2L, 1L,
     2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L,
-    1L, 2L, 1L, 2L), .Label = c("Agent", "Patient"), class = "factor")),
-    .Names = c("Y2", "P2", "AAAAAAAA", "B2", "C2"),
+    1L, 2L, 1L, 2L), levels = c("Agent", "Patient"), class = "factor")),
+    names = c("Y2", "P2", "AAAAAAAA", "B2", "C2"),
     class = "data.frame", row.names = 1:24)
 AK2anova.out <-
     aov(Y2 ~ AAAAAAAA * B2 * C2 +
@@ -3178,10 +3178,10 @@ hist(log(-5:100), plot = FALSE)
 
 
 ## merge problem with names/not in rbind.data.frame
-x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), .Dim = 2:3,
-               .Dimnames = list(c("1", "2"), c("P", "V", "2")))
-y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), .Dim = 2:3,
-               .Dimnames = list(c("1", "2"), c("P", "V", "1")))
+x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), dim = 2:3,
+               dimnames = list(c("1", "2"), c("P", "V", "2")))
+y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), dim = 2:3,
+               dimnames = list(c("1", "2"), c("P", "V", "1")))
 merge(x, y, all.y = TRUE)
 ## failed for a while in pre-2.0.0
 
@@ -3789,8 +3789,8 @@ z
 ## summary.matrix failed on some classed objects
 surv <- structure(c(2.06, 2.13, 0.09, 0.27, 1, 0.36, 3.04, 0.67, 0.35,
                     0.24, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0),
-                  .Dim = c(10L, 2L),
-                  .Dimnames = list(NULL, c("time", "status")),
+                  dim = c(10L, 2L),
+                  dimnames = list(NULL, c("time", "status")),
                   type = "right", class = "Surv")
 summary(surv)
 ## Had infinite recursion (sometimes segfault) on 2.2.0.
@@ -4564,7 +4564,7 @@ prod(z)
 
 ## problems with 0-row data frames created by read.table
 x <- structure(list(one = NULL, two = NULL, three = NULL),
-               .Names = c("one", "two", "three"), class = "data.frame")
+               names = c("one", "two", "three"), class = "data.frame")
 y <- data.frame(one=1,two=2,three=3)
 (z <- rbind(x,y))
 stopifnot(dim(z) == c(1, 3))
@@ -4830,7 +4830,7 @@ stopifnot(identical(sapply(z, class), list(groups=class(f2), x="integer")),
 f <- function() NULL
 g <- alist(a=, b=4, c=)
 formals(f) <- g
-# identical(formals(f), g) is false as g has .Names attribute
+# identical(formals(f), g) is false as g has names attribute
 stopifnot(is.null(body(f)), identical(names(formals(f)), names(g)))
 ## was function(a, b=4)  before 2.6.0
 
