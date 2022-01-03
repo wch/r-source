@@ -1,15 +1,15 @@
 % File src/library/stats/man/lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm}
-\alias{lm}
-%\alias{print.lm}
-\concept{regression}
 \title{Fitting Linear Models}
+\alias{lm}
+\alias{print.lm}
+\concept{regression}
 \description{
-  \code{lm} is used to fit linear models.
+  \code{lm} is used to fit linear models, including multivariate ones.
   It can be used to carry out regression,
   single stratum analysis of variance and
   analysis of covariance (although \code{\link{aov}} may provide a more
@@ -19,6 +19,8 @@
 lm(formula, data, subset, weights, na.action,
    method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
    singular.ok = TRUE, contrasts = NULL, offset, \dots)
+
+\S3method{print}{lm}(x, digits = max(3L, getOption("digits") - 3L), \dots)
 }
 \arguments{
   \item{formula}{an object of class \code{"\link{formula}"} (or one that
@@ -70,8 +72,12 @@ lm(formula, data, subset, weights, na.action,
     included in the formula instead or as well, and if more than one are
     specified their sum is used.  See \code{\link{model.offset}}.}
 
-  \item{\dots}{additional arguments to be passed to the low level
+  \item{\dots}{For \code{lm()}: additional arguments to be passed to the low level
     regression fitting functions (see below).}
+  %% print.lm():
+  \item{digits}{the number of \emph{significant} digits to be
+    passed to \code{\link{format}(\link{coef}(x), .)} when
+    \code{\link{print}()}ing.}
 }
 \details{
   Models for \code{lm} are specified symbolically.  A typical model has
@@ -90,7 +96,8 @@ lm(formula, data, subset, weights, na.action,
   subtracted from the response.
 
   If \code{response} is a matrix a linear model is fitted separately by
-  least-squares to each column of the matrix.
+  least-squares to each column of the matrix and the result inherits from
+  \code{"mlm"} (\dQuote{multivariate linear model}).
 
   See \code{\link{model.matrix}} for some further details.  The terms in
   the formula will be re-ordered so that main effects come first,
@@ -125,7 +132,7 @@ lm(formula, data, subset, weights, na.action,
 }
 \value{
   \code{lm} returns an object of \code{\link{class}} \code{"lm"} or for
-  multiple responses of class \code{c("mlm", "lm")}.
+  multivariate (\sQuote{multiple}) responses of class \code{c("mlm", "lm")}.
 
   The functions \code{summary} and \code{\link{anova}} are used to
   obtain and print a summary and analysis of variance table of the
@@ -177,7 +184,7 @@ lm(formula, data, subset, weights, na.action,
   values are time series.
 }
 \seealso{
-  \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for
+  \code{\link{summary.lm}} for more detailed summaries and \code{\link{anova.lm}} for
   the ANOVA table; \code{\link{aov}} for a different interface.
 
   The generic functions \code{\link{coef}}, \code{\link{effects}},
