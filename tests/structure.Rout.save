@@ -1,0 +1,91 @@
+
+R Under development (unstable) (2022-01-01 r81419) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin21.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### Tests of structure() and deparsing.
+> 
+> ## deparsing has always treated some attributes specially (apparently
+> ## to allow inter-operability with S).
+> ## The mapping is
+> ## as printed: "dim", "dimnames", "names", "tsp", "levels"
+> ## deparsed: ".Dim", ".Dimnames", ".Names", ".Tsp", ".Label"
+> ## structure() remaps to the printed form.
+> 
+> X <- matrix(1:4, 2, 2, dimnames=list(c("A", "B"), 1:2))
+> names(attributes(X))
+[1] "dim"      "dimnames"
+> cat(deparse(X), "\n")
+structure(1:4, .Dim = c(2L, 2L), .Dimnames = list(c("A", "B"),      c("1", "2"))) 
+> Y <- structure(1:4, .Dim = c(2L, 2L),
++                .Dimnames = list(c("A", "B"), c("1", "2")))
+> identical(X, Y)
+[1] TRUE
+> 
+> z <- ts(1:10, frequency = 4, start = c(1959, 2))
+> attributes(z)
+$tsp
+[1] 1959.25 1961.50    4.00
+
+$class
+[1] "ts"
+
+> cat(deparse(z), "\n")
+structure(1:10, .Tsp = c(1959.25, 1961.5, 4), class = "ts") 
+> z2 <- structure(1:10, .Tsp = c(1959.25, 1961.5, 4), class = "ts")
+> identical(z, z2)
+[1] TRUE
+> 
+> ## levels <-> .Labek is most relevant to factors, but is always remapped.
+> x <- 1:3
+> attr(x, "levels") <- letters[x]
+> cat(deparse(x), "\n")
+structure(1:3, .Label = c("a", "b", "c")) 
+> y <- structure(1:3, .Label = c("a", "b", "c"))
+> identical(x, y)
+[1] TRUE
+> 
+> 
+> ## Factors were long depared with double (rather than integer codes).
+> ## As from R 2.5.0 parsing such a deparse will given an error, so
+> ## structure() coerces the codes to an integer vector.
+> ## Example from Puromycin.R
+> state <- structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++                      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
++                    .Label = c("treated", "untreated"), class = "factor")
+> typeof(state)
+[1] "integer"
+> storage.mode(state)
+[1] "integer"
+> attributes(state)
+$levels
+[1] "treated"   "untreated"
+
+$class
+[1] "factor"
+
+> cat(deparse(state))
+structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L,  2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), .Label = c("treated",  "untreated"), class = "factor")> 
+> state2 <- structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
++                       2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L),
++                     levels = c("treated", "untreated"), class = "factor")
+> identical(state,state2)
+[1] TRUE
+> 
+> proc.time()
+   user  system elapsed 
+  0.070   0.020   0.094 
