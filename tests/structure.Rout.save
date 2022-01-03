@@ -86,6 +86,3 @@ structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L,  2L, 2L, 2L, 2L,
 > identical(state,state2)
 [1] TRUE
 > 
-> proc.time()
-   user  system elapsed 
-  0.070   0.020   0.094 

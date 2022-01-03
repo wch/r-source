@@ -219,8 +219,8 @@ op <- options(warn = 2)# no warnings allowed
 (tN. <- table(fN, exclude = c("B",NA))) ## had extraneous "B" and NA
 stopifnot(exprs = {
     identical(c(tN1), c(`NA`=1L, `NaN`=1L, NbN=1L))
-    identical(c(tN),  structure(2:1, .Names = c("A", NA)))
-    identical(c(tN.), structure(2L,  .Names = "A"))
+    identical(c(tN),  structure(2:1, names = c("A", NA)))
+    identical(c(tN.), structure(2L,  names = "A"))
 })
 ## both failed in R <= 3.3.1
 stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
@@ -230,7 +230,7 @@ stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
 x <- factor(c(1, 2, NA, NA), exclude = NULL) ; is.na(x)[2] <- TRUE
 x # << two "different" NA's (in codes | w/ level) looking the same in print()
 stopifnot(identical(x, structure(as.integer(c(1, NA, 3, 3)),
-				 .Label = c("1", "2", NA), class = "factor")))
+				 levels = c("1", "2", NA), class = "factor")))
 (txx <- table(x, exclude = NULL))
 stopifnot(identical(txx, table(x, useNA = "ifany")),
 	  identical(as.vector(txx), c(1:0, 3L)))
@@ -301,7 +301,7 @@ stopifnot(exprs = {
     identical(c("2" = 1L), c(table(1:2, exclude=1) -> t12.1))
     identical(t12.1, table(1:2, exclude=1, useNA= "no"))
     identical(t12.1, table(1:2, exclude=1, useNA= "ifany"))
-    identical(structure(1:0, .Names = c("2", NA)),
+    identical(structure(1:0, names = c("2", NA)),
               c(     table(1:2, exclude=1, useNA= "always")))
 })
 options(op) # (revert to default)
@@ -953,9 +953,9 @@ stopifnot(exprs = { ## all these have been TRUE "forever" :
     identical(capture.output(ff), c("[1] <NA> my   <NA>",
 				    "Levels: my <NA>"))
     identical(factor(ff),
-	      structure(c(NA, 1L, NA), .Label = "my", class = "factor"))
+	      structure(c(NA, 1L, NA), levels = "my", class = "factor"))
     identical(factor(ff, exclude=NULL),
-	      structure(c(2L, 1L, 2L), .Label = c("my", NA), class = "factor"))
+	      structure(c(2L, 1L, 2L), levels = c("my", NA), class = "factor"))
     identical(as.integer(       ff),                c(2:1,NA))
     identical(as.integer(factor(ff, exclude=NULL)), c(2:1,2L))
 })
@@ -1686,9 +1686,9 @@ stopifnot(exprs = {
 ## scale(*, <non-numeric>)
 if(requireNamespace('Matrix', lib.loc=.Library, quietly = TRUE)) {
     de <- data.frame(Type = structure(c(1L, 1L, 4L, 1L, 4L, 2L, 2L, 2L, 4L, 1L),
-				      .Label = paste0("T", 1:4), class = "factor"),
+				      levels = paste0("T", 1:4), class = "factor"),
 		     Subj = structure(c(9L, 5L, 8L, 3L, 3L, 4L, 3L, 6L, 6L, 1L),
-				      .Label = as.character(1:9), class = "factor"))
+				      levels = as.character(1:9), class = "factor"))
     show(SM <- xtabs(~ Type + Subj, data = de, sparse=TRUE))
     stopifnot(exprs = {
 	inherits(SM, "sparseMatrix")
@@ -3523,7 +3523,7 @@ x <- ts(x, start = 2.5, end = 107.5, frequency = 0.2)
 (wx <- window(x, start = 20, end = 30, extend = TRUE))
 stopifnot(exprs = {
     all.equal(attributes(x),         list(tsp = c(2.5, 107.5, 0.2), class = "ts"))
-    all.equal(wx, structure(c(0.5, 0.6), .Tsp = c(22.5, 27.5, 0.2), class = "ts"))
+    all.equal(wx, structure(c(0.5, 0.6), tsp = c(22.5, 27.5, 0.2), class = "ts"))
 })
 assertErrV(cbind(ts(1:2, start = 0.5, end = 1.5),
                  ts(1:2, start = 0  , end = 1)))
@@ -3532,7 +3532,7 @@ assertErrV(cbind(ts(1:2, start = 0.5, end = 1.5),
 ## -- 1 --
 frYr <- 365.25
 tt <- (0:3652)/frYr
-timeO <- structure(tt, .Tsp = c(1981, 1990.998631, frYr), class = "ts")
+timeO <- structure(tt, tsp = c(1981, 1990.998631, frYr), class = "ts")
 ttt <- time(timeO) # Error "'end' must be a whole number of cycles after 'start'"
 ## -- 2 --
 set.seed(7); tt <- ts(rnorm(60), frequency=12)
@@ -3545,7 +3545,7 @@ stopifnot(exprs = {
     length(dt2) == length(tt) - 2L
     all.equal(6*tsp(dt2), c(7, 35.5, 72))
     all.equal(dt2[1:2], c(3.986498, -0.22047961))
-    all.equal(tsD, structure(1:49, .Tsp = c(18242, 18246, 12), class = "ts"))
+    all.equal(tsD, structure(1:49, tsp = c(18242, 18246, 12), class = "ts"))
 })
 ## failed for a while in R-devel 2019-12-*
 

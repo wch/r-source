@@ -1,4 +1,4 @@
-.hcl_colors_parameters <- as.data.frame(rbind(structure(numeric(0L), .Dim = c(0L, 16L), .Dimnames = list(NULL,
+.hcl_colors_parameters <- as.data.frame(rbind(structure(numeric(0L), dim = c(0L, 16L), dimnames = list(NULL,
                       c("type", "h1", "h2", "h3", "c1", "c2", "c3", "l1", "l2", "l3", "p1", "p2", "p3", "p4", "cmax1", "cmax2"))),
     ##  1 : qualitative
     "Pastel 1"      = c(     1,    0,   NA,   NA,   35,   NA,   NA,   85,   NA,   NA,   NA,   NA,   NA,   NA,      NA,      NA),

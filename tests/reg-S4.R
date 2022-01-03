@@ -555,12 +555,12 @@ problNames <- c("names", "dimnames", "row.names",
 myTry <- function(expr, ...) tryCatch(expr, error = function(e) e)
 tstSlotname <- function(nm) {
     r <- myTry(setClass("foo", representation =
-                        structure(list("character"), .Names = nm)))
+                        structure(list("character"), names = nm)))
     if(is(r, "error")) return(r$message)
     ## else
     ch <- LETTERS[1:5]
     ## instead of  new("foo", <...> = ch):
-    x <- myTry(do.call(new, structure(list("foo", ch), .Names=c("", nm))))
+    x <- myTry(do.call(new, structure(list("foo", ch), names=c("", nm))))
     if(is(x, "error")) return(x$message)
     y <- myTry(new("foo"));		 if(is(y, "error")) return(y$message)
     r <- myTry(capture.output(show(x))); if(is(r, "error")) return(r$message)
