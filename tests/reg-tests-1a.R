@@ -392,12 +392,12 @@ stopifnot(Eq(coef(g1), coef(g2)),
 	  Eq(resid(g1), resid(g2)))
 ## from logLik.glm.Rd
 anorexia <-
-structure(list(Treat = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
+structure(list(Treat = factor(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L,
-3L), levels = c("CBT", "Cont", "FT"), class = "factor"), Prewt = c(80.7,
+3L), labels = c("CBT", "Cont", "FT")), Prewt = c(80.7,
 89.4, 91.8, 74, 78.1, 88.3, 87.3, 75.1, 80.6, 78.4, 77.6, 88.7,
 81.3, 78.1, 70.5, 77.3, 85.2, 86, 84.1, 79.7, 85.5, 84.4, 79.6,
 77.5, 72.3, 89, 80.5, 84.9, 81.5, 82.6, 79.9, 88.7, 94.9, 76.3,
@@ -1684,17 +1684,17 @@ stopifnot(identical(x, unlist(as.list(x))))
 ## test of long Error expression in aov(): PR#1315 and later,
 ## and also a cross-check of deparse(, cutoff = 500)
 AA <- structure(list(Y2 = c(10, 9, 0, 0, 5, 6, 0, 0, 8, 9, 0, 0, 4,
-4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = structure(c(1L, 1L,
+4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = factor(c(1L, 1L,
 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 3L,
-3L, 3L, 3L, 3L, 3L, 3L), levels = c("1", "2", "3"), class = "factor"),
-    AAAAAAAA = structure(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L,
+3L, 3L, 3L, 3L, 3L, 3L), labels = c("1", "2", "3")),
+    AAAAAAAA = factor(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L,
     1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L
-    ), levels = c("E1", "E2"), class = "factor"), B2 = structure(c(1L,
+    ), labels = c("E1", "E2")), B2 = factor(c(1L,
     1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L,
-    1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L), levels = c("Red", "Unred"
-    ), class = "factor"), C2 = structure(c(1L, 2L, 1L, 2L, 1L,
+    1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L), labels = c("Red", "Unred"
+    )), C2 = factor(c(1L, 2L, 1L, 2L, 1L,
     2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L,
-    1L, 2L, 1L, 2L), levels = c("Agent", "Patient"), class = "factor")),
+    1L, 2L, 1L, 2L), labels = c("Agent", "Patient"))),
     names = c("Y2", "P2", "AAAAAAAA", "B2", "C2"),
     class = "data.frame", row.names = 1:24)
 AK2anova.out <-
