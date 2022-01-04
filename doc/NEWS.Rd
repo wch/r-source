@@ -258,6 +258,11 @@
       open the \R installation directory in Explorer (\PR{17842}).
 
       \item \code{libcurl} is now required for building from source.
+
+      \item Clipboard connection now works also with text in other than the
+      current native encoding (\PR{18267}, with Hiroaki Yutani).  Text is
+      always pasted in UTF16-LE to the clipboard and the \code{encoding}
+      argument is ignored. 
     }
   }
 

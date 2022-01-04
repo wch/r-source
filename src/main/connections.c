@@ -2372,20 +2372,29 @@ static Rboolean clp_open(Rconnection con)
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     this->pos = 0;
+    if (strlen(con->encname) > 0 && strcmp(con->encname, "native.enc"))
+	/* R <= 4.1 allowed writing data to clipboard in given encoding,
+	   but did not specify that encoding using CF_LOCALE. Similarly, it
+	   would read data assuming a given encoding, without checking
+	   CF_LOCALE. Using CF_UNICODETEXT is simpler as it avoids the need
+	   for specifying CF_LOCALE and hence the conversion between iconv
+	   encoding names and Windows locale IDs. */
+	warning(_("argument '%s' will be ignored"), "encoding");
     if(con->canread) {
 	/* copy the clipboard contents now */
 #ifdef Win32
 	HGLOBAL hglb;
-	char *pc;
+	wchar_t *wpc;
 	if(GA_clipboardhastext() &&
 	   OpenClipboard(NULL) &&
-	   (hglb = GetClipboardData(CF_TEXT)) &&
-	   (pc = (char *)GlobalLock(hglb))) {
-	    int len = (int) strlen(pc);  // will be fairly small
+	   (hglb = GetClipboardData(CF_UNICODETEXT)) &&
+	   (wpc = (wchar_t *)GlobalLock(hglb))) {
+	    
+	    int len = (int)wcslen(wpc) * sizeof(wchar_t);
 	    this->buff = (char *)malloc(len + 1);
 	    this->last = this->len = len;
 	    if(this->buff) {
-		strcpy(this->buff, pc);
+		memcpy(this->buff, wpc, len + 1);
 		GlobalUnlock(hglb);
 		CloseClipboard();
 	    } else {
@@ -2416,6 +2425,8 @@ static Rboolean clp_open(Rconnection con)
     }
     con->text = TRUE;
     /* Not calling set_buffer(con) as the data is already buffered */
+    strncpy(con->encname, "UTF-16LE", 100);
+    con->encname[100 - 1] = '\0';
     set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;
@@ -2428,19 +2439,20 @@ static void clp_writeout(Rconnection con)
 #ifdef Win32
     Rclpconn this = con->private;
 
+    /* see comment on CF_UNICODETEXT/CF_TEXT in clp_open */
     HGLOBAL hglb;
-    char *s, *p;
-    if ( (hglb = GlobalAlloc(GHND, this->len)) &&
-	 (s = (char *)GlobalLock(hglb)) ) {
-	p = this->buff;
-	while(p < this->buff + this->pos) *s++ = *p++;
-	*s = '\0';
+    wchar_t *s;
+    int wlen = (this->last + sizeof(wchar_t) - 1) / sizeof(wchar_t);
+    if ( (hglb = GlobalAlloc(GHND, (wlen + 1) * sizeof(wchar_t))) &&
+	 (s = (wchar_t *)GlobalLock(hglb)) ) {
+	memcpy(s, this->buff, wlen * sizeof(wchar_t));
+	s[wlen] = L'\0';
 	GlobalUnlock(hglb);
 	if (!OpenClipboard(NULL) || !EmptyClipboard()) {
 	    warning(_("unable to open the clipboard"));
 	    GlobalFree(hglb);
 	} else {
-	    if(!SetClipboardData(CF_TEXT, hglb)) {
+	    if(!SetClipboardData(CF_UNICODETEXT, hglb)) {
 		warning(_("unable to write to the clipboard"));
 		GlobalFree(hglb);
 	    }
