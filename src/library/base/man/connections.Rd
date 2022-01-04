@@ -549,8 +549,8 @@ socketTimeout(socket, timeout = -1)
   on the text to be written to the clipboard.  This can be raised by
   using e.g.\sspace{}\code{file("clipboard-128")} to give 128Kb.
 
-  The clipboard works in Unicode wide characters, so encodings might
-  not work as one might expect.
+  The Windows clipboard is always accessed in Unicode wide characters
+  and the \code{encoding} argument is ignored (with a warning).
 #endif
 #ifdef unix
   Unix users wishing to \emph{write} to one of the X11 selections may be
