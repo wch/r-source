@@ -2532,29 +2532,44 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     Rclpconn this = con->private;
-    int i, len = (int)(size * nitems), used = 0;
-    char c, *p = (char *) ptr, *q = this->buff + this->pos;
+    int len = (int)(size * nitems), used = 0;
 
     if(!con->canwrite)
 	error(_("clipboard connection is open for reading only"));
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
 
-    for(i = 0; i < len; i++) {
-	if(this->pos >= this->len) break;
-	c = *p++;
 #ifdef Win32
-    /* clipboard requires CRLF termination */
-	if(c == '\n') {
-	    *q++ = '\r';
-	    this->pos++;
+    /* clipboard requires CRLF termination, copy by wchar_t */
+    int i;
+    wchar_t wc, *p = (wchar_t *) ptr, *q = (wchar_t *) this->buff + this->pos;
+
+    for(i = 0; i < len; i += sizeof(wchar_t)) {
+	if(this->pos >= this->len) break;
+	wc = *p++;
+	if(wc == L'\n') {
+	    *q++ = L'\r';
+	    this->pos += sizeof(wchar_t);
 	    if(this->pos >= this->len) break;
 	}
-#endif
-	*q++ = c;
-	this->pos++;
-	used++;
+	*q++ = wc;
+	this->pos += sizeof(wchar_t);
+	used += sizeof(wchar_t);
     }
+#else
+    /* NOTE: not reachable as clipboard is not writeable on Unix */
+    /* copy byte-by-byte */
+    int space = this->len - this->pos;
+
+    if (space < len) {
+	truncated = 1;
+	used = space;
+    } else
+	used = len;
+    memcpy(this->buff + this->pos, ptr, used);
+    this->pos += used;
+#endif
+
     if (used < len && !this->warned) {
 	warning(_("clipboard buffer is full and output lost"));
 	this->warned = TRUE;
