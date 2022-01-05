@@ -2425,8 +2425,10 @@ static Rboolean clp_open(Rconnection con)
     }
     con->text = TRUE;
     /* Not calling set_buffer(con) as the data is already buffered */
+#ifdef Win32
     strncpy(con->encname, "UTF-16LE", 100);
     con->encname[100 - 1] = '\0';
+#endif
     set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;
