@@ -162,18 +162,17 @@
 #   SSE2 (seen on 32-bit builds with forced SSE2 using -mfpmath=sse -msse2,
 #   probably not needed on 64-bit builds)
 #
-# -fno-reorder-blocks-and-partition works as a workaround for invalid unwind
-#   information, otherwise causing crashes on long jumps; however, it
-#   produces large amount of spurious notes with GCC optimization pragmas
-#   due to a GCC bug
+# -fexceptions is used as a workaround for GCC 10.3.0 bug causing crashes in
+#   long jumps due to invalid unwind tables. This is the only reason for
+#   this option as R does not use structured exception handling from C.
+#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103274
+#   
+#   -fno-reorder-blocks-and-partition was not a suitable workaround because
+#   of https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103465
 #
-# -fexceptions is an alternative workaround for invalid unwind information,
-#   though produces larger code
-#
-# The underlying bug in GCC requiring -fno-reorder-blocks-and-partition or
-# -fexceptions has been fixed in GCC 10/11/12, so -fexceptions is no longer
-# strictly needed (the recommended gcc 10.3 toolchain already has that
-# bugfix).
+#   (reorder-blocks-and-partition has been fixed in GCC, so -fexceptions
+#   should no longer be needed for newer versions of GCC and the recommended
+#   gcc 10.3 toolchain)
 #
 # See MkRules.rules where -fno-optimize-sibling-calls is optionally added to
 # work around issues with gfortran/legacy calls from C.
