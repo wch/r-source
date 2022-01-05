@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -545,7 +545,7 @@ socketTimeout(socket, timeout = -1)
 
 #ifdef windows
   When writing to the clipboard, the output is copied to the clipboard
-  only when the connection is closed or flushed.  There is a 32Kb limit
+  only when the connection is closed or flushed.  There is a 64Kb limit
   on the text to be written to the clipboard.  This can be raised by
   using e.g.\sspace{}\code{file("clipboard-128")} to give 128Kb.
 
