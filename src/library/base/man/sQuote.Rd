@@ -1,6 +1,6 @@
 % File src/library/base/man/sQuote.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sQuote}
@@ -69,7 +69,11 @@ dQuote(x, q = getOption("useFancyQuotes"))
   codepage, which in most locales uses a different encoding from
   Windows.  Further, if the codepage is changed (with \code{chcp.exe},
   e.g.\sspace{}to 1252 in a Western European language), the default raster fonts
-  do not support the directional quotes.
+  do not support the directional quotes. From R 4.2, UTF-8 is the
+  native encoding on recent Windows systems and \code{Rterm} would
+  automatically switch the console codepage to 65001 (UTF-8), however, it is
+  still not clear whether the default fonts on all systems would support the
+  directional quotes.
 
   To work around this, the default for \code{options("useFancyQuotes")}
   is \code{FALSE} on Windows except for the \code{Rgui} console.  There

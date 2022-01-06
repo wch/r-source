@@ -1,6 +1,6 @@
 % File src/library/base/man/deparse.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparse}
@@ -79,6 +79,12 @@ deparse1(expr, collapse = " ", width.cutoff = 500L, ...)
   graphics display list recorded by \code{\link{recordPlot}} is not
   intended to be deparsed and \code{.Internal} calls will be shown as
   primitive calls.
+
+  Prior to \R 4.2.0, attributes named \code{dim}, \code{dimnames},
+  \code{levels}, \code{names} and \code{tsp} were deparsed to
+  \code{.Dim}, \code{.Dimnames}, \code{.Label}, \code{.Names} and
+  \code{.Tsp} as part of calls to \code{\link{structure}}, apparently
+  for historical compatibility with S.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -775,11 +775,10 @@ more reliable with these OSes (but still not 100% correct).
 @section Quotes don't come out right on the console/terminal/pager.
 
 R 4.2 uses UTF-8 as the native encoding on recent Windows (see Q2.2) and
-this should make also previously reported problem problems disappear.  With
+this should make also this previously reported problem disappear.  With
 this feature, R automatically uses the 65001 code page (UTF-8).  When using
 @code{RTerm} from the @code{Windows Command Prompt} (@file{cmd.exe}) or
-@code{Power Shell}, one may have to switch the code page of the terminal
-with @command{chcp 65001} and select a suitable font that has glyphs for the
+@code{Power Shell}, one may have to select a suitable font that has glyphs for the
 characters intended, such as @samp{NSimFun} for Asian language).
 
 R may make use of directional quotes that were not always rendered
@@ -796,7 +795,9 @@ encodings: this can be changed via @command{chcp}, with @command{chcp
 1252} being appropriate for Western European (including English)
 locales.  The other is that the default raster fonts only include
 directional single quotes and not directional double quotes (which will
-probably be rendered as a filled rectangle).
+probably be rendered as a filled rectangle). In R 4.2
+on recent versions of Windows where UTF-8 is the native encoding,
+@command{Rterm} will automatically switch the console codepage to UTF-8.
 
 Directional quotes will also be used in text help which is normally
 displayed in R's internal pager: these may not be rendered correctly in
@@ -1021,9 +1022,7 @@ R 4.2 on recent versions of Windows (see Q2.2) uses UTF-8 as the native
 encoding.  It is thus possible to use characters outside of the system
 locale code page in R, including the command-line front-end
 @command{Rterm.exe} (and @command{Rgui.exe}, where limited support has
-existed before). For use in @command{RTerm}, one needs to set up the
-terminal (e.g. @file{cmd.exe} or @code{PowerShell}) itself to use UTF-8,
-which can be done via @command{chcp 65001}, and to choose suitable fonts
+existed before). For use in @command{RTerm}, one needs to choose suitable fonts
 which have the required glyphs, such as @code{NSimFun} for Asian languages.
 Use @code{l10n_info()} from R to check whether R is really running in UTF-8
 as native encoding.
@@ -1060,7 +1059,9 @@ GB2312).
 When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. @code{Lucida Console} or
 @code{Consolas}, not the OEM raster fonts) and a suitable codepage
-(which for the Windows Cmd shell can be done using @command{chcp}).
+(which for the Windows Cmd shell can be done using @command{chcp}). In R 4.2
+on recent versions of Windows where UTF-8 is the native encoding,
+@command{Rterm} will automatically switch the console codepage to UTF-8.
 
 @node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
 @section I selected English for installation but R runs in Chinese.

@@ -30,32 +30,6 @@
 #include <errno.h>
 #include <setjmp.h>
 
-/* 
-  R Specific.  Workaround which disables unwinding individual frames (SEH)
-  on Windows, to avoid problems (a segfault observed with GCC10 on Windows
-  10, infinite recursion observed in Windows 10 pre-release 20197).  Frame
-  argument of mingw_getsp() seems to be working as well, but NULL is
-  expected to have more stable behavior as Windows evolves.  This argument
-  is unfortunately undocumented by Microsoft.  Disabling unwinding provides
-  the same behavior as on Linux, which may be a good thing for testing (C++
-  destructors not called on long jumps), also it could be faster.
-
-  The workaround is currently disabled, as it turns out the original cause
-  of the crashes are incorrect unwind tables generated due to a GCC bug
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103274. Currently, the work-
-  around is thus to use -fno-reorder-blocks-and-partition
-
-#if defined(__MINGW64__)
-  #undef setjmp
-  #ifdef _UCRT
-    #define setjmp(x) __intrinsic_setjmpex((x), NULL)
-  #else
-    #define setjmp(x) _setjmp((x), NULL)
-  #endif
-#endif
-
-*/
-
 #define	SIGHUP	1	/* hangup */
 #define	SIGINT	2	/* interrupt */
 #define	SIGQUIT	3	/* quit */

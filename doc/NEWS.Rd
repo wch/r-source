@@ -161,7 +161,7 @@
       \code{legend()} also gains new arguments \code{title.cex} and
       \code{title.font}. Thanks to Swetlana Herbrandt.
 
-      \item Deparsing no longer remaps attribute names \samp{dim},
+      \item Deparsing no longer remaps attribute names \code{dim},
       \code{dimnames}, \code{levels}, \code{names} and \code{tsp} to
       historical S-compatible names (which \code{structure()} maps back).
     }
@@ -262,6 +262,11 @@
       open the \R installation directory in Explorer (\PR{17842}).
 
       \item \code{libcurl} is now required for building from source.
+
+      \item Clipboard connection now works also with text in other than the
+      current native encoding (\PR{18267}, with Hiroaki Yutani).  Text is
+      always pasted in UTF16-LE to the clipboard and the \code{encoding}
+      argument is ignored. 
     }
   }
 

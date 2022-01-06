@@ -1,6 +1,6 @@
 % File src/library/utils/man/clipboard.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{clipboard}
@@ -56,11 +56,16 @@ writeClipboard(str, format = 1)
   formats, \code{raw = FALSE} (the default) for text formats.  The
   current codepage is used to convert text to Unicode text, and
   information on that is contained in the \code{CF_LOCALE} format.
-  (Take care if you are running R in a different locale from Windows.)
+  (Take care if you are running R in a different locale from Windows. It is
+  recommended to read as Unicode text, so that Windows does the conversion
+  based on \code{CF_LOCALE}, if available.) 
 
   The \code{writeClipboard} function will write a character vector as
   text or Unicode text with standard CR-LF line terminators.  It will
-  copy a raw vector directly to the clipboard without any changes.
+  copy a raw vector directly to the clipboard without any changes. It is
+  recommended to use Unicode text instead of text to avoid interoperability
+  problems. (Note that \R 4.2 and newer on recent systems uses UTF-8 as the
+  native encoding but the machine's locale uses a different encoding.)
 }
 \value{
   For \code{getClipboardFormats}, a character or integer vector of
