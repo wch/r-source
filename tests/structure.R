@@ -7,6 +7,8 @@
 ## deparsed: ".Dim", ".Dimnames", ".Names", ".Tsp", ".Label"
 ## structure() remaps to the printed form.
 
+## The remapping in deparse will be removed in R 4.2.0.
+
 X <- matrix(1:4, 2, 2, dimnames=list(c("A", "B"), 1:2))
 names(attributes(X))
 cat(deparse(X), "\n")
@@ -28,10 +30,10 @@ y <- structure(1:3, .Label = c("a", "b", "c"))
 identical(x, y)
 
 
-## Factors were long depared with double (rather than integer codes).
+## Factors were long deparsed with double (rather than integer codes).
 ## As from R 2.5.0 parsing such a deparse will given an error, so
 ## structure() coerces the codes to an integer vector.
-## Example from Puromycin.R
+## Example from an earlier version of Puromycin.R
 state <- structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
                    .Label = c("treated", "untreated"), class = "factor")
