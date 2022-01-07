@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/legend.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,8 +30,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
          seg.len = 2)
 {
     ## the 2nd arg may really be `legend'
-    if(missing(legend) && !missing(y) &&
-       (is.character(y) || is.expression(y))) {
+    if(missing(legend) && !missing(y) && (is.character(y) || is.expression(y))) {
 	legend <- y
 	y <- NULL
     }
@@ -67,7 +66,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     reverse.yaxis <- par("yaxp")[1] > par("yaxp")[2]    
     xlog <- par("xlog")
     ylog <- par("ylog")
-    
+
     ## recycle
     cex <- rep(cex, length.out=n.leg)
     x.intersp <- rep(x.intersp, length.out=n.leg)
@@ -97,17 +96,15 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     colwise <- function(x, n, ncol, n.legpercol, fun, reverse=FALSE){
 	## needed for legend with >1 columns
 	xmat <- matrix(c(rep(x, length.out=n), rep(0L, n.legpercol * ncol - n)), ncol=ncol)
-	res <- apply(xmat, 2, function(x) fun(x))
+	res <- apply(xmat, 2, fun)
 	res[res == 0L] <- max(res) # space for empty columns
-	if(reverse) res <- -res
-	return(res)
+	if(reverse) -res else res
     }
     rowwise <- function(x, n, ncol, n.legpercol, fun, reverse=FALSE){
 	## needed for legend with >1 rows
 	xmat <- matrix(c(rep(x, length.out=n), rep(0L, n.legpercol * ncol - n)), ncol=ncol)
-	res <- apply(xmat, 1, function(x) fun(x))
-	if(reverse) res <- -res
-	return(res)
+	res <- apply(xmat, 1, fun)
+	if(reverse) -res else res
     }
     if(trace) {
 	catn <- function(...)
@@ -127,23 +124,23 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	    ncol <- n.leg
 	    1
 	} else ceiling(n.leg / ncol)
-    
-    Cex <- cex * par("cex")		# = the `effective' cex for text
+
+    Cex <- cex * par("cex") # = the `effective' cex for text
 
     ## at this point we want positive width even for reversed x axis.
     if(is.null(text.width))
-	text.width <- max(abs(mapply(strwidth, legend, cex = cex, 
-						font = text.font, MoreArgs = list(units = "user"))))
+	text.width <- max(abs(mapply(strwidth, legend, cex = cex,
+				     font = text.font, MoreArgs = list(units = "user"))))
     else if((length(text.width) > 1L && any(is.na(text.width)))  ||
             (all(!is.na(text.width)) && (!is.numeric(text.width) || any(text.width < 0))))
 	stop("'text.width' must be numeric, >= 0, or a scalar NA")
 
-	if(auto.text.width <- all(is.na(text.width))){
+    if(auto.text.width <- all(is.na(text.width))) {
 	## textwidth for each legend element
 	text.width <- abs(mapply(strwidth, legend, cex = cex, 
-						font = text.font, MoreArgs = list(units = "user")))
-    ncol <- ceiling(n.leg / n.legpercol) # adjust ncol to the really needed number
-	}
+				 font = text.font, MoreArgs = list(units = "user")))
+	ncol <- ceiling(n.leg / n.legpercol) # adjust ncol to the really needed number
+    }
 
     xyc <- xyinch(par("cin"), warn.log=FALSE) # [uses par("usr") and "pin"]
     xc <- Cex * xyc[1L]
@@ -155,14 +152,15 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 
     y.intersp <- rep(y.intersp, length.out=n.legpercol)
     yextra <- rowwise(yc, n=n.leg, ncol=ncol, n.legpercol=n.legpercol, 
-    				  fun=function(x) max(abs(x)), reverse = reverse.yaxis) * (y.intersp - 1)
+                      fun=function(x) max(abs(x)), reverse = reverse.yaxis) * (y.intersp - 1)
     ## watch out for reversed axis here: heights can be negative
-    ymax <- sign(yc[1]) * max(abs(yc)) * max(1, mapply(strheight, legend, cex = cex, 
-    								font = text.font, MoreArgs = list(units = "user"))/yc)
+    ymax <- sign(yc[1]) * max(abs(yc)) *
+		max(1, mapply(strheight, legend, cex = cex, font = text.font,
+			      MoreArgs = list(units = "user"))/yc)
     ychar <- yextra + ymax
     ymaxtitle <- title.cex * par("cex") * xyc[2L] * 
     	max(1, strheight(title, cex = title.cex, font = title.font, units = "user") / 
-    						(title.cex * par("cex") * xyc[2L]))
+		(title.cex * par("cex") * xyc[2L]))
     ychartitle <- yextra[1] + ymaxtitle
     if(trace) catn("  xchar=", fv(xchar), "; (yextra, ychar)=", fv(yextra,ychar))
 
@@ -212,22 +210,21 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	y <- mean(y)
 	if(missing(xjust)) xjust <- 0.5
 	if(missing(yjust)) yjust <- 0.5
-
     }
     else {## nx == 1  or  auto
 	## -- (w,h) := (width,height) of the box to draw -- computed in steps
-    yc <- rowwise(yc, n.leg, ncol, n.legpercol, 
-      			  fun = function(x) max(abs(x)), reverse = reverse.yaxis)
-    h <- sum(ychar) + yc[length(yc)] + (!is.null(title)) * ychartitle
+	yc <- rowwise(yc, n.leg, ncol, n.legpercol,
+		      fun = function(x) max(abs(x)), reverse = reverse.yaxis)
+	h <- sum(ychar) + yc[length(yc)] + (!is.null(title)) * ychartitle
 
 	## calculate optimal width per column, and other widths
-    xch1 <- colwise(xchar, n.leg, ncol, n.legpercol, 
-    				fun = function(x) max(abs(x)), reverse=reverse.xaxis)
-    x.interspCol <- colwise(x.intersp, n.leg, ncol, n.legpercol, fun = max)
-    seg.lenCol <- colwise(seg.len, n.leg, ncol, n.legpercol, fun = max)
-    text.width <- colwise(text.width, n = ifelse(auto.text.width, n.leg, ncol), ncol,
-                            n.legpercol = ifelse(auto.text.width, n.legpercol, 1),
-                            fun = function(x) max(abs(x)), reverse=reverse.xaxis)
+	xch1 <- colwise(xchar, n.leg, ncol, n.legpercol,
+			fun = function(x) max(abs(x)), reverse=reverse.xaxis)
+	x.interspCol <- colwise(x.intersp, n.leg, ncol, n.legpercol, fun = max)
+	seg.lenCol <- colwise(seg.len, n.leg, ncol, n.legpercol, fun = max)
+	text.width <- colwise(text.width, n = if(auto.text.width) n.leg else ncol, ncol,
+			      n.legpercol = if(auto.text.width) n.legpercol else 1,
+			      fun = function(x) max(abs(x)), reverse=reverse.xaxis)
 
 	w0 <- text.width + (x.interspCol + 1) * xch1
 	if(mfill)	w0 <- w0 + dx.fill
@@ -238,7 +235,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	if (!is.null(title)
 	    && (abs(tw <- strwidth(title, units="user", 
                                cex = title.cex, font = title.font) + 
-				0.5 * title.cex * par("cex") * xyc[1L])) > abs(w)) {
+			0.5 * title.cex * par("cex") * xyc[1L])) > abs(w)) {
 	    xextra <- (tw - w)/2
 	    w <- tw
 	}
@@ -275,11 +272,11 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
     xt <- left + xc + xextra +  
 	rep(c(0, cumsum(w0))[1L:ncol], each=n.legpercol, length.out=n.leg)
-	topspace <- 0.5 * ymax + (!is.null(title)) * ychartitle
+    topspace <- 0.5 * ymax + (!is.null(title)) * ychartitle
     yt <- top -	topspace - cumsum((c(0, ychar)/2 + c(ychar, 0)/2)[1L:n.legpercol])
     yt <- rep(yt, length.out=n.leg)
-    
-    if (mfill) {		#- draw filled boxes -------------
+
+    if (mfill) {			#- draw filled boxes -------------
 	if(plot) {
 	    if(!is.null(fill)) fill <- rep_len(fill, n.leg)
 	    rect2(left = xt, top=yt+ybox/2, dx = xbox, dy = ybox,
@@ -330,7 +327,6 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	if(plot)
 	    points2(x1, y1, pch = pch[ok], col = col[ok],
 		    cex = pt.cex[ok], bg = pt.bg[ok], lwd = pt.lwd[ok])
-##D	if (!merge) xt <- xt + dx.pch
     }
 
     xt <- xt + x.intersp * xc
