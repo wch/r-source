@@ -339,6 +339,29 @@ x[[i]] <- r3 <- as.raw(3); stopifnot(x[[i]] == r3)
 ## failed in R <= 0.4.3 {even with large vectors}
 
 
+## print()ing {up to max.print only!} of long vectors;
+## including named and "generic" (= list):
+stopifnot((n <- 2^31 + 352) > .Machine$integer.max)
+system.time(L <- integer(n))        #   5.8 sec {ada-20}
+system.time(LL <- vector("list", n))# ~15   sec {ada-20}
+system.time(nm <- c(LETTERS, letters, rep("xx", length(L) - 2*26)))
+## between 55 and 76 sec {ada-20, 2022-01-07}  user  system elapsed
+Ln <- L
+## FIXME? takes about 2 secs, but these are *not* seen by system.time (!!)
+system.time(names(Ln) <- nm)
+## user  system elapsed
+##    0       0       0
+op <- options(max.print = 300)
+L
+## now (after using %lld) gives
+## [ reached getOption("max.print") -- omitted 2147483700 entries ]
+## before, it gave   ..... -- omitted -2147483596 entries
+##                                   ^^^
+Ln # gave  Error: long vectors not supported yet: ...
+LL # gave  Error: long vect...
+options(op)
+
+
 
 gc() # NB the "max used"
 proc.time() # total  [ ~ 40 minutes in full case, 2019-04-12]

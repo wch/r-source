@@ -266,7 +266,7 @@
       \item Clipboard connection now works also with text in other than the
       current native encoding (\PR{18267}, with Hiroaki Yutani).  Text is
       always pasted in UTF16-LE to the clipboard and the \code{encoding}
-      argument is ignored. 
+      argument is ignored.
     }
   }
 
@@ -501,6 +501,11 @@
 
       \item \code{all.equal(*, scale = s)} now works as intended when
       \code{length(s) > 1}, thanks to Michael Chirico's \PR{18272}.
+
+      \item \code{print(x)} for long vectors \code{x} now also works for
+      named atomic vectors or lists and prints the correct number when
+      reaching the \code{getOption("max.print")} limit; partly thanks to a
+      report and proposal by Hugh Parsonage to the R-devel list.
     }
   }
 }

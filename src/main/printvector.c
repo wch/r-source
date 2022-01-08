@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2021  The R Core Team.
+ *  Copyright (C) 1998-2022  The R Core Team.
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -38,6 +38,10 @@
 #include "Print.h"
 #include <R_ext/Itermacros.h> /* for ITERATE_BY_REGION */
 
+#ifdef Win32
+#include <trioremap.h> /* for %lld */
+#endif
+
 #define DO_first_lab			\
     if (indx) {				\
 	labwidth = IndexWidth(n) + 2;	\
@@ -60,7 +64,7 @@
 /* print*Vector (* in {Real, Integer, Complex}) are exported, but no
    longer directly called by internal R sources (which now call
    print*VectorS for ALTREP support). Macros are used to prevent drift
-   between print*Vector and print*VectorS. 
+   between print*Vector and print*VectorS.
 
    printIntegerVector(INTEGER(x)) and printIntegerVector(x) must
    always give identical output, unless INTEGER(x) fails, en.g. during
@@ -68,7 +72,7 @@
 
 /* i must be defined and contain the overall position in the vector
    because DO_newline uses it
-   ENCCALL is the full invocation of Encode*() which 
+   ENCCALL is the full invocation of Encode*() which
    is passed to Rprintf
 */
 
@@ -149,7 +153,7 @@ void printIntegerVectorS(SEXP x, R_xlen_t n, int indx)
 			  i = idx + j; /* for macros */
 			  NUMVECTOR_TIGHTLOOP(EncodeInteger(px[j], w));
 		      });
-    
+
     Rprintf("\n");
 }
 
@@ -184,7 +188,7 @@ void printRealVectorS(SEXP x, R_xlen_t n, int indx)
 			  i = idx + j; /* for macros */
 			  NUMVECTOR_TIGHTLOOP(EncodeReal0(px[j], w, d, e, OutDec));
 		      });
-    
+
     Rprintf("\n");
 }
 
@@ -220,7 +224,7 @@ void printComplexVectorS(SEXP x, R_xlen_t n, int indx)
     w = wr + wi + 2;	/* +2 for "+" and "i" */
     w += R_print.gap;
 
-    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, Rcomplex, COMPLEX, 0, n, 
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, Rcomplex, COMPLEX, 0, n,
 		      for(R_xlen_t j = 0; j < nb; j++) {
 			  i = idx + j; /* for macros */
 			  NUMVECTOR_TIGHTLOOP(CMPLX_ISNA(px[j]) ?
@@ -253,7 +257,7 @@ static void printStringVectorS(SEXP x, R_xlen_t n, int quote, int indx)
 {
     /* because there's no get_region method for ALTSTRINGs
        we hit the old version if we can to avoid the
-       STRING_ELT in the tight loop. 
+       STRING_ELT in the tight loop.
 
        This will work for all nonALTREP STRSXPs as well as whenever
        the ALTSTRING class is willing to give us a full dataptr from
@@ -264,7 +268,7 @@ static void printStringVectorS(SEXP x, R_xlen_t n, int quote, int indx)
 	printStringVector(xptr, n, quote, indx);
 	return;
     }
-    
+
     int w, labwidth=0, width;
 
     DO_first_lab;
@@ -347,8 +351,8 @@ void printVector(SEXP x, int indx, int quote)
 	    break;
 	}
 	if(n_pr < n)
-		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]\n",
-			n - n_pr);
+	    Rprintf(" [ reached getOption(\"max.print\") -- omitted %lld entries ]\n",
+		    (long long)n - n_pr);
     }
     else
 #define PRINT_V_0						\
@@ -466,13 +470,13 @@ static void printNamedRawVectorS(SEXP x, int n, SEXP names)
 attribute_hidden
 void printNamedVector(SEXP x, SEXP names, int quote, const char *title)
 {
-    int n;
 
     if (title != NULL)
 	 Rprintf("%s\n", title);
 
-    if ((n = LENGTH(x)) != 0) {
-	int n_pr = (n <= R_print.max +1) ? n : R_print.max;
+    R_xlen_t n = XLENGTH(x);
+    if (n != 0) {
+	R_xlen_t n_pr = (n <= R_print.max +1) ? n : R_print.max;
 	/* '...max +1'  ==> will omit at least 2 ==> plural in msg below */
 	switch (TYPEOF(x)) {
 	case LGLSXP:
@@ -496,9 +500,8 @@ void printNamedVector(SEXP x, SEXP names, int quote, const char *title)
 	    break;
 	}
 	if(n_pr < n)
-		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]\n",
-			n - n_pr);
-
+	    Rprintf(" [ reached getOption(\"max.print\") -- omitted %lld entries ]\n",
+		    (long long)n - n_pr);
     }
     else {
 	Rprintf("named ");
