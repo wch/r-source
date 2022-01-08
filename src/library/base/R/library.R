@@ -1,7 +1,7 @@
 #  File src/library/base/R/library.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -77,10 +77,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     stopOnConflict <- isTRUE(conf.ctrl$error)
 
     if (missing(warn.conflicts))
-        warn.conflicts <- if (isFALSE(conf.ctrl$warn)) FALSE else TRUE
-    if ((! missing(include.only)) && (! missing(exclude)))
-        stop(gettext("only one of 'include.only' and 'exclude' can be used"),
-             call. = FALSE, domain = NA)
+        warn.conflicts <- !isFALSE(conf.ctrl$warn)
+    if (!missing(include.only) && !missing(exclude))
+        stop("only one of 'include.only' and 'exclude' can be used",
+             call. = FALSE)
 
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
@@ -269,7 +269,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 }
             }
         }
-    }
+    } # {checkConflicts()}
 
     if(verbose && quietly)
 	message("'verbose' and 'quietly' are both true; being verbose then ..")

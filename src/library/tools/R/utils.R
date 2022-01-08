@@ -2050,8 +2050,7 @@ function(x, dfile)
         asc <- iconv(x, "latin1", "ASCII")
         ## fields might have been NA to start with, so use identical.
         if(!identical(asc, x)) {
-            warning(gettext("Unknown encoding with non-ASCII data: converting to ASCII"),
-                    domain = NA)
+            warning("Unknown encoding with non-ASCII data: converting to ASCII")
 	    ind <- is.na(asc) | (asc != x)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
         }
