@@ -1,6 +1,6 @@
 % File src/library/stats/man/formula.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formula}
@@ -158,9 +158,10 @@ as.formula(object, env = parent.frame())
 \seealso{
   \code{\link{~}}, \code{\link{I}}, \code{\link{offset}}.
 
-  For formula manipulation: \code{\link{terms}}, and \code{\link{all.vars}};
-  for typical use: \code{\link{lm}}, \code{\link{glm}}, and
+  For formula manipulation: \code{\link{terms}}, and \code{\link{all.vars}}.
+  For typical use: \code{\link{lm}}, \code{\link{glm}}, and
   \code{\link{coplot}}.
+  For formula construction: \code{\link{reformulate}}.
 }
 \examples{
 class(fo <- y ~ x1*x2) # "formula"
@@ -176,5 +177,8 @@ environment(as.formula("y ~ x", env = new.env()))
 ## Create a formula for a model with a large number of variables:
 xnam <- paste0("x", 1:25)
 (fmla <- as.formula(paste("y ~ ", paste(xnam, collapse= "+"))))
+## Equivalent with reformulate():
+fmla2 <- reformulate(xnam, response = "y")
+stopifnot(identical(fmla, fmla2))
 }
 \keyword{models}
