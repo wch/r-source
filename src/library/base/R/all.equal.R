@@ -28,6 +28,7 @@ all.equal.default <- function(target, current, ...)
     if(is.language(target))
 	return(all.equal.language(target, current, ...))
     if(is.function(target)) {
+      if("function" %in% .class2(target))
         .Deprecated("all.equal(*)", old="all.equal.default(<function>)")
 	return(all.equal.function(target, current, ...))
     }

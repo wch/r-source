@@ -5638,6 +5638,11 @@ stopifnot(all.equal(one, one+(-1:3)/1e9, scale=1:5))
 ## gave Error .. (converted from warning) longer object length is not a multiple ..
 
 
+## all.equal(<selfStart>) no longer wrongly warns
+stopifnot(all.equal(SSfol, SSfol))
+## gave Error .. from warning  'all.equal.default(<function>)' is deprecated
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
