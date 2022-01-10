@@ -500,7 +500,7 @@
       fixing \PR{18247}.
 
       \item \code{all.equal(*, scale = s)} now works as intended when
-      \code{length(s) > 1}, thanks to Michael Chirico's \PR{18272}.
+      \code{length(s) > 1}, partly thanks to Michael Chirico's \PR{18272}.
 
       \item \code{print(x)} for long vectors \code{x} now also works for
       named atomic vectors or lists and prints the correct number when

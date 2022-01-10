@@ -138,14 +138,16 @@ all.equal.numeric <-
     }
     out <- out | target == current # equal NAs _or_ numbers
     if(all(out)) return(if(is.null(msg)) TRUE else msg)
-    if(countEQ) {
-        N <- length(out)
-        sabst0 <- sum(abs(target[out])/N)
-    } else
-        sabst0 <- 0
-    target  <- target [!out]
-    current <- current[!out]
-    if(!countEQ) N <- length(target)
+    anyO <- any(out)
+    sabst0 <- if(countEQ && anyO) mean(abs(target[out])) else 0
+    if(anyO) {
+        keep <- which(!out)
+	target  <- target [keep]
+	current <- current[keep]
+	if(!is.null(scale) && length(scale) > 1L)
+	    scale <- rep_len(scale, length(out))[keep]
+    }
+    N <- length(target)
     if(is.integer(target) && is.integer(current)) target <- as.double(target)
     what <-
 	if(is.null(scale)) {

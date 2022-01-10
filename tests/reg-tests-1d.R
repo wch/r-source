@@ -5633,6 +5633,9 @@ stopifnot(
     identical("Mean scaled difference: 1",
               all.equal(c(1, 1), c(1.01, 1.01), scale = c(.01, .01))))
 ## gave error when _R_CHECK_LENGTH_1_LOGIC2_ was set and length 2 answer otherwise
+one <- rep(1,5)
+stopifnot(all.equal(one, one+(-1:3)/1e9, scale=1:5))
+## gave Error .. (converted from warning) longer object length is not a multiple ..
 
 
 
