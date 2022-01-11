@@ -44,7 +44,7 @@ Stangle(file, driver = Rtangle(),
 
 \details{
   Automatic generation of reports by mixing word processing markup (like
-  latex) and S code.  The S code gets replaced by its output (text or
+  \LaTeX) and S code.  The S code gets replaced by its output (text or
   graphs) in the final markup file.  This allows a report to be re-generated
   if the input data change and documents the code to reproduce the
   analysis in the same file that also produces the report.
@@ -78,7 +78,7 @@ Stangle(file, driver = Rtangle(),
 \section{Syntax Definition}{
   Sweave allows a flexible syntax framework for marking
   documentation and text chunks. The default is a noweb-style syntax, as
-  alternative a latex-style syntax can be used.  (See the user manual for
+  alternative a \LaTeX-style syntax can be used.  (See the user manual for
   further details.)
 
   If \code{syntax = NULL} (the default) then the available syntax
