@@ -5646,7 +5646,7 @@ stopifnot(all.equal(SSfol, SSfol))
 ## reformulate() error msg [part of PR#18281]:
 (msg <- tryCmsg(reformulate(paste0("x", 1:8), response = c("y","z"))))
 if(englishMsgs)
-    stopifnot(grepl("must be a string", msg))
+    stopifnot(grepl("must be a character string", msg))
 ## was 'Error in doWithOneRestart(return(expr), restart) : bad error message'
 
 
