@@ -162,7 +162,7 @@
 #   SSE2 (seen on 32-bit builds with forced SSE2 using -mfpmath=sse -msse2,
 #   probably not needed on 64-bit builds)
 #
-# -fexceptions is used as a workaround for GCC 10.3.0 bug causing crashes in
+# -fexceptions was used as a workaround for GCC 10.3.0 bug causing crashes in
 #   long jumps due to invalid unwind tables. This is the only reason for
 #   this option as R does not use structured exception handling from C.
 #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103274
@@ -177,7 +177,7 @@
 # See MkRules.rules where -fno-optimize-sibling-calls is optionally added to
 # work around issues with gfortran/legacy calls from C.
 #
-# EOPTS = -mfpmath=sse -msse2 -mstackrealign -fexceptions $(LTO)
+# EOPTS = -mfpmath=sse -msse2 -mstackrealign $(LTO)
 
 # define to -fopenmp if the toolchain has OpenMP support
 # OPENMP = -fopenmp
