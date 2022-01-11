@@ -5643,6 +5643,13 @@ stopifnot(all.equal(SSfol, SSfol))
 ## gave Error .. from warning  'all.equal.default(<function>)' is deprecated
 
 
+## reformulate() error msg [part of PR#18281]:
+(msg <- tryCmsg(reformulate(paste0("x", 1:8), response = c("y","z"))))
+if(englishMsgs)
+    stopifnot(grepl("must be a string", msg))
+## was 'Error in doWithOneRestart(return(expr), restart) : bad error message'
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

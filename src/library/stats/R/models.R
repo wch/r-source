@@ -195,7 +195,9 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
 	else
 	    call("~",
 		 ## response can be a symbol or call as  Surv(ftime, case)
-		 if(is.character(response))
+		 if(is.character(response)) {
+		     if(length(response) != 1)
+			 stop(gettextf("'%s' must be a character string", "response"), domain=NA)
                      tryCatch(str2lang(response),
                               error = function(e) {
                                   sc <- sys.calls()
@@ -210,6 +212,7 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
                                       call = reformCall)) # , domain=NA
                                   as.symbol(response)
                               })
+		 }
                  else response,
 		 terms)
     formula(fexpr, env)
