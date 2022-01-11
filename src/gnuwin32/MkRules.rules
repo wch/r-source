@@ -32,7 +32,7 @@ MIKTEX ?= TRUE
 TEXI2ANY ?= texi2any
 TEXI2DVI = env COMSPEC= texi2dvi
 MAKEINFO = texi2any
-EOPTS ?= -mfpmath=sse -msse2 -mstackrealign -fexceptions
+EOPTS ?= -mfpmath=sse -msse2 -mstackrealign
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
 ISDIR ?= C:/Program Files (x86)/Inno Setup 6
