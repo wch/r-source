@@ -3992,11 +3992,17 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > ### ** Examples
 > 
-> asOneSidedFormula("age")
+> (form <- asOneSidedFormula("age"))
 ~age
-<environment: 0x10d1e8138>
-> asOneSidedFormula(~ age)
-~age
+> stopifnot(exprs = {
++     identical(form, asOneSidedFormula(form))
++     identical(form, asOneSidedFormula(as.name("age")))
++     identical(form, asOneSidedFormula(expression(age)))
++ })
+> asOneSidedFormula(quote(log(age)))
+~log(age)
+> asOneSidedFormula(1)
+~1
 > 
 > 
 > 

@@ -464,6 +464,10 @@
       should now behave in all cases as always documented: the index used is
       equivalent to \code{as.integer(i)} unless that would overflow where
       \code{trunc(i)} is used instead.
+
+      \item \code{asOneSidedFormula()} now associates the resulting
+      formula with the global environment rather than the evaluation
+      environment created for the call.
     }
   }
 }
