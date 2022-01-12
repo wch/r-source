@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-01-03 r81434) -- "Unsuffered Consequences"
+R Under development (unstable) (2022-01-11 r81473) -- "Unsuffered Consequences"
 Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: aarch64-apple-darwin21.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3994,7 +3994,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x12b3f40c0>
+<environment: 0x10d1e8138>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -5031,7 +5031,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x12c5f7040>
+<bytecode: 0x13cff0aa8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7655,7 +7655,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x106eafed0>
+<environment: 0x1041dc108>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7664,6 +7664,9 @@ attr(,".Environment")
 y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + 
     x12 + x13 + x14 + x15 + x16 + x17 + x18 + x19 + x20 + x21 + 
     x22 + x23 + x24 + x25
+> ## Equivalent with reformulate():
+> fmla2 <- reformulate(xnam, response = "y")
+> stopifnot(identical(fmla, fmla2))
 > 
 > 
 > 
@@ -12486,14 +12489,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x14a487040>
-<environment: 0x14a47eb78>
+<bytecode: 0x12e294e38>
+<environment: 0x12e27d3c0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x14a487190>
-<environment: 0x14a47eb78>
+<bytecode: 0x12e291078>
+<environment: 0x12e27d3c0>
 
 > 
 > 
@@ -16772,8 +16775,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x12caaf4f0>
-<environment: 0x106aa27b0>
+<bytecode: 0x103851d18>
+<environment: 0x103eedc30>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19209,7 +19212,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.273 0.218 2.502 0 0 
+Time elapsed:  2.26 0.217 2.498 0 0 
 > grDevices::dev.off()
 null device 
           1 
