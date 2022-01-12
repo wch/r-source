@@ -14877,12 +14877,11 @@ zero.
 @c maybe not all into the index ...
 
 @R{} has a set of commonly used mathematical constants encompassing
-constants defined by POSIX and usually@footnote{but see the second
-paragraph of @pxref{Portable C and C++ code}.} found in @file{math.h}
-(but maybe not in the C++ header @file{cmath}) and contains further ones
-that are used in statistical computations.  These are defined to (at
-least) 30 digits accuracy in @file{Rmath.h}.  The following definitions
-use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
+constants defined by POSIX and usually found in headers @file{math.h}
+and @file{cmath}, as well as further ones that are used in statistical
+computations.  These are defined to (at least) 30 digits accuracy in
+@file{Rmath.h}.  The following definitions use @code{ln(x)} for the
+natural logarithm (@code{log(x)} in @R{}).
 
 @quotation
 @multitable {Name can be long}  {Definition (needs space)}  {0.123456789012345678 ...}
@@ -14918,6 +14917,8 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) (and so on)
 defined (unless @code{STRICT_R_HEADERS} is defined) in the included
 header @file{R_ext/Constants.h}, mainly for compatibility with @Sl{}.
+All but @code{PI} are deprecated and should be replaced by the C99/C++11
+versions used in that file.
 
 @findex TRUE
 @findex FALSE

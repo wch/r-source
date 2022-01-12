@@ -293,8 +293,6 @@
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
       \dQuote{Writing R Extensions}.
-      [Currently planned for early Nov: \acronym{CRAN} package authors
-      have been notified.]
 
       \item Package installation speed for packages installed with
       \code{keep.source} has been improved. This resolve the issue
@@ -355,7 +353,16 @@
       macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
       any \R{} header.  Header \file{R_ext/RS.h} will no longer include
       \file{R_ext/Error.h} unless \code{R_LEGACY_S_DEFS} is set to \code{1}.
-   }
+
+      \item Header \file{R_ext/Constants.h} (included by \file{R.h})
+      when included from C++ now includes the C++ header \file{cfloat}
+      rather than the C header \file{float.h} (as C++11 is now
+      required).
+
+      \item The legacy S-compatibility macros \code{SINGLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
+      and will be removed in due course. 
+    }
   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
