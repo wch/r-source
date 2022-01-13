@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2020   The R Core Team
+ *  Copyright (C) 1997-2022   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 #include <Defn.h>
 #include <R_ext/RStartup.h>
-#include <R_ext/RS.h> // for Calloc
+//#include <R_ext/RS.h> // for Calloc
 
 
 /* Remove and process common command-line arguments

@@ -1,6 +1,6 @@
 % File src/library/base/man/order.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{order}
@@ -40,11 +40,10 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     \code{FALSE}, they are put first; if \code{NA}, they are removed
     (see \sQuote{Note}.)}
   \item{method}{the method to be used: partial matches are allowed.  The
-    default (\code{"auto"}) implies \code{"radix"} for short numeric vectors,
-    integer vectors, logical vectors and factors.
-    Otherwise, it implies \code{"shell"}.
-    For details of methods \code{"shell"}, 
-    \code{"quick"}, and \code{"radix"},
+    default (\code{"auto"}) implies \code{"radix"} for numeric vectors,
+    integer vectors, logical vectors and factors with fewer than
+    \eqn{2^{31}}{2^31} elements. Otherwise, it implies \code{"shell"}.
+    For details of methods \code{"shell"}, \code{"quick"}, and \code{"radix"},
     see the help for \code{\link{sort}}.}
 }
 \details{
@@ -62,14 +61,14 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \code{\link{Comparison}}.
 
   The \code{"shell"} method is generally the safest bet and is the
-  default method, except for short factors, numeric vectors,
-  integer vectors and logical vectors, where \code{"radix"} is assumed.
-  Method \code{"radix"} stably sorts logical,
-  numeric and character vectors in linear time. It outperforms the other
-  methods, although there are caveats (see \code{\link{sort}}).  Method
-  \code{"quick"} for \code{sort.list} is only supported for numeric
-  \code{x} with \code{na.last = NA}, is not stable, and is slower than
-  \code{"radix"}. 
+  default method, except for short factors, numeric vectors, integer
+  vectors and logical vectors, where \code{"radix"} is assumed.  Method
+  \code{"radix"} stably sorts logical, numeric and character vectors in
+  linear time. It outperforms the other methods, although there are
+  drawbacks, especially for character vectors (see \code{\link{sort}}).
+  Method \code{"quick"} for \code{sort.list} is only supported for
+  numeric \code{x} with \code{na.last = NA}, is not stable, and is
+  slower than \code{"radix"}.
   
   \code{partial = NULL} is supported for compatibility with other
   implementations of S, but no other values are accepted and ordering is

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2021  The R Core Team
+ *  Copyright (C) 1998--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2314,11 +2314,11 @@ static int textwidth(DEstruct DE, const char *text, int nchar)
 	else
 #endif
 	    ans = XmbTextEscapement(font_set, buf, nchar);
-	Free(buf);
+	R_Free(buf);
 	return ans;
     }
     ans = XTextWidth(DE->font_info, buf, nchar);
-    Free(buf);
+    R_Free(buf);
     return ans;
 }
 

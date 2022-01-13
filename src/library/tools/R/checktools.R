@@ -1091,11 +1091,10 @@ function(new, old, outputs = FALSE)
     packages <- intersect(old$Package, new$Package)
 
     if(!length(packages)) {
-        db <- data.frame(Package = character(),
-                         Check = character(),
-                         Old = character(),
-                         New = character(),
-                         stringsAsFactors = FALSE)
+        db <- list2DF(list(Package = character(),
+                           Check = character(),
+                           Old = character(),
+                           New = character()))
         class(db) <- check_details_changes_classes
         return(db)
     }

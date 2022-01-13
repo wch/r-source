@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2020  The R Core Team
+ *  Copyright (C) 2002--2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -35,7 +35,7 @@
 /* interval at which to check interrupts */
 #define NINTERRUPT 1000000
 
-#include <R_ext/RS.h>		/* for Calloc/Free */
+#include <R_ext/RS.h>		/* for R_Calloc/R_Free */
 
 #include <wchar.h>
 #include <tre/tre.h>
@@ -316,7 +316,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
     if(opt_counts) {
 	PROTECT(counts = alloc3DArray(INTSXP, nx, ny, 3));
 	PROTECT(trafos = allocMatrix(STRSXP, nx, ny));
-	buf = Calloc(buflen, char);
+	buf = R_Calloc(buflen, char);
     }
 
     for(i = 0; i < nx; i++) {
@@ -349,14 +349,14 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 		     */
 		    nr = nxi + 1;
 		    nc = nyj + 1;
-		    dists = Calloc(nr * nc, double);
+		    dists = R_Calloc(nr * nc, double);
 		    MAT(dists, 0, 0) = 0;
 		    for(k = 1; k < nr; k++)
 			MAT(dists, k, 0) = k * cost_del;
 		    for(l = 1; l < nc; l++)
 			MAT(dists, 0, l) = l * cost_ins;
 		    if(opt_counts) {
-			paths = Calloc(nr * nc, char);
+			paths = R_Calloc(nr * nc, char);
 			for(k = 1; k < nr; k++)
 			    MAT(paths, k, 0) = 'D';
 			for(l = 1; l < nc; l++)
@@ -405,7 +405,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 			    k = nxi; l = nyj; m = k + l; nz = m;
 			    need = 2 * m + 1;
 			    if(buflen < need) {
-				buf = Realloc(buf, need , char);
+				buf = R_Realloc(buf, need , char);
 				buflen = need;
 			    }
 			    /* Need to read backwards and fill forwards. */
@@ -435,9 +435,9 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 			    COUNTS(i, j, 2) = nsub;
 			    SET_STRING_ELT(trafos, i + nx * j, mkChar(buf));
 			}
-			Free(paths);
+			R_Free(paths);
 		    }
-		    Free(dists);
+		    R_Free(dists);
 		}
 	    }
 	}
@@ -454,7 +454,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
     }
 
     if(opt_counts) {
-	Free(buf);
+	R_Free(buf);
 	PROTECT(dimnames = allocVector(VECSXP, 3));
 	PROTECT(names = allocVector(STRSXP, 3));
 	SET_STRING_ELT(names, 0, mkChar("ins"));

@@ -332,7 +332,8 @@
 ## CURL_CPPFLAGS=
 ## CURL_LIBS=
 ## To force a static link use the line below: this is only needed
-## if both shared and static libcurl libraries were built.
+## if both shared and static libcurl libraries were installed (and
+## not guaranteed to work then).
 ## CURL_LIBS=`curl-config --static-libs`
 
 ## Path to the version of pkg-config to be used for locating cairographics,
@@ -347,7 +348,7 @@
 ## The configure code is conservative about enabling OpenMP 
 ## so use can be forced here (or non-use if set but empty).
 ## For packages (note that SHLIB_OPENMP_CXXFLAGS is for CXX, not
-## necessarily for CXX14/17/20).
+## necessarily for CXX11/14/17/20).
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
 ## SHLIB_OPENMP_FFLAGS=

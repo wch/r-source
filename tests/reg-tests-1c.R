@@ -1071,14 +1071,14 @@ stopifnot(identical(names(myD), names(format(head(myD)))),
 		    data.frame(X2.1 = 2:1, X1.2 = 1:2)))
 ## format.data.frame() did not show "stringsAsFactors" in R <= 3.2.2
 ## Follow up: the new as.data.frame.list() must be careful with 'AsIs' columns:
-desc <- structure( c("a", NA, "z"), .Names = c("A", NA, "Z"))
+desc <- structure( c("a", NA, "z"), names = c("A", NA, "Z"))
 tools::assertError( data.frame(desc = desc, stringsAsFactors = FALSE) )
 ## however
 dd <- data.frame(desc = structure(desc, class="AsIs"),
                  row.names = c("A","M","Z"), stringsAsFactors = FALSE)
 ## is "legal" (because "AsIs" can be 'almost anything')
 dd ## <- did not format nor print correctly in R-devel early Nov.2015
-fdesc <- structure(c("a", "NA", "z"), .Names=names(desc), class="AsIs")
+fdesc <- structure(c("a", "NA", "z"), names=names(desc), class="AsIs")
 stopifnot(identical(format(dd),
                     data.frame(desc = fdesc, row.names = c("A", "M", "Z"))),
           identical(capture.output(dd),

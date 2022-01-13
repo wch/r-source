@@ -56,10 +56,12 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \file{\var{R_HOME}/share/texmf} as a \sQuote{texmf tree} (\sQuote{root
   directory} in the parlance of the \sQuote{MiKTeX settings} utility).
 
-  By default, \file{Sweave.sty} sets the width of all included graphics to:\cr
+  By default, \file{Sweave.sty} loads the \samp{graphicx} \LaTeX package
+  sets the width of all included graphics to:\cr
   \samp{\\setkeys{Gin}{width=0.8\\textwidth}}.
 
-  This setting affects the width size option passed to the
+  This setting (defined in the \samp{graphicx} package)
+  affects the width size option passed to the
   \samp{\\includegraphics{}} directive for each plot file and in turn
   impacts the scaling of your plot files as they will appear in your
   final document.

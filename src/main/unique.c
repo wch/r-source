@@ -76,6 +76,7 @@ struct _HashData {
     Rboolean useCache;
     Rboolean useCloEnv;
     Rboolean extptrAsRef;
+    Rboolean inHashtab;
 };
 
 #define HTDATA_INT(d) (INTEGER0((d)->HashTable))
@@ -210,6 +211,20 @@ static R_INLINE hlen shash(SEXP x, R_xlen_t indx, HashData *d)
 {
     unsigned int k;
     const char *p;
+    if (d->inHashtab) {
+	SEXP xi = STRING_ELT(x, indx);
+	int noTrans = (IS_BYTES(xi) || IS_ASCII(xi)) ? TRUE : FALSE;
+	if (d->useCache && noTrans)
+	    return scatter(PTRHASH(xi), d);
+	const void *vmax = vmaxget();
+	p = noTrans ? CHAR(xi) : translateCharUTF8(xi);
+	k = 0;
+	while (*p++)
+	    /* multiplier was 8 but 11 isn't a power of 2 */
+	    k = 11 * k + (unsigned int) *p;
+	vmaxset(vmax); /* discard any memory used by translateChar */
+	return scatter(k, d);
+    }
     if(!d->useUTF8 && d->useCache) return cshash(x, indx, d);
     const void *vmax = vmaxget();
     /* Not having d->useCache really should not happen anymore. */
@@ -366,6 +381,7 @@ static hlen vhash_one(SEXP _this, HashData *d)
 	}
 	break;
     case LANGSXP:
+    case LISTSXP:
 	R_CheckStack();
 	/* all attributes are ignored */
 	/* might be good to consider envirnments on formulas */
@@ -384,25 +400,14 @@ static hlen vhash_one(SEXP _this, HashData *d)
 	}
 	break;
     case SYMSXP:
-	/* at this point a symbol name should be guaranteed to have a
-	   hash value, but check just to be safe */
-	if (! HASHASH(PRINTNAME(_this)) ) {
-	    SET_HASHVALUE(PRINTNAME(_this),
-			  R_Newhashpjw(CHAR(PRINTNAME(_this))));
-	    SET_HASHASH(PRINTNAME(_this), 1);
-	}
-	key ^= HASHVALUE(PRINTNAME(_this));
+	key *= PTRHASH(_this);
 	key *= 97;
 	break;
     case CHARSXP:
-	/* encoding is ignored */
-	if( !HASHASH(_this) ) {
-	    /* could also use cshash here, but would need to deal with
-	       uncached strings */
-	    SET_HASHVALUE(_this, R_Newhashpjw(CHAR(_this)));
-	    SET_HASHASH(_this, 1);
-	}
-	key ^= HASHVALUE(_this);
+	if(!d->useUTF8 && d->useCache) key *= PTRHASH(_this);
+	/**** otherwise, do nothing for now */
+	/* this should only happen in C-leve hash tables */
+	/* eventually this should do what shash does */
 	key *= 97;
 	break;
     case EXTPTRSXP:
@@ -578,14 +583,24 @@ static Rboolean duplicatedInit(SEXP x, HashData *d)
 		break;
 	    }
 	}
-    } else if (TYPEOF(x) == VECSXP) {
+    } else if (TYPEOF(x) == VECSXP || TYPEOF(x) == EXPRSXP) {
 	R_xlen_t i, n = XLENGTH(x);
 	for(i = 0; i < n; i++)
 	    if (duplicatedInit(VECTOR_ELT(x, i), d)) {
 		stop = TRUE;
 		break;
 	    }
-    }
+    } else if (TYPEOF(x) == LANGSXP || TYPEOF(x) == LISTSXP) {
+	for(SEXP head = x; head != R_NilValue; head = CDR(head))
+	    if (duplicatedInit(CAR(head), d)) {
+		stop = TRUE;
+		break;
+	    }
+
+    } else if (TYPEOF(x) == CLOSXP) {
+	if (duplicatedInit(BODY_EXPR(x), d))
+	    stop = TRUE;
+    }	
     return stop;
 }
 
@@ -2289,6 +2304,7 @@ static int hash_identical(SEXP x, int K, int useCloEnv)
     HashData d = { .K = K, .useUTF8 = FALSE, .useCache = TRUE };
     d.useCloEnv = useCloEnv;
     d.extptrAsRef = TRUE;
+    d.inHashtab = TRUE;
 
     int val = (int) vhash_one(x, &d);
     if (val == NA_INTEGER) val = 0;

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-12-01 r81279) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2022-01-11 r81473) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin21.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1258,16 +1258,16 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 +         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
 +             trace=TRUE, control = list(maxiter = 10)) )
 0.01722077  (5.34e+02): par = (0.6168807 -1.783839 2.050204 0.2004597)
-3.308944e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
-2.571093e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-1.633875e-23 (4.26e+03): par = (0.5793887 -1.787785 2.029277 0.1915474)
-5.883240e-29 (1.32e+01): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.292713e-29 (1.71e+00): par = (0.5793887 -1.787785 2.029277 0.1915474)
+3.308943e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
+2.571074e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+1.643021e-23 (1.54e+04): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.241672e-28 (4.49e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+7.843813e-29 (8.54e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+7.843813e-29 (8.54e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+7.843813e-29 (8.54e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+7.843813e-29 (8.54e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+7.843813e-29 (8.54e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+7.843813e-29 (8.54e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
 Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  : 
   number of iterations exceeded maximum of 10
 > ## End(Don't show)
@@ -1278,14 +1278,14 @@ Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  :
   It.   1, fac=           1, eval (no.,total): ( 1,  1): new dev = 3.30894e-06
 3.308942e-06  (9.08e-04): par = (0.5798674 -1.784335 2.028943 0.1920502)
   It.   2, fac=           1, eval (no.,total): ( 1,  2): new dev = 2.57108e-11
-2.571082e-11  (2.53e-06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66922e-23
-1.669220e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915474)
-1.670353e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915474 -1.787785)
+2.571081e-11  (2.53e-06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66688e-23
+1.666877e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.668015e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915475 -1.787785)
 > all.equal(coef(fm1), coef(fmX1), tolerance=0) # ... rel.diff.: 1.57e-6
-[1] "Mean relative difference: 1.574125e-06"
+[1] "Mean relative difference: 1.57412e-06"
 > all.equal(coef(fm1), coef(fmX),  tolerance=0) # ... rel.diff.: 1.03e-12
-[1] "Mean relative difference: 1.031784e-12"
+[1] "Mean relative difference: 1.032438e-12"
 > ## IGNORE_RDIFF_END
 > stopifnot(all.equal(coef(fm1), coef(fmX1), tolerance = 6e-6),
 +           all.equal(coef(fm1), coef(fmX ), tolerance = 1e-11))
@@ -3992,11 +3992,17 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > ### ** Examples
 > 
-> asOneSidedFormula("age")
+> (form <- asOneSidedFormula("age"))
 ~age
-<environment: 0x5559a617d2d0>
-> asOneSidedFormula(~ age)
-~age
+> stopifnot(exprs = {
++     identical(form, asOneSidedFormula(form))
++     identical(form, asOneSidedFormula(as.name("age")))
++     identical(form, asOneSidedFormula(expression(age)))
++ })
+> asOneSidedFormula(quote(log(age)))
+~log(age)
+> asOneSidedFormula(1)
+~1
 > 
 > 
 > 
@@ -5031,7 +5037,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5559a79596e8>
+<bytecode: 0x13cff0aa8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7655,7 +7661,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5559a7174a80>
+<environment: 0x1041dc108>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7664,6 +7670,9 @@ attr(,".Environment")
 y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + 
     x12 + x13 + x14 + x15 + x16 + x17 + x18 + x19 + x20 + x21 + 
     x22 + x23 + x24 + x25
+> ## Equivalent with reformulate():
+> fmla2 <- reformulate(xnam, response = "y")
+> stopifnot(identical(fmla, fmla2))
 > 
 > 
 > 
@@ -9188,7 +9197,7 @@ it = 10 -2.083333 -2.083333
 > 
 > ### Name: lm
 > ### Title: Fitting Linear Models
-> ### Aliases: lm
+> ### Aliases: lm print.lm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -11152,8 +11161,6 @@ Warning in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  :
   No starting values specified for some parameters.
 Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
-Error in nls(formula = y ~ Const + A * exp(B * x), algorithm = "default",  : 
-  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
 > o2 <- options(digits = 10) # more accuracy for 'trace'
 > ## central differencing works here typically (PR#18165: not converging on *some*):
 > ctr2 <- nls.control(nDcentral=TRUE, tol = 8e-8, # <- even smaller than above
@@ -11168,16 +11175,16 @@ Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
 1017460.306    (4.15e+02): par = (1 1 1)
 758164.7503    (2.34e+02): par = (13.42031396 1.961485 0.05947543745)
-269506.3537    (3.23e+02): par = (51.75719817 -13.09155958 0.8428607712)
-68969.21891    (1.03e+02): par = (76.0006985 -1.93522675 1.0190858)
-633.3672224    (1.29e+00): par = (100.3761515 8.624648408 5.104490252)
-151.4400170    (9.39e+00): par = (100.6344391 4.913490999 0.2849209664)
-53.08739445    (7.24e+00): par = (100.6830407 6.899303393 0.4637755095)
-1.344478582    (5.97e-01): par = (100.0368306 9.897714144 0.5169294926)
+269506.3539    (3.23e+02): par = (51.75719816 -13.09155956 0.8428607704)
+68969.21896    (1.03e+02): par = (76.0006985 -1.93522674 1.019085799)
+633.3672230    (1.29e+00): par = (100.3761515 8.62464841 5.104490262)
+151.4400192    (9.39e+00): par = (100.6344391 4.913490991 0.2849209622)
+53.08739629    (7.24e+00): par = (100.6830407 6.899303358 0.4637755087)
+1.344478607    (5.97e-01): par = (100.0368306 9.897714143 0.5169294932)
 0.9908415908   (1.55e-02): par = (100.0300625 9.9144191 0.5023516843)
-0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207336)
-0.9906046054   (9.94e-08): par = (100.028875 9.916228366 0.50252165)
-0.9906046054   (5.00e-08): par = (100.028875 9.916228377 0.5025216525)
+0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207337)
+0.9906046054   (9.96e-08): par = (100.028875 9.916228366 0.50252165)
+0.9906046054   (3.78e-10): par = (100.028875 9.916228388 0.5025216549)
 Nonlinear regression model
   model: y ~ Const + A * exp(B * x)
    data: parent.frame()
@@ -12488,14 +12495,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5559a5319a28>
-<environment: 0x5559a5321e88>
+<bytecode: 0x12e294e38>
+<environment: 0x12e27d3c0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5559a53198d8>
-<environment: 0x5559a5321e88>
+<bytecode: 0x12e291078>
+<environment: 0x12e27d3c0>
 
 > 
 > 
@@ -16774,8 +16781,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x5559a5c78570>
-<environment: 0x5559a7df4328>
+<bytecode: 0x103851d18>
+<environment: 0x103eedc30>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19211,7 +19218,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.622 0.163 4.787 0 0 
+Time elapsed:  2.26 0.217 2.498 0 0 
 > grDevices::dev.off()
 null device 
           1 

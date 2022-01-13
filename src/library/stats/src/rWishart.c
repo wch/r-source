@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2019  The R Core Team
+ *  Copyright (C) 2012-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,11 +85,11 @@ rWishart(SEXP ns, SEXP nuP, SEXP scal)
     if (!isMatrix(scal) || !isReal(scal) || dims[0] != dims[1])
 	error(_("'scal' must be a square, real matrix"));
     if (n <= 0) n = 1;
-    // allocate early to avoid memory leaks in Callocs below.
+    // allocate early to avoid memory leaks in R_Callocs below.
     PROTECT(ans = alloc3DArray(REALSXP, dims[0], dims[0], n));
     psqr = dims[0] * dims[0];
-    tmp = Calloc(psqr, double);
-    scCp = Calloc(psqr, double);
+    tmp = R_Calloc(psqr, double);
+    scCp = R_Calloc(psqr, double);
 
     Memcpy(scCp, REAL(scal), psqr);
     memset(tmp, 0, psqr * sizeof(double));
@@ -114,7 +114,7 @@ rWishart(SEXP ns, SEXP nuP, SEXP scal)
     }
 
     PutRNGstate();
-    Free(scCp); Free(tmp);
+    R_Free(scCp); R_Free(tmp);
     UNPROTECT(1);
     return ans;
 }

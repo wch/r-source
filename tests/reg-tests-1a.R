@@ -392,12 +392,12 @@ stopifnot(Eq(coef(g1), coef(g2)),
 	  Eq(resid(g1), resid(g2)))
 ## from logLik.glm.Rd
 anorexia <-
-structure(list(Treat = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
+structure(list(Treat = factor(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L,
-3L), .Label = c("CBT", "Cont", "FT"), class = "factor"), Prewt = c(80.7,
+3L), labels = c("CBT", "Cont", "FT")), Prewt = c(80.7,
 89.4, 91.8, 74, 78.1, 88.3, 87.3, 75.1, 80.6, 78.4, 77.6, 88.7,
 81.3, 78.1, 70.5, 77.3, 85.2, 86, 84.1, 79.7, 85.5, 84.4, 79.6,
 77.5, 72.3, 89, 80.5, 84.9, 81.5, 82.6, 79.9, 88.7, 94.9, 76.3,
@@ -411,7 +411,7 @@ structure(list(Treat = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
 95.3, 82.4, 72.5, 90.9, 71.3, 85.4, 81.6, 89.1, 83.9, 82.7, 75.7,
 82.6, 100.4, 85.2, 83.6, 84.6, 96.2, 86.7, 95.2, 94.3, 91.5,
 91.9, 100.3, 76.7, 76.8, 101.6, 94.9, 75.2, 77.8, 95.5, 90.7,
-92.5, 93.8, 91.7, 98)), .Names = c("Treat", "Prewt", "Postwt"
+92.5, 93.8, 91.7, 98)), names = c("Treat", "Prewt", "Postwt"
 ), class = "data.frame", row.names = 1:72)
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
 	    family = gaussian, data = anorexia)
@@ -1403,7 +1403,7 @@ persp(1:2, 1:2, matrix(1:4, 2), xlab=1)
 ## PR#1244 bug in det using method="qr"
 ## method argument is no longer used in det
 #m2 <- structure(c(9822616000, 3841723000, 79790.09, 3841723000, 1502536000,
-#		  31251.82, 79790.09, 31251.82, 64156419.36), .Dim = c(3, 3))
+#		  31251.82, 79790.09, 31251.82, 64156419.36), dim = c(3, 3))
 #(d1 <- det(m2, method="eigenvalues"))
 #(d2 <- det(m2, method="qr"))
 #stopifnot(d2 == 0) ## 1.4.1 gave 9.331893e+19
@@ -1684,18 +1684,18 @@ stopifnot(identical(x, unlist(as.list(x))))
 ## test of long Error expression in aov(): PR#1315 and later,
 ## and also a cross-check of deparse(, cutoff = 500)
 AA <- structure(list(Y2 = c(10, 9, 0, 0, 5, 6, 0, 0, 8, 9, 0, 0, 4,
-4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = structure(c(1L, 1L,
+4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = factor(c(1L, 1L,
 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 3L,
-3L, 3L, 3L, 3L, 3L, 3L), .Label = c("1", "2", "3"), class = "factor"),
-    AAAAAAAA = structure(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L,
+3L, 3L, 3L, 3L, 3L, 3L), labels = c("1", "2", "3")),
+    AAAAAAAA = factor(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L,
     1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L
-    ), .Label = c("E1", "E2"), class = "factor"), B2 = structure(c(1L,
+    ), labels = c("E1", "E2")), B2 = factor(c(1L,
     1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L,
-    1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L), .Label = c("Red", "Unred"
-    ), class = "factor"), C2 = structure(c(1L, 2L, 1L, 2L, 1L,
+    1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L), labels = c("Red", "Unred"
+    )), C2 = factor(c(1L, 2L, 1L, 2L, 1L,
     2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L,
-    1L, 2L, 1L, 2L), .Label = c("Agent", "Patient"), class = "factor")),
-    .Names = c("Y2", "P2", "AAAAAAAA", "B2", "C2"),
+    1L, 2L, 1L, 2L), labels = c("Agent", "Patient"))),
+    names = c("Y2", "P2", "AAAAAAAA", "B2", "C2"),
     class = "data.frame", row.names = 1:24)
 AK2anova.out <-
     aov(Y2 ~ AAAAAAAA * B2 * C2 +
@@ -2390,51 +2390,62 @@ slm1 <- step(lm1)
 add1(lm1, ~ I(Education^2) + .^2)
 step(lm1, scope=~ I(Education^2) + .^2)
 
-Quine <- structure(list(Eth = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2,
-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-2, 2, 2, 2, 2, 2, 2, 2, 2, 2), .Label = c("A", "N"), class = "factor"),
-    Sex = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), .Label = c("F",
-    "M"), class = "factor"), Age = structure(c(1, 1, 1, 1, 1,
-    1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2,
-    2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4,
-    4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
-    2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4,
-    4, 4, 4, 4, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-    2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4,
-    4, 4, 4, 4, 4, 4, 4, 4), .Label = c("F0", "F1", "F2", "F3"
-    ), class = "factor"), Lrn = structure(c(2, 2, 2, 1, 1, 1,
-    1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,
-    2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2,
-    2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-    1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 1), .Label = c("AL", "SL"), class = "factor"),
-    Days = c(2, 11, 14, 5, 5, 13, 20, 22, 6, 6, 15, 7, 14, 6,
-    32, 53, 57, 14, 16, 16, 17, 40, 43, 46, 8, 23, 23, 28, 34,
-    36, 38, 3, 5, 11, 24, 45, 5, 6, 6, 9, 13, 23, 25, 32, 53,
-    54, 5, 5, 11, 17, 19, 8, 13, 14, 20, 47, 48, 60, 81, 2, 0,
-    2, 3, 5, 10, 14, 21, 36, 40, 6, 17, 67, 0, 0, 2, 7, 11, 12,
-    0, 0, 5, 5, 5, 11, 17, 3, 4, 22, 30, 36, 8, 0, 1, 5, 7, 16,
-    27, 0, 30, 10, 14, 27, 41, 69, 25, 10, 11, 20, 33, 5, 7,
-    0, 1, 5, 5, 5, 5, 7, 11, 15, 5, 14, 6, 6, 7, 28, 0, 5, 14,
-    2, 2, 3, 8, 10, 12, 1, 1, 9, 22, 3, 3, 5, 15, 18, 22, 37)),
-    .Names = c("Eth", "Sex", "Age", "Slow or fast", "Days"),
-    class = "data.frame", row.names = 1:46)
+Quine <-
+structure(list(Eth = factor(c(1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), levels = 1:2,
+labels = c("A", "N")),
+Sex = factor(c(2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L), levels = 1:2,
+labels = c("F", "M")),
+Age = factor(c(1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L,
+3L, 3L, 3L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 1L, 1L, 1L, 1L, 1L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 3L,
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 4L, 4L, 4L, 4L,
+4L, 4L, 4L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L,
+3L, 3L, 3L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L),  levels = 1:4,
+labels = c("F0", "F1", "F2", "F3")),
+`Slow or fast` = factor(c(2L,
+2L, 2L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 1L, 1L, 2L, 2L, 2L, 2L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 1L,
+1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L,
+1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 1L, 1L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L), levels = 1:2, labels = c("AL", "SL")),
+Days = c(2, 11,
+14, 5, 5, 13, 20, 22, 6, 6, 15, 7, 14, 6, 32, 53, 57, 14, 16,
+16, 17, 40, 43, 46, 8, 23, 23, 28, 34, 36, 38, 3, 5, 11, 24,
+45, 5, 6, 6, 9, 13, 23, 25, 32, 53, 54, 5, 5, 11, 17, 19, 8,
+13, 14, 20, 47, 48, 60, 81, 2, 0, 2, 3, 5, 10, 14, 21, 36, 40,
+6, 17, 67, 0, 0, 2, 7, 11, 12, 0, 0, 5, 5, 5, 11, 17, 3, 4, 22,
+30, 36, 8, 0, 1, 5, 7, 16, 27, 0, 30, 10, 14, 27, 41, 69, 25,
+10, 11, 20, 33, 5, 7, 0, 1, 5, 5, 5, 5, 7, 11, 15, 5, 14, 6,
+6, 7, 28, 0, 5, 14, 2, 2, 3, 8, 10, 12, 1, 1, 9, 22, 3, 3, 5,
+15, 18, 22, 37)),
+class = "data.frame", row.names = 1:146)
 step(aov(log(Days+2.5) ~ .^4, data=Quine))
 set.seed(11)
 DF <- data.frame(y=rnorm(21), `x 1`=-10:10., check.names = FALSE)
@@ -3166,10 +3177,10 @@ hist(log(-5:100), plot = FALSE)
 
 
 ## merge problem with names/not in rbind.data.frame
-x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), .Dim = 2:3,
-               .Dimnames = list(c("1", "2"), c("P", "V", "2")))
-y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), .Dim = 2:3,
-               .Dimnames = list(c("1", "2"), c("P", "V", "1")))
+x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), dim = 2:3,
+               dimnames = list(c("1", "2"), c("P", "V", "2")))
+y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), dim = 2:3,
+               dimnames = list(c("1", "2"), c("P", "V", "1")))
 merge(x, y, all.y = TRUE)
 ## failed for a while in pre-2.0.0
 
@@ -3777,8 +3788,8 @@ z
 ## summary.matrix failed on some classed objects
 surv <- structure(c(2.06, 2.13, 0.09, 0.27, 1, 0.36, 3.04, 0.67, 0.35,
                     0.24, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0),
-                  .Dim = c(10L, 2L),
-                  .Dimnames = list(NULL, c("time", "status")),
+                  dim = c(10L, 2L),
+                  dimnames = list(NULL, c("time", "status")),
                   type = "right", class = "Surv")
 summary(surv)
 ## Had infinite recursion (sometimes segfault) on 2.2.0.
@@ -4552,7 +4563,7 @@ prod(z)
 
 ## problems with 0-row data frames created by read.table
 x <- structure(list(one = NULL, two = NULL, three = NULL),
-               .Names = c("one", "two", "three"), class = "data.frame")
+               names = c("one", "two", "three"), class = "data.frame")
 y <- data.frame(one=1,two=2,three=3)
 (z <- rbind(x,y))
 stopifnot(dim(z) == c(1, 3))
@@ -4818,7 +4829,7 @@ stopifnot(identical(sapply(z, class), list(groups=class(f2), x="integer")),
 f <- function() NULL
 g <- alist(a=, b=4, c=)
 formals(f) <- g
-# identical(formals(f), g) is false as g has .Names attribute
+# identical(formals(f), g) is false as g has names attribute
 stopifnot(is.null(body(f)), identical(names(formals(f)), names(g)))
 ## was function(a, b=4)  before 2.6.0
 

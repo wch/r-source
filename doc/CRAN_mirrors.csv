@@ -9,7 +9,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Austria [https]",Austria,Wien,https://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at,"secure_mirror_from_master"
 "Belgium (Antwerp) [https]",Belgium,Antwerp,https://www.freestatistics.org/cran/,"Patrick Wessa","patrick # wessa.net",1,be
 "Belgium (Brussels) [https]",Belgium,Brussels,https://ftp.belnet.be/mirror/CRAN/,"Belnet, the Belgian research and education network","ftpmaint # belnet.be",1,be,"secure_mirror_from_master"
-"Brazil (BA) [https]",Brazil,Ilheus,https://nbcgib.uesc.br/mirrors/cran/,"Computational Biology Center at Universidade Estadual de Santa Cruz","Eduardo Almeida Costa <eacosta # uesc.br>",1,br,"secure_mirror_from_master"
+"Brazil (BA) [https]",Brazil,Ilheus,https://nbcgib.uesc.br/mirrors/cran/,"Computational Biology Center at Universidade Estadual de Santa Cruz","Eduardo Almeida Costa <eacosta # uesc.br>",0,br,"secure_mirror_from_master"
 "Brazil (PR) [https]",Brazil,Curitiba,https://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","root # c3sl.ufpr.br",1,br,"secure_mirror_from_master"
 "Brazil (RJ) [https]",Brazil,"Rio de Janeiro",https://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo.cruz # fiocruz.br",1,br,"secure_mirror_from_master"
 "Brazil (SP 1) [https]",Brazil,"Sao Paulo",https://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br,"secure_mirror_from_master"
@@ -33,7 +33,8 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Shanghai 1) [https]",China,Shanghai,https://mirrors.tongji.edu.cn/CRAN/,"Tongji University","mirrors # opentj.org",1,cn,"secure_mirror_from_master"
 "China (Shanghai 2) [https]",China,Shanghai,https://mirrors.sjtug.sjtu.edu.cn/cran/,"Shanghai Jiao Tong University","Alex Chi <iskyzh # gmail.com>",1,cn,"secure_mirror_from_master"
 "China (Shenzhen) [https]",China,Shenzhen,https://mirrors.sustech.edu.cn/CRAN/,"Southern University of Science and Technology (SUSTech)","cra # sustech.edu.cn",1,cn,"secure_mirror_from_master"
-"Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co,
+"China (Xianyang) [https]",China,Xianyang,https://mirrors.nwafu.edu.cn/cran/,"Northwest A&F University (NWAFU)","dingyuxiao99 # nwafu.edu.cn",1,cn
+"Colombia (Cali) [https]",Colombia,Cali,https://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",0,co,
 "Costa Rica [https]","Costa Rica","San José",https://mirror.uned.ac.cr/cran/,"Distance State University (UNED)","rherrerav # uned.ac.cr",1,cr,"secure_mirror_from_master"
 "Cyprus [https]",Cyprus,Nicosia,https://mirror.library.ucy.ac.cy/cran/,"University of Cyprus","mirror # ucy.ac.cy",1,cy,"secure_mirror_from_master"
 "Czech Republic [https]","Czech Republic","Prague",https://mirrors.nic.cz/R/,"CZ.NIC, Prague","mirrors # nic.cz",1,cz,"secure_mirror_from_master"

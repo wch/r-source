@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -106,23 +106,25 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   for integer vectors and factors.
 
   The \code{"radix"} method generally outperforms the other methods,
-  especially for character vectors and small integers. Compared to quick
-  sort, it is slightly faster for vectors with large integer or real
-  values (but unlike quick sort, radix is stable and supports all
-  \code{na.last} options). The implementation is orders of magnitude
-  faster than shell sort for character vectors, in part thanks to clever
-  use of the internal \code{CHARSXP} table.
+  especially for small integers.  Compared to quick sort, it is slightly
+  faster for vectors with large integer or real values (but unlike quick
+  sort, radix is stable and supports all \code{na.last} options). The
+  implementation is orders of magnitude faster than shell sort for
+  character vectors, but collation \emph{does not respect the
+  locale} and so gives incorrect answers even in English locales.
 
-  However, there are some caveats with the radix sort:
+  However, there are some caveats for the radix sort:
   \itemize{
     \item{
       If \code{x} is a \code{character} vector, all elements must share
-      the same encoding. Only UTF-8 (including ASCII) and Latin-1
-      encodings are supported. Collation always follows the "C" locale.
+      the same encoding.  Only UTF-8 (including ASCII) and Latin-1
+      encodings are supported.  Collation follows that with
+      \env{LC_COLLATE=C}, that is lexicographically byte-by-byte using
+      numerical ordering of bytes.
     }
     \item{
-      \link{Long vectors} (with more than 2^32 elements) and \code{complex}
-      vectors are not supported yet.
+      \link{Long vectors} (with \eqn{2^{31}}{2^31} or more elements)
+      and \code{complex} vectors are not supported.
     }
   }
 }

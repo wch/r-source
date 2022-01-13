@@ -1,6 +1,6 @@
 % File src/library/tools/man/pskill.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011 R Core Team
+% Copyright 2011-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pskill}
@@ -60,7 +60,7 @@ SIGUSR2
   objects contain the appropriate integer values for the current platform
   (or \code{NA_INTEGER_} if the signal is not defined).
 
-  Only \code{SIGINT} and \code{SIGKILL} will be defined on Windows, and
+  Only \code{SIGINT} and \code{SIGTERM} will be defined on Windows, and
   \code{pskill} will always use the Windows system call
   \code{TerminateProcess}.
 }

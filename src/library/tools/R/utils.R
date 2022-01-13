@@ -1009,11 +1009,10 @@ function(package, lib.loc = NULL)
     if(!nzchar(path)) return(NULL)
     if(package == "base") {
         len <- nrow(.S3_methods_table)
-        return(data.frame(generic = .S3_methods_table[, 1L],
-                          home = rep_len("base", len),
-                          class = .S3_methods_table[, 2L],
-                          delayed = rep_len(FALSE, len),
-                          stringsAsFactors = FALSE))
+        return(list2DF(list(generic = .S3_methods_table[, 1L],
+                            home = rep_len("base", len),
+                            class = .S3_methods_table[, 2L],
+                            delayed = rep_len(FALSE, len))))
     }
     lib.loc <- dirname(path)
     nsinfo <- parseNamespaceFile(package, lib.loc)
@@ -1024,11 +1023,10 @@ function(package, lib.loc = NULL)
     if(!all(ind)) {
         ## Delayed registrations can be handled directly.
         pos <- which(!ind)
-        tab <- data.frame(generic = S3methods[pos, 1L],
-                          home = S3methods[pos, 4L],
-                          class = S3methods[pos, 2L],
-                          delayed = rep_len(TRUE, length(pos)),
-                          stringsAsFactors = FALSE)
+        tab <- list2DF(list(generic = S3methods[pos, 1L],
+                            home = S3methods[pos, 4L],
+                            class = S3methods[pos, 2L],
+                            delayed = rep_len(TRUE, length(pos))))
         S3methods <- S3methods[ind, , drop = FALSE]
     }
     generic <- S3methods[, 1L]
@@ -1046,11 +1044,10 @@ function(package, lib.loc = NULL)
                use.names = FALSE)
     ## S3 group generics belong to base.
     homes[!ind] <- "base"
-    home <- homes[match(generic, generics)]
-    class <- S3methods[, 2L]
-    delayed <- rep_len(FALSE, length(class))
-    rbind(data.frame(generic, home, class, delayed,
-                     stringsAsFactors = FALSE),
+    rbind(list2DF(list(generic = generic,
+                       home = homes[match(generic, generics)],
+                       class = S3methods[, 2L],
+                       delayed = rep_len(FALSE, length(generic)))),
           tab)
 }
 
@@ -2050,8 +2047,7 @@ function(x, dfile)
         asc <- iconv(x, "latin1", "ASCII")
         ## fields might have been NA to start with, so use identical.
         if(!identical(asc, x)) {
-            warning(gettext("Unknown encoding with non-ASCII data: converting to ASCII"),
-                    domain = NA)
+            warning("Unknown encoding with non-ASCII data: converting to ASCII")
 	    ind <- is.na(asc) | (asc != x)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
         }

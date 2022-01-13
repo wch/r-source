@@ -1172,10 +1172,10 @@ function(package, lib.loc = NULL)
 
         nms <- character()
         ## Handle trailing colons and leading/trailing white space.
-        s <- sub("^ *", "", sub("( *:)? *$", "", s))
+        s <- sub("^[[:space:]]*", "", sub("([[:space:]]*:)?[[:space:]]*$", "", s))
         ## Handle \samp entries: need to match until the first unescaped
         ## rbrace.
-        re <- "\\\\samp\\{(([^\\}]|[\\].)*)\\}( *, *)?"
+        re <- "\\\\samp\\{(([^\\}]|[\\].)*)\\}([[:space:]]*,[[:space:]]*)?"
         m <- gregexpr(re, s)
         if(any(unlist(m) > -1)) {
             nms <- sub(re, "\\1", unlist(regmatches(s, m)))
@@ -1185,7 +1185,7 @@ function(package, lib.loc = NULL)
         }
         ## Handle \code entries, assuming that they can be taken literally
         ## (no escaping or quoting to obtain valid R syntax).
-        re <- "\\\\code\\{([^}]*)\\}( *, *)?"
+        re <- "\\\\code\\{([^}]*)\\}([[:space:]]*,[[:space:]]*)?"
         m <- gregexpr(re, s)
         add <- regmatches(s, m)
         lens <- lengths(add)
@@ -1208,7 +1208,7 @@ function(package, lib.loc = NULL)
         nms <- c(nms, add)
         regmatches(s, m) <- ""
         ## Handle rest.
-        nms <- c(nms, unlist(strsplit(s, " *, *")))
+        nms <- c(nms, unlist(strsplit(s, "[[:space:]]*,[[:space:]]*")))
         nms
     }
 
@@ -1223,7 +1223,7 @@ function(package, lib.loc = NULL)
         x <- .Rd_drop_comments(x[[1L]])
         ## </FIXME>
         ## What did the format section start with?
-        if(!grepl("^[ \n\t]*(A|This) data frame",
+        if(!grepl("^[[:space:]]*(A|This) data frame",
                   .Rd_deparse(x, tag = FALSE)))
             return(character())
         ## Get \describe inside \format.

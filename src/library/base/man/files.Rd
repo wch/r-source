@@ -77,7 +77,8 @@ Sys.junction(from, to)
   (However, directory names must not include a trailing backslash or
   slash on Windows.)  Note that if the file is a symbolic link on a
   Unix-alike, the result indicates if the link points to an actual file,
-  not just if the link exists.
+  not just if the link exists. On Windows, the result is unreliable for a
+  broken symbolic link (junction).
   Lastly, note the \emph{different} function \code{\link{exists}} which
   checks for existence of \R objects.
 

@@ -1624,11 +1624,10 @@ static int R_rmdir(const wchar_t *dir)
 static int isReparsePoint(const wchar_t *name)
 {
     DWORD res = GetFileAttributesW(name);
-    if(res == INVALID_FILE_ATTRIBUTES) {
-	warning("cannot get info on '%ls', reason '%s'",
-		name, formatError(GetLastError()));
+    if(res == INVALID_FILE_ATTRIBUTES)
+	/* Do not warn, because this function is also used for files that don't
+	   exist. R_WFileExists may return false for broken symbolic links. */
 	return 0;
-    }
     // printf("%ls: %x\n", name, res);
     return res & FILE_ATTRIBUTE_REPARSE_POINT;
 }
@@ -1664,10 +1663,16 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
     R_CheckStack(); // called recursively
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
     //printf("R_unlink(%ls)\n", name);
-    if (!R_WFileExists(name)) return 0;
-    if (force) _wchmod(name, _S_IWRITE);
+    /* We cannot use R_WFileExists here since it is false for broken
+       symbolic links
+       if (!R_WFileExists(name)) return 0; */
+    int name_exists = (GetFileAttributesW(name) != INVALID_FILE_ATTRIBUTES);
+    if (name_exists && force)
+	_wchmod(name, _S_IWRITE);
+    if (name_exists && isReparsePoint(name))
+	return delReparsePoint(name);
 
-    if (recursive) {
+    if (name_exists && recursive) {
 	_WDIR *dir;
 	struct _wdirent *de;
 	wchar_t p[PATH_MAX];
@@ -1677,8 +1682,7 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
 	_wstati64(name, &sb);
 	/* We need to test for a junction first, as junctions
 	   are detected as directories. */
-	if (isReparsePoint(name)) ans += delReparsePoint(name);
-	else if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	    if ((dir = _wopendir(name)) != NULL) {
 		while ((de = _wreaddir(dir))) {
 		    if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
@@ -1710,9 +1714,11 @@ static int R_unlink(const wchar_t *name, int recursive, int force)
 	    return ans;
 	}
 	/* drop through */
-    } else if (isReparsePoint(name)) return delReparsePoint(name);
+    }
 
-    return _wunlink(name) == 0 ? 0 : 1;
+    int unlink_succeeded = (_wunlink(name) == 0);
+    /* We want to return 0 if either unlink succeeded or 'name' did not exist */
+    return (unlink_succeeded || !name_exists) ? 0 : 1;
 }
 
 void R_CleanTempDir(void)

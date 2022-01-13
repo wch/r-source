@@ -366,6 +366,12 @@ if(FALSE) {
 
         dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         if (!dir.exists(instdir)) {
+            # This allows a package to be installed if a broken symbolic
+            # link (or a regular file) is place (PR#18262)
+            unlink(instdir, recursive = FALSE)
+            dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
+        }
+        if (!dir.exists(instdir)) {
             message("ERROR: unable to create ", sQuote(instdir), domain = NA)
             do_exit_on_error()
         }
@@ -1404,6 +1410,8 @@ if(FALSE) {
                              paste("Archs:", paste(dirs, collapse = ", "))
                              )
                 writeLines(newdesc, descfile, useBytes = TRUE)
+                saveRDS(.split_description(.read_description(descfile)),
+                         file.path(instdir, "Meta", "package.rds"))
             }
         } else if (multiarch) {   # end of src dir
             if (WINDOWS) {
@@ -2778,22 +2786,20 @@ if(FALSE) {
 
     topics <- Rd$Aliases
     M <- if (!length(topics)) {
-        data.frame(Topic = character(),
-                   File = character(),
-                   Title = character(),
-                   Internal = character(),
-                   stringsAsFactors = FALSE)
+        list2DF(list(Topic = character(),
+                     File = character(),
+                     Title = character(),
+                     Internal = character()))
     } else {
         lens <- lengths(topics)
         files <- sub("\\.[Rr]d$", "", Rd$File)
         internal <- (vapply(Rd$Keywords,
                             function(x) match("internal", x, 0L),
                             0L) > 0L)
-        data.frame(Topic = unlist(topics),
-                   File = rep.int(files, lens),
-                   Title = rep.int(Rd$Title, lens),
-                   Internal = rep.int(internal, lens),
-                   stringsAsFactors = FALSE)
+        list2DF(list(Topic = unlist(topics),
+                     File = rep.int(files, lens),
+                     Title = rep.int(Rd$Title, lens),
+                     Internal = rep.int(internal, lens)))
     }
     ## FIXME duplicated aliases warning
     outman <- file.path(outDir, "help")

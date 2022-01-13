@@ -782,19 +782,19 @@ static void attr2(SEXP s, LocalParseData *d, Rboolean not_names)
 	   !(TAG(a) == R_NamesSymbol && not_names)) {
 	    print2buff(", ", d);
 	    if(TAG(a) == R_DimSymbol) {
-		print2buff(".Dim", d);
+		print2buff("dim", d); // was .Dim
 	    }
 	    else if(TAG(a) == R_DimNamesSymbol) {
-		print2buff(".Dimnames", d);
+		print2buff("dimnames", d); // was .Dimnames
 	    }
 	    else if(TAG(a) == R_NamesSymbol) {
-		print2buff(".Names", d);
+		print2buff("names", d); // was .Names
 	    }
 	    else if(TAG(a) == R_TspSymbol) {
-		print2buff(".Tsp", d);
+		print2buff("tsp", d); // was .Tsp
 	    }
 	    else if(TAG(a) == R_LevelsSymbol) {
-		print2buff(".Label", d);
+		print2buff("levels", d); // was .Label
 	    }
 	    else {
 		/* TAG(a) might contain spaces etc */

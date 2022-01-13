@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2010--2020  R Core Team
+ *  Copyright (C) 2010--2021  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,9 @@
 #include <stdio.h>
 
 extern char *getRHOME(int); /* in ../rhome.c */
+
+extern size_t quoted_arg_len(const char *arg); /* in rcmdfn.c */
+extern char *quoted_arg_cat(char *dest, const char *arg);
 
 static void Usage (char *RCMD, char *arch)
 {
@@ -76,12 +79,18 @@ int main (int argc, char **argv)
     for(int i = cmdarg; i < argc; i++) {
 	if (interactive && !strcmp(argv[i], "CMD"))
 	    interactive = 0;
+	if (strlen(cmd) + quoted_arg_len(argv[i]) + 2 > CMD_LEN) {
+	    fprintf(stderr, "command line too long\n");
+	    exit(27);
+	}
 	strcat(cmd, " ");
-	strcat(cmd, "\"");
-	strcat(cmd, argv[i]);
-	strcat(cmd, "\"");
+	quoted_arg_cat(cmd, argv[i]);
     }
     /* the outermost double quotes are needed for cmd.exe */
+    if (strlen(cmd) + 1 > CMD_LEN) {
+	fprintf(stderr, "command line too long\n");
+	exit(27);
+    }
     strcat(cmd, "\"");
 
     if (interactive)

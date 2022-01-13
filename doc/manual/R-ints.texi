@@ -3651,7 +3651,8 @@ and many variables recording the graphics parameters and functions of
 them.
 
 The base system state is contained in @code{baseSystemState} structure
-defined in @file{R_ext/GraphicsBase.h}.  This contains three @code{GPar}
+defined in the private header @file{GraphicsBase.h}.  
+This contains three @code{GPar}
 structures and a Boolean variable used to record if @code{plot.new()}
 (or @code{persp}) has been used successfully on the device.
 

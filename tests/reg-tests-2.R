@@ -312,15 +312,15 @@ summary(data.frame(x))
 
 ## Chong Gu 2001-Feb-16.  step on binomials
 detg1 <-
-structure(list(Temp = structure(c(2L, 1L, 2L, 1L, 2L, 1L, 2L,
-    1L, 2L, 1L, 2L, 1L), .Label = c("High", "Low"), class = "factor"),
-    M.user = structure(c(1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L,
-    1L, 2L, 2L), .Label = c("N", "Y"), class = "factor"),
-    Soft = structure(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L),
-    .Label = c("Hard", "Medium", "Soft"), class = "factor"),
+structure(list(Temp = factor(c(2L, 1L, 2L, 1L, 2L, 1L, 2L,
+    1L, 2L, 1L, 2L, 1L), labels = c("High", "Low")),
+    M.user = factor(c(1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L,
+    1L, 2L, 2L), labels = c("N", "Y")),
+    Soft = factor(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L),
+    labels = c("Hard", "Medium", "Soft")),
     M = c(42, 30, 52, 43,
     50, 23, 55, 47, 53, 27, 49, 29), X = c(68, 42, 37, 24, 66,
-    33, 47, 23, 63, 29, 57, 19)), .Names = c("Temp", "M.user",
+    33, 47, 23, 63, 29, 57, 19)), names = c("Temp", "M.user",
 "Soft", "M", "X"), class = "data.frame", row.names = c("1", "3",
 "5", "7", "9", "11", "13", "15", "17", "19", "21", "23"))
 detg1.m0 <- glm(cbind(X,M)~1,binomial,detg1)
@@ -367,10 +367,11 @@ gofX.df<-
     0.999573603041505, 0.67546318055115, -0.756802495307928,
     -0.0583741434275801, -0.756802495307928, 0.999573603041505,
     -0.756802495307928, 0.67546318055115, -0.0583741434275801
-    ), groups = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
-    2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3), class = "factor", .Label = c("1",
-    "2", "3"))), .Names = c("A", "B", "C", "D", "groups"), row.names = 1:24,
-            class = "data.frame")
+    ), groups = factor(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L,
+                         2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L),
+                       labels = c("1", "2", "3"))),
+names = c("A", "B", "C", "D", "groups"), row.names = 1:24,
+class = "data.frame")
 
 gofX.manova <- manova(formula = cbind(A, B, C, D) ~ groups, data = gofX.df)
 try(summary(gofX.manova))
@@ -834,7 +835,7 @@ par(mfrow = c(1,1))
                    x4 = c(60, 52, 20, 47, 33, 22, 6, 44, 22, 26, 34, 12, 12),
                    y = c(78.5, 74.3, 104.3, 87.6, 95.9, 109.2, 102.7, 72.5,
                    93.1, 115.9, 83.8, 113.3, 109.4)),
-              .Names = c("x1", "x2", "x3", "x4", "y"), class = "data.frame",
+              names = c("x1", "x2", "x3", "x4", "y"), class = "data.frame",
               row.names = 1:13)
 teststep <- function(formula, data)
 {

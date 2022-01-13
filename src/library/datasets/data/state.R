@@ -49,18 +49,18 @@ list(x = c(-86.7509, -127.25, -111.625, -92.2992, -119.773, -105.513,
            38.4204, 44.5937, 43.0504))
 
 "state.division" <-
-structure(factor(c(4, 9, 8, 5, 9, 8, 1, 3, 3, 3, 9, 8, 6, 6, 7, 7, 4, 5,
+factor(c(4, 9, 8, 5, 9, 8, 1, 3, 3, 3, 9, 8, 6, 6, 7, 7, 4, 5,
 1, 3, 1, 6, 7, 4, 7, 8, 7, 8, 1, 2, 8, 2, 3, 7, 6, 5, 9, 2, 1, 3, 7, 4,
-5, 8, 1, 3, 9, 3, 6, 8), levels=1:9),
- .Label = c("New England", "Middle Atlantic", "South Atlantic",
+5, 8, 1, 3, 9, 3, 6, 8), levels=1:9,
+ labels = c("New England", "Middle Atlantic", "South Atlantic",
             "East South Central", "West South Central", "East North Central",
             "West North Central", "Mountain", "Pacific"))
 
 "state.region" <-
-structure(factor(c(2, 4, 4, 2, 4, 4, 1, 2, 2, 2, 4, 4, 3, 3, 3, 3, 2, 2,
+factor(c(2, 4, 4, 2, 4, 4, 1, 2, 2, 2, 4, 4, 3, 3, 3, 3, 2, 2,
 1, 2, 1, 3, 3, 2, 3, 4, 3, 4, 1, 1, 4, 1, 2, 3, 3, 2, 4, 1, 1, 2, 3, 2,
-2, 4, 1, 2, 4, 2, 3, 4), levels=1:4),
- .Label = c("Northeast", "South", "North Central", "West"))
+2, 4, 1, 2, 4, 2, 3, 4), levels=1:4,
+label = c("Northeast", "South", "North Central", "West"))
 
 "state.x77" <-
 structure(c(3615, 365, 2212, 2110, 21198, 2541, 3100, 579, 8277, 4931,
@@ -103,8 +103,8 @@ structure(c(3615, 365, 2212, 2110, 21198, 2541, 3100, 579, 8277, 4931,
             109889, 9027, 7521, 121412, 47831, 48798, 69273, 40975,
             68782, 96184, 44966, 1049, 30225, 75955, 41328, 262134,
             82096, 9267, 39780, 66570, 24070, 54464, 97203),
-          .Dim = c(50, 8),
-          .Dimnames = list(state.name,
+          dim = c(50, 8),
+          dimnames = list(state.name,
           c("Population", "Income", "Illiteracy", "Life Exp", "Murder",
             "HS Grad", "Frost", "Area")))
 

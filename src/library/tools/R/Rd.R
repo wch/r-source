@@ -75,15 +75,14 @@ function(db)
     ## NB: Encoding is the encoding declared in the file, not
     ## that after parsing.
     if(!length(db)) {
-        out <- data.frame(File = character(),
-                          Name = character(),
-                          Type = character(),
-                          Title = character(),
-                          Encoding = character(),
-                          stringsAsFactors = FALSE)
-        out$Aliases <- list()
-        out$Concepts <- list()
-        out$Keywords <- list()
+        out <- list2DF(list(File = character(),
+                            Name = character(),
+                            Type = character(),
+                            Title = character(),
+                            Encoding = character(),
+                            Aliases = list(),
+                            Concepts = list(),
+                            Keywords = list()))
         return(out)
     }
 
@@ -97,17 +96,14 @@ function(db)
     colnames(contents) <- entries
 
     title <- .Rd_format_title(unlist(contents[ , "Title"]))
-    out <- data.frame(File = basename(names(db)),
-                      Name = unlist(contents[ , "Name"]),
-                      Type = unlist(contents[ , "Type"]),
-                      Title = title,
-                      Encoding = unlist(contents[ , "Encoding"]),
-                      row.names = NULL, # avoid trying to compute row
-                                        # names
-                      stringsAsFactors = FALSE)
-    out$Aliases <- contents[ , "Aliases"]
-    out$Concepts <- contents[ , "Concepts"]
-    out$Keywords <- contents[ , "Keywords"]
+    out <- list2DF(list(File = basename(names(db)),
+                        Name = unlist(contents[ , "Name"]),
+                        Type = unlist(contents[ , "Type"]),
+                        Title = title,
+                        Encoding = unlist(contents[ , "Encoding"]),
+                        Aliases = contents[ , "Aliases"],
+                        Concepts = contents[ , "Concepts"],
+                        Keywords = contents[ , "Keywords"]))
     out
 }
 

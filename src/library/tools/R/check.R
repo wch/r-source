@@ -1751,7 +1751,7 @@ add_dummies <- function(dir, Log)
             ## that source files have the predefined extensions.
             ## </NOTE>
             if (!any(file.exists(file.path("src",
-                                           c("Makefile", "Makefile.win", 
+                                           c("Makefile", "Makefile.win",
 					     "Makefile.ucrt",
                                              "install.libs.R"))))) {
                 if (!length(dir("src", pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)"))) {
@@ -5219,6 +5219,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .*\\[-Wanalyzer-file-leak\\]",
                              ": warning: .*\\[-Wanalyzer-use-after-free\\]",
                              ": warning: .*\\[-Wanalyzer-free-of-non-heap\\]",
+                             ## gcc and clang
+                             ": warning: .*\\[-Wpointer-sign\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
                              "\\[-Wcpp\\] ",

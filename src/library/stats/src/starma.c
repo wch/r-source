@@ -1,6 +1,6 @@
 /*  R : A Computer Language for Statistical Data Analysis
  *
- *  Copyright (C) 1999-2002 The R Core Team
+ *  Copyright (C) 1999-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -332,8 +332,8 @@ forkal(Starma G, int d, int il, double *delta, double *y, double *amse,
 /*     and their conditional mean square errors for any arima process. */
 
     store = (double *) R_alloc(rd, sizeof(double));
-    Free(G->a); G->a = a = Calloc(rd, double);
-    Free(G->P); G->P = P = Calloc(rz, double);
+    R_Free(G->a); G->a = a = R_Calloc(rd, double);
+    R_Free(G->P); G->P = P = R_Calloc(rz, double);
 
 /*     check for input faults. */
     *ifault = 0;

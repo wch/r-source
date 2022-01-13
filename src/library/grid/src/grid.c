@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2019 The R Core Team
+ *                2003-2022 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1834,10 +1834,10 @@ static void polygonEdge(double *x, double *y, int n,
 			double *edgex, double *edgey) {
     int i, v1, v2;
     double xm, ym;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     int found = 0;
     double angle = theta/180*M_PI;
     double vangle1, vangle2;
@@ -2351,10 +2351,10 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     SEXP tracePts = R_NilValue;
     SEXP result = R_NilValue;
     double edgex, edgey;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     SEXP resolvedFill = R_NilValue;
     /* Get the current device 
      */
@@ -2893,10 +2893,10 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     double edgex, edgey;
     SEXP resolvedFill = R_NilValue;
     /* Get the current device 
@@ -3053,10 +3053,10 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
     double edgex, edgey;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -3550,10 +3550,10 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     LTransform transform;
     SEXP txt, result = R_NilValue;
     double edgex, edgey;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     /* 
      * Bounding rectangles for checking overlapping
      * Initialised to shut up compiler
@@ -4637,10 +4637,10 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
     const void *vmax;
-    double xmin = DOUBLE_XMAX;
-    double xmax = -DOUBLE_XMAX;
-    double ymin = DOUBLE_XMAX;
-    double ymax = -DOUBLE_XMAX;
+    double xmin = DBL_MAX;
+    double xmax = -DBL_MAX;
+    double ymin = DBL_MAX;
+    double ymax = -DBL_MAX;
     double edgex, edgey;
     /* Get the current device 
      */

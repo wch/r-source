@@ -150,6 +150,20 @@
       \sQuote{FIXME} to enable \code{as.vector(<data.frame>,
       mode="list")}.  This breaks code relying on
       \code{as.vector(<data.frame>)} to return the unchanged data frame.
+
+      \item \code{legend()} is now vectorized for arguments \code{cex},
+      \code{x.intersp}, and \code{text.width}.
+      The latter can now also be specified as a vector (one element for
+      each column of the legend) or as \code{NA} for computing a proper
+      column wise maximum value of \code{strwidth(legend)}.
+      The argument \code{y.intersp} can be specified as a vector with
+      one entry for each row of the legend.
+      \code{legend()} also gains new arguments \code{title.cex} and
+      \code{title.font}. Thanks to Swetlana Herbrandt.
+
+      \item Deparsing no longer remaps attribute names \code{dim},
+      \code{dimnames}, \code{levels}, \code{names} and \code{tsp} to
+      historical S-compatible names (which \code{structure()} maps back).
     }
   }
 
@@ -248,6 +262,11 @@
       open the \R installation directory in Explorer (\PR{17842}).
 
       \item \code{libcurl} is now required for building from source.
+
+      \item Clipboard connection now works also with text in other than the
+      current native encoding (\PR{18267}, with Hiroaki Yutani).  Text is
+      always pasted in UTF16-LE to the clipboard and the \code{encoding}
+      argument is ignored.
     }
   }
 
@@ -258,6 +277,9 @@
       tested (except \emph{pro tem} for \code{curlGetHeaders()}) as modern
       browsers have removed support.
       %% Chrome and Firefox did in early 2021: Safari and Edge never had it.
+
+      \item \R can now be built with \samp{DEFS = -DSTRICT_R_HEADERS=1},
+      but not yet some of the recommended packages.
     }
   }
 
@@ -274,8 +296,6 @@
       correct prototypes for Fortran BLAS/LAPACK routines called from
       C/C++, and requires adjustment of most such calls -- see
       \dQuote{Writing R Extensions}.
-      [Currently planned for early Nov: \acronym{CRAN} package authors
-      have been notified.]
 
       \item Package installation speed for packages installed with
       \code{keep.source} has been improved. This resolve the issue
@@ -336,7 +356,16 @@
       macro \code{R_LEGACY_S_DEFS} to \code{1} \emph{before} including
       any \R{} header.  Header \file{R_ext/RS.h} will no longer include
       \file{R_ext/Error.h} unless \code{R_LEGACY_S_DEFS} is set to \code{1}.
-   }
+
+      \item Header \file{R_ext/Constants.h} (included by \file{R.h})
+      when included from C++ now includes the C++ header \file{cfloat}
+      rather than the C header \file{float.h} (as C++11 is now
+      required).
+
+      \item The legacy S-compatibility macros \code{SINGLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
+      and will be removed in due course. 
+    }
   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -415,7 +444,7 @@
       data frames with default row names (Thanks to Charlie Gao's
       \PR{18179}).
 
-      \item \code{txtProgresBar()} now enforces a non-zero width for
+      \item \code{txtProgressBar()} now enforces a non-zero width for
       \code{char}, without which no progress can be visible.
 
       \item \code{dimnames(table(d))} is more consistent in the case where
@@ -445,6 +474,10 @@
       should now behave in all cases as always documented: the index used is
       equivalent to \code{as.integer(i)} unless that would overflow where
       \code{trunc(i)} is used instead.
+
+      \item \code{asOneSidedFormula()} now associates the resulting
+      formula with the global environment rather than the evaluation
+      environment created for the call.
     }
   }
 }
@@ -479,6 +512,20 @@
 
       \item \code{...names()} now matches \code{names(list(...))} closely,
       fixing \PR{18247}.
+
+      \item \code{all.equal(*, scale = s)} now works as intended when
+      \code{length(s) > 1}, partly thanks to Michael Chirico's \PR{18272}.
+
+      \item \code{print(x)} for long vectors \code{x} now also works for
+      named atomic vectors or lists and prints the correct number when
+      reaching the \code{getOption("max.print")} limit; partly thanks to a
+      report and proposal by Hugh Parsonage to the R-devel list.
+
+      \item \code{all.equal(<selfStart>, *)} no longer signals a deprecation
+      warning.
+
+      \item \code{formulate(*, response=r)} gives a helpful error message
+      now when \code{length(r) > 1}, thanks to Bill Dunlap's \PR{18281}.
     }
   }
 }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2016  The R Core Team
+ *  Copyright (C) 2005-2022  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 
 static const double THRESH = 30.;
 static const double MTHRESH = -30.;
-static const double INVEPS = 1/DOUBLE_EPS;
+static const double INVEPS = 1/DBL_EPSILON;
 
 /**
  * Evaluate x/(1 - x). An inline function is used so that x is
@@ -80,7 +80,7 @@ SEXP logit_linkinv(SEXP eta)
 	error(_("Argument %s must be a nonempty numeric vector"), "eta");
     for (i = 0; i < n; i++) {
 	double etai = reta[i], tmp;
-	tmp = (etai < MTHRESH) ? DOUBLE_EPS :
+	tmp = (etai < MTHRESH) ? DBL_EPSILON :
 	    ((etai > THRESH) ? INVEPS : exp(etai));
 	rans[i] = x_d_opx(tmp);
     }
@@ -100,7 +100,7 @@ SEXP logit_mu_eta(SEXP eta)
 	double etai = reta[i];
 	double opexp = 1 + exp(etai);
 
-	rans[i] = (etai > THRESH || etai < MTHRESH) ? DOUBLE_EPS :
+	rans[i] = (etai > THRESH || etai < MTHRESH) ? DBL_EPSILON :
 	    exp(etai)/(opexp * opexp);
     }
     UNPROTECT(1);

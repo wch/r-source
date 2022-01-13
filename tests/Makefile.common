@@ -12,7 +12,8 @@ test-src-gct = \
 	lm-tests.R \
 	ok-errors.R \
 	method-dispatch.R \
-	any-all.R
+	any-all.R \
+	structure.R
 test-src-strict-1 = \
 	$(test-src-gct) \
 	d-p-q-r-tests.R
@@ -24,7 +25,7 @@ test-src-sloppy-a = \
 	datasets.R \
 	datetime.R \
 	iec60559.R
-## set in Makefile.{in,win}
+## set in Makefile.{in,win} as requires recommended packages
 ##test-src-sloppy-b = eval-etc-2.R
 test-src-sloppy-1 = $(test-src-sloppy-a) $(test-src-sloppy-b)
 test-src-sloppy-auto =

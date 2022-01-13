@@ -32,8 +32,8 @@ structure(c("R or S files (*.R,*.q,*.ssc,*.S)",
 
             "*.R;*.q;*.ssc;*.S", "*.emf", "*.ps", "*.pdf", "*.png", "*.bmp",
             "*.jpeg;*.jpg", "*.txt", "*.RData;*.rda", "*.zip", "*.tar.gz", "*.*"),
-       .Dim = c(12L, 2L),
-       .Dimnames = list(c("R", "emf", "ps","pdf", "png",
+       dim = c(12L, 2L),
+       dimnames = list(c("R", "emf", "ps","pdf", "png",
                           "bmp", "jpeg", "txt", "RData", "zip", "tarball", "All"),
                         NULL))
 

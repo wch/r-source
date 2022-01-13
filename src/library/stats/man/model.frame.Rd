@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2022 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.frame}
@@ -38,7 +38,9 @@ get_all_vars(formula, data, \dots)
   \item{subset}{a specification of the rows to be used: defaults to all
     rows. This can be any valid indexing vector (see
     \code{\link{[.data.frame}}) for the rows of \code{data} or if that is not
-    supplied, a data frame made up of the variables used in \code{formula}.}
+    supplied, a data frame made up of the variables used in
+    \code{formula}.  (See additional details about how this argument
+    interacts with data-dependent bases under \sQuote{Details} below.)}
 
   \item{na.action}{how \code{NA}s are treated.  The default is first,
     any \code{na.action} attribute of \code{data}, second
@@ -102,6 +104,12 @@ get_all_vars(formula, data, \dots)
   \code{xlev} arguments: if \code{xlev} specifies a factor and a
   character variable is found, it is converted to a factor (as from \R
   2.10.0).
+
+  Because variables in the formula are evaluated before rows are dropped
+  based on \code{subset}, the characteristics of data-dependent bases such
+  as orthogonal polynomials (i.e. from terms using \code{\link{poly}}) or
+  splines will be computed based on the full data set rather than the
+  subsetted one.
 
   Unless \code{na.action = NULL}, time-series attributes will be removed
   from the variables found (since they will be wrong if \code{NA}s are

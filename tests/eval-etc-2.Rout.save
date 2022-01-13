@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2021-10-13 r81047) -- "Unsuffered Consequences"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2022-01-01 r81419) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin21.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -262,7 +262,7 @@ Z32: new("dgCMatrix", i = integer(0), p = c(0L, 0L, 0L), Dim = 3:2,
     Dimnames = list(NULL, NULL), x = numeric(0), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-ad: structure(c(2, 1, 1, 2), .Dim = c(2L, 2L), .Dimnames = list(NULL, 
+ad: structure(c(2, 1, 1, 2), dim = c(2L, 2L), dimnames = list(NULL, 
     c("a", "b")))
  --> checking list(*): Ok
 --=--=--=--=--
@@ -469,7 +469,7 @@ j: c(2, 9, 6, 7, 8, 9, 10)
  --> checking list(*): Ok
 --=--=--=--=--
 l3: structure(c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, 
-FALSE), .Dim = c(3L, 3L))
+FALSE), dim = c(3L, 3L))
  --> checking list(*): Ok
 --=--=--=--=--
 l3s: new("lgCMatrix", i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
@@ -575,5 +575,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.584 0.104 1.691 0.001 0.002 
+Time elapsed:  0.482 0.031 0.518 0.001 0.002 
 > 

@@ -1,6 +1,6 @@
 % File src/library/base/man/identical.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2001-2016 R Core Team
+% Copyright 2001-2021 R Core Team
 % Distributed under GPL 2 or later
 
 \name{identical}
@@ -76,8 +76,11 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   \code{\link{NaN}} as different from \code{\link{NA_real_}}, but all
   \code{NaN}s are equal (and all \code{NA} of the same type are equal).
 
-  Character strings are regarded as identical if they are in different
-  marked encodings but would agree when translated to UTF-8.
+  Character strings (except those in marked encoding \code{"bytes"}) are
+  regarded as identical even if they are in different marked encodings but
+  would agree when translated to UTF-8. A character string in marked encoding
+  \code{"bytes"} is only regarded as identical to a character string in the
+  same encoding and with the same content.
 
   If \code{attrib.as.set} is true, as by default, comparison of
   attributes view them as a set (and not a vector, so order is not

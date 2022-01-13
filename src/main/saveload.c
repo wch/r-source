@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2022  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1675,7 +1675,7 @@ static void OutStringXdr(FILE *fp, const char *s, SaveLoadData *d)
     strcpy(t, s);
     OutIntegerXdr(fp, n, d);
     res = xdr_bytes(&d->xdrs, &t, &n, n);
-    Free(t);
+    R_Free(t);
     if (!res)
 	error(_("an xdr string data write error occurred"));
 }

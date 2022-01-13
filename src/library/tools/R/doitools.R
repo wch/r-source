@@ -19,9 +19,8 @@
 doi_db <-
 function(dois, parents)
 {
-    db <- data.frame(DOI = trimws(as.character(dois)),
-                     Parent = as.character(parents),
-                     stringsAsFactors = FALSE)
+    db <- list2DF(list(DOI = trimws(as.character(dois)),
+                       Parent = as.character(parents)))
     class(db) <- c("doi_db", "data.frame")
     db
 }
@@ -141,9 +140,7 @@ function(db, verbose = FALSE, parallel = FALSE, pool = NULL)
                         p = list(),
                         s = rep.int("", length(d)),
                         m = rep.int("", length(d))) {
-        y <- data.frame(DOI = d, From = I(p), Status = s, Message = m,
-                        stringsAsFactors = FALSE)
-        y$From <- p
+        y <- list2DF(list(DOI = d, From = p, Status = s, Message = m))
         class(y) <- c("check_doi_db", "data.frame")
         y
     }

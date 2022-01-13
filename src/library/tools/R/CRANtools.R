@@ -549,10 +549,9 @@ function(db = CRAN_package_db())
     maintainer <- db[, "Maintainer"]
     address <- tolower(sub(".*<(.*)>.*", "\\1", maintainer))
     maintainer <- gsub("\n", " ", maintainer, fixed=TRUE)
-    data.frame(Package = db[, "Package"],
-               Address = address,
-               Maintainer = maintainer,
-               stringsAsFactors = FALSE)
+    list2DF(list(Package = db[, "Package"],
+                 Address = address,
+                 Maintainer = maintainer))
 }
 
 CRAN_package_maintainers_info <-
@@ -721,8 +720,7 @@ function(packages, which = "most", recursive = FALSE,
                }
                d <- as.Date(d)
                o <- order(d, decreasing = TRUE)
-               data.frame(Package = e[o], Date = d[o],
-                          stringsAsFactors = FALSE)
+               list2DF(list(Package = e[o], Date = d[o]))
            })
 }
 
