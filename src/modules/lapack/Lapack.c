@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2019  The R Core Team.
+ *  Copyright (C) 2001--2022  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1411,7 +1411,7 @@ void
 R_init_lapack(DllInfo *info)
 {
     R_LapackRoutines *tmp;
-    tmp = Calloc(1, R_LapackRoutines);
+    tmp = R_Calloc(1, R_LapackRoutines);
 
     tmp->do_lapack = mod_do_lapack;
     R_setLapackRoutines(tmp);

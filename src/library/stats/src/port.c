@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2015   The R Core Team.
+ *  Copyright (C) 2005-2022   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -244,11 +244,11 @@ void F77_NAME(dv7ipr)(int *n, const int ip[], double x[])
 {
     /* permute x so that x[i] := x[ip[i]]. */
     int i, nn = *n;
-    double *xcp = Calloc(nn, double);
+    double *xcp = R_Calloc(nn, double);
 
     for (i = 0; i < nn; i++) xcp[i] = x[ip[i] - 1]; /* ip contains 1-based indices */
     Memcpy(x, xcp, nn);
-    Free(xcp);
+    R_Free(xcp);
 }
 
 /* dv7prm... applies reverse permutation to vector.  */
@@ -256,11 +256,11 @@ void F77_NAME(dv7prm)(int *n, const int ip[], double x[])
 {
     /* permute x so that x[ip[i]] := x[i]. */
     int i, nn = *n;
-    double *xcp = Calloc(nn, double);
+    double *xcp = R_Calloc(nn, double);
 
     for (i = 0; i < nn; i++) xcp[ip[i] - 1] = x[i]; /* ip contains 1-based indices */
     Memcpy(x, xcp, nn);
-    Free(xcp);
+    R_Free(xcp);
 }
 
 /* dv7scl... scale src by *scal to dest */

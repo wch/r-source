@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2020   The R Core Team
+ *  Copyright (C) 1998-2022   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2004        The R Foundation
  *
@@ -26,7 +26,7 @@
 #include <Defn.h> /* => Utils.h with the protos from here; Rinternals.h */
 #include <Internal.h>
 #include <Rmath.h>
-#include <R_ext/RS.h>  /* for Calloc/Free */
+#include <R_ext/RS.h>  /* for R_Calloc/R_Free */
 #include <float.h> /* for DBL_MAX */
 #include <R_ext/Itermacros.h> /* for ITERATE_BY_REGION */
 
@@ -1173,7 +1173,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 
     if(isNull(rho)) {
 	/* First sort NAs to one end */
-	isna = Calloc(n, int);
+	isna = R_Calloc(n, int);
 	switch (TYPEOF(key)) {
 	case LGLSXP:
 	case INTSXP:
@@ -1206,7 +1206,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 		sort2_with_index
 #undef less
 		if (n - numna < 2) {
-		    Free(isna);
+		    R_Free(isna);
 		    return;
 		}
 		if (nalast) hi -= numna; else lo += numna;
@@ -1274,7 +1274,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 #undef less
 	}
     }
-    if(isna) Free(isna);
+    if(isna) R_Free(isna);
 }
 
 /* version for long vectors */
@@ -1310,7 +1310,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 
     if(isNull(rho)) {
 	/* First sort NAs to one end */
-	isna = Calloc(n, int);
+	isna = R_Calloc(n, int);
 	switch (TYPEOF(key)) {
 	case LGLSXP:
 	case INTSXP:
@@ -1343,7 +1343,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 		sort2_with_index
 #undef less
 		if (n - numna < 2) {
-		    Free(isna);
+		    R_Free(isna);
 		    return;
 		}
 		if (nalast) hi -= numna; else lo += numna;
@@ -1411,7 +1411,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 #undef less
 	}
     }
-    if(isna) Free(isna);
+    if(isna) R_Free(isna);
 }
 #endif
 

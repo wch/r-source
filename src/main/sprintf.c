@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2020     The R Core Team
+ *  Copyright (C) 2002--2022     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 #include <Defn.h>
 #include <Internal.h>
 #include "RBufferUtils.h"
-#include <R_ext/RS.h> /* for Calloc/Free */
+#include <R_ext/RS.h> /* for R_Calloc/R_Free */
 #ifdef Win32
 #include <trioremap.h>
 #endif
@@ -334,13 +334,13 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				if(TYPEOF(_this) != STRSXP) {
 				    /* as.character method might call sprintf() */
 				    size_t nc = strlen(outputString);
-				    char *z = Calloc(nc+1, char);
+				    char *z = R_Calloc(nc+1, char);
 				    strcpy(z, outputString);
 				    PROTECT(tmp = lang2(R_AsCharacterSymbol, _this));
 
 				    COERCE_THIS_TO_A
 				    strcpy(outputString, z);
-				    Free(z);
+				    R_Free(z);
 				}
 				break;
 			    default:

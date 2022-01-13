@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2002-2017  The R Foundation
- *  Copyright (C) 1999-2018  The R Core Team.
+ *  Copyright (C) 1999-2022  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
-#include <R_ext/RS.h> /* for Calloc, Realloc and for S4 object bit */
+#include <R_ext/RS.h> /* for R_Calloc, R_Realloc and for S4 object bit */
 
 static SEXP GetObject(RCNTXT *cptr)
 {
@@ -1399,11 +1399,11 @@ SEXP do_set_prim_method(SEXP op, const char *code_string, SEXP fundef,
 	if(prim_methods) {
 	    int i;
 
-	    prim_methods  = Realloc(prim_methods,  n, prim_methods_t);
-	    prim_generics = Realloc(prim_generics, n, SEXP);
-	    prim_mlist	  = Realloc(prim_mlist,	   n, SEXP);
+	    prim_methods  = R_Realloc(prim_methods,  n, prim_methods_t);
+	    prim_generics = R_Realloc(prim_generics, n, SEXP);
+	    prim_mlist	  = R_Realloc(prim_mlist,	   n, SEXP);
 
-	    /* Realloc does not clear the added memory, hence: */
+	    /* R_Realloc does not clear the added memory, hence: */
 	    for (i = maxMethodsOffset ; i < n ; i++) {
 		prim_methods[i]	 = NO_METHODS;
 		prim_generics[i] = NULL;
@@ -1411,9 +1411,9 @@ SEXP do_set_prim_method(SEXP op, const char *code_string, SEXP fundef,
 	    }
 	}
 	else {
-	    prim_methods  = Calloc(n, prim_methods_t);
-	    prim_generics = Calloc(n, SEXP);
-	    prim_mlist	  = Calloc(n, SEXP);
+	    prim_methods  = R_Calloc(n, prim_methods_t);
+	    prim_generics = R_Calloc(n, SEXP);
+	    prim_mlist	  = R_Calloc(n, SEXP);
 	}
 	maxMethodsOffset = n;
     }
