@@ -41,11 +41,10 @@ function(ifile, encoding = "unknown")
     dpos <- grep(syntax$doc, lines)
     cpos <- grep(syntax$code, lines)
 
-    recs <- rbind(data.frame(line = dpos,
-                             type = rep.int(TEXT, length(dpos))),
-                  data.frame(line = cpos,
-                             type = rep.int(CODE, length(cpos)))
-                  )
+    recs <- list2DF(list(line = c(dpos,
+                                  cpos),
+                         type = c(rep.int(TEXT, length(dpos)),
+                                  rep.int(CODE, length(cpos)))))
     recs <- recs[order(recs$line),]
     last <- 0L
     state <- TEXT

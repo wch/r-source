@@ -2786,22 +2786,20 @@ if(FALSE) {
 
     topics <- Rd$Aliases
     M <- if (!length(topics)) {
-        data.frame(Topic = character(),
-                   File = character(),
-                   Title = character(),
-                   Internal = character(),
-                   stringsAsFactors = FALSE)
+        list2DF(list(Topic = character(),
+                     File = character(),
+                     Title = character(),
+                     Internal = character()))
     } else {
         lens <- lengths(topics)
         files <- sub("\\.[Rr]d$", "", Rd$File)
         internal <- (vapply(Rd$Keywords,
                             function(x) match("internal", x, 0L),
                             0L) > 0L)
-        data.frame(Topic = unlist(topics),
-                   File = rep.int(files, lens),
-                   Title = rep.int(Rd$Title, lens),
-                   Internal = rep.int(internal, lens),
-                   stringsAsFactors = FALSE)
+        list2DF(list(Topic = unlist(topics),
+                     File = rep.int(files, lens),
+                     Title = rep.int(Rd$Title, lens),
+                     Internal = rep.int(internal, lens)))
     }
     ## FIXME duplicated aliases warning
     outman <- file.path(outDir, "help")
