@@ -47400,8 +47400,14 @@ if test -n "${CURL_CONFIG}"; then
   fi
   ## This should be correct for a static-only build, user will
   ## need to override to specify static linking (see config.site)
+  ## SU: No, it's not, unfortunately, we have to use --static-libs
+  ## for static-only builds on macOS as those provide incomplete flags with --libs
   if test -z "${CURL_LIBS}"; then
-    CURL_LIBS=`${CURL_CONFIG} --libs`
+    if test x`${CURL_CONFIG} --built-shared` = xno; then
+      CURL_LIBS=`${CURL_CONFIG} --static-libs`
+    else
+      CURL_LIBS=`${CURL_CONFIG} --libs`
+    fi
   fi
 fi
 r_save_CPPFLAGS="${CPPFLAGS}"
