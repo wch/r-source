@@ -1619,11 +1619,11 @@ recommended in
 `Writing R Extensions'
 @end ifclear
 @findex R_alloc
-@findex Calloc
-@findex Realloc
-@findex Free
+@findex R_Calloc
+@findex R_Realloc
+@findex R_Free
 for use in @R{} packages, namely the use of @code{R_alloc},
-@code{Calloc}, @code{Realloc} and @code{Free}.  Memory allocated by
+@code{R_Calloc}, @code{R_Realloc} and @code{R_Free}.  Memory allocated by
 @code{R_alloc} is freed by the garbage collector once the `watermark'
 has been reset by calling
 @findex vmaxset

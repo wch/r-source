@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2021 The R Core Team.
+ *  Copyright (C) 2000-2022 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -71,14 +71,14 @@
 #include <R_ext/Arith.h>      /* R_FINITE, ISNAN, ... */
 #include <R_ext/Boolean.h>    /* Rboolean type */
 #include <R_ext/Complex.h>    /* Rcomplex type */
-#include <R_ext/Constants.h>  /* PI, DOUBLE_EPS, etc */
+#include <R_ext/Constants.h>  /* M_PI; DOUBLE_EPS, etc unless STRICT_R_HEADERS */
 #include <R_ext/Error.h>      /* error and warning */
 #include <R_ext/Memory.h>     /* R_alloc and S_alloc */
 #include <R_ext/Print.h>      /* Rprintf etc */
 #include <R_ext/Random.h>     /* RNG interface */
 #include <R_ext/Utils.h>      /* sort routines et al */
 #include <R_ext/RS.h>
-/* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
+/* for PROBLEM ... R_Calloc, R_Realloc, R_Free, Memcpy, F77_xxxx */
 
 
 typedef double Sfloat;
