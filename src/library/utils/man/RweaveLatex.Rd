@@ -57,7 +57,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   directory} in the parlance of the \sQuote{MiKTeX settings} utility).
 
   By default, \file{Sweave.sty} loads the \samp{graphicx} \LaTeX package
-  sets the width of all included graphics to:\cr
+  and sets the width of all included graphics to:\cr
   \samp{\\setkeys{Gin}{width=0.8\\textwidth}}.
 
   This setting (defined in the \samp{graphicx} package)
