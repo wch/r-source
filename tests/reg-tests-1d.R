@@ -5650,6 +5650,12 @@ if(englishMsgs)
 ## was 'Error in doWithOneRestart(return(expr), restart) : bad error message'
 
 
+## hist() of a single date or date-time
+dt <- as.POSIXlt("2021-10-13", "UTC")
+hist(dt,          "secs", plot = FALSE)
+hist(as.Date(dt), "days", plot = FALSE)
+## failed in R <= 4.1.2 with Error in seq_len(1L + max(which(breaks < maxx)))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
