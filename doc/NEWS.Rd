@@ -362,7 +362,7 @@
       rather than the C header \file{float.h} (as C++11 is now
       required).
 
-      \item The legacy S-compatibility macros \code{SINGLE_*} in
+      \item The legacy S-compatibility macros \code{DOUBLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
       and will be removed in due course. 
     }
@@ -488,6 +488,13 @@
       \item The default version of Bioconductor has been changed to
       3.14. (This is used by \code{setRepositories} and the menus in
       GUIs.)
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The legacy S-compatibility macros \code{DOUBLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated.
     }
   }
 

@@ -43,7 +43,9 @@
 #include <float.h>  /* Defines the RHSs, C99 and later */
 #endif
 /*
-  These SINGLE_* defines were deprecated in R 4.2.0.
+  The SINGLE_* defines were deprecated in R 4.1.3.
+
+  The DOUBLE_* defines were deprecated in R 4.2.0
  */
 #define SINGLE_EPS     FLT_EPSILON
 #define SINGLE_BASE    FLT_RADIX
