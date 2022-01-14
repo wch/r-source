@@ -5657,6 +5657,31 @@ hist(as.Date(dt), "days", plot = FALSE)
 ## failed in R <= 4.1.2 with Error in seq_len(1L + max(which(breaks < maxx)))
 
 
+### globalCallingHandlers() when being called inside withCallingHandlers(),  PR#18257
+globalCallingHandlers(NULL)
+stopifnot(identical(globalCallingHandlers(), list()))
+## Register a global calling handler for messages
+globalCallingHandlers(message = function(m) {
+  cat("Hey, message :", conditionMessage(m))
+  invokeRestart("muffleMessage")
+})
+h1 <- globalCallingHandlers()
+## Confirm that it is registered
+stopifnot(is.list(h1), length(h1) == 1, is.function(h1$message))
+## and verify it works
+stopifnot(identical(capture.output(message("boom")), "Hey, message : boom"))
+## Now try to remove all global calling handlers while having active
+## calling handlers; gives a non-tryCatch()able (!) error, hence:
+op <- options(error = expression(NULL)) # careful!!
+## ... "should not be called with handlers on the stack"  [as expected]
+withCallingHandlers(globalCallingHandlers(NULL), foo = identity)
+options(op)# revert to sanity.  Then:
+h2 <- globalCallingHandlers()
+stopifnot(identical(h1, h2))
+## h2 was empty list() erronously in R versions <= 4.2.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

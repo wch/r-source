@@ -364,7 +364,7 @@
 
       \item The legacy S-compatibility macros \code{DOUBLE_*} in
       \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
-      and will be removed in due course. 
+      and will be removed in due course.
     }
   }
 
@@ -533,6 +533,10 @@
 
       \item \code{formulate(*, response=r)} gives a helpful error message
       now when \code{length(r) > 1}, thanks to Bill Dunlap's \PR{18281}.
+
+      \item Unregistering \code{globalCallingHandlers} inside
+      \code{withCallingHandlers()} now works, thanks to Henrik Bengtsson's
+      \PR{18275}.
     }
   }
 }
