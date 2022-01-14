@@ -35,6 +35,9 @@
 
       \item \code{...names()} now matches \code{names(list(...))} closely,
       fixing \PR{18247}.
+
+      \item \code{all.equal(*, scale = s)} now works as intended when
+      \code{length(s) > 1}, partly thanks to Michael Chirico's \PR{18272}.
     }
   }
 }

@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2022 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -138,28 +138,31 @@ all.equal.numeric <-
     }
     out <- out | target == current # equal NAs _or_ numbers
     if(all(out)) return(if(is.null(msg)) TRUE else msg)
-    if(countEQ) {
-        N <- length(out)
-        sabst0 <- sum(abs(target[out])/N)
-    } else
-        sabst0 <- 0
-    target  <- target [!out]
-    current <- current[!out]
-    if(!countEQ) N <- length(target)
+    anyO <- any(out)
+    sabst0 <- if(countEQ && anyO) mean(abs(target[out])) else 0
+    if(anyO) {
+        keep <- which(!out)
+	target  <- target [keep]
+	current <- current[keep]
+	if(!is.null(scale) && length(scale) > 1L)
+	    scale <- rep_len(scale, length(out))[keep]
+    }
+    N <- length(target)
     if(is.integer(target) && is.integer(current)) target <- as.double(target)
-    xy <- sum(abs(target - current)/N) ## abs(z) == Mod(z) for complex
     what <-
 	if(is.null(scale)) {
-	    xn <- (sabst0 + sum(abs(target)/N))
-	    if(is.finite(xn) && xn > tolerance) {
-		xy <- xy/xn
+	    scale <- (sabst0 + sum(abs(target)/N))
+	    if(is.finite(scale) && scale > tolerance) {
 		"relative"
-	    } else "absolute"
+	    } else {
+		scale <- 1
+                "absolute"
+	    }
 	} else {
 	    stopifnot(all(scale > 0))
-	    xy <- xy/scale
 	    if(all(abs(scale - 1) < 1e-7)) "absolute" else "scaled"
 	}
+    xy <- sum(abs(target - current)/(N*scale)) ## abs(z) == Mod(z) for complex
 
     if (cplx) what <- paste(what, "Mod") # PR#10575
     if(is.na(xy) || xy > tolerance)
