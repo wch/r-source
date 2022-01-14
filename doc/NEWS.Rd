@@ -194,6 +194,9 @@
 
       \item \code{dev.capabilities()} reports on device support
       for the new features.
+
+      \item \code{par()} now warns about unnamed non-character arguments
+      to prevent misuse such as \code{{usr <- par("usr"); par(usr)}}.
     }
   }
 

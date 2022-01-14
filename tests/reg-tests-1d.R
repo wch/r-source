@@ -5681,6 +5681,10 @@ stopifnot(identical(h1, h2))
 ## h2 was empty list() erronously in R versions <= 4.2.x
 
 
+## PR#18246: par() should warn about invalid/unused arguments
+tools::assertWarning({usr <- par("usr"); par(usr)}, verbose = TRUE)
+tools::assertWarning(par(las = 1, list(cex = 1)))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
