@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2021-11-06 17:17\n"
+"POT-Creation-Date: 2022-01-14 11:27\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -63,7 +63,9 @@ msgid "'iconvlist' is not available on this system"
 msgstr "«iconvlist» er ikkje tilgjengeleg på dette systemet"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr "«kind» må vera ein teiknstreng av lengd 1 (slumptalsgenerator som skal brukast)."
+msgstr ""
+"«kind» må vera ein teiknstreng av lengd 1 (slumptalsgenerator som skal "
+"brukast)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "«%s» er ikkje ei gyldig kortform av ein slumptalsgenerator"
@@ -137,7 +139,8 @@ msgid "invalid 'name' argument"
 msgstr "ugyldig «name»-argument"
 
 msgid "package %s is required by %s, which may no longer work correctly"
-msgstr "pakken «%s» er kravd av «%s», som kanskje ikkje fungerer skikkeleg lenger"
+msgstr ""
+"pakken «%s» er kravd av «%s», som kanskje ikkje fungerer skikkeleg lenger"
 
 msgid "package %s is required by %s so will not be detached"
 msgstr "pakken «%s» er kravd av «%s», og vert derfor ikkje kopla frå"
@@ -279,7 +282,9 @@ msgstr "ugyldig «dimnames» oppgjeve for dataramme"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "kan ikkje gjera klassen «%s» om til ei dataramme"
 
-msgid "'row.names' is not a character vector of length %d -- omitting it. Will be an error!"
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
 msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -342,8 +347,10 @@ msgstr ""
 msgid "need 0, 1, or 2 subscripts"
 msgstr "treng 0, 1 eller 2 indeksar"
 
-msgid "missing values are not allowed in subscripted assignments of data frames"
-msgstr "manglande verdiar er ikkje tillatne i indekserte tildelingar av datarammer"
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr ""
+"manglande verdiar er ikkje tillatne i indekserte tildelingar av datarammer"
 
 msgid "non-existent rows not allowed"
 msgstr "ikkje-eksisterande rader er ikkje tillatne"
@@ -462,7 +469,8 @@ msgstr "«to» må ha lengd 1"
 msgid "'length.out' must be of length 1"
 msgstr "«length.out» må ha lengd 1"
 
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
 msgstr "nøyaktig to av «to», «by» og «length.out»/«along.with» må oppgjevast"
 
 msgid "'by' must be of length 1"
@@ -618,7 +626,8 @@ msgstr "er ugyldig for dim ="
 
 #, fuzzy
 msgid "must pass a package name, %s or %s object"
-msgstr "må oversenda eit pakkenamn eller «DLLInfo»- eller «DLLInfoReference»-objekt"
+msgstr ""
+"må oversenda eit pakkenamn eller «DLLInfo»- eller «DLLInfoReference»-objekt"
 
 #, fuzzy
 msgid "No DLL currently loaded with name or path %s"
@@ -634,8 +643,11 @@ msgstr "må oppgje DLL via eit «DLLInfo»-objekt. Sjå «getLoadedDLLs()»."
 msgid "function is not in a namespace, so cannot locate associated DLL"
 msgstr "funksjonen er ikkje i eit namnerom, så kan ikkje lasta tilknytt DLL"
 
-msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
-msgstr "ser etter DLL for innebygde rutinekall, men ingen DLL-ar i namnerommet til kallet"
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr ""
+"ser etter DLL for innebygde rutinekall, men ingen DLL-ar i namnerommet til "
+"kallet"
 
 msgid "0 x 0 matrix"
 msgstr "0 × 0-matrise"
@@ -669,8 +681,11 @@ msgstr "«%s» gjev ikkje meining for ordna faktorar"
 msgid "'%s' not defined for ordered factors"
 msgstr "«%s» er ikkje definert for ordna faktorar"
 
-msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
-msgstr "«%s» gjev berre meining for ordna faktorar viss alle argumenta har same nivå"
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr ""
+"«%s» gjev berre meining for ordna faktorar viss alle argumenta har same nivå"
 
 msgid "no files to copy to"
 msgstr "ingen filer å kopiera til"
@@ -682,7 +697,9 @@ msgid "more 'from' files than 'to' files"
 msgstr "fleire «from»-filer enn «to»-filer"
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
-msgstr "«recursive» vert ikkje brukt, sidan «to» ikkje er ei enkeltmappe som finst frå før"
+msgstr ""
+"«recursive» vert ikkje brukt, sidan «to» ikkje er ei enkeltmappe som finst "
+"frå før"
 
 msgid "cannot overwrite a non-directory with a directory"
 msgstr ""
@@ -759,7 +776,9 @@ msgstr "«zero.print» har lengd > 1"
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "«zero.print» må vera ein teiknstreng, ein boolsk verdi eller NULL"
 
-msgid "'zero.print' is truncated to fit into formatted zeros; consider 'replace=TRUE'"
+msgid ""
+"'zero.print' is truncated to fit into formatted zeros; consider "
+"'replace=TRUE'"
 msgstr ""
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
@@ -896,7 +915,8 @@ msgstr "feil ved lasting av pakke/namnerom for «%s»"
 
 #, fuzzy
 msgid "package %s does not have a namespace and should be re-installed"
-msgstr "pakken «%s» har ikkje eit namnerom (NAMESPACE), og må installerast på nytt"
+msgstr ""
+"pakken «%s» har ikkje eit namnerom (NAMESPACE), og må installerast på nytt"
 
 msgid "package %s already present in search()"
 msgstr "pakken «%s» er allereie tilgjengeleg i «search()»"
@@ -964,7 +984,8 @@ msgstr ""
 "\n"
 "brukar versjonen i «%s»"
 
-msgid "Further information is available in the following vignettes in directory %s:"
+msgid ""
+"Further information is available in the following vignettes in directory %s:"
 msgstr "Du finn meir informasjon i vignette i mappa «%s»:"
 
 msgid "Description:"
@@ -1119,8 +1140,12 @@ msgid "additional arguments ignored in message()"
 msgstr "ignorerte ekstraargument i message()"
 
 #, fuzzy
-msgid "tracing functions requires the 'methods' package, but unable to load the 'methods' namespace"
-msgstr "Sporfunksjonar krev «methods»-pakken, men klarte ikkje lasta «methods»-namnerommet"
+msgid ""
+"tracing functions requires the 'methods' package, but unable to load the "
+"'methods' namespace"
+msgstr ""
+"Sporfunksjonar krev «methods»-pakken, men klarte ikkje lasta «methods»-"
+"namnerommet"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "kan ikkje endra lagringsmodus til ein faktor"
@@ -1155,13 +1180,19 @@ msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "namnerommet «%s» er alt forsegla i «loadNamespace»"
 
 #, fuzzy
-msgid "failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace"
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr "klarte ikkje tildela RegisteredNativeSymbol for"
 
-msgid "failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace"
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
 msgstr ""
 
-msgid "failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace"
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
 msgstr ""
 
 msgid "package %s does not have a namespace"
@@ -1179,7 +1210,8 @@ msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
 msgid "package %s has no 'package.rds' in Meta/"
 msgstr "pakken «%s» har inga NAMESPACE-fil"
 
-msgid "package %s has a license that you need to accept in an interactive session"
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
 msgstr "pakken %s har lisensvilkår som du må godta i ei interaktiv økt"
 
 #, fuzzy
@@ -1203,7 +1235,9 @@ msgstr ""
 msgid "license for package %s not accepted"
 msgstr "Lisensvilkåra for pakken %s ikkje godtekne"
 
-msgid "package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version"
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
 msgstr ""
 
 msgid "-- processing imports for"
@@ -1238,7 +1272,9 @@ msgstr ""
 
 #, fuzzy
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
-msgstr "exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i pakken %s"
+msgstr ""
+"exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i "
+"pakken %s"
 
 msgid "-- processing S4 stuff for"
 msgstr ""
@@ -1254,11 +1290,17 @@ msgid "--- processing classes"
 msgstr "feil klasse"
 
 #, fuzzy
-msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
-msgstr "exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i pakken %s"
+msgid ""
+"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
+"package %s"
+msgstr ""
+"exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i "
+"pakken %s"
 
 msgid "in package %s classes %s were specified for export but not defined"
-msgstr "i pakken «%s» er klassane «%s» spesifiserte for eksport, men er ikkje definerte"
+msgstr ""
+"i pakken «%s» er klassane «%s» spesifiserte for eksport, men er ikkje "
+"definerte"
 
 #, fuzzy
 msgid "no function found corresponding to methods exports from %s for: %s"
@@ -1277,7 +1319,9 @@ msgid "failed to find metadata object for %s"
 msgstr "fann ikkje metadataobjekt for %s"
 
 msgid "in package %s methods %s were specified for export but not defined"
-msgstr "i pakken «%s» er metodane «%s» spesifiserte for eksport, men er ikkje definerte"
+msgstr ""
+"i pakken «%s» er metodane «%s» spesifiserte for eksport, men er ikkje "
+"definerte"
 
 msgid "-- done processing S4 stuff for"
 msgstr ""
@@ -1324,15 +1368,21 @@ msgid "invalid import target"
 msgstr "ugyldig importeringsmål"
 
 msgid "found methods to import for function %s but not the generic itself"
-msgstr "fann metodar for import for funksjonen «%s», men ikkje for den generiske funksjonen sjølv"
+msgstr ""
+"fann metodar for import for funksjonen «%s», men ikkje for den generiske "
+"funksjonen sjølv"
 
 #, fuzzy
 msgid "replacing previous import %s by %s when loading %s"
 msgstr "byt ut førre import «%s» ved lasting av «%s»"
 
 #, fuzzy
-msgid "No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)"
-msgstr "Fann ingen generisk funksjon som svarar til førespurde importerte metodar for «%s» frå pakken «%s» (feilformaterte eksportar?)"
+msgid ""
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
+msgstr ""
+"Fann ingen generisk funksjon som svarar til førespurde importerte metodar "
+"for «%s» frå pakken «%s» (feilformaterte eksportar?)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "kan ikkje leggja til i eksportar til forsegla namnerom"
@@ -1372,7 +1422,8 @@ msgstr "ugyldig metode"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "fann ikkje objektet «%s» ved lasting av namnerommet «%s»"
 
-msgid "While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
+msgid ""
+"While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
 msgstr ""
 
 msgid "Maybe package installed with version of R newer than %s ?"
@@ -1638,7 +1689,7 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "fleire argument ignorerte i warning()"
 
-msgid "Sys.setenv(LANGUAGE=\"%s\")  may have failed"
+msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
 msgid ""
@@ -1783,8 +1834,12 @@ msgstr ""
 msgid "invalid 'digits'"
 msgstr "ugyldig «digits»-verdi"
 
-msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
-msgstr "argumenta «show.output.on.console», «minimized» og «invisible» gjeld berre Windows"
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"argumenta «show.output.on.console», «minimized» og «invisible» gjeld berre "
+"Windows"
 
 msgid "'intern' must be TRUE or FALSE"
 msgstr "«intern» må vera TRUE eller FALSE"
@@ -1899,9 +1954,12 @@ msgstr[1] "erstattingsobjektet har %d rader, men må ha %d"
 
 #, fuzzy
 msgid "replacement element %d is a matrix/data frame of %d row, need %d"
-msgid_plural "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr[0] "erstattingselement %d er ei matrise/dataramme med %d rader – treng %d"
-msgstr[1] "erstattingselement %d er ei matrise/dataramme med %d rader – treng %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] ""
+"erstattingselement %d er ei matrise/dataramme med %d rader – treng %d"
+msgstr[1] ""
+"erstattingselement %d er ei matrise/dataramme med %d rader – treng %d"
 
 #, fuzzy
 msgid "replacement element %d has %d row, need %d"
@@ -1965,10 +2023,18 @@ msgid_plural "'by' must specify uniquely valid columns"
 msgstr[0] "«by» må definera unike, gyldige kolonnar"
 msgstr[1] "«by» må definera unike, gyldige kolonnar"
 
-msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
-msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
-msgstr[0] "Fann funksjon som ikkje er S4-generisk ved eksportering av metodar frå namnerommet «%s»: %s"
-msgstr[1] "Fann funksjonar som ikkje er S4-generiske ved eksportering av metodar frå namnerommet «%s»: %s"
+msgid ""
+"Function found when exporting methods from the namespace %s which is not S4 "
+"generic: %s"
+msgid_plural ""
+"Functions found when exporting methods from the namespace %s which are not "
+"S4 generic: %s"
+msgstr[0] ""
+"Fann funksjon som ikkje er S4-generisk ved eksportering av metodar frå "
+"namnerommet «%s»: %s"
+msgstr[1] ""
+"Fann funksjonar som ikkje er S4-generiske ved eksportering av metodar frå "
+"namnerommet «%s»: %s"
 
 #, fuzzy
 msgid "No methods found in package %s for request: %s when loading %s"
@@ -1977,8 +2043,10 @@ msgstr[0] "Fann ingen metodar i «%s» for førespurnader: %s"
 msgstr[1] "Fann ingen metodar i «%s» for førespurnader: %s"
 
 #, fuzzy
-msgid "requested method not found in environment/package %s: %s when loading %s"
-msgid_plural "requested methods not found in environment/package %s: %s when loading %s"
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
 msgstr[0] "fann ikkje førespurde metodar i omgjevnaden/pakken «%s»: %s"
 msgstr[1] "fann ikkje førespurde metodar i omgjevnaden/pakken «%s»: %s"
 
@@ -2147,7 +2215,8 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 #~ msgstr "Versjon av Kinderman–Ramage-generator som har feil brukt"
 
 #~ msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-#~ msgstr "Versjon av Kinderman–Ramage-generator som har feil kan ikkje brukast"
+#~ msgstr ""
+#~ "Versjon av Kinderman–Ramage-generator som har feil kan ikkje brukast"
 
 #~ msgid "you cannot be serious"
 #~ msgstr "det meiner du ikkje"
