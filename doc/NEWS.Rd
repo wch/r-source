@@ -366,8 +366,13 @@
       required).
 
       \item The legacy S-compatibility macros \code{DOUBLE_*} in
-      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
-      and will be removed in due course.
+      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated.
+      
+      \item \code{R_Calloc}, \code{R_Free} and \code{R_Realloc} are
+      preferred to their unprefixed forms and error messages now use the
+      prefix. These forms were introduced in \R 3.4.0 and are available
+      even when \code{STRICT_R_HEADERS} is defined.
+
     }
   }
 
@@ -448,7 +453,7 @@
       \PR{18179}).
 
       \item \code{txtProgressBar()} now enforces a non-zero width for
-      \code{char}, without which no progress can be visible.
+      argument \code{char}, without which no progress can be visible.
 
       \item \code{dimnames(table(d))} is more consistent in the case where
       \code{d} is a list with a single component, thanks to Thomas Soeiro's
