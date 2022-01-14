@@ -13127,13 +13127,14 @@ Here is the complete C code which we will explain section by section.
 
 @example
 @group
-#include <R.h> /* for DOUBLE_EPS */
+#include <R.h> 
 #include <Rinternals.h>
+#include <float.h> /* for DBL_EPSILON */
 
 SEXP numeric_deriv(SEXP args)
 @{
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
-    double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
+    double tt, xx, delta, eps = sqrt(DBL_EPSILON), *rgr, *rans;
     int i, start;
 @end group
 
@@ -13897,7 +13898,7 @@ never from front-ends.  They are not thread-safe.
 @subsection User-controlled memory
 @findex R_Calloc
 @findex R_Realloc
-@findex R+Free
+@findex R_Free
 
 The other form of memory allocation is an interface to @code{malloc},
 the interface providing @R{} error signaling.  This memory lasts until
@@ -13918,7 +13919,7 @@ void R_Free(@var{any} *@var{p})
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
 If there is an error during allocation it is handled by @R{}, so if
 these return the memory has been successfully allocated or freed.
-@code{Free} will set the pointer @var{p} to @code{NULL}.  (Some but not
+@code{R_Free} will set the pointer @var{p} to @code{NULL}.  (Some but not
 all versions of @Sl{} did so.)
 
 Users should arrange to @code{R_Free} this memory when no longer needed,
