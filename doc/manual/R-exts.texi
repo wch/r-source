@@ -14093,7 +14093,7 @@ including the header file @file{Rmath.h}; @xref{Distribution functions}.
 Those calls should also be preceded and followed by calls to
 @code{GetRNGstate} and @code{PutRNGstate}.
 
-@c MM: FIXME   void rmultinom() is different, returning a vecton!
+@c MM: FIXME   void rmultinom() is different, returning a vector!
 @c BUT rmultinom is not mentioned in the xref-ed section ... so it not
 @c even part of the API.
 
