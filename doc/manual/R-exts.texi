@@ -13615,9 +13615,9 @@ conveniently from an @code{on.exit} action in the calling @R{} function
 -- see @code{pwilcox} for an example.
 
 Do not assume that memory allocated by @code{R_Calloc}/@code{R_Realloc}
-comes from the same pool as used by @code{malloc}:@footnote{That was not
-the case on Windows prior to @R{} 4.2.0.}in particular do not use
-@code{free} or @code{strdup} with it.
+comes from the same pool as used by @code{malloc}:@footnote{That is
+currently the case on Windows. }in particular do not use @code{free} or
+@code{strdup} with it.
 
 Memory obtained by these macros should be aligned in the same way as
 @code{malloc}, that is `suitably aligned for any kind of variable'.
@@ -14590,7 +14590,8 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 
 There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) (and so on)
 defined (unless @code{STRICT_R_HEADERS} is defined) in the included
-header @file{R_ext/Constants.h}, mainly for compatibility with @Sl{}.
+header @file{R_ext/Constants.h}, mainly for compatibility with
+@Sl{}. (Some of these are deprecated.)
 
 @findex TRUE
 @findex FALSE
@@ -15295,6 +15296,7 @@ currently includes
 @multitable @columnfractions 0.30 0.55
 @item @file{R.h} @tab includes many other files
 @item @file{S.h} @tab different version for code ported from @Sl{}
+(unsupported since 2016)
 @item @file{Rinternals.h} @tab definitions for using @R{}'s internal
 structures
 @item @file{Rdefines.h} @tab macros for an @Sl{}-like interface to the
@@ -15317,8 +15319,6 @@ not part of the stable API.
 @item @file{R_ext/RStartup.h} @tab for add-on front-ends
 @item @file{R_ext/Rdynload.h} @tab needed to register compiled code in
 packages
-@item @file{R_ext/R-ftp-http.h} @tab interface to internal method of
-@code{download.file}
 @item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
 @item @file{R_ext/Visibility.h} @tab definitions controlling visibility
 @item @file{R_ext/eventloop.h} @tab for add-on front-ends and for

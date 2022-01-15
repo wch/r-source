@@ -14,6 +14,14 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The legacy S-compatibility macros \code{SINGLE_*} in
+      \file{R_ext/Constants.h} (included by \file{R.h}) are deprecated
+      and will be removed in due course. 
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Initialization of self-starting \code{nls()} models with
