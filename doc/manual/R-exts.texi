@@ -13834,7 +13834,7 @@ x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 (@code{size_t} is defined in @file{stddef.h} which the header defining
 @code{R_alloc} includes.)
 
-There is a similar call, @code{S_alloc} (for compatibility with older
+There is a similar call, @code{S_alloc} (named for compatibility with older
 versions of @Sl{}) which zeroes the memory allocated,
 
 @example
@@ -13852,13 +13852,13 @@ char *S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 which changes the allocation size from @var{old} to @var{new} units, and
 zeroes the additional units.
 
-For compatibility with later versions of @Sl{}, header @file{S.h}
-(only) defines wrapper macros equivalent to
+@c For compatibility with later versions of @Sl{}, header @file{S.h}
+@c (only) defines wrapper macros equivalent to
 
-@example
-type* Salloc(long @var{n}, int @var{type})
-type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
-@end example
+@c @example
+@c type* Salloc(long @var{n}, int @var{type})
+@c type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
+@c @end example
 
 This memory is taken from the heap, and released at the end of the
 @code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
@@ -14044,8 +14044,8 @@ Messages of more than 255 characters are truncated, with a warning.
 @findex GetRNGstate
 @findex PutRNGstate
 @findex .Random.seed
-@findex seed_in
-@findex seed_out
+@c @findex seed_in
+@c @findex seed_out
 
 The interface to @R{}'s internal random number generation routines is
 
@@ -14079,21 +14079,23 @@ out after use.
 
 These are defined in header @file{R_ext/Random.h}.
 
-File @file{S.h} defines @code{seed_in} and @code{seed_out} for
-@Sl{}-compatibility rather than @code{GetRNGstate} and
-@code{PutRNGstate}.  These take a @code{long *} argument which is
-ignored.
+@c File @file{S.h} defines @code{seed_in} and @code{seed_out} for
+@c @Sl{}-compatibility rather than @code{GetRNGstate} and
+@c @code{PutRNGstate}.  These take a @code{long *} argument which is
+@c ignored.
 
 The random number generator is private to @R{}; there is no way to
-select the kind of RNG or set the seed except by evaluating calls to the
+select the kind of RNG nor set the seed except by evaluating calls to the
 @R{} functions.
 
 The C code behind @R{}'s @code{r@var{xxx}} functions can be accessed by
-including the header file @file{Rmath.h}; @xref{Distribution
-functions}.  Those calls generate a single variate and should also be
-enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
+including the header file @file{Rmath.h}; @xref{Distribution functions}.
+Those calls should also be preceded and followed by calls to
+@code{GetRNGstate} and @code{PutRNGstate}.
 
-@c MM: FIXME   void rmultinom() is different, returning a vector!
+@c MM: FIXME   void rmultinom() is different, returning a vecton!
+@c BUT rmultinom is not mentioned in the xref-ed section ... so it not
+@c even part of the API.
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
